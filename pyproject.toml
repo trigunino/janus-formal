@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "janus-lab"
+version = "0.1.0"
+description = "Reproducible tests for Janus cosmology against standard cosmological models"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pypdf>=4.0",
+  "sympy>=1.12",
+]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+fit = ["scipy>=1.11", "emcee>=3.1"]
+data = ["pandas>=2.2"]
+science = ["scipy>=1.11", "matplotlib>=3.7", "pandas>=2.2"]
+perf = ["numba>=0.61; python_version < '3.14'"]
+cosmo = ["cobaya>=3.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

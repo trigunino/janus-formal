@@ -1,0 +1,6 @@
+dataset,z,fsigma8,sigma,source_vector,source_covariance
+SDSS_MGS,0.15,0.527256,0.16315943123215404,data\raw\sdss_dr16_bao_plus\sdss_MGS_FSBAO_DVfs8.txt,data\raw\sdss_dr16_bao_plus\sdss_MGS_FSBAO_DVfs8_covtot.txt
+BOSS_DR12_LRG,0.38,0.4974,0.04509489993336275,data\raw\sdss_dr16_bao_plus\sdss_DR12_LRG_FSBAO_DMDHfs8.txt,data\raw\sdss_dr16_bao_plus\sdss_DR12_LRG_FSBAO_DMDHfs8_covtot.txt
+BOSS_DR12_LRG,0.51,0.459,0.03772121419042605,data\raw\sdss_dr16_bao_plus\sdss_DR12_LRG_FSBAO_DMDHfs8.txt,data\raw\sdss_dr16_bao_plus\sdss_DR12_LRG_FSBAO_DMDHfs8_covtot.txt
+eBOSS_DR16_LRG,0.698,0.4730038921505922,0.04429021938845522,data\raw\sdss_dr16_bao_plus\sdss_DR16_LRG_FSBAO_DMDHfs8.txt,data\raw\sdss_dr16_bao_plus\sdss_DR16_LRG_FSBAO_DMDHfs8_covtot.txt
+eBOSS_DR16_QSO,1.48,0.462,0.04493962616666943,data\raw\sdss_dr16_bao_plus\sdss_DR16_QSO_FSBAO_DMDHfs8.txt,data\raw\sdss_dr16_bao_plus\sdss_DR16_QSO_FSBAO_DMDHfs8_covtot.txt
