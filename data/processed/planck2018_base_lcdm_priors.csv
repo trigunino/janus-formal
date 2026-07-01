@@ -1,0 +1,4 @@
+parameter,mean,sigma,likelihood,source
+Omega_m,0.3158,0.0073,TTTEEE_lowE_lensing,Planck_2018_VI_eq_27
+H0,67.36,0.54,TTTEEE_lowE_lensing,Planck_2018_VI_eq_27
+sigma8,0.811,0.006,base_LCDM_summary,Planck_2018_VI_abstract_summary

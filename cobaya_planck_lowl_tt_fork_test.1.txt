@@ -1,0 +1,2 @@
+#        weight    minuslogpost       chi2__CMB   minuslogprior minuslogprior__0            chi2 chi2__planck_2018_lowl.TT
+              1       11.194702       22.389404              -0               -0       22.389404                 22.389404

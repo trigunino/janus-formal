@@ -28,6 +28,10 @@ def fullLikelihoodReady (c : CosmologicalChi2Calculator) : Prop :=
   c.desiPlanckIncluded /\
   c.fullLikelihoodReady
 
+def sdssFullCovarianceReady (c : CosmologicalChi2Calculator) : Prop :=
+  sdssDiagonalChi2Ready c /\
+  c.fullCovarianceUsed
+
 theorem sdss_diagonal_chi2_is_first_likelihood_gate
     (c : CosmologicalChi2Calculator)
     (hData : c.sdssDataLoaded)
@@ -47,6 +51,20 @@ theorem missing_full_covariance_blocks_full_likelihood
     Not (fullLikelihoodReady c) := by
   intro h
   exact hMissing h.right.left
+
+theorem sdss_full_covariance_closes_first_covariance_gate
+    (c : CosmologicalChi2Calculator)
+    (hDiag : sdssDiagonalChi2Ready c)
+    (hFullCov : c.fullCovarianceUsed) :
+    sdssFullCovarianceReady c := by
+  exact And.intro hDiag hFullCov
+
+theorem missing_desi_planck_blocks_full_likelihood
+    (c : CosmologicalChi2Calculator)
+    (hMissing : Not c.desiPlanckIncluded) :
+    Not (fullLikelihoodReady c) := by
+  intro h
+  exact hMissing h.right.right.left
 
 end P0EFTCosmologicalChi2Calculator
 end JanusFormal

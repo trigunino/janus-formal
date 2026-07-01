@@ -7,8 +7,14 @@ import math
 
 import matplotlib.pyplot as plt
 
+try:
+    from scripts.build_p0_eft_growth_master_branch_export import write_reports as write_master_curve
+except ModuleNotFoundError:
+    from build_p0_eft_growth_master_branch_export import write_reports as write_master_curve
+
 
 DATA_PATH = Path("data/processed/p0_eft_fsigma8/sdss_dr16_fsigma8_points.csv")
+COV_PATH = Path("data/processed/p0_eft_fsigma8/sdss_dr16_fsigma8_covariance.csv")
 CURVE_PATH = Path("outputs/reports/p0_eft_growth_master_branch_z0_2.csv")
 REPORT_PATH = Path("outputs/reports/p0_eft_cosmological_chi2_calculator.md")
 JSON_PATH = Path("outputs/reports/p0_eft_cosmological_chi2_calculator.json")
@@ -19,6 +25,34 @@ PNG_PATH = Path("outputs/reports/p0_eft_cosmological_chi2_residuals.png")
 def read_csv(path: Path) -> list[dict]:
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
+
+
+def read_covariance(path: Path = COV_PATH) -> list[list[float]]:
+    rows = read_csv(path)
+    keys = [key for key in rows[0].keys() if key not in {"dataset", "z"}]
+    return [[float(row[key]) for key in keys] for row in rows]
+
+
+def solve_linear(matrix: list[list[float]], vector: list[float]) -> list[float]:
+    n = len(vector)
+    aug = [row[:] + [value] for row, value in zip(matrix, vector)]
+    for pivot in range(n):
+        best = max(range(pivot, n), key=lambda row: abs(aug[row][pivot]))
+        if abs(aug[best][pivot]) < 1e-15:
+            raise ValueError("singular covariance")
+        aug[pivot], aug[best] = aug[best], aug[pivot]
+        scale = aug[pivot][pivot]
+        aug[pivot] = [value / scale for value in aug[pivot]]
+        for row in range(n):
+            if row == pivot:
+                continue
+            factor = aug[row][pivot]
+            aug[row] = [value - factor * base for value, base in zip(aug[row], aug[pivot])]
+    return [row[-1] for row in aug]
+
+
+def dot(left: list[float], right: list[float]) -> float:
+    return sum(a * b for a, b in zip(left, right))
 
 
 def interp_linear(rows: list[dict], z: float, key: str = "fsigma8_shape") -> float:
@@ -44,6 +78,13 @@ def chi2_for_amplitude(data: list[dict], curve: list[dict], amp: float) -> float
     return total
 
 
+def chi2_for_amplitude_full_cov(
+    data: list[dict], curve: list[dict], amp: float, covariance: list[list[float]]
+) -> float:
+    residual = [amp * interp_linear(curve, float(row["z"])) - float(row["fsigma8"]) for row in data]
+    return dot(residual, solve_linear(covariance, residual))
+
+
 def best_amplitude(data: list[dict], curve: list[dict]) -> float:
     numerator = 0.0
     denominator = 0.0
@@ -53,6 +94,14 @@ def best_amplitude(data: list[dict], curve: list[dict]) -> float:
         numerator += shape * float(row["fsigma8"]) / sigma2
         denominator += shape * shape / sigma2
     return numerator / denominator
+
+
+def best_amplitude_full_cov(data: list[dict], curve: list[dict], covariance: list[list[float]]) -> float:
+    shape = [interp_linear(curve, float(row["z"])) for row in data]
+    observed = [float(row["fsigma8"]) for row in data]
+    inv_shape = solve_linear(covariance, shape)
+    inv_observed = solve_linear(covariance, observed)
+    return dot(shape, inv_observed) / dot(shape, inv_shape)
 
 
 def build_residuals(data: list[dict], curve: list[dict], amp: float) -> list[dict]:
@@ -101,10 +150,16 @@ def render_plot(residuals: list[dict], curve: list[dict], amp: float, png_path: 
 
 def build_payload() -> dict:
     data = read_csv(DATA_PATH)
+    covariance = read_covariance(COV_PATH)
+    if not CURVE_PATH.exists():
+        write_master_curve()
     curve = read_csv(CURVE_PATH)
     amp_best = best_amplitude(data, curve)
     chi2_best = chi2_for_amplitude(data, curve, amp_best)
     chi2_unit = chi2_for_amplitude(data, curve, 1.0)
+    amp_best_full = best_amplitude_full_cov(data, curve, covariance)
+    chi2_best_full = chi2_for_amplitude_full_cov(data, curve, amp_best_full, covariance)
+    chi2_unit_full = chi2_for_amplitude_full_cov(data, curve, 1.0, covariance)
     residuals = build_residuals(data, curve, amp_best)
     dof_best = len(data) - 1
     render_plot(residuals, curve, amp_best)
@@ -119,14 +174,19 @@ def build_payload() -> dict:
         "amplitude_best": amp_best,
         "chi2_unit_amplitude": chi2_unit,
         "chi2_best_amplitude": chi2_best,
+        "full_covariance_used": True,
+        "chi2_unit_amplitude_full_covariance": chi2_unit_full,
+        "amplitude_best_full_covariance": amp_best_full,
+        "chi2_best_amplitude_full_covariance": chi2_best_full,
         "dof_best_amplitude": dof_best,
         "reduced_chi2_best": chi2_best / dof_best if dof_best > 0 else None,
+        "reduced_chi2_best_full_covariance": chi2_best_full / dof_best if dof_best > 0 else None,
         "outputs": {"residuals_csv": str(CSV_PATH), "plot_png": str(PNG_PATH)},
         "residuals": residuals,
         "notes": [
-            "Uses diagonal covariance only for this first SDSS check.",
+            "Uses the reduced SDSS/eBOSS DR16 f_sigma8 covariance, including the BOSS DR12 cross-redshift term.",
             "Best amplitude is a normalization of the exported shape, not a refit of Janus branch dynamics.",
-            "Full covariance and DESI/Planck priors remain open.",
+            "DESI/Planck priors remain open.",
         ],
     }
 
@@ -143,6 +203,10 @@ def render_markdown(payload: dict) -> str:
         f"Chi2 unit amplitude: {payload['chi2_unit_amplitude']:.6g}",
         f"Chi2 best amplitude: {payload['chi2_best_amplitude']:.6g}",
         f"Reduced chi2 best: {payload['reduced_chi2_best']:.6g}",
+        f"Chi2 unit amplitude full covariance: {payload['chi2_unit_amplitude_full_covariance']:.6g}",
+        f"Best amplitude full covariance: {payload['amplitude_best_full_covariance']:.6g}",
+        f"Chi2 best amplitude full covariance: {payload['chi2_best_amplitude_full_covariance']:.6g}",
+        f"Reduced chi2 best full covariance: {payload['reduced_chi2_best_full_covariance']:.6g}",
         "",
         "## Residuals",
         "",

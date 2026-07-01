@@ -1,0 +1,118 @@
+from __future__ import annotations
+
+import unittest
+from pathlib import Path
+
+from scripts.build_p0_eft_bi_sector_boltzmann_prototype import build_payload
+
+
+class P0EFTBiSectorBoltzmannPrototypeScriptTests(unittest.TestCase):
+    def test_payload_records_lcdm_limit_and_information_loss(self) -> None:
+        payload = build_payload()
+
+        self.assertEqual(payload["status"], "bi-sector-boltzmann-prototype-integrated")
+        self.assertEqual(payload["solver_name"], "Janus Z4 CMB Solver")
+        self.assertEqual(payload["solver_slug"], "janus_z4_cmb_solver")
+        self.assertTrue(payload["solver_contract_ready"])
+        self.assertTrue(payload["lcdm_limit_recovered"])
+        self.assertTrue(payload["z4_unified_geometric_origin_encoded"])
+        self.assertTrue(payload["metric_sectors_are_z4_projections"])
+        self.assertTrue(payload["independent_metric_dynamics_forbidden"])
+        self.assertTrue(payload["z4_projection_operator_normalized"])
+        self.assertAlmostEqual(payload["z4_projection_operator"]["trace"], 2.0)
+        self.assertTrue(payload["z4_projection_residuals_bounded"])
+        self.assertTrue(payload["mono_metric_information_loss_detected"])
+        self.assertTrue(payload["constraints_bounded"])
+        self.assertTrue(payload["two_metric_perturbations_explicit"])
+        self.assertTrue(payload["metric_constraints_bounded"])
+        self.assertTrue(payload["newtonian_gauge_declared"])
+        self.assertTrue(payload["newtonian_gauge_residuals_bounded"])
+        self.assertTrue(payload["membrane_density_jump_conserved"])
+        self.assertTrue(payload["continuity_residuals_bounded"])
+        self.assertTrue(payload["bianchi_closure_residuals_bounded"])
+        self.assertTrue(payload["antisymmetric_mode_survives"])
+        self.assertGreater(payload["sound_horizon_proxy"], 0.0)
+        self.assertGreater(payload["theta_star_proxy"], 0.0)
+        self.assertGreater(payload["acoustic_ell_proxy"], 0.0)
+        self.assertIn("tt_peak_shift_proxy", payload)
+        self.assertNotEqual(payload["tt_peak_shift_proxy"], 0.0)
+        self.assertTrue(payload["photon_baryon_hierarchy_integrated"])
+        self.assertTrue(payload["photon_baryon_history_integrated"])
+        self.assertTrue(payload["line_of_sight_uses_time_dependent_sources"])
+        self.assertTrue(payload["isw_uses_conformal_time_gradient"])
+        self.assertTrue(payload["neutrino_anisotropic_stress_proxy_integrated"])
+        self.assertTrue(payload["cl_tt_proxy_computed"])
+        self.assertTrue(payload["visibility_proxy_integrated"])
+        self.assertTrue(payload["visibility_proxy_is_diagnostic_only"])
+        self.assertTrue(payload["line_of_sight_cl_tt_proxy_computed"])
+        self.assertTrue(payload["optical_depth_visibility_integrated"])
+        self.assertTrue(payload["visibility_calibrated_to_astar"])
+        self.assertLess(payload["physical_visibility_peak_residual"], 5.0e-4)
+        self.assertTrue(payload["physical_visibility_required_for_cmb_gate"])
+        self.assertGreater(payload["visibility_source_delta"], 0.0)
+        self.assertIn("photon_baryon_transfer_proxy", payload)
+        self.assertIn("max_slip_proxy", payload)
+        self.assertTrue(payload["conformal_projection_map_computed"])
+        self.assertTrue(payload["conformal_time_mapping_computed"])
+        self.assertTrue(payload["conformal_distance_mapping_computed"])
+        self.assertEqual(payload["conformal_distance_source"], "prototype_background_e_of_a")
+        self.assertEqual(len(payload["eta_unit_grid"]), 3)
+        self.assertEqual(len(payload["chi_unit_grid"]), 3)
+        self.assertGreater(payload["max_chi_conformal"], 0.0)
+        self.assertGreater(len(payload["cl_tt_proxy"]), 0)
+        self.assertGreater(len(payload["line_of_sight_cl_tt_proxy"]), 0)
+        self.assertNotEqual(payload["line_of_sight_temperature_source"], 0.0)
+        self.assertNotEqual(payload["physical_line_of_sight_temperature_source"], 0.0)
+        self.assertTrue(payload["line_of_sight_source_decomposition_computed"])
+        self.assertTrue(payload["transport_terms_are_proxy_only"])
+        self.assertIn("transport_proxy_relative_size", payload["line_of_sight_source_decomposition"])
+        self.assertTrue(payload["multipole_line_of_sight_projection_computed"])
+        self.assertTrue(payload["multipole_projection_uses_conformal_map"])
+        self.assertTrue(payload["bessel_kernel_projection_proxy_only"])
+        self.assertTrue(payload["k_projection_rescale_proxy_only"])
+        self.assertTrue(payload["k_ell_projection_scale_calibrated_from_theta_star_proxy"])
+        self.assertGreater(payload["projection_scale_calibration"]["projection_distance_scale"], 0.0)
+        self.assertGreater(len(payload["multipole_line_of_sight_cl_tt_proxy"]), 0)
+        self.assertTrue(payload["polarization_line_of_sight_proxy_computed"])
+        self.assertTrue(payload["te_ee_proxy_computed"])
+        self.assertTrue(payload["polarization_source_proxy_only"])
+        self.assertGreater(len(payload["multipole_line_of_sight_spectra_proxy"]), 0)
+        self.assertTrue(payload["reionization_visibility_proxy_integrated"])
+        self.assertTrue(payload["low_ell_polarization_proxy_computed"])
+        self.assertTrue(payload["reionization_proxy_only"])
+        self.assertGreater(len(payload["low_ell_reionization_spectra_proxy"]), 0)
+        self.assertTrue(payload["cmb_lensing_smoothing_proxy_computed"])
+        self.assertTrue(payload["lensing_source_proxy_only"])
+        self.assertGreater(len(payload["lensed_multipole_spectra_proxy"]), 0)
+        self.assertTrue(payload["cmb_spectra_export_ready_for_adapter"])
+        self.assertTrue(payload["cmb_spectra_proxy_csv"].endswith(".csv"))
+        self.assertTrue(payload["cmb_adapter_contract_ready"])
+        self.assertTrue(payload["cmb_adapter_contract_json"].endswith(".json"))
+        self.assertTrue(payload["cmb_spectra_contract"]["contract_passed"])
+        self.assertTrue(payload["cmb_solver_scaffold_75_percent_reached"])
+        self.assertTrue(payload["cmb_solver_scaffold_95_percent_reached"])
+        self.assertTrue(payload["cmb_z4_projected_solver_75_percent_reached"])
+        self.assertFalse(payload["cmb_solver_physical_prediction_75_percent_reached"])
+        self.assertGreaterEqual(payload["cmb_solver_scaffold_completion_fraction"], 0.95)
+        self.assertGreaterEqual(payload["cmb_z4_projected_solver_completion_fraction"], 0.75)
+        self.assertGreater(len(payload["cmb_solver_physical_blockers"]), 0)
+        self.assertIn("planck_likelihood_adapter", payload["cmb_solver_physical_blockers"])
+
+    def test_planck_likelihood_stays_open(self) -> None:
+        payload = build_payload()
+
+        self.assertFalse(payload["direct_planck_likelihood_ready"])
+        self.assertFalse(payload["full_observational_cosmology_no_fit_ready"])
+
+    def test_report_writer_exports_spectra_csv(self) -> None:
+        from scripts.build_p0_eft_bi_sector_boltzmann_prototype import write_reports
+
+        payload = write_reports()
+
+        self.assertTrue(Path(payload["cmb_spectra_proxy_csv"]).exists())
+        self.assertTrue(Path(payload["cmb_adapter_contract_json"]).exists())
+        self.assertTrue(Path(payload["solver_contract_json"]).exists())
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,21 @@
+theory:
+  camb:
+    extra_args:
+      lens_potential_accuracy: 1
+likelihood:
+  planck_2018_lowl.TT: null
+params:
+  H0: 67.4
+  ombh2: 0.02237
+  omch2: 0.136
+  tau: 0.054
+  As: 2.1e-09
+  ns: 0.965
+  mnu: 0.06
+  nnu: 3.7424238
+  omk: 0
+  YHe: 0.245
+sampler:
+  evaluate: null
+packages_path: external/cobaya_packages
+output: cobaya_planck_lowl_tt_fork_test

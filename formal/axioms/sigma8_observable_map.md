@@ -182,6 +182,48 @@ Status: partially reduced to `delta_lens_plus` as a weak-field diagnostic; still
 
 Question: which metric, source combination, and light-propagation equation correspond to weak-lensing observations?
 
+## Survey Hard Targets
+
+KiDS-1000 cosmic shear is now a compressed low-`S8` hard target:
+
+- Source: KiDS-1000 cosmic shear data products / cosmology page.
+- Observable: `S8 = sigma8 * sqrt(Omega_m / 0.3)`.
+- Fiducial COSEBIs result: `S8 = 0.759 +0.024/-0.021`.
+- Implementation: `scripts/build_kids1000_s8_target.py` writes `outputs/reports/kids1000_s8_target.json`.
+- Data-product inventory: `scripts/build_kids1000_data_products_inventory.py` writes FITS HDU dimensions for `COVMAT`, `En`, `xiP/xiM`, `PeeE` and `NZ_SOURCE`.
+- COSEBIs contract: `scripts/build_kids1000_cosebis_contract.py` extracts `En`, `COVMAT` and `NZ_SOURCE` into a structurally valid no-fit survey contract.
+- Janus same-order vector: `scripts/build_kids1000_janus_cosebis_proxy_vector.py` writes a 300-component no-fit proxy vector in the exact KiDS `En` order.
+- COSEBIs operator: `src/janus_lab/cosebis.py` implements the log-COSEBIs `T_+`, `T_-` transform from `xi_+/-` to `E_n`; `scripts/build_kids1000_cosebis_operator_report.py` records the KiDS settings `theta=[0.5,300] arcmin`, `n_max=5`, and scale-cut dimension 75.
+- Limber/Hankel bridge: `src/janus_lab/weak_lensing_spectra.py` implements `P_Weyl(k,z) -> P_kappa^ij(ell) -> xi_+/-^ij(theta)`; `scripts/build_kids1000_janus_limber_xi_cosebis.py` sends a parametric Weyl scaffold through KiDS `n(z)` and the COSEBIs operator.
+- Janus-Holst Weyl shape: `scripts/build_kids1000_janus_holst_weyl_cosebis.py` replaces the toy Weyl scaffold with the current Holst `mu_JH(k,a)`, torsion `Omega_T(a)` and growth `D_JH(k,a)` branch, then maps it through KiDS COSEBIs.
+- Diagnostic chi-square: `scripts/build_kids1000_janus_holst_shape_chi2.py` slices the KiDS covariance to 75 modes and reports unit-amplitude plus best-single-amplitude diagnostics only.
+- Residual audit: the same script writes per-mode residuals/pulls and tomographic max-bin scans; the current Janus-Holst shape is acceptable only for bin-1-only diagnostics and degrades as bins 2-5 enter.
+- Nuisance audit: `scripts/build_kids1000_janus_holst_nuisance_audit.py` adds explicit diagnostic pair-bin and mode-tilt templates; the current improvement is mode-like, not a valid IA/baryon closure.
+- Mode-cut audit: `scripts/build_kids1000_janus_holst_mode_cut_audit.py` scans COSEBIs `n<=1..5`; even aggressive cuts remain poor, so the issue is not only the highest retained mode.
+- Eta scan: `scripts/build_kids1000_janus_holst_eta_scan.py` scans inspected `eta_holst` branches with a refitted amplitude; `eta_holst=0` improves the diagnostic shape but is not a value-slip Green-kernel closure.
+- Best-eta localization: the same eta scan shows bins 1-2 can be made acceptable diagnostically, while the failure reappears when bin 3 enters and remains concentrated in mixed/high tomographic pairs.
+- Tilt scan: `scripts/build_kids1000_janus_holst_tilt_scan.py` scans a Weyl spectral-index diagnostic at `eta_holst=0`; the best inspected tilt improves only marginally, so a one-parameter k-tilt is not enough.
+- Source-redshift shift scan: `scripts/build_kids1000_janus_holst_nz_shift_scan.py` applies global post-hoc shifts to KiDS `n(z)` at `eta_holst=0`, tilt `0.5`; chi2 improves monotonically for large positive shifts, pointing to a geometry/tomography mismatch rather than an admissible photo-z nuisance.
+- Geometry scan: `scripts/build_kids1000_janus_holst_geometry_scan.py` scans Janus `q0` in the KiDS distance kernel; opening the geometry improves only marginally, so `q0` drift alone does not explain the tomographic mismatch.
+- Redshift-kernel scan: `scripts/build_kids1000_janus_holst_redshift_kernel_scan.py` multiplies the Limber integrand by post-hoc `(1+z)^p`; large negative powers improve diagnostics, indicating the current kernel likely overweights high-redshift contribution.
+- Distance-kernel audit: `scripts/build_kids1000_janus_holst_distance_kernel_audit.py` exposes a named `angular_lens` efficiency kernel equivalent to the physically motivated `p=-2` case; it improves the diagnostic but does not close KiDS.
+- Kernel residual audit: `scripts/build_kids1000_janus_holst_kernel_residual_audit.py` localizes named kernel variants; `angular_lens` is best, but the 2-3 tomographic pair remains the dominant failure.
+- Kernel closure decision: `scripts/build_kids1000_janus_holst_kernel_closure_decision.py` freezes `eta_holst=0`, spectral index `0.5`, and `angular_lens` as a diagnostic candidate only, with explicit `do-not-promote-to-prediction`.
+- Pair-2-3 audit: `scripts/build_kids1000_janus_holst_pair23_audit.py` shows the dominant pair is uniformly underpredicted, especially COSEBIs mode 1, with bin-2/bin-3 source overlap about 0.46.
+- Pair-amplitude/bin-factor audits: `scripts/build_kids1000_janus_holst_pair_amplitude_audit.py` and `scripts/build_kids1000_janus_holst_bin_factor_audit.py` show a large bin-2 normalization diagnostic, but the fitted factors do not constitute a calibration, IA, or photo-z model.
+- Per-bin n(z) shift audit: `scripts/build_kids1000_janus_holst_per_bin_nz_shift_audit.py` confirms bin 2 is the most sensitive post-hoc source-redshift direction; a bin-2 shift improves the diagnostic but is not an admissible photo-z nuisance fit.
+- No-fit boundary: `scripts/build_kids1000_janus_holst_no_fit_boundary.py` freezes the diagnostic candidate and explicitly forbids using fitted amplitude, inspected eta/tilt, `angular_lens`, bin-2 shifts, or bin factors as prediction ingredients.
+- Value-slip target: `scripts/build_kids1000_janus_holst_value_slip_kernel_target.py` converts the bin-2 symptom into a source-derived kernel target: derive `eta_slip_JH(k,a)` or an equivalent optical projection factor from the Janus-Holst Green problem, without feeding in `Z_MID_BIN2`, bin factors, or KiDS residual scalars.
+- Value-slip scaffold: `src/janus_lab/value_slip.py` and `scripts/build_kids1000_janus_holst_value_slip_scaffold.py` add the non-fit code path from derivative-slip source to `Sigma_JH`, but prediction remains blocked until the Green kernel is computed from source.
+- Projected Green calculation: `scripts/build_p0_eft_ds3_projected_green_calculation.py` evaluates a regulated S3 spectral response; the result is scheme-dependent and does not prove `G_Neumann^Sigma=(3/2)H`.
+- Green-kernel closure checklist: `scripts/build_kids1000_janus_holst_green_kernel_closure_checklist.py` lists the blockers before `green_kernel_computed=True`: source-derived boundary conditions, finite-mode Green kernel, fixed projection/renormalization scheme, finite KiDS-grid `eta_slip_JH`, and source-selected `Q_det/Q_cross`.
+- Kink-only target: `scripts/build_kids1000_janus_holst_kink_lensing_target.py` opens a safer branch that uses `Delta(partial_n(Psi-Phi))` directly as a kink/refraction source and explicitly avoids coincident Green value-slip, bin shifts, bin factors, and KiDS residual scalars.
+- Kink solver scaffold: `src/janus_lab/kink_growth.py` and `scripts/build_kids1000_janus_holst_kink_solver_scaffold.py` encode the ODE mechanics where `delta` is continuous and `d delta / d ln a` receives a membrane jump, but prediction is blocked until `S_kink` and `alpha_Janus(a)` are source-derived.
+- Kink source target: `src/janus_lab/kink_source.py` and `scripts/build_kids1000_janus_holst_kink_source_target.py` define the guarded `S_kink * alpha_Janus * delta` jump interface, reject KiDS/fit provenance, and remain non-predictive until the Holst junction source fixes both factors.
+- Kink source closure audit: `scripts/build_p0_eft_kink_source_closure_audit.py` links the derivative-jump source, growth `S_kink` formula, and spinless-isotropic `alpha_Janus` branch; it closes the source structure but keeps prediction blocked by the Euler projection coefficient and torsion-energy normalization.
+- Closure gates: `scripts/build_kids1000_physics_closure_gates.py` blocks prediction claims until amplitude, value slip, nonlinear/small-scale, IA and baryon policies are fixed before residual inspection.
+- Boundary: the technical `P_Weyl -> xi_+/- -> COSEBIs -> chi2` path has a Janus-Holst shape branch; a final KiDS prediction still needs source-derived primordial amplitude, nonlinear/small-scale closure, and the open value-slip Green kernel.
+
 ## Current Numerical Findings
 
 These are constraints on toy IC families, not Janus predictions.

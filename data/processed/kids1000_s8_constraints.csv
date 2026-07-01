@@ -1,0 +1,2 @@
+survey_id,probe,observable,statistic,s8,s8_err_plus,s8_err_minus,reference,source_url,products_url,notes
+KiDS-1000,cosmic_shear,S8,COSEBIs fiducial,0.759,0.024,0.021,Asgari_Lin_Joachimi_etal_2021,https://kids.strw.leidenuniv.nl/DR4/KiDS-1000_cosmicshear.php,https://kids.strw.leidenuniv.nl/DR4/data_files/KiDS1000_cosmic_shear_data_release.tgz,Compressed S8 target only; full shear likelihood requires data vectors covariance n(z) and mask/window.
