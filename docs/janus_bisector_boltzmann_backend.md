@@ -722,6 +722,231 @@ Expected first-pass behavior:
 The gate uses internal response diagnostics for continuity and phase checks. It
 does not run official Planck likelihoods and is not a full native-Z4 verdict.
 
+## Official Planck Acoustic Driving Delta Trial
+
+Current trial:
+`p0_eft_janus_z4_official_planck_acoustic_driving_delta_trial.json`.
+
+This trial is controlled and effective:
+
+- backend is `CAMB-GR + Z4 delta`;
+- trial type is `effective_acoustic_temperature_source_delta`;
+- enabled channel is `acoustic_temperature_source`;
+- it is not a full native-Z4 verdict.
+
+The temperature source is decomposed into three sub-trials:
+
+- `surface_only = W_acoustic * g * deltaPsi`;
+- `early_isw_only = W_acoustic * exp(-kappa) * (deltaPhiDot + deltaPsiDot)`;
+- `full = surface_only + early_isw_only`.
+
+Frozen sectors:
+
+- EE and the polarization source;
+- lensing and `C_phi_phi`;
+- recombination;
+- visibility;
+- background projection;
+- primordial spectrum.
+
+The trial exports per-component, per-lambda spectra and Planck channel deltas
+when the local likelihood packages are available. Interpretation must compare
+`surface_only`, `early_isw_only` and `full` before opening any new physics gate.
+
+Current controlled result:
+
+- best component: `early_isw_only`;
+- best lambda: `-0.01`;
+- best available total response: `delta_chi2 ~= -7.605`;
+- `full` gives the same response within numerical precision;
+- `surface_only` is negligible (`delta_chi2 ~= -3.8e-5`);
+- no surface/eISW cancellation is detected;
+- EE and `C_phi_phi` are unchanged by construction.
+
+This is not a Planck success verdict. It shows that the pre-recombination
+early-ISW/acoustic-temperature source has real leverage, while the surface/SW
+forcing term does not.
+
+## Acoustic Phase Consistency Gate
+
+Current gate:
+`p0_eft_janus_z4_acoustic_phase_consistency_gate.json`.
+
+This gate refines the `early_isw_only` acoustic-temperature source around
+`lambda_Z4 = -0.01` before any polarization source is opened.
+
+Required checks:
+
+- TT peak shifts are finite and continuous;
+- TE zero-crossing shifts are finite and sign-stable;
+- EE remains unchanged;
+- `C_phi_phi` remains unchanged;
+- channel-level Planck deltas are reported;
+- the best lambda must not be only a scan-edge artifact.
+
+If this gate fails, do not open `PolarizationSourceDeltaGate`; derive a slip or
+phase correction first.
+
+Current controlled result:
+
+- best refined lambda: `-0.008`;
+- best available response: `delta_chi2 ~= -8.414`;
+- best point is not a scan-edge artifact;
+- TE phase guard passes;
+- EE and `C_phi_phi` remain frozen by construction;
+- available channel breakdown at best:
+  - high-l TT: `~=-3.504`;
+  - high-l TTTEEE: `~=-3.922`;
+  - low-l TT: `~=-0.00697`;
+  - low-l EE: `0`;
+  - lensing likelihood: `~=-0.980`.
+
+The nonzero lensing-likelihood response is flagged as subdominant but should be
+kept visible: `C_phi_phi` is frozen at spectra level, so this is an adapter or
+likelihood-coupling diagnostic, not evidence of a lensing-sector Z4 correction.
+
+## Planck Lensing Input Dependence Gate
+
+Current gate:
+`p0_eft_janus_z4_planck_lensing_input_dependence_gate.json`.
+
+Purpose: classify why the Planck lensing likelihood moves when `C_phi_phi` is
+frozen. The gate compares:
+
+- A: `C_phi_phi = GR`, CMB spectra = GR;
+- B: `C_phi_phi = GR`, CMB spectra = acoustic delta;
+- C: `C_phi_phi` control, CMB spectra = GR;
+- D: `C_phi_phi` control, CMB spectra = acoustic delta.
+
+If B-A is nonzero while C-A is zero and D matches B, the lensing-likelihood
+motion is classified as primary-CMB input dependence, not a Z4 lensing signal.
+
+Current result:
+
+- B-A: `~=-0.980`;
+- C-A: `0`;
+- D-A: `~=-0.980`;
+- classification: primary-CMB input dependence.
+
+## Polarization Source Delta Gate
+
+Current gate:
+`p0_eft_janus_z4_polarization_source_delta_gate.json`.
+
+This opens only source-level E-transfer response. It does not patch EE spectra.
+Subchannels:
+
+- `E_source_projection_only`;
+- `Theta2_quadrupole_response`;
+- `Pi_source_response`;
+- `full_polarization_source`.
+
+Frozen sectors:
+
+- recombination;
+- visibility;
+- background projection;
+- `r_s/r_d`;
+- primordial spectrum;
+- lensing;
+- slip.
+
+The gate blocks official Planck polarization trials until a separate controlled
+trial scaffold is added.
+
+Current source-level result:
+
+- gate passed;
+- largest source norm is `full_polarization_source`;
+- dominant derived subsource is `Theta2_quadrupole_response`;
+- Planck polarization trial remains blocked until the controlled trial scaffold
+  is added.
+
+## Official Planck Polarization Source Delta Trial
+
+Current trial:
+`p0_eft_janus_z4_official_planck_polarization_source_delta_trial.json`.
+
+Policy:
+
+- temperature channel fixed to `early_isw_only` with `lambda_T = -0.008`;
+- scan `lambda_E` independently;
+- no direct `C_l` patch;
+- no native toy LOS;
+- recombination, visibility, background, `r_s/r_d`, primordial, lensing and
+  slip remain frozen;
+- lensing-likelihood movement remains classified as primary-CMB input
+  dependence.
+
+Subchannels:
+
+- `E_source_projection_only`;
+- `Theta2_quadrupole_response`;
+- `Pi_source_response`;
+- `full_polarization_source`.
+
+This is an effective source trial. Standalone high-l TE/EE likelihood files are
+still unavailable locally, so only available Planck channel combinations may be
+reported.
+
+Current controlled result:
+
+- best subchannel: `Theta2_quadrupole_response`;
+- best `lambda_E`: `-0.02`;
+- incremental gain over temperature-only: `~=-1.079`;
+- best point is at the scan edge;
+- every subchannel prefers the negative edge of the scan.
+
+Conclusion: a polarization-source response is detected, but it is not yet a
+robust non-edge optimum. Do not open joint acoustic-polarization consistency
+until the `lambda_E` normalization is derived or a refined scan finds an
+interior optimum.
+
+## Polarization Edge Phase Audit Gate
+
+Current gate:
+`p0_eft_janus_z4_polarization_edge_phase_audit_gate.json`.
+
+The extended negative `lambda_E` scan brackets the previous edge optimum:
+
+- best subchannel: `Theta2_quadrupole_response`;
+- best `lambda_E`: `-0.02`;
+- incremental gain over temperature-only: `~=-1.079`;
+- best point is not a scan edge;
+- best-point TE/EE phase guard passes;
+- TT and `C_phi_phi` are invariant under `lambda_E`;
+- the full extended scan is not perturbative at large `|lambda_E|`, so only the
+  bracketed neighborhood of the best point should be interpreted.
+
+This allows a controlled acoustic-polarization joint consistency gate for the
+bracketed `Theta2` point. It still does not imply a full Planck or native-Z4
+verdict.
+
+## Acoustic Polarization Joint Consistency Gate
+
+Current gate:
+`p0_eft_janus_z4_acoustic_polarization_joint_consistency_gate.json`.
+
+The local two-dimensional scan combines:
+
+- temperature source: `early_isw_only`;
+- polarization source: `Theta2_quadrupole_response`.
+
+Current controlled result:
+
+- best point: `lambda_T = -0.008`, `lambda_E = -0.02`;
+- joint delta chi2: `~=-9.492`;
+- temperature-only delta at the same point: `~=-8.414`;
+- polarization-only delta at the same point: `~=-0.912`;
+- interaction term: `~=-0.166`, small relative to the joint movement;
+- `C_phi_phi`, visibility, background, `r_s/r_d` and primordial sectors remain frozen;
+- hard phase guard passes, but TE/EE residual smoothness guards fail.
+
+Conclusion: acoustic and polarization effective sources add mostly coherently,
+but the joint source is not promotable. The next required derivation is the
+real `Theta2` tight-coupling closure and TE/EE transport smoothness, not another
+likelihood scan.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

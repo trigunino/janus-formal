@@ -19,6 +19,8 @@ Statut separe par niveau de preuve :
 - `late_time_growth_branch_observationally_viable = True`
 - `cmb_bao_monommetric_camb_hooks_sufficient = False`
 - `bi_sector_boltzmann_backend_required = Open`
+- `janus_z4_cmb_solver_status = InProgress`
+- `acoustic_polarization_joint_gate_passed = False`
 - `full_observational_cosmology_no_fit_ready = False`
 
 Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
@@ -28,6 +30,18 @@ caractere bi-secteur Janus-orbifold.
 
 Les derniers gates CMB/BAO montrent que les hooks mono-metriques CAMB sont utiles
 comme diagnostics EFT, mais insuffisants comme preuve finale du modele complet.
+
+Le solveur CMB/Z4 suit maintenant une politique stricte :
+
+- les spectres Planck officiels ne doivent pas consommer le solveur natif tant
+  que la limite GR n'est pas validee contre une reference standard ;
+- les deltas Z4 non nuls sont testes uniquement comme deviations controlees
+  autour d'une baseline CAMB-GR sure ;
+- le dernier gate acoustique/polarisation trouve un meilleur point
+  `lambda_T=-0.008`, `lambda_E=-0.02` avec `delta_chi2 ~= -9.49`, mais il ne
+  passe pas : les gardes de lissage TE/EE echouent ;
+- prochain verrou CMB : deriver la vraie fermeture tight-coupling `Theta2` et
+  le transport TE/EE, au lieu d'elargir les scans de vraisemblance.
 
 Point d'entree principal :
 
@@ -52,6 +66,7 @@ Validation CMB/Z4 active :
 ```bash
 lake build JanusFormal
 python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
+python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_joint_consistency_gate_script
 ```
 
 `JanusFormal.LegacyCMB` est une archive compile-only des anciens essais

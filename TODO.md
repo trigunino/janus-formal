@@ -155,12 +155,86 @@
   - allow only early-ISW/acoustic gravitational driving;
   - keep recombination, visibility, `r_s`, `r_d`, background projection and primordial spectrum frozen;
   - report TT peak shifts, TE zero crossings, EE peak shifts and early-ISW response.
-- [ ] Add official acoustic-driving Planck trial:
+- [x] Add official acoustic-driving Planck trial:
   - backend remains `CAMB-GR + Z4 delta`;
   - enabled channel is `acoustic_temperature_source`;
+  - split trials into `surface_only`, `early_isw_only` and `full`;
   - TE may respond through temperature only;
   - EE, visibility, recombination, primordial spectrum and lensing remain frozen;
   - report as controlled trial, not a full native-Z4 verdict.
+- [ ] Interpret acoustic-driving trial result:
+  - current best controlled response is `early_isw_only` at `lambda_Z4=-0.01`;
+  - `delta_chi2_total_available ~= -7.605`;
+  - `surface_only` is negligible (`~=-3.8e-5`);
+  - no surface/eISW cancellation detected;
+  - high-l TT and high-l TTTEEE both improve on available channels;
+  - EE remains frozen by construction;
+  - next likely gate: `PolarizationSourceDeltaGate` or a tighter TE phase diagnostic;
+  - if high-l explodes, audit acoustic window and Bessel projection convention.
+- [x] Add acoustic phase consistency gate:
+  - refined `early_isw_only` lambda scan around `-0.01`;
+  - TT peak and TE zero-crossing diagnostics;
+  - channel-level Planck chi2 breakdown;
+  - EE and `C_phi_phi` frozen guards;
+  - blocks polarization if the best point is a scan-edge artifact.
+- [x] Run acoustic phase consistency gate:
+  - best refined `lambda_Z4 = -0.008`;
+  - `delta_chi2_total_available ~= -8.414`;
+  - best point is not a scan-edge artifact;
+  - TE phase guard passed;
+  - EE and `C_phi_phi` are frozen by construction;
+  - Planck lensing likelihood moves by `~=-0.98` despite frozen `C_phi_phi`, so keep a subdominant-adapter warning.
+- [ ] Open `PolarizationSourceDeltaGate` only with lensing-adapter warning preserved:
+  - keep recombination and visibility frozen;
+  - open only the quadrupole / `Pi` source response;
+  - do not reinterpret the acoustic phase gate as a full Planck success.
+- [x] Add Planck lensing input-dependence gate:
+  - compare A: `C_phi_phi=GR`, CMB=GR;
+  - B: `C_phi_phi=GR`, CMB acoustic delta;
+  - C: `C_phi_phi` control, CMB=GR;
+  - D: `C_phi_phi` control, CMB acoustic delta;
+  - classify lensing likelihood motion as primary-CMB input dependence, not Z4 lensing.
+- [x] Run Planck lensing input-dependence gate:
+  - B-A primary CMB dependence: `~=-0.980`;
+  - C-A phiphi control: `0`;
+  - D-A combined: `~=-0.980`;
+  - classify the lensing likelihood motion as primary-CMB input dependence.
+- [x] Add polarization source delta gate:
+  - source-level E transfer only;
+  - subchannels: `E_source_projection_only`, `Theta2_quadrupole_response`, `Pi_source_response`, `full_polarization_source`;
+  - keep recombination, visibility, background, `r_s/r_d`, primordial, lensing and slip frozen;
+  - do not allow a Planck polarization trial until a separate trial scaffold is added.
+- [x] Add controlled polarization-source Planck trial:
+  - keep temperature channel fixed at `lambda_ref=-0.008`;
+  - scan polarization subchannels separately;
+  - preserve the lensing input-dependence classification.
+- [ ] Interpret controlled polarization-source Planck trial:
+  - current best subchannel is `Theta2_quadrupole_response`;
+  - best `lambda_E=-0.02`, at scan edge;
+  - incremental polarization gain over temperature-only: `~=-1.079`;
+  - all subchannels prefer the negative scan edge;
+  - keep standalone TE/EE caveat visible;
+  - do not open joint acoustic-polarization consistency until lambda_E normalization is derived or the scan finds a non-edge optimum.
+- [x] Add and run polarization edge phase audit:
+  - extended negative `lambda_E` scan;
+  - best subchannel remains `Theta2_quadrupole_response`;
+  - best `lambda_E=-0.02` is now bracketed, not scan-edge;
+  - incremental gain remains `~=-1.079`;
+  - best-point TE/EE phase guard passes;
+  - TT and `C_phi_phi` are invariant under `lambda_E`;
+  - full extended scan perturbativity fails at large `|lambda_E|`, so only the bracketed best region is interpretable.
+- [x] Add and run acoustic-polarization joint consistency gate:
+  - best point: `lambda_T=-0.008`, `lambda_E=-0.02`;
+  - joint delta chi2: `~=-9.492`;
+  - temperature-only contribution: `~=-8.414`;
+  - polarization-only contribution: `~=-0.912`;
+  - interaction term: `~=-0.166`, small relative to the joint response;
+  - hard TE phase guard passes, but TE/EE residual smoothness guards fail;
+  - `C_phi_phi`, visibility, background, `r_s/r_d` and primordial sectors remain frozen;
+  - verdict: useful coherent-source diagnostic, not promotable to full Planck/native-Z4.
+- [ ] Derive the real `Theta2` tight-coupling closure and TE/EE transport smoothness:
+  - do not continue by widening likelihood scans;
+  - replace effective `Theta2_quadrupole_response` with an action-derived closure.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;
