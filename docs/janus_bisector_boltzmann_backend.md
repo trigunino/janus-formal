@@ -577,6 +577,151 @@ This is the first allowed nonzero-Z4 likelihood path after eligibility:
   `outputs/reports/z4_lensing_shape_delta_trial_spectra/`;
 - execution of likelihood channels is an audit trial, not a success verdict.
 
+## Lensing Component Projection Gate
+
+Current gate: `p0_eft_janus_z4_lensing_component_projection_gate.json`.
+
+This gate splits the eligible Weyl/lensing deformation into three pieces:
+
+- amplitude-only projection;
+- shape-only projection;
+- full amplitude+shape response.
+
+It reports the best available signed `delta_chi2` for each component. If all
+responses are negligible, lensing-only is demoted to a diagnostic/calibration
+channel and the next physical target is a source-level SW/ISW delta.
+
+Current result:
+
+- best amplitude-only response: `delta_chi2 ~= -0.0346`;
+- best shape-only response: `delta_chi2 ~= -0.0266`;
+- best full response: `delta_chi2 ~= -0.0080`;
+- verdict: lensing-only is stable and routed correctly, but observationally
+  negligible as a Planck rescue mechanism.
+
+## SW/ISW Source Delta Gate
+
+Current gate: `p0_eft_janus_z4_swisw_source_delta_gate.json`.
+
+This gate opens the next physical channel without patching spectra directly:
+
+- only `late_ISW_delta` is enabled;
+- `early_ISW_delta` remains disabled;
+- visibility, recombination, acoustic phase, polarization and primordial
+  spectrum deltas remain frozen;
+- lambda-zero identity and small-lambda source continuity are required;
+- official Planck trial remains blocked until a Weyl+late-ISW consistency gate
+  ties the ISW source to the same `Phi+Psi` deformation as lensing.
+
+## Weyl Late-ISW Consistency Gate
+
+Current gate: `p0_eft_janus_z4_weyl_late_isw_consistency_gate.json`.
+
+This gate enforces one shared gravitational deformation:
+
+`X_Z4(k,tau) = delta(Phi + Psi)`.
+
+The lensing kernel must use `X_Z4`; the late-ISW source must use
+`dX_Z4/dtau` times a late-time window. Independent lensing and ISW Weyl deltas
+are forbidden.
+
+Required guards:
+
+- no direct `C_l` patch;
+- no native toy LOS;
+- no early-ISW leakage near recombination/equality;
+- recombination, visibility, acoustic driving and polarization source unchanged;
+- lambda-zero identity and small-lambda continuity.
+
+If this gate passes, the next allowed controlled trial is
+`official_planck_weyl_late_isw_delta_trial`, not a full native-Z4 verdict.
+
+## Official Planck Weyl Late-ISW Delta Trial
+
+Current trial:
+`p0_eft_janus_z4_official_planck_weyl_late_isw_delta_trial.json`.
+
+This is an effective shared-source trial:
+
+- backend is `CAMB-GR + Z4 delta`;
+- enabled channels are `shared_weyl_lensing` and `late_isw_source`;
+- early ISW, acoustic, recombination and polarization deltas are disabled;
+- native toy LOS and full native Z4 solver are not used;
+- execution is a controlled likelihood audit, not a Planck success verdict.
+
+Current verdict:
+
+- best available response: `delta_chi2_total_available ~= -0.0037` at
+  `lambda_Z4 = -0.01`;
+- the shared Weyl+late-ISW channel is coherent but observationally negligible;
+- it is closed as a calibration/diagnostic channel, not as a Planck rescue
+  channel.
+
+## Metric Potential Split Gate
+
+Current gate:
+`p0_eft_janus_z4_metric_potential_split_gate.json`.
+
+Before opening early-ISW or acoustic driving, the Weyl delta must be split into
+metric potentials explicitly:
+
+- `X_Z4 = delta(Phi + Psi)`;
+- `deltaSlip_Z4 = delta(Phi - Psi)`;
+- `deltaPhi = (X_Z4 + deltaSlip_Z4) / 2`;
+- `deltaPsi = (X_Z4 - deltaSlip_Z4) / 2`.
+
+Required guards:
+
+- no direct `C_l` patch;
+- no native toy LOS;
+- no independent hidden `Phi` or `Psi` source;
+- preserve `deltaPhi + deltaPsi = X_Z4`;
+- tag the slip source explicitly;
+- use `eta = Phi/Psi` only as a guarded diagnostic, never as a primary variable;
+- recombination, visibility, acoustic, polarization and primordial deltas remain
+  disabled.
+
+This gate may allow an acoustic-driving gate. It does not allow an official
+Planck verdict by itself.
+
+## Acoustic Driving Delta Gate
+
+Current gate:
+`p0_eft_janus_z4_acoustic_driving_delta_gate.json`.
+
+This is the first pre-recombination source-level Z4 gate. It uses only the
+explicit metric split from `MetricPotentialSplitGate`:
+
+- `deltaPhi_Z4`;
+- `deltaPsi_Z4`;
+- their time derivatives.
+
+Allowed source:
+
+`deltaS_T,Z4 = W_acoustic(tau) * [g(tau) deltaPsi_Z4 + exp(-kappa) *
+(deltaPhiDot_Z4 + deltaPsiDot_Z4)]`.
+
+Frozen sectors:
+
+- recombination;
+- visibility;
+- background projection;
+- sound horizon `r_s`;
+- drag horizon `r_d`;
+- primordial spectrum;
+- polarization source;
+- lensing `C_phi_phi`.
+
+Expected first-pass behavior:
+
+- TT may respond;
+- TE may respond through the modified temperature transfer;
+- EE remains unchanged;
+- late ISW leakage is forbidden.
+
+The gate uses internal response diagnostics for continuity and phase checks. It
+does not run official Planck likelihoods and is not a full native-Z4 verdict.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

@@ -115,6 +115,52 @@
   - uses only the eligible shape channel;
   - records band responses and optional official likelihood rows;
   - keeps trial execution separate from Planck success.
+- [x] Add lensing component projection gate:
+  - separates amplitude-only, shape-only and full `C_L^phiphi` deltas;
+  - measures available Planck response per component;
+  - demotes lensing-only if all component responses remain negligible.
+  - result: best available `delta_chi2` is still negligible
+    (`amplitude_only ~ -0.0346`, `shape_only ~ -0.0266`, `full ~ -0.0080`);
+    lensing-only is diagnostic/calibration, not a Planck rescue channel.
+- [x] Add late-ISW source delta gate:
+  - source-level only, no direct `C_l` patch;
+  - late ISW enabled, early ISW disabled;
+  - recombination, visibility, acoustic phase, polarization and primordial
+    spectrum deltas remain frozen;
+  - Planck trial remains blocked until Weyl+late-ISW consistency is derived.
+- [x] Add Weyl+late-ISW consistency gate:
+  - one shared `X_Z4(k,tau)=delta(Phi+Psi)`;
+  - lensing kernel uses `X_Z4`;
+  - late ISW source uses `dX_Z4/dtau` with a late-time window;
+  - independent lensing/ISW Weyl patches are forbidden;
+  - recombination, visibility, acoustic phase and polarization remain unchanged;
+  - controlled Weyl+late-ISW Planck trial is allowed only after this gate.
+- [x] Add official Weyl+late-ISW trial scaffold:
+  - uses shared Weyl/lensing plus late-ISW source;
+  - early ISW, acoustic, recombination and polarization deltas are disabled;
+  - exports signed lambda spectra and optional Planck likelihood rows;
+  - remains an effective trial, not a full native-Z4 verdict.
+- [x] Close Weyl+late-ISW as diagnostic only:
+  - best available response is `delta_chi2 ~= -0.0037` at `lambda_Z4=-0.01`;
+  - the channel is coherent but observationally negligible;
+  - do not rescue Planck by increasing lambda outside the controlled small-delta regime.
+- [x] Add metric-potential split gate:
+  - preserve `X_Z4 = delta(Phi+Psi)`;
+  - define explicit `deltaSlip_Z4 = delta(Phi-Psi)`;
+  - reconstruct `deltaPhi` and `deltaPsi` without independent hidden sources;
+  - keep eta and mu/Sigma as guarded diagnostics, not primary variables;
+  - keep acoustic, recombination, visibility, polarization and primordial deltas disabled.
+- [x] Add acoustic-driving delta gate after metric split:
+  - use explicit `deltaPhi` and `deltaPsi`;
+  - allow only early-ISW/acoustic gravitational driving;
+  - keep recombination, visibility, `r_s`, `r_d`, background projection and primordial spectrum frozen;
+  - report TT peak shifts, TE zero crossings, EE peak shifts and early-ISW response.
+- [ ] Add official acoustic-driving Planck trial:
+  - backend remains `CAMB-GR + Z4 delta`;
+  - enabled channel is `acoustic_temperature_source`;
+  - TE may respond through temperature only;
+  - EE, visibility, recombination, primordial spectrum and lensing remain frozen;
+  - report as controlled trial, not a full native-Z4 verdict.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;
