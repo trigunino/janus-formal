@@ -9,10 +9,20 @@ from cobaya.input import update_info
 from cobaya.model import get_model
 
 
-REPORT_PATH = Path("outputs/reports/p0_eft_janus_z4_official_planck_highl_gate.md")
-JSON_PATH = Path("outputs/reports/p0_eft_janus_z4_official_planck_highl_gate.json")
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "src"))
+
+from scripts.build_p0_eft_janus_z4_integrated_negative_imprint_branch import SPECTRA_PATH, write_reports as write_branch
+
+
+REPORT_PATH = Path("outputs/reports/p0_eft_janus_z4_integrated_negative_imprint_planck_gate.md")
+JSON_PATH = Path("outputs/reports/p0_eft_janus_z4_integrated_negative_imprint_planck_gate.json")
 
 LIKELIHOODS = {
+    "lowl_TT": "planck_2018_lowl.TT",
+    "lowl_EE": "planck_2018_lowl.EE",
+    "lensing": "planck_2018_lensing.clik",
     "highl_TT": "planck_2018_highl_plik.TT",
     "highl_TE": "planck_2018_highl_plik.TE",
     "highl_EE": "planck_2018_highl_plik.EE",
@@ -21,8 +31,14 @@ LIKELIHOODS = {
 
 
 def _base_info(component: str) -> dict:
+    if not SPECTRA_PATH.exists():
+        write_branch()
     return {
-        "theory": {"janus_lab.z4_cmb_cobaya.JanusZ4NativeBoltzmann": {}},
+        "theory": {
+            "janus_lab.z4_cmb_cobaya.JanusZ4NativeBoltzmann": {
+                "spectra_path": str(SPECTRA_PATH),
+            }
+        },
         "likelihood": {component: None},
         "params": {
             "janus_dummy": {"value": 0.0},
@@ -43,14 +59,14 @@ def _reference_point(info: dict) -> dict[str, float]:
         if "loc" in ref:
             point[name] = float(ref["loc"])
         elif "min" in spec["prior"] and "max" in spec["prior"]:
-            point[name] = 0.5 * (float(spec["prior"]["min"]) + float(spec["prior"]["max"]))
+            point[name] = 0.5 * (float(spec["prior"]["min"]) + float(spec["prior"]["max"])
+                                 )
         else:
             point[name] = 0.0
     return point
 
 
-def run_likelihood(component: str) -> dict:
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+def run_likelihood(name: str, component: str) -> dict:
     info = _base_info(component)
     try:
         point = _reference_point(info)
@@ -59,6 +75,7 @@ def run_likelihood(component: str) -> dict:
         loglike = float(loglikes[0])
         chi2 = -2.0 * loglike if math.isfinite(loglike) else math.inf
         return {
+            "name": name,
             "component": component,
             "executed": True,
             "sampled_nuisance_count": len(point),
@@ -68,8 +85,9 @@ def run_likelihood(component: str) -> dict:
             "derived": [float(value) for value in derived],
             "error": None,
         }
-    except Exception as exc:  # pragma: no cover - reported as audit data
+    except Exception as exc:  # pragma: no cover
         return {
+            "name": name,
             "component": component,
             "executed": False,
             "sampled_nuisance_count": 0,
@@ -82,26 +100,30 @@ def run_likelihood(component: str) -> dict:
 
 
 def build_payload() -> dict:
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-    from janus_lab.z4_cmb_cobaya import DEFAULT_SPECTRA
-
-    channels = {name: run_likelihood(component) for name, component in LIKELIHOODS.items()}
+    channels = {name: run_likelihood(name, component) for name, component in LIKELIHOODS.items()}
     executed = [row for row in channels.values() if row["executed"]]
     finite = [row for row in executed if row["finite"]]
+    finite_chi2 = {name: row["chi2"] for name, row in channels.items() if row["finite"]}
+    total_finite_chi2 = float(sum(finite_chi2.values())) if finite_chi2 else math.inf
     worst = max(finite, key=lambda row: row["chi2"], default=None)
     return {
-        "status": "janus-z4-official-planck-highl-gate",
-        "channels": channels,
-        "official_planck_highl_executed": bool(executed),
-        "official_planck_highl_channels_executed": len(executed),
-        "official_planck_highl_channels_finite": len(finite),
-        "worst_finite_channel": worst["component"] if worst else None,
-        "safe_gr_baseline_provider_used": "camb_gr_baseline" in str(DEFAULT_SPECTRA),
-        "default_provider_spectra_path": str(DEFAULT_SPECTRA),
-        "toy_native_source_engine_used": False,
-        "observational_planck_gate_passed": False,
+        "status": "janus-z4-integrated-negative-imprint-planck-gate",
+        "spectra_path": str(SPECTRA_PATH),
+        "compressed_lcdm_parameters_used": False,
         "legacy_camb_fork_required": False,
-        "verdict": "Official high-l Plik likelihoods are wired to the safe GR-baseline provider at fixed nuisance refs.",
+        "official_planck_likelihood_executed": bool(executed),
+        "channels_executed": len(executed),
+        "channels_finite": len(finite),
+        "channels": channels,
+        "finite_channel_chi2": finite_chi2,
+        "total_finite_chi2": total_finite_chi2,
+        "worst_finite_channel": worst["name"] if worst else None,
+        "observational_planck_gate_passed": False,
+        "verdict": (
+            "Dedicated official-gate measurement for the integrated controlled-geometric plus "
+            "negative-sector jeans_blue imprint branch. This reports the likelihood response only; "
+            "it does not declare Planck validation."
+        ),
     }
 
 
@@ -110,14 +132,15 @@ def write_reports() -> dict:
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     lines = [
-        "# Janus Z4 Official Planck High-l Gate",
+        "# Janus Z4 Integrated Negative Imprint Planck Gate",
         "",
         f"Status: `{payload['status']}`",
-        f"Executed channels: `{payload['official_planck_highl_channels_executed']}`",
-        f"Finite channels: `{payload['official_planck_highl_channels_finite']}`",
+        f"Spectra path: `{payload['spectra_path']}`",
+        f"Official Planck likelihood executed: `{payload['official_planck_likelihood_executed']}`",
+        f"Channels finite: `{payload['channels_finite']}`",
+        f"Total finite chi2: `{payload['total_finite_chi2']}`",
         f"Worst finite channel: `{payload['worst_finite_channel']}`",
-        f"Safe GR baseline provider used: `{payload['safe_gr_baseline_provider_used']}`",
-        f"Toy native source engine used: `{payload['toy_native_source_engine_used']}`",
+        f"Observational Planck gate passed: `{payload['observational_planck_gate_passed']}`",
         "",
         "## Channels",
     ]

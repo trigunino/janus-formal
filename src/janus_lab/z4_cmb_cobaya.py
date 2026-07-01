@@ -9,16 +9,22 @@ from cobaya.likelihood import Likelihood
 from cobaya.theories.cosmo import BoltzmannBase
 
 
-DEFAULT_SPECTRA = Path("outputs/reports/p0_eft_janus_z4_native_cmb_transfer_spectra.csv")
+DEFAULT_SPECTRA = Path("outputs/reports/p0_eft_janus_z4_camb_gr_baseline_spectra.csv")
+TOY_NATIVE_SPECTRA = Path("outputs/reports/p0_eft_janus_z4_native_cmb_transfer_spectra.csv")
 
 
 class JanusZ4NativeBoltzmann(BoltzmannBase):
     spectra_path: str = str(DEFAULT_SPECTRA)
     pp_calibration_target: float = 1.0e-7
+    calibrate_internal_units: bool = False
     extra_args: dict[str, Any] = {}
 
     def initialize(self) -> None:
-        self._cls = self._load_cls(Path(self.spectra_path), self.pp_calibration_target)
+        self._cls = self._load_cls(
+            Path(self.spectra_path),
+            self.pp_calibration_target,
+            self.calibrate_internal_units,
+        )
 
     def initialize_with_params(self) -> None:
         if not hasattr(self, "_cls"):
@@ -47,17 +53,17 @@ class JanusZ4NativeBoltzmann(BoltzmannBase):
         return self.get_Cl(ell_factor=ell_factor, units=units)
 
     @staticmethod
-    def _load_cls(path: Path, pp_calibration_target: float = 1.0e-7) -> dict[str, np.ndarray]:
+    def _load_cls(
+        path: Path,
+        pp_calibration_target: float = 1.0e-7,
+        calibrate_internal_units: bool = False,
+    ) -> dict[str, np.ndarray]:
         if not path.exists():
-            from scripts.build_p0_eft_janus_z4_native_cmb_transfer_solver import write_reports
-
-            write_reports()
+            JanusZ4NativeBoltzmann._write_missing_spectra(path)
         with path.open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         if rows and int(rows[-1]["ell"]) < 2508:
-            from scripts.build_p0_eft_janus_z4_native_cmb_transfer_solver import write_reports
-
-            write_reports()
+            JanusZ4NativeBoltzmann._write_missing_spectra(path)
             with path.open(encoding="utf-8") as handle:
                 rows = list(csv.DictReader(handle))
         sparse_ell = np.array([int(row["ell"]) for row in rows], dtype=float)
@@ -77,7 +83,20 @@ class JanusZ4NativeBoltzmann(BoltzmannBase):
             "bb": np.zeros_like(ell),
             "pp": dense("cl_pp"),
         }
-        return JanusZ4NativeBoltzmann._calibrate_internal_units(cls, pp_calibration_target)
+        if calibrate_internal_units:
+            return JanusZ4NativeBoltzmann._calibrate_internal_units(cls, pp_calibration_target)
+        return cls
+
+    @staticmethod
+    def _write_missing_spectra(path: Path) -> None:
+        if path == DEFAULT_SPECTRA:
+            from scripts.build_p0_eft_janus_z4_camb_gr_baseline_export import write_reports
+        elif path == TOY_NATIVE_SPECTRA:
+            from scripts.build_p0_eft_janus_z4_native_cmb_transfer_solver import write_reports
+        else:
+            from scripts.build_p0_eft_janus_z4_native_cmb_transfer_solver import write_reports
+
+        write_reports()
 
     @staticmethod
     def _calibrate_internal_units(cls: dict[str, np.ndarray], pp_calibration_target: float = 1.0e-7) -> dict[str, np.ndarray]:

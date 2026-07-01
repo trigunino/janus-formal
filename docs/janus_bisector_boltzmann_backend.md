@@ -263,6 +263,29 @@ Minimal backend boundary:
   ratio `10` fixed, uses no continuous fit factor, and finds `jeans_blue` as the
   only promotable TT candidate that does not damage TE/EE. This is still a
   branch-only screen, not a Planck validation.
+- [x] Integrate the controlled geometric branch with the fixed `jeans_blue`
+  negative-sector imprint and export Planck-adapter spectra to `ell=2508`.
+  The dedicated official-gate run rejects this integrated branch
+  (`highl_TTTEEE ~4.09e5`, `highl_TT ~3.49e5`, low-l TT infinite). The imprint
+  is therefore a useful TT-shape diagnostic, not the CMB solution.
+- [x] Add the CMB failure map. It converts the integrated-branch Planck
+  rejection into four derivation obligations: TT acoustic source/damping,
+  low-l SW/ISW regularization, Weyl lensing projection kernel, and the
+  polarization visibility/phase guard. This is now the active CMB to-do map.
+- [x] Derive the leading TT acoustic source and low-l SW/ISW hidden-sector
+  regularization. The symbolic result separates the visible and negative-sector
+  acoustic sources and proves zero residual for hidden ISW cancellation and
+  super-horizon SW compensation. This has not yet been inserted into the active
+  solver.
+- [x] Test the derived TT/SW-ISW terms in a controlled solver branch. The branch
+  is finite and slightly improves shape proxies, but the dedicated official
+  Planck gate worsens relative to the integrated imprint branch
+  (`highl_TTTEEE ~4.09e5`, `highl_TT ~3.49e5`, low-l TT still infinite). The
+  leading-order hidden-source insertion is therefore insufficient.
+- [x] Derive and test mirror-even Weyl / TT clock transport. The symbolic guards
+  close, but the controlled branch worsens low-l TT while only weakly improving
+  the first TT peak; it is not safe for an official gate. Isolated source
+  insertion is not the missing CMB mechanism.
 - [x] Add CMB spectrum assembly target: finite proxy `TT/TE/EE/PP` spectra are
   exported in the Planck adapter shape before physical transfer-function
   spectra are claimed.
@@ -342,6 +365,17 @@ Minimal backend boundary:
 - [x] Add the formal `Janus Z4 CMB Solver` Lean wrapper. It separates
   Z4 architecture readiness from physical Planck readiness, so a complete
   scaffold cannot accidentally imply a validated CMB likelihood.
+- [x] Add the native GR-baseline gate. The solver now has a direct
+  Z4-off/negative-sector-off/torsion-off integrity audit for finite sources,
+  finite spectra, positive auto-spectra and normalized visibility. This is a
+  regression target, not a Planck validation.
+- [x] Add the observable oscilloscope. Active Z4 branches must expose SW,
+  early-ISW, Weyl/lensing and `mu/Sigma/eta` diagnostics before any official
+  CMB gate is interpreted.
+- [x] Add the mirror/recombination roadmap. The next physical block must keep
+  plus/minus photon-baryon states, separate visibility histories and Z4
+  projection at the observable-source level; early collapse to `rho_eff` is
+  explicitly forbidden.
 
 ## Backend Decision Rule
 
@@ -351,3 +385,196 @@ requires multiple projected metric-sector variables with nontrivial
 transport/projection maps, the final validation backend must expose those
 projected degrees of freedom directly before any CMB, BAO or growth result is
 called prediction-ready.
+
+## Native GR Reference Gate
+
+Before any further Z4 correction, the native solver must pass its GR-off
+baseline check against a standard GR Boltzmann solver.
+
+Current gate: `p0_eft_janus_z4_native_gr_reference_gate.json`.
+
+Verdict: failed.
+
+- Reference solver: `CAMB`.
+- Z4 sector: off.
+- Negative sector: off.
+- Torsion: off.
+- Shape-only amplitude fit: enabled per channel.
+- Native GR matches standard GR: `false`.
+- Z4 corrections allowed: `false`.
+- TT first peak shift: `20`.
+- high-TT chi2/dof: `229.0182013456774`.
+- high-TE chi2/dof: `1295.8879821882795`.
+- high-EE chi2/dof: `252.02176544373862`.
+- lensing chi2/dof: `205.8213931365132`.
+
+This means Planck rejection is not yet evidence about Janus/Z4 physics. The
+native GR CMB engine itself must first reproduce a standard GR spectrum.
+
+## Native GR Decomposition Gate
+
+Current gate: `p0_eft_janus_z4_native_gr_decomposition_gate.json`.
+
+Purpose: localize which GR block fails before any Z4 physics is interpreted.
+
+Required decomposition:
+
+- interface sanity: units, `Dl`/`Cl`, ell indexing, TE sign;
+- background geometry: `zstar`, `zdrag`, `rstar`, `rdrag`, `D_M`, `theta_s`,
+  `ell_A`;
+- visibility: normalization, peak and width;
+- fixed-k native sources: `S_T`, `S_E`, `S_ISW`, Weyl proxy;
+- unlensed/proxy TT/TE/EE bands;
+- lensing/phiphi split marker.
+
+Blocking rule: no Janus/Z4 correction, torsion tuning or physical Planck
+interpretation until this native GR decomposition gate is repaired.
+
+## Native GR Acoustic Repair Scan
+
+Current gate: `p0_eft_janus_z4_native_gr_acoustic_repair_scan.json`.
+
+This tests the cheapest possible repair first: an ell/projection warp of the
+native GR spectra against CAMB. If that fails, the mismatch is not just an
+acoustic angular-scale error; the native LOS/source engine itself must be
+repaired.
+
+Current outcome: projection-only repair is insufficient. The next solver task is
+the native GR source engine: TT monopole/Doppler/SW/ISW, TE phase, polarization
+source and visibility transport.
+
+## GR Backend Policy
+
+Current policy: `p0_eft_janus_z4_gr_backend_policy.json`.
+
+Until the native source engine reproduces CAMB in GR/Z4-off mode, CAMB is the
+strict GR reference backend. Native spectra remain useful for diagnostics, but
+not for physical Planck interpretation. Z4 corrections stay blocked unless they
+are implemented as controlled deviations around a verified GR baseline.
+
+Operational rule: the default Cobaya provider path is the CAMB-GR baseline
+export. The old toy native LOS spectra can still be loaded explicitly for
+diagnostics, but they are not the default Planck baseline.
+
+## CAMB GR Baseline Export
+
+Current export: `p0_eft_janus_z4_camb_gr_baseline_spectra.csv`.
+
+The strict GR/Z4-off CAMB spectrum is now exported in the same native schema
+(`ell`, `cl_tt`, `cl_te`, `cl_ee`, `cl_pp`). This gives the CMB pipeline a
+verified GR baseline while preserving the block on the toy LOS source engine.
+
+Current reduction gate: `p0_eft_janus_z4_gr_baseline_reduction_gate.json`.
+
+Outcome: the dominant TT/TE mismatch is removed on the CAMB-backed baseline
+path. This does not repair the toy native source engine; it establishes the
+correct baseline around which future controlled Janus/Z4 deviations must be
+implemented.
+
+## Controlled Z4 Deviation Gate
+
+Current gate: `p0_eft_janus_z4_controlled_deviation_gate.json`.
+
+Allowed backend taxonomy:
+
+- `camb_gr_safe_baseline`: Planck allowed.
+- `native_toy_los_debug`: Planck forbidden.
+- `camb_gr_plus_z4_delta`: Planck allowed only after delta gates pass.
+
+Required invariants:
+
+- `lambda_Z4 = 0` reproduces CAMB-GR in the native schema.
+- raw toy LOS spectra never reach Planck.
+- every Z4 correction is tagged by channel:
+  `delta_weyl_lensing_kernel`, `delta_sw_isw_source`,
+  `delta_acoustic_phase`, `delta_polarization_source`,
+  `delta_background_projection`, `delta_hidden_sector_stress`.
+- spectrum-level deltas are debug-only unless source/transfer coherence is
+  proven.
+
+## Weyl/Lensing Delta Gate
+
+Current gate: `p0_eft_janus_z4_weyl_lensing_delta_gate.json`.
+
+This is the first nonzero internal Z4 delta gate. It is deliberately limited to
+the Weyl/lensing kernel:
+
+- unlensed primary `TT/TE/EE` must remain unchanged;
+- only `C_L^phiphi` may respond;
+- convention is explicitly `C_L^phiphi`, not deflection power and not
+  `L^4 C_L^phiphi`;
+- small-lambda response must be finite, continuous and keep auto-spectra
+  positive;
+- official nonzero-Z4 Planck likelihood remains disabled until a separate
+  remapping/eligibility gate exists.
+
+## Lensed Remapping Response Gate
+
+Current gate: `p0_eft_janus_z4_lensed_remapping_response_gate.json`.
+
+This gate propagates the Weyl/lensing `C_L^phiphi` response through a controlled
+lensed remapping diagnostic:
+
+- input primary spectra are CAMB-GR unlensed/baseline spectra;
+- the only nonzero input delta is the Weyl/lensing `phiphi` response;
+- unlensed `TT/TE/EE` must remain unchanged;
+- lensed `TT/TE/EE` responses must be finite and continuous;
+- TT/EE peak positions and TE zero crossings must not jump for small lambda;
+- a uniform `phiphi` amplitude delta is currently screened by the normalized
+  smoothing diagnostic, so an observable lensing effect requires a shape delta
+  or a more physical remapping kernel;
+- nonzero-Z4 official Planck execution still requires a separate eligibility
+  gate.
+
+## Previous Objective: CMB Primordial Imprint Lock (completed internally)
+
+**Goal:** derive the primordial CMB imprint for Janus-Z4 from a single
+consistent action-to-projection chain, then only after that rerun official
+Planck gates.
+
+### 1) Acoustic source + SW/ISW kernel (hard lock)
+- Derive TT source split from the full Z4 action: monopole + Doppler + ISW +
+  ordinary/non-ordinary SW channels.
+- Derive a single `Phi`/`Psi` source map used by both positive and mirror photon
+  sectors.
+- Enforce low-ℓ SW/ISW regularization so the integrated Sachs-Wolfe tail is
+  finite at recombination crossing.
+
+### 2) Polarization/tight-coupling + visibility lock
+- Derive tight-coupling identity for quadrupole in the Z4-mirror setting,
+  including the parity/transport projector from membrane passage.
+- Couple physical visibility `g(η)` to the action-derived baryon-photon collision
+  kernel (`tau_dot`) instead of proxy fitting factors.
+- Enforce one phase-map for `TT/TE/EE` from recombination to line-of-sight.
+
+### 3) Weyl/lensing + membrane transport kernel (hard lock)
+- Derive the Weyl source and LOS projection kernel in the same sector basis used
+  by `phi/psi` transport, including mirror-evanescent projection.
+- Derive lensing transfer with a non-local kernel that is consistent with the
+  same negative-sector/positive-sector junction used in the visibility model.
+- Close consistency test: TT/EE/TE phase and lensing shape must move together
+  under this kernel; if one channel shifts alone, reject the branch.
+
+### Execution checklist
+- Add symbolic derivations for all three blocks (one theorem per block + one
+  composed lock theorem).
+- Keep official Planck likelihood gates off during derivation; only run once all 3
+  locks are closed.
+- If any block cannot be derived, the correct status is an explicit `status =
+  InProgress`, not a numerical scan result.
+
+### Current status
+- Internal lock report: `p0_eft_janus_z4_primordial_imprint_lock.json`.
+- Current internal status: all three blocks are ready for a non-compressed
+  official Planck gate.
+- Official non-compressed Planck gate has now been rerun on native Z4 spectra.
+  It is rejected:
+  - low-l EE chi2: `411.7839883108354`;
+  - lensing chi2: `2467.356660959575`;
+  - high-l TT chi2: `368244.04651235015`;
+  - high-l TTTEEE chi2: `464491.57901370607`;
+  - low-l TT: rejected/non-finite;
+  - high-l TE/EE standalone clik files: unavailable locally.
+- This means the internal CMB locks are no longer the blocker. The blocker is
+  now physical solver quality: native Z4 spectra are not observationally viable
+  against Planck.

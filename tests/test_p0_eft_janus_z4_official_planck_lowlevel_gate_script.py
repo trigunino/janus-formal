@@ -13,6 +13,8 @@ class P0EFTJanusZ4OfficialPlanckLowLevelGateScriptTests(unittest.TestCase):
         self.assertEqual(set(payload["channels"]), set(LIKELIHOODS))
         self.assertTrue(payload["official_planck_likelihood_executed"])
         self.assertFalse(payload["legacy_camb_fork_required"])
+        self.assertTrue(payload["safe_gr_baseline_provider_used"])
+        self.assertFalse(payload["toy_native_source_engine_used"])
         self.assertFalse(payload["observational_planck_gate_passed"])
         self.assertGreaterEqual(payload["official_planck_channels_executed"], 1)
 
@@ -21,7 +23,7 @@ class P0EFTJanusZ4OfficialPlanckLowLevelGateScriptTests(unittest.TestCase):
 
         self.assertTrue(Path("outputs/reports/p0_eft_janus_z4_official_planck_lowlevel_gate.json").exists())
         self.assertTrue(Path("outputs/reports/p0_eft_janus_z4_official_planck_lowlevel_gate.md").exists())
-        self.assertIn("native Z4 provider", payload["verdict"])
+        self.assertIn("safe GR-baseline provider", payload["verdict"])
 
 
 if __name__ == "__main__":

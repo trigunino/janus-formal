@@ -55,7 +55,11 @@ def build_payload() -> dict:
     ]
     return {
         "status": "janus-z4-official-planck-verdict",
-        "native_z4_spectra_used": True,
+        "native_z4_spectra_used": False,
+        "safe_gr_baseline_provider_used": bool(
+            low.get("safe_gr_baseline_provider_used") and high.get("safe_gr_baseline_provider_used")
+        ),
+        "toy_native_source_engine_used": False,
         "compressed_lcdm_parameters_used": False,
         "legacy_camb_fork_required": False,
         "official_planck_likelihood_executed": (
@@ -66,10 +70,12 @@ def build_payload() -> dict:
         "infinite_or_rejected_channels": infinite,
         "unavailable_channels": unavailable,
         "observational_planck_gate_passed": False,
+        "physical_janus_z4_interpretation_suspended": True,
+        "suspension_reason": "toy native LOS/source engine fails against CAMB; default provider uses safe CAMB-GR baseline",
         "verdict": (
-            "Rejected by current official Planck gates: native Z4 spectra are accepted "
-            "by the Cobaya/Planck interface, but low-l TT, lensing and high-l Plik "
-            "are not observationally viable in the current solver branch."
+            "Rejected numerically by current official Planck gates, but physical "
+            "Janus/Z4 interpretation is suspended because no Janus/Z4 correction "
+            "has been re-enabled on top of the verified GR baseline."
         ),
     }
 
@@ -83,10 +89,14 @@ def write_reports() -> dict:
         "",
         f"Status: `{payload['status']}`",
         f"Native Z4 spectra used: `{payload['native_z4_spectra_used']}`",
+        f"Safe GR baseline provider used: `{payload['safe_gr_baseline_provider_used']}`",
+        f"Toy native source engine used: `{payload['toy_native_source_engine_used']}`",
         f"Compressed LCDM parameters used: `{payload['compressed_lcdm_parameters_used']}`",
         f"Legacy CAMB fork required: `{payload['legacy_camb_fork_required']}`",
         f"Official Planck likelihood executed: `{payload['official_planck_likelihood_executed']}`",
         f"Observational Planck gate passed: `{payload['observational_planck_gate_passed']}`",
+        f"Physical Janus/Z4 interpretation suspended: `{payload['physical_janus_z4_interpretation_suspended']}`",
+        f"Suspension reason: `{payload['suspension_reason']}`",
         "",
         "## Finite Channel Chi2",
     ]

@@ -57,6 +57,9 @@ def run_likelihood(component: str) -> dict:
 
 
 def build_payload() -> dict:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from janus_lab.z4_cmb_cobaya import DEFAULT_SPECTRA
+
     channels = {name: run_likelihood(component) for name, component in LIKELIHOODS.items()}
     executed = [row for row in channels.values() if row["executed"]]
     finite = [row for row in executed if row["finite"]]
@@ -66,11 +69,14 @@ def build_payload() -> dict:
         "official_planck_likelihood_executed": bool(executed),
         "official_planck_channels_executed": len(executed),
         "official_planck_channels_finite": len(finite),
+        "safe_gr_baseline_provider_used": "camb_gr_baseline" in str(DEFAULT_SPECTRA),
+        "default_provider_spectra_path": str(DEFAULT_SPECTRA),
+        "toy_native_source_engine_used": False,
         "observational_planck_gate_passed": False,
         "legacy_camb_fork_required": False,
         "verdict": (
-            "Official low-level Planck likelihoods can consume the native Z4 provider, "
-            "but current spectra do not pass the gate."
+            "Official low-level Planck likelihoods can consume the safe GR-baseline provider, "
+            "but current fixed-reference spectra do not pass the observational gate."
         ),
     }
 
@@ -87,6 +93,8 @@ def write_reports() -> dict:
         f"Channels executed: `{payload['official_planck_channels_executed']}`",
         f"Finite channels: `{payload['official_planck_channels_finite']}`",
         f"Observational Planck gate passed: `{payload['observational_planck_gate_passed']}`",
+        f"Safe GR baseline provider used: `{payload['safe_gr_baseline_provider_used']}`",
+        f"Toy native source engine used: `{payload['toy_native_source_engine_used']}`",
         "",
         "## Channels",
     ]
