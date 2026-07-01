@@ -8,3 +8,6 @@ __pycache__/
 
 data/raw/
 outputs/
+
+# Legacy diagnostic CAMB fork kept local only; Janus Z4 CMB solver is native.
+external/camb_janus_fork/

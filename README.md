@@ -47,9 +47,22 @@ Validation plus large :
 lake build
 ```
 
+Validation CMB/Z4 active :
+
+```bash
+lake build JanusFormal
+python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
+```
+
+`JanusFormal.LegacyCMB` est une archive compile-only des anciens essais
+mono-metriques CAMB/Planck. Ne pas l'utiliser comme validation standard du
+solveur Z4 natif ni comme preuve physique.
+
 ## Organisation utile
 
-- `JanusFormal.lean` importe l'ensemble des modules Lean.
+- `JanusFormal.lean` importe l'ensemble des modules Lean actifs.
+- `JanusFormal/LegacyCMB.lean` regroupe les anciens diagnostics mono-metriques
+  CAMB/Planck. Ils restent hors validation CMB/Z4 standard.
 - `JanusFormal/P0EFT*.lean` contient les verrous formels EFT/topologie.
 - `scripts/build_p0_eft_run*.py` genere les payloads et rapports d'audit.
 - `tests/test_p0_eft_run*.py` verifie les statuts exposes par ces scripts.

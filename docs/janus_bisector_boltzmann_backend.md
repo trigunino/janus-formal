@@ -125,6 +125,134 @@ Minimal backend boundary:
 - [x] Add Planck adapter ready closure: spectrum columns, ell grid, finite
   spectra, covariance contract and dry-run chi2 are validated. Official Planck
   likelihood execution is still not claimed by this closure.
+- [x] Add native Z4 CMB transfer solver: LOS/k/ell integration with spherical
+  Bessel projection, visibility-weighted sources and primordial power now
+  exports finite TT/TE/EE/PP spectra without the legacy CAMB fork.
+- [x] Add Cobaya native provider/channel gate: `JanusZ4NativeBoltzmann` exposes
+  `get_Cl`, and a custom Cobaya likelihood decomposes TT/TE/EE/PP chi2 channels.
+  This is a technical Cobaya bridge, not an official Planck likelihood pass.
+- [x] Add Planck-like channel decomposition for the native Z4 provider:
+  high-l TT/TE/EE, lowE and lensing proxy channels are separated without using
+  compressed LCDM parameters or the legacy CAMB fork. This remains a pre-clik
+  diagnostic until the official Planck likelihood consumes the provider.
+- [x] Add official Planck/Cobaya gates for native Z4 spectra where local
+  likelihood data are available: low-l TT/EE, lensing, high-l TT and high-l
+  TTTEEE execute without compressed LCDM parameters. Current native spectra are
+  rejected; separate high-l TE/EE clik packages are unavailable locally.
+- [x] Add shape-only diagnostic for the native Z4 spectra. The current dominant
+  shape failure is high-l TE, followed by the first TT peak, EE and lensing.
+  Adding finite-width visibility, Silk damping and lensing smoothing improves
+  official high-l/lensing chi2 by orders of magnitude, but Planck still rejects
+  the branch.
+- [x] Add internal unit calibration and acoustic-time correction. The current
+  official Planck verdict remains rejected, but the active native Z4 path now
+  improves high-l TTTEEE to about `3.37e7` and lensing to about `3.05e3`.
+  The remaining blocker is shape physics: missing TT power near the acoustic
+  peak region and incorrect TE phase/source normalization.
+- [x] Replace purely trigonometric acoustic sources with a stable minimal
+  coupled photon-baryon source integrator. This improves the official high-l
+  TTTEEE verdict further to about `1.6e6`, and the internal proxy shows TE is
+  no longer the dominant channel. The remaining blockers are high-l TT shape,
+  low-l TT rejection and lensing normalization/shape.
+- [x] Split the Weyl/lensing source from the acoustic potential source. This is
+  now represented explicitly in the native Z4 solver, but the official lensing
+  chi2 remains around `1.08e4`. The next required change is a real
+  `C_L^{phi phi}` projection kernel and normalization, not another acoustic
+  source tweak.
+- [x] Add an official Planck lensing amplitude diagnostic. Scaling only the
+  native Z4 `C_L^{phi phi}` amplitude from `1e-4` to `1e2` does not solve the
+  lensing gate; the current amplitude is already the best point in that scan.
+  This isolates the blocker to the shape/projection kernel rather than a single
+  missing multiplicative factor.
+- [x] Densify the low/mid-ell grid and calibrate `C_L^{phi phi}` on a median
+  `80 <= L <= 400` anchor instead of a low-L interpolation spike. This improves
+  the official lensing chi2 to about `3.0e3` and high-l TTTEEE to about
+  `4.3e5`. The branch is still rejected, but the remaining error is now a
+  resolvable physical-shape problem rather than a broken adapter or a single
+  amplitude factor.
+- [x] Replace the polarization source with a minimal tight-coupling shear
+  source from `v_b` and `dv_b/deta`. This slightly improves the internal
+  proxy (`~56.8` to `~56.0`) and official lensing (`~3.0e3` to `~2.45e3`), but
+  worsens official high-l TTTEEE (`~4.3e5` to `~5.3e5`). The result is kept as
+  a diagnostic source model, not as an accepted CMB solution.
+- [x] Add a peak/damping diagnostic that separates TT peak phase, TE zero-phase,
+  EE peak phase and high-l TT damping slope. This turns the Planck rejection
+  into explicit acoustic-source obligations instead of a single opaque chi2.
+  Current output exposes large TT/EE peak mismatches, overly steep high-l TT
+  damping and no TE zero crossing in the tested range.
+- [x] Add a polarization-source scan comparing the active tight-coupling shear
+  source, a minimal quadrupole hierarchy candidate and hybrid mixtures. The
+  quadrupole branch restores TE zero crossings and improves lowE proxy, while
+  the active shear branch remains the safer official-gate default. The hybrid
+  scan shows this is not a simple mixing-weight problem; the quadrupole phase
+  and normalization need a derived hierarchy.
+- [x] Replace the scalar E-mode projection with the spin-2 E-mode kernel
+  `sqrt((l+2)(l+1)l(l-1)) j_l(x)/x^2`. This is a physical projection
+  correction, not a fit. Current official gate improves high-l TTTEEE from
+  about `5.3e5` to about `4.6e5` and lowE from about `434` to about `412`, while
+  Planck remains rejected.
+- [x] Add an official E-mode projection-scale scan. Reducing the E projection
+  scale to `0.4` improves high-l TTTEEE further to about `4.3e5`, but this is
+  treated as a diagnostic normalization scan only. The active physical spin-2
+  scale is restored to `1.0`; the remaining blocker is still source phase and
+  hierarchy closure.
+- [x] Add a low-l TT source-component diagnostic. The current low-l TT source is
+  dominated by Sachs-Wolfe auto-power (`~70%`) with substantial ISW auto-power
+  (`~23%`) and large destructive interference. This isolates the low-l TT
+  failure to SW/ISW/source-interference physics rather than the TE/EE
+  polarization branch.
+- [x] Add a scalar-source scan over the Z4 potential horizon scale. Larger
+  scales reduce the lowTT shape proxy slightly (`~4.36` to `~4.21` chi2/dof),
+  but worsen high-l TT peak/damping proxies. This shows the SW/ISW issue is not
+  solved by a scalar-potential scale tweak; the scalar source must be derived so
+  low-l and high-l TT improve together.
+- [x] Add the CMB/Z4 diagnostic master report. It audits the public-shape
+  comparison, dominant pulls, shape-only gate, official Planck gates, lack of
+  compressed LCDM parameters, visibility/Silk/lensing pieces, final verdict and
+  remaining locks in one reproducible artifact.
+- [x] Add physical closure audits for the three remaining CMB/Z4 blockers:
+  polarization hierarchy, scalar SW/ISW closure and Weyl lensing projection.
+  These are symbolic scaffolds only; all three physical-ready flags remain
+  false until the Z4 action/geodesic coefficients are derived.
+- [x] Strengthen those audits with coefficient-level algebraic targets:
+  polarization closes at `c_q=1, c_v=0, c_z4=0`, Weyl lensing closes at
+  `b_G=1, b_W=1, b_D=0, b_X=0`, and scalar SW/ISW now records the conditional
+  `a_S=0, a_B=1` target while leaving `a_P/a_M` to action variation.
+- [x] Add upstream action transport for the CMB/Z4 closure triad:
+  `coefficientsFromFullZ4Action`, `scalarActionDerivedReady` and
+  `sourceCoefficientsDerived` now transport the coefficient targets into the
+  internal physical-closure triad. This does not claim an observational Planck
+  pass; the official gate remains false.
+- [x] Add a post-internal-closure Planck decomposition report. It separates the
+  now-closed internal coefficient triad from the remaining observational shape
+  failures and prioritizes a derived acoustic/polarization phase kernel before
+  any further fitting-style scans.
+- [x] Add the acoustic/polarization phase-kernel scaffold. It isolates
+  monopole, Doppler, quadrupole, E-mode and Z4-free polarization variables and
+  reduces the next physical lock to the tight-coupling identity
+  `Theta2 = k*vb/tau_dot`, without changing the numerical solver.
+- [x] Add the tight-coupling quadrupole identity audit. In the leak-free
+  quadrupole equation, the dominant Thomson limit gives
+  `Theta2 = k*vb/tau_dot` and feeds the phase-kernel residual. This is a
+  symbolic closure only; spectra are not updated by this audit.
+- [x] Add a branch-only phase-kernel application diagnostic. It applies
+  `Theta2 = k*vb/tau_dot` to separate before/after spectra paths, including a
+  visibility/Silk-damped branch with conserved normalization. It measures TE
+  zero crossings, high-l TE shape, TT peak phase and EE shape, and records an
+  integration verdict without changing the native solver or claiming Planck.
+- [x] Add a Z4 parity/Holst polarization mixer diagnostic. It decomposes the
+  source into even/odd parity channels and projects the odd channel by
+  `cos(alpha_H)`. The current branch finds viable TE+EE candidates, with the
+  best diagnostic point at `alpha_H = pi/2`, meaning the odd channel is rotated
+  out of visible E-mode rather than added directly.
+- [x] Add a membrane tetrad-transport diagnostic. It treats the polarization
+  change as post-source Janus memory at `a_sigma=2/3`, applies the Z4
+  quarter-turn `alpha_H=pi/2` to the odd polarization channel, improves TE and
+  EE together, and leaves TT peak phase unchanged. This is still branch-only
+  until official gates are rerun.
+- [x] Add a fixed-geometry CMB idea screen. Without continuous fit factors,
+  E/B-hidden conservation passes, Weyl mirror projection weakly improves
+  lensing shape, and SW/ISW membrane memory fails its low-l TT guard.
 - [x] Add CMB spectrum assembly target: finite proxy `TT/TE/EE/PP` spectra are
   exported in the Planck adapter shape before physical transfer-function
   spectra are claimed.
