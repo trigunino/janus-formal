@@ -526,6 +526,57 @@ lensed remapping diagnostic:
 - nonzero-Z4 official Planck execution still requires a separate eligibility
   gate.
 
+## Lensing Shape Delta Gate
+
+Current gate: `p0_eft_janus_z4_lensing_shape_delta_gate.json`.
+
+This gate separates amplitude-only lensing calibration from an observable
+source-level shape response:
+
+- the previous Weyl/lensing delta is classified as near-uniform amplitude
+  response;
+- the new delta is a non-constant kernel/source-level `C_L^phiphi` response;
+- unlensed `TT/TE/EE` remain unchanged;
+- lambda-zero identity and small-lambda remapping continuity are required;
+- normalized and physical remapping diagnostics are both recorded;
+- nonzero-Z4 official Planck execution remains disabled until a dedicated
+  eligibility gate exists.
+
+## Nonzero-Z4 Planck Eligibility Gate
+
+Current gate: `p0_eft_janus_z4_nonzero_planck_eligibility_gate.json`.
+
+This gate authorizes a first official likelihood call. It is not a Planck
+success verdict.
+
+Required invariants:
+
+- backend is `camb_gr_plus_z4_delta`;
+- native toy LOS is not used and remains Planck-forbidden;
+- `lambda_Z4 = 0` is exactly CAMB-GR for primary, `phiphi` and lensed spectra;
+- only the tagged Weyl/lensing shape channel is enabled;
+- SW/ISW, acoustic phase, polarization, visibility, recombination, primordial
+  and hidden-sector deltas stay disabled;
+- `C_L^phiphi` convention is explicit;
+- small-lambda response is finite, continuous and does not jump peaks or TE
+  zero crossings.
+
+First allowed run name:
+`official_planck_lensing_shape_delta_trial`.
+
+## Official Planck Lensing Shape Delta Trial
+
+Current trial: `p0_eft_janus_z4_official_planck_lensing_shape_delta_trial.json`.
+
+This is the first allowed nonzero-Z4 likelihood path after eligibility:
+
+- lambda grid: `[-1e-2, -1e-3, 0, 1e-3, 1e-2]`;
+- backend stays `CAMB-GR + Weyl/lensing shape delta`;
+- native toy LOS and full native Z4 solver are not used;
+- exported spectra are per-lambda CSV files under
+  `outputs/reports/z4_lensing_shape_delta_trial_spectra/`;
+- execution of likelihood channels is an audit trial, not a success verdict.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

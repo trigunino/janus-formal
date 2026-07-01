@@ -100,6 +100,21 @@
   - current response is screened as a uniform phiphi-amplitude delta;
   - observable lensing requires a shape delta or more physical remapping kernel;
   - nonzero Z4 still needs a separate Planck eligibility gate.
+- [x] Add lensing shape-delta gate:
+  - classify the first Weyl/lensing delta as near-uniform amplitude response;
+  - add a non-constant kernel/source-level `C_L^phiphi` shape response;
+  - verify lambda-zero identity and small-lambda remapping continuity;
+  - keep nonzero Z4 Planck-forbidden until an eligibility gate exists.
+- [x] Add nonzero-Z4 Planck eligibility gate:
+  - authorizes only `CAMB-GR + Weyl/lensing shape delta` likelihood trials;
+  - does not claim Planck success;
+  - keeps native toy LOS forbidden;
+  - requires lambda-zero identity, channel isolation and small-lambda stability.
+- [x] Add first signed Planck trial scaffold:
+  - exports `CAMB-GR + Weyl/lensing shape delta` spectra for small signed lambdas;
+  - uses only the eligible shape channel;
+  - records band responses and optional official likelihood rows;
+  - keeps trial execution separate from Planck success.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;

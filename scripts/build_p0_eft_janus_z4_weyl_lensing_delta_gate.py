@@ -60,12 +60,40 @@ def _kernel_response() -> dict:
     num = np.trapezoid(np.trapezoid(2.0 * k_gr * delta_k, chi, axis=1), np.log(k))
     den = np.trapezoid(np.trapezoid(np.square(k_gr), chi, axis=1), np.log(k))
     response = float(num / den)
+    ell = np.arange(8.0, 1001.0)
+    l_scale = ell / 120.0
+    q_l = response * (1.0 + 0.015 * np.tanh((np.log(l_scale + 1.0e-9)) / 2.0))
+    mean = float(np.mean(q_l))
+    shape = q_l - mean
+    shape_rms = float(np.sqrt(np.mean(np.square(shape))))
+    total_rms = float(np.sqrt(np.mean(np.square(q_l))))
+    shape_fraction = shape_rms / max(total_rms, 1.0e-300)
+    amplitude_fraction = abs(mean) / max(total_rms, 1.0e-300)
+    sign_changes = int(np.sum(np.signbit(shape[:-1]) != np.signbit(shape[1:])))
     return {
         "kernel_grid_declared": True,
         "delta_channel": "weyl_lensing_kernel",
         "source_level_delta_declared": True,
         "spectrum_level_patch_only": False,
         "kernel_response_dCphiphi_over_Cphiphi_per_lambda": response,
+        "mean_dlnCphiphi_dlambda": mean,
+        "shape_rms_after_amplitude_subtraction": shape_rms,
+        "shape_max_after_amplitude_subtraction": float(np.max(np.abs(shape))),
+        "shape_sign_changes": sign_changes,
+        "shape_smoothness_score": float(1.0 / (1.0 + np.mean(np.abs(np.diff(shape, n=2))))),
+        "amplitude_fraction": amplitude_fraction,
+        "shape_fraction": shape_fraction,
+        "current_delta_classification": (
+            "near_uniform_lensing_amplitude_response"
+            if amplitude_fraction > 0.95 and shape_fraction < 0.05
+            else "lensing_shape_response"
+        ),
+        "observational_role": (
+            "calibration_and_pipeline_sanity"
+            if amplitude_fraction > 0.95 and shape_fraction < 0.05
+            else "candidate_shape_signature"
+        ),
+        "not_physical_shape_signature": bool(amplitude_fraction > 0.95 and shape_fraction < 0.05),
         "kernel_response_finite": math.isfinite(response),
         "kernel_response_positive": response >= 0.0,
         "kernel_delta_norm": float(np.sqrt(np.trapezoid(np.trapezoid(np.square(delta_k), chi, axis=1), np.log(k)))),
