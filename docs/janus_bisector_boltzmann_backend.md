@@ -253,6 +253,16 @@ Minimal backend boundary:
 - [x] Add a fixed-geometry CMB idea screen. Without continuous fit factors,
   E/B-hidden conservation passes, Weyl mirror projection weakly improves
   lensing shape, and SW/ISW membrane memory fails its low-l TT guard.
+- [x] Add a controlled geometric solver branch that combines E/B-hidden
+  membrane transport and Weyl mirror projection. Shape diagnostics improve TE,
+  EE and lensing while leaving TT and lowTT unchanged; this branch is ready for
+  official-gate execution but is not itself a Planck validation.
+- [x] Add a negative-sector primordial imprint diagnostic using the local Janus
+  CMB-paper hypothesis that negative-sector structure can seed visible CMB
+  fluctuations. The diagnostic keeps the scale ratio `100` and light-speed
+  ratio `10` fixed, uses no continuous fit factor, and finds `jeans_blue` as the
+  only promotable TT candidate that does not damage TE/EE. This is still a
+  branch-only screen, not a Planck validation.
 - [x] Add CMB spectrum assembly target: finite proxy `TT/TE/EE/PP` spectra are
   exported in the Planck adapter shape before physical transfer-function
   spectra are claimed.

@@ -22,6 +22,8 @@ INPUTS = {
     "parity_mixer": "p0_eft_janus_z4_parity_polarization_mixer.json",
     "membrane_transport": "p0_eft_janus_z4_membrane_polarization_transport.json",
     "geometric_idea_screen": "p0_eft_janus_z4_geometric_cmb_idea_screen.json",
+    "controlled_geometric_branch": "p0_eft_janus_z4_controlled_geometric_solver_branch.json",
+    "negative_sector_imprint": "p0_eft_janus_negative_sector_cmb_imprint.json",
 }
 
 
@@ -55,6 +57,8 @@ def build_payload() -> dict:
     parity_mixer = reports["parity_mixer"]
     membrane_transport = reports["membrane_transport"]
     geometric_idea_screen = reports["geometric_idea_screen"]
+    controlled_branch = reports["controlled_geometric_branch"]
+    negative_imprint = reports["negative_sector_imprint"]
 
     finite = official.get("finite_channel_chi2", {})
     bands = shape.get("bands", {})
@@ -174,8 +178,33 @@ def build_payload() -> dict:
         "weyl_projection_passes": bool(geometric_idea_screen.get("weyl_lensing_mirror_projection", {}).get("passes")),
         "swisw_memory_passes": bool(geometric_idea_screen.get("swisw_membrane_memory", {}).get("passes")),
     }
+    controlled_branch_status = {
+        "branch_only_diagnostic": bool(controlled_branch.get("branch_only_diagnostic")),
+        "safe_shape_improved": bool(controlled_branch.get("safe_shape_improved")),
+        "solver_numerics_modified": bool(controlled_branch.get("solver_numerics_modified")),
+        "planck_validation_claimed": bool(controlled_branch.get("planck_validation_claimed")),
+        "spectra_path": controlled_branch.get("spectra_path"),
+        "deltas": controlled_branch.get("shape_chi2_per_dof_deltas", {}),
+        "hidden_bb_fraction": controlled_branch.get("hidden_bb_fraction"),
+    }
+    best_negative = negative_imprint.get("best_promotable_candidate") or {}
+    best_negative_deltas = best_negative.get("deltas_vs_controlled_branch", {})
+    negative_imprint_status = {
+        "branch_only_diagnostic": bool(negative_imprint.get("branch_only_diagnostic")),
+        "safe_to_promote": bool(negative_imprint.get("safe_to_promote")),
+        "solver_numerics_modified": bool(negative_imprint.get("solver_numerics_modified")),
+        "planck_validation_claimed": bool(negative_imprint.get("planck_validation_claimed")),
+        "accepted_candidate_count": negative_imprint.get("accepted_candidate_count"),
+        "best_promotable_mode": best_negative.get("mode"),
+        "best_tt_delta": best_negative_deltas.get("highl_TT_peak1"),
+        "best_te_delta": best_negative_deltas.get("highl_TE"),
+        "best_ee_delta": best_negative_deltas.get("highl_EE"),
+    }
 
     next_priority = (
+        "integrate controlled geometric branch plus promotable negative-sector Jeans imprint and run official gates"
+        if controlled_branch_status["safe_shape_improved"] and negative_imprint_status["safe_to_promote"]
+        else
         "integrate Z4 membrane tetrad-transport polarization branch and run official gates"
         if membrane_transport_status["safe_solver_integration_recommended"]
         else
@@ -207,6 +236,8 @@ def build_payload() -> dict:
         "parity_mixer_safe_solver_integration_recommended": parity_mixer_status["safe_solver_integration_recommended"],
         "membrane_transport_safe_solver_integration_recommended": membrane_transport_status["safe_solver_integration_recommended"],
         "geometric_screen_recommended_next_branches": geometric_screen_status["recommended_next_branches"],
+        "controlled_geometric_branch_safe_shape_improved": controlled_branch_status["safe_shape_improved"],
+        "negative_sector_imprint_safe_to_promote": negative_imprint_status["safe_to_promote"],
         "forbidden_shortcut": "do not tune E-mode scale, lensing amplitude, or scalar horizon scale as fitted nuisance parameters",
     }
 
@@ -237,6 +268,8 @@ def build_payload() -> dict:
         "parity_mixer_status": parity_mixer_status,
         "membrane_transport_status": membrane_transport_status,
         "geometric_screen_status": geometric_screen_status,
+        "controlled_geometric_branch_status": controlled_branch_status,
+        "negative_sector_imprint_status": negative_imprint_status,
         "verdict": (
             "Post-closure internal Z4 coefficients are no longer the blocker. "
             "The current CMB failure is observational shape physics: acoustic/polarization phase, "
@@ -282,6 +315,8 @@ def write_reports() -> dict:
         f"- parity mixer safe solver integration recommended: `{payload['next_theory_correction']['parity_mixer_safe_solver_integration_recommended']}`",
         f"- membrane transport safe solver integration recommended: `{payload['next_theory_correction']['membrane_transport_safe_solver_integration_recommended']}`",
         f"- geometric screen recommended branches: `{payload['next_theory_correction']['geometric_screen_recommended_next_branches']}`",
+        f"- controlled geometric branch safe shape improved: `{payload['next_theory_correction']['controlled_geometric_branch_safe_shape_improved']}`",
+        f"- negative-sector imprint safe to promote: `{payload['next_theory_correction']['negative_sector_imprint_safe_to_promote']}`",
         f"- forbidden shortcut: {payload['next_theory_correction']['forbidden_shortcut']}",
         "",
         "## Phase Application Status",
@@ -319,6 +354,22 @@ def write_reports() -> dict:
         f"- E/B hidden passes: `{payload['geometric_screen_status']['eb_hidden_passes']}`",
         f"- Weyl projection passes: `{payload['geometric_screen_status']['weyl_projection_passes']}`",
         f"- SW/ISW memory passes: `{payload['geometric_screen_status']['swisw_memory_passes']}`",
+        "",
+        "## Controlled Geometric Branch",
+        f"- branch-only diagnostic: `{payload['controlled_geometric_branch_status']['branch_only_diagnostic']}`",
+        f"- safe shape improved: `{payload['controlled_geometric_branch_status']['safe_shape_improved']}`",
+        f"- hidden BB fraction: `{payload['controlled_geometric_branch_status']['hidden_bb_fraction']}`",
+        f"- spectra path: `{payload['controlled_geometric_branch_status']['spectra_path']}`",
+        f"- deltas: `{payload['controlled_geometric_branch_status']['deltas']}`",
+        "",
+        "## Negative-Sector Primordial Imprint",
+        f"- branch-only diagnostic: `{payload['negative_sector_imprint_status']['branch_only_diagnostic']}`",
+        f"- safe to promote: `{payload['negative_sector_imprint_status']['safe_to_promote']}`",
+        f"- accepted candidates: `{payload['negative_sector_imprint_status']['accepted_candidate_count']}`",
+        f"- best promotable mode: `{payload['negative_sector_imprint_status']['best_promotable_mode']}`",
+        f"- TT chi2/dof delta: `{payload['negative_sector_imprint_status']['best_tt_delta']}`",
+        f"- TE chi2/dof delta: `{payload['negative_sector_imprint_status']['best_te_delta']}`",
+        f"- EE chi2/dof delta: `{payload['negative_sector_imprint_status']['best_ee_delta']}`",
         "",
         payload["verdict"],
         "",

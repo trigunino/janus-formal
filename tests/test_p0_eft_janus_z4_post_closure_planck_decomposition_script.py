@@ -46,6 +46,16 @@ class P0EFTJanusZ4PostClosurePlanckDecompositionTests(unittest.TestCase):
         self.assertFalse(payload["geometric_screen_status"]["solver_numerics_modified"])
         self.assertFalse(payload["geometric_screen_status"]["planck_validation_claimed"])
         self.assertIsInstance(payload["geometric_screen_status"]["recommended_next_branches"], list)
+        self.assertTrue(payload["controlled_geometric_branch_status"]["branch_only_diagnostic"])
+        self.assertFalse(payload["controlled_geometric_branch_status"]["solver_numerics_modified"])
+        self.assertFalse(payload["controlled_geometric_branch_status"]["planck_validation_claimed"])
+        self.assertIn("highl_TE", payload["controlled_geometric_branch_status"]["deltas"])
+        self.assertTrue(payload["negative_sector_imprint_status"]["branch_only_diagnostic"])
+        self.assertFalse(payload["negative_sector_imprint_status"]["solver_numerics_modified"])
+        self.assertFalse(payload["negative_sector_imprint_status"]["planck_validation_claimed"])
+        self.assertIsInstance(payload["negative_sector_imprint_status"]["safe_to_promote"], bool)
+        self.assertIsInstance(payload["negative_sector_imprint_status"]["accepted_candidate_count"], int)
+        self.assertIn("negative_sector_imprint_safe_to_promote", payload["next_theory_correction"])
 
     def test_report_writer_exports_outputs(self) -> None:
         write_reports()
