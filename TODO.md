@@ -79,7 +79,8 @@
 - [x] Open only a diagnostic v2 likelihood trial gate; no official Planck
   claim or candidate promotion.
 - [x] Add v2 official-likelihood policy gate before any observed wrapper use.
-- [ ] Add v2 observed-wrapper/GR-reference handshake before any observed trial.
+- [x] Add v2 observed-wrapper/GR-reference handshake before any observed trial.
+- [ ] Add v2 no-retuning replay before any observed Planck trial.
 
 ## Priority 1 - Define the bi-sector model
 
