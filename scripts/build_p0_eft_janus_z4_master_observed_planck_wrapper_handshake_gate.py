@@ -36,9 +36,9 @@ def _combined_locator() -> dict:
     }
 
 
-def _simple_component(name: str, wrapper_root: Path, data_root: Path, expected_suffix: str) -> dict:
-    wrapper_py = wrapper_root / f"{name.split('_')[-1]}.py"
-    wrapper_yaml = wrapper_root / f"{name.split('_')[-1]}.yaml"
+def _simple_component(name: str, wrapper_root: Path, data_root: Path, module_stub: str, expected_suffix: str) -> dict:
+    wrapper_py = wrapper_root / f"{module_stub}.py"
+    wrapper_yaml = wrapper_root / f"{module_stub}.yaml"
     matches = sorted(str(path) for path in data_root.rglob(expected_suffix)) if data_root.exists() else []
     return {
         "cobaya_component": name,
@@ -60,9 +60,27 @@ def _component_locators() -> dict:
         "highl_TTTEEE": _combined_locator(),
         "highl_TE": _channel_locator("TE"),
         "highl_EE": _channel_locator("EE"),
-        "lowl_TT": _simple_component("planck_2018_lowl.TT", lowl_root, data_root, "commander_dx12_v3_2_29.clik"),
-        "lowl_EE": _simple_component("planck_2018_lowl.EE", lowl_root, data_root, "simall_100x143_offlike5_EE_Aplanck_B.clik"),
-        "lensing": _simple_component("planck_2018_lensing.clik", lensing_root, data_root, "smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8.clik_lensing"),
+        "lowl_TT": _simple_component(
+            "planck_2018_lowl.TT_clik",
+            lowl_root,
+            data_root,
+            "TT_clik",
+            "commander_dx12_v3_2_29.clik",
+        ),
+        "lowl_EE": _simple_component(
+            "planck_2018_lowl.EE_clik",
+            lowl_root,
+            data_root,
+            "EE_clik",
+            "simall_100x143_offlike5_EE_Aplanck_B.clik",
+        ),
+        "lensing": _simple_component(
+            "planck_2018_lensing.clik",
+            lensing_root,
+            data_root,
+            "clik",
+            "smicadx12_Dec5_ftl_mv2_ndclpp_p_teb_consext8.clik_lensing",
+        ),
     }
 
 

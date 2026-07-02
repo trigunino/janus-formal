@@ -12,6 +12,8 @@ class P0EFTJanusZ4MasterObservedPlanckWrapperHandshakeGateTests(unittest.TestCas
         self.assertFalse(payload["mock_wrappers_allowed"])
         self.assertFalse(payload["fallback_to_internal_pseudo_likelihood_allowed"])
         self.assertIn("highl_TTTEEE", payload["component_availability"])
+        self.assertTrue(payload["observed_planck_wrapper_available"])
+        self.assertFalse(payload["gr_reference_handshake_on_same_wrapper_passed"])
         self.assertFalse(payload["master_candidate_no_retuning_replay"])
         self.assertFalse(payload["official_planck_trial_allowed"])
         self.assertFalse(payload["candidate_promotion_allowed"])

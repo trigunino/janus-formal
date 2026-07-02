@@ -47,6 +47,8 @@
   from any observed Planck run.
 - [x] Add observed Planck wrapper handshake gate only after wrapper, nuisance,
   non-overlap, GR reference, and no-retuning replay policies are explicit.
+- [x] Detect complete observed Planck wrapper coverage for high-l, low-l, and
+  lensing components.
 - [ ] Provide a GR reference handshake report on the same observed Planck
   wrapper before any master no-retuning replay.
 - [ ] Only after an action-derived regularized master shape: run the next
