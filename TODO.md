@@ -39,8 +39,10 @@
 - [x] Add `MasterActionNormalizationGate` to block likelihood handshakes until
   that normalization is derived from the Z4 action, membrane junction terms, or
   orbifold boundary conditions.
-- [ ] Add `MasterLikelihoodHandshakeGate`; no official Planck trial before this
+- [x] Add `MasterLikelihoodHandshakeGate`; no official Planck trial before this
   handshake passes.
+- [ ] Add `MasterDiagnosticLikelihoodTrialGate`; still no candidate promotion
+  without an explicit diagnostic result.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 

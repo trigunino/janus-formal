@@ -93,6 +93,8 @@ Current CMB/Z4 master-equation status:
 - the regularized diagnostic shape report clears the pre-likelihood shape
   lock, while preserving the separate full-action normalization lock;
 - `MasterActionNormalizationGate` allows only the next likelihood handshake;
+- `MasterLikelihoodHandshakeGate` marks diagnostic likelihood input readiness,
+  but still forbids official Planck trial and promotion;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.
