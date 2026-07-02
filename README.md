@@ -100,6 +100,9 @@ Current CMB/Z4 master-equation status:
   claim;
 - `MasterOfficialLikelihoodPolicyGate` blocks observed Planck until wrapper,
   nuisance, non-overlap, GR reference, and no-retuning replay policies exist;
+- `MasterObservedPlanckWrapperHandshakeGate` forbids mocks and pseudo-likelihood
+  fallback; it remains blocked until a GR reference handshake exists on the same
+  observed wrapper;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.

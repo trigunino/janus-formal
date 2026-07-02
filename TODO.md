@@ -45,8 +45,10 @@
   without an explicit diagnostic result.
 - [x] Add official likelihood policy gate separating internal pseudo-likelihood
   from any observed Planck run.
-- [ ] Add observed Planck wrapper handshake gate only after wrapper, nuisance,
+- [x] Add observed Planck wrapper handshake gate only after wrapper, nuisance,
   non-overlap, GR reference, and no-retuning replay policies are explicit.
+- [ ] Provide a GR reference handshake report on the same observed Planck
+  wrapper before any master no-retuning replay.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 
