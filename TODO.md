@@ -402,6 +402,15 @@
   - `lambda_T = 0`, `lambda_E = 0`;
   - `source_of_spectra = regenerated`;
   - cache/provenance manifest includes cosmology, nuisance, lambda, CAMB and backend hashes.
+- [x] Add regenerative GR handshake gate:
+  - `lambda_T = 0`, `lambda_E = 0`, Z4 disabled;
+  - regenerated vector matches the safe CAMB-GR reference;
+  - conventions recorded: `C_l` not `D_l`, lensed CMB spectra, `C_L^phiphi`, TE sign, ell indexing;
+  - likelihood sanity checked by the official wrappers when run in official mode.
+- [x] Add regenerative cache invalidation gate:
+  - changing each standard cosmology parameter changes the cosmology/theory hashes;
+  - spectra change under `omega_b`, `omega_cdm`, `H0`, `tau`, `A_s`, `n_s`;
+  - stale CSV reuse remains forbidden.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

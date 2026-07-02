@@ -118,6 +118,8 @@ def provenance_manifest(
     return {
         "source_of_spectra": source_of_spectra,
         "z4_delta_source": z4_delta_source,
+        "cmb_spectra_kind": "lensed_total",
+        "cl_pp_kind": "C_L_phiphi",
         "theory_vector_hash": _hash_payload({"cosmology": cosmology_dict, "lambda": lambda_dict}),
         "cosmology_hash": _hash_payload(cosmology_dict),
         "nuisance_hash": _hash_payload(nuisance_vector),

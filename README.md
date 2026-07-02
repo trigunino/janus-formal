@@ -186,6 +186,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `lambda_T = lambda_E = 0`;
   - spectra are regenerated from CAMB per cosmology point;
   - provenance/cache hashes are emitted for cosmology, nuisance, lambdas and backend versions.
+- regenerative GR handshake:
+  - regenerated CAMB-GR matches the safe CAMB-GR reference at `lambda_T=lambda_E=0`;
+  - conventions are explicit: `C_l`, lensed CMB spectra, `C_L^phiphi`, TE sign and ell indexing.
+- regenerative cache invalidation:
+  - changing `omega_b`, `omega_cdm`, `H0`, `tau`, `A_s` or `n_s` changes hashes and spectra;
+  - stale CSV reuse is forbidden.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
