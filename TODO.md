@@ -235,6 +235,34 @@
 - [ ] Derive the real `Theta2` tight-coupling closure and TE/EE transport smoothness:
   - do not continue by widening likelihood scans;
   - replace effective `Theta2_quadrupole_response` with an action-derived closure.
+- [x] Add and run `Theta2TightCouplingClosureGate`:
+  - previous status: `source_tagged_effective`;
+  - new status: `tight_coupling_derived_effective`;
+  - `Theta2` depends on `k/kappadot`, velocity/dipole proxy and metric driving;
+  - response vanishes in the strong tight-coupling limit;
+  - response remains regular at the visibility peak;
+  - response is smooth in `k` and `tau`;
+  - full Boltzmann hierarchy remains open.
+- [x] Add and run `TEEETransportSmoothnessGate`:
+  - compares old `source_tagged_effective` transport to the new tight-coupling transport;
+  - TE second-difference ratio new/old: `~=0.900`;
+  - EE second-difference ratio new/old: `~=0.267`;
+  - direct `C_l`, native toy LOS, recombination, visibility, background, `r_s/r_d`, primordial, lensing and slip remain frozen.
+- [ ] Rerun acoustic-polarization joint consistency with `tight_coupling_derived_effective` `Theta2`:
+  - compare old joint result `delta_chi2 ~= -9.492` to new closed-transport result;
+  - require interaction term to remain small;
+  - require TE/EE smoothness to remain improved;
+  - still not a full Planck verdict.
+- [x] Add and run closed-Theta2 acoustic-polarization joint gate:
+  - best point remains `lambda_T=-0.008`, `lambda_E=-0.02`;
+  - new joint delta chi2: `~=-9.199`;
+  - old tagged-source joint delta chi2: `~=-9.492`;
+  - new interaction term: `~=-0.155`;
+  - hard phase, TE smoothness and EE smoothness guards pass;
+  - promote only to `effective_acoustic_polarization_candidate`;
+  - full Planck verdict remains false.
+- [ ] Open Boltzmann hierarchy closure roadmap:
+  - promote `tight_coupling_derived_effective` only after deriving photon multipoles, polarization multipoles, collision terms and free-streaming transition.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;

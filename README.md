@@ -21,6 +21,7 @@ Statut separe par niveau de preuve :
 - `bi_sector_boltzmann_backend_required = Open`
 - `janus_z4_cmb_solver_status = InProgress`
 - `acoustic_polarization_joint_gate_passed = False`
+- `closed_theta2_acoustic_polarization_candidate = True`
 - `full_observational_cosmology_no_fit_ready = False`
 
 Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
@@ -40,8 +41,12 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
 - le dernier gate acoustique/polarisation trouve un meilleur point
   `lambda_T=-0.008`, `lambda_E=-0.02` avec `delta_chi2 ~= -9.49`, mais il ne
   passe pas : les gardes de lissage TE/EE echouent ;
-- prochain verrou CMB : deriver la vraie fermeture tight-coupling `Theta2` et
-  le transport TE/EE, au lieu d'elargir les scans de vraisemblance.
+- la fermeture tight-coupling effective `Theta2` leve ce blocage : le gate
+  ferme donne `delta_chi2 ~= -9.20`, interaction `~=-0.155`, et les gardes
+  TE/EE passent ;
+- statut exact : candidat acoustique/polarisation effectif, pas verdict Planck ;
+- prochain verrou CMB : fermeture complete de la hierarchie Boltzmann photon /
+  polarisation.
 
 Point d'entree principal :
 
@@ -67,6 +72,7 @@ Validation CMB/Z4 active :
 lake build JanusFormal
 python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_joint_consistency_gate_script
+python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_closed_theta2_joint_gate_script
 ```
 
 `JanusFormal.LegacyCMB` est une archive compile-only des anciens essais

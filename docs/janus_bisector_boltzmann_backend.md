@@ -947,6 +947,63 @@ but the joint source is not promotable. The next required derivation is the
 real `Theta2` tight-coupling closure and TE/EE transport smoothness, not another
 likelihood scan.
 
+## Theta2 Tight-Coupling Closure Gate
+
+Current gate:
+`p0_eft_janus_z4_theta2_tight_coupling_closure_gate.json`.
+
+Result:
+
+- previous status: `source_tagged_effective`;
+- new status: `tight_coupling_derived_effective`;
+- `Theta2` is tied to `k/kappadot`, velocity/dipole response and metric driving;
+- it is not an arbitrary function of `ell`;
+- it vanishes in the strong tight-coupling limit;
+- it is regular at the visibility peak;
+- it is smooth in `k` and `tau`;
+- full Boltzmann hierarchy closure remains open.
+
+This is a source-structure closure, not a Planck verdict.
+
+## TE/EE Transport Smoothness Gate
+
+Current gate:
+`p0_eft_janus_z4_teee_transport_smoothness_gate.json`.
+
+Result:
+
+- input status: `tight_coupling_derived_effective`;
+- TE second-difference ratio new/old: `~=0.900`;
+- EE second-difference ratio new/old: `~=0.267`;
+- TE and EE residual smoothness improve relative to the old tagged source;
+- direct `C_l`, native toy LOS, recombination, visibility, background,
+  `r_s/r_d`, primordial, lensing and slip remain frozen.
+
+Next action: rerun the acoustic-polarization joint gate using the closed
+`Theta2` transport and compare against the previous `delta_chi2 ~= -9.492`.
+
+## Closed-Theta2 Acoustic Polarization Joint Gate
+
+Current gate:
+`p0_eft_janus_z4_acoustic_polarization_closed_theta2_joint_gate.json`.
+
+Result:
+
+- `theta2_closure_status = tight_coupling_derived_effective`;
+- best point: `lambda_T = -0.008`, `lambda_E = -0.02`;
+- new joint delta chi2: `~=-9.199`;
+- old tagged-source joint delta chi2: `~=-9.492`;
+- new interaction term: `~=-0.155`;
+- hard phase guard passes;
+- TE smoothness guard passes;
+- EE smoothness guard passes;
+- `C_phi_phi`, visibility, background, `r_s/r_d`, primordial and slip remain frozen.
+
+Conclusion: the closed-Theta2 transport keeps most of the likelihood gain while
+removing the previous TE/EE smoothness blocker. This promotes the channel only
+to `effective_acoustic_polarization_candidate`; it is not a full Planck verdict.
+The next required lock is full photon/polarization Boltzmann hierarchy closure.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single
