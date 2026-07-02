@@ -337,6 +337,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - reports residual after amplitude fit, phase lag and effective transfer rank for density, velocity, shear, Weyl, Theta0, Pi and projection source;
   - current result: no component has independent transfer rank; all tested components are rank-1 / amplitude-rescaling dominated;
   - next required work is minus-sector microphysics, still no spectra or Planck.
+- minus-sector microphysics:
+  - specification gate requires non-amplitude physics and forbids free normalization knobs;
+  - first diagnostic route is a fixed sound-speed/Jeans deformation, still pre-observational and not derived from the full action;
+  - current result: it creates independent transfer rank in some channels but remains carrier-tangent, so no component is promotable.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

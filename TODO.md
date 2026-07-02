@@ -599,6 +599,18 @@
 - [ ] Derive minus-sector microphysics:
   - independent sound speed, pressure, shear/free-streaming, thermal ratio or decoupling law;
   - must preserve conservation/Bianchi and forbid free normalization knobs.
+- [x] Implement `MinusSectorMicrophysicsSpecificationGate`:
+  - declares required non-amplitude mechanisms;
+  - selects sound-speed/Jeans as first route;
+  - forbids amplitude knobs, `rho_eff`, projection-only rescue, spectra and Planck.
+- [x] Implement `MinusSectorSoundSpeedJeansGate`:
+  - tests a fixed Jeans-profile minus-sector deformation;
+  - reports transfer rank and carrier tangency before any observational use.
+- [x] Decide sound-speed/Jeans outcome:
+  - independent transfer rank appears for density/Weyl/Theta0/projection source;
+  - all channels remain carrier-tangent (`parallel_fraction ~= 0.999`);
+  - no component survives `parallel_fraction < 0.7`.
+- [ ] Implement `MinusSectorShearFreeStreamingGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
