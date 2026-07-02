@@ -98,6 +98,8 @@ Current CMB/Z4 master-equation status:
 - `MasterDiagnosticLikelihoodTrialGate` runs only an internal GR-reference
   pseudo-likelihood; it uses no observed Planck data and makes no observational
   claim;
+- `MasterOfficialLikelihoodPolicyGate` blocks observed Planck until wrapper,
+  nuisance, non-overlap, GR reference, and no-retuning replay policies exist;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.
