@@ -27,6 +27,7 @@ Statut separe par niveau de preuve :
 - `planck_likelihood_completeness_candidate_trial_allowed = True`
 - `full_planck_validation_allowed = False`
 - `closed_boltzmann_candidate_robust = True`
+- `standalone_highl_TE_EE_acquired = False`
 - `full_observational_cosmology_no_fit_ready = False`
 
 Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
@@ -61,6 +62,10 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
   Planck complète car les standalone high-l TE/EE restent absents localement ;
 - la robustesse locale du candidat passe : meilleur point non-edge, courbure
   locale détectée, gain conserve sous `lmax`/TCA.
+- le candidat est gelé pour la prochaine validation : pas de retuning, pas de
+  nouveau canal, pas d'ouverture slip/recombinaison/visibilité/miroir/primordial ;
+- prochain verrou externe : acquérir ou raccorder standalone high-l TE/EE, puis
+  tester exactement le même candidat.
 
 Point d'entree principal :
 
@@ -104,6 +109,7 @@ python -m unittest tests.test_p0_eft_janus_z4_photon_polarization_boltzmann_hier
 python -m unittest tests.test_p0_eft_janus_z4_official_planck_closed_boltzmann_acoustic_polarization_trial_script
 python -m unittest tests.test_p0_eft_janus_z4_planck_likelihood_completeness_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_closed_boltzmann_candidate_robustness_gate_script
+python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_acquisition_gate_script
 ```
 
 `JanusFormal.LegacyCMB` est une archive compile-only des anciens essais

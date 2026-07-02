@@ -1085,6 +1085,32 @@ robust under the current effective scalar setup. Do not open new physics before
 the missing Planck likelihood completeness issue is resolved or explicitly
 accepted as a limitation.
 
+## Standalone TE/EE Acquisition Gate
+
+Current gate:
+`p0_eft_janus_z4_standalone_teee_acquisition_gate.json`.
+
+Frozen candidate:
+
+- name: `P0EFTJanusZ4ClosedBoltzmannAcousticPolarizationCandidate`;
+- backend: `camb_gr_plus_z4_delta`;
+- temperature: `early_isw_only`, `lambda_T = -0.008`;
+- polarization: closed photon/polarization Boltzmann hierarchy, `lambda_E = -0.02`;
+- frozen: recombination, visibility, background projection, `r_s/r_d`,
+  primordial spectrum, `C_phi_phi`, slip, mirror/negative-sector Boltzmann, raw
+  native toy LOS.
+
+Result:
+
+- robust available-channel candidate: `true`;
+- standalone high-l TE available: `false`;
+- standalone high-l EE available: `false`;
+- full high-l decomposition trial allowed: `false`;
+- full Planck validation allowed: `false`.
+
+Conclusion: do not open new physics. Acquire or connect standalone high-l TE/EE
+likelihoods, then rerun exactly the same frozen candidate.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

@@ -304,6 +304,20 @@
   - lmax/TCA robustness passes;
   - TE/EE smoothness remains pass;
   - full Planck verdict remains false.
+- [x] Freeze closed-Boltzmann candidate spec:
+  - candidate: `P0EFTJanusZ4ClosedBoltzmannAcousticPolarizationCandidate`;
+  - backend: `camb_gr_plus_z4_delta`;
+  - `lambda_T=-0.008`, `lambda_E=-0.02`;
+  - recombination, visibility, background projection, `r_s/r_d`, primordial spectrum, `C_phi_phi`, slip, mirror sector and raw native toy LOS remain frozen.
+- [x] Add standalone TE/EE acquisition gate:
+  - robust available-channel candidate: true;
+  - standalone high-l TE available: false;
+  - standalone high-l EE available: false;
+  - no parameter retuning or new physics allowed before acquisition;
+  - full high-l decomposition trial remains blocked.
+- [ ] Acquire or connect standalone high-l TE/EE likelihoods:
+  - rerun the same frozen candidate only;
+  - output high-l TT, TE, EE, TTTEEE, low-l TT/EE and lensing deltas separately.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;
