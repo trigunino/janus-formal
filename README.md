@@ -125,9 +125,10 @@ Current CMB/Z4 master-equation status:
   carrier-tangent (`parallel_fraction < 0.7`) before any diagnostic spectra;
 - `MasterRegularizedDiagnosticSpectraV2Gate` serializes GR and GR+Z4-v2
   diagnostic spectra after that projection, but still forbids likelihood use;
+- `MasterDiagnosticShapeReportV2Gate` audits v2 shape stability and explicit
+  non-overlap accounting; it still forbids likelihood evaluation;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until v2 diagnostic spectra are audited under shape/non-overlap
-  accounting.
+  forbidden until the v2 pre-likelihood lock is explicitly cleared.
 
 Point d'entree principal :
 

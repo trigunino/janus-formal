@@ -71,7 +71,8 @@
   before any new observed rerun.
 - [x] Run carrier-tangent projection on the revised source-level master v2.
 - [x] Regenerate v2 diagnostic spectra from the revised master source.
-- [ ] Audit v2 diagnostic spectra shape/non-overlap before any likelihood gate.
+- [x] Audit v2 diagnostic spectra shape/non-overlap before any likelihood gate.
+- [ ] Add/clear the v2 pre-likelihood lock before any observed likelihood gate.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 
