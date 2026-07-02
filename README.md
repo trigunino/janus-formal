@@ -294,6 +294,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - weak surface branch archive:
   - SW-only orthogonal component exists, but physical Doppler-completed branch is not promotable;
   - no Planck trial or candidate promotion is allowed.
+- two-sector Boltzmann variables:
+  - declares explicit `+` and `-` perturbation variables, metrics and Z4 projection/coupling data;
+  - forbids `rho_eff` shortcuts, direct `C_l` patches and raw toy LOS;
+  - requires conservation/Bianchi before spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

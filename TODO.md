@@ -542,7 +542,12 @@
   - SW-only orthogonal component exists;
   - physical Doppler-completed surface is not promotable;
   - Planck trial remains blocked.
-- [ ] Choose next structural channel: two-sector Boltzmann dynamics or normal-mode bimetric slip transport.
+- [x] Open two-sector Boltzmann dynamics:
+  - declares plus/minus perturbation variables explicitly;
+  - forbids `rho_eff`, direct `C_l` patches and raw toy LOS;
+  - keeps Planck and spectra generation blocked.
+- [ ] Implement `TwoSectorConservationBianchiGate`.
+- [ ] Then implement `TwoSectorInitialModeGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
