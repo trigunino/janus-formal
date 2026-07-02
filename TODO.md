@@ -76,8 +76,9 @@
 - [x] Derive/check v2 action normalization before any likelihood handshake.
 - [x] Only after v2 action normalization: run the next likelihood handshake
   gate. No Planck claim before that.
-- [ ] Open only a diagnostic v2 likelihood trial gate; no official Planck
+- [x] Open only a diagnostic v2 likelihood trial gate; no official Planck
   claim or candidate promotion.
+- [ ] Add v2 official-likelihood policy gate before any observed wrapper use.
 
 ## Priority 1 - Define the bi-sector model
 

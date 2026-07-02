@@ -133,8 +133,11 @@ Current CMB/Z4 master-equation status:
   upstream master revision, shared `U_Z4`, and `L_transport = 2/3`;
 - `MasterLikelihoodHandshakeV2Gate` marks v2 diagnostic likelihood input
   readiness while still forbidding likelihood evaluation and Planck trial;
+- `MasterDiagnosticLikelihoodTrialV2Gate` runs only an internal GR-reference
+  pseudo-likelihood diagnostic and makes no observational claim;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until an explicit diagnostic trial gate is opened separately.
+  forbidden until an explicit official-likelihood policy gate is opened and
+  passed separately.
 
 Point d'entree principal :
 
