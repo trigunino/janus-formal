@@ -255,6 +255,9 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - route selected: `boundary_green`;
   - Green kernel is declared but not derived;
   - value-level slip and Planck trials remain blocked until retarded support, normalization and boundary jumps are closed.
+- boundary Green operator closure gate:
+  - operator type selected: `boundary_normal`;
+  - `L_slip_Z4` is declared, but `L_slip_Z4 G = delta`, normalization, homogeneous-mode removal and regularity remain open.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

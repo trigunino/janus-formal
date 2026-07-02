@@ -489,6 +489,10 @@
   - route selected: boundary Green transport;
   - kernel declared but not derived;
   - remains blocked until retarded support, fixed normalization, regularity and boundary jump conditions are closed.
+- [x] Add boundary Green operator closure gate:
+  - operator type selected: `boundary_normal`;
+  - declares `L_slip_Z4 G_slip_Z4 = delta`;
+  - blocks until boundary jumps, normalization, homogeneous-mode removal and regularity are derived.
 - [ ] Derive boundary Green or normal-mode transport from derivative/source slip to value-level `delta_slip_Z4`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
