@@ -24,8 +24,8 @@ structure StandaloneTEEEAcquisitionGate where
 
 def acquisitionReady (g : StandaloneTEEEAcquisitionGate) : Prop :=
   g.robustAvailableChannelCandidate /\
-  Not g.standaloneHighlTEAvailable /\
-  Not g.standaloneHighlEEAvailable /\
+  g.standaloneHighlTEAvailable /\
+  g.standaloneHighlEEAvailable /\
   g.candidateFrozenForNextTrial /\
   g.noParameterRetuning /\
   g.noNewDeltaChannel /\
@@ -45,7 +45,7 @@ theorem ready_implies_acquisition_gate
     g.gatePassed := by
   exact hPolicy h
 
-theorem missing_standalone_teee_blocks_full_decomposition
+theorem acquisition_without_handshake_blocks_full_decomposition
     (g : StandaloneTEEEAcquisitionGate)
     (h : acquisitionReady g) :
     Not g.fullHighlDecompositionTrialAllowed /\ Not g.fullPlanckValidationAllowed := by

@@ -3,6 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+try:
+    from scripts.build_p0_eft_janus_z4_standalone_teee_acquisition_gate import _channel_locator
+except ModuleNotFoundError:
+    from build_p0_eft_janus_z4_standalone_teee_acquisition_gate import _channel_locator
+
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z4_planck_likelihood_completeness_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z4_planck_likelihood_completeness_gate.json")
@@ -31,9 +36,13 @@ def build_payload() -> dict:
     best = trial.get("best_summary", {})
     finite = best.get("finite_channel_chi2", {})
     availability = {name: name in finite for name in EXPECTED_CHANNELS}
+    local_standalone_te = _channel_locator("TE")["available"]
+    local_standalone_ee = _channel_locator("EE")["available"]
     highl_teee_combined = availability["highl_TTTEEE"]
-    standalone_te_ee = availability["highl_TE"] and availability["highl_EE"]
-    full_validation = bool(all(availability.values()) and standalone_te_ee)
+    highl_te_available = bool(availability["highl_TE"] or local_standalone_te)
+    highl_ee_available = bool(availability["highl_EE"] or local_standalone_ee)
+    standalone_te_ee = highl_te_available and highl_ee_available
+    full_validation = False
     candidate_trial_allowed = bool(
         trial.get("boltzmann_closed_effective_z4_cmb_candidate")
         and availability["highl_TTTEEE"]
@@ -51,8 +60,10 @@ def build_payload() -> dict:
         "available_channels": availability,
         "highl_TT_available": availability["highl_TT"],
         "highl_TTTEEE_available": highl_teee_combined,
-        "highl_TE_standalone_available": availability["highl_TE"],
-        "highl_EE_standalone_available": availability["highl_EE"],
+        "highl_TE_standalone_available": highl_te_available,
+        "highl_EE_standalone_available": highl_ee_available,
+        "local_highl_TE_standalone_clik_available": local_standalone_te,
+        "local_highl_EE_standalone_clik_available": local_standalone_ee,
         "low_l_TT_available": availability["lowl_TT"],
         "low_l_EE_available": availability["lowl_EE"],
         "lensing_available": availability["lensing"],
@@ -65,8 +76,10 @@ def build_payload() -> dict:
         "worktree_status_snapshot": worktree_text.splitlines(),
         "planck_likelihood_completeness_gate_passed": candidate_trial_allowed,
         "next_required_action": (
-            "run candidate robustness gate; do not claim full Planck validation"
-            if candidate_trial_allowed and not full_validation
+            "run standalone high-l TE/EE GR handshake; do not claim full Planck validation"
+            if candidate_trial_allowed and standalone_te_ee and not full_validation
+            else "run candidate robustness gate; do not claim full Planck validation"
+            if candidate_trial_allowed
             else "install missing standalone high-l TE/EE likelihoods before full validation"
         ),
     }

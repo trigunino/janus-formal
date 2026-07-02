@@ -315,9 +315,24 @@
   - standalone high-l EE available: false;
   - no parameter retuning or new physics allowed before acquisition;
   - full high-l decomposition trial remains blocked.
-- [ ] Acquire or connect standalone high-l TE/EE likelihoods:
+- [x] Acquire or connect standalone high-l TE/EE likelihoods:
+  - local Cobaya wrappers exist: `planck_2018_highl_plik.TE`, `planck_2018_highl_plik.EE`;
+  - required standalone data are installed locally: `plik_rd12_HM_v22_TE.clik`, `plik_rd12_HM_v22_EE.clik`;
   - rerun the same frozen candidate only;
   - output high-l TT, TE, EE, TTTEEE, low-l TT/EE and lensing deltas separately.
+- [x] Run standalone high-l TE/EE GR reference handshake:
+  - check `C_l/D_l`, units, TE sign, `ell` indexing, nuisance vector, foreground handling, GR reference sanity;
+  - GR/CAMB reference passed for standalone TE/EE;
+  - frozen candidate high-l decomposition trial is now allowed.
+- [x] Run frozen candidate high-l decomposition trial:
+  - no retuning: `lambda_T=-0.008`, `lambda_E=-0.02`;
+  - `delta_chi2_highl_TT = -3.5043`;
+  - `delta_chi2_highl_TE = +0.0412`;
+  - `delta_chi2_highl_EE = -0.2733`;
+  - `delta_chi2_highl_TTTEEE = -4.1114`;
+  - `delta_chi2_lensing = -1.5779`;
+  - `delta_chi2_total = -9.4326`;
+  - full Planck validation remains false.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

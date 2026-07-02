@@ -7,6 +7,7 @@ from pathlib import Path
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z4_standalone_teee_handshake_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z4_standalone_teee_handshake_gate.json")
 ACQUISITION_JSON = Path("outputs/reports/p0_eft_janus_z4_standalone_teee_acquisition_gate.json")
+GR_HANDSHAKE_JSON = Path("outputs/reports/p0_eft_janus_z4_standalone_teee_gr_reference_handshake.json")
 
 
 def _load(path: Path) -> dict:
@@ -15,23 +16,26 @@ def _load(path: Path) -> dict:
 
 def build_payload() -> dict:
     acquisition = _load(ACQUISITION_JSON)
+    gr_handshake = _load(GR_HANDSHAKE_JSON)
     highl_te = bool(acquisition.get("standalone_highl_TE_available"))
     highl_ee = bool(acquisition.get("standalone_highl_EE_available"))
     acquired = bool(highl_te and highl_ee)
     candidate = acquisition.get("candidate_spec_frozen", {})
     convention_checks = {
-        "Cl_vs_Dl_convention_checked": acquired,
-        "units_checked": acquired,
-        "TE_sign_checked": acquired,
-        "ell_indexing_checked": acquired,
-        "nuisance_vector_checked": acquired,
-        "foreground_handling_checked": acquired,
-        "GR_reference_sanity_checked": acquired,
+        "Cl_vs_Dl_convention_checked": bool(acquired and gr_handshake.get("Cl_vs_Dl_convention_checked")),
+        "units_checked": bool(acquired and gr_handshake.get("units_checked")),
+        "TE_sign_checked": bool(acquired and gr_handshake.get("TE_sign_checked")),
+        "ell_indexing_checked": bool(acquired and gr_handshake.get("ell_indexing_checked")),
+        "nuisance_vector_checked": bool(acquired and gr_handshake.get("nuisance_vector_checked")),
+        "foreground_handling_checked": bool(acquired and gr_handshake.get("foreground_handling_checked")),
+        "GR_reference_sanity_checked": bool(acquired and gr_handshake.get("GR_reference_sanity_checked")),
     }
     handshake_passed = bool(acquired and all(convention_checks.values()))
     return {
         "status": "janus-z4-standalone-teee-handshake-gate",
         "source_acquisition_gate": str(ACQUISITION_JSON),
+        "source_gr_reference_handshake": str(GR_HANDSHAKE_JSON),
+        "gr_reference_handshake_report_present": bool(gr_handshake),
         "candidate_spec_frozen": candidate,
         "standalone_highl_TE_available": highl_te,
         "standalone_highl_EE_available": highl_ee,

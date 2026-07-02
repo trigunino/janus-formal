@@ -147,3 +147,15 @@ Le depot exclut volontairement :
 - caches Python
 
 Ces elements sont regenerables localement et ne doivent pas etre pousses.
+
+## Current CMB/Z4 checkpoint
+
+- Standalone high-l TE/EE Cobaya wrappers and `.clik` data are available locally.
+- GR/CAMB standalone TE/EE handshake passes.
+- Frozen candidate high-l decomposition was rerun unchanged:
+  - `lambda_T = -0.008`
+  - `lambda_E = -0.02`
+  - `delta_chi2_total = -9.4326`
+  - `delta_chi2_highl_TE = +0.0412`
+  - `delta_chi2_highl_EE = -0.2733`
+- This is still not a full Planck validation.
