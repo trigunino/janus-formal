@@ -361,6 +361,15 @@
   - TE cost remains small and EE remains non-degraded;
   - candidate status: `nuisance_sensitivity_checked_candidate`;
   - still not a profiled Planck candidate.
+- [x] Run candidate local nuisance profiling gate:
+  - same nuisance space, priors, bounds and optimizer for GR and candidate;
+  - non-overlap combined profiled gain: `-5.1768`;
+  - non-overlap decomposed profiled gain: `-5.9829`;
+  - local profiled gains are favorable;
+  - boundary hits detected for `calib_217T` and `gal545_A_217`;
+  - `local_profiled_nuisance_effective_candidate = false`;
+  - `profiled_planck_candidate = false`;
+  - next blocker: boundary-safe profiling policy.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

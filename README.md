@@ -165,6 +165,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   no global nuisance profiling has been performed.
 - nuisance sensitivity: local symmetric nuisance perturbations preserve the
   non-overlap gains; status `nuisance_sensitivity_checked_candidate`.
+- local nuisance profiling: profiled gains remain favorable
+  (`-5.1768`, `-5.9829`), but nuisance boundary hits are present
+  (`calib_217T`, `gal545_A_217`), so
+  `local_profiled_nuisance_effective_candidate = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
 - This is still not a full Planck validation.
