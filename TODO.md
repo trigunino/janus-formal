@@ -354,6 +354,13 @@
   - EE peak shifts: zero in tested bands;
   - residuals and smoothness scores exported;
   - non-overlap accounting included.
+- [x] Add candidate nuisance sensitivity gate:
+  - `lambda_T=-0.008` and `lambda_E=-0.02` remain frozen;
+  - nuisance perturbations applied symmetrically to GR baseline and candidate;
+  - non-overlap gains survive the tested nuisance grid;
+  - TE cost remains small and EE remains non-degraded;
+  - candidate status: `nuisance_sensitivity_checked_candidate`;
+  - still not a profiled Planck candidate.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

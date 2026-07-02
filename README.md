@@ -163,6 +163,8 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - `planck_highl_decomposed_effective_candidate = True`
 - nuisance/foreground policy: `fixed_nuisance_effective_candidate`;
   no global nuisance profiling has been performed.
+- nuisance sensitivity: local symmetric nuisance perturbations preserve the
+  non-overlap gains; status `nuisance_sensitivity_checked_candidate`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
 - This is still not a full Planck validation.
