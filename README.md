@@ -310,6 +310,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - declares `X' = A_Z4(k,tau) X + S_Z4(k,tau)` over explicit plus/minus state variables;
   - evolves fluid rows, metric constraints and projection rows under Bianchi guards;
   - keeps source regeneration, spectra and Planck blocked until stability/eigenmode checks.
+- two-sector stability/eigenmodes:
+  - checks finite eigenvalues and no explosive real modes over representative `k`;
+  - guards symmetric, antisymmetric Z4, relative isocurvature and projection modes;
+  - allows source-level regeneration only, still no spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
