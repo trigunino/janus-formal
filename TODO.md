@@ -525,7 +525,13 @@
 - [x] Decide whether closed full-surface remains less tangent than no-slip:
   - full-surface parallel fraction is `0.794`, better than no-slip `0.904` but only weakly improved;
   - no Planck trial yet.
-- [ ] Implement `DerivedSlipSurfaceCarrierTangentProjectionGate` or archive weak surface branch.
+- [x] Implement `DerivedSlipSurfaceDopplerDecompositionGate`:
+  - separates SW-only, Doppler-only and full-surface carrier alignment;
+  - confirms Doppler reintroduces tangency.
+- [x] Implement `DerivedSlipSurfaceCarrierTangentProjectionGate`:
+  - classifies the branch as `weak_orthogonal_diagnostic`;
+  - keeps candidate promotion and Planck trial blocked.
+- [ ] Decide whether to derive `DopplerTransportClosureRefinementGate` or archive weak surface branch.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

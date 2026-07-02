@@ -283,6 +283,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - keeps visibility and recombination frozen;
   - closed full-surface response is less tangent than no-slip but only weakly (`parallel_fraction ~= 0.794`);
   - remains pre-Planck and diagnostic-only.
+- surface Doppler decomposition:
+  - SW-only surface remains orthogonal, but Doppler completion reintroduces carrier tangency;
+  - surface branch is classified as `weak_orthogonal_diagnostic`;
+  - no candidate promotion or Planck trial is allowed.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
