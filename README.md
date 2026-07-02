@@ -385,6 +385,13 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - selected internal ansatz: `localized_transition`, `parallel_fraction = 0.176`;
   - regenerates temperature, polarization, lensing, Doppler, Theta0, Pi, slip and minus-sector sources from the same `U_Z4`;
   - still no spectra or Planck.
+- master constraint closure audit:
+  - verifies source-level Doppler, Theta0, Pi, slip, lensing, temperature, polarization and minus-sector relations against the same `U_Z4`;
+  - still no spectra or Planck.
+- master source carrier-tangent replay:
+  - replays the regenerated source-level payload against GR/CAMB carrier tangents;
+  - current result: `parallel_fraction = 0.191`, passing both `<0.7` and `<0.5`;
+  - still no spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

@@ -717,6 +717,17 @@ Required formal gates:
   - regenerates `U_Z4`, `S_T`, `S_E`, `S_lens`, Doppler, Theta0, Pi, slip and minus-sector variables from the selected master ansatz;
   - keeps all sources tied to the same `U_Z4` hash;
   - keeps spectra and Planck blocked.
+- [x] Add `P0EFTJanusZ4MasterConstraintClosureAuditGate`:
+  - closes Doppler/continuity, Theta0, Pi, slip, lensing, temperature, polarization and minus-sector consistency against the same `U_Z4`;
+  - keeps spectra and Planck blocked.
+- [x] Add `P0EFTJanusZ4MasterSourceCarrierTangentReplayGate`:
+  - replays the regenerated source-level payload against GR/CAMB carrier tangents;
+  - verifies whether the source map preserves the `<0.7` carrier threshold;
+  - keeps spectra and Planck blocked.
+- [x] Decide source carrier replay outcome:
+  - regenerated source replay gives `parallel_fraction = 0.191`;
+  - passes `<0.7` and `<0.5`;
+  - next gate may check diagnostic spectra readiness, but Planck remains blocked.
 
 Completion rule:
 - [x] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
