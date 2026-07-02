@@ -704,10 +704,22 @@ Required formal gates:
   - dominant carrier direction is `tau`;
   - current master diagnostic ansatz does not beat archived patchwork branches;
   - no spectra or Planck trial is allowed.
-- [ ] Revise the unique Z4 master ansatz before any source-level regeneration gate.
+- [x] Add `P0EFTJanusZ4MasterAnsatzRevisionScanGate`:
+  - scans internal non-observational master ansatz shapes;
+  - reports best carrier-tangent projection;
+  - keeps lambda retuning, spectra, Planck and promotion blocked.
+- [x] Decide revised master ansatz outcome:
+  - best ansatz is `localized_transition`;
+  - `parallel_fraction = 0.176`;
+  - passes both `<0.7` and `<0.5` internal carrier-tangent thresholds;
+  - still no spectra or Planck.
+- [x] Add `P0EFTJanusZ4MasterSourceLevelRegenerationGate`:
+  - regenerates `U_Z4`, `S_T`, `S_E`, `S_lens`, Doppler, Theta0, Pi, slip and minus-sector variables from the selected master ansatz;
+  - keeps all sources tied to the same `U_Z4` hash;
+  - keeps spectra and Planck blocked.
 
 Completion rule:
-- [ ] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
+- [x] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
 - [ ] Only after that, consider observational gates.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;

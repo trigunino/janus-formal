@@ -378,6 +378,13 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - projects the single-`U_Z4` diagnostic signal against GR/CAMB carrier tangents;
   - current first ansatz result: `parallel_fraction = 0.9973`, dominant tangent `tau`;
   - keeps spectra and Planck blocked; current ansatz must be revised before source-level regeneration.
+- master ansatz revision scan:
+  - scans internal candidate shapes for the unique `U_Z4` generator;
+  - this is not an observational fit and keeps lambda retuning, spectra and Planck blocked.
+- master source-level regeneration:
+  - selected internal ansatz: `localized_transition`, `parallel_fraction = 0.176`;
+  - regenerates temperature, polarization, lensing, Doppler, Theta0, Pi, slip and minus-sector sources from the same `U_Z4`;
+  - still no spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
