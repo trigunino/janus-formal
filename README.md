@@ -106,6 +106,9 @@ Current CMB/Z4 master-equation status:
   detected locally;
 - the same-wrapper GR reference handshake is declared separately and performs
   no Z4 candidate replay;
+- `MasterNoRetuningReplayGate` replays the fixed master source with
+  `L_transport = a_sigma = 2/3`; no lambda, normalization, or channel retuning
+  is allowed;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.

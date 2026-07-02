@@ -51,8 +51,11 @@
   lensing components.
 - [x] Provide a GR reference handshake report on the same observed Planck
   wrapper before any master no-retuning replay.
-- [ ] Re-run `MasterObservedPlanckWrapperHandshakeGate` after the GR report and
-  then add `MasterNoRetuningReplayGate`.
+- [x] Re-run `MasterObservedPlanckWrapperHandshakeGate` after the GR report.
+- [x] Add `MasterNoRetuningReplayGate`; master source hash and
+  `L_transport = a_sigma = 2/3` remain frozen.
+- [ ] Add observed Planck diagnostic trial gate. No promotion without a clean
+  non-overlap result.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 
