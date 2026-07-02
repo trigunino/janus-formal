@@ -378,6 +378,18 @@
   - `boundary_safe_local_profiled_candidate = true`;
   - `profiled_planck_candidate = false`;
   - `full_planck_validation = false`.
+- [x] Add candidate cosmology parameter policy gate:
+  - standard cosmology parameters are fixed in the current spectra-table backend;
+  - `lambda_policy = frozen_from_candidate_spec_after_internal_trials`;
+  - no lambda retuning and no new Z4 physics;
+  - policy gate passes as a documentation/guard rail.
+- [x] Add candidate local cosmology profiling gate:
+  - same cosmology/prior/optimizer rule is required for GR and candidate;
+  - local cosmology profiling is intentionally blocked;
+  - blocker: current backend consumes fixed spectra tables and cannot regenerate spectra under `omega_b/omega_cdm/H0/tau/As/ns` shifts;
+  - `local_cosmology_profiled_candidate = false`;
+  - `profiled_planck_candidate = false`;
+  - `full_planck_validation = false`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

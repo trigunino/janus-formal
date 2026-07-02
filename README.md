@@ -174,6 +174,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `boundary_guarded`: `(-5.7058`, `-6.5223`) for combined/decomposed bases;
   - `problem_nuisances_fixed`: `(-13.1561`, `-12.0977`);
   - `boundary_safe_local_profiled_candidate = True`.
+- cosmology parameter policy:
+  - standard cosmology parameters are fixed in the current spectra-table backend;
+  - `lambda_policy = frozen_from_candidate_spec_after_internal_trials`;
+  - local cosmology profiling is blocked until a regenerating CAMB/Z4 backend exists.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
