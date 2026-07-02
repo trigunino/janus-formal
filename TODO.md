@@ -431,9 +431,13 @@
   - source objects `W_acoustic`, `exp(-kappa)`, `deltaPhiDot+deltaPsiDot`, time grid and projection grid are regenerated per cosmology;
   - `delta_S_T_Z4_regenerated_per_cosmology = true` for the frozen `early_isw_only` temperature channel;
   - local cosmology profiling remains blocked until polarization/Pi source regeneration and strict replay pass.
+- [x] Add regenerative polarization Pi source gate:
+  - source objects `Theta_l`, `E_l`, `Pi_source_Z4`, TCA switch, opacity grid and time grid are regenerated per cosmology;
+  - `Pi_source_Z4` is derived from multipoles, with no free `Theta2` tag and no direct TE/EE patch;
+  - local cosmology profiling remains blocked until strict source-level replay passes.
 - [x] Add local cosmology profiling readiness gate:
   - GR handshake, cache invalidation, frozen replay and effective deltas are green;
-  - source-level Z4 delta regeneration remains false;
+  - strict source-level replay remains false;
   - readiness remains red and profiling remains forbidden.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;

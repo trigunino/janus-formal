@@ -198,13 +198,16 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `z4_delta_source = reference_cosmology_replay`, so cosmology profiling remains blocked.
 - regenerative Z4 delta per cosmology:
   - effective closed-Boltzmann spectral deltas regenerate with cosmology;
-  - strict source-level Z4/Pi regeneration is still open, so local cosmology profiling remains blocked.
+  - strict source-level replay is still open, so local cosmology profiling remains blocked.
 - source-level/readiness gates:
-  - `delta_S_T_Z4` and `Pi_source_Z4` are not yet regenerated per cosmology;
-  - `LocalCosmologyProfilingReadinessGate` remains red until source-level regeneration closes.
+  - `delta_S_T_Z4` and `Pi_source_Z4` now regenerate per cosmology;
+  - `LocalCosmologyProfilingReadinessGate` remains red until strict source-level replay closes.
 - regenerative temperature source delta:
   - `delta_S_T_Z4` now regenerates per cosmology for the frozen `early_isw_only` temperature channel;
-  - polarization/Pi source-level regeneration remains open.
+  - temperature remains source-level, not a direct `C_l` patch.
+- regenerative polarization Pi source:
+  - `Theta_l`, `E_l`, `Pi_source_Z4`, TCA and opacity objects now regenerate per cosmology;
+  - `Pi_source_Z4` is derived from multipoles, with no free `Theta2` tag and no direct TE/EE patch.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
