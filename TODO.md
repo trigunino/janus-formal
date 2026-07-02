@@ -343,6 +343,17 @@
   - standalone TE cost is small: `+0.0412`;
   - standalone EE improves: `-0.2733`;
   - full Planck validation remains false.
+- [x] Add candidate nuisance/foreground policy gate:
+  - same nuisance vector counts for baseline and candidate;
+  - foreground/calibration parameters are declared by clik wrappers;
+  - no global nuisance profiling yet;
+  - candidate status: `fixed_nuisance_effective_candidate`.
+- [x] Add high-l residual diagnostic report:
+  - TT peak shifts: zero in tested bands;
+  - TE zero shifts: zero in tested bands;
+  - EE peak shifts: zero in tested bands;
+  - residuals and smoothness scores exported;
+  - non-overlap accounting included.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

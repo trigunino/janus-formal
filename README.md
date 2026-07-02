@@ -161,4 +161,8 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `delta_chi2_highl_TE = +0.0412`
   - `delta_chi2_highl_EE = -0.2733`
 - `planck_highl_decomposed_effective_candidate = True`
+- nuisance/foreground policy: `fixed_nuisance_effective_candidate`;
+  no global nuisance profiling has been performed.
+- residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
+  zero in the tested high-l bands.
 - This is still not a full Planck validation.
