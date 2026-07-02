@@ -345,6 +345,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - declares `sigma_minus` and an `F_l_minus` hierarchy;
   - audits shear-only, free-streaming-only, Weyl anisotropic stress, Pi response and full channel before any spectra;
   - current result: independent rank appears in anisotropic/Pi/full channels, but all remain carrier-tangent.
+- minus-sector thermal ratio:
+  - tests a fixed `T_minus/T_plus` route through pressure, damping, decoupling proxy and Pi response;
+  - current result: independent rank appears, but all channels remain carrier-tangent.
+- minus-sector decoupling law:
+  - blocks further progress until a derived minus-sector visibility, opacity, drag epoch or recombination law exists;
+  - forbids free decoupling shifts and visibility patches.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

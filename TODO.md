@@ -618,7 +618,18 @@
   - Weyl anisotropic stress, Pi response and full channel get independent rank;
   - all remain carrier-tangent (`parallel_fraction ~= 0.998-0.999`);
   - no component survives `parallel_fraction < 0.7`.
-- [ ] Implement `MinusSectorThermalRatioGate`.
+- [x] Implement `MinusSectorThermalRatioGate`:
+  - tests fixed `xi_T = T_minus / T_plus`;
+  - audits thermal density, pressure, damping, decoupling proxy, Pi response and full channel;
+  - keeps free thermal-ratio fitting, spectra and Planck blocked.
+- [x] Decide thermal-ratio outcome:
+  - independent transfer rank appears in several channels;
+  - all channels remain carrier-tangent (`parallel_fraction ~= 0.997-0.999`);
+  - no component survives `parallel_fraction < 0.7`.
+- [x] Add `MinusSectorDecouplingLawGate` blocker:
+  - requires a derived minus-sector visibility/opacity/drag/recombination law;
+  - forbids free decoupling shifts and visibility patches.
+- [ ] Derive minus-sector decoupling/recombination law or archive two-sector CMB route.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
