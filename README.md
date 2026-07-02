@@ -95,6 +95,9 @@ Current CMB/Z4 master-equation status:
 - `MasterActionNormalizationGate` allows only the next likelihood handshake;
 - `MasterLikelihoodHandshakeGate` marks diagnostic likelihood input readiness,
   but still forbids official Planck trial and promotion;
+- `MasterDiagnosticLikelihoodTrialGate` runs only an internal GR-reference
+  pseudo-likelihood; it uses no observed Planck data and makes no observational
+  claim;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.

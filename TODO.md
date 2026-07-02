@@ -41,8 +41,10 @@
   orbifold boundary conditions.
 - [x] Add `MasterLikelihoodHandshakeGate`; no official Planck trial before this
   handshake passes.
-- [ ] Add `MasterDiagnosticLikelihoodTrialGate`; still no candidate promotion
+- [x] Add `MasterDiagnosticLikelihoodTrialGate`; still no candidate promotion
   without an explicit diagnostic result.
+- [ ] Add official likelihood policy gate separating internal pseudo-likelihood
+  from any observed Planck run.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 
