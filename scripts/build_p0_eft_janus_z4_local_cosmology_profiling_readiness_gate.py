@@ -11,6 +11,7 @@ CACHE_JSON = Path("outputs/reports/p0_eft_janus_z4_regenerative_cache_invalidati
 REPLAY_JSON = Path("outputs/reports/p0_eft_janus_z4_regenerative_frozen_candidate_replay_gate.json")
 Z4_DELTA_JSON = Path("outputs/reports/p0_eft_janus_z4_regenerative_z4_delta_per_cosmology_gate.json")
 SOURCE_JSON = Path("outputs/reports/p0_eft_janus_z4_regenerative_source_level_delta_gate.json")
+STRICT_REPLAY_JSON = Path("outputs/reports/p0_eft_janus_z4_strict_source_level_frozen_candidate_replay_gate.json")
 
 
 def _load(path: Path) -> dict:
@@ -23,12 +24,14 @@ def build_payload() -> dict:
     replay = _load(REPLAY_JSON)
     z4 = _load(Z4_DELTA_JSON)
     source = _load(SOURCE_JSON)
+    strict_replay = _load(STRICT_REPLAY_JSON)
     ready = bool(
         gr.get("regenerative_gr_handshake_passed")
         and cache.get("gate_passed")
         and replay.get("regenerative_frozen_candidate_replay_passed")
         and z4.get("effective_gate_passed")
         and source.get("strict_source_level_gate_passed")
+        and strict_replay.get("strict_source_level_frozen_candidate_replay_passed")
     )
     return {
         "status": "janus-z4-local-cosmology-profiling-readiness-gate",
@@ -37,6 +40,9 @@ def build_payload() -> dict:
         "frozen_candidate_replay_passed": bool(replay.get("regenerative_frozen_candidate_replay_passed")),
         "effective_z4_spectrum_deltas_regenerated_per_cosmology": bool(z4.get("effective_gate_passed")),
         "source_level_z4_deltas_regenerated_per_cosmology": bool(source.get("strict_source_level_gate_passed")),
+        "strict_source_level_frozen_replay_matches": bool(
+            strict_replay.get("strict_source_level_frozen_candidate_replay_passed")
+        ),
         "same_nonoverlap_accounting_required": True,
         "lambda_frozen_for_first_profile": True,
         "local_cosmology_profiling_allowed": ready,
@@ -44,7 +50,7 @@ def build_payload() -> dict:
         "full_planck_validation": False,
         "blocked_reason": None
         if ready
-        else "source-level Z4 delta regeneration is not closed; effective spectral deltas alone are insufficient for cosmology profiling",
+        else "strict source-level Z4 replay is not closed; effective spectral deltas alone are insufficient for cosmology profiling",
     }
 
 

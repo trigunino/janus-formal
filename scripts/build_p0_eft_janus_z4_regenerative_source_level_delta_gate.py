@@ -1,50 +1,50 @@
 from __future__ import annotations
 
-import hashlib
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z4_regenerative_polarization_pi_source_gate import build_payload as polarization_payload
+from scripts.build_p0_eft_janus_z4_regenerative_temperature_source_delta_gate import build_payload as temperature_payload
+from scripts.build_p0_eft_janus_z4_regenerative_z4_delta_per_cosmology_gate import build_payload as z4_delta_payload
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z4_regenerative_source_level_delta_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z4_regenerative_source_level_delta_gate.json")
-Z4_DELTA_JSON = Path("outputs/reports/p0_eft_janus_z4_regenerative_z4_delta_per_cosmology_gate.json")
-
-
-def _load(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-
-
-def _hash_payload(payload: object) -> str:
-    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
 def build_payload() -> dict:
-    z4_delta = _load(Z4_DELTA_JSON)
+    z4_delta = z4_delta_payload()
+    temp = temperature_payload()
+    pol = polarization_payload()
     mutation_rows = {}
     for name, row in z4_delta.get("mutation_rows", {}).items():
-        source_contract = {
-            "parameter": name,
-            "delta_S_T_Z4": "not_derived",
-            "Pi_source_Z4": "not_derived",
-            "photon_polarization_hierarchy_source": "effective_only",
-            "lambda_T": z4_delta.get("lambda_T"),
-            "lambda_E": z4_delta.get("lambda_E"),
-            "cosmology_hash_changed": row.get("cosmology_hash_changed"),
-        }
+        temp_row = temp.get("mutation_rows", {}).get(name, {})
+        pol_row = pol.get("mutation_rows", {}).get(name, {})
         mutation_rows[name] = {
             "cosmology_hash_changed": bool(row.get("cosmology_hash_changed")),
             "effective_spectrum_delta_hash_changed": bool(row.get("z4_delta_hash_changed")),
             "source_delta_cache_key_includes_cosmology_hash": True,
             "source_delta_cache_key_includes_lambda_hash": True,
-            "source_contract_hash": _hash_payload(source_contract),
-            "delta_S_T_Z4_hash_changed": False,
-            "Pi_source_hash_changed": False,
-            "hierarchy_source_hash_changed": False,
-            "source_level_delta_changed": False,
+            "delta_S_T_Z4_hash_changed": bool(temp_row.get("temperature_source_hash_changed")),
+            "Pi_source_hash_changed": bool(pol_row.get("Pi_source_hash_changed")),
+            "hierarchy_source_hash_changed": bool(pol_row.get("hierarchy_hash_changed")),
+            "source_level_delta_changed": bool(
+                temp_row.get("temperature_source_hash_changed") and pol_row.get("Pi_source_hash_changed")
+            ),
         }
+    full_source = bool(
+        z4_delta.get("effective_gate_passed")
+        and temp.get("regenerative_temperature_source_delta_gate_passed")
+        and pol.get("regenerative_polarization_pi_source_gate_passed")
+        and all(row["source_level_delta_changed"] for row in mutation_rows.values())
+    )
     return {
         "status": "janus-z4-regenerative-source-level-delta-gate",
-        "source_z4_delta_gate": str(Z4_DELTA_JSON),
         "lambda_T": z4_delta.get("lambda_T"),
         "lambda_E": z4_delta.get("lambda_E"),
         "lambda_frozen": z4_delta.get("lambda_T") == -8.0e-3 and z4_delta.get("lambda_E") == -2.0e-2,
@@ -52,16 +52,18 @@ def build_payload() -> dict:
         "no_lambda_retuning": True,
         "effective_gate_passed": bool(z4_delta.get("effective_gate_passed")),
         "mutation_rows": mutation_rows,
-        "delta_S_T_Z4_regenerated_per_cosmology": False,
-        "Pi_source_regenerated_per_cosmology": False,
-        "photon_polarization_hierarchy_source_regenerated_per_cosmology": False,
+        "delta_S_T_Z4_regenerated_per_cosmology": bool(temp.get("delta_S_T_Z4_regenerated_per_cosmology")),
+        "Pi_source_regenerated_per_cosmology": bool(pol.get("Pi_source_regenerated_per_cosmology")),
+        "photon_polarization_hierarchy_source_regenerated_per_cosmology": bool(
+            pol.get("photon_polarization_hierarchy_regenerated_per_cosmology")
+        ),
         "source_delta_cache_key_includes_cosmology_hash": True,
         "source_delta_cache_key_includes_lambda_hash": True,
-        "no_stale_source_delta_reuse": False,
-        "full_source_level_z4_delta_regeneration": False,
+        "no_stale_source_delta_reuse": full_source,
+        "full_source_level_z4_delta_regeneration": full_source,
         "local_cosmology_profiling_allowed": False,
-        "strict_source_level_gate_passed": False,
-        "blocked_reason": "source equations for delta_S_T_Z4 and Pi_source_Z4 are not implemented; only effective spectral deltas regenerate",
+        "strict_source_level_gate_passed": full_source,
+        "blocked_reason": None if full_source else "source-level temperature and Pi regeneration are not both closed",
         "profiled_planck_candidate": False,
         "full_planck_validation": False,
     }

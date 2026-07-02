@@ -1,4 +1,4 @@
-import JanusFormal.P0EFTJanusZ4RegenerativeSourceLevelDeltaGate
+import JanusFormal.P0EFTJanusZ4StrictSourceLevelFrozenCandidateReplayGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ4LocalCosmologyProfilingReadinessGate
@@ -11,6 +11,7 @@ structure LocalCosmologyProfilingReadinessGate where
   frozenCandidateReplayPassed : Prop
   effectiveZ4SpectrumDeltasRegeneratedPerCosmology : Prop
   sourceLevelZ4DeltasRegeneratedPerCosmology : Prop
+  strictSourceLevelFrozenReplayMatches : Prop
   sameNonOverlapAccountingRequired : Prop
   lambdaFrozenForFirstProfile : Prop
   localCosmologyProfilingAllowed : Prop
@@ -23,6 +24,7 @@ def profilingReadinessReady (g : LocalCosmologyProfilingReadinessGate) : Prop :=
   g.frozenCandidateReplayPassed /\
   g.effectiveZ4SpectrumDeltasRegeneratedPerCosmology /\
   g.sourceLevelZ4DeltasRegeneratedPerCosmology /\
+  g.strictSourceLevelFrozenReplayMatches /\
   g.sameNonOverlapAccountingRequired /\
   g.lambdaFrozenForFirstProfile /\
   Not g.profiledPlanckCandidate /\

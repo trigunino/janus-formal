@@ -435,10 +435,14 @@
   - source objects `Theta_l`, `E_l`, `Pi_source_Z4`, TCA switch, opacity grid and time grid are regenerated per cosmology;
   - `Pi_source_Z4` is derived from multipoles, with no free `Theta2` tag and no direct TE/EE patch;
   - local cosmology profiling remains blocked until strict source-level replay passes.
+- [x] Add strict source-level frozen candidate replay gate:
+  - replay the frozen candidate with `z4_delta_source = strict_source_level_regenerated`;
+  - compare high-l TT/TE/EE/TTTEEE and non-overlap totals against the checkpoint;
+  - keep `profiled_planck_candidate = false` and `full_planck_validation = false`.
 - [x] Add local cosmology profiling readiness gate:
   - GR handshake, cache invalidation, frozen replay and effective deltas are green;
-  - strict source-level replay remains false;
-  - readiness remains red and profiling remains forbidden.
+  - source-level T/Pi regeneration and strict replay are required;
+  - readiness now opens local cosmology profiling, not full Planck validation.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
