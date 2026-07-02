@@ -546,7 +546,10 @@
   - declares plus/minus perturbation variables explicitly;
   - forbids `rho_eff`, direct `C_l` patches and raw toy LOS;
   - keeps Planck and spectra generation blocked.
-- [ ] Implement `TwoSectorConservationBianchiGate`.
+- [x] Implement `TwoSectorConservationBianchiGate`:
+  - declares plus/minus continuity, Euler and shear closure rows;
+  - declares explicit zero exchange terms;
+  - enforces projected Bianchi guard and separates gravitational sign from thermodynamic density sign.
 - [ ] Then implement `TwoSectorInitialModeGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;

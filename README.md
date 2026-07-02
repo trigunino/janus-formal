@@ -298,6 +298,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - declares explicit `+` and `-` perturbation variables, metrics and Z4 projection/coupling data;
   - forbids `rho_eff` shortcuts, direct `C_l` patches and raw toy LOS;
   - requires conservation/Bianchi before spectra or Planck.
+- two-sector conservation/Bianchi:
+  - declares plus/minus continuity, Euler and shear closure rows;
+  - uses explicit zero exchange terms and projected exchange balance;
+  - keeps gravitational sign separate from thermodynamic density sign.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
