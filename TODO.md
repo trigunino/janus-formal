@@ -580,6 +580,15 @@
   - decomposes plus, minus, symmetric, antisymmetric Z4, relative-isocurvature, projection-only, Weyl, Theta0 and Pi sources;
   - no spectra or Planck trial is allowed.
 - [ ] Decide whether any audited sub-component below `parallel_fraction < 0.7` deserves a separate gate.
+- [x] Implement `ProjectionParityPreservationGate`:
+  - compares value, normal-derivative, jump, membrane-weighted and mixed projections;
+  - reports whether any projection preserves the Z4-odd antisymmetric mode without becoming carrier-tangent;
+  - keeps spectra and Planck blocked.
+- [x] Decide projection parity outcome:
+  - no tested projection preserves a non-carrier-tangent antisymmetric mode;
+  - best projection remains `parallel_fraction ~= 0.999`;
+  - next required gate is `MinusSectorIndependentTransferGate`.
+- [ ] Implement `MinusSectorIndependentTransferGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

@@ -328,6 +328,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - two-sector source construction audit:
   - decomposes plus, minus, symmetric, antisymmetric Z4, relative-isocurvature, projection-only, Weyl, Theta0 and Pi source components;
   - only a component with `parallel_fraction < 0.7` can open a separate diagnostic gate.
+- projection parity preservation:
+  - tests value, normal-derivative, jump, membrane-weighted and mixed observable projections;
+  - current result: no tested projection preserves a non-carrier-tangent Z4-odd mode;
+  - next required gate: minus-sector independent transfer, still no spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
