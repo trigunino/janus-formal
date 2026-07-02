@@ -86,6 +86,8 @@ Current CMB/Z4 master-equation status:
 - bounded-tanh shape regularization clears those artifacts diagnostically, but
   is only transport-derived through the membrane equation
   `dR/dS = 1 - (R/L)^2`, not yet full-action-derived;
+- regularized diagnostic spectra are generated only as internal spectra, not
+  as Planck likelihood inputs;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.
