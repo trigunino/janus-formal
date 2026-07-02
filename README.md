@@ -90,6 +90,9 @@ Current CMB/Z4 master-equation status:
   as Planck likelihood inputs;
 - the regularized diagnostic shape report clears the pre-likelihood shape
   lock, while preserving the separate full-action normalization lock;
+- `MasterActionNormalizationGate` blocks likelihood handshakes until
+  `L_transport = 0.65` is derived from the full Z4 action, membrane junction
+  terms, or orbifold boundary conditions;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.
