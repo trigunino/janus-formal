@@ -109,6 +109,8 @@ Current CMB/Z4 master-equation status:
 - `MasterNoRetuningReplayGate` replays the fixed master source with
   `L_transport = a_sigma = 2/3`; no lambda, normalization, or channel retuning
   is allowed;
+- `MasterObservedPlanckDiagnosticTrialGate` is opt-in for observed execution and
+  never promotes directly; clean non-overlap accounting is required next;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.
