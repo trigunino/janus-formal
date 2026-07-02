@@ -470,6 +470,11 @@
   - close the final role as `diagnostic_archived`;
   - set `carrier_degenerate_effective_candidate = true`;
   - keep `profiled_planck_candidate = false` and `full_planck_validation = false`.
+- [x] Add derived slip gate contract:
+  - block free slip, free `eta(a,k)`, direct `C_l` patches and raw toy LOS;
+  - keep `derived_slip_candidate_enabled = false` until a source-derived Z4/bimetric slip equation exists;
+  - require source-level regeneration and carrier tangent projection before any Planck trial.
+- [ ] Derive the Z4/bimetric slip source equation needed by `P0EFTJanusZ4DerivedSlipGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

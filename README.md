@@ -234,6 +234,11 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `carrier_degenerate_effective_candidate = True`;
   - `candidate_role = diagnostic_archived`;
   - the frozen early-ISW/closed-Boltzmann candidate must not be promoted or retuned.
+- derived slip gate:
+  - the gate contract is present, but `slip_source_derivation_available = False`;
+  - `derived_slip_candidate_enabled = False`;
+  - free slip parameters, free `eta(a,k)` ratios, direct `C_l` patches and raw toy LOS are forbidden;
+  - next required artifact: a source-derived Z4/bimetric slip equation.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
