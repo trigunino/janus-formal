@@ -127,8 +127,11 @@ Current CMB/Z4 master-equation status:
   diagnostic spectra after that projection, but still forbids likelihood use;
 - `MasterDiagnosticShapeReportV2Gate` audits v2 shape stability and explicit
   non-overlap accounting; it still forbids likelihood evaluation;
+- `MasterPreLikelihoodLockV2Gate` clears the v2 shape lock and allows only the
+  next action-normalization/handshake step, not Planck evaluation;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until the v2 pre-likelihood lock is explicitly cleared.
+  forbidden until the v2 action-normalization and wrapper handshake are
+  explicitly passed.
 
 Point d'entree principal :
 
