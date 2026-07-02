@@ -610,7 +610,15 @@
   - independent transfer rank appears for density/Weyl/Theta0/projection source;
   - all channels remain carrier-tangent (`parallel_fraction ~= 0.999`);
   - no component survives `parallel_fraction < 0.7`.
-- [ ] Implement `MinusSectorShearFreeStreamingGate`.
+- [x] Implement `MinusSectorShearFreeStreamingGate`:
+  - declares `sigma_minus` and an `F_l_minus` free-streaming hierarchy;
+  - audits shear-only, free-streaming-only, Weyl anisotropic stress, Pi response and full channel;
+  - keeps spectra, Planck, promotion and free amplitudes blocked.
+- [x] Decide shear/free-streaming outcome:
+  - Weyl anisotropic stress, Pi response and full channel get independent rank;
+  - all remain carrier-tangent (`parallel_fraction ~= 0.998-0.999`);
+  - no component survives `parallel_fraction < 0.7`.
+- [ ] Implement `MinusSectorThermalRatioGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

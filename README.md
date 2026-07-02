@@ -341,6 +341,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - specification gate requires non-amplitude physics and forbids free normalization knobs;
   - first diagnostic route is a fixed sound-speed/Jeans deformation, still pre-observational and not derived from the full action;
   - current result: it creates independent transfer rank in some channels but remains carrier-tangent, so no component is promotable.
+- minus-sector shear/free-streaming:
+  - declares `sigma_minus` and an `F_l_minus` hierarchy;
+  - audits shear-only, free-streaming-only, Weyl anisotropic stress, Pi response and full channel before any spectra;
+  - current result: independent rank appears in anisotropic/Pi/full channels, but all remain carrier-tangent.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
