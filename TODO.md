@@ -485,6 +485,10 @@
   - requires either boundary Green transport or normal-mode transport;
   - keeps value-level `deltaSlip_Z4(k,tau)` unavailable until a causal normalized kernel is derived;
   - forbids Planck trials, free slip and free `eta(a,k)`.
+- [x] Add boundary Green slip transport gate:
+  - route selected: boundary Green transport;
+  - kernel declared but not derived;
+  - remains blocked until retarded support, fixed normalization, regularity and boundary jump conditions are closed.
 - [ ] Derive boundary Green or normal-mode transport from derivative/source slip to value-level `delta_slip_Z4`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;

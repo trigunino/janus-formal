@@ -251,6 +251,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - source-level slip is available, but value-level `deltaSlip_Z4(k,tau)` transport is not;
   - both acceptable routes are explicit: boundary Green transport or normal-mode transport;
   - Planck trials remain forbidden until a causal normalized transport kernel is derived.
+- boundary Green slip transport gate:
+  - route selected: `boundary_green`;
+  - Green kernel is declared but not derived;
+  - value-level slip and Planck trials remain blocked until retarded support, normalization and boundary jumps are closed.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
