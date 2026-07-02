@@ -225,6 +225,11 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - decomposed high-l gain after `omega_cdm` marginalization: `+0.9162249090`;
   - all tested 2D carrier pairs with `omega_cdm` also fail to preserve the gain.
   - interpretation: `omega_cdm` absorbs the effective Z4 signal in local carrier profiling, so this blocks any stronger Planck-profiled claim.
+- carrier tangent projection:
+  - `90.4008%` of the frozen Z4 delta lies parallel to the local GR/CAMB carrier tangent space;
+  - dominant spectral tangent direction: `A_s`, with `n_s` close behind;
+  - orthogonal residual gain is unfavorable: combined `+18.6589`, decomposed `+18.2580`;
+  - interpretation: the current effective Z4 signal is mostly carrier-tangent, not a robust orthogonal Planck signature.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

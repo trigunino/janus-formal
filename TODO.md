@@ -458,6 +458,13 @@
   - tested `omega_cdm x A_s`, `omega_cdm x n_s`, `omega_cdm x H0`, `omega_cdm x omega_b`;
   - all tested pairs fail to preserve the frozen-candidate gain;
   - status: `local_2d_carrier_profiled_effective_candidate = false`.
+- [x] Add carrier tangent projection gate:
+  - project the frozen Z4 delta onto local GR/CAMB tangents for `omega_cdm`, `omega_b`, `H0`, `A_s`, `n_s`, `tau`;
+  - parallel fraction: `0.9040080775`;
+  - perpendicular fraction: `0.0959918908`;
+  - dominant tangent direction: `A_s`;
+  - orthogonal residual does not improve non-overlap Planck: combined `+18.6589`, decomposed `+18.2580`;
+  - status: diagnostic complete, no Planck-profiled promotion.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
