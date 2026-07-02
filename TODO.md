@@ -333,6 +333,16 @@
   - `delta_chi2_lensing = -1.5779`;
   - `delta_chi2_total = -9.4326`;
   - full Planck validation remains false.
+- [x] Add non-overlapping likelihood accounting:
+  - legacy overlapping total `-9.4326` is diagnostic only;
+  - combined high-l basis total: `-5.6962`;
+  - decomposed high-l basis total: `-5.3212`;
+  - do not add `highl_TTTEEE` together with standalone `highl_TT/TE/EE`.
+- [x] Promote frozen candidate as high-l decomposed effective candidate:
+  - `planck_highl_decomposed_effective_candidate = true`;
+  - standalone TE cost is small: `+0.0412`;
+  - standalone EE improves: `-0.2733`;
+  - full Planck validation remains false.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

@@ -155,7 +155,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - Frozen candidate high-l decomposition was rerun unchanged:
   - `lambda_T = -0.008`
   - `lambda_E = -0.02`
-  - `delta_chi2_total = -9.4326`
+  - legacy overlapping diagnostic total: `delta_chi2 = -9.4326`
+  - non-overlapping combined high-l total: `delta_chi2 = -5.6962`
+  - non-overlapping decomposed high-l total: `delta_chi2 = -5.3212`
   - `delta_chi2_highl_TE = +0.0412`
   - `delta_chi2_highl_EE = -0.2733`
+- `planck_highl_decomposed_effective_candidate = True`
 - This is still not a full Planck validation.
