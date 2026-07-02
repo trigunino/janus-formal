@@ -397,6 +397,11 @@
   - Z4 deltas are not regenerated per cosmology;
   - cache/provenance keys for cosmology/nuisance/lambda/backend versions are required before profiling;
   - local cosmology profiling remains forbidden.
+- [x] Add regenerative CAMB-GR provider:
+  - generates TT/TE/EE/C_phi_phi schema from CAMB for a cosmology point;
+  - `lambda_T = 0`, `lambda_E = 0`;
+  - `source_of_spectra = regenerated`;
+  - cache/provenance manifest includes cosmology, nuisance, lambda, CAMB and backend hashes.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

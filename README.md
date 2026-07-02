@@ -182,6 +182,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - current backend uses `source_of_spectra = csv_fixed`;
   - CAMB-GR spectra and Z4 deltas are not regenerated under cosmology changes;
   - local cosmology profiling remains forbidden until `source_of_spectra = regenerated`.
+- regenerative CAMB-GR provider:
+  - `lambda_T = lambda_E = 0`;
+  - spectra are regenerated from CAMB per cosmology point;
+  - provenance/cache hashes are emitted for cosmology, nuisance, lambdas and backend versions.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
