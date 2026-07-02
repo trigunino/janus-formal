@@ -550,7 +550,11 @@
   - declares plus/minus continuity, Euler and shear closure rows;
   - declares explicit zero exchange terms;
   - enforces projected Bianchi guard and separates gravitational sign from thermodynamic density sign.
-- [ ] Then implement `TwoSectorInitialModeGate`.
+- [x] Implement `TwoSectorInitialModeGate`:
+  - declares plus/minus adiabatic, symmetric, antisymmetric Z4, relative isocurvature and projection modes;
+  - enforces regular, constraint/Bianchi-compatible initial conditions;
+  - forbids standard CAMB adiabatic forcing and `rho_eff` initial-condition collapse.
+- [ ] Implement `TwoSectorLinearEvolutionClosureGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

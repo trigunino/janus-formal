@@ -302,6 +302,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - declares plus/minus continuity, Euler and shear closure rows;
   - uses explicit zero exchange terms and projected exchange balance;
   - keeps gravitational sign separate from thermodynamic density sign.
+- two-sector initial modes:
+  - declares plus/minus adiabatic, symmetric, antisymmetric Z4, relative isocurvature and projection modes;
+  - forbids collapsing the hidden sector into a single CAMB adiabatic or `rho_eff` initial condition;
+  - keeps spectra and Planck blocked until linear evolution closure.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
