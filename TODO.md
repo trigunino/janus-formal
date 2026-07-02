@@ -505,7 +505,11 @@
   - reconstructs `deltaPhi_Z4` and `deltaPsi_Z4` from `deltaW_Z4` and derived `deltaSlip_Z4`;
   - regenerates temperature surface, early-ISW and Pi/polarization sources with slip;
   - logs normal orientation sign and keeps Planck blocked.
-- [ ] Implement `DerivedSlipCarrierTangentProjectionGate`.
+- [x] Implement `DerivedSlipCarrierTangentProjectionGate`:
+  - compares surface, early-ISW, Pi and full-slip source signatures against GR/CAMB carrier tangents;
+  - includes normal orientation flip as diagnostic-only;
+  - keeps Planck trial and candidate promotion blocked.
+- [ ] Decide next action from derived-slip tangent projection result.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

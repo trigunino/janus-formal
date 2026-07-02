@@ -50,7 +50,7 @@ def _visibility_window(tau: np.ndarray) -> np.ndarray:
     return window / max(float(np.max(window)), 1.0e-12)
 
 
-def _slip_sources(cosmology: CosmologyPoint) -> dict:
+def _slip_sources(cosmology: CosmologyPoint, normal_orientation_sign: float = NORMAL_ORIENTATION_SIGN) -> dict:
     temp = regenerative_temperature_source_delta(cosmology, FROZEN_LAMBDA_T)
     pol = regenerative_polarization_pi_source(cosmology, FROZEN_LAMBDA_E, HIERARCHY_LMAX)
     temp_payload = temp["source_payload"]
@@ -62,7 +62,7 @@ def _slip_sources(cosmology: CosmologyPoint) -> dict:
     delta_w_dot = np.asarray(temp_payload["deltaPhiDot_plus_deltaPsiDot"], dtype=float)
     delta_w = _cumulative_trapezoid(tau, delta_w_dot)
 
-    delta_slip = NORMAL_ORIENTATION_SIGN * np.asarray(
+    delta_slip = normal_orientation_sign * np.asarray(
         [slip_transport_integral(SLIP_K, float(t), "boundary_normal_derivative") for t in tau],
         dtype=float,
     )
@@ -89,7 +89,7 @@ def _slip_sources(cosmology: CosmologyPoint) -> dict:
         "lambda_E": FROZEN_LAMBDA_E,
         "slip_k": SLIP_K,
         "visible_slip_projection": "boundary_normal_derivative",
-        "normal_orientation_sign": NORMAL_ORIENTATION_SIGN,
+        "normal_orientation_sign": normal_orientation_sign,
         "time_grid": tau.tolist(),
         "deltaW_Z4": delta_w.tolist(),
         "deltaWDot_Z4": delta_w_dot.tolist(),
@@ -114,7 +114,7 @@ def _slip_sources(cosmology: CosmologyPoint) -> dict:
         "temperature_source_hash": hash_payload(source_payload["delta_S_T_Z4_with_slip"]),
         "Pi_source_hash": hash_payload(source_payload["Pi_source_Z4_with_slip"]),
         "polarization_source_hash": hash_payload(source_payload["delta_S_E_Z4_with_slip"]),
-        "slip_kernel_hash": hash_payload({"route": "boundary_normal_derivative", "k": SLIP_K, "orientation": NORMAL_ORIENTATION_SIGN}),
+        "slip_kernel_hash": hash_payload({"route": "boundary_normal_derivative", "k": SLIP_K, "orientation": normal_orientation_sign}),
         "surface_term_norm": float(np.linalg.norm(temperature_surface_term)),
         "early_isw_term_norm": float(np.linalg.norm(temperature_early_isw_term)),
         "pi_source_norm": float(np.linalg.norm(pi_source_with_slip)),
