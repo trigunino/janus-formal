@@ -192,6 +192,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - regenerative cache invalidation:
   - changing `omega_b`, `omega_cdm`, `H0`, `tau`, `A_s` or `n_s` changes hashes and spectra;
   - stale CSV reuse is forbidden.
+- regenerative frozen candidate replay:
+  - `lambda_T = -0.008`, `lambda_E = -0.02`, no retuning;
+  - checkpoint high-l deltas are replayed at reference cosmology;
+  - `z4_delta_source = reference_cosmology_replay`, so cosmology profiling remains blocked.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

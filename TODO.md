@@ -411,6 +411,12 @@
   - changing each standard cosmology parameter changes the cosmology/theory hashes;
   - spectra change under `omega_b`, `omega_cdm`, `H0`, `tau`, `A_s`, `n_s`;
   - stale CSV reuse remains forbidden.
+- [x] Add regenerative frozen candidate replay gate:
+  - `lambda_T = -0.008`, `lambda_E = -0.02`;
+  - no retuning and no new physics;
+  - checkpoint deltas replay at reference cosmology;
+  - `z4_delta_source = reference_cosmology_replay`;
+  - local cosmology profiling remains blocked until Z4 deltas regenerate per cosmology.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
