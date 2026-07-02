@@ -80,7 +80,9 @@
   claim or candidate promotion.
 - [x] Add v2 official-likelihood policy gate before any observed wrapper use.
 - [x] Add v2 observed-wrapper/GR-reference handshake before any observed trial.
-- [ ] Add v2 no-retuning replay before any observed Planck trial.
+- [x] Add v2 no-retuning replay before any observed Planck trial.
+- [ ] If proceeding beyond the stop line, open only an observed diagnostic trial
+  gate; no promotion or full validation.
 
 ## Priority 1 - Define the bi-sector model
 

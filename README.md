@@ -141,6 +141,8 @@ Current CMB/Z4 master-equation status:
   `MasterObservedPlanckWrapperHandshakeV2Gate` verify wrapper availability and
   GR-reference conventions, while still blocking official Planck trial until
   v2 no-retuning replay;
+- `MasterNoRetuningReplayV2Gate` replays the fixed v2 source/revision without
+  lambda, normalization, revision, or new-physics retuning;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until an explicit official-likelihood policy gate is opened and
   passed separately.
