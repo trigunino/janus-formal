@@ -145,6 +145,8 @@ Current CMB/Z4 master-equation status:
   lambda, normalization, revision, or new-physics retuning;
 - `MasterObservedPlanckDiagnosticTrialV2Gate` is opt-in only and never promotes
   directly, even when an observed run is explicitly requested;
+- `MasterObservedNonOverlapAccountingV2Gate` is the mandatory accounting layer
+  for any explicit observed diagnostic run and never promotes directly;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until an explicit official-likelihood policy gate is opened and
   passed separately.

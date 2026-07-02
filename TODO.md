@@ -83,8 +83,10 @@
 - [x] Add v2 no-retuning replay before any observed Planck trial.
 - [x] If proceeding beyond the stop line, open only an observed diagnostic trial
   gate; no promotion or full validation.
-- [ ] If an observed run is explicitly requested, route result through v2
+- [x] If an observed run is explicitly requested, route result through v2
   non-overlap accounting before any interpretation.
+- [ ] Keep official Planck validation false unless a later explicit observed
+  run passes non-overlap and additional stability gates.
 
 ## Priority 1 - Define the bi-sector model
 
