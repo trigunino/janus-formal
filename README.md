@@ -213,7 +213,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - the checkpoint replay matches and local cosmology profiling readiness is open.
 - local cosmology profiling:
   - `local_cosmology_profiling_allowed = True` for the first frozen-lambda local profile;
-  - this does not promote the candidate to profiled Planck status.
+  - local cosmology+nuisance profiling passes with frozen lambdas:
+    - combined high-l profile gain: `-4.6204804254`;
+    - decomposed high-l profile gain: `-4.2056083637`;
+    - best local cosmology key: `omega_cdm`;
+    - no nuisance boundary hits in the profiled bases.
+  - this promotes only `local_cosmology_nuisance_profiled_effective_candidate`, not Planck-full status.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

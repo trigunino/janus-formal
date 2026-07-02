@@ -1,39 +1,57 @@
-import JanusFormal.P0EFTJanusZ4CandidateCosmologyParameterPolicyGate
-
 namespace JanusFormal
 namespace P0EFTJanusZ4CandidateLocalCosmologyProfilingGate
 
 set_option autoImplicit false
 
-structure LocalCosmologyProfilingGate where
-  policyGatePassed : Prop
+structure LocalCosmologyNuisanceProfilingGate where
+  readinessGatePassed : Prop
   sameCosmologySpaceForGRAndCandidate : Prop
   samePriorsBoundsOptimizerForGRAndCandidate : Prop
-  lambdaFrozen : Prop
+  sameNuisancePolicyForGRAndCandidate : Prop
+  lambdaTFrozen : Prop
+  lambdaEFrozen : Prop
+  noLambdaRetuning : Prop
   noNewPhysics : Prop
-  cosmologicalTransferRegenerationAvailable : Prop
-  localCosmologyProfilingExecuted : Prop
-  localCosmologyProfiledCandidate : Prop
+  overlappingTotalForbidden : Prop
+  nonOverlapAccountingOnly : Prop
+  profiledGainCombinedHighl : Prop
+  profiledGainDecomposedHighl : Prop
+  teCostRemainsSmall : Prop
+  eeNotDegraded : Prop
+  noSevereBoundaryHits : Prop
+  transportGuardsPass : Prop
+  tcaLmaxGuardsPass : Prop
+  localCosmologyNuisanceProfiledEffectiveCandidate : Prop
   profiledPlanckCandidate : Prop
   fullPlanckValidation : Prop
 
-def profilingBlockedByStaticSpectraBackend (g : LocalCosmologyProfilingGate) : Prop :=
-  g.policyGatePassed /\
+def localProfileReady (g : LocalCosmologyNuisanceProfilingGate) : Prop :=
+  g.readinessGatePassed /\
   g.sameCosmologySpaceForGRAndCandidate /\
   g.samePriorsBoundsOptimizerForGRAndCandidate /\
-  g.lambdaFrozen /\
+  g.sameNuisancePolicyForGRAndCandidate /\
+  g.lambdaTFrozen /\
+  g.lambdaEFrozen /\
+  g.noLambdaRetuning /\
   g.noNewPhysics /\
-  Not g.cosmologicalTransferRegenerationAvailable /\
-  Not g.localCosmologyProfilingExecuted /\
-  Not g.localCosmologyProfiledCandidate /\
+  g.overlappingTotalForbidden /\
+  g.nonOverlapAccountingOnly /\
+  g.profiledGainCombinedHighl /\
+  g.profiledGainDecomposedHighl /\
+  g.teCostRemainsSmall /\
+  g.eeNotDegraded /\
+  g.noSevereBoundaryHits /\
+  g.transportGuardsPass /\
+  g.tcaLmaxGuardsPass /\
   Not g.profiledPlanckCandidate /\
   Not g.fullPlanckValidation
 
-theorem static_spectra_backend_blocks_local_cosmology_profiling
-    (g : LocalCosmologyProfilingGate)
-    (h : profilingBlockedByStaticSpectraBackend g) :
-    Not g.localCosmologyProfiledCandidate := by
-  exact h.right.right.right.right.right.right.right.left
+theorem local_profile_ready_promotes_effective_candidate
+    (g : LocalCosmologyNuisanceProfilingGate)
+    (hPolicy : localProfileReady g -> g.localCosmologyNuisanceProfiledEffectiveCandidate)
+    (h : localProfileReady g) :
+    g.localCosmologyNuisanceProfiledEffectiveCandidate := by
+  exact hPolicy h
 
 end P0EFTJanusZ4CandidateLocalCosmologyProfilingGate
 end JanusFormal

@@ -443,6 +443,11 @@
   - GR handshake, cache invalidation, frozen replay and effective deltas are green;
   - source-level T/Pi regeneration and strict replay are required;
   - readiness now opens local cosmology profiling, not full Planck validation.
+- [x] Add local cosmology+nuisance profiling gate:
+  - profile GR and candidate over the same local cosmology grid and nuisance policy;
+  - keep `lambda_T = -0.008`, `lambda_E = -0.02`, no retuning and no new physics;
+  - combined high-l gain `-4.6204804254`, decomposed high-l gain `-4.2056083637`;
+  - promote only `local_cosmology_nuisance_profiled_effective_candidate`, not full Planck validation.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
