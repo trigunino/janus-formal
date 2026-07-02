@@ -390,6 +390,13 @@
   - `local_cosmology_profiled_candidate = false`;
   - `profiled_planck_candidate = false`;
   - `full_planck_validation = false`.
+- [x] Add regenerative CAMB/Z4 backend gate:
+  - current status: blocked;
+  - `source_of_spectra = csv_fixed`;
+  - CAMB-GR spectra are not regenerated per cosmology;
+  - Z4 deltas are not regenerated per cosmology;
+  - cache/provenance keys for cosmology/nuisance/lambda/backend versions are required before profiling;
+  - local cosmology profiling remains forbidden.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

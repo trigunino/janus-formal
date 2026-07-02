@@ -178,6 +178,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - standard cosmology parameters are fixed in the current spectra-table backend;
   - `lambda_policy = frozen_from_candidate_spec_after_internal_trials`;
   - local cosmology profiling is blocked until a regenerating CAMB/Z4 backend exists.
+- regenerative backend gate:
+  - current backend uses `source_of_spectra = csv_fixed`;
+  - CAMB-GR spectra and Z4 deltas are not regenerated under cosmology changes;
+  - local cosmology profiling remains forbidden until `source_of_spectra = regenerated`.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
