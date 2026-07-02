@@ -356,6 +356,11 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - reason: projection, slip/surface, sound-speed/Jeans, shear/free-streaming and thermal-ratio routes all remain carrier-tangent;
   - no additional CMB/Z4 physics, spectra, Planck trials, retuning or projection tweaks should be added on this branch;
   - reopen only with an action-derived minus-sector decoupling/recombination law.
+- unique Z4 master-equation track:
+  - next upstream direction after freezing patchwork CMB/Z4 branches;
+  - goal: derive all slip, Doppler, Pi, minus-sector and projection observables from one generator `U_Z4`;
+  - first required gates: `UniqueEquationMasterGate`, `MasterReconstructionGate`, `MasterConstraintConsistencyGate`, `MasterToObservableMapGate`, then `MasterCarrierTangentProjectionGate`;
+  - no spectra or Planck until the master-derived signal passes carrier-tangent projection.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

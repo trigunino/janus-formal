@@ -634,6 +634,75 @@
   - projection, slip/surface, sound-speed/Jeans, shear/free-streaming and thermal-ratio routes remain carrier-tangent;
   - no spectra, Planck, promotion, retuning, projection tweaks or new effective CMB/Z4 gates on this branch.
 - [ ] Reopen only if an action-derived minus-sector decoupling/recombination law is available.
+
+## Unique Z4 master equation track
+
+Status: new upstream track, opened after freezing the patchwork CMB/Z4 branches.
+
+Rationale:
+- downstream additions built separately keep becoming carrier-tangent;
+- archived failures include slip, surface/Doppler, two-sector projection, sound-speed/Jeans, shear/free-streaming and thermal-ratio routes;
+- next viable direction is one upstream generator `U_Z4`, not independent corrections.
+
+Policy:
+- no Planck;
+- no spectra;
+- no retuning;
+- no free `eta`;
+- no free slip;
+- no free projection coefficient;
+- no independent Doppler/Pi/minus-sector amplitude;
+- no `rho_eff` shortcut;
+- no direct `C_l` patch;
+- no raw toy LOS.
+
+Required formal gates:
+- [ ] `P0EFTJanusZ4UniqueEquationMasterGate`:
+  - declare master variable `U_Z4`;
+  - declare master operator `L_Z4`;
+  - declare source `J_Z4`;
+  - declare Z4 parity;
+  - declare orbifold/boundary conditions;
+  - declare GR limit;
+  - set `master_equation_solved = false` until actually derived;
+  - keep spectra and Planck blocked.
+- [ ] `P0EFTJanusZ4MasterReconstructionGate`:
+  - reconstruct `Phi_plus`, `Psi_plus`;
+  - reconstruct `Phi_minus`, `Psi_minus`;
+  - reconstruct `delta_plus`, `theta_plus`, `sigma_plus`;
+  - reconstruct `delta_minus`, `theta_minus`, `sigma_minus`;
+  - reconstruct `Theta0_Z4`;
+  - reconstruct `v_gamma_Z4` / Doppler;
+  - reconstruct `Pi_Z4`;
+  - reconstruct `Weyl_Z4`;
+  - reconstruct observable projection;
+  - mark any missing map as `blocked_until_master_reconstruction`, not silently free.
+- [ ] `P0EFTJanusZ4MasterConstraintConsistencyGate`:
+  - check Bianchi consistency;
+  - check plus/minus conservation;
+  - check trace-free slip consistency;
+  - check Doppler/continuity consistency;
+  - check `Pi` comes from multipoles;
+  - check projection Z4 compatibility;
+  - check GR limit;
+  - keep spectra and Planck blocked.
+- [ ] `P0EFTJanusZ4MasterToObservableMapGate`:
+  - define `S_T,Z4 = F_T[U_Z4]`;
+  - define `S_E,Z4 = F_E[U_Z4]`;
+  - define `S_lens,Z4 = F_lens[U_Z4]`;
+  - prove Doppler, Theta0, Pi, slip and minus-sector variables use the same `U_Z4`;
+  - forbid independent downstream source patches.
+- [ ] `P0EFTJanusZ4MasterCarrierTangentProjectionGate`:
+  - project the master-derived signal against GR/CAMB carrier tangents;
+  - report dominant carrier direction;
+  - compare against archived branches;
+  - success threshold: `parallel_fraction < 0.7`;
+  - strong threshold: `parallel_fraction < 0.5`;
+  - if `parallel_fraction > 0.8`, archive current master-equation ansatz before any Planck gate.
+
+Completion rule:
+- [ ] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
+- [ ] Only after that, consider observational gates.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
