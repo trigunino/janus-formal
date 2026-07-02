@@ -371,6 +371,13 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - master constraint consistency gate:
   - declares Bianchi, plus/minus conservation, trace-free slip, Doppler/continuity, Pi-from-multipoles, Z4 projection and GR-limit checks;
   - all checks remain blocked until master reconstruction is actually derived.
+- master-to-observable map gate:
+  - declares `S_T,Z4`, `S_E,Z4`, `S_lens,Z4`, Doppler, Theta0, Pi, slip and minus-sector variables as functionals of the same `U_Z4`;
+  - forbids independent downstream source patches.
+- master carrier-tangent projection:
+  - projects the single-`U_Z4` diagnostic signal against GR/CAMB carrier tangents;
+  - current first ansatz result: `parallel_fraction = 0.9973`, dominant tangent `tau`;
+  - keeps spectra and Planck blocked; current ansatz must be revised before source-level regeneration.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

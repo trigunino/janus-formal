@@ -686,19 +686,25 @@ Required formal gates:
   - check projection Z4 compatibility;
   - check GR limit;
   - keep spectra and Planck blocked.
-- [ ] `P0EFTJanusZ4MasterToObservableMapGate`:
+- [x] `P0EFTJanusZ4MasterToObservableMapGate`:
   - define `S_T,Z4 = F_T[U_Z4]`;
   - define `S_E,Z4 = F_E[U_Z4]`;
   - define `S_lens,Z4 = F_lens[U_Z4]`;
   - prove Doppler, Theta0, Pi, slip and minus-sector variables use the same `U_Z4`;
   - forbid independent downstream source patches.
-- [ ] `P0EFTJanusZ4MasterCarrierTangentProjectionGate`:
+- [x] `P0EFTJanusZ4MasterCarrierTangentProjectionGate`:
   - project the master-derived signal against GR/CAMB carrier tangents;
   - report dominant carrier direction;
   - compare against archived branches;
   - success threshold: `parallel_fraction < 0.7`;
   - strong threshold: `parallel_fraction < 0.5`;
   - if `parallel_fraction > 0.8`, archive current master-equation ansatz before any Planck gate.
+- [x] Decide first unique-master ansatz outcome:
+  - `parallel_fraction = 0.9973`;
+  - dominant carrier direction is `tau`;
+  - current master diagnostic ansatz does not beat archived patchwork branches;
+  - no spectra or Planck trial is allowed.
+- [ ] Revise the unique Z4 master ansatz before any source-level regeneration gate.
 
 Completion rule:
 - [ ] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
