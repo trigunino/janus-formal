@@ -318,6 +318,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - regenerates plus, minus, antisymmetric Z4 and projection sources;
   - exposes Weyl, monopole and Pi projected source diagnostics;
   - allows carrier-tangent projection only, still no spectra or Planck.
+- two-sector carrier-tangent projection:
+  - projects Weyl, monopole, Pi and full two-sector source diagnostics against GR/CAMB carrier tangents;
+  - classifies the branch before any spectra or Planck trial;
+  - current full two-sector diagnostic is `archive_fast` (`parallel_fraction ~= 0.998`, A_s dominated).
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

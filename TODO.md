@@ -566,7 +566,14 @@
   - regenerates plus, minus, antisymmetric Z4 and projection sources;
   - exposes Weyl, monopole and Pi projected source diagnostics;
   - allows carrier-tangent projection only, not spectra or Planck.
-- [ ] Implement `TwoSectorCarrierTangentProjectionGate`.
+- [x] Implement `TwoSectorCarrierTangentProjectionGate`:
+  - projects Weyl, monopole, Pi and full two-sector diagnostics against GR/CAMB carrier tangents;
+  - keeps spectra, Planck and promotion blocked.
+- [x] Decide next action from two-sector tangent classification:
+  - full two-sector diagnostic is `archive_fast`;
+  - full parallel fraction is `0.998`, dominated by `A_s`;
+  - no spectra or Planck trial.
+- [ ] Archive or refine two-sector source generation.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
