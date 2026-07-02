@@ -573,7 +573,13 @@
   - full two-sector diagnostic is `archive_fast`;
   - full parallel fraction is `0.998`, dominated by `A_s`;
   - no spectra or Planck trial.
-- [ ] Archive or refine two-sector source generation.
+- [x] Archive current two-sector full source as carrier-degenerate:
+  - full source is `A_s` dominated and not promotable;
+  - variables/conservation/modes/evolution/stability/source history is preserved.
+- [x] Implement `TwoSectorSourceConstructionAuditGate`:
+  - decomposes plus, minus, symmetric, antisymmetric Z4, relative-isocurvature, projection-only, Weyl, Theta0 and Pi sources;
+  - no spectra or Planck trial is allowed.
+- [ ] Decide whether any audited sub-component below `parallel_fraction < 0.7` deserves a separate gate.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

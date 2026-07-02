@@ -322,6 +322,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - projects Weyl, monopole, Pi and full two-sector source diagnostics against GR/CAMB carrier tangents;
   - classifies the branch before any spectra or Planck trial;
   - current full two-sector diagnostic is `archive_fast` (`parallel_fraction ~= 0.998`, A_s dominated).
+- two-sector carrier-degenerate archive:
+  - archives the current full two-sector source as carrier-degenerate while preserving the structural history;
+  - keeps spectra, Planck, promotion and retuning blocked.
+- two-sector source construction audit:
+  - decomposes plus, minus, symmetric, antisymmetric Z4, relative-isocurvature, projection-only, Weyl, Theta0 and Pi source components;
+  - only a component with `parallel_fraction < 0.7` can open a separate diagnostic gate.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
