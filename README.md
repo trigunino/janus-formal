@@ -202,6 +202,9 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - source-level/readiness gates:
   - `delta_S_T_Z4` and `Pi_source_Z4` are not yet regenerated per cosmology;
   - `LocalCosmologyProfilingReadinessGate` remains red until source-level regeneration closes.
+- regenerative temperature source delta:
+  - `delta_S_T_Z4` now regenerates per cosmology for the frozen `early_isw_only` temperature channel;
+  - polarization/Pi source-level regeneration remains open.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

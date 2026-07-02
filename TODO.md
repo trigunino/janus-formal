@@ -427,6 +427,10 @@
   - strict gate remains blocked;
   - `delta_S_T_Z4` and `Pi_source_Z4` are not regenerated per cosmology;
   - no local cosmology profiling is allowed from effective spectral deltas alone.
+- [x] Add regenerative temperature source delta gate:
+  - source objects `W_acoustic`, `exp(-kappa)`, `deltaPhiDot+deltaPsiDot`, time grid and projection grid are regenerated per cosmology;
+  - `delta_S_T_Z4_regenerated_per_cosmology = true` for the frozen `early_isw_only` temperature channel;
+  - local cosmology profiling remains blocked until polarization/Pi source regeneration and strict replay pass.
 - [x] Add local cosmology profiling readiness gate:
   - GR handshake, cache invalidation, frozen replay and effective deltas are green;
   - source-level Z4 delta regeneration remains false;
