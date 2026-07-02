@@ -531,7 +531,18 @@
 - [x] Implement `DerivedSlipSurfaceCarrierTangentProjectionGate`:
   - classifies the branch as `weak_orthogonal_diagnostic`;
   - keeps candidate promotion and Planck trial blocked.
-- [ ] Decide whether to derive `DopplerTransportClosureRefinementGate` or archive weak surface branch.
+- [x] Implement `DopplerTransportClosureRefinementGate`:
+  - derives photon dipole and baryon velocity responses;
+  - enforces tight-coupling/Euler guards;
+  - keeps visibility/recombination frozen and no Doppler amplitude free.
+- [x] Decide branch fate after refined Doppler classification:
+  - refined full-surface parallel fraction is `0.834`, worse than prior `0.794`;
+  - branch remains weak/carrier-tangent.
+- [x] Archive weak surface branch:
+  - SW-only orthogonal component exists;
+  - physical Doppler-completed surface is not promotable;
+  - Planck trial remains blocked.
+- [ ] Choose next structural channel: two-sector Boltzmann dynamics or normal-mode bimetric slip transport.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

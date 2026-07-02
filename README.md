@@ -287,6 +287,13 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - SW-only surface remains orthogonal, but Doppler completion reintroduces carrier tangency;
   - surface branch is classified as `weak_orthogonal_diagnostic`;
   - no candidate promotion or Planck trial is allowed.
+- Doppler transport refinement:
+  - derives photon dipole and baryon velocity responses with tight-coupling/Euler guards;
+  - keeps visibility/recombination frozen and no Doppler amplitude free;
+  - refined full-surface remains weak/carrier-tangent (`parallel_fraction ~= 0.834`).
+- weak surface branch archive:
+  - SW-only orthogonal component exists, but physical Doppler-completed branch is not promotable;
+  - no Planck trial or candidate promotion is allowed.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
