@@ -129,9 +129,10 @@ Current CMB/Z4 master-equation status:
   non-overlap accounting; it still forbids likelihood evaluation;
 - `MasterPreLikelihoodLockV2Gate` clears the v2 shape lock and allows only the
   next action-normalization/handshake step, not Planck evaluation;
+- `MasterActionNormalizationV2Gate` ties the v2 normalization to the selected
+  upstream master revision, shared `U_Z4`, and `L_transport = 2/3`;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until the v2 action-normalization and wrapper handshake are
-  explicitly passed.
+  forbidden until the v2 likelihood/wrapper handshake is explicitly passed.
 
 Point d'entree principal :
 

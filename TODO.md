@@ -73,7 +73,7 @@
 - [x] Regenerate v2 diagnostic spectra from the revised master source.
 - [x] Audit v2 diagnostic spectra shape/non-overlap before any likelihood gate.
 - [x] Add/clear the v2 pre-likelihood lock before any observed likelihood gate.
-- [ ] Derive/check v2 action normalization before any likelihood handshake.
+- [x] Derive/check v2 action normalization before any likelihood handshake.
 - [ ] Only after v2 action normalization: run the next likelihood handshake
   gate. No Planck claim before that.
 
