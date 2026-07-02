@@ -67,6 +67,10 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
 - prochain verrou externe : acquérir ou raccorder standalone high-l TE/EE, puis
   tester exactement le même candidat.
 
+Freeze rule after checkpoint `8ce53806`: no new Z4 physics or parameter
+retuning is allowed until standalone high-l TE/EE likelihood coverage is
+acquired and the frozen candidate is rerun unchanged.
+
 Point d'entree principal :
 
 - `JanusFormal/P0EFTGlobalTopologyMasterLock.lean`
