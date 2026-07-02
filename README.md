@@ -392,6 +392,13 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - replays the regenerated source-level payload against GR/CAMB carrier tangents;
   - current result: `parallel_fraction = 0.191`, passing both `<0.7` and `<0.5`;
   - still no spectra or Planck.
+- master diagnostic spectra readiness:
+  - allows internal diagnostic spectra generation after the carrier replay passes;
+  - still forbids official Planck, likelihood evaluation, candidate promotion, retuning and nuisance refit.
+- master diagnostic spectra generation:
+  - writes internal GR and GR+master-Z4 diagnostic spectra;
+  - replays carrier projection after serialization;
+  - still forbids official Planck, likelihood evaluation, promotion and retuning.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

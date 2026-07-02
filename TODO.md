@@ -728,6 +728,13 @@ Required formal gates:
   - regenerated source replay gives `parallel_fraction = 0.191`;
   - passes `<0.7` and `<0.5`;
   - next gate may check diagnostic spectra readiness, but Planck remains blocked.
+- [x] Add `P0EFTJanusZ4MasterDiagnosticSpectraReadinessGate`:
+  - allows internal diagnostic spectra generation only;
+  - keeps official Planck, likelihood evaluation, promotion, retuning and nuisance refit blocked.
+- [x] Add `P0EFTJanusZ4MasterDiagnosticSpectraGenerationGate`:
+  - writes internal GR and GR+master-Z4 diagnostic spectra;
+  - replays carrier projection after CSV serialization;
+  - keeps official Planck, likelihood evaluation, promotion and retuning blocked.
 
 Completion rule:
 - [x] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
