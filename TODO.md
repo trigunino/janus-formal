@@ -81,8 +81,10 @@
 - [x] Add v2 official-likelihood policy gate before any observed wrapper use.
 - [x] Add v2 observed-wrapper/GR-reference handshake before any observed trial.
 - [x] Add v2 no-retuning replay before any observed Planck trial.
-- [ ] If proceeding beyond the stop line, open only an observed diagnostic trial
+- [x] If proceeding beyond the stop line, open only an observed diagnostic trial
   gate; no promotion or full validation.
+- [ ] If an observed run is explicitly requested, route result through v2
+  non-overlap accounting before any interpretation.
 
 ## Priority 1 - Define the bi-sector model
 

@@ -143,6 +143,8 @@ Current CMB/Z4 master-equation status:
   v2 no-retuning replay;
 - `MasterNoRetuningReplayV2Gate` replays the fixed v2 source/revision without
   lambda, normalization, revision, or new-physics retuning;
+- `MasterObservedPlanckDiagnosticTrialV2Gate` is opt-in only and never promotes
+  directly, even when an observed run is explicitly requested;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until an explicit official-likelihood policy gate is opened and
   passed separately.
