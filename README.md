@@ -219,6 +219,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
     - best local cosmology key: `omega_cdm`;
     - no nuisance boundary hits in the profiled bases.
   - this promotes only `local_cosmology_nuisance_profiled_effective_candidate`, not Planck-full status.
+- carrier degeneracy diagnostics:
+  - the 1D `omega_cdm` carrier profile does not preserve the frozen-candidate gain;
+  - combined high-l gain after `omega_cdm` marginalization: `+0.6827240820`;
+  - decomposed high-l gain after `omega_cdm` marginalization: `+0.9162249090`;
+  - all tested 2D carrier pairs with `omega_cdm` also fail to preserve the gain.
+  - interpretation: `omega_cdm` absorbs the effective Z4 signal in local carrier profiling, so this blocks any stronger Planck-profiled claim.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

@@ -448,6 +448,16 @@
   - keep `lambda_T = -0.008`, `lambda_E = -0.02`, no retuning and no new physics;
   - combined high-l gain `-4.6204804254`, decomposed high-l gain `-4.2056083637`;
   - promote only `local_cosmology_nuisance_profiled_effective_candidate`, not full Planck validation.
+- [x] Add carrier parameter degeneracy report:
+  - focus parameter: `omega_cdm`;
+  - 1D `omega_cdm` marginalization does not preserve the gain;
+  - combined high-l gain after marginalization: `+0.6827240820`;
+  - decomposed high-l gain after marginalization: `+0.9162249090`;
+  - status: degeneracy detected, no Planck-profiled promotion.
+- [x] Add local 2D carrier profiling gate:
+  - tested `omega_cdm x A_s`, `omega_cdm x n_s`, `omega_cdm x H0`, `omega_cdm x omega_b`;
+  - all tested pairs fail to preserve the frozen-candidate gain;
+  - status: `local_2d_carrier_profiled_effective_candidate = false`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
