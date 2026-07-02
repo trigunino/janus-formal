@@ -49,8 +49,10 @@
   non-overlap, GR reference, and no-retuning replay policies are explicit.
 - [x] Detect complete observed Planck wrapper coverage for high-l, low-l, and
   lensing components.
-- [ ] Provide a GR reference handshake report on the same observed Planck
+- [x] Provide a GR reference handshake report on the same observed Planck
   wrapper before any master no-retuning replay.
+- [ ] Re-run `MasterObservedPlanckWrapperHandshakeGate` after the GR report and
+  then add `MasterNoRetuningReplayGate`.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 

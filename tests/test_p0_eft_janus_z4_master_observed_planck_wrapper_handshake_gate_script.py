@@ -4,7 +4,7 @@ from scripts.build_p0_eft_janus_z4_master_observed_planck_wrapper_handshake_gate
 
 
 class P0EFTJanusZ4MasterObservedPlanckWrapperHandshakeGateTests(unittest.TestCase):
-    def test_observed_wrapper_gate_blocks_without_gr_same_wrapper_handshake(self):
+    def test_observed_wrapper_gate_passes_gr_handshake_but_blocks_planck(self):
         payload = build_payload()
 
         self.assertEqual(payload["status"], "janus-z4-master-observed-planck-wrapper-handshake-gate")
@@ -13,7 +13,8 @@ class P0EFTJanusZ4MasterObservedPlanckWrapperHandshakeGateTests(unittest.TestCas
         self.assertFalse(payload["fallback_to_internal_pseudo_likelihood_allowed"])
         self.assertIn("highl_TTTEEE", payload["component_availability"])
         self.assertTrue(payload["observed_planck_wrapper_available"])
-        self.assertFalse(payload["gr_reference_handshake_on_same_wrapper_passed"])
+        self.assertTrue(payload["gr_reference_handshake_on_same_wrapper_passed"])
+        self.assertTrue(payload["observed_planck_wrapper_handshake_gate_passed"])
         self.assertFalse(payload["master_candidate_no_retuning_replay"])
         self.assertFalse(payload["official_planck_trial_allowed"])
         self.assertFalse(payload["candidate_promotion_allowed"])
