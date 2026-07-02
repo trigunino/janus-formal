@@ -64,6 +64,11 @@
 - [x] Add `MasterObservedNonOverlapAccountingGate`; it records rejection and
   never promotes directly.
 - [x] Add `MasterObservedFailureMapGate` to localize the high-l failure.
+- [x] Scan upstream master high-l acoustic shape revisions:
+  channel-wise `_unit` normalization is replaced by shared `U_Z4`
+  normalization plus a Silk/high-l guard.
+- [ ] Regenerate source-level master v2 from the selected upstream revision
+  before any new observed rerun.
 - [ ] Revise the upstream master high-l acoustic shape before any new observed
   promotion path.
 - [ ] Only after an action-derived regularized master shape: run the next

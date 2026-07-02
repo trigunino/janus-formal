@@ -116,6 +116,9 @@ Current CMB/Z4 master-equation status:
 - `MasterObservedNonOverlapAccountingGate` records that rejection without
   promotion;
 - `MasterObservedFailureMapGate` localizes the failure to high-l acoustic shape;
+- `MasterHighLAcousticRevisionScanGate` finds an upstream non-tangent revision:
+  shared `U_Z4` normalization plus a high-l/Silk guard; no Planck rerun is
+  allowed directly from the scan;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.
