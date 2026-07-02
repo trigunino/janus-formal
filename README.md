@@ -239,6 +239,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `derived_slip_candidate_enabled = False`;
   - free slip parameters, free `eta(a,k)` ratios, direct `C_l` patches and raw toy LOS are forbidden;
   - next required artifact: a source-derived Z4/bimetric slip equation.
+- bimetric slip source derivation:
+  - source equation derived: `Lap_TF(delta_slip_Z4) = -chi*(Pi_plus_TF + Pi_minus_TF)`;
+  - this closes the source-level slip equation only;
+  - value-slip Green/normal-mode transport remains open, so Planck trials remain blocked.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

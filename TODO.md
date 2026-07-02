@@ -474,7 +474,10 @@
   - block free slip, free `eta(a,k)`, direct `C_l` patches and raw toy LOS;
   - keep `derived_slip_candidate_enabled = false` until a source-derived Z4/bimetric slip equation exists;
   - require source-level regeneration and carrier tangent projection before any Planck trial.
-- [ ] Derive the Z4/bimetric slip source equation needed by `P0EFTJanusZ4DerivedSlipGate`.
+- [x] Derive the Z4/bimetric slip source equation needed by `P0EFTJanusZ4DerivedSlipGate`:
+  - source operator: `Lap_TF(delta_slip_Z4) = -chi*(Pi_plus_TF + Pi_minus_TF)`;
+  - closes the source equation, not the value-slip Green/normal-mode transport.
+- [ ] Derive boundary Green or normal-mode transport from derivative/source slip to value-level `delta_slip_Z4`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
