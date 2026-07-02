@@ -318,7 +318,7 @@
 - [ ] Acquire or connect standalone high-l TE/EE likelihoods:
   - rerun the same frozen candidate only;
   - output high-l TT, TE, EE, TTTEEE, low-l TT/EE and lensing deltas separately.
-- [ ] Enforce post-checkpoint freeze rule:
+- [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
   - rerun the frozen candidate unchanged before any new mechanism is opened.
