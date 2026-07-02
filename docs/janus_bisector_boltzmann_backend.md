@@ -1111,6 +1111,29 @@ Result:
 Conclusion: do not open new physics. Acquire or connect standalone high-l TE/EE
 likelihoods, then rerun exactly the same frozen candidate.
 
+## Standalone TE/EE Handshake Gate
+
+Current gate:
+`p0_eft_janus_z4_standalone_teee_handshake_gate.json`.
+
+Purpose:
+
+- verify standalone high-l TE/EE plumbing before rerunning the frozen candidate;
+- check `C_l` vs `D_l`, units, TE sign convention, `ell` indexing, nuisance
+  vector handling, foreground handling and GR reference sanity.
+
+Current result:
+
+- standalone high-l TE available: `false`;
+- standalone high-l EE available: `false`;
+- all convention checks remain `false` until the likelihoods are connected;
+- high-l decomposition trial allowed: `false`;
+- full Planck validation allowed: `false`.
+
+Conclusion: the handshake is correctly blocked. The next action is external:
+connect standalone high-l TE/EE likelihoods, run the GR handshake, then rerun the
+same frozen candidate without retuning.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

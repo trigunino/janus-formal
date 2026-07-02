@@ -28,6 +28,7 @@ Statut separe par niveau de preuve :
 - `full_planck_validation_allowed = False`
 - `closed_boltzmann_candidate_robust = True`
 - `standalone_highl_TE_EE_acquired = False`
+- `standalone_highl_TE_EE_handshake_passed = False`
 - `full_observational_cosmology_no_fit_ready = False`
 
 Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
@@ -66,6 +67,9 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
   nouveau canal, pas d'ouverture slip/recombinaison/visibilité/miroir/primordial ;
 - prochain verrou externe : acquérir ou raccorder standalone high-l TE/EE, puis
   tester exactement le même candidat.
+- le handshake standalone TE/EE doit vérifier `C_l/D_l`, unités, signe TE,
+  indexation `ell`, nuisance vector, foregrounds et sanity GR avant tout trial
+  de décomposition high-l.
 
 Freeze rule after checkpoint `8ce53806`: no new Z4 physics or parameter
 retuning is allowed until standalone high-l TE/EE likelihood coverage is
@@ -114,6 +118,7 @@ python -m unittest tests.test_p0_eft_janus_z4_official_planck_closed_boltzmann_a
 python -m unittest tests.test_p0_eft_janus_z4_planck_likelihood_completeness_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_closed_boltzmann_candidate_robustness_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_acquisition_gate_script
+python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_handshake_gate_script
 ```
 
 `JanusFormal.LegacyCMB` est une archive compile-only des anciens essais

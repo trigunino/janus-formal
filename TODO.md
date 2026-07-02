@@ -322,6 +322,11 @@
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
   - rerun the frozen candidate unchanged before any new mechanism is opened.
+- [x] Add standalone TE/EE handshake gate:
+  - checks required: `C_l/D_l`, units, TE sign, `ell` indexing, nuisance vector, foreground handling, GR reference sanity;
+  - current status: blocked because standalone high-l TE/EE are unavailable;
+  - full high-l decomposition trial remains forbidden;
+  - frozen candidate invariants remain enforced.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;
