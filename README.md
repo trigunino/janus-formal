@@ -88,6 +88,8 @@ Current CMB/Z4 master-equation status:
   `dR/dS = 1 - (R/L)^2`, not yet full-action-derived;
 - regularized diagnostic spectra are generated only as internal spectra, not
   as Planck likelihood inputs;
+- the regularized diagnostic shape report clears the pre-likelihood shape
+  lock, while preserving the separate full-action normalization lock;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.

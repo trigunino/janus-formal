@@ -32,7 +32,7 @@
   `dR/dS = 1 - (R/L)^2`, `R = L*tanh(S/L)`.
 - [x] Regenerate diagnostic spectra from the membrane-transport regularized
   master source.
-- [ ] Add the regularized diagnostic shape report gate before any likelihood
+- [x] Add the regularized diagnostic shape report gate before any likelihood
   handshake.
 - [ ] Derive the membrane transport normalization from the full upstream Z4
   action; current status is transport-derived, not full-action-derived.
