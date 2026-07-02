@@ -278,6 +278,11 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - full derived-slip source is archived as carrier-tangent (`A_s` dominated);
   - surface term is kept only as an orthogonality diagnostic;
   - surface Sachs-Wolfe use is blocked until photon-monopole and Doppler consistency are derived.
+- photon-monopole Sachs-Wolfe closure:
+  - forms `g * (deltaTheta0_Z4 + deltaPsi_Z4)` and a Doppler diagnostic instead of isolated `g * deltaPsi_Z4`;
+  - keeps visibility and recombination frozen;
+  - closed full-surface response is less tangent than no-slip but only weakly (`parallel_fraction ~= 0.794`);
+  - remains pre-Planck and diagnostic-only.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

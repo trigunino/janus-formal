@@ -518,7 +518,14 @@
 - [x] Add surface Sachs-Wolfe consistency blocker:
   - `g * deltaPsi_Z4` alone is not physical without photon monopole/Doppler closure;
   - next gate must derive photon-monopole SW closure.
-- [ ] Implement `DerivedSlipPhotonMonopoleSWClosureGate`.
+- [x] Implement `DerivedSlipPhotonMonopoleSWClosureGate`:
+  - forms `g * (deltaTheta0_Z4 + deltaPsi_Z4)`;
+  - derives Doppler diagnostic from photon-baryon velocity response;
+  - keeps visibility/recombination frozen and Planck blocked.
+- [x] Decide whether closed full-surface remains less tangent than no-slip:
+  - full-surface parallel fraction is `0.794`, better than no-slip `0.904` but only weakly improved;
+  - no Planck trial yet.
+- [ ] Implement `DerivedSlipSurfaceCarrierTangentProjectionGate` or archive weak surface branch.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
