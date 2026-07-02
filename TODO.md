@@ -263,6 +263,33 @@
   - full Planck verdict remains false.
 - [ ] Open Boltzmann hierarchy closure roadmap:
   - promote `tight_coupling_derived_effective` only after deriving photon multipoles, polarization multipoles, collision terms and free-streaming transition.
+- [x] Add and run photon/polarization Boltzmann hierarchy closure gate:
+  - scalar mode only;
+  - `B` modes disabled or GR-only;
+  - `Theta_l` and `E_l` multipoles declared up to `lmax=24`;
+  - `Pi` source derived from multipoles;
+  - no free `Theta2` source tag;
+  - TCA, transition and free-streaming regimes declared;
+  - TCA switch smoothness passes;
+  - strong TCA suppression passes;
+  - `lmax` convergence passes;
+  - status: `boltzmann_hierarchy_closed_effective`;
+  - full Planck verdict remains false.
+- [ ] Run `official_planck_closed_boltzmann_acoustic_polarization_trial`:
+  - start at `lambda_T=-0.008`, `lambda_E=-0.02`;
+  - use small local scan only;
+  - compare against closed-Theta2 effective gain `~=-9.199`;
+  - do not label as full Z4 Planck verdict.
+- [x] Run `official_planck_closed_boltzmann_acoustic_polarization_trial`:
+  - best point remains `lambda_T=-0.008`, `lambda_E=-0.02`;
+  - closed-Boltzmann gain: `~=-9.201`;
+  - closed-Theta2 reference gain: `~=-9.199`;
+  - gain preservation ratio: `~=1.000`;
+  - interaction term: `~=-0.155`;
+  - TE/EE smoothness, TCA switch, strong TCA suppression and `lmax` convergence pass;
+  - standalone high-l TE/EE remains unavailable locally;
+  - promote only to `boltzmann_closed_effective_z4_cmb_candidate`;
+  - full Planck verdict remains false.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;

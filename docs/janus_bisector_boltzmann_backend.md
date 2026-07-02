@@ -1004,6 +1004,50 @@ removing the previous TE/EE smoothness blocker. This promotes the channel only
 to `effective_acoustic_polarization_candidate`; it is not a full Planck verdict.
 The next required lock is full photon/polarization Boltzmann hierarchy closure.
 
+## Photon/Polarization Boltzmann Hierarchy Closure Gate
+
+Current gate:
+`p0_eft_janus_z4_photon_polarization_boltzmann_hierarchy_closure_gate.json`.
+
+Result:
+
+- scalar mode only;
+- `B` modes disabled or treated as GR-only;
+- `Theta_l` and `E_l` multipoles declared through `lmax=24`;
+- collision terms declared with frozen GR visibility backend opacity;
+- `Pi` source derived from multipoles;
+- no free `Theta2` source tag;
+- no direct `TE`, `EE` or `C_l` patch;
+- TCA, transition and free-streaming regimes declared;
+- TCA switch smoothness passes;
+- strong TCA suppression passes;
+- `lmax` convergence passes;
+- frozen sectors remain frozen.
+
+Conclusion: the hierarchy is closed at the effective scalar photon/polarization
+level. This authorizes a closed-Boltzmann acoustic/polarization Planck trial,
+but still not a full native Z4 Planck verdict.
+
+## Official Planck Closed-Boltzmann Acoustic Polarization Trial
+
+Current trial:
+`p0_eft_janus_z4_official_planck_closed_boltzmann_acoustic_polarization_trial.json`.
+
+Result:
+
+- best point: `lambda_T = -0.008`, `lambda_E = -0.02`;
+- closed-Boltzmann gain: `~=-9.201`;
+- closed-Theta2 reference gain: `~=-9.199`;
+- gain preservation ratio: `~=1.000`;
+- interaction term: `~=-0.155`;
+- transport guards pass;
+- likelihood trial conditions pass;
+- standalone high-l TE/EE likelihood files remain unavailable locally.
+
+Conclusion: the gain survives the effective Boltzmann hierarchy closure. This
+promotes the channel to `boltzmann_closed_effective_z4_cmb_candidate`, not to a
+full native-Z4 Planck validation.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

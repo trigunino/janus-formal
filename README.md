@@ -22,6 +22,8 @@ Statut separe par niveau de preuve :
 - `janus_z4_cmb_solver_status = InProgress`
 - `acoustic_polarization_joint_gate_passed = False`
 - `closed_theta2_acoustic_polarization_candidate = True`
+- `photon_polarization_boltzmann_hierarchy_closed_effective = True`
+- `boltzmann_closed_effective_z4_cmb_candidate = True`
 - `full_observational_cosmology_no_fit_ready = False`
 
 Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
@@ -45,8 +47,13 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
   ferme donne `delta_chi2 ~= -9.20`, interaction `~=-0.155`, et les gardes
   TE/EE passent ;
 - statut exact : candidat acoustique/polarisation effectif, pas verdict Planck ;
-- prochain verrou CMB : fermeture complete de la hierarchie Boltzmann photon /
-  polarisation.
+- la hierarchie Boltzmann photon/polarisation est maintenant fermee au niveau
+  effectif scalaire (`Theta_l`, `E_l`, source `Pi`, TCA -> free-streaming,
+  convergence `lmax`) ;
+- le trial Planck ferme-Boltzmann local preserve le gain
+  (`delta_chi2 ~= -9.20`, ratio de preservation `~=1.000`) ;
+- statut exact : `boltzmann_closed_effective_z4_cmb_candidate`, pas validation
+  Planck globale.
 
 Point d'entree principal :
 
@@ -86,6 +93,8 @@ lake build JanusFormal
 python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_joint_consistency_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_closed_theta2_joint_gate_script
+python -m unittest tests.test_p0_eft_janus_z4_photon_polarization_boltzmann_hierarchy_closure_gate_script
+python -m unittest tests.test_p0_eft_janus_z4_official_planck_closed_boltzmann_acoustic_polarization_trial_script
 ```
 
 `JanusFormal.LegacyCMB` est une archive compile-only des anciens essais

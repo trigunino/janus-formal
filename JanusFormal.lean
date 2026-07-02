@@ -7,3 +7,5 @@ Historical/full import graph is preserved in `JanusFormal.AllImportsArchive`.
 import JanusFormal.Basic
 import JanusFormal.P0EFTGlobalTopologyMasterLock
 import JanusFormal.P0EFTJanusZ4AcousticPolarizationClosedTheta2JointGate
+import JanusFormal.P0EFTJanusZ4PhotonPolarizationBoltzmannHierarchyClosureGate
+import JanusFormal.P0EFTJanusZ4OfficialPlanckClosedBoltzmannAcousticPolarizationTrial
