@@ -274,6 +274,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - compares surface, early-ISW, Pi and full-slip source signatures against GR/CAMB carrier tangents;
   - logs active normal orientation and orientation-flip diagnostic only;
   - remains diagnostic-only and does not allow Planck promotion.
+- full derived-slip archive / surface diagnostic:
+  - full derived-slip source is archived as carrier-tangent (`A_s` dominated);
+  - surface term is kept only as an orthogonality diagnostic;
+  - surface Sachs-Wolfe use is blocked until photon-monopole and Doppler consistency are derived.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

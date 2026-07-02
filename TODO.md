@@ -509,7 +509,16 @@
   - compares surface, early-ISW, Pi and full-slip source signatures against GR/CAMB carrier tangents;
   - includes normal orientation flip as diagnostic-only;
   - keeps Planck trial and candidate promotion blocked.
-- [ ] Decide next action from derived-slip tangent projection result.
+- [x] Archive full derived-slip source as carrier-tangent:
+  - full source is `A_s` dominated and not promotable;
+  - Planck trial remains blocked.
+- [x] Add surface-term orthogonality diagnostic:
+  - surface term is orthogonal enough to inspect;
+  - orthogonal residual remains blocked until SW consistency closes.
+- [x] Add surface Sachs-Wolfe consistency blocker:
+  - `g * deltaPsi_Z4` alone is not physical without photon monopole/Doppler closure;
+  - next gate must derive photon-monopole SW closure.
+- [ ] Implement `DerivedSlipPhotonMonopoleSWClosureGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
