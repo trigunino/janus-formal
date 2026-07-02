@@ -78,7 +78,12 @@ def _tangent_matrix(reference: list[dict[str, float]], scales: dict[str, float])
 
 
 def _projection_stats(vector: np.ndarray, matrix: np.ndarray, tangent_norms: dict[str, float]) -> dict:
-    coefficients, *_ = np.linalg.lstsq(matrix, vector, rcond=None)
+    try:
+        coefficients, *_ = np.linalg.lstsq(matrix, vector, rcond=None)
+        solver = "lstsq"
+    except np.linalg.LinAlgError:
+        coefficients = np.linalg.pinv(matrix) @ vector
+        solver = "pinv_fallback"
     projected = matrix @ coefficients
     perpendicular = vector - projected
     norm_sq = float(np.dot(vector, vector))
@@ -91,6 +96,7 @@ def _projection_stats(vector: np.ndarray, matrix: np.ndarray, tangent_norms: dic
         "dominant_tangent_direction": max(contributions, key=contributions.get),
         "tangent_contribution_scores": contributions,
         "orthogonal_residual_norm": float(np.linalg.norm(perpendicular)),
+        "projection_solver": solver,
     }
 
 

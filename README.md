@@ -135,6 +135,8 @@ Current CMB/Z4 master-equation status:
   readiness while still forbidding likelihood evaluation and Planck trial;
 - `MasterDiagnosticLikelihoodTrialV2Gate` runs only an internal GR-reference
   pseudo-likelihood diagnostic and makes no observational claim;
+- `MasterOfficialLikelihoodPolicyV2Gate` blocks official Planck use until a v2
+  wrapper, GR handshake, nuisance policy, and no-retuning replay are declared;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until an explicit official-likelihood policy gate is opened and
   passed separately.
