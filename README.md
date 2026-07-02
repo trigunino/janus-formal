@@ -66,6 +66,19 @@ Validation plus large :
 lake build
 ```
 
+Validation Lean active :
+
+```bash
+lake build JanusFormal
+```
+
+`JanusFormal.lean` est volontairement une facade active minimale. Le graphe
+complet historique reste disponible dans :
+
+```bash
+lake build JanusFormal.AllImportsArchive
+```
+
 Validation CMB/Z4 active :
 
 ```bash
