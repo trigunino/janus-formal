@@ -332,6 +332,11 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - tests value, normal-derivative, jump, membrane-weighted and mixed observable projections;
   - current result: no tested projection preserves a non-carrier-tangent Z4-odd mode;
   - next required gate: minus-sector independent transfer, still no spectra or Planck.
+- minus-sector independent transfer:
+  - tests whether `T_minus` is only a best-fit rescaling of `T_plus`;
+  - reports residual after amplitude fit, phase lag and effective transfer rank for density, velocity, shear, Weyl, Theta0, Pi and projection source;
+  - current result: no component has independent transfer rank; all tested components are rank-1 / amplitude-rescaling dominated;
+  - next required work is minus-sector microphysics, still no spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

@@ -588,7 +588,17 @@
   - no tested projection preserves a non-carrier-tangent antisymmetric mode;
   - best projection remains `parallel_fraction ~= 0.999`;
   - next required gate is `MinusSectorIndependentTransferGate`.
-- [ ] Implement `MinusSectorIndependentTransferGate`.
+- [x] Implement `MinusSectorIndependentTransferGate`:
+  - compares `T_minus` against best-fit `c*T_plus` for density, velocity, shear, Weyl, Theta0, Pi and projection source;
+  - reports residual, phase lag and effective rank;
+  - keeps spectra, Planck, projection retuning and free minus amplitude blocked.
+- [x] Decide minus-sector transfer outcome:
+  - no tested component has independent transfer rank;
+  - density, velocity, shear, Weyl, Theta0, Pi and projection source remain rank-1 / amplitude-rescaling dominated;
+  - next required work is deriving minus-sector microphysics, not trying Planck.
+- [ ] Derive minus-sector microphysics:
+  - independent sound speed, pressure, shear/free-streaming, thermal ratio or decoupling law;
+  - must preserve conservation/Bianchi and forbid free normalization knobs.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
