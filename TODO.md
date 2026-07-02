@@ -67,10 +67,11 @@
 - [x] Scan upstream master high-l acoustic shape revisions:
   channel-wise `_unit` normalization is replaced by shared `U_Z4`
   normalization plus a Silk/high-l guard.
-- [ ] Regenerate source-level master v2 from the selected upstream revision
+- [x] Regenerate source-level master v2 from the selected upstream revision
   before any new observed rerun.
-- [ ] Revise the upstream master high-l acoustic shape before any new observed
-  promotion path.
+- [x] Run carrier-tangent projection on the revised source-level master v2.
+- [x] Regenerate v2 diagnostic spectra from the revised master source.
+- [ ] Audit v2 diagnostic spectra shape/non-overlap before any likelihood gate.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 

@@ -119,9 +119,15 @@ Current CMB/Z4 master-equation status:
 - `MasterHighLAcousticRevisionScanGate` finds an upstream non-tangent revision:
   shared `U_Z4` normalization plus a high-l/Silk guard; no Planck rerun is
   allowed directly from the scan;
+- `MasterRevisedSourceLevelRegenerationGate` regenerates all source channels
+  from that revised upstream `U_Z4` v2 and still forbids spectra/Planck;
+- `MasterRevisedCarrierTangentProjectionGate` verifies the v2 source is less
+  carrier-tangent (`parallel_fraction < 0.7`) before any diagnostic spectra;
+- `MasterRegularizedDiagnosticSpectraV2Gate` serializes GR and GR+Z4-v2
+  diagnostic spectra after that projection, but still forbids likelihood use;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until the regularized source is regenerated and its normalization
-  is tied back to the upstream Z4 action.
+  forbidden until v2 diagnostic spectra are audited under shape/non-overlap
+  accounting.
 
 Point d'entree principal :
 
