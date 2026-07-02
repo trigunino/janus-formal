@@ -399,6 +399,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - writes internal GR and GR+master-Z4 diagnostic spectra;
   - replays carrier projection after serialization;
   - still forbids official Planck, likelihood evaluation, promotion and retuning.
+- master diagnostic shape report:
+  - reports TT/TE/EE ratio ranges, peak shifts and zero-count changes;
+  - diagnostic-only, no likelihood evaluation.
+- master pre-likelihood lock:
+  - active while diagnostic spectra contain zero-crossing or large fractional shape artifacts;
+  - current lock reason: TT/EE extra zero crossings and large fractional deviations.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

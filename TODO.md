@@ -735,6 +735,13 @@ Required formal gates:
   - writes internal GR and GR+master-Z4 diagnostic spectra;
   - replays carrier projection after CSV serialization;
   - keeps official Planck, likelihood evaluation, promotion and retuning blocked.
+- [x] Add `P0EFTJanusZ4MasterDiagnosticShapeReportGate`:
+  - reports TT/TE/EE ratio stats, peak shifts and zero-count changes;
+  - remains diagnostic-only and forbids likelihood evaluation.
+- [x] Add `P0EFTJanusZ4MasterPreLikelihoodLockGate`:
+  - blocks likelihoods when diagnostic spectra have zero-crossing or large fractional shape artifacts;
+  - current lock is active because TT/EE acquire extra zero crossings.
+- [ ] Revise master shape regularization before any likelihood handshake.
 
 Completion rule:
 - [x] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
