@@ -493,7 +493,11 @@
   - operator type selected: `boundary_normal`;
   - declares `L_slip_Z4 G_slip_Z4 = delta`;
   - blocks until boundary jumps, normalization, homogeneous-mode removal and regularity are derived.
-- [ ] Derive boundary Green or normal-mode transport from derivative/source slip to value-level `delta_slip_Z4`.
+- [x] Derive boundary-normal Green kernel transport:
+  - solves finite-interval `L_slip_Z4 = -d_n^2 + k^2` with Z4 Dirichlet boundaries;
+  - fixes normalization by the derivative jump and removes homogeneous mode by boundary conditions;
+  - value-level `deltaSlip_Z4` transport is mathematically available, but Planck remains blocked.
+- [ ] Implement `DerivedSlipValueTransportGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

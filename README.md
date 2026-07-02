@@ -258,6 +258,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - boundary Green operator closure gate:
   - operator type selected: `boundary_normal`;
   - `L_slip_Z4` is declared, but `L_slip_Z4 G = delta`, normalization, homogeneous-mode removal and regularity remain open.
+- boundary-normal Green kernel solution:
+  - finite-interval operator `L_slip_Z4 = -d_n^2 + k^2` solved with Z4 Dirichlet boundaries;
+  - homogeneous mode removed by boundary conditions and value-level `deltaSlip_Z4` transport is now mathematically available;
+  - Planck trials remain forbidden until source-level slip regeneration and tangent projection gates pass.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
