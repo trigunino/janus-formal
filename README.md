@@ -351,6 +351,11 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - minus-sector decoupling law:
   - blocks further progress until a derived minus-sector visibility, opacity, drag epoch or recombination law exists;
   - forbids free decoupling shifts and visibility patches.
+- frozen two-sector CMB/Z4 branch:
+  - status: `diagnostic_archived`;
+  - reason: projection, slip/surface, sound-speed/Jeans, shear/free-streaming and thermal-ratio routes all remain carrier-tangent;
+  - no additional CMB/Z4 physics, spectra, Planck trials, retuning or projection tweaks should be added on this branch;
+  - reopen only with an action-derived minus-sector decoupling/recombination law.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

@@ -629,7 +629,11 @@
 - [x] Add `MinusSectorDecouplingLawGate` blocker:
   - requires a derived minus-sector visibility/opacity/drag/recombination law;
   - forbids free decoupling shifts and visibility patches.
-- [ ] Derive minus-sector decoupling/recombination law or archive two-sector CMB route.
+- [x] Freeze/archive current two-sector CMB/Z4 branch:
+  - status: `diagnostic_archived`;
+  - projection, slip/surface, sound-speed/Jeans, shear/free-streaming and thermal-ratio routes remain carrier-tangent;
+  - no spectra, Planck, promotion, retuning, projection tweaks or new effective CMB/Z4 gates on this branch.
+- [ ] Reopen only if an action-derived minus-sector decoupling/recombination law is available.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
