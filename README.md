@@ -111,6 +111,11 @@ Current CMB/Z4 master-equation status:
   is allowed;
 - `MasterObservedPlanckDiagnosticTrialGate` is opt-in for observed execution and
   never promotes directly; clean non-overlap accounting is required next;
+- the first observed diagnostic execution rejects the current normalized master
+  branch with large positive high-l non-overlap chi2;
+- `MasterObservedNonOverlapAccountingGate` records that rejection without
+  promotion;
+- `MasterObservedFailureMapGate` localizes the failure to high-l acoustic shape;
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until the regularized source is regenerated and its normalization
   is tied back to the upstream Z4 action.

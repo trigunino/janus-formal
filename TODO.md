@@ -58,6 +58,14 @@
   non-overlap result.
 - [ ] Execute observed diagnostic trial explicitly if needed, then add
   `MasterObservedNonOverlapAccountingGate`.
+- [x] Execute observed diagnostic trial once locally:
+  combined non-overlap is strongly positive, so the observed master branch is
+  rejected as currently normalized.
+- [x] Add `MasterObservedNonOverlapAccountingGate`; it records rejection and
+  never promotes directly.
+- [x] Add `MasterObservedFailureMapGate` to localize the high-l failure.
+- [ ] Revise the upstream master high-l acoustic shape before any new observed
+  promotion path.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 
