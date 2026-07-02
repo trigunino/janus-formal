@@ -247,6 +247,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - plus/minus scalar variables, projection/mixing and stress sources are declared;
   - traceless spatial slip equation gate passes at source level;
   - regeneration readiness remains blocked until boundary Green/normal-mode transport is derived.
+- slip transport kernel gate:
+  - source-level slip is available, but value-level `deltaSlip_Z4(k,tau)` transport is not;
+  - both acceptable routes are explicit: boundary Green transport or normal-mode transport;
+  - Planck trials remain forbidden until a causal normalized transport kernel is derived.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
