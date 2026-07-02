@@ -74,8 +74,10 @@
 - [x] Audit v2 diagnostic spectra shape/non-overlap before any likelihood gate.
 - [x] Add/clear the v2 pre-likelihood lock before any observed likelihood gate.
 - [x] Derive/check v2 action normalization before any likelihood handshake.
-- [ ] Only after v2 action normalization: run the next likelihood handshake
+- [x] Only after v2 action normalization: run the next likelihood handshake
   gate. No Planck claim before that.
+- [ ] Open only a diagnostic v2 likelihood trial gate; no official Planck
+  claim or candidate promotion.
 
 ## Priority 1 - Define the bi-sector model
 

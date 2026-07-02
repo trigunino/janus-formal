@@ -131,8 +131,10 @@ Current CMB/Z4 master-equation status:
   next action-normalization/handshake step, not Planck evaluation;
 - `MasterActionNormalizationV2Gate` ties the v2 normalization to the selected
   upstream master revision, shared `U_Z4`, and `L_transport = 2/3`;
+- `MasterLikelihoodHandshakeV2Gate` marks v2 diagnostic likelihood input
+  readiness while still forbidding likelihood evaluation and Planck trial;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until the v2 likelihood/wrapper handshake is explicitly passed.
+  forbidden until an explicit diagnostic trial gate is opened separately.
 
 Point d'entree principal :
 
