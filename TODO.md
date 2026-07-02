@@ -417,6 +417,12 @@
   - checkpoint deltas replay at reference cosmology;
   - `z4_delta_source = reference_cosmology_replay`;
   - local cosmology profiling remains blocked until Z4 deltas regenerate per cosmology.
+- [x] Add regenerative Z4 delta per cosmology gate:
+  - effective closed-Boltzmann spectral deltas change under cosmology mutations;
+  - delta cache key includes cosmology and lambda hashes;
+  - no stale effective delta reuse;
+  - strict source-level `delta_S_T_Z4` and `Pi` regeneration remains open;
+  - local cosmology profiling remains blocked.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

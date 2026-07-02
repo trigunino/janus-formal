@@ -196,6 +196,9 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - `lambda_T = -0.008`, `lambda_E = -0.02`, no retuning;
   - checkpoint high-l deltas are replayed at reference cosmology;
   - `z4_delta_source = reference_cosmology_replay`, so cosmology profiling remains blocked.
+- regenerative Z4 delta per cosmology:
+  - effective closed-Boltzmann spectral deltas regenerate with cosmology;
+  - strict source-level Z4/Pi regeneration is still open, so local cosmology profiling remains blocked.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
