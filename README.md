@@ -13,9 +13,11 @@ Depot de travail pour formaliser et tester un pipeline Janus autour de :
 Statut separe par niveau de preuve :
 
 - `formal_topology_scaffold_complete = True`
-- `aps_global_theorem_proved = True`
-- `orbifold_global_theorem_proved = True`
-- `holst_geometric_lock_closed = True`
+- `aps_global_theorem_proved_without_axioms = False`
+- `orbifold_global_theorem_proved_without_axioms = False`
+- `unique_action_variation_proved_without_axioms = False`
+- `pure_math_model_closed_without_axioms = False`
+- `holst_geometric_lock_closed = Conditional`
 - `late_time_growth_branch_observationally_viable = True`
 - `cmb_bao_monommetric_camb_hooks_sufficient = False`
 - `bi_sector_boltzmann_backend_required = Open`
@@ -33,10 +35,10 @@ Statut separe par niveau de preuve :
 - `standalone_highl_TE_EE_handshake_passed = False`
 - `full_observational_cosmology_no_fit_ready = False`
 
-Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
-ouvert n'est pas la topologie APS/orbifold, mais la validation observationnelle
-complete avec un backend cosmologique capable de representer correctement le
-caractere bi-secteur Janus-orbifold.
+Les verrous mathematiques internes formalises sous Lean sont fermes comme
+echafaudage conditionnel. Les preuves globales APS/Pin, orbifold 2:1 et action
+unique sans axiomes restent ouvertes; la validation observationnelle complete
+reste donc bloquee.
 
 Les derniers gates CMB/BAO montrent que les hooks mono-metriques CAMB sont utiles
 comme diagnostics EFT, mais insuffisants comme preuve finale du modele complet.
@@ -147,6 +149,98 @@ Current CMB/Z4 master-equation status:
   directly, even when an observed run is explicitly requested;
 - `MasterObservedNonOverlapAccountingV2Gate` is the mandatory accounting layer
   for any explicit observed diagnostic run and never promotes directly;
+- `MasterObservedFailureMapV2Gate` locks the explicit observed v2 rejection:
+  high-l acoustic shape dominates, promotion/retuning/new physics remain blocked;
+- `MasterHighLAcousticFailureAutopsyGate` decomposes the rejection into
+  TT/TE/EE peak, zero-crossing, damping-tail and attribution gaps; it remains
+  explanatory only and blocks Planck retry/retuning;
+- `MasterPhotonBaryonMatchingGate` blocks the current `U_Z4 -> photon-baryon`
+  mapping after the acoustic phase failure and requires upstream rederivation;
+- `MasterSourceComponentDiagnosticSpectraGate` writes diagnostic-only
+  SW/early-ISW/Doppler/Pi/Weyl component spectra without enabling likelihoods;
+- `MasterPhotonBaryonAcousticCalculatorGate` starts the calculator-side rebuild:
+  it reconstructs `Theta0`, Doppler and `Pi` from an oscillator/quadrature
+  basis, writes a diagnostic payload, and still blocks spectra/Planck;
+- `MasterAcousticCalculatorComponentSpectraGate`,
+  `MasterAcousticCalculatorShapePhaseDampingGate`,
+  `MasterSolverProvenanceManifestGate`, and
+  `MasterSolverImplementationReadinessGate` close the internal solver checkpoint:
+  `solver_implemented = true` only for diagnostic CMB generation, not Planck
+  validation;
+- `MasterUnlensedLensedSplitGate` and `MasterLensingRemapPolicyGate` add
+  explicit unlensed/lensed diagnostic spectra and record that the current remap
+  is an internal policy, not a physical lensing solver;
+- `MasterFutureObservedPlanckDiagnosticReadinessGate` allows only a future
+  observed diagnostic run under split/provenance/non-retuning guards; validation
+  and promotion remain false;
+- `P0EFTJanusZ4CompleteCMBSolverStack` records the complete solver stack:
+  Z4 Boltzmann evolution, visibility/recombination, Weyl LOS lensing,
+  per-cosmology regeneration, and a likelihood-ready theory vector. This enables
+  diagnostic likelihood evaluation only; Planck validation remains false until
+  an observed likelihood run succeeds.
+- `P0EFTJanusZ4CompleteGRLimitShapeGate` checks the Z4-off/native GR limit
+  against regenerated CAMB-GR shape before interpreting any Z4-on observed
+  Planck result.
+- The Z4-off limit is now explicitly anchored to the regenerative CAMB-GR
+  provider. The internal LOS prototype is not used as the GR acoustic solver.
+- `P0EFTJanusZ4CompleteConventionHandshake` records the GR-reference `C_l`
+  convention calibration used to convert the internal proxy vector into a
+  diagnostic CAMB-compatible convention; this is not a Planck validation.
+- `P0EFTJanusZ4CompleteObservedPlanckDiagnosticGate` exports the calibrated
+  complete solver vector into the observed Planck wrapper CSV convention and is
+  opt-in only; `P0EFTJanusZ4CompleteObservedNonOverlapAccountingGate` forbids
+  overlapping high-l totals from being used as validation.
+- The explicit observed diagnostic rejects the current complete-solver branch:
+  low-l is non-finite for the candidate and the available high-l+lensing
+  non-overlap deltas are strongly positive; full Planck validation remains
+  false.
+- `P0EFTJanusZ4SolverInputManifestGate` now blocks Z4 observed interpretation
+  until physical inputs, Z4 initial conditions, projection, minus-sector
+  microphysics, and calibration policy are explicit. The current branch is
+  blocked by hidden/default Z4 inputs and LS channel calibration.
+- `P0EFTJanusZ4PureMathClosureAuditGate` records the pure math status:
+  APS/Pin, orbifold 2:1, and action scaffolds are present, but the axiom-free
+  global theorems remain open, so no-fit remains false.
+- `P0EFTJanusZ4HardGlobalTheoremAvailabilityGate` records that no direct
+  Lean/mathlib import currently closes APS/Pin, orbifold 2:1, or the unique
+  Janus/Z4/Holst action theorem for this project geometry.
+- `P0EFTJanusZ4HardGlobalTheoremReductionGate` reduces the closure problem to
+  atomic obligations: APS index package, Janus cover ratio, full action
+  variation, and full Ward closure.
+- `P0EFTJanusZ4FullActionAtomicClosureGate` further reduces the action branch
+  to linearized action, determinant measure, boundary closure, nonlinear
+  Euler-Lagrange residual, and Ward closure.
+- `P0EFTJanusZ4DeterminantMeasureAssemblyBridge` closes the determinant-measure
+  insertion bridge into the full action assembly.
+- `P0EFTJanusZ4VolumeSolderCountertermBridge` derives the identity-channel
+  EFT counterterm from the Janus volume-solder invariant at the algebraic
+  boundary-identity level.
+- `P0EFTJanusZ4BoundaryPureClosureObstructionGate` records the current boundary
+  obstruction: standard sources alone leave an identity residue, the Janus
+  counterterm bridge is available, but the nonlinear boundary variation remains
+  open.
+- `P0EFTJanusZ4NonlinearBoundaryVariationObligationGate` reduces that remaining
+  boundary problem to full tetrad, Cartan-connection, membrane-junction,
+  gauge-fixing, and second-variation residual obligations.
+- `P0EFTJanusZ4WardAtomicClosureGate` reduces the Ward branch to weighted
+  current cancellation, global divergence, anomaly, and obstruction obligations.
+- `P0EFTJanusZ4NonlinearELResidualObligationGate` imports the nonlinear residual
+  factorization into the active proof surface: both EL residuals reduce to one
+  common obstruction `O_nl`, whose vanishing is still open.
+- `P0EFTJanusZ4GaugeFixingVariationUniquenessGate` isolates the action gauge
+  branch: gauge insertion and observation-independent convention are scaffolded,
+  but residual gauge removal by Janus geometry remains open.
+- `P0EFTJanusZ4APSIndexPackageObligationGate` records the APS/Pin status:
+  local spectral-pairing and kernel-trivialization interfaces are available,
+  but the global Pin lift, APS Fredholm domain, parity anomaly, and trace
+  regularization theorem remain open.
+- `P0EFTJanusZ4OrbifoldCoverRatioObligationGate` records the orbifold status:
+  Z2 cover, fixed-set, flux-law, and local two-to-one multiplicity interfaces
+  are available, but the global Euler/holonomy class and uniqueness of the
+  volume ratio remain open.
+- `P0EFTJanusZ4HardExternalTheoremTargetRegistry` records the exact theorem
+  targets that an imported result or future local proof must satisfy before any
+  no-fit promotion can be considered.
 - official Planck likelihood, candidate promotion, and full validation remain
   forbidden until an explicit official-likelihood policy gate is opened and
   passed separately.

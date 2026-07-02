@@ -3,6 +3,7 @@
 ## Current verdict
 
 - Formal topology scaffold: closed.
+- Pure math no-axiom closure: open.
 - Late-time growth / SDSS-eBOSS branch: viable as EFT diagnostic.
 - BAO `r_d`: requires a real pre-drag background contraction.
 - CMB Planck: native Z4 gate executed after primordial-imprint lock; current
@@ -12,6 +13,35 @@
 - Native GR decomposition: required now; Planck rejection is suspended as a
   physical Janus/Z4 verdict until this baseline is repaired.
 - Therefore: do not claim full no-fit cosmology yet.
+
+## Pure math closure
+
+- [x] Add `P0EFTJanusZ4PureMathClosureAuditGate`.
+- [x] Add `P0EFTJanusZ4HardGlobalTheoremAvailabilityGate`.
+- [x] Add `P0EFTJanusZ4HardGlobalTheoremReductionGate`.
+- [x] Add hard external theorem target registry.
+- [x] Reduce APS/Pin index package to atomic global obligations.
+- [x] Reduce orbifold 2:1 theorem to atomic global cover-ratio obligations.
+- [x] Add `P0EFTJanusZ4FullActionAtomicClosureGate`.
+- [x] Close determinant-measure insertion bridge into full action assembly.
+- [x] Add boundary pure-closure obstruction gate.
+- [x] Derive the identity-channel EFT counterterm from the Janus volume-solder
+  invariant at the algebraic boundary-identity level.
+- [x] Reduce nonlinear boundary variation to atomic tetrad/connection/membrane
+  obligations.
+- [x] Reduce Ward closure to atomic weighted-current, divergence, anomaly, and
+  obstruction obligations.
+- [x] Reduce nonlinear Euler-Lagrange residuals to one common obstruction `O_nl`.
+- [x] Reduce gauge-fixing variation uniqueness to an atomic obligation.
+- [ ] Close the nonlinear boundary variation so the full boundary action is
+  closed beyond the algebraic identity-channel counterterm bridge.
+- [ ] Prove residual gauge freedom is removed by Janus geometry.
+- [ ] Prove the common nonlinear Euler-Lagrange obstruction `O_nl = 0`.
+- [ ] Close the Ward/global anomaly branch without axioms.
+- [ ] Prove APS/Pin global theorem without axioms.
+- [ ] Prove orbifold global 2:1 theorem without axioms.
+- [ ] Prove unique Janus/Z4/Holst action variation to equations without axioms.
+- [ ] Only after all three: consider `full_cosmology_prediction_ready_no_fit = true`.
 
 ## Active CMB/Z4 master-equation lock
 
@@ -87,6 +117,23 @@
   non-overlap accounting before any interpretation.
 - [ ] Keep official Planck validation false unless a later explicit observed
   run passes non-overlap and additional stability gates.
+- [x] Add complete-solver observed Planck diagnostic/export gate and complete
+  non-overlap accounting gate. These are diagnostic-only and keep validation
+  and promotion false.
+- [x] Execute the complete-solver observed diagnostic once:
+  available high-l+lensing combined delta is positive, available decomposed
+  delta is positive, low-l is non-finite, and the branch is rejected.
+- [x] Add the complete-solver Z4-off GR-limit shape gate. Z4-on Planck
+  interpretation is blocked unless the native GR limit matches CAMB-GR shape.
+- [x] Anchor the Z4-off GR limit to the regenerative CAMB-GR provider instead
+  of the internal LOS proxy.
+- [x] Add `SolverInputManifestGate`; current Z4-on Planck interpretation is
+  blocked by hidden/default Z4 inputs, unspecified minus-sector microphysics,
+  hardcoded initial mode, and LS channel calibration.
+- [ ] Replace LS channel calibration with unit-only conversion or a declared
+  physical amplitude.
+- [ ] Declare Z4 initial mode, boundary conditions, projection map, and
+  minus-sector microphysics before the next observed Z4-on interpretation.
 
 ## Priority 1 - Define the bi-sector model
 
@@ -849,6 +896,52 @@ Completion rule:
   - native Z4 spectra are not used by default;
   - toy native source engine remains blocked;
   - high-l TE/EE standalone clik files are unavailable locally.
+- [x] Run explicit observed Planck diagnostic for master v2:
+  - observed trial executed;
+  - non-overlap combined high-l = `9183.131824821805`;
+  - non-overlap decomposed high-l = `9609.043119904283`;
+  - branch rejected, dominated by high-l acoustic shape.
+- [x] Add `MasterObservedFailureMapV2Gate`:
+  - locks the observed v2 rejection;
+  - keeps candidate promotion, retuning, new physics, and full Planck validation blocked.
+- [x] Add `MasterHighLAcousticFailureAutopsyGate`:
+  - decomposes TT/TE/EE peak shifts, TE zero shifts and damping-tail residuals;
+  - records that current spectra are lensed-total only, so unlensed/source split is still open;
+  - keeps Planck retry, retuning, new physics and promotion blocked.
+- [x] Add `MasterPhotonBaryonMatchingGate`:
+  - verifies the declared `U_Z4 -> Theta0/Doppler/Pi/PhiPsi` mapping;
+  - inherits the acoustic phase failure and blocks spectra/Planck retry;
+  - requires upstream photon-baryon rederivation.
+- [x] Add `MasterSourceComponentDiagnosticSpectraGate`:
+  - writes diagnostic-only `surface_SW`, `early_ISW`, `Doppler`, `polarization_Pi`, `lens_Weyl` spectra;
+  - no observed likelihood, no promotion, no retuning.
+- [x] Add `MasterPhotonBaryonAcousticCalculatorGate`:
+  - starts a calculator rebuild with oscillator phase and Doppler quadrature;
+  - writes `p0_eft_janus_z4_master_acoustic_calculator_payload.json`;
+  - remains diagnostic-only and blocks spectra/Planck.
+- [x] Add solver implementation checkpoint:
+  - `MasterAcousticCalculatorComponentSpectraGate`;
+  - `MasterAcousticCalculatorShapePhaseDampingGate`;
+  - `MasterSolverProvenanceManifestGate`;
+  - `MasterSolverImplementationReadinessGate`;
+  - `solver_implemented = true` only for internal diagnostic CMB generation.
+- [x] Add unlensed/lensed and future observational readiness:
+  - `MasterUnlensedLensedSplitGate`;
+  - `MasterLensingRemapPolicyGate`;
+  - `MasterFutureObservedPlanckDiagnosticReadinessGate`;
+  - future observed diagnostic allowed only under split/provenance/non-retuning guards;
+  - full Planck validation and promotion remain false.
+- [x] Add complete Z4 CMB solver stack:
+  - Z4 Boltzmann evolution core;
+  - visibility/recombination handling;
+  - Weyl line-of-sight lensing with unlensed Cl, C_L phiphi and lensed TT/TE/EE;
+  - per-cosmology regeneration checks;
+  - likelihood-ready theory vector gate with Planck validation still false.
+- [x] Add GR-reference convention handshake:
+  - calibrates proxy theory vector to `dimensionless_Cl_CAMB_convention_calibrated`;
+  - checks `C_l` convention, ell indexing and channel lengths;
+  - still no Planck validation or promotion.
+- [ ] Archive the current master-v2 CMB mapping or derive an unlensed/source-level backend.
 
 ## Priority 5 - Documentation locks
 
