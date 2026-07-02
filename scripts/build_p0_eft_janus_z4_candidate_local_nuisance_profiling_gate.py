@@ -98,39 +98,95 @@ def _chi2(model, names: list[str], vector: np.ndarray) -> float:
     return -2.0 * total if math.isfinite(total) else math.inf
 
 
-def _profile(components: tuple[str, ...], spectra_path: str) -> dict:
+def _profile(
+    components: tuple[str, ...],
+    spectra_path: str,
+    *,
+    fixed_names: set[str] | None = None,
+    boundary_guard_epsilon: float = 0.0,
+    prior_penalty_weight: float = 0.0,
+) -> dict:
+    fixed_names = fixed_names or set()
     info = _base_info(components, spectra_path)
     names, x0, bounds = _nuisance_space(info)
     model = get_model(info)
+    fixed_values = {name: value for name, value in zip(names, x0) if name in fixed_names}
+    free = [(name, value, bound) for name, value, bound in zip(names, x0, bounds) if name not in fixed_names]
+    free_names = [row[0] for row in free]
+    free_x0 = [row[1] for row in free]
+    free_bounds = []
+    for _name, _value, (lo, hi) in free:
+        width = hi - lo
+        eps = min(max(boundary_guard_epsilon * width, 0.0), 0.25 * width)
+        free_bounds.append((lo + eps, hi - eps))
+
+    def expand(vector: np.ndarray) -> np.ndarray:
+        values = dict(fixed_values)
+        values.update({name: float(value) for name, value in zip(free_names, vector)})
+        return np.array([values[name] for name in names], dtype=float)
+
+    def objective(vector: np.ndarray) -> float:
+        expanded = expand(vector)
+        chi2 = _chi2(model, names, expanded)
+        if prior_penalty_weight <= 0.0:
+            return chi2
+        penalty = 0.0
+        for value, start, (lo, hi) in zip(expanded, x0, bounds):
+            scale = max((hi - lo) / 4.0, 1.0e-12)
+            penalty += ((value - start) / scale) ** 2
+        return chi2 + prior_penalty_weight * penalty
+
     if not names:
         chi2 = _chi2(model, [], np.array([], dtype=float))
         return {
             "chi2": chi2,
+            "raw_chi2": chi2,
+            "prior_penalty": 0.0,
             "nuisance_names": [],
             "bestfit_nuisance_vector": {},
             "nuisance_boundary_hits": [],
+            "fixed_nuisances": [],
             "optimizer_success": True,
             "optimizer_message": "no nuisance parameters",
         }
-    x0_arr = np.array(x0, dtype=float)
+    if not free_names:
+        best = np.array(x0, dtype=float)
+        raw = _chi2(model, names, best)
+        return {
+            "chi2": raw,
+            "raw_chi2": raw,
+            "prior_penalty": 0.0,
+            "nuisance_names": names,
+            "bestfit_nuisance_vector": {name: float(value) for name, value in zip(names, best)},
+            "nuisance_boundary_hits": [],
+            "fixed_nuisances": sorted(fixed_values),
+            "optimizer_success": True,
+            "optimizer_message": "all nuisance parameters fixed",
+        }
+    x0_arr = np.array(free_x0, dtype=float)
     result = minimize(
-        lambda x: _chi2(model, names, x),
+        objective,
         x0_arr,
         method="L-BFGS-B",
-        bounds=bounds,
+        bounds=free_bounds,
         options={"maxiter": 20, "ftol": 1.0e-4, "maxls": 8},
     )
-    best = np.asarray(result.x, dtype=float)
+    best = expand(np.asarray(result.x, dtype=float))
     hits = [
         name
         for name, value, (lo, hi) in zip(names, best, bounds)
+        if name not in fixed_values
         if abs(value - lo) <= 1.0e-6 or abs(value - hi) <= 1.0e-6
     ]
+    raw = _chi2(model, names, best)
     return {
         "chi2": float(result.fun),
+        "raw_chi2": float(raw),
+        "prior_penalty": float(result.fun - raw),
         "nuisance_names": names,
         "bestfit_nuisance_vector": {name: float(value) for name, value in zip(names, best)},
         "nuisance_boundary_hits": hits,
+        "fixed_nuisances": sorted(fixed_values),
         "optimizer_success": bool(result.success),
         "optimizer_message": str(result.message),
     }

@@ -169,6 +169,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   (`-5.1768`, `-5.9829`), but nuisance boundary hits are present
   (`calib_217T`, `gal545_A_217`), so
   `local_profiled_nuisance_effective_candidate = False`.
+- boundary-safe nuisance profiling: guarded/fixed policies remove the boundary
+  issue while preserving gains:
+  - `boundary_guarded`: `(-5.7058`, `-6.5223`) for combined/decomposed bases;
+  - `problem_nuisances_fixed`: `(-13.1561`, `-12.0977`);
+  - `boundary_safe_local_profiled_candidate = True`.
+- `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
 - This is still not a full Planck validation.

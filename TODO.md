@@ -370,6 +370,14 @@
   - `local_profiled_nuisance_effective_candidate = false`;
   - `profiled_planck_candidate = false`;
   - next blocker: boundary-safe profiling policy.
+- [x] Add and run boundary-safe nuisance profiling gate:
+  - no new Z4 physics and no retuning;
+  - robust boundary-safe policies: `boundary_guarded`, `problem_nuisances_fixed`;
+  - `boundary_guarded` gains: combined `-5.7058`, decomposed `-6.5223`;
+  - `problem_nuisances_fixed` gains: combined `-13.1561`, decomposed `-12.0977`;
+  - `boundary_safe_local_profiled_candidate = true`;
+  - `profiled_planck_candidate = false`;
+  - `full_planck_validation = false`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
