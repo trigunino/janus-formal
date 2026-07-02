@@ -34,11 +34,13 @@
   master source.
 - [x] Add the regularized diagnostic shape report gate before any likelihood
   handshake.
-- [ ] Derive the membrane transport normalization from the full upstream Z4
-  action; current status is transport-derived, not full-action-derived.
+- [x] Derive the membrane transport normalization from the upstream Z4
+  membrane/orbifold lock: `L_transport = a_sigma = 2/3`.
 - [x] Add `MasterActionNormalizationGate` to block likelihood handshakes until
   that normalization is derived from the Z4 action, membrane junction terms, or
   orbifold boundary conditions.
+- [ ] Add `MasterLikelihoodHandshakeGate`; no official Planck trial before this
+  handshake passes.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 

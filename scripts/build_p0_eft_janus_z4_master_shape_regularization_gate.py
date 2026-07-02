@@ -23,7 +23,7 @@ from scripts.build_p0_eft_janus_z4_two_sector_source_construction_audit_gate imp
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z4_master_shape_regularization_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z4_master_shape_regularization_gate.json")
-REGULARIZATION_LIMIT = 0.65
+REGULARIZATION_LIMIT = 2.0 / 3.0
 
 
 def _regularize(shape: np.ndarray, limit: float = REGULARIZATION_LIMIT) -> np.ndarray:
@@ -89,7 +89,7 @@ def build_payload() -> dict:
         "pre_likelihood_lock_was_active": lock["pre_likelihood_lock_active"],
         "raw_lock_reason": lock["lock_reason"],
         "source_payload_hash": hash_payload(source),
-        "regularization_route": "bounded_tanh_master_shape",
+        "regularization_route": "orbifold_membrane_bounded_tanh_master_shape",
         "regularization_limit": REGULARIZATION_LIMIT,
         "is_action_derived": False,
         "shape_regularization_evaluated": True,
