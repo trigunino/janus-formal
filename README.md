@@ -314,6 +314,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - checks finite eigenvalues and no explosive real modes over representative `k`;
   - guards symmetric, antisymmetric Z4, relative isocurvature and projection modes;
   - allows source-level regeneration only, still no spectra or Planck.
+- two-sector source-level regeneration:
+  - regenerates plus, minus, antisymmetric Z4 and projection sources;
+  - exposes Weyl, monopole and Pi projected source diagnostics;
+  - allows carrier-tangent projection only, still no spectra or Planck.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

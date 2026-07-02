@@ -562,7 +562,11 @@
   - checks finite eigenvalues and no explosive real modes;
   - guards symmetric, antisymmetric Z4, relative isocurvature and projection modes;
   - allows source-level regeneration only, not spectra or Planck.
-- [ ] Implement `TwoSectorSourceLevelRegenerationGate`.
+- [x] Implement `TwoSectorSourceLevelRegenerationGate`:
+  - regenerates plus, minus, antisymmetric Z4 and projection sources;
+  - exposes Weyl, monopole and Pi projected source diagnostics;
+  - allows carrier-tangent projection only, not spectra or Planck.
+- [ ] Implement `TwoSectorCarrierTangentProjectionGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
