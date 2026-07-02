@@ -657,7 +657,7 @@ Policy:
 - no raw toy LOS.
 
 Required formal gates:
-- [ ] `P0EFTJanusZ4UniqueEquationMasterGate`:
+- [x] `P0EFTJanusZ4UniqueEquationMasterGate`:
   - declare master variable `U_Z4`;
   - declare master operator `L_Z4`;
   - declare source `J_Z4`;
@@ -666,7 +666,7 @@ Required formal gates:
   - declare GR limit;
   - set `master_equation_solved = false` until actually derived;
   - keep spectra and Planck blocked.
-- [ ] `P0EFTJanusZ4MasterReconstructionGate`:
+- [x] `P0EFTJanusZ4MasterReconstructionGate`:
   - reconstruct `Phi_plus`, `Psi_plus`;
   - reconstruct `Phi_minus`, `Psi_minus`;
   - reconstruct `delta_plus`, `theta_plus`, `sigma_plus`;
@@ -677,7 +677,7 @@ Required formal gates:
   - reconstruct `Weyl_Z4`;
   - reconstruct observable projection;
   - mark any missing map as `blocked_until_master_reconstruction`, not silently free.
-- [ ] `P0EFTJanusZ4MasterConstraintConsistencyGate`:
+- [x] `P0EFTJanusZ4MasterConstraintConsistencyGate`:
   - check Bianchi consistency;
   - check plus/minus conservation;
   - check trace-free slip consistency;

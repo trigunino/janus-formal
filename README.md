@@ -361,6 +361,16 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - goal: derive all slip, Doppler, Pi, minus-sector and projection observables from one generator `U_Z4`;
   - first required gates: `UniqueEquationMasterGate`, `MasterReconstructionGate`, `MasterConstraintConsistencyGate`, `MasterToObservableMapGate`, then `MasterCarrierTangentProjectionGate`;
   - no spectra or Planck until the master-derived signal passes carrier-tangent projection.
+- unique equation master gate:
+  - declares `L_Z4[U_Z4] = J_Z4`, Z4 parity, orbifold/boundary conditions and GR limit;
+  - keeps `master_equation_solved = false` and forbids independent downstream slip/Doppler/Pi/minus-sector patches.
+- master reconstruction gate:
+  - declares reconstruction maps for metric, fluid, Doppler, Pi, Weyl and projection observables;
+  - all maps remain `blocked_until_master_reconstruction` until derived from the same `U_Z4`;
+  - independent downstream source patches remain forbidden.
+- master constraint consistency gate:
+  - declares Bianchi, plus/minus conservation, trace-free slip, Doppler/continuity, Pi-from-multipoles, Z4 projection and GR-limit checks;
+  - all checks remain blocked until master reconstruction is actually derived.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
