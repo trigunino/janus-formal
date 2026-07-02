@@ -1048,6 +1048,43 @@ Conclusion: the gain survives the effective Boltzmann hierarchy closure. This
 promotes the channel to `boltzmann_closed_effective_z4_cmb_candidate`, not to a
 full native-Z4 Planck validation.
 
+## Planck Likelihood Completeness Gate
+
+Current gate:
+`p0_eft_janus_z4_planck_likelihood_completeness_gate.json`.
+
+Result:
+
+- available: low-l TT, low-l EE, lensing, high-l TT, high-l TTTEEE;
+- missing locally: standalone high-l TE and standalone high-l EE;
+- candidate trial allowed: `true`;
+- full Planck validation allowed: `false`;
+- generated outputs are not imported as source theory vectors.
+
+Conclusion: the local likelihood environment is complete enough for candidate
+trials, but not enough for a full Planck validation claim.
+
+## Closed-Boltzmann Candidate Robustness Gate
+
+Current gate:
+`p0_eft_janus_z4_closed_boltzmann_candidate_robustness_gate.json`.
+
+Result:
+
+- best point stable: `true`;
+- local curvature detected: `true`;
+- best point not on scan edge: `true`;
+- gain remains below `-5`;
+- TCA switch robustness passes;
+- `lmax` robustness passes;
+- TE/EE smoothness remains pass;
+- full Planck verdict remains `false`.
+
+Conclusion: the closed-Boltzmann acoustic/polarization candidate is locally
+robust under the current effective scalar setup. Do not open new physics before
+the missing Planck likelihood completeness issue is resolved or explicitly
+accepted as a limitation.
+
 ## Previous Objective: CMB Primordial Imprint Lock (completed internally)
 
 **Goal:** derive the primordial CMB imprint for Janus-Z4 from a single

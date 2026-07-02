@@ -290,6 +290,20 @@
   - standalone high-l TE/EE remains unavailable locally;
   - promote only to `boltzmann_closed_effective_z4_cmb_candidate`;
   - full Planck verdict remains false.
+- [x] Add and run Planck likelihood completeness gate:
+  - available: low-l TT, low-l EE, lensing, high-l TT, high-l TTTEEE;
+  - missing locally: standalone high-l TE and standalone high-l EE;
+  - candidate trial allowed: true;
+  - full Planck validation allowed: false;
+  - generated outputs not imported as theory sources.
+- [x] Add and run closed-Boltzmann candidate robustness gate:
+  - best point stable: true;
+  - local curvature detected: true;
+  - best lambda not edge: true;
+  - gain remains below `-5`;
+  - lmax/TCA robustness passes;
+  - TE/EE smoothness remains pass;
+  - full Planck verdict remains false.
 - [x] Add the CMB primordial imprint lock:
   - TT acoustic source + SW/ISW;
   - Theta2 + physical visibility transport;

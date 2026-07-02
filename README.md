@@ -24,6 +24,9 @@ Statut separe par niveau de preuve :
 - `closed_theta2_acoustic_polarization_candidate = True`
 - `photon_polarization_boltzmann_hierarchy_closed_effective = True`
 - `boltzmann_closed_effective_z4_cmb_candidate = True`
+- `planck_likelihood_completeness_candidate_trial_allowed = True`
+- `full_planck_validation_allowed = False`
+- `closed_boltzmann_candidate_robust = True`
 - `full_observational_cosmology_no_fit_ready = False`
 
 Les verrous mathematiques internes formalises sous Lean restent fermes. Ce qui reste
@@ -54,6 +57,10 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
   (`delta_chi2 ~= -9.20`, ratio de preservation `~=1.000`) ;
 - statut exact : `boltzmann_closed_effective_z4_cmb_candidate`, pas validation
   Planck globale.
+- la complétude likelihood autorise le trial candidat, mais bloque la validation
+  Planck complète car les standalone high-l TE/EE restent absents localement ;
+- la robustesse locale du candidat passe : meilleur point non-edge, courbure
+  locale détectée, gain conserve sous `lmax`/TCA.
 
 Point d'entree principal :
 
@@ -95,6 +102,8 @@ python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_joint_consis
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_closed_theta2_joint_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_photon_polarization_boltzmann_hierarchy_closure_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_official_planck_closed_boltzmann_acoustic_polarization_trial_script
+python -m unittest tests.test_p0_eft_janus_z4_planck_likelihood_completeness_gate_script
+python -m unittest tests.test_p0_eft_janus_z4_closed_boltzmann_candidate_robustness_gate_script
 ```
 
 `JanusFormal.LegacyCMB` est une archive compile-only des anciens essais
