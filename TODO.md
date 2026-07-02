@@ -501,7 +501,11 @@
   - visible projection: `boundary_normal_derivative`;
   - Dirichlet boundary value is zero by construction;
   - value-level `deltaSlip_Z4` and `deltaSlipDot_Z4` are available, with Planck still blocked.
-- [ ] Implement `DerivedSlipSourceLevelRegenerationGate`.
+- [x] Implement `DerivedSlipSourceLevelRegenerationGate`:
+  - reconstructs `deltaPhi_Z4` and `deltaPsi_Z4` from `deltaW_Z4` and derived `deltaSlip_Z4`;
+  - regenerates temperature surface, early-ISW and Pi/polarization sources with slip;
+  - logs normal orientation sign and keeps Planck blocked.
+- [ ] Implement `DerivedSlipCarrierTangentProjectionGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

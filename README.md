@@ -266,6 +266,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - visible-sector projection selected: `boundary_normal_derivative`;
   - Dirichlet boundary value is explicitly zero, while the normal derivative projection is nonzero;
   - value-level `deltaSlip_Z4` and `deltaSlipDot_Z4` are available for the next regeneration gate.
+- derived slip source-level regeneration:
+  - reconstructs `deltaPhi_Z4 = (deltaW_Z4 + deltaSlip_Z4)/2` and `deltaPsi_Z4 = (deltaW_Z4 - deltaSlip_Z4)/2`;
+  - regenerates temperature surface, early-ISW and Pi/polarization sources with the derived slip;
+  - keeps Planck trials blocked until carrier-tangent projection is checked.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
