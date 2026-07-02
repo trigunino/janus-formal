@@ -497,7 +497,11 @@
   - solves finite-interval `L_slip_Z4 = -d_n^2 + k^2` with Z4 Dirichlet boundaries;
   - fixes normalization by the derivative jump and removes homogeneous mode by boundary conditions;
   - value-level `deltaSlip_Z4` transport is mathematically available, but Planck remains blocked.
-- [ ] Implement `DerivedSlipValueTransportGate`.
+- [x] Implement `DerivedSlipValueTransportGate`:
+  - visible projection: `boundary_normal_derivative`;
+  - Dirichlet boundary value is zero by construction;
+  - value-level `deltaSlip_Z4` and `deltaSlipDot_Z4` are available, with Planck still blocked.
+- [ ] Implement `DerivedSlipSourceLevelRegenerationGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

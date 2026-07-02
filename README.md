@@ -262,6 +262,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - finite-interval operator `L_slip_Z4 = -d_n^2 + k^2` solved with Z4 Dirichlet boundaries;
   - homogeneous mode removed by boundary conditions and value-level `deltaSlip_Z4` transport is now mathematically available;
   - Planck trials remain forbidden until source-level slip regeneration and tangent projection gates pass.
+- derived slip value transport:
+  - visible-sector projection selected: `boundary_normal_derivative`;
+  - Dirichlet boundary value is explicitly zero, while the normal derivative projection is nonzero;
+  - value-level `deltaSlip_Z4` and `deltaSlipDot_Z4` are available for the next regeneration gate.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
