@@ -465,6 +465,11 @@
   - dominant tangent direction: `A_s`;
   - orthogonal residual does not improve non-overlap Planck: combined `+18.6589`, decomposed `+18.2580`;
   - status: diagnostic complete, no Planck-profiled promotion.
+- [x] Add carrier-degenerate candidate closure gate:
+  - preserve the positive history: fixed-carrier, boundary-safe nuisance, and source-level regenerative gates passed;
+  - close the final role as `diagnostic_archived`;
+  - set `carrier_degenerate_effective_candidate = true`;
+  - keep `profiled_planck_candidate = false` and `full_planck_validation = false`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

@@ -230,6 +230,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - dominant spectral tangent direction: `A_s`, with `n_s` close behind;
   - orthogonal residual gain is unfavorable: combined `+18.6589`, decomposed `+18.2580`;
   - interpretation: the current effective Z4 signal is mostly carrier-tangent, not a robust orthogonal Planck signature.
+- closure:
+  - `carrier_degenerate_effective_candidate = True`;
+  - `candidate_role = diagnostic_archived`;
+  - the frozen early-ISW/closed-Boltzmann candidate must not be promoted or retuned.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
