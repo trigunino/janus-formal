@@ -28,8 +28,12 @@
 - [x] Add bounded-tanh shape regularization as a diagnostic:
   it clears the pre-likelihood shape artifacts and keeps carrier projection
   below threshold, but it is not action-derived.
-- [ ] Derive the regularized master shape from the upstream Z4 action or
-  membrane transport, then regenerate diagnostic spectra.
+- [x] Derive the bounded response as membrane transport:
+  `dR/dS = 1 - (R/L)^2`, `R = L*tanh(S/L)`.
+- [ ] Regenerate diagnostic spectra from the membrane-transport regularized
+  master source.
+- [ ] Derive the membrane transport normalization from the full upstream Z4
+  action; current status is transport-derived, not full-action-derived.
 - [ ] Only after an action-derived regularized master shape: run the next
   likelihood handshake gate. No Planck claim before that.
 

@@ -21,7 +21,7 @@ Statut separe par niveau de preuve :
 - `bi_sector_boltzmann_backend_required = Open`
 - `janus_z4_cmb_solver_status = InProgress`
 - `janus_z4_master_equation_path = Active`
-- `janus_z4_master_shape_regularization = DiagnosticOnly`
+- `janus_z4_master_shape_regularization = MembraneTransportDerived`
 - `acoustic_polarization_joint_gate_passed = False`
 - `closed_theta2_acoustic_polarization_candidate = True`
 - `photon_polarization_boltzmann_hierarchy_closed_effective = True`
@@ -84,9 +84,11 @@ Current CMB/Z4 master-equation status:
 - localized-transition source replay is non-tangent (`parallel_fraction ~= 0.1906`);
 - raw diagnostic spectra are pre-likelihood locked by TT/EE shape artifacts;
 - bounded-tanh shape regularization clears those artifacts diagnostically, but
-  is not action-derived;
+  is only transport-derived through the membrane equation
+  `dR/dS = 1 - (R/L)^2`, not yet full-action-derived;
 - official Planck likelihood, candidate promotion, and full validation remain
-  forbidden until the regularized shape is derived from the upstream Z4 action.
+  forbidden until the regularized source is regenerated and its normalization
+  is tied back to the upstream Z4 action.
 
 Point d'entree principal :
 
