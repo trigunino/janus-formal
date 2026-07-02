@@ -477,6 +477,10 @@
 - [x] Derive the Z4/bimetric slip source equation needed by `P0EFTJanusZ4DerivedSlipGate`:
   - source operator: `Lap_TF(delta_slip_Z4) = -chi*(Pi_plus_TF + Pi_minus_TF)`;
   - closes the source equation, not the value-slip Green/normal-mode transport.
+- [x] Add derived-slip scaffolding gates:
+  - `BimetricScalarVariablesGate` declares plus/minus metric, fluid, projection, mixing and stress variables;
+  - `TracelessSpatialSlipEquationGate` exposes source-level slip from the trace-free spatial equation;
+  - `DerivedSlipRegenerationReadinessGate` remains blocked until value-slip transport is derived.
 - [ ] Derive boundary Green or normal-mode transport from derivative/source slip to value-level `delta_slip_Z4`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;

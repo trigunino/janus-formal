@@ -243,6 +243,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - source equation derived: `Lap_TF(delta_slip_Z4) = -chi*(Pi_plus_TF + Pi_minus_TF)`;
   - this closes the source-level slip equation only;
   - value-slip Green/normal-mode transport remains open, so Planck trials remain blocked.
+- derived slip scaffolding:
+  - plus/minus scalar variables, projection/mixing and stress sources are declared;
+  - traceless spatial slip equation gate passes at source level;
+  - regeneration readiness remains blocked until boundary Green/normal-mode transport is derived.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
