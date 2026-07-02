@@ -13,6 +13,26 @@
   physical Janus/Z4 verdict until this baseline is repaired.
 - Therefore: do not claim full no-fit cosmology yet.
 
+## Active CMB/Z4 master-equation lock
+
+- [x] Archive patchwork slip/surface/minus-sector attempts as diagnostic-only
+  when their observable response remains carrier-tangent.
+- [x] Open the unique Z4 master-equation path and require all observable
+  deltas to descend from one upstream `U_Z4` generator.
+- [x] Find a non-tangent localized-transition master ansatz:
+  source-level replay parallel fraction is about `0.1906`.
+- [x] Generate internal diagnostic spectra only; official Planck likelihood
+  remains forbidden.
+- [x] Lock the raw master spectra before likelihood because TT/EE zero-count
+  artifacts and large fractional deviations are present.
+- [x] Add bounded-tanh shape regularization as a diagnostic:
+  it clears the pre-likelihood shape artifacts and keeps carrier projection
+  below threshold, but it is not action-derived.
+- [ ] Derive the regularized master shape from the upstream Z4 action or
+  membrane transport, then regenerate diagnostic spectra.
+- [ ] Only after an action-derived regularized master shape: run the next
+  likelihood handshake gate. No Planck claim before that.
+
 ## Priority 1 - Define the bi-sector model
 
 - [x] Write the first minimal linear Janus-orbifold prototype with two sectors:

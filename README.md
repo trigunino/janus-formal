@@ -20,6 +20,8 @@ Statut separe par niveau de preuve :
 - `cmb_bao_monommetric_camb_hooks_sufficient = False`
 - `bi_sector_boltzmann_backend_required = Open`
 - `janus_z4_cmb_solver_status = InProgress`
+- `janus_z4_master_equation_path = Active`
+- `janus_z4_master_shape_regularization = DiagnosticOnly`
 - `acoustic_polarization_joint_gate_passed = False`
 - `closed_theta2_acoustic_polarization_candidate = True`
 - `photon_polarization_boltzmann_hierarchy_closed_effective = True`
@@ -74,6 +76,17 @@ Le solveur CMB/Z4 suit maintenant une politique stricte :
 Freeze rule after checkpoint `8ce53806`: no new Z4 physics or parameter
 retuning is allowed until standalone high-l TE/EE likelihood coverage is
 acquired and the frozen candidate is rerun unchanged.
+
+Current CMB/Z4 master-equation status:
+
+- patchwork slip/surface/minus-sector branches are frozen as diagnostic-only;
+- the unique `U_Z4` master path is active;
+- localized-transition source replay is non-tangent (`parallel_fraction ~= 0.1906`);
+- raw diagnostic spectra are pre-likelihood locked by TT/EE shape artifacts;
+- bounded-tanh shape regularization clears those artifacts diagnostically, but
+  is not action-derived;
+- official Planck likelihood, candidate promotion, and full validation remain
+  forbidden until the regularized shape is derived from the upstream Z4 action.
 
 Point d'entree principal :
 
