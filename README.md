@@ -306,6 +306,10 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   - declares plus/minus adiabatic, symmetric, antisymmetric Z4, relative isocurvature and projection modes;
   - forbids collapsing the hidden sector into a single CAMB adiabatic or `rho_eff` initial condition;
   - keeps spectra and Planck blocked until linear evolution closure.
+- two-sector linear evolution:
+  - declares `X' = A_Z4(k,tau) X + S_Z4(k,tau)` over explicit plus/minus state variables;
+  - evolves fluid rows, metric constraints and projection rows under Bianchi guards;
+  - keeps source regeneration, spectra and Planck blocked until stability/eigenmode checks.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

@@ -554,7 +554,11 @@
   - declares plus/minus adiabatic, symmetric, antisymmetric Z4, relative isocurvature and projection modes;
   - enforces regular, constraint/Bianchi-compatible initial conditions;
   - forbids standard CAMB adiabatic forcing and `rho_eff` initial-condition collapse.
-- [ ] Implement `TwoSectorLinearEvolutionClosureGate`.
+- [x] Implement `TwoSectorLinearEvolutionClosureGate`:
+  - declares `X' = A_Z4(k,tau) X + S_Z4(k,tau)`;
+  - evolves plus/minus fluid rows, metric constraints and projection rows;
+  - keeps source regeneration, spectra and Planck blocked until stability checks.
+- [ ] Implement `TwoSectorStabilityEigenmodeGate`.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
