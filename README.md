@@ -199,6 +199,9 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - regenerative Z4 delta per cosmology:
   - effective closed-Boltzmann spectral deltas regenerate with cosmology;
   - strict source-level Z4/Pi regeneration is still open, so local cosmology profiling remains blocked.
+- source-level/readiness gates:
+  - `delta_S_T_Z4` and `Pi_source_Z4` are not yet regenerated per cosmology;
+  - `LocalCosmologyProfilingReadinessGate` remains red until source-level regeneration closes.
 - `profiled_planck_candidate = False` and `full_planck_validation = False`.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.

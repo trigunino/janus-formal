@@ -423,6 +423,14 @@
   - no stale effective delta reuse;
   - strict source-level `delta_S_T_Z4` and `Pi` regeneration remains open;
   - local cosmology profiling remains blocked.
+- [x] Add source-level Z4 delta regeneration gate:
+  - strict gate remains blocked;
+  - `delta_S_T_Z4` and `Pi_source_Z4` are not regenerated per cosmology;
+  - no local cosmology profiling is allowed from effective spectral deltas alone.
+- [x] Add local cosmology profiling readiness gate:
+  - GR handshake, cache invalidation, frozen replay and effective deltas are green;
+  - source-level Z4 delta regeneration remains false;
+  - readiness remains red and profiling remains forbidden.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;
