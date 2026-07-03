@@ -12,7 +12,8 @@ def build_payload() -> dict:
     equation_locks = {
         "background_equations_derived": True,
         "sigma_photon_geodesic_map_derived": True,
-        "bao_sound_ruler_derived": True,
+        "bao_sound_ruler_formula_ready": True,
+        "bao_sound_ruler_evaluated": False,
         "growth_perturbation_equations_derived": True,
         "cmb_boltzmann_equations_derived": True,
     }
@@ -23,10 +24,16 @@ def build_payload() -> dict:
         "legacy_z4_archived": True,
         "z4_physics_reactivation_forbidden": True,
         "equation_locks": equation_locks,
-        "observation_equation_locks_closed": all(equation_locks.values()),
+        "observation_equation_locks_closed": all(
+            value
+            for key, value in equation_locks.items()
+            if key != "bao_sound_ruler_evaluated"
+        ),
+        "observation_prediction_inputs_ready": all(equation_locks.values()),
         "non_compressed_observation_gates_passed": False,
         "full_cosmology_prediction_ready_no_fit": False,
         "next_required": [
+            "evaluate_z2_sigma_bao_sound_ruler_without_fitted_rd",
             "run_non_compressed_growth_bao_cmb_gates",
         ],
         "forbidden": [
@@ -49,6 +56,7 @@ def write_reports() -> dict:
         f"Pure math closed: `{payload['z2_sigma_pure_math_closed']}`",
         f"Legacy Z4 archived: `{payload['legacy_z4_archived']}`",
         f"Observation equation locks closed: `{payload['observation_equation_locks_closed']}`",
+        f"Observation prediction inputs ready: `{payload['observation_prediction_inputs_ready']}`",
         f"Full cosmology no-fit ready: `{payload['full_cosmology_prediction_ready_no_fit']}`",
         "",
         "## Next Required",

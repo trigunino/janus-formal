@@ -472,6 +472,11 @@
   - Etherington reciprocity is importable conditionally on null geodesics and photon conservation;
   - BAO sound-horizon machinery is importable generically;
   - Sigma photon map and Z2/Sigma `r_d` remain local derivations.
+- [x] Split repository layout:
+  - root `JanusFormal.lean` imports only `JanusFormal.ActiveZ2Sigma`;
+  - active Z2/Sigma imports live in `JanusFormal/ActiveZ2Sigma.lean`;
+  - historical modules stay in optional `JanusFormal/AllImportsArchive.lean`;
+  - `docs/janus_repository_layout.md` indexes daily active vs archived commands.
 - [x] Add `P0EFTJanusZ2SigmaPhotonGeodesicDistanceMapGate`:
   - visible photon metric projection declared;
   - photon null geodesic and redshift map derived;
@@ -480,7 +485,8 @@
   - photon-baryon sound speed declared;
   - drag epoch condition declared;
   - `r_d^Z2Sigma = integral c_s^Z2Sigma/H_Z2Sigma dz`;
-  - fitted Planck `r_d` and compressed LCDM priors forbidden.
+  - fitted Planck `r_d` and compressed LCDM priors forbidden;
+  - numerical evaluation remains blocked on active `H_Z2Sigma`, `c_s^Z2Sigma`, and `z_d^Z2Sigma`.
 - [x] Add `P0EFTJanusZ2SigmaBAONonCompressedObservationGate`:
   - DESI DR2 Gaussian BAO mean vector and 13x13 covariance are ready;
   - compressed Planck `r_d` and archived Holst/Z4 BAO diagnostics are forbidden;

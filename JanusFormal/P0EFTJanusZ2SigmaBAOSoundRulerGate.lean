@@ -14,7 +14,11 @@ structure Z2SigmaBAOSoundRulerGate where
   rdIntegralOverHZ2SigmaDeclared : Prop
   fittedPlanckRdForbidden : Prop
   compressedLCDMPriorForbidden : Prop
-  baoSoundRulerDerived : Prop
+  baoSoundRulerFormulaReady : Prop
+  hZ2SigmaNumericalReady : Prop
+  photonBaryonSoundSpeedReady : Prop
+  dragEpochReady : Prop
+  baoSoundRulerEvaluated : Prop
 
 def baoSoundRulerLockClosed
     (g : Z2SigmaBAOSoundRulerGate) : Prop :=
@@ -26,12 +30,27 @@ def baoSoundRulerLockClosed
   g.fittedPlanckRdForbidden /\
   g.compressedLCDMPriorForbidden
 
-theorem bao_sound_ruler_lock_derives_rd
+def baoSoundRulerEvaluationReady
+    (g : Z2SigmaBAOSoundRulerGate) : Prop :=
+  baoSoundRulerLockClosed g /\
+  g.baoSoundRulerFormulaReady /\
+  g.hZ2SigmaNumericalReady /\
+  g.photonBaryonSoundSpeedReady /\
+  g.dragEpochReady /\
+  g.baoSoundRulerEvaluated
+
+theorem bao_sound_ruler_lock_declares_formula
     (g : Z2SigmaBAOSoundRulerGate)
     (hLock : baoSoundRulerLockClosed g)
-    (hImplies : baoSoundRulerLockClosed g -> g.baoSoundRulerDerived) :
-    g.baoSoundRulerDerived := by
+    (hImplies : baoSoundRulerLockClosed g -> g.baoSoundRulerFormulaReady) :
+    g.baoSoundRulerFormulaReady := by
   exact hImplies hLock
+
+theorem bao_sound_ruler_evaluation_requires_numerical_background
+    (g : Z2SigmaBAOSoundRulerGate)
+    (hReady : baoSoundRulerEvaluationReady g) :
+    g.hZ2SigmaNumericalReady := by
+  exact hReady.2.2.1
 
 end P0EFTJanusZ2SigmaBAOSoundRulerGate
 end JanusFormal

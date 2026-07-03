@@ -11,7 +11,8 @@ structure Z2SigmaObservationalRoadmapGate where
   z4PhysicsReactivationForbidden : Prop
   backgroundEquationsDerived : Prop
   sigmaPhotonGeodesicMapDerived : Prop
-  baoSoundRulerDerived : Prop
+  baoSoundRulerFormulaReady : Prop
+  baoSoundRulerEvaluated : Prop
   growthPerturbationEquationsDerived : Prop
   cmbBoltzmannEquationsDerived : Prop
   nonCompressedObservationGatesPassed : Prop
@@ -21,7 +22,7 @@ def observationEquationLocksClosed
     (g : Z2SigmaObservationalRoadmapGate) : Prop :=
   g.backgroundEquationsDerived /\
   g.sigmaPhotonGeodesicMapDerived /\
-  g.baoSoundRulerDerived /\
+  g.baoSoundRulerFormulaReady /\
   g.growthPerturbationEquationsDerived /\
   g.cmbBoltzmannEquationsDerived
 

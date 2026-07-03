@@ -7,7 +7,8 @@ set_option autoImplicit false
 
 structure Z2SigmaBAONonCompressedObservationGate where
   photonDistanceMapDerived : Prop
-  baoSoundRulerDerived : Prop
+  baoSoundRulerFormulaReady : Prop
+  baoSoundRulerEvaluated : Prop
   desiDR2GaussianBAODataReady : Prop
   desiDR2CovarianceReady : Prop
   compressedLCDMPlanckRdForbidden : Prop
@@ -19,7 +20,7 @@ structure Z2SigmaBAONonCompressedObservationGate where
 def baoObservationPrerequisites
     (g : Z2SigmaBAONonCompressedObservationGate) : Prop :=
   g.photonDistanceMapDerived /\
-  g.baoSoundRulerDerived /\
+  g.baoSoundRulerFormulaReady /\
   g.desiDR2GaussianBAODataReady /\
   g.desiDR2CovarianceReady /\
   g.compressedLCDMPlanckRdForbidden /\
@@ -28,6 +29,7 @@ def baoObservationPrerequisites
 def baoObservationLockClosed
     (g : Z2SigmaBAONonCompressedObservationGate) : Prop :=
   baoObservationPrerequisites g /\
+  g.baoSoundRulerEvaluated /\
   g.z2SigmaBAOPredictionVectorReady /\
   g.chi2EvaluatedAgainstDESIBAOCovariance
 

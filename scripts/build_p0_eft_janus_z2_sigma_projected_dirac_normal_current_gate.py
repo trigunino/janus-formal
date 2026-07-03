@@ -42,8 +42,10 @@ def build_payload() -> dict:
         ),
         "source_links": [
             "https://link.aps.org/doi/10.1103/PhysRevD.101.124035",
+            "https://arxiv.org/html/2503.03918v2",
+            "https://arxiv.org/pdf/1201.5423",
+            "https://doi.org/10.1007/BF02710419",
             "https://cosmo.fis.fc.ul.pt/~crawford/papers/cqg204034p17.pdf",
-            "https://en.wikipedia.org/wiki/Dirac_equation",
         ],
         "declared": declared,
         "closure": closure,

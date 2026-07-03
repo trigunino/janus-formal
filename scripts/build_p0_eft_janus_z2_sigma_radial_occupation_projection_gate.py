@@ -36,7 +36,8 @@ def build_payload() -> dict:
             "active Sigma spinor/projection map gates",
         ],
         "source_links": [
-            "https://en.wikipedia.org/wiki/Equivariant_map",
+            "https://arxiv.org/pdf/2106.06610",
+            "https://www.numdam.org/item/10.5802/ccirm.1.pdf",
             "https://www.sci.unich.it/geodeep2022/slides/Groups_Representations_and_Equivariance.pdf",
         ],
         "bibliography_result": (

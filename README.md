@@ -66,7 +66,8 @@ Statut separe par niveau de preuve :
 - `z2_sigma_numerical_background_closure_ready = False`
 - `z2_sigma_distance_bao_bibliography_checked = True`
 - `sigma_photon_geodesic_map_derived = True`
-- `z2_sigma_bao_sound_ruler_derived = True`
+- `z2_sigma_bao_sound_ruler_formula_ready = True`
+- `z2_sigma_bao_sound_ruler_evaluated = False`
 - `z2_sigma_bao_direct_desi_dr2_data_ready = True`
 - `z2_sigma_bao_prediction_vector_ready = False`
 - `z2_sigma_growth_bibliography_checked = True`
@@ -766,9 +767,10 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaPhotonGeodesicDistanceMapGate` derives the visible photon
   distance map from the Z2/Sigma background: `D_H`, `D_M`, `D_A`, and `D_L`
   with an Etherington guard.
-- `P0EFTJanusZ2SigmaBAOSoundRulerGate` derives
-  `r_d^Z2Sigma = integral c_s^Z2Sigma/H_Z2Sigma dz`; fitted Planck `r_d` and
-  compressed LCDM priors remain forbidden.
+- `P0EFTJanusZ2SigmaBAOSoundRulerGate` declares the structural sound-ruler
+  formula `r_d^Z2Sigma = integral c_s^Z2Sigma/H_Z2Sigma dz`; fitted Planck
+  `r_d` and compressed LCDM priors remain forbidden. Numerical evaluation is
+  still blocked on active `H_Z2Sigma`, `c_s^Z2Sigma`, and `z_d^Z2Sigma`.
 - `P0EFTJanusZ2SigmaGrowthBibliographyGate` records that standard perturbation,
   bimetric, Einstein-Cartan, and Janus structure-growth sources exist, but no
   source closes the active Z2/Sigma growth equations.
@@ -863,18 +865,21 @@ Archived CMB/Z4 master-equation status:
 Point d'entree principal actif :
 
 - `JanusFormal.lean`
+- `JanusFormal/ActiveZ2Sigma.lean`
 - `JanusFormal/P0EFTJanusZ2SigmaPureMathClosureAuditGate.lean`
 - `scripts/build_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate.py`
+- `docs/janus_repository_layout.md`
 
 ## Validation rapide
 
 ```bash
 python -m unittest tests.test_p0_eft_janus_active_z2_sigma_facade_audit_script
+python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script
 python -m unittest tests.test_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate_script
 lake build JanusFormal
 ```
 
-Validation plus large :
+Validation plus large active :
 
 ```bash
 lake build
@@ -886,17 +891,18 @@ Validation Lean active :
 lake build JanusFormal
 ```
 
-`JanusFormal.lean` est volontairement une facade active minimale Z2/Sigma. Le
-graphe complet historique reste disponible dans :
+`JanusFormal.lean` est volontairement une facade racine minimale qui importe
+`JanusFormal/ActiveZ2Sigma.lean`. Le graphe complet historique reste disponible
+en audit optionnel dans :
 
 ```bash
 lake build JanusFormal.AllImportsArchive
 ```
 
-Validation CMB/Z4 archive :
+Validation CMB/Z4 archive optionnelle :
 
 ```bash
-lake build JanusFormal
+lake build JanusFormal.AllImportsArchive
 python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_joint_consistency_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_closed_theta2_joint_gate_script
@@ -914,7 +920,9 @@ solveur Z4 natif ni comme preuve physique.
 
 ## Organisation utile
 
-- `JanusFormal.lean` importe l'ensemble des modules Lean actifs.
+- `JanusFormal.lean` importe seulement `JanusFormal.ActiveZ2Sigma`.
+- `JanusFormal/ActiveZ2Sigma.lean` importe l'ensemble des modules Lean actifs.
+- `JanusFormal/AllImportsArchive.lean` est optionnel et conserve l'historique.
 - `JanusFormal/LegacyCMB.lean` regroupe les anciens diagnostics mono-metriques
   CAMB/Planck. Ils restent hors validation CMB/Z4 standard.
 - `JanusFormal/P0EFT*.lean` contient les verrous formels EFT/topologie.

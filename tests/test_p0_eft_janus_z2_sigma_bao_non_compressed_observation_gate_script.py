@@ -13,6 +13,8 @@ class P0EFTJanusZ2SigmaBAONonCompressedObservationGateTests(unittest.TestCase):
         self.assertEqual(payload["covariance_shape"], [13, 13])
         self.assertIn("DM_over_rs", payload["quantities"])
         self.assertTrue(payload["bao_observation_prerequisites_ready"])
+        self.assertFalse(payload["prerequisites"]["bao_sound_ruler_evaluated"])
+        self.assertFalse(payload["bao_prediction_prerequisites_ready"])
 
     def test_bao_gate_waits_for_active_z2_sigma_prediction(self):
         payload = build_payload()

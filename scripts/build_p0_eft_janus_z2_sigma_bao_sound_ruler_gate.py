@@ -18,17 +18,31 @@ def build_payload() -> dict:
         "fitted_planck_rd_forbidden": True,
         "compressed_lcdm_prior_forbidden": True,
     }
+    evaluation = {
+        "H_Z2Sigma_numerical_ready": False,
+        "photon_baryon_sound_speed_ready": False,
+        "drag_epoch_ready": False,
+        "rd_integral_evaluated": False,
+    }
     return {
         "status": "janus-z2-sigma-bao-sound-ruler-gate",
         "active_core": "Z2_tunnel_Sigma",
         "lock": lock,
+        "evaluation": evaluation,
         "bao_sound_ruler_lock_closed": all(lock.values()),
-        "bao_sound_ruler_derived": all(lock.values()),
+        "bao_sound_ruler_formula_ready": all(lock.values()),
+        "bao_sound_ruler_evaluated": all(lock.values()) and all(evaluation.values()),
         "rd_definition": "r_d^Z2Sigma = integral_{z_d}^{infinity} c_s^Z2Sigma(z) / H_Z2Sigma(z) dz",
-        "distance_ratios_ready": True,
+        "distance_ratios_ready": False,
         "fitted_planck_rd_forbidden": True,
         "compressed_lcdm_prior_forbidden": True,
-        "non_compressed_bao_gate_ready": True,
+        "non_compressed_bao_gate_ready": False,
+        "next_required": [
+            "supply_H_Z2Sigma_from_numerical_background_closure",
+            "derive_c_s_Z2Sigma_from_active_photon_baryon_plasma",
+            "derive_drag_epoch_z_d_Z2Sigma",
+            "evaluate_r_d_integral_without_compressed_LCDM_prior",
+        ],
     }
 
 
@@ -40,9 +54,13 @@ def write_reports() -> dict:
         "# Janus Z2/Sigma BAO Sound Ruler Gate",
         "",
         f"Active core: `{payload['active_core']}`",
-        f"BAO sound ruler derived: `{payload['bao_sound_ruler_derived']}`",
+        f"BAO sound ruler formula ready: `{payload['bao_sound_ruler_formula_ready']}`",
+        f"BAO sound ruler evaluated: `{payload['bao_sound_ruler_evaluated']}`",
         f"Definition: `{payload['rd_definition']}`",
+        "",
+        "## Next Required",
     ]
+    lines.extend(f"- `{item}`" for item in payload["next_required"])
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
     return payload
 

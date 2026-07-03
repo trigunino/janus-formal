@@ -5,6 +5,7 @@ from pathlib import Path
 
 
 ROOT_PATH = Path("JanusFormal.lean")
+ACTIVE_PATH = Path("JanusFormal/ActiveZ2Sigma.lean")
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_active_z2_sigma_facade_audit.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_active_z2_sigma_facade_audit.json")
 
@@ -177,12 +178,21 @@ ALLOWED_IMPORTS = {
 def _imports() -> list[str]:
     return [
         line.removeprefix("import ").strip()
+        for line in ACTIVE_PATH.read_text(encoding="utf-8").splitlines()
+        if line.startswith("import ")
+    ]
+
+
+def _root_imports() -> list[str]:
+    return [
+        line.removeprefix("import ").strip()
         for line in ROOT_PATH.read_text(encoding="utf-8").splitlines()
         if line.startswith("import ")
     ]
 
 
 def build_payload() -> dict:
+    root_imports = _root_imports()
     imports = _imports()
     unexpected = [item for item in imports if item not in ALLOWED_IMPORTS]
     forbidden_active_z4 = [
@@ -203,12 +213,20 @@ def build_payload() -> dict:
     ]
     return {
         "status": "janus-active-z2-sigma-facade-audit",
-        "root": str(ROOT_PATH),
+        "root": ROOT_PATH.as_posix(),
+        "active_facade": ACTIVE_PATH.as_posix(),
+        "root_imports": root_imports,
+        "root_facade_minimal": root_imports == ["JanusFormal.ActiveZ2Sigma"],
         "imports": imports,
         "unexpected_imports": unexpected,
         "forbidden_active_z4_imports": forbidden_active_z4,
         "forbidden_cmb_planck_imports": forbidden_cmb_planck,
-        "active_facade_z2_sigma_only": not unexpected and not forbidden_active_z4 and not forbidden_cmb_planck,
+        "active_facade_z2_sigma_only": (
+            root_imports == ["JanusFormal.ActiveZ2Sigma"]
+            and not unexpected
+            and not forbidden_active_z4
+            and not forbidden_cmb_planck
+        ),
         "legacy_z4_archive_policy_imported": "JanusFormal.P0EFTJanusLegacyZ4ArchivePolicyGate" in imports,
     }
 
@@ -220,6 +238,8 @@ def write_reports() -> dict:
     lines = [
         "# Janus Active Z2/Sigma Facade Audit",
         "",
+        f"Root facade minimal: `{payload['root_facade_minimal']}`",
+        f"Active facade: `{payload['active_facade']}`",
         f"Active facade Z2/Sigma only: `{payload['active_facade_z2_sigma_only']}`",
         f"Legacy Z4 archive policy imported: `{payload['legacy_z4_archive_policy_imported']}`",
         f"Unexpected imports: `{payload['unexpected_imports']}`",

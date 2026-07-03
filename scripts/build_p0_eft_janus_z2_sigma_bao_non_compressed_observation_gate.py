@@ -34,7 +34,8 @@ def build_payload() -> dict:
     cov_rows, cov_cols = _cov_shape() if COV_PATH.exists() else (0, 0)
     prerequisites = {
         "photon_distance_map_derived": True,
-        "bao_sound_ruler_derived": True,
+        "bao_sound_ruler_formula_ready": True,
+        "bao_sound_ruler_evaluated": False,
         "desi_dr2_gaussian_bao_data_ready": len(mean_rows) == 13,
         "desi_dr2_covariance_ready": cov_rows == len(mean_rows) and cov_cols == len(mean_rows),
         "compressed_lcdm_planck_rd_forbidden": True,
@@ -56,7 +57,12 @@ def build_payload() -> dict:
         "covariance_shape": [cov_rows, cov_cols],
         "prerequisites": prerequisites,
         "prediction": prediction,
-        "bao_observation_prerequisites_ready": all(prerequisites.values()),
+        "bao_observation_prerequisites_ready": all(
+            value
+            for key, value in prerequisites.items()
+            if key != "bao_sound_ruler_evaluated"
+        ),
+        "bao_prediction_prerequisites_ready": all(prerequisites.values()),
         "bao_non_compressed_gate_passed": all(prerequisites.values()) and all(prediction.values()),
         "full_cosmology_prediction_ready_no_fit": False,
         "forbidden_reuse": [
@@ -66,6 +72,7 @@ def build_payload() -> dict:
         ],
         "next_required": [
             "compute_z2_sigma_D_M_D_H_D_V_from_derived_background",
+            "evaluate_z2_sigma_rd_from_H_c_s_and_drag_epoch",
             "compute_z2_sigma_rd_from_derived_sound_ruler",
             "evaluate_chi2_against_desi_dr2_bao_covariance",
         ],
@@ -84,6 +91,7 @@ def write_reports() -> dict:
         f"DESI DR2 data points: `{payload['data_points']}`",
         f"Quantities: `{payload['quantities']}`",
         f"Covariance shape: `{payload['covariance_shape']}`",
+        f"BAO prediction prerequisites ready: `{payload['bao_prediction_prerequisites_ready']}`",
         f"Z2/Sigma BAO prediction vector ready: `{payload['prediction']['z2_sigma_bao_prediction_vector_ready']}`",
         f"BAO non-compressed gate passed: `{payload['bao_non_compressed_gate_passed']}`",
         "",

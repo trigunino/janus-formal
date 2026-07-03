@@ -21,6 +21,13 @@ class P0EFTJanusZ2SigmaRadialOccupationProjectionGateTests(unittest.TestCase):
         self.assertFalse(payload["radial_occupation_projection_ready"])
         self.assertIn("feed_result_to_distribution_isotropy_anisotropic_stress_gate", payload["next_required"])
 
+    def test_bibliography_uses_non_wiki_equivariance_sources(self):
+        payload = build_payload()
+
+        self.assertTrue(payload["source_links"])
+        self.assertFalse(any("wikipedia.org" in link for link in payload["source_links"]))
+        self.assertTrue(any("arxiv.org" in link or "numdam.org" in link for link in payload["source_links"]))
+
 
 if __name__ == "__main__":
     unittest.main()

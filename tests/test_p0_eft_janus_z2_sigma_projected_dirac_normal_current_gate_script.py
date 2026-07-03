@@ -20,6 +20,14 @@ class P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGateTests(unittest.TestCase):
         self.assertFalse(payload["no_normal_dirac_current_ready"])
         self.assertIn("derive_or_reject_J_n_Z2Sigma_equals_zero", payload["next_required"])
 
+    def test_bibliography_uses_primary_sources(self):
+        payload = build_payload()
+
+        self.assertTrue(payload["source_links"])
+        self.assertFalse(any("wikipedia.org" in link for link in payload["source_links"]))
+        self.assertTrue(any("arxiv.org" in link for link in payload["source_links"]))
+        self.assertTrue(any("10.1007/BF02710419" in link for link in payload["source_links"]))
+
 
 if __name__ == "__main__":
     unittest.main()
