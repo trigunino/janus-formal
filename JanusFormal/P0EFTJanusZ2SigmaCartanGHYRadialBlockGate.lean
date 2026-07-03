@@ -1,0 +1,50 @@
+import JanusFormal.P0EFTJanusZ2SigmaThroatRadiusBlockExpansionGate
+
+namespace JanusFormal
+namespace P0EFTJanusZ2SigmaCartanGHYRadialBlockGate
+
+set_option autoImplicit false
+
+structure CartanGHYRadialBlockGate where
+  ghyBrownYorkBibliographyChecked : Prop
+  cartanGHYBoundaryTermAvailable : Prop
+  radialEmbeddingVariationDeclared : Prop
+  inducedMetricRadialVariationDeclared : Prop
+  extrinsicCurvatureRadialVariationDeclared : Prop
+  z2NormalOrientationDeclared : Prop
+  observationalFitForbidden : Prop
+  eCartanGHYFunctionalDerivativeDeclared : Prop
+  eCartanGHYStructuralReductionReady : Prop
+  eCartanGHYOfAReady : Prop
+  rSigmaOfARequired : Prop
+
+def cartanGHYRadialLedgerDeclared
+    (g : CartanGHYRadialBlockGate) : Prop :=
+  g.ghyBrownYorkBibliographyChecked /\
+  g.cartanGHYBoundaryTermAvailable /\
+  g.radialEmbeddingVariationDeclared /\
+  g.inducedMetricRadialVariationDeclared /\
+  g.extrinsicCurvatureRadialVariationDeclared /\
+  g.z2NormalOrientationDeclared /\
+  g.observationalFitForbidden /\
+  g.eCartanGHYFunctionalDerivativeDeclared
+
+def cartanGHYRadialBlockReduced
+    (g : CartanGHYRadialBlockGate) : Prop :=
+  cartanGHYRadialLedgerDeclared g /\
+  g.eCartanGHYStructuralReductionReady
+
+def cartanGHYRadialBlockOfAReady
+    (g : CartanGHYRadialBlockGate) : Prop :=
+  cartanGHYRadialBlockReduced g /\
+  g.eCartanGHYOfAReady /\
+  g.rSigmaOfARequired
+
+theorem cartan_ghy_of_a_requires_radius_law
+    (g : CartanGHYRadialBlockGate)
+    (hReady : cartanGHYRadialBlockOfAReady g) :
+    g.rSigmaOfARequired := by
+  exact hReady.2.2
+
+end P0EFTJanusZ2SigmaCartanGHYRadialBlockGate
+end JanusFormal

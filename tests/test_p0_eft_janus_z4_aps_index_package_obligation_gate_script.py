@@ -17,6 +17,11 @@ class P0EFTJanusZ4APSIndexPackageObligationGateTests(unittest.TestCase):
             "aps_boundary_projector_fredholm",
             payload["remaining_aps_obligations"],
         )
+        self.assertTrue(payload["external_theorem_blocker"])
+        self.assertEqual(
+            payload["obligation_provenance"]["pin_minus_lift_squared_minus_one"]["status"],
+            "external_or_missing_internal_theorem",
+        )
         self.assertFalse(payload["full_cosmology_prediction_ready_no_fit"])
 
 

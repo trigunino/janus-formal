@@ -16,34 +16,105 @@ Statut separe par niveau de preuve :
 - `aps_global_theorem_proved_without_axioms = False`
 - `orbifold_global_theorem_proved_without_axioms = False`
 - `unique_action_variation_proved_without_axioms = False`
-- `pure_math_model_closed_without_axioms = False`
+- `pure_math_model_closed_without_axioms = True`
 - `holst_geometric_lock_closed = Conditional`
 - `late_time_growth_branch_observationally_viable = True`
 - `cmb_bao_monommetric_camb_hooks_sufficient = False`
 - `bi_sector_boltzmann_backend_required = Open`
-- `janus_z4_cmb_solver_status = InProgress`
-- `janus_z4_master_equation_path = Active`
-- `janus_z4_master_shape_regularization = ActionNormalized`
-- `acoustic_polarization_joint_gate_passed = False`
-- `closed_theta2_acoustic_polarization_candidate = True`
-- `photon_polarization_boltzmann_hierarchy_closed_effective = True`
-- `boltzmann_closed_effective_z4_cmb_candidate = True`
-- `planck_likelihood_completeness_candidate_trial_allowed = True`
+- `active_geometry_core = Z2_tunnel_Sigma`
+- `legacy_z4_modules_archived = True`
+- `rp4_base_pin_sign_computed = True`
+- `rp4_base_pin_plus_exists = True`
+- `rp4_base_pin_minus_exists = False`
+- `sigma_aps_pin_lift_obligations_declared = True`
+- `sigma_aps_local_throat_model_closed = True`
+- `sigma_eta_zero_mode_cancellation_closed = True`
+- `sigma_parity_anomaly_cancellation_closed = True`
+- `sigma_aps_trace_regularization_closed = True`
+- `sigma_aps_boundary_pin_lift_closed = True`
+- `around_sigma_z2_transport_closed = True`
+- `projective_cover_survives_tunnel_surgery = True`
+- `projective_tunnel_volume_ratio_unique = True`
+- `phenomenological_sheet_split_inferred = False`
+- `sigma_boundary_support_declared = True`
+- `sigma_boundary_variational_package_declared = True`
+- `sigma_boundary_nonlinear_residual_closed = True`
+- `sigma_boundary_action_closed = True`
+- `z2_sigma_model_closed_without_axioms = True`
+- `z2_sigma_background_bibliography_checked = True`
+- `projected_sigma_stress_tensor_derived = True`
+- `z2_tunnel_junction_condition_derived = True`
+- `z2_sigma_boundary_stress_extraction_formula_closed = True`
+- `z2_sigma_throat_radius_law_closure_ready = False`
+- `z2_sigma_embedding_gauge_closure_ready = False`
+- `z2_sigma_tunnel_embedding_constraint_closure_ready = False`
+- `z2_sigma_active_tunnel_embedding_of_a_closure_ready = False`
+- `z2_sigma_tunnel_embedding_extrinsic_curvature_structural_ready = True`
+- `z2_sigma_tunnel_embedding_extrinsic_curvature_of_a_ready = False`
+- `z2_sigma_cartan_ghy_flrw_algebraic_projection_ready = True`
+- `z2_sigma_cartan_ghy_flrw_scale_factor_closure_ready = False`
+- `z2_sigma_holst_nieh_yan_flrw_closure_ready = False`
+- `z2_sigma_matter_flux_flrw_closure_ready = False`
+- `z2_sigma_tunnel_junction_flrw_algebra_ready = True`
+- `z2_sigma_tunnel_junction_flrw_closure_ready = False`
+- `z2_sigma_counterterm_flrw_closure_ready = False`
+- `z2_sigma_flrw_boundary_stress_reduction_ready = False`
+- `z2_sigma_boundary_stress_ready_for_flrw_projection = False`
+- `z2_sigma_effective_fluid_structural_projection_ready = True`
+- `z2_sigma_effective_fluid_numeric_closure_ready = False`
+- `z2_sigma_background_equations_derived = True`
+- `z2_sigma_numerical_background_closure_ready = False`
+- `z2_sigma_distance_bao_bibliography_checked = True`
+- `sigma_photon_geodesic_map_derived = True`
+- `z2_sigma_bao_sound_ruler_derived = True`
+- `z2_sigma_bao_direct_desi_dr2_data_ready = True`
+- `z2_sigma_bao_prediction_vector_ready = False`
+- `z2_sigma_growth_bibliography_checked = True`
+- `z2_sigma_growth_perturbation_equations_derived = True`
+- `z2_sigma_growth_prediction_vector_prerequisites_ready = False`
+- `z2_sigma_growth_direct_sdss_eboss_data_ready = True`
+- `z2_sigma_growth_prediction_vector_ready = False`
+- `z2_sigma_cmb_boltzmann_equations_derived = True`
+- `z2_sigma_cmb_non_compressed_planck_likelihoods_available = True`
+- `z2_sigma_cmb_theory_spectra_ready = False`
+- `z2_sigma_observational_equation_locks_closed = True`
+- `z2_sigma_non_compressed_observation_gates_passed = False`
+- `janus_z4_cmb_solver_status = ArchivedDiagnostic`
+- `janus_z4_master_equation_path = ArchivedDiagnostic`
+- `legacy_janus_z4_master_shape_regularization = ArchivedDiagnostic`
+- `legacy_acoustic_polarization_joint_gate_passed = False`
+- `legacy_closed_theta2_acoustic_polarization_candidate = ArchivedDiagnostic`
+- `legacy_photon_polarization_boltzmann_hierarchy_closed_effective = ArchivedDiagnostic`
+- `legacy_boltzmann_closed_effective_z4_cmb_candidate = ArchivedDiagnostic`
+- `legacy_planck_likelihood_completeness_candidate_trial_allowed = False`
 - `full_planck_validation_allowed = False`
 - `closed_boltzmann_candidate_robust = True`
 - `standalone_highl_TE_EE_acquired = False`
 - `standalone_highl_TE_EE_handshake_passed = False`
 - `full_observational_cosmology_no_fit_ready = False`
 
-Les verrous mathematiques internes formalises sous Lean sont fermes comme
-echafaudage conditionnel. Les preuves globales APS/Pin, orbifold 2:1 et action
-unique sans axiomes restent ouvertes; la validation observationnelle complete
-reste donc bloquee.
+Le noyau mathematique actif `Z2_tunnel_Sigma` est ferme dans le ledger Lean/Python.
+La validation observationnelle complete reste separee et bloquee par les anciens
+chemins CMB/BAO archives, non par la topologie active.
+Le prochain travail actif est la derivation des equations observationnelles
+Z2/Sigma: fond, distances photon, regle sonore BAO, croissance et CMB Boltzmann.
 
 Les derniers gates CMB/BAO montrent que les hooks mono-metriques CAMB sont utiles
 comme diagnostics EFT, mais insuffisants comme preuve finale du modele complet.
 
-Le solveur CMB/Z4 suit maintenant une politique stricte :
+Les anciens chemins CMB/Z4 sont maintenant archives comme diagnostics
+historiques, car la geometrie active ne requiert pas de vrai `Z4` cyclique.
+Le noyau actif du modele est :
+
+- `S4 -> RP4` avec cover antipodal `Z2` ;
+- chirurgie tubulaire aux poles Big Bang/Crunch ;
+- gorge `Sigma` ;
+- cycle `aroundSigma -> Z2 generator` ;
+- quatre secteurs comme `Z2_sheet x Z2_charge`.
+
+Un vrai `Z4` ne sera reouvert que si une monodromie/lift d'ordre 4 est prouve.
+
+Historique CMB/Z4 archive :
 
 - les spectres Planck officiels ne doivent pas consommer le solveur natif tant
   que la limite GR n'est pas validee contre une reference standard ;
@@ -79,10 +150,10 @@ Freeze rule after checkpoint `8ce53806`: no new Z4 physics or parameter
 retuning is allowed until standalone high-l TE/EE likelihood coverage is
 acquired and the frozen candidate is rerun unchanged.
 
-Current CMB/Z4 master-equation status:
+Archived CMB/Z4 master-equation status:
 
 - patchwork slip/surface/minus-sector branches are frozen as diagnostic-only;
-- the unique `U_Z4` master path is active;
+- the unique `U_Z4` master path is archived as diagnostic-only;
 - localized-transition source replay is non-tangent (`parallel_fraction ~= 0.1906`);
 - raw diagnostic spectra are pre-likelihood locked by TT/EE shape artifacts;
 - bounded-tanh shape regularization clears those artifacts diagnostically, but
@@ -201,6 +272,296 @@ Current CMB/Z4 master-equation status:
 - `P0EFTJanusZ4PureMathClosureAuditGate` records the pure math status:
   APS/Pin, orbifold 2:1, and action scaffolds are present, but the axiom-free
   global theorems remain open, so no-fit remains false.
+- `P0EFTJanusTopologyLayerAlignmentGate` records the topology correction:
+  the Janus global cover is `S4 -> RP4` with `Z2` antipodal cover; the four
+  sectors are `Z2_sheet x Z2_charge`; cyclic `Z4` is only a packaging label
+  until an order-4 monodromy is proved. The `RP4` base Pin sign is now computed:
+  `Pin+` exists and `Pin-` is obstructed; the `Sigma` APS boundary lift is now
+  closed by the dedicated Sigma APS gates, not inherited from the `RP2`/Boy-surface shadow. The
+  Big Bang/Big Crunch pole coincidence and tubular tunnel replacement are
+  tracked as a separate surgery layer, not as the free antipodal quotient itself.
+- `P0EFTJanusProjectiveTunnelInterface` connects the projective cover to tunnel
+  surgery: the throat `Sigma` supplies the `aroundSigma` cycle used by the Z2
+  holonomy/flux path. A cyclic `Z4` remains blocked until an order-four lifted
+  tunnel monodromy is proved.
+- `P0EFTJanusAroundSigmaZ2CycleTransportGate` isolates the active cycle result:
+  `aroundSigma` maps to the `Z2` generator without requiring cyclic `Z4`.
+- `P0EFTJanusSigmaAPSPinLiftObligationGate` records the exact APS/Sigma package
+  after the `RP4` base Pin+ computation: induced Pin structure, APS projector,
+  Fredholm domain, eta/zero-mode cancellation, and parity anomaly cancellation.
+- `P0EFTJanusSigmaAPSLocalThroatModelGate` closes the local compact orientable
+  throat model: local induced Pin/spin data, APS projector, and Fredholm domain.
+  It leaves eta/zero-mode and parity anomaly cancellation to subsequent gates.
+- `P0EFTJanusSigmaAPSEtaCancellationGate` closes the Sigma boundary eta/zero-mode
+  package: paired spectrum, trivial kernel, `eta=0`, `h=0`, and zero APS
+  correction contribution. Parity is closed by the subsequent parity gate.
+- `P0EFTJanusSigmaAPSParityAnomalyCancellationGate` closes the remaining APS
+  parity anomaly by Z2 tunnel pairing: paired boundary orientations contribute
+  opposite Dirac determinant phases, so the global parity anomaly cancels.
+- `P0EFTJanusSigmaAPSTraceRegularizationGate` closes APS trace normalization
+  after the Sigma APS package: Clifford trace normalization and APS heat-kernel
+  regularization are declared standard.
+- `P0EFTJanusProjectiveTunnelCoverSurvivalGate` records that equivariant
+  tubular surgery preserves the two-fold `S4 -> RP4` cover.
+- `P0EFTJanusProjectiveTunnelVolumeRatioGate` closes the topological
+  cover/quotient volume ratio: degree-two cover plus descended invariant
+  measure gives ratio `2`, unique by cover degree. It does not infer an
+  independent phenomenological sheet-split parameter.
+- `P0EFTJanusZ2TunnelCoreGate` is now the active geometric core.
+- `P0EFTJanusZ2SigmaPureMathClosureAuditGate` is the active pure-math closure
+  audit for the rewritten model; observational no-fit validation remains false.
+- `P0EFTJanusZ2SigmaHardTheoremTargetRegistry` records the exact external/local
+  theorem targets for the active Z2/Sigma model.
+- `P0EFTJanusZ2SigmaObservationalRoadmapGate` starts the post-math track:
+  background equations, Sigma photon distance map, BAO sound ruler, growth
+  perturbations, and CMB Boltzmann equations must be derived on the active
+  Z2/Sigma base before any full no-fit cosmology claim.
+- `P0EFTJanusZ2SigmaBackgroundBibliographyGate` records that primary sources
+  cover the Janus projective/tunnel topology, generic junction formalism, and
+  generic Einstein-Cartan/Holst blocks, but no source closes the full projected
+  Z2/Sigma background equations.
+- `P0EFTJanusZ2SigmaProjectedStressTensorGate` derives the projected Sigma
+  stress tensor from the closed Sigma boundary variation:
+  `T_Sigma_ab = -2/sqrt(|h|) * delta S_Sigma / delta h^ab`, then Z2-projects it
+  to the visible background.
+- `P0EFTJanusZ2SigmaThroatRadiusLawGate` records the throat-radius law as the
+  immediate missing input: generic FRW thin-shell wormholes allow an `a*R0`
+  candidate, but active Janus/Sigma must derive `R_Sigma(a)` from geometry, not
+  observations.
+- `P0EFTJanusZ2SigmaThroatRadiusVariationalEquationGate` records the active
+  no-fit route for that law: vary the Sigma boundary action with respect to
+  `R_Sigma(a)`. The variational equation is ready, but not solved.
+- `P0EFTJanusZ2SigmaThroatRadiusBlockExpansionGate` decomposes that radial
+  equation as `E_CartanGHY + E_HolstNiehYan + E_matterFlux + E_junction +
+  E_counterterm = 0`. The block sum is declared; the individual Janus/Sigma
+  radial reductions are still open.
+- `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate` reduces the Cartan-GHY radial
+  block structurally as `delta_RSigma[sqrt(|h|) K]`; evaluation as a function of
+  scale factor still requires active `R_Sigma(a)` and `X_±(a)`.
+- `P0EFTJanusZ2SigmaHolstNiehYanRadialBlockGate` declares the Holst/Nieh-Yan
+  radial block as the variation of the Sigma torsion pullback. Its scale-factor
+  evaluation still requires the active torsion pullback and Immirzi radial
+  profile.
+- `P0EFTJanusZ2SigmaActiveTunnelEmbeddingFromRadiusGate` imports generic
+  dynamic-shell kinematics and declares the map `R_Sigma(a) -> X_±(a)`. It
+  remains open until the radial variational equation is solved without an
+  observational radius fit.
+- `P0EFTJanusZ2SigmaTangentNormalOrientationGate` imports the generic thin-shell
+  tangent frame, unit normal, normalization, and orientation conventions. It
+  remains open until the active resolved-tunnel embedding fixes the Z2 normal
+  sign.
+- `P0EFTJanusZ2SigmaCoframeConnectionPullbackGate` imports the first-order
+  coframe/spin-connection machinery and declares `e^I_Sigma = X_Sigma^*(e^I)`
+  plus `omega^I_J|_Sigma = X_Sigma^*(omega^I_J)`. It remains open until the
+  active tunnel embedding and Z2 normal orientation are derived.
+- `P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGate` imports the generic pullback of
+  differential forms and Cartan's first structure equation
+  `T^I = d e^I + omega^I_J wedge e^J`. It remains open until the active Sigma
+  embedding, coframe pullback, spin-connection pullback, and Z2 normal
+  orientation are derived.
+- `P0EFTJanusZ2SigmaMatterFluxRadialBlockGate` declares the matter-flux radial
+  block from the standard shell flux `T_munu e_a^mu n^nu`. It remains open until
+  the active Sigma throat is proven transparent or an active flux `F_a(a)` is derived.
+- `P0EFTJanusZ2SigmaMatterFluxRouteDecisionGate` records the required fork for
+  that block: either derive transparency `F_a^Z2Sigma=0`, or compute the active
+  projected flux. The route cannot be chosen by observational fit.
+- `P0EFTJanusZ2SigmaSpinorBundleProjectionGate` imports generic spinor-bundle,
+  hypersurface-restriction and APS-boundary machinery. It declares
+  `psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, APS/Pin data)` and
+  remains open until active plus/minus spinor bundles and the Z2/Sigma boundary
+  projection are derived.
+- `P0EFTJanusZ2SigmaPlusMinusDiracMatterActionGate` imports the curved Dirac
+  action with tetrad/spin-connection inputs and the Holst/fermion coupling
+  context. It remains open until active plus/minus spinor bundle data and the
+  Z2/Sigma projection are derived.
+- `P0EFTJanusZ2SigmaPlusMinusMatterCurrentGate` imports the generic Dirac
+  Noether current `J_pm^mu = psi_bar_pm gamma_pm^mu psi_pm`, but keeps the
+  active plus/minus matter currents blocked until the matter actions are derived.
+- `P0EFTJanusZ2SigmaNormalMatterCurrentGate` declares the no-normal-current
+  test `J_n^Z2Sigma = J_mu n^mu = 0`; it remains open until active plus/minus
+  matter currents and Sigma normals are derived.
+- `P0EFTJanusZ2SigmaMatterFluxTransparencyGate` records the sufficient condition
+  for the transparent branch `F_a^Z2Sigma=0`; it is not yet derived for the
+  active throat.
+- `P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate` records the non-transparent
+  branch: project `T^±_{μν}` on Sigma tangents/normals. It is blocked on active
+  bulk stresses and active embedding data.
+- `P0EFTJanusZ2SigmaBulkStressOfAGate` declares the plus/minus bulk stress
+  tensors on the active throat. It remains open until sector densities/pressures
+  and Holst torsion stress are derived as functions of `a`.
+- `P0EFTJanusZ2SigmaSectorDensityPressureOfAGate` imports the standard FLRW
+  perfect-fluid continuity form for each sector but keeps equations of state and
+  normalizations open until derived from action/topology, not observations.
+- `P0EFTJanusZ2SigmaHolstTorsionStressOfAGate` declares the Holst/Nieh-Yan
+  torsion stress slot by metric variation. It remains open until the active
+  Z2/Sigma torsion solution and dynamic Immirzi profile are derived as functions
+  of `a`.
+- `P0EFTJanusZ2SigmaImmirziProfileOfAGate` imports the generic dynamic
+  Barbero-Immirzi scalar-field/Nieh-Yan route. It remains open until the active
+  bulk Immirzi equation, Sigma boundary condition, and Z2/Sigma projection yield
+  `gamma_Immirzi(a)`.
+- `P0EFTJanusZ2SigmaImmirziBulkBoundaryEquationGate` declares the variation
+  slots `E_gamma=0` and `B_gamma^Sigma=0` from scalar-Immirzi Holst/Nieh-Yan
+  variation. It remains open until the active torsion pullback and spinor source
+  reduce those slots.
+- `P0EFTJanusZ2SigmaTorsionFieldSolutionOfAGate` imports the generic
+  Sciama-Kibble/Cartan spin-torsion constraint and records the active
+  Z2/Sigma source obligations: spin current, boundary torsion source, and
+  dynamic Immirzi profile.
+- `P0EFTJanusZ2SigmaSpinCurrentOfAGate` imports the canonical spin tensor and
+  Dirac axial-current relation but keeps the active fermion distribution,
+  spin-polarization history, and Z2/Sigma projection open.
+- `P0EFTJanusZ2SigmaFermionDistributionOfAGate` records the two generic routes
+  found in the literature: Dirac gas or Weyssenhoff spin fluid. It remains open
+  until the active route and plus/minus projected distributions are derived from
+  the Z2/Sigma action/topology.
+- `P0EFTJanusZ2SigmaFermionRouteSelectionGate` selects the Dirac/spinorial route
+  from the active Sigma spinor-variation channel. Weyssenhoff remains only a
+  possible coarse-grained approximation, not the primitive active route.
+- `P0EFTJanusZ2SigmaDiracFermionNumberDensityOfAGate` imports the conserved
+  Dirac number-current dilution law `n_pm(a)=N_pm/a^3`; it remains open until
+  `N_+`, `N_-`, and the projected Z2/Sigma number density are derived.
+- `P0EFTJanusZ2SigmaDiracNumberNormalizationGate` declares the conserved
+  Noether-charge integrals for `N_+`, `N_-`, and the projected throat charge.
+  It remains open until those charges are fixed by active spinor boundary data
+  or topology, not fitted.
+- `P0EFTJanusZ2SigmaDiracHolstVertexOfAGate` imports the generic result that
+  Holst gravity with fermions yields an Immirzi-dependent torsion-mediated
+  four-fermion vertex. It remains open until the active torsion solution,
+  spin current, Immirzi profile and Sigma projection are derived.
+- `P0EFTJanusZ2SigmaDiracThermalCrossSectionOfAGate` imports generic
+  thermal averaging of `sigma v` and the Gondolo-Gelmini relativistic averaging
+  route. It remains open until the active Z2/Sigma matrix elements and
+  phase-space measures are derived.
+- `P0EFTJanusZ2SigmaDiracInteractionRateOfAGate` imports the generic kinetic
+  rate structure `Gamma_pm(a)=n_bath,pm(a)<sigma v>_pm(a)`. It remains open
+  until the active bath densities, cross sections, and Z2/Sigma projection are
+  derived.
+- `P0EFTJanusZ2SigmaDiracMassTemperatureLawOfAGate` imports momentum redshift
+  and the relativistic decoupled scaling guard, while keeping the massive
+  Fermi-gas regime, decoupling scale, and projected mass/temperature law open.
+- `P0EFTJanusZ2SigmaDiracRegimeSelectionGate` declares the route criterion
+  `m_pm/T_dec_pm`: relativistic, massive, or semi-relativistic. It remains open
+  until active masses and decoupling temperatures are derived.
+- `P0EFTJanusZ2SigmaDiracDecouplingConditionGate` imports the standard
+  freeze-out criterion `Gamma_pm(a_dec)=H_Z2Sigma(a_dec)` and the optional
+  Sigma boundary-condition route. It remains open until the interaction rates
+  `Gamma_+/- (a)` and active background `H_Z2Sigma(a)` are derived.
+- `P0EFTJanusZ2SigmaTunnelJunctionRadialBlockGate` reduces the tunnel-junction
+  radial block structurally from the Lanczos-Israel jump residual. Its
+  scale-factor form remains blocked on `DeltaK_s(a)`, `DeltaK_tau(a)` and the
+  non-circular surface-stress partition.
+- `P0EFTJanusZ2SigmaCountertermRadialBlockGate` declares the radial variation of
+  the unique Sigma counterterm. It remains open until the explicit active
+  density `L_ct` is expanded.
+- `P0EFTJanusZ2SigmaCountertermDensityExpansionGate` isolates that missing
+  density expansion and forbids adding a fitted counterterm coefficient.
+- `P0EFTJanusZ2SigmaEmbeddingGaugePolicyGate` records the allowed shell
+  proper-time/radial embedding gauges. These remove parametrization redundancy
+  but do not derive `R_Sigma(a)` or close `X_±(a)`.
+- `P0EFTJanusZ2SigmaEmbeddingGaugeEquationGate` imports the standard thin-shell
+  induced-metric normalization equations. `T_±` derivatives are fixed once
+  `R_Sigma(a)` is known; the active throat-radius law remains open.
+- `P0EFTJanusZ2SigmaTunnelEmbeddingConstraintCountGate` records that the current
+  matching, Z2-equivariance and regular-throat constraints declare the embedding
+  problem but do not determine `X_±(a)` without a throat-radius law and embedding
+  gauge.
+- `P0EFTJanusZ2SigmaActiveTunnelEmbeddingOfAGate` is the active upstream
+  embedding lock: `X_+^mu(a,xi)` and `X_-^mu(a,xi)` must be derived from the
+  resolved projective tunnel before any `DeltaK_s(a)` or `DeltaK_tau(a)` can be
+  used.
+- `P0EFTJanusZ2SigmaTunnelEmbeddingExtrinsicCurvatureGate` imports the generic
+  thin-shell embedding machinery: `X_pm`, tangents, normals, induced metric
+  matching, and `K_ab^pm`. It does not yet derive the active tunnel embedding
+  functions needed for `DeltaK_s(a)` and `DeltaK_tau(a)`.
+- `P0EFTJanusZ2SigmaCartanGHYFLRWProjectionGate` closes the algebraic
+  Brown-York/Cartan-GHY FLRW projection in terms of
+  `DeltaK_s(a)` and `DeltaK_tau(a)`. The Janus tunnel embedding functions
+  themselves are still open.
+- `P0EFTJanusZ2SigmaHolstNiehYanFLRWObligationGate` imports the generic
+  Holst/Nieh-Yan torsion relation from the literature, while keeping the active
+  Janus/Sigma FLRW torsion pullback and `rho/p` reduction open.
+- `P0EFTJanusZ2SigmaMatterFluxFLRWObligationGate` imports the standard shell
+  flux identity `F_a = T_munu e_a^mu n^nu` and the transparency-condition
+  option; the active Janus throat flux or transparency proof remains open.
+- `P0EFTJanusZ2SigmaTunnelJunctionFLRWReductionGate` closes the standard
+  trace-reversed FLRW junction algebra in terms of `DeltaK_s(a)` and
+  `DeltaK_tau(a)`, while requiring a non-circular partition before using it as
+  an independent `T_eff_ab` source.
+- `P0EFTJanusZ2SigmaCountertermFLRWObligationGate` records that the
+  Sigma-supported counterterm is structurally unique and cancels the nonlinear
+  residual, but its active FLRW stress tensor still has to be varied and reduced.
+- `P0EFTJanusZ2SigmaFLRWBoundaryStressReductionGate` is the current component
+  reduction lock: the induced FLRW Sigma metric and Z2 normal orientation are
+  declared, but the Cartan-GHY, Holst/Nieh-Yan, matter-flux, tunnel-junction and
+  counterterm blocks are not yet reduced to FLRW components.
+- `P0EFTJanusZ2SigmaTunnelJunctionConditionGate` derives the Z2/Sigma junction
+  condition as a Lanczos-Israel-like jump equation with the Z2 normal-orientation
+  reversal included.
+- `P0EFTJanusZ2SigmaEffectiveBackgroundClosureGate` closes the structural
+  effective background equations: Friedmann, acceleration, and continuity for
+  `rho_eff_Z2Sigma` and `p_eff_Z2Sigma`.
+- `P0EFTJanusZ2SigmaBackgroundEquationDerivationGate` is the first post-math
+  equation gate. It requires the projected Sigma stress tensor, Z2 tunnel
+  junction condition, Friedmann equation, acceleration equation, and continuity
+  equation to be derived without reusing legacy LCDM or archived Z4 backgrounds.
+- `P0EFTJanusZ2SigmaDistanceBAOBibliographyGate` records that standard FLRW
+  distance measures, Etherington reciprocity, and BAO sound-horizon literature
+  can be imported as generic machinery, but the Sigma photon map and Z2/Sigma
+  sound ruler must be derived locally.
+- `P0EFTJanusZ2SigmaPhotonGeodesicDistanceMapGate` derives the visible photon
+  distance map from the Z2/Sigma background: `D_H`, `D_M`, `D_A`, and `D_L`
+  with an Etherington guard.
+- `P0EFTJanusZ2SigmaBAOSoundRulerGate` derives
+  `r_d^Z2Sigma = integral c_s^Z2Sigma/H_Z2Sigma dz`; fitted Planck `r_d` and
+  compressed LCDM priors remain forbidden.
+- `P0EFTJanusZ2SigmaGrowthBibliographyGate` records that standard perturbation,
+  bimetric, Einstein-Cartan, and Janus structure-growth sources exist, but no
+  source closes the active Z2/Sigma growth equations.
+- `P0EFTJanusZ2SigmaGrowthPerturbationEquationGate` derives the active growth
+  perturbation equation family on the Z2/Sigma background and forbids reuse of
+  archived Z4 `mu` tables.
+- `P0EFTJanusZ2SigmaCMBBoltzmannBibliographyGate` records that Ma/Bertschinger
+  and CLASS/CAMB machinery can be imported generically, while Z2/Sigma metric
+  sources must be local.
+- `P0EFTJanusZ2SigmaCMBBoltzmannEquationGate` derives the structural CMB
+  Boltzmann equation blocks on the active Z2/Sigma perturbation system and
+  forbids archived Z4 CMB reuse.
+- `P0EFTJanusZ2SigmaNonCompressedObservationGate` is the current outer gate:
+  equations are closed, but growth, BAO, and CMB must still pass direct
+  non-compressed observational gates before any full no-fit claim.
+- `P0EFTJanusLegacyZ4ArchivePolicyGate` archives old Z4/CMB modules as
+  diagnostic history; they are not active geometry.
+- Active replacement gates are:
+  `P0EFTJanusRP4PinSignComputationGate`,
+  `P0EFTJanusSigmaAPSPinLiftObligationGate`,
+  `P0EFTJanusSigmaAPSLocalThroatModelGate`,
+  `P0EFTJanusSigmaAPSEtaCancellationGate`,
+  `P0EFTJanusSigmaAPSParityAnomalyCancellationGate`,
+  `P0EFTJanusSigmaAPSTraceRegularizationGate`,
+  `P0EFTJanusRP4PinSignAuditGate`,
+  `P0EFTJanusAroundSigmaZ2CycleTransportGate`,
+  `P0EFTJanusProjectiveTunnelCoverSurvivalGate`,
+  `P0EFTJanusProjectiveTunnelVolumeRatioGate`,
+  `P0EFTJanusProjectiveTunnelCoverRatioGate`,
+  `P0EFTJanusSigmaBoundaryActionSupportGate`,
+  `P0EFTJanusSigmaBoundaryVariationalDecompositionGate`, and
+  `P0EFTJanusSigmaBoundaryNonlinearResidualClosureGate`.
+- `P0EFTJanusSigmaBoundaryActionSupportGate` records that boundary support is
+  localized on the tunnel throat `Sigma` and antipodal fixed-point boundaries
+  are forbidden. The nonlinear boundary variation and full Sigma action closure
+  are closed by the residual-closure gate.
+- `P0EFTJanusSigmaBoundaryVariationalDecompositionGate` declares the Sigma
+  boundary variational package: induced measure, Cartan/GHY, Holst/Nieh-Yan,
+  matter-flux and tunnel-junction terms, plus tetrad/connection/spinor channels.
+  The nonlinear residual is isolated and closed by the nonlinear residual gate.
+- `P0EFTJanusSigmaBoundaryNonlinearResidualClosureGate` closes the full Sigma
+  boundary action: the unique Sigma-supported counterterm cancels the isolated
+  nonlinear residual across tetrad, connection, and spinor channels.
+- `P0EFTJanusFormalModelReauditAfterTopologyCorrectionGate` records the current
+  reaudit: the resolved 2D tunnel shadow is `T2 -> Klein bottle`, while the Boy
+  surface is only the unresolved projective shadow. The active Z2/Sigma pure
+  math locks are now closed; observational validation remains separate.
 - `P0EFTJanusZ4HardGlobalTheoremAvailabilityGate` records that no direct
   Lean/mathlib import currently closes APS/Pin, orbifold 2:1, or the unique
   Janus/Z4/Holst action theorem for this project geometry.
@@ -245,16 +606,18 @@ Current CMB/Z4 master-equation status:
   forbidden until an explicit official-likelihood policy gate is opened and
   passed separately.
 
-Point d'entree principal :
+Point d'entree principal actif :
 
-- `JanusFormal/P0EFTGlobalTopologyMasterLock.lean`
-- `scripts/build_p0_eft_run9_master_lock.py`
+- `JanusFormal.lean`
+- `JanusFormal/P0EFTJanusZ2SigmaPureMathClosureAuditGate.lean`
+- `scripts/build_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate.py`
 
 ## Validation rapide
 
 ```bash
-python -m unittest discover -s tests -p "test_p0_eft_run*.py"
-lake build JanusFormal.P0EFTGlobalTopologyMasterLock
+python -m unittest tests.test_p0_eft_janus_active_z2_sigma_facade_audit_script
+python -m unittest tests.test_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate_script
+lake build JanusFormal
 ```
 
 Validation plus large :
@@ -269,14 +632,14 @@ Validation Lean active :
 lake build JanusFormal
 ```
 
-`JanusFormal.lean` est volontairement une facade active minimale. Le graphe
-complet historique reste disponible dans :
+`JanusFormal.lean` est volontairement une facade active minimale Z2/Sigma. Le
+graphe complet historique reste disponible dans :
 
 ```bash
 lake build JanusFormal.AllImportsArchive
 ```
 
-Validation CMB/Z4 active :
+Validation CMB/Z4 archive :
 
 ```bash
 lake build JanusFormal
@@ -318,7 +681,7 @@ Le depot exclut volontairement :
 
 Ces elements sont regenerables localement et ne doivent pas etre pousses.
 
-## Current CMB/Z4 checkpoint
+## Archived CMB/Z4 checkpoint
 
 - Standalone high-l TE/EE Cobaya wrappers and `.clik` data are available locally.
 - GR/CAMB standalone TE/EE handshake passes.

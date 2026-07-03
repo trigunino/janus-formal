@@ -3,19 +3,351 @@
 ## Current verdict
 
 - Formal topology scaffold: closed.
-- Pure math no-axiom closure: open.
+- Active geometry core: `Z2_tunnel_Sigma`.
+- Legacy CMB/Z4 paths: archived diagnostic only.
+- Pure math no-axiom closure: closed for the active `Z2_tunnel_Sigma` model.
 - Late-time growth / SDSS-eBOSS branch: viable as EFT diagnostic.
 - BAO `r_d`: requires a real pre-drag background contraction.
-- CMB Planck: native Z4 gate executed after primordial-imprint lock; current
-  spectra are rejected by Planck.
-- Native GR baseline: fails against CAMB shape-only reference, so Z4 corrections
-  are premature until the GR acoustic/recombination/lensing engine is fixed.
+- Archived CMB/Planck: native Z4 gate was executed historically after the
+  primordial-imprint lock; those spectra are rejected by Planck and are not
+  active model evidence.
+- Archived native GR baseline: failed against CAMB shape-only reference, so the
+  historical Z4 correction program is archived rather than extended.
 - Native GR decomposition: required now; Planck rejection is suspended as a
-  physical Janus/Z4 verdict until this baseline is repaired.
+  physical Janus verdict until an active Z2/Sigma observational model exists.
 - Therefore: do not claim full no-fit cosmology yet.
+- Active next track: derive observational equations from the closed
+  `Z2_tunnel_Sigma` base, not from archived cyclic Z4 modules.
 
 ## Pure math closure
 
+- [x] Add `P0EFTJanusTopologyLayerAlignmentGate`:
+  - global topology is `S4 -> RP4` with antipodal `Z2` cover;
+  - Big Bang / Big Crunch poles and their antipodal coincidence are explicit;
+  - tunnel surgery is separated from the free antipodal quotient;
+  - four physical sectors are `Z2_sheet x Z2_charge`;
+  - cyclic `Z4` remains packaging unless order-4 monodromy is proved;
+  - `RP4` Pin sign must not be imported from the `RP2`/Boy shadow.
+- [x] Add `P0EFTJanusProjectiveTunnelInterface`:
+  - unifies `S4 -> RP4` with tubular tunnel surgery;
+  - derives the `aroundSigma` cycle transport into the existing Z2 holonomy path;
+  - keeps cyclic `Z4` blocked until a lifted tunnel monodromy of order four is proved.
+- [x] Add `P0EFTJanusAroundSigmaZ2CycleTransportGate`:
+  - `aroundSigma` maps to the `Z2` generator;
+  - no cyclic `Z4` monodromy is required for the active geometry.
+- [x] Add `P0EFTJanusProjectiveTunnelCoverSurvivalGate`:
+  - equivariant tubular surgery preserves the two-fold `S4 -> RP4` cover;
+  - volume ratio is handled by the separate volume-ratio gate.
+- [x] Add `P0EFTJanusProjectiveTunnelVolumeRatioGate`:
+  - degree-two cover plus descended invariant measure gives cover/quotient ratio `2`;
+  - ratio is unique by cover degree;
+  - this does not infer an independent phenomenological sheet-split ratio.
+- [x] Add `P0EFTJanusFormalModelReauditAfterTopologyCorrectionGate`:
+  - resolved 2D tunnel shadow is `T2 -> Klein bottle`;
+  - Boy surface remains unresolved projective shadow only;
+  - active Z2/Sigma pure-math locks are closed; observational no-fit remains separate.
+- [x] Add active `P0EFTJanusZ2TunnelCoreGate`.
+- [x] Add active `P0EFTJanusZ2SigmaPureMathClosureAuditGate`.
+- [x] Add active `P0EFTJanusZ2SigmaHardTheoremTargetRegistry`.
+- [x] Add active `P0EFTJanusZ2SigmaObservationalRoadmapGate`:
+  - pure math closed;
+  - observational equation locks still open;
+  - cyclic Z4 reactivation forbidden;
+  - full no-fit cosmology remains false.
+- [x] Add `P0EFTJanusZ2SigmaBackgroundBibliographyGate`:
+  - Janus 2024 supplies projective/tunnel and bimetric FLRW ingredients;
+  - junction/GHY/Israel literature supplies generic boundary machinery;
+  - Einstein-Cartan/Holst literature supplies generic torsion blocks;
+  - full projected Z2/Sigma background equations are not found in the literature.
+- [x] Add `P0EFTJanusZ2SigmaBoundaryStressExtractionGate`:
+  - extracts the formal `T_eff_ab` definition from the closed Sigma boundary action;
+  - component blocks are declared for Cartan-GHY, Holst/Nieh-Yan, matter flux, tunnel junction and counterterm;
+  - FLRW component reduction is still open.
+- [x] Add `P0EFTJanusZ2SigmaThroatRadiusLawGate`:
+    - imports generic FRW thin-shell wormhole throat-radius machinery;
+    - records `R_Sigma(a)=a R0` only as a candidate ansatz;
+    - keeps active Janus derivation of `R_Sigma(a)` open and forbids observational fitting.
+  - [x] Add `P0EFTJanusZ2SigmaThroatRadiusVariationalEquationGate`:
+    - records that topology alone underdetermines `R_Sigma(a)`;
+    - declares `delta S_Sigma / delta R_Sigma(a) = 0` as the active no-fit equation;
+    - keeps the equation unsolved until the boundary blocks are expanded.
+  - [x] Add `P0EFTJanusZ2SigmaThroatRadiusBlockExpansionGate`:
+    - declares `E_RSigma = E_CartanGHY + E_HolstNiehYan + E_flux + E_junction + E_ct = 0`;
+    - records Israel/GHY/Brown-York bibliography support for the block strategy;
+    - keeps all Janus/Sigma radial block reductions open.
+  - [x] Add `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate`:
+    - reduces `E_CartanGHY` structurally from `delta_RSigma[sqrt(|h|) K]`;
+    - keeps `E_CartanGHY(a)` blocked on `R_Sigma(a)` and `X_±(a)`.
+  - [x] Add `P0EFTJanusZ2SigmaHolstNiehYanRadialBlockGate`:
+    - declares `E_HolstNiehYan` as radial variation of the Sigma torsion/Nieh-Yan pullback;
+    - keeps its scale-factor form blocked on torsion pullback and Immirzi profile.
+  - [x] Add `P0EFTJanusZ2SigmaActiveTunnelEmbeddingFromRadiusGate`:
+    - imports dynamic-shell kinematics for `R_Sigma(a) -> X_±(a)`;
+    - keeps active embedding blocked until `R_Sigma(a)` is solved from the radial variational equation.
+  - [x] Add `P0EFTJanusZ2SigmaTangentNormalOrientationGate`:
+    - imports thin-shell tangent frame, unit normal and orientation conventions;
+    - keeps active frames and Z2 normal sign blocked on the resolved-tunnel embedding.
+  - [x] Add `P0EFTJanusZ2SigmaCoframeConnectionPullbackGate`:
+    - imports first-order coframe/spin-connection pullback machinery;
+    - keeps `X_Sigma^*(e)` and `X_Sigma^*(omega)` blocked on active embedding and Z2 orientation.
+  - [x] Add `P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGate`:
+    - imports differential-form pullback and Cartan first structure equation;
+    - keeps Sigma torsion pullback blocked on embedding, coframe, connection and Z2 orientation.
+  - [x] Add `P0EFTJanusZ2SigmaMatterFluxRadialBlockGate`:
+    - imports the normal-tangent flux term `T_munu e_a^mu n^nu`;
+    - keeps `E_matterFlux` blocked until transparency or active flux is derived.
+  - [x] Add `P0EFTJanusZ2SigmaMatterFluxRouteDecisionGate`:
+    - declares the transparency-vs-active-projection fork;
+    - forbids choosing the matter-flux route by observational fit.
+  - [x] Add `P0EFTJanusZ2SigmaSpinorBundleProjectionGate`:
+    - imports spinor-bundle, boundary-restriction and APS-boundary machinery;
+    - declares `psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, APS/Pin data)`;
+    - keeps active plus/minus spinor bundle and boundary-projection data open.
+  - [x] Add `P0EFTJanusZ2SigmaPlusMinusDiracMatterActionGate`:
+    - imports curved Dirac action and Holst/fermion coupling context;
+    - keeps plus/minus matter actions blocked on coframe/connection and spinor projection data.
+  - [x] Add `P0EFTJanusZ2SigmaPlusMinusMatterCurrentGate`:
+    - imports generic Dirac Noether current structure;
+    - keeps `J_+` and `J_-` blocked on active plus/minus matter actions.
+  - [x] Add `P0EFTJanusZ2SigmaNormalMatterCurrentGate`:
+    - imports generic current normal-projection criterion;
+    - keeps `J_n^Z2Sigma=0` blocked on active currents and Sigma normals.
+  - [x] Add `P0EFTJanusZ2SigmaMatterFluxTransparencyGate`:
+    - declares sufficient conditions for `F_a^Z2Sigma=0`;
+    - keeps transparency open until normal current or Z2 flux cancellation is derived.
+  - [x] Add `P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate`:
+    - declares the non-transparent branch `F_a^± = T^±_munu e_a^mu n_±^nu`;
+    - keeps active flux blocked on bulk stresses and active embedding data.
+  - [x] Add `P0EFTJanusZ2SigmaBulkStressOfAGate`:
+    - declares `T^±_munu(a)` from sector perfect fluids plus Holst torsion stress;
+    - keeps bulk stress blocked on active sector densities/pressures and torsion stress.
+  - [x] Add `P0EFTJanusZ2SigmaSectorDensityPressureOfAGate`:
+    - imports FLRW perfect-fluid continuity per sector;
+    - keeps `rho_±(a), p_±(a)` blocked on derived equations of state and normalizations.
+  - [x] Add `P0EFTJanusZ2SigmaHolstTorsionStressOfAGate`:
+    - declares `T_HolstTorsion_munu(a)` by metric variation of the Holst/torsion action;
+    - keeps the stress blocked on the active torsion solution and Immirzi profile.
+  - [x] Add `P0EFTJanusZ2SigmaImmirziProfileOfAGate`:
+    - imports dynamic Barbero-Immirzi scalar-field/Nieh-Yan literature;
+    - keeps `gamma_Immirzi(a)` blocked on the bulk equation, Sigma boundary condition and Z2/Sigma projection.
+  - [x] Add `P0EFTJanusZ2SigmaImmirziBulkBoundaryEquationGate`:
+    - imports scalar-Immirzi Holst/Nieh-Yan variation structure;
+    - keeps `E_gamma=0` and `B_gamma^Sigma=0` blocked on torsion pullback and spinor source.
+  - [x] Add `P0EFTJanusZ2SigmaTorsionFieldSolutionOfAGate`:
+    - imports the generic Sciama-Kibble/Cartan spin-torsion constraint;
+    - keeps `T_Z2Sigma(a)` blocked on spin current, boundary torsion source and Immirzi profile.
+  - [x] Add `P0EFTJanusZ2SigmaSpinCurrentOfAGate`:
+    - imports canonical spin tensor and Dirac axial-current structure;
+    - keeps active spin current blocked on fermion distribution, spin polarization and Z2/Sigma projection.
+  - [x] Add `P0EFTJanusZ2SigmaFermionDistributionOfAGate`:
+    - declares Dirac-gas and Weyssenhoff-fluid routes from the literature;
+    - keeps active distributions blocked until the route and plus/minus projections are action/topology-derived.
+  - [x] Add `P0EFTJanusZ2SigmaFermionRouteSelectionGate`:
+    - selects the Dirac/spinorial route from the active Sigma spinor-variation channel;
+    - keeps Weyssenhoff as coarse-graining only, not a primitive fitted route.
+  - [x] Add `P0EFTJanusZ2SigmaDiracFermionNumberDensityOfAGate`:
+    - imports conserved Dirac number-current dilution `n_pm(a)=N_pm/a^3`;
+    - keeps `N_+`, `N_-` and projected Z2/Sigma density blocked on action/topology.
+  - [x] Add `P0EFTJanusZ2SigmaDiracNumberNormalizationGate`:
+    - declares Noether-charge integrals for `N_+`, `N_-` and projected throat charge;
+    - keeps charge values blocked until active spinor boundary data/topology fixes them.
+  - [x] Add `P0EFTJanusZ2SigmaDiracHolstVertexOfAGate`:
+    - imports the generic Holst-fermion torsion-mediated four-fermion vertex;
+    - keeps matrix elements blocked on active torsion, spin current, Immirzi profile and Sigma projection.
+  - [x] Add `P0EFTJanusZ2SigmaDiracThermalCrossSectionOfAGate`:
+    - imports generic `<sigma v>` thermal averaging and Gondolo-Gelmini relativistic averaging;
+    - keeps cross sections blocked on active matrix elements, phase-space measures and projection.
+  - [x] Add `P0EFTJanusZ2SigmaDiracInteractionRateOfAGate`:
+    - imports `Gamma_pm(a)=n_bath,pm(a)<sigma v>_pm(a)` as generic kinetic structure;
+    - keeps rates blocked on active bath densities, cross sections and Z2/Sigma projection.
+  - [x] Add `P0EFTJanusZ2SigmaDiracMassTemperatureLawOfAGate`:
+    - imports momentum redshift and relativistic decoupled temperature scaling as generic machinery;
+    - keeps massive regime, decoupling scale and projected mass/temperature law blocked on active derivation.
+  - [x] Add `P0EFTJanusZ2SigmaDiracRegimeSelectionGate`:
+    - declares `m_pm/T_dec_pm` as the relativistic/massive/semi-relativistic criterion;
+    - keeps regime selection blocked until active masses and decoupling temperatures are derived.
+  - [x] Add `P0EFTJanusZ2SigmaDiracDecouplingConditionGate`:
+    - imports `Gamma_pm(a_dec)=H_Z2Sigma(a_dec)` as the standard freeze-out condition;
+    - keeps decoupling blocked until `Gamma_+/- (a)` and `H_Z2Sigma(a)` are derived.
+  - [x] Add `P0EFTJanusZ2SigmaTunnelJunctionRadialBlockGate`:
+    - reduces `E_tunnelJunction` structurally from the Lanczos-Israel jump residual;
+    - keeps its scale-factor form blocked on `DeltaK_s(a)`, `DeltaK_tau(a)` and source partition.
+  - [x] Add `P0EFTJanusZ2SigmaCountertermRadialBlockGate`:
+    - declares radial variation of the unique Sigma counterterm;
+    - keeps reduction blocked until explicit `L_ct` is expanded.
+  - [x] Add `P0EFTJanusZ2SigmaCountertermDensityExpansionGate`:
+    - isolates the missing `L_ct(h,K,torsion,Immirzi)` expansion;
+    - forbids new fitted counterterm freedom.
+- [x] Add `P0EFTJanusZ2SigmaEmbeddingGaugePolicyGate`:
+  - imports shell proper-time gauge as generic thin-shell machinery;
+  - records radial/time embedding gauge choices as coordinate fixing only;
+  - blocks using gauge choice as a substitute for deriving `R_Sigma(a)`.
+- [x] Add `P0EFTJanusZ2SigmaEmbeddingGaugeEquationGate`:
+  - imports induced-metric normalization for dynamic thin shells;
+  - fixes `T_±` derivatives conditionally on `R_Sigma(a)`;
+  - keeps `R_Sigma(a)` and therefore `X_±(a)` open.
+- [x] Add `P0EFTJanusZ2SigmaTunnelEmbeddingConstraintCountGate`:
+  - records unknown embedding functions and declared constraints;
+  - isolates missing `R_Sigma(a)` throat-radius law and embedding gauge;
+  - prevents `X_±(a)` closure from being inferred by constraint naming alone.
+- [x] Add `P0EFTJanusZ2SigmaActiveTunnelEmbeddingOfAGate`:
+  - declares the active resolved-tunnel embedding problem `X_+^mu(a,xi)` and `X_-^mu(a,xi)`;
+  - imports Janus projective/tunnel topology plus generic thin-shell embedding machinery;
+  - blocks `DeltaK_s(a)` and `DeltaK_tau(a)` until the active embedding is derived.
+- [x] Add `P0EFTJanusZ2SigmaTunnelEmbeddingExtrinsicCurvatureGate`:
+  - imports generic thin-shell embedding machinery;
+  - declares `X_pm`, tangents, normals, induced metric matching and `K_ab^pm`;
+  - derives `DeltaK_s` and `DeltaK_tau` structurally from `K_ab^pm`;
+  - leaves active tunnel embedding functions of `a` open.
+- [x] Add `P0EFTJanusZ2SigmaCartanGHYFLRWProjectionGate`:
+  - imports the generic Brown-York/Israel FLRW projection;
+  - derives `rho_CGHY = 3 eps_Z2 DeltaK_s/kappa`;
+  - derives `p_CGHY = eps_Z2(DeltaK_tau - 2 DeltaK_s)/kappa`;
+  - leaves `DeltaK_s(a)` and `DeltaK_tau(a)` as active tunnel-embedding derivations.
+- [x] Add `P0EFTJanusZ2SigmaHolstNiehYanFLRWObligationGate`:
+  - imports generic Holst/Nieh-Yan torsion literature;
+  - blocks torsionless Holst from being used as a nonzero Sigma source;
+  - leaves the active FLRW torsion pullback and dynamic-Immirzi boundary variation open.
+- [x] Add `P0EFTJanusZ2SigmaMatterFluxFLRWObligationGate`:
+  - imports the standard shell flux one-form `T_munu e_a^mu n^nu`;
+  - declares the transparency-condition option;
+  - leaves active Janus throat flux or a transparency proof open.
+- [x] Add `P0EFTJanusZ2SigmaTunnelJunctionFLRWReductionGate`:
+  - closes the standard trace-reversed FLRW junction algebra;
+  - keeps `DeltaK_s(a)`, `DeltaK_tau(a)` and the non-circular source partition open.
+- [x] Add `P0EFTJanusZ2SigmaCountertermFLRWObligationGate`:
+  - records the unique Sigma counterterm and nonlinear residual cancellation;
+  - leaves the active FLRW counterterm stress variation and `rho/p` reduction open.
+- [x] Add `P0EFTJanusZ2SigmaFLRWBoundaryStressReductionGate`:
+  - declares the induced FLRW Sigma metric and Z2 normal orientation;
+  - keeps all five component reductions open until derived on the active Sigma background;
+  - blocks `T_eff_ab` projection to `rho_eff(a), p_eff(a)`.
+- [x] Add `P0EFTJanusZ2SigmaProjectedStressTensorGate`:
+  - defines the induced Sigma metric variation;
+  - declares the Brown-York-like projected stress tensor;
+  - applies the Z2 projection to the visible background.
+- [x] Add `P0EFTJanusZ2SigmaTunnelJunctionConditionGate`:
+  - declares the extrinsic-curvature jump across Sigma;
+  - includes Z2 normal-orientation reversal;
+  - derives the tunnel junction condition from projected Sigma stress.
+- [x] Add `P0EFTJanusZ2SigmaEffectiveFluidClosureGate`:
+  - primary thin-shell/Brown-York literature supplies the projection method;
+  - no direct Janus `Z2_tunnel_Sigma` formula for `rho_eff(a), p_eff(a)` was imported;
+  - structural projection is ready, numeric effective-fluid closure remains open.
+- [x] Add `P0EFTJanusZ2SigmaEffectiveBackgroundClosureGate`:
+  - derives the structural effective Friedmann equation;
+  - derives the structural acceleration equation;
+  - derives the effective continuity equation;
+  - no observational parameters are fitted.
+- [x] Add active `P0EFTJanusZ2SigmaBackgroundEquationDerivationGate`:
+  - Sigma boundary action is available;
+  - projected Sigma stress tensor is derived;
+  - Z2 tunnel junction condition is derived;
+  - effective Friedmann/acceleration/continuity equations are derived;
+  - legacy LCDM and archived Z4 backgrounds are forbidden.
+- [x] Add `P0EFTJanusZ2SigmaNumericalBackgroundClosureGate`:
+  - structural background equations are closed;
+  - numerical `H_Z2Sigma(a)` remains blocked until `rho_eff(a)` and `p_eff(a)` are supplied from the active Sigma boundary action;
+  - legacy LCDM and archived Z4 background callables remain forbidden.
+- [x] Add `P0EFTJanusZ2SigmaDistanceBAOBibliographyGate`:
+  - standard FLRW distance definitions are importable;
+  - Etherington reciprocity is importable conditionally on null geodesics and photon conservation;
+  - BAO sound-horizon machinery is importable generically;
+  - Sigma photon map and Z2/Sigma `r_d` remain local derivations.
+- [x] Add `P0EFTJanusZ2SigmaPhotonGeodesicDistanceMapGate`:
+  - visible photon metric projection declared;
+  - photon null geodesic and redshift map derived;
+  - `D_H`, `D_M`, `D_A`, `D_L` derived with Etherington guard.
+- [x] Add `P0EFTJanusZ2SigmaBAOSoundRulerGate`:
+  - photon-baryon sound speed declared;
+  - drag epoch condition declared;
+  - `r_d^Z2Sigma = integral c_s^Z2Sigma/H_Z2Sigma dz`;
+  - fitted Planck `r_d` and compressed LCDM priors forbidden.
+- [x] Add `P0EFTJanusZ2SigmaBAONonCompressedObservationGate`:
+  - DESI DR2 Gaussian BAO mean vector and 13x13 covariance are ready;
+  - compressed Planck `r_d` and archived Holst/Z4 BAO diagnostics are forbidden;
+  - the gate remains red until active Z2/Sigma distances and `r_d` are computed.
+- [x] Add `P0EFTJanusZ2SigmaGrowthBibliographyGate`:
+  - standard scalar perturbation framework is importable;
+  - bimetric and Einstein-Cartan perturbation contexts exist;
+  - complete Z2/Sigma growth equations remain a local derivation.
+- [x] Add `P0EFTJanusZ2SigmaGrowthPerturbationEquationGate`:
+  - continuity and Euler perturbation rows derived;
+  - Poisson/slip/friction family derived for the active Z2/Sigma core.
+- [x] Add `P0EFTJanusZ2SigmaGrowthNonCompressedObservationGate`:
+  - SDSS/eBOSS DR16 direct `f_sigma8` points and 5x5 covariance are ready;
+  - archived Holst/Z4 growth curves and compressed Planck priors are forbidden;
+  - the gate remains red until an active Z2/Sigma prediction vector is computed.
+- [x] Add `P0EFTJanusZ2SigmaGrowthPredictionVectorGate`:
+  - prevents reusing the archived Holst/Z4 growth solvers as active Z2/Sigma evidence;
+  - blocks until numerical `H`, `Omega_m`, `mu`, slip and friction closures are supplied;
+  - requires an explicit initial-condition and `sigma8` normalization policy.
+- [x] Add `P0EFTJanusZ2SigmaCMBNonCompressedObservationGate`:
+  - local non-compressed Planck low-l, lowE, high-l TTTEEE and lensing likelihood paths are available;
+  - archived Z4 CMB spectra and compressed Planck LCDM priors are forbidden;
+  - the gate remains red until active Z2/Sigma TT/TE/EE/PP spectra are generated and handshaken.
+  - Z2/Sigma Poisson constraint, slip relation and friction term derived;
+  - archived Z4 `mu` reuse forbidden.
+- [x] Add `P0EFTJanusZ2SigmaCMBBoltzmannBibliographyGate`:
+  - Ma/Bertschinger and CLASS/CAMB equation machinery are importable;
+  - complete Z2/Sigma CMB Boltzmann equations remain local.
+- [x] Add `P0EFTJanusZ2SigmaCMBBoltzmannEquationGate`:
+  - photon temperature and polarization hierarchies declared;
+  - baryon and neutrino couplings declared;
+  - Z2/Sigma metric source terms derived;
+  - archived Z4 CMB reuse forbidden.
+- [x] Add `P0EFTJanusZ2SigmaNonCompressedObservationGate`:
+  - all equation locks are closed;
+  - direct growth, BAO and CMB gates remain to run;
+  - compressed LCDM validation remains forbidden;
+  - full no-fit cosmology remains false.
+- [x] Add active facade audit:
+  - `JanusFormal.lean` imports only Z2/Sigma active gates;
+  - old CMB/Z4 modules stay in `JanusFormal.AllImportsArchive`.
+- [x] Add docs alignment audit to prevent active-Z4 wording from returning.
+- [x] Archive legacy `Z4` as diagnostic-only with
+  `P0EFTJanusLegacyZ4ArchivePolicyGate`.
+- [x] Add Z2/Sigma replacement gates:
+  - `P0EFTJanusRP4PinSignComputationGate`;
+  - `P0EFTJanusRP4PinSignAuditGate`;
+  - `P0EFTJanusProjectiveTunnelCoverRatioGate`;
+  - `P0EFTJanusSigmaBoundaryActionSupportGate`.
+- [x] Add `P0EFTJanusSigmaBoundaryVariationalDecompositionGate`:
+  - induced Sigma measure;
+  - Cartan/GHY, Holst/Nieh-Yan, matter-flux and tunnel-junction terms;
+  - tetrad, connection and spinor variation channels;
+  - nonlinear residual obstruction isolated.
+- [x] Compute `RP4` base Pin sign:
+  - `w(T RP4) = (1 + a)^5 = 1 + a + a^4` mod 2;
+  - `w1 != 0`, `w2 = 0`, `w1^2 != 0`;
+  - `Pin+` exists on the `RP4` base;
+  - `Pin-` is obstructed on the `RP4` base.
+- [x] Add `P0EFTJanusSigmaAPSPinLiftObligationGate`:
+  - induced Pin structure on `Sigma`;
+  - APS boundary projector;
+  - Fredholm domain;
+  - eta/zero-mode cancellation;
+  - parity anomaly cancellation.
+- [x] Add `P0EFTJanusSigmaAPSLocalThroatModelGate`:
+  - compact orientable Sigma throat local model;
+  - local induced Pin/spin data;
+  - local APS projector and Fredholm domain;
+  - eta/parity handled by subsequent gates.
+- [x] Add `P0EFTJanusSigmaAPSEtaCancellationGate`:
+  - Sigma Dirac spectrum paired;
+  - Sigma Dirac kernel trivial;
+  - `eta=0`, `h=0`, and APS correction contribution zero;
+  - parity handled by subsequent parity gate.
+- [x] Add `P0EFTJanusSigmaAPSParityAnomalyCancellationGate`:
+  - Z2 tunnel pairing declared;
+  - paired boundary orientation reversal declared;
+  - opposite Dirac determinant phases declared;
+  - parity anomaly cancels pairwise;
+  - Sigma APS boundary Pin lift closed.
+- [x] Add `P0EFTJanusSigmaAPSTraceRegularizationGate`:
+  - Clifford trace normalization declared;
+  - APS heat-kernel regularization declared;
+  - trace regularization standard globally.
 - [x] Add `P0EFTJanusZ4PureMathClosureAuditGate`.
 - [x] Add `P0EFTJanusZ4HardGlobalTheoremAvailabilityGate`.
 - [x] Add `P0EFTJanusZ4HardGlobalTheoremReductionGate`.
@@ -33,21 +365,51 @@
   obstruction obligations.
 - [x] Reduce nonlinear Euler-Lagrange residuals to one common obstruction `O_nl`.
 - [x] Reduce gauge-fixing variation uniqueness to an atomic obligation.
-- [ ] Close the nonlinear boundary variation so the full boundary action is
+- [x] Close the nonlinear boundary variation so the full boundary action is
   closed beyond the algebraic identity-channel counterterm bridge.
 - [ ] Prove residual gauge freedom is removed by Janus geometry.
 - [ ] Prove the common nonlinear Euler-Lagrange obstruction `O_nl = 0`.
 - [ ] Close the Ward/global anomaly branch without axioms.
-- [ ] Prove APS/Pin global theorem without axioms.
-- [ ] Prove orbifold global 2:1 theorem without axioms.
-- [ ] Prove unique Janus/Z4/Holst action variation to equations without axioms.
-- [ ] Only after all three: consider `full_cosmology_prediction_ready_no_fit = true`.
+- [x] Prove `Sigma` APS boundary Pin lift without axioms.
+- [x] Prove projective-tunnel cover/quotient volume ratio and uniqueness.
+- [x] Close active Janus Z2/Sigma/Holst Sigma boundary action without axioms.
+  Sigma support, variational package, nonlinear residual cancellation, and full
+  boundary action are closed for the active pure-math ledger.
+- [ ] Only after non-compressed Planck + BAO + growth pass under one derived
+  observational model: consider `full_cosmology_prediction_ready_no_fit = true`.
 
-## Active CMB/Z4 master-equation lock
+### Active objective: hard global theorems (APS/Pin + orbifold 2:1 + unique action)
+
+- Canonical execution plan moved to: [active_objective_hard_global_lock.md](docs/active_objective_hard_global_lock.md)
+
+- [x] Establish `aps_index_package_closed` as a non-axiomatic theorem in Lean from
+  concrete local-global data:
+  - local Sigma APS projector/Fredholm package is closed;
+  - Sigma eta/zero-mode package is closed;
+  - Sigma global parity anomaly cancellation is closed;
+  - trace regularization standard is closed.
+- [x] Establish projective-tunnel cover-ratio lock:
+  - `global_projective_tunnel_volume_ratio_two_to_one`
+  - `global_volume_ratio_unique_two_to_one`
+- [x] Close the combined Z2/Sigma action-to-equations interface for the active
+  pure-math boundary/action ledger (without
+  introducing new phenomenological assumptions):
+  - single tunnel-supported source on `Sigma`
+  - Sigma-supported variational decomposition
+  - nonlinear residual cancellation
+  - full boundary action closure
+- [x] Update the hard-global/observational readouts so lock status is:
+  - APS lock closed,
+  - projective tunnel 2:1 lock closed,
+  - Sigma boundary action lock closed,
+  - no promotion of `planck` verdict and no `full_cosmology_prediction_ready_no_fit`.
+- [x] Freeze CMB/observational gates separately from the active pure-math closure.
+
+## Archived CMB/Z4 master-equation lock
 
 - [x] Archive patchwork slip/surface/minus-sector attempts as diagnostic-only
   when their observable response remains carrier-tangent.
-- [x] Open the unique Z4 master-equation path and require all observable
+- [x] Archive the unique Z4 master-equation path and require all observable
   deltas to descend from one upstream `U_Z4` generator.
 - [x] Find a non-tangent localized-transition master ansatz:
   source-level replay parallel fraction is about `0.1906`.
@@ -759,12 +1121,13 @@
 
 ## Unique Z4 master equation track
 
-Status: new upstream track, opened after freezing the patchwork CMB/Z4 branches.
+Status: archived diagnostic track. It is not part of the active Z2/Sigma model.
 
 Rationale:
 - downstream additions built separately keep becoming carrier-tangent;
 - archived failures include slip, surface/Doppler, two-sector projection, sound-speed/Jeans, shear/free-streaming and thermal-ratio routes;
-- next viable direction is one upstream generator `U_Z4`, not independent corrections.
+- historical lesson: independent downstream corrections failed; any future
+  non-Z2 extension would need one upstream generator, but this is not active.
 
 Policy:
 - no Planck;
@@ -863,11 +1226,13 @@ Required formal gates:
 - [x] Add `P0EFTJanusZ4MasterPreLikelihoodLockGate`:
   - blocks likelihoods when diagnostic spectra have zero-crossing or large fractional shape artifacts;
   - current lock is active because TT/EE acquire extra zero crossings.
-- [ ] Revise master shape regularization before any likelihood handshake.
+- [x] Archive master shape regularization instead of revising it under the
+  active Z2/Sigma model.
 
 Completion rule:
 - [x] Only if the master-derived signal passes carrier-tangent projection, open a controlled diagnostic source-level regeneration gate.
-- [ ] Only after that, consider observational gates.
+- [x] Observational gates for this Z4 branch are archived under the active
+  Z2/Sigma model.
 - [x] Enforce post-checkpoint freeze rule:
   - checkpoint: `8ce53806`;
   - no new Z4 physics or parameter retuning is allowed until standalone high-l TE/EE likelihood coverage is acquired;

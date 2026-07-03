@@ -12,6 +12,7 @@ def build_payload() -> dict:
     aps = {
         "target": "APS/Pin global theorem for eta_H = -2",
         "refined_gate": "p0_eft_janus_z4_aps_index_package_obligation_gate",
+        "frontier_gate": "p0_eft_janus_z4_hard_global_atomic_frontier_gate",
         "scaffold_complete": True,
         "local_trace_transport_closed": True,
         "spectrum_pairing_interface_closed": True,
@@ -28,6 +29,7 @@ def build_payload() -> dict:
     orbifold = {
         "target": "global orbifold 2:1 theorem for a_sigma = 2/3",
         "refined_gate": "p0_eft_janus_z4_orbifold_cover_ratio_obligation_gate",
+        "frontier_gate": "p0_eft_janus_z4_hard_global_atomic_frontier_gate",
         "scaffold_complete": True,
         "local_holonomy_transport_closed": True,
         "integer_flux_law_interface_closed": True,
@@ -40,7 +42,7 @@ def build_payload() -> dict:
         ],
     }
     action = {
-        "target": "unique Janus/Z4/Holst action-to-equations derivation",
+        "target": "unique Janus Z2/Sigma/Holst action-to-equations derivation",
         "refined_gates": [
             "p0_eft_janus_z4_nonlinear_boundary_variation_obligation_gate",
             "p0_eft_janus_z4_nonlinear_el_residual_obligation_gate",
@@ -61,16 +63,41 @@ def build_payload() -> dict:
             "action_to_cmb_equations_transport_unique",
         ],
     }
+    topology_alignment = {
+        "gate": "p0_eft_janus_topology_layer_alignment_gate",
+        "projective_tunnel_interface_gate": "p0_eft_janus_projective_tunnel_interface",
+        "global_topology": "S4_to_RP4_antipodal_quotient",
+        "topological_cover_group": "Z2",
+        "projective_tunnel_closed": True,
+        "around_sigma_cycle_transport_available": True,
+        "antipodal_quotient_singular_orbifold": False,
+        "natural_four_sector_group": "Z2xZ2",
+        "cyclic_z4_monodromy_proved": False,
+        "cyclic_z4_inference_allowed": False,
+        "z4_label_policy": "four_sector_packaging_until_order4_monodromy_proved",
+        "rp4_pin_sign_recheck_required": True,
+        "active_core_gate": "p0_eft_janus_z2_tunnel_core_gate",
+        "legacy_z4_archive_gate": "p0_eft_janus_legacy_z4_archive_policy_gate",
+        "active_core": "Z2_tunnel_Sigma",
+        "legacy_z4_archived": True,
+        "rp4_pin_sign_audit_gate": "p0_eft_janus_rp4_pin_sign_audit_gate",
+        "projective_tunnel_cover_ratio_gate": "p0_eft_janus_projective_tunnel_cover_ratio_gate",
+        "sigma_boundary_action_support_gate": "p0_eft_janus_sigma_boundary_action_support_gate",
+    }
     all_closed = bool(
         aps["global_index_theorem_proved_without_axioms"]
         and orbifold["global_orbifold_theorem_proved_without_axioms"]
         and action["unique_action_full_variation_proved_without_axioms"]
+        and topology_alignment["active_core"] == "Z2_tunnel_Sigma"
+        and topology_alignment["legacy_z4_archived"]
+        and not topology_alignment["rp4_pin_sign_recheck_required"]
     )
     return {
         "status": "janus-z4-pure-math-closure-audit-gate",
         "aps_pin": aps,
         "orbifold_2_to_1": orbifold,
         "unique_action": action,
+        "topology_layer_alignment": topology_alignment,
         "hard_external_theorem_target_registry": "p0_eft_janus_z4_hard_external_theorem_target_registry",
         "pure_math_model_closed_without_axioms": all_closed,
         "full_cosmology_prediction_ready_no_fit": all_closed,
@@ -101,6 +128,25 @@ def write_reports() -> dict:
         ])
         lines.extend(f"  - `{item}`" for item in block["remaining_axioms"])
         lines.append("")
+    topo = payload["topology_layer_alignment"]
+    lines.extend([
+        "## Topology layer alignment",
+        f"- gate: `{topo['gate']}`",
+        f"- projective-tunnel interface: `{topo['projective_tunnel_interface_gate']}`",
+        f"- global topology: `{topo['global_topology']}`",
+        f"- cover group: `{topo['topological_cover_group']}`",
+        f"- projective tunnel closed: `{topo['projective_tunnel_closed']}`",
+        f"- aroundSigma transport available: `{topo['around_sigma_cycle_transport_available']}`",
+        f"- natural four-sector group: `{topo['natural_four_sector_group']}`",
+        f"- cyclic Z4 monodromy proved: `{topo['cyclic_z4_monodromy_proved']}`",
+        f"- active core: `{topo['active_core']}`",
+        f"- legacy Z4 archived: `{topo['legacy_z4_archived']}`",
+        f"- RP4 Pin audit: `{topo['rp4_pin_sign_audit_gate']}`",
+        f"- projective-tunnel ratio: `{topo['projective_tunnel_cover_ratio_gate']}`",
+        f"- Sigma boundary support: `{topo['sigma_boundary_action_support_gate']}`",
+        f"- RP4 Pin sign recheck required: `{topo['rp4_pin_sign_recheck_required']}`",
+        "",
+    ])
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
     return payload
 

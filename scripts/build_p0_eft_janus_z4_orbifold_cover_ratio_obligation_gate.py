@@ -19,10 +19,39 @@ def build_payload() -> dict:
         "volume_cover_ratio_two_to_one": False,
         "global_volume_ratio_unique_two_to_one": False,
     }
+    obligation_provenance = {
+        "global_euler_holonomy_class_computed": {
+            "status": "external_or_missing_internal_theorem",
+            "expected_source": "Euler/holonomy class computation for the Janus Z2 orbifold cover",
+            "current_imports": [
+                "P0EFTOrbifoldEulerCharacteristic",
+                "P0EFTOrbifoldHolonomyFluxQuantization",
+                "P0EFTOrbifoldFluxIntegerTheorem",
+            ],
+        },
+        "volume_cover_ratio_two_to_one": {
+            "status": "external_or_missing_internal_theorem",
+            "expected_source": "global volume-cover theorem deriving Vol+ : Vol- = 2 : 1",
+            "current_imports": [
+                "P0EFTOrbifoldVolumeCoverClassification",
+                "P0EFTOrbifoldVolumeDerivation",
+            ],
+        },
+        "global_volume_ratio_unique_two_to_one": {
+            "status": "external_or_missing_internal_theorem",
+            "expected_source": "uniqueness theorem excluding other global cover ratios",
+            "current_imports": [
+                "P0EFTOrbifoldVolumeCoverClassification",
+                "P0EFTOrbifoldEulerCharacteristic",
+            ],
+        },
+    }
     closed = all(obligations.values())
+    remaining = [key for key, value in obligations.items() if not value]
     return {
         "status": "janus-z4-orbifold-cover-ratio-obligation-gate",
         "orbifold_obligations": obligations,
+        "obligation_provenance": obligation_provenance,
         "orbifold_local_interfaces_ready": all(
             obligations[key]
             for key in (
@@ -34,9 +63,8 @@ def build_payload() -> dict:
             )
         ),
         "janus_cover_ratio_derived": closed,
-        "remaining_orbifold_obligations": [
-            key for key, value in obligations.items() if not value
-        ],
+        "remaining_orbifold_obligations": remaining,
+        "external_theorem_blocker": bool(remaining),
         "pure_math_model_closed_without_axioms": False,
         "full_cosmology_prediction_ready_no_fit": False,
         "next_required_gate": "prove_global_euler_holonomy_class_and_unique_cover_ratio",
@@ -56,6 +84,10 @@ def write_reports() -> dict:
         "## Remaining orbifold obligations",
     ]
     lines.extend(f"- `{item}`" for item in payload["remaining_orbifold_obligations"])
+    lines.extend(["", "## Provenance"])
+    for item in payload["remaining_orbifold_obligations"]:
+        row = payload["obligation_provenance"][item]
+        lines.append(f"- `{item}`: {row['status']} ({row['expected_source']})")
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return payload
 
