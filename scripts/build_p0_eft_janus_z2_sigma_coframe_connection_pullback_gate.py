@@ -16,6 +16,7 @@ def build_payload() -> dict:
         "differential_form_pullback_imported": True,
         "active_Sigma_embedding_required": True,
         "tangent_normal_orientation_gate_declared": True,
+        "projective_gluing_normal_orientation_sign_gate_declared": True,
         "coframe_pullback_declared": True,
         "spin_connection_pullback_declared": True,
         "Z2_normal_orientation_required": True,
@@ -25,7 +26,7 @@ def build_payload() -> dict:
         "active_Sigma_embedding_ready": False,
         "coframe_pullback_ready": False,
         "spin_connection_pullback_ready": False,
-        "Z2_oriented_pullback_ready": False,
+        "Z2_oriented_pullback_ready": True,
         "coframe_connection_pullback_ready": False,
     }
     return {
@@ -36,6 +37,7 @@ def build_payload() -> dict:
             "spin-connection and Cartan-structure-equation references",
             "standard differential-form pullback references",
             "active tangent-normal/Z2 orientation gate",
+            "projective gluing normal orientation sign gate",
         ],
         "bibliography_result": (
             "Generic first-order geometry supplies coframe e^I, spin connection "
@@ -47,7 +49,7 @@ def build_payload() -> dict:
         "formulas": {
             "coframe_pullback": "e^I_Sigma = X_Sigma^*(e^I)",
             "connection_pullback": "omega^I_J|_Sigma = X_Sigma^*(omega^I_J)",
-            "oriented_pullback": "Z2 orientation fixes the normal sign used by X_+ and X_-",
+            "oriented_pullback": "epsilon_Z2=-1 fixes the normal sign used by X_+ and X_-",
         },
         "coframe_connection_pullback_ledger_declared": all(declared.values()),
         "coframe_connection_pullback_ready": all(declared.values()) and all(closure.values()),
@@ -58,7 +60,6 @@ def build_payload() -> dict:
             "derive_tangent_and_normal_frames_on_Sigma",
             "pull_back_coframe_to_Sigma",
             "pull_back_spin_connection_to_Sigma",
-            "fix_Z2_normal_orientation_sign",
             "feed_coframe_connection_pullback_to_torsion_pullback_on_Sigma_gate",
         ],
     }

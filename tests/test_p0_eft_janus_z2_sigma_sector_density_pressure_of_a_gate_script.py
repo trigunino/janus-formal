@@ -9,6 +9,8 @@ class P0EFTJanusZ2SigmaSectorDensityPressureOfAGateTests(unittest.TestCase):
 
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["sector_density_pressure_ledger_declared"])
+        self.assertTrue(payload["declared"]["Dirac_equation_of_state_gate_declared"])
+        self.assertTrue(payload["declared"]["kinetic_moment_fluid_closure_gate_declared"])
         self.assertIn("continuity_plus", payload["formulas"])
         self.assertTrue(payload["declared"]["observational_fit_forbidden"])
 
@@ -18,6 +20,8 @@ class P0EFTJanusZ2SigmaSectorDensityPressureOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_equation_of_state_derived"])
         self.assertFalse(payload["closure"]["plus_initial_normalization_derived"])
         self.assertFalse(payload["sector_density_pressure_of_a_ready"])
+        self.assertIn("pass_Dirac_equation_of_state_of_a_gate", payload["next_required"])
+        self.assertIn("pass_kinetic_moment_fluid_closure_gate", payload["next_required"])
         self.assertIn("derive_sector_normalizations_from_action_or_topology", payload["next_required"])
 
 

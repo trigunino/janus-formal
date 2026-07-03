@@ -1,6 +1,7 @@
 import JanusFormal.P0EFTJanusZ2SigmaFermionRouteSelectionGate
 import JanusFormal.P0EFTJanusZ2SigmaDiracFermionNumberDensityOfAGate
 import JanusFormal.P0EFTJanusZ2SigmaDiracMassTemperatureLawOfAGate
+import JanusFormal.P0EFTJanusZ2SigmaDiracThermalOccupationOfAGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaFermionDistributionOfAGate
@@ -15,6 +16,7 @@ structure FermionDistributionOfAGate where
   fermionRouteSelectionGateImported : Prop
   diracNumberDensityGateImported : Prop
   diracMassTemperatureLawGateImported : Prop
+  diracThermalOccupationGateImported : Prop
   z2SigmaProjectionRequired : Prop
   thermodynamicSignPolicyDeclared : Prop
   observationalFitForbidden : Prop
@@ -34,6 +36,7 @@ def fermionDistributionLedgerDeclared
   g.fermionRouteSelectionGateImported /\
   g.diracNumberDensityGateImported /\
   g.diracMassTemperatureLawGateImported /\
+  g.diracThermalOccupationGateImported /\
   g.z2SigmaProjectionRequired /\
   g.thermodynamicSignPolicyDeclared /\
   g.observationalFitForbidden

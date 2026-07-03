@@ -10,6 +10,8 @@ structure SectorDensityPressureOfAGate where
   perfectFluidContinuityImported : Prop
   plusSectorRhoPDeclared : Prop
   minusSectorRhoPDeclared : Prop
+  diracEquationOfStateGateDeclared : Prop
+  kineticMomentFluidClosureGateDeclared : Prop
   z2SignPolicyDeclared : Prop
   equationOfStatePolicyDeclared : Prop
   observationalFitForbidden : Prop
@@ -28,6 +30,8 @@ def sectorDensityPressureLedgerDeclared
   g.perfectFluidContinuityImported /\
   g.plusSectorRhoPDeclared /\
   g.minusSectorRhoPDeclared /\
+  g.diracEquationOfStateGateDeclared /\
+  g.kineticMomentFluidClosureGateDeclared /\
   g.z2SignPolicyDeclared /\
   g.equationOfStatePolicyDeclared /\
   g.observationalFitForbidden /\

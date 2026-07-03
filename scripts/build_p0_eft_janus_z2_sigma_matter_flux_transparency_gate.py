@@ -13,6 +13,8 @@ def build_payload() -> dict:
         "thin_shell_transparency_bibliography_checked": True,
         "no_normal_matter_current_criterion_declared": True,
         "normal_matter_current_gate_declared": True,
+        "projected_Dirac_normal_current_gate_declared": True,
+        "bulk_stress_normal_flux_cancellation_gate_declared": True,
         "bulk_stress_normal_projection_criterion_declared": True,
         "Sigma_as_geometric_throat_not_matter_portal_declared": True,
         "Z2_flux_cancellation_criterion_declared": True,
@@ -33,6 +35,8 @@ def build_payload() -> dict:
             "Thin-shell surface conservation identity with momentum flux term",
             "Dynamic thin-shell literature using no energy-momentum flux across shell",
             "active normal-matter-current gate",
+            "active projected Dirac normal-current gate",
+            "active bulk-stress normal-flux cancellation gate",
         ],
         "bibliography_result": (
             "Transparency is a standard branch when no matter/radiation crosses the shell. "
@@ -49,6 +53,8 @@ def build_payload() -> dict:
         "next_required": [
             "derive_no_normal_matter_current_at_Sigma",
             "pass_normal_matter_current_gate",
+            "pass_projected_Dirac_normal_current_gate",
+            "pass_bulk_stress_normal_flux_cancellation_gate",
             "derive_bulk_stress_normal_projection_zero_or_Z2_cancellation",
             "if_transparency_fails_compute_active_flux_F_a_of_a",
         ],

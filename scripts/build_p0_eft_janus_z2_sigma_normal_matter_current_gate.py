@@ -13,6 +13,8 @@ def build_payload() -> dict:
         "matter_current_bibliography_checked": True,
         "Noether_current_formula_imported": True,
         "plus_minus_matter_current_gate_declared": True,
+        "projected_Dirac_matter_current_gate_declared": True,
+        "projected_Dirac_normal_current_gate_declared": True,
         "normal_projection_criterion_declared": True,
         "Sigma_normals_required": True,
         "Z2_projected_current_declared": True,
@@ -33,6 +35,8 @@ def build_payload() -> dict:
             "thin-shell transparency no-normal-flux condition",
             "Dirac U(1) Noether current references for fermionic matter",
             "active plus/minus matter-current gate",
+            "active projected Dirac matter-current gate",
+            "active projected Dirac normal-current gate",
         ],
         "bibliography_result": (
             "Generic current conservation supplies a matter current and its normal "
@@ -52,6 +56,8 @@ def build_payload() -> dict:
         "next_required": [
             "derive_plus_minus_matter_currents_from_active_matter_action",
             "pass_plus_minus_matter_current_gate",
+            "pass_projected_Dirac_matter_current_gate",
+            "pass_projected_Dirac_normal_current_gate",
             "pass_tangent_normal_orientation_gate",
             "project_currents_on_Sigma_normals",
             "prove_or_reject_J_n_Z2Sigma_equals_zero",

@@ -40,8 +40,7 @@ theorem sigma_counterterm_is_required_for_nonlinear_closure
     (g : SigmaBoundaryNonlinearResidualClosureGate)
     (h : sigmaNonlinearBoundaryResidualClosed g) :
     g.sigmaSupportedCountertermUnique /\ g.countertermVariationCancelsResidual := by
-  rcases h with ⟨_, _, hUnique, hCancels, _, _, _, _⟩
-  exact And.intro hUnique hCancels
+  exact And.intro h.right.right.left h.right.right.right.left
 
 end P0EFTJanusSigmaBoundaryNonlinearResidualClosureGate
 end JanusFormal

@@ -37,6 +37,7 @@ def build_payload() -> dict:
             "Dirac regime-selection gate",
             "Dirac decoupling-condition gate",
             "active Dirac/spinorial fermion route-selection gate",
+            "active Dirac scalar mass law gate",
         ],
         "bibliography_result": (
             "Generic cosmology supplies momentum redshift and T_scaling ~ a^-1 "
@@ -57,6 +58,7 @@ def build_payload() -> dict:
         "next_required": [
             "pass_Dirac_regime_selection_gate",
             "pass_Dirac_decoupling_condition_gate",
+            "pass_Dirac_scalar_mass_law_gate",
             "derive_plus_minus_mass_temperature_laws",
             "project_mass_temperature_law_through_Z2Sigma_throat",
             "propagate_mass_temperature_law_to_fermion_distribution_gate",

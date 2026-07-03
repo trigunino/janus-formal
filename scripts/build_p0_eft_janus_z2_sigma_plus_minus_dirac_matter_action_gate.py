@@ -14,6 +14,7 @@ def build_payload() -> dict:
         "Holst_fermion_bibliography_checked": True,
         "plus_minus_spinor_bundles_declared": True,
         "spinor_bundle_projection_gate_declared": True,
+        "projected_Dirac_action_reduction_gate_declared": True,
         "tetrad_spin_connection_inputs_required": True,
         "plus_Dirac_action_declared": True,
         "minus_Dirac_action_declared": True,
@@ -36,6 +37,7 @@ def build_payload() -> dict:
             "Einstein-Cartan/Holst fermion coupling literature",
             "active coframe/connection pullback gate",
             "active spinor bundle projection gate",
+            "active projected Dirac action reduction gate",
         ],
         "bibliography_result": (
             "Generic first-order gravity supplies the curved Dirac action and its "
@@ -56,8 +58,10 @@ def build_payload() -> dict:
             "pass_coframe_connection_pullback_gate",
             "derive_plus_minus_spinor_bundle_data_on_resolved_tunnel",
             "pass_spinor_bundle_projection_gate",
+            "pass_projected_Dirac_action_reduction_gate",
             "derive_Z2Sigma_spinor_boundary_projection",
             "reduce_plus_minus_Dirac_actions",
+            "feed_actions_to_plus_minus_Dirac_action_local_reduction_gate",
             "feed_actions_to_plus_minus_matter_current_gate",
             "feed_actions_to_bulk_stress_and_Dirac_Holst_vertex_gates",
         ],

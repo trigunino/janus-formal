@@ -10,6 +10,7 @@ class P0EFTJanusZ2SigmaPlusMinusMatterCurrentGateTests(unittest.TestCase):
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["plus_minus_matter_current_ledger_declared"])
         self.assertTrue(payload["declared"]["plus_minus_Dirac_matter_action_gate_declared"])
+        self.assertTrue(payload["declared"]["projected_Dirac_matter_current_gate_declared"])
         self.assertTrue(payload["declared"]["Dirac_current_formula_imported"])
         self.assertTrue(payload["declared"]["plus_current_declared"])
         self.assertTrue(payload["declared"]["minus_current_declared"])
@@ -22,6 +23,7 @@ class P0EFTJanusZ2SigmaPlusMinusMatterCurrentGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_minus_matter_currents_ready"])
         self.assertFalse(payload["plus_minus_matter_current_ready"])
         self.assertIn("pass_plus_minus_Dirac_matter_action_gate", payload["next_required"])
+        self.assertIn("pass_projected_Dirac_matter_current_gate", payload["next_required"])
         self.assertIn("derive_J_plus_and_J_minus_from_Noether_variation", payload["next_required"])
 
 

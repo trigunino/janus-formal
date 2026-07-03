@@ -1,5 +1,7 @@
 import JanusFormal.P0EFTJanusZ2SigmaTangentNormalOrientationGate
 import JanusFormal.P0EFTJanusZ2SigmaPlusMinusMatterCurrentGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectedDiracMatterCurrentGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaNormalMatterCurrentGate
@@ -10,6 +12,8 @@ structure NormalMatterCurrentGate where
   matterCurrentBibliographyChecked : Prop
   noetherCurrentFormulaImported : Prop
   plusMinusMatterCurrentGateDeclared : Prop
+  projectedDiracMatterCurrentGateDeclared : Prop
+  projectedDiracNormalCurrentGateDeclared : Prop
   normalProjectionCriterionDeclared : Prop
   sigmaNormalsRequired : Prop
   z2ProjectedCurrentDeclared : Prop
@@ -25,6 +29,8 @@ def normalMatterCurrentLedgerDeclared
   g.matterCurrentBibliographyChecked /\
   g.noetherCurrentFormulaImported /\
   g.plusMinusMatterCurrentGateDeclared /\
+  g.projectedDiracMatterCurrentGateDeclared /\
+  g.projectedDiracNormalCurrentGateDeclared /\
   g.normalProjectionCriterionDeclared /\
   g.sigmaNormalsRequired /\
   g.z2ProjectedCurrentDeclared /\

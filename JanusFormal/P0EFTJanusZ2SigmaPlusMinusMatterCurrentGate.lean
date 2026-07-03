@@ -1,5 +1,6 @@
 import JanusFormal.P0EFTJanusZ2SigmaDiracFermionNumberDensityOfAGate
 import JanusFormal.P0EFTJanusZ2SigmaPlusMinusDiracMatterActionGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectedDiracMatterCurrentGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaPlusMinusMatterCurrentGate
@@ -9,6 +10,7 @@ set_option autoImplicit false
 structure PlusMinusMatterCurrentGate where
   diracNoetherCurrentBibliographyChecked : Prop
   plusMinusDiracMatterActionGateDeclared : Prop
+  projectedDiracMatterCurrentGateDeclared : Prop
   plusMinusMatterActionsDeclared : Prop
   diracCurrentFormulaImported : Prop
   plusCurrentDeclared : Prop
@@ -25,6 +27,7 @@ def plusMinusMatterCurrentLedgerDeclared
     (g : PlusMinusMatterCurrentGate) : Prop :=
   g.diracNoetherCurrentBibliographyChecked /\
   g.plusMinusDiracMatterActionGateDeclared /\
+  g.projectedDiracMatterCurrentGateDeclared /\
   g.plusMinusMatterActionsDeclared /\
   g.diracCurrentFormulaImported /\
   g.plusCurrentDeclared /\

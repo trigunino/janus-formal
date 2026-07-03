@@ -1,4 +1,6 @@
 import JanusFormal.P0EFTJanusZ2SigmaActiveTunnelEmbeddingOfAGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectiveGluingNormalOrientationSignGate
+import JanusFormal.P0EFTJanusZ2SigmaEmbeddingTangentFrameTransportGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaTangentNormalOrientationGate
@@ -9,6 +11,8 @@ structure TangentNormalOrientationGate where
   thinShellNormalBibliographyChecked : Prop
   sigmaEmbeddingDeclared : Prop
   activeEmbeddingFromRadiusGateDeclared : Prop
+  projectiveGluingNormalOrientationSignGateDeclared : Prop
+  embeddingTangentFrameTransportGateDeclared : Prop
   tangentFrameFormulaDeclared : Prop
   unitNormalFormulaDeclared : Prop
   orthogonalityNormalizationDeclared : Prop
@@ -25,6 +29,8 @@ def tangentNormalOrientationLedgerDeclared
   g.thinShellNormalBibliographyChecked /\
   g.sigmaEmbeddingDeclared /\
   g.activeEmbeddingFromRadiusGateDeclared /\
+  g.projectiveGluingNormalOrientationSignGateDeclared /\
+  g.embeddingTangentFrameTransportGateDeclared /\
   g.tangentFrameFormulaDeclared /\
   g.unitNormalFormulaDeclared /\
   g.orthogonalityNormalizationDeclared /\

@@ -14,6 +14,8 @@ def build_payload() -> dict:
         "perfect_fluid_continuity_imported": True,
         "plus_sector_rho_p_declared": True,
         "minus_sector_rho_p_declared": True,
+        "Dirac_equation_of_state_gate_declared": True,
+        "kinetic_moment_fluid_closure_gate_declared": True,
         "Z2_sign_policy_declared": True,
         "equation_of_state_policy_declared": True,
         "observational_fit_forbidden": True,
@@ -35,6 +37,8 @@ def build_payload() -> dict:
             "Petit/Margnat/Zejli 2024, arXiv:2412.04644",
             "standard FLRW perfect-fluid continuity equation",
             "Janus bimetric FLRW sector literature",
+            "active Dirac equation-of-state gate",
+            "active kinetic moment fluid-closure gate",
         ],
         "bibliography_result": (
             "Standard FLRW gives rho' + 3H(rho+p)=0 and perfect-fluid stress. "
@@ -55,6 +59,8 @@ def build_payload() -> dict:
         "next_required": [
             "derive_plus_sector_equation_of_state",
             "derive_minus_sector_equation_of_state",
+            "pass_Dirac_equation_of_state_of_a_gate",
+            "pass_kinetic_moment_fluid_closure_gate",
             "derive_sector_normalizations_from_action_or_topology",
             "propagate_rho_p_plus_minus_to_bulk_stress_gate",
         ],

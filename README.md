@@ -335,6 +335,14 @@ Archived CMB/Z4 master-equation status:
   equation as `E_CartanGHY + E_HolstNiehYan + E_matterFlux + E_junction +
   E_counterterm = 0`. The block sum is declared; the individual Janus/Sigma
   radial reductions are still open.
+- `P0EFTJanusZ2SigmaThroatRadiusBlockDependencyAuditGate` records the current
+  dependency state of the block sum: Cartan-GHY, Holst/Nieh-Yan and junction
+  are structurally reduced, while matter-flux and counterterm still block
+  `E_RSigma` expansion and `R_Sigma(a)`.
+- `P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGate` records the current
+  no-fit solution frontier: the variational equation and conditional embedding
+  map are ready, while matter-flux and counterterm still block the radius
+  solution certificate.
 - `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate` reduces the Cartan-GHY radial
   block structurally as `delta_RSigma[sqrt(|h|) K]`; evaluation as a function of
   scale factor still requires active `R_Sigma(a)` and `X_±(a)`.
@@ -342,44 +350,146 @@ Archived CMB/Z4 master-equation status:
   radial block as the variation of the Sigma torsion pullback. Its scale-factor
   evaluation still requires the active torsion pullback and Immirzi radial
   profile.
+- `P0EFTJanusZ2SigmaRadiusGaugeEmbeddingTransportGate` records the standard
+  thin-shell transport from a solved `R_Sigma(a)` plus proper-time/radial gauge
+  equations to `X_+/-`. It remains blocked until the no-fit throat-radius law is
+  solved and inserted into the gauge equations.
+- `P0EFTJanusZ2SigmaRadiusToEmbeddingConditionalClosureGate` closes only the
+  conditional thin-shell map: if `R_Sigma(a)` is supplied, proper-time/radial
+  gauge equations determine `X_+/-`. It does not derive `R_Sigma(a)`.
 - `P0EFTJanusZ2SigmaActiveTunnelEmbeddingFromRadiusGate` imports generic
   dynamic-shell kinematics and declares the map `R_Sigma(a) -> X_±(a)`. It
   remains open until the radial variational equation is solved without an
   observational radius fit.
+- `P0EFTJanusZ2SigmaActiveEmbeddingReadinessGate` records that primary
+  thin-shell literature closes only the conditional map
+  `R_Sigma(a) + gauge equations -> X_+/-`; active embedding, tangent frames and
+  unit normals remain blocked until `R_Sigma(a)` is derived.
+- `P0EFTJanusZ2SigmaEmbeddingTangentFrameTransportGate` records the standard
+  transport `X_+/- (a) -> partial_a X_+/- -> E_a^mu`; it remains blocked until
+  the active embedding functions are derived.
 - `P0EFTJanusZ2SigmaTangentNormalOrientationGate` imports the generic thin-shell
   tangent frame, unit normal, normalization, and orientation conventions. It
-  remains open until the active resolved-tunnel embedding fixes the Z2 normal
-  sign.
+  now receives `epsilon_Z2=-1` from projective-tunnel gluing, but remains open
+  until the active resolved-tunnel embedding supplies frames and unit normals.
 - `P0EFTJanusZ2SigmaCoframeConnectionPullbackGate` imports the first-order
   coframe/spin-connection machinery and declares `e^I_Sigma = X_Sigma^*(e^I)`
   plus `omega^I_J|_Sigma = X_Sigma^*(omega^I_J)`. It remains open until the
-  active tunnel embedding and Z2 normal orientation are derived.
+  active tunnel embedding supplies the coframe and spin-connection pullbacks;
+  the Z2-oriented sign is already fixed by projective gluing.
+- `P0EFTJanusZ2SigmaCoframeConnectionPullbackReadinessGate` records the split
+  between standard geometry and active Janus data: differential-form/coframe/
+  connection pullback formulae are ready, while the actual pullbacks remain
+  blocked on `X_+/- (a)`, tangent frames and unit normals.
 - `P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGate` imports the generic pullback of
   differential forms and Cartan's first structure equation
   `T^I = d e^I + omega^I_J wedge e^J`. It remains open until the active Sigma
   embedding, coframe pullback, spin-connection pullback, and Z2 normal
-  orientation are derived.
+  orientation transport are available.
 - `P0EFTJanusZ2SigmaMatterFluxRadialBlockGate` declares the matter-flux radial
   block from the standard shell flux `T_munu e_a^mu n^nu`. It remains open until
   the active Sigma throat is proven transparent or an active flux `F_a(a)` is derived.
 - `P0EFTJanusZ2SigmaMatterFluxRouteDecisionGate` records the required fork for
   that block: either derive transparency `F_a^Z2Sigma=0`, or compute the active
   projected flux. The route cannot be chosen by observational fit.
+- `P0EFTJanusZ2SigmaMatterFluxFrontierGate` records the exact current frontier:
+  transparency is blocked on normal-current and bulk-stress cancellation, while
+  active projection is blocked on bulk stress and embedding data.
+- `P0EFTJanusZ2SigmaMatterFluxTransparencyReadinessGate` records the transparent
+  thin-shell criteria `J_n^Z2Sigma=0` and `F_a^Z2Sigma=0`; it remains blocked
+  until active embedding, Sigma normals, normal current and bulk-stress
+  cancellation are derived.
+- `P0EFTJanusZ2SigmaMatterFluxRadiusAcyclicityGate` prevents a circular
+  radius solve: active projected flux depends on `X_+/-[R_Sigma]`, so it cannot
+  be used as an independent source for `R_Sigma(a)` unless transparency is
+  derived independently or a coupled radius-flux system is formulated.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxSystemGate` declares that non-transparent
+  flux must be solved together with `R_Sigma(a)` through
+  `E_RSigma[R_Sigma,F_a]=0` and the active projection
+  `F_a^Z2Sigma[X_+/-[R_Sigma]]`; the system is not yet well posed or solved.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxWellPosednessGate` records the next
+  proof obligation: local existence, uniqueness, continuous dependence,
+  constraint compatibility, and homogeneous gauge fixing for the coupled
+  `R_Sigma(a)`/`F_a^Z2Sigma(a)` system. These are not yet proved.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxFunctionSpaceGate` declares the analytic
+  function-space frontier for that proof: radius regularity, flux trace space,
+  embedding trace map, equation map continuity, and a linearized
+  Fredholm/invertibility obligation. These analytic obligations remain open.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxTraceRegularityGate` narrows the first
+  analytic sub-obligation: prove that `X_+/-[R_Sigma]`, the normal, tangent
+  frame, and stress traces live in compatible spaces so
+  `T_pm e_a^mu n_mu` is a well-defined boundary flux. This is still open.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxSobolevIndexGate` records the conservative
+  regularity target behind that trace proof: `Sigma` is treated as 3D,
+  bulk-to-boundary trace loses `1/2` derivative, and the candidate ledger uses
+  `s_bulk >= 3`, hence `s_Sigma >= 5/2`, above the boundary algebra threshold.
+  The threshold proofs are still open.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxSobolevThresholdTransportGate` transports
+  the standard Sobolev trace and multiplication theorems to close the trace and
+  product threshold checks for that candidate index choice. It deliberately
+  leaves the normal/tangent frame trace support open as a separate geometry
+  obligation.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxNormalTangentTraceSupportGate` records that
+  `e_a^mu[R_Sigma]` and `n_mu[R_Sigma]` must be transported from a regular,
+  co-oriented, nondegenerate Sigma embedding. The frame is not allowed to be an
+  independent fit; continuity of those traces remains open.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxEmbeddingFrameTraceTransportGate` states the
+  conditional transport rule: once the active embedding is regular,
+  co-oriented, and has nondegenerate induced metric, the tangent and normal trace
+  support can feed the flux trace proof. The prerequisites are still open.
+- `P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGate` imports generic Spin/Pin
+  obstruction machinery, the RP4 Pin+ result and the projective-tunnel topology.
+  It declares `S_+ -> M_+` and `S_- -> M_-`, while keeping the resolved-tunnel
+  Pin lift and active plus/minus spinor bundles open.
+- `P0EFTJanusZ2SigmaBoundarySpinorRestrictionGate` imports generic hypersurface
+  spinor restriction. It declares `psi_+|_Sigma`, `psi_-|_Sigma`, and their
+  boundary pair, while staying blocked on the active Sigma embedding and
+  plus/minus spinor bundles.
+- `P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGate` imports APS and local
+  Dirac-boundary projector machinery. It declares
+  `P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, n_Z2, APS/Pin data)` and forbids any
+  fitted boundary phase or free chiral-bag angle.
 - `P0EFTJanusZ2SigmaSpinorBundleProjectionGate` imports generic spinor-bundle,
   hypersurface-restriction and APS-boundary machinery. It declares
   `psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, APS/Pin data)` and
   remains open until active plus/minus spinor bundles and the Z2/Sigma boundary
   projection are derived.
+- `P0EFTJanusZ2SigmaSpinorProjectionReadinessGate` records that generic
+  hypersurface spinor restriction and APS/local projection formulae are ready.
+  The active plus/minus projection still waits for the resolved tunnel Pin lift,
+  Sigma boundary spinor data, and the idempotent Z2/Sigma projection map.
+- `P0EFTJanusZ2SigmaProjectedDiracActionReductionGate` imports the first-order
+  curved Dirac action plus Holst/fermion coupling context and records the
+  active reduction `S_D^Z2Sigma = P_Z2Sigma(S_D,+, S_D,-; psi_Sigma^Z2)`.
+  It forbids fitted effective masses, boundary phases, and chiral angles.
+- `P0EFTJanusZ2SigmaProjectedDiracActionReadinessGate` records that the standard
+  curved-Dirac and Holst-fermion formulae are ready. The active projected action
+  still waits for coframe/connection pullbacks and Z2/Sigma spinor projection.
 - `P0EFTJanusZ2SigmaPlusMinusDiracMatterActionGate` imports the curved Dirac
   action with tetrad/spin-connection inputs and the Holst/fermion coupling
   context. It remains open until active plus/minus spinor bundle data and the
   Z2/Sigma projection are derived.
+- `P0EFTJanusZ2SigmaProjectedDiracMatterCurrentGate` imports the generic Dirac
+  U(1) Noether current and declares
+  `J_Z2Sigma^mu = P_Z2Sigma(J_+^mu, J_-^mu; psi_Sigma^Z2)`. It remains blocked
+  until the projected Dirac action is reduced.
+- `P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGate` projects that Dirac current
+  on the active Sigma normals: `J_n^Z2Sigma = J_n^+ + eps_Z2 J_n^-`. It keeps
+  the transparency test `J_n^Z2Sigma=0` blocked until the projected current and
+  Sigma normals are derived.
+- `P0EFTJanusZ2SigmaBulkStressNormalFluxCancellationGate` declares the
+  thin-shell bulk-stress flux `F_a^Z2Sigma = F_a^+ + eps_Z2 F_a^-` and keeps
+  zero-flux/Z2 cancellation open until active bulk stresses, tangents and
+  normals are derived.
 - `P0EFTJanusZ2SigmaPlusMinusMatterCurrentGate` imports the generic Dirac
   Noether current `J_pm^mu = psi_bar_pm gamma_pm^mu psi_pm`, but keeps the
   active plus/minus matter currents blocked until the matter actions are derived.
 - `P0EFTJanusZ2SigmaNormalMatterCurrentGate` declares the no-normal-current
   test `J_n^Z2Sigma = J_mu n^mu = 0`; it remains open until active plus/minus
   matter currents and Sigma normals are derived.
+- `P0EFTJanusZ2SigmaNormalMatterCurrentReadinessGate` records the standard Dirac
+  Noether current and normal projection formulae; `J_n^Z2Sigma=0` remains
+  blocked on active Sigma normals and projected Dirac currents.
 - `P0EFTJanusZ2SigmaMatterFluxTransparencyGate` records the sufficient condition
   for the transparent branch `F_a^Z2Sigma=0`; it is not yet derived for the
   active throat.
@@ -415,9 +525,84 @@ Archived CMB/Z4 master-equation status:
   found in the literature: Dirac gas or Weyssenhoff spin fluid. It remains open
   until the active route and plus/minus projected distributions are derived from
   the Z2/Sigma action/topology.
+- `P0EFTJanusZ2SigmaDiracThermalOccupationOfAGate` imports Fermi-Dirac
+  occupation and phase-space moment machinery. It keeps `f_pm(q,a)` blocked on
+  number normalization, mass/temperature law, regime and chemical potentials.
+- `P0EFTJanusZ2SigmaDiracChemicalPotentialOfAGate` declares the number-constraint
+  inversion fixing `mu_pm(a)` from `N_pm`, `T_pm(a)`, `m_pm` and regime data.
+  It forbids fitting chemical potentials.
+- `P0EFTJanusZ2SigmaDiracDegeneracyFactorGate` declares the internal/spin
+  degeneracy factors `g_+`, `g_-` and projected `g_Z2Sigma`. It keeps them
+  blocked on active spinor bundles, projection data and route selection.
+- `P0EFTJanusZ2SigmaDiracEquationOfStateOfAGate` imports the standard kinetic
+  Fermi-gas integrals for `rho_pm(a)` and `p_pm(a)`, but keeps the active
+  plus/minus equation of state blocked on distribution, regime, and
+  mass/temperature derivations.
+- `P0EFTJanusZ2SigmaKineticMomentFluidClosureGate` imports the kinetic
+  stress-energy moment `T_munu[f]` and records the FLRW perfect-fluid reduction.
+  It remains blocked until projected distributions and isotropy/no-anisotropic
+  stress are derived.
+- `P0EFTJanusZ2SigmaDistributionIsotropyAnisotropicStressGate` records the
+  needed isotropy condition `f_pm(q_vec,a)=f_pm(|q|,a)` and
+  `pi_ij=T_ij-p h_ij`; the projected FLRW fluid closure remains blocked until
+  the Z2/Sigma distribution isotropy and zero projected anisotropic stress are
+  derived.
+- `P0EFTJanusZ2SigmaDiracFermiDiracIsotropyGate` imports the standard
+  Fermi-Dirac radiality argument: if `E_pm(q_vec,a)=E_pm(|q|,a)` and the
+  Z2/Sigma projection preserves radial dependence, then the plus/minus
+  occupations are momentum-isotropic. The active radial dispersion and
+  projection-preservation proof remain open.
+- `P0EFTJanusZ2SigmaDiracRadialEnergyDispersionGate` records the standard
+  massive-particle relation `epsilon_pm(q,a)=sqrt(q^2+a^2 m_pm(a)^2)`.
+  It keeps radiality blocked until scalar plus/minus mass laws and FLRW
+  momentum frames are derived on the active Z2/Sigma background.
+- `P0EFTJanusZ2SigmaRadialOccupationProjectionGate` records the symmetry
+  condition needed for the throat projection: if `P_Z2Sigma` is equivariant
+  under FLRW momentum rotations, then radial plus/minus occupations project to
+  a radial Z2/Sigma occupation. The active equivariance proof remains open.
+- `P0EFTJanusZ2SigmaFLRWMomentumFrameGate` records the standard FLRW
+  orthonormal/comoving momentum frame `q_i=a p_hat_i`. It remains blocked on
+  the active plus/minus coframe pullbacks and projected frame construction.
+- `P0EFTJanusZ2SigmaDiracScalarMassLawGate` records the generic curved-space
+  Dirac fact that the mass term is a local Lorentz scalar. The active
+  plus/minus mass laws still have to be derived from the projected Dirac action
+  and Z2/Sigma projection, not fitted.
+- `P0EFTJanusZ2SigmaDiracMassTermFromActionGate` records the coefficient
+  extraction step `m_pm(a)=coefficient_of(psibar_pm psi_pm)` from the reduced
+  plus/minus Dirac actions. It remains blocked until the projected Dirac action
+  reduction is closed.
+- `P0EFTJanusZ2SigmaPlusMinusDiracActionLocalReductionGate` records the local
+  plus/minus decomposition into kinetic, mass-bilinear and axial-torsion terms.
+  It remains blocked until the active plus/minus matter actions are ready.
+- `P0EFTJanusZ2SigmaResolvedTunnelPinLiftGate` records the lift from the
+  resolved tunnel frame bundle to the Pin bundle and its plus/minus restrictions.
+  It remains blocked on the active resolved-tunnel frame bundle and Pin lift.
+- `P0EFTJanusZ2SigmaEmbeddingRegularityEquivarianceGate` records the active
+  embedding checks needed before the Sigma throat can count as a smooth embedded
+  submanifold: full-rank immersion, topological embedding, regular radius and
+  Z2-equivariance. It remains blocked until `X_+/-` are derived.
+- `P0EFTJanusZ2SigmaSmoothEmbeddedThroatGate` records the embedded-submanifold
+  prerequisites needed before applying collar/tubular-neighborhood theorems to
+  the Sigma throat. It remains blocked on active `X_+/-` embeddings, regular
+  nonzero throat radius, rank, topological embedding and Z2 equivariance.
+- `P0EFTJanusZ2SigmaCollarTubularNeighborhoodGate` records the standard
+  collar/tubular-neighborhood theorem interface needed around the Sigma throat.
+  It remains blocked until Sigma is proven as a smooth embedded throat with a
+  derived normal bundle and compatible plus/minus collars.
+- `P0EFTJanusZ2SigmaResolvedTunnelSmoothAtlasGate` records the collar,
+  tubular-throat and smooth-gluing obligations needed to build the resolved
+  tunnel atlas after polar-neighborhood removal. It remains blocked until the
+  collars, gluing map and transition maps are derived.
+- `P0EFTJanusZ2SigmaResolvedTunnelFrameBundleGate` records the construction of
+  `T M_res` and `F(M_res)` after tubular replacement. It remains blocked until
+  the resolved-tunnel smooth atlas and tangent bundle are derived.
 - `P0EFTJanusZ2SigmaFermionRouteSelectionGate` selects the Dirac/spinorial route
   from the active Sigma spinor-variation channel. Weyssenhoff remains only a
   possible coarse-grained approximation, not the primitive active route.
+- `P0EFTJanusZ2SigmaDiracChargeBoundaryProjectionGate` imports the conserved
+  curved-spacetime Dirac charge integral and declares
+  `N_Z2Sigma = P_Z2Sigma(N_+, N_-; psi_Sigma^Z2)`. It remains blocked on the
+  projected current, spinor projection, and anomaly/boundary-leak guards.
 - `P0EFTJanusZ2SigmaDiracFermionNumberDensityOfAGate` imports the conserved
   Dirac number-current dilution law `n_pm(a)=N_pm/a^3`; it remains open until
   `N_+`, `N_-`, and the projected Z2/Sigma number density are derived.
@@ -454,8 +639,77 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaCountertermRadialBlockGate` declares the radial variation of
   the unique Sigma counterterm. It remains open until the explicit active
   density `L_ct` is expanded.
+- `P0EFTJanusZ2SigmaCountertermLocalDensityBasisGate` records the allowed local
+  active basis for that density: `h_ab`, `K_ab`, Sigma torsion pullback,
+  Immirzi/radion boundary fields and Z2 orientation, with no new fitted
+  counterterm freedom.
+- `P0EFTJanusZ2SigmaCountertermTetradResidualChannelGate` isolates the first
+  residual coefficient `R_e`; it remains open until the active Sigma coframe
+  variation is transported into `delta h`, `delta K` and torsion-pullback data.
+- `P0EFTJanusZ2SigmaCountertermTetradVariationTransportGate` isolates that
+  transport step: `delta e -> delta h_ab`, `delta e -> delta K_ab`, and
+  `delta e -> delta X_Sigma^*T^I`. It forbids a metric-only shortcut.
+- `P0EFTJanusZ2SigmaCountertermTetradMetricVariationTransportGate` closes the
+  algebraic part `delta e -> delta h_ab` via
+  `delta h_ab = eta_IJ(delta e_a^I e_b^J + e_a^I delta e_b^J)`. It leaves
+  `delta K` and torsion-pullback transport open.
+- `P0EFTJanusZ2SigmaCountertermTetradExtrinsicCurvatureVariationTransportGate`
+  isolates `delta e -> delta K_ab`. It declares
+  `K_ab = e_a^mu e_b^nu nabla_mu n_nu` and keeps the transport blocked on
+  active embedding, tangent/normal traces and connection variation.
+- `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackVariationTransportGate`
+  records the Cartan tetrad-variation formula
+  `delta_e T^I = D_omega(delta e^I)` for the independent-connection branch.
+  The Sigma torsion pullback and allowed-basis expansion remain open.
+- `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackReadinessGate` records that
+  oriented pullback commutation and the ambient Cartan torsion formula are closed.
+  The active embedding, coframe/connection pullback, Sigma torsion pullback and
+  FLRW irreducible basis still block the torsion-pullback transport.
+- `P0EFTJanusZ2SigmaCountertermTetradVariationTransportReadinessGate` aggregates
+  the three tetrad transports. It records that `delta e -> delta h_ab` is closed,
+  while `delta e -> delta K_ab` and torsion-pullback transport still block `R_e`.
+- `P0EFTJanusZ2SigmaCountertermConnectionResidualChannelGate` isolates the
+  spin-connection coefficient `R_omega`; it remains open until the active
+  Sigma connection variation is transported through torsion and Nieh-Yan data.
+- `P0EFTJanusZ2SigmaCountertermConnectionVariationTransportGate` records the
+  fixed-coframe transport `delta_omega T^I = delta omega^I_J wedge e^J` and
+  blocks until the Sigma pullback/orientation transport is proved.
+- `P0EFTJanusZ2SigmaConnectionOnlyFixedEmbeddingVariationGate` records the
+  field-space split in which `delta_omega X_Sigma = 0`; embedding variation is
+  kept in the separate `R_X` channel.
+- `P0EFTJanusZ2SigmaFixedMapPullbackVariationCommutationGate` records the
+  fixed-map commutation
+  `delta_omega X_Sigma^*omega = X_Sigma^*(delta_omega omega)`.
+- `P0EFTJanusZ2SigmaProjectiveGluingNormalOrientationSignGate` fixes the
+  active Z2 normal-orientation coefficient as `epsilon_Z2=-1` from the
+  projective-tunnel sheet exchange.
+- `P0EFTJanusZ2SigmaOrientedPullbackVariationCommutationGate` keeps the same
+  commutation oriented by that projective-tunnel sign, not a fitted sign.
+- `P0EFTJanusZ2SigmaFixedEmbeddingConnectionPullbackVariationGate` isolates
+  the fixed-embedding condition `delta_omega X_Sigma = 0` and the commutation
+  target `delta_omega X_Sigma^*omega = X_Sigma^*(delta_omega omega)`.
+- `P0EFTJanusZ2SigmaCountertermSpinorResidualChannelGate`,
+  `P0EFTJanusZ2SigmaCountertermEmbeddingResidualChannelGate` and
+  `P0EFTJanusZ2SigmaCountertermMatterFluxResidualChannelGate` isolate
+  `R_psi`, `R_X` and `R_matter` without promoting any fitted residual
+  coefficient.
+- `P0EFTJanusZ2SigmaCountertermResidualChannelFrontierGate` aggregates the five
+  residual coefficients `R_e`, `R_omega`, `R_psi`, `R_X` and `R_matter`; all
+  remain open before the residual one-form can be explicit.
+- `P0EFTJanusZ2SigmaCountertermResidualOneFormDecompositionGate` splits the
+  nonlinear residual into tetrad, connection, spinor, embedding and matter-flux
+  channels before any integrability claim is allowed.
+- `P0EFTJanusZ2SigmaCountertermResidualIntegrabilityGate` records the exactness
+  condition `d_field alpha_res = 0`; its field-space curl is still open.
+- `P0EFTJanusZ2SigmaCountertermResidualExtractionGate` isolates the missing
+  extraction step: the nonlinear residual one-form must be made explicit,
+  proved integrable and integrated into the unique primitive `L_ct`.
 - `P0EFTJanusZ2SigmaCountertermDensityExpansionGate` isolates that missing
   density expansion and forbids adding a fitted counterterm coefficient.
+- `P0EFTJanusZ2SigmaCountertermRadialReductionFrontierGate` summarizes the
+  required counterterm chain: explicit residual one-form, field-space exactness,
+  integrated primitive, local density expansion, then radial variation. The
+  chain is still open and cannot feed `R_Sigma(a)` yet.
 - `P0EFTJanusZ2SigmaEmbeddingGaugePolicyGate` records the allowed shell
   proper-time/radial embedding gauges. These remove parametrization redundancy
   but do not derive `R_Sigma(a)` or close `X_±(a)`.

@@ -10,6 +10,7 @@ structure MatterFluxActiveProjectionGate where
   transparencyNotAssumed : Prop
   plusBulkStressDeclared : Prop
   minusBulkStressDeclared : Prop
+  bulkStressNormalFluxCancellationGateDeclared : Prop
   sigmaTangentsDeclared : Prop
   sigmaNormalsDeclared : Prop
   z2OrientationProjectionDeclared : Prop
@@ -28,6 +29,7 @@ def activeFluxProjectionLedgerDeclared
   g.transparencyNotAssumed /\
   g.plusBulkStressDeclared /\
   g.minusBulkStressDeclared /\
+  g.bulkStressNormalFluxCancellationGateDeclared /\
   g.sigmaTangentsDeclared /\
   g.sigmaNormalsDeclared /\
   g.z2OrientationProjectionDeclared /\

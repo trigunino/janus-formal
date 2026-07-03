@@ -11,6 +11,9 @@ class P0EFTJanusZ2SigmaSpinorBundleProjectionGateTests(unittest.TestCase):
         self.assertTrue(payload["spinor_bundle_projection_ledger_declared"])
         self.assertTrue(payload["declared"]["spinor_bundle_bibliography_checked"])
         self.assertTrue(payload["declared"]["APS_boundary_spinor_bibliography_checked"])
+        self.assertTrue(payload["declared"]["plus_minus_spinor_bundle_data_gate_declared"])
+        self.assertTrue(payload["declared"]["boundary_spinor_restriction_gate_declared"])
+        self.assertTrue(payload["declared"]["spinor_boundary_projection_map_gate_declared"])
         self.assertTrue(payload["declared"]["Z2Sigma_spinor_projection_declared"])
 
     def test_projection_waits_for_active_spinor_data(self):
@@ -20,6 +23,9 @@ class P0EFTJanusZ2SigmaSpinorBundleProjectionGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["minus_spinor_bundle_ready"])
         self.assertFalse(payload["closure"]["Z2Sigma_spinor_projection_ready"])
         self.assertFalse(payload["spinor_bundle_projection_ready"])
+        self.assertIn("pass_plus_minus_spinor_bundle_data_gate", payload["next_required"])
+        self.assertIn("pass_boundary_spinor_restriction_gate", payload["next_required"])
+        self.assertIn("pass_spinor_boundary_projection_map_gate", payload["next_required"])
         self.assertIn("derive_Z2Sigma_spinor_projection", payload["next_required"])
 
 

@@ -13,6 +13,8 @@ def build_payload() -> dict:
         "thin_shell_normal_bibliography_checked": True,
         "Sigma_embedding_declared": True,
         "active_embedding_from_radius_gate_declared": True,
+        "projective_gluing_normal_orientation_sign_gate_declared": True,
+        "embedding_tangent_frame_transport_gate_declared": True,
         "tangent_frame_formula_declared": True,
         "unit_normal_formula_declared": True,
         "orthogonality_normalization_declared": True,
@@ -23,7 +25,7 @@ def build_payload() -> dict:
         "active_Sigma_embedding_ready": False,
         "tangent_frames_of_a_ready": False,
         "unit_normals_of_a_ready": False,
-        "Z2_orientation_sign_fixed": False,
+        "Z2_orientation_sign_fixed": True,
         "tangent_normal_orientation_ready": False,
     }
     return {
@@ -34,6 +36,8 @@ def build_payload() -> dict:
             "Poisson thin-shell hypersurface normal conventions",
             "Barrabes-Israel thin-shell/null-shell orientation conventions",
             "active tunnel embedding from radius gate",
+            "projective gluing normal orientation sign gate",
+            "embedding tangent frame transport gate",
         ],
         "bibliography_result": (
             "Thin-shell literature supplies tangent frames, unit normals, "
@@ -47,16 +51,15 @@ def build_payload() -> dict:
             "tangent": "e_a^mu = partial_a X_pm^mu",
             "normal_orthogonality": "n_pm_mu e_a^mu = 0",
             "normal_normalization": "n_pm_mu n_pm^mu = epsilon_pm",
-            "z2_orientation": "n_- is fixed by the Z2 reversal/oriented gluing convention relative to n_+",
+            "z2_orientation": "n_- = - tau_Z2_* n_+ from projective tunnel gluing",
         },
         "tangent_normal_orientation_ledger_declared": all(declared.values()),
         "tangent_normal_orientation_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
             "pass_active_tunnel_embedding_of_a_gate",
             "pass_active_tunnel_embedding_from_radius_gate",
-            "derive_tangent_frames_from_X_plus_minus_of_a",
+            "pass_embedding_tangent_frame_transport_gate",
             "solve_unit_normals_from_orthogonality_and_normalization",
-            "fix_Z2_normal_orientation_sign_from_projective_tunnel_gluing",
             "feed_frames_to_coframe_connection_pullback_gate",
             "feed_frames_to_extrinsic_curvature_gate",
         ],

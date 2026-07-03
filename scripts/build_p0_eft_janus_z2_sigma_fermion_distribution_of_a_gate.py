@@ -17,6 +17,7 @@ def build_payload() -> dict:
         "fermion_route_selection_gate_imported": True,
         "Dirac_number_density_gate_imported": True,
         "Dirac_mass_temperature_law_gate_imported": True,
+        "Dirac_thermal_occupation_gate_imported": True,
         "Z2Sigma_projection_required": True,
         "thermodynamic_sign_policy_declared": True,
         "observational_fit_forbidden": True,
@@ -39,6 +40,7 @@ def build_payload() -> dict:
             "active Sigma spinor-variation route-selection gate",
             "Dirac fermion number-density gate",
             "Dirac mass/temperature law gate",
+            "Dirac thermal occupation gate",
             "Einstein-Cartan-Dirac cosmology literature",
         ],
         "bibliography_result": (
@@ -60,6 +62,7 @@ def build_payload() -> dict:
         "next_required": [
             "pass_Dirac_fermion_number_density_of_a_gate",
             "pass_Dirac_mass_temperature_law_of_a_gate",
+            "pass_Dirac_thermal_occupation_of_a_gate",
             "derive_plus_minus_fermion_distributions_of_a",
             "project_fermion_distribution_through_Z2Sigma_throat",
             "propagate_fermion_distribution_to_spin_current_gate",

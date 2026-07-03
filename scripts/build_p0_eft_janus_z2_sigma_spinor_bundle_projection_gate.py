@@ -12,6 +12,9 @@ def build_payload() -> dict:
     declared = {
         "spinor_bundle_bibliography_checked": True,
         "APS_boundary_spinor_bibliography_checked": True,
+        "plus_minus_spinor_bundle_data_gate_declared": True,
+        "boundary_spinor_restriction_gate_declared": True,
+        "spinor_boundary_projection_map_gate_declared": True,
         "plus_minus_spinor_bundles_declared": True,
         "Sigma_boundary_restriction_declared": True,
         "Z2Sigma_spinor_projection_declared": True,
@@ -31,6 +34,9 @@ def build_payload() -> dict:
         "primary_sources_checked": [
             "spinor bundles on spin manifolds and restrictions to hypersurfaces",
             "Atiyah-Patodi-Singer boundary conditions for Dirac operators",
+            "active plus/minus spinor bundle data gate",
+            "active boundary spinor restriction gate",
+            "active Z2/Sigma spinor boundary projection map gate",
             "active Sigma APS/Pin lift and trace-regularization gates",
         ],
         "bibliography_result": (
@@ -54,6 +60,9 @@ def build_payload() -> dict:
         "spinor_bundle_projection_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
             "pass_sigma_APS_Pin_lift_obligation_gates",
+            "pass_plus_minus_spinor_bundle_data_gate",
+            "pass_boundary_spinor_restriction_gate",
+            "pass_spinor_boundary_projection_map_gate",
             "derive_plus_minus_spinor_bundles_on_resolved_tunnel",
             "derive_boundary_restriction_of_spinors_to_Sigma",
             "derive_Z2Sigma_spinor_projection",

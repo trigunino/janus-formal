@@ -1,4 +1,5 @@
 import JanusFormal.P0EFTJanusZ2SigmaFermionRouteSelectionGate
+import JanusFormal.P0EFTJanusZ2SigmaDiracChargeBoundaryProjectionGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaDiracNumberNormalizationGate
@@ -7,6 +8,7 @@ set_option autoImplicit false
 
 structure DiracNumberNormalizationGate where
   noetherChargeBibliographyChecked : Prop
+  diracChargeBoundaryProjectionGateDeclared : Prop
   diracCurrentChargeIntegralDeclared : Prop
   plusSectorChargeDeclared : Prop
   minusSectorChargeDeclared : Prop
@@ -21,6 +23,7 @@ structure DiracNumberNormalizationGate where
 def diracNumberNormalizationLedgerDeclared
     (g : DiracNumberNormalizationGate) : Prop :=
   g.noetherChargeBibliographyChecked /\
+  g.diracChargeBoundaryProjectionGateDeclared /\
   g.diracCurrentChargeIntegralDeclared /\
   g.plusSectorChargeDeclared /\
   g.minusSectorChargeDeclared /\

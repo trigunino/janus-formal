@@ -1,4 +1,6 @@
 import JanusFormal.P0EFTJanusZ2SigmaCountertermRadialBlockGate
+import JanusFormal.P0EFTJanusZ2SigmaCountertermLocalDensityBasisGate
+import JanusFormal.P0EFTJanusZ2SigmaCountertermResidualExtractionGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaCountertermDensityExpansionGate
@@ -8,6 +10,8 @@ set_option autoImplicit false
 structure CountertermDensityExpansionGate where
   sigmaCountertermUniquenessImported : Prop
   countertermCancelsNonlinearResidualImported : Prop
+  countertermLocalDensityBasisGateDeclared : Prop
+  countertermResidualExtractionGateDeclared : Prop
   densityExpansionProblemDeclared : Prop
   allowedVariablesDeclared : Prop
   noNewCountertermFreedomDeclared : Prop
@@ -21,6 +25,8 @@ def countertermDensityExpansionLedgerDeclared
     (g : CountertermDensityExpansionGate) : Prop :=
   g.sigmaCountertermUniquenessImported /\
   g.countertermCancelsNonlinearResidualImported /\
+  g.countertermLocalDensityBasisGateDeclared /\
+  g.countertermResidualExtractionGateDeclared /\
   g.densityExpansionProblemDeclared /\
   g.allowedVariablesDeclared /\
   g.noNewCountertermFreedomDeclared /\

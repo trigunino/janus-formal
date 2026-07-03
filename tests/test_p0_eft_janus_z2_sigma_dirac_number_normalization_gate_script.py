@@ -9,6 +9,7 @@ class P0EFTJanusZ2SigmaDiracNumberNormalizationGateTests(unittest.TestCase):
 
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["dirac_number_normalization_ledger_declared"])
+        self.assertTrue(payload["declared"]["Dirac_charge_boundary_projection_gate_declared"])
         self.assertTrue(payload["declared"]["Dirac_current_charge_integral_declared"])
         self.assertIn("plus_charge", payload["formulas"])
 
@@ -18,6 +19,7 @@ class P0EFTJanusZ2SigmaDiracNumberNormalizationGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_charge_fixed_by_action_or_topology"])
         self.assertFalse(payload["closure"]["number_normalizations_ready"])
         self.assertFalse(payload["dirac_number_normalization_ready"])
+        self.assertIn("pass_Dirac_charge_boundary_projection_gate", payload["next_required"])
         self.assertIn("derive_N_plus_from_active_spinor_boundary_data", payload["next_required"])
         self.assertIn("propagate_number_normalization_to_density_gate", payload["next_required"])
 

@@ -13,6 +13,7 @@ class P0EFTJanusZ2SigmaFermionDistributionOfAGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["fermion_route_selection_gate_imported"])
         self.assertTrue(payload["declared"]["Dirac_number_density_gate_imported"])
         self.assertTrue(payload["declared"]["Dirac_mass_temperature_law_gate_imported"])
+        self.assertTrue(payload["declared"]["Dirac_thermal_occupation_gate_imported"])
         self.assertTrue(payload["declared"]["Weyssenhoff_fluid_route_declared"])
         self.assertIn("number_conservation", payload["formulas"])
 
@@ -24,6 +25,7 @@ class P0EFTJanusZ2SigmaFermionDistributionOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["fermion_distribution_of_a_ready"])
         self.assertIn("pass_Dirac_fermion_number_density_of_a_gate", payload["next_required"])
         self.assertIn("pass_Dirac_mass_temperature_law_of_a_gate", payload["next_required"])
+        self.assertIn("pass_Dirac_thermal_occupation_of_a_gate", payload["next_required"])
         self.assertIn("propagate_fermion_distribution_to_spin_current_gate", payload["next_required"])
 
 

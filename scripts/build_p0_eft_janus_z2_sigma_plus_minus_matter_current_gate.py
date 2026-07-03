@@ -12,6 +12,7 @@ def build_payload() -> dict:
     declared = {
         "Dirac_Noether_current_bibliography_checked": True,
         "plus_minus_Dirac_matter_action_gate_declared": True,
+        "projected_Dirac_matter_current_gate_declared": True,
         "plus_minus_matter_actions_declared": True,
         "Dirac_current_formula_imported": True,
         "plus_current_declared": True,
@@ -34,6 +35,7 @@ def build_payload() -> dict:
             "Dirac equation in curved spacetime/tetrad formalism",
             "active Dirac fermion number-density gate",
             "active plus/minus Dirac matter-action gate",
+            "active projected Dirac matter-current gate",
         ],
         "bibliography_result": (
             "Generic Dirac theory supplies J^mu = psi_bar gamma^mu psi and "
@@ -53,6 +55,7 @@ def build_payload() -> dict:
             "derive_plus_matter_action_from_active_Z2Sigma_matter_sector",
             "derive_minus_matter_action_from_active_Z2Sigma_matter_sector",
             "pass_plus_minus_Dirac_matter_action_gate",
+            "pass_projected_Dirac_matter_current_gate",
             "derive_J_plus_and_J_minus_from_Noether_variation",
             "feed_plus_minus_currents_to_normal_matter_current_gate",
             "feed_number_currents_to_Dirac_number_density_gate",

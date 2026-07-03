@@ -11,6 +11,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_number_normalizati
 def build_payload() -> dict:
     declared = {
         "Noether_charge_bibliography_checked": True,
+        "Dirac_charge_boundary_projection_gate_declared": True,
         "Dirac_current_charge_integral_declared": True,
         "plus_sector_charge_declared": True,
         "minus_sector_charge_declared": True,
@@ -30,6 +31,7 @@ def build_payload() -> dict:
         "primary_sources_checked": [
             "Dirac U(1) Noether charge literature",
             "conserved-current charge integrals on curved hypersurfaces",
+            "active Dirac charge boundary-projection gate",
             "active Z2/Sigma projected throat ledger",
         ],
         "bibliography_result": (
@@ -50,6 +52,7 @@ def build_payload() -> dict:
         "next_required": [
             "derive_N_plus_from_active_spinor_boundary_data",
             "derive_N_minus_from_active_spinor_boundary_data",
+            "pass_Dirac_charge_boundary_projection_gate",
             "derive_Z2Sigma_projected_number_charge",
             "propagate_number_normalization_to_density_gate",
         ],

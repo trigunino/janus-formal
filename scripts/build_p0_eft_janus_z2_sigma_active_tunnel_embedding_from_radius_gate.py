@@ -12,6 +12,8 @@ def build_payload() -> dict:
     declared = {
         "thin_shell_embedding_bibliography_checked": True,
         "dynamic_shell_radius_kinematics_imported": True,
+        "radius_gauge_embedding_transport_gate_declared": True,
+        "radius_to_embedding_conditional_closure_imported": True,
         "embedding_gauge_equations_imported": True,
         "throat_radius_variational_equation_imported": True,
         "R_Sigma_to_X_pm_map_declared": True,
@@ -28,6 +30,8 @@ def build_payload() -> dict:
         "active_core": "Z2_tunnel_Sigma",
         "primary_sources_checked": [
             "FRW dynamic thin-shell wormhole kinematics",
+            "active radius-gauge embedding transport gate",
+            "conditional radius-to-embedding closure gate",
             "Darmois-Israel shell embedding and gauge equations",
             "active Janus throat-radius variational equation gate",
         ],
@@ -40,12 +44,15 @@ def build_payload() -> dict:
         "closure": closure,
         "maps": {
             "radius_to_embedding": "R_Sigma(a) + gauge equations -> X_+^mu(a,xi), X_-^mu(a,xi)",
+            "conditional_radius_to_embedding": "if R_Sigma(a) is supplied, proper-time/radial gauge integrations determine X_+/-",
             "embedding_to_frames": "X_pm(a) -> tangent frames e_a^mu and unit normals n_pm^mu",
             "embedding_to_pullbacks": "X_pm(a) -> X_Sigma^*(e^I), X_Sigma^*(omega^I_J)",
         },
         "active_embedding_from_radius_ledger_declared": all(declared.values()),
         "active_embedding_from_radius_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
+            "instantiate_radius_to_embedding_conditional_closure_with_R_Sigma_of_a",
+            "pass_radius_gauge_embedding_transport_gate",
             "solve_R_Sigma_of_a_from_throat_radius_variational_equation",
             "insert_R_Sigma_of_a_into_embedding_gauge_equations",
             "derive_X_plus_minus_of_a",

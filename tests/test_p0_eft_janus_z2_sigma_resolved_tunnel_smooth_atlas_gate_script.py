@@ -1,0 +1,29 @@
+import unittest
+
+from scripts.build_p0_eft_janus_z2_sigma_resolved_tunnel_smooth_atlas_gate import build_payload
+
+
+class P0EFTJanusZ2SigmaResolvedTunnelSmoothAtlasGateTests(unittest.TestCase):
+    def test_resolved_tunnel_smooth_atlas_ledger_is_declared(self):
+        payload = build_payload()
+
+        self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
+        self.assertTrue(payload["resolved_tunnel_smooth_atlas_ledger_declared"])
+        self.assertTrue(payload["declared"]["collar_tubular_neighborhood_gate_declared"])
+        self.assertTrue(payload["declared"]["tubular_neighborhood_bibliography_checked"])
+        self.assertTrue(payload["declared"]["collar_gluing_bibliography_checked"])
+        self.assertIn("atlas", payload["formulas"])
+
+    def test_resolved_tunnel_smooth_atlas_closure_remains_blocked(self):
+        payload = build_payload()
+
+        self.assertTrue(payload["closure"]["projective_tunnel_topology_ready"])
+        self.assertFalse(payload["closure"]["resolved_tunnel_atlas_derived"])
+        self.assertFalse(payload["closure"]["smooth_atlas_ready"])
+        self.assertFalse(payload["resolved_tunnel_smooth_atlas_ready"])
+        self.assertIn("pass_collar_tubular_neighborhood_gate", payload["next_required"])
+        self.assertIn("feed_result_to_resolved_tunnel_frame_bundle_gate", payload["next_required"])
+
+
+if __name__ == "__main__":
+    unittest.main()

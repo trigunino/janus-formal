@@ -23,6 +23,7 @@ class P0EFTJanusZ2SigmaDiracMassTemperatureLawOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["dirac_mass_temperature_law_of_a_ready"])
         self.assertIn("pass_Dirac_regime_selection_gate", payload["next_required"])
         self.assertIn("pass_Dirac_decoupling_condition_gate", payload["next_required"])
+        self.assertIn("pass_Dirac_scalar_mass_law_gate", payload["next_required"])
         self.assertIn("propagate_mass_temperature_law_to_fermion_distribution_gate", payload["next_required"])
 
 

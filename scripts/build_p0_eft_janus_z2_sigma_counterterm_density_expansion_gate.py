@@ -12,6 +12,8 @@ def build_payload() -> dict:
     declared = {
         "Sigma_counterterm_uniqueness_imported": True,
         "counterterm_cancels_nonlinear_residual_imported": True,
+        "counterterm_local_density_basis_gate_declared": True,
+        "counterterm_residual_extraction_gate_declared": True,
         "density_expansion_problem_declared": True,
         "allowed_variables_declared": True,
         "no_new_counterterm_freedom_declared": True,
@@ -28,6 +30,8 @@ def build_payload() -> dict:
         "active_core": "Z2_tunnel_Sigma",
         "primary_sources_checked": [
             "active Janus Sigma nonlinear residual closure gate",
+            "active counterterm local density basis gate",
+            "active counterterm residual extraction gate",
             "Brown-York boundary counterterm stress method",
             "boundary counterterm renormalization literature",
         ],
@@ -53,6 +57,8 @@ def build_payload() -> dict:
         "counterterm_density_expansion_ledger_declared": all(declared.values()),
         "counterterm_density_expansion_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
+            "pass_counterterm_local_density_basis_gate",
+            "pass_counterterm_residual_extraction_gate",
             "expand_L_ct_in_h_K_torsion_Immirzi_variables",
             "prove_expansion_preserves_unique_residual_cancellation",
             "pass_L_ct_to_counterterm_radial_block",

@@ -1,5 +1,8 @@
 import JanusFormal.P0EFTJanusSigmaAPSPinLiftObligationGate
 import JanusFormal.P0EFTJanusSigmaAPSTraceRegularizationGate
+import JanusFormal.P0EFTJanusZ2SigmaBoundarySpinorRestrictionGate
+import JanusFormal.P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGate
+import JanusFormal.P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaSpinorBundleProjectionGate
@@ -9,6 +12,9 @@ set_option autoImplicit false
 structure SpinorBundleProjectionGate where
   spinorBundleBibliographyChecked : Prop
   apsBoundarySpinorBibliographyChecked : Prop
+  plusMinusSpinorBundleDataGateDeclared : Prop
+  boundarySpinorRestrictionGateDeclared : Prop
+  spinorBoundaryProjectionMapGateDeclared : Prop
   plusMinusSpinorBundlesDeclared : Prop
   sigmaBoundaryRestrictionDeclared : Prop
   z2SigmaSpinorProjectionDeclared : Prop
@@ -24,6 +30,9 @@ def spinorBundleProjectionLedgerDeclared
     (g : SpinorBundleProjectionGate) : Prop :=
   g.spinorBundleBibliographyChecked /\
   g.apsBoundarySpinorBibliographyChecked /\
+  g.plusMinusSpinorBundleDataGateDeclared /\
+  g.boundarySpinorRestrictionGateDeclared /\
+  g.spinorBoundaryProjectionMapGateDeclared /\
   g.plusMinusSpinorBundlesDeclared /\
   g.sigmaBoundaryRestrictionDeclared /\
   g.z2SigmaSpinorProjectionDeclared /\

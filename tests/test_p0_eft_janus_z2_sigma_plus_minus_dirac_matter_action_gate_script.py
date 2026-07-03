@@ -12,6 +12,7 @@ class P0EFTJanusZ2SigmaPlusMinusDiracMatterActionGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["curved_Dirac_action_bibliography_checked"])
         self.assertTrue(payload["declared"]["Holst_fermion_bibliography_checked"])
         self.assertTrue(payload["declared"]["spinor_bundle_projection_gate_declared"])
+        self.assertTrue(payload["declared"]["projected_Dirac_action_reduction_gate_declared"])
         self.assertTrue(payload["declared"]["plus_Dirac_action_declared"])
         self.assertTrue(payload["declared"]["minus_Dirac_action_declared"])
 
@@ -24,6 +25,8 @@ class P0EFTJanusZ2SigmaPlusMinusDiracMatterActionGateTests(unittest.TestCase):
         self.assertFalse(payload["plus_minus_dirac_matter_action_ready"])
         self.assertIn("pass_coframe_connection_pullback_gate", payload["next_required"])
         self.assertIn("pass_spinor_bundle_projection_gate", payload["next_required"])
+        self.assertIn("pass_projected_Dirac_action_reduction_gate", payload["next_required"])
+        self.assertIn("feed_actions_to_plus_minus_Dirac_action_local_reduction_gate", payload["next_required"])
 
 
 if __name__ == "__main__":

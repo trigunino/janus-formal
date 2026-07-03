@@ -1,4 +1,5 @@
 import JanusFormal.P0EFTJanusZ2SigmaTangentNormalOrientationGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectiveGluingNormalOrientationSignGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaCoframeConnectionPullbackGate
@@ -12,6 +13,7 @@ structure CoframeConnectionPullbackGate where
   differentialFormPullbackImported : Prop
   activeSigmaEmbeddingRequired : Prop
   tangentNormalOrientationGateDeclared : Prop
+  projectiveGluingNormalOrientationSignGateDeclared : Prop
   coframePullbackDeclared : Prop
   spinConnectionPullbackDeclared : Prop
   z2NormalOrientationRequired : Prop
@@ -30,6 +32,7 @@ def coframeConnectionPullbackLedgerDeclared
   g.differentialFormPullbackImported /\
   g.activeSigmaEmbeddingRequired /\
   g.tangentNormalOrientationGateDeclared /\
+  g.projectiveGluingNormalOrientationSignGateDeclared /\
   g.coframePullbackDeclared /\
   g.spinConnectionPullbackDeclared /\
   g.z2NormalOrientationRequired /\

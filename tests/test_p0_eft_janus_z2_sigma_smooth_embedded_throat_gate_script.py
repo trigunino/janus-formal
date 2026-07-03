@@ -1,0 +1,29 @@
+import unittest
+
+from scripts.build_p0_eft_janus_z2_sigma_smooth_embedded_throat_gate import build_payload
+
+
+class P0EFTJanusZ2SigmaSmoothEmbeddedThroatGateTests(unittest.TestCase):
+    def test_smooth_embedded_throat_ledger_is_declared(self):
+        payload = build_payload()
+
+        self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
+        self.assertTrue(payload["sigma_smooth_embedded_throat_ledger_declared"])
+        self.assertTrue(payload["declared"]["embedding_regularity_equivariance_gate_declared"])
+        self.assertTrue(payload["declared"]["embedded_submanifold_bibliography_checked"])
+        self.assertTrue(payload["declared"]["immersion_rank_condition_declared"])
+        self.assertIn("rank", payload["formulas"])
+
+    def test_smooth_embedded_throat_remains_blocked_on_active_embedding(self):
+        payload = build_payload()
+
+        self.assertFalse(payload["closure"]["active_tunnel_embedding_ready"])
+        self.assertFalse(payload["closure"]["sigma_smooth_embedded_throat_derived"])
+        self.assertFalse(payload["sigma_smooth_embedded_throat_ready"])
+        self.assertIn("pass_embedding_regularity_equivariance_gate", payload["next_required"])
+        self.assertIn("pass_active_tunnel_embedding_of_a_gate", payload["next_required"])
+        self.assertIn("feed_result_to_collar_tubular_neighborhood_gate", payload["next_required"])
+
+
+if __name__ == "__main__":
+    unittest.main()

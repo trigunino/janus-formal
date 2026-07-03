@@ -14,6 +14,7 @@ def build_payload() -> dict:
         "transparency_not_assumed": True,
         "plus_bulk_stress_declared": True,
         "minus_bulk_stress_declared": True,
+        "bulk_stress_normal_flux_cancellation_gate_declared": True,
         "bulk_stress_of_a_gate_declared": True,
         "Sigma_tangents_declared": True,
         "Sigma_normals_declared": True,
@@ -36,6 +37,7 @@ def build_payload() -> dict:
             "Israel thin-shell surface conservation identity",
             "Poisson-Visser momentum-flux treatment",
             "Singular hypersurfaces and thin shells in cosmology, arXiv:2402.09539",
+            "active bulk-stress normal-flux cancellation gate",
         ],
         "bibliography_result": (
             "The active non-transparent branch is computed by projecting each bulk stress "
@@ -53,6 +55,7 @@ def build_payload() -> dict:
         "active_flux_projection_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
             "pass_bulk_stress_of_a_gate",
+            "pass_bulk_stress_normal_flux_cancellation_gate_or_record_nonzero_flux",
             "derive_active_embedding_tangents_and_normals_of_a",
             "evaluate_F_a_Z2Sigma_of_a",
         ],

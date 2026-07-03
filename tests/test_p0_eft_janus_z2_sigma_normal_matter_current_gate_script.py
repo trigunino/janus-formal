@@ -11,6 +11,8 @@ class P0EFTJanusZ2SigmaNormalMatterCurrentGateTests(unittest.TestCase):
         self.assertTrue(payload["normal_matter_current_ledger_declared"])
         self.assertTrue(payload["declared"]["Noether_current_formula_imported"])
         self.assertTrue(payload["declared"]["plus_minus_matter_current_gate_declared"])
+        self.assertTrue(payload["declared"]["projected_Dirac_matter_current_gate_declared"])
+        self.assertTrue(payload["declared"]["projected_Dirac_normal_current_gate_declared"])
         self.assertTrue(payload["declared"]["normal_projection_criterion_declared"])
         self.assertIn("J_n^Z2Sigma", payload["formula"]["z2_projected_normal_current"])
 
@@ -22,6 +24,8 @@ class P0EFTJanusZ2SigmaNormalMatterCurrentGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["no_normal_matter_current_derived"])
         self.assertFalse(payload["no_normal_matter_current_ready"])
         self.assertIn("pass_plus_minus_matter_current_gate", payload["next_required"])
+        self.assertIn("pass_projected_Dirac_matter_current_gate", payload["next_required"])
+        self.assertIn("pass_projected_Dirac_normal_current_gate", payload["next_required"])
         self.assertIn("pass_tangent_normal_orientation_gate", payload["next_required"])
 
 

@@ -1,4 +1,6 @@
 import JanusFormal.P0EFTJanusZ2SigmaEmbeddingGaugeEquationGate
+import JanusFormal.P0EFTJanusZ2SigmaRadiusGaugeEmbeddingTransportGate
+import JanusFormal.P0EFTJanusZ2SigmaRadiusToEmbeddingConditionalClosureGate
 import JanusFormal.P0EFTJanusZ2SigmaThroatRadiusVariationalEquationGate
 
 namespace JanusFormal
@@ -9,6 +11,8 @@ set_option autoImplicit false
 structure ActiveTunnelEmbeddingFromRadiusGate where
   thinShellEmbeddingBibliographyChecked : Prop
   dynamicShellRadiusKinematicsImported : Prop
+  radiusGaugeEmbeddingTransportGateDeclared : Prop
+  radiusToEmbeddingConditionalClosureImported : Prop
   embeddingGaugeEquationsImported : Prop
   throatRadiusVariationalEquationImported : Prop
   rSigmaToXpmMapDeclared : Prop
@@ -22,6 +26,8 @@ def activeEmbeddingFromRadiusLedgerDeclared
     (g : ActiveTunnelEmbeddingFromRadiusGate) : Prop :=
   g.thinShellEmbeddingBibliographyChecked /\
   g.dynamicShellRadiusKinematicsImported /\
+  g.radiusGaugeEmbeddingTransportGateDeclared /\
+  g.radiusToEmbeddingConditionalClosureImported /\
   g.embeddingGaugeEquationsImported /\
   g.throatRadiusVariationalEquationImported /\
   g.rSigmaToXpmMapDeclared /\

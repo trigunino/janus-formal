@@ -1,5 +1,6 @@
 import JanusFormal.P0EFTJanusZ2SigmaCoframeConnectionPullbackGate
 import JanusFormal.P0EFTJanusZ2SigmaFermionRouteSelectionGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectedDiracActionReductionGate
 import JanusFormal.P0EFTJanusZ2SigmaSpinorBundleProjectionGate
 
 namespace JanusFormal
@@ -12,6 +13,7 @@ structure PlusMinusDiracMatterActionGate where
   holstFermionBibliographyChecked : Prop
   plusMinusSpinorBundlesDeclared : Prop
   spinorBundleProjectionGateDeclared : Prop
+  projectedDiracActionReductionGateDeclared : Prop
   tetradSpinConnectionInputsRequired : Prop
   plusDiracActionDeclared : Prop
   minusDiracActionDeclared : Prop
@@ -30,6 +32,7 @@ def plusMinusDiracMatterActionLedgerDeclared
   g.holstFermionBibliographyChecked /\
   g.plusMinusSpinorBundlesDeclared /\
   g.spinorBundleProjectionGateDeclared /\
+  g.projectedDiracActionReductionGateDeclared /\
   g.tetradSpinConnectionInputsRequired /\
   g.plusDiracActionDeclared /\
   g.minusDiracActionDeclared /\

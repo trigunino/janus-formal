@@ -10,6 +10,8 @@ class P0EFTJanusZ2SigmaMatterFluxTransparencyGateTests(unittest.TestCase):
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["transparency_criteria_declared"])
         self.assertTrue(payload["criteria"]["normal_matter_current_gate_declared"])
+        self.assertTrue(payload["criteria"]["projected_Dirac_normal_current_gate_declared"])
+        self.assertTrue(payload["criteria"]["bulk_stress_normal_flux_cancellation_gate_declared"])
         self.assertIn("F_a^Z2Sigma", payload["sufficient_condition"])
         self.assertTrue(payload["criteria"]["observational_fit_forbidden"])
 
@@ -20,6 +22,8 @@ class P0EFTJanusZ2SigmaMatterFluxTransparencyGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["active_Sigma_transparency_derived"])
         self.assertFalse(payload["active_sigma_transparency_ready"])
         self.assertIn("pass_normal_matter_current_gate", payload["next_required"])
+        self.assertIn("pass_projected_Dirac_normal_current_gate", payload["next_required"])
+        self.assertIn("pass_bulk_stress_normal_flux_cancellation_gate", payload["next_required"])
         self.assertIn("if_transparency_fails_compute_active_flux_F_a_of_a", payload["next_required"])
 
 

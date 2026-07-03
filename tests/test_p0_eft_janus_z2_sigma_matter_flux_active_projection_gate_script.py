@@ -11,6 +11,7 @@ class P0EFTJanusZ2SigmaMatterFluxActiveProjectionGateTests(unittest.TestCase):
         self.assertTrue(payload["active_flux_projection_ledger_declared"])
         self.assertTrue(payload["declared"]["transparency_not_assumed"])
         self.assertTrue(payload["declared"]["bulk_stress_of_a_gate_declared"])
+        self.assertTrue(payload["declared"]["bulk_stress_normal_flux_cancellation_gate_declared"])
         self.assertIn("T_munu^+", payload["formula"]["plus_flux"])
 
     def test_active_flux_projection_waits_for_bulk_stress_and_embedding(self):
@@ -20,6 +21,7 @@ class P0EFTJanusZ2SigmaMatterFluxActiveProjectionGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["embedding_of_a_ready"])
         self.assertFalse(payload["active_flux_projection_ready"])
         self.assertIn("pass_bulk_stress_of_a_gate", payload["next_required"])
+        self.assertIn("pass_bulk_stress_normal_flux_cancellation_gate_or_record_nonzero_flux", payload["next_required"])
         self.assertIn("derive_active_embedding_tangents_and_normals_of_a", payload["next_required"])
 
 

@@ -1,5 +1,6 @@
 import JanusFormal.P0EFTJanusZ2SigmaMatterFluxRadialBlockGate
 import JanusFormal.P0EFTJanusZ2SigmaNormalMatterCurrentGate
+import JanusFormal.P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGate
 
 namespace JanusFormal
 namespace P0EFTJanusZ2SigmaMatterFluxTransparencyGate
@@ -10,6 +11,8 @@ structure MatterFluxTransparencyGate where
   thinShellTransparencyBibliographyChecked : Prop
   noNormalMatterCurrentCriterionDeclared : Prop
   normalMatterCurrentGateDeclared : Prop
+  projectedDiracNormalCurrentGateDeclared : Prop
+  bulkStressNormalFluxCancellationGateDeclared : Prop
   bulkStressNormalProjectionCriterionDeclared : Prop
   sigmaAsGeometricThroatNotMatterPortalDeclared : Prop
   z2FluxCancellationCriterionDeclared : Prop
@@ -25,6 +28,8 @@ def transparencyCriteriaDeclared
   g.thinShellTransparencyBibliographyChecked /\
   g.noNormalMatterCurrentCriterionDeclared /\
   g.normalMatterCurrentGateDeclared /\
+  g.projectedDiracNormalCurrentGateDeclared /\
+  g.bulkStressNormalFluxCancellationGateDeclared /\
   g.bulkStressNormalProjectionCriterionDeclared /\
   g.sigmaAsGeometricThroatNotMatterPortalDeclared /\
   g.z2FluxCancellationCriterionDeclared /\
