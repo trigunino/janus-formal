@@ -9,8 +9,11 @@ class P0EFTJanusZ2SigmaDistanceBAOBibliographyGateTests(unittest.TestCase):
 
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["standard_flrw_distance_source_found"])
+        self.assertTrue(payload["curved_transverse_distance_source_found"])
         self.assertTrue(payload["etherington_reciprocity_source_found"])
         self.assertTrue(payload["bao_sound_horizon_source_found"])
+        self.assertTrue(payload["photon_baryon_drag_source_found"])
+        self.assertIn("curved_transverse_comoving_distance_Sk_chi", payload["sources"]["hogg_distance_measures"]["supports"])
         self.assertFalse(payload["complete_sigma_photon_distance_map_found"])
         self.assertFalse(payload["complete_z2_sigma_sound_ruler_found"])
         self.assertTrue(payload["local_distance_and_ruler_derivation_required"])

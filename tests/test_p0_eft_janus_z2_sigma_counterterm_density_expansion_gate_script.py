@@ -17,8 +17,12 @@ class P0EFTJanusZ2SigmaCountertermDensityExpansionGateTests(unittest.TestCase):
     def test_explicit_density_expansion_remains_open(self):
         payload = build_payload()
 
+        self.assertTrue(payload["closure"]["local_density_basis_complete"])
+        self.assertFalse(payload["closure"]["counterterm_primitive_integrated"])
         self.assertFalse(payload["closure"]["L_ct_expanded_in_active_variables"])
+        self.assertFalse(payload["upstream_frontiers"]["residual_extraction"]["ready"])
         self.assertFalse(payload["counterterm_density_expansion_ready"])
+        self.assertIn("counterterm_primitive_integrated = false", payload["current_frontier"])
         self.assertIn("pass_counterterm_local_density_basis_gate", payload["next_required"])
         self.assertIn("pass_counterterm_residual_extraction_gate", payload["next_required"])
         self.assertIn("expand_L_ct_in_h_K_torsion_Immirzi_variables", payload["next_required"])

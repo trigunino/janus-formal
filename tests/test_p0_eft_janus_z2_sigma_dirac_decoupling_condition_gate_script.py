@@ -20,6 +20,8 @@ class P0EFTJanusZ2SigmaDiracDecouplingConditionGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_interaction_rate_of_a_ready"])
         self.assertFalse(payload["closure"]["H_Z2Sigma_of_a_ready"])
         self.assertFalse(payload["dirac_decoupling_condition_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "active_interaction_rate_and_H_Z2Sigma_decoupling")
         self.assertIn("pass_Dirac_interaction_rate_of_a_gate", payload["next_required"])
         self.assertIn("pass_Z2Sigma_numerical_background_closure_gate", payload["next_required"])
         self.assertIn("derive_active_H_Z2Sigma_of_a", payload["next_required"])

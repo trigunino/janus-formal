@@ -19,10 +19,13 @@ class P0EFTJanusZ2SigmaBAOSoundRulerGateTests(unittest.TestCase):
         payload = build_payload()
 
         self.assertFalse(payload["evaluation"]["H_Z2Sigma_numerical_ready"])
-        self.assertFalse(payload["evaluation"]["photon_baryon_sound_speed_ready"])
+        self.assertTrue(payload["evaluation"]["photon_baryon_sound_speed_builder_ready"])
+        self.assertTrue(payload["evaluation"]["photon_baryon_sound_speed_over_c_builder_ready"])
+        self.assertFalse(payload["evaluation"]["photon_baryon_sound_speed_values_ready"])
         self.assertFalse(payload["evaluation"]["drag_epoch_ready"])
         self.assertFalse(payload["bao_sound_ruler_evaluated"])
         self.assertFalse(payload["non_compressed_bao_gate_ready"])
+        self.assertIn("rhat_d^Z2Sigma", payload["rd_hat_definition"])
         self.assertIn("derive_drag_epoch_z_d_Z2Sigma", payload["next_required"])
 
 

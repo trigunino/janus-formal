@@ -13,12 +13,15 @@ class P0EFTJanusZ2SigmaResolvedTunnelPinLiftGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["resolved_tunnel_frame_bundle_declared"])
         self.assertTrue(payload["declared"]["Pin_lift_compatibility_criterion_declared"])
         self.assertIn("pin_lift", payload["formulas"])
+        self.assertIn("resolved_tunnel_frame_bundle", payload["upstream_frontiers"])
+        self.assertTrue(payload["nearest_pin_lift_frontier"]["diagnostic_only"])
 
     def test_resolved_tunnel_pin_lift_closure_remains_blocked(self):
         payload = build_payload()
 
         self.assertTrue(payload["closure"]["Sigma_APS_Pin_lift_ready"])
         self.assertFalse(payload["closure"]["resolved_tunnel_frame_bundle_ready"])
+        self.assertFalse(payload["upstream_frontiers"]["resolved_tunnel_frame_bundle"]["ready"])
         self.assertFalse(payload["closure"]["resolved_tunnel_Pin_lift_ready"])
         self.assertFalse(payload["resolved_tunnel_pin_lift_ready"])
         self.assertIn("pass_resolved_tunnel_frame_bundle_gate", payload["next_required"])

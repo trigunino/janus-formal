@@ -3,12 +3,25 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from scripts.build_p0_eft_janus_z2_sigma_dirac_mass_temperature_law_of_a_gate import (
+    build_payload as build_mass_temperature_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_dirac_regime_selection_gate import (
+    build_payload as build_regime_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_fermion_distribution_of_a_gate import (
+    build_payload as build_distribution_payload,
+)
+
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_equation_of_state_of_a_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_equation_of_state_of_a_gate.json")
 
 
 def build_payload() -> dict:
+    distribution = build_distribution_payload()
+    regime = build_regime_payload()
+    mass_temperature = build_mass_temperature_payload()
     declared = {
         "kinetic_theory_bibliography_checked": True,
         "Fermi_Dirac_energy_pressure_integrals_imported": True,
@@ -23,16 +36,27 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_distribution_of_a_ready": False,
-        "minus_distribution_of_a_ready": False,
-        "plus_regime_selected": False,
-        "minus_regime_selected": False,
-        "plus_mass_temperature_law_ready": False,
-        "minus_mass_temperature_law_ready": False,
+        "plus_distribution_of_a_ready": distribution["closure"]["plus_fermion_distribution_of_a_ready"],
+        "minus_distribution_of_a_ready": distribution["closure"]["minus_fermion_distribution_of_a_ready"],
+        "plus_regime_selected": regime["closure"]["plus_regime_selected"],
+        "minus_regime_selected": regime["closure"]["minus_regime_selected"],
+        "plus_mass_temperature_law_ready": mass_temperature["closure"]["plus_mass_temperature_law_ready"],
+        "minus_mass_temperature_law_ready": mass_temperature["closure"]["minus_mass_temperature_law_ready"],
         "plus_equation_of_state_derived": False,
         "minus_equation_of_state_derived": False,
         "projected_equation_of_state_ready": False,
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = "none"
+    if not ready:
+        if not distribution["gate_passed"]:
+            primary_blocker = distribution["primary_blocker"]
+        elif not regime["gate_passed"]:
+            primary_blocker = regime["primary_blocker"]
+        elif not mass_temperature["gate_passed"]:
+            primary_blocker = mass_temperature["primary_blocker"]
+        else:
+            primary_blocker = "Dirac_rho_pressure_integrals_and_projection"
     return {
         "status": "janus-z2-sigma-dirac-equation-of-state-of-a-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -53,6 +77,20 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "fermion_distribution_of_a": {
+                "gate_passed": distribution["gate_passed"],
+                "primary_blocker": distribution["primary_blocker"],
+            },
+            "dirac_regime_selection": {
+                "gate_passed": regime["gate_passed"],
+                "primary_blocker": regime["primary_blocker"],
+            },
+            "dirac_mass_temperature_law": {
+                "gate_passed": mass_temperature["gate_passed"],
+                "primary_blocker": mass_temperature["primary_blocker"],
+            },
+        },
         "formulas": {
             "rho_pm": "rho_pm(a) = g/(2 pi^2) integral dp p^2 E_pm(p,a) f_pm(p,a)",
             "pressure_pm": "p_pm(a) = g/(6 pi^2) integral dp p^4/E_pm(p,a) f_pm(p,a)",
@@ -60,7 +98,9 @@ def build_payload() -> dict:
             "massive_limit": "w_pm -> 0 only after m_pm/T_pm >> 1 and decoupling are derived",
         },
         "dirac_equation_of_state_ledger_declared": all(declared.values()),
-        "dirac_equation_of_state_ready": all(declared.values()) and all(closure.values()),
+        "dirac_equation_of_state_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_fermion_distribution_of_a_gate",
             "pass_Dirac_regime_selection_gate",

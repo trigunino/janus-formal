@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_embedding_frame_trace_transport_gate import (
+    build_payload as build_frame_trace_transport_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_connection_variation_transport_gate import (
+    build_payload as build_connection_variation_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_extrinsic_curvature_variation_transport_gate.md")
@@ -9,6 +24,9 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_extri
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_embedding_payload()
+    frame_trace = build_frame_trace_transport_payload()
+    connection_variation = build_connection_variation_payload()
     declared = {
         "tetrad_variation_transport_gate_imported": True,
         "extrinsic_curvature_gate_imported": True,
@@ -22,12 +40,23 @@ def build_payload() -> dict:
         "z2_normal_orientation_variation_declared": True,
         "no_fitted_extrinsic_curvature_variation": True,
     }
+    active_embedding_ready = active_embedding["active_embedding_readiness_ready"]
+    frame_trace_ready = frame_trace["embedding_frame_trace_transport_ready"]
+    connection_variation_ready = connection_variation[
+        "counterterm_connection_variation_transport_ready"
+    ]
+    upstream_ready = active_embedding_ready and frame_trace_ready and connection_variation_ready
+    delta_k_structural_formula_ready = True
+    delta_k_allowed_basis_ready = False
     closure = {
-        "active_embedding_ready": False,
-        "tangent_normal_trace_transport_ready": False,
-        "connection_variation_transport_ready": False,
-        "delta_K_in_allowed_basis": False,
-        "extrinsic_curvature_variation_transport_ready": False,
+        "delta_K_structural_formula_ready": delta_k_structural_formula_ready,
+        "active_embedding_ready": active_embedding_ready,
+        "tangent_normal_trace_transport_ready": frame_trace_ready,
+        "connection_variation_transport_ready": connection_variation_ready,
+        "delta_K_upstream_transport_inputs_ready": upstream_ready,
+        "delta_K_in_allowed_basis": delta_k_allowed_basis_ready,
+        "extrinsic_curvature_variation_transport_ready": upstream_ready
+        and delta_k_allowed_basis_ready,
     }
     return {
         "status": "janus-z2-sigma-counterterm-tetrad-extrinsic-curvature-variation-transport-gate",
@@ -49,18 +78,52 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding_ready,
+                "readiness": active_embedding["readiness"],
+                "still_open": active_embedding["still_open"],
+            },
+            "frame_trace_transport": {
+                "gate": frame_trace["status"],
+                "ready": frame_trace_ready,
+                "prerequisites": frame_trace["prerequisites"],
+                "transported": frame_trace["transported"],
+                "current_frontier": frame_trace["current_frontier"],
+            },
+            "connection_variation": {
+                "gate": connection_variation["status"],
+                "ready": connection_variation_ready,
+                "closure": connection_variation["closure"],
+            },
+        },
         "formulae": {
             "extrinsic_curvature": "K_ab = e_a^mu e_b^nu nabla_mu n_nu",
+            "second_form": "K_ab = -n_mu(partial_a partial_b X^mu + Gamma^mu_alpha_beta e_a^alpha e_b^beta)",
+            "structural_variation": (
+                "delta K_ab = -delta n_mu A_ab^mu - n_mu(delta partial_a partial_b X^mu "
+                "+ delta Gamma^mu_alpha_beta e_a^alpha e_b^beta "
+                "+ Gamma^mu_alpha_beta delta(e_a^alpha e_b^beta))"
+            ),
             "variation_channels": "delta K_ab receives delta e_a, delta n, delta Gamma/omega and Z2 orientation terms",
+        },
+        "partial_subchannels": {
+            "structural_variation_formula": {
+                "ready": delta_k_structural_formula_ready,
+                "status": "formula_only_not_value_transport_ready",
+            },
+            "active_value_transport": {
+                "ready": upstream_ready and delta_k_allowed_basis_ready,
+                "status": "blocked_on_active_embedding_frame_connection_variation",
+            },
         },
         "deltaK_transport_ledger_declared": all(declared.values()),
         "deltaK_transport_ready": all(declared.values()) and all(closure.values()),
         "current_frontier": [
-            "active_embedding_ready = false",
-            "tangent_normal_trace_transport_ready = false",
-            "connection_variation_transport_ready = false",
-            "delta_K_in_allowed_basis = false",
-            "extrinsic_curvature_variation_transport_ready = false",
+            f"{key} = false"
+            for key, ready in closure.items()
+            if not ready
         ],
         "next_required": [
             "close_active_tunnel_embedding_of_a_gate",

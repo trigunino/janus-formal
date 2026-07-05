@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_resolved_tunnel_pin_lift_gate import (
+    build_payload as build_resolved_tunnel_pin_lift_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_spinor_bundle_data_gate.md")
@@ -9,6 +18,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_spinor_bundle
 
 
 def build_payload() -> dict:
+    pin_lift = build_resolved_tunnel_pin_lift_payload()
+    resolved_tunnel_pin_lift_ready = pin_lift["resolved_tunnel_pin_lift_ready"]
     declared = {
         "spin_Pin_bibliography_checked": True,
         "RP4_Pin_plus_result_imported": True,
@@ -21,7 +32,7 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "resolved_tunnel_Pin_lift_ready": False,
+        "resolved_tunnel_Pin_lift_ready": resolved_tunnel_pin_lift_ready,
         "plus_spinor_bundle_ready": False,
         "minus_spinor_bundle_ready": False,
         "plus_minus_spinor_bundle_data_ready": False,
@@ -47,6 +58,18 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "resolved_tunnel_pin_lift": {
+                "gate": pin_lift["status"],
+                "ready": pin_lift["resolved_tunnel_pin_lift_ready"],
+                "closure": pin_lift["closure"],
+            },
+        },
+        "nearest_spinor_bundle_frontier": {
+            "block": "resolved_tunnel_Pin_lift",
+            "gate": "P0EFTJanusZ2SigmaResolvedTunnelPinLiftGate",
+            "diagnostic_only": True,
+        },
         "formulas": {
             "pin_input": "RP4 base: Pin+ imported; Sigma APS/Pin lift remains active input",
             "plus_bundle": "S_+ -> M_+ declared over resolved tunnel sheet",

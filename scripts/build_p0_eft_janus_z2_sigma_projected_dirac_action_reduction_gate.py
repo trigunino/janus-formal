@@ -1,14 +1,31 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_gate import (
+    EMBEDDING_MANIFEST_PATH,
+    build_payload as build_coframe_connection_pullback_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_spinor_bundle_projection_gate import (
+    build_payload as build_spinor_bundle_projection_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_projected_dirac_action_reduction_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_projected_dirac_action_reduction_gate.json")
 
 
-def build_payload() -> dict:
+def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) -> dict:
+    coframe_connection = build_coframe_connection_pullback_payload(
+        embedding_manifest_path=embedding_manifest_path
+    )
+    spinor_projection = build_spinor_bundle_projection_payload()
     declared = {
         "curved_Dirac_action_bibliography_checked": True,
         "Holst_fermion_coupling_bibliography_checked": True,
@@ -20,13 +37,26 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "coframe_connection_pullback_ready": False,
-        "plus_minus_spinor_projection_ready": False,
+        "coframe_connection_pullback_ready": coframe_connection[
+            "coframe_connection_pullback_ready"
+        ],
+        "plus_minus_spinor_projection_ready": spinor_projection["closure"][
+            "plus_minus_spinor_projection_ready"
+        ],
         "plus_Dirac_action_reduced": False,
         "minus_Dirac_action_reduced": False,
         "Z2_projected_Dirac_action_ready": False,
         "plus_minus_matter_actions_ready": False,
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = "none"
+    if not ready:
+        if not coframe_connection["gate_passed"]:
+            primary_blocker = coframe_connection["primary_blocker"]
+        elif not spinor_projection["gate_passed"]:
+            primary_blocker = spinor_projection["primary_blocker"]
+        else:
+            primary_blocker = "plus_minus_Dirac_action_reduction"
     return {
         "status": "janus-z2-sigma-projected-dirac-action-reduction-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -47,6 +77,22 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "coframe_connection_pullback": {
+                "gate": coframe_connection["status"],
+                "ready": coframe_connection["coframe_connection_pullback_ready"],
+                "primary_blocker": coframe_connection["primary_blocker"],
+                "closure": coframe_connection["closure"],
+                "next_required": coframe_connection["next_required"],
+            },
+            "spinor_bundle_projection": {
+                "gate": spinor_projection["status"],
+                "ready": spinor_projection["spinor_bundle_projection_ready"],
+                "primary_blocker": spinor_projection["primary_blocker"],
+                "closure": spinor_projection["closure"],
+                "next_required": spinor_projection["next_required"],
+            },
+        },
         "formulas": {
             "plus_action": "S_D,+[e_+,omega_+,psi_+] with e_+,omega_+ pulled to active data",
             "minus_action": "S_D,-[e_-,omega_-,psi_-] with e_-,omega_- pulled to active data",
@@ -54,7 +100,9 @@ def build_payload() -> dict:
             "policy": "no fitted effective mass, boundary phase, or chiral angle",
         },
         "projected_dirac_action_reduction_ledger_declared": all(declared.values()),
-        "projected_dirac_action_reduction_ready": all(declared.values()) and all(closure.values()),
+        "projected_dirac_action_reduction_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_coframe_connection_pullback_gate",
             "pass_spinor_bundle_projection_gate",
@@ -77,6 +125,7 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['projected_dirac_action_reduction_ledger_declared']}`",
         f"Reduction ready: `{payload['projected_dirac_action_reduction_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Formulas",
     ]

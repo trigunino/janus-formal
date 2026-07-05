@@ -16,7 +16,23 @@ class P0EFTJanusZ2SigmaCountertermTetradResidualChannelGateTests(unittest.TestCa
     def test_tetrad_channel_remains_open_until_coefficient_is_explicit(self):
         payload = build_payload()
 
+        self.assertTrue(payload["closure"]["tetrad_metric_residual_subchannel_explicit"])
+        self.assertTrue(
+            payload["closure"]["tetrad_metric_residual_coefficient_formula_declared"]
+        )
+        self.assertFalse(
+            payload["closure"]["tetrad_metric_residual_coefficient_value_ready"]
+        )
+        self.assertIn("metric_residual_coefficient_writer", payload["upstream_frontiers"])
+        self.assertFalse(payload["upstream_frontiers"]["metric_residual_coefficient_writer"]["ready"])
+        self.assertTrue(payload["partial_subchannels"]["metric"]["ready"])
+        self.assertIn("R_e_metric", payload["partial_subchannels"]["metric"]["residual_coefficient"])
         self.assertFalse(payload["closure"]["tetrad_residual_coefficient_explicit"])
+        self.assertFalse(payload["closure"]["tetrad_variation_transport_ready"])
+        self.assertFalse(
+            payload["closure"]["active_sigma_boundary_variation_residual_formula_ready"]
+        )
+        self.assertFalse(payload["upstream_frontiers"]["tetrad_variation_transport"]["ready"])
         self.assertFalse(payload["counterterm_tetrad_residual_channel_ready"])
         self.assertIn("compute_R_e_from_active_sigma_boundary_variation", payload["next_required"])
 

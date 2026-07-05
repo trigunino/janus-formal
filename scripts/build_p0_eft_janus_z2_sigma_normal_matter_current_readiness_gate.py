@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_readiness_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_matter_current_gate import (
+    build_payload as build_projected_dirac_matter_current_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_normal_current_gate import (
+    build_payload as build_projected_dirac_normal_current_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_normal_matter_current_readiness_gate.md")
@@ -9,6 +24,9 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_normal_matter_current_re
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_embedding_readiness_payload()
+    projected_current = build_projected_dirac_matter_current_payload()
+    projected_normal = build_projected_dirac_normal_current_payload()
     declared = {
         "normal_matter_current_gate_imported": True,
         "plus_minus_matter_current_gate_imported": True,
@@ -18,13 +36,45 @@ def build_payload() -> dict:
         "Dirac_Noether_current_bibliography_checked": True,
     }
     readiness = {
-        "active_embedding_ready": False,
-        "Sigma_normals_ready": False,
-        "plus_minus_matter_currents_ready": False,
-        "projected_Dirac_matter_current_ready": False,
-        "projected_Dirac_normal_current_ready": False,
-        "no_normal_matter_current_derived": False,
-        "no_normal_matter_current_ready": False,
+        "active_embedding_ready": active_embedding["active_embedding_readiness_ready"],
+        "Sigma_normals_ready": active_embedding["readiness"]["unit_normals_ready"],
+        "plus_minus_matter_currents_ready": projected_current["closure"][
+            "plus_minus_matter_currents_ready"
+        ],
+        "projected_Dirac_matter_current_ready": projected_current[
+            "projected_dirac_matter_current_ready"
+        ],
+        "projected_Dirac_normal_current_ready": projected_normal[
+            "projected_dirac_normal_current_ready"
+        ],
+        "no_normal_matter_current_derived": projected_normal["closure"][
+            "no_normal_matter_current_derived"
+        ],
+        "no_normal_matter_current_ready": projected_normal[
+            "no_normal_dirac_current_ready"
+        ],
+    }
+    ready = all(declared.values()) and all(readiness.values())
+    primary_blocker = "none"
+    if not ready:
+        if not active_embedding["gate_passed"]:
+            primary_blocker = active_embedding["primary_blocker"]
+        elif not projected_current["gate_passed"]:
+            primary_blocker = projected_current["primary_blocker"]
+        elif not projected_normal["gate_passed"]:
+            primary_blocker = projected_normal["primary_blocker"]
+        else:
+            primary_blocker = "normal_matter_current_zero_condition"
+    nearest_normal_current_frontier = {
+        "block": primary_blocker,
+        "gate": "P0EFTJanusZ2SigmaActiveEmbeddingReadinessGate",
+        "required": [
+            "derive R_Sigma(a) from the throat variational equation",
+            "derive X_+/- (a) from the conditional embedding map",
+            "transport Sigma unit normals from the active embedding",
+            "then project plus/minus Dirac currents on Sigma normals",
+        ],
+        "diagnostic_only": True,
     }
     return {
         "status": "janus-z2-sigma-normal-matter-current-readiness-gate",
@@ -46,6 +96,32 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "readiness": readiness,
+        "upstream_frontiers": {
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding["active_embedding_readiness_ready"],
+                "primary_blocker": active_embedding["primary_blocker"],
+                "readiness": active_embedding["readiness"],
+                "nearest_frontier": active_embedding["nearest_embedding_frontier"],
+            },
+            "projected_dirac_matter_current": {
+                "gate": projected_current["status"],
+                "ready": projected_current["projected_dirac_matter_current_ready"],
+                "primary_blocker": projected_current["primary_blocker"],
+                "closure": projected_current["closure"],
+                "next_required": projected_current["next_required"],
+            },
+            "projected_dirac_normal_current": {
+                "gate": projected_normal["status"],
+                "ready": projected_normal["projected_dirac_normal_current_ready"],
+                "no_normal_current_ready": projected_normal[
+                    "no_normal_dirac_current_ready"
+                ],
+                "primary_blocker": projected_normal["primary_blocker"],
+                "closure": projected_normal["closure"],
+                "next_required": projected_normal["next_required"],
+            },
+        },
         "formulae": {
             "dirac_current": "J_pm^mu = psibar_pm gamma_pm^mu psi_pm",
             "normal_projection": "J_n^pm = J_pm^mu n_mu^pm",
@@ -64,8 +140,13 @@ def build_payload() -> dict:
             "projected_Dirac_normal_current_ready",
             "no_normal_matter_current_derived",
         ],
+        "nearest_normal_current_frontier": nearest_normal_current_frontier,
+        "nearest_normal_current_frontier_declared": True,
+        "nearest_normal_current_frontier_diagnostic_only": True,
         "normal_matter_current_readiness_ledger_declared": all(declared.values()),
-        "normal_matter_current_readiness_ready": all(declared.values()) and all(readiness.values()),
+        "normal_matter_current_readiness_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "close_active_embedding_readiness_gate",
             "close_projected_Dirac_matter_current_gate",
@@ -92,6 +173,11 @@ def write_reports() -> dict:
     lines.extend(f"- `{key}`: `{value}`" for key, value in payload["formulae"].items())
     lines.extend(["", "## Still Open"])
     lines.extend(f"- `{item}`" for item in payload["still_open"])
+    lines.extend(["", "## Nearest Normal-Current Frontier"])
+    nearest = payload["nearest_normal_current_frontier"]
+    lines.append(f"- `block`: `{nearest['block']}`")
+    lines.append(f"- `gate`: `{nearest['gate']}`")
+    lines.extend(f"- `required`: `{item}`" for item in nearest["required"])
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
     return payload
 

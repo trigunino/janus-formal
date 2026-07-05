@@ -21,6 +21,12 @@ class P0EFTJanusZ2SigmaResolvedTunnelFrameBundleGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["resolved_tunnel_atlas_derived"])
         self.assertFalse(payload["closure"]["resolved_tunnel_frame_bundle_ready"])
         self.assertFalse(payload["resolved_tunnel_frame_bundle_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertEqual(
+            payload["upstream_frontiers"]["resolved_tunnel_smooth_atlas"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertIn("pass_resolved_tunnel_smooth_atlas_gate", payload["next_required"])
         self.assertIn("feed_result_to_resolved_tunnel_Pin_lift_gate", payload["next_required"])
 

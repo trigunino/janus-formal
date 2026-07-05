@@ -13,12 +13,25 @@ class P0EFTJanusZ2SigmaCoupledRadiusFluxEmbeddingFrameTraceTransportGateTests(un
         self.assertTrue(payload["embedding_frame_trace_transport_ledger_declared"])
         self.assertTrue(payload["declared"]["no_independent_frame_fit"])
         self.assertIn("regular_embedding_ready", payload["conditional_transport_rule"])
+        self.assertTrue(payload["conditional_formulae_ready"]["tangent_frame_formula_ready"])
+        self.assertTrue(payload["partial_subchannels"]["frame_normal_formulae"]["ready"])
+        self.assertIn("partial_a X", payload["formulae"]["tangent_frame"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
 
     def test_transport_stays_blocked_until_embedding_prerequisites_close(self):
         payload = build_payload()
 
         self.assertFalse(payload["prerequisites"]["regular_embedding_ready"])
+        self.assertTrue(payload["prerequisites"]["coorientation_ready"])
+        self.assertFalse(payload["prerequisites"]["induced_metric_nondegenerate_ready"])
+        self.assertIn("flux_projection_domain", payload["upstream_frontiers"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["flux_projection_domain"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertFalse(payload["transported"]["candidate_indices_support_normal_and_tangent_traces"])
+        self.assertTrue(payload["partial_subchannels"]["frame_normal_formulae"]["ready"])
+        self.assertFalse(payload["partial_subchannels"]["active_trace_transport"]["ready"])
         self.assertFalse(payload["embedding_frame_trace_transport_ready"])
         self.assertIn("close_embedding_regularity_equivariance_gate", payload["next_required"])
 

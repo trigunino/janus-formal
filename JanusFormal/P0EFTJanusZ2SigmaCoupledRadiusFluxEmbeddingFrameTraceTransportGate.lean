@@ -14,6 +14,9 @@ structure CoupledRadiusFluxEmbeddingFrameTraceTransportGate where
   inducedMetricNondegenerateReady : Prop
   frameTraceTransportDeclared : Prop
   noIndependentFrameFit : Prop
+  tangentFrameFormulaReady : Prop
+  normalCovectorFormulaReady : Prop
+  inducedMetricPullbackFormulaReady : Prop
   tangentFrameTraceSupported : Prop
   normalTraceSupported : Prop
   tangentFrameTraceContinuous : Prop
@@ -34,6 +37,9 @@ def embeddingFrameTraceTransportReady
   g.regularEmbeddingReady /\
   g.coorientationReady /\
   g.inducedMetricNondegenerateReady /\
+  g.tangentFrameFormulaReady /\
+  g.normalCovectorFormulaReady /\
+  g.inducedMetricPullbackFormulaReady /\
   g.tangentFrameTraceSupported /\
   g.normalTraceSupported /\
   g.tangentFrameTraceContinuous /\
@@ -50,7 +56,14 @@ theorem frame_trace_transport_feeds_normal_tangent_support
     (g : CoupledRadiusFluxEmbeddingFrameTraceTransportGate)
     (hReady : embeddingFrameTraceTransportReady g) :
     g.candidateIndicesSupportNormalAndTangentTraces := by
-  exact hReady.2.2.2.2.2.2.2.2
+  exact hReady.2.2.2.2.2.2.2.2.2.2.2
+
+theorem frame_formulae_do_not_close_transport_without_embedding
+    (g : CoupledRadiusFluxEmbeddingFrameTraceTransportGate)
+    (hNoEmbedding : Not g.regularEmbeddingReady) :
+    Not (embeddingFrameTraceTransportReady g) := by
+  intro hReady
+  exact hNoEmbedding (frame_trace_transport_requires_embedding g hReady)
 
 end P0EFTJanusZ2SigmaCoupledRadiusFluxEmbeddingFrameTraceTransportGate
 end JanusFormal

@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_function_space_gate import (
+    build_payload as build_function_space_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_well_posedness_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_well
 
 
 def build_payload() -> dict:
+    function_space = build_function_space_payload()
     declared = {
         "coupled_radius_flux_system_imported": True,
         "thin_shell_well_posedness_bibliography_checked": True,
@@ -29,6 +39,7 @@ def build_payload() -> dict:
         "homogeneous_gauge_mode_fixed": False,
         "coupled_system_well_posed": False,
     }
+    ready = all(declared.values()) and all(proof_obligations.values())
     return {
         "status": "janus-z2-sigma-coupled-radius-flux-well-posedness-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -50,6 +61,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "proof_obligations": proof_obligations,
+        "upstream_frontiers": {
+            "function_space": {
+                "gate": function_space["status"],
+                "ready": function_space["function_space_ready"],
+                "current_frontier": function_space["current_frontier"],
+                "primary_blocker": function_space.get("primary_blocker"),
+            },
+        },
         "unknown_space": [
             "R_Sigma(a) in a declared radial regularity class",
             "F_a^Z2Sigma(a) as a functional of X_+/-[R_Sigma]",
@@ -61,8 +80,14 @@ def build_payload() -> dict:
             "boundary/gauge constraints fixing the homogeneous embedding mode",
         ],
         "well_posedness_ledger_declared": all(declared.values()),
-        "well_posedness_ready": all(declared.values()) and all(proof_obligations.values()),
+        "well_posedness_ready": ready,
         "coupled_system_well_posed": proof_obligations["coupled_system_well_posed"],
+        "gate_passed": ready,
+        "primary_blocker": (
+            "none"
+            if ready
+            else function_space.get("primary_blocker", "function_space_ready_for_well_posedness")
+        ),
         "current_frontier": [
             "local_existence_proved = false",
             "local_uniqueness_proved = false",
@@ -91,6 +116,7 @@ def write_reports() -> dict:
         f"Ledger declared: `{payload['well_posedness_ledger_declared']}`",
         f"Well-posedness ready: `{payload['well_posedness_ready']}`",
         f"Coupled system well posed: `{payload['coupled_system_well_posed']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Current Frontier",
     ]

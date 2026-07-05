@@ -19,8 +19,20 @@ class P0EFTJanusZ2SigmaCountertermRadialReductionFrontierGateTests(unittest.Test
 
         self.assertFalse(payload["chain"]["residual_one_form_explicit"])
         self.assertFalse(payload["chain"]["counterterm_primitive_integrated"])
+        self.assertTrue(payload["chain"]["local_density_basis_complete"])
         self.assertFalse(payload["chain"]["counterterm_block_reduced"])
+        self.assertFalse(payload["upstream_frontiers"]["residual_extraction"]["ready"])
+        self.assertFalse(payload["upstream_frontiers"]["density_expansion"]["ready"])
+        self.assertFalse(payload["upstream_frontiers"]["radial_block"]["block_reduced"])
         self.assertFalse(payload["counterterm_radial_reduction_ready"])
+        self.assertEqual(
+            payload["primary_blocker"],
+            "tetrad_residual_channel",
+        )
+        self.assertEqual(
+            payload["upstream_frontiers"]["radial_block"]["primary_blocker"],
+            "tetrad_residual_channel",
+        )
         self.assertIn("feed_counterterm_block_reduced_to_throat_radius_solution_frontier", payload["next_required"])
 
 

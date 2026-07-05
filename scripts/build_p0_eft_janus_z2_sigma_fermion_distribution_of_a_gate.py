@@ -3,12 +3,29 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from scripts.build_p0_eft_janus_z2_sigma_dirac_fermion_number_density_of_a_gate import (
+    build_payload as build_number_density_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_dirac_mass_temperature_law_of_a_gate import (
+    build_payload as build_mass_temperature_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_dirac_thermal_occupation_of_a_gate import (
+    build_payload as build_thermal_occupation_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_fermion_route_selection_gate import (
+    build_payload as build_route_payload,
+)
+
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_fermion_distribution_of_a_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_fermion_distribution_of_a_gate.json")
 
 
 def build_payload() -> dict:
+    route = build_route_payload()
+    number_density = build_number_density_payload()
+    mass_temperature = build_mass_temperature_payload()
+    thermal_occupation = build_thermal_occupation_payload()
     declared = {
         "fermion_distribution_bibliography_checked": True,
         "Dirac_gas_route_declared": True,
@@ -23,13 +40,26 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "route_selected_from_action_or_topology": True,
-        "fermion_number_density_of_a_ready": False,
-        "fermion_mass_or_temperature_law_ready": False,
+        "route_selected_from_action_or_topology": route["fermion_route_selection_ready"],
+        "fermion_number_density_of_a_ready": number_density["dirac_fermion_number_density_of_a_ready"],
+        "fermion_mass_or_temperature_law_ready": mass_temperature["dirac_mass_temperature_law_of_a_ready"],
         "plus_fermion_distribution_of_a_ready": False,
         "minus_fermion_distribution_of_a_ready": False,
         "projected_fermion_distribution_of_a_ready": False,
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = "none"
+    if not ready:
+        if not route["gate_passed"]:
+            primary_blocker = route["primary_blocker"]
+        elif not number_density["gate_passed"]:
+            primary_blocker = number_density["primary_blocker"]
+        elif not mass_temperature["gate_passed"]:
+            primary_blocker = mass_temperature["primary_blocker"]
+        elif not thermal_occupation["gate_passed"]:
+            primary_blocker = thermal_occupation["primary_blocker"]
+        else:
+            primary_blocker = "plus_minus_projected_fermion_distribution_integrals"
     return {
         "status": "janus-z2-sigma-fermion-distribution-of-a-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -51,6 +81,24 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "fermion_route_selection": {
+                "gate_passed": route["gate_passed"],
+                "primary_blocker": route["primary_blocker"],
+            },
+            "dirac_fermion_number_density_of_a": {
+                "gate_passed": number_density["gate_passed"],
+                "primary_blocker": number_density["primary_blocker"],
+            },
+            "dirac_mass_temperature_law_of_a": {
+                "gate_passed": mass_temperature["gate_passed"],
+                "primary_blocker": mass_temperature["primary_blocker"],
+            },
+            "dirac_thermal_occupation_of_a": {
+                "gate_passed": thermal_occupation["gate_passed"],
+                "primary_blocker": thermal_occupation["primary_blocker"],
+            },
+        },
         "formulas": {
             "number_conservation": "d(n_pm a^3)/d ln a = 0 only after the active fermion route is selected",
             "dirac_gas_route": "f_pm(a,p,s) determines axial current A_pm^mu(a)",
@@ -58,7 +106,9 @@ def build_payload() -> dict:
             "projection": "f_Z2Sigma(a) = project_Z2Sigma(f_+(a), f_-(a))",
         },
         "fermion_distribution_ledger_declared": all(declared.values()),
-        "fermion_distribution_of_a_ready": all(declared.values()) and all(closure.values()),
+        "fermion_distribution_of_a_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_Dirac_fermion_number_density_of_a_gate",
             "pass_Dirac_mass_temperature_law_of_a_gate",

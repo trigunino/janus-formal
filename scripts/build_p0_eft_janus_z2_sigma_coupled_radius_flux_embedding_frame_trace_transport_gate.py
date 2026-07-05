@@ -1,14 +1,23 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_flux_projection_domain_gate import (
+    build_payload as build_flux_projection_domain_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_embedding_frame_trace_transport_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_embedding_frame_trace_transport_gate.json")
 
 
 def build_payload() -> dict:
+    domain = build_flux_projection_domain_payload()
     declared = {
         "normal_tangent_trace_support_gate_imported": True,
         "embedding_regularity_equivariance_imported": True,
@@ -17,9 +26,16 @@ def build_payload() -> dict:
         "no_independent_frame_fit": True,
     }
     prerequisites = {
-        "regular_embedding_ready": False,
-        "coorientation_ready": False,
-        "induced_metric_nondegenerate_ready": False,
+        "regular_embedding_ready": domain["closure"]["regular_embedding_ready"],
+        "coorientation_ready": domain["closure"]["coorientation_ready"],
+        "induced_metric_nondegenerate_ready": domain["closure"][
+            "induced_metric_nondegenerate_ready"
+        ],
+    }
+    conditional_formulae_ready = {
+        "tangent_frame_formula_ready": True,
+        "normal_covector_formula_ready": True,
+        "induced_metric_pullback_formula_ready": True,
     }
     transported = {
         "tangent_frame_trace_supported": False,
@@ -49,7 +65,31 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "prerequisites": prerequisites,
+        "conditional_formulae_ready": conditional_formulae_ready,
+        "upstream_frontiers": {
+            "flux_projection_domain": {
+                "gate": domain["status"],
+                "ready": domain["flux_projection_domain_ready"],
+                "primary_blocker": domain["primary_blocker"],
+                "closure": domain["closure"],
+            },
+        },
         "transported": transported,
+        "formulae": {
+            "tangent_frame": "e_a^mu = partial_a X^mu",
+            "induced_metric": "h_ab = g_munu e_a^mu e_b^nu",
+            "unit_normal": "n_mu = eps_Z2 partial_mu Phi / sqrt(|g^alpha_beta partial_alpha Phi partial_beta Phi|)",
+        },
+        "partial_subchannels": {
+            "frame_normal_formulae": {
+                "ready": all(conditional_formulae_ready.values()),
+                "status": "formula_only_not_active_trace_transport_ready",
+            },
+            "active_trace_transport": {
+                "ready": all(prerequisites.values()) and all(transported.values()),
+                "status": "blocked_on_regular_embedding_and_nondegenerate_induced_metric",
+            },
+        },
         "conditional_transport_rule": (
             "regular_embedding_ready and coorientation_ready and induced_metric_nondegenerate_ready "
             "=> tangent/normal trace support and continuity"
@@ -57,12 +97,20 @@ def build_payload() -> dict:
         "embedding_frame_trace_transport_ledger_declared": all(declared.values()),
         "embedding_frame_trace_transport_ready": all(declared.values())
         and all(prerequisites.values())
+        and all(conditional_formulae_ready.values())
         and all(transported.values()),
+        "primary_blocker": domain["primary_blocker"],
         "current_frontier": [
-            "regular_embedding_ready = false",
-            "coorientation_ready = false",
-            "induced_metric_nondegenerate_ready = false",
-            "candidate_indices_support_normal_and_tangent_traces = false",
+            *[
+                f"{key} = false"
+                for key, ready in prerequisites.items()
+                if not ready
+            ],
+            *[
+                f"{key} = false"
+                for key, ready in transported.items()
+                if not ready
+            ],
         ],
         "next_required": [
             "close_embedding_regularity_equivariance_gate",
@@ -83,9 +131,13 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['embedding_frame_trace_transport_ledger_declared']}`",
         f"Transport ready: `{payload['embedding_frame_trace_transport_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Conditional Transport Rule",
         f"`{payload['conditional_transport_rule']}`",
+        "",
+        "## Formulae",
+        *[f"- `{key}`: `{value}`" for key, value in payload["formulae"].items()],
         "",
         "## Current Frontier",
     ]

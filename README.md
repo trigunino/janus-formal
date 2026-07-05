@@ -49,27 +49,231 @@ Statut separe par niveau de preuve :
 - `z2_sigma_embedding_gauge_closure_ready = False`
 - `z2_sigma_tunnel_embedding_constraint_closure_ready = False`
 - `z2_sigma_active_tunnel_embedding_of_a_closure_ready = False`
+- `z2_sigma_embedding_to_flrw_K_frontier_reported = True`
+- `z2_sigma_rsigma_certificate_bridge_writes_embedding_and_curvature = True`
+- `z2_sigma_rsigma_certificate_bridge_writes_H0_and_Rcurv_normalizations = True`
 - `z2_sigma_tunnel_embedding_extrinsic_curvature_structural_ready = True`
 - `z2_sigma_tunnel_embedding_extrinsic_curvature_of_a_ready = False`
+- `z2_sigma_metric_geometry_primitives_ready = True`
+- `z2_sigma_extrinsic_curvature_tensor_builder_ready = True`
+- `z2_sigma_flrw_extrinsic_curvature_grid_builder_ready = True`
+- `z2_sigma_flrw_extrinsic_curvature_grid_writer_ready = True`
+- `z2_sigma_flrw_extrinsic_curvature_grid_writer_passed = False`
+- `z2_sigma_extrinsic_curvature_jump_builder_ready = True`
+- `z2_sigma_cartan_ghy_from_extrinsic_curvature_builder_ready = True`
+- `z2_sigma_cartan_ghy_deltaK_input_writer_ready = True`
+- `z2_sigma_cartan_ghy_deltaK_input_writer_passed = False`
+- `z2_sigma_cartan_ghy_component_from_deltaK_inputs_ready = True`
+- `z2_sigma_cartan_ghy_component_from_deltaK_inputs_passed = False`
+- `z2_sigma_critical_normalization_builder_ready = True`
+- `z2_sigma_background_scalar_manifest_writer_ready = True`
+- `z2_sigma_background_h0_input_writer_ready = True`
+- `z2_sigma_background_h0_input_writer_passed = False`
+- `z2_sigma_background_curvature_input_writer_ready = True`
+- `z2_sigma_background_curvature_input_writer_passed = False`
+- `z2_sigma_active_flrw_spatial_metric_branch_contract_declared = True`
+- `z2_sigma_active_flrw_spatial_metric_branch_gate_passed = False`
+- `z2_sigma_background_curvature_normalization_from_branch_ready = True`
+- `z2_sigma_background_curvature_normalization_from_branch_passed = False`
+- `z2_sigma_background_curvature_radius_input_writer_ready = True`
+- `z2_sigma_background_curvature_radius_input_writer_passed = False`
+- `z2_sigma_topology_alone_fixes_numeric_omega_k = False`
+- `z2_sigma_topology_alone_fixes_flrw_k_Z2Sigma = False`
+- `z2_sigma_active_curvature_sign_domain_declared = True`
+- `z2_sigma_active_curvature_sign_gate_passed = False`
+- `z2_sigma_active_FLRW_curvature_radius_or_embedding_scale_required = True`
+- `z2_sigma_active_omega_k_formula_builder_ready = True`
+- `z2_sigma_active_omega_k_values_ready = False`
+- `z2_sigma_dimensionless_curvature_scale_from_h0_radius_ready = True`
+- `z2_sigma_dimensionless_curvature_scale_from_h0_radius_passed = False`
+- `z2_sigma_h0_radius_to_scale_free_omega_k_pipeline_ready = True`
+- `z2_sigma_h0_radius_to_scale_free_omega_k_pipeline_passed = False`
+- `z2_sigma_h0_radius_flrw_to_scale_free_background_pipeline_ready = True`
+- `z2_sigma_h0_radius_flrw_to_scale_free_background_pipeline_passed = False`
+- `z2_sigma_dimensionless_curvature_scale_input_writer_ready = True`
+- `z2_sigma_dimensionless_curvature_scale_input_writer_passed = False`
+- `z2_sigma_background_gravity_input_writer_ready = True`
+- `z2_sigma_background_gravity_input_writer_passed = True`
+- `z2_sigma_background_gravity_codata_convention_ready = True`
+- `z2_sigma_early_plasma_codata_constants_ready = True`
+- `z2_sigma_early_plasma_codata_constants_passed = True`
+- `z2_sigma_early_plasma_photon_temperature_firas_ready = True`
+- `z2_sigma_early_plasma_photon_temperature_firas_passed = True`
+- `z2_sigma_early_plasma_photon_density_firas_codata_ready = True`
+- `z2_sigma_early_plasma_photon_density_firas_codata_passed = True`
+- `z2_sigma_early_plasma_photon_density_history_firas_codata_ready = True`
+- `z2_sigma_early_plasma_photon_density_history_firas_codata_passed = True`
+- `z2_sigma_early_plasma_saha_ionization_readiness_ready = True`
+- `z2_sigma_early_plasma_saha_ionization_readiness_passed = False`
+- `z2_sigma_saha_ionization_history_ready = True`
+- `z2_sigma_saha_ionization_history_passed = False`
+- `z2_sigma_early_plasma_saha_inputs_assembler_ready = True`
+- `z2_sigma_early_plasma_saha_inputs_assembler_passed = False`
+- `z2_sigma_noether_volume_to_saha_early_plasma_pipeline_ready = True`
+- `z2_sigma_noether_volume_to_saha_early_plasma_pipeline_passed = False`
+- `z2_sigma_curvature_charge_to_saha_early_plasma_pipeline_ready = True`
+- `z2_sigma_curvature_charge_to_saha_early_plasma_pipeline_passed = False`
+- `z2_sigma_early_plasma_model_normalization_assembler_ready = True`
+- `z2_sigma_early_plasma_model_normalization_assembler_passed = False`
+- `z2_sigma_early_plasma_model_required_fields = n_b0, x_e, electrons_per_baryon`
+- `z2_sigma_background_scalar_inputs_assembler_ready = True`
+- `z2_sigma_background_scalar_inputs_assembler_passed = False`
+- `z2_sigma_background_physical_input_obligation_ready = True`
+- `z2_sigma_background_physical_input_obligation_passed = False`
+- `z2_sigma_background_scalar_manifest_writer_from_inputs_ready = True`
+- `z2_sigma_background_scalar_inputs_manifest_valid = False`
+- `z2_sigma_flrw_component_manifest_writer_ready = True`
+- `z2_sigma_flrw_component_manifest_writer_from_inputs_ready = True`
+- `z2_sigma_flrw_component_inputs_manifest_valid = False`
+- `z2_sigma_flrw_non_matter_inputs_assembler_ready = True`
+- `z2_sigma_flrw_non_matter_inputs_assembler_passed = False`
+- `z2_sigma_flrw_non_matter_component_frontiers_reported = True`
+- `z2_sigma_flrw_inputs_merge_transparent_matter_flux_ready = True`
+- `z2_sigma_flrw_inputs_merge_transparent_matter_flux_passed = False`
+- `z2_sigma_flrw_component_manifest_merge_ready = True`
+- `z2_sigma_flrw_component_pipeline_subfrontiers_reported = True`
+- `z2_sigma_bao_component_manifest_scalar_provenance_required = True`
+- `z2_sigma_H_Z2Sigma_callable_builder_ready = True`
+- `z2_sigma_H0_Z2Sigma_dependent_blocker_classified = True`
 - `z2_sigma_cartan_ghy_flrw_algebraic_projection_ready = True`
+- `z2_sigma_torsion_cartan_and_pullback_formulae_ready = True`
 - `z2_sigma_cartan_ghy_flrw_scale_factor_closure_ready = False`
+- `z2_sigma_throat_radius_nearest_radial_block_frontier_reported = True`
 - `z2_sigma_holst_nieh_yan_flrw_closure_ready = False`
+- `z2_sigma_holst_nieh_yan_component_from_inputs_ready = True`
+- `z2_sigma_holst_nieh_yan_component_from_inputs_passed = False`
 - `z2_sigma_matter_flux_flrw_closure_ready = False`
+- `z2_sigma_matter_flux_transparency_input_writer_ready = True`
+- `z2_sigma_matter_flux_transparency_input_writer_passed = False`
+- `z2_sigma_matter_flux_transparency_writer_requires_projection_readiness = True`
+- `z2_sigma_bulk_stress_normal_flux_requires_bulk_stress_of_a = True`
+- `z2_sigma_matter_flux_zero_component_from_transparency_ready = True`
+- `z2_sigma_matter_flux_zero_component_from_transparency_passed = False`
 - `z2_sigma_tunnel_junction_flrw_algebra_ready = True`
 - `z2_sigma_tunnel_junction_flrw_closure_ready = False`
 - `z2_sigma_counterterm_flrw_closure_ready = False`
+- `z2_sigma_counterterm_component_from_inputs_ready = True`
+- `z2_sigma_counterterm_component_from_inputs_passed = False`
+- `z2_sigma_counterterm_component_from_inputs_requires_FLRW_and_radial_reduction = True`
+- `z2_sigma_counterterm_tetrad_metric_residual_formula_declared = True`
+- `z2_sigma_counterterm_tetrad_metric_residual_coefficient_writer_ready = True`
+- `z2_sigma_counterterm_tetrad_metric_residual_coefficient_writer_passed = False`
+- `z2_sigma_counterterm_tetrad_metric_residual_value_ready = False`
 - `z2_sigma_flrw_boundary_stress_reduction_ready = False`
 - `z2_sigma_boundary_stress_ready_for_flrw_projection = False`
 - `z2_sigma_effective_fluid_structural_projection_ready = True`
 - `z2_sigma_effective_fluid_numeric_closure_ready = False`
+- `z2_sigma_effective_fluid_accepts_strict_flrw_component_manifest = True`
 - `z2_sigma_background_equations_derived = True`
 - `z2_sigma_numerical_background_closure_ready = False`
+- `z2_sigma_numerical_background_accepts_strict_background_scalar_manifest = True`
 - `z2_sigma_distance_bao_bibliography_checked = True`
 - `sigma_photon_geodesic_map_derived = True`
 - `z2_sigma_bao_sound_ruler_formula_ready = True`
 - `z2_sigma_bao_sound_ruler_evaluated = False`
 - `z2_sigma_bao_direct_desi_dr2_data_ready = True`
+- `z2_sigma_strict_effective_fluid_assembler_ready = True`
+- `z2_sigma_strict_H_builder_ready = True`
+- `z2_sigma_strict_c_s_builder_ready = True`
+- `z2_sigma_strict_z_d_solver_ready = True`
+- `z2_sigma_early_plasma_normalization_builder_ready = True`
+- `z2_sigma_early_plasma_density_builder_ready = True`
+- `z2_sigma_photon_baryon_sound_speed_over_c_builder_ready = True`
+- `z2_sigma_early_plasma_component_manifest_writer_ready = True`
+- `z2_sigma_early_plasma_baryon_photon_input_writer_ready = True`
+- `z2_sigma_early_plasma_baryon_photon_input_writer_passed = False`
+- `z2_sigma_early_plasma_ionization_thomson_input_writer_ready = True`
+- `z2_sigma_early_plasma_ionization_thomson_input_writer_passed = False`
+- `z2_sigma_early_plasma_inputs_assembler_ready = True`
+- `z2_sigma_early_plasma_inputs_assembler_passed = False`
+- `z2_sigma_early_plasma_physical_input_obligation_ready = True`
+- `z2_sigma_early_plasma_physical_input_obligation_passed = False`
+- `z2_sigma_early_plasma_manifest_writer_from_inputs_ready = True`
+- `z2_sigma_early_plasma_inputs_manifest_valid = False`
+- `z2_sigma_early_plasma_component_manifest_merge_ready = True`
+- `z2_sigma_early_plasma_accepts_strict_component_manifest = True`
+- `z2_sigma_thomson_drag_rate_builder_ready = True`
+- `z2_sigma_Gamma_drag_over_H0_builder_ready = True`
+- `z2_sigma_Gamma_drag_over_H0_values_ready = False`
+- `z2_sigma_scale_free_Gamma_drag_over_H0_from_active_H0_ready = False`
+- `z2_sigma_drag_epoch_bracket_finder_ready = True`
+- `z2_sigma_strict_bao_calculator_ready = True`
+- `z2_sigma_bao_curvature_aware_DM_ready = True`
+- `z2_sigma_strict_sound_ruler_integrator_ready = True`
 - `z2_sigma_bao_prediction_vector_ready = False`
+- `z2_sigma_bao_chi2_dry_run_ready = True`
+- `z2_sigma_bao_manifest_schema_gate_passed = True`
+- `z2_sigma_bao_component_manifest_schema_gate_passed = True`
+- `z2_sigma_bao_component_manifest_critical_normalization_tracked = True`
+- `z2_sigma_bao_input_provenance_required = True`
+- `z2_sigma_bao_source_component_manifest_path_required = True`
+- `z2_sigma_bao_source_component_manifest_hash_required = True`
+- `z2_sigma_bao_background_scalar_manifest_valid = False`
+- `z2_sigma_bao_flrw_component_manifest_valid = False`
+- `z2_sigma_bao_early_plasma_manifest_valid = False`
+- `z2_sigma_bao_omega_k_dependent_blocker_classified = True`
+- `z2_sigma_bao_gamma_drag_dependent_blocker_classified = True`
+- `z2_sigma_bao_early_plasma_density_dependent_blockers_classified = True`
+- `z2_sigma_bao_component_readiness_dependent_blockers_classified = True`
+- `z2_sigma_bao_component_provenance_required = True`
+- `z2_sigma_bao_component_manifest_writer_ready = True`
+- `z2_sigma_bao_component_to_chi2_dry_run_ready = True`
+- `z2_sigma_bao_three_manifest_to_chi2_dry_run_ready = True`
+- `z2_sigma_active_inputs_to_official_bao_gate_ready = True`
+- `z2_sigma_active_inputs_to_official_bao_atomic_preflight_required = True`
+- `z2_sigma_active_inputs_to_official_bao_gate_passed = False`
+- `z2_sigma_bao_component_readiness_audit_gate_passed = False`
+- `z2_sigma_bao_remaining_artifact_frontier_reported = True`
+- `z2_sigma_bao_physical_derivation_frontier_reported = True`
+- `z2_sigma_bao_nearest_component_frontier = cartan_ghy`
+- `z2_sigma_bao_canonical_scale_free_artifact_reported = True`
+- `z2_sigma_bao_scale_free_formulation_ready = True`
+- `z2_sigma_bao_scale_free_minimal_contract_ready = False`
+- `z2_sigma_bao_scale_free_minimal_contract_reads_component_manifest = True`
+- `z2_sigma_bao_scale_free_manifest_stores_Gamma_drag_over_H0 = True`
+- `z2_sigma_bao_scale_free_chi2_audits_Gamma_drag_over_H0 = True`
+- `z2_sigma_bao_scale_free_chi2_reports_prediction_residual_vectors = True`
+- `z2_sigma_bao_scale_free_primitive_chi2_gate_ready = True`
+- `z2_sigma_bao_scale_free_primitive_chi2_gate_passed = False`
+- `z2_sigma_bao_scale_free_primitive_manifest_writer_ready = True`
+- `z2_sigma_bao_scale_free_primitive_manifest_loader_ready = True`
+- `z2_sigma_bao_scale_free_background_primitive_manifest_writer_ready = True`
+- `z2_sigma_flrw_to_scale_free_background_primitive_gate_ready = True`
+- `z2_sigma_flrw_to_scale_free_background_primitive_gate_passed = False`
+- `z2_sigma_flrw_to_scale_free_background_primitive_normalization_input_ready = True`
+- `z2_sigma_flrw_to_scale_free_background_primitive_normalization_input_passed = False`
+- `z2_sigma_scale_free_background_primitive_input_writer_ready = True`
+- `z2_sigma_scale_free_background_primitive_input_writer_passed = False`
+- `z2_sigma_bao_scale_free_plasma_primitive_manifest_writer_ready = True`
+- `z2_sigma_early_plasma_to_scale_free_plasma_primitive_gate_ready = True`
+- `z2_sigma_early_plasma_to_scale_free_plasma_primitive_gate_passed = False`
+- `z2_sigma_early_plasma_to_scale_free_plasma_primitive_normalization_input_ready = True`
+- `z2_sigma_early_plasma_to_scale_free_plasma_primitive_normalization_input_passed = False`
+- `z2_sigma_scale_free_plasma_primitive_input_writer_ready = True`
+- `z2_sigma_scale_free_plasma_primitive_input_writer_passed = False`
+- `z2_sigma_bao_scale_free_primitive_inputs_assembler_ready = True`
+- `z2_sigma_bao_scale_free_primitive_inputs_assembler_passed = False`
+- `z2_sigma_bao_split_primitives_to_scale_free_chi2_ready = True`
+- `z2_sigma_bao_split_primitives_to_scale_free_chi2_passed = False`
+- `z2_sigma_bao_direct_primitives_to_scale_free_chi2_ready = True`
+- `z2_sigma_bao_direct_primitives_to_scale_free_chi2_passed = False`
+- `z2_sigma_bao_active_primitive_physical_input_obligation_ready = True`
+- `z2_sigma_bao_active_primitive_physical_input_obligation_passed = False`
+- `z2_sigma_E_Z2Sigma_dimensionless_builder_ready = True`
+- `z2_sigma_E_Z2Sigma_values_ready = False`
+- `z2_sigma_bao_scale_free_active_manifest_pipeline_ready = True`
+- `z2_sigma_active_inputs_to_scale_free_bao_chi2_gate_ready = True`
+- `z2_sigma_active_inputs_to_scale_free_bao_chi2_gate_passed = False`
+- `z2_sigma_bao_scale_free_chi2_gate_ready = True`
+- `z2_sigma_bao_scale_free_chi2_gate_passed = False`
+- `z2_sigma_bao_scale_free_official_gate_unblocked = False`
+- `z2_sigma_cartan_ghy_deltaK_to_component_builder_ready = True`
+- `z2_sigma_matter_flux_transparent_component_builder_ready = True`
+- `z2_sigma_bao_active_manifest_pipeline_gate_passed = False`
+- `z2_sigma_bao_active_input_manifest_available = False`
+- `z2_sigma_bao_active_input_manifest_valid = False`
+- `z2_sigma_bao_official_chi2_gate_passed = False`
+- `z2_sigma_bao_active_readiness_gate_passed = False`
 - `z2_sigma_growth_bibliography_checked = True`
 - `z2_sigma_growth_perturbation_equations_derived = True`
 - `z2_sigma_growth_prediction_vector_prerequisites_ready = False`
@@ -343,7 +547,16 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGate` records the current
   no-fit solution frontier: the variational equation and conditional embedding
   map are ready, while matter-flux and counterterm still block the radius
-  solution certificate.
+  solution certificate. The matter-flux side now reports both the
+  transparency/projection frontier and the coupled radius-flux route.
+- The active BAO materialization runner now writes the Sigma/RP3 local unit
+  intrinsic metric input `unit_intrinsic_metric_q_ab_inputs.json` and exposes the
+  strict next physical target as the non-Cartan radial terms:
+  `E_HolstNiehYan`, `E_matterFlux`, and `E_counterterm`.
+- The matter-flux branch is connected through transparency input, zero-component
+  and radial-block gates. It remains blocked until active Sigma transparency or
+  a nontransparent projected flux is derived; no zero flux is inserted without
+  that proof.
 - `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate` reduces the Cartan-GHY radial
   block structurally as `delta_RSigma[sqrt(|h|) K]`; evaluation as a function of
   scale factor still requires active `R_Sigma(a)` and `X_±(a)`.
@@ -365,7 +578,10 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaActiveEmbeddingReadinessGate` records that primary
   thin-shell literature closes only the conditional map
   `R_Sigma(a) + gauge equations -> X_+/-`; active embedding, tangent frames and
-  unit normals remain blocked until `R_Sigma(a)` is derived.
+  unit normals remain blocked until `R_Sigma(a)` is derived. It imports the
+  non-cyclic radius-to-embedding and embedding-from-radius statuses, and now
+  requires the throat-radius solution certificate plus
+  `embedding_unblocked_by_radius_solution` before `active_embedding_ready`.
 - `P0EFTJanusZ2SigmaEmbeddingTangentFrameTransportGate` records the standard
   transport `X_+/- (a) -> partial_a X_+/- -> E_a^mu`; it remains blocked until
   the active embedding functions are derived.
@@ -381,12 +597,14 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaCoframeConnectionPullbackReadinessGate` records the split
   between standard geometry and active Janus data: differential-form/coframe/
   connection pullback formulae are ready, while the actual pullbacks remain
-  blocked on `X_+/- (a)`, tangent frames and unit normals.
+  blocked on live active-embedding and tangent-normal orientation readiness.
 - `P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGate` imports the generic pullback of
   differential forms and Cartan's first structure equation
-  `T^I = d e^I + omega^I_J wedge e^J`. It remains open until the active Sigma
-  embedding, coframe pullback, spin-connection pullback, and Z2 normal
-  orientation transport are available.
+  `T^I = d e^I + omega^I_J wedge e^J`, with both the Cartan formula and
+  `X_Sigma^*(T^I)` pullback formula recorded as partial-ready subchannels. It
+  imports live coframe/connection pullback readiness and remains open until
+  the active Sigma embedding, coframe/connection pullbacks and FLRW
+  irreducible torsion basis are reduced.
 - `P0EFTJanusZ2SigmaMatterFluxRadialBlockGate` declares the matter-flux radial
   block from the standard shell flux `T_munu e_a^mu n^nu`. It remains open until
   the active Sigma throat is proven transparent or an active flux `F_a(a)` is derived.
@@ -395,19 +613,34 @@ Archived CMB/Z4 master-equation status:
   projected flux. The route cannot be chosen by observational fit.
 - `P0EFTJanusZ2SigmaMatterFluxFrontierGate` records the exact current frontier:
   transparency is blocked on normal-current and bulk-stress cancellation, while
-  active projection is blocked on bulk stress and embedding data.
+  active projection is blocked on bulk stress and embedding data. It imports live
+  transparency, active-projection, route-decision and radial-block statuses.
+- `P0EFTJanusZ2SigmaFluxProjectionDomainGate` isolates the domain prerequisites
+  for the shell flux projection `T_munu e_a^mu n^nu`: the active tunnel supplies
+  Sigma and the Z2 coorientation sign, but the nondegenerate induced metric,
+  tangent traces and unit normals remain blocked on the resolved frame bundle
+  and active `X_±(a)` embedding.
 - `P0EFTJanusZ2SigmaMatterFluxTransparencyReadinessGate` records the transparent
   thin-shell criteria `J_n^Z2Sigma=0` and `F_a^Z2Sigma=0`; it remains blocked
   until active embedding, Sigma normals, normal current and bulk-stress
   cancellation are derived.
+- `P0EFTJanusZ2SigmaMatterFluxTransparencyGate` now requires the upstream guards
+  explicitly: normal-current readiness, projected Dirac normal current and bulk
+  normal-flux projection must all be ready before a zero/cancelled flux can
+  declare active transparency.
 - `P0EFTJanusZ2SigmaMatterFluxRadiusAcyclicityGate` prevents a circular
   radius solve: active projected flux depends on `X_+/-[R_Sigma]`, so it cannot
   be used as an independent source for `R_Sigma(a)` unless transparency is
   derived independently or a coupled radius-flux system is formulated.
+- `P0EFTJanusZ2SigmaMatterFluxFrontierGate` now records the transparency route
+  as the nearest non-circular matter-flux frontier; this is diagnostic only and
+  does not reduce `E_matterFlux` until `J_n^Z2Sigma=0` and the normal
+  stress/flux cancellation are derived.
 - `P0EFTJanusZ2SigmaCoupledRadiusFluxSystemGate` declares that non-transparent
   flux must be solved together with `R_Sigma(a)` through
   `E_RSigma[R_Sigma,F_a]=0` and the active projection
-  `F_a^Z2Sigma[X_+/-[R_Sigma]]`; the system is not yet well posed or solved.
+  `F_a^Z2Sigma[X_+/-[R_Sigma]]`; it now imports the live function-space and
+  well-posedness frontiers, and the system is not yet well posed or solved.
 - `P0EFTJanusZ2SigmaCoupledRadiusFluxWellPosednessGate` records the next
   proof obligation: local existence, uniqueness, continuous dependence,
   constraint compatibility, and homogeneous gauge fixing for the coupled
@@ -437,11 +670,15 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaCoupledRadiusFluxEmbeddingFrameTraceTransportGate` states the
   conditional transport rule: once the active embedding is regular,
   co-oriented, and has nondegenerate induced metric, the tangent and normal trace
-  support can feed the flux trace proof. The prerequisites are still open.
+  support can feed the flux trace proof. It now consumes the active flux-domain
+  gate, so `coorientation_ready` is transported from the Z2/Sigma tunnel, while
+  regular embedding and induced-metric nondegeneracy remain open.
 - `P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGate` imports generic Spin/Pin
   obstruction machinery, the RP4 Pin+ result and the projective-tunnel topology.
   It declares `S_+ -> M_+` and `S_- -> M_-`, while keeping the resolved-tunnel
-  Pin lift and active plus/minus spinor bundles open.
+  Pin lift and active plus/minus spinor bundles open. It now indexes the
+  `ResolvedTunnelPinLiftGate` frontier explicitly, so bundle readiness cannot
+  self-certify.
 - `P0EFTJanusZ2SigmaBoundarySpinorRestrictionGate` imports generic hypersurface
   spinor restriction. It declares `psi_+|_Sigma`, `psi_-|_Sigma`, and their
   boundary pair, while staying blocked on the active Sigma embedding and
@@ -449,7 +686,12 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGate` imports APS and local
   Dirac-boundary projector machinery. It declares
   `P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, n_Z2, APS/Pin data)` and forbids any
-  fitted boundary phase or free chiral-bag angle.
+  fitted boundary phase or free chiral-bag angle. It consumes the flux-domain
+  gate so the Z2 coorientation sign is partial-ready and consumes the Sigma
+  APS/Pin gate as closed. It also imports the projective-gluing orientation
+  sign `epsilon_Z2=-1`, so Z2 normal orientation is partial-ready without using
+  the active embedding. The projection still remains blocked on boundary
+  spinor data and the active unit-normal Clifford action.
 - `P0EFTJanusZ2SigmaSpinorBundleProjectionGate` imports generic spinor-bundle,
   hypersurface-restriction and APS-boundary machinery. It declares
   `psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, APS/Pin data)` and
@@ -474,10 +716,17 @@ Archived CMB/Z4 master-equation status:
   U(1) Noether current and declares
   `J_Z2Sigma^mu = P_Z2Sigma(J_+^mu, J_-^mu; psi_Sigma^Z2)`. It remains blocked
   until the projected Dirac action is reduced.
+- `P0EFTJanusZ2SigmaReflectingSpinorBoundaryCurrentGate` records the standard
+  reflecting/MIT-bag route to `J_n=0`; it remains blocked until the active
+  Z2/Sigma spinor projector, normal Clifford action and zero-leakage condition
+  are derived without a free boundary phase. The Z2 normal orientation sign is
+  now transported from projective gluing, but that alone does not close the
+  reflecting-current condition.
 - `P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGate` projects that Dirac current
   on the active Sigma normals: `J_n^Z2Sigma = J_n^+ + eps_Z2 J_n^-`. It keeps
   the transparency test `J_n^Z2Sigma=0` blocked until the projected current and
-  Sigma normals are derived.
+  Sigma normals are derived, or until the reflecting spinor boundary-current
+  route is closed.
 - `P0EFTJanusZ2SigmaBulkStressNormalFluxCancellationGate` declares the
   thin-shell bulk-stress flux `F_a^Z2Sigma = F_a^+ + eps_Z2 F_a^-` and keeps
   zero-flux/Z2 cancellation open until active bulk stresses, tangents and
@@ -492,8 +741,9 @@ Archived CMB/Z4 master-equation status:
   Noether current and normal projection formulae; `J_n^Z2Sigma=0` remains
   blocked on active Sigma normals and projected Dirac currents.
 - `P0EFTJanusZ2SigmaMatterFluxTransparencyGate` records the sufficient condition
-  for the transparent branch `F_a^Z2Sigma=0`; it is not yet derived for the
-  active throat.
+  for the transparent branch `F_a^Z2Sigma=0`; it imports the live normal-current,
+  projected Dirac normal-current and bulk-stress flux frontiers, and is not yet
+  derived for the active throat.
 - `P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate` records the non-transparent
   branch: project `T^±_{μν}` on Sigma tangents/normals. It is blocked on active
   bulk stresses and active embedding data.
@@ -577,7 +827,8 @@ Archived CMB/Z4 master-equation status:
   It remains blocked until the active plus/minus matter actions are ready.
 - `P0EFTJanusZ2SigmaResolvedTunnelPinLiftGate` records the lift from the
   resolved tunnel frame bundle to the Pin bundle and its plus/minus restrictions.
-  It remains blocked on the active resolved-tunnel frame bundle and Pin lift.
+  It now indexes `ResolvedTunnelFrameBundleGate` as its upstream frontier and
+  remains blocked on the active resolved-tunnel frame bundle and Pin lift.
 - `P0EFTJanusZ2SigmaEmbeddingRegularityEquivarianceGate` records the active
   embedding checks needed before the Sigma throat can count as a smooth embedded
   submanifold: full-rank immersion, topological embedding, regular radius and
@@ -611,6 +862,129 @@ Archived CMB/Z4 master-equation status:
   Noether-charge integrals for `N_+`, `N_-`, and the projected throat charge.
   It remains open until those charges are fixed by active spinor boundary data
   or topology, not fitted.
+- `P0EFTJanusZ2SigmaBaryonNumberDensityNoetherVolumeGate` declares the only
+  active route currently allowed for `baryon_number_density0_m3_Z2Sigma`:
+  `n_b0 = N_b,Z2Sigma / V0,Z2Sigma`. It remains blocked until the projected
+  Noether baryon charge and active spatial volume are derived, with the Z2
+  cover factor applied exactly once.
+- `P0EFTJanusZ2SigmaSpatialVolumeProjectiveSliceGate` supplies the active
+  spatial-volume route used by that density gate:
+  `V0_Z2Sigma = (1/2) integral_cover sqrt(det h_cover) d^3x`, with closed-RP3
+  specialization `V0_Z2Sigma = pi^2 R_curv^3`. It requires the closed
+  projective spatial branch `k_Z2Sigma = +1` and active curvature radius;
+  topology alone still does not provide a numeric volume.
+- `P0EFTJanusZ2SigmaRP3SpatialSliceCurvatureSignGate` conditionally writes
+  `k_Z2Sigma = +1` only from an active `S3 -> RP3` spatial-slice proof. It does
+  not derive `R_curv_Z2Sigma` or numeric `omega_k_Z2Sigma`.
+- `P0EFTJanusZ2SigmaRP3SpatialSliceInputWriterFromProjectiveFoliationGate`
+  can write that spatial-slice proof input only from an active projective
+  foliation where FLRW leaves are antipodal `S3 -> RP3` leaves. Global
+  `S4 -> RP4` topology alone is still insufficient.
+- `P0EFTJanusZ2SigmaProjectiveFoliationCompatibilityGate` records the reason:
+  generic latitude `S3` leaves in `S4` are paired by the antipodal map, so a
+  single-leaf `RP3` FLRW slice requires an active invariant-leaf time gauge.
+- `P0EFTJanusZ2SigmaProjectiveSpatialSliceTopologyBranchGate` keeps the two
+  positive-curvature spatial branches separate: invariant leaf `RP3` has volume
+  `pi^2 R_curv^3`; paired-leaf representative `S3` has volume
+  `2*pi^2 R_curv^3`. It consumes
+  `outputs/active_z2_sigma/time_gauge_leaf_action_inputs.json` and can write
+  `k_Z2Sigma = +1` without computing `R_curv_Z2Sigma` or `omega_k_Z2Sigma`.
+- `P0EFTJanusZ2SigmaSignedCoverTimeCoordinateFromProjectiveTunnelGate` derives
+  the active signed cover-time input from the projective/tunnel pole axis:
+  BigBang/BigCrunch antipodal poles on the `S4` cover define a signed height
+  coordinate with antipodal pullback `minus_self`. This writes
+  `outputs/active_z2_sigma/signed_cover_time_coordinate_inputs.json` without
+  Planck/LCDM, archived Z4, or observational time-gauge fitting.
+- `P0EFTJanusZ2SigmaSignedCoverTimeParityGate` is the upstream time-gauge
+  provenance gate. It maps an active signed time coordinate on the `S4` cover
+  to `outputs/active_z2_sigma/active_time_coordinate_parity_inputs.json`:
+  antipodal pullback `plus_self` gives even parity; `minus_self` gives odd
+  parity. Planck/LCDM, archived Z4 and observational time-gauge fits are
+  forbidden.
+- `P0EFTJanusZ2SigmaTimeGaugeLeafActionInputWriterGate` writes that manifest
+  from active time-coordinate parity: even antipodal parity gives an invariant
+  `RP3` leaf; odd antipodal parity gives paired `S3` leaves. Observational
+  time-gauge fitting is forbidden.
+- `P0EFTJanusZ2SigmaBackgroundCurvatureBranchInputsAssemblerGate` assembles
+  `H0_Z2Sigma`, `k_Z2Sigma`, and `R_curv_Z2Sigma` into
+  `background_curvature_branch_inputs.json` for the strict `omega_k` builder.
+  It keeps the numeric curvature radius as an active embedding/throat-scale
+  obligation and forbids Planck/LCDM, archived Z4, H0 fits, and curvature fits.
+- `P0EFTJanusZ2SigmaBackgroundCurvatureRadiusInputWriterGate` is the strict
+  writer for active `R_curv_Z2Sigma_Mpc`; it validates an upstream active
+  tunnel/embedding radius normalization and rejects curvature fits. Its live
+  report now records that `H0_Z2Sigma R_curv_Z2Sigma/c` cannot be inverted into
+  a dimensional `R_curv_Z2Sigma` without an active embedding/throat scale.
+- `P0EFTJanusZ2SigmaBackgroundAtomicInputWriterGates` also records the matching
+  dimensional `H0_Z2Sigma` blocker: the scale-free product cannot determine
+  `H0_Z2Sigma` separately, and Planck/LCDM, archived Z4, and observational H0
+  provenance remain forbidden.
+- `P0EFTJanusZ2SigmaScaleFreeOmegaKFromCurvatureScaleGate` adds the BAO
+  scale-free curvature route:
+  `omega_k_Z2Sigma = -k_Z2Sigma/(H0_Z2Sigma R_curv_Z2Sigma/c)^2`. This avoids
+  introducing a dimensional observational `H0` into the scale-free DESI BAO
+  path, while still requiring the active dimensionless curvature scale.
+- `P0EFTJanusZ2SigmaDimensionlessCurvatureScaleFromH0RadiusGate` computes
+  that active scale-free curvature normalization
+  `H0_Z2Sigma R_curv_Z2Sigma/c` from active `H0` and `R_curv` manifests only.
+- `P0EFTJanusZ2SigmaDimensionlessCurvatureScaleFromBranchGate` computes the
+  same scale-free curvature normalization directly from the active curvature
+  branch manifest `background_curvature_branch_inputs.json`. It is a bridge
+  from the physical branch path into the scale-free BAO route; it still writes
+  nothing until active `H0_Z2Sigma` and `R_curv_Z2Sigma` are supplied upstream.
+- `P0EFTJanusZ2SigmaDimensionfulScaleSeparationObligationGate` records the
+  non-invertibility frontier: `H0_Z2Sigma R_curv_Z2Sigma/c` is enough for the
+  scale-free curvature product, but not enough to recover dimensional `H0`,
+  dimensional `R_curv`, physical volume, or `Gamma_drag/H0`.
+- `P0EFTJanusZ2SigmaDimensionlessCurvatureScaleInputWriterGate` is the strict
+  writer for that active dimensionless scale
+  `H0_Z2Sigma R_curv_Z2Sigma/c`; it rejects fitted H0/curvature provenance,
+  Planck/LCDM and archived Z4 inputs.
+- `P0EFTJanusZ2SigmaH0RadiusToScaleFreeOmegaKPipelineGate` composes active
+  H0, active curvature radius, curvature sign, dimensionless curvature scale,
+  and scale-free `omega_k_Z2Sigma` into one strict BAO curvature pipeline.
+- `P0EFTJanusZ2SigmaSpatialVolumeInputWriterFromCurvatureBranchGate` converts
+  the active curvature-branch manifest `R_curv_Z2Sigma_Mpc` to
+  `R_curv_Z2Sigma_m` for the spatial-volume gate. It requires
+  `k_Z2Sigma = +1` and reuses no `omega_k` inversion, Planck/LCDM background,
+  or archived Z4 data. It also records that the dimensionless BAO artifact
+  `H0_Z2Sigma R_curv_Z2Sigma/c` is insufficient for physical volume without
+  active dimensional `R_curv_Z2Sigma`.
+- `P0EFTJanusZ2SigmaProjectedBaryonNoetherChargeInputGate` validates the active
+  projected baryon charge manifest. It requires projected Dirac current and
+  charge-boundary projection readiness, forbids free projection weights, and
+  rejects observational baryon fits. It now preflights the live
+  `DiracChargeBoundaryProjectionGate`, so a source JSON cannot self-certify the
+  projected baryon charge while the global Dirac charge projection remains open.
+  Its live report now exposes both Dirac charge-boundary projection and
+  `DiracNumberNormalizationGate` as diagnostic frontiers; `N_+`, `N_-`, and
+  `N_Z2Sigma` cannot be supplied by a baryon-density fit.
+- `P0EFTJanusZ2SigmaBAOActivePrimitivePhysicalInputObligationGate` recognizes
+  the active scale-free `omega_k_Z2Sigma` artifact. Its live blocker is now
+  reduced to active FLRW component inputs and active early-plasma inputs.
+- `P0EFTJanusZ2SigmaBaryonNumberDensityNoetherVolumeGate` now requires the live
+  projected-baryon-charge and projective-volume manifests before deriving
+  `n_b0 = N_b/V0`. It accepts explicit active manifests passed by path, so
+  downstream Saha/plasma fixtures are no longer coupled to default output
+  paths; the live route remains red until the real active charge and volume
+  manifests exist.
+- `P0EFTJanusZ2SigmaNoetherVolumeToSahaEarlyPlasmaPipelineGate` now exposes the
+  downstream plasma frontier in four audited blocks: baryon density,
+  Saha-history, Saha-input assembly, and early-plasma manifest writing. The
+  blocker remains the active Noether charge plus active projective volume.
+- `P0EFTJanusZ2SigmaSpatialVolumeInputWriterFromCurvatureBranchGate` now
+  requires the live curvature-branch assembler before converting
+  `R_curv_Z2Sigma` into the projective spatial-volume input.
+- `P0EFTJanusZ2SigmaActiveEmbeddingToFLRWExtrinsicCurvatureInputGate` declares
+  the missing adapter from active `R_Sigma(a), X_±(a)`, tangents and normals to
+  `flrw_extrinsic_curvature_grid_inputs.json`. It remains red until the active
+  tunnel embedding is derived.
+- `P0EFTJanusZ2SigmaRSigmaSolutionToEmbeddingCurvatureBranchGate` declares the
+  single no-fit bridge from a future `R_Sigma(a)` throat-solution certificate to
+  both active embedding data and the dimensionful curvature branch used by
+  spatial volume/plasma. It remains red until matter-flux and counterterm radial
+  blocks close, the throat solution certificate is ready, and
+  `embedding_unblocked_by_radius_solution = true`.
 - `P0EFTJanusZ2SigmaDiracHolstVertexOfAGate` imports the generic result that
   Holst gravity with fermions yields an Immirzi-dependent torsion-mediated
   four-fermion vertex. It remains open until the active torsion solution,
@@ -647,9 +1021,13 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaCountertermTetradResidualChannelGate` isolates the first
   residual coefficient `R_e`; it remains open until the active Sigma coframe
   variation is transported into `delta h`, `delta K` and torsion-pullback data.
+  The gate now imports the live tetrad-variation transport readiness frontier and
+  records the metric subchannel as partial-only, not sufficient for the full
+  residual one-form.
 - `P0EFTJanusZ2SigmaCountertermTetradVariationTransportGate` isolates that
   transport step: `delta e -> delta h_ab`, `delta e -> delta K_ab`, and
-  `delta e -> delta X_Sigma^*T^I`. It forbids a metric-only shortcut.
+  `delta e -> delta X_Sigma^*T^I`. It imports the live metric, extrinsic and
+  torsion transport statuses and forbids a metric-only shortcut.
 - `P0EFTJanusZ2SigmaCountertermTetradMetricVariationTransportGate` closes the
   algebraic part `delta e -> delta h_ab` via
   `delta h_ab = eta_IJ(delta e_a^I e_b^J + e_a^I delta e_b^J)`. It leaves
@@ -661,20 +1039,29 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackVariationTransportGate`
   records the Cartan tetrad-variation formula
   `delta_e T^I = D_omega(delta e^I)` for the independent-connection branch.
-  The Sigma torsion pullback and allowed-basis expansion remain open.
+  It imports the live torsion-pullback and oriented pullback/variation
+  commutation statuses. The Sigma torsion pullback and allowed-basis expansion
+  remain open.
 - `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackReadinessGate` records that
-  oriented pullback commutation and the ambient Cartan torsion formula are closed.
+  oriented pullback commutation plus the ambient Cartan and Sigma pullback
+  torsion formulae are closed.
   The active embedding, coframe/connection pullback, Sigma torsion pullback and
   FLRW irreducible basis still block the torsion-pullback transport.
 - `P0EFTJanusZ2SigmaCountertermTetradVariationTransportReadinessGate` aggregates
   the three tetrad transports. It records that `delta e -> delta h_ab` is closed,
   while `delta e -> delta K_ab` and torsion-pullback transport still block `R_e`.
 - `P0EFTJanusZ2SigmaCountertermConnectionResidualChannelGate` isolates the
-  spin-connection coefficient `R_omega`; it remains open until the active
-  Sigma connection variation is transported through torsion and Nieh-Yan data.
+  spin-connection coefficient `R_omega`. It now imports the connection
+  variation transport gate and records the fixed-embedding pullback commutation
+  as a partial-ready subchannel; it remains open until the active Sigma
+  connection variation is transported through torsion and Nieh-Yan data and
+  `R_omega` is explicit.
 - `P0EFTJanusZ2SigmaCountertermConnectionVariationTransportGate` records the
   fixed-coframe transport `delta_omega T^I = delta omega^I_J wedge e^J` and
-  blocks until the Sigma pullback/orientation transport is proved.
+  imports the live fixed-embedding connection pullback and torsion-pullback
+  statuses. It records the fixed-embedding pullback commutation as a partial
+  subchannel, while the full connection transport remains blocked until the
+  active Sigma pullback/orientation and Nieh-Yan variation are proved.
 - `P0EFTJanusZ2SigmaConnectionOnlyFixedEmbeddingVariationGate` records the
   field-space split in which `delta_omega X_Sigma = 0`; embedding variation is
   kept in the separate `R_X` channel.
@@ -688,15 +1075,31 @@ Archived CMB/Z4 master-equation status:
   commutation oriented by that projective-tunnel sign, not a fitted sign.
 - `P0EFTJanusZ2SigmaFixedEmbeddingConnectionPullbackVariationGate` isolates
   the fixed-embedding condition `delta_omega X_Sigma = 0` and the commutation
-  target `delta_omega X_Sigma^*omega = X_Sigma^*(delta_omega omega)`.
+  target `delta_omega X_Sigma^*omega = X_Sigma^*(delta_omega omega)`. It
+  imports live active-embedding, coframe/connection pullback and oriented
+  commutation statuses.
 - `P0EFTJanusZ2SigmaCountertermSpinorResidualChannelGate`,
   `P0EFTJanusZ2SigmaCountertermEmbeddingResidualChannelGate` and
   `P0EFTJanusZ2SigmaCountertermMatterFluxResidualChannelGate` isolate
   `R_psi`, `R_X` and `R_matter` without promoting any fitted residual
-  coefficient.
+  coefficient; the matter-flux channel imports the live active matter-flux
+  frontier.
 - `P0EFTJanusZ2SigmaCountertermResidualChannelFrontierGate` aggregates the five
   residual coefficients `R_e`, `R_omega`, `R_psi`, `R_X` and `R_matter`; all
-  remain open before the residual one-form can be explicit.
+  remain open before the residual one-form can be explicit. It now reports the
+  nearest diagnostic attack order: the tetrad channel is most advanced, with
+  `delta_e_to_delta_K` as the next missing subgate. This does not promote any
+  residual coefficient.
+- `P0EFTJanusZ2SigmaCountertermTetradExtrinsicCurvatureVariationTransportGate`
+  now records the structural variation of
+  `K_ab = -n_mu(partial_a partial_b X^mu + Gamma^mu_alpha_beta e_a^alpha e_b^beta)`.
+  This closes only the formula subchannel; active value transport still needs
+  `R_Sigma(a)`, embedding frames/normals and connection variation.
+- `P0EFTJanusZ2SigmaCoupledRadiusFluxEmbeddingFrameTraceTransportGate` records
+  the conditional frame formulae `e_a^mu = partial_a X^mu`,
+  `h_ab = g_munu e_a^mu e_b^nu`, and the normalized level-set normal. These
+  are formula-only until the active embedding is regular and the induced metric
+  is nondegenerate.
 - `P0EFTJanusZ2SigmaCountertermResidualOneFormDecompositionGate` splits the
   nonlinear residual into tetrad, connection, spinor, embedding and matter-flux
   channels before any integrability claim is allowed.
@@ -818,6 +1221,97 @@ Archived CMB/Z4 master-equation status:
   reaudit: the resolved 2D tunnel shadow is `T2 -> Klein bottle`, while the Boy
   surface is only the unresolved projective shadow. The active Z2/Sigma pure
   math locks are now closed; observational validation remains separate.
+- `P0EFTJanusZ2SigmaBAOScaleFreePrimitiveDerivationFrontierGate` records the
+  current BAO frontier for the active model: `E_Z2Sigma`, `omega_k_Z2Sigma`,
+  `c_s/c`, and `Gamma_drag/H0` must be derived into the split primitive
+  manifests before DESI DR2 BAO chi2 can run without Planck/LCDM/Z4 reuse.
+- `P0EFTJanusZ2SigmaBAOComponentToScaleFreeSplitPrimitivesGate` can split a
+  valid active `bao_component_inputs.json` into background and plasma primitive
+  manifests for the direct scale-free DESI path.
+- `P0EFTJanusZ2SigmaFLRWToScaleFreeBackgroundPrimitiveGate` writes the
+  background half directly from active `flrw_components.json` plus
+  `background_scale_free_omega_k_inputs.json`, avoiding a dimensional
+  observational `H0` in that BAO primitive path.
+- `P0EFTJanusZ2SigmaCurvatureScaleFLRWToScaleFreeBackgroundPipelineGate` is the
+  preferred scale-free background pipeline when the active model supplies
+  `k_Z2Sigma` and `H0_Z2Sigma*R_curv_Z2Sigma/c` directly: it computes
+  `omega_k_Z2Sigma` and then writes `E_Z2Sigma(z)` from active FLRW components.
+  Its live report now exposes the nested FLRW-component frontier: Cartan-GHY,
+  Holst/Nieh-Yan, counterterm, and transparent matter-flux components.
+- `P0EFTJanusZ2SigmaFLRWToScaleFreeBackgroundPrimitiveNormalizationInputGate`
+  writes the direct background primitive normalization manifest consumed by
+  the strict direct writer, using only active FLRW and scale-free curvature
+  inputs.
+- `P0EFTJanusZ2SigmaScaleFreeBackgroundPrimitiveInputWriterGate` is the direct
+  writer for already-derived dimensionless background arrays `E_Z2Sigma(z)` and
+  `omega_k_Z2Sigma`; it avoids requiring an intermediate FLRW component manifest.
+- `P0EFTJanusZ2SigmaEarlyPlasmaToScaleFreePlasmaPrimitiveGate` writes the
+  plasma half directly from active `early_plasma.json` plus active
+  `background_H0_inputs.json`, producing `c_s/c` and `Gamma_drag/H0` while
+  still forbidding observational H0 fits, Planck/LCDM, and archived Z4 inputs.
+  Its report now exposes both required input frontiers explicitly:
+  `early_plasma_manifest` and `active_h0_manifest`; the latter is wired to the
+  active H0 writer from `background_H0_normalization_inputs.json`.
+- `P0EFTJanusZ2SigmaEarlyPlasmaToScaleFreePlasmaPrimitiveNormalizationInputGate`
+  writes the direct plasma primitive normalization manifest consumed by the
+  strict direct writer, using only active early-plasma and H0 inputs.
+- `P0EFTJanusZ2SigmaScaleFreePlasmaPrimitiveInputWriterGate` is the direct
+  writer for already-derived dimensionless plasma arrays `c_s/c` and
+  `Gamma_drag/H0`; it avoids requiring a dimensional `Gamma_drag` intermediate.
+- `P0EFTJanusZ2SigmaBAOComponentToScaleFreePrimitiveChi2Gate` composes the
+  auditable active path from `bao_component_inputs.json` through split
+  primitives and canonical primitive inputs to DESI DR2 scale-free chi2.
+- `P0EFTJanusZ2SigmaActiveInputsToScaleFreePrimitiveChi2Gate` composes the full
+  strict input path from active background/FLRW/early-plasma input manifests to
+  the primitive-chain DESI DR2 scale-free chi2. The active BAO input paths now
+  require the counterterm radial reduction frontier before writing intermediate
+  manifests, so placeholder `counterterm_rho/p` arrays cannot produce a BAO
+  chi2.
+- `P0EFTJanusZ2SigmaPhysicalInputsToScaleFreeBAOChi2Gate` composes the newer
+  physical-input path: active `k, H0*R_curv/c + flrw_components` produce the
+  background primitive, active curvature/Noether charge plus CODATA/FIRAS/Saha
+  produce the plasma primitive, then the split primitives feed DESI DR2.
+  Its live report now exposes structured frontiers for background,
+  curvature+charge plasma, and plasma primitive readiness, including the
+  nested `early_plasma_manifest` and `active_h0_manifest` blockers. It remains
+  red until active FLRW components, active `H0_Z2Sigma/R_curv_Z2Sigma`,
+  projected baryon charge, and active early-plasma/H0 inputs are supplied
+  without Planck/LCDM, archived Z4, or observational H0/curvature fits.
+  It also emits `physical_frontier_summary`, a flat checklist of remaining
+  background, matter-flux, curvature-volume, baryon-charge and early-plasma
+  blockers before DESI DR2 can be evaluated. The global blocker now also
+  includes the dimensionful-scale separation rule: do not invert
+  `H0_Z2Sigma R_curv_Z2Sigma/c` to fabricate `H0` or `R_curv`.
+- `P0EFTJanusZ2SigmaSpatialVolumeInputWriterFromCurvatureBranchGate` now
+  reports its nearest volume frontier explicitly: active curvature branch,
+  active dimensional `R_curv_Z2Sigma_Mpc`, active H0 scale normalization, and
+  closed positive projective spatial branch. The scale-free product
+  `H0*R_curv/c` remains insufficient for physical volume.
+- `P0EFTJanusZ2SigmaBaryonNumberDensityNoetherVolumeGate` now exposes the two
+  immediate blockers for `n_b0_Z2Sigma`: projected Noether baryon charge and
+  active spatial volume. This keeps the `c_s/c` BAO blocker traced to charge
+  projection plus volume, not to an opaque plasma manifest.
+- `P0EFTJanusZ2SigmaSahaIonizationHistoryGate` now exposes its Saha inputs:
+  active baryon number density, direct FIRAS photon temperature, and CODATA/NIST
+  constants. It still forbids Planck/LCDM recombination histories.
+- `P0EFTJanusZ2SigmaFLRWComponentsFromComponentSourcesPipelineGate` composes
+  the active FLRW source-component path:
+  Cartan-GHY + Holst/Nieh-Yan + counterterm + transparent matter-flux
+  components -> `flrw_component_inputs.json` -> `flrw_components.json`.
+  It is an assembler only; the live model still needs those component sources
+  derived from the Z2/Sigma action.
+- The transparent matter-flux subpath is now explicit in the physical BAO
+  report: `zero_matter_flux_component -> transparency_input_writer ->
+  normal_matter_current + bulk_stress_normal_flux`. It is diagnostic-only until
+  the active no-normal-current and bulk normal-flux cancellation/zero-projection
+  gates are derived.
+- `P0EFTJanusZ2SigmaBAOSplitPrimitivesToScaleFreeChi2Gate` composes the
+  canonical direct path from already-derived split primitives to DESI DR2
+  scale-free prediction/residual vectors and chi2.
+- `P0EFTJanusZ2SigmaDirectPrimitivesToScaleFreeChi2Gate` composes the direct
+  dimensionless background/plasma primitive writers, primitive assembler, and
+  DESI DR2 scale-free chi2. It remains red until both direct normalization
+  manifests exist.
 - `P0EFTJanusZ4HardGlobalTheoremAvailabilityGate` records that no direct
   Lean/mathlib import currently closes APS/Pin, orbifold 2:1, or the unique
   Janus/Z4/Holst action theorem for this project geometry.

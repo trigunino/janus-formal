@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_dirac_equation_of_state_of_a_gate import (
+    build_payload as build_dirac_eos_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_kinetic_moment_fluid_closure_gate import (
+    build_payload as build_kinetic_closure_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_sector_density_pressure_of_a_gate.md")
@@ -9,6 +21,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_sector_density_pressure_
 
 
 def build_payload() -> dict:
+    dirac_eos = build_dirac_eos_payload()
+    kinetic_closure = build_kinetic_closure_payload()
     declared = {
         "Janus_bimetric_FLRW_bibliography_checked": True,
         "perfect_fluid_continuity_imported": True,
@@ -23,12 +37,20 @@ def build_payload() -> dict:
         "minus_continuity_equation_declared": True,
     }
     closure = {
-        "plus_equation_of_state_derived": False,
-        "minus_equation_of_state_derived": False,
+        "plus_equation_of_state_derived": dirac_eos["closure"][
+            "plus_equation_of_state_derived"
+        ],
+        "minus_equation_of_state_derived": dirac_eos["closure"][
+            "minus_equation_of_state_derived"
+        ],
         "plus_initial_normalization_derived": False,
         "minus_initial_normalization_derived": False,
-        "plus_rho_p_of_a_ready": False,
-        "minus_rho_p_of_a_ready": False,
+        "plus_fluid_moment_ready": kinetic_closure["closure"]["plus_fluid_moment_ready"],
+        "minus_fluid_moment_ready": kinetic_closure["closure"]["minus_fluid_moment_ready"],
+        "plus_rho_p_of_a_ready": dirac_eos["closure"]["plus_equation_of_state_derived"]
+        and kinetic_closure["closure"]["plus_fluid_moment_ready"],
+        "minus_rho_p_of_a_ready": dirac_eos["closure"]["minus_equation_of_state_derived"]
+        and kinetic_closure["closure"]["minus_fluid_moment_ready"],
     }
     return {
         "status": "janus-z2-sigma-sector-density-pressure-of-a-gate",
@@ -48,6 +70,20 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "dirac_equation_of_state": {
+                "gate": dirac_eos["status"],
+                "ready": dirac_eos["dirac_equation_of_state_ready"],
+                "primary_blocker": dirac_eos["primary_blocker"],
+                "closure": dirac_eos["closure"],
+            },
+            "kinetic_moment_fluid_closure": {
+                "gate": kinetic_closure["status"],
+                "ready": kinetic_closure["kinetic_moment_fluid_closure_ready"],
+                "primary_blocker": kinetic_closure["primary_blocker"],
+                "closure": kinetic_closure["closure"],
+            },
+        },
         "formulas": {
             "continuity_plus": "d rho_+/d ln a + 3(rho_+ + p_+) = 0",
             "continuity_minus": "d rho_-/d ln a + 3(rho_- + p_-) = 0",
@@ -56,6 +92,16 @@ def build_payload() -> dict:
         },
         "sector_density_pressure_ledger_declared": all(declared.values()),
         "sector_density_pressure_of_a_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else (
+                dirac_eos["primary_blocker"]
+                if not dirac_eos["dirac_equation_of_state_ready"]
+                else kinetic_closure["primary_blocker"]
+            )
+        ),
         "next_required": [
             "derive_plus_sector_equation_of_state",
             "derive_minus_sector_equation_of_state",

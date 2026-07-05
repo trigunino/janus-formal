@@ -21,6 +21,8 @@ class P0EFTJanusZ2SigmaDiracThermalOccupationOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_number_normalization_ready"])
         self.assertFalse(payload["closure"]["plus_mass_temperature_law_ready"])
         self.assertFalse(payload["dirac_thermal_occupation_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "Dirac_number_mass_regime_chemical_potential_degeneracy")
         self.assertIn("pass_Dirac_number_normalization_gate", payload["next_required"])
         self.assertIn("pass_Dirac_chemical_potential_gate", payload["next_required"])
         self.assertIn("pass_Dirac_degeneracy_factor_gate", payload["next_required"])

@@ -13,13 +13,17 @@ class P0EFTJanusZ2SigmaCoupledRadiusFluxSobolevIndexGateTests(unittest.TestCase)
         self.assertEqual(payload["index_choice"]["candidate_bulk_index"], "s_bulk >= 3")
         self.assertTrue(payload["declared"]["no_index_fit_to_observations"])
 
-    def test_index_choice_remains_blocked_until_thresholds_are_proved(self):
+    def test_index_choice_closes_thresholds_but_waits_for_normal_tangent_support(self):
         payload = build_payload()
 
-        self.assertFalse(payload["obligations"]["candidate_indices_pass_trace_threshold"])
-        self.assertFalse(payload["obligations"]["candidate_indices_pass_product_threshold"])
+        self.assertTrue(payload["obligations"]["candidate_indices_pass_trace_threshold"])
+        self.assertTrue(payload["obligations"]["candidate_indices_pass_product_threshold"])
+        self.assertFalse(payload["obligations"]["candidate_indices_support_normal_and_tangent_traces"])
         self.assertFalse(payload["sobolev_index_ready"])
-        self.assertIn("sobolev_index_choice_ready_for_trace_proof = false", payload["current_frontier"])
+        self.assertIn(
+            "candidate_indices_support_normal_and_tangent_traces = false",
+            payload["current_frontier"],
+        )
 
 
 if __name__ == "__main__":

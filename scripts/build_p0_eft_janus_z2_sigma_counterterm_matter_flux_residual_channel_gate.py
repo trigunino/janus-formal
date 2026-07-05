@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_matter_flux_frontier_gate import (
+    build_payload as build_matter_flux_frontier_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_matter_flux_residual_channel_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_matter_flux_
 
 
 def build_payload() -> dict:
+    matter_flux_frontier = build_matter_flux_frontier_payload()
     declared = {
         "matter_flux_radial_block_gate_declared": True,
         "matter_flux_active_projection_gate_declared": True,
@@ -20,10 +30,15 @@ def build_payload() -> dict:
         "active_flux_of_a_declared": True,
         "no_fitted_matter_residual_coefficient": True,
     }
+    flux_ready = matter_flux_frontier["matter_flux_frontier_ready"]
+    residual_formula_ready = False
+    residual_ready = flux_ready and residual_formula_ready
     closure = {
-        "matter_residual_coefficient_explicit": False,
-        "matter_residual_in_allowed_basis": False,
-        "matter_residual_ready_for_one_form_decomposition": False,
+        "matter_flux_frontier_ready": flux_ready,
+        "matter_residual_formula_from_flux_variation_ready": residual_formula_ready,
+        "matter_residual_coefficient_explicit": residual_ready,
+        "matter_residual_in_allowed_basis": residual_ready,
+        "matter_residual_ready_for_one_form_decomposition": residual_ready,
     }
     return {
         "status": "janus-z2-sigma-counterterm-matter-flux-residual-channel-gate",
@@ -39,6 +54,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "matter_flux": {
+                "gate": matter_flux_frontier["status"],
+                "ready": matter_flux_frontier["matter_flux_frontier_ready"],
+                "paths": matter_flux_frontier["paths"],
+                "current_frontier": matter_flux_frontier["current_frontier"],
+            },
+        },
         "channel_template": "alpha_matter = integral_Sigma R_matter delta matter",
         "forbidden": [
             "fit matter residual coefficient",
@@ -48,6 +71,11 @@ def build_payload() -> dict:
         ],
         "counterterm_matter_flux_residual_channel_ledger_declared": all(declared.values()),
         "counterterm_matter_flux_residual_channel_ready": all(declared.values()) and all(closure.values()),
+        "current_frontier": [
+            f"{key} = false"
+            for key, ready in closure.items()
+            if not ready
+        ],
         "next_required": [
             "compute_R_matter_from_active_normal_flux_variation",
             "derive_active_flux_of_a",

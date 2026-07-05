@@ -49,5 +49,12 @@ theorem tetrad_readiness_feeds_parent_transport
     g.tetradVariationTransportReady := by
   exact hReady.2.2.2.2
 
+theorem missing_deltaK_transport_blocks_tetrad_readiness
+    (g : CountertermTetradVariationTransportReadinessGate)
+    (hMissing : Not g.extrinsicCurvatureVariationTransportReady) :
+    Not (tetradVariationReadinessReady g) := by
+  intro hReady
+  exact hMissing (tetrad_readiness_requires_deltaK g hReady)
+
 end P0EFTJanusZ2SigmaCountertermTetradVariationTransportReadinessGate
 end JanusFormal

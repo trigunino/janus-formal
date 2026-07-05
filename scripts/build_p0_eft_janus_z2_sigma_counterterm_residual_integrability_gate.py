@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_one_form_decomposition_gate import (
+    build_payload as build_one_form_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_integrability_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_int
 
 
 def build_payload() -> dict:
+    one_form = build_one_form_payload()
     declared = {
         "residual_one_form_decomposition_gate_declared": True,
         "covariant_phase_space_bibliography_checked": True,
@@ -19,13 +29,21 @@ def build_payload() -> dict:
         "no_fitted_exactness_condition": True,
     }
     closure = {
-        "residual_one_form_components_explicit": False,
+        "residual_one_form_components_explicit": one_form["closure"][
+            "residual_one_form_components_explicit"
+        ],
         "field_space_curl_computed": False,
         "channel_cross_derivatives_symmetric": False,
         "z2_boundary_compatibility_proved": False,
         "residual_one_form_exact": False,
         "ready_for_counterterm_primitive": False,
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = (
+        "none"
+        if ready
+        else one_form.get("primary_blocker", "counterterm_residual_field_space_curl")
+    )
     return {
         "status": "janus-z2-sigma-counterterm-residual-integrability-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -41,6 +59,16 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "one_form_decomposition": {
+                "gate": one_form["status"],
+                "ready": one_form[
+                    "counterterm_residual_one_form_decomposition_ready"
+                ],
+                "closure": one_form["closure"],
+                "primary_blocker": one_form.get("primary_blocker", "counterterm_residual_channels"),
+            },
+        },
         "integrability_condition": "d_field alpha_res = 0",
         "cross_derivative_template": "partial_A R_B - partial_B R_A = 0 for active Sigma channels",
         "forbidden": [
@@ -50,7 +78,9 @@ def build_payload() -> dict:
             "legacy Z4 integrability import",
         ],
         "counterterm_residual_integrability_ledger_declared": all(declared.values()),
-        "counterterm_residual_integrability_ready": all(declared.values()) and all(closure.values()),
+        "counterterm_residual_integrability_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_counterterm_residual_one_form_decomposition_gate",
             "compute_field_space_curl_of_alpha_res",

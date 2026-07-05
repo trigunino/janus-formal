@@ -19,6 +19,7 @@ structure CountertermTetradExtrinsicCurvatureVariationTransportGate where
   deltaEToDeltaConnectionDeclared : Prop
   z2NormalOrientationVariationDeclared : Prop
   noFittedExtrinsicCurvatureVariation : Prop
+  deltaKStructuralFormulaReady : Prop
   activeEmbeddingReady : Prop
   tangentNormalTraceTransportReady : Prop
   connectionVariationTransportReady : Prop
@@ -37,7 +38,8 @@ def extrinsicCurvatureVariationTransportLedgerDeclared
   g.deltaEToDeltaNormalDeclared /\
   g.deltaEToDeltaConnectionDeclared /\
   g.z2NormalOrientationVariationDeclared /\
-  g.noFittedExtrinsicCurvatureVariation
+  g.noFittedExtrinsicCurvatureVariation /\
+  g.deltaKStructuralFormulaReady
 
 def extrinsicCurvatureVariationTransportReady
     (g : CountertermTetradExtrinsicCurvatureVariationTransportGate) : Prop :=
@@ -53,6 +55,13 @@ theorem deltaK_transport_requires_embedding
     (hReady : extrinsicCurvatureVariationTransportReady g) :
     g.activeEmbeddingReady := by
   exact hReady.2.1
+
+theorem deltaK_structural_formula_alone_does_not_transport_values
+    (g : CountertermTetradExtrinsicCurvatureVariationTransportGate)
+    (hNoEmbedding : Not g.activeEmbeddingReady) :
+    Not (extrinsicCurvatureVariationTransportReady g) := by
+  intro hReady
+  exact hNoEmbedding (deltaK_transport_requires_embedding g hReady)
 
 theorem deltaK_transport_feeds_tetrad_transport
     (g : CountertermTetradExtrinsicCurvatureVariationTransportGate)

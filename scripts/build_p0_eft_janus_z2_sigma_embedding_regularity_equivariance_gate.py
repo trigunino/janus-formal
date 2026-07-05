@@ -59,6 +59,12 @@ def build_payload() -> dict:
         },
         "embedding_regularity_equivariance_ledger_declared": all(declared.values()),
         "embedding_regularity_equivariance_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "active_tunnel_embedding_from_RSigma"
+        ),
         "next_required": [
             "pass_active_tunnel_embedding_of_a_gate",
             "derive_X_plus_minus_of_a",

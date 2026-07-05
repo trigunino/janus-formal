@@ -23,6 +23,8 @@ class P0EFTJanusZ2SigmaNormalMatterCurrentGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["Sigma_normals_ready"])
         self.assertFalse(payload["closure"]["no_normal_matter_current_derived"])
         self.assertFalse(payload["no_normal_matter_current_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
         self.assertIn("pass_plus_minus_matter_current_gate", payload["next_required"])
         self.assertIn("pass_projected_Dirac_matter_current_gate", payload["next_required"])
         self.assertIn("pass_projected_Dirac_normal_current_gate", payload["next_required"])

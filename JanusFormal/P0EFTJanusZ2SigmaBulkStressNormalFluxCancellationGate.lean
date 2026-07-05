@@ -23,6 +23,10 @@ structure BulkStressNormalFluxCancellationGate where
   minusFluxProjectionReady : Prop
   z2FluxCancellationDerived : Prop
   bulkStressNormalProjectionZeroDerived : Prop
+  bulkStressOfAFrontierDeclared : Prop
+  fluxProjectionDomainFrontierDeclared : Prop
+  nearestBulkStressFluxFrontierDeclared : Prop
+  nearestBulkStressFluxFrontierDiagnosticOnly : Prop
 
 def bulkStressNormalFluxCancellationLedgerDeclared
     (g : BulkStressNormalFluxCancellationGate) : Prop :=
@@ -43,7 +47,11 @@ def bulkStressNormalFluxProjectionReady
   g.sigmaTangentsReady /\
   g.sigmaNormalsReady /\
   g.plusFluxProjectionReady /\
-  g.minusFluxProjectionReady
+  g.minusFluxProjectionReady /\
+  g.bulkStressOfAFrontierDeclared /\
+  g.fluxProjectionDomainFrontierDeclared /\
+  g.nearestBulkStressFluxFrontierDeclared /\
+  g.nearestBulkStressFluxFrontierDiagnosticOnly
 
 def bulkStressNormalFluxCancellationReady
     (g : BulkStressNormalFluxCancellationGate) : Prop :=
@@ -55,7 +63,17 @@ theorem normal_flux_projection_requires_bulk_stress
     (g : BulkStressNormalFluxCancellationGate)
     (hReady : bulkStressNormalFluxProjectionReady g) :
     g.bulkStressPlusOfAReady /\ g.bulkStressMinusOfAReady := by
-  exact And.intro hReady.2.1 hReady.2.2.1
+  exact ⟨hReady.2.1, hReady.2.2.1⟩
+
+theorem normal_flux_projection_declares_frontiers
+    (g : BulkStressNormalFluxCancellationGate)
+    (hReady : bulkStressNormalFluxProjectionReady g) :
+    g.bulkStressOfAFrontierDeclared /\
+    g.fluxProjectionDomainFrontierDeclared /\
+    g.nearestBulkStressFluxFrontierDeclared /\
+    g.nearestBulkStressFluxFrontierDiagnosticOnly := by
+  rcases hReady with ⟨_, _, _, _, _, _, _, hBulk, hDomain, hNearest, hDiag⟩
+  exact ⟨hBulk, hDomain, hNearest, hDiag⟩
 
 end P0EFTJanusZ2SigmaBulkStressNormalFluxCancellationGate
 end JanusFormal

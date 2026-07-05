@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaThroatRadiusVariationalEquationGateTests(unittest.TestCas
         self.assertFalse(payload["equation"]["R_Sigma_equation_solved"])
         self.assertFalse(payload["equation"]["R_Sigma_of_a_ready"])
         self.assertFalse(payload["throat_radius_variational_closure_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "E_RSigma_equation_unsolved")
 
 
 if __name__ == "__main__":

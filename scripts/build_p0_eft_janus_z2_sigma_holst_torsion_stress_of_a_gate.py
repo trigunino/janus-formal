@@ -57,6 +57,12 @@ def build_payload() -> dict:
         },
         "holst_torsion_stress_ledger_declared": all(declared.values()),
         "holst_torsion_stress_of_a_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "torsion_field_solution_and_immirzi_profile"
+        ),
         "next_required": [
             "pass_Z2Sigma_torsion_field_solution_of_a_gate",
             "derive_dynamic_Immirzi_profile_of_a",

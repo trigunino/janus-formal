@@ -11,6 +11,10 @@ structure BulkStressOfAGate where
   minusSectorStressDeclared : Prop
   perfectFluidFLRWStressImported : Prop
   holstTorsionStressContributionDeclared : Prop
+  sectorDensityPressureFrontierImported : Prop
+  holstTorsionStressFrontierImported : Prop
+  nearestBulkStressFrontierDeclared : Prop
+  nearestBulkStressFrontierDiagnosticOnly : Prop
   z2SignPolicyDeclared : Prop
   observationalFitForbidden : Prop
   tPlusMunvOfADeclared : Prop
@@ -28,6 +32,10 @@ def bulkStressLedgerDeclared
   g.minusSectorStressDeclared /\
   g.perfectFluidFLRWStressImported /\
   g.holstTorsionStressContributionDeclared /\
+  g.sectorDensityPressureFrontierImported /\
+  g.holstTorsionStressFrontierImported /\
+  g.nearestBulkStressFrontierDeclared /\
+  g.nearestBulkStressFrontierDiagnosticOnly /\
   g.z2SignPolicyDeclared /\
   g.observationalFitForbidden /\
   g.tPlusMunvOfADeclared /\
@@ -47,6 +55,16 @@ theorem bulk_stress_requires_sector_density_pressure
     (hReady : bulkStressOfAReady g) :
     g.plusMatterDensityPressureOfAReady /\ g.minusMatterDensityPressureOfAReady := by
   exact And.intro hReady.2.1 hReady.2.2.1
+
+theorem bulk_stress_ledger_imports_frontiers
+    (g : BulkStressOfAGate)
+    (hLedger : bulkStressLedgerDeclared g) :
+    g.sectorDensityPressureFrontierImported /\
+      g.holstTorsionStressFrontierImported /\
+      g.nearestBulkStressFrontierDeclared := by
+  rcases hLedger with
+    ⟨_, _, _, _, _, hSectorFrontier, hHolstFrontier, hNearest, _, _, _, _⟩
+  exact ⟨hSectorFrontier, hHolstFrontier, hNearest⟩
 
 end P0EFTJanusZ2SigmaBulkStressOfAGate
 end JanusFormal

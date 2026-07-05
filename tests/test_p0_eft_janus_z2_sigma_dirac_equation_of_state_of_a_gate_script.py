@@ -19,6 +19,12 @@ class P0EFTJanusZ2SigmaDiracEquationOfStateOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_distribution_of_a_ready"])
         self.assertFalse(payload["closure"]["plus_regime_selected"])
         self.assertFalse(payload["dirac_equation_of_state_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(
+            payload["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
+        self.assertFalse(payload["upstream_frontiers"]["fermion_distribution_of_a"]["gate_passed"])
         self.assertIn("pass_fermion_distribution_of_a_gate", payload["next_required"])
         self.assertIn("pass_Dirac_regime_selection_gate", payload["next_required"])
 

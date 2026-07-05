@@ -26,6 +26,8 @@ structure ResolvedTunnelPinLiftGate where
   plusRestrictionPinLiftDerived : Prop
   minusRestrictionPinLiftDerived : Prop
   resolvedTunnelPinLiftReady : Prop
+  nearestPinLiftFrontierDeclared : Prop
+  nearestPinLiftFrontierDiagnosticOnly : Prop
 
 def resolvedTunnelPinLiftLedgerDeclared
     (g : ResolvedTunnelPinLiftGate) : Prop :=
@@ -37,7 +39,9 @@ def resolvedTunnelPinLiftLedgerDeclared
   g.resolvedTunnelFrameBundleDeclared /\
   g.pinLiftCompatibilityCriterionDeclared /\
   g.plusMinusRestrictionCriterionDeclared /\
-  g.observationalFitForbidden
+  g.observationalFitForbidden /\
+  g.nearestPinLiftFrontierDeclared /\
+  g.nearestPinLiftFrontierDiagnosticOnly
 
 def resolvedTunnelPinLiftReady
     (g : ResolvedTunnelPinLiftGate) : Prop :=
@@ -57,6 +61,22 @@ theorem resolved_tunnel_pin_lift_requires_sigma_aps_lift
     g.sigmaApsPinLiftReady := by
   rcases hReady with ⟨_, _, _, hSigma, _, _, _, _, _⟩
   exact hSigma
+
+theorem resolved_tunnel_pin_lift_requires_frame_bundle
+    (g : ResolvedTunnelPinLiftGate)
+    (hReady : resolvedTunnelPinLiftReady g) :
+    g.resolvedTunnelFrameBundleReady := by
+  rcases hReady with ⟨_, _, _, _, hFrame, _, _, _, _⟩
+  exact hFrame
+
+theorem nearest_pin_lift_frontier_diagnostic_does_not_close_pin_lift
+    (g : ResolvedTunnelPinLiftGate)
+    (_hDiag : g.nearestPinLiftFrontierDiagnosticOnly)
+    (hNoFrame : Not g.resolvedTunnelFrameBundleReady) :
+    Not (g.nearestPinLiftFrontierDiagnosticOnly /\ resolvedTunnelPinLiftReady g) := by
+  intro h
+  rcases h.2 with ⟨_, _, _, _, hFrame, _, _, _, _⟩
+  exact hNoFrame hFrame
 
 end P0EFTJanusZ2SigmaResolvedTunnelPinLiftGate
 end JanusFormal

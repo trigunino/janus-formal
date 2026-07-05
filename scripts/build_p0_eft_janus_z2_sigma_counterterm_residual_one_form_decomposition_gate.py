@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_channel_frontier_gate import (
+    build_payload as build_channel_frontier_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_one_form_decomposition_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_one
 
 
 def build_payload() -> dict:
+    channel_frontier = build_channel_frontier_payload()
     declared = {
         "nonlinear_residual_closure_imported": True,
         "local_density_basis_gate_declared": True,
@@ -28,10 +38,22 @@ def build_payload() -> dict:
         "no_fitted_residual_coefficient": True,
     }
     closure = {
-        "residual_one_form_components_explicit": False,
-        "residual_one_form_local_in_allowed_basis": False,
-        "residual_one_form_ready_for_integrability_gate": False,
+        "residual_one_form_components_explicit": channel_frontier["channels"][
+            "all_residual_channels_explicit"
+        ],
+        "residual_one_form_local_in_allowed_basis": channel_frontier["channels"][
+            "residual_one_form_ready_for_decomposition"
+        ],
+        "residual_one_form_ready_for_integrability_gate": channel_frontier["channels"][
+            "residual_one_form_ready_for_decomposition"
+        ],
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = (
+        "none"
+        if ready
+        else channel_frontier.get("primary_blocker", "counterterm_residual_channels")
+    )
     return {
         "status": "janus-z2-sigma-counterterm-residual-one-form-decomposition-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -53,6 +75,16 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "residual_channels": {
+                "gate": channel_frontier["status"],
+                "ready": channel_frontier["residual_channel_frontier_ready"],
+                "channels": channel_frontier["channels"],
+                "channel_frontiers": channel_frontier["channel_frontiers"],
+                "current_frontier": channel_frontier["current_frontier"],
+                "primary_blocker": channel_frontier.get("primary_blocker", "counterterm_residual_channels"),
+            },
+        },
         "one_form_template": (
             "alpha_res = R_e delta e + R_omega delta omega + R_psi delta psi "
             "+ R_X delta X + R_matter delta matter"
@@ -70,7 +102,9 @@ def build_payload() -> dict:
             "legacy Z4 residual import",
         ],
         "counterterm_residual_one_form_decomposition_ledger_declared": all(declared.values()),
-        "counterterm_residual_one_form_decomposition_ready": all(declared.values()) and all(closure.values()),
+        "counterterm_residual_one_form_decomposition_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "compute_tetrad_residual_channel",
             "pass_counterterm_tetrad_residual_channel_gate",

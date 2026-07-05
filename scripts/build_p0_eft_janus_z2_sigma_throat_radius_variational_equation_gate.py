@@ -24,6 +24,16 @@ def build_payload() -> dict:
         "R_Sigma_equation_solved": False,
         "R_Sigma_of_a_ready": False,
     }
+    effective_equation_terms = {
+        "cartan_ghy_radial_term": "E_CartanGHY[R_Sigma,X_pm,K_pm](a)",
+        "holst_nieh_yan_radial_term": "E_HolstNiehYan[R_Sigma,torsion](a)",
+        "matter_flux_radial_term": "E_matterFlux[R_Sigma,F_a](a)",
+        "counterterm_radial_term": "E_counterterm[R_Sigma,omega,e](a)",
+    }
+    effective_equation = (
+        "E_RSigma(a) := E_CartanGHY(a) + E_HolstNiehYan(a) "
+        "+ E_matterFlux(a) + E_counterterm(a) = 0"
+    )
     return {
         "status": "janus-z2-sigma-throat-radius-variational-equation-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -43,11 +53,20 @@ def build_payload() -> dict:
             "E_RSigma(a) := delta S_Sigma[h(R_Sigma), K(R_Sigma), torsion(R_Sigma)] "
             "/ delta R_Sigma(a) = 0"
         ),
+        "effective_RSigma_equation": effective_equation,
+        "effective_RSigma_terms": effective_equation_terms,
+        "effective_RSigma_equation_ready": all(effective_equation_terms.values()),
         "throat_radius_variational_problem_declared": all(declared.values()),
         "throat_radius_variational_equation_ready": all(declared.values())
         and equation["radial_Euler_Lagrange_operator_ready"]
         and equation["R_Sigma_equation_ready"],
         "throat_radius_variational_closure_ready": all(declared.values()) and all(equation.values()),
+        "gate_passed": all(declared.values()) and all(equation.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(equation.values())
+            else "E_RSigma_equation_unsolved"
+        ),
         "next_required": [
             "expand_E_RSigma_using_Cartan_GHY_Holst_matter_flux_junction_counterterm_blocks",
             "solve_E_RSigma_equals_zero_without_observational_fit",

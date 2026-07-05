@@ -54,5 +54,11 @@ theorem charge_projection_requires_projected_current
     g.projectedDiracCurrentReady := by
   exact hReady.2.1
 
+theorem charge_projection_requires_spinor_projection
+    (g : DiracChargeBoundaryProjectionGate)
+    (hReady : diracChargeBoundaryProjectionReady g) :
+    g.spinorProjectionReady := by
+  exact hReady.2.2.1
+
 end P0EFTJanusZ2SigmaDiracChargeBoundaryProjectionGate
 end JanusFormal

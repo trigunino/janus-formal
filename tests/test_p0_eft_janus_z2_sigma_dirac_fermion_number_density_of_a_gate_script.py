@@ -19,6 +19,9 @@ class P0EFTJanusZ2SigmaDiracFermionNumberDensityOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_number_normalization_derived"])
         self.assertFalse(payload["closure"]["projected_number_density_ready"])
         self.assertFalse(payload["dirac_fermion_number_density_of_a_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertFalse(payload["upstream_frontiers"]["dirac_number_normalization"]["gate_passed"])
         self.assertIn("pass_Dirac_number_normalization_gate", payload["next_required"])
         self.assertIn("propagate_number_density_to_fermion_distribution_gate", payload["next_required"])
 

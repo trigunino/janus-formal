@@ -10,15 +10,24 @@ class P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGateTests(unittest.TestCase):
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["projected_dirac_normal_current_ledger_declared"])
         self.assertTrue(payload["declared"]["projected_Dirac_matter_current_gate_declared"])
+        self.assertTrue(payload["declared"]["reflecting_spinor_boundary_current_gate_declared"])
         self.assertTrue(payload["declared"]["Z2_projected_normal_current_declared"])
+        self.assertIn("reflecting_spinor_boundary_current", payload["upstream_frontiers"])
 
     def test_normal_current_waits_for_current_and_normals(self):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["projected_Dirac_matter_current_ready"])
         self.assertFalse(payload["closure"]["Sigma_normals_ready"])
+        self.assertFalse(payload["closure"]["reflecting_boundary_normal_current_zero_ready"])
         self.assertFalse(payload["no_normal_dirac_current_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(
+            payload["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertIn("derive_or_reject_J_n_Z2Sigma_equals_zero", payload["next_required"])
+        self.assertIn("or_close_reflecting_spinor_boundary_current_gate", payload["next_required"])
 
     def test_bibliography_uses_primary_sources(self):
         payload = build_payload()

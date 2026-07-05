@@ -15,6 +15,7 @@ structure DiracNumberNormalizationGate where
   z2SigmaProjectionChargeDeclared : Prop
   anomalyOrBoundaryLeakGuardDeclared : Prop
   observationalFitForbidden : Prop
+  diracChargeBoundaryProjectionReady : Prop
   plusChargeFixedByActionOrTopology : Prop
   minusChargeFixedByActionOrTopology : Prop
   projectedChargeFixedByZ2Sigma : Prop
@@ -34,6 +35,7 @@ def diracNumberNormalizationLedgerDeclared
 def diracNumberNormalizationReady
     (g : DiracNumberNormalizationGate) : Prop :=
   diracNumberNormalizationLedgerDeclared g /\
+  g.diracChargeBoundaryProjectionReady /\
   g.plusChargeFixedByActionOrTopology /\
   g.minusChargeFixedByActionOrTopology /\
   g.projectedChargeFixedByZ2Sigma /\
@@ -43,7 +45,13 @@ theorem number_normalization_requires_plus_minus_charges
     (g : DiracNumberNormalizationGate)
     (hReady : diracNumberNormalizationReady g) :
     g.plusChargeFixedByActionOrTopology /\ g.minusChargeFixedByActionOrTopology := by
-  exact And.intro hReady.2.1 hReady.2.2.1
+  exact And.intro hReady.2.2.1 hReady.2.2.2.1
+
+theorem number_normalization_requires_boundary_projection
+    (g : DiracNumberNormalizationGate)
+    (hReady : diracNumberNormalizationReady g) :
+    g.diracChargeBoundaryProjectionReady := by
+  exact hReady.2.1
 
 end P0EFTJanusZ2SigmaDiracNumberNormalizationGate
 end JanusFormal

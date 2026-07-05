@@ -7,6 +7,8 @@ set_option autoImplicit false
 
 structure CoupledRadiusFluxTraceRegularityGate where
   functionSpaceGateImported : Prop
+  sobolevThresholdTransportImported : Prop
+  embeddingFrameTraceTransportImported : Prop
   sobolevTraceBibliographyChecked : Prop
   embeddingTraceMapDeclared : Prop
   normalTraceMapDeclared : Prop
@@ -15,6 +17,8 @@ structure CoupledRadiusFluxTraceRegularityGate where
   productSpaceDeclared : Prop
   noPointwiseProductShortcut : Prop
   noObservationalTraceFit : Prop
+  sobolevTraceThresholdPassed : Prop
+  sobolevProductThresholdPassed : Prop
   embeddingTraceContinuous : Prop
   normalTraceContinuous : Prop
   tangentFrameTraceContinuous : Prop
@@ -24,6 +28,8 @@ structure CoupledRadiusFluxTraceRegularityGate where
 def traceRegularityLedgerDeclared
     (g : CoupledRadiusFluxTraceRegularityGate) : Prop :=
   g.functionSpaceGateImported /\
+  g.sobolevThresholdTransportImported /\
+  g.embeddingFrameTraceTransportImported /\
   g.sobolevTraceBibliographyChecked /\
   g.embeddingTraceMapDeclared /\
   g.normalTraceMapDeclared /\
@@ -36,6 +42,8 @@ def traceRegularityLedgerDeclared
 def traceRegularityReady
     (g : CoupledRadiusFluxTraceRegularityGate) : Prop :=
   traceRegularityLedgerDeclared g /\
+  g.sobolevTraceThresholdPassed /\
+  g.sobolevProductThresholdPassed /\
   g.embeddingTraceContinuous /\
   g.normalTraceContinuous /\
   g.tangentFrameTraceContinuous /\
@@ -46,13 +54,19 @@ theorem trace_ready_requires_embedding_trace
     (g : CoupledRadiusFluxTraceRegularityGate)
     (hReady : traceRegularityReady g) :
     g.embeddingTraceContinuous := by
-  exact hReady.2.1
+  exact hReady.2.2.2.1
+
+theorem trace_ready_requires_sobolev_thresholds
+    (g : CoupledRadiusFluxTraceRegularityGate)
+    (hReady : traceRegularityReady g) :
+    g.sobolevTraceThresholdPassed /\ g.sobolevProductThresholdPassed := by
+  exact ⟨hReady.2.1, hReady.2.2.1⟩
 
 theorem trace_ready_feeds_flux_functional_frontier
     (g : CoupledRadiusFluxTraceRegularityGate)
     (hReady : traceRegularityReady g) :
     g.fluxFunctionalTraceReady := by
-  exact hReady.2.2.2.2.2
+  exact hReady.2.2.2.2.2.2.2
 
 end P0EFTJanusZ2SigmaCoupledRadiusFluxTraceRegularityGate
 end JanusFormal

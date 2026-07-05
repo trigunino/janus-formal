@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaBoundarySpinorRestrictionGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["active_Sigma_embedding_ready"])
         self.assertFalse(payload["closure"]["plus_spinor_bundle_ready"])
         self.assertFalse(payload["closure"]["Sigma_boundary_spinor_data_ready"])
+        self.assertIn("active_embedding", payload["upstream_frontiers"])
+        self.assertIn("plus_minus_spinor_bundle_data", payload["upstream_frontiers"])
         self.assertFalse(payload["boundary_spinor_restriction_ready"])
         self.assertIn("derive_active_Sigma_embedding", payload["next_required"])
 

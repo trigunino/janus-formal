@@ -1,14 +1,36 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_action_readiness_gate import (
+    build_payload as build_projected_dirac_action_readiness_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate import (
+    build_payload as build_torsion_pullback_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_immirzi_bulk_boundary_equation_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_immirzi_bulk_boundary_equation_gate.json")
 
 
-def build_payload() -> dict:
+def build_payload(
+    *,
+    torsion_pullback_payload: dict | None = None,
+    projected_dirac_payload: dict | None = None,
+) -> dict:
+    torsion = torsion_pullback_payload or build_torsion_pullback_payload()
+    projected_dirac = projected_dirac_payload or build_projected_dirac_action_readiness_payload()
+    torsion_ready = bool(torsion["closure"]["torsion_pullback_on_Sigma_ready"])
+    spinor_source_ready = bool(
+        projected_dirac["readiness"]["Z2_projected_Dirac_action_ready"]
+        and projected_dirac["readiness"]["Holst_fermion_coupling_formula_ready"]
+    )
     declared = {
         "variation_bibliography_checked": True,
         "scalar_Immirzi_Holst_variation_imported": True,
@@ -21,11 +43,11 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "bulk_Immirzi_equation_reduced": False,
-        "Sigma_boundary_condition_reduced": False,
-        "torsion_pullback_ready": False,
-        "spinor_source_ready": False,
-        "Immirzi_bulk_boundary_equation_ready": False,
+        "bulk_Immirzi_equation_reduced": torsion_ready and spinor_source_ready,
+        "Sigma_boundary_condition_reduced": torsion_ready and spinor_source_ready,
+        "torsion_pullback_ready": torsion_ready,
+        "spinor_source_ready": spinor_source_ready,
+        "Immirzi_bulk_boundary_equation_ready": torsion_ready and spinor_source_ready,
     }
     return {
         "status": "janus-z2-sigma-immirzi-bulk-boundary-equation-gate",
@@ -43,6 +65,18 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "torsion_pullback_on_Sigma": {
+                "gate": torsion["status"],
+                "ready": torsion["torsion_pullback_on_sigma_ready"],
+                "current_frontier": torsion["current_frontier"],
+            },
+            "projected_Dirac_action_readiness": {
+                "gate": projected_dirac["status"],
+                "ready": projected_dirac["projected_dirac_action_readiness_ready"],
+                "still_open": projected_dirac["still_open"],
+            },
+        },
         "formulas": {
             "bulk_slot": "E_gamma = delta S_HolstNiehYan / delta gamma_Immirzi = 0",
             "sigma_boundary_slot": "B_gamma^Sigma = boundary_term(delta_gamma S_Sigma) = 0",
@@ -50,6 +84,19 @@ def build_payload() -> dict:
         },
         "immirzi_bulk_boundary_ledger_declared": all(declared.values()),
         "immirzi_bulk_boundary_equation_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "torsion_pullback_on_Sigma"
+            if not torsion_ready
+            else "projected_Dirac_action_readiness"
+        ),
+        "current_frontier": [
+            f"{key} = false"
+            for key, ready in closure.items()
+            if not ready
+        ],
         "next_required": [
             "derive_Z2Sigma_torsion_pullback",
             "pass_torsion_pullback_on_Sigma_gate",

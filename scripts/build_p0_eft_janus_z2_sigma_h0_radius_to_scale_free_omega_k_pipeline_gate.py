@@ -1,0 +1,102 @@
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_dimensionless_curvature_scale_from_h0_radius_gate import (
+    build_payload as build_dimensionless_scale_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_dimensionless_curvature_scale_input_writer_gate import (
+    build_payload as build_dimensionless_scale_writer_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_scale_free_omega_k_from_curvature_scale_gate import (
+    build_payload as build_scale_free_omega_k_payload,
+)
+
+
+H0_INPUT_PATH = Path("outputs/active_z2_sigma/background_H0_inputs.json")
+RADIUS_INPUT_PATH = Path("outputs/active_z2_sigma/background_curvature_radius_inputs.json")
+SIGN_INPUT_PATH = Path("outputs/active_z2_sigma/background_curvature_sign_inputs.json")
+SCALE_NORMALIZATION_PATH = Path(
+    "outputs/active_z2_sigma/background_dimensionless_curvature_scale_normalization_inputs.json"
+)
+SCALE_INPUT_PATH = Path("outputs/active_z2_sigma/background_dimensionless_curvature_scale_inputs.json")
+OMEGA_K_OUTPUT_PATH = Path("outputs/active_z2_sigma/background_scale_free_omega_k_inputs.json")
+REPORT_PATH = Path(
+    "outputs/reports/p0_eft_janus_z2_sigma_h0_radius_to_scale_free_omega_k_pipeline_gate.md"
+)
+JSON_PATH = Path(
+    "outputs/reports/p0_eft_janus_z2_sigma_h0_radius_to_scale_free_omega_k_pipeline_gate.json"
+)
+
+
+def build_payload(
+    *,
+    h0_input_path: Path = H0_INPUT_PATH,
+    radius_input_path: Path = RADIUS_INPUT_PATH,
+    sign_input_path: Path = SIGN_INPUT_PATH,
+    scale_normalization_path: Path = SCALE_NORMALIZATION_PATH,
+    scale_input_path: Path = SCALE_INPUT_PATH,
+    omega_k_output_path: Path = OMEGA_K_OUTPUT_PATH,
+) -> dict:
+    scale = build_dimensionless_scale_payload(
+        h0_input_path=h0_input_path,
+        radius_input_path=radius_input_path,
+        output_path=scale_normalization_path,
+    )
+    scale_writer = build_dimensionless_scale_writer_payload(
+        input_path=scale_normalization_path,
+        output_path=scale_input_path,
+    )
+    omega = build_scale_free_omega_k_payload(
+        sign_input_path=sign_input_path,
+        scale_input_path=scale_input_path,
+        output_path=omega_k_output_path,
+    )
+    return {
+        "status": "janus-z2-sigma-h0-radius-to-scale-free-omega-k-pipeline-gate",
+        "active_core": "Z2_tunnel_Sigma",
+        "input_exists": {
+            "h0": h0_input_path.exists(),
+            "curvature_radius": radius_input_path.exists(),
+            "curvature_sign": sign_input_path.exists(),
+        },
+        "dimensionless_curvature_scale_normalization_passed": scale["gate_passed"],
+        "dimensionless_curvature_scale_input_writer_passed": scale_writer["gate_passed"],
+        "scale_free_omega_k_passed": omega["gate_passed"],
+        "omega_k_value": omega["omega_k_value"],
+        "uses_compressed_planck_lcdm_background": False,
+        "uses_archived_z4_background": False,
+        "uses_observational_H0_fit": False,
+        "uses_observational_curvature_fit": False,
+        "gate_passed": scale["gate_passed"] and scale_writer["gate_passed"] and omega["gate_passed"],
+        "blocker": None if omega["gate_passed"] else "missing active H0, curvature radius, curvature sign, or derived scale input",
+    }
+
+
+def write_reports() -> dict:
+    payload = build_payload()
+    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    JSON_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    lines = [
+        "# Janus Z2/Sigma H0 Radius To Scale-Free Omega_k Pipeline Gate",
+        "",
+        f"Input exists: `{payload['input_exists']}`",
+        f"Dimensionless scale passed: `{payload['dimensionless_curvature_scale_normalization_passed']}`",
+        f"Scale input writer passed: `{payload['dimensionless_curvature_scale_input_writer_passed']}`",
+        f"Omega_k passed: `{payload['scale_free_omega_k_passed']}`",
+        f"Gate passed: `{payload['gate_passed']}`",
+    ]
+    if payload["blocker"]:
+        lines.append(f"Blocker: `{payload['blocker']}`")
+    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
+    return payload
+
+
+if __name__ == "__main__":
+    print(json.dumps(write_reports(), indent=2))

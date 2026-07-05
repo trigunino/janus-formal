@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_tunnel_embedding_of_a_gate import (
+    build_payload as build_active_tunnel_embedding_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_tangent_normal_orientation_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_tangent_normal_orientati
 
 
 def build_payload() -> dict:
+    embedding = build_active_tunnel_embedding_payload()
     declared = {
         "thin_shell_normal_bibliography_checked": True,
         "Sigma_embedding_declared": True,
@@ -22,12 +32,13 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "active_Sigma_embedding_ready": False,
+        "active_Sigma_embedding_ready": embedding["active_tunnel_embedding_of_a_closure_ready"],
         "tangent_frames_of_a_ready": False,
         "unit_normals_of_a_ready": False,
         "Z2_orientation_sign_fixed": True,
         "tangent_normal_orientation_ready": False,
     }
+    ready = all(declared.values()) and all(closure.values())
     return {
         "status": "janus-z2-sigma-tangent-normal-orientation-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -46,6 +57,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "active_tunnel_embedding_of_a": {
+                "gate": embedding["status"],
+                "ready": embedding["active_tunnel_embedding_of_a_closure_ready"],
+                "derived": embedding["derived"],
+                "primary_blocker": embedding.get("primary_blocker"),
+            },
+        },
         "formulas": {
             "embedding": "X_pm^mu(y^a): Sigma -> M_pm",
             "tangent": "e_a^mu = partial_a X_pm^mu",
@@ -54,7 +73,13 @@ def build_payload() -> dict:
             "z2_orientation": "n_- = - tau_Z2_* n_+ from projective tunnel gluing",
         },
         "tangent_normal_orientation_ledger_declared": all(declared.values()),
-        "tangent_normal_orientation_ready": all(declared.values()) and all(closure.values()),
+        "tangent_normal_orientation_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": (
+            "none"
+            if ready
+            else embedding.get("primary_blocker", "active_tunnel_embedding_tangent_frames_and_normals")
+        ),
         "next_required": [
             "pass_active_tunnel_embedding_of_a_gate",
             "pass_active_tunnel_embedding_from_radius_gate",

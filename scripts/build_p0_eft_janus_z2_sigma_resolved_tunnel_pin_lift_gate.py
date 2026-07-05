@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_resolved_tunnel_frame_bundle_gate import (
+    build_payload as build_resolved_tunnel_frame_bundle_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_pin_lift_gate.md")
@@ -9,6 +18,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_pin_lift
 
 
 def build_payload() -> dict:
+    frame_bundle = build_resolved_tunnel_frame_bundle_payload()
+    frame_bundle_ready = frame_bundle["resolved_tunnel_frame_bundle_ready"]
     declared = {
         "spin_Pin_bibliography_checked": True,
         "projective_tunnel_interface_declared": True,
@@ -24,7 +35,7 @@ def build_payload() -> dict:
         "projective_tunnel_topology_ready": True,
         "RP4_Pin_plus_ready": True,
         "Sigma_APS_Pin_lift_ready": True,
-        "resolved_tunnel_frame_bundle_ready": False,
+        "resolved_tunnel_frame_bundle_ready": frame_bundle_ready,
         "resolved_tunnel_Pin_lift_derived": False,
         "plus_restriction_Pin_lift_derived": False,
         "minus_restriction_Pin_lift_derived": False,
@@ -53,6 +64,18 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "resolved_tunnel_frame_bundle": {
+                "gate": frame_bundle["status"],
+                "ready": frame_bundle["resolved_tunnel_frame_bundle_ready"],
+                "closure": frame_bundle["closure"],
+            },
+        },
+        "nearest_pin_lift_frontier": {
+            "block": "resolved_tunnel_frame_bundle",
+            "gate": "P0EFTJanusZ2SigmaResolvedTunnelFrameBundleGate",
+            "diagnostic_only": True,
+        },
         "formulas": {
             "pin_lift": "P_Pin -> P_O over the resolved tunnel frame bundle",
             "compatibility": "Pin lift restricts to Sigma APS boundary data",

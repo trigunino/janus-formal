@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_oriented_pullback_variation_commutation_gate import (
+    build_payload as build_oriented_pullback_commutation_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate import (
+    build_payload as build_torsion_pullback_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_torsion_pullback_variation_transport_gate.md")
@@ -9,6 +21,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_torsi
 
 
 def build_payload() -> dict:
+    torsion_pullback = build_torsion_pullback_payload()
+    oriented_commutation = build_oriented_pullback_commutation_payload()
     declared = {
         "tetrad_variation_transport_gate_imported": True,
         "torsion_pullback_on_sigma_gate_imported": True,
@@ -21,12 +35,22 @@ def build_payload() -> dict:
         "z2_orientation_transport_declared": True,
         "no_fitted_torsion_variation_coefficient": True,
     }
+    torsion_ready = torsion_pullback["torsion_pullback_on_sigma_ready"]
+    commutation_ready = oriented_commutation[
+        "oriented_pullback_variation_commutation_ready"
+    ]
+    allowed_basis_ready = (
+        torsion_pullback["closure"]["FLRW_irreducible_torsion_pullback_ready"]
+        and commutation_ready
+    )
     closure = {
-        "torsion_pullback_ready": False,
-        "pullback_commutation_ready": True,
+        "torsion_pullback_ready": torsion_ready,
+        "pullback_commutation_ready": commutation_ready,
         "delta_e_to_delta_torsion_formula_proved": True,
-        "torsion_pullback_variation_in_allowed_basis": False,
-        "torsion_pullback_variation_transport_ready": False,
+        "torsion_pullback_variation_in_allowed_basis": allowed_basis_ready,
+        "torsion_pullback_variation_transport_ready": torsion_ready
+        and commutation_ready
+        and allowed_basis_ready,
     }
     return {
         "status": "janus-z2-sigma-counterterm-tetrad-torsion-pullback-variation-transport-gate",
@@ -48,6 +72,18 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "torsion_pullback_on_sigma": {
+                "gate": torsion_pullback["status"],
+                "ready": torsion_ready,
+                "closure": torsion_pullback["closure"],
+            },
+            "oriented_pullback_commutation": {
+                "gate": oriented_commutation["status"],
+                "ready": commutation_ready,
+                "closure": oriented_commutation["closure"],
+            },
+        },
         "formulae": {
             "torsion": "T^I = d e^I + omega^I_J wedge e^J",
             "tetrad_variation_branch": "delta_e omega^I_J = 0",
@@ -61,9 +97,9 @@ def build_payload() -> dict:
             "pullback_commutation_ready",
         ],
         "still_open": [
-            "torsion_pullback_ready",
-            "torsion_pullback_variation_in_allowed_basis",
-            "torsion_pullback_variation_transport_ready",
+            key
+            for key, ready in closure.items()
+            if not ready
         ],
         "next_required": [
             "close_torsion_pullback_on_sigma_gate",

@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_matter_current_gate import (
+    build_payload as build_projected_dirac_current_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_spinor_bundle_projection_gate import (
+    build_payload as build_spinor_bundle_projection_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_charge_boundary_projection_gate.md")
@@ -9,6 +21,10 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_charge_boundary_pr
 
 
 def build_payload() -> dict:
+    projected_current = build_projected_dirac_current_payload()
+    spinor_projection = build_spinor_bundle_projection_payload()
+    projected_current_ready = projected_current["projected_dirac_matter_current_ready"]
+    spinor_projection_ready = spinor_projection["spinor_bundle_projection_ready"]
     declared = {
         "curved_Dirac_charge_bibliography_checked": True,
         "projected_Dirac_matter_current_gate_declared": True,
@@ -22,8 +38,8 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "projected_Dirac_current_ready": False,
-        "spinor_projection_ready": False,
+        "projected_Dirac_current_ready": projected_current_ready,
+        "spinor_projection_ready": spinor_projection_ready,
         "plus_charge_integral_ready": False,
         "minus_charge_integral_ready": False,
         "Z2Sigma_projected_charge_ready": False,
@@ -48,6 +64,20 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "projected_dirac_matter_current": {
+                "gate": projected_current["status"],
+                "ready": projected_current_ready,
+                "primary_blocker": projected_current.get("primary_blocker", "unknown"),
+                "closure": projected_current["closure"],
+            },
+            "spinor_bundle_projection": {
+                "gate": spinor_projection["status"],
+                "ready": spinor_projection_ready,
+                "primary_blocker": spinor_projection.get("primary_blocker", "unknown"),
+                "closure": spinor_projection["closure"],
+            },
+        },
         "formulas": {
             "plus_charge": "N_+ = integral_{C_+} J_+^mu dSigma_mu",
             "minus_charge": "N_- = integral_{C_-} J_-^mu dSigma_mu",
@@ -56,6 +86,18 @@ def build_payload() -> dict:
         },
         "dirac_charge_boundary_projection_ledger_declared": all(declared.values()),
         "dirac_charge_boundary_projection_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else (
+                projected_current["primary_blocker"]
+                if not projected_current["gate_passed"]
+                else spinor_projection["primary_blocker"]
+                if not spinor_projection["gate_passed"]
+                else "Dirac_charge_integrals_and_Z2Sigma_projection"
+            )
+        ),
         "next_required": [
             "pass_projected_Dirac_matter_current_gate",
             "pass_spinor_bundle_projection_gate",
@@ -76,6 +118,7 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['dirac_charge_boundary_projection_ledger_declared']}`",
         f"Charge projection ready: `{payload['dirac_charge_boundary_projection_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Formulas",
     ]

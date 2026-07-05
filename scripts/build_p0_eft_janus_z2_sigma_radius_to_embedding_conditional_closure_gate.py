@@ -60,6 +60,12 @@ def build_payload() -> dict:
         "radius_to_embedding_unconditional_ready": all(declared.values())
         and all(conditional.values())
         and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(conditional.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(conditional.values()) and all(closure.values())
+            else "R_Sigma_of_a"
+        ),
         "next_required": [
             "solve_R_Sigma_of_a_from_throat_radius_variational_equation",
             "instantiate_conditional_embedding_map_with_R_Sigma_of_a",

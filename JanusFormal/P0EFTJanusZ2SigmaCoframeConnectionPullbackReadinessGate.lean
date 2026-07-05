@@ -14,6 +14,7 @@ structure CoframeConnectionPullbackReadinessGate where
   tangentNormalOrientationGateImported : Prop
   coframeConnectionPullbackGateImported : Prop
   pullbackCoframeConnectionBibliographyChecked : Prop
+  activeEmbeddingGeometryManifestValid : Prop
   activeEmbeddingReady : Prop
   tangentFrameReady : Prop
   normalOrientationReady : Prop
@@ -50,6 +51,13 @@ theorem coframe_connection_readiness_requires_embedding
     (hReady : coframeConnectionPullbackReadinessReady g) :
     g.activeEmbeddingReady := by
   exact hReady.2.1
+
+theorem valid_embedding_manifest_can_feed_coframe_embedding
+    (g : CoframeConnectionPullbackReadinessGate)
+    (hManifest : g.activeEmbeddingGeometryManifestValid)
+    (hImplies : g.activeEmbeddingGeometryManifestValid -> g.activeEmbeddingReady) :
+    g.activeEmbeddingReady := by
+  exact hImplies hManifest
 
 theorem coframe_connection_readiness_feeds_pullback
     (g : CoframeConnectionPullbackReadinessGate)

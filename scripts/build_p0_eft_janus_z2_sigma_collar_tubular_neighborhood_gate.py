@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_smooth_embedded_throat_gate import (
+    build_payload as build_smooth_embedded_throat_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_collar_tubular_neighborhood_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_collar_tubular_neighborh
 
 
 def build_payload() -> dict:
+    throat = build_smooth_embedded_throat_payload()
     declared = {
         "collar_neighborhood_bibliography_checked": True,
         "tubular_neighborhood_bibliography_checked": True,
@@ -22,7 +32,7 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "sigma_smooth_embedded_derived": False,
+        "sigma_smooth_embedded_derived": throat["sigma_smooth_embedded_throat_ready"],
         "normal_bundle_derived": False,
         "plus_boundary_collar_derived": False,
         "minus_boundary_collar_derived": False,
@@ -53,6 +63,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "sigma_smooth_embedded_throat": {
+                "gate": throat["status"],
+                "ready": throat["sigma_smooth_embedded_throat_ready"],
+                "closure": throat["closure"],
+                "primary_blocker": throat.get("primary_blocker"),
+            },
+        },
         "formulas": {
             "plus_collar": "c_+ : Sigma x [0, eps) -> M_+",
             "minus_collar": "c_- : Sigma x [0, eps) -> M_-",
@@ -61,6 +79,13 @@ def build_payload() -> dict:
         },
         "collar_tubular_neighborhood_ledger_declared": all(declared.values()),
         "collar_tubular_neighborhood_ready": all(declared.values()) and all(closure.values()),
+        "standard_collar_tubular_theorems_available": True,
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else throat.get("primary_blocker", "sigma_smooth_embedded_throat")
+        ),
         "next_required": [
             "pass_sigma_smooth_embedded_throat_gate",
             "prove_sigma_is_smooth_embedded_throat",

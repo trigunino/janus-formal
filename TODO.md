@@ -18,6 +18,356 @@
 - Therefore: do not claim full no-fit cosmology yet.
 - Active next track: derive observational equations from the closed
   `Z2_tunnel_Sigma` base, not from archived cyclic Z4 modules.
+- BAO active readiness now reads the strict active manifest path
+  `outputs/active_z2_sigma/bao_inputs.json`; the path is currently missing, so
+  `H_Z2Sigma`, `c_s_Z2Sigma`, `z_d_Z2Sigma`, `r_d_Z2Sigma` and DESI chi2 remain
+  blocked rather than mocked.
+- BAO component writing now requires three strict upstream manifests:
+  `outputs/active_z2_sigma/background_scalars.json`,
+  `outputs/active_z2_sigma/flrw_components.json`, and
+  `outputs/active_z2_sigma/early_plasma.json`. All three are currently missing,
+  so `outputs/active_z2_sigma/bao_component_inputs.json` is not written.
+- `outputs/active_z2_sigma/background_scalar_inputs.json` is now the strict
+  upstream input manifest for writing `background_scalars.json`; it must provide
+  active `H0_Z2Sigma`, `omega_k_Z2Sigma`, and `G_Z2Sigma` provenance with no
+  observational H0 fit, Planck/LCDM prior, or archived Z4 reuse.
+- A strict background-scalar assembler can now write
+  `background_scalar_inputs.json` from active `background_H0_inputs.json`,
+  `background_curvature_inputs.json`, and `background_gravity_inputs.json`;
+  it remains blocked until those three active scalar inputs exist.
+- Strict atomic background writers can now produce those three scalar inputs
+  from active `background_H0_normalization_inputs.json`,
+  `background_curvature_normalization_inputs.json`, and
+  `background_gravity_normalization_inputs.json`; they remain blocked until the
+  active scale, projective curvature and low-energy gravity convention are
+  derived upstream.
+- `outputs/active_z2_sigma/flrw_component_inputs.json` is now the strict
+  upstream input manifest for writing `flrw_components.json`; it must provide
+  active Cartan-GHY, Holst/Nieh-Yan, matter-flux, and counterterm FLRW arrays
+  with non-Planck, non-LCDM, non-Z4 provenance.
+- Matter-flux has a strict zero-component subpath:
+  `outputs/active_z2_sigma/matter_flux_transparency_inputs.json ->
+  matter_flux_zero_components.json`. It only writes zeros when active Sigma
+  transparency is derived; it does not by itself unlock the full FLRW manifest.
+- The matter-flux frontier now marks transparency as the nearest non-circular
+  route: active projection requires `X_+/-[R_Sigma]`, while transparency can
+  reduce `E_matterFlux` without fitting `R_Sigma(a)`.
+- The transparency input itself can be written only from the active
+  no-normal-current gate plus active bulk-stress normal-flux cancellation/zero
+  projection and an active `a_grid`.
+- The transparency gate itself now also requires active normal-current
+  readiness, projected Dirac normal current readiness and bulk normal-flux
+  projection readiness before accepting any derived zero/cancellation boolean.
+- A strict merge gate can combine
+  `flrw_component_inputs_without_matter_flux.json + matter_flux_zero_components.json`
+  into `flrw_component_inputs.json`, but only with active provenance and aligned
+  grids.
+- Effective-fluid and numerical-background gates now consume those strict
+  manifests when present. Valid temporary manifests prove that `rho_eff/p_eff`
+  and `H_Z2Sigma(a)` readiness can turn true without Planck/LCDM/Z4 reuse.
+- Early-plasma density and Thomson-drag gates now consume the strict
+  `outputs/active_z2_sigma/early_plasma.json` artifact when present. The true
+  open derivations are active baryon/photon normalization, ionization history,
+  free-electron density, and `Gamma_drag_Z2Sigma`.
+- `outputs/active_z2_sigma/early_plasma_inputs.json` is now the strict upstream
+  input manifest for writing `early_plasma.json`; it must provide active
+  baryon/photon/ionization/Thomson normalizations with non-Planck, non-LCDM,
+  non-Z4 provenance.
+- A strict early-plasma assembler can now write `early_plasma_inputs.json` from
+  active `early_plasma_baryon_photon_inputs.json` and
+  `early_plasma_ionization_thomson_inputs.json`; it remains blocked until those
+  two active manifests exist.
+- Strict upstream writers can now produce those two partial manifests from
+  active `early_plasma_baryon_photon_normalization_inputs.json` and
+  `early_plasma_ionization_thomson_normalization_inputs.json`; both remain red
+  until real active normalizations are supplied.
+- The temporary BAO dry-run now exercises the full strict-manifest plumbing:
+  `background_scalars.json + flrw_components.json + early_plasma.json ->
+  bao_component_inputs.json -> bao_inputs.json -> DESI chi2`. It remains
+  `dry_run_only`, not an official BAO evaluation.
+- `build_p0_eft_janus_z2_sigma_active_inputs_to_official_bao_gate.py` now
+  provides the official one-command path from the three active input manifests
+  to DESI DR2 BAO chi2. It remains blocked until real active input manifests
+  exist.
+- The official one-command BAO gate uses an atomic preflight: it does not write
+  any intermediate official manifest unless all three active input manifests are
+  present.
+- The BAO readiness audit now exposes a `remaining_artifact_frontier` and a
+  `physical_derivation_frontier`. Current plumbing gaps should not be expanded
+  into more writer gates until the listed active physical inputs exist.
+- The BAO readiness audit now also reports
+  `nearest_component_frontier = cartan_ghy`: builders are ready, but live
+  evaluation still needs active `DeltaK_s/tau(a)` from the tunnel embedding and
+  `background_scalars.json` for `kappa*rho_crit0`.
+- Current physical frontier:
+  active `H0/G/omega_k` conventions, active `R_Sigma(a)` and `X_+/- (a)`,
+  Holst/Nieh-Yan FLRW stress, Sigma counterterm stress, Sigma transparency,
+  baryon/photon normalization, and ionization/Thomson drag inputs.
+- Normalization policy: `H0_Z2Sigma` is not an observational H0 fit in BAO
+  ratios when `H_Z2Sigma`, `z_d` and `r_d` are recomputed self-consistently.
+  It still enters the physical drag equation `Gamma_drag = H`, so it cannot be
+  varied independently of the active early-plasma inputs.
+- A scale-free BAO formulation is available:
+  `E_Z2Sigma(z)`, `c_s^Z2Sigma/c`, `z_d^Z2Sigma`,
+  `H0*r_d/c = integral (c_s/c)/E dz`. It is equivalent to the dimensional
+  DESI ratio calculator and does not unblock the official BAO gate by itself.
+  The active builders now expose `E_Z2Sigma(z)` from normalized effective
+  density and `Gamma_drag^Z2Sigma/H0` for scale-free drag solving.
+- The active early-plasma helpers now expose `c_s^Z2Sigma/c` directly from
+  active baryon/photon densities. The builder is ready; values remain blocked
+  until `rho_baryon_Z2Sigma` and `rho_photon_Z2Sigma` are derived.
+- Minimal scale-free BAO primitive contract:
+  `E_Z2Sigma(z)`, `c_s^Z2Sigma/c`, `Gamma_drag^Z2Sigma/H0`, and
+  `omega_k_Z2Sigma`. From those, the active path derives `z_d`, `rhat_d`,
+  DESI DR2 BAO prediction vector and chi2. This contract is not ready until
+  the primitives are derived from active Z2/Sigma physics. The contract gate now
+  validates the strict `bao_component_inputs.json` manifest dynamically: if that
+  active manifest exists and passes provenance checks, the scale-free primitive
+  contract becomes ready without any Planck/LCDM or archived Z4 input. The
+  generated `bao_scale_free_inputs.json` stores `E_Z2Sigma`, `c_s/c`,
+  `Gamma_drag/H0`, `z_d`, and `rhat_d` explicitly for audit. The scale-free
+  chi2 gate now reports primitive samples, prediction/residual vector lengths,
+  and `Gamma_drag/H0` availability alongside the DESI chi2.
+- A one-command scale-free BAO chi2 gate now runs the strict chain
+  `background_scalar_inputs + flrw_component_inputs + early_plasma_inputs ->
+  bao_component_inputs -> bao_scale_free_inputs -> DESI chi2`. It remains
+  blocked in the live workspace until the active physical input manifests exist.
+- The BAO readiness audit now reports a separate canonical scale-free artifact:
+  `outputs/active_z2_sigma/bao_scale_free_inputs.json`, driven by
+  `E_Z2Sigma`, `c_s/c`, `Gamma_drag/H0`, and `omega_k_Z2Sigma`, with no
+  observational H0 fit or archived Z4 input.
+- A primitive-entry BAO gate now accepts
+  `outputs/active_z2_sigma/bao_scale_free_primitive_inputs.json` with active
+  `E_Z2Sigma`, `c_s/c`, `Gamma_drag/H0`, and `omega_k_Z2Sigma`, solves
+  `Gamma_drag/H0 = E` for `z_d`, writes `bao_scale_free_inputs.json`, then runs
+  the DESI DR2 scale-free chi2. The primitive manifest now has a public strict
+  writer/loader in `z2_sigma_active_inputs.py`, so future physical derivations do
+  not hand-write JSON. The live gate remains red until that primitive manifest is
+  derived from Z2/Sigma physics.
+- A split primitive assembler is available:
+  `bao_scale_free_background_primitive_inputs.json` supplies `E_Z2Sigma` and
+  `omega_k_Z2Sigma`; `bao_scale_free_plasma_primitive_inputs.json` supplies
+  `c_s/c` and `Gamma_drag/H0`. The assembler writes the canonical
+  `bao_scale_free_primitive_inputs.json`. Both split manifests now have public
+  strict writers/loaders in `z2_sigma_active_inputs.py`.
+- A split-primitive-to-chi2 gate now composes the direct canonical path:
+  background primitive + plasma primitive -> primitive manifest -> scale-free
+  BAO inputs -> DESI DR2 prediction/residual vectors and chi2.
+- A primitive derivation frontier gate now records the exact upstream physics
+  still required before DESI BAO can be evaluated from active Z2/Sigma:
+  derive `E_Z2Sigma`, `omega_k_Z2Sigma`, `c_s/c`, and `Gamma_drag/H0` into the
+  two split primitive manifests. It remains red until both manifests are valid
+  and aligned.
+- A physical-input obligation gate now records the three strict active manifests
+  that must exist before that primitive frontier can feed DESI DR2:
+  `background_scalar_inputs.json`, `flrw_component_inputs.json`, and
+  `early_plasma_inputs.json`. It forbids mocks, compressed Planck/LCDM inputs,
+  archived Z4 reuse, observational H0 fits, and phenomenological Holst BAO scan
+  values.
+- An early-plasma physical-input obligation gate now isolates the `c_s` and
+  `Gamma_drag` side of the BAO blocker: active baryon/photon normalizations plus
+  active ionization/Thomson normalizations are required before the existing
+  builders may derive `c_s/c`, `Gamma_drag`, and then `z_d` with `E_Z2Sigma`.
+- When a strict active `bao_component_inputs.json` exists, a component-to-split
+  primitive gate can now write the two scale-free primitive manifests directly:
+  background primitives from the active effective fluid/curvature and plasma
+  primitives from the active photon-baryon/drag sector.
+- A narrower background-only scale-free gate can now write
+  `bao_scale_free_background_primitive_inputs.json` from active
+  `flrw_components.json` plus `background_scale_free_omega_k_inputs.json`,
+  without passing through a dimensional `H0` BAO component manifest.
+- A narrower plasma-only scale-free gate can now write
+  `bao_scale_free_plasma_primitive_inputs.json` from active `early_plasma.json`
+  plus active `background_H0_inputs.json`, producing `c_s/c` and
+  `Gamma_drag/H0` with no observational H0 fit or archived Z4 input.
+- A one-command component-to-primitive-chi2 gate now composes the auditable path
+  `bao_component_inputs.json -> split primitives -> canonical primitive ->
+  scale-free BAO inputs -> DESI DR2 chi2`. It remains red in the live workspace
+  until the active component manifest exists.
+- A one-command active-inputs-to-primitive-chi2 gate now composes the full
+  auditable path from `background_scalar_inputs.json`, `flrw_component_inputs.json`
+  and `early_plasma_inputs.json` through the primitive chain to DESI DR2 chi2.
+  It uses atomic preflight and writes no intermediates until all three inputs
+  exist; it now also blocks if the counterterm radial reduction frontier is not
+  closed, preventing placeholder `counterterm_rho/p` arrays from reaching BAO.
+- Canonical first BAO artifact to produce:
+  `outputs/active_z2_sigma/background_scalars.json`, sourced only from active
+  `background_H0_inputs.json`, `background_curvature_inputs.json`, and
+  `background_gravity_inputs.json`. This must not use compressed Planck/LCDM,
+  archived Z4, or an observational H0 fit.
+- Curvature policy: the closed projective/tunnel `2:1` topology does not by
+  itself fix FLRW `k_Z2Sigma` or numeric `omega_k_Z2Sigma`; derive the active
+  spatial metric branch and FLRW curvature radius/embedding scale before
+  writing `background_curvature_inputs.json`. The branch contract is declared
+  through `R3_Z2Sigma = 6*k_Z2Sigma/R_curv_Z2Sigma^2`; its values remain blocked
+  until `X_+/- (a)` or the induced FLRW spatial metric is derived.
+- `P0EFTJanusZ2SigmaRP3SpatialSliceCurvatureSignGate` is now the conditional
+  active route for the sign: an active `S3 -> RP3` spatial slice can write
+  `k_Z2Sigma = +1`, while `R_curv_Z2Sigma` and `omega_k_Z2Sigma` remain open.
+- `P0EFTJanusZ2SigmaRP3SpatialSliceInputWriterFromProjectiveFoliationGate`
+  narrows the required proof: supply an active projective foliation whose FLRW
+  leaves are antipodal `S3 -> RP3` leaves before the sign writer can pass.
+- `P0EFTJanusZ2SigmaProjectiveFoliationCompatibilityGate` blocks the shortcut
+  from global `S4 -> RP4` to a single `RP3` FLRW slice: generic `S3` leaves are
+  paired by the antipodal map, so an active invariant-leaf time gauge must
+  still be derived for the `RP3` branch.
+- `P0EFTJanusZ2SigmaProjectiveSpatialSliceTopologyBranchGate` tracks the other
+  live possibility: paired leaves select an `S3` representative branch, not an
+  `RP3` branch, and the volume factor changes from `1` to `2`. The next active
+  input is `outputs/active_z2_sigma/time_gauge_leaf_action_inputs.json`.
+- `P0EFTJanusZ2SigmaSignedCoverTimeParityGate` is now the upstream provenance
+  writer: `outputs/active_z2_sigma/signed_cover_time_coordinate_inputs.json`
+  must supply the active signed `S4` cover time coordinate before parity can be
+  written.
+- `P0EFTJanusZ2SigmaTimeGaugeLeafActionInputWriterGate` narrows that blocker to
+  `outputs/active_z2_sigma/active_time_coordinate_parity_inputs.json`; even
+  parity selects invariant `RP3`, odd parity selects paired `S3`.
+- `omega_k_Z2Sigma` formula path is now explicit:
+  `omega_k = -k_Z2Sigma c^2 / (H0_Z2Sigma^2 R_curv_Z2Sigma^2)`.
+  Formula and strict writer are ready; values remain blocked until the active
+  FLRW branch/tunnel embedding fixes both `k_Z2Sigma` and `R_curv_Z2Sigma` and
+  supplies `background_curvature_branch_inputs.json`.
+- `P0EFTJanusZ2SigmaH0RadiusFLRWToScaleFreeBackgroundPipelineGate` now validates
+  the strict background route `H0,R_curv,k + flrw_components -> omega_k ->
+  E_Z2Sigma(z)` for scale-free BAO. It remains red live until active `H0`,
+  `R_curv/k`, and FLRW component densities are supplied.
+- `P0EFTJanusZ2SigmaCurvatureScaleFLRWToScaleFreeBackgroundPipelineGate` validates
+  the direct scale-free background route
+  `k + H0*R_curv/c + flrw_components -> omega_k -> E_Z2Sigma(z)`. The live
+  `omega_k_Z2Sigma` side is now evaluable; the remaining background blocker is
+  the active `flrw_components.json` manifest, now decomposed into Cartan-GHY,
+  Holst/Nieh-Yan, counterterm and transparent matter-flux component frontiers.
+- `P0EFTJanusZ2SigmaDimensionlessCurvatureScaleFromBranchGate` now bridges the
+  physical curvature branch into the direct scale-free route by deriving
+  `H0*R_curv/c` from `background_curvature_branch_inputs.json` when that active
+  manifest exists. It does not supply or fit `H0` or `R_curv`.
+- `P0EFTJanusZ2SigmaDimensionfulScaleSeparationObligationGate` makes that
+  separation explicit: the product `H0*R_curv/c` is not invertible into separate
+  dimensional `H0` or `R_curv`, and cannot supply volume or `Gamma_drag/H0`.
+- `P0EFTJanusZ2SigmaBackgroundPhysicalInputObligationGate` isolates the
+  background side of the BAO blocker: active `H0_Z2Sigma`, active FLRW
+  curvature branch (`k_Z2Sigma`, `R_curv_Z2Sigma`), and active `G_Z2Sigma`
+  must be supplied before `E_Z2Sigma` and `Gamma_drag/H0` can be evaluated.
+- `P0EFTJanusZ2SigmaBackgroundGravityCODATAConventionGate` can now write the
+  active `G_Z2Sigma` input from the explicit NIST/CODATA Newtonian gravity
+  convention. This is not a Planck/LCDM prior and not a cosmological fit.
+- `P0EFTJanusZ2SigmaEarlyPlasmaCODATAConstantsGate` can now write the
+  CODATA constants needed by the early-plasma side: radiation constant, proton
+  mass as baryon-mass convention, Thomson cross-section, electron mass,
+  `k_B`, `hbar`, `eV`, and hydrogen ionization energy. This does not fix
+  active `rho_baryon0`, `T_gamma0`, `x_e`, or composition.
+- `P0EFTJanusZ2SigmaEarlyPlasmaModelNormalizationAssemblerGate` can combine
+  CODATA constants and FIRAS temperature with a future active
+  model-normalization manifest to write the existing baryon/photon and
+  ionization/Thomson split inputs. It stays red until baryon and ionization
+  normalizations are derived.
+- The model-normalization manifest now needs only active baryon number density,
+  ionization fraction and electrons-per-baryon. `rho_baryon0` is derived from
+  `n_b0*m_b` using the CODATA baryon-mass convention.
+- `P0EFTJanusZ2SigmaEarlyPlasmaPhotonTemperatureFIRASGate` records the direct
+  non-compressed COBE/FIRAS monopole temperature `T_gamma0 = 2.72548 K`. It is
+  not a Planck/LCDM compressed parameter and not an observational fit, but it
+  also does not fix baryon or ionization normalizations.
+- `P0EFTJanusZ2SigmaEarlyPlasmaPhotonDensityFIRASCODATAGate` derives
+  `rho_photon0 = a_rad*T_gamma0^4` from CODATA plus FIRAS. This closes the
+  photon-normalization sub-block while leaving baryon and ionization inputs open.
+- `P0EFTJanusZ2SigmaEarlyPlasmaPhotonDensityHistoryFIRASCODATAGate` derives the
+  conserved photon history `rho_photon(z)=rho_photon0*(1+z)^4` from that closed
+  photon normalization. It does not close baryon loading or drag opacity.
+- `P0EFTJanusZ2SigmaEarlyPlasmaSahaIonizationReadinessGate` declares the
+  non-Planck Saha-equilibrium route for `x_e(z)` using active `n_b(z)` and
+  FIRAS `T_gamma(z)`. It remains red until active baryon number is available;
+  Peebles/RECFAST precision remains a later upgrade.
+- `P0EFTJanusZ2SigmaSahaIonizationHistoryGate` now computes the active hydrogen
+  Saha history once `n_b0`, FIRAS `T_gamma0`, and CODATA/NIST constants exist.
+  It remains red in the live pipeline until the Noether/volume baryon-number
+  density is derived and the resulting history is fed into the plasma manifest.
+- `P0EFTJanusZ2SigmaEarlyPlasmaSahaInputsAssemblerGate` can assemble
+  `early_plasma_inputs.json` from CODATA constants, FIRAS `T_gamma0`, and the
+  active Saha history. It preserves the grid-valued `x_e(z)` and bypasses the
+  old scalar `ionization_fraction_Z2Sigma` path when a history is available.
+- `P0EFTJanusZ2SigmaNoetherVolumeToSahaEarlyPlasmaPipelineGate` validates the
+  full downstream route `N_b/V0 -> n_b0 -> x_e(z) -> early_plasma_inputs ->
+  early_plasma.json`. It remains red live because the active projected baryon
+  Noether charge and active spatial volume are not yet derived. Explicit active
+  charge/volume manifests passed by path now build `n_b0` and downstream
+  Saha/plasma fixtures without coupling to default output paths. The live report
+  now exposes `baryon_density`, `saha_history`, `saha_inputs`, and
+  `early_plasma_manifest` as separate frontiers.
+- `P0EFTJanusZ2SigmaCurvatureChargeToSahaEarlyPlasmaPipelineGate` extends that
+  route upstream to `R_curv,k -> RP3 volume -> N_b/V0 -> x_e(z) -> plasma`.
+  It reduces the live plasma blocker to active curvature radius/branch plus
+  projected baryon Noether charge. Its report now exposes three nested
+  frontiers: Dirac charge-boundary projection, spatial-volume input from the
+  curvature branch, and downstream baryon-density/Saha manifest assembly.
+- `P0EFTJanusZ2SigmaSpatialVolumeInputWriterFromCurvatureBranchGate` now
+  preflights the live curvature-branch assembler; a dimensionful curvature
+  branch fixture cannot self-certify the active spatial volume.
+- `P0EFTJanusZ2SigmaPhysicalInputsToScaleFreeBAOChi2Gate` now composes the
+  physical active route end-to-end:
+  `k + H0*R_curv/c + flrw_components -> background primitive`,
+  `R_curv/k + projected baryon charge + CODATA/FIRAS/Saha -> plasma primitive`,
+  then `split primitives -> scale-free DESI DR2 prediction/residual vectors and
+  chi2`. It uses the direct FIRAS photon-temperature manifest by default and
+  now reports structured frontiers for background, curvature+charge plasma, and
+  plasma primitive readiness, including the nested `early_plasma_manifest` and
+  `active_h0_manifest` plasma blockers. The H0 blocker is wired to the active
+  `background_H0_normalization_inputs.json -> background_H0_inputs.json` writer.
+  It also emits `physical_frontier_summary`, a flat checklist of the remaining
+  background, matter-flux, curvature-volume, baryon-charge and early-plasma
+  blockers.
+  It remains red live until active `H0`, `R_curv/k`, FLRW components, projected
+  baryon Noether charge, and active early-plasma/H0 manifests are supplied.
+- `P0EFTJanusZ2SigmaBAOActivePrimitivePhysicalInputObligationGate` now consumes
+  the active scale-free `omega_k_Z2Sigma` artifact when present; live BAO
+  primitive readiness is therefore blocked by FLRW component inputs and
+  early-plasma inputs, not by raw Planck/LCDM background scalars.
+- `P0EFTJanusZ2SigmaFLRWComponentsFromComponentSourcesPipelineGate` now composes
+  the active source-component route to `flrw_components.json`:
+  Cartan-GHY, Holst/Nieh-Yan, counterterm and transparent matter-flux component
+  manifests are merged and written through the strict FLRW manifest writer. It
+  remains red live until those component manifests are derived. The non-matter
+  assembler now reports diagnostic subfrontiers for Cartan-GHY, Holst/Nieh-Yan,
+  and counterterm components, so this blocker is traceable without invoking
+  archived Z4 or Planck/LCDM inputs.
+- The throat-radius frontier now reports the nearest radial blockers explicitly:
+  Cartan-GHY is structurally reduced, but `R_Sigma(a)` and then `DeltaK_s/tau(a)`
+  remain blocked until matter-flux and counterterm radial blocks are reduced.
+- The active embedding-to-FLRW-K adapter now reports the exact upstream frontier:
+  derive `R_Sigma(a)`, `X_+/- (a)`, tangent frames, unit normals, and
+  `DeltaK_s/tau(a)` before Cartan-GHY can write live FLRW components. This is
+  the current non-circular Cartan path; it does not use archived Z4 or
+  Planck/LCDM inputs.
+- The `R_Sigma` solution bridge now writes both
+  `active_tunnel_embedding_geometry_inputs.json` and
+  `background_curvature_branch_inputs.json` when, and only when, a strict
+  active no-fit `rsigma_solution_certificate.json` exists and the throat-radius
+  frontier is closed.
+- The same bridge now writes the two atomic dimensional normalization inputs
+  `background_H0_normalization_inputs.json` and
+  `background_curvature_radius_normalization_inputs.json` from that strict
+  certificate, keeping `H0_Z2Sigma` and `R_curv_Z2Sigma` separate rather than
+  inverting the scale-free product.
+- The matter-flux transparency input writer now requires both the normal-current
+  closure and the bulk-stress projection/cancellation readiness before writing
+  a zero-flux transparency manifest; closure booleans alone are not sufficient.
+- The bulk-stress normal-flux route now imports the active bulk stress `of(a)`
+  frontier explicitly; projected zero-flux cannot close while `T_+/-^{mu nu}(a)`
+  are still unavailable.
+- The counterterm tetrad residual channel now declares the metric subchannel
+  formula `R_e_metric^{aI}` from `delta h_ab(delta e)`, but the active value is
+  still not ready; this does not close the full tetrad residual channel.
+- A strict counterterm tetrad metric-residual coefficient writer now exists. It
+  computes `R_e_metric^{aI}` only from active `R_h_ab` and `e_bI_on_Sigma`
+  inputs and remains red until those artifacts exist.
+- The spinor boundary projection map now imports the projective-gluing normal
+  orientation sign `epsilon_Z2=-1`; Z2 normal orientation is partial-ready, but
+  boundary spinors, unit-normal Clifford action, idempotence and self-adjointness
+  still block the projected spinor route.
+- The coupled radius-flux function-space gate now imports the standard Sobolev
+  trace/product threshold transport into the active blocker report: trace and
+  product thresholds are closed, while normal/tangent frame trace continuity
+  remains blocked on the active embedding.
 
 ## Pure math closure
 
@@ -80,7 +430,22 @@
     - keeps `R_Sigma(a)` unsolved until both missing radial blocks close.
   - [x] Add `P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGate`:
     - records that the variational equation and conditional embedding map are ready;
-    - keeps the no-fit radius solution blocked by matter-flux and counterterm radial blocks.
+    - imports matter-flux transparency/projection, coupled radius-flux, and counterterm radial frontiers;
+    - keeps the no-fit radius solution blocked by live upstream matter-flux and counterterm radial statuses;
+    - reports the nearest unresolved radial block as diagnostic-only (`matter_flux` first in the current workspace).
+  - [x] Wire active BAO runner through the strict `R_Sigma` input layer:
+    - writes active Sigma/RP3 `unit_intrinsic_metric_q_ab_inputs.json`;
+    - checks `rsigma_certificate_payload` and isotropic balance inputs without using Planck/LCDM/Z4 archives;
+    - runs matter-flux transparency input, zero-component and radial-block gates before `E_matterFlux`;
+    - reports the next physical target as `E_HolstNiehYan`, `E_matterFlux`, and `E_counterterm` radial derivation.
+  - [ ] Derive non-Cartan `R_Sigma` radial terms:
+    - derive Sigma torsion pullback and Immirzi profile for `E_HolstNiehYan(a)`;
+    - derive active Sigma transparency or projected flux for `E_matterFlux(a)`;
+    - prove counterterm residual exactness, integrate the primitive and reduce `E_counterterm(a)`;
+    - then rerun the isotropic `R_Sigma` solver and propagate Cartan/GHY to the BAO runner.
+  - [x] Tighten `P0EFTJanusZ2SigmaRSigmaSolutionToEmbeddingCurvatureBranchGate`:
+    - bridge writes now require matter-flux and counterterm blocks, the throat solution certificate, and `embedding_unblocked_by_radius_solution`;
+    - a complete certificate alone cannot write embedding or curvature manifests.
   - [x] Add `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate`:
     - reduces `E_CartanGHY` structurally from `delta_RSigma[sqrt(|h|) K]`;
     - keeps `E_CartanGHY(a)` blocked on `R_Sigma(a)` and `X_±(a)`.
@@ -98,7 +463,9 @@
     - keeps active embedding blocked until `R_Sigma(a)` is solved from the radial variational equation.
   - [x] Add `P0EFTJanusZ2SigmaActiveEmbeddingReadinessGate`:
     - records that the conditional thin-shell embedding map is ready;
-    - keeps active `X_+/- (a)`, tangent frames and unit normals blocked on `R_Sigma(a)`.
+    - imports live radius-to-embedding and embedding-from-radius statuses without importing the throat-radius frontier cycle;
+    - keeps active `X_+/- (a)`, tangent frames and unit normals blocked on `R_Sigma(a)`;
+    - now also requires the throat-radius solution certificate and `embedding_unblocked_by_radius_solution` before active embedding readiness can pass.
   - [x] Add `P0EFTJanusZ2SigmaEmbeddingTangentFrameTransportGate`:
     - records `E_a_pm^mu = partial_a X_pm^mu`;
     - keeps tangent frames blocked until active `X_+/- (a)` is derived.
@@ -111,10 +478,13 @@
     - marks Z2-oriented pullback transport ready from the projective sign.
   - [x] Add `P0EFTJanusZ2SigmaCoframeConnectionPullbackReadinessGate`:
     - closes the standard differential-form/coframe/connection pullback formulae;
+    - imports live active-embedding and tangent-normal orientation statuses;
     - keeps actual coframe and spin-connection pullbacks blocked on active embedding, tangent frames and unit normals.
   - [x] Add `P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGate`:
     - imports differential-form pullback and Cartan first structure equation;
-    - keeps Sigma torsion pullback blocked on embedding, coframe and connection pullbacks.
+    - records Cartan torsion and `X_Sigma^*(T^I)` pullback formula subchannels as partial-ready;
+    - imports live coframe/connection pullback readiness;
+    - keeps Sigma torsion pullback blocked on embedding, coframe/connection pullbacks and FLRW irreducible split.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxRadialBlockGate`:
     - imports the normal-tangent flux term `T_munu e_a^mu n^nu`;
     - keeps `E_matterFlux` blocked until transparency or active flux is derived.
@@ -123,7 +493,13 @@
     - forbids choosing the matter-flux route by observational fit.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxFrontierGate`:
     - records transparency and active-projection routes as the exact flux frontier;
+    - imports live transparency, active-projection, route-decision and radial-block statuses;
     - keeps `E_matterFlux` blocked until one route is derived.
+  - [x] Add `P0EFTJanusZ2SigmaFluxProjectionDomainGate`:
+    - records Sigma and Z2 coorientation as available from the projective tunnel;
+    - keeps the flux projection domain blocked on resolved frame bundle,
+      active `X_±(a)`, tangent traces and unit normals;
+    - does not derive transparency, active flux or `E_matterFlux`.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxTransparencyReadinessGate`:
     - records current and stress-flux transparency criteria from thin-shell literature;
     - keeps transparency blocked on active embedding, Sigma normals, normal current and bulk-stress cancellation.
@@ -132,6 +508,7 @@
     - requires either independently derived transparency or a coupled radius-flux system.
   - [x] Add `P0EFTJanusZ2SigmaCoupledRadiusFluxSystemGate`:
     - declares coupled unknowns `R_Sigma(a)`, `X_+/-[R_Sigma]`, and `F_a^Z2Sigma(a)`;
+    - imports live function-space and well-posedness frontiers;
     - keeps the coupled system blocked until well-posedness and solution are derived.
   - [x] Add `P0EFTJanusZ2SigmaCoupledRadiusFluxWellPosednessGate`:
     - declares the local existence/uniqueness/continuous-dependence obligations;
@@ -153,10 +530,12 @@
     - keeps their trace continuity/support open until transported from embedding regularity.
   - [x] Add `P0EFTJanusZ2SigmaCoupledRadiusFluxEmbeddingFrameTraceTransportGate`:
     - states conditional transport from regular co-oriented nondegenerate embedding to frame traces;
+    - consumes the flux-domain gate so Z2/Sigma coorientation is no longer a live blocker;
     - keeps the transport blocked until embedding regularity/equivariance closes.
   - [x] Add `P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGate`:
     - imports Spin/Pin obstruction machinery and the RP4 Pin+ result;
     - declares `S_+ -> M_+` and `S_- -> M_-`;
+    - indexes `ResolvedTunnelPinLiftGate` as the upstream frontier;
     - keeps resolved-tunnel Pin lift and active bundle data open.
   - [x] Add `P0EFTJanusZ2SigmaBoundarySpinorRestrictionGate`:
     - imports generic hypersurface spinor restriction;
@@ -165,6 +544,9 @@
   - [x] Add `P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGate`:
     - imports APS and local Dirac-boundary projector machinery;
     - declares `P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, n_Z2, APS/Pin data)`;
+    - records Z2 coorientation as partial-ready from the flux-domain gate;
+    - records Sigma APS/Pin as closed upstream;
+    - keeps boundary spinor data and unit normal Clifford action blocked on active embedding/bundles;
     - forbids fitted boundary phases and keeps idempotence/self-adjointness open.
   - [x] Add `P0EFTJanusZ2SigmaSpinorBundleProjectionGate`:
     - imports spinor-bundle, boundary-restriction and APS-boundary machinery;
@@ -187,10 +569,13 @@
     - imports Dirac U(1) Noether-current machinery;
     - declares `J_Z2Sigma^mu = P_Z2Sigma(J_+^mu, J_-^mu; psi_Sigma^Z2)`;
     - keeps projected current blocked until the projected Dirac action is reduced.
+  - [x] Add `P0EFTJanusZ2SigmaReflectingSpinorBoundaryCurrentGate`:
+    - records the reflecting/MIT-bag route to `J_n=0`;
+    - keeps it blocked until the active spinor projector, normal Clifford action and zero-leakage condition are derived without a free boundary phase.
   - [x] Add `P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGate`:
     - projects the active Dirac current on Sigma normals;
     - declares `J_n^Z2Sigma = J_n^+ + eps_Z2 J_n^-`;
-    - keeps `J_n^Z2Sigma=0` blocked until current and normals are derived.
+    - keeps `J_n^Z2Sigma=0` blocked until current/normals or the reflecting spinor boundary-current route are derived.
   - [x] Add `P0EFTJanusZ2SigmaBulkStressNormalFluxCancellationGate`:
     - declares `F_a^Z2Sigma = F_a^+ + eps_Z2 F_a^-`;
     - imports thin-shell momentum-flux machinery;
@@ -206,6 +591,7 @@
     - keeps `J_n^Z2Sigma=0` blocked on active normals and projected Dirac currents.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxTransparencyGate`:
     - declares sufficient conditions for `F_a^Z2Sigma=0`;
+    - imports live normal-current, projected Dirac normal-current and bulk-stress flux frontiers;
     - keeps transparency open until normal current or Z2 flux cancellation is derived.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate`:
     - declares the non-transparent branch `F_a^± = T^±_munu e_a^mu n_±^nu`;
@@ -277,6 +663,7 @@
     - keeps reduction blocked until plus/minus matter actions are ready.
   - [x] Add `P0EFTJanusZ2SigmaResolvedTunnelPinLiftGate`:
     - declares the resolved tunnel frame-bundle Pin lift and plus/minus restrictions;
+    - indexes `ResolvedTunnelFrameBundleGate` as the upstream frontier;
     - keeps spinor bundles blocked until the active resolved-tunnel lift is derived.
   - [x] Add `P0EFTJanusZ2SigmaEmbeddingRegularityEquivarianceGate`:
     - records rank, topological embedding, regular radius and Z2-equivariance checks;
@@ -306,6 +693,80 @@
   - [x] Add `P0EFTJanusZ2SigmaDiracNumberNormalizationGate`:
     - declares Noether-charge integrals for `N_+`, `N_-` and projected throat charge;
     - keeps charge values blocked until active spinor boundary data/topology fixes them.
+  - [x] Add `P0EFTJanusZ2SigmaBaryonNumberDensityNoetherVolumeGate`:
+    - declares `n_b0_Z2Sigma = N_b,Z2Sigma / V0,Z2Sigma`;
+    - keeps `baryon_number_density0_m3_Z2Sigma` blocked until projected Noether charge
+      and active spatial volume are derived;
+    - forbids Planck/LCDM, archived Z4 and phenomenological BAO-fit provenance.
+  - [x] Add `P0EFTJanusZ2SigmaSpatialVolumeProjectiveSliceGate`:
+    - declares `V0_Z2Sigma = (1/2) integral_cover sqrt(det h_cover) d^3x`;
+    - specializes the closed projective slice to `V0_Z2Sigma = pi^2 R_curv^3`;
+    - requires closed projective spatial branch `k_Z2Sigma = +1`;
+    - keeps volume values blocked until active curvature radius/spatial branch
+      data are supplied with active provenance.
+  - [x] Add `P0EFTJanusZ2SigmaRP3SpatialSliceCurvatureSignGate`:
+    - conditionally writes `k_Z2Sigma = +1` from active `S3 -> RP3` spatial
+      slice provenance;
+    - keeps `R_curv_Z2Sigma` and `omega_k_Z2Sigma` blocked.
+  - [x] Add `P0EFTJanusZ2SigmaRP3SpatialSliceInputWriterFromProjectiveFoliationGate`:
+    - writes `rp3_spatial_slice_inputs.json` only from active projective
+      foliation data;
+    - requires FLRW slices to be identified with antipodal `S3 -> RP3` leaves.
+  - [x] Add `P0EFTJanusZ2SigmaProjectiveFoliationCompatibilityGate`:
+    - records that generic `S4` latitude leaves are antipodal-paired;
+    - blocks single-leaf `RP3` inference until an active invariant-leaf time
+      gauge is derived.
+  - [x] Add `P0EFTJanusZ2SigmaProjectiveSpatialSliceTopologyBranchGate`:
+    - distinguishes invariant-leaf `RP3` from paired-leaf representative `S3`;
+    - writes `k_Z2Sigma = +1` only after active time-gauge leaf action is supplied;
+    - keeps `R_curv_Z2Sigma` and `omega_k_Z2Sigma` open.
+  - [x] Add `P0EFTJanusZ2SigmaSignedCoverTimeCoordinateFromProjectiveTunnelGate`:
+    - derives the active signed cover-time coordinate from the S4 projective
+      tunnel pole axis;
+    - writes `signed_cover_time_coordinate_inputs.json` with antipodal pullback
+      `minus_self`;
+    - uses no Planck/LCDM background, archived Z4, or observational time-gauge
+      fit.
+  - [x] Add `P0EFTJanusZ2SigmaSignedCoverTimeParityGate`:
+    - narrows the upstream blocker to
+      `outputs/active_z2_sigma/signed_cover_time_coordinate_inputs.json`;
+    - maps antipodal pullback `plus_self` to even parity and `minus_self` to odd
+      parity;
+    - forbids Planck/LCDM background, archived Z4 reuse, and observational
+      time-gauge fitting.
+  - [x] Add `P0EFTJanusZ2SigmaTimeGaugeLeafActionInputWriterGate`:
+    - maps active antipodal time parity to leaf action type;
+    - forbids observational time-gauge fitting.
+  - [x] Add `P0EFTJanusZ2SigmaBackgroundCurvatureBranchInputsAssemblerGate`:
+    - merges active `H0_Z2Sigma`, `k_Z2Sigma`, and `R_curv_Z2Sigma` manifests
+      into `background_curvature_branch_inputs.json`;
+    - keeps the active curvature radius as the remaining embedding/throat-scale
+      input before `omega_k_Z2Sigma` can be evaluated.
+  - [x] Add `P0EFTJanusZ2SigmaScaleFreeOmegaKFromCurvatureScaleGate`:
+    - computes `omega_k_Z2Sigma = -k/(H0 R_curv/c)^2` for scale-free DESI BAO;
+    - avoids a dimensional observational `H0` in the BAO ratio path;
+    - keeps `H0_R_curv_over_c_Z2Sigma` as an active dimensionless curvature
+      scale obligation.
+  - [x] Add `P0EFTJanusZ2SigmaSpatialVolumeInputWriterFromCurvatureBranchGate`:
+    - consumes active `background_curvature_branch_inputs.json`;
+    - converts `R_curv_Z2Sigma_Mpc` to `R_curv_Z2Sigma_m`;
+    - requires `k_Z2Sigma = +1`;
+    - writes `spatial_volume_projective_slice_inputs.json` only from active provenance;
+    - records that `H0_R_curv_over_c_Z2Sigma` alone cannot determine physical volume.
+  - [x] Clarify dimensional H0/R_curv blockers:
+    - `BackgroundAtomicInputWriterGates` records that `H0_R_curv_over_c_Z2Sigma`
+      is insufficient to determine dimensional `H0_Z2Sigma`;
+    - `BackgroundCurvatureRadiusInputWriterGate` records the matching
+      dimensional `R_curv_Z2Sigma` blocker;
+    - live missing artifacts are
+      `outputs/active_z2_sigma/background_H0_normalization_inputs.json` and
+      `outputs/active_z2_sigma/background_curvature_radius_normalization_inputs.json`.
+  - [x] Add `P0EFTJanusZ2SigmaProjectedBaryonNoetherChargeInputGate`:
+    - validates `projected_baryon_number_charge_Z2Sigma` only after projected
+      Dirac current and charge-boundary projection readiness;
+    - preflights the live Dirac charge-boundary projection gate, so fixture/source
+      manifests cannot self-certify the projected baryon charge;
+    - forbids free projection weights and observational baryon fits.
   - [x] Add `P0EFTJanusZ2SigmaDiracHolstVertexOfAGate`:
     - imports the generic Holst-fermion torsion-mediated four-fermion vertex;
     - keeps matrix elements blocked on active torsion, spin current, Immirzi profile and Sigma projection.
@@ -335,30 +796,38 @@
     - keeps expansion blocked until the explicit unique density is derived.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradResidualChannelGate`:
     - isolates the coframe/tetrad residual coefficient `R_e`;
+    - imports the live tetrad-variation transport readiness frontier;
+    - records the metric residual subchannel as partial-only;
     - blocks until `delta e` is transported to `delta h`, `delta K` and torsion data.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradVariationTransportGate`:
     - declares `delta e -> delta h`, `delta e -> delta K`, and torsion-pullback transports;
+    - imports live metric, extrinsic-curvature and torsion-pullback transport statuses;
     - blocks `R_e` until those transports are derived.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradMetricVariationTransportGate`:
     - closes the algebraic `delta e -> delta h_ab` transport;
     - leaves `delta K` and torsion-pullback transports open.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradExtrinsicCurvatureVariationTransportGate`:
     - declares `K_ab = e_a e_b nabla n` and the `delta K` variation channels;
+    - imports live active-embedding, frame-trace and connection-variation statuses;
     - keeps `delta e -> delta K` blocked on embedding, frame traces and connection variation.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackVariationTransportGate`:
     - records `delta_e T^I = D_omega(delta e^I)` in the independent-connection branch;
+    - imports live torsion-pullback and oriented pullback/variation commutation statuses;
     - keeps Sigma torsion pullback and allowed-basis expansion open.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackReadinessGate`:
-    - records oriented pullback commutation and ambient Cartan torsion formula as closed;
+    - records oriented pullback commutation plus ambient Cartan and Sigma pullback torsion formulae as closed;
     - keeps active embedding, coframe/connection pullback, Sigma torsion pullback and FLRW irreducible basis open.
   - [x] Add `P0EFTJanusZ2SigmaCountertermTetradVariationTransportReadinessGate`:
     - aggregates metric, extrinsic-curvature and torsion-pullback tetrad transports;
     - records metric transport closed and keeps `R_e` blocked on `delta K` and torsion.
   - [x] Add `P0EFTJanusZ2SigmaCountertermConnectionResidualChannelGate`:
     - isolates the spin-connection residual coefficient `R_omega`;
-    - blocks until `delta omega` is transported through torsion/Nieh-Yan boundary data.
+    - records fixed-embedding pullback commutation as partial-only via the connection transport gate;
+    - blocks until `delta omega` is fully transported through torsion/Nieh-Yan boundary data and `R_omega` is explicit.
   - [x] Add `P0EFTJanusZ2SigmaCountertermConnectionVariationTransportGate`:
     - records `delta_omega T^I = delta omega^I_J wedge e^J`;
+    - imports live fixed-embedding connection pullback and torsion-pullback statuses;
+    - records fixed-embedding pullback commutation as partial-only;
     - blocks until pullback and Nieh-Yan variation transport are proved on Sigma.
   - [x] Add `P0EFTJanusZ2SigmaConnectionOnlyFixedEmbeddingVariationGate`:
     - proves the channel split condition `delta_omega X_Sigma = 0`;
@@ -374,27 +843,53 @@
     - transports the fixed Z2 normal sign into oriented pullback commutation.
   - [x] Add `P0EFTJanusZ2SigmaFixedEmbeddingConnectionPullbackVariationGate`:
     - declares the fixed-embedding branch `delta_omega X_Sigma = 0`;
+    - imports live active-embedding, coframe/connection pullback and oriented-commutation statuses;
     - blocks until pullback/variation commutation and Z2 orientation are proved.
   - [x] Add spinor, embedding and matter-flux residual channel gates:
     - isolates `R_psi`, `R_X` and `R_matter`;
+    - matter-flux now imports the live active matter-flux frontier;
     - keeps all three blocked until their coefficients are explicit in the active basis.
+  - [x] Refine the counterterm residual attack order:
+    - `CountertermResidualChannelFrontierGate` now reports `tetrad` as the
+      nearest diagnostic residual channel;
+    - `CountertermTetradVariationTransportReadinessGate` now reports
+      `delta_e_to_delta_K` as the nearest missing subgate;
+    - Lean proves that missing extrinsic-curvature variation transport blocks
+      parent tetrad transport readiness.
+  - [x] Add formula-only `delta_e -> delta_K` structural variation:
+    - records
+      `delta K_ab = -delta n_mu A_ab^mu - n_mu(delta X'' + delta Gamma ee + Gamma delta(ee))`;
+    - marks the structural formula ready while keeping active value transport
+      blocked on `R_Sigma(a)`, embedding frames/normals and connection variation;
+    - Lean proves that the structural formula alone does not transport values
+      without active embedding.
+  - [x] Add formula-only embedding frame/normal trace transport:
+    - records `e_a^mu = partial_a X^mu`,
+      `h_ab = g_munu e_a^mu e_b^nu`, and normalized level-set normal;
+    - keeps active trace transport blocked on regular embedding and nondegenerate
+      induced metric;
+    - Lean proves formulae alone do not close transport without embedding.
   - [x] Add `P0EFTJanusZ2SigmaCountertermResidualChannelFrontierGate`:
     - aggregates `R_e`, `R_omega`, `R_psi`, `R_X`, and `R_matter`;
+    - imports live tetrad, connection, spinor, embedding and matter-flux channel statuses;
     - keeps the residual one-form blocked until every channel coefficient is explicit.
   - [x] Add `P0EFTJanusZ2SigmaCountertermResidualOneFormDecompositionGate`:
     - splits the residual one-form into tetrad/connection/spinor/embedding/matter channels;
+    - imports the live residual-channel frontier instead of hard-coding component readiness;
     - blocks until those channel coefficients are explicit in the allowed basis.
   - [x] Add `P0EFTJanusZ2SigmaCountertermResidualIntegrabilityGate`:
     - declares the field-space exactness test `d_field alpha_res = 0`;
     - blocks until the residual curl/cross-channel symmetry is proved.
   - [x] Add `P0EFTJanusZ2SigmaCountertermResidualExtractionGate`:
     - declares the residual one-form to primitive extraction problem;
+    - imports live residual-one-form decomposition and integrability statuses;
     - blocks until `L_ct` is integrated from the explicit nonlinear residual.
   - [x] Add `P0EFTJanusZ2SigmaCountertermDensityExpansionGate`:
     - isolates the missing `L_ct(h,K,torsion,Immirzi)` expansion;
     - forbids new fitted counterterm freedom.
   - [x] Add `P0EFTJanusZ2SigmaCountertermRadialReductionFrontierGate`:
     - records the full residual-one-form -> primitive -> density -> radial-variation chain;
+    - imports live residual-extraction, local-density-basis, density-expansion and radial-block statuses;
     - keeps `counterterm_block_reduced = false` until the chain closes.
   - [x] Add `P0EFTJanusZ2SigmaEmbeddingGaugePolicyGate`:
   - imports shell proper-time gauge as generic thin-shell machinery;
@@ -417,6 +912,51 @@
   - declares `X_pm`, tangents, normals, induced metric matching and `K_ab^pm`;
   - derives `DeltaK_s` and `DeltaK_tau` structurally from `K_ab^pm`;
   - leaves active tunnel embedding functions of `a` open.
+- [x] Add strict metric-geometry primitives:
+  - builds inverse metric, Levi-Civita Christoffels, induced metric pullback and normalized level-set normal;
+  - requires active metric, metric derivatives, level-set/embedding and explicit orientation/sign;
+  - feeds the extrinsic-curvature tensor builder without Planck/LCDM/Z4 defaults.
+- [x] Add strict extrinsic-curvature tensor builder:
+  - computes `K_ab = -n_mu(partial_a partial_b X^mu + Gamma^mu_alpha_beta e_a^alpha e_b^beta)`;
+  - reduces `K_s = gamma^{ij}K_ij/3` and `K_tau = K_tau_tau`;
+  - requires active embedding derivatives, Christoffels, normals and spatial metric;
+  - does not supply fitted geometry or Planck/LCDM/Z4 defaults.
+  - [x] Add strict FLRW extrinsic-curvature grid builder:
+    - evaluates active geometry data on `a_grid`;
+    - outputs `K_s(a)` and `K_tau(a)` arrays for plus/minus sectors;
+    - keeps values blocked until active embedding, connection and normals are supplied.
+- [x] Add active embedding to FLRW extrinsic-curvature input adapter:
+  - declares the contract
+    `R_Sigma(a), X_±(a), tangents, normals, Christoffels -> flrw_extrinsic_curvature_grid_inputs.json`;
+  - remains blocked until active tunnel embedding closure is derived;
+  - prevents supplied K-array fixtures from being treated as Cartan-GHY source data.
+- [x] Add `R_Sigma` solution to embedding/curvature branch bridge:
+  - declares the single certificate route from solved throat radius to both
+    Cartan-GHY embedding data and active dimensionful curvature/volume branch;
+  - remains blocked until matter-flux and counterterm radial blocks are reduced.
+- [x] Add strict FLRW extrinsic-curvature grid writer:
+  - validates active plus/minus `K_s/K_tau(a)` arrays and explicit Z2 orientation;
+  - writes `flrw_extrinsic_curvature_grid.json` only from active grid inputs;
+  - feeds the Cartan-GHY DeltaK input writer without Planck/LCDM/Z4 defaults.
+- [x] Add strict extrinsic-curvature jump builder:
+  - computes `DeltaK_s = K_s_plus + eps_Z2 K_s_minus`;
+  - computes `DeltaK_tau = K_tau_plus + eps_Z2 K_tau_minus`;
+  - requires active plus/minus extrinsic curvatures and explicit Z2 orientation;
+  - records that orientation is explicit and must not be fitted or silently changed;
+  - keeps values blocked until active `K_ab^pm(a)` are derived from the tunnel embedding.
+- [x] Add strict Cartan-GHY from extrinsic-curvature builder:
+  - composes `K_s/K_tau ± -> DeltaK_s/tau -> rho_CGHY/p_CGHY`;
+  - requires active plus/minus curvature functions and explicit `kappa*rho_crit0`;
+  - introduces no new formula beyond the existing active projection convention.
+- [x] Add strict critical-normalization builder:
+  - builds `rho_crit0_Z2Sigma`, `kappa_Z2Sigma` and `kappa*rho_crit0`;
+  - requires active `H0_Z2Sigma` and explicit gravitational constant convention;
+  - forbids Planck/LCDM `H0` defaults and archived Z4 normalization.
+- [x] Add strict background-scalar manifest writer:
+  - validates `H0_Z2Sigma`, `omega_k_Z2Sigma`, `G_Z2Sigma` and critical-normalization provenance;
+  - propagates scalar provenance into BAO component manifests;
+  - requires `scalar_provenance` in active BAO component manifests before the active pipeline can consume them;
+  - forbids compressed Planck/LCDM background, archived Z4 reuse and observational `H0` fitting.
 - [x] Add `P0EFTJanusZ2SigmaCartanGHYFLRWProjectionGate`:
   - imports the generic Brown-York/Israel FLRW projection;
   - derives `rho_CGHY = 3 eps_Z2 DeltaK_s/kappa`;
@@ -491,6 +1031,144 @@
   - DESI DR2 Gaussian BAO mean vector and 13x13 covariance are ready;
   - compressed Planck `r_d` and archived Holst/Z4 BAO diagnostics are forbidden;
   - the gate remains red until active Z2/Sigma distances and `r_d` are computed.
+- [x] Add `P0EFTJanusZ2SigmaBAOActiveReadinessGate`:
+  - aggregates active `H_Z2Sigma`, `D_M/D_H/D_V`, `c_s`, `z_d`, `r_d` and DESI covariance readiness;
+  - records that `src/janus_lab/z2_sigma_background.py` can assemble `rho_eff_Z2Sigma(a)` and `p_eff_Z2Sigma(a)` from active FLRW stress components;
+  - records that `src/janus_lab/z2_sigma_background.py` has the strict `H_Z2Sigma(z)` callable builder and can construct values once active `H0_Z2Sigma`, `omega_k_Z2Sigma` and `rho_eff/rho_crit0(a)` are supplied;
+  - records that `src/janus_lab/z2_sigma_early_plasma.py` can construct `c_s^Z2Sigma(z)` and solve `z_d^Z2Sigma` once active baryon/photon densities, `H_Z2Sigma` and drag rate are supplied;
+  - records that `src/janus_lab/z2_sigma_bao.py` can compute DESI vectors and chi2 once active `H_Z2Sigma`, `omega_k_Z2Sigma` and `r_d` are supplied;
+  - records that `src/janus_lab/z2_sigma_sound_ruler.py` can integrate `r_d^Z2Sigma` once active `H_Z2Sigma`, `c_s^Z2Sigma` and `z_d^Z2Sigma` are supplied;
+  - keeps BAO chi2 blocked until those quantities are derived numerically;
+  - forbids compressed Planck `r_d`, `planck_like_scale`, archived Z4 and phenomenological Holst BAO reuse.
+- [x] Add a Z2/Sigma BAO chi2 dry-run:
+  - proves the DESI vector/covariance pipeline computes when supplied explicit functions;
+  - marks the result demo-only and forbids official use until active `H_Z2Sigma` and `r_d^Z2Sigma` replace demo inputs.
+- [x] Add `P0EFTJanusZ2SigmaBAOOfficialChi2Gate`:
+  - consumes only `outputs/active_z2_sigma/bao_inputs.json`;
+  - requires manifest provenance `active_core = Z2_tunnel_Sigma` and `source = active_derived`;
+  - rejects compressed Planck/LCDM `r_d`, archived Z4 reuse and phenomenological Holst BAO scans;
+  - computes the DESI vector and covariance chi2 only when the active manifest exists.
+- [x] Add strict scale-free BAO chi2 path:
+  - can write `outputs/active_z2_sigma/bao_scale_free_inputs.json` from the active BAO component manifest;
+  - consumes only active `E_Z2Sigma`, `c_s/c`, `Gamma_drag/H0`, `z_d` and `rhat_d = H0*r_d/c`;
+  - requires scale-free provenance and `observational_H0_fit_used = false`;
+  - verifies stored `rhat_d` against the dimensionless sound-ruler integral;
+  - reports DESI prediction/residual vectors plus primitive audit samples;
+  - remains non-official until active physical manifests exist.
+- [x] Add active-inputs-to-scale-free-BAO-chi2 gate:
+  - performs atomic preflight on background, FLRW and early-plasma active input manifests;
+  - writes the component manifest, scale-free manifest and DESI scale-free chi2 in one controlled pass;
+  - blocks before writing if counterterm `rho/p` is not derived from active Sigma radial reduction;
+  - keeps the official dimensional BAO gate blocked and reports `Gamma_drag/H0` availability.
+- [x] Add scale-free primitive-to-chi2 gate:
+  - consumes the direct primitive manifest `bao_scale_free_primitive_inputs.json`;
+  - solves `Gamma_drag/H0 = E` internally for `z_d`;
+  - writes strict `bao_scale_free_inputs.json` and reuses the DESI scale-free chi2 gate;
+  - rejects Planck/LCDM, archived Z4 and observational-H0 provenance.
+- [x] Add split primitive assembler:
+  - merges background dimensionless primitives with plasma/drag dimensionless primitives;
+  - keeps the z grid and z_max aligned;
+  - writes the canonical primitive manifest through the public strict writer.
+- [x] Add scale-free primitive derivation frontier gate:
+  - names the four remaining primitive derivations required for direct DESI BAO;
+  - validates the split primitive manifests when present;
+  - forbids compressed Planck/LCDM, archived Z4, observational-H0 and Holst-scan reuse.
+- [x] Add component-to-split-primitive gate:
+  - consumes the strict active BAO component manifest;
+  - writes background and plasma scale-free primitive manifests;
+  - keeps live BAO blocked until the component manifest itself exists.
+- [x] Add component-to-primitive-chi2 gate:
+  - composes the split primitive gate, canonical primitive assembler and
+    primitive chi2 gate;
+  - gives one command from active component manifest to DESI scale-free chi2;
+  - still blocks live because no active component manifest exists.
+- [x] Add active-inputs-to-primitive-chi2 gate:
+  - composes strict active input writers, component manifest writer, primitive
+    split/assembler path and DESI scale-free chi2;
+  - keeps atomic preflight before writing intermediates and requires counterterm radial reduction.
+- [x] Add `P0EFTJanusZ2SigmaBAOManifestSchemaGate`:
+  - records the accepted manifest fields and provenance contract;
+  - requires `input_provenance` for `H_Z2Sigma`, `c_s_Z2Sigma`, `z_d_Z2Sigma` and `r_d_Z2Sigma`;
+  - requires `source_component_manifest_path` and `source_component_manifest_sha256` so official BAO inputs are traceable to the active component manifest;
+  - exposes a strict writer/loader interface for future active derivations.
+- [x] Add `P0EFTJanusZ2SigmaBAOActiveManifestPipelineGate`:
+  - converts active FLRW component arrays plus early-plasma arrays into the official BAO input manifest;
+  - remains blocked until `outputs/active_z2_sigma/bao_component_inputs.json` exists with active-derived provenance.
+- [x] Add strict early-plasma component manifest writer:
+  - validates `rho_baryon_Z2Sigma`, `rho_photon_Z2Sigma` and `Gamma_drag_Z2Sigma` arrays with active provenance;
+  - can merge validated early-plasma payloads with independently derived FLRW components into a full BAO component manifest;
+  - keeps `z_d` solving in the active BAO pipeline, where `H_Z2Sigma` is available;
+  - rejects compressed Planck/LCDM, archived Z4 and Holst-scan provenance.
+- [x] Add strict FLRW component manifest writer:
+  - validates Cartan-GHY, Holst/Nieh-Yan, matter-flux and counterterm `rho/p` arrays on `a_grid`;
+  - can merge background scalar, FLRW component and early-plasma manifests into the active BAO component manifest;
+  - rejects compressed Planck/LCDM, archived Z4 and Holst-scan provenance.
+- [x] Add `P0EFTJanusZ2SigmaBAOComponentManifestSchemaGate`:
+  - declares the required component manifest fields;
+  - includes explicit `critical_normalization` metadata with `kappa*rho_crit0_Z2Sigma`;
+  - treats `z_d_bracket` as optional because the active pipeline can derive it from `Gamma_drag_Z2Sigma-H_Z2Sigma` on `z_grid`;
+  - requires per-component provenance and rejects demo/LCDM/Planck/Z4/Holst-scan provenance tokens;
+  - keeps `docs/templates/active_z2_sigma_bao_component_inputs.template.json` documentation-only, not an active output.
+- [x] Add `P0EFTJanusZ2SigmaBAOComponentReadinessAuditGate`:
+  - maps every active BAO component manifest field to its upstream gate;
+  - separates dependent blockers such as `H0_Z2Sigma` and `kappa*rho_crit0_Z2Sigma` from direct FLRW stress-component blockers;
+  - classifies `cartan_ghy_rho/p` as dependent on active `DeltaK_s/tau(a)` and critical normalization rather than as independent direct blockers;
+  - classifies Holst/Nieh-Yan, matter-flux and counterterm `rho/p` fields as dependent on their active torsion, flux and counterterm reduction obligations rather than as standalone unknowns;
+  - classifies `H0_Z2Sigma` as dependent on active time-gauge normalization, `rho_eff_Z2Sigma(a)` and tunnel embedding rather than as an observational fit input;
+  - classifies `omega_k_Z2Sigma` as dependent on active projective curvature and tunnel embedding rather than an independent direct blocker;
+  - classifies `rho_baryon_Z2Sigma` and `rho_photon_Z2Sigma` as dependent on active plasma normalizations rather than independent direct blockers;
+  - classifies `Gamma_drag_Z2Sigma` as dependent on active photon/baryon plasma inputs instead of as an independent direct blocker;
+  - emits a `root_obligations` list headed by `R_Sigma(a) -> X_±(a) -> DeltaK_s/tau(a)`, torsion pullback, Sigma transparency/counterterm and active early-plasma normalization;
+  - reports the live radius/embedding frontier: conditional `R_Sigma(a) -> X_±(a)` is ready, but unconditional `R_Sigma(a)` and `X_±(a)` remain blocked by matter-flux, counterterm and `E_RSigma=0`;
+  - keeps component-manifest writing blocked until active FLRW components, background scalars and early plasma are derived.
+- [x] Add `P0EFTJanusZ2SigmaBAOComponentManifestWriterGate`:
+  - writes `bao_component_inputs.json` from active component functions with strict provenance;
+  - rejects forbidden demo/LCDM/Planck/Z4/Holst-scan provenance before the official BAO pipeline can consume it.
+- [x] Add component-to-chi2 BAO dry-run:
+  - exercises writer -> active manifest pipeline -> DESI chi2 calculator in a temporary directory;
+  - marks the result dry-run only and not an official BAO evaluation.
+- [x] Add strict Thomson drag-rate builder:
+  - builds `Gamma_drag_Z2Sigma(z) = n_e,Z2Sigma sigma_T c / R_Z2Sigma`;
+  - requires active free-electron, baryon and photon histories;
+  - forbids Planck/LCDM recombination history defaults and archived Z4 inputs.
+- [x] Add strict drag-epoch bracket finder:
+  - locates active `Gamma_drag_Z2Sigma(z)-H_Z2Sigma(z)` sign changes on a supplied redshift grid;
+  - forbids Planck/LCDM drag-epoch fits and archived Z4 inputs;
+  - keeps `z_d^Z2Sigma` values blocked until active `H_Z2Sigma` and `Gamma_drag_Z2Sigma` are derived.
+- [x] Add strict early-plasma density builders:
+  - builds conserved active baryon and photon histories from active normalizations;
+  - builds free-electron density from active baryon number and ionization histories;
+  - forbids Planck/LCDM density parameters and recombination-history defaults.
+- [x] Add strict early-plasma normalization builders:
+  - builds baryon number density from active baryon mass density and explicit baryon-mass convention;
+  - builds photon energy density from active blackbody temperature and explicit radiation constant;
+  - keeps Planck `T_CMB`, `omega_b` and recombination histories forbidden as defaults.
+- [x] Add strict Cartan-GHY component builder:
+  - maps active `DeltaK_s(a)` and `DeltaK_tau(a)` to `rho_CGHY/rho_crit0` and `p_CGHY/rho_crit0`;
+  - requires explicit Z2 orientation and `kappa*rho_crit0`;
+  - does not infer Planck/LCDM normalization or reuse archived Z4 inputs.
+- [x] Add strict Cartan-GHY component writer from `DeltaK` inputs:
+  - consumes `cartan_ghy_deltaK_inputs.json` plus active `background_scalars.json`;
+  - writes `cartan_ghy_components.json` only with active `DeltaK_s/tau(a)` and `kappa*rho_crit0`;
+  - remains blocked until active tunnel embedding and active background normalization exist.
+- [x] Add strict Cartan-GHY DeltaK input writer:
+  - consumes active `flrw_extrinsic_curvature_grid.json`;
+  - computes `DeltaK_s/tau = K_plus + eps_Z2 K_minus` with explicit orientation;
+  - writes `cartan_ghy_deltaK_inputs.json` only from active plus/minus extrinsic-curvature arrays.
+- [x] Add strict Holst/Nieh-Yan component writer:
+  - consumes active `holst_nieh_yan_component_inputs.json`;
+  - writes `holst_nieh_yan_components.json` only after active FLRW Holst/Nieh-Yan reduction;
+  - rejects Planck/LCDM/Z4/Holst-scan provenance.
+- [x] Add strict counterterm component writer:
+  - consumes active `counterterm_component_inputs.json`;
+  - writes `counterterm_components.json` only after active FLRW counterterm and radial reduction;
+  - rejects Planck/LCDM/Z4/Holst-scan provenance.
+- [x] Add strict non-matter FLRW inputs assembler:
+  - merges Cartan-GHY, Holst/Nieh-Yan and counterterm component payloads;
+  - writes `flrw_component_inputs_without_matter_flux.json` only when all three exist with aligned active grids.
+- [x] Add strict matter-flux component builder:
+  - permits zero matter-flux components only after active Sigma transparency is derived;
+  - forbids silently setting `matter_flux_rho/p = 0` without a transparency proof.
 - [x] Add `P0EFTJanusZ2SigmaGrowthBibliographyGate`:
   - standard scalar perturbation framework is importable;
   - bimetric and Einstein-Cartan perturbation contexts exist;

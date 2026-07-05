@@ -34,6 +34,8 @@ def build_payload() -> dict:
         "declared": declared,
         "fermion_route_ledger_declared": all(declared.values()),
         "fermion_route_selection_ready": all(declared.values()),
+        "gate_passed": all(declared.values()),
+        "primary_blocker": "none" if all(declared.values()) else "Dirac_spinorial_route_from_Sigma_action",
         "selected_route": "Dirac_gas_spinorial",
         "weyssenhoff_status": "coarse_graining_only_not_primitive_route",
         "next_required": [

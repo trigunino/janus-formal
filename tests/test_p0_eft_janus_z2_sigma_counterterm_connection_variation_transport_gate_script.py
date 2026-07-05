@@ -16,8 +16,16 @@ class P0EFTJanusZ2SigmaCountertermConnectionVariationTransportGateTests(unittest
     def test_connection_variation_transport_remains_open_until_pullback_is_proved(self):
         payload = build_payload()
 
+        self.assertTrue(payload["closure"]["fixed_embedding_commutation_subchannel_ready"])
+        self.assertTrue(payload["partial_subchannels"]["fixed_embedding_commutation"]["ready"])
         self.assertFalse(payload["closure"]["sigma_pullback_ready"])
         self.assertFalse(payload["closure"]["delta_omega_to_delta_torsion_formula_proved"])
+        self.assertFalse(
+            payload["upstream_frontiers"]["fixed_embedding_connection_pullback_variation"][
+                "ready"
+            ]
+        )
+        self.assertFalse(payload["upstream_frontiers"]["torsion_pullback_on_sigma"]["ready"])
         self.assertFalse(payload["counterterm_connection_variation_transport_ready"])
         self.assertIn("pass_fixed_embedding_connection_pullback_variation_gate", payload["next_required"])
         self.assertIn("prove_delta_omega_torsion_formula_on_Sigma", payload["next_required"])

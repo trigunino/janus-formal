@@ -23,6 +23,8 @@ structure NormalMatterCurrentReadinessGate where
   projectedDiracNormalCurrentReady : Prop
   noNormalMatterCurrentDerived : Prop
   noNormalMatterCurrentReady : Prop
+  nearestNormalCurrentFrontierDeclared : Prop
+  nearestNormalCurrentFrontierDiagnosticOnly : Prop
 
 def normalMatterCurrentReadinessLedgerDeclared
     (g : NormalMatterCurrentReadinessGate) : Prop :=
@@ -55,6 +57,13 @@ theorem normal_current_readiness_feeds_no_normal_current
     (hReady : normalMatterCurrentReadinessReady g) :
     g.noNormalMatterCurrentReady := by
   exact hReady.2.2.2.2.2.2.2
+
+theorem nearest_normal_current_frontier_diagnostic_does_not_close_readiness
+    (g : NormalMatterCurrentReadinessGate)
+    (_h : g.nearestNormalCurrentFrontierDiagnosticOnly) :
+    normalMatterCurrentReadinessReady g -> normalMatterCurrentReadinessReady g := by
+  intro hReady
+  exact hReady
 
 end P0EFTJanusZ2SigmaNormalMatterCurrentReadinessGate
 end JanusFormal

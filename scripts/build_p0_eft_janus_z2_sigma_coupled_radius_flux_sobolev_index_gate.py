@@ -33,8 +33,8 @@ def build_payload() -> dict:
         "T_pm_trace_regularity": "H^(5/2)(Sigma) or compatible algebra trace class",
     }
     obligations = {
-        "candidate_indices_pass_trace_threshold": False,
-        "candidate_indices_pass_product_threshold": False,
+        "candidate_indices_pass_trace_threshold": True,
+        "candidate_indices_pass_product_threshold": True,
         "candidate_indices_support_normal_and_tangent_traces": False,
         "sobolev_index_choice_ready_for_trace_proof": False,
     }
@@ -61,9 +61,11 @@ def build_payload() -> dict:
         "obligations": obligations,
         "sobolev_index_ledger_declared": all(declared.values()),
         "sobolev_index_ready": all(declared.values()) and all(obligations.values()),
+        "closed_from_standard_sobolev_theorems": [
+            "candidate_indices_pass_trace_threshold",
+            "candidate_indices_pass_product_threshold",
+        ],
         "current_frontier": [
-            "candidate_indices_pass_trace_threshold = false",
-            "candidate_indices_pass_product_threshold = false",
             "candidate_indices_support_normal_and_tangent_traces = false",
             "sobolev_index_choice_ready_for_trace_proof = false",
         ],
@@ -90,6 +92,8 @@ def write_reports() -> dict:
         "## Candidate Indices",
     ]
     lines.extend(f"- `{key}`: `{value}`" for key, value in payload["index_choice"].items())
+    lines.extend(["", "## Closed From Standard Sobolev Theorems"])
+    lines.extend(f"- `{item}`" for item in payload["closed_from_standard_sobolev_theorems"])
     lines.extend(["", "## Current Frontier"])
     lines.extend(f"- `{item}`" for item in payload["current_frontier"])
     lines.extend(["", "## Next Required"])

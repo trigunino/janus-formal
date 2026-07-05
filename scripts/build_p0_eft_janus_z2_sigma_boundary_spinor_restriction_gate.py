@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_readiness_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_plus_minus_spinor_bundle_data_gate import (
+    build_payload as build_plus_minus_spinor_bundle_data_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_boundary_spinor_restriction_gate.md")
@@ -9,6 +21,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_boundary_spinor_restrict
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_embedding_readiness_payload()
+    plus_minus_data = build_plus_minus_spinor_bundle_data_payload()
     declared = {
         "hypersurface_spinor_restriction_bibliography_checked": True,
         "active_Sigma_embedding_imported": True,
@@ -19,9 +33,9 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "active_Sigma_embedding_ready": False,
-        "plus_spinor_bundle_ready": False,
-        "minus_spinor_bundle_ready": False,
+        "active_Sigma_embedding_ready": active_embedding["active_embedding_readiness_ready"],
+        "plus_spinor_bundle_ready": plus_minus_data["closure"]["plus_spinor_bundle_ready"],
+        "minus_spinor_bundle_ready": plus_minus_data["closure"]["minus_spinor_bundle_ready"],
         "plus_boundary_restriction_ready": False,
         "minus_boundary_restriction_ready": False,
         "Sigma_boundary_spinor_data_ready": False,
@@ -45,6 +59,20 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding["active_embedding_readiness_ready"],
+                "readiness": active_embedding["readiness"],
+                "nearest_frontier": active_embedding["nearest_embedding_frontier"],
+            },
+            "plus_minus_spinor_bundle_data": {
+                "gate": plus_minus_data["status"],
+                "ready": plus_minus_data["plus_minus_spinor_bundle_data_ready"],
+                "closure": plus_minus_data["closure"],
+                "next_required": plus_minus_data["next_required"],
+            },
+        },
         "formulas": {
             "plus_restriction": "psi_+|_Sigma = i_Sigma,+^*(psi_+)",
             "minus_restriction": "psi_-|_Sigma = i_Sigma,-^*(psi_-)",

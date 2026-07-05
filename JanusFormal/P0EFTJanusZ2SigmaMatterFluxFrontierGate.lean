@@ -15,14 +15,18 @@ structure MatterFluxFrontierGate where
   activeProjectionGateImported : Prop
   normalMatterCurrentGateImported : Prop
   bulkStressFluxCancellationGateImported : Prop
+  matterFluxRadiusAcyclicityGateChecked : Prop
   thinShellFluxBibliographyChecked : Prop
   noFitRoutePolicyDeclared : Prop
   transparencyCriteriaDeclared : Prop
   noNormalMatterCurrentReady : Prop
   bulkStressCancellationReady : Prop
   activeFluxProjectionReady : Prop
+  matterFluxRadiusAcyclicRouteReady : Prop
   routeDecisionReady : Prop
   matterFluxRadialBlockReduced : Prop
+  nearestMatterFluxRouteFrontierDeclared : Prop
+  nearestMatterFluxRouteFrontierDiagnosticOnly : Prop
 
 def matterFluxFrontierLedgerDeclared
     (g : MatterFluxFrontierGate) : Prop :=
@@ -31,6 +35,7 @@ def matterFluxFrontierLedgerDeclared
   g.activeProjectionGateImported /\
   g.normalMatterCurrentGateImported /\
   g.bulkStressFluxCancellationGateImported /\
+  g.matterFluxRadiusAcyclicityGateChecked /\
   g.thinShellFluxBibliographyChecked /\
   g.noFitRoutePolicyDeclared /\
   g.transparencyCriteriaDeclared
@@ -50,6 +55,7 @@ def matterFluxFrontierReady
     (g : MatterFluxFrontierGate) : Prop :=
   matterFluxFrontierLedgerDeclared g /\
   (matterFluxTransparencyPathReady g \/ matterFluxActiveProjectionPathReady g) /\
+  g.matterFluxRadiusAcyclicRouteReady /\
   g.routeDecisionReady /\
   g.matterFluxRadialBlockReduced
 
@@ -58,6 +64,19 @@ theorem matter_flux_frontier_requires_transparency_or_projection
     (hReady : matterFluxFrontierReady g) :
     matterFluxTransparencyPathReady g \/ matterFluxActiveProjectionPathReady g := by
   exact hReady.2.1
+
+theorem matter_flux_frontier_requires_acyclic_radius_route
+    (g : MatterFluxFrontierGate)
+    (hReady : matterFluxFrontierReady g) :
+    g.matterFluxRadiusAcyclicRouteReady := by
+  exact hReady.2.2.1
+
+theorem nearest_matter_flux_route_frontier_is_diagnostic_only
+    (g : MatterFluxFrontierGate)
+    (_h : g.nearestMatterFluxRouteFrontierDiagnosticOnly) :
+    matterFluxFrontierReady g -> matterFluxFrontierReady g := by
+  intro hReady
+  exact hReady
 
 end P0EFTJanusZ2SigmaMatterFluxFrontierGate
 end JanusFormal

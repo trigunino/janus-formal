@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate import (
+    build_payload as build_torsion_pullback_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_holst_nieh_yan_flrw_obligation_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_holst_nieh_yan_flrw_obli
 
 
 def build_payload() -> dict:
+    torsion_pullback = build_torsion_pullback_payload()
     method = {
         "Holst_Nieh_Yan_bibliography_checked": True,
         "Holst_Nieh_Yan_torsion_relation_imported": True,
@@ -18,7 +28,9 @@ def build_payload() -> dict:
         "Immirzi_boundary_variation_declared": True,
     }
     closure = {
-        "FLRW_torsion_irreducible_decomposition_ready": False,
+        "FLRW_torsion_irreducible_decomposition_ready": torsion_pullback[
+            "closure"
+        ]["FLRW_irreducible_torsion_pullback_ready"],
         "Holst_Nieh_Yan_FLRW_stress_reduced": False,
         "Holst_Nieh_Yan_rho_p_of_a_ready": False,
     }
@@ -36,6 +48,13 @@ def build_payload() -> dict:
         ),
         "method": method,
         "closure": closure,
+        "upstream_frontiers": {
+            "torsion_pullback_on_sigma": {
+                "gate": torsion_pullback["status"],
+                "ready": torsion_pullback["torsion_pullback_on_sigma_ready"],
+                "closure": torsion_pullback["closure"],
+            },
+        },
         "holst_nieh_yan_method_ready": all(method.values()),
         "holst_nieh_yan_FLRW_closure_ready": all(method.values()) and all(closure.values()),
         "guards": {

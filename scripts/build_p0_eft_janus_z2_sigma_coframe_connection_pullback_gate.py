@@ -1,14 +1,25 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_readiness_gate import (
+    EMBEDDING_MANIFEST_PATH,
+    build_payload as build_readiness_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coframe_connection_pullback_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coframe_connection_pullback_gate.json")
 
 
-def build_payload() -> dict:
+def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) -> dict:
+    readiness_payload = build_readiness_payload(embedding_manifest_path=embedding_manifest_path)
+    readiness = readiness_payload["readiness"]
     declared = {
         "coframe_connection_bibliography_checked": True,
         "tetrad_coframe_formalism_imported": True,
@@ -23,12 +34,19 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "active_Sigma_embedding_ready": False,
-        "coframe_pullback_ready": False,
-        "spin_connection_pullback_ready": False,
+        "active_Sigma_embedding_ready": readiness["active_embedding_ready"],
+        "coframe_pullback_formula_ready": readiness["coframe_pullback_formula_ready"],
+        "spin_connection_pullback_formula_ready": readiness[
+            "spin_connection_pullback_formula_ready"
+        ],
+        "coframe_pullback_ready": readiness["coframe_pullback_ready"],
+        "spin_connection_pullback_ready": readiness["spin_connection_pullback_ready"],
         "Z2_oriented_pullback_ready": True,
-        "coframe_connection_pullback_ready": False,
+        "coframe_connection_pullback_ready": readiness[
+            "coframe_connection_pullback_ready"
+        ],
     }
+    ready = all(declared.values()) and all(closure.values())
     return {
         "status": "janus-z2-sigma-coframe-connection-pullback-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -46,13 +64,28 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "coframe_connection_pullback_readiness": {
+                "gate": readiness_payload["status"],
+                "ready": readiness_payload[
+                    "coframe_connection_pullback_readiness_ready"
+                ],
+                "primary_blocker": readiness_payload.get("primary_blocker", "unknown"),
+                "readiness": readiness,
+                "still_open": readiness_payload["still_open"],
+            },
+        },
         "formulas": {
             "coframe_pullback": "e^I_Sigma = X_Sigma^*(e^I)",
             "connection_pullback": "omega^I_J|_Sigma = X_Sigma^*(omega^I_J)",
             "oriented_pullback": "epsilon_Z2=-1 fixes the normal sign used by X_+ and X_-",
         },
         "coframe_connection_pullback_ledger_declared": all(declared.values()),
-        "coframe_connection_pullback_ready": all(declared.values()) and all(closure.values()),
+        "coframe_connection_pullback_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": (
+            "none" if ready else readiness_payload["primary_blocker"]
+        ),
         "next_required": [
             "pass_active_tunnel_embedding_of_a_gate",
             "pass_tangent_normal_orientation_gate",

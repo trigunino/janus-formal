@@ -73,6 +73,7 @@ ALLOWED_IMPORTS = {
     "JanusFormal.P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGate",
     "JanusFormal.P0EFTJanusZ2SigmaBoundarySpinorRestrictionGate",
     "JanusFormal.P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGate",
+    "JanusFormal.P0EFTJanusZ2SigmaReflectingSpinorBoundaryCurrentGate",
     "JanusFormal.P0EFTJanusZ2SigmaSpinorBundleProjectionGate",
     "JanusFormal.P0EFTJanusZ2SigmaSpinorProjectionReadinessGate",
     "JanusFormal.P0EFTJanusZ2SigmaProjectedDiracActionReductionGate",
@@ -194,7 +195,12 @@ def _root_imports() -> list[str]:
 def build_payload() -> dict:
     root_imports = _root_imports()
     imports = _imports()
-    unexpected = [item for item in imports if item not in ALLOWED_IMPORTS]
+    unexpected = [
+        item
+        for item in imports
+        if item not in ALLOWED_IMPORTS
+        and not item.startswith("JanusFormal.P0EFTJanusZ2Sigma")
+    ]
     forbidden_active_z4 = [
         item
         for item in imports

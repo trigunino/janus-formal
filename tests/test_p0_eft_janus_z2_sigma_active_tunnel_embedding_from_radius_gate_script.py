@@ -13,6 +13,8 @@ class P0EFTJanusZ2SigmaActiveTunnelEmbeddingFromRadiusGateTests(unittest.TestCas
         self.assertTrue(payload["declared"]["radius_gauge_embedding_transport_gate_declared"])
         self.assertTrue(payload["declared"]["radius_to_embedding_conditional_closure_imported"])
         self.assertTrue(payload["declared"]["R_Sigma_to_X_pm_map_declared"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
 
     def test_embedding_remains_blocked_until_radius_law_is_solved(self):
         payload = build_payload()

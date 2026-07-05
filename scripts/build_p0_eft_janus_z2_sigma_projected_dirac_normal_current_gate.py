@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_reflecting_spinor_boundary_current_gate import (
+    build_payload as build_reflecting_boundary_current_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_readiness_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_matter_current_gate import (
+    build_payload as build_projected_dirac_matter_current_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_projected_dirac_normal_current_gate.md")
@@ -9,9 +24,13 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_projected_dirac_normal_c
 
 
 def build_payload() -> dict:
+    reflecting = build_reflecting_boundary_current_payload()
+    active_embedding = build_active_embedding_readiness_payload()
+    projected_current = build_projected_dirac_matter_current_payload()
     declared = {
         "thin_shell_flux_bibliography_checked": True,
         "projected_Dirac_matter_current_gate_declared": True,
+        "reflecting_spinor_boundary_current_gate_declared": True,
         "tangent_normal_orientation_gate_declared": True,
         "plus_normal_current_declared": True,
         "minus_normal_current_declared": True,
@@ -20,13 +39,42 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "projected_Dirac_matter_current_ready": False,
-        "Sigma_normals_ready": False,
-        "plus_normal_current_ready": False,
-        "minus_normal_current_ready": False,
-        "Z2_projected_normal_current_ready": False,
-        "no_normal_matter_current_derived": False,
+        "projected_Dirac_matter_current_ready": projected_current[
+            "projected_dirac_matter_current_ready"
+        ],
+        "Sigma_normals_ready": active_embedding["readiness"]["unit_normals_ready"],
+        "plus_normal_current_ready": (
+            projected_current["projected_dirac_matter_current_ready"]
+            and active_embedding["readiness"]["unit_normals_ready"]
+        ),
+        "minus_normal_current_ready": (
+            projected_current["projected_dirac_matter_current_ready"]
+            and active_embedding["readiness"]["unit_normals_ready"]
+        ),
+        "Z2_projected_normal_current_ready": (
+            projected_current["projected_dirac_matter_current_ready"]
+            and active_embedding["readiness"]["unit_normals_ready"]
+        ),
+        "reflecting_boundary_normal_current_zero_ready": reflecting[
+            "normal_dirac_current_zero_ready"
+        ],
+        "no_normal_matter_current_derived": reflecting[
+            "normal_dirac_current_zero_ready"
+        ],
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = "none"
+    if not ready:
+        if not active_embedding["gate_passed"]:
+            primary_blocker = active_embedding["primary_blocker"]
+        elif not projected_current["gate_passed"]:
+            primary_blocker = projected_current["primary_blocker"]
+        elif not reflecting.get("gate_passed", reflecting["normal_dirac_current_zero_ready"]):
+            primary_blocker = reflecting.get(
+                "primary_blocker", "reflecting_spinor_boundary_current"
+            )
+        else:
+            primary_blocker = "projected_Dirac_normal_current_zero_condition"
     return {
         "status": "janus-z2-sigma-projected-dirac-normal-current-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -34,6 +82,7 @@ def build_payload() -> dict:
             "thin-shell conservation identity with normal momentum flux",
             "Dirac U(1) Noether current normal projection",
             "active projected Dirac matter-current and tangent/normal gates",
+            "active reflecting spinor boundary-current gate",
         ],
         "bibliography_result": (
             "Thin-shell literature supplies the normal-flux slot and Dirac theory "
@@ -49,6 +98,26 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "reflecting_spinor_boundary_current": {
+                "gate": reflecting["status"],
+                "ready": reflecting["normal_dirac_current_zero_ready"],
+                "primary_blocker": reflecting.get("primary_blocker", "unknown"),
+                "closure": reflecting["closure"],
+            },
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding["active_embedding_readiness_ready"],
+                "primary_blocker": active_embedding["primary_blocker"],
+                "readiness": active_embedding["readiness"],
+            },
+            "projected_dirac_matter_current": {
+                "gate": projected_current["status"],
+                "ready": projected_current["projected_dirac_matter_current_ready"],
+                "primary_blocker": projected_current["primary_blocker"],
+                "closure": projected_current["closure"],
+            },
+        },
         "formulas": {
             "plus_normal_current": "J_n^+ = J_+^mu n_mu^+",
             "minus_normal_current": "J_n^- = J_-^mu n_mu^-",
@@ -58,12 +127,15 @@ def build_payload() -> dict:
         "projected_dirac_normal_current_ledger_declared": all(declared.values()),
         "projected_dirac_normal_current_ready": all(declared.values())
         and all(value for key, value in closure.items() if key != "no_normal_matter_current_derived"),
-        "no_normal_dirac_current_ready": all(declared.values()) and all(closure.values()),
+        "no_normal_dirac_current_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_projected_Dirac_matter_current_gate",
             "pass_tangent_normal_orientation_gate",
             "project_J_plus_and_J_minus_on_Sigma_normals",
             "derive_or_reject_J_n_Z2Sigma_equals_zero",
+            "or_close_reflecting_spinor_boundary_current_gate",
             "feed_result_to_matter_flux_transparency_gate",
         ],
     }

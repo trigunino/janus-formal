@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_embedding_frame_trace_transport_gate import (
+    build_payload as build_embedding_frame_trace_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_sobolev_threshold_transport_gate import (
+    build_payload as build_sobolev_threshold_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_trace_regularity_gate.md")
@@ -9,8 +21,12 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_trac
 
 
 def build_payload() -> dict:
+    sobolev = build_sobolev_threshold_payload()
+    frame = build_embedding_frame_trace_payload()
     declared = {
         "function_space_gate_imported": True,
+        "sobolev_threshold_transport_imported": True,
+        "embedding_frame_trace_transport_imported": True,
         "sobolev_trace_bibliography_checked": True,
         "embedding_trace_map_declared": True,
         "normal_trace_map_declared": True,
@@ -21,11 +37,26 @@ def build_payload() -> dict:
         "no_observational_trace_fit": True,
     }
     analytic_obligations = {
-        "embedding_trace_continuous": False,
-        "normal_trace_continuous": False,
-        "tangent_frame_trace_continuous": False,
-        "stress_normal_product_well_defined": False,
-        "flux_functional_trace_ready": False,
+        "sobolev_trace_threshold_passed": sobolev["transported"][
+            "candidate_indices_pass_trace_threshold"
+        ],
+        "sobolev_product_threshold_passed": sobolev["transported"][
+            "candidate_indices_pass_product_threshold"
+        ],
+        "embedding_trace_continuous": frame["transported"][
+            "tangent_frame_trace_continuous"
+        ],
+        "normal_trace_continuous": frame["transported"]["normal_trace_continuous"],
+        "tangent_frame_trace_continuous": frame["transported"][
+            "tangent_frame_trace_continuous"
+        ],
+        "stress_normal_product_well_defined": (
+            sobolev["transported"]["candidate_indices_pass_product_threshold"]
+            and frame["transported"]["candidate_indices_support_normal_and_tangent_traces"]
+        ),
+        "flux_functional_trace_ready": frame["partial_subchannels"][
+            "active_trace_transport"
+        ]["ready"],
     }
     return {
         "status": "janus-z2-sigma-coupled-radius-flux-trace-regularity-gate",
@@ -47,6 +78,27 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "analytic_obligations": analytic_obligations,
+        "upstream_frontiers": {
+            "sobolev_threshold_transport": {
+                "gate": sobolev["status"],
+                "ready": sobolev["trace_and_product_thresholds_transported"],
+                "still_open": sobolev["still_open"],
+            },
+            "embedding_frame_trace_transport": {
+                "gate": frame["status"],
+                "ready": frame["embedding_frame_trace_transport_ready"],
+                "conditional_formulae_ready": frame["conditional_formulae_ready"],
+                "current_frontier": frame["current_frontier"],
+            },
+        },
+        "closed_from_standard_theorems": [
+            key
+            for key in [
+                "sobolev_trace_threshold_passed",
+                "sobolev_product_threshold_passed",
+            ]
+            if analytic_obligations[key]
+        ],
         "trace_maps": [
             "R_Sigma -> X_+/-[R_Sigma]|_Sigma",
             "R_Sigma -> n_mu[R_Sigma]|_Sigma",

@@ -15,6 +15,9 @@ class P0EFTJanusZ2SigmaCountertermMatterFluxResidualChannelGateTests(unittest.Te
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["matter_residual_coefficient_explicit"])
+        self.assertFalse(payload["closure"]["matter_flux_frontier_ready"])
+        self.assertFalse(payload["closure"]["matter_residual_formula_from_flux_variation_ready"])
+        self.assertFalse(payload["upstream_frontiers"]["matter_flux"]["ready"])
         self.assertFalse(payload["counterterm_matter_flux_residual_channel_ready"])
         self.assertIn("compute_R_matter_from_active_normal_flux_variation", payload["next_required"])
 

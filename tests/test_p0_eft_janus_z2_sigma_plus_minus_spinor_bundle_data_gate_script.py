@@ -13,11 +13,14 @@ class P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["resolved_tunnel_Pin_lift_gate_declared"])
         self.assertTrue(payload["declared"]["plus_sector_spinor_bundle_declared"])
         self.assertTrue(payload["declared"]["minus_sector_spinor_bundle_declared"])
+        self.assertIn("resolved_tunnel_pin_lift", payload["upstream_frontiers"])
+        self.assertTrue(payload["nearest_spinor_bundle_frontier"]["diagnostic_only"])
 
     def test_bundle_data_waits_for_resolved_tunnel_pin_lift(self):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["resolved_tunnel_Pin_lift_ready"])
+        self.assertFalse(payload["upstream_frontiers"]["resolved_tunnel_pin_lift"]["ready"])
         self.assertFalse(payload["closure"]["plus_spinor_bundle_ready"])
         self.assertFalse(payload["closure"]["minus_spinor_bundle_ready"])
         self.assertFalse(payload["plus_minus_spinor_bundle_data_ready"])

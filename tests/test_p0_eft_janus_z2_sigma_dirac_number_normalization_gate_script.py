@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaDiracNumberNormalizationGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_charge_fixed_by_action_or_topology"])
         self.assertFalse(payload["closure"]["number_normalizations_ready"])
         self.assertFalse(payload["dirac_number_normalization_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
         self.assertIn("pass_Dirac_charge_boundary_projection_gate", payload["next_required"])
         self.assertIn("derive_N_plus_from_active_spinor_boundary_data", payload["next_required"])
         self.assertIn("propagate_number_normalization_to_density_gate", payload["next_required"])

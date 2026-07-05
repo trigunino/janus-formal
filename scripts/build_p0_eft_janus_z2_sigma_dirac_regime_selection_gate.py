@@ -51,6 +51,12 @@ def build_payload() -> dict:
         },
         "dirac_regime_ledger_declared": all(declared.values()),
         "dirac_regime_selection_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "mass_temperature_ratio_from_active_distribution"
+        ),
         "next_required": [
             "derive_plus_Dirac_mass_or_massless_condition",
             "derive_minus_Dirac_mass_or_massless_condition",

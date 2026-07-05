@@ -60,6 +60,12 @@ def build_payload() -> dict:
         },
         "distribution_isotropy_ledger_declared": all(declared.values()),
         "distribution_isotropy_closure_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "active_distribution_isotropy"
+        ),
         "next_required": [
             "pass_fermion_distribution_of_a_gate",
             "derive_plus_minus_momentum_isotropy",

@@ -16,7 +16,9 @@ structure Z2SigmaBAOSoundRulerGate where
   compressedLCDMPriorForbidden : Prop
   baoSoundRulerFormulaReady : Prop
   hZ2SigmaNumericalReady : Prop
-  photonBaryonSoundSpeedReady : Prop
+  photonBaryonSoundSpeedBuilderReady : Prop
+  photonBaryonSoundSpeedOverCBuilderReady : Prop
+  photonBaryonSoundSpeedValuesReady : Prop
   dragEpochReady : Prop
   baoSoundRulerEvaluated : Prop
 
@@ -35,7 +37,7 @@ def baoSoundRulerEvaluationReady
   baoSoundRulerLockClosed g /\
   g.baoSoundRulerFormulaReady /\
   g.hZ2SigmaNumericalReady /\
-  g.photonBaryonSoundSpeedReady /\
+  g.photonBaryonSoundSpeedValuesReady /\
   g.dragEpochReady /\
   g.baoSoundRulerEvaluated
 

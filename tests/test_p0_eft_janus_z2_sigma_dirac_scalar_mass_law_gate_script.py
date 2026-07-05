@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaDiracScalarMassLawGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_mass_term_from_action_derived"])
         self.assertFalse(payload["closure"]["projected_scalar_mass_derived"])
         self.assertFalse(payload["dirac_scalar_mass_law_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "projected_Dirac_action_mass_term")
         self.assertIn("pass_Dirac_mass_term_from_action_gate", payload["next_required"])
         self.assertIn("feed_result_to_Dirac_radial_energy_dispersion_gate", payload["next_required"])
 

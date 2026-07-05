@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_tunnel_embedding_from_radius_gate import (
+    build_payload as build_active_tunnel_embedding_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_embedding_regularity_equivariance_gate import (
+    build_payload as build_embedding_regularity_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_smooth_embedded_throat_gate.md")
@@ -9,6 +21,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_smooth_embedded_throat_g
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_tunnel_embedding_payload()
+    embedding_regularity = build_embedding_regularity_payload()
     declared = {
         "embedded_submanifold_bibliography_checked": True,
         "tubular_neighborhood_prerequisite_checked": True,
@@ -23,13 +37,21 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "active_tunnel_embedding_ready": False,
-        "regular_throat_radius_derived": False,
-        "immersion_rank_derived": False,
-        "topological_embedding_derived": False,
-        "Z2_equivariant_embedding_derived": False,
+        "active_tunnel_embedding_ready": active_embedding["active_embedding_from_radius_ready"],
+        "regular_throat_radius_derived": embedding_regularity["closure"]["regular_throat_radius_derived"],
+        "immersion_rank_derived": embedding_regularity["closure"]["immersion_rank_derived"],
+        "topological_embedding_derived": embedding_regularity["closure"]["topological_embedding_derived"],
+        "Z2_equivariant_embedding_derived": embedding_regularity["closure"]["Z2_equivariant_embedding_derived"],
         "sigma_smooth_embedded_throat_derived": False,
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = (
+        "none"
+        if ready
+        else active_embedding.get("primary_blocker")
+        or embedding_regularity.get("primary_blocker")
+        or "active_tunnel_embedding_from_RSigma"
+    )
     return {
         "status": "janus-z2-sigma-smooth-embedded-throat-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -52,6 +74,20 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "active_tunnel_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding["active_embedding_from_radius_ready"],
+                "closure": active_embedding["closure"],
+                "primary_blocker": active_embedding.get("primary_blocker"),
+            },
+            "embedding_regularity_equivariance": {
+                "gate": embedding_regularity["status"],
+                "ready": embedding_regularity["embedding_regularity_equivariance_ready"],
+                "closure": embedding_regularity["closure"],
+                "primary_blocker": embedding_regularity.get("primary_blocker"),
+            },
+        },
         "formulas": {
             "embedding": "X_pm(a, xi): Sigma -> M_pm",
             "rank": "rank(dX_pm)=dim(Sigma)",
@@ -59,7 +95,9 @@ def build_payload() -> dict:
             "z2_equivariance": "tau o X_+(a,xi) = X_-(a,xi)",
         },
         "sigma_smooth_embedded_throat_ledger_declared": all(declared.values()),
-        "sigma_smooth_embedded_throat_ready": all(declared.values()) and all(closure.values()),
+        "sigma_smooth_embedded_throat_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_embedding_regularity_equivariance_gate",
             "pass_active_tunnel_embedding_of_a_gate",

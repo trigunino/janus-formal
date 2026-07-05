@@ -20,6 +20,12 @@ class P0EFTJanusZ2SigmaActiveTunnelEmbeddingOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["derived"]["X_plus_minus_of_a_derived"])
         self.assertFalse(payload["derived"]["DeltaK_s_of_a_derived"])
         self.assertFalse(payload["active_tunnel_embedding_of_a_closure_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertEqual(
+            payload["upstream_frontiers"]["active_tunnel_embedding_from_radius"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertIn("pass_tunnel_embedding_constraint_count_gate", payload["next_required"])
         self.assertIn("pass_active_tunnel_embedding_from_radius_gate", payload["next_required"])
         self.assertTrue(

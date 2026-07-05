@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_tunnel_embedding_of_a_gate import (
+    build_payload as build_active_tunnel_embedding_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_cartan_ghy_flrw_projection_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_cartan_ghy_flrw_projecti
 
 
 def build_payload() -> dict:
+    embedding = build_active_tunnel_embedding_payload()
     algebraic = {
         "brown_york_cartan_GHY_convention_declared": True,
         "FLRW_induced_metric_declared": True,
@@ -21,8 +31,8 @@ def build_payload() -> dict:
         "p_CartanGHY_formula_ready": True,
     }
     scale_factor = {
-        "Delta_Ks_of_a_ready": False,
-        "Delta_Ktau_of_a_ready": False,
+        "Delta_Ks_of_a_ready": embedding["derived"]["DeltaK_s_of_a_derived"],
+        "Delta_Ktau_of_a_ready": embedding["derived"]["DeltaK_tau_of_a_derived"],
     }
     return {
         "status": "janus-z2-sigma-cartan-ghy-flrw-projection-gate",
@@ -34,6 +44,15 @@ def build_payload() -> dict:
         ),
         "algebraic": algebraic,
         "scale_factor": scale_factor,
+        "upstream_frontiers": {
+            "active_tunnel_embedding_of_a": {
+                "gate": embedding["status"],
+                "ready": embedding[
+                    "active_tunnel_embedding_of_a_closure_ready"
+                ],
+                "derived": embedding["derived"],
+            },
+        },
         "formulas": {
             "rho_CartanGHY": "rho_CGHY(a) = 3 * eps_Z2 * DeltaK_s(a) / kappa",
             "p_CartanGHY": "p_CGHY(a) = eps_Z2 * (DeltaK_tau(a) - 2 * DeltaK_s(a)) / kappa",

@@ -22,6 +22,8 @@ structure CountertermResidualChannelFrontierGate where
   spinorResidualReady : Prop
   embeddingResidualReady : Prop
   matterFluxResidualReady : Prop
+  nearestResidualChannelFrontierDeclared : Prop
+  nearestResidualChannelFrontierIsDiagnosticOnly : Prop
   allResidualChannelsExplicit : Prop
   residualOneFormReadyForDecomposition : Prop
 
@@ -43,6 +45,8 @@ def residualChannelFrontierReady
   g.spinorResidualReady /\
   g.embeddingResidualReady /\
   g.matterFluxResidualReady /\
+  g.nearestResidualChannelFrontierDeclared /\
+  g.nearestResidualChannelFrontierIsDiagnosticOnly /\
   g.allResidualChannelsExplicit /\
   g.residualOneFormReadyForDecomposition
 
@@ -56,7 +60,14 @@ theorem residual_frontier_feeds_one_form_decomposition
     (g : CountertermResidualChannelFrontierGate)
     (hReady : residualChannelFrontierReady g) :
     g.residualOneFormReadyForDecomposition := by
-  exact hReady.2.2.2.2.2.2.2
+  exact hReady.2.2.2.2.2.2.2.2.2
+
+theorem nearest_frontier_does_not_close_residual_channels
+    (g : CountertermResidualChannelFrontierGate)
+    (hNotAll : Not g.allResidualChannelsExplicit) :
+    Not (residualChannelFrontierReady g) := by
+  intro hReady
+  exact hNotAll hReady.2.2.2.2.2.2.2.2.1
 
 end P0EFTJanusZ2SigmaCountertermResidualChannelFrontierGate
 end JanusFormal

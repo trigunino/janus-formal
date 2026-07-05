@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaDistributionIsotropyAnisotropicStressGateTests(unittest.T
         self.assertFalse(payload["closure"]["plus_momentum_isotropy_derived"])
         self.assertFalse(payload["closure"]["projected_anisotropic_stress_zero_derived"])
         self.assertFalse(payload["distribution_isotropy_closure_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "active_distribution_isotropy")
         self.assertIn("pass_Dirac_Fermi_Dirac_isotropy_gate", payload["next_required"])
         self.assertIn("pass_radial_occupation_projection_gate", payload["next_required"])
         self.assertIn("feed_result_to_kinetic_moment_fluid_closure_gate", payload["next_required"])

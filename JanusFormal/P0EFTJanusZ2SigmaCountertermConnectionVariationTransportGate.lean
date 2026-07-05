@@ -21,6 +21,7 @@ structure CountertermConnectionVariationTransportGate where
   fixedEmbeddingConnectionPullbackVariationGateDeclared : Prop
   z2OrientationTransportDeclared : Prop
   noFittedTransportCoefficient : Prop
+  fixedEmbeddingCommutationSubchannelReady : Prop
   sigmaPullbackReady : Prop
   deltaOmegaToDeltaTorsionFormulaProved : Prop
   niehYanVariationTransportProved : Prop
@@ -54,6 +55,14 @@ theorem connection_transport_ready_requires_delta_torsion_formula
     (hReady : countertermConnectionVariationTransportReady g) :
     g.deltaOmegaToDeltaTorsionFormulaProved := by
   exact hReady.right.right.left
+
+theorem fixed_commutation_subchannel_alone_does_not_close_connection_transport
+    (g : CountertermConnectionVariationTransportGate)
+    (_hSubchannel : g.fixedEmbeddingCommutationSubchannelReady)
+    (hMissing : Not g.sigmaPullbackReady) :
+    Not (countertermConnectionVariationTransportReady g) := by
+  intro hReady
+  exact hMissing hReady.2.1
 
 end P0EFTJanusZ2SigmaCountertermConnectionVariationTransportGate
 end JanusFormal

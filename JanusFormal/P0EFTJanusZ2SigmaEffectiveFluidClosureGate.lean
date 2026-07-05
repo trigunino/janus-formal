@@ -14,6 +14,8 @@ structure Z2SigmaEffectiveFluidClosureGate where
   perfectFluidProjectionDeclared : Prop
   rhoEffProjectionFormulaReady : Prop
   pEffProjectionFormulaReady : Prop
+  strictEffectiveFluidComponentAssemblerReady : Prop
+  assemblerRequiresActiveFLRWComponentRhoP : Prop
   rhoEffZ2SigmaOfAReady : Prop
   pEffZ2SigmaOfAReady : Prop
   directJanusFormulaFoundInBibliography : Prop
@@ -26,7 +28,9 @@ def effectiveFluidStructuralPrerequisites
   g.inducedFLRWSigmaMetricDeclared /\
   g.perfectFluidProjectionDeclared /\
   g.rhoEffProjectionFormulaReady /\
-  g.pEffProjectionFormulaReady
+  g.pEffProjectionFormulaReady /\
+  g.strictEffectiveFluidComponentAssemblerReady /\
+  g.assemblerRequiresActiveFLRWComponentRhoP
 
 def effectiveFluidNumericClosure
     (g : Z2SigmaEffectiveFluidClosureGate) : Prop :=

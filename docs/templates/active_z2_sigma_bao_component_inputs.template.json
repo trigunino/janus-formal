@@ -1,0 +1,42 @@
+{
+  "note": "Documentation template only. Do not copy into outputs/active_z2_sigma unless all arrays are produced by active Z2/Sigma derivations.",
+  "active_core": "Z2_tunnel_Sigma",
+  "source": "active_derived",
+  "compressed_planck_lcdm_rd_used": false,
+  "archived_z4_reuse_used": false,
+  "phenomenological_holst_bao_scan_used": false,
+  "H0_Z2Sigma_km_s_Mpc": "ACTIVE_DERIVED_NUMBER",
+  "omega_k_Z2Sigma": "ACTIVE_DERIVED_NUMBER",
+  "a_grid": ["STRICTLY_INCREASING_ACTIVE_SCALE_FACTOR_GRID"],
+  "z_grid": ["STRICTLY_INCREASING_ACTIVE_REDSHIFT_GRID"],
+  "z_d_bracket": ["LOWER_ACTIVE_DRAG_BRACKET", "UPPER_ACTIVE_DRAG_BRACKET"],
+  "z_max": "ACTIVE_INTEGRATION_UPPER_LIMIT",
+  "flrw_components_over_rho_crit0": {
+    "cartan_ghy_rho": ["ARRAY_ON_A_GRID"],
+    "cartan_ghy_p": ["ARRAY_ON_A_GRID"],
+    "holst_nieh_yan_rho": ["ARRAY_ON_A_GRID"],
+    "holst_nieh_yan_p": ["ARRAY_ON_A_GRID"],
+    "matter_flux_rho": ["ARRAY_ON_A_GRID"],
+    "matter_flux_p": ["ARRAY_ON_A_GRID"],
+    "counterterm_rho": ["ARRAY_ON_A_GRID"],
+    "counterterm_p": ["ARRAY_ON_A_GRID"]
+  },
+  "early_plasma": {
+    "rho_baryon_Z2Sigma": ["ARRAY_ON_Z_GRID"],
+    "rho_photon_Z2Sigma": ["ARRAY_ON_Z_GRID"],
+    "Gamma_drag_Z2Sigma": ["ARRAY_ON_Z_GRID"]
+  },
+  "component_provenance": {
+    "cartan_ghy_rho": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "cartan_ghy_p": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "holst_nieh_yan_rho": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "holst_nieh_yan_p": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "matter_flux_rho": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "matter_flux_p": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "counterterm_rho": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "counterterm_p": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "rho_baryon_Z2Sigma": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "rho_photon_Z2Sigma": "ACTIVE_GATE_OR_DERIVATION_ID",
+    "Gamma_drag_Z2Sigma": "ACTIVE_GATE_OR_DERIVATION_ID"
+  }
+}

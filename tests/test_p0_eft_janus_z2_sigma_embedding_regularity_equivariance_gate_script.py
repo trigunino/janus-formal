@@ -12,6 +12,8 @@ class P0EFTJanusZ2SigmaEmbeddingRegularityEquivarianceGateTests(unittest.TestCas
         self.assertTrue(payload["declared"]["immersion_rank_test_declared"])
         self.assertTrue(payload["declared"]["Z2_equivariance_test_declared"])
         self.assertIn("rank_test", payload["formulas"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "active_tunnel_embedding_from_RSigma")
 
     def test_embedding_regularity_remains_blocked_on_xpm(self):
         payload = build_payload()

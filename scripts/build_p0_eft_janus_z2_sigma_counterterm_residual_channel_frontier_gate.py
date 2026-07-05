@@ -1,7 +1,28 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_connection_residual_channel_gate import (
+    build_payload as build_connection_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_embedding_residual_channel_gate import (
+    build_payload as build_embedding_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_matter_flux_residual_channel_gate import (
+    build_payload as build_matter_flux_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_spinor_residual_channel_gate import (
+    build_payload as build_spinor_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_residual_channel_gate import (
+    build_payload as build_tetrad_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_channel_frontier_gate.md")
@@ -9,6 +30,11 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_cha
 
 
 def build_payload() -> dict:
+    tetrad = build_tetrad_payload()
+    connection = build_connection_payload()
+    spinor = build_spinor_payload()
+    embedding = build_embedding_payload()
+    matter_flux = build_matter_flux_payload()
     declared = {
         "tetrad_residual_channel_imported": True,
         "connection_residual_channel_imported": True,
@@ -19,14 +45,50 @@ def build_payload() -> dict:
         "no_fitted_residual_coefficient": True,
     }
     channels = {
-        "tetrad_residual_ready": False,
-        "connection_residual_ready": False,
-        "spinor_residual_ready": False,
-        "embedding_residual_ready": False,
-        "matter_flux_residual_ready": False,
-        "all_residual_channels_explicit": False,
-        "residual_one_form_ready_for_decomposition": False,
+        "tetrad_residual_ready": tetrad["counterterm_tetrad_residual_channel_ready"],
+        "connection_residual_ready": connection["counterterm_connection_residual_channel_ready"],
+        "spinor_residual_ready": spinor["counterterm_spinor_residual_channel_ready"],
+        "embedding_residual_ready": embedding["counterterm_embedding_residual_channel_ready"],
+        "matter_flux_residual_ready": matter_flux["counterterm_matter_flux_residual_channel_ready"],
     }
+    channels["all_residual_channels_explicit"] = all(channels.values())
+    channels["residual_one_form_ready_for_decomposition"] = channels[
+        "all_residual_channels_explicit"
+    ]
+    channel_frontiers = {
+        "tetrad": {
+            "gate": tetrad["status"],
+            "ready": tetrad["counterterm_tetrad_residual_channel_ready"],
+            "closure": tetrad["closure"],
+        },
+        "connection": {
+            "gate": connection["status"],
+            "ready": connection["counterterm_connection_residual_channel_ready"],
+            "closure": connection["closure"],
+        },
+        "spinor": {
+            "gate": spinor["status"],
+            "ready": spinor["counterterm_spinor_residual_channel_ready"],
+            "closure": spinor["closure"],
+        },
+        "embedding": {
+            "gate": embedding["status"],
+            "ready": embedding["counterterm_embedding_residual_channel_ready"],
+            "closure": embedding["closure"],
+        },
+        "matter_flux": {
+            "gate": matter_flux["status"],
+            "ready": matter_flux["counterterm_matter_flux_residual_channel_ready"],
+            "closure": matter_flux["closure"],
+        },
+    }
+    partial_scores = {
+        name: sum(1 for value in data["closure"].values() if value is True)
+        for name, data in channel_frontiers.items()
+    }
+    nearest_channel = max(partial_scores, key=partial_scores.get)
+    ready = all(declared.values()) and all(channels.values())
+    primary_blocker = "none" if ready else f"{nearest_channel}_residual_channel"
     return {
         "status": "janus-z2-sigma-counterterm-residual-channel-frontier-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -48,6 +110,21 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "channels": channels,
+        "channel_frontiers": channel_frontiers,
+        "partial_channel_scores": partial_scores,
+        "nearest_residual_channel_frontier": {
+            "channel": nearest_channel,
+            "reason": (
+                "highest number of already explicit closure subchannels; this is an "
+                "attack order hint, not a proof of readiness"
+            ),
+            "score": partial_scores[nearest_channel],
+            "remaining_false_closure_fields": [
+                key
+                for key, value in channel_frontiers[nearest_channel]["closure"].items()
+                if value is False
+            ],
+        },
         "channel_coefficients": [
             "R_e tetrad/coframe coefficient",
             "R_omega spin-connection coefficient",
@@ -56,13 +133,15 @@ def build_payload() -> dict:
             "R_matter matter-flux coefficient",
         ],
         "residual_channel_frontier_ledger_declared": all(declared.values()),
-        "residual_channel_frontier_ready": all(declared.values()) and all(channels.values()),
+        "nearest_residual_channel_frontier_declared": True,
+        "nearest_residual_channel_frontier_is_diagnostic_only": True,
+        "residual_channel_frontier_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "current_frontier": [
-            "tetrad_residual_ready = false",
-            "connection_residual_ready = false",
-            "spinor_residual_ready = false",
-            "embedding_residual_ready = false",
-            "matter_flux_residual_ready = false",
+            f"{key} = false"
+            for key, ready in channels.items()
+            if not ready and key.endswith("_ready")
         ],
         "next_required": [
             "close_tetrad_residual_channel_gate",
@@ -91,6 +170,13 @@ def write_reports() -> dict:
     lines.extend(f"- `{item}`" for item in payload["channel_coefficients"])
     lines.extend(["", "## Current Frontier"])
     lines.extend(f"- `{item}`" for item in payload["current_frontier"])
+    lines.extend(
+        [
+            "",
+            "## Nearest Residual Channel Frontier",
+            f"`{payload['nearest_residual_channel_frontier']['channel']}`",
+        ]
+    )
     lines.extend(["", "## Next Required"])
     lines.extend(f"- `{item}`" for item in payload["next_required"])
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")

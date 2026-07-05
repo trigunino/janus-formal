@@ -19,9 +19,10 @@ def build_payload() -> dict:
             ],
         },
         "hogg_distance_measures": {
-            "url": "https://ned.ipac.caltech.edu/level5/Hogg/paper.pdf",
+            "url": "https://arxiv.org/abs/astro-ph/9905116",
             "supports": [
                 "radial_null_trajectory_distance_measures",
+                "curved_transverse_comoving_distance_Sk_chi",
                 "D_M_D_A_D_L_standard_definitions",
             ],
         },
@@ -33,10 +34,19 @@ def build_payload() -> dict:
             ],
         },
         "bao_sound_horizon": {
-            "url": "https://ui.adsabs.harvard.edu/abs/2021PhRvD.104d3521A/abstract",
+            "url": "https://arxiv.org/abs/astro-ph/9709112",
             "supports": [
+                "sound_horizon_at_drag_epoch",
+                "baryon_loading_R",
+                "Compton_drag_epoch_context",
+            ],
+        },
+        "hu_sugiyama_photon_baryon_drag": {
+            "url": "https://arxiv.org/abs/astro-ph/9510117",
+            "supports": [
+                "photon_baryon_tight_coupling_context",
+                "baryon_drag_on_photons",
                 "drag_epoch_sound_horizon_context",
-                "Eisenstein_Hu_style_r_d_calibration_context",
             ],
         },
     }
@@ -46,8 +56,10 @@ def build_payload() -> dict:
         "sources": sources,
         "janus_photon_geodesic_source_found": True,
         "standard_flrw_distance_source_found": True,
+        "curved_transverse_distance_source_found": True,
         "etherington_reciprocity_source_found": True,
         "bao_sound_horizon_source_found": True,
+        "photon_baryon_drag_source_found": True,
         "complete_sigma_photon_distance_map_found": False,
         "complete_z2_sigma_sound_ruler_found": False,
         "local_distance_and_ruler_derivation_required": True,

@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaRadiusToEmbeddingConditionalClosureGateTests(unittest.Tes
         self.assertFalse(payload["closure"]["R_Sigma_of_a_ready"])
         self.assertFalse(payload["closure"]["X_plus_minus_of_a_ready"])
         self.assertFalse(payload["radius_to_embedding_unconditional_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_of_a")
         self.assertIn("solve_R_Sigma_of_a_from_throat_radius_variational_equation", payload["next_required"])
 
 

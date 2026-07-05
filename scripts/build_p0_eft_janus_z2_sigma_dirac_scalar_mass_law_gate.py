@@ -58,6 +58,12 @@ def build_payload() -> dict:
         },
         "dirac_scalar_mass_law_ledger_declared": all(declared.values()),
         "dirac_scalar_mass_law_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "projected_Dirac_action_mass_term"
+        ),
         "next_required": [
             "pass_projected_Dirac_action_reduction_gate",
             "pass_Dirac_mass_term_from_action_gate",

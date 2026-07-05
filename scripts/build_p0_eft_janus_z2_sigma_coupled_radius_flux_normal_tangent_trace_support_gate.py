@@ -55,6 +55,8 @@ def build_payload() -> dict:
         ],
         "normal_tangent_trace_ledger_declared": all(declared.values()),
         "normal_tangent_trace_support_ready": all(declared.values()) and all(support.values()),
+        "standard_hypersurface_trace_theorems_available": True,
+        "primary_blocker": "embedding_regularity_equivariance",
         "current_frontier": [
             "tangent_frame_trace_supported = false",
             "normal_trace_supported = false",
@@ -81,6 +83,7 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['normal_tangent_trace_ledger_declared']}`",
         f"Support ready: `{payload['normal_tangent_trace_support_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Dependencies",
     ]

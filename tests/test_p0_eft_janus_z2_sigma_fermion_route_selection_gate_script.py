@@ -9,6 +9,8 @@ class P0EFTJanusZ2SigmaFermionRouteSelectionGateTests(unittest.TestCase):
 
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["fermion_route_selection_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
         self.assertEqual(payload["selected_route"], "Dirac_gas_spinorial")
         self.assertTrue(payload["declared"]["no_fluid_route_chosen_by_fit"])
 

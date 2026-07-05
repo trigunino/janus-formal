@@ -1,14 +1,26 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_immirzi_bulk_boundary_equation_gate import (
+    build_payload as build_immirzi_bulk_boundary_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_immirzi_profile_of_a_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_immirzi_profile_of_a_gate.json")
 
 
-def build_payload() -> dict:
+def build_payload(*, bulk_boundary_payload: dict | None = None) -> dict:
+    bulk_boundary = bulk_boundary_payload or build_immirzi_bulk_boundary_payload()
+    bulk_ready = bool(bulk_boundary["closure"]["bulk_Immirzi_equation_reduced"])
+    boundary_ready = bool(bulk_boundary["closure"]["Sigma_boundary_condition_reduced"])
+    profile_ready = bulk_ready and boundary_ready
     declared = {
         "Immirzi_bibliography_checked": True,
         "Barbero_Immirzi_scalar_field_imported": True,
@@ -20,12 +32,12 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "bulk_Immirzi_equation_ready": False,
-        "Sigma_boundary_condition_ready": False,
-        "plus_Immirzi_profile_of_a_ready": False,
-        "minus_Immirzi_profile_of_a_ready": False,
-        "projected_Immirzi_profile_of_a_ready": False,
-        "Immirzi_profile_of_a_ready": False,
+        "bulk_Immirzi_equation_ready": bulk_ready,
+        "Sigma_boundary_condition_ready": boundary_ready,
+        "plus_Immirzi_profile_of_a_ready": profile_ready,
+        "minus_Immirzi_profile_of_a_ready": profile_ready,
+        "projected_Immirzi_profile_of_a_ready": profile_ready,
+        "Immirzi_profile_of_a_ready": profile_ready,
     }
     return {
         "status": "janus-z2-sigma-immirzi-profile-of-a-gate",
@@ -44,6 +56,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "immirzi_bulk_boundary_equation": {
+                "gate": bulk_boundary["status"],
+                "ready": bulk_boundary["immirzi_bulk_boundary_equation_ready"],
+                "primary_blocker": bulk_boundary["primary_blocker"],
+                "current_frontier": bulk_boundary["current_frontier"],
+            },
+        },
         "formulas": {
             "field": "gamma_Immirzi = gamma_Immirzi(x), projected to gamma_Immirzi,pm(a)",
             "bulk_equation": "E_gamma[Holst + Nieh-Yan + torsion + spinors] = 0",
@@ -52,6 +72,17 @@ def build_payload() -> dict:
         },
         "immirzi_profile_ledger_declared": all(declared.values()),
         "immirzi_profile_of_a_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else bulk_boundary["primary_blocker"]
+        ),
+        "current_frontier": [
+            f"{key} = false"
+            for key, ready in closure.items()
+            if not ready
+        ],
         "next_required": [
             "derive_bulk_Immirzi_field_equation",
             "pass_Immirzi_bulk_boundary_equation_gate",

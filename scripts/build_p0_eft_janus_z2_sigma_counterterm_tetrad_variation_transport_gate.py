@@ -1,14 +1,31 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_extrinsic_curvature_variation_transport_gate import (
+    build_payload as build_extrinsic_curvature_variation_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_metric_variation_transport_gate import (
+    build_payload as build_metric_variation_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_torsion_pullback_variation_transport_gate import (
+    build_payload as build_torsion_pullback_variation_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_variation_transport_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_variation_transport_gate.json")
 
 
 def build_payload() -> dict:
+    metric = build_metric_variation_payload()
+    extrinsic = build_extrinsic_curvature_variation_payload()
+    torsion = build_torsion_pullback_variation_payload()
     declared = {
         "tetrad_residual_channel_imported": True,
         "extrinsic_curvature_gate_imported": True,
@@ -23,11 +40,17 @@ def build_payload() -> dict:
         "no_fitted_tetrad_residual_coefficient": True,
     }
     closure = {
-        "induced_metric_variation_transport_ready": False,
-        "extrinsic_curvature_variation_transport_ready": False,
-        "torsion_pullback_variation_transport_ready": False,
-        "tetrad_variation_transport_ready": False,
+        "induced_metric_variation_transport_ready": metric[
+            "tetrad_metric_variation_transport_ready"
+        ],
+        "extrinsic_curvature_variation_transport_ready": extrinsic[
+            "deltaK_transport_ready"
+        ],
+        "torsion_pullback_variation_transport_ready": torsion[
+            "tetrad_torsion_pullback_variation_ready"
+        ],
     }
+    closure["tetrad_variation_transport_ready"] = all(closure.values())
     return {
         "status": "janus-z2-sigma-counterterm-tetrad-variation-transport-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -48,6 +71,25 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "metric_variation": {
+                "gate": metric["status"],
+                "ready": metric["tetrad_metric_variation_transport_ready"],
+                "closure": metric["closure"],
+            },
+            "extrinsic_curvature_variation": {
+                "gate": extrinsic["status"],
+                "ready": extrinsic["deltaK_transport_ready"],
+                "closure": extrinsic["closure"],
+                "current_frontier": extrinsic["current_frontier"],
+            },
+            "torsion_pullback_variation": {
+                "gate": torsion["status"],
+                "ready": torsion["tetrad_torsion_pullback_variation_ready"],
+                "closure": torsion["closure"],
+                "still_open": torsion["still_open"],
+            },
+        },
         "transport_targets": [
             "delta e -> delta h_ab",
             "delta e -> delta K_ab",
@@ -57,10 +99,9 @@ def build_payload() -> dict:
         "tetrad_variation_transport_ledger_declared": all(declared.values()),
         "tetrad_variation_transport_ready": all(declared.values()) and all(closure.values()),
         "current_frontier": [
-            "induced_metric_variation_transport_ready = false",
-            "extrinsic_curvature_variation_transport_ready = false",
-            "torsion_pullback_variation_transport_ready = false",
-            "tetrad_variation_transport_ready = false",
+            f"{key} = false"
+            for key, ready in closure.items()
+            if not ready
         ],
         "next_required": [
             "derive_delta_e_to_delta_h_transport",

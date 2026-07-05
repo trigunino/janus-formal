@@ -1,6 +1,10 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_gate import build_payload
+from tests.test_z2_sigma_embedding_geometry_manifest import _manifest
 
 
 class P0EFTJanusZ2SigmaCoframeConnectionPullbackGateTests(unittest.TestCase):
@@ -19,12 +23,31 @@ class P0EFTJanusZ2SigmaCoframeConnectionPullbackGateTests(unittest.TestCase):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["active_Sigma_embedding_ready"])
+        self.assertTrue(payload["closure"]["coframe_pullback_formula_ready"])
+        self.assertTrue(payload["closure"]["spin_connection_pullback_formula_ready"])
         self.assertFalse(payload["closure"]["coframe_pullback_ready"])
         self.assertFalse(payload["closure"]["spin_connection_pullback_ready"])
         self.assertTrue(payload["closure"]["Z2_oriented_pullback_ready"])
         self.assertFalse(payload["coframe_connection_pullback_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertIn("coframe_connection_pullback_readiness", payload["upstream_frontiers"])
         self.assertIn("pass_active_tunnel_embedding_of_a_gate", payload["next_required"])
         self.assertIn("pass_tangent_normal_orientation_gate", payload["next_required"])
+
+    def test_valid_active_embedding_manifest_unblocks_coframe_pullback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "embedding.json"
+            path.write_text(json.dumps(_manifest()), encoding="utf-8")
+
+            payload = build_payload(embedding_manifest_path=path)
+
+        self.assertTrue(payload["closure"]["active_Sigma_embedding_ready"])
+        self.assertTrue(payload["closure"]["coframe_pullback_ready"])
+        self.assertTrue(payload["closure"]["spin_connection_pullback_ready"])
+        self.assertTrue(payload["coframe_connection_pullback_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
 
 
 if __name__ == "__main__":

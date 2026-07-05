@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_readiness_gate import (
+    build_payload as build_coframe_connection_pullback_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_oriented_pullback_variation_commutation_gate import (
+    build_payload as build_oriented_pullback_commutation_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_fixed_embedding_connection_pullback_variation_gate.md")
@@ -9,6 +24,9 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_fixed_embedding_connecti
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_embedding_payload()
+    coframe_connection = build_coframe_connection_pullback_payload()
+    oriented_commutation = build_oriented_pullback_commutation_payload()
     declared = {
         "active_tunnel_embedding_gate_declared": True,
         "coframe_connection_pullback_gate_declared": True,
@@ -23,12 +41,17 @@ def build_payload() -> dict:
         "no_embedding_variation_hidden_in_delta_omega": True,
         "no_fitted_pullback_coefficient": True,
     }
+    active_embedding_ready = active_embedding["active_embedding_readiness_ready"]
+    connection_pullback_ready = coframe_connection["readiness"]["spin_connection_pullback_ready"]
+    oriented_commutation_ready = oriented_commutation[
+        "oriented_pullback_variation_commutation_ready"
+    ]
     closure = {
-        "active_embedding_ready": False,
-        "connection_pullback_ready": False,
+        "active_embedding_ready": active_embedding_ready,
+        "connection_pullback_ready": connection_pullback_ready,
         "fixed_embedding_condition_proved": True,
         "pullback_commutes_with_delta_omega": True,
-        "z2_oriented_commutation_ready": True,
+        "z2_oriented_commutation_ready": oriented_commutation_ready,
     }
     return {
         "status": "janus-z2-sigma-fixed-embedding-connection-pullback-variation-gate",
@@ -49,6 +72,25 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding_ready,
+                "readiness": active_embedding["readiness"],
+                "still_open": active_embedding["still_open"],
+            },
+            "coframe_connection_pullback": {
+                "gate": coframe_connection["status"],
+                "ready": coframe_connection["coframe_connection_pullback_readiness_ready"],
+                "readiness": coframe_connection["readiness"],
+                "still_open": coframe_connection["still_open"],
+            },
+            "oriented_pullback_commutation": {
+                "gate": oriented_commutation["status"],
+                "ready": oriented_commutation_ready,
+                "closure": oriented_commutation["closure"],
+            },
+        },
         "formulae": {
             "fixed_embedding_commutation": "delta_omega X_Sigma^* omega = X_Sigma^*(delta_omega omega)",
             "hidden_embedding_excluded": "delta_omega X_Sigma = 0",
@@ -62,6 +104,11 @@ def build_payload() -> dict:
         ],
         "fixed_embedding_connection_pullback_variation_ledger_declared": all(declared.values()),
         "fixed_embedding_connection_pullback_variation_ready": all(declared.values()) and all(closure.values()),
+        "current_frontier": [
+            f"{key} = false"
+            for key, ready in closure.items()
+            if not ready
+        ],
         "next_required": [
             "pass_active_tunnel_embedding_of_a_gate",
             "pass_coframe_connection_pullback_gate",

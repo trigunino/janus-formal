@@ -50,6 +50,12 @@ def build_payload() -> dict:
         },
         "active_embedding_from_radius_ledger_declared": all(declared.values()),
         "active_embedding_from_radius_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "R_Sigma_solution_certificate"
+        ),
         "next_required": [
             "instantiate_radius_to_embedding_conditional_closure_with_R_Sigma_of_a",
             "pass_radius_gauge_embedding_transport_gate",
@@ -72,6 +78,7 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['active_embedding_from_radius_ledger_declared']}`",
         f"Ready: `{payload['active_embedding_from_radius_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Maps",
     ]

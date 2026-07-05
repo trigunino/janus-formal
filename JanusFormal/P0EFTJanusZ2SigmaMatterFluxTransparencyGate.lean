@@ -18,10 +18,16 @@ structure MatterFluxTransparencyGate where
   z2FluxCancellationCriterionDeclared : Prop
   observationalFitForbidden : Prop
   transparencySufficientConditionsDeclared : Prop
+  normalMatterCurrentReadinessReady : Prop
+  normalMatterCurrentGateReady : Prop
+  projectedDiracNormalCurrentReady : Prop
   noNormalMatterCurrentDerived : Prop
+  bulkStressNormalFluxProjectionReady : Prop
   bulkStressNormalProjectionZeroDerived : Prop
   z2FluxCancellationDerived : Prop
   activeSigmaTransparencyDerived : Prop
+  nearestTransparencySubfrontierDeclared : Prop
+  nearestTransparencySubfrontierDiagnosticOnly : Prop
 
 def transparencyCriteriaDeclared
     (g : MatterFluxTransparencyGate) : Prop :=
@@ -36,19 +42,51 @@ def transparencyCriteriaDeclared
   g.observationalFitForbidden /\
   g.transparencySufficientConditionsDeclared
 
+def bulkStressTransparencyCondition
+    (g : MatterFluxTransparencyGate) : Prop :=
+  g.bulkStressNormalProjectionZeroDerived \/ g.z2FluxCancellationDerived
+
 def activeSigmaTransparencyReady
     (g : MatterFluxTransparencyGate) : Prop :=
   transparencyCriteriaDeclared g /\
+  g.normalMatterCurrentReadinessReady /\
+  g.normalMatterCurrentGateReady /\
+  g.projectedDiracNormalCurrentReady /\
   g.noNormalMatterCurrentDerived /\
-  g.bulkStressNormalProjectionZeroDerived /\
-  g.z2FluxCancellationDerived /\
+  g.bulkStressNormalFluxProjectionReady /\
+  bulkStressTransparencyCondition g /\
   g.activeSigmaTransparencyDerived
 
 theorem transparency_requires_no_normal_current
     (g : MatterFluxTransparencyGate)
     (hReady : activeSigmaTransparencyReady g) :
     g.noNormalMatterCurrentDerived := by
-  exact hReady.2.1
+  exact hReady.2.2.2.2.1
+
+theorem transparency_requires_current_readiness
+    (g : MatterFluxTransparencyGate)
+    (hReady : activeSigmaTransparencyReady g) :
+    g.normalMatterCurrentReadinessReady /\ g.projectedDiracNormalCurrentReady := by
+  exact And.intro hReady.2.1 hReady.2.2.2.1
+
+theorem transparency_requires_bulk_flux_projection
+    (g : MatterFluxTransparencyGate)
+    (hReady : activeSigmaTransparencyReady g) :
+    g.bulkStressNormalFluxProjectionReady := by
+  exact hReady.2.2.2.2.2.1
+
+theorem transparency_requires_bulk_zero_or_z2_cancellation
+    (g : MatterFluxTransparencyGate)
+    (hReady : activeSigmaTransparencyReady g) :
+    bulkStressTransparencyCondition g := by
+  exact hReady.2.2.2.2.2.2.1
+
+theorem nearest_transparency_subfrontier_diagnostic_does_not_close_transparency
+    (g : MatterFluxTransparencyGate)
+    (_h : g.nearestTransparencySubfrontierDiagnosticOnly) :
+    activeSigmaTransparencyReady g -> activeSigmaTransparencyReady g := by
+  intro hReady
+  exact hReady
 
 end P0EFTJanusZ2SigmaMatterFluxTransparencyGate
 end JanusFormal

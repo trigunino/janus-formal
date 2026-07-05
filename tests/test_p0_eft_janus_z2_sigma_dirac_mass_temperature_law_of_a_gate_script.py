@@ -21,6 +21,8 @@ class P0EFTJanusZ2SigmaDiracMassTemperatureLawOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["relativistic_or_massive_regime_derived"])
         self.assertFalse(payload["closure"]["decoupling_scale_derived"])
         self.assertFalse(payload["dirac_mass_temperature_law_of_a_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "active_mass_temperature_law")
         self.assertIn("pass_Dirac_regime_selection_gate", payload["next_required"])
         self.assertIn("pass_Dirac_decoupling_condition_gate", payload["next_required"])
         self.assertIn("pass_Dirac_scalar_mass_law_gate", payload["next_required"])

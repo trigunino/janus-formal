@@ -21,6 +21,11 @@ class P0EFTJanusZ2SigmaHolstTorsionStressOfAGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["torsion_field_solution_of_a_ready"])
         self.assertFalse(payload["closure"]["Immirzi_profile_of_a_ready"])
         self.assertFalse(payload["holst_torsion_stress_of_a_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(
+            payload["primary_blocker"],
+            "torsion_field_solution_and_immirzi_profile",
+        )
         self.assertIn("pass_Z2Sigma_torsion_field_solution_of_a_gate", payload["next_required"])
         self.assertIn("pass_Immirzi_profile_of_a_gate", payload["next_required"])
         self.assertIn("propagate_Holst_torsion_stress_to_bulk_stress_gate", payload["next_required"])

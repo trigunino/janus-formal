@@ -55,6 +55,12 @@ def build_payload() -> dict:
         },
         "dirac_mass_temperature_ledger_declared": all(declared.values()),
         "dirac_mass_temperature_law_of_a_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "active_mass_temperature_law"
+        ),
         "next_required": [
             "pass_Dirac_regime_selection_gate",
             "pass_Dirac_decoupling_condition_gate",

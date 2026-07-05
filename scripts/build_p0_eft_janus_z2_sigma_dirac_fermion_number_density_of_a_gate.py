@@ -3,12 +3,17 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from scripts.build_p0_eft_janus_z2_sigma_dirac_number_normalization_gate import (
+    build_payload as build_number_normalization_payload,
+)
+
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_fermion_number_density_of_a_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_fermion_number_density_of_a_gate.json")
 
 
 def build_payload() -> dict:
+    number_normalization = build_number_normalization_payload()
     declared = {
         "Dirac_number_density_bibliography_checked": True,
         "Dirac_U1_current_imported": True,
@@ -20,11 +25,16 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_number_normalization_derived": False,
-        "minus_number_normalization_derived": False,
+        "plus_number_normalization_derived": number_normalization["closure"][
+            "plus_charge_fixed_by_action_or_topology"
+        ],
+        "minus_number_normalization_derived": number_normalization["closure"][
+            "minus_charge_fixed_by_action_or_topology"
+        ],
         "projected_number_density_ready": False,
         "Dirac_fermion_number_density_of_a_ready": False,
     }
+    ready = all(declared.values()) and all(closure.values())
     return {
         "status": "janus-z2-sigma-dirac-fermion-number-density-of-a-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -42,6 +52,12 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "dirac_number_normalization": {
+                "gate_passed": number_normalization["gate_passed"],
+                "primary_blocker": number_normalization["primary_blocker"],
+            },
+        },
         "formulas": {
             "dirac_current": "J_pm^mu = psi_bar_pm gamma^mu psi_pm",
             "covariant_conservation": "nabla_mu J_pm^mu = 0 unless an active anomaly/source is derived",
@@ -49,7 +65,13 @@ def build_payload() -> dict:
             "projection": "n_Z2Sigma(a) = project_Z2Sigma(N_+, N_-) / a^3",
         },
         "dirac_number_density_ledger_declared": all(declared.values()),
-        "dirac_fermion_number_density_of_a_ready": all(declared.values()) and all(closure.values()),
+        "dirac_fermion_number_density_of_a_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": (
+            "none"
+            if ready
+            else number_normalization["primary_blocker"]
+        ),
         "next_required": [
             "pass_Dirac_number_normalization_gate",
             "propagate_number_density_to_fermion_distribution_gate",

@@ -12,6 +12,8 @@ class P0EFTJanusZ2SigmaResolvedTunnelSmoothAtlasGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["collar_tubular_neighborhood_gate_declared"])
         self.assertTrue(payload["declared"]["tubular_neighborhood_bibliography_checked"])
         self.assertTrue(payload["declared"]["collar_gluing_bibliography_checked"])
+        self.assertTrue(payload["standard_smooth_gluing_theorems_available"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
         self.assertIn("atlas", payload["formulas"])
 
     def test_resolved_tunnel_smooth_atlas_closure_remains_blocked(self):
@@ -21,6 +23,11 @@ class P0EFTJanusZ2SigmaResolvedTunnelSmoothAtlasGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["resolved_tunnel_atlas_derived"])
         self.assertFalse(payload["closure"]["smooth_atlas_ready"])
         self.assertFalse(payload["resolved_tunnel_smooth_atlas_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["collar_tubular_neighborhood"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertIn("pass_collar_tubular_neighborhood_gate", payload["next_required"])
         self.assertIn("feed_result_to_resolved_tunnel_frame_bundle_gate", payload["next_required"])
 

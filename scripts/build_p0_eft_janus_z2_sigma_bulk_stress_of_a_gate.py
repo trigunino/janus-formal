@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_sector_density_pressure_of_a_gate import (
+    build_payload as build_sector_density_pressure_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_holst_torsion_stress_of_a_gate import (
+    build_payload as build_holst_torsion_stress_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_bulk_stress_of_a_gate.md")
@@ -9,12 +21,16 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_bulk_stress_of_a_gate.js
 
 
 def build_payload() -> dict:
+    sector_density_pressure = build_sector_density_pressure_payload()
+    holst_torsion_stress = build_holst_torsion_stress_payload()
     declared = {
         "Janus_bimetric_stress_bibliography_checked": True,
         "plus_sector_stress_declared": True,
         "minus_sector_stress_declared": True,
         "sector_density_pressure_gate_declared": True,
         "Holst_torsion_stress_gate_declared": True,
+        "sector_density_pressure_frontier_imported": True,
+        "Holst_torsion_stress_frontier_imported": True,
         "perfect_fluid_FLRW_stress_imported": True,
         "Holst_torsion_stress_contribution_declared": True,
         "Z2_sign_policy_declared": True,
@@ -23,9 +39,18 @@ def build_payload() -> dict:
         "T_minus_munu_of_a_declared": True,
     }
     closure = {
-        "plus_matter_density_pressure_of_a_ready": False,
-        "minus_matter_density_pressure_of_a_ready": False,
-        "torsion_stress_of_a_ready": False,
+        "plus_matter_density_pressure_of_a_ready": sector_density_pressure["closure"][
+            "plus_rho_p_of_a_ready"
+        ],
+        "minus_matter_density_pressure_of_a_ready": sector_density_pressure["closure"][
+            "minus_rho_p_of_a_ready"
+        ],
+        "sector_density_pressure_of_a_ready": sector_density_pressure[
+            "sector_density_pressure_of_a_ready"
+        ],
+        "torsion_stress_of_a_ready": holst_torsion_stress[
+            "holst_torsion_stress_of_a_ready"
+        ],
         "bulk_stress_plus_of_a_ready": False,
         "bulk_stress_minus_of_a_ready": False,
     }
@@ -45,6 +70,28 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "sector_density_pressure_of_a": {
+                "gate": sector_density_pressure["status"],
+                "ready": sector_density_pressure["sector_density_pressure_of_a_ready"],
+                "closure": sector_density_pressure["closure"],
+                "next_required": sector_density_pressure["next_required"],
+            },
+            "holst_torsion_stress_of_a": {
+                "gate": holst_torsion_stress["status"],
+                "ready": holst_torsion_stress["holst_torsion_stress_of_a_ready"],
+                "closure": holst_torsion_stress["closure"],
+                "next_required": holst_torsion_stress["next_required"],
+            },
+        },
+        "nearest_bulk_stress_frontier": {
+            "blocks": [
+                key
+                for key, ready in closure.items()
+                if not ready
+            ],
+            "diagnostic_only": True,
+        },
         "formula": {
             "perfect_fluid": "T_munu^(pm) = (rho_pm+p_pm) u_mu u_nu + p_pm g_munu^(pm)",
             "active_bulk": "T_munu^(pm,active)(a) = T_matter^(pm)(a) + T_HolstTorsion^(pm)(a)",
@@ -52,6 +99,16 @@ def build_payload() -> dict:
         },
         "bulk_stress_ledger_declared": all(declared.values()),
         "bulk_stress_of_a_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else (
+                sector_density_pressure.get("primary_blocker")
+                if not sector_density_pressure["sector_density_pressure_of_a_ready"]
+                else holst_torsion_stress.get("primary_blocker")
+            )
+        ),
         "next_required": [
             "pass_sector_density_pressure_of_a_gate",
             "pass_Holst_torsion_stress_of_a_gate",

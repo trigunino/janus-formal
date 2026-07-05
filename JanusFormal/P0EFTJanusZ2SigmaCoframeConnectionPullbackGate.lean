@@ -18,6 +18,7 @@ structure CoframeConnectionPullbackGate where
   spinConnectionPullbackDeclared : Prop
   z2NormalOrientationRequired : Prop
   observationalFitForbidden : Prop
+  activeEmbeddingGeometryManifestValid : Prop
   activeSigmaEmbeddingReady : Prop
   coframePullbackReady : Prop
   spinConnectionPullbackReady : Prop
@@ -52,6 +53,13 @@ theorem coframe_connection_pullback_requires_active_embedding
     (hReady : coframeConnectionPullbackClosure g) :
     g.activeSigmaEmbeddingReady := by
   exact hReady.2.1
+
+theorem valid_embedding_manifest_can_supply_active_sigma_embedding
+    (g : CoframeConnectionPullbackGate)
+    (hManifest : g.activeEmbeddingGeometryManifestValid)
+    (hImplies : g.activeEmbeddingGeometryManifestValid -> g.activeSigmaEmbeddingReady) :
+    g.activeSigmaEmbeddingReady := by
+  exact hImplies hManifest
 
 end P0EFTJanusZ2SigmaCoframeConnectionPullbackGate
 end JanusFormal

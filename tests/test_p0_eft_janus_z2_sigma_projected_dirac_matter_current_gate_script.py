@@ -11,6 +11,8 @@ class P0EFTJanusZ2SigmaProjectedDiracMatterCurrentGateTests(unittest.TestCase):
         self.assertTrue(payload["projected_dirac_matter_current_ledger_declared"])
         self.assertTrue(payload["declared"]["U1_vector_symmetry_declared"])
         self.assertTrue(payload["declared"]["Z2_projected_current_declared"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
 
     def test_projected_current_waits_for_projected_dirac_action(self):
         payload = build_payload()
@@ -18,6 +20,8 @@ class P0EFTJanusZ2SigmaProjectedDiracMatterCurrentGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["projected_Dirac_action_ready"])
         self.assertFalse(payload["closure"]["Z2_projected_current_ready"])
         self.assertFalse(payload["projected_dirac_matter_current_ready"])
+        self.assertIn("projected_dirac_action_reduction", payload["upstream_frontiers"])
+        self.assertIn("plus_minus_matter_current", payload["upstream_frontiers"])
         self.assertIn("pass_projected_Dirac_action_reduction_gate", payload["next_required"])
 
     def test_bibliography_uses_primary_sources(self):

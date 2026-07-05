@@ -18,6 +18,21 @@ class P0EFTJanusZ2SigmaBulkStressNormalFluxCancellationGateTests(unittest.TestCa
         self.assertFalse(payload["closure"]["bulk_stress_plus_of_a_ready"])
         self.assertFalse(payload["closure"]["Sigma_normals_ready"])
         self.assertFalse(payload["bulk_stress_normal_flux_cancellation_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(
+            payload["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
+        self.assertIn("bulk_stress_of_a", payload["upstream_frontiers"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["bulk_stress_of_a"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
+        self.assertIn(
+            "bulk_stress_plus_of_a_ready",
+            payload["nearest_bulk_stress_flux_frontier"]["blocks"],
+        )
+        self.assertTrue(payload["nearest_bulk_stress_flux_frontier"]["diagnostic_only"])
         self.assertIn("prove_or_reject_Z2_flux_cancellation", payload["next_required"])
 
     def test_bibliography_uses_primary_thin_shell_sources(self):

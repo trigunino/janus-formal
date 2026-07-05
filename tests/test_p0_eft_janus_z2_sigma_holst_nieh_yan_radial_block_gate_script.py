@@ -22,6 +22,26 @@ class P0EFTJanusZ2SigmaHolstNiehYanRadialBlockGateTests(unittest.TestCase):
         self.assertIn("pass_torsion_pullback_on_Sigma_gate", payload["next_required"])
         self.assertIn("derive_Sigma_torsion_pullback_from_active_Z2_Sigma_connection", payload["next_required"])
 
+    def test_ready_torsion_and_immirzi_close_radial_block(self):
+        payload = build_payload(
+            torsion_pullback_payload={
+                "status": "torsion",
+                "torsion_pullback_on_sigma_ready": True,
+                "closure": {"torsion_pullback_on_Sigma_ready": True},
+                "current_frontier": [],
+            },
+            immirzi_profile_payload={
+                "status": "immirzi",
+                "immirzi_profile_of_a_ready": True,
+                "primary_blocker": "none",
+                "current_frontier": [],
+            },
+        )
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertTrue(payload["holst_nieh_yan_radial_block_of_a_ready"])
+        self.assertEqual(payload["primary_blocker"], "none")
+
 
 if __name__ == "__main__":
     unittest.main()

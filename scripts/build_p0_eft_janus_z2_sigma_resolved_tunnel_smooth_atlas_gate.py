@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_collar_tubular_neighborhood_gate import (
+    build_payload as build_collar_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_smooth_atlas_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_smooth_a
 
 
 def build_payload() -> dict:
+    collar = build_collar_payload()
     declared = {
         "tubular_neighborhood_bibliography_checked": True,
         "collar_gluing_bibliography_checked": True,
@@ -23,7 +33,7 @@ def build_payload() -> dict:
     }
     closure = {
         "projective_tunnel_topology_ready": True,
-        "collars_derived": False,
+        "collars_derived": collar["collar_tubular_neighborhood_ready"],
         "tubular_replacement_smooth_derived": False,
         "gluing_map_smooth_derived": False,
         "transition_maps_smooth_derived": False,
@@ -54,6 +64,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "collar_tubular_neighborhood": {
+                "gate": collar["status"],
+                "ready": collar["collar_tubular_neighborhood_ready"],
+                "closure": collar["closure"],
+                "primary_blocker": collar.get("primary_blocker"),
+            },
+        },
         "formulas": {
             "collar": "partial M x [0, eps) -> M",
             "tube_chart": "Sigma x (-eps, eps) -> U_Sigma",
@@ -62,6 +80,13 @@ def build_payload() -> dict:
         },
         "resolved_tunnel_smooth_atlas_ledger_declared": all(declared.values()),
         "resolved_tunnel_smooth_atlas_ready": all(declared.values()) and all(closure.values()),
+        "standard_smooth_gluing_theorems_available": True,
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else collar.get("primary_blocker", "collar_tubular_neighborhood")
+        ),
         "next_required": [
             "pass_collar_tubular_neighborhood_gate",
             "derive_collar_neighborhoods",

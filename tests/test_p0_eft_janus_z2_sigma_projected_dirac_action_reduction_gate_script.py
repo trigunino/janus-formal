@@ -1,6 +1,10 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_action_reduction_gate import build_payload
+from tests.test_z2_sigma_embedding_geometry_manifest import _manifest
 
 
 class P0EFTJanusZ2SigmaProjectedDiracActionReductionGateTests(unittest.TestCase):
@@ -12,6 +16,8 @@ class P0EFTJanusZ2SigmaProjectedDiracActionReductionGateTests(unittest.TestCase)
         self.assertTrue(payload["declared"]["coframe_connection_pullback_gate_declared"])
         self.assertTrue(payload["declared"]["spinor_bundle_projection_gate_declared"])
         self.assertTrue(payload["declared"]["no_effective_fitted_mass_or_phase"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
 
     def test_reduction_waits_for_pullback_and_projection(self):
         payload = build_payload()
@@ -20,8 +26,24 @@ class P0EFTJanusZ2SigmaProjectedDiracActionReductionGateTests(unittest.TestCase)
         self.assertFalse(payload["closure"]["plus_minus_spinor_projection_ready"])
         self.assertFalse(payload["closure"]["Z2_projected_Dirac_action_ready"])
         self.assertFalse(payload["projected_dirac_action_reduction_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertIn("coframe_connection_pullback", payload["upstream_frontiers"])
+        self.assertIn("spinor_bundle_projection", payload["upstream_frontiers"])
         self.assertIn("pass_spinor_bundle_projection_gate", payload["next_required"])
         self.assertIn("feed_projected_action_to_mass_term_from_action_gate", payload["next_required"])
+
+    def test_valid_embedding_manifest_unblocks_only_coframe_frontier(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "embedding.json"
+            path.write_text(json.dumps(_manifest()), encoding="utf-8")
+
+            payload = build_payload(embedding_manifest_path=path)
+
+        self.assertTrue(payload["closure"]["coframe_connection_pullback_ready"])
+        self.assertFalse(payload["closure"]["plus_minus_spinor_projection_ready"])
+        self.assertFalse(payload["closure"]["Z2_projected_Dirac_action_ready"])
+        self.assertFalse(payload["projected_dirac_action_reduction_ready"])
+        self.assertEqual(payload["primary_blocker"], "plus_minus_spinor_bundle_data")
 
 
 if __name__ == "__main__":

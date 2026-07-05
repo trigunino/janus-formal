@@ -20,7 +20,9 @@ def build_payload() -> dict:
     }
     evaluation = {
         "H_Z2Sigma_numerical_ready": False,
-        "photon_baryon_sound_speed_ready": False,
+        "photon_baryon_sound_speed_builder_ready": True,
+        "photon_baryon_sound_speed_over_c_builder_ready": True,
+        "photon_baryon_sound_speed_values_ready": False,
         "drag_epoch_ready": False,
         "rd_integral_evaluated": False,
     }
@@ -33,6 +35,7 @@ def build_payload() -> dict:
         "bao_sound_ruler_formula_ready": all(lock.values()),
         "bao_sound_ruler_evaluated": all(lock.values()) and all(evaluation.values()),
         "rd_definition": "r_d^Z2Sigma = integral_{z_d}^{infinity} c_s^Z2Sigma(z) / H_Z2Sigma(z) dz",
+        "rd_hat_definition": "rhat_d^Z2Sigma = integral_{z_d}^{infinity} (c_s^Z2Sigma/c)/E_Z2Sigma dz",
         "distance_ratios_ready": False,
         "fitted_planck_rd_forbidden": True,
         "compressed_lcdm_prior_forbidden": True,

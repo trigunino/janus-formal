@@ -1,14 +1,34 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_matter_flux_active_projection_gate import (
+    build_payload as build_active_projection_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_matter_flux_route_decision_gate import (
+    build_payload as build_route_decision_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_matter_flux_transparency_gate import (
+    build_payload as build_transparency_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.json")
 
 
 def build_payload() -> dict:
+    transparency = build_transparency_payload()
+    active_projection = build_active_projection_payload()
+    route_decision = build_route_decision_payload()
+    transparency_ready = transparency["active_sigma_transparency_ready"]
+    active_flux_ready = active_projection["active_flux_projection_ready"]
+    route_ready = route_decision["matter_flux_route_decision_ready"]
     declared = {
         "thin_shell_flux_bibliography_checked": True,
         "normal_tangent_flux_formula_ready": True,
@@ -23,9 +43,11 @@ def build_payload() -> dict:
         "E_matterFlux_block_declared": True,
     }
     closure = {
-        "transparency_condition_derived": False,
-        "active_flux_of_a_ready": False,
-        "E_matterFlux_radial_block_reduced": False,
+        "transparency_condition_derived": transparency_ready,
+        "active_flux_of_a_ready": active_flux_ready,
+        "matter_flux_route_decision_ready": route_ready,
+        "E_matterFlux_radial_block_reduced": route_ready
+        and (transparency_ready or active_flux_ready),
     }
     return {
         "status": "janus-z2-sigma-matter-flux-radial-block-gate",
@@ -43,6 +65,32 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "transparency": {
+                "gate": transparency["status"],
+                "ready": transparency_ready,
+                "primary_blocker": transparency.get(
+                    "primary_blocker", "matter_flux_transparency"
+                ),
+                "current_frontier": transparency["current_frontier"],
+            },
+            "active_projection": {
+                "gate": active_projection["status"],
+                "ready": active_flux_ready,
+                "primary_blocker": active_projection.get(
+                    "primary_blocker", "matter_flux_active_projection"
+                ),
+                "closure": active_projection["closure"],
+            },
+            "route_decision": {
+                "gate": route_decision["status"],
+                "ready": route_ready,
+                "primary_blocker": route_decision.get(
+                    "primary_blocker", "matter_flux_route_decision"
+                ),
+                "selected_route": route_decision["selected_route"],
+            },
+        },
         "formula": {
             "flux_one_form": "F_a^pm = T_munu^pm e_a^mu n_pm^nu",
             "radial_block": "E_matterFlux = delta_RSigma integral_Sigma F_tau^Z2Sigma or 0 under derived transparency",
@@ -51,7 +99,30 @@ def build_payload() -> dict:
         "matter_flux_radial_ledger_declared": all(declared.values()),
         "matter_flux_radial_block_reduced": all(declared.values())
         and (closure["transparency_condition_derived"] or closure["active_flux_of_a_ready"])
+        and closure["matter_flux_route_decision_ready"]
         and closure["E_matterFlux_radial_block_reduced"],
+        "gate_passed": all(declared.values())
+        and (closure["transparency_condition_derived"] or closure["active_flux_of_a_ready"])
+        and closure["matter_flux_route_decision_ready"]
+        and closure["E_matterFlux_radial_block_reduced"],
+        "primary_blocker": (
+            "none"
+            if (
+                all(declared.values())
+                and (closure["transparency_condition_derived"] or closure["active_flux_of_a_ready"])
+                and closure["matter_flux_route_decision_ready"]
+                and closure["E_matterFlux_radial_block_reduced"]
+            )
+            else (
+                transparency.get("primary_blocker", "matter_flux_transparency")
+                if not transparency_ready
+                else active_projection.get("primary_blocker", "matter_flux_active_projection")
+                if not active_flux_ready
+                else route_decision.get("primary_blocker", "matter_flux_route_decision")
+                if not route_ready
+                else "E_matterFlux_radial_block"
+            )
+        ),
         "next_required": [
             "pass_matter_flux_transparency_gate_or_reject_transparency",
             "pass_matter_flux_route_decision_gate",

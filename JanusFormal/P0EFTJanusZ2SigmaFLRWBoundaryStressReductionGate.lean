@@ -19,6 +19,11 @@ structure Z2SigmaFLRWBoundaryStressReductionGate where
   matterFluxFLRWReduced : Prop
   tunnelJunctionFLRWReduced : Prop
   countertermFLRWReduced : Prop
+  cartanGHYDeltaKsOfAReady : Prop
+  cartanGHYDeltaKtauOfAReady : Prop
+  tunnelJunctionDeltaKsOfAReady : Prop
+  tunnelJunctionDeltaKtauOfAReady : Prop
+  tunnelJunctionNonCircularPartitionReady : Prop
   componentSignsFixedByZ2Normal : Prop
   tEffABReadyForFLRWProjection : Prop
 
@@ -36,6 +41,11 @@ def flrwBoundaryStressReductionReady
   g.inducedFLRWSigmaMetricDeclared /\
   g.z2NormalOrientationDeclared /\
   allComponentReductionsReady g /\
+  g.cartanGHYDeltaKsOfAReady /\
+  g.cartanGHYDeltaKtauOfAReady /\
+  g.tunnelJunctionDeltaKsOfAReady /\
+  g.tunnelJunctionDeltaKtauOfAReady /\
+  g.tunnelJunctionNonCircularPartitionReady /\
   g.componentSignsFixedByZ2Normal /\
   g.tEffABReadyForFLRWProjection
 
@@ -44,6 +54,12 @@ theorem flrw_projection_requires_all_component_reductions
     (hReady : flrwBoundaryStressReductionReady g) :
     allComponentReductionsReady g := by
   exact hReady.2.2.2.1
+
+theorem flrw_projection_requires_cartan_scale_factor_functions
+    (g : Z2SigmaFLRWBoundaryStressReductionGate)
+    (hReady : flrwBoundaryStressReductionReady g) :
+    g.cartanGHYDeltaKsOfAReady /\ g.cartanGHYDeltaKtauOfAReady := by
+  exact And.intro hReady.2.2.2.2.1 hReady.2.2.2.2.2.1
 
 end P0EFTJanusZ2SigmaFLRWBoundaryStressReductionGate
 end JanusFormal

@@ -67,6 +67,12 @@ def build_payload() -> dict:
         },
         "dirac_thermal_occupation_ledger_declared": all(declared.values()),
         "dirac_thermal_occupation_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "Dirac_number_mass_regime_chemical_potential_degeneracy"
+        ),
         "next_required": [
             "pass_Dirac_number_normalization_gate",
             "pass_Dirac_mass_temperature_law_gate",

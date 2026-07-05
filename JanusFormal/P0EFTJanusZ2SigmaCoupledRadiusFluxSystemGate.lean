@@ -10,6 +10,8 @@ structure CoupledRadiusFluxSystemGate where
   throatRadiusVariationalEquationImported : Prop
   matterFluxActiveProjectionImported : Prop
   matterFluxRadiusAcyclicityImported : Prop
+  coupledRadiusFluxFunctionSpaceImported : Prop
+  coupledRadiusFluxWellPosednessImported : Prop
   thinShellFluxBibliographyChecked : Prop
   coupledUnknownsDeclared : Prop
   coupledEquationsDeclared : Prop
@@ -19,6 +21,8 @@ structure CoupledRadiusFluxSystemGate where
   fZ2SigmaFunctionalDeclared : Prop
   embeddingDependenceRecorded : Prop
   closureConditionsDeclared : Prop
+  functionSpaceReadyForWellPosedness : Prop
+  wellPosednessReady : Prop
   coupledSystemWellPosed : Prop
   coupledSystemSolved : Prop
   rSigmaOfAReady : Prop
@@ -30,6 +34,8 @@ def coupledRadiusFluxLedgerDeclared
   g.throatRadiusVariationalEquationImported /\
   g.matterFluxActiveProjectionImported /\
   g.matterFluxRadiusAcyclicityImported /\
+  g.coupledRadiusFluxFunctionSpaceImported /\
+  g.coupledRadiusFluxWellPosednessImported /\
   g.thinShellFluxBibliographyChecked /\
   g.coupledUnknownsDeclared /\
   g.coupledEquationsDeclared /\
@@ -43,6 +49,8 @@ def coupledRadiusFluxSystemReady
   g.fZ2SigmaFunctionalDeclared /\
   g.embeddingDependenceRecorded /\
   g.closureConditionsDeclared /\
+  g.functionSpaceReadyForWellPosedness /\
+  g.wellPosednessReady /\
   g.coupledSystemWellPosed
 
 def coupledRadiusFluxSolutionReady
@@ -58,6 +66,18 @@ theorem coupled_solution_required_before_flux_enters_radius
     (hReady : coupledRadiusFluxSolutionReady g) :
     g.coupledSystemSolved := by
   exact hReady.2.1
+
+theorem coupled_system_ready_requires_function_space
+    (g : CoupledRadiusFluxSystemGate)
+    (hReady : coupledRadiusFluxSystemReady g) :
+    g.functionSpaceReadyForWellPosedness := by
+  exact hReady.2.2.2.2.2.1
+
+theorem coupled_system_ready_requires_well_posedness
+    (g : CoupledRadiusFluxSystemGate)
+    (hReady : coupledRadiusFluxSystemReady g) :
+    g.wellPosednessReady := by
+  exact hReady.2.2.2.2.2.2.1
 
 end P0EFTJanusZ2SigmaCoupledRadiusFluxSystemGate
 end JanusFormal

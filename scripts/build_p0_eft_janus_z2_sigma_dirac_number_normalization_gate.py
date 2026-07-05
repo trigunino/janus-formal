@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_dirac_charge_boundary_projection_gate import (
+    build_payload as build_dirac_charge_boundary_projection_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_number_normalization_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_dirac_number_normalizati
 
 
 def build_payload() -> dict:
+    boundary = build_dirac_charge_boundary_projection_payload()
     declared = {
         "Noether_charge_bibliography_checked": True,
         "Dirac_charge_boundary_projection_gate_declared": True,
@@ -20,10 +30,18 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_charge_fixed_by_action_or_topology": False,
-        "minus_charge_fixed_by_action_or_topology": False,
-        "projected_charge_fixed_by_Z2Sigma": False,
-        "number_normalizations_ready": False,
+        "plus_charge_fixed_by_action_or_topology": boundary["closure"][
+            "plus_charge_integral_ready"
+        ],
+        "minus_charge_fixed_by_action_or_topology": boundary["closure"][
+            "minus_charge_integral_ready"
+        ],
+        "projected_charge_fixed_by_Z2Sigma": boundary["closure"][
+            "Z2Sigma_projected_charge_ready"
+        ],
+        "number_normalizations_ready": boundary[
+            "dirac_charge_boundary_projection_ready"
+        ],
     }
     return {
         "status": "janus-z2-sigma-dirac-number-normalization-gate",
@@ -41,6 +59,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "dirac_charge_boundary_projection": {
+                "gate": boundary["status"],
+                "ready": boundary["dirac_charge_boundary_projection_ready"],
+                "closure": boundary["closure"],
+                "nearest_required": boundary["next_required"],
+            },
+        },
         "formulas": {
             "plus_charge": "N_+ = integral_{Sigma_t^+} J_+^mu dSigma_mu",
             "minus_charge": "N_- = integral_{Sigma_t^-} J_-^mu dSigma_mu",
@@ -49,6 +75,12 @@ def build_payload() -> dict:
         },
         "dirac_number_normalization_ledger_declared": all(declared.values()),
         "dirac_number_normalization_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else boundary["primary_blocker"]
+        ),
         "next_required": [
             "derive_N_plus_from_active_spinor_boundary_data",
             "derive_N_minus_from_active_spinor_boundary_data",

@@ -19,6 +19,8 @@ class P0EFTJanusZ2SigmaDiracRegimeSelectionGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["plus_m_over_Tdec_derived"])
         self.assertFalse(payload["closure"]["projected_regime_selected"])
         self.assertFalse(payload["dirac_regime_selection_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "mass_temperature_ratio_from_active_distribution")
         self.assertIn("pass_Dirac_decoupling_condition_gate", payload["next_required"])
         self.assertIn("propagate_regime_to_mass_temperature_law_gate", payload["next_required"])
 

@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_readiness_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_gate import (
+    build_payload as build_coframe_connection_pullback_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate import (
+    build_payload as build_torsion_pullback_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_torsion_pullback_readiness_gate.md")
@@ -9,6 +24,9 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_torsi
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_embedding_readiness_payload()
+    coframe_connection = build_coframe_connection_pullback_payload()
+    torsion_pullback = build_torsion_pullback_payload()
     declared = {
         "active_embedding_from_radius_gate_imported": True,
         "coframe_connection_pullback_gate_imported": True,
@@ -18,14 +36,26 @@ def build_payload() -> dict:
         "Cartan_pullback_bibliography_checked": True,
     }
     readiness = {
-        "active_embedding_ready": False,
-        "coframe_connection_pullback_ready": False,
+        "active_embedding_ready": active_embedding[
+            "active_embedding_readiness_ready"
+        ],
+        "coframe_connection_pullback_ready": coframe_connection[
+            "coframe_connection_pullback_ready"
+        ],
         "oriented_pullback_commutation_ready": True,
         "ambient_torsion_formula_ready": True,
-        "Sigma_torsion_pullback_ready": False,
-        "FLRW_irreducible_torsion_pullback_ready": False,
-        "torsion_pullback_on_Sigma_ready": False,
-        "torsion_pullback_variation_allowed_basis_ready": False,
+        "Sigma_torsion_pullback_ready": torsion_pullback["closure"][
+            "Sigma_torsion_pullback_ready"
+        ],
+        "FLRW_irreducible_torsion_pullback_ready": torsion_pullback["closure"][
+            "FLRW_irreducible_torsion_pullback_ready"
+        ],
+        "torsion_pullback_on_Sigma_ready": torsion_pullback[
+            "torsion_pullback_on_sigma_ready"
+        ],
+        "torsion_pullback_variation_allowed_basis_ready": torsion_pullback[
+            "torsion_pullback_on_sigma_ready"
+        ],
         "torsion_pullback_variation_transport_ready": False,
     }
     return {
@@ -49,6 +79,23 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "readiness": readiness,
+        "upstream_frontiers": {
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding["active_embedding_readiness_ready"],
+                "readiness": active_embedding["readiness"],
+            },
+            "coframe_connection_pullback": {
+                "gate": coframe_connection["status"],
+                "ready": coframe_connection["coframe_connection_pullback_ready"],
+                "closure": coframe_connection["closure"],
+            },
+            "torsion_pullback_on_sigma": {
+                "gate": torsion_pullback["status"],
+                "ready": torsion_pullback["torsion_pullback_on_sigma_ready"],
+                "closure": torsion_pullback["closure"],
+            },
+        },
         "closed": [
             "oriented_pullback_commutation_ready",
             "ambient_torsion_formula_ready",

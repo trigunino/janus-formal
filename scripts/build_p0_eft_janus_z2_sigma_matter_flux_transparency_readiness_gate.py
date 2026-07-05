@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import (
+    build_payload as build_active_embedding_readiness_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_bulk_stress_normal_flux_cancellation_gate import (
+    build_payload as build_bulk_stress_flux_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_normal_matter_current_readiness_gate import (
+    build_payload as build_normal_matter_current_readiness_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_transparency_readiness_gate.md")
@@ -9,6 +24,9 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_transparency
 
 
 def build_payload() -> dict:
+    active_embedding = build_active_embedding_readiness_payload()
+    normal_current = build_normal_matter_current_readiness_payload()
+    bulk_flux = build_bulk_stress_flux_payload()
     declared = {
         "transparency_gate_imported": True,
         "normal_matter_current_gate_imported": True,
@@ -19,12 +37,23 @@ def build_payload() -> dict:
         "transparency_criteria_declared": True,
     }
     readiness = {
-        "active_embedding_ready": False,
-        "Sigma_normals_ready": False,
-        "no_normal_matter_current_ready": False,
-        "bulk_stress_normal_flux_projection_ready": False,
-        "Z2_bulk_stress_cancellation_ready": False,
-        "active_Sigma_transparency_ready": False,
+        "active_embedding_ready": active_embedding[
+            "active_embedding_readiness_ready"
+        ],
+        "Sigma_normals_ready": active_embedding["readiness"]["unit_normals_ready"],
+        "no_normal_matter_current_ready": normal_current["readiness"][
+            "no_normal_matter_current_ready"
+        ],
+        "bulk_stress_normal_flux_projection_ready": bulk_flux[
+            "bulk_stress_normal_flux_projection_ready"
+        ],
+        "Z2_bulk_stress_cancellation_ready": bulk_flux[
+            "bulk_stress_normal_flux_cancellation_ready"
+        ],
+        "active_Sigma_transparency_ready": (
+            normal_current["readiness"]["no_normal_matter_current_ready"]
+            and bulk_flux["bulk_stress_normal_flux_cancellation_ready"]
+        ),
     }
     return {
         "status": "janus-z2-sigma-matter-flux-transparency-readiness-gate",
@@ -46,6 +75,30 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "readiness": readiness,
+        "upstream_frontiers": {
+            "active_embedding": {
+                "gate": active_embedding["status"],
+                "ready": active_embedding["active_embedding_readiness_ready"],
+                "readiness": active_embedding["readiness"],
+            },
+            "normal_matter_current_readiness": {
+                "gate": normal_current["status"],
+                "ready": normal_current[
+                    "normal_matter_current_readiness_ready"
+                ],
+                "readiness": normal_current["readiness"],
+            },
+            "bulk_stress_normal_flux": {
+                "gate": bulk_flux["status"],
+                "projection_ready": bulk_flux[
+                    "bulk_stress_normal_flux_projection_ready"
+                ],
+                "cancellation_ready": bulk_flux[
+                    "bulk_stress_normal_flux_cancellation_ready"
+                ],
+                "closure": bulk_flux["closure"],
+            },
+        },
         "criteria": {
             "current": "J_n^Z2Sigma = J_n^+ + eps_Z2 J_n^- = 0",
             "stress_flux": "F_a^Z2Sigma = T^+_munu e_a^mu n_+^nu + eps_Z2 T^-_munu e_a^mu n_-^nu = 0",

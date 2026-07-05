@@ -13,6 +13,8 @@ class P0EFTJanusZ2SigmaCoupledRadiusFluxNormalTangentTraceSupportGateTests(unitt
         self.assertTrue(payload["normal_tangent_trace_ledger_declared"])
         self.assertTrue(payload["declared"]["regular_embedding_assumption_declared"])
         self.assertTrue(payload["declared"]["no_independent_frame_fit"])
+        self.assertTrue(payload["standard_hypersurface_trace_theorems_available"])
+        self.assertEqual(payload["primary_blocker"], "embedding_regularity_equivariance")
 
     def test_support_remains_blocked_until_transported_from_embedding(self):
         payload = build_payload()

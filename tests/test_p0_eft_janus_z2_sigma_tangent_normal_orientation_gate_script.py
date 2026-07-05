@@ -23,6 +23,12 @@ class P0EFTJanusZ2SigmaTangentNormalOrientationGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["unit_normals_of_a_ready"])
         self.assertTrue(payload["closure"]["Z2_orientation_sign_fixed"])
         self.assertFalse(payload["tangent_normal_orientation_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertEqual(
+            payload["upstream_frontiers"]["active_tunnel_embedding_of_a"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertIn("pass_active_tunnel_embedding_of_a_gate", payload["next_required"])
         self.assertIn("pass_active_tunnel_embedding_from_radius_gate", payload["next_required"])
         self.assertIn("pass_embedding_tangent_frame_transport_gate", payload["next_required"])

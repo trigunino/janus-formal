@@ -22,6 +22,8 @@ structure PlusMinusSpinorBundleDataGate where
   plusSpinorBundleReady : Prop
   minusSpinorBundleReady : Prop
   plusMinusSpinorBundleDataReady : Prop
+  nearestSpinorBundleFrontierDeclared : Prop
+  nearestSpinorBundleFrontierDiagnosticOnly : Prop
 
 def plusMinusSpinorBundleDataLedgerDeclared
     (g : PlusMinusSpinorBundleDataGate) : Prop :=
@@ -33,7 +35,9 @@ def plusMinusSpinorBundleDataLedgerDeclared
   g.plusSectorSpinorBundleDeclared /\
   g.minusSectorSpinorBundleDeclared /\
   g.gravitationalSignSeparatedFromSpinorBundle /\
-  g.observationalFitForbidden
+  g.observationalFitForbidden /\
+  g.nearestSpinorBundleFrontierDeclared /\
+  g.nearestSpinorBundleFrontierDiagnosticOnly
 
 def plusMinusSpinorBundleDataReady
     (g : PlusMinusSpinorBundleDataGate) : Prop :=
@@ -48,6 +52,15 @@ theorem plus_minus_spinor_data_requires_resolved_tunnel_pin_lift
     (hReady : plusMinusSpinorBundleDataReady g) :
     g.resolvedTunnelPinLiftReady := by
   exact hReady.2.1
+
+theorem nearest_spinor_bundle_frontier_diagnostic_does_not_close_bundle_data
+    (g : PlusMinusSpinorBundleDataGate)
+    (_hDiag : g.nearestSpinorBundleFrontierDiagnosticOnly)
+    (hNoPinLift : Not g.resolvedTunnelPinLiftReady) :
+    Not (g.nearestSpinorBundleFrontierDiagnosticOnly /\
+      plusMinusSpinorBundleDataReady g) := by
+  intro h
+  exact hNoPinLift h.2.2.1
 
 end P0EFTJanusZ2SigmaPlusMinusSpinorBundleDataGate
 end JanusFormal

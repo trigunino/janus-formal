@@ -17,9 +17,11 @@ class P0EFTJanusZ2SigmaCountertermTetradVariationTransportGateTests(unittest.Tes
     def test_transport_remains_blocked_until_all_targets_are_derived(self):
         payload = build_payload()
 
-        self.assertFalse(payload["closure"]["induced_metric_variation_transport_ready"])
+        self.assertTrue(payload["closure"]["induced_metric_variation_transport_ready"])
         self.assertFalse(payload["closure"]["extrinsic_curvature_variation_transport_ready"])
-        self.assertFalse(payload["tetrad_variation_transport_ready"])
+        self.assertFalse(payload["closure"]["torsion_pullback_variation_transport_ready"])
+        self.assertFalse(payload["closure"]["tetrad_variation_transport_ready"])
+        self.assertIn("metric_variation", payload["upstream_frontiers"])
         self.assertIn(
             "feed_tetrad_variation_transport_to_tetrad_residual_channel_gate",
             payload["next_required"],

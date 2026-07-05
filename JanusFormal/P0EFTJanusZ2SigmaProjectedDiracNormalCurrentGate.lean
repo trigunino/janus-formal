@@ -1,4 +1,5 @@
 import JanusFormal.P0EFTJanusZ2SigmaProjectedDiracMatterCurrentGate
+import JanusFormal.P0EFTJanusZ2SigmaReflectingSpinorBoundaryCurrentGate
 import JanusFormal.P0EFTJanusZ2SigmaTangentNormalOrientationGate
 
 namespace JanusFormal
@@ -9,6 +10,7 @@ set_option autoImplicit false
 structure ProjectedDiracNormalCurrentGate where
   thinShellFluxBibliographyChecked : Prop
   projectedDiracMatterCurrentGateDeclared : Prop
+  reflectingSpinorBoundaryCurrentGateDeclared : Prop
   tangentNormalOrientationGateDeclared : Prop
   plusNormalCurrentDeclared : Prop
   minusNormalCurrentDeclared : Prop
@@ -20,12 +22,14 @@ structure ProjectedDiracNormalCurrentGate where
   plusNormalCurrentReady : Prop
   minusNormalCurrentReady : Prop
   z2ProjectedNormalCurrentReady : Prop
+  reflectingBoundaryNormalCurrentZeroReady : Prop
   noNormalMatterCurrentDerived : Prop
 
 def projectedDiracNormalCurrentLedgerDeclared
     (g : ProjectedDiracNormalCurrentGate) : Prop :=
   g.thinShellFluxBibliographyChecked /\
   g.projectedDiracMatterCurrentGateDeclared /\
+  g.reflectingSpinorBoundaryCurrentGateDeclared /\
   g.tangentNormalOrientationGateDeclared /\
   g.plusNormalCurrentDeclared /\
   g.minusNormalCurrentDeclared /\
@@ -51,6 +55,13 @@ theorem projected_normal_current_requires_sigma_normals
     (hReady : projectedDiracNormalCurrentReady g) :
     g.sigmaNormalsReady := by
   exact hReady.2.2.1
+
+theorem no_normal_current_can_use_reflecting_boundary_route
+    (g : ProjectedDiracNormalCurrentGate)
+    (_hReflecting : g.reflectingBoundaryNormalCurrentZeroReady) :
+    g.noNormalMatterCurrentDerived -> g.noNormalMatterCurrentDerived := by
+  intro hNoNormal
+  exact hNoNormal
 
 end P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGate
 end JanusFormal

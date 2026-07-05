@@ -22,6 +22,24 @@ class P0EFTJanusZ2SigmaImmirziProfileOfAGateTests(unittest.TestCase):
         self.assertIn("pass_Immirzi_bulk_boundary_equation_gate", payload["next_required"])
         self.assertIn("feed_Immirzi_profile_to_torsion_stress_and_Dirac_Holst_vertex_gates", payload["next_required"])
 
+    def test_ready_bulk_boundary_closes_profile(self):
+        payload = build_payload(
+            bulk_boundary_payload={
+                "status": "bulk",
+                "immirzi_bulk_boundary_equation_ready": True,
+                "primary_blocker": "none",
+                "current_frontier": [],
+                "closure": {
+                    "bulk_Immirzi_equation_reduced": True,
+                    "Sigma_boundary_condition_reduced": True,
+                },
+            },
+        )
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertTrue(payload["immirzi_profile_of_a_ready"])
+        self.assertEqual(payload["primary_blocker"], "none")
+
 
 if __name__ == "__main__":
     unittest.main()

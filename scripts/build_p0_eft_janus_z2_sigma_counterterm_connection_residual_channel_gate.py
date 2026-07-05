@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_connection_variation_transport_gate import (
+    build_payload as build_connection_variation_transport_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_connection_residual_channel_gate.md")
@@ -9,6 +18,11 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_connection_r
 
 
 def build_payload() -> dict:
+    transport = build_connection_variation_transport_payload()
+    fixed_commutation_ready = transport["partial_subchannels"]["fixed_embedding_commutation"][
+        "ready"
+    ]
+    transport_ready = transport["counterterm_connection_variation_transport_ready"]
     declared = {
         "coframe_connection_pullback_gate_declared": True,
         "torsion_pullback_on_sigma_gate_declared": True,
@@ -23,6 +37,8 @@ def build_payload() -> dict:
         "no_fitted_connection_residual_coefficient": True,
     }
     closure = {
+        "fixed_embedding_commutation_subchannel_ready": fixed_commutation_ready,
+        "connection_variation_transport_ready": transport_ready,
         "connection_residual_coefficient_explicit": False,
         "connection_residual_in_allowed_basis": False,
         "connection_residual_ready_for_one_form_decomposition": False,
@@ -44,6 +60,21 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "connection_variation_transport": {
+                "gate": transport["status"],
+                "ready": transport_ready,
+                "closure": transport["closure"],
+                "partial_subchannels": transport["partial_subchannels"],
+            },
+        },
+        "partial_subchannels": {
+            "fixed_embedding_commutation_to_connection_channel": {
+                "ready": fixed_commutation_ready,
+                "status": "partial_only_not_R_omega_explicit",
+                "formula": "delta_omega X_Sigma^* omega = X_Sigma^*(delta_omega omega)",
+            },
+        },
         "channel_template": "alpha_omega = integral_Sigma R_omega^{ab} delta omega_ab",
         "transport_targets": [
             "delta torsion pullback from delta omega",

@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_embedding_frame_trace_transport_gate import (
+    build_payload as build_embedding_frame_trace_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_sobolev_threshold_transport_gate import (
+    build_payload as build_sobolev_threshold_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_function_space_gate.md")
@@ -9,6 +21,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_coupled_radius_flux_func
 
 
 def build_payload() -> dict:
+    sobolev = build_sobolev_threshold_payload()
+    frame = build_embedding_frame_trace_payload()
     declared = {
         "well_posedness_gate_imported": True,
         "thin_shell_regularity_bibliography_checked": True,
@@ -20,14 +34,34 @@ def build_payload() -> dict:
         "equation_map_domain_codomain_declared": True,
         "no_distributional_product_ambiguity_declared": True,
         "no_observational_norm_fit": True,
+        "sobolev_threshold_transport_imported": True,
+        "embedding_frame_trace_transport_imported": True,
     }
     analytic_obligations = {
-        "flux_functional_well_defined": False,
-        "embedding_trace_map_continuous": False,
+        "trace_threshold_passed": sobolev["transported"][
+            "candidate_indices_pass_trace_threshold"
+        ],
+        "product_threshold_passed": sobolev["transported"][
+            "candidate_indices_pass_product_threshold"
+        ],
+        "embedding_trace_map_continuous": frame["transported"][
+            "tangent_frame_trace_continuous"
+        ],
+        "normal_trace_map_continuous": frame["transported"]["normal_trace_continuous"],
+        "flux_functional_well_defined": frame["transported"][
+            "candidate_indices_support_normal_and_tangent_traces"
+        ],
         "equation_map_continuous": False,
         "linearized_map_fredholm_or_invertible": False,
         "function_space_ready_for_well_posedness": False,
     }
+    ready = all(declared.values()) and all(analytic_obligations.values())
+    primary_blocker = (
+        "none"
+        if ready
+        else frame.get("primary_blocker")
+        or "embedding_frame_trace_transport"
+    )
     return {
         "status": "janus-z2-sigma-coupled-radius-flux-function-space-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -48,6 +82,19 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "analytic_obligations": analytic_obligations,
+        "upstream_frontiers": {
+            "sobolev_threshold_transport": {
+                "gate": sobolev["status"],
+                "ready": sobolev["trace_and_product_thresholds_transported"],
+                "still_open": sobolev["still_open"],
+            },
+            "embedding_frame_trace_transport": {
+                "gate": frame["status"],
+                "ready": frame["embedding_frame_trace_transport_ready"],
+                "current_frontier": frame["current_frontier"],
+                "primary_blocker": frame.get("primary_blocker"),
+            },
+        },
         "candidate_spaces": {
             "R_Sigma": "C^2 or Sobolev H^s radial function with s high enough for traces",
             "F_a_Z2Sigma": "boundary one-form/function in the matching trace space",
@@ -55,13 +102,13 @@ def build_payload() -> dict:
             "gauge_slice": "homogeneous throat-radius/embedding mode fixed before uniqueness",
         },
         "function_space_ledger_declared": all(declared.values()),
-        "function_space_ready": all(declared.values()) and all(analytic_obligations.values()),
+        "function_space_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "current_frontier": [
-            "flux_functional_well_defined = false",
-            "embedding_trace_map_continuous = false",
-            "equation_map_continuous = false",
-            "linearized_map_fredholm_or_invertible = false",
-            "function_space_ready_for_well_posedness = false",
+            f"{key} = false"
+            for key, ready in analytic_obligations.items()
+            if not ready
         ],
         "next_required": [
             "prove_trace_regularities_for_X_pm_of_RSigma",
@@ -82,6 +129,7 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['function_space_ledger_declared']}`",
         f"Function space ready: `{payload['function_space_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Current Frontier",
     ]

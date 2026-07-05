@@ -21,6 +21,13 @@ class P0EFTJanusZ2SigmaFixedEmbeddingConnectionPullbackVariationGateTests(unitte
         self.assertTrue(payload["closure"]["fixed_embedding_condition_proved"])
         self.assertTrue(payload["closure"]["pullback_commutes_with_delta_omega"])
         self.assertTrue(payload["closure"]["z2_oriented_commutation_ready"])
+        self.assertFalse(payload["closure"]["active_embedding_ready"])
+        self.assertFalse(payload["closure"]["connection_pullback_ready"])
+        self.assertFalse(payload["upstream_frontiers"]["active_embedding"]["ready"])
+        self.assertFalse(
+            payload["upstream_frontiers"]["coframe_connection_pullback"]["ready"]
+        )
+        self.assertTrue(payload["upstream_frontiers"]["oriented_pullback_commutation"]["ready"])
         self.assertFalse(payload["fixed_embedding_connection_pullback_variation_ready"])
         self.assertIn("pass_active_tunnel_embedding_of_a_gate", payload["next_required"])
         self.assertIn("pass_coframe_connection_pullback_gate", payload["next_required"])

@@ -54,6 +54,12 @@ def build_payload() -> dict:
         },
         "dirac_decoupling_ledger_declared": all(declared.values()),
         "dirac_decoupling_condition_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "active_interaction_rate_and_H_Z2Sigma_decoupling"
+        ),
         "next_required": [
             "derive_plus_minus_interaction_rates_of_a",
             "pass_Dirac_interaction_rate_of_a_gate",

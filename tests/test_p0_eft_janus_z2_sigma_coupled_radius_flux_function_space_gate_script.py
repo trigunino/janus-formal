@@ -11,13 +11,27 @@ class P0EFTJanusZ2SigmaCoupledRadiusFluxFunctionSpaceGateTests(unittest.TestCase
         self.assertTrue(payload["function_space_ledger_declared"])
         self.assertIn("R_Sigma", payload["candidate_spaces"])
         self.assertTrue(payload["declared"]["no_distributional_product_ambiguity_declared"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
 
     def test_function_space_remains_blocked_until_analytic_obligations_close(self):
         payload = build_payload()
 
+        self.assertTrue(payload["analytic_obligations"]["trace_threshold_passed"])
+        self.assertTrue(payload["analytic_obligations"]["product_threshold_passed"])
         self.assertFalse(payload["analytic_obligations"]["flux_functional_well_defined"])
         self.assertFalse(payload["analytic_obligations"]["embedding_trace_map_continuous"])
+        self.assertFalse(payload["analytic_obligations"]["normal_trace_map_continuous"])
         self.assertFalse(payload["function_space_ready"])
+        self.assertTrue(
+            payload["upstream_frontiers"]["sobolev_threshold_transport"]["ready"]
+        )
+        self.assertFalse(
+            payload["upstream_frontiers"]["embedding_frame_trace_transport"]["ready"]
+        )
+        self.assertEqual(
+            payload["upstream_frontiers"]["embedding_frame_trace_transport"]["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
         self.assertIn("function_space_ready_for_well_posedness = false", payload["current_frontier"])
 
 

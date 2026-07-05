@@ -15,6 +15,8 @@ structure TorsionPullbackOnSigmaGate where
   coframeConnectionPullbackGateDeclared : Prop
   z2NormalOrientationRequired : Prop
   observationalFitForbidden : Prop
+  cartanTorsionFormulaReady : Prop
+  sigmaPullbackFormulaReady : Prop
   sigmaEmbeddingReady : Prop
   coframePullbackReady : Prop
   connectionPullbackReady : Prop
@@ -35,9 +37,14 @@ def torsionPullbackLedgerDeclared
   g.z2NormalOrientationRequired /\
   g.observationalFitForbidden
 
+def torsionFormulaSubchannelsReady
+    (g : TorsionPullbackOnSigmaGate) : Prop :=
+  g.cartanTorsionFormulaReady /\ g.sigmaPullbackFormulaReady
+
 def torsionPullbackReady
     (g : TorsionPullbackOnSigmaGate) : Prop :=
   torsionPullbackLedgerDeclared g /\
+  torsionFormulaSubchannelsReady g /\
   g.sigmaEmbeddingReady /\
   g.coframePullbackReady /\
   g.connectionPullbackReady /\
@@ -50,7 +57,14 @@ theorem torsion_pullback_requires_embedding_and_connection
     (g : TorsionPullbackOnSigmaGate)
     (hReady : torsionPullbackReady g) :
     g.sigmaEmbeddingReady /\ g.coframePullbackReady /\ g.connectionPullbackReady := by
-  exact And.intro hReady.2.1 (And.intro hReady.2.2.1 hReady.2.2.2.1)
+  exact And.intro hReady.2.2.1 (And.intro hReady.2.2.2.1 hReady.2.2.2.2.1)
+
+theorem torsion_formulas_do_not_close_sigma_pullback_without_embedding
+    (g : TorsionPullbackOnSigmaGate)
+    (hNoEmbedding : ¬ g.sigmaEmbeddingReady) :
+    ¬ (torsionFormulaSubchannelsReady g /\ torsionPullbackReady g) := by
+  intro h
+  exact hNoEmbedding h.2.2.2.1
 
 end P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGate
 end JanusFormal

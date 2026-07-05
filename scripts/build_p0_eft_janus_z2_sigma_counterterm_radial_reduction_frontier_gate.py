@@ -1,14 +1,44 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_density_expansion_gate import (
+    build_payload as build_density_expansion_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_local_density_basis_gate import (
+    build_payload as build_local_density_basis_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_radial_block_gate import (
+    build_payload as build_radial_block_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_extraction_gate import (
+    build_payload as build_residual_extraction_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_radial_reduction_frontier_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_radial_reduction_frontier_gate.json")
 
 
+def _first_blocker(*payloads: dict) -> str:
+    for payload in payloads:
+        blocker = payload.get("primary_blocker")
+        if blocker and blocker != "none":
+            return blocker
+    return "counterterm_residual_exact_primitive_and_radial_reduction"
+
+
 def build_payload() -> dict:
+    residual = build_residual_extraction_payload()
+    basis = build_local_density_basis_payload()
+    density = build_density_expansion_payload()
+    radial = build_radial_block_payload()
     declared = {
         "counterterm_radial_block_imported": True,
         "residual_extraction_gate_imported": True,
@@ -18,14 +48,17 @@ def build_payload() -> dict:
         "no_fitted_counterterm_coefficient": True,
     }
     chain = {
-        "residual_one_form_explicit": False,
-        "residual_integrability_proved": False,
-        "counterterm_primitive_integrated": False,
-        "L_ct_local_expansion_derived": False,
-        "L_ct_ready_for_radial_variation": False,
-        "E_counterterm_radial_block_reduced": False,
-        "counterterm_block_reduced": False,
+        "residual_one_form_explicit": residual["closure"]["residual_one_form_explicit"],
+        "residual_integrability_proved": residual["closure"]["residual_integrability_proved"],
+        "counterterm_primitive_integrated": residual["closure"]["counterterm_primitive_integrated"],
+        "local_density_basis_complete": basis["closure"]["local_density_basis_complete"],
+        "L_ct_local_expansion_derived": density["closure"]["L_ct_expanded_in_active_variables"],
+        "L_ct_ready_for_radial_variation": density["closure"]["L_ct_ready_for_radial_variation"],
+        "E_counterterm_radial_block_reduced": radial["closure"]["E_counterterm_radial_block_reduced"],
+        "counterterm_block_reduced": radial["counterterm_radial_block_reduced"],
     }
+    ready = all(declared.values()) and all(chain.values())
+    primary_blocker = "none" if ready else _first_blocker(residual, density, radial, basis)
     return {
         "status": "janus-z2-sigma-counterterm-radial-reduction-frontier-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -47,6 +80,32 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "chain": chain,
+        "upstream_frontiers": {
+            "residual_extraction": {
+                "gate": residual["status"],
+                "ready": residual["counterterm_residual_extraction_ready"],
+                "closure": residual["closure"],
+                "primary_blocker": residual.get("primary_blocker", "counterterm_residual_extraction"),
+            },
+            "local_density_basis": {
+                "gate": basis["status"],
+                "ready": basis["counterterm_local_density_basis_ready"],
+                "closure": basis["closure"],
+                "primary_blocker": basis.get("primary_blocker", "counterterm_local_density_basis"),
+            },
+            "density_expansion": {
+                "gate": density["status"],
+                "ready": density["counterterm_density_expansion_ready"],
+                "closure": density["closure"],
+                "primary_blocker": density.get("primary_blocker", "counterterm_density_expansion"),
+            },
+            "radial_block": {
+                "gate": radial["status"],
+                "block_reduced": radial["counterterm_radial_block_reduced"],
+                "closure": radial["closure"],
+                "primary_blocker": radial.get("primary_blocker", "counterterm_radial_block"),
+            },
+        },
         "reduction_chain": [
             "alpha_res explicit",
             "d_field alpha_res = 0",
@@ -55,13 +114,13 @@ def build_payload() -> dict:
             "delta_RSigma integral_Sigma sqrt(|h|) L_ct reduced",
         ],
         "counterterm_radial_reduction_frontier_ledger_declared": all(declared.values()),
-        "counterterm_radial_reduction_ready": all(declared.values()) and all(chain.values()),
+        "counterterm_radial_reduction_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "current_frontier": [
-            "residual_one_form_explicit = false",
-            "residual_integrability_proved = false",
-            "counterterm_primitive_integrated = false",
-            "L_ct_local_expansion_derived = false",
-            "E_counterterm_radial_block_reduced = false",
+            f"{key} = false"
+            for key, ready in chain.items()
+            if not ready and key != "counterterm_block_reduced"
         ],
         "next_required": [
             "close_counterterm_residual_one_form_decomposition_gate",

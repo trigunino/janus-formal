@@ -11,6 +11,8 @@ class P0EFTJanusZ2SigmaBulkStressOfAGateTests(unittest.TestCase):
         self.assertTrue(payload["bulk_stress_ledger_declared"])
         self.assertTrue(payload["declared"]["sector_density_pressure_gate_declared"])
         self.assertTrue(payload["declared"]["Holst_torsion_stress_gate_declared"])
+        self.assertTrue(payload["declared"]["sector_density_pressure_frontier_imported"])
+        self.assertTrue(payload["declared"]["Holst_torsion_stress_frontier_imported"])
         self.assertIn("perfect_fluid", payload["formula"])
         self.assertTrue(payload["declared"]["observational_fit_forbidden"])
 
@@ -18,8 +20,17 @@ class P0EFTJanusZ2SigmaBulkStressOfAGateTests(unittest.TestCase):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["plus_matter_density_pressure_of_a_ready"])
+        self.assertFalse(payload["closure"]["sector_density_pressure_of_a_ready"])
         self.assertFalse(payload["closure"]["torsion_stress_of_a_ready"])
         self.assertFalse(payload["bulk_stress_of_a_ready"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(
+            payload["primary_blocker"],
+            "R_Sigma_solution_certificate",
+        )
+        self.assertIn("sector_density_pressure_of_a", payload["upstream_frontiers"])
+        self.assertIn("holst_torsion_stress_of_a", payload["upstream_frontiers"])
+        self.assertIn("sector_density_pressure_of_a_ready", payload["nearest_bulk_stress_frontier"]["blocks"])
         self.assertIn("pass_sector_density_pressure_of_a_gate", payload["next_required"])
         self.assertIn("pass_Holst_torsion_stress_of_a_gate", payload["next_required"])
         self.assertIn("assemble_T_plus_minus_munu_of_a", payload["next_required"])

@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 from scripts.build_p0_eft_janus_z2_sigma_matter_flux_radial_block_gate import build_payload
 
@@ -21,9 +22,46 @@ class P0EFTJanusZ2SigmaMatterFluxRadialBlockGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["transparency_condition_derived"])
         self.assertFalse(payload["closure"]["active_flux_of_a_ready"])
         self.assertFalse(payload["matter_flux_radial_block_reduced"])
+        self.assertFalse(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertEqual(payload["upstream_frontiers"]["transparency"]["primary_blocker"], "R_Sigma_solution_certificate")
         self.assertIn("pass_matter_flux_route_decision_gate", payload["next_required"])
         self.assertIn("pass_matter_flux_transparency_gate_or_reject_transparency", payload["next_required"])
         self.assertIn("pass_matter_flux_active_projection_gate_if_not_transparent", payload["next_required"])
+
+    def test_radial_block_consumes_decided_transparency_route(self):
+        transparency = {
+            "status": "mock-transparency",
+            "active_sigma_transparency_ready": True,
+            "current_frontier": [],
+        }
+        active_projection = {
+            "status": "mock-active-projection",
+            "active_flux_projection_ready": False,
+            "closure": {},
+        }
+        route_decision = {
+            "status": "mock-route",
+            "matter_flux_route_decision_ready": True,
+            "selected_route": "transparent",
+        }
+        with patch(
+            "scripts.build_p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.build_transparency_payload",
+            return_value=transparency,
+        ), patch(
+            "scripts.build_p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.build_active_projection_payload",
+            return_value=active_projection,
+        ), patch(
+            "scripts.build_p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.build_route_decision_payload",
+            return_value=route_decision,
+        ):
+            payload = build_payload()
+
+        self.assertTrue(payload["closure"]["transparency_condition_derived"])
+        self.assertTrue(payload["closure"]["matter_flux_route_decision_ready"])
+        self.assertTrue(payload["matter_flux_radial_block_reduced"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
 
 
 if __name__ == "__main__":

@@ -3,12 +3,25 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from scripts.build_p0_eft_janus_z2_sigma_dirac_equation_of_state_of_a_gate import (
+    build_payload as build_dirac_eos_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_distribution_isotropy_anisotropic_stress_gate import (
+    build_payload as build_isotropy_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_fermion_distribution_of_a_gate import (
+    build_payload as build_distribution_payload,
+)
+
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_kinetic_moment_fluid_closure_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_kinetic_moment_fluid_closure_gate.json")
 
 
 def build_payload() -> dict:
+    distribution = build_distribution_payload()
+    dirac_eos = build_dirac_eos_payload()
+    isotropy = build_isotropy_payload()
     declared = {
         "kinetic_moment_bibliography_checked": True,
         "stress_energy_moment_formula_declared": True,
@@ -23,16 +36,27 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_distribution_ready": False,
-        "minus_distribution_ready": False,
-        "plus_equation_of_state_ready": False,
-        "minus_equation_of_state_ready": False,
-        "plus_FLRW_isotropy_derived": False,
-        "minus_FLRW_isotropy_derived": False,
+        "plus_distribution_ready": distribution["closure"]["plus_fermion_distribution_of_a_ready"],
+        "minus_distribution_ready": distribution["closure"]["minus_fermion_distribution_of_a_ready"],
+        "plus_equation_of_state_ready": dirac_eos["closure"]["plus_equation_of_state_derived"],
+        "minus_equation_of_state_ready": dirac_eos["closure"]["minus_equation_of_state_derived"],
+        "plus_FLRW_isotropy_derived": isotropy["closure"]["plus_anisotropic_stress_zero_derived"],
+        "minus_FLRW_isotropy_derived": isotropy["closure"]["minus_anisotropic_stress_zero_derived"],
         "plus_fluid_moment_ready": False,
         "minus_fluid_moment_ready": False,
         "projected_fluid_moment_ready": False,
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = "none"
+    if not ready:
+        if not distribution["gate_passed"]:
+            primary_blocker = distribution["primary_blocker"]
+        elif not dirac_eos["gate_passed"]:
+            primary_blocker = dirac_eos["primary_blocker"]
+        elif not isotropy["gate_passed"]:
+            primary_blocker = isotropy["primary_blocker"]
+        else:
+            primary_blocker = "kinetic_moment_projection"
     return {
         "status": "janus-z2-sigma-kinetic-moment-fluid-closure-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -54,6 +78,20 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "fermion_distribution_of_a": {
+                "gate_passed": distribution["gate_passed"],
+                "primary_blocker": distribution["primary_blocker"],
+            },
+            "dirac_equation_of_state": {
+                "gate_passed": dirac_eos["gate_passed"],
+                "primary_blocker": dirac_eos["primary_blocker"],
+            },
+            "distribution_isotropy_anisotropic_stress": {
+                "gate_passed": isotropy["gate_passed"],
+                "primary_blocker": isotropy["primary_blocker"],
+            },
+        },
         "formulas": {
             "moment_stress": "T_munu^(pm)[f] = integral dP p_mu p_nu f_pm",
             "rho_pressure": "rho_pm and p_pm are zeroth/second isotropic moments of f_pm",
@@ -61,7 +99,9 @@ def build_payload() -> dict:
             "projection": "T_fluid^Z2Sigma = P_Z2Sigma(T_+[f_+], T_-[f_-])",
         },
         "kinetic_moment_fluid_closure_ledger_declared": all(declared.values()),
-        "kinetic_moment_fluid_closure_ready": all(declared.values()) and all(closure.values()),
+        "kinetic_moment_fluid_closure_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_fermion_distribution_of_a_gate",
             "pass_Dirac_equation_of_state_of_a_gate",

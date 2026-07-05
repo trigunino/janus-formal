@@ -1,7 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_boundary_spinor_restriction_gate import (
+    build_payload as build_boundary_spinor_restriction_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_plus_minus_spinor_bundle_data_gate import (
+    build_payload as build_plus_minus_spinor_bundle_data_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_spinor_boundary_projection_map_gate import (
+    build_payload as build_spinor_boundary_projection_map_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_spinor_bundle_projection_gate.md")
@@ -9,6 +24,9 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_spinor_bundle_projection
 
 
 def build_payload() -> dict:
+    plus_minus_data = build_plus_minus_spinor_bundle_data_payload()
+    boundary_restriction = build_boundary_spinor_restriction_payload()
+    projection_map = build_spinor_boundary_projection_map_payload()
     declared = {
         "spinor_bundle_bibliography_checked": True,
         "APS_boundary_spinor_bibliography_checked": True,
@@ -22,12 +40,37 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_spinor_bundle_ready": False,
-        "minus_spinor_bundle_ready": False,
-        "Sigma_boundary_spinor_data_ready": False,
-        "Z2Sigma_spinor_projection_ready": False,
-        "plus_minus_spinor_projection_ready": False,
+        "plus_spinor_bundle_ready": plus_minus_data["closure"]["plus_spinor_bundle_ready"],
+        "minus_spinor_bundle_ready": plus_minus_data["closure"]["minus_spinor_bundle_ready"],
+        "Sigma_boundary_spinor_data_ready": boundary_restriction["closure"][
+            "Sigma_boundary_spinor_data_ready"
+        ],
+        "Z2Sigma_spinor_projection_ready": projection_map["closure"][
+            "Z2Sigma_spinor_projection_ready"
+        ],
+        "plus_minus_spinor_projection_ready": (
+            plus_minus_data["plus_minus_spinor_bundle_data_ready"]
+            and boundary_restriction["boundary_spinor_restriction_ready"]
+            and projection_map["spinor_boundary_projection_map_ready"]
+        ),
     }
+    ready = all(declared.values()) and all(closure.values())
+    primary_blocker = "none"
+    if not ready:
+        if not plus_minus_data["plus_minus_spinor_bundle_data_ready"]:
+            primary_blocker = plus_minus_data.get(
+                "primary_blocker", "plus_minus_spinor_bundle_data"
+            )
+        elif not boundary_restriction["boundary_spinor_restriction_ready"]:
+            primary_blocker = boundary_restriction.get(
+                "primary_blocker", "boundary_spinor_restriction"
+            )
+        elif not projection_map["spinor_boundary_projection_map_ready"]:
+            primary_blocker = projection_map.get(
+                "primary_blocker", "spinor_boundary_projection_map"
+            )
+        else:
+            primary_blocker = "plus_minus_spinor_projection"
     return {
         "status": "janus-z2-sigma-spinor-bundle-projection-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -51,13 +94,38 @@ def build_payload() -> dict:
         ],
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "plus_minus_spinor_bundle_data": {
+                "gate": plus_minus_data["status"],
+                "ready": plus_minus_data["plus_minus_spinor_bundle_data_ready"],
+                "primary_blocker": plus_minus_data.get("primary_blocker", "unknown"),
+                "closure": plus_minus_data["closure"],
+                "next_required": plus_minus_data["next_required"],
+            },
+            "boundary_spinor_restriction": {
+                "gate": boundary_restriction["status"],
+                "ready": boundary_restriction["boundary_spinor_restriction_ready"],
+                "primary_blocker": boundary_restriction.get("primary_blocker", "unknown"),
+                "closure": boundary_restriction["closure"],
+                "next_required": boundary_restriction["next_required"],
+            },
+            "spinor_boundary_projection_map": {
+                "gate": projection_map["status"],
+                "ready": projection_map["spinor_boundary_projection_map_ready"],
+                "primary_blocker": projection_map.get("primary_blocker", "unknown"),
+                "closure": projection_map["closure"],
+                "next_required": projection_map["next_required"],
+            },
+        },
         "formulas": {
             "plus_minus_spinors": "S_pm -> M_pm, psi_pm in Gamma(S_pm)",
             "boundary_restriction": "psi_pm|_Sigma = i_Sigma^*(psi_pm)",
             "z2_projection": "psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, APS/Pin data)",
         },
         "spinor_bundle_projection_ledger_declared": all(declared.values()),
-        "spinor_bundle_projection_ready": all(declared.values()) and all(closure.values()),
+        "spinor_bundle_projection_ready": ready,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
             "pass_sigma_APS_Pin_lift_obligation_gates",
             "pass_plus_minus_spinor_bundle_data_gate",
@@ -81,6 +149,7 @@ def write_reports() -> dict:
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['spinor_bundle_projection_ledger_declared']}`",
         f"Projection ready: `{payload['spinor_bundle_projection_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Formulas",
     ]

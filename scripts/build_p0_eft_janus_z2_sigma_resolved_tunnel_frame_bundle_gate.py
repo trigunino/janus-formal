@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_resolved_tunnel_smooth_atlas_gate import (
+    build_payload as build_smooth_atlas_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_frame_bundle_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_frame_bu
 
 
 def build_payload() -> dict:
+    atlas = build_smooth_atlas_payload()
     declared = {
         "frame_bundle_bibliography_checked": True,
         "tubular_neighborhood_bibliography_checked": True,
@@ -23,8 +33,8 @@ def build_payload() -> dict:
     }
     closure = {
         "projective_tunnel_topology_ready": True,
-        "tubular_replacement_smooth_derived": False,
-        "resolved_tunnel_atlas_derived": False,
+        "tubular_replacement_smooth_derived": atlas["closure"]["tubular_replacement_smooth_derived"],
+        "resolved_tunnel_atlas_derived": atlas["closure"]["resolved_tunnel_atlas_derived"],
         "resolved_tunnel_tangent_bundle_derived": False,
         "resolved_tunnel_frame_bundle_derived": False,
         "plus_frame_bundle_restriction_derived": False,
@@ -53,6 +63,14 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_frontiers": {
+            "resolved_tunnel_smooth_atlas": {
+                "gate": atlas["status"],
+                "ready": atlas["resolved_tunnel_smooth_atlas_ready"],
+                "closure": atlas["closure"],
+                "primary_blocker": atlas.get("primary_blocker"),
+            },
+        },
         "formulas": {
             "tangent_bundle": "T M_res over the smooth resolved tunnel manifold M_res",
             "frame_bundle": "F(M_res)=Iso(R^n,T_x M_res)",
@@ -61,6 +79,12 @@ def build_payload() -> dict:
         },
         "resolved_tunnel_frame_bundle_ledger_declared": all(declared.values()),
         "resolved_tunnel_frame_bundle_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else atlas.get("primary_blocker", "resolved_tunnel_smooth_atlas")
+        ),
         "next_required": [
             "pass_resolved_tunnel_smooth_atlas_gate",
             "prove_tubular_replacement_is_smooth",

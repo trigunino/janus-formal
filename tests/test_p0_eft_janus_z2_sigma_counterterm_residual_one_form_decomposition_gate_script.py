@@ -23,6 +23,17 @@ class P0EFTJanusZ2SigmaCountertermResidualOneFormDecompositionGateTests(unittest
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["residual_one_form_components_explicit"])
+        self.assertFalse(payload["upstream_frontiers"]["residual_channels"]["ready"])
+        self.assertFalse(
+            payload["upstream_frontiers"]["residual_channels"]["channels"][
+                "all_residual_channels_explicit"
+            ]
+        )
+        self.assertFalse(
+            payload["upstream_frontiers"]["residual_channels"]["channel_frontiers"]["tetrad"][
+                "ready"
+            ]
+        )
         self.assertFalse(payload["counterterm_residual_one_form_decomposition_ready"])
         self.assertIn("compute_tetrad_residual_channel", payload["next_required"])
         self.assertIn("pass_counterterm_tetrad_residual_channel_gate", payload["next_required"])

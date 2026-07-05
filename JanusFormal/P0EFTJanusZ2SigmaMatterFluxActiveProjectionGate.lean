@@ -21,6 +21,8 @@ structure MatterFluxActiveProjectionGate where
   plusBulkStressOfAReady : Prop
   minusBulkStressOfAReady : Prop
   embeddingOfAReady : Prop
+  sigmaTangentsReady : Prop
+  sigmaNormalsReady : Prop
   activeFluxOfAReady : Prop
 
 def activeFluxProjectionLedgerDeclared
@@ -44,14 +46,21 @@ def activeFluxProjectionReady
   g.plusBulkStressOfAReady /\
   g.minusBulkStressOfAReady /\
   g.embeddingOfAReady /\
+  g.sigmaTangentsReady /\
+  g.sigmaNormalsReady /\
   g.activeFluxOfAReady
 
 theorem active_flux_requires_embedding
     (g : MatterFluxActiveProjectionGate)
     (hReady : activeFluxProjectionReady g) :
     g.embeddingOfAReady := by
-  rcases hReady with ⟨_, _, _, hEmbedding, _⟩
-  exact hEmbedding
+  exact hReady.2.2.2.1
+
+theorem active_flux_requires_tangents_and_normals
+    (g : MatterFluxActiveProjectionGate)
+    (hReady : activeFluxProjectionReady g) :
+    g.sigmaTangentsReady /\ g.sigmaNormalsReady := by
+  exact And.intro hReady.2.2.2.2.1 hReady.2.2.2.2.2.1
 
 end P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate
 end JanusFormal

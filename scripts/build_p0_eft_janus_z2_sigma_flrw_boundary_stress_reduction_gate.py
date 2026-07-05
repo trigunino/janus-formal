@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_cartan_ghy_flrw_projection_gate import (
+    build_payload as build_cartan_projection_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_flrw_boundary_stress_reduction_gate.md")
@@ -9,6 +18,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_flrw_boundary_stress_red
 
 
 def build_payload() -> dict:
+    cartan_projection = build_cartan_projection_payload()
     setup = {
         "boundary_stress_extraction_formula_closed": True,
         "induced_FLRW_sigma_metric_declared": True,
@@ -22,8 +32,12 @@ def build_payload() -> dict:
         "counterterm_FLRW_reduced": False,
     }
     scale_factor_functions = {
-        "cartan_GHY_Delta_Ks_of_a_ready": False,
-        "cartan_GHY_Delta_Ktau_of_a_ready": False,
+        "cartan_GHY_Delta_Ks_of_a_ready": cartan_projection["scale_factor"][
+            "Delta_Ks_of_a_ready"
+        ],
+        "cartan_GHY_Delta_Ktau_of_a_ready": cartan_projection["scale_factor"][
+            "Delta_Ktau_of_a_ready"
+        ],
         "tunnel_junction_Delta_Ks_of_a_ready": False,
         "tunnel_junction_Delta_Ktau_of_a_ready": False,
         "tunnel_junction_non_circular_partition_ready": False,
@@ -44,6 +58,18 @@ def build_payload() -> dict:
         "component_reductions": component_reductions,
         "scale_factor_functions": scale_factor_functions,
         "projection": projection,
+        "upstream_frontiers": {
+            "cartan_ghy_flrw_projection": {
+                "gate": cartan_projection["status"],
+                "algebraic_ready": cartan_projection[
+                    "cartan_GHY_FLRW_algebraic_projection_ready"
+                ],
+                "scale_factor_ready": cartan_projection[
+                    "cartan_GHY_FLRW_scale_factor_closure_ready"
+                ],
+                "scale_factor": cartan_projection["scale_factor"],
+            },
+        },
         "all_component_reductions_ready": all(component_reductions.values()),
         "flrw_boundary_stress_reduction_ready": (
             all(setup.values())

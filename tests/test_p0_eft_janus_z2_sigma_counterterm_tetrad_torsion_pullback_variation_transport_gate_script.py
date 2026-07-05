@@ -19,6 +19,9 @@ class P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackVariationTransportGateTes
 
         self.assertFalse(payload["closure"]["torsion_pullback_ready"])
         self.assertTrue(payload["closure"]["pullback_commutation_ready"])
+        self.assertFalse(payload["upstream_frontiers"]["torsion_pullback_on_sigma"]["ready"])
+        self.assertTrue(payload["upstream_frontiers"]["oriented_pullback_commutation"]["ready"])
+        self.assertFalse(payload["closure"]["torsion_pullback_variation_in_allowed_basis"])
         self.assertFalse(payload["tetrad_torsion_pullback_variation_ready"])
         self.assertIn("close_torsion_pullback_on_sigma_gate", payload["next_required"])
 
