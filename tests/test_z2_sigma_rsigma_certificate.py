@@ -54,6 +54,22 @@ class Z2SigmaRSigmaCertificateTests(unittest.TestCase):
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertIn("E_RSigma", payload["effective_RSigma_equation"])
 
+    def test_certificate_accepts_optional_second_embedding_fields(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "rsigma.json"
+            payload = _certificate()
+            payload["second_embedding_plus"] = [[[[1.0]]], [[[2.0]]]]
+            payload["second_embedding_minus"] = [[[[-1.0]]], [[[-2.0]]]]
+            payload["tau_index"] = 0
+            payload["spatial_indices"] = [1, 2, 3]
+            write_active_z2sigma_rsigma_solution_certificate(path, payload)
+
+            loaded = load_active_z2sigma_rsigma_solution_certificate(path)
+
+        self.assertEqual(loaded["second_embedding_plus"], [[[[1.0]]], [[[2.0]]]])
+        self.assertEqual(loaded["second_embedding_minus"], [[[[-1.0]]], [[[-2.0]]]])
+        self.assertEqual(loaded["spatial_indices"], [1, 2, 3])
+
     def test_forbidden_planck_or_large_residual_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "rsigma.json"

@@ -14,6 +14,10 @@ from janus_lab.z2_sigma_embedding_geometry_manifest import (
     load_active_z2sigma_embedding_geometry_manifest,
     validate_optional_flrw_extrinsic_curvature_fields,
 )
+from janus_lab.z2_sigma_extrinsic_curvature import (
+    extrinsic_curvature_from_embedding_second_form,
+    reduce_flrw_extrinsic_curvature_components,
+)
 from scripts.build_p0_eft_janus_z2_sigma_active_tunnel_embedding_of_a_gate import (
     build_payload as build_active_tunnel_embedding_payload,
 )
@@ -29,6 +33,10 @@ JSON_PATH = Path(
 )
 
 REQUIRED_FIELDS = REQUIRED_EMBEDDING_GEOMETRY_FIELDS
+SECOND_FORM_FIELDS = [
+    "second_embedding_plus",
+    "second_embedding_minus",
+]
 
 def _path_status(path: Path) -> dict:
     exists = path.exists()
@@ -60,19 +68,85 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
     embedding_missing = [
         key for key, ready in embedding_derived.items() if not ready
     ]
+    missing_second_form_fields = []
+    if manifest["payload"] is not None:
+        missing_second_form_fields = [
+            field for field in SECOND_FORM_FIELDS if field not in manifest["payload"]
+        ]
     manifest_blocks = (
         ([] if manifest["exists"] else ["active_tunnel_embedding_geometry_inputs_manifest"])
         + manifest["missing_fields"]
-        + manifest["missing_k_fields"]
+        + (
+            []
+            if not manifest["missing_k_fields"] or not missing_second_form_fields
+            else manifest["missing_k_fields"] + missing_second_form_fields
+        )
     )
-    can_write = (
+    can_write_from_k = (
         manifest["exists"]
         and not manifest["missing_fields"]
         and not manifest["missing_k_fields"]
         and manifest["validation_error"] is None
     )
+    can_compute_from_second_form = (
+        manifest["exists"]
+        and not manifest["missing_fields"]
+        and manifest["missing_k_fields"]
+        and not missing_second_form_fields
+        and manifest["validation_error"] is None
+    )
+    can_write = can_write_from_k or can_compute_from_second_form
+    k_route = None
     if can_write:
         source = manifest["payload"]
+        if can_compute_from_second_form:
+            k_s_plus = []
+            k_s_minus = []
+            k_tau_plus = []
+            k_tau_minus = []
+            tau_index = int(source.get("tau_index", 0))
+            spatial_indices = tuple(int(i) for i in source.get("spatial_indices", [1, 2, 3]))
+            for index, _a in enumerate(source["a_grid"]):
+                plus_k = extrinsic_curvature_from_embedding_second_form(
+                    source["tangent_frames_plus"][index],
+                    source["second_embedding_plus"][index],
+                    source["christoffels_plus"][index],
+                    source["unit_normals_plus"][index],
+                )
+                minus_k = extrinsic_curvature_from_embedding_second_form(
+                    source["tangent_frames_minus"][index],
+                    source["second_embedding_minus"][index],
+                    source["christoffels_minus"][index],
+                    source["unit_normals_minus"][index],
+                )
+                plus_s, plus_tau = reduce_flrw_extrinsic_curvature_components(
+                    plus_k,
+                    source["spatial_inverse_metric"][index],
+                    tau_index=tau_index,
+                    spatial_indices=spatial_indices,
+                )
+                minus_s, minus_tau = reduce_flrw_extrinsic_curvature_components(
+                    minus_k,
+                    source["spatial_inverse_metric"][index],
+                    tau_index=tau_index,
+                    spatial_indices=spatial_indices,
+                )
+                k_s_plus.append(plus_s)
+                k_s_minus.append(minus_s)
+                k_tau_plus.append(plus_tau)
+                k_tau_minus.append(minus_tau)
+            k_provenance = (
+                source["embedding_provenance"]
+                + "; active second_embedding_plus/minus -> K_s/K_tau reduction"
+            )
+            k_route = "computed_from_second_embedding"
+        else:
+            k_s_plus = source["K_s_plus_Z2Sigma"]
+            k_s_minus = source["K_s_minus_Z2Sigma"]
+            k_tau_plus = source["K_tau_plus_Z2Sigma"]
+            k_tau_minus = source["K_tau_minus_Z2Sigma"]
+            k_provenance = source["K_provenance"]
+            k_route = "provided_K_fields"
         built = {
             "active_core": "Z2_tunnel_Sigma",
             "source": "active_derived",
@@ -80,12 +154,13 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
             "archived_z4_reuse_used": False,
             "phenomenological_holst_bao_scan_used": False,
             "a_grid": source["a_grid"],
-            "K_s_plus_Z2Sigma": source["K_s_plus_Z2Sigma"],
-            "K_s_minus_Z2Sigma": source["K_s_minus_Z2Sigma"],
-            "K_tau_plus_Z2Sigma": source["K_tau_plus_Z2Sigma"],
-            "K_tau_minus_Z2Sigma": source["K_tau_minus_Z2Sigma"],
+            "K_s_plus_Z2Sigma": k_s_plus,
+            "K_s_minus_Z2Sigma": k_s_minus,
+            "K_tau_plus_Z2Sigma": k_tau_plus,
+            "K_tau_minus_Z2Sigma": k_tau_minus,
             "z2_orientation_sign": source["z2_orientation_sign"],
-            "K_provenance": source["K_provenance"],
+            "K_provenance": k_provenance,
+            "K_reduction_route": k_route,
         }
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(json.dumps(built, indent=2), encoding="utf-8")
@@ -103,6 +178,7 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
         "adapter_declared": True,
         "required_fields": REQUIRED_FIELDS,
         "optional_k_fields": OPTIONAL_FLRW_EXTRINSIC_CURVATURE_FIELDS,
+        "optional_second_form_fields": SECOND_FORM_FIELDS,
         "active_tunnel_embedding_of_a_closure_ready": embedding[
             "active_tunnel_embedding_of_a_closure_ready"
         ],
@@ -121,6 +197,7 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
                 "exists": manifest["exists"],
                 "missing_fields": manifest["missing_fields"],
                 "missing_k_fields": manifest["missing_k_fields"],
+                "missing_second_form_fields": missing_second_form_fields,
                 "required_fields": REQUIRED_FIELDS,
             },
         },
@@ -130,6 +207,9 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
             "diagnostic_only": True,
         },
         "would_write_flrw_extrinsic_curvature_grid_inputs": can_write,
+        "can_write_from_provided_K_fields": can_write_from_k,
+        "can_compute_K_from_second_embedding": can_compute_from_second_form,
+        "K_reduction_route": k_route,
         "gate_passed": can_write,
         "primary_blocker": primary_blocker,
         "blocker": None

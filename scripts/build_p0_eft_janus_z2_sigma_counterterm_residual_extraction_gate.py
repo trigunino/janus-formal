@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_one_form_decomposi
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_local_density_basis_gate import (
     build_payload as build_local_density_basis_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_primitive_integration_gate import (
+    build_payload as build_primitive_integration_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_residual_extraction_gate.md")
@@ -35,6 +38,7 @@ def build_payload() -> dict:
     one_form = build_one_form_payload()
     integrability = build_integrability_payload()
     basis = build_local_density_basis_payload()
+    primitive = build_primitive_integration_payload(integrability_payload=integrability)
     declared = {
         "nonlinear_residual_closure_imported": True,
         "local_density_basis_gate_declared": True,
@@ -47,7 +51,7 @@ def build_payload() -> dict:
         "uniqueness_transport_declared": True,
         "observational_fit_forbidden": True,
     }
-    counterterm_primitive_integrated = False
+    counterterm_primitive_integrated = primitive["counterterm_primitive_integration_ready"]
     local_expansion_derived = (
         counterterm_primitive_integrated
         and basis["closure"]["L_ct_local_expansion_derived"]
@@ -99,6 +103,12 @@ def build_payload() -> dict:
                 "ready": basis["counterterm_local_density_basis_ready"],
                 "closure": basis["closure"],
                 "primary_blocker": basis.get("primary_blocker", "counterterm_local_density_basis"),
+            },
+            "primitive_integration": {
+                "gate": primitive["status"],
+                "ready": primitive["counterterm_primitive_integration_ready"],
+                "current_frontier": primitive["current_frontier"],
+                "primary_blocker": primitive.get("primary_blocker", "counterterm_primitive_integration"),
             },
         },
         "structural_formulae": {

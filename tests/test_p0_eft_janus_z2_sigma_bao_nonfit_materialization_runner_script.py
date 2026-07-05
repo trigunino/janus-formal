@@ -295,6 +295,10 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
         self.assertIn("active_tunnel_embedding_from_radius", payload["steps_passed"])
         self.assertIn("embedding_tangent_frame_transport", payload["steps_passed"])
         self.assertIn("active_embedding_to_flrw_extrinsic_curvature", payload["steps_passed"])
+        self.assertIn("flrw_extrinsic_curvature_grid_builder", payload["steps_passed"])
+        self.assertIn("flrw_extrinsic_curvature_grid_writer", payload["steps_passed"])
+        self.assertIn("extrinsic_curvature_jump_builder", payload["steps_passed"])
+        self.assertIn("cartan_ghy_from_extrinsic_curvature", payload["steps_passed"])
 
     def test_step_summary_preserves_current_frontier(self):
         payload = build_payload(
@@ -369,6 +373,8 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
 
         self.assertIn("background_gravity_codata", payload["steps_passed"])
         self.assertIn("background_gravity_input", payload["steps_passed"])
+        self.assertIn("background_scalar_inputs", payload["steps_passed"])
+        self.assertIn("background_scalars", payload["steps_passed"])
 
     def test_default_steps_include_direct_photon_materialization(self):
         payload = build_payload(
@@ -502,12 +508,33 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
         self.assertIn("coupled_radius_flux_function_space", payload["steps_passed"])
         self.assertIn("coupled_radius_flux_well_posedness", payload["steps_passed"])
         self.assertIn("coupled_radius_flux_system", payload["steps_passed"])
+        self.assertIn("counterterm_residual_channel_frontier", payload["steps_passed"])
         self.assertIn("matter_flux_radial_block", payload["steps_passed"])
+        self.assertIn("coframe_connection_components_from_unit_q", payload["steps_passed"])
+        self.assertIn("torsion_pullback_components", payload["steps_passed"])
         self.assertIn("torsion_pullback_on_sigma", payload["steps_passed"])
+        self.assertIn("flrw_irreducible_torsion_components", payload["steps_passed"])
         self.assertIn("immirzi_bulk_boundary_equation", payload["steps_passed"])
         self.assertIn("immirzi_profile_of_a", payload["steps_passed"])
         self.assertIn("holst_nieh_yan_radial_block", payload["steps_passed"])
+        self.assertIn("holst_nieh_yan_radial_inputs_from_torsionless_identity", payload["steps_passed"])
+        self.assertIn("rsigma_holst_nieh_yan_radial_term", payload["steps_passed"])
+        self.assertIn("rsigma_matter_flux_radial_term", payload["steps_passed"])
+        self.assertIn("rsigma_matter_flux_active_projection_radial_term", payload["steps_passed"])
         self.assertIn("counterterm_residual_one_form", payload["steps_passed"])
+        self.assertIn("counterterm_residual_integrability", payload["steps_passed"])
+        self.assertIn("counterterm_primitive_integration", payload["steps_passed"])
+        self.assertIn("counterterm_residual_extraction", payload["steps_passed"])
+        self.assertIn("counterterm_density_expansion", payload["steps_passed"])
+        self.assertIn("counterterm_radial_block", payload["steps_passed"])
+        self.assertIn("flrw_irreducible_torsion_pullback", payload["steps_passed"])
+        self.assertIn("non_cartan_rsigma_radial_terms_status", payload["steps_passed"])
+        self.assertIn("cartan_ghy_deltaK_input", payload["steps_passed"])
+        self.assertIn("cartan_ghy_component", payload["steps_passed"])
+        self.assertIn("holst_nieh_yan_component", payload["steps_passed"])
+        self.assertIn("counterterm_component", payload["steps_passed"])
+        self.assertIn("flrw_non_matter_inputs_assembler", payload["steps_passed"])
+        self.assertIn("rsigma_solver_collocation_a_grid_input", payload["steps_passed"])
 
     def test_runner_reports_root_blockers(self):
         payload = build_payload(

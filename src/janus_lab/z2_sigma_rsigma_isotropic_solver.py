@@ -79,6 +79,10 @@ def solve_isotropic_rsigma_balance(
     cert_payload["a_grid"] = grid.tolist()
     cert_payload["R_Sigma_of_a"] = radius.tolist()
     cert_payload["z2_orientation_sign"] = float(z2_orientation_sign)
+    cert_payload["R_Sigma_solution_certificate_type"] = "active_no_fit_solution"
+    cert_payload["rsigma_payload_is_template"] = False
+    cert_payload["rsigma_payload_not_solution_certificate"] = False
+    cert_payload["R_Sigma_of_a_placeholder"] = False
     certificate = build_rsigma_certificate_from_residual_payload(
         residual_payload=residual_payload,
         certificate_payload=cert_payload,

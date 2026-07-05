@@ -443,6 +443,115 @@
     - derive active Sigma transparency or projected flux for `E_matterFlux(a)`;
     - prove counterterm residual exactness, integrate the primitive and reduce `E_counterterm(a)`;
     - then rerun the isotropic `R_Sigma` solver and propagate Cartan/GHY to the BAO runner.
+  - [x] Wire the Holst/Nieh-Yan upstream into the BAO runner:
+    - `torsion_pullback_on_sigma`, `immirzi_bulk_boundary_equation`,
+      `immirzi_profile_of_a`, and `holst_nieh_yan_radial_block` now run before
+      `R_Sigma` certificate assembly;
+    - the active blocker is visible as `active_holst_nieh_yan_radial_inputs`,
+      not an opaque missing radial term.
+  - [x] Add strict Holst/Nieh-Yan radial term writer:
+    - `rsigma_holst_nieh_yan_radial_term` writes `rsigma_E_HolstNiehYan.json`
+      only from active `holst_nieh_yan_radial_inputs.json`;
+    - it requires Sigma torsion pullback, FLRW irreducible torsion, Immirzi
+      radial profile and Holst/Nieh-Yan radial reduction;
+    - Planck/LCDM, archived Z4, observational H0/curvature and Holst-BAO scan
+      provenance are rejected.
+  - [x] Split Holst torsion readiness into Sigma pullback and FLRW irreducibles:
+    - `flrw_irreducible_torsion_pullback` is now a runner step;
+    - it requires `Sigma_torsion_pullback`, then trace/axial/tensor torsion
+      component reduction;
+    - no Holst radial term is emitted from a hardcoded torsion placeholder.
+  - [x] Add algebraic FLRW torsion irreducible decomposition:
+    - `flrw_irreducible_torsion_components` consumes active `q_ab` and
+      `T^a_bc` pullback inputs;
+    - it computes trace, totally antisymmetric and tensor torsion pieces;
+    - it validates antisymmetry, nondegenerate metric and reconstruction
+      residual before the FLRW irreducible gate can pass.
+  - [x] Add Cartan torsion pullback component writer:
+    - `torsion_pullback_components` consumes active coframe, `de^I`, and
+      spin-connection pullback inputs;
+    - it computes `T^I = de^I + omega^I_J wedge e^J` and converts it to
+      `T^a_bc` through the inverse coframe;
+    - it rejects non-antisymmetric connection/forms and forbidden provenance.
+  - [x] Add torsionless coframe/connection baseline from unit q:
+    - `coframe_connection_components_from_unit_q` writes a local orthonormal
+      coframe and zero spin connection/exterior derivative from `q_ab`;
+    - the resulting Cartan torsion is zero by construction;
+    - the manifest is marked `torsionless_baseline_only`, not a nonzero Holst
+      torsion solution.
+  - [x] Add torsionless Holst/Nieh-Yan zero identity:
+    - `holst_nieh_yan_radial_inputs_from_torsionless_identity` writes
+      `E_HolstNiehYan(a)=0` only when all derived torsion components vanish;
+    - the strict radial-term writer accepts this route without an Immirzi
+      profile because the Nieh-Yan density is identically zero;
+    - this is a baseline identity, not a nonzero Holst torsion branch.
+  - [x] Wire the counterterm upstream into the BAO runner:
+    - `counterterm_residual_channel_frontier`, one-form decomposition,
+      integrability, extraction, density expansion and radial block now run
+      before `R_Sigma` certificate assembly;
+    - the active blocker is visible as residual channel/exactness/primitive
+      status, not a missing opaque `rsigma_E_counterterm.json`.
+  - [x] Split counterterm primitive integration out of residual extraction:
+    - `counterterm_primitive_integration` now records the exactness-to-primitive
+      step explicitly;
+    - it requires residual one-form exactness, primitive residual cancellation,
+      uniqueness up to constant, and no new counterterm freedom.
+  - [x] Add nontransparent active-projection writer for `E_matterFlux`:
+    - transparency still writes zero only after active Sigma transparency;
+    - `rsigma_matter_flux_active_projection_radial_term` now accepts a derived
+      active projected `E_matterFlux(a)` manifest;
+    - non-Cartan status accepts either matter-flux route without fitting;
+    - active projection is route-exclusive and cannot overwrite a derived
+      transparency route.
+  - [x] Add unified non-Cartan radial terms status:
+    - reports readiness and blocker for `E_HolstNiehYan`, `E_matterFlux`, and
+      `E_counterterm` in one place;
+    - current blockers: `active_holst_nieh_yan_radial_inputs`,
+      `active_Sigma_transparency_manifest`, and `tetrad_residual_channel`.
+  - [x] Decouple `R_Sigma` certificate grid from Holst radial term:
+    - `rsigma_a_grid_inputs.json` is now the preferred grid source;
+    - fallback to `rsigma_E_HolstNiehYan.json` is retained only for compatibility;
+    - current grid blocker is `active_a_grid_from_non_matter_FLRW_inputs`.
+  - [x] Add solver-only collocation grid fallback:
+    - `rsigma_solver_collocation_a_grid_input` writes `rsigma_a_grid_inputs.json`
+      from validated active `q_ab`;
+    - the manifest is marked `grid_role = solver_collocation_grid`;
+    - it is explicitly not an observable, not a fit parameter, and not a derived
+      FLRW scale-factor history.
+  - [x] Mark `R_Sigma` payloads as templates until solved:
+    - `rsigma_certificate_payload.json` carries `rsigma_payload_is_template = true`;
+    - the isotropic balance solver clears that marker and emits
+      `active_no_fit_solution` only after solving `E_RSigma = 0`.
+  - [x] Forbid template payload propagation into embedding/curvature:
+    - `rsigma_solution_to_embedding_curvature_branch` now requires
+      `active_no_fit_solution`;
+    - conditional/template payloads cannot write embedding, curvature, H0 or
+      curvature-radius normalization manifests.
+  - [x] Expose non-matter FLRW component assembly in the BAO runner:
+    - runs `cartan_ghy_component`, `holst_nieh_yan_component`,
+      `counterterm_component`, and `flrw_non_matter_inputs_assembler` before
+      `rsigma_a_grid_input`;
+    - current upstream blockers are active `DeltaK_s/tau`, Holst/Nieh-Yan FLRW
+      reduction, and counterterm FLRW/radial reduction.
+  - [x] Expose strict Cartan-GHY upstream chain in the BAO runner:
+    - runs FLRW extrinsic-curvature grid builder/writer, jump builder,
+      `cartan_ghy_deltaK_input`, background scalar inputs, and background scalar
+      manifest writer before `cartan_ghy_component`;
+    - current blockers are active tunnel embedding/`K_ab(a)` and active
+      `H0/R_curv` normalization, not hidden component placeholders.
+  - [x] Allow strict `second_embedding -> K_s/K_tau` reduction:
+    - `active_embedding_to_flrw_extrinsic_curvature_input_gate` now computes
+      FLRW extrinsic-curvature scalars from active `second_embedding_plus/minus`,
+      tangent frames, Christoffels, normals, and spatial inverse metric;
+    - it still accepts explicit active `K_*` fields when present;
+    - it remains blocked until the active embedding manifest exists.
+  - [x] Preserve optional second-form data through the `R_Sigma` certificate bridge:
+    - strict certificates may carry `second_embedding_plus/minus`, `tau_index`,
+      and `spatial_indices`;
+    - the embedding/curvature bridge copies those fields into
+      `active_tunnel_embedding_geometry_inputs.json`;
+    - this lets a future solved certificate feed Cartan-GHY without a separate
+      precomputed `K_*` fixture.
   - [x] Tighten `P0EFTJanusZ2SigmaRSigmaSolutionToEmbeddingCurvatureBranchGate`:
     - bridge writes now require matter-flux and counterterm blocks, the throat solution certificate, and `embedding_unblocked_by_radius_solution`;
     - a complete certificate alone cannot write embedding or curvature manifests.

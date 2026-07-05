@@ -29,6 +29,13 @@ REQUIRED_RSIGMA_CERTIFICATE_FIELDS = [
     "rsigma_solution_provenance",
 ]
 
+OPTIONAL_RSIGMA_CERTIFICATE_EMBEDDING_FIELDS = [
+    "second_embedding_plus",
+    "second_embedding_minus",
+    "tau_index",
+    "spatial_indices",
+]
+
 ACCEPTED_RSIGMA_CERTIFICATE_TYPES = {
     "active_no_fit_solution",
     "conditional_closed_frontier_solution",
@@ -92,6 +99,21 @@ def validate_active_z2sigma_rsigma_solution_certificate(payload: dict) -> dict:
         "spatial_inverse_metric",
     ]:
         _require_series_matches_grid(payload, key, len(a_grid))
+    for key in ["second_embedding_plus", "second_embedding_minus"]:
+        if key in payload:
+            _require_series_matches_grid(payload, key, len(a_grid))
+    if "tau_index" in payload:
+        tau_index = int(payload["tau_index"])
+        if tau_index < 0:
+            raise ValueError("tau_index must be nonnegative")
+    if "spatial_indices" in payload:
+        spatial_indices = payload["spatial_indices"]
+        if (
+            not isinstance(spatial_indices, list)
+            or len(spatial_indices) != 3
+            or any(int(index) < 0 for index in spatial_indices)
+        ):
+            raise ValueError("spatial_indices must be a list of three nonnegative indices")
     h0 = float(payload.get("H0_Z2Sigma_km_s_Mpc"))
     r_curv = float(payload.get("R_curv_Z2Sigma_Mpc"))
     if not math.isfinite(h0) or h0 <= 0.0:

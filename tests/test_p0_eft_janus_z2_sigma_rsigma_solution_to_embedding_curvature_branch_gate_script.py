@@ -30,7 +30,10 @@ def _certificate() -> dict:
             "E_RSigma(a) := E_CartanGHY(a) + E_HolstNiehYan(a) "
             "+ E_matterFlux(a) + E_counterterm(a) = 0"
         ),
-        "R_Sigma_solution_certificate_type": "conditional_closed_frontier_solution",
+        "R_Sigma_solution_certificate_type": "active_no_fit_solution",
+        "rsigma_payload_is_template": False,
+        "rsigma_payload_not_solution_certificate": False,
+        "R_Sigma_of_a_placeholder": False,
         "R_Sigma_solution_residual_max_abs": 0.0,
         "compressed_planck_lcdm_background_used": False,
         "archived_z4_background_reuse_used": False,
@@ -54,6 +57,15 @@ def _certificate() -> dict:
         "z2_orientation_sign": 1.0,
         "rsigma_solution_provenance": "active no-fit throat radius solution",
     }
+
+
+def _certificate_with_second_embedding() -> dict:
+    cert = _certificate()
+    cert["second_embedding_plus"] = [[[[1.0]]], [[[2.0]]]]
+    cert["second_embedding_minus"] = [[[[-1.0]]], [[[-2.0]]]]
+    cert["tau_index"] = 0
+    cert["spatial_indices"] = [1, 2, 3]
+    return cert
 
 
 class RSigmaSolutionToEmbeddingCurvatureBranchGateTests(unittest.TestCase):
@@ -143,6 +155,29 @@ class RSigmaSolutionToEmbeddingCurvatureBranchGateTests(unittest.TestCase):
         self.assertFalse(h0_payload["observational_H0_fit_used"])
         self.assertFalse(curvature_payload["observational_curvature_fit_used"])
 
+    def test_closed_frontier_transports_optional_second_embedding_fields(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cert = root / "rsigma.json"
+            embedding = root / "embedding.json"
+            cert.write_text(json.dumps(_certificate_with_second_embedding()), encoding="utf-8")
+
+            payload = build_payload(
+                input_path=cert,
+                embedding_output_path=embedding,
+                curvature_output_path=root / "curvature.json",
+                h0_normalization_output_path=root / "h0_norm.json",
+                curvature_radius_normalization_output_path=root / "radius_norm.json",
+                frontier_payload=_closed_frontier(),
+            )
+            embedding_payload = json.loads(embedding.read_text(encoding="utf-8"))
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(embedding_payload["second_embedding_plus"], [[[[1.0]]], [[[2.0]]]])
+        self.assertEqual(embedding_payload["second_embedding_minus"], [[[[-1.0]]], [[[-2.0]]]])
+        self.assertEqual(embedding_payload["tau_index"], 0)
+        self.assertEqual(embedding_payload["spatial_indices"], [1, 2, 3])
+
     def test_closed_frontier_rejects_invalid_certificate(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -156,6 +191,27 @@ class RSigmaSolutionToEmbeddingCurvatureBranchGateTests(unittest.TestCase):
         self.assertFalse(payload["gate_passed"])
         self.assertFalse(payload["would_write_embedding_manifest"])
         self.assertIn("Forbidden provenance flag", payload["input_certificate"]["validation_error"])
+
+    def test_closed_frontier_rejects_conditional_template_certificate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cert = root / "rsigma.json"
+            bad = _certificate()
+            bad["R_Sigma_solution_certificate_type"] = "conditional_closed_frontier_solution"
+            bad["rsigma_payload_is_template"] = True
+            bad["rsigma_payload_not_solution_certificate"] = True
+            bad["R_Sigma_of_a_placeholder"] = True
+            cert.write_text(json.dumps(bad), encoding="utf-8")
+
+            payload = build_payload(input_path=cert, frontier_payload=_closed_frontier())
+
+        self.assertFalse(payload["gate_passed"])
+        self.assertFalse(payload["would_write_embedding_manifest"])
+        self.assertFalse(payload["input_certificate"]["active_no_fit_solution_certificate_ready"])
+        self.assertEqual(
+            payload["input_certificate"]["R_Sigma_solution_certificate_type"],
+            "conditional_closed_frontier_solution",
+        )
 
     def test_closed_frontier_rejects_certificate_without_effective_equation(self):
         with tempfile.TemporaryDirectory() as tmp:

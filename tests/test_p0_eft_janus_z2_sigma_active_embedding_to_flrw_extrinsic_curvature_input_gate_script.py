@@ -45,6 +45,53 @@ def _embedding_manifest(*, include_k: bool = False) -> dict:
     return payload
 
 
+def _embedding_manifest_with_second_form() -> dict:
+    payload = _embedding_manifest()
+    payload.update(
+        {
+            "X_plus_of_a": [[0.0, 1.0, 0.0, 0.0], [0.0, 2.0, 0.0, 0.0]],
+            "X_minus_of_a": [[0.0, -1.0, 0.0, 0.0], [0.0, -2.0, 0.0, 0.0]],
+            "tangent_frames_plus": [[[1.0, 0.0, 0.0, 0.0],
+                                      [0.0, 1.0, 0.0, 0.0],
+                                      [0.0, 0.0, 1.0, 0.0],
+                                      [0.0, 0.0, 0.0, 1.0]]
+                                     for _ in payload["a_grid"]],
+            "tangent_frames_minus": [[[1.0, 0.0, 0.0, 0.0],
+                                       [0.0, 1.0, 0.0, 0.0],
+                                       [0.0, 0.0, 1.0, 0.0],
+                                       [0.0, 0.0, 0.0, 1.0]]
+                                      for _ in payload["a_grid"]],
+            "unit_normals_plus": [[1.0, 0.0, 0.0, 0.0] for _ in payload["a_grid"]],
+            "unit_normals_minus": [[1.0, 0.0, 0.0, 0.0] for _ in payload["a_grid"]],
+            "christoffels_plus": [[[[0.0 for _ in range(4)] for _ in range(4)] for _ in range(4)]
+                                  for _ in payload["a_grid"]],
+            "christoffels_minus": [[[[0.0 for _ in range(4)] for _ in range(4)] for _ in range(4)]
+                                   for _ in payload["a_grid"]],
+            "spatial_inverse_metric": [[[1.0, 0.0, 0.0],
+                                        [0.0, 0.5, 0.0],
+                                        [0.0, 0.0, 1.0 / 3.0]]
+                                       for _ in payload["a_grid"]],
+            "second_embedding_plus": [],
+            "second_embedding_minus": [],
+            "embedding_provenance": "active second-form embedding geometry",
+        }
+    )
+    for a in [0.5, 1.0]:
+        plus = [[[0.0 for _ in range(4)] for _ in range(4)] for _ in range(4)]
+        minus = [[[0.0 for _ in range(4)] for _ in range(4)] for _ in range(4)]
+        plus[0][0][0] = -2.0 * a
+        plus[1][1][0] = -3.0 * a
+        plus[2][2][0] = -6.0 * a
+        plus[3][3][0] = -9.0 * a
+        minus[0][0][0] = -1.0 * a
+        minus[1][1][0] = -2.0 * a
+        minus[2][2][0] = -4.0 * a
+        minus[3][3][0] = -6.0 * a
+        payload["second_embedding_plus"].append(plus)
+        payload["second_embedding_minus"].append(minus)
+    return payload
+
+
 class ActiveEmbeddingToFLRWExtrinsicCurvatureInputGateTests(unittest.TestCase):
     def test_missing_embedding_manifest_blocks(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -104,6 +151,28 @@ class ActiveEmbeddingToFLRWExtrinsicCurvatureInputGateTests(unittest.TestCase):
         self.assertEqual(payload["nearest_embedding_to_flrw_K_frontier"]["blocks"], [])
         self.assertEqual(written["K_s_plus_Z2Sigma"], [3.0, 6.0])
         self.assertFalse(written["archived_z4_reuse_used"])
+
+    def test_complete_manifest_with_second_form_computes_flrw_grid_inputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_path = root / "embedding.json"
+            output_path = root / "flrw_extrinsic_curvature_grid_inputs.json"
+            input_path.write_text(
+                json.dumps(_embedding_manifest_with_second_form()),
+                encoding="utf-8",
+            )
+
+            payload = build_payload(input_path=input_path, output_path=output_path)
+            written = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertTrue(payload["can_compute_K_from_second_embedding"])
+        self.assertEqual(payload["K_reduction_route"], "computed_from_second_embedding")
+        self.assertEqual(written["K_reduction_route"], "computed_from_second_embedding")
+        self.assertEqual(written["K_s_plus_Z2Sigma"], [1.5, 3.0])
+        self.assertEqual(written["K_tau_plus_Z2Sigma"], [1.0, 2.0])
+        self.assertEqual(written["K_s_minus_Z2Sigma"], [1.0, 2.0])
+        self.assertEqual(written["K_tau_minus_Z2Sigma"], [0.5, 1.0])
 
     def test_forbidden_embedding_provenance_blocks_manifest(self):
         with tempfile.TemporaryDirectory() as tmp:

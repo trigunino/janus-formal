@@ -101,6 +101,10 @@ class RSigmaIsotropicBalanceSolverGateTests(unittest.TestCase):
             cartan = json.loads(cartan_out.read_text(encoding="utf-8"))
 
         self.assertTrue(payload["gate_passed"])
+        self.assertEqual(cert["R_Sigma_solution_certificate_type"], "active_no_fit_solution")
+        self.assertFalse(cert["rsigma_payload_is_template"])
+        self.assertFalse(cert["rsigma_payload_not_solution_certificate"])
+        self.assertFalse(cert["R_Sigma_of_a_placeholder"])
         self.assertEqual(cert["R_Sigma_of_a"], [2.0, 3.0])
         self.assertEqual(cartan["term_values"], [6.0, 9.0])
         self.assertEqual(payload["R_Sigma_solution_residual_max_abs"], 0.0)

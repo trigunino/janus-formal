@@ -35,17 +35,34 @@ def _certificate_status(path: Path) -> dict:
     exists = path.exists()
     missing_fields: list[str] = []
     validation_error = None
+    certificate_type = None
+    is_template = None
+    not_solution_certificate = None
     if exists:
         try:
             payload = load_active_z2sigma_rsigma_solution_certificate(path)
             missing_fields = [field for field in REQUIRED_CERTIFICATE_FIELDS if field not in payload]
+            certificate_type = payload.get("R_Sigma_solution_certificate_type")
+            is_template = bool(payload.get("rsigma_payload_is_template", False))
+            not_solution_certificate = bool(payload.get("rsigma_payload_not_solution_certificate", False))
         except Exception as exc:
             validation_error = str(exc)
+    active_no_fit_solution_ready = (
+        certificate_type == "active_no_fit_solution"
+        and is_template is False
+        and not_solution_certificate is False
+        and validation_error is None
+        and not missing_fields
+    )
     return {
         "path": str(path),
         "exists": exists,
         "missing_fields": missing_fields,
         "validation_error": validation_error,
+        "R_Sigma_solution_certificate_type": certificate_type,
+        "rsigma_payload_is_template": is_template,
+        "rsigma_payload_not_solution_certificate": not_solution_certificate,
+        "active_no_fit_solution_certificate_ready": active_no_fit_solution_ready,
     }
 
 
@@ -54,7 +71,7 @@ def _load_certificate(path: Path) -> dict:
 
 
 def _build_embedding_manifest(cert: dict) -> dict:
-    return {
+    manifest = {
         "active_core": "Z2_tunnel_Sigma",
         "source": "active_derived",
         "compressed_planck_lcdm_background_used": False,
@@ -77,6 +94,15 @@ def _build_embedding_manifest(cert: dict) -> dict:
         "embedding_provenance": cert["rsigma_solution_provenance"],
         "effective_RSigma_equation": cert["effective_RSigma_equation"],
     }
+    for field in [
+        "second_embedding_plus",
+        "second_embedding_minus",
+        "tau_index",
+        "spatial_indices",
+    ]:
+        if field in cert:
+            manifest[field] = cert[field]
+    return manifest
 
 
 def _build_curvature_branch_manifest(cert: dict) -> dict:
@@ -184,6 +210,7 @@ def build_payload(
         and certificate["exists"]
         and not certificate["missing_fields"]
         and certificate["validation_error"] is None
+        and certificate["active_no_fit_solution_certificate_ready"]
     )
     embedding_written = False
     curvature_written = False
@@ -263,7 +290,7 @@ def build_payload(
         "validation_error": write_error,
         "blocker": None
         if can_write
-        else "R_Sigma(a) solution certificate is unavailable or throat radius frontier is not closed",
+        else "R_Sigma(a) active no-fit solution certificate is unavailable or throat radius frontier is not closed",
         "next_required": [
             "reduce_matter_flux_or_solve_coupled_radius_flux_system",
             "reduce_counterterm_radial_block",

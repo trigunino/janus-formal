@@ -11,13 +11,16 @@ if str(REPO_ROOT) not in sys.path:
 from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_readiness_gate import (
     build_payload as build_coframe_connection_pullback_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_flrw_irreducible_torsion_pullback_gate import (
+    build_payload as build_flrw_irreducible_torsion_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate.json")
 
 
-def build_payload() -> dict:
+def build_payload(*, flrw_irreducible_payload: dict | None = None) -> dict:
     coframe_connection = build_coframe_connection_pullback_payload()
     declared = {
         "torsion_pullback_bibliography_checked": True,
@@ -35,7 +38,10 @@ def build_payload() -> dict:
     connection_pullback_ready = coframe_connection["readiness"]["spin_connection_pullback_ready"]
     ambient_torsion_form_ready = coframe_pullback_ready and connection_pullback_ready
     sigma_torsion_ready = sigma_embedding_ready and ambient_torsion_form_ready
-    flrw_irreducible_ready = False
+    flrw_irreducible = flrw_irreducible_payload or build_flrw_irreducible_torsion_payload(
+        sigma_torsion_pullback_ready=sigma_torsion_ready,
+    )
+    flrw_irreducible_ready = flrw_irreducible["FLRW_irreducible_torsion_pullback_ready"]
     closure = {
         "cartan_torsion_formula_ready": True,
         "sigma_pullback_formula_ready": True,
@@ -70,6 +76,12 @@ def build_payload() -> dict:
                 "ready": coframe_connection["coframe_connection_pullback_readiness_ready"],
                 "readiness": coframe_connection["readiness"],
                 "still_open": coframe_connection["still_open"],
+            },
+            "flrw_irreducible_torsion_pullback": {
+                "gate": flrw_irreducible["status"],
+                "ready": flrw_irreducible_ready,
+                "primary_blocker": flrw_irreducible["primary_blocker"],
+                "current_frontier": flrw_irreducible["current_frontier"],
             },
         },
         "formulas": {

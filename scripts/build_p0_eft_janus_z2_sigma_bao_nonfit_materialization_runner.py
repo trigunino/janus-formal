@@ -21,6 +21,12 @@ from scripts.build_p0_eft_janus_z2_sigma_background_gravity_codata_convention_ga
 from scripts.build_p0_eft_janus_z2_sigma_background_gravity_input_writer_gate import (
     build_payload as build_gravity_input_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_background_scalar_inputs_assembler_gate import (
+    build_payload as build_background_scalar_inputs_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_background_scalar_manifest_writer_from_inputs_gate import (
+    build_payload as build_background_scalars_payload,
+)
 from scripts.build_p0_eft_janus_z2_sigma_background_h0_input_writer_gate import (
     build_payload as build_h0_payload,
 )
@@ -129,8 +135,38 @@ from scripts.build_p0_eft_janus_z2_sigma_counterterm_radial_reduction_frontier_g
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_one_form_decomposition_gate import (
     build_payload as build_counterterm_residual_one_form_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_channel_frontier_gate import (
+    build_payload as build_counterterm_residual_channel_frontier_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_integrability_gate import (
+    build_payload as build_counterterm_residual_integrability_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_primitive_integration_gate import (
+    build_payload as build_counterterm_primitive_integration_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_extraction_gate import (
+    build_payload as build_counterterm_residual_extraction_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_density_expansion_gate import (
+    build_payload as build_counterterm_density_expansion_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_radial_block_gate import (
+    build_payload as build_counterterm_radial_block_payload,
+)
 from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate import (
     build_payload as build_torsion_pullback_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_flrw_irreducible_torsion_pullback_gate import (
+    build_payload as build_flrw_irreducible_torsion_pullback_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_flrw_irreducible_torsion_components_from_pullback_gate import (
+    build_payload as build_flrw_irreducible_torsion_components_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_components_from_coframe_connection_gate import (
+    build_payload as build_torsion_pullback_components_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_coframe_connection_pullback_components_from_unit_q_gate import (
+    build_payload as build_coframe_connection_components_from_unit_q_payload,
 )
 from scripts.build_p0_eft_janus_z2_sigma_immirzi_bulk_boundary_equation_gate import (
     build_payload as build_immirzi_bulk_boundary_payload,
@@ -140,6 +176,39 @@ from scripts.build_p0_eft_janus_z2_sigma_immirzi_profile_of_a_gate import (
 )
 from scripts.build_p0_eft_janus_z2_sigma_holst_nieh_yan_radial_block_gate import (
     build_payload as build_holst_nieh_yan_radial_block_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_holst_nieh_yan_radial_inputs_from_torsionless_identity_gate import (
+    build_payload as build_holst_nieh_yan_radial_inputs_from_torsionless_identity_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_holst_nieh_yan_radial_term_from_active_inputs_gate import (
+    build_payload as build_rsigma_holst_nieh_yan_radial_term_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_flrw_extrinsic_curvature_grid_builder_gate import (
+    build_payload as build_flrw_extrinsic_curvature_grid_builder_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_flrw_extrinsic_curvature_grid_writer_gate import (
+    build_payload as build_flrw_extrinsic_curvature_grid_writer_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_extrinsic_curvature_jump_builder_gate import (
+    build_payload as build_extrinsic_curvature_jump_builder_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_cartan_ghy_from_extrinsic_curvature_gate import (
+    build_payload as build_cartan_ghy_from_extrinsic_curvature_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_cartan_ghy_deltaK_input_writer_gate import (
+    build_payload as build_cartan_ghy_deltaK_input_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_cartan_ghy_component_from_deltaK_inputs_gate import (
+    build_payload as build_cartan_ghy_component_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_holst_nieh_yan_component_from_inputs_gate import (
+    build_payload as build_holst_nieh_yan_component_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_component_from_inputs_gate import (
+    build_payload as build_counterterm_component_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_flrw_non_matter_inputs_assembler_gate import (
+    build_payload as build_flrw_non_matter_inputs_assembler_payload,
 )
 from scripts.build_p0_eft_janus_z2_sigma_cartan_ghy_rsigma_certificate_to_isotropic_radius_collar_gate import (
     build_payload as build_cartan_ghy_rsigma_certificate_to_isotropic_radius_collar_payload,
@@ -246,11 +315,20 @@ from scripts.build_p0_eft_janus_z2_sigma_rsigma_isotropic_balance_solver_gate im
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_certificate_payload_input_writer_gate import (
     build_payload as build_rsigma_certificate_payload_input_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_solver_collocation_a_grid_input_writer_gate import (
+    build_payload as build_rsigma_solver_collocation_a_grid_input_payload,
+)
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_radial_terms_input_writer_gate import (
     build_payload as build_rsigma_radial_terms_input_payload,
 )
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_transparency_gate import (
     build_payload as build_rsigma_matter_flux_radial_term_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_active_projection_gate import (
+    build_payload as build_rsigma_matter_flux_active_projection_radial_term_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_non_cartan_rsigma_radial_terms_status_gate import (
+    build_payload as build_non_cartan_rsigma_radial_terms_status_payload,
 )
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_solution_to_embedding_curvature_branch_gate import (
     build_payload as build_rsigma_bridge_payload,
@@ -319,15 +397,35 @@ DEFAULT_STEPS: tuple[Step, ...] = (
     ("coupled_radius_flux_well_posedness", build_coupled_radius_flux_well_posedness_payload),
     ("coupled_radius_flux_system", build_coupled_radius_flux_system_payload),
     ("matter_flux_frontier", build_matter_flux_frontier_payload),
+    ("counterterm_residual_channel_frontier", build_counterterm_residual_channel_frontier_payload),
     ("counterterm_residual_one_form", build_counterterm_residual_one_form_payload),
+    ("counterterm_residual_integrability", build_counterterm_residual_integrability_payload),
+    ("counterterm_primitive_integration", build_counterterm_primitive_integration_payload),
+    ("counterterm_residual_extraction", build_counterterm_residual_extraction_payload),
+    ("counterterm_density_expansion", build_counterterm_density_expansion_payload),
+    ("counterterm_radial_block", build_counterterm_radial_block_payload),
     ("counterterm_radial_reduction_frontier", build_counterterm_radial_reduction_frontier_payload),
     ("counterterm_attack_order", build_counterterm_attack_order_payload),
     ("matter_flux_radial_block", build_matter_flux_radial_block_payload),
+    ("coframe_connection_components_from_unit_q", build_coframe_connection_components_from_unit_q_payload),
+    ("torsion_pullback_components", build_torsion_pullback_components_payload),
+    ("flrw_irreducible_torsion_components", build_flrw_irreducible_torsion_components_payload),
+    ("flrw_irreducible_torsion_pullback", build_flrw_irreducible_torsion_pullback_payload),
     ("torsion_pullback_on_sigma", build_torsion_pullback_payload),
     ("immirzi_bulk_boundary_equation", build_immirzi_bulk_boundary_payload),
     ("immirzi_profile_of_a", build_immirzi_profile_payload),
     ("holst_nieh_yan_radial_block", build_holst_nieh_yan_radial_block_payload),
     ("rsigma_matter_flux_radial_term", build_rsigma_matter_flux_radial_term_payload),
+    ("rsigma_matter_flux_active_projection_radial_term", build_rsigma_matter_flux_active_projection_radial_term_payload),
+    ("cartan_ghy_deltaK_input", build_cartan_ghy_deltaK_input_payload),
+    ("cartan_ghy_component", build_cartan_ghy_component_payload),
+    ("holst_nieh_yan_component", build_holst_nieh_yan_component_payload),
+    ("counterterm_component", build_counterterm_component_payload),
+    ("flrw_non_matter_inputs_assembler", build_flrw_non_matter_inputs_assembler_payload),
+    ("rsigma_solver_collocation_a_grid_input", build_rsigma_solver_collocation_a_grid_input_payload),
+    ("holst_nieh_yan_radial_inputs_from_torsionless_identity", build_holst_nieh_yan_radial_inputs_from_torsionless_identity_payload),
+    ("rsigma_holst_nieh_yan_radial_term", build_rsigma_holst_nieh_yan_radial_term_payload),
+    ("non_cartan_rsigma_radial_terms_status", build_non_cartan_rsigma_radial_terms_status_payload),
     ("unit_intrinsic_metric_q_ab", build_unit_intrinsic_metric_q_ab_payload),
     ("rsigma_certificate_payload_input", build_rsigma_certificate_payload_input_payload),
     ("rsigma_isotropic_balance_solver", build_rsigma_isotropic_balance_solver_payload),
@@ -347,10 +445,16 @@ DEFAULT_STEPS: tuple[Step, ...] = (
     ("active_tunnel_embedding_from_radius", build_active_tunnel_embedding_from_radius_payload),
     ("embedding_tangent_frame_transport", build_embedding_tangent_frame_transport_payload),
     ("active_embedding_to_flrw_extrinsic_curvature", build_embedding_to_flrw_extrinsic_curvature_payload),
+    ("flrw_extrinsic_curvature_grid_builder", build_flrw_extrinsic_curvature_grid_builder_payload),
+    ("flrw_extrinsic_curvature_grid_writer", build_flrw_extrinsic_curvature_grid_writer_payload),
+    ("extrinsic_curvature_jump_builder", build_extrinsic_curvature_jump_builder_payload),
+    ("cartan_ghy_from_extrinsic_curvature", build_cartan_ghy_from_extrinsic_curvature_payload),
     ("background_h0", build_h0_payload),
     ("curvature_radius", build_curvature_radius_payload),
     ("dimensionful_scale_separation", build_dimensionful_scale_separation_payload),
     ("curvature_branch", build_curvature_branch_payload),
+    ("background_scalar_inputs", build_background_scalar_inputs_payload),
+    ("background_scalars", build_background_scalars_payload),
     ("spatial_volume_input", build_spatial_volume_input_payload),
     ("spatial_volume", build_spatial_volume_payload),
     ("spinor_bundle_projection", build_spinor_bundle_projection_payload),
@@ -454,6 +558,7 @@ def _root_blockers(steps: list[dict]) -> list[str]:
         "rsigma_to_embedding_curvature_branch",
         "active_embedding_readiness",
         "active_tunnel_embedding_from_radius",
+        "flrw_extrinsic_curvature_grid_writer",
         "coupled_radius_flux_system",
         "matter_flux_frontier",
         "counterterm_radial_reduction_frontier",
@@ -484,7 +589,15 @@ def _root_blockers(steps: list[dict]) -> list[str]:
         "scale_free_plasma",
     }:
         roots.append("early_plasma_manifest_from_active_baryon_photon_saha_inputs")
-    if failed & {"flrw_components", "scale_free_background"}:
+    if failed & {
+        "cartan_ghy_component",
+        "holst_nieh_yan_component",
+        "counterterm_component",
+        "flrw_non_matter_inputs_assembler",
+        "cartan_ghy_deltaK_input",
+        "flrw_components",
+        "scale_free_background",
+    }:
         roots.append("active_FLRW_component_manifest_from_geometric_sources")
     return roots
 

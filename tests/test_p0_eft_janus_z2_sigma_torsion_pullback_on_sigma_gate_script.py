@@ -23,6 +23,11 @@ class P0EFTJanusZ2SigmaTorsionPullbackOnSigmaGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["Sigma_embedding_ready"])
         self.assertFalse(payload["closure"]["connection_pullback_ready"])
         self.assertFalse(payload["upstream_frontiers"]["coframe_connection_pullback"]["ready"])
+        self.assertFalse(payload["upstream_frontiers"]["flrw_irreducible_torsion_pullback"]["ready"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["flrw_irreducible_torsion_pullback"]["primary_blocker"],
+            "Sigma_torsion_pullback",
+        )
         self.assertFalse(payload["closure"]["FLRW_irreducible_torsion_pullback_ready"])
         self.assertFalse(payload["partial_subchannels"]["flrw_irreducible_split"]["ready"])
         self.assertFalse(payload["torsion_pullback_on_sigma_ready"])
