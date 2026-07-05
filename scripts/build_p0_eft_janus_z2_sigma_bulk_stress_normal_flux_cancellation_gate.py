@@ -14,6 +14,12 @@ from scripts.build_p0_eft_janus_z2_sigma_flux_projection_domain_gate import (
 from scripts.build_p0_eft_janus_z2_sigma_bulk_stress_of_a_gate import (
     build_payload as build_bulk_stress_of_a_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_equivariant_flux_cancellation_gate import (
+    build_payload as build_equivariant_flux_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_perfect_fluid_tangential_flux_zero_gate import (
+    build_payload as build_perfect_fluid_flux_zero_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_bulk_stress_normal_flux_cancellation_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_bulk_stress_normal_flux_cancellation_gate.json")
@@ -22,6 +28,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_bulk_stress_normal_flux_
 def build_payload() -> dict:
     domain = build_flux_projection_domain_payload()
     bulk_stress = build_bulk_stress_of_a_payload()
+    equivariant_flux = build_equivariant_flux_payload()
+    perfect_fluid_zero = build_perfect_fluid_flux_zero_payload()
     declared = {
         "thin_shell_momentum_flux_bibliography_checked": True,
         "bulk_stress_of_a_gate_declared": True,
@@ -56,7 +64,7 @@ def build_payload() -> dict:
         "Sigma_normals_ready": domain["closure"]["Sigma_normals_ready"],
         "plus_flux_projection_ready": plus_projection_ready,
         "minus_flux_projection_ready": minus_projection_ready,
-        "Z2_flux_cancellation_derived": False,
+        "Z2_flux_cancellation_derived": equivariant_flux["z2_flux_cancellation_derived"],
         "bulk_stress_normal_projection_zero_derived": False,
     }
     projection_keys = [
@@ -110,6 +118,19 @@ def build_payload() -> dict:
                 "ready": domain["flux_projection_domain_ready"],
                 "closure": domain["closure"],
                 "primary_blocker": domain.get("primary_blocker"),
+            },
+            "equivariant_flux_cancellation": {
+                "gate": equivariant_flux["status"],
+                "ready": equivariant_flux["gate_passed"],
+                "primary_blocker": equivariant_flux["primary_blocker"],
+                "closure": equivariant_flux["closure"],
+            },
+            "perfect_fluid_tangential_flux_zero": {
+                "gate": perfect_fluid_zero["status"],
+                "ready": perfect_fluid_zero["gate_passed"],
+                "primary_blocker": perfect_fluid_zero["primary_blocker"],
+                "closure": perfect_fluid_zero["closure"],
+                "scope": perfect_fluid_zero["scope"],
             },
         },
         "nearest_bulk_stress_flux_frontier": {

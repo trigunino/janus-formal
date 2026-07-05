@@ -20,29 +20,25 @@ class P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGateTests(unittest.TestCase):
             payload["upstream_frontiers"]["radius_to_embedding"]["unconditional_ready"]
         )
 
-    def test_solution_certificate_remains_blocked_by_two_radial_blocks(self):
+    def test_solution_certificate_now_blocks_on_counterterm_coefficients(self):
         payload = build_payload()
 
-        self.assertFalse(payload["status_flags"]["matter_flux_block_reduced"])
-        self.assertFalse(
+        self.assertTrue(payload["status_flags"]["matter_flux_block_reduced"])
+        self.assertTrue(
             payload["status_flags"]["matter_flux_transparency_or_projection_frontier_ready"]
         )
         self.assertFalse(payload["status_flags"]["coupled_radius_flux_solution_ready"])
         self.assertFalse(payload["status_flags"]["counterterm_block_reduced"])
-        self.assertFalse(payload["upstream_frontiers"]["matter_flux_frontier"]["frontier_ready"])
+        self.assertTrue(payload["upstream_frontiers"]["matter_flux_frontier"]["frontier_ready"])
         self.assertFalse(payload["upstream_frontiers"]["coupled_radius_flux"]["solution_ready"])
         self.assertFalse(payload["upstream_frontiers"]["counterterm"]["reduction_ready"])
         self.assertFalse(payload["throat_radius_solution_certificate_ready"])
         self.assertFalse(payload["embedding_unblocked_by_radius_solution"])
-        self.assertEqual(payload["primary_blocker"], "matter_flux_radial_block")
-        self.assertEqual(payload["nearest_primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertEqual(payload["primary_blocker"], "counterterm_radial_block")
+        self.assertEqual(payload["nearest_primary_blocker"], "counterterm_coefficient_expansion")
         self.assertEqual(
             payload["upstream_frontiers"]["matter_flux_frontier"]["primary_blocker"],
-            "R_Sigma_solution_certificate",
-        )
-        self.assertIn(
-            "matter_flux_block_reduced = false via MatterFluxFrontierGate or CoupledRadiusFluxSystemGate",
-            payload["current_frontier"],
+            "none",
         )
         self.assertIn(
             "counterterm_block_reduced = false via CountertermRadialReductionFrontierGate",
@@ -65,17 +61,17 @@ class P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGateTests(unittest.TestCase):
         )
         self.assertTrue(payload["nearest_unresolved_radial_block_declared"])
         self.assertTrue(payload["nearest_unresolved_radial_block_diagnostic_only"])
-        self.assertEqual(payload["nearest_unresolved_radial_block"]["block"], "matter_flux")
+        self.assertEqual(payload["nearest_unresolved_radial_block"]["block"], "counterterm")
         self.assertEqual(
             payload["nearest_unresolved_radial_block"]["primary_blocker"],
-            "R_Sigma_solution_certificate",
+            "counterterm_coefficient_expansion",
         )
         self.assertEqual(
             payload["nearest_unresolved_radial_block"]["gate"],
-            "P0EFTJanusZ2SigmaMatterFluxFrontierGate",
+            "P0EFTJanusZ2SigmaCountertermRadialReductionFrontierGate",
         )
         self.assertIn(
-            "derive active Sigma transparency",
+            "extract residual one-form coefficients",
             payload["nearest_unresolved_radial_block"]["required"],
         )
 

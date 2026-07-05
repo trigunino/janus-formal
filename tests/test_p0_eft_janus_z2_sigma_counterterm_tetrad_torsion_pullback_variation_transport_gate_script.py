@@ -14,16 +14,17 @@ class P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackVariationTransportGateTes
         self.assertEqual(payload["formulae"]["delta_torsion"], "delta_e T^I = D_omega(delta e^I)")
         self.assertIn("delta_e_to_delta_torsion_formula_proved", payload["closed"])
 
-    def test_pullback_transport_remains_blocked(self):
+    def test_pullback_transport_closes_from_symbolic_torsion_payload(self):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["torsion_pullback_ready"])
         self.assertTrue(payload["closure"]["pullback_commutation_ready"])
         self.assertFalse(payload["upstream_frontiers"]["torsion_pullback_on_sigma"]["ready"])
         self.assertTrue(payload["upstream_frontiers"]["oriented_pullback_commutation"]["ready"])
-        self.assertFalse(payload["closure"]["torsion_pullback_variation_in_allowed_basis"])
-        self.assertFalse(payload["tetrad_torsion_pullback_variation_ready"])
-        self.assertIn("close_torsion_pullback_on_sigma_gate", payload["next_required"])
+        self.assertTrue(payload["closure"]["symbolic_gaussian_collar_torsion_pullback_ready"])
+        self.assertTrue(payload["closure"]["torsion_pullback_variation_in_allowed_basis"])
+        self.assertTrue(payload["tetrad_torsion_pullback_variation_ready"])
+        self.assertIn("derive_residual_coefficients_R_T_A", payload["next_required"])
 
 
 if __name__ == "__main__":

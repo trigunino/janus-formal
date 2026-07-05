@@ -23,6 +23,9 @@ from scripts.build_p0_eft_janus_z2_sigma_tangent_normal_orientation_gate import 
 from scripts.build_p0_eft_janus_z2_sigma_projective_gluing_normal_orientation_sign_gate import (
     build_payload as build_projective_gluing_normal_orientation_sign_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_local_mit_reflecting_projector_gate import (
+    build_payload as build_local_mit_projector_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_spinor_boundary_projection_map_gate.md")
@@ -35,6 +38,7 @@ def build_payload() -> dict:
     boundary_spinor = build_boundary_spinor_restriction_payload()
     tangent_normal = build_tangent_normal_orientation_payload()
     normal_orientation_sign = build_projective_gluing_normal_orientation_sign_payload()
+    local_mit = build_local_mit_projector_payload()
     coorientation_ready = flux_domain["closure"]["coorientation_ready"]
     sigma_aps_ready = aps_pin["sigma_aps_boundary_pin_lift_closed"]
     boundary_spinor_ready = boundary_spinor["boundary_spinor_restriction_ready"]
@@ -59,10 +63,13 @@ def build_payload() -> dict:
         "Z2_coorientation_sign_ready": coorientation_ready,
         "tangent_normal_orientation_ready": tangent_normal_ready,
         "Z2_normal_orientation_ready": z2_normal_orientation_ready,
-        "unit_normal_Clifford_action_ready": False,
-        "projection_idempotent_ready": False,
-        "projection_self_adjoint_ready": False,
-        "Z2Sigma_spinor_projection_ready": False,
+        "unit_normal_Clifford_action_ready": local_mit["closure"][
+            "unit_normal_Clifford_action_ready"
+        ],
+        "projection_idempotent_ready": local_mit["closure"]["projection_idempotent_ready"],
+        "projection_self_adjoint_ready": local_mit["closure"]["projection_self_adjoint_ready"],
+        "Z2Sigma_spinor_projection_ready": boundary_spinor_ready
+        and local_mit["local_mit_reflecting_projector_ready"],
     }
     ready = all(declared.values()) and all(closure.values())
     primary_blocker = (
@@ -121,6 +128,12 @@ def build_payload() -> dict:
                 ],
                 "formulae": normal_orientation_sign["formulae"],
             },
+            "local_mit_reflecting_projector": {
+                "gate": local_mit["status"],
+                "ready": local_mit["local_mit_reflecting_projector_ready"],
+                "closure": local_mit["closure"],
+                "scope": local_mit["scope"],
+            },
         },
         "partial_subchannels": {
             "Z2_coorientation_sign": {
@@ -133,7 +146,11 @@ def build_payload() -> dict:
             },
             "Z2_normal_orientation_sign": {
                 "ready": z2_normal_orientation_ready,
-                "status": "orientation_sign_ready_not_unit_normal_clifford_ready",
+                "status": "orientation_sign_ready",
+            },
+            "local_MIT_projector": {
+                "ready": local_mit["local_mit_reflecting_projector_ready"],
+                "status": "local_projector_algebra_only_not_boundary_spinor_data",
             },
         },
         "nearest_spinor_projection_frontier": {
@@ -159,10 +176,7 @@ def build_payload() -> dict:
             "pass_boundary_spinor_restriction_gate",
             "close_sigma_APS_Pin_lift",
             "derive_Z2_normal_orientation",
-            "derive_unit_normal_Clifford_action_from_active_embedding",
             "derive_boundary_spinor_data_from_plus_minus_spinor_bundles",
-            "prove_P_Z2Sigma_idempotent",
-            "prove_P_Z2Sigma_self_adjoint",
             "feed_projection_map_to_spinor_bundle_projection_gate",
         ],
     }

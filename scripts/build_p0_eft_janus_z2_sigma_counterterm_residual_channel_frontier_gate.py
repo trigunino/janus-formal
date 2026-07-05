@@ -88,7 +88,17 @@ def build_payload() -> dict:
     }
     nearest_channel = max(partial_scores, key=partial_scores.get)
     ready = all(declared.values()) and all(channels.values())
-    primary_blocker = "none" if ready else f"{nearest_channel}_residual_channel"
+    if ready:
+        primary_blocker = "none"
+    elif (
+        nearest_channel == "tetrad"
+        and tetrad["closure"]["tetrad_variation_transport_ready"]
+        and tetrad["closure"]["active_sigma_boundary_variation_residual_formula_ready"]
+        and not tetrad["closure"]["tetrad_residual_coefficient_explicit"]
+    ):
+        primary_blocker = "tetrad_residual_coefficients"
+    else:
+        primary_blocker = f"{nearest_channel}_residual_channel"
     return {
         "status": "janus-z2-sigma-counterterm-residual-channel-frontier-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -118,6 +128,8 @@ def build_payload() -> dict:
                 "highest number of already explicit closure subchannels; this is an "
                 "attack order hint, not a proof of readiness"
             ),
+            "transport_closed_coefficients_open": primary_blocker
+            == "tetrad_residual_coefficients",
             "score": partial_scores[nearest_channel],
             "remaining_false_closure_fields": [
                 key
@@ -144,7 +156,7 @@ def build_payload() -> dict:
             if not ready and key.endswith("_ready")
         ],
         "next_required": [
-            "close_tetrad_residual_channel_gate",
+            "derive_tetrad_residual_coefficients_R_h_R_K_R_T_R_chi",
             "close_connection_residual_channel_gate",
             "close_spinor_residual_channel_gate",
             "close_embedding_residual_channel_gate",

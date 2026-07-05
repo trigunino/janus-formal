@@ -24,9 +24,19 @@ class P0EFTJanusZ2SigmaBulkStressNormalFluxCancellationGateTests(unittest.TestCa
             "R_Sigma_solution_certificate",
         )
         self.assertIn("bulk_stress_of_a", payload["upstream_frontiers"])
+        self.assertIn("equivariant_flux_cancellation", payload["upstream_frontiers"])
+        self.assertIn("perfect_fluid_tangential_flux_zero", payload["upstream_frontiers"])
         self.assertEqual(
             payload["upstream_frontiers"]["bulk_stress_of_a"]["primary_blocker"],
             "R_Sigma_solution_certificate",
+        )
+        self.assertEqual(
+            payload["upstream_frontiers"]["equivariant_flux_cancellation"]["primary_blocker"],
+            "Z2_equivariant_embedding_derived",
+        )
+        self.assertEqual(
+            payload["upstream_frontiers"]["perfect_fluid_tangential_flux_zero"]["scope"]["Holst_torsion_flux"],
+            "not_closed_by_this_gate",
         )
         self.assertIn(
             "bulk_stress_plus_of_a_ready",

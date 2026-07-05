@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_channel_frontier_g
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_residual_channel_gate import (
     build_payload as build_tetrad_residual_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_symbolic_local_primitive_gate import (
+    build_payload as build_symbolic_primitive_payload,
+)
 from scripts.build_p0_eft_janus_z2_sigma_throat_radius_solution_frontier_gate import (
     build_payload as build_throat_radius_frontier_payload,
 )
@@ -29,6 +32,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_attack_order
 def build_payload() -> dict:
     residual_frontier = build_residual_channel_frontier_payload()
     tetrad = build_tetrad_residual_payload()
+    symbolic = build_symbolic_primitive_payload()
     embedding = build_active_embedding_payload()
     throat = build_throat_radius_frontier_payload()
 
@@ -36,6 +40,8 @@ def build_payload() -> dict:
     active_embedding_ready = embedding["active_embedding_readiness_ready"]
     throat_radius_ready = throat["status_flags"]["R_Sigma_of_a_ready"]
     tetrad_ready = tetrad["counterterm_tetrad_residual_channel_ready"]
+    symbolic_ready = symbolic["symbolic_local_primitive_ready"]
+    coefficient_expansion_ready = symbolic["closure"]["coefficient_expansion_explicit"]
 
     declared = {
         "residual_channel_frontier_imported": True,
@@ -43,20 +49,34 @@ def build_payload() -> dict:
         "active_embedding_readiness_imported": True,
         "throat_radius_solution_frontier_imported": True,
         "attack_order_is_diagnostic_only": True,
+        "circular_radius_counterterm_dependency_checked": True,
+        "symbolic_local_counterterm_route_declared": True,
         "no_counterterm_channel_dropped": True,
         "no_fit_shortcut": True,
         "no_legacy_z4_import": True,
     }
+    circular_dependency_detected = (
+        not throat_radius_ready
+        and not active_embedding_ready
+        and not tetrad_ready
+        and throat["status_flags"]["matter_flux_block_reduced"]
+        and not throat["status_flags"]["counterterm_block_reduced"]
+    )
     closure = {
         "nearest_channel_identified": nearest["channel"] == "tetrad",
         "tetrad_channel_is_nearest_not_ready": nearest["channel"] == "tetrad" and not tetrad_ready,
+        "radius_counterterm_circular_dependency_detected": circular_dependency_detected,
         "active_embedding_ready": active_embedding_ready,
         "R_Sigma_solution_certificate_ready": throat_radius_ready,
+        "symbolic_local_counterterm_route_ready": symbolic_ready,
+        "counterterm_coefficient_expansion_explicit": coefficient_expansion_ready,
         "counterterm_attack_order_ready": False,
     }
     upstream_blocker = (
-        "R_Sigma_solution_certificate"
-        if not throat_radius_ready
+        "counterterm_coefficient_expansion"
+        if symbolic_ready and not coefficient_expansion_ready
+        else "symbolic_local_counterterm_route"
+        if not symbolic_ready
         else "active_embedding_readiness"
         if not active_embedding_ready
         else "tetrad_residual_channel"
@@ -67,10 +87,14 @@ def build_payload() -> dict:
         "declared": declared,
         "closure": closure,
         "attack_order": [
-            "close_R_Sigma_solution_certificate",
-            "materialize_active_embedding_geometry",
-            "close_tetrad_deltaK_and_torsion_pullback_transport",
-            "compute_tetrad_residual_channel",
+            "derive_counterterm_residual_symbolically_in_local_boundary_basis",
+            "integrate_L_ct_primitive_without_R_Sigma_values",
+            "derive_counterterm_residual_scalar_contractions_inputs",
+            "write_counterterm_lct_radial_profile_from_residual_contractions",
+            "reduce_E_counterterm_radial_block",
+            "then_solve_R_Sigma_solution_certificate",
+            "then_materialize_active_embedding_geometry",
+            "then_evaluate_deltaK_and_torsion_pullback_on_embedding",
             "then_close_remaining_connection_spinor_embedding_matter_flux_channels",
             "then_form_exact_residual_one_form_and_counterterm_primitive",
         ],
@@ -84,6 +108,12 @@ def build_payload() -> dict:
                 "gate": tetrad["status"],
                 "ready": tetrad_ready,
                 "current_frontier": tetrad["current_frontier"],
+            },
+            "symbolic_local_primitive": {
+                "gate": symbolic["status"],
+                "ready": symbolic_ready,
+                "closure": symbolic["closure"],
+                "output_manifest": symbolic["output_manifest"],
             },
             "active_embedding": {
                 "gate": embedding["status"],
@@ -101,10 +131,11 @@ def build_payload() -> dict:
         "primary_blocker": upstream_blocker,
         "gate_passed": all(declared.values()) and all(closure.values()),
         "next_required": [
-            "continue_R_Sigma_solution_frontier",
-            "reduce_matter_flux_and_counterterm_radial_blocks",
-            "emit_active_embedding_geometry_manifest",
-            "rerun_counterterm_tetrad_residual_channel_gate",
+            "expand_residual_coefficients_R_h_R_K_R_T_R_chi_in_allowed_basis",
+            "prove_explicit_coefficients_preserve_L_ct_cancellation",
+            "materialize_counterterm_residual_scalar_contractions_inputs",
+            "run_counterterm_lct_radial_profile_from_residual_contractions",
+            "rerun_counterterm_radial_reduction_frontier_gate",
         ],
     }
 

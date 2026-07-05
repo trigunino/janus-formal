@@ -116,6 +116,33 @@ class NonCartanRSigmaRadialTermsStatusGateTests(unittest.TestCase):
         self.assertIn("derive_E_matterFlux_radial_term_manifest", payload["next_required"])
         self.assertIn("derive_E_counterterm_radial_term_manifest", payload["next_required"])
 
+    def test_density_variation_route_can_satisfy_counterterm(self):
+        payload = build_payload(
+            holst_payload={
+                "holst_nieh_yan_radial_block_of_a_ready": True,
+                "primary_blocker": "none",
+            },
+            holst_radial_term_payload={
+                "E_HolstNiehYan_from_active_inputs_written": True,
+                "primary_blocker": "none",
+            },
+            matter_flux_payload={
+                "E_matterFlux_zero_from_transparency_written": True,
+                "primary_blocker": "none",
+            },
+            counterterm_payload={
+                "counterterm_radial_block_of_a_ready": False,
+                "primary_blocker": "tetrad_residual_channel",
+            },
+            counterterm_density_variation_payload={
+                "E_counterterm_from_density_variation_written": True,
+                "primary_blocker": "none",
+            },
+        )
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertTrue(payload["terms"]["E_counterterm"]["routes"]["density_variation_ready"])
+
 
 if __name__ == "__main__":
     unittest.main()

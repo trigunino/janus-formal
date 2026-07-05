@@ -19,6 +19,7 @@ class P0EFTJanusZ2SigmaCountertermRadialReductionFrontierGateTests(unittest.Test
 
         self.assertFalse(payload["chain"]["residual_one_form_explicit"])
         self.assertFalse(payload["chain"]["counterterm_primitive_integrated"])
+        self.assertTrue(payload["chain"]["symbolic_local_primitive_exists"])
         self.assertTrue(payload["chain"]["local_density_basis_complete"])
         self.assertFalse(payload["chain"]["counterterm_block_reduced"])
         self.assertFalse(payload["upstream_frontiers"]["residual_extraction"]["ready"])
@@ -27,13 +28,14 @@ class P0EFTJanusZ2SigmaCountertermRadialReductionFrontierGateTests(unittest.Test
         self.assertFalse(payload["counterterm_radial_reduction_ready"])
         self.assertEqual(
             payload["primary_blocker"],
-            "tetrad_residual_channel",
+            "counterterm_coefficient_expansion",
         )
+        self.assertTrue(payload["upstream_frontiers"]["symbolic_local_primitive"]["ready"])
         self.assertEqual(
             payload["upstream_frontiers"]["radial_block"]["primary_blocker"],
-            "tetrad_residual_channel",
+            "tetrad_residual_coefficients",
         )
-        self.assertIn("feed_counterterm_block_reduced_to_throat_radius_solution_frontier", payload["next_required"])
+        self.assertIn("expand_symbolic_counterterm_coefficients", payload["next_required"])
 
 
 if __name__ == "__main__":

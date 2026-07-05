@@ -14,6 +14,9 @@ from scripts.build_p0_eft_janus_z2_sigma_matter_flux_active_projection_gate impo
 from scripts.build_p0_eft_janus_z2_sigma_matter_flux_transparency_gate import (
     build_payload as build_transparency_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_perfect_fluid_tangency_gate import (
+    build_payload as build_perfect_fluid_radial_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_route_decision_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_route_decision_gate.json")
@@ -22,8 +25,10 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_route_decisi
 def build_payload() -> dict:
     transparency = build_transparency_payload()
     active_projection = build_active_projection_payload()
+    perfect_fluid_radial = build_perfect_fluid_radial_payload()
     transparency_ready = transparency["active_sigma_transparency_ready"]
     active_projection_ready = active_projection["active_flux_projection_ready"]
+    perfect_fluid_radial_ready = perfect_fluid_radial["gate_passed"]
     transparency_closure = transparency.get("closure", {})
     active_projection_closure = active_projection.get("closure", {})
     upstream_contract = {
@@ -46,23 +51,29 @@ def build_payload() -> dict:
             "Sigma_normals_ready", False
         ),
     }
-    route_decided = transparency_ready or active_projection_ready
+    route_decided = transparency_ready or active_projection_ready or perfect_fluid_radial_ready
     declared = {
         "thin_shell_flux_conservation_bibliography_checked": True,
         "transparency_route_declared": True,
         "active_projection_route_declared": True,
+        "perfect_fluid_tangential_zero_route_declared": True,
         "route_exhaustive_for_radial_block": True,
         "route_choice_by_fit_forbidden": True,
     }
     closure = {
         "transparency_derived": transparency_ready,
         "active_flux_projection_ready": active_projection_ready,
+        "perfect_fluid_tangential_radial_zero_ready": perfect_fluid_radial_ready,
         "matter_flux_route_decided": route_decided,
         "matter_flux_radial_reduction_allowed": route_decided,
     }
     ready = (
         all(declared.values())
-        and (closure["transparency_derived"] or closure["active_flux_projection_ready"])
+        and (
+            closure["transparency_derived"]
+            or closure["active_flux_projection_ready"]
+            or closure["perfect_fluid_tangential_radial_zero_ready"]
+        )
         and closure["matter_flux_route_decided"]
         and closure["matter_flux_radial_reduction_allowed"]
     )
@@ -71,6 +82,7 @@ def build_payload() -> dict:
         if ready
         else transparency.get("primary_blocker")
         or active_projection.get("primary_blocker")
+        or perfect_fluid_radial.get("primary_blocker")
         or "transparency_or_active_flux_projection"
     )
     return {
@@ -101,6 +113,14 @@ def build_payload() -> dict:
                 "closure": active_projection["closure"],
                 "primary_blocker": active_projection.get("primary_blocker"),
             },
+            "perfect_fluid_tangential_zero": {
+                "gate": perfect_fluid_radial["status"],
+                "ready": perfect_fluid_radial_ready,
+                "active_sigma_transparency_claimed": perfect_fluid_radial[
+                    "active_sigma_transparency_claimed"
+                ],
+                "primary_blocker": perfect_fluid_radial["primary_blocker"],
+            },
         },
         "upstream_contract": upstream_contract,
         "selected_route": (
@@ -108,11 +128,14 @@ def build_payload() -> dict:
             if transparency_ready
             else "active_projection"
             if active_projection_ready
+            else "perfect_fluid_tangential_zero"
+            if perfect_fluid_radial_ready
             else None
         ),
         "routes": {
             "transparent": "F_a^Z2Sigma = 0 -> E_matterFlux = 0",
             "active_projection": "F_a^Z2Sigma(a) = [T_munu e_a^mu n^nu]_Z2 -> reduce E_matterFlux(a)",
+            "perfect_fluid_tangential_zero": "perfect-fluid u.n=e.n=0 -> E_matterFlux=0 without claiming full Sigma transparency",
         },
         "matter_flux_route_ledger_declared": all(declared.values()),
         "matter_flux_route_decision_ready": ready,

@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_matter_flux_route_decision_gate import 
 from scripts.build_p0_eft_janus_z2_sigma_matter_flux_transparency_gate import (
     build_payload as build_transparency_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_perfect_fluid_tangency_gate import (
+    build_payload as build_perfect_fluid_radial_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_radial_block_gate.json")
@@ -26,14 +29,17 @@ def build_payload() -> dict:
     transparency = build_transparency_payload()
     active_projection = build_active_projection_payload()
     route_decision = build_route_decision_payload()
+    perfect_fluid_radial = build_perfect_fluid_radial_payload()
     transparency_ready = transparency["active_sigma_transparency_ready"]
     active_flux_ready = active_projection["active_flux_projection_ready"]
+    perfect_fluid_radial_ready = perfect_fluid_radial["gate_passed"]
     route_ready = route_decision["matter_flux_route_decision_ready"]
     declared = {
         "thin_shell_flux_bibliography_checked": True,
         "normal_tangent_flux_formula_ready": True,
         "radial_flux_variation_declared": True,
         "transparency_branch_declared": True,
+        "perfect_fluid_tangential_zero_branch_declared": True,
         "matter_flux_route_decision_gate_declared": True,
         "transparency_gate_declared": True,
         "active_flux_projection_gate_declared": True,
@@ -45,9 +51,10 @@ def build_payload() -> dict:
     closure = {
         "transparency_condition_derived": transparency_ready,
         "active_flux_of_a_ready": active_flux_ready,
+        "perfect_fluid_tangential_radial_zero_ready": perfect_fluid_radial_ready,
         "matter_flux_route_decision_ready": route_ready,
         "E_matterFlux_radial_block_reduced": route_ready
-        and (transparency_ready or active_flux_ready),
+        and (transparency_ready or active_flux_ready or perfect_fluid_radial_ready),
     }
     return {
         "status": "janus-z2-sigma-matter-flux-radial-block-gate",
@@ -90,26 +97,46 @@ def build_payload() -> dict:
                 ),
                 "selected_route": route_decision["selected_route"],
             },
+            "perfect_fluid_tangential_zero": {
+                "gate": perfect_fluid_radial["status"],
+                "ready": perfect_fluid_radial_ready,
+                "active_sigma_transparency_claimed": perfect_fluid_radial[
+                    "active_sigma_transparency_claimed"
+                ],
+            },
         },
         "formula": {
             "flux_one_form": "F_a^pm = T_munu^pm e_a^mu n_pm^nu",
             "radial_block": "E_matterFlux = delta_RSigma integral_Sigma F_tau^Z2Sigma or 0 under derived transparency",
             "transparency_branch": "E_matterFlux = 0 only if F_a^Z2Sigma = 0 is derived from active Sigma physics",
+            "perfect_fluid_branch": "E_matterFlux = 0 for the perfect-fluid tangential matter sector; full Sigma transparency is not claimed",
         },
         "matter_flux_radial_ledger_declared": all(declared.values()),
         "matter_flux_radial_block_reduced": all(declared.values())
-        and (closure["transparency_condition_derived"] or closure["active_flux_of_a_ready"])
+        and (
+            closure["transparency_condition_derived"]
+            or closure["active_flux_of_a_ready"]
+            or closure["perfect_fluid_tangential_radial_zero_ready"]
+        )
         and closure["matter_flux_route_decision_ready"]
         and closure["E_matterFlux_radial_block_reduced"],
         "gate_passed": all(declared.values())
-        and (closure["transparency_condition_derived"] or closure["active_flux_of_a_ready"])
+        and (
+            closure["transparency_condition_derived"]
+            or closure["active_flux_of_a_ready"]
+            or closure["perfect_fluid_tangential_radial_zero_ready"]
+        )
         and closure["matter_flux_route_decision_ready"]
         and closure["E_matterFlux_radial_block_reduced"],
         "primary_blocker": (
             "none"
             if (
                 all(declared.values())
-                and (closure["transparency_condition_derived"] or closure["active_flux_of_a_ready"])
+                and (
+                    closure["transparency_condition_derived"]
+                    or closure["active_flux_of_a_ready"]
+                    or closure["perfect_fluid_tangential_radial_zero_ready"]
+                )
                 and closure["matter_flux_route_decision_ready"]
                 and closure["E_matterFlux_radial_block_reduced"]
             )

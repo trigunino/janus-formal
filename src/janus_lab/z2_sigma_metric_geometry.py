@@ -82,3 +82,75 @@ def induced_metric_from_tangents(metric_covariant: np.ndarray, tangent_vectors: 
     if not np.all(np.isfinite(metric)) or not np.all(np.isfinite(tangents)):
         raise ValueError("metric and tangent vectors must be finite")
     return np.einsum("mn,am,bn->ab", metric, tangents, tangents)
+
+
+def normalize_timelike_contravariant_vectors(
+    metric_covariant_values: list | np.ndarray,
+    time_direction_values: list | np.ndarray,
+) -> list:
+    """Normalize active time directions so g_mn u^m u^n = -1 on each grid point."""
+
+    metric = np.asarray(metric_covariant_values, dtype=float)
+    direction = np.asarray(time_direction_values, dtype=float)
+    if metric.ndim != 3 or metric.shape[1] != metric.shape[2]:
+        raise ValueError("metric_covariant_values must have shape [n_grid, dim, dim]")
+    n_grid, dim, _ = metric.shape
+    if direction.shape != (n_grid, dim):
+        raise ValueError("time_direction_values must have shape [n_grid, dim]")
+    for item in metric:
+        if not np.allclose(item, item.T):
+            raise ValueError("metric_covariant_values must be symmetric")
+    if not np.all(np.isfinite(metric)) or not np.all(np.isfinite(direction)):
+        raise ValueError("metric and time directions must be finite")
+    norms = np.einsum("gm,gmn,gn->g", direction, metric, direction)
+    if np.any(norms >= 0.0):
+        raise ValueError("time directions must be timelike with negative norm")
+    return (direction / np.sqrt(-norms)[:, None]).tolist()
+
+
+def vector_normal_contractions(
+    metric_covariant_values: list | np.ndarray,
+    vector_contravariant_values: list | np.ndarray,
+    normal_contravariant_values: list | np.ndarray,
+) -> list:
+    """Return g_mn v^m n^n on each active grid point."""
+
+    metric = np.asarray(metric_covariant_values, dtype=float)
+    vector = np.asarray(vector_contravariant_values, dtype=float)
+    normal = np.asarray(normal_contravariant_values, dtype=float)
+    if normal.ndim == 3 and normal.shape[1] == 1:
+        normal = normal[:, 0, :]
+    if metric.ndim != 3 or metric.shape[1] != metric.shape[2]:
+        raise ValueError("metric_covariant_values must have shape [n_grid, dim, dim]")
+    n_grid, dim, _ = metric.shape
+    if vector.shape != (n_grid, dim):
+        raise ValueError("vector_contravariant_values must have shape [n_grid, dim]")
+    if normal.shape != (n_grid, dim):
+        raise ValueError("normal_contravariant_values must have shape [n_grid, dim]")
+    if not np.all(np.isfinite(metric)) or not np.all(np.isfinite(vector)) or not np.all(np.isfinite(normal)):
+        raise ValueError("metric, vector and normal values must be finite")
+    return np.einsum("gm,gmn,gn->g", vector, metric, normal).tolist()
+
+
+def tangent_normal_contractions(
+    metric_covariant_values: list | np.ndarray,
+    tangent_vectors_values: list | np.ndarray,
+    normal_contravariant_values: list | np.ndarray,
+) -> list:
+    """Return g_mn e_a^m n^n for every grid point and tangent index."""
+
+    metric = np.asarray(metric_covariant_values, dtype=float)
+    tangents = np.asarray(tangent_vectors_values, dtype=float)
+    normal = np.asarray(normal_contravariant_values, dtype=float)
+    if normal.ndim == 3 and normal.shape[1] == 1:
+        normal = normal[:, 0, :]
+    if metric.ndim != 3 or metric.shape[1] != metric.shape[2]:
+        raise ValueError("metric_covariant_values must have shape [n_grid, dim, dim]")
+    n_grid, dim, _ = metric.shape
+    if tangents.ndim != 3 or tangents.shape[0] != n_grid or tangents.shape[2] != dim:
+        raise ValueError("tangent_vectors_values must have shape [n_grid, n_tangent, dim]")
+    if normal.shape != (n_grid, dim):
+        raise ValueError("normal_contravariant_values must have shape [n_grid, dim]")
+    if not np.all(np.isfinite(metric)) or not np.all(np.isfinite(tangents)) or not np.all(np.isfinite(normal)):
+        raise ValueError("metric, tangents and normal values must be finite")
+    return np.einsum("gam,gmn,gn->ga", tangents, metric, normal).tolist()

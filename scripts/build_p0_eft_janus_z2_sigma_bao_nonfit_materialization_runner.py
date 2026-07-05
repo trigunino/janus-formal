@@ -327,8 +327,32 @@ from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_tra
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_active_projection_gate import (
     build_payload as build_rsigma_matter_flux_active_projection_radial_term_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_matter_flux_active_projection_radial_input_writer_gate import (
+    build_payload as build_matter_flux_active_projection_radial_input_writer_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_matter_flux_projection_components_from_embedding_stress_gate import (
+    build_payload as build_matter_flux_projection_components_from_embedding_stress_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_bulk_stress_on_sigma_from_perfect_fluid_gate import (
+    build_payload as build_bulk_stress_on_sigma_from_perfect_fluid_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_sector_perfect_fluid_on_sigma_input_writer_gate import (
+    build_payload as build_sector_perfect_fluid_on_sigma_input_writer_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_sector_four_velocity_from_time_direction_gate import (
+    build_payload as build_sector_four_velocity_from_time_direction_payload,
+)
 from scripts.build_p0_eft_janus_z2_sigma_non_cartan_rsigma_radial_terms_status_gate import (
     build_payload as build_non_cartan_rsigma_radial_terms_status_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_counterterm_radial_term_from_density_variation_gate import (
+    build_payload as build_rsigma_counterterm_density_variation_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_radial_geometry_factors_from_unit_q_gate import (
+    build_payload as build_counterterm_radial_geometry_factors_payload,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_radial_density_variation_input_writer_gate import (
+    build_payload as build_counterterm_radial_density_variation_input_writer_payload,
 )
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_solution_to_embedding_curvature_branch_gate import (
     build_payload as build_rsigma_bridge_payload,
@@ -416,6 +440,11 @@ DEFAULT_STEPS: tuple[Step, ...] = (
     ("immirzi_profile_of_a", build_immirzi_profile_payload),
     ("holst_nieh_yan_radial_block", build_holst_nieh_yan_radial_block_payload),
     ("rsigma_matter_flux_radial_term", build_rsigma_matter_flux_radial_term_payload),
+    ("sector_four_velocity_from_time_direction", build_sector_four_velocity_from_time_direction_payload),
+    ("sector_perfect_fluid_on_sigma_input_writer", build_sector_perfect_fluid_on_sigma_input_writer_payload),
+    ("bulk_stress_on_sigma_from_perfect_fluid", build_bulk_stress_on_sigma_from_perfect_fluid_payload),
+    ("matter_flux_projection_components_from_embedding_stress", build_matter_flux_projection_components_from_embedding_stress_payload),
+    ("matter_flux_active_projection_radial_input_writer", build_matter_flux_active_projection_radial_input_writer_payload),
     ("rsigma_matter_flux_active_projection_radial_term", build_rsigma_matter_flux_active_projection_radial_term_payload),
     ("cartan_ghy_deltaK_input", build_cartan_ghy_deltaK_input_payload),
     ("cartan_ghy_component", build_cartan_ghy_component_payload),
@@ -425,6 +454,9 @@ DEFAULT_STEPS: tuple[Step, ...] = (
     ("rsigma_solver_collocation_a_grid_input", build_rsigma_solver_collocation_a_grid_input_payload),
     ("holst_nieh_yan_radial_inputs_from_torsionless_identity", build_holst_nieh_yan_radial_inputs_from_torsionless_identity_payload),
     ("rsigma_holst_nieh_yan_radial_term", build_rsigma_holst_nieh_yan_radial_term_payload),
+    ("counterterm_radial_geometry_factors", build_counterterm_radial_geometry_factors_payload),
+    ("counterterm_radial_density_variation_input_writer", build_counterterm_radial_density_variation_input_writer_payload),
+    ("rsigma_counterterm_density_variation", build_rsigma_counterterm_density_variation_payload),
     ("non_cartan_rsigma_radial_terms_status", build_non_cartan_rsigma_radial_terms_status_payload),
     ("unit_intrinsic_metric_q_ab", build_unit_intrinsic_metric_q_ab_payload),
     ("rsigma_certificate_payload_input", build_rsigma_certificate_payload_input_payload),
@@ -615,6 +647,43 @@ def _atomic_root_blockers(steps: list[dict]) -> list[str]:
 
 
 def _next_physical_target(atomic_root_blockers: list[str]) -> str | None:
+    velocity_primitives = {
+        "sector_time_direction_on_sigma_inputs",
+    }
+    if "sector_four_velocity_on_sigma_inputs" in atomic_root_blockers and "sector_metric_on_sigma_inputs" in atomic_root_blockers:
+        return "derive_sector_metric_and_time_direction_on_Sigma_for_four_velocity"
+    if velocity_primitives & set(atomic_root_blockers):
+        return "derive_sector_time_direction_on_Sigma_for_four_velocity"
+    sector_fluid_primitives = {
+        "sector_density_pressure_on_sigma_inputs",
+        "sector_metric_on_sigma_inputs",
+        "sector_four_velocity_on_sigma_inputs",
+    }
+    if sector_fluid_primitives & set(atomic_root_blockers):
+        return "derive_sector_density_pressure_metric_and_four_velocity_on_Sigma"
+    if "sector_perfect_fluid_on_sigma_inputs" in atomic_root_blockers:
+        return "derive_sector_rho_p_metric_and_four_velocity_on_Sigma_for_bulk_stress"
+    matter_flux_projection_primitives = {
+        "active_tunnel_embedding_geometry_inputs",
+        "bulk_stress_on_sigma_inputs",
+        "radial_variation_tangent_weights_inputs",
+    }
+    if (
+        matter_flux_projection_primitives & set(atomic_root_blockers)
+        and "counterterm_radial_density_variation_inputs" in atomic_root_blockers
+    ):
+        return "derive_matter_flux_projection_primitives_and_counterterm_radial_density_variation_inputs"
+    if matter_flux_projection_primitives & set(atomic_root_blockers):
+        return "derive_active_embedding_bulk_stress_and_radial_weights_for_matter_flux_projection"
+    if {
+        "active_matter_flux_projection_components",
+        "counterterm_radial_density_variation_inputs",
+    }.issubset(set(atomic_root_blockers)):
+        return "derive_active_matter_flux_projection_components_and_counterterm_radial_density_variation_inputs"
+    if "active_matter_flux_projection_components" in atomic_root_blockers:
+        return "derive_active_matter_flux_projection_components_Tpm_tangents_normals_radial_weights"
+    if "counterterm_radial_density_variation_inputs" in atomic_root_blockers:
+        return "derive_counterterm_radial_density_variation_inputs_sqrt_h_Lct_radial_derivatives"
     if any(
         blocker in {
             "R_Sigma_radial_terms_inputs",

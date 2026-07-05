@@ -518,6 +518,53 @@
     - the manifest is marked `grid_role = solver_collocation_grid`;
     - it is explicitly not an observable, not a fit parameter, and not a derived
       FLRW scale-factor history.
+  - [x] Add concrete active projection writer for `E_matterFlux(a)`:
+    - consumes active `T_plus/minus`, tangent vectors, normals and radial
+      variation weights;
+    - computes `F_a^Z2Sigma` by tensor contraction;
+    - writes `matter_flux_active_projection_radial_inputs.json` for the existing
+      `rsigma_E_matterFlux` writer when those physical inputs are present.
+  - [x] Centralize active matter-flux tensor contraction:
+    - `janus_lab.z2_sigma_matter_flux.project_active_matter_flux_radial_values`
+      computes `T^±_{μν} e_a^μ n_±^ν` and radial reduction;
+    - the remaining blocker is the active input manifest with `T_pm`,
+      tangents, normals and radial weights.
+  - [x] Split `matter_flux_projection_components.json` into primitive active inputs:
+    - active tunnel embedding geometry supplies tangents, normals and `eps_Z2`;
+    - active bulk stress on Sigma supplies `T_plus/minus`;
+    - active radial-variation weights supply `deltaX_RSigma`;
+    - the writer emits projection components only when all three are present.
+  - [x] Add active bulk-stress-on-Sigma perfect-fluid writer:
+    - consumes sector `rho/p`, covariant metrics and contravariant four-velocities;
+    - computes `T_munu=(rho+p)u_mu u_nu+p g_munu`;
+    - writes `bulk_stress_on_sigma_inputs.json` for the matter-flux projection path.
+  - [x] Split sector perfect-fluid inputs into primitives:
+    - density/pressure on Sigma;
+    - covariant metric on Sigma;
+    - contravariant four-velocity on Sigma;
+    - the assembler writes `sector_perfect_fluid_on_sigma_inputs.json` only when
+      all three are active-derived.
+  - [x] Derive sector four-velocity from active time direction:
+    - consumes sector covariant metrics and timelike direction fields;
+    - normalizes `u` with `g_munu u^mu u^nu = -1`;
+    - writes `sector_four_velocity_on_sigma_inputs.json`.
+  - [x] Add strict counterterm radial density variation writer:
+    - consumes explicit `sqrt|h|`, `partial_R sqrt|h|`, `L_ct`, and
+      `partial_R L_ct`;
+    - computes `E_counterterm = partial_R(sqrt|h| L_ct)`;
+    - rejects fitted counterterm coefficients and writes `rsigma_E_counterterm`
+      only when all active density-variation inputs are present.
+  - [x] Derive counterterm geometry factors from active unit `q_ab`:
+    - for `h_ab = R_Sigma^2 q_ab`, derives
+      `sqrt|h| = R_Sigma^3 sqrt(det q)`;
+    - derives `partial_R sqrt|h| = 3 R_Sigma^2 sqrt(det q)`;
+    - keeps `L_ct` and `R_Sigma(a)` as required physical inputs.
+  - [x] Add counterterm radial density variation input writer:
+    - combines geometry factors with active `R_Sigma`, `L_ct`, and
+      `partial_R L_ct` profiles;
+    - writes `counterterm_radial_density_variation_inputs.json`;
+    - blocks on `counterterm_lct_radial_profile` until the active density
+      profile is derived or supplied.
   - [x] Mark `R_Sigma` payloads as templates until solved:
     - `rsigma_certificate_payload.json` carries `rsigma_payload_is_template = true`;
     - the isotropic balance solver clears that marker and emits
@@ -600,10 +647,25 @@
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxRouteDecisionGate`:
     - declares the transparency-vs-active-projection fork;
     - forbids choosing the matter-flux route by observational fit.
+  - [x] Add `p0_eft_janus_z2_sigma_matter_flux_route_investigation`:
+    - compares transparency `F_a=0` against coupled `R_Sigma(a)` + embedding + flux;
+    - selects the coupled constructive path while transparency remains unproved;
+    - records that the negative sector is gravitational/Z2-signed, not an assumed
+      thermodynamic negative-density shortcut.
+  - [x] Add `P0EFTJanusZ2SigmaEquivariantFluxCancellationGate`:
+    - declares the Janus/Z2 route to transparency through embedding equivariance,
+      normal reversal, tangent transport, and stress equivariance;
+    - keeps `F_a=0` blocked until active embedding and `T_- = tau_* T_+` are derived.
+  - [x] Add `p0_eft_janus_z2_sigma_sector_metric_time_direction_from_unit_throat_chart`
+    and `p0_eft_janus_z2_sigma_flow_tangency_from_embedding_velocity`:
+    - materializes the unit-throat sector metric/time direction and four-velocity;
+    - reduces the perfect-fluid tangency test to the active embedding geometry
+      manifest needed for `u.n=0` and `e.n=0`.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxFrontierGate`:
     - records transparency and active-projection routes as the exact flux frontier;
     - imports live transparency, active-projection, route-decision and radial-block statuses;
-    - keeps `E_matterFlux` blocked until one route is derived.
+    - keeps full transparency open, but the perfect-fluid tangential route now
+      reduces the radial `E_matterFlux` block without claiming transparency.
   - [x] Add `P0EFTJanusZ2SigmaFluxProjectionDomainGate`:
     - records Sigma and Z2 coorientation as available from the projective tunnel;
     - keeps the flux projection domain blocked on resolved frame bundle,
@@ -614,7 +676,8 @@
     - keeps transparency blocked on active embedding, Sigma normals, normal current and bulk-stress cancellation.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxRadiusAcyclicityGate`:
     - forbids using `F_a[X_+/-[R_Sigma]]` as an independent radius source;
-    - requires either independently derived transparency or a coupled radius-flux system.
+    - requires independently derived transparency, a coupled radius-flux system,
+      or the non-circular perfect-fluid tangential zero route.
   - [x] Add `P0EFTJanusZ2SigmaCoupledRadiusFluxSystemGate`:
     - declares coupled unknowns `R_Sigma(a)`, `X_+/-[R_Sigma]`, and `F_a^Z2Sigma(a)`;
     - imports live function-space and well-posedness frontiers;
@@ -958,6 +1021,14 @@
     - isolates `R_psi`, `R_X` and `R_matter`;
     - matter-flux now imports the live active matter-flux frontier;
     - keeps all three blocked until their coefficients are explicit in the active basis.
+  - [x] Add `P0EFTJanusZ2SigmaSpinorSolderingEquivarianceFromBoundaryVariationGate`:
+    - reduces `psi_- = U_Z2 psi_+` to the projected Dirac boundary spinor
+      residual, instead of assuming a free spinor phase or MIT condition;
+    - current blocker is `spinor_soldering_boundary_variation_residual`.
+  - [x] Add `P0EFTJanusZ2SigmaSpinorQuotientDescentEquivarianceGate`:
+    - records the quotient/descent route for `psi_- = U_Z2 psi_+`;
+    - blocks on `resolved_tunnel_Pin_lift_for_spinor_descent`;
+    - keeps legacy Z4 monodromy and independent plus/minus spinors forbidden.
   - [x] Refine the counterterm residual attack order:
     - `CountertermResidualChannelFrontierGate` now reports `tetrad` as the
       nearest diagnostic residual channel;
@@ -2318,6 +2389,187 @@ Completion rule:
   - checks `C_l` convention, ell indexing and channel lengths;
   - still no Planck validation or promotion.
 - [ ] Archive the current master-v2 CMB mapping or derive an unlensed/source-level backend.
+
+## Active Z2/Sigma F_a=0 route
+
+- [x] Close local matter/Holst Sigma flux subroute:
+  - perfect-fluid tangential flux zero from `u.n=0` and `e.n=0`;
+  - torsionless local Holst/Nieh-Yan Sigma flux slot `E_HolstNiehYan=0`;
+  - writes the perfect-fluid radial `E_matterFlux=0` manifest;
+  - no claim about off-Sigma bulk Holst stress or full Sigma transparency.
+- [x] Close local MIT projector algebra:
+  - unit-normal Clifford action;
+  - idempotent/self-adjoint reflecting projector;
+  - normal-current zero identity conditional on the boundary spinor satisfying the projector.
+- [ ] Derive the physical reflecting spinor boundary condition:
+  - plus/minus spinor bundles on the resolved tunnel;
+  - boundary spinor restriction to Sigma;
+  - proof that the active boundary spinor satisfies the fixed reflecting projector;
+  - then feed `normal_dirac_current_zero` to full Sigma transparency.
+- [ ] Or derive the Janus/Z2 normal-current cancellation route:
+  - sheet-exchange normal reversal is ready;
+  - conditional Dirac-current parity algebra is ready from a spinor intertwiner;
+  - local Sigma `U_Z2^Sigma = B_n` is ready for Clifford/adjoint algebra;
+  - extend local `U_Z2^Sigma` to the resolved-tunnel Pin lift;
+  - prove physical spinor equivariance `psi_- = U_Z2 psi_+`;
+  - fix the projected-current orientation sign from the action;
+  - prove or reject `J_n^Z2Sigma=0` without imposing MIT reflection.
+
+## Active Z2/Sigma counterterm closure
+
+- [x] Correct the counterterm attack order:
+  - detected the circular dependency `R_Sigma -> embedding -> delta_K -> counterterm -> R_Sigma`;
+  - forbids using the active embedding as prerequisite for the symbolic
+    counterterm primitive;
+  - new non-circular route: derive `L_ct` first in the local boundary basis
+    `(h_ab, K_ab, torsion pullback, Immirzi/radion, Z2 sign)`, then evaluate it
+    radially after an `R_Sigma` grid/certificate exists.
+- [x] Materialize the symbolic local primitive:
+  - writes `counterterm_symbolic_local_primitive.json`;
+  - records `L_ct = - integral_gamma alpha_res`;
+  - explicitly keeps `coefficient_expansion_explicit = false` and
+    `radial_profile_ready = false`.
+- [x] Close local tetrad transport for the counterterm channel:
+  - writes `counterterm_tetrad_transport_closure.json`;
+  - derives `h_ab=R_Sigma^2 q_ab`, `K_ab=R_Sigma q_ab`,
+    `partial_R K_ab=q_ab`, `K=3/R_Sigma`, and
+    `partial_R K=-3/R_Sigma^2`;
+  - closes the torsionless active pullback branch from
+    `torsion_pullback_components_inputs.json`;
+  - does not write `L_ct`, `E_counterterm`, or an `R_Sigma(a)` solution.
+- [ ] Derive symbolic `L_ct` in the allowed local density basis:
+  - reuse the old Sigma nonlinear residual closure only as a uniqueness/cancellation
+    statement;
+  - do not promote it to a radial value until coefficients are explicit;
+  - extract the tetrad residual one-form, prove exactness, integrate primitive.
+- [x] Close `delta_e -> delta_K` without radius values for the counterterm-local
+  branch:
+  - symbolic Gaussian collar gives the allowed-basis transport;
+  - full active embedding values remain deferred until `R_Sigma(a)` exists.
+- [x] Close torsion-pullback symbolic variation for the counterterm-local branch:
+  - Cartan formula and pullback/variation commutation are ready;
+  - active local torsionless unit-q components close the current allowed-basis
+    counterterm transport;
+  - nonzero Holst torsion remains a separate physical branch, not assumed here.
+- [x] Reduce the active torsion residual coefficient:
+  - writes `counterterm_residual_coefficients_partial.json`;
+  - derives `R_T^A=0` for the active torsionless Sigma branch;
+  - uses only active torsion pullback, irreducible torsion, and
+    `rsigma_E_HolstNiehYan` payloads.
+- [x] Reduce the radial counterterm formula symbolically:
+  - writes `counterterm_radial_projection_formula.json`;
+  - derives `partial_R L_ct = -(2 R_Sigma R_h^{ab} q_ab + R_K^{ab} q_ab + R_chi partial_R chi)`;
+  - derives `E_counterterm = partial_R(sqrt|h| L_ct)`;
+  - does not invent `R_h`, `R_K`, `R_chi`, `R_Sigma`, or the `L_ct` integration constant.
+- [x] Add the concrete `L_ct` radial profile calculator:
+  - consumes `counterterm_residual_scalar_contractions_inputs.json`;
+  - writes `counterterm_lct_radial_profile.json` only when scalar contractions
+    and the `L_ct` integration constant are fixed;
+  - feeds the existing strict density-variation route to `rsigma_E_counterterm`.
+- [x] Add the tensor-to-scalar residual contraction assembler:
+  - consumes active `q_ab`, `R_Sigma`, `R_h_ab`, `R_K_ab`, and
+    Immirzi/radion scalar residual payloads;
+  - writes `counterterm_residual_scalar_contractions_inputs.json`;
+  - accepts active radius certificates using either `R_Sigma_of_a` or
+    normalized `R_Sigma_values`;
+  - current active run confirms `q_ab` and the torsionless Immirzi contraction
+    are present.
+- [x] Close the torsionless Immirzi scalar contraction:
+  - writes `counterterm_immirzi_residual_scalar_inputs.json`;
+  - derives `R_chi partial_R chi = 0` because the active torsionless
+    Holst/Nieh-Yan pullback has no Immirzi radial contribution;
+  - does not claim that the full `R_chi(a)` or `partial_R chi(a)` profile is
+    solved.
+- [x] Add a non-fit residual-tensor calculator from explicit local density:
+  - consumes active `counterterm_local_density_action_inputs.json`;
+  - differentiates `L_ct_expression` on the isotropic Sigma branch;
+  - writes `counterterm_metric_residual_tensor_inputs.json` and
+    `counterterm_extrinsic_residual_tensor_inputs.json`;
+  - currently blocks because the active local counterterm density/action is not
+    derived.
+- [x] Materialize the current `L_ct` density decision:
+  - checks GHY/Brown-York, pure Holst/Nieh-Yan, volume-solder/logdet, and
+    transgression routes;
+  - writes `counterterm_local_density_action_obstruction.json`;
+  - does not write a fake `counterterm_local_density_action_inputs.json`;
+  - now identifies the minimal missing physical input as the explicit
+    coefficient expansion from the active Sigma counterterm boundary action.
+- [x] Split pulled-dust action from pulled-Sigma-counterterm action:
+  - records that the existing B4vol/pulled-dust chain is conditionally available;
+  - prevents using the dust/matter action as the Sigma counterterm action;
+  - keeps `counterterm_local_density_action_inputs.json` forbidden until an
+    explicit `S_ct[Sigma]` boundary functional is written and reduced.
+- [x] Write the symbolic Sigma counterterm boundary action:
+  - defines `S_ct[Sigma] = integral_Sigma sqrt|h| L_ct(h,K,T_pullback,chi,epsilon_Z2)`;
+  - fixes the measure as `dmu_Sigma = d^3y sqrt_abs_h`;
+  - records the non-duplication role relative to Cartan-GHY, Holst/Nieh-Yan,
+    matter/dust and tunnel-junction terms;
+  - fixes the additive constant symbolically by `L_ct(reference_residual_zero_throat)=0`;
+  - still forbids `counterterm_local_density_action_inputs.json` until the
+    explicit coefficient expansion is derived.
+- [x] Add the coefficient-expansion obligation gate:
+  - consumes the symbolic `S_ct[Sigma]` boundary action;
+  - records known partial closures `R_T^A=0` and `R_chi partial_R chi=0`;
+  - identifies `R_h_ab` and `R_K_ab` from `delta S_ct` as the live blocker;
+  - keeps local density action inputs forbidden.
+- [x] Derive the measure-aware coefficient formula:
+  - `R_h_ab = -(1/2 h^ab L_ct + partial L_ct/partial h_ab)`;
+  - `R_K_ab = -partial L_ct/partial K_ab`;
+  - `R_chi = -partial L_ct/partial chi`;
+  - does not invent the still-missing explicit `L_ct_expression`.
+- [x] Attempt explicit `L_ct_expression` derivation from the closed `S_ct` layer:
+  - records that uniqueness/cancellation plus the variation formula are not
+    enough to determine a local expression;
+  - forbids alpha/beta ansatz, GHY reuse, matter-action reuse and observational
+    fitting;
+  - moves the precise blocker to explicit `alpha_res` components and field-space
+    exactness.
+- [x] Attempt `alpha_res` extraction:
+  - writes `counterterm_alpha_res_partial.json`;
+  - records torsion and Immirzi radial contractions as known on the active
+    torsionless branch;
+  - identifies tetrad residual coefficients `R_h_ab/R_K_ab` as the first concrete
+    blocker before full one-form decomposition.
+- [x] Attempt tetrad residual value extraction:
+  - confirms tetrad transport and variation formulas are closed;
+  - confirms the current nonlinear Sigma closure is boolean-only;
+  - blocks because it does not emit `alpha_res_components`, `R_h_ab`, `R_K_ab`,
+    or `L_ct_expression`.
+- [x] Refine the nonlinear Sigma closure source gate:
+  - keeps cancellation/uniqueness closed;
+  - exposes `component_emission.alpha_res_components_available = false`;
+  - records the next source-level obligation as `emit_alpha_res_components`.
+- [ ] Expand the residual coefficients:
+  - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
+    counterterm density/action;
+  - fix the `L_ct` integration constant from an active boundary condition;
+  - materialize `counterterm_residual_scalar_contractions_inputs.json`;
+  - only then derive `counterterm_lct_radial_profile.json` and
+    `rsigma_E_counterterm.json`.
+
+### Counterterm `L_ct` derivation objective
+
+- [ ] Decide the active `L_ct(h,K,chi)` route from first principles, not by fit:
+  - reject plain GHY/Brown-York duplication unless the term is shown not to
+    double-count the active Cartan-GHY block;
+  - reject pure Nieh-Yan as the full counterterm on the current torsionless
+    branch because it only gives `R_chi partial_R chi = 0`;
+  - test volume-solder/log-determinant as the identity-channel route only after
+    the action bridge fixes the measure, lapse/slice factor and integration
+    constant;
+  - test transgression-style boundary action only if the two Janus sheet
+    connections and boundary matching data are explicitly identified.
+- [ ] Produce one of two concrete outcomes:
+  - `counterterm_local_density_action_inputs.json` with explicit
+    `L_ct_expression`, active provenance and no fitted coefficient; or
+  - an obstruction report proving that the active Sigma counterterm cannot be
+    reduced without additional physical boundary data.
+- [ ] If the density is produced, run:
+  - `derive_p0_eft_janus_z2_sigma_counterterm_residual_tensors_from_local_density_action.py`;
+  - `derive_p0_eft_janus_z2_sigma_counterterm_residual_scalar_contractions.py`;
+  - `derive_p0_eft_janus_z2_sigma_counterterm_lct_radial_profile_from_residual_contractions.py`;
+  - `build_p0_eft_janus_z2_sigma_counterterm_radial_density_variation_input_writer_gate.py`;
+  - `build_p0_eft_janus_z2_sigma_rsigma_counterterm_radial_term_from_density_variation_gate.py`.
 
 ## Priority 5 - Documentation locks
 

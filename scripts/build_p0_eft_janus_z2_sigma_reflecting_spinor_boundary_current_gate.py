@@ -11,6 +11,9 @@ if str(REPO_ROOT) not in sys.path:
 from scripts.build_p0_eft_janus_z2_sigma_spinor_boundary_projection_map_gate import (
     build_payload as build_spinor_boundary_projection_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_local_mit_reflecting_projector_gate import (
+    build_payload as build_local_mit_projector_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_reflecting_spinor_boundary_current_gate.md")
@@ -19,6 +22,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_reflecting_spinor_bounda
 
 def build_payload() -> dict:
     spinor_projection = build_spinor_boundary_projection_payload()
+    local_mit = build_local_mit_projector_payload()
     declared = {
         "MIT_bag_boundary_current_bibliography_checked": True,
         "local_reflecting_boundary_condition_declared": True,
@@ -34,11 +38,10 @@ def build_payload() -> dict:
         "Z2_normal_orientation_ready": spinor_projection["closure"][
             "Z2_normal_orientation_ready"
         ],
-        "projection_idempotent_ready": spinor_projection["closure"][
-            "projection_idempotent_ready"
-        ],
-        "projection_self_adjoint_ready": spinor_projection["closure"][
-            "projection_self_adjoint_ready"
+        "projection_idempotent_ready": spinor_projection["closure"]["projection_idempotent_ready"],
+        "projection_self_adjoint_ready": spinor_projection["closure"]["projection_self_adjoint_ready"],
+        "local_MIT_current_zero_algebra_ready": local_mit[
+            "normal_current_zero_algebra_ready"
         ],
         "reflecting_boundary_condition_derived": False,
         "boundary_leakage_zero_derived": False,
@@ -71,17 +74,22 @@ def build_payload() -> dict:
                 "ready": spinor_projection["spinor_boundary_projection_map_ready"],
                 "closure": spinor_projection["closure"],
             },
+            "local_mit_reflecting_projector": {
+                "gate": local_mit["status"],
+                "ready": local_mit["local_mit_reflecting_projector_ready"],
+                "scope": local_mit["scope"],
+            },
         },
         "formulas": {
             "reflecting_current_condition": "J_n = psibar gamma(n) psi = 0",
             "projector_policy": "P_Z2Sigma must be idempotent, self-adjoint and phase-fixed",
+            "local_algebra_scope": "MIT projector algebra only; physical boundary condition still must be derived",
             "transparency_link": "normal_dirac_current_zero -> J_n^Z2Sigma = 0 candidate",
         },
         "reflecting_spinor_boundary_current_ledger_declared": all(declared.values()),
         "normal_dirac_current_zero_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
             "close_spinor_boundary_projection_map_gate",
-            "derive_unit_normal_Clifford_action_from_active_embedding",
             "derive_reflecting_boundary_condition_without_free_phase",
             "prove_boundary_leakage_zero",
             "feed_normal_dirac_current_zero_to_projected_dirac_normal_current_gate",

@@ -17,6 +17,12 @@ from scripts.build_p0_eft_janus_z2_sigma_counterterm_local_density_basis_gate im
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_metric_residual_coefficient_input_writer_gate import (
     build_payload as build_metric_coefficient_writer_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_symbolic_local_primitive_gate import (
+    build_payload as build_symbolic_local_primitive_payload,
+)
+from scripts.derive_p0_eft_janus_z2_sigma_counterterm_residual_coefficients_partial import (
+    build_payload as build_partial_coefficients_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_residual_channel_gate.md")
@@ -27,6 +33,8 @@ def build_payload() -> dict:
     transport_readiness = build_tetrad_transport_readiness_payload()
     local_basis = build_local_density_basis_payload()
     metric_coefficient_writer = build_metric_coefficient_writer_payload()
+    symbolic_primitive = build_symbolic_local_primitive_payload()
+    partial_coefficients = build_partial_coefficients_payload()
     declared = {
         "coframe_connection_pullback_gate_declared": True,
         "residual_one_form_decomposition_gate_declared": True,
@@ -43,8 +51,11 @@ def build_payload() -> dict:
     metric_subchannel_ready = transport_readiness["readiness"][
         "induced_metric_variation_transport_ready"
     ]
-    boundary_residual_formula_ready = False
-    residual_ready = transport_ready and boundary_residual_formula_ready
+    boundary_residual_formula_ready = symbolic_primitive["closure"]["symbolic_primitive_exists"]
+    residual_coefficients_explicit = (
+        metric_coefficient_writer["tetrad_metric_residual_coefficient_value_ready"]
+        and False
+    )
     basis_ready = (
         local_basis["closure"]["unique_counterterm_transported"]
         and local_basis["closure"]["local_density_basis_complete"]
@@ -58,9 +69,10 @@ def build_payload() -> dict:
         "tetrad_variation_transport_ready": transport_ready,
         "allowed_local_density_basis_ready": basis_ready,
         "active_sigma_boundary_variation_residual_formula_ready": boundary_residual_formula_ready,
-        "tetrad_residual_coefficient_explicit": residual_ready,
-        "tetrad_residual_in_allowed_basis": residual_ready and basis_ready,
-        "tetrad_residual_ready_for_one_form_decomposition": residual_ready and basis_ready,
+        "tetrad_residual_coefficient_explicit": residual_coefficients_explicit,
+        "tetrad_torsion_residual_coefficient_reduced": partial_coefficients["gate_passed"],
+        "tetrad_residual_in_allowed_basis": residual_coefficients_explicit and basis_ready,
+        "tetrad_residual_ready_for_one_form_decomposition": residual_coefficients_explicit and basis_ready,
     }
     return {
         "status": "janus-z2-sigma-counterterm-tetrad-residual-channel-gate",
@@ -97,6 +109,20 @@ def build_payload() -> dict:
                 "output_manifest": metric_coefficient_writer["output_manifest"],
                 "nearest_frontier": metric_coefficient_writer["nearest_frontier"],
             },
+            "symbolic_local_primitive": {
+                "gate": symbolic_primitive["status"],
+                "ready": symbolic_primitive["closure"]["symbolic_primitive_exists"],
+                "output_manifest": symbolic_primitive["output_manifest"],
+                "coefficient_expansion_explicit": symbolic_primitive[
+                    "closure"
+                ]["coefficient_expansion_explicit"],
+            },
+            "partial_residual_coefficients": {
+                "gate": partial_coefficients["status"],
+                "ready": partial_coefficients["gate_passed"],
+                "output_manifest": partial_coefficients["output_manifest"],
+                "still_requires": partial_coefficients["coefficients"].get("still_requires", []),
+            },
         },
         "channel_template": "alpha_e = integral_Sigma R_e^a_I delta e_a^I",
         "transport_targets": [
@@ -124,13 +150,13 @@ def build_payload() -> dict:
                 "ready": transport_readiness["readiness"][
                     "extrinsic_curvature_variation_transport_ready"
                 ],
-                "status": "blocked_on_active_embedding_frame_connection_variation",
+                "status": "transport_closed_coefficients_open",
             },
             "torsion_pullback": {
                 "ready": transport_readiness["readiness"][
                     "torsion_pullback_variation_transport_ready"
                 ],
-                "status": "blocked_on_sigma_pullback_allowed_basis",
+                "status": "transport_closed_coefficients_open",
             },
         },
         "forbidden": [
@@ -147,9 +173,8 @@ def build_payload() -> dict:
             if not ready
         ],
         "next_required": [
-            "compute_R_e_from_active_sigma_boundary_variation",
-            "transport_delta_e_to_delta_h_delta_K_delta_torsion",
-            "express_R_e_in_allowed_local_density_basis",
+            "expand_R_h_R_K_R_T_R_chi_coefficients_from_active_sigma_boundary_variation",
+            "feed_coefficients_to_symbolic_local_primitive",
             "feed_R_e_to_residual_one_form_decomposition_gate",
         ],
     }

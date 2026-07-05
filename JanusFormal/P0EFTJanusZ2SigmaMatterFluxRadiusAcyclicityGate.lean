@@ -16,8 +16,10 @@ structure MatterFluxRadiusAcyclicityGate where
   embeddingDependsOnRSigmaDeclared : Prop
   independentFluxSourceForRadiusForbidden : Prop
   transparencyMayBeAcyclicIfDerivedIndependently : Prop
+  perfectFluidTangentialZeroMayBeAcyclic : Prop
   coupledRadiusFluxRouteDeclared : Prop
   transparencyAcyclicReady : Prop
+  perfectFluidTangentialZeroAcyclicReady : Prop
   activeProjectionAcyclicReady : Prop
   coupledRadiusFluxSystemReady : Prop
   matterFluxCanEnterRadiusSolution : Prop
@@ -32,18 +34,23 @@ def matterFluxRadiusAcyclicityLedgerDeclared
   g.embeddingDependsOnRSigmaDeclared /\
   g.independentFluxSourceForRadiusForbidden /\
   g.transparencyMayBeAcyclicIfDerivedIndependently /\
+  g.perfectFluidTangentialZeroMayBeAcyclic /\
   g.coupledRadiusFluxRouteDeclared
 
 def matterFluxRadiusAcyclicRouteReady
     (g : MatterFluxRadiusAcyclicityGate) : Prop :=
   matterFluxRadiusAcyclicityLedgerDeclared g /\
-  (g.transparencyAcyclicReady \/ g.coupledRadiusFluxSystemReady) /\
+  (g.transparencyAcyclicReady \/
+    g.perfectFluidTangentialZeroAcyclicReady \/
+    g.coupledRadiusFluxSystemReady) /\
   g.matterFluxCanEnterRadiusSolution
 
 theorem active_projection_alone_does_not_close_radius_source
     (g : MatterFluxRadiusAcyclicityGate)
     (hReady : matterFluxRadiusAcyclicRouteReady g) :
-    g.transparencyAcyclicReady \/ g.coupledRadiusFluxSystemReady := by
+    g.transparencyAcyclicReady \/
+      g.perfectFluidTangentialZeroAcyclicReady \/
+      g.coupledRadiusFluxSystemReady := by
   exact hReady.2.1
 
 end P0EFTJanusZ2SigmaMatterFluxRadiusAcyclicityGate

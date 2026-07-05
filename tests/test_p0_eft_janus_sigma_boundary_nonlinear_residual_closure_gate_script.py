@@ -14,6 +14,9 @@ class P0EFTJanusSigmaBoundaryNonlinearResidualClosureGateTests(unittest.TestCase
         self.assertTrue(payload["closure"]["tetrad_channel_closed"])
         self.assertTrue(payload["closure"]["connection_channel_closed"])
         self.assertTrue(payload["closure"]["spinor_channel_closed"])
+        self.assertTrue(payload["nonlinear_closure_is_boolean_only"])
+        self.assertFalse(payload["component_emission"]["alpha_res_components_available"])
+        self.assertIn("emit_alpha_res_components", payload["next_required"])
 
 
 if __name__ == "__main__":

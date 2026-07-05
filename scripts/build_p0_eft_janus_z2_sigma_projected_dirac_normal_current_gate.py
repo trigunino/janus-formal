@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_active_embedding_readiness_gate import 
 from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_matter_current_gate import (
     build_payload as build_projected_dirac_matter_current_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_dirac_normal_current_z2_cancellation_gate import (
+    build_payload as build_z2_current_cancellation_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_projected_dirac_normal_current_gate.md")
@@ -27,6 +30,7 @@ def build_payload() -> dict:
     reflecting = build_reflecting_boundary_current_payload()
     active_embedding = build_active_embedding_readiness_payload()
     projected_current = build_projected_dirac_matter_current_payload()
+    z2_cancellation = build_z2_current_cancellation_payload()
     declared = {
         "thin_shell_flux_bibliography_checked": True,
         "projected_Dirac_matter_current_gate_declared": True,
@@ -58,11 +62,25 @@ def build_payload() -> dict:
         "reflecting_boundary_normal_current_zero_ready": reflecting[
             "normal_dirac_current_zero_ready"
         ],
+        "Z2_current_cancellation_ready": z2_cancellation[
+            "dirac_normal_current_z2_cancellation_ready"
+        ],
         "no_normal_matter_current_derived": reflecting[
             "normal_dirac_current_zero_ready"
-        ],
+        ] or z2_cancellation["dirac_normal_current_z2_cancellation_ready"],
     }
-    ready = all(declared.values()) and all(closure.values())
+    normal_zero_route_ready = (
+        closure["reflecting_boundary_normal_current_zero_ready"]
+        or closure["Z2_current_cancellation_ready"]
+    )
+    projection_slots_ready = (
+        closure["projected_Dirac_matter_current_ready"]
+        and closure["Sigma_normals_ready"]
+        and closure["plus_normal_current_ready"]
+        and closure["minus_normal_current_ready"]
+        and closure["Z2_projected_normal_current_ready"]
+    )
+    ready = all(declared.values()) and projection_slots_ready and normal_zero_route_ready
     primary_blocker = "none"
     if not ready:
         if not active_embedding["gate_passed"]:
@@ -117,16 +135,23 @@ def build_payload() -> dict:
                 "primary_blocker": projected_current["primary_blocker"],
                 "closure": projected_current["closure"],
             },
+            "z2_current_cancellation": {
+                "gate": z2_cancellation["status"],
+                "ready": z2_cancellation["dirac_normal_current_z2_cancellation_ready"],
+                "primary_blocker": z2_cancellation["primary_blocker"],
+                "route_blockers": z2_cancellation.get("route_blockers", []),
+                "closure": z2_cancellation["closure"],
+            },
         },
         "formulas": {
             "plus_normal_current": "J_n^+ = J_+^mu n_mu^+",
             "minus_normal_current": "J_n^- = J_-^mu n_mu^-",
             "z2_projected_normal_current": "J_n^Z2Sigma = J_n^+ + eps_Z2 J_n^-",
             "transparency_test": "transparent Dirac branch requires J_n^Z2Sigma = 0",
+            "z2_cancellation_route": "derive current parity sigma_J and projected-current sign, then J_n^+ + eps_current J_n^- = 0",
         },
         "projected_dirac_normal_current_ledger_declared": all(declared.values()),
-        "projected_dirac_normal_current_ready": all(declared.values())
-        and all(value for key, value in closure.items() if key != "no_normal_matter_current_derived"),
+        "projected_dirac_normal_current_ready": all(declared.values()) and projection_slots_ready,
         "no_normal_dirac_current_ready": ready,
         "gate_passed": ready,
         "primary_blocker": primary_blocker,
@@ -136,6 +161,7 @@ def build_payload() -> dict:
             "project_J_plus_and_J_minus_on_Sigma_normals",
             "derive_or_reject_J_n_Z2Sigma_equals_zero",
             "or_close_reflecting_spinor_boundary_current_gate",
+            "or_close_Dirac_normal_current_Z2_cancellation_gate",
             "feed_result_to_matter_flux_transparency_gate",
         ],
     }

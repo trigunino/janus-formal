@@ -13,6 +13,8 @@ structure SigmaBoundaryNonlinearResidualClosureGate where
   spinorChannelClosed : Prop
   nonlinearBoundaryVariationOnSigmaClosed : Prop
   fullBoundaryActionClosedOnSigma : Prop
+  alphaResComponentsAvailable : Prop
+  lCtExpressionEmitted : Prop
 
 def sigmaNonlinearBoundaryResidualClosed
     (g : SigmaBoundaryNonlinearResidualClosureGate) : Prop :=
@@ -30,6 +32,12 @@ def sigmaFullBoundaryActionClosed
   sigmaNonlinearBoundaryResidualClosed g /\
   g.fullBoundaryActionClosedOnSigma
 
+def sigmaClosureEmitsComponents
+    (g : SigmaBoundaryNonlinearResidualClosureGate) : Prop :=
+  sigmaFullBoundaryActionClosed g /\
+  g.alphaResComponentsAvailable /\
+  g.lCtExpressionEmitted
+
 theorem nonlinear_residual_closure_gives_full_sigma_boundary_action
     (g : SigmaBoundaryNonlinearResidualClosureGate)
     (h : sigmaFullBoundaryActionClosed g) :
@@ -41,6 +49,13 @@ theorem sigma_counterterm_is_required_for_nonlinear_closure
     (h : sigmaNonlinearBoundaryResidualClosed g) :
     g.sigmaSupportedCountertermUnique /\ g.countertermVariationCancelsResidual := by
   exact And.intro h.right.right.left h.right.right.right.left
+
+theorem missing_alpha_components_blocks_component_emission
+    (g : SigmaBoundaryNonlinearResidualClosureGate)
+    (hMissing : Not g.alphaResComponentsAvailable) :
+    Not (sigmaClosureEmitsComponents g) := by
+  intro hReady
+  exact hMissing hReady.2.1
 
 end P0EFTJanusSigmaBoundaryNonlinearResidualClosureGate
 end JanusFormal

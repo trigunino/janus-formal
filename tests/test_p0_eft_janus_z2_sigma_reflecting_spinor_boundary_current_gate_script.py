@@ -20,11 +20,12 @@ class P0EFTJanusZ2SigmaReflectingSpinorBoundaryCurrentGateTests(unittest.TestCas
 
         self.assertFalse(payload["closure"]["spinor_boundary_projection_map_ready"])
         self.assertTrue(payload["closure"]["Z2_normal_orientation_ready"])
+        self.assertTrue(payload["closure"]["local_MIT_current_zero_algebra_ready"])
         self.assertFalse(payload["closure"]["reflecting_boundary_condition_derived"])
         self.assertFalse(payload["closure"]["boundary_leakage_zero_derived"])
         self.assertFalse(payload["normal_dirac_current_zero_ready"])
         self.assertIn(
-            "derive_unit_normal_Clifford_action_from_active_embedding",
+            "derive_reflecting_boundary_condition_without_free_phase",
             payload["next_required"],
         )
 

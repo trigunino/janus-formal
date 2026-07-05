@@ -546,21 +546,39 @@ Archived CMB/Z4 master-equation status:
   `E_RSigma` expansion and `R_Sigma(a)`.
 - `P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGate` records the current
   no-fit solution frontier: the variational equation and conditional embedding
-  map are ready, while matter-flux and counterterm still block the radius
-  solution certificate. The matter-flux side now reports both the
-  transparency/projection frontier and the coupled radius-flux route.
+  map are ready. The matter-flux radial block is now reduced for the
+  perfect-fluid sector through tangentiality; the counterterm still blocks the
+  radius solution certificate. The transparency/projection frontier remains
+  open for full Sigma transparency.
 - The active BAO materialization runner now writes the Sigma/RP3 local unit
   intrinsic metric input `unit_intrinsic_metric_q_ab_inputs.json` and exposes the
   strict next physical target as the non-Cartan radial terms:
   `E_HolstNiehYan`, `E_matterFlux`, and `E_counterterm`.
 - The matter-flux branch is connected through transparency input, zero-component
-  and radial-block gates. It remains blocked until active Sigma transparency or
-  a nontransparent projected flux is derived; no zero flux is inserted without
-  that proof.
-- `E_matterFlux` now has both strict output routes into `rsigma_E_matterFlux.json`:
-  derived transparency writes the zero term, while an active projected
-  `F_a^Z2Sigma(a)` radial manifest may write the nonzero term. The status gate
-  accepts either route and rejects missing/fitted flux.
+  and radial-block gates. The perfect-fluid tangential subroute writes
+  `rsigma_E_matterFlux.json` with `E_matterFlux=0` without claiming full active
+  Sigma transparency; normal-current/full bulk transparency remains open.
+- `E_matterFlux` now has strict output routes into `rsigma_E_matterFlux.json`:
+  derived transparency may write the zero term, the perfect-fluid tangential
+  radial subroute writes the zero term for the perfect-fluid matter sector, and
+  an active projected `F_a^Z2Sigma(a)` radial manifest may write a nonzero term.
+  The tensor contraction is centralized in `janus_lab.z2_sigma_matter_flux`;
+  the status gate rejects missing/fitted flux.
+- `P0EFTJanusZ2SigmaMatterFluxProjectionComponentsFromEmbeddingStressGate`
+  removes the opaque projection-components blocker: it writes
+  `matter_flux_projection_components.json` only from active tunnel embedding
+  geometry, active `T_plus/minus_munu` on Sigma and active radial-variation tangent
+  weights.
+- `P0EFTJanusZ2SigmaBulkStressOnSigmaFromPerfectFluidGate` writes the active
+  `T_plus/minus_munu` input from sector `rho/p`, covariant metrics and
+  contravariant four-velocities using `T_munu=(rho+p)u_mu u_nu+p g_munu`. It
+  remains blocked until those sector fluid inputs are derived on Sigma.
+- `P0EFTJanusZ2SigmaSectorPerfectFluidOnSigmaInputWriterGate` splits that
+  blocker into primitive active inputs: sector density/pressure, sector
+  covariant metrics and sector four-velocities on Sigma.
+- `P0EFTJanusZ2SigmaSectorFourVelocityFromTimeDirectionGate` derives the sector
+  four-velocities from active timelike directions and sector metrics by enforcing
+  `g_munu u^mu u^nu = -1`.
 - The nontransparent active-projection writer is route-exclusive: it requires
   `selected_route = active_projection` and refuses to overwrite a derived
   transparency route.
@@ -612,6 +630,110 @@ Archived CMB/Z4 master-equation status:
   validated active `q_ab`, marks `grid_role = solver_collocation_grid`, and
   explicitly records that the grid is not an observable, fit parameter, or FLRW
   background history.
+- `P0EFTJanusZ2SigmaMatterFluxActiveProjectionRadialInputWriterGate` is the
+  concrete non-transparent matter-flux route. Given active `T_plus/minus`,
+  tangent vectors, unit normals and radial variation weights, it computes
+  `F_a^Z2Sigma = T_plus e_a n_plus + eps_Z2 T_minus e_a n_minus` and reduces it
+  to `E_matterFlux(a)` for the existing radial-term writer.
+- `P0EFTJanusZ2SigmaRSigmaCountertermRadialTermFromDensityVariationGate` is the
+  strict counterterm radial route once the active density is known. It computes
+  `E_counterterm = (partial_R sqrt|h|) L_ct + sqrt|h| partial_R L_ct` and rejects
+  fitted counterterm coefficients.
+- `P0EFTJanusZ2SigmaCountertermRadialGeometryFactorsFromUnitQGate` derives the
+  geometry-only part of that variation from the active unit throat metric:
+  for `h_ab = R_Sigma^2 q_ab`, `sqrt|h| = R_Sigma^3 sqrt(det q)` and
+  `partial_R sqrt|h| = 3 R_Sigma^2 sqrt(det q)`. It does not invent `L_ct` or
+  `R_Sigma(a)`.
+- `P0EFTJanusZ2SigmaCountertermRadialDensityVariationInputWriterGate` combines
+  those geometry factors with an active `counterterm_lct_radial_profile.json`
+  (`R_Sigma`, `L_ct`, `partial_R L_ct`) and writes the strict
+  `counterterm_radial_density_variation_inputs.json` payload. It remains blocked
+  until that active profile is derived or supplied.
+- `P0EFTJanusZ2SigmaCountertermAttackOrderGate` now guards against the circular
+  route `R_Sigma -> embedding -> delta_K -> counterterm -> R_Sigma`. The active
+  route is symbolic first: derive `L_ct` in the allowed local boundary basis
+  `(h_ab, K_ab, torsion pullback, Immirzi/radion, Z2 sign)`, then evaluate its
+  radial profile after a radius grid/certificate exists. The older Sigma
+  nonlinear residual closure is treated only as uniqueness/cancellation evidence
+  until these coefficients are explicit.
+- `P0EFTJanusZ2SigmaCountertermSymbolicLocalPrimitiveGate` now materializes that
+  non-circular symbolic step in
+  `outputs/active_z2_sigma/counterterm_symbolic_local_primitive.json` as
+  `L_ct = - integral_gamma alpha_res`. This is not a radial profile and does not
+  write `E_counterterm`; the live blocker is now the explicit coefficient
+  expansion `R_h, R_K, R_chi` in the allowed local basis (`R_T` is zero on the
+  active torsionless branch).
+- `derive_p0_eft_janus_z2_sigma_counterterm_residual_coefficients_partial.py`
+  reduces the torsion residual coefficient on the active torsionless branch:
+  `R_T^A=0`, because the Sigma torsion pullback, irreducible torsion split and
+  Holst/Nieh-Yan radial term all vanish. This is only a partial coefficient
+  expansion; `R_h`, `R_K` and `R_chi` remain open.
+- `derive_p0_eft_janus_z2_sigma_counterterm_tetrad_transport_closure.py` now
+  closes the active local tetrad transport used by that counterterm channel:
+  from `h_ab(R)=R_Sigma^2 q_ab` it derives `K_ab=R_Sigma q_ab`,
+  `partial_R K_ab=q_ab`, `K=3/R_Sigma`, `partial_R K=-3/R_Sigma^2`, and uses
+  the active torsion-pullback payload to close the torsionless pullback branch.
+  This does not supply the residual coefficients or `E_counterterm(a)`.
+- `derive_p0_eft_janus_z2_sigma_counterterm_radial_projection_formula.py` reduces
+  the active radial formula to
+  `partial_R L_ct = -(2 R_Sigma R_h^{ab} q_ab + R_K^{ab} q_ab + R_chi partial_R chi)`
+  and `E_counterterm = partial_R(sqrt|h| L_ct)`. It is symbolic only.
+- `derive_p0_eft_janus_z2_sigma_counterterm_lct_radial_profile_from_residual_contractions.py`
+  is the concrete calculator from scalar contractions to `counterterm_lct_radial_profile.json`.
+  It requires `counterterm_residual_scalar_contractions_inputs.json`, including
+  `R_Sigma`, `R_h q`, `R_K q`, `R_chi partial_R chi`, and a fixed
+  `L_ct` integration constant. It refuses to write a profile without those inputs.
+- `derive_p0_eft_janus_z2_sigma_counterterm_residual_scalar_contractions.py`
+  is the tensor-to-scalar bridge for that profile. It contracts active
+  `R_h_ab` and `R_K_ab` against the unit throat metric `q_ab`, multiplies the
+  Immirzi/radion scalar channel `R_chi partial_R chi`, and writes
+  `counterterm_residual_scalar_contractions_inputs.json`. In the current active
+  payloads `q_ab` and the torsionless Immirzi contraction
+  `R_chi partial_R chi = 0` exist. `R_Sigma`, `R_h_ab`, and `R_K_ab` remain
+  physical derivations, not fitted inputs. The active radius certificate may use
+  either `R_Sigma_of_a` or the normalized downstream key `R_Sigma_values`.
+- `derive_p0_eft_janus_z2_sigma_counterterm_residual_tensors_from_local_density_action.py`
+  is the non-fit variational calculator for the missing `R_h_ab/R_K_ab` tensors.
+  It consumes an explicit active `counterterm_local_density_action_inputs.json`
+  with `L_ct_expression`, differentiates it in the isotropic
+  `h_ab=R_Sigma^2 q_ab`, `K_trace=3/R_Sigma` branch, and writes
+  `counterterm_metric_residual_tensor_inputs.json` plus
+  `counterterm_extrinsic_residual_tensor_inputs.json`. It currently blocks
+  because the active local counterterm density/action is not yet derived.
+- `build_p0_eft_janus_z2_sigma_counterterm_lct_density_route_decision.py`
+  is the current decision record for that missing density. It rejects GHY
+  duplication, pure torsionless Nieh-Yan, volume-solder without explicit
+  coefficient expansion, and transgression without two explicit sheet connections. It writes
+  `counterterm_local_density_action_obstruction.json`, not a fake
+  `counterterm_local_density_action_inputs.json`.
+- `build_p0_eft_janus_z2_sigma_counterterm_pulled_action_bridge_target.py`
+  separates the existing pulled-dust/B4vol action work from the active Sigma
+  counterterm action. `S_ct[Sigma]` is now written as the boundary functional
+  `integral_Sigma sqrt|h| L_ct(h,K,T_pullback,chi,epsilon_Z2)` with symbolic
+  zero-residual normalization; the remaining blocker is the explicit coefficient
+  expansion needed for `counterterm_local_density_action_inputs.json`.
+- `build_p0_eft_janus_z2_sigma_counterterm_coefficient_expansion_obligation_gate.py`
+  is the active blocker after `S_ct[Sigma]`: `R_T^A=0` and
+  `R_chi partial_R chi=0` are known on the torsionless branch, while
+  `R_h_ab` and `R_K_ab` still have to be derived from `delta S_ct`.
+- `derive_p0_eft_janus_z2_sigma_counterterm_variational_coefficient_formula.py`
+  closes the measure-aware variation formula:
+  `R_h_ab = -(1/2 h^ab L_ct + partial L_ct/partial h_ab)` and
+  `R_K_ab = -partial L_ct/partial K_ab`. It does not invent the missing
+  explicit `L_ct_expression`.
+- `build_p0_eft_janus_z2_sigma_counterterm_lct_expression_obstruction_gate.py`
+  records the failed derivation attempt for the explicit density: uniqueness of
+  `S_ct` plus the variation formula is insufficient. The active residual
+  one-form `alpha_res` must be explicit and exact before `L_ct_expression` can
+  be integrated.
+- `build_p0_eft_janus_z2_sigma_counterterm_alpha_res_extraction_attempt_gate.py`
+  writes the current partial `alpha_res`: torsion and Immirzi radial contractions
+  are known on the active torsionless branch, while the tetrad channel still
+  blocks on explicit `R_h_ab/R_K_ab`.
+- `build_p0_eft_janus_z2_sigma_counterterm_tetrad_residual_value_extraction_attempt_gate.py`
+  confirms that the tetrad transport and variation formula are closed, but the
+  current nonlinear Sigma closure is boolean-only: it proves cancellation, not
+  the explicit `alpha_res` tensor components needed for `R_h_ab/R_K_ab`.
 - `P0EFTJanusZ2SigmaRSigmaCertificatePayloadInputWriterGate` now marks
   `rsigma_certificate_payload.json` as a template, not a solution certificate.
   Only the isotropic balance solver may promote it to
@@ -690,6 +812,26 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaMatterFluxRouteDecisionGate` records the required fork for
   that block: either derive transparency `F_a^Z2Sigma=0`, or compute the active
   projected flux. The route cannot be chosen by observational fit.
+- `p0_eft_janus_z2_sigma_matter_flux_route_investigation` compares both live
+  routes. Current result: transparency is not proved, so the constructive route
+  is the coupled `R_Sigma(a)` + embedding + flux closure. It also records the
+  active negative-sector convention: negative gravitational/Z2 projection sign
+  is present, but thermodynamic negative density is not assumed.
+- `P0EFTJanusZ2SigmaEquivariantFluxCancellationGate` adds the Janus-specific
+  conditional proof route for transparency: if the embedding is Z2-equivariant,
+  the Sigma normal reverses, tangents transport by the deck map, and
+  `T_- = tau_* T_+`, then `F_a^+ + eps_Z2 F_a^- = 0`. This is not yet closed;
+  it is blocked on active embedding and stress equivariance.
+- `p0_eft_janus_z2_sigma_fa_zero_exhaustion_gate` records the current verdict on
+  the `F_a=0` path. It is promising and not a fit-rustine: the best subroute is
+  perfect-fluid tangentiality (`u.n=0`, `e.n=0`) for the matter part, plus the
+  torsionless local Holst/Nieh-Yan Sigma flux identity. Full transparency is now
+  reduced to the Dirac normal-current route: either a physical reflecting
+  boundary condition, or a derived Z2 current-parity cancellation.
+- `p0_eft_janus_z2_sigma_sector_metric_time_direction_from_unit_throat_chart`
+  materializes the active unit-throat chart collar metric `diag(-1,q_ab,+1_n)`
+  and time direction. The four-velocity and local-frame writers now close
+  `u.n/e.n` locally without claiming the full tunnel embedding or `K_ab`.
 - `P0EFTJanusZ2SigmaMatterFluxFrontierGate` records the exact current frontier:
   transparency is blocked on normal-current and bulk-stress cancellation, while
   active projection is blocked on bulk stress and embedding data. It imports live
@@ -710,11 +852,13 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaMatterFluxRadiusAcyclicityGate` prevents a circular
   radius solve: active projected flux depends on `X_+/-[R_Sigma]`, so it cannot
   be used as an independent source for `R_Sigma(a)` unless transparency is
-  derived independently or a coupled radius-flux system is formulated.
+  derived independently or a coupled radius-flux system is formulated. It now
+  also accepts the non-circular perfect-fluid tangential zero route because
+  `u.n=0` and `e.n=0` do not require `X_+/-[R_Sigma]`.
 - `P0EFTJanusZ2SigmaMatterFluxFrontierGate` now records the transparency route
-  as the nearest non-circular matter-flux frontier; this is diagnostic only and
-  does not reduce `E_matterFlux` until `J_n^Z2Sigma=0` and the normal
-  stress/flux cancellation are derived.
+  as the nearest full-transparency frontier; this is diagnostic only for the
+  spinor/full-stress route. The perfect-fluid tangential subroute already
+  reduces the radial `E_matterFlux` block without declaring full transparency.
 - `P0EFTJanusZ2SigmaCoupledRadiusFluxSystemGate` declares that non-transparent
   flux must be solved together with `R_Sigma(a)` through
   `E_RSigma[R_Sigma,F_a]=0` and the active projection
@@ -769,8 +913,31 @@ Archived CMB/Z4 master-equation status:
   gate so the Z2 coorientation sign is partial-ready and consumes the Sigma
   APS/Pin gate as closed. It also imports the projective-gluing orientation
   sign `epsilon_Z2=-1`, so Z2 normal orientation is partial-ready without using
-  the active embedding. The projection still remains blocked on boundary
-  spinor data and the active unit-normal Clifford action.
+  the active embedding. The local MIT projector now closes unit-normal Clifford,
+  idempotence and self-adjointness algebra; the projection still remains blocked
+  on physical boundary spinor data and the derived reflecting condition.
+- `P0EFTJanusZ2SigmaDiracNormalCurrentZ2CancellationGate` records the alternative
+  Janus route to `J_n^Z2Sigma=0`: use the sheet-exchange normal reversal plus a
+  derived parity for the Dirac current. It is not closed yet; the blocker is the
+  current parity/sign from the active spinor projection, not an observational fit.
+- `P0EFTJanusZ2SigmaDiracCurrentParityFromSpinorIntertwinerGate` reduces that
+  blocker to a precise spinor-lift obligation: construct `U_Z2` from the
+  resolved-tunnel Pin lift and verify Clifford intertwining plus Dirac-adjoint
+  compatibility. The current-parity algebra is conditionally ready; the global
+  parity is not promoted until the active `U_Z2` exists.
+- `P0EFTJanusZ2SigmaLocalPinReflectionIntertwinerGate` now closes the local
+  Sigma Clifford part with `U_Z2^Sigma := B_n`. It proves only local normal/tangent
+  gamma intertwining and local Dirac-adjoint compatibility. It does not claim the
+  global resolved-tunnel Pin lift or the physical spinor equivariance
+  `psi_- = U_Z2 psi_+`.
+- `P0EFTJanusZ2SigmaSpinorSolderingEquivarianceFromBoundaryVariationGate` reduces
+  that physical equivariance to the active boundary spinor residual. It remains
+  blocked until `R_psi`, `R_psibar`, projection compatibility and the soldering
+  residual zero condition are derived from the projected Dirac boundary variation.
+- `P0EFTJanusZ2SigmaSpinorQuotientDescentEquivarianceGate` records the cleaner
+  topological route: a physical spinor defined on the resolved Z2 quotient should
+  lift to an equivariant spinor on the two-fold cover. This route remains blocked
+  on the resolved-tunnel Pin lift and sheet-exchange action, not on a fit parameter.
 - `P0EFTJanusZ2SigmaSpinorBundleProjectionGate` imports generic spinor-bundle,
   hypersurface-restriction and APS-boundary machinery. It declares
   `psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, APS/Pin data)` and
@@ -1098,11 +1265,10 @@ Archived CMB/Z4 master-equation status:
   Immirzi/radion boundary fields and Z2 orientation, with no new fitted
   counterterm freedom.
 - `P0EFTJanusZ2SigmaCountertermTetradResidualChannelGate` isolates the first
-  residual coefficient `R_e`; it remains open until the active Sigma coframe
-  variation is transported into `delta h`, `delta K` and torsion-pullback data.
-  The gate now imports the live tetrad-variation transport readiness frontier and
-  records the metric subchannel as partial-only, not sufficient for the full
-  residual one-form.
+  residual coefficient `R_e`. The active local transport into `delta h`,
+  `delta K` and torsion-pullback data is now closed by the symbolic Gaussian
+  collar route. The channel remains open only because the residual coefficients
+  `R_h, R_K, R_T, R_chi` are not yet expanded.
 - `P0EFTJanusZ2SigmaCountertermTetradVariationTransportGate` isolates that
   transport step: `delta e -> delta h_ab`, `delta e -> delta K_ab`, and
   `delta e -> delta X_Sigma^*T^I`. It imports the live metric, extrinsic and
@@ -1112,23 +1278,24 @@ Archived CMB/Z4 master-equation status:
   `delta h_ab = eta_IJ(delta e_a^I e_b^J + e_a^I delta e_b^J)`. It leaves
   `delta K` and torsion-pullback transport open.
 - `P0EFTJanusZ2SigmaCountertermTetradExtrinsicCurvatureVariationTransportGate`
-  isolates `delta e -> delta K_ab`. It declares
-  `K_ab = e_a^mu e_b^nu nabla_mu n_nu` and keeps the transport blocked on
-  active embedding, tangent/normal traces and connection variation.
+  isolates `delta e -> delta K_ab`. The global embedding route remains blocked
+  until `R_Sigma(a)` exists, but the counterterm-local route is closed on the
+  active Gaussian collar by `K_ab=R_Sigma q_ab` and `partial_R K_ab=q_ab`.
 - `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackVariationTransportGate`
   records the Cartan tetrad-variation formula
   `delta_e T^I = D_omega(delta e^I)` for the independent-connection branch.
-  It imports the live torsion-pullback and oriented pullback/variation
-  commutation statuses. The Sigma torsion pullback and allowed-basis expansion
-  remain open.
+  It now consumes the active local torsion-pullback payload for the torsionless
+  collar branch and closes the allowed-basis transport for the counterterm
+  tetrad channel.
 - `P0EFTJanusZ2SigmaCountertermTetradTorsionPullbackReadinessGate` records that
   oriented pullback commutation plus the ambient Cartan and Sigma pullback
   torsion formulae are closed.
   The active embedding, coframe/connection pullback, Sigma torsion pullback and
   FLRW irreducible basis still block the torsion-pullback transport.
 - `P0EFTJanusZ2SigmaCountertermTetradVariationTransportReadinessGate` aggregates
-  the three tetrad transports. It records that `delta e -> delta h_ab` is closed,
-  while `delta e -> delta K_ab` and torsion-pullback transport still block `R_e`.
+  the three tetrad transports. It now records the local counterterm transport as
+  closed for `delta e -> delta h_ab`, `delta e -> delta K_ab` and
+  torsion-pullback; `R_e` remains blocked by missing residual coefficients.
 - `P0EFTJanusZ2SigmaCountertermConnectionResidualChannelGate` isolates the
   spin-connection coefficient `R_omega`. It now imports the connection
   variation transport gate and records the fixed-embedding pullback commutation
@@ -1295,7 +1462,9 @@ Archived CMB/Z4 master-equation status:
   The nonlinear residual is isolated and closed by the nonlinear residual gate.
 - `P0EFTJanusSigmaBoundaryNonlinearResidualClosureGate` closes the full Sigma
   boundary action: the unique Sigma-supported counterterm cancels the isolated
-  nonlinear residual across tetrad, connection, and spinor channels.
+  nonlinear residual across tetrad, connection, and spinor channels. It now
+  explicitly records that this is boolean closure only: `alpha_res` components
+  and `L_ct_expression` are not emitted by that gate.
 - `P0EFTJanusFormalModelReauditAfterTopologyCorrectionGate` records the current
   reaudit: the resolved 2D tunnel shadow is `T2 -> Klein bottle`, while the Boy
   surface is only the unresolved projective shadow. The active Z2/Sigma pure

@@ -22,11 +22,19 @@ class P0EFTJanusZ2SigmaCountertermResidualChannelFrontierGateTests(unittest.Test
         self.assertFalse(payload["channel_frontiers"]["tetrad"]["ready"])
         self.assertFalse(payload["channel_frontiers"]["matter_flux"]["ready"])
         self.assertEqual(payload["nearest_residual_channel_frontier"]["channel"], "tetrad")
+        self.assertTrue(
+            payload["nearest_residual_channel_frontier"]["transport_closed_coefficients_open"]
+        )
         self.assertIn(
-            "tetrad_variation_transport_ready",
+            "tetrad_residual_coefficient_explicit",
             payload["nearest_residual_channel_frontier"]["remaining_false_closure_fields"],
         )
+        self.assertEqual(payload["primary_blocker"], "tetrad_residual_coefficients")
         self.assertFalse(payload["residual_channel_frontier_ready"])
+        self.assertIn(
+            "derive_tetrad_residual_coefficients_R_h_R_K_R_T_R_chi",
+            payload["next_required"],
+        )
         self.assertIn("feed_all_coefficients_to_residual_one_form_decomposition_gate", payload["next_required"])
 
 

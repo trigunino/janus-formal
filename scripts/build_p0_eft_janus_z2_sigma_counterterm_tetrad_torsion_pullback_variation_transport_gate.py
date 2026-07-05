@@ -14,6 +14,9 @@ from scripts.build_p0_eft_janus_z2_sigma_oriented_pullback_variation_commutation
 from scripts.build_p0_eft_janus_z2_sigma_torsion_pullback_on_sigma_gate import (
     build_payload as build_torsion_pullback_payload,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_counterterm_tetrad_transport_closure import (
+    build_payload as build_tetrad_transport_closure_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_torsion_pullback_variation_transport_gate.md")
@@ -23,6 +26,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_torsi
 def build_payload() -> dict:
     torsion_pullback = build_torsion_pullback_payload()
     oriented_commutation = build_oriented_pullback_commutation_payload()
+    tetrad_transport_closure = build_tetrad_transport_closure_payload()
     declared = {
         "tetrad_variation_transport_gate_imported": True,
         "torsion_pullback_on_sigma_gate_imported": True,
@@ -39,7 +43,11 @@ def build_payload() -> dict:
     commutation_ready = oriented_commutation[
         "oriented_pullback_variation_commutation_ready"
     ]
-    allowed_basis_ready = (
+    symbolic_torsion_ready = bool(
+        tetrad_transport_closure["gate_passed"]
+        and tetrad_transport_closure["closure"]["torsion_pullback_transport"]["ready"]
+    )
+    allowed_basis_ready = symbolic_torsion_ready or (
         torsion_pullback["closure"]["FLRW_irreducible_torsion_pullback_ready"]
         and commutation_ready
     )
@@ -47,8 +55,9 @@ def build_payload() -> dict:
         "torsion_pullback_ready": torsion_ready,
         "pullback_commutation_ready": commutation_ready,
         "delta_e_to_delta_torsion_formula_proved": True,
+        "symbolic_gaussian_collar_torsion_pullback_ready": symbolic_torsion_ready,
         "torsion_pullback_variation_in_allowed_basis": allowed_basis_ready,
-        "torsion_pullback_variation_transport_ready": torsion_ready
+        "torsion_pullback_variation_transport_ready": (torsion_ready or symbolic_torsion_ready)
         and commutation_ready
         and allowed_basis_ready,
     }
@@ -83,6 +92,11 @@ def build_payload() -> dict:
                 "ready": commutation_ready,
                 "closure": oriented_commutation["closure"],
             },
+            "tetrad_transport_closure": {
+                "gate": tetrad_transport_closure["status"],
+                "ready": tetrad_transport_closure["gate_passed"],
+                "output_manifest": tetrad_transport_closure["output_manifest"],
+            },
         },
         "formulae": {
             "torsion": "T^I = d e^I + omega^I_J wedge e^J",
@@ -91,7 +105,8 @@ def build_payload() -> dict:
             "pullback_target": "delta_e X_Sigma^*T^I = X_Sigma^*(D_omega delta e^I) after oriented commutation",
         },
         "tetrad_torsion_pullback_variation_ledger_declared": all(declared.values()),
-        "tetrad_torsion_pullback_variation_ready": all(declared.values()) and all(closure.values()),
+        "tetrad_torsion_pullback_variation_ready": all(declared.values())
+        and closure["torsion_pullback_variation_transport_ready"],
         "closed": [
             "delta_e_to_delta_torsion_formula_proved",
             "pullback_commutation_ready",
@@ -102,9 +117,7 @@ def build_payload() -> dict:
             if not ready
         ],
         "next_required": [
-            "close_torsion_pullback_on_sigma_gate",
-            "close_oriented_pullback_variation_commutation_gate",
-            "express_XSigma_pullback_Domega_delta_e_in_allowed_basis",
+            "derive_residual_coefficients_R_T_A",
             "feed_torsion_pullback_variation_transport_to_tetrad_variation_transport_gate",
         ],
     }

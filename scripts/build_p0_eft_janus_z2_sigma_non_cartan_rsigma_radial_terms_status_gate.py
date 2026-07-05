@@ -23,6 +23,9 @@ from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_tra
 from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_active_projection_gate import (
     build_payload as build_matter_flux_active_projection_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_counterterm_radial_term_from_density_variation_gate import (
+    build_payload as build_counterterm_density_variation_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_non_cartan_rsigma_radial_terms_status_gate.md")
@@ -57,12 +60,16 @@ def build_payload(
     matter_flux_payload: dict | None = None,
     matter_flux_active_projection_payload: dict | None = None,
     counterterm_payload: dict | None = None,
+    counterterm_density_variation_payload: dict | None = None,
 ) -> dict:
     holst = holst_payload or build_holst_payload()
     holst_radial = holst_radial_term_payload or build_holst_radial_term_payload()
     matter_flux = matter_flux_payload or build_matter_flux_payload()
     matter_flux_active = matter_flux_active_projection_payload or build_matter_flux_active_projection_payload()
     counterterm = counterterm_payload or build_counterterm_payload()
+    counterterm_density_variation = (
+        counterterm_density_variation_payload or build_counterterm_density_variation_payload()
+    )
     matter_flux_ready = bool(matter_flux.get("E_matterFlux_zero_from_transparency_written")) or bool(
         matter_flux_active.get("E_matterFlux_from_active_projection_written")
     )
@@ -94,9 +101,28 @@ def build_payload(
             },
         },
         "E_counterterm": {
-            "ready": bool(counterterm.get("counterterm_radial_block_of_a_ready")),
-            "primary_blocker": counterterm.get("primary_blocker", "counterterm_radial_block"),
-            "frontier": _frontier(counterterm),
+            "ready": bool(counterterm.get("counterterm_radial_block_of_a_ready")) or bool(
+                counterterm_density_variation.get("E_counterterm_from_density_variation_written")
+            ),
+            "primary_blocker": (
+                "none"
+                if bool(counterterm.get("counterterm_radial_block_of_a_ready"))
+                or bool(counterterm_density_variation.get("E_counterterm_from_density_variation_written"))
+                else counterterm_density_variation.get(
+                    "primary_blocker",
+                    counterterm.get("primary_blocker", "counterterm_radial_block"),
+                )
+            ),
+            "frontier": []
+            if bool(counterterm.get("counterterm_radial_block_of_a_ready"))
+            or bool(counterterm_density_variation.get("E_counterterm_from_density_variation_written"))
+            else _frontier(counterterm_density_variation) + _frontier(counterterm),
+            "routes": {
+                "density_variation_ready": bool(
+                    counterterm_density_variation.get("E_counterterm_from_density_variation_written")
+                ),
+                "legacy_radial_block_ready": bool(counterterm.get("counterterm_radial_block_of_a_ready")),
+            },
         },
     }
     missing = [name for name, data in terms.items() if not data["ready"]]

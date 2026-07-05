@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_perfect_fluid_tangency_gate import (
+    build_payload as build_perfect_fluid_radial_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_radius_acyclicity_gate.md")
@@ -9,6 +18,11 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_radius_acycl
 
 
 def build_payload() -> dict:
+    perfect_fluid_radial = build_perfect_fluid_radial_payload()
+    perfect_fluid_acyclic = (
+        perfect_fluid_radial["gate_passed"]
+        and not perfect_fluid_radial["active_sigma_transparency_claimed"]
+    )
     declared = {
         "matter_flux_frontier_imported": True,
         "coupled_radius_flux_system_imported": True,
@@ -18,13 +32,15 @@ def build_payload() -> dict:
         "embedding_depends_on_RSigma_declared": True,
         "independent_flux_source_for_radius_forbidden": True,
         "transparency_may_be_acyclic_if_derived_independently": True,
+        "perfect_fluid_tangential_zero_may_be_acyclic": True,
         "coupled_radius_flux_route_declared": True,
     }
     closure = {
         "transparency_acyclic_ready": False,
+        "perfect_fluid_tangential_zero_acyclic_ready": perfect_fluid_acyclic,
         "active_projection_acyclic_ready": False,
         "coupled_radius_flux_system_ready": False,
-        "matter_flux_can_enter_radius_solution": False,
+        "matter_flux_can_enter_radius_solution": perfect_fluid_acyclic,
     }
     return {
         "status": "janus-z2-sigma-matter-flux-radius-acyclicity-gate",
@@ -49,15 +65,29 @@ def build_payload() -> dict:
         "policy": {
             "forbidden": "use F_a^Z2Sigma[X_pm(R_Sigma)] as an already-known source for solving R_Sigma(a)",
             "allowed_transparency": "derive F_a^Z2Sigma=0 independently of the unknown embedding/radius",
+            "allowed_perfect_fluid_tangency": "use E_matterFlux=0 from u.n=e.n=0 because it does not depend on X_pm(R_Sigma)",
             "allowed_coupled_route": "solve E_RSigma(a)=0 and F_a^Z2Sigma(a) as a coupled radius-flux system",
+        },
+        "upstream_frontiers": {
+            "perfect_fluid_tangential_zero": {
+                "gate": perfect_fluid_radial["status"],
+                "ready": perfect_fluid_radial["gate_passed"],
+                "active_sigma_transparency_claimed": perfect_fluid_radial[
+                    "active_sigma_transparency_claimed"
+                ],
+            },
         },
         "current_frontier": [
             "transparency_acyclic_ready = false",
             "coupled_radius_flux_system_ready = false",
-        ],
+        ] if not perfect_fluid_acyclic else [],
         "matter_flux_radius_acyclicity_ledger_declared": all(declared.values()),
         "matter_flux_radius_acyclic_route_ready": all(declared.values())
-        and (closure["transparency_acyclic_ready"] or closure["coupled_radius_flux_system_ready"])
+        and (
+            closure["transparency_acyclic_ready"]
+            or closure["perfect_fluid_tangential_zero_acyclic_ready"]
+            or closure["coupled_radius_flux_system_ready"]
+        )
         and closure["matter_flux_can_enter_radius_solution"],
         "next_required": [
             "derive_transparency_without_using_unknown_X_pm_or_RSigma",

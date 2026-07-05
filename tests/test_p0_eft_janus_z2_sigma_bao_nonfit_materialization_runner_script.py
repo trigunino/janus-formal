@@ -156,6 +156,157 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
             "derive_non_Cartan_RSigma_radial_terms_E_HolstNiehYan_E_matterFlux_E_counterterm",
         )
 
+    def test_next_target_reports_exact_missing_non_cartan_payloads(self):
+        payload = build_payload(
+            materialization_steps=(
+                (
+                    "matter_flux_active_projection_radial_input_writer",
+                    lambda: {
+                        "status": "matter",
+                        "gate_passed": False,
+                        "primary_blocker": "active_matter_flux_projection_components",
+                    },
+                ),
+                (
+                    "rsigma_counterterm_density_variation",
+                    lambda: {
+                        "status": "counter",
+                        "gate_passed": False,
+                        "primary_blocker": "counterterm_radial_density_variation_inputs",
+                    },
+                ),
+            ),
+            real_state_builder=lambda: {
+                "gate_passed": False,
+                "bao_chi2_evaluated": False,
+                "missing_real_active_inputs": ["active_RSigma_solution_certificate"],
+                "fixture_result_is_not_physical_result": True,
+                "blocker": "real inputs incomplete",
+                "next_required": [],
+            },
+        )
+
+        self.assertEqual(
+            payload["next_physical_target"],
+            "derive_active_matter_flux_projection_components_and_counterterm_radial_density_variation_inputs",
+        )
+
+    def test_next_target_reports_matter_flux_projection_primitives(self):
+        payload = build_payload(
+            materialization_steps=(
+                (
+                    "matter_flux_projection_components_from_embedding_stress",
+                    lambda: {
+                        "status": "matter",
+                        "gate_passed": False,
+                        "primary_blocker": "bulk_stress_on_sigma_inputs",
+                    },
+                ),
+                (
+                    "rsigma_counterterm_density_variation",
+                    lambda: {
+                        "status": "counter",
+                        "gate_passed": False,
+                        "primary_blocker": "counterterm_radial_density_variation_inputs",
+                    },
+                ),
+            ),
+            real_state_builder=lambda: {
+                "gate_passed": False,
+                "bao_chi2_evaluated": False,
+                "missing_real_active_inputs": ["active_RSigma_solution_certificate"],
+                "fixture_result_is_not_physical_result": True,
+                "blocker": "real inputs incomplete",
+                "next_required": [],
+            },
+        )
+
+        self.assertEqual(
+            payload["next_physical_target"],
+            "derive_matter_flux_projection_primitives_and_counterterm_radial_density_variation_inputs",
+        )
+
+    def test_next_target_reports_sector_perfect_fluid_inputs(self):
+        payload = build_payload(
+            materialization_steps=(
+                (
+                    "bulk_stress_on_sigma_from_perfect_fluid",
+                    lambda: {
+                        "status": "bulk",
+                        "gate_passed": False,
+                        "primary_blocker": "sector_perfect_fluid_on_sigma_inputs",
+                    },
+                ),
+            ),
+            real_state_builder=lambda: {
+                "gate_passed": False,
+                "bao_chi2_evaluated": False,
+                "missing_real_active_inputs": ["active_RSigma_solution_certificate"],
+                "fixture_result_is_not_physical_result": True,
+                "blocker": "real inputs incomplete",
+                "next_required": [],
+            },
+        )
+
+        self.assertEqual(
+            payload["next_physical_target"],
+            "derive_sector_rho_p_metric_and_four_velocity_on_Sigma_for_bulk_stress",
+        )
+
+    def test_next_target_reports_sector_fluid_primitives(self):
+        payload = build_payload(
+            materialization_steps=(
+                (
+                    "sector_perfect_fluid_on_sigma_input_writer",
+                    lambda: {
+                        "status": "fluid",
+                        "gate_passed": False,
+                        "primary_blocker": "sector_metric_on_sigma_inputs",
+                    },
+                ),
+            ),
+            real_state_builder=lambda: {
+                "gate_passed": False,
+                "bao_chi2_evaluated": False,
+                "missing_real_active_inputs": ["active_RSigma_solution_certificate"],
+                "fixture_result_is_not_physical_result": True,
+                "blocker": "real inputs incomplete",
+                "next_required": [],
+            },
+        )
+
+        self.assertEqual(
+            payload["next_physical_target"],
+            "derive_sector_density_pressure_metric_and_four_velocity_on_Sigma",
+        )
+
+    def test_next_target_reports_velocity_primitives(self):
+        payload = build_payload(
+            materialization_steps=(
+                (
+                    "sector_four_velocity_from_time_direction",
+                    lambda: {
+                        "status": "velocity",
+                        "gate_passed": False,
+                        "primary_blocker": "sector_time_direction_on_sigma_inputs",
+                    },
+                ),
+            ),
+            real_state_builder=lambda: {
+                "gate_passed": False,
+                "bao_chi2_evaluated": False,
+                "missing_real_active_inputs": ["active_RSigma_solution_certificate"],
+                "fixture_result_is_not_physical_result": True,
+                "blocker": "real inputs incomplete",
+                "next_required": [],
+            },
+        )
+
+        self.assertEqual(
+            payload["next_physical_target"],
+            "derive_sector_time_direction_on_Sigma_for_four_velocity",
+        )
+
     def test_step_summary_uses_frontier_blocks(self):
         payload = build_payload(
             materialization_steps=(
@@ -519,7 +670,14 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
         self.assertIn("holst_nieh_yan_radial_block", payload["steps_passed"])
         self.assertIn("holst_nieh_yan_radial_inputs_from_torsionless_identity", payload["steps_passed"])
         self.assertIn("rsigma_holst_nieh_yan_radial_term", payload["steps_passed"])
+        self.assertIn("counterterm_radial_geometry_factors", payload["steps_passed"])
+        self.assertIn("counterterm_radial_density_variation_input_writer", payload["steps_passed"])
         self.assertIn("rsigma_matter_flux_radial_term", payload["steps_passed"])
+        self.assertIn("sector_four_velocity_from_time_direction", payload["steps_passed"])
+        self.assertIn("sector_perfect_fluid_on_sigma_input_writer", payload["steps_passed"])
+        self.assertIn("bulk_stress_on_sigma_from_perfect_fluid", payload["steps_passed"])
+        self.assertIn("matter_flux_projection_components_from_embedding_stress", payload["steps_passed"])
+        self.assertIn("matter_flux_active_projection_radial_input_writer", payload["steps_passed"])
         self.assertIn("rsigma_matter_flux_active_projection_radial_term", payload["steps_passed"])
         self.assertIn("counterterm_residual_one_form", payload["steps_passed"])
         self.assertIn("counterterm_residual_integrability", payload["steps_passed"])

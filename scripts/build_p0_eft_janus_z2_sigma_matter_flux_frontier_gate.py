@@ -23,6 +23,9 @@ from scripts.build_p0_eft_janus_z2_sigma_matter_flux_route_decision_gate import 
 from scripts.build_p0_eft_janus_z2_sigma_matter_flux_transparency_gate import (
     build_payload as build_transparency_payload,
 )
+from scripts.build_p0_eft_janus_z2_sigma_rsigma_matter_flux_radial_term_from_perfect_fluid_tangency_gate import (
+    build_payload as build_perfect_fluid_radial_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_matter_flux_frontier_gate.md")
@@ -35,6 +38,7 @@ def build_payload() -> dict:
     acyclicity = build_acyclicity_payload()
     route_decision = build_route_decision_payload()
     radial_block = build_radial_block_payload()
+    perfect_fluid_radial = build_perfect_fluid_radial_payload()
     declared = {
         "route_decision_gate_imported": True,
         "transparency_gate_imported": True,
@@ -59,6 +63,7 @@ def build_payload() -> dict:
         "active_flux_projection_ready": active_projection["active_flux_projection_ready"],
         "route_decision_ready": route_decision["matter_flux_route_decision_ready"],
         "matter_flux_radial_block_reduced": radial_block["matter_flux_radial_block_reduced"],
+        "perfect_fluid_tangential_radial_zero_ready": perfect_fluid_radial["gate_passed"],
         "matter_flux_radius_acyclic_route_ready": acyclicity[
             "matter_flux_radius_acyclic_route_ready"
         ],
@@ -129,10 +134,18 @@ def build_payload() -> dict:
                 "primary_blocker": radial_block["primary_blocker"],
                 "closure": radial_block["closure"],
             },
+            "perfect_fluid_tangential_zero": {
+                "gate": perfect_fluid_radial["status"],
+                "ready": perfect_fluid_radial["gate_passed"],
+                "active_sigma_transparency_claimed": perfect_fluid_radial[
+                    "active_sigma_transparency_claimed"
+                ],
+            },
         },
         "routes": {
             "transparency": "no_normal_matter_current + bulk_stress_Z2_cancellation -> E_matterFlux = 0",
             "active_projection": "T_pm(a), tangents, normals -> F_a^Z2Sigma(a) -> E_matterFlux(a)",
+            "perfect_fluid_tangential_zero": "perfect-fluid u.n=e.n=0 -> E_matterFlux=0 for the perfect-fluid sector only",
         },
         "current_frontier": [
             f"{key} = false"
@@ -151,6 +164,7 @@ def build_payload() -> dict:
         and (
             paths["active_sigma_transparency_ready"]
             or paths["active_flux_projection_ready"]
+            or paths["perfect_fluid_tangential_radial_zero_ready"]
         )
         and paths["matter_flux_radius_acyclic_route_ready"]
         and paths["route_decision_ready"]
@@ -162,6 +176,7 @@ def build_payload() -> dict:
                 and (
                     paths["active_sigma_transparency_ready"]
                     or paths["active_flux_projection_ready"]
+                    or paths["perfect_fluid_tangential_radial_zero_ready"]
                 )
                 and paths["matter_flux_radius_acyclic_route_ready"]
                 and paths["route_decision_ready"]

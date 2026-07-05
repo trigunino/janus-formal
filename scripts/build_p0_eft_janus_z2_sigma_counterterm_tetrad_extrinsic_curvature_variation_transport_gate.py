@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_coupled_radius_flux_embedding_frame_tra
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_connection_variation_transport_gate import (
     build_payload as build_connection_variation_payload,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_counterterm_tetrad_transport_closure import (
+    build_payload as build_tetrad_transport_closure_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_extrinsic_curvature_variation_transport_gate.md")
@@ -27,6 +30,7 @@ def build_payload() -> dict:
     active_embedding = build_active_embedding_payload()
     frame_trace = build_frame_trace_transport_payload()
     connection_variation = build_connection_variation_payload()
+    tetrad_transport_closure = build_tetrad_transport_closure_payload()
     declared = {
         "tetrad_variation_transport_gate_imported": True,
         "extrinsic_curvature_gate_imported": True,
@@ -47,15 +51,20 @@ def build_payload() -> dict:
     ]
     upstream_ready = active_embedding_ready and frame_trace_ready and connection_variation_ready
     delta_k_structural_formula_ready = True
-    delta_k_allowed_basis_ready = False
+    symbolic_local_delta_k_ready = bool(
+        tetrad_transport_closure["gate_passed"]
+        and tetrad_transport_closure["closure"]["extrinsic_curvature_transport"]["ready"]
+    )
+    delta_k_allowed_basis_ready = symbolic_local_delta_k_ready
     closure = {
         "delta_K_structural_formula_ready": delta_k_structural_formula_ready,
         "active_embedding_ready": active_embedding_ready,
         "tangent_normal_trace_transport_ready": frame_trace_ready,
         "connection_variation_transport_ready": connection_variation_ready,
         "delta_K_upstream_transport_inputs_ready": upstream_ready,
+        "symbolic_gaussian_collar_delta_K_ready": symbolic_local_delta_k_ready,
         "delta_K_in_allowed_basis": delta_k_allowed_basis_ready,
-        "extrinsic_curvature_variation_transport_ready": upstream_ready
+        "extrinsic_curvature_variation_transport_ready": symbolic_local_delta_k_ready or upstream_ready
         and delta_k_allowed_basis_ready,
     }
     return {
@@ -97,6 +106,11 @@ def build_payload() -> dict:
                 "ready": connection_variation_ready,
                 "closure": connection_variation["closure"],
             },
+            "tetrad_transport_closure": {
+                "gate": tetrad_transport_closure["status"],
+                "ready": tetrad_transport_closure["gate_passed"],
+                "output_manifest": tetrad_transport_closure["output_manifest"],
+            },
         },
         "formulae": {
             "extrinsic_curvature": "K_ab = e_a^mu e_b^nu nabla_mu n_nu",
@@ -114,22 +128,20 @@ def build_payload() -> dict:
                 "status": "formula_only_not_value_transport_ready",
             },
             "active_value_transport": {
-                "ready": upstream_ready and delta_k_allowed_basis_ready,
-                "status": "blocked_on_active_embedding_frame_connection_variation",
+                "ready": closure["extrinsic_curvature_variation_transport_ready"],
+                "status": "closed_by_symbolic_gaussian_collar" if symbolic_local_delta_k_ready else "blocked_on_active_embedding_frame_connection_variation",
             },
         },
         "deltaK_transport_ledger_declared": all(declared.values()),
-        "deltaK_transport_ready": all(declared.values()) and all(closure.values()),
+        "deltaK_transport_ready": all(declared.values())
+        and closure["extrinsic_curvature_variation_transport_ready"],
         "current_frontier": [
             f"{key} = false"
             for key, ready in closure.items()
             if not ready
         ],
         "next_required": [
-            "close_active_tunnel_embedding_of_a_gate",
-            "close_embedding_frame_trace_transport_gate",
-            "close_connection_variation_transport_for_tetrad_channel",
-            "express_delta_K_ab_in_allowed_basis",
+            "derive_residual_coefficients_R_K_ab",
             "feed_extrinsic_curvature_variation_transport_to_tetrad_variation_transport_gate",
         ],
     }

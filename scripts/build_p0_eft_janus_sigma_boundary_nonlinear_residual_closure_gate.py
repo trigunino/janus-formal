@@ -20,18 +20,37 @@ def build_payload() -> dict:
         "nonlinear_boundary_variation_on_sigma_closed": True,
         "full_boundary_action_closed_on_sigma": True,
     }
+    component_emission = {
+        "alpha_res_components_available": False,
+        "R_h_ab_emitted": False,
+        "R_K_ab_emitted": False,
+        "R_chi_emitted": False,
+        "L_ct_expression_emitted": False,
+    }
     return {
         "status": "janus-sigma-boundary-nonlinear-residual-closure-gate",
         "closure": closure,
+        "component_emission": component_emission,
         "sigma_nonlinear_boundary_residual_closed": all(
             value for key, value in closure.items()
             if key != "full_boundary_action_closed_on_sigma"
         ),
         "sigma_full_boundary_action_closed": all(closure.values()),
+        "nonlinear_closure_is_boolean_only": not component_emission[
+            "alpha_res_components_available"
+        ],
+        "component_emission_obligation": (
+            "Refine this gate from cancellation/uniqueness to explicit alpha_res "
+            "components before deriving L_ct_expression or R_h/R_K values."
+        ),
+        "next_required": [
+            "emit_alpha_res_components",
+            "emit_R_h_ab_R_K_ab_R_chi_or_L_ct_expression",
+        ],
         "interpretation": (
             "The isolated nonlinear Sigma boundary residual is cancelled by the "
             "unique Sigma-supported counterterm; tetrad, connection, and spinor "
-            "channels close."
+            "channels close. This is a closure statement, not a component emission."
         ),
     }
 
@@ -46,6 +65,7 @@ def write_reports() -> dict:
             "",
             f"Nonlinear residual closed: `{payload['sigma_nonlinear_boundary_residual_closed']}`",
             f"Full boundary action closed: `{payload['sigma_full_boundary_action_closed']}`",
+            f"Alpha components available: `{payload['component_emission']['alpha_res_components_available']}`",
         ]),
         encoding="utf-8",
     )

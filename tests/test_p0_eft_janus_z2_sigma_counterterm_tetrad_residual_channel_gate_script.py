@@ -28,13 +28,19 @@ class P0EFTJanusZ2SigmaCountertermTetradResidualChannelGateTests(unittest.TestCa
         self.assertTrue(payload["partial_subchannels"]["metric"]["ready"])
         self.assertIn("R_e_metric", payload["partial_subchannels"]["metric"]["residual_coefficient"])
         self.assertFalse(payload["closure"]["tetrad_residual_coefficient_explicit"])
-        self.assertFalse(payload["closure"]["tetrad_variation_transport_ready"])
-        self.assertFalse(
+        self.assertTrue(payload["closure"]["tetrad_variation_transport_ready"])
+        self.assertTrue(
             payload["closure"]["active_sigma_boundary_variation_residual_formula_ready"]
         )
-        self.assertFalse(payload["upstream_frontiers"]["tetrad_variation_transport"]["ready"])
+        self.assertTrue(payload["upstream_frontiers"]["tetrad_variation_transport"]["ready"])
+        self.assertIn("symbolic_local_primitive", payload["upstream_frontiers"])
+        self.assertTrue(payload["partial_subchannels"]["extrinsic_curvature"]["ready"])
+        self.assertTrue(payload["partial_subchannels"]["torsion_pullback"]["ready"])
         self.assertFalse(payload["counterterm_tetrad_residual_channel_ready"])
-        self.assertIn("compute_R_e_from_active_sigma_boundary_variation", payload["next_required"])
+        self.assertIn(
+            "expand_R_h_R_K_R_T_R_chi_coefficients_from_active_sigma_boundary_variation",
+            payload["next_required"],
+        )
 
 
 if __name__ == "__main__":

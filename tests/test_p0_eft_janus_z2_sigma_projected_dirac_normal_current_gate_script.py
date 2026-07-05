@@ -13,6 +13,7 @@ class P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["reflecting_spinor_boundary_current_gate_declared"])
         self.assertTrue(payload["declared"]["Z2_projected_normal_current_declared"])
         self.assertIn("reflecting_spinor_boundary_current", payload["upstream_frontiers"])
+        self.assertIn("z2_current_cancellation", payload["upstream_frontiers"])
 
     def test_normal_current_waits_for_current_and_normals(self):
         payload = build_payload()
@@ -20,6 +21,15 @@ class P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["projected_Dirac_matter_current_ready"])
         self.assertFalse(payload["closure"]["Sigma_normals_ready"])
         self.assertFalse(payload["closure"]["reflecting_boundary_normal_current_zero_ready"])
+        self.assertFalse(payload["closure"]["Z2_current_cancellation_ready"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["z2_current_cancellation"]["primary_blocker"],
+            "spinor_equivariance_routes_open",
+        )
+        self.assertIn(
+            "resolved_tunnel_Pin_lift_for_spinor_descent",
+            payload["upstream_frontiers"]["z2_current_cancellation"]["route_blockers"],
+        )
         self.assertFalse(payload["no_normal_dirac_current_ready"])
         self.assertFalse(payload["gate_passed"])
         self.assertEqual(
@@ -28,6 +38,7 @@ class P0EFTJanusZ2SigmaProjectedDiracNormalCurrentGateTests(unittest.TestCase):
         )
         self.assertIn("derive_or_reject_J_n_Z2Sigma_equals_zero", payload["next_required"])
         self.assertIn("or_close_reflecting_spinor_boundary_current_gate", payload["next_required"])
+        self.assertIn("or_close_Dirac_normal_current_Z2_cancellation_gate", payload["next_required"])
 
     def test_bibliography_uses_primary_sources(self):
         payload = build_payload()
