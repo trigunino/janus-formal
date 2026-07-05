@@ -734,6 +734,8 @@ Archived CMB/Z4 master-equation status:
   confirms that the tetrad transport and variation formula are closed, but the
   current nonlinear Sigma closure is boolean-only: it proves cancellation, not
   the explicit `alpha_res` tensor components needed for `R_h_ab/R_K_ab`.
+- `docs/active_z2_sigma_counterterm_status.md` is the compact current index for
+  the active counterterm branch and its live blocker.
 - `P0EFTJanusZ2SigmaRSigmaCertificatePayloadInputWriterGate` now marks
   `rsigma_certificate_payload.json` as a template, not a solution certificate.
   Only the isotropic balance solver may promote it to
