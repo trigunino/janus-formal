@@ -23,14 +23,19 @@ class P0EFTJanusZ2SigmaCountertermConnectionResidualChannelGateTests(unittest.Te
         self.assertIn("fit connection residual coefficient", payload["forbidden"])
         self.assertIn("delta torsion pullback from delta omega", payload["transport_targets"])
 
-    def test_connection_channel_remains_open_until_coefficient_is_explicit(self):
+    def test_connection_channel_closes_via_torsionless_fixed_embedding_coefficient(self):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["connection_variation_transport_ready"])
-        self.assertFalse(payload["closure"]["connection_residual_coefficient_explicit"])
-        self.assertFalse(payload["counterterm_connection_residual_channel_ready"])
-        self.assertIn("compute_R_omega_from_active_sigma_boundary_variation", payload["next_required"])
-        self.assertIn("pass_counterterm_connection_variation_transport_gate", payload["next_required"])
+        self.assertTrue(payload["closure"]["torsion_pullback_coefficient_zero"])
+        self.assertTrue(payload["closure"]["connection_residual_coefficient_explicit"])
+        self.assertTrue(payload["counterterm_connection_residual_channel_ready"])
+        self.assertEqual(payload["residual_coefficient"]["R_omega"], "0")
+        self.assertEqual(
+            payload["residual_coefficient"]["scope"],
+            "connection_only_fixed_embedding_torsionless_sigma_branch",
+        )
+        self.assertFalse(payload["residual_coefficient"]["full_connection_transport_claimed"])
 
 
 if __name__ == "__main__":

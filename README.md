@@ -752,6 +752,46 @@ Archived CMB/Z4 master-equation status:
   slot are available, but componentwise parities, paired residual support,
   matter/stress equivariance and spinor-current parity are not yet strong enough
   to prove `tau_Z2^* alpha_res = - alpha_res`.
+- `build_p0_eft_janus_z2_sigma_counterterm_tetrad_component_parity_gate.py`
+  closes the variation-side parity for the tetrad components:
+  `delta h_ab` is Z2-even and `delta K_ab` is Z2-odd from normal orientation.
+  The component proof still blocks because it needs coefficient parities
+  `tau_Z2^* R_h_ab = -R_h_ab` and `tau_Z2^* R_K_ab = +R_K_ab`.
+- `build_p0_eft_janus_z2_sigma_counterterm_coefficient_parity_from_odd_density_gate.py`
+  proves the conditional algebra for those coefficient parities:
+  if the local Sigma density is Z2-odd, then
+  `tau_Z2^* R_h_ab = -R_h_ab` and `tau_Z2^* R_K_ab = +R_K_ab`.
+  The route remains blocked on proving `tau_Z2^* L_ct = -L_ct`. If that fails,
+  the model must keep a derived nonzero `E_counterterm(a)` rather than forcing
+  quotient cancellation.
+- `build_p0_eft_janus_z2_sigma_counterterm_lct_z2_odd_density_gate.py`
+  shows that `tau_Z2^* L_ct = -L_ct` follows from the symbolic primitive only
+  if `alpha_res` is already Z2-odd and the zero-residual integration constant
+  is fixed at a Z2-invariant throat. Therefore using `L_ct` oddness to prove
+  the tetrad pieces of `alpha_res` would be circular.
+- `build_p0_eft_janus_z2_sigma_toy_exact_throat_model_gate.py` is a diagnostic
+  toy model only. For a round finite throat it gives `h_ab=R^2 q_ab`,
+  `K_ab^+=+R q_ab`, `K_ab^-=-R q_ab`, so linear `K` terms are Z2-odd while
+  `K^2` and intrinsic-curvature terms are Z2-even. The point-collapse limit
+  kills the displayed power-law integrals, but it is singular and is not an
+  active proof of the counterterm.
+- `build_p0_eft_janus_z2_sigma_counterterm_minimal_density_basis_gate.py`
+  restricts the torsionless finite-throat diagnostic basis to three terms:
+  `epsilon_Z2*K`, `K^2`, and `R[h]`. The basis is small but not solved by
+  symmetry alone: normalization gives one constraint, while the metric and
+  extrinsic residual trace constraints are still needed to determine the three
+  coefficients.
+- `build_p0_eft_janus_z2_sigma_counterterm_minimal_basis_trace_constraints_gate.py`
+  varies that minimal basis on the round-throat toy. Even imposing
+  `E_counterterm(R)=0` for all `R` only gives `c1=0` and `3*c2+2*c3=0`, leaving
+  one free parameter. Active `R_h` and `R_K` trace targets are still required.
+- `build_p0_eft_janus_z2_sigma_counterterm_minimal_basis_dual_route_decision_gate.py`
+  tests both non-circular routes. The active trace solution route is blocked
+  because no active `R_h/R_K` trace payload exists. The nonzero route is only
+  parametric:
+  `E_ct(R)=sqrt(q)*(6*c1*epsilon_Z2*R + 9*c2 + 6*c3)`.
+  It cannot be promoted numerically without coefficients, `R_Sigma(a)` and
+  volume normalization.
 - `P0EFTJanusZ2SigmaRSigmaCertificatePayloadInputWriterGate` now marks
   `rsigma_certificate_payload.json` as a template, not a solution certificate.
   Only the isotropic balance solver may promote it to
@@ -949,9 +989,10 @@ Archived CMB/Z4 master-equation status:
   global resolved-tunnel Pin lift or the physical spinor equivariance
   `psi_- = U_Z2 psi_+`.
 - `P0EFTJanusZ2SigmaSpinorSolderingEquivarianceFromBoundaryVariationGate` reduces
-  that physical equivariance to the active boundary spinor residual. It remains
-  blocked until `R_psi`, `R_psibar`, projection compatibility and the soldering
-  residual zero condition are derived from the projected Dirac boundary variation.
+  that physical equivariance to the active boundary spinor residual. The local
+  projected residual coefficients now close as `R_psi=0`, `R_psibar=0` under the
+  Sigma reflecting boundary condition; global resolved-tunnel spinor equivariance
+  remains separate.
 - `P0EFTJanusZ2SigmaSpinorQuotientDescentEquivarianceGate` records the cleaner
   topological route: a physical spinor defined on the resolved Z2 quotient should
   lift to an equivariant spinor on the two-fold cover. This route remains blocked

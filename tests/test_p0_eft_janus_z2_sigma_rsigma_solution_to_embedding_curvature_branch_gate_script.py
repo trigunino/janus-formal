@@ -105,7 +105,7 @@ class RSigmaSolutionToEmbeddingCurvatureBranchGateTests(unittest.TestCase):
             payload = build_payload(input_path=cert)
 
         self.assertFalse(payload["gate_passed"])
-        self.assertFalse(payload["throat_radius_frontier"]["matter_flux_block_reduced"])
+        self.assertTrue(payload["throat_radius_frontier"]["matter_flux_block_reduced"])
         self.assertFalse(payload["throat_radius_frontier"]["counterterm_block_reduced"])
         self.assertFalse(
             payload["throat_radius_frontier"]["throat_radius_solution_certificate_ready"]

@@ -46,6 +46,13 @@ def build_payload() -> dict:
     z2_normal_orientation_ready = normal_orientation_sign[
         "projective_gluing_normal_orientation_sign_ready"
     ]
+    local_spinor_boundary_projection_ready = (
+        sigma_aps_ready
+        and z2_normal_orientation_ready
+        and local_mit["closure"]["unit_normal_Clifford_action_ready"]
+        and local_mit["closure"]["projection_idempotent_ready"]
+        and local_mit["closure"]["projection_self_adjoint_ready"]
+    )
     declared = {
         "APS_projection_bibliography_checked": True,
         "local_boundary_projection_bibliography_checked": True,
@@ -68,16 +75,22 @@ def build_payload() -> dict:
         ],
         "projection_idempotent_ready": local_mit["closure"]["projection_idempotent_ready"],
         "projection_self_adjoint_ready": local_mit["closure"]["projection_self_adjoint_ready"],
+        "local_Z2Sigma_spinor_projection_ready": local_spinor_boundary_projection_ready,
         "Z2Sigma_spinor_projection_ready": boundary_spinor_ready
+        and tangent_normal_ready
         and local_mit["local_mit_reflecting_projector_ready"],
     }
     ready = all(declared.values()) and all(closure.values())
     primary_blocker = (
         "none"
         if ready
-        else tangent_normal.get("primary_blocker")
-        or flux_domain.get("primary_blocker")
-        or "boundary_spinor_data_and_unit_normal_clifford_action"
+        else (
+            "boundary_spinor_restriction_data"
+            if local_spinor_boundary_projection_ready and not boundary_spinor_ready
+            else tangent_normal.get("primary_blocker")
+            or flux_domain.get("primary_blocker")
+            or "boundary_spinor_data_and_unit_normal_clifford_action"
+        )
     )
     return {
         "status": "janus-z2-sigma-spinor-boundary-projection-map-gate",
@@ -152,9 +165,13 @@ def build_payload() -> dict:
                 "ready": local_mit["local_mit_reflecting_projector_ready"],
                 "status": "local_projector_algebra_only_not_boundary_spinor_data",
             },
+            "local_Z2Sigma_projection": {
+                "ready": local_spinor_boundary_projection_ready,
+                "status": "local_projection_ready_not_global_boundary_spinor_data",
+            },
         },
         "nearest_spinor_projection_frontier": {
-            "block": "boundary_spinor_data_and_unit_normal_clifford_action",
+            "block": "boundary_spinor_restriction_data",
             "gates": [
                 "P0EFTJanusZ2SigmaBoundarySpinorRestrictionGate",
                 "P0EFTJanusZ2SigmaTangentNormalOrientationGate",
@@ -164,6 +181,7 @@ def build_payload() -> dict:
         "formulas": {
             "projection_map": "psi_Sigma^Z2 = P_Z2Sigma(psi_+|_Sigma, psi_-|_Sigma, n_Z2, APS/Pin data)",
             "normal_clifford_action": "gamma(n_Z2) acts on restricted spinors only after active unit normal data exist",
+            "local_projection_map": "P_Z2Sigma^local is fixed by APS/Pin data, Z2 normal orientation, and the phase-fixed local MIT projector",
             "idempotence_guard": "P_Z2Sigma^2 = P_Z2Sigma",
             "adjoint_guard": "P_Z2Sigma^dagger = P_Z2Sigma",
             "phase_policy": "no fitted boundary phase or free chiral bag angle",
@@ -174,9 +192,8 @@ def build_payload() -> dict:
         "primary_blocker": primary_blocker,
         "next_required": [
             "pass_boundary_spinor_restriction_gate",
-            "close_sigma_APS_Pin_lift",
-            "derive_Z2_normal_orientation",
             "derive_boundary_spinor_data_from_plus_minus_spinor_bundles",
+            "lift_local_projection_to_global_boundary_spinor_data",
             "feed_projection_map_to_spinor_bundle_projection_gate",
         ],
     }

@@ -20,6 +20,9 @@ from scripts.derive_p0_eft_janus_z2_sigma_counterterm_variational_coefficient_fo
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_residual_value_extraction_attempt_gate import (
     build_payload as build_tetrad_value_attempt,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_remaining_non_ghy_counterterm_channel_audit import (
+    build_payload as build_remaining_non_ghy,
+)
 
 
 REPORT_PATH = Path(
@@ -36,7 +39,13 @@ def build_payload(*, output_path: Path = OUTPUT_PATH) -> dict:
     partial = build_partial_coefficients()
     formula = build_variational_formula()
     tetrad_value_attempt = build_tetrad_value_attempt()
+    remaining = build_remaining_non_ghy()
     coeff = partial["coefficients"]
+    open_pre_radius = [
+        name
+        for name, is_open in remaining["open_non_GHY_channels"].items()
+        if is_open
+    ]
     partial_alpha = {
         "active_core": "Z2_tunnel_Sigma",
         "source": "active_derived",
@@ -44,6 +53,9 @@ def build_payload(*, output_path: Path = OUTPUT_PATH) -> dict:
         "known_terms": {
             "torsion_pullback": "R_T^A dT_A = 0 on active torsionless branch",
             "immirzi_radial_contraction": "R_chi partial_R chi = 0",
+            "spinor_residual_channel": "R_psi = R_psibar = 0 on local reflecting projected Sigma branch",
+            "connection_residual_channel": "R_omega = 0 on fixed-embedding torsionless Sigma branch",
+            "matter_flux_residual_channel": "R_matter = 0 on perfect-fluid tangential matter sector",
         },
         "formal_terms": {
             "R_h_ab": formula["formulas"]["R_h_ab"],
@@ -53,9 +65,9 @@ def build_payload(*, output_path: Path = OUTPUT_PATH) -> dict:
         "missing_terms": [
             "explicit_R_h_ab_values",
             "explicit_R_K_ab_values",
-            "full_R_chi_value_if_nonradial_variation_needed",
-            "connection_spinor_embedding_matter_channel_coefficients",
         ],
+        "open_pre_radius_non_GHY_channels": open_pre_radius,
+        "post_radius_embedding_channels": remaining["post_radius_embedding_channels"],
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(partial_alpha, indent=2), encoding="utf-8")
@@ -82,10 +94,14 @@ def build_payload(*, output_path: Path = OUTPUT_PATH) -> dict:
             "R_K_ab_value_extractable": tetrad_value_attempt["R_K_ab_value_extractable"],
             "primary_blocker": tetrad_value_attempt["primary_blocker"],
         },
+        "remaining_non_GHY_counterterm_channels": remaining["open_non_GHY_channels"],
+        "open_remaining_non_GHY_counterterm_channels": open_pre_radius,
+        "post_radius_embedding_channels": remaining["post_radius_embedding_channels"],
         "partial_alpha_res": partial_alpha,
         "next_required": [
             "derive_tetrad_R_h_ab_R_K_ab_from_explicit_L_ct_or_boundary_residual",
-            "close_connection_spinor_embedding_matter_residual_channels",
+            "write_counterterm_trace_residual_inputs_json",
+            "keep_embedding_residual_channel_post_RSigma",
             "then_run_residual_one_form_decomposition_gate",
         ],
     }

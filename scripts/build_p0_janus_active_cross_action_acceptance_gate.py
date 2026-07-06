@@ -28,6 +28,14 @@ def build_payload() -> dict:
     accepted = build_accepted_action_search()
     external = build_external_scouple_audit()
     origin = build_weak_selector_origin()
+    source_material = {
+        "M15_source_card_exists": Path("docs/source_cards/M15.md").exists(),
+        "M30_source_card_exists": Path("docs/source_cards/M30.md").exists(),
+        "M15_local_text_extract_exists": bool(list(Path("data").glob("**/M15*.txt"))),
+        "M30_local_text_extract_exists": bool(list(Path("data").glob("**/M30*.txt"))),
+        "M15_local_pdf_exists": bool(list(Path("data").glob("**/M15*.pdf"))),
+        "M30_local_pdf_exists": bool(list(Path("data").glob("**/M30*.pdf"))),
+    }
     acceptance_rows = [
         {
             "check": "field_equation_source_slot",
@@ -75,6 +83,11 @@ def build_payload() -> dict:
         "status": "active-cross-action-math-valid-source-not-accepted",
         "acceptance_rows": acceptance_rows,
         "blockers": blockers,
+        "source_material": source_material,
+        "source_material_sufficient_for_reaudit": bool(
+            source_material["M15_local_text_extract_exists"]
+            or source_material["M15_local_pdf_exists"]
+        ),
         "m15_field_equation_action_available": bool(accepted["m15_action_accepted_for_field_equations"]),
         "m15_accepted_as_scouple": bool(accepted["m15_action_accepted_as_scouple"]),
         "independent_scouple_found": bool(accepted["independent_scouple_found"]),
@@ -97,6 +110,14 @@ def build_payload() -> dict:
             "but current Janus source audits do not accept it as a published phi/L variational law. "
             "It must remain a proposed new axiom unless a source-derived S_x is found."
         ),
+        "next_research_step": (
+            "acquire_or_restore_M15_M30_raw_sources_then_reaudit_S_cross"
+            if not (
+                source_material["M15_local_text_extract_exists"]
+                or source_material["M15_local_pdf_exists"]
+            )
+            else "reopen_M15_M30_S_cross_phi_L_source_audit"
+        ),
     }
 
 
@@ -113,6 +134,7 @@ def render_markdown(payload: dict) -> str:
         f"External variational transport law found: {payload['external_variational_transport_law_found']}",
         f"Active cross action derives weak selector: {payload['active_cross_action_derives_weak_selector']}",
         f"Active cross action source accepted: {payload['active_cross_action_source_accepted']}",
+        f"Source material sufficient for reaudit: {payload['source_material_sufficient_for_reaudit']}",
         f"Can adopt as published Janus: {payload['can_adopt_as_published_janus']}",
         f"Can adopt as explicit new axiom: {payload['can_adopt_as_explicit_new_axiom']}",
         f"New axiom adopted: {payload['new_axiom_adopted']}",

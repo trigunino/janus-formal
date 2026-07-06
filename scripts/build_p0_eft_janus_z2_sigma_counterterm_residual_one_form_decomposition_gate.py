@@ -54,6 +54,50 @@ def build_payload() -> dict:
         if ready
         else channel_frontier.get("primary_blocker", "counterterm_residual_channels")
     )
+    residual_channels = channel_frontier["channels"]
+    next_required = []
+    if not residual_channels["tetrad_residual_ready"]:
+        next_required.extend(
+            [
+                "compute_tetrad_residual_channel",
+                "pass_counterterm_tetrad_residual_channel_gate",
+            ]
+        )
+    if not residual_channels["connection_residual_ready"]:
+        next_required.extend(
+            [
+                "compute_connection_residual_channel",
+                "pass_counterterm_connection_residual_channel_gate",
+            ]
+        )
+    if not residual_channels["spinor_residual_ready"]:
+        next_required.extend(
+            [
+                "compute_spinor_residual_channel",
+                "pass_counterterm_spinor_residual_channel_gate",
+            ]
+        )
+    if not residual_channels["embedding_residual_ready"]:
+        next_required.extend(
+            [
+                "compute_embedding_residual_channel",
+                "pass_counterterm_embedding_residual_channel_gate",
+            ]
+        )
+    if not residual_channels["matter_flux_residual_ready"]:
+        next_required.extend(
+            [
+                "compute_matter_flux_residual_channel",
+                "pass_counterterm_matter_flux_residual_channel_gate",
+            ]
+        )
+    next_required.extend(
+        [
+            "express_residual_channels_in_allowed_basis",
+            "feed_one_form_to_integrability_gate",
+        ]
+    )
+
     return {
         "status": "janus-z2-sigma-counterterm-residual-one-form-decomposition-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -105,20 +149,7 @@ def build_payload() -> dict:
         "counterterm_residual_one_form_decomposition_ready": ready,
         "gate_passed": ready,
         "primary_blocker": primary_blocker,
-        "next_required": [
-            "compute_tetrad_residual_channel",
-            "pass_counterterm_tetrad_residual_channel_gate",
-            "compute_connection_residual_channel",
-            "pass_counterterm_connection_residual_channel_gate",
-            "compute_spinor_residual_channel",
-            "pass_counterterm_spinor_residual_channel_gate",
-            "compute_embedding_residual_channel",
-            "pass_counterterm_embedding_residual_channel_gate",
-            "compute_matter_flux_residual_channel",
-            "pass_counterterm_matter_flux_residual_channel_gate",
-            "express_residual_channels_in_allowed_basis",
-            "feed_one_form_to_integrability_gate",
-        ],
+        "next_required": next_required,
     }
 
 

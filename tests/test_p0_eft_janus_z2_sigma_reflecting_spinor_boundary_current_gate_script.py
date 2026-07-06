@@ -15,19 +15,20 @@ class P0EFTJanusZ2SigmaReflectingSpinorBoundaryCurrentGateTests(unittest.TestCas
         self.assertIn("J_n", payload["formulas"]["reflecting_current_condition"])
         self.assertTrue(payload["source_links"])
 
-    def test_normal_current_zero_waits_for_active_projection(self):
+    def test_local_reflecting_condition_is_derived_but_global_projection_remains_open(self):
         payload = build_payload()
 
         self.assertFalse(payload["closure"]["spinor_boundary_projection_map_ready"])
         self.assertTrue(payload["closure"]["Z2_normal_orientation_ready"])
         self.assertTrue(payload["closure"]["local_MIT_current_zero_algebra_ready"])
-        self.assertFalse(payload["closure"]["reflecting_boundary_condition_derived"])
-        self.assertFalse(payload["closure"]["boundary_leakage_zero_derived"])
+        self.assertTrue(payload["closure"]["local_reflecting_boundary_condition_derived"])
+        self.assertTrue(payload["closure"]["local_boundary_leakage_zero_derived"])
+        self.assertTrue(payload["closure"]["reflecting_boundary_condition_derived"])
+        self.assertTrue(payload["closure"]["boundary_leakage_zero_derived"])
+        self.assertTrue(payload["local_normal_dirac_current_zero_ready"])
         self.assertFalse(payload["normal_dirac_current_zero_ready"])
-        self.assertIn(
-            "derive_reflecting_boundary_condition_without_free_phase",
-            payload["next_required"],
-        )
+        self.assertEqual(payload["primary_blocker"], "spinor_boundary_projection_map_ready")
+        self.assertIn("derive_global_Z2Sigma_spinor_projection_map", payload["next_required"])
 
 
 if __name__ == "__main__":

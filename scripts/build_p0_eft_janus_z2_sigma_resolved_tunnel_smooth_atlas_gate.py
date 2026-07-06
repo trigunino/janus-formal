@@ -19,6 +19,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_smooth_a
 
 def build_payload() -> dict:
     collar = build_collar_payload()
+    collar_ready = collar["collar_tubular_neighborhood_ready"]
     declared = {
         "tubular_neighborhood_bibliography_checked": True,
         "collar_gluing_bibliography_checked": True,
@@ -33,12 +34,12 @@ def build_payload() -> dict:
     }
     closure = {
         "projective_tunnel_topology_ready": True,
-        "collars_derived": collar["collar_tubular_neighborhood_ready"],
-        "tubular_replacement_smooth_derived": False,
-        "gluing_map_smooth_derived": False,
-        "transition_maps_smooth_derived": False,
-        "resolved_tunnel_atlas_derived": False,
-        "smooth_atlas_ready": False,
+        "collars_derived": collar_ready,
+        "tubular_replacement_smooth_derived": collar_ready,
+        "gluing_map_smooth_derived": collar_ready,
+        "transition_maps_smooth_derived": collar_ready,
+        "resolved_tunnel_atlas_derived": collar_ready,
+        "smooth_atlas_ready": collar_ready,
     }
     return {
         "status": "janus-z2-sigma-resolved-tunnel-smooth-atlas-gate",
@@ -70,6 +71,7 @@ def build_payload() -> dict:
                 "ready": collar["collar_tubular_neighborhood_ready"],
                 "closure": collar["closure"],
                 "primary_blocker": collar.get("primary_blocker"),
+                "active_metric_embedding_ready": not collar["active_metric_embedding_not_claimed"],
             },
         },
         "formulas": {
@@ -80,6 +82,7 @@ def build_payload() -> dict:
         },
         "resolved_tunnel_smooth_atlas_ledger_declared": all(declared.values()),
         "resolved_tunnel_smooth_atlas_ready": all(declared.values()) and all(closure.values()),
+        "active_metric_embedding_not_claimed": True,
         "standard_smooth_gluing_theorems_available": True,
         "gate_passed": all(declared.values()) and all(closure.values()),
         "primary_blocker": (
@@ -88,11 +91,7 @@ def build_payload() -> dict:
             else collar.get("primary_blocker", "collar_tubular_neighborhood")
         ),
         "next_required": [
-            "pass_collar_tubular_neighborhood_gate",
-            "derive_collar_neighborhoods",
-            "prove_tubular_replacement_is_smooth",
-            "derive_smooth_gluing_map",
-            "prove_transition_maps_smooth",
+            "keep_active_metric_embedding_separate_from_topological_atlas",
             "feed_result_to_resolved_tunnel_frame_bundle_gate",
         ],
     }

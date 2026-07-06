@@ -15,7 +15,9 @@ structure SigmaBoundaryNonlinearResidualClosureGate where
   fullBoundaryActionClosedOnSigma : Prop
   alphaResComponentDecompositionAvailable : Prop
   alphaResComponentsAvailable : Prop
+  alphaResPartialComponentValuesAvailable : Prop
   alphaResComponentValuesAvailable : Prop
+  spinorComponentValueZeroEmitted : Prop
   lCtExpressionEmitted : Prop
 
 def sigmaNonlinearBoundaryResidualClosed
@@ -41,6 +43,13 @@ def sigmaClosureEmitsComponents
   g.alphaResComponentsAvailable /\
   g.alphaResComponentValuesAvailable /\
   g.lCtExpressionEmitted
+
+def sigmaClosureEmitsPartialComponents
+    (g : SigmaBoundaryNonlinearResidualClosureGate) : Prop :=
+  sigmaFullBoundaryActionClosed g /\
+  g.alphaResComponentDecompositionAvailable /\
+  g.alphaResComponentsAvailable /\
+  g.alphaResPartialComponentValuesAvailable
 
 def sigmaClosureEmitsComponentSchema
     (g : SigmaBoundaryNonlinearResidualClosureGate) : Prop :=
@@ -70,6 +79,22 @@ theorem missing_alpha_components_blocks_component_emission
 theorem component_schema_does_not_emit_values
     (g : SigmaBoundaryNonlinearResidualClosureGate)
     (_hSchema : sigmaClosureEmitsComponentSchema g)
+    (hMissingValues : Not g.alphaResComponentValuesAvailable) :
+    Not (sigmaClosureEmitsComponents g) := by
+  intro hReady
+  exact hMissingValues hReady.2.2.2.1
+
+theorem partial_component_values_do_not_emit_full_values
+    (g : SigmaBoundaryNonlinearResidualClosureGate)
+    (_hPartial : sigmaClosureEmitsPartialComponents g)
+    (hMissingValues : Not g.alphaResComponentValuesAvailable) :
+    Not (sigmaClosureEmitsComponents g) := by
+  intro hReady
+  exact hMissingValues hReady.2.2.2.1
+
+theorem spinor_zero_is_only_partial_component_value
+    (g : SigmaBoundaryNonlinearResidualClosureGate)
+    (_hSpinor : g.spinorComponentValueZeroEmitted)
     (hMissingValues : Not g.alphaResComponentValuesAvailable) :
     Not (sigmaClosureEmitsComponents g) := by
   intro hReady

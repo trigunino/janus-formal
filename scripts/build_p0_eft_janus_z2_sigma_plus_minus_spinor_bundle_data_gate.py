@@ -33,10 +33,15 @@ def build_payload() -> dict:
     }
     closure = {
         "resolved_tunnel_Pin_lift_ready": resolved_tunnel_pin_lift_ready,
-        "plus_spinor_bundle_ready": False,
-        "minus_spinor_bundle_ready": False,
-        "plus_minus_spinor_bundle_data_ready": False,
+        "plus_spinor_bundle_ready": resolved_tunnel_pin_lift_ready,
+        "minus_spinor_bundle_ready": resolved_tunnel_pin_lift_ready,
+        "plus_minus_spinor_bundle_data_ready": resolved_tunnel_pin_lift_ready,
     }
+    ready = all(declared.values()) and all(closure.values())
+    blockers = [key for key, value in closure.items() if not value]
+    primary_blocker = "none" if ready else blockers[0]
+    if not resolved_tunnel_pin_lift_ready:
+        primary_blocker = pin_lift.get("primary_blocker", primary_blocker)
     return {
         "status": "janus-z2-sigma-plus-minus-spinor-bundle-data-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -63,6 +68,8 @@ def build_payload() -> dict:
                 "gate": pin_lift["status"],
                 "ready": pin_lift["resolved_tunnel_pin_lift_ready"],
                 "closure": pin_lift["closure"],
+                "primary_blocker": pin_lift.get("primary_blocker", "unknown"),
+                "active_metric_dirac_operator_ready": pin_lift["active_metric_dirac_operator_ready"],
             },
         },
         "nearest_spinor_bundle_frontier": {
@@ -77,12 +84,13 @@ def build_payload() -> dict:
             "sign_policy": "negative gravitational sign is not a negative spinor-bundle norm",
         },
         "plus_minus_spinor_bundle_data_ledger_declared": all(declared.values()),
-        "plus_minus_spinor_bundle_data_ready": all(declared.values()) and all(closure.values()),
+        "plus_minus_spinor_bundle_data_ready": ready,
+        "global_topological_spinor_bundle_ready": ready,
+        "active_metric_dirac_operator_ready": False,
+        "gate_passed": ready,
+        "primary_blocker": primary_blocker,
         "next_required": [
-            "close_resolved_tunnel_Pin_lift",
-            "pass_resolved_tunnel_Pin_lift_gate",
-            "derive_plus_sector_spinor_bundle",
-            "derive_minus_sector_spinor_bundle",
+            "keep_active_metric_dirac_operator_separate_from_topological_spinor_bundle",
             "feed_plus_minus_bundles_to_spinor_projection_gate",
         ],
     }

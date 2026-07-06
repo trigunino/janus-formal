@@ -26,6 +26,17 @@ class CountertermAlphaResExtractionAttemptGateTests(unittest.TestCase):
             self.assertEqual(written["alpha_res_status"], "partial")
             self.assertIn("R_h_ab", written["formal_terms"])
             self.assertIn("explicit_R_h_ab_values", written["missing_terms"])
+            self.assertIn("explicit_R_K_ab_values", written["missing_terms"])
+            self.assertNotIn("connection_residual_channel_coefficients", written["missing_terms"])
+            self.assertNotIn("matter_flux_residual_channel_coefficients", written["missing_terms"])
+            self.assertEqual(
+                written["open_pre_radius_non_GHY_channels"],
+                ["metric_non_GHY_trace_R_h", "extrinsic_non_GHY_trace_R_K"],
+            )
+            self.assertEqual(
+                payload["open_remaining_non_GHY_counterterm_channels"],
+                ["metric_non_GHY_trace_R_h", "extrinsic_non_GHY_trace_R_K"],
+            )
 
 
 if __name__ == "__main__":

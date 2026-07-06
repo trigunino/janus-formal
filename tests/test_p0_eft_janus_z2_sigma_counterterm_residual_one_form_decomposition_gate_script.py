@@ -38,7 +38,7 @@ class P0EFTJanusZ2SigmaCountertermResidualOneFormDecompositionGateTests(unittest
         self.assertIn("compute_tetrad_residual_channel", payload["next_required"])
         self.assertIn("pass_counterterm_tetrad_residual_channel_gate", payload["next_required"])
         self.assertIn("pass_counterterm_connection_residual_channel_gate", payload["next_required"])
-        self.assertIn("pass_counterterm_spinor_residual_channel_gate", payload["next_required"])
+        self.assertNotIn("pass_counterterm_spinor_residual_channel_gate", payload["next_required"])
         self.assertIn("pass_counterterm_embedding_residual_channel_gate", payload["next_required"])
         self.assertIn("pass_counterterm_matter_flux_residual_channel_gate", payload["next_required"])
         self.assertIn("feed_one_form_to_integrability_gate", payload["next_required"])

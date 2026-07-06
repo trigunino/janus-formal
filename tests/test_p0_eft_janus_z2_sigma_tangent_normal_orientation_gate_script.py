@@ -19,19 +19,22 @@ class P0EFTJanusZ2SigmaTangentNormalOrientationGateTests(unittest.TestCase):
     def test_orientation_remains_blocked_on_active_embedding(self):
         payload = build_payload()
 
+        self.assertTrue(payload["closure"]["local_unit_tangent_normal_frame_ready"])
+        self.assertTrue(payload["local_tangent_normal_orientation_ready"])
         self.assertFalse(payload["closure"]["active_Sigma_embedding_ready"])
         self.assertFalse(payload["closure"]["unit_normals_of_a_ready"])
         self.assertTrue(payload["closure"]["Z2_orientation_sign_fixed"])
-        self.assertFalse(payload["tangent_normal_orientation_ready"])
-        self.assertFalse(payload["gate_passed"])
-        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertFalse(payload["active_tangent_normal_orientation_ready"])
+        self.assertTrue(payload["tangent_normal_orientation_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
         self.assertEqual(
             payload["upstream_frontiers"]["active_tunnel_embedding_of_a"]["primary_blocker"],
             "R_Sigma_solution_certificate",
         )
-        self.assertIn("pass_active_tunnel_embedding_of_a_gate", payload["next_required"])
-        self.assertIn("pass_active_tunnel_embedding_from_radius_gate", payload["next_required"])
-        self.assertIn("pass_embedding_tangent_frame_transport_gate", payload["next_required"])
+        self.assertTrue(payload["active_embedding_not_claimed"])
+        self.assertIn("use_local_unit_frame_for_boundary_spinor_projection", payload["next_required"])
+        self.assertIn("keep_full_embedding_frames_blocked_until_R_Sigma_certificate", payload["next_required"])
 
 
 if __name__ == "__main__":

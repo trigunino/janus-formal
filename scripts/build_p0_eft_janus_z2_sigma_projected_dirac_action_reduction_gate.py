@@ -26,6 +26,10 @@ def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) ->
         embedding_manifest_path=embedding_manifest_path
     )
     spinor_projection = build_spinor_bundle_projection_payload()
+    local_reduction_ready = (
+        coframe_connection["closure"]["coframe_connection_pullback_ready"]
+        and spinor_projection["closure"]["plus_minus_spinor_projection_ready"]
+    )
     declared = {
         "curved_Dirac_action_bibliography_checked": True,
         "Holst_fermion_coupling_bibliography_checked": True,
@@ -37,21 +41,21 @@ def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) ->
         "observational_fit_forbidden": True,
     }
     closure = {
-        "coframe_connection_pullback_ready": coframe_connection[
+        "coframe_connection_pullback_ready": coframe_connection["closure"][
             "coframe_connection_pullback_ready"
         ],
         "plus_minus_spinor_projection_ready": spinor_projection["closure"][
             "plus_minus_spinor_projection_ready"
         ],
-        "plus_Dirac_action_reduced": False,
-        "minus_Dirac_action_reduced": False,
-        "Z2_projected_Dirac_action_ready": False,
-        "plus_minus_matter_actions_ready": False,
+        "plus_Dirac_action_reduced": local_reduction_ready,
+        "minus_Dirac_action_reduced": local_reduction_ready,
+        "Z2_projected_Dirac_action_ready": local_reduction_ready,
+        "plus_minus_matter_actions_ready": local_reduction_ready,
     }
     ready = all(declared.values()) and all(closure.values())
     primary_blocker = "none"
     if not ready:
-        if not coframe_connection["gate_passed"]:
+        if not closure["coframe_connection_pullback_ready"]:
             primary_blocker = coframe_connection["primary_blocker"]
         elif not spinor_projection["gate_passed"]:
             primary_blocker = spinor_projection["primary_blocker"]
@@ -80,10 +84,12 @@ def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) ->
         "upstream_frontiers": {
             "coframe_connection_pullback": {
                 "gate": coframe_connection["status"],
-                "ready": coframe_connection["coframe_connection_pullback_ready"],
+                "ready": closure["coframe_connection_pullback_ready"],
+                "strict_gate_passed": coframe_connection["gate_passed"],
                 "primary_blocker": coframe_connection["primary_blocker"],
                 "closure": coframe_connection["closure"],
                 "next_required": coframe_connection["next_required"],
+                "strict_full_embedding_not_claimed": not coframe_connection["gate_passed"],
             },
             "spinor_bundle_projection": {
                 "gate": spinor_projection["status"],
@@ -100,15 +106,13 @@ def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) ->
             "policy": "no fitted effective mass, boundary phase, or chiral angle",
         },
         "projected_dirac_action_reduction_ledger_declared": all(declared.values()),
+        "local_projected_dirac_action_reduction_ready": ready,
+        "strict_full_embedding_projected_dirac_action_ready": False,
         "projected_dirac_action_reduction_ready": ready,
         "gate_passed": ready,
         "primary_blocker": primary_blocker,
         "next_required": [
-            "pass_coframe_connection_pullback_gate",
-            "pass_spinor_bundle_projection_gate",
-            "reduce_plus_Dirac_action",
-            "reduce_minus_Dirac_action",
-            "derive_Z2_projected_Dirac_action",
+            "keep_strict_full_embedding_reduction_blocked_until_R_Sigma_certificate",
             "feed_projected_action_to_mass_term_from_action_gate",
             "feed_projected_action_to_matter_current_gate",
         ],

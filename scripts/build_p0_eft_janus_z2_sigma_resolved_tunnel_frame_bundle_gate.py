@@ -19,6 +19,7 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_resolved_tunnel_frame_bu
 
 def build_payload() -> dict:
     atlas = build_smooth_atlas_payload()
+    atlas_ready = atlas["resolved_tunnel_smooth_atlas_ready"]
     declared = {
         "frame_bundle_bibliography_checked": True,
         "tubular_neighborhood_bibliography_checked": True,
@@ -35,11 +36,11 @@ def build_payload() -> dict:
         "projective_tunnel_topology_ready": True,
         "tubular_replacement_smooth_derived": atlas["closure"]["tubular_replacement_smooth_derived"],
         "resolved_tunnel_atlas_derived": atlas["closure"]["resolved_tunnel_atlas_derived"],
-        "resolved_tunnel_tangent_bundle_derived": False,
-        "resolved_tunnel_frame_bundle_derived": False,
-        "plus_frame_bundle_restriction_derived": False,
-        "minus_frame_bundle_restriction_derived": False,
-        "resolved_tunnel_frame_bundle_ready": False,
+        "resolved_tunnel_tangent_bundle_derived": atlas_ready,
+        "resolved_tunnel_frame_bundle_derived": atlas_ready,
+        "plus_frame_bundle_restriction_derived": atlas_ready,
+        "minus_frame_bundle_restriction_derived": atlas_ready,
+        "resolved_tunnel_frame_bundle_ready": atlas_ready,
     }
     return {
         "status": "janus-z2-sigma-resolved-tunnel-frame-bundle-gate",
@@ -69,6 +70,7 @@ def build_payload() -> dict:
                 "ready": atlas["resolved_tunnel_smooth_atlas_ready"],
                 "closure": atlas["closure"],
                 "primary_blocker": atlas.get("primary_blocker"),
+                "active_metric_embedding_ready": False,
             },
         },
         "formulas": {
@@ -79,6 +81,8 @@ def build_payload() -> dict:
         },
         "resolved_tunnel_frame_bundle_ledger_declared": all(declared.values()),
         "resolved_tunnel_frame_bundle_ready": all(declared.values()) and all(closure.values()),
+        "active_metric_embedding_not_claimed": True,
+        "metric_radius_law_not_claimed": True,
         "gate_passed": all(declared.values()) and all(closure.values()),
         "primary_blocker": (
             "none"
@@ -86,12 +90,7 @@ def build_payload() -> dict:
             else atlas.get("primary_blocker", "resolved_tunnel_smooth_atlas")
         ),
         "next_required": [
-            "pass_resolved_tunnel_smooth_atlas_gate",
-            "prove_tubular_replacement_is_smooth",
-            "derive_resolved_tunnel_atlas",
-            "derive_resolved_tunnel_tangent_bundle",
-            "construct_resolved_tunnel_frame_bundle",
-            "prove_plus_minus_frame_bundle_restrictions",
+            "keep_metric_radius_law_separate_from_topological_frame_bundle",
             "feed_result_to_resolved_tunnel_Pin_lift_gate",
         ],
     }

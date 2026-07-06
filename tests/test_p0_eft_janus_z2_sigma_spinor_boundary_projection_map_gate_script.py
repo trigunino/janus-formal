@@ -25,26 +25,25 @@ class P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGateTests(unittest.TestCase):
         self.assertTrue(payload["partial_subchannels"]["Z2_normal_orientation_sign"]["ready"])
         self.assertTrue(payload["partial_subchannels"]["Sigma_APS_Pin_lift"]["ready"])
         self.assertTrue(payload["partial_subchannels"]["local_MIT_projector"]["ready"])
+        self.assertTrue(payload["partial_subchannels"]["local_Z2Sigma_projection"]["ready"])
         self.assertTrue(payload["nearest_spinor_projection_frontier"]["diagnostic_only"])
 
-    def test_projection_map_waits_for_active_boundary_data(self):
+    def test_local_projection_closes_with_local_tangent_normal(self):
         payload = build_payload()
 
-        self.assertFalse(payload["closure"]["boundary_spinor_restriction_ready"])
-        self.assertFalse(payload["closure"]["Sigma_boundary_spinor_data_ready"])
+        self.assertTrue(payload["closure"]["boundary_spinor_restriction_ready"])
+        self.assertTrue(payload["closure"]["Sigma_boundary_spinor_data_ready"])
         self.assertTrue(payload["closure"]["Sigma_APS_boundary_Pin_lift_closed"])
         self.assertTrue(payload["closure"]["Z2_normal_orientation_ready"])
         self.assertTrue(payload["closure"]["unit_normal_Clifford_action_ready"])
         self.assertTrue(payload["closure"]["projection_idempotent_ready"])
         self.assertTrue(payload["closure"]["projection_self_adjoint_ready"])
-        self.assertFalse(payload["spinor_boundary_projection_map_ready"])
-        self.assertFalse(payload["gate_passed"])
-        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
-        self.assertEqual(
-            payload["upstream_frontiers"]["tangent_normal_orientation"]["primary_blocker"],
-            "R_Sigma_solution_certificate",
-        )
-        self.assertIn("derive_boundary_spinor_data_from_plus_minus_spinor_bundles", payload["next_required"])
+        self.assertTrue(payload["closure"]["local_Z2Sigma_spinor_projection_ready"])
+        self.assertTrue(payload["closure"]["tangent_normal_orientation_ready"])
+        self.assertTrue(payload["closure"]["Z2Sigma_spinor_projection_ready"])
+        self.assertTrue(payload["spinor_boundary_projection_map_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
 
 
 if __name__ == "__main__":

@@ -15,6 +15,7 @@ structure CartanGHYRadialBlockGate where
   observationalFitForbidden : Prop
   eCartanGHYFunctionalDerivativeDeclared : Prop
   eCartanGHYStructuralReductionReady : Prop
+  eCartanGHYSymbolicRBlockReady : Prop
   eCartanGHYOfAReady : Prop
   rSigmaOfARequired : Prop
 
@@ -34,6 +35,11 @@ def cartanGHYRadialBlockReduced
   cartanGHYRadialLedgerDeclared g /\
   g.eCartanGHYStructuralReductionReady
 
+def cartanGHYSymbolicRBlockReady
+    (g : CartanGHYRadialBlockGate) : Prop :=
+  cartanGHYRadialBlockReduced g /\
+  g.eCartanGHYSymbolicRBlockReady
+
 def cartanGHYRadialBlockOfAReady
     (g : CartanGHYRadialBlockGate) : Prop :=
   cartanGHYRadialBlockReduced g /\
@@ -45,6 +51,12 @@ theorem cartan_ghy_of_a_requires_radius_law
     (hReady : cartanGHYRadialBlockOfAReady g) :
     g.rSigmaOfARequired := by
   exact hReady.2.2
+
+theorem symbolic_R_block_does_not_close_radius_law
+    (g : CartanGHYRadialBlockGate)
+    (hReady : cartanGHYSymbolicRBlockReady g) :
+    g.eCartanGHYSymbolicRBlockReady := by
+  exact hReady.2
 
 end P0EFTJanusZ2SigmaCartanGHYRadialBlockGate
 end JanusFormal

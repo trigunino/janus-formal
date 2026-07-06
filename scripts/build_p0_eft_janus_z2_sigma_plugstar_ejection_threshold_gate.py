@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_plugstar_curvature_amplitude_from_embedding_gate import (
+    build_payload as build_active_a_k_payload,
+)
 
 
 REPORT_PATH = Path(
@@ -12,7 +21,8 @@ JSON_PATH = Path(
 )
 
 
-def build_payload() -> dict:
+def build_payload(*, active_a_k_payload: dict | None = None) -> dict:
+    active_a_k = active_a_k_payload if active_a_k_payload is not None else build_active_a_k_payload()
     declared = {
         "plugstar_route_declared": True,
         "parallel_exploration_only": True,
@@ -57,6 +67,23 @@ def build_payload() -> dict:
     }
     gate_passed = all(declared.values()) and all(closure.values())
     blockers = [key for key, value in closure.items() if not value]
+    active_bound_ready = bool(active_a_k.get("gate_passed", False))
+    active_threshold_solution = active_a_k.get("threshold_solution") if active_bound_ready else None
+    route_status = "active_bound_ready" if active_bound_ready else (
+        "conditional_closed_waiting_for_active_A_K" if gate_passed else "credible_but_blocked"
+    )
+    archive_decision = {
+        "archive_ready": True,
+        "archive_status": "ready_to_archive_as_conditional_parallel_branch",
+        "final_verdict": "useful_as_minimum_throat_constraint_not_active_closure",
+        "closed_part": "Z2 transmission compatibility and formal threshold equation",
+        "conditional_part": "numeric active bound requires active A_K from embedding curvature",
+        "unresolved_active_blocker": "none"
+        if active_bound_ready
+        else active_a_k["primary_blocker"],
+        "active_pipeline_promotion_allowed": active_bound_ready,
+        "active_pipeline_import_forbidden_until_A_K_ready": not active_bound_ready,
+    }
     return {
         "status": "janus-z2-sigma-plugstar-ejection-threshold-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -88,25 +115,29 @@ def build_payload() -> dict:
             "solution": "R_Sigma_min = sqrt(A_K) / K_crit",
             "bound": "R_Sigma(a) >= sqrt(A_K) / K_crit",
         },
+        "active_A_K_status": {
+            "gate": active_a_k["status"],
+            "gate_passed": active_bound_ready,
+            "route_status": active_a_k["route_status"],
+            "primary_blocker": active_a_k["primary_blocker"],
+            "certificate": active_a_k.get("active_A_K_certificate"),
+        },
+        "active_threshold_solution": active_threshold_solution,
+        "archive_decision": archive_decision,
         "candidate_thresholds": candidate_thresholds,
         "closure": closure,
-        "route_status": "conditional_closed" if gate_passed else "credible_but_blocked",
+        "route_status": route_status,
         "gate_passed": gate_passed,
         "primary_blocker": "none" if gate_passed else blockers[0],
         "blockers": blockers,
         "interpretation": (
             "The isolated plugstar route closes conditionally on the curvature "
-            "threshold certificate: Z2-even curvature concentration triggers a paired "
-            "opposite-sheet ejection branch, giving the finite lower bound "
-            "R_Sigma_min = sqrt(A_K) / K_crit."
+            "threshold certificate. A numeric active lower bound is ready only when "
+            "A_K is derived from active embedding curvature data."
         ),
         "next_required": []
-        if gate_passed
-        else [
-            "promote_conditional_curvature_certificate_to_active_radius_flux_derivation",
-            "derive_A_K_from_active_embedding_data",
-            "keep_result_outside_active_pipeline_until_active_certificate_ready",
-        ],
+        if active_bound_ready
+        else active_a_k["next_required"],
     }
 
 
@@ -134,6 +165,20 @@ def write_reports() -> dict:
     lines.extend(["", "## Threshold Solution"])
     for key, value in payload["threshold_solution"].items():
         lines.append(f"- `{key}`: `{value}`")
+    lines.extend(["", "## Active A_K"])
+    lines.extend(
+        f"- `{key}`: `{value}`" for key, value in payload["active_A_K_status"].items()
+    )
+    if payload["active_threshold_solution"] is not None:
+        lines.extend(["", "## Active Threshold Solution"])
+        lines.extend(
+            f"- `{key}`: `{value}`"
+            for key, value in payload["active_threshold_solution"].items()
+        )
+    lines.extend(["", "## Archive Decision"])
+    lines.extend(
+        f"- `{key}`: `{value}`" for key, value in payload["archive_decision"].items()
+    )
     lines.extend(["", "## Candidate Thresholds"])
     for name, item in payload["candidate_thresholds"].items():
         lines.append(

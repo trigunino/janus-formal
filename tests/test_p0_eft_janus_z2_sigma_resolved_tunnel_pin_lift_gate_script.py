@@ -20,11 +20,13 @@ class P0EFTJanusZ2SigmaResolvedTunnelPinLiftGateTests(unittest.TestCase):
         payload = build_payload()
 
         self.assertTrue(payload["closure"]["Sigma_APS_Pin_lift_ready"])
-        self.assertFalse(payload["closure"]["resolved_tunnel_frame_bundle_ready"])
-        self.assertFalse(payload["upstream_frontiers"]["resolved_tunnel_frame_bundle"]["ready"])
-        self.assertFalse(payload["closure"]["resolved_tunnel_Pin_lift_ready"])
-        self.assertFalse(payload["resolved_tunnel_pin_lift_ready"])
-        self.assertIn("pass_resolved_tunnel_frame_bundle_gate", payload["next_required"])
+        self.assertTrue(payload["closure"]["resolved_tunnel_frame_bundle_ready"])
+        self.assertTrue(payload["upstream_frontiers"]["resolved_tunnel_frame_bundle"]["ready"])
+        self.assertTrue(payload["closure"]["resolved_tunnel_Pin_lift_ready"])
+        self.assertTrue(payload["resolved_tunnel_pin_lift_ready"])
+        self.assertTrue(payload["global_topological_spinor_bundle_ready"])
+        self.assertFalse(payload["active_metric_dirac_operator_ready"])
+        self.assertIn("keep_active_metric_dirac_operator_separate_from_topological_pin_lift", payload["next_required"])
         self.assertIn("feed_result_to_plus_minus_spinor_bundle_data_gate", payload["next_required"])
 
 

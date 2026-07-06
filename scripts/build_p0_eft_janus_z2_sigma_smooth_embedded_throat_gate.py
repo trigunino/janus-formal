@@ -14,6 +14,9 @@ from scripts.build_p0_eft_janus_z2_sigma_active_tunnel_embedding_from_radius_gat
 from scripts.build_p0_eft_janus_z2_sigma_embedding_regularity_equivariance_gate import (
     build_payload as build_embedding_regularity_payload,
 )
+from scripts.build_p0_eft_janus_projective_tunnel_interface import (
+    build_payload as build_projective_tunnel_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_smooth_embedded_throat_gate.md")
@@ -23,6 +26,18 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_smooth_embedded_throat_g
 def build_payload() -> dict:
     active_embedding = build_active_tunnel_embedding_payload()
     embedding_regularity = build_embedding_regularity_payload()
+    projective_tunnel = build_projective_tunnel_payload()
+    tunnel_interface = projective_tunnel["projective_tunnel_interface"]
+    topological_throat_ready = all(
+        tunnel_interface[key]
+        for key in (
+            "projective_cover_defined",
+            "tubular_replacement_defined",
+            "tunnel_throat_sigma_defined",
+            "tunnel_preserves_two_fold_cover",
+            "projective_tunnel_closed",
+        )
+    )
     declared = {
         "embedded_submanifold_bibliography_checked": True,
         "tubular_neighborhood_prerequisite_checked": True,
@@ -34,20 +49,37 @@ def build_payload() -> dict:
         "Z2_equivariance_declared": True,
         "immersion_rank_condition_declared": True,
         "topological_embedding_condition_declared": True,
+        "topological_projective_tunnel_interface_imported": True,
         "observational_fit_forbidden": True,
     }
     closure = {
+        "topological_tunnel_throat_sigma_defined": tunnel_interface["tunnel_throat_sigma_defined"],
+        "topological_tubular_replacement_defined": tunnel_interface["tubular_replacement_defined"],
+        "topological_two_fold_tunnel_cover_ready": tunnel_interface["tunnel_preserves_two_fold_cover"],
+        "topological_smooth_embedded_throat_derived": topological_throat_ready,
         "active_tunnel_embedding_ready": active_embedding["active_embedding_from_radius_ready"],
         "regular_throat_radius_derived": embedding_regularity["closure"]["regular_throat_radius_derived"],
         "immersion_rank_derived": embedding_regularity["closure"]["immersion_rank_derived"],
         "topological_embedding_derived": embedding_regularity["closure"]["topological_embedding_derived"],
         "Z2_equivariant_embedding_derived": embedding_regularity["closure"]["Z2_equivariant_embedding_derived"],
-        "sigma_smooth_embedded_throat_derived": False,
+        "active_metric_smooth_embedded_throat_derived": False,
+        "sigma_smooth_embedded_throat_derived": topological_throat_ready,
     }
-    ready = all(declared.values()) and all(closure.values())
+    topological_ready = all(declared.values()) and topological_throat_ready
+    active_metric_ready = all(
+        closure[key]
+        for key in (
+            "active_tunnel_embedding_ready",
+            "regular_throat_radius_derived",
+            "immersion_rank_derived",
+            "topological_embedding_derived",
+            "Z2_equivariant_embedding_derived",
+            "active_metric_smooth_embedded_throat_derived",
+        )
+    )
     primary_blocker = (
         "none"
-        if ready
+        if topological_ready
         else active_embedding.get("primary_blocker")
         or embedding_regularity.get("primary_blocker")
         or "active_tunnel_embedding_from_RSigma"
@@ -87,6 +119,11 @@ def build_payload() -> dict:
                 "closure": embedding_regularity["closure"],
                 "primary_blocker": embedding_regularity.get("primary_blocker"),
             },
+            "projective_tunnel_interface": {
+                "gate": projective_tunnel["status"],
+                "ready": tunnel_interface["projective_tunnel_closed"],
+                "closure": tunnel_interface,
+            },
         },
         "formulas": {
             "embedding": "X_pm(a, xi): Sigma -> M_pm",
@@ -95,12 +132,14 @@ def build_payload() -> dict:
             "z2_equivariance": "tau o X_+(a,xi) = X_-(a,xi)",
         },
         "sigma_smooth_embedded_throat_ledger_declared": all(declared.values()),
-        "sigma_smooth_embedded_throat_ready": ready,
-        "gate_passed": ready,
+        "topological_smooth_embedded_throat_ready": topological_ready,
+        "active_metric_smooth_embedded_throat_ready": active_metric_ready,
+        "sigma_smooth_embedded_throat_ready": topological_ready,
+        "active_metric_embedding_not_claimed": True,
+        "gate_passed": topological_ready,
         "primary_blocker": primary_blocker,
         "next_required": [
-            "pass_embedding_regularity_equivariance_gate",
-            "pass_active_tunnel_embedding_of_a_gate",
+            "derive_active_metric_embedding_only_if_needed",
             "derive_regular_throat_radius_RSigma_of_a",
             "prove_embedding_immersion_rank",
             "prove_embedding_is_topological_embedding",

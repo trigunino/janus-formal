@@ -69,6 +69,7 @@ class RSigmaCertificatePayloadInputWriterGateTests(unittest.TestCase):
 
             payload = build_payload(
                 term_grid_path=term,
+                grid_input_path=root / "missing_grid.json",
                 h0_input_path=h0,
                 radius_input_path=radius,
                 curvature_sign_path=sign,

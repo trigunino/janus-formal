@@ -20,6 +20,12 @@ from scripts.derive_p0_eft_janus_z2_sigma_counterterm_variational_coefficient_fo
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_lct_expression_obstruction_gate import (
     build_payload as build_lct_obstruction,
 )
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_residual_channel_frontier_gate import (
+    build_payload as build_residual_channel_frontier,
+)
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_trace_residual_tensor_input_writer_gate import (
+    build_payload as build_trace_tensor_writer,
+)
 
 
 REPORT_PATH = Path(
@@ -37,6 +43,8 @@ def build_payload() -> dict:
     partial = build_partial_coefficients()
     formula = build_variational_formula()
     lct_obstruction = build_lct_obstruction()
+    residual_frontier = build_residual_channel_frontier()
+    trace_tensor_writer = build_trace_tensor_writer()
     coeff = partial["coefficients"]
     action_closed = bool(action["boundary_action_functional_closed"])
     torsion_contraction_ready = bool(coeff.get("R_T_A_ready"))
@@ -92,15 +100,34 @@ def build_payload() -> dict:
             "primary_blocker": lct_obstruction["primary_blocker"],
             "obstruction": lct_obstruction["obstruction"],
         },
+        "residual_channel_frontier": {
+            "gate": residual_frontier["status"],
+            "ready": residual_frontier["residual_channel_frontier_ready"],
+            "channels": residual_frontier["channels"],
+            "primary_blocker": residual_frontier["primary_blocker"],
+            "current_frontier": residual_frontier["current_frontier"],
+        },
+        "trace_residual_tensor_writer": {
+            "gate": trace_tensor_writer["status"],
+            "ready": trace_tensor_writer["gate_passed"],
+            "primary_blocker": trace_tensor_writer["primary_blocker"],
+            "formula": trace_tensor_writer["round_throat_trace_to_tensor_formula"],
+            "metric_output_manifest": trace_tensor_writer["metric_output_manifest"],
+            "extrinsic_output_manifest": trace_tensor_writer["extrinsic_output_manifest"],
+        },
         "explicit_coefficient_expansion_ready": explicit_ready,
         "radial_scalar_contractions_ready": radial_contractions_ready,
         "counterterm_local_density_action_inputs_allowed": explicit_ready,
-        "primary_blocker": "explicit_L_ct_expression",
+        "primary_blocker": residual_frontier["primary_blocker"],
         "next_required": [
-            "derive_explicit_L_ct_expression_in_allowed_basis",
-            "evaluate_partial_L_ct_partial_h_ab",
-            "evaluate_partial_L_ct_partial_K_ab",
-            "derive_or_show_unneeded_delta_S_ct_delta_chi",
+            "derive_R_h_trace_from_active_boundary_residual",
+            "derive_R_K_trace_from_active_boundary_residual",
+            "write_counterterm_trace_residual_inputs_json",
+            "run_trace_residual_tensor_input_writer",
+            "derive_or_eliminate_full_R_chi_from_active_boundary_residual",
+            "close_connection_residual_channel",
+            "close_embedding_residual_channel",
+            "close_matter_flux_residual_channel",
             "materialize_counterterm_local_density_action_inputs_json",
         ],
     }

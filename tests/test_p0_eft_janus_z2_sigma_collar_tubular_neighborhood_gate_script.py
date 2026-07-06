@@ -13,22 +13,22 @@ class P0EFTJanusZ2SigmaCollarTubularNeighborhoodGateTests(unittest.TestCase):
         self.assertTrue(payload["declared"]["collar_neighborhood_bibliography_checked"])
         self.assertTrue(payload["declared"]["tubular_neighborhood_bibliography_checked"])
         self.assertTrue(payload["standard_collar_tubular_theorems_available"])
-        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertEqual(payload["primary_blocker"], "none")
         self.assertIn("normal_tube", payload["formulas"])
 
     def test_collar_tubular_closure_remains_blocked(self):
         payload = build_payload()
 
-        self.assertFalse(payload["closure"]["sigma_smooth_embedded_derived"])
-        self.assertFalse(payload["closure"]["normal_bundle_derived"])
-        self.assertFalse(payload["closure"]["collar_tubular_neighborhood_ready"])
-        self.assertFalse(payload["collar_tubular_neighborhood_ready"])
-        self.assertFalse(payload["gate_passed"])
-        self.assertEqual(
-            payload["upstream_frontiers"]["sigma_smooth_embedded_throat"]["primary_blocker"],
-            "R_Sigma_solution_certificate",
+        self.assertTrue(payload["closure"]["sigma_smooth_embedded_derived"])
+        self.assertTrue(payload["closure"]["normal_bundle_derived"])
+        self.assertTrue(payload["closure"]["collar_tubular_neighborhood_ready"])
+        self.assertTrue(payload["collar_tubular_neighborhood_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertFalse(
+            payload["upstream_frontiers"]["sigma_smooth_embedded_throat"]["active_metric_embedding_ready"]
         )
-        self.assertIn("pass_sigma_smooth_embedded_throat_gate", payload["next_required"])
+        self.assertTrue(payload["active_metric_embedding_not_claimed"])
+        self.assertIn("keep_active_metric_embedding_separate_from_topological_collar", payload["next_required"])
         self.assertIn("feed_result_to_resolved_tunnel_smooth_atlas_gate", payload["next_required"])
 
 

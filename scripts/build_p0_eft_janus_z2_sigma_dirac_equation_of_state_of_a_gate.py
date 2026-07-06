@@ -1,7 +1,12 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from scripts.build_p0_eft_janus_z2_sigma_dirac_mass_temperature_law_of_a_gate import (
     build_payload as build_mass_temperature_payload,

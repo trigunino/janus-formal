@@ -31,7 +31,10 @@ def build_payload() -> dict:
         "no_fitted_matter_residual_coefficient": True,
     }
     flux_ready = matter_flux_frontier["matter_flux_frontier_ready"]
-    residual_formula_ready = False
+    perfect_fluid_zero_ready = matter_flux_frontier["paths"][
+        "perfect_fluid_tangential_radial_zero_ready"
+    ]
+    residual_formula_ready = flux_ready and perfect_fluid_zero_ready
     residual_ready = flux_ready and residual_formula_ready
     closure = {
         "matter_flux_frontier_ready": flux_ready,
@@ -54,6 +57,16 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "residual_coefficient": {
+            "value": "0",
+            "scope": "perfect_fluid_tangential_matter_sector",
+            "provenance": (
+                "u.n=0 and e_a.n=0 imply T_munu e_a^mu n^nu=0; this closes "
+                "the matter-flux residual for the already-selected perfect-fluid "
+                "tangential radial branch only"
+            ),
+            "full_sigma_transparency_claimed": False,
+        },
         "upstream_frontiers": {
             "matter_flux": {
                 "gate": matter_flux_frontier["status"],
@@ -77,10 +90,12 @@ def build_payload() -> dict:
             if not ready
         ],
         "next_required": [
-            "compute_R_matter_from_active_normal_flux_variation",
-            "derive_active_flux_of_a",
-            "express_R_matter_in_allowed_local_density_basis",
-            "feed_R_matter_to_residual_one_form_decomposition_gate",
+            *([] if residual_ready else [
+                "compute_R_matter_from_active_normal_flux_variation",
+                "derive_active_flux_of_a",
+                "express_R_matter_in_allowed_local_density_basis",
+                "feed_R_matter_to_residual_one_form_decomposition_gate",
+            ]),
         ],
     }
 

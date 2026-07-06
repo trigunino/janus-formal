@@ -18,6 +18,10 @@ structure CountertermSpinorResidualChannelGate where
   projectedSpinorVariationTransportDeclared : Prop
   z2PinPhasePolicyDeclared : Prop
   noFittedSpinorResidualCoefficient : Prop
+  localMITReflectingProjectorReady : Prop
+  normalCurrentZeroAlgebraReady : Prop
+  boundarySpinorSatisfiesReflectingProjectorDerived : Prop
+  conditionalReflectingProjectorResidualZero : Prop
   spinorResidualCoefficientExplicit : Prop
   conjugateSpinorResidualCoefficientExplicit : Prop
   spinorResidualInAllowedBasis : Prop
@@ -36,6 +40,13 @@ def countertermSpinorResidualChannelLedgerDeclared
   g.z2PinPhasePolicyDeclared /\
   g.noFittedSpinorResidualCoefficient
 
+def conditionalReflectingProjectorRouteAvailable
+    (g : CountertermSpinorResidualChannelGate) : Prop :=
+  countertermSpinorResidualChannelLedgerDeclared g /\
+  g.localMITReflectingProjectorReady /\
+  g.normalCurrentZeroAlgebraReady /\
+  g.conditionalReflectingProjectorResidualZero
+
 def countertermSpinorResidualChannelReady
     (g : CountertermSpinorResidualChannelGate) : Prop :=
   countertermSpinorResidualChannelLedgerDeclared g /\
@@ -50,6 +61,28 @@ theorem spinor_channel_ready_requires_projected_residual
     (hReady : countertermSpinorResidualChannelReady g) :
     g.spinorResidualCompatibleWithProjection := by
   exact hReady.right.right.right.right.left
+
+theorem reflecting_projector_route_still_requires_physical_boundary_condition
+    (g : CountertermSpinorResidualChannelGate)
+    (_hRoute : conditionalReflectingProjectorRouteAvailable g)
+    (hPhysical : g.boundarySpinorSatisfiesReflectingProjectorDerived) :
+    g.boundarySpinorSatisfiesReflectingProjectorDerived := by
+  exact hPhysical
+
+theorem local_projected_zero_coefficients_close_spinor_channel
+    (g : CountertermSpinorResidualChannelGate)
+    (hLedger : countertermSpinorResidualChannelLedgerDeclared g)
+    (hRpsi : g.spinorResidualCoefficientExplicit)
+    (hRpsibar : g.conjugateSpinorResidualCoefficientExplicit)
+    (hBasis : g.spinorResidualInAllowedBasis)
+    (hProjection : g.spinorResidualCompatibleWithProjection)
+    (hOneForm : g.spinorResidualReadyForOneFormDecomposition) :
+    countertermSpinorResidualChannelReady g := by
+  exact And.intro hLedger
+    (And.intro hRpsi
+      (And.intro hRpsibar
+        (And.intro hBasis
+          (And.intro hProjection hOneForm))))
 
 end P0EFTJanusZ2SigmaCountertermSpinorResidualChannelGate
 end JanusFormal

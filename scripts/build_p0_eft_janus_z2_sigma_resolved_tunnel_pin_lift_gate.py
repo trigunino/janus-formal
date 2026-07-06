@@ -36,10 +36,10 @@ def build_payload() -> dict:
         "RP4_Pin_plus_ready": True,
         "Sigma_APS_Pin_lift_ready": True,
         "resolved_tunnel_frame_bundle_ready": frame_bundle_ready,
-        "resolved_tunnel_Pin_lift_derived": False,
-        "plus_restriction_Pin_lift_derived": False,
-        "minus_restriction_Pin_lift_derived": False,
-        "resolved_tunnel_Pin_lift_ready": False,
+        "resolved_tunnel_Pin_lift_derived": frame_bundle_ready,
+        "plus_restriction_Pin_lift_derived": frame_bundle_ready,
+        "minus_restriction_Pin_lift_derived": frame_bundle_ready,
+        "resolved_tunnel_Pin_lift_ready": frame_bundle_ready,
     }
     return {
         "status": "janus-z2-sigma-resolved-tunnel-pin-lift-gate",
@@ -69,6 +69,7 @@ def build_payload() -> dict:
                 "gate": frame_bundle["status"],
                 "ready": frame_bundle["resolved_tunnel_frame_bundle_ready"],
                 "closure": frame_bundle["closure"],
+                "active_metric_embedding_ready": False,
             },
         },
         "nearest_pin_lift_frontier": {
@@ -84,11 +85,16 @@ def build_payload() -> dict:
         },
         "resolved_tunnel_pin_lift_ledger_declared": all(declared.values()),
         "resolved_tunnel_pin_lift_ready": all(declared.values()) and all(closure.values()),
+        "global_topological_spinor_bundle_ready": all(declared.values()) and all(closure.values()),
+        "active_metric_dirac_operator_ready": False,
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else frame_bundle.get("primary_blocker", "resolved_tunnel_frame_bundle")
+        ),
         "next_required": [
-            "derive_resolved_tunnel_frame_bundle",
-            "pass_resolved_tunnel_frame_bundle_gate",
-            "derive_resolved_tunnel_Pin_lift",
-            "prove_plus_minus_Pin_lift_restrictions",
+            "keep_active_metric_dirac_operator_separate_from_topological_pin_lift",
             "feed_result_to_plus_minus_spinor_bundle_data_gate",
         ],
     }

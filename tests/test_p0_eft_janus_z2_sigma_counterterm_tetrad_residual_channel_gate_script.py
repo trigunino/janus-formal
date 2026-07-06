@@ -24,6 +24,14 @@ class P0EFTJanusZ2SigmaCountertermTetradResidualChannelGateTests(unittest.TestCa
             payload["closure"]["tetrad_metric_residual_coefficient_value_ready"]
         )
         self.assertIn("metric_residual_coefficient_writer", payload["upstream_frontiers"])
+        self.assertIn("round_throat_trace_reduction", payload["upstream_frontiers"])
+        self.assertTrue(payload["closure"]["round_throat_tensor_shape_reduced_to_trace"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["round_throat_trace_reduction"][
+                "metric_tensor_shape"
+            ],
+            "R_h_ab = (R_h_trace / d) h_ab",
+        )
         self.assertFalse(payload["upstream_frontiers"]["metric_residual_coefficient_writer"]["ready"])
         self.assertTrue(payload["partial_subchannels"]["metric"]["ready"])
         self.assertIn("R_e_metric", payload["partial_subchannels"]["metric"]["residual_coefficient"])
@@ -38,7 +46,7 @@ class P0EFTJanusZ2SigmaCountertermTetradResidualChannelGateTests(unittest.TestCa
         self.assertTrue(payload["partial_subchannels"]["torsion_pullback"]["ready"])
         self.assertFalse(payload["counterterm_tetrad_residual_channel_ready"])
         self.assertIn(
-            "expand_R_h_R_K_R_T_R_chi_coefficients_from_active_sigma_boundary_variation",
+            "derive_R_h_trace_and_R_K_trace_from_active_sigma_boundary_variation",
             payload["next_required"],
         )
 

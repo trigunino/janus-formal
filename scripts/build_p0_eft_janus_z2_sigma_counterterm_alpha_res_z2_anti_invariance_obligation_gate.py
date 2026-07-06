@@ -14,6 +14,9 @@ from scripts.build_p0_eft_janus_sigma_boundary_nonlinear_residual_closure_gate i
 from scripts.build_p0_eft_janus_z2_sigma_counterterm_z2_odd_residual_projection_route_gate import (
     build_payload as build_z2_odd_route,
 )
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_tetrad_component_parity_gate import (
+    build_payload as build_tetrad_component_parity,
+)
 from scripts.build_p0_eft_janus_z2_sigma_dirac_current_parity_from_spinor_intertwiner_gate import (
     build_payload as build_dirac_current_parity,
 )
@@ -45,6 +48,7 @@ def build_payload() -> dict:
     orientation = build_orientation()
     nonlinear = build_nonlinear_closure()
     route = build_z2_odd_route()
+    tetrad_parity = build_tetrad_component_parity()
     stress = build_stress_equivariance()
     flux = build_flux_cancellation()
     holst = build_holst_flux()
@@ -58,6 +62,8 @@ def build_payload() -> dict:
     alpha_component_values_available = component_emission.get(
         "alpha_res_component_values_available", False
     )
+    known_component_values = component_emission.get("known_alpha_res_component_values", {})
+    spinor_component_zero_known = "spinor_component" in known_component_values
     alpha_component_names = component_emission.get("alpha_res_component_names", [])
 
     channel_tests = {
@@ -82,9 +88,9 @@ def build_payload() -> dict:
             "formula": "T_total^- = tau_* T_total^+",
         },
         "spinor_current_channel": {
-            "ready": current["dirac_current_z2_parity_ready"],
-            "required_parity": "equivariant_or_cancelled",
-            "formula": "J_- = tau_Z2_* J_+",
+            "ready": spinor_component_zero_known or current["dirac_current_z2_parity_ready"],
+            "required_parity": "zero_residual_or_equivariant_current",
+            "formula": "R_psi=R_psibar=0 locally, or J_- = tau_Z2_* J_+",
         },
         "residual_component_channel": {
             "ready": alpha_component_decomposition_available,
@@ -95,13 +101,13 @@ def build_payload() -> dict:
     component_parity_tests = {
         "metric_tetrad_component": {
             "component_declared": "metric_tetrad_component" in alpha_component_names,
-            "parity_proved": False,
-            "blocker": "R_h_ab_value_and_Z2_pullback_parity",
+            "parity_proved": tetrad_parity["closure"]["metric_tetrad_component_Z2_odd_proved"],
+            "blocker": tetrad_parity["component_tests"]["metric_tetrad_component"]["blocker"],
         },
         "extrinsic_tetrad_component": {
             "component_declared": "extrinsic_tetrad_component" in alpha_component_names,
-            "parity_proved": False,
-            "blocker": "R_K_ab_value_and_Z2_normal_orientation_parity",
+            "parity_proved": tetrad_parity["closure"]["extrinsic_tetrad_component_Z2_odd_proved"],
+            "blocker": tetrad_parity["component_tests"]["extrinsic_tetrad_component"]["blocker"],
         },
         "torsion_pullback_component": {
             "component_declared": "torsion_pullback_component" in alpha_component_names,
@@ -122,9 +128,11 @@ def build_payload() -> dict:
         },
         "spinor_component": {
             "component_declared": "spinor_component" in alpha_component_names,
-            "parity_proved": current["dirac_current_z2_parity_ready"],
+            "parity_proved": (
+                spinor_component_zero_known or current["dirac_current_z2_parity_ready"]
+            ),
             "blocker": "none"
-            if current["dirac_current_z2_parity_ready"]
+            if (spinor_component_zero_known or current["dirac_current_z2_parity_ready"])
             else current["primary_blocker"],
         },
         "embedding_component": {
@@ -208,6 +216,7 @@ def build_payload() -> dict:
                 "gate": nonlinear["status"],
                 "closed": nonlinear["sigma_nonlinear_boundary_residual_closed"],
                 "component_emission": component_emission,
+                "known_component_values": known_component_values,
             },
             "stress_equivariance": {
                 "gate": stress["status"],
@@ -231,6 +240,12 @@ def build_payload() -> dict:
                 "ready": holst["holst_torsion_flux_zero_or_equivariance_ready"],
                 "primary_blocker": holst["primary_blocker"],
             },
+            "tetrad_component_parity": {
+                "gate": tetrad_parity["status"],
+                "ready": tetrad_parity["gate_passed"],
+                "primary_blocker": tetrad_parity["primary_blocker"],
+                "closure": tetrad_parity["closure"],
+            },
         },
         "route_status": "credible_but_blocked"
         if not counterterm_zero_ready
@@ -241,7 +256,7 @@ def build_payload() -> dict:
         "interpretation": (
             "The Janus/Z2 bypass is not dead: normal orientation reversal and the "
             "Holst torsionless boundary slot are available. It is not closed either: "
-                "the nonlinear Sigma gate now emits a component schema, but matter/stress/spinor "
+                "the nonlinear Sigma gate now emits a component schema and known zero components, but matter/stress "
                 "equivariance and tetrad/connection component parities are not yet strong enough to prove componentwise oddness of "
                 "alpha_res."
         ),
@@ -251,8 +266,6 @@ def build_payload() -> dict:
             "prove_componentwise_tau_Z2_pullback_alpha_i_equals_minus_alpha_i",
             "emit_explicit_alpha_res_component_values_for_tetrad_connection_chi_channels",
             "close_total_stress_Z2_equivariance_or_prove_flux_slot_zero",
-            "close_Dirac_current_Z2_parity_or prove_spinor_residual_pairing_zero",
-            "prove_paired_sheet_residual_support_on_Sigma",
         ],
     }
 

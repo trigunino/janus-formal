@@ -17,17 +17,19 @@ class P0EFTJanusZ2SigmaSmoothEmbeddedThroatGateTests(unittest.TestCase):
     def test_smooth_embedded_throat_remains_blocked_on_active_embedding(self):
         payload = build_payload()
 
+        self.assertTrue(payload["closure"]["topological_smooth_embedded_throat_derived"])
+        self.assertTrue(payload["topological_smooth_embedded_throat_ready"])
         self.assertFalse(payload["closure"]["active_tunnel_embedding_ready"])
-        self.assertFalse(payload["closure"]["sigma_smooth_embedded_throat_derived"])
-        self.assertFalse(payload["sigma_smooth_embedded_throat_ready"])
-        self.assertFalse(payload["gate_passed"])
-        self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")
+        self.assertFalse(payload["active_metric_smooth_embedded_throat_ready"])
+        self.assertTrue(payload["closure"]["sigma_smooth_embedded_throat_derived"])
+        self.assertTrue(payload["sigma_smooth_embedded_throat_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
         self.assertEqual(
             payload["upstream_frontiers"]["active_tunnel_embedding"]["primary_blocker"],
             "R_Sigma_solution_certificate",
         )
-        self.assertIn("pass_embedding_regularity_equivariance_gate", payload["next_required"])
-        self.assertIn("pass_active_tunnel_embedding_of_a_gate", payload["next_required"])
+        self.assertIn("derive_active_metric_embedding_only_if_needed", payload["next_required"])
         self.assertIn("feed_result_to_collar_tubular_neighborhood_gate", payload["next_required"])
 
 

@@ -54,11 +54,11 @@ def build_payload() -> dict:
         "formula_derivation_closed": action_closed,
         "explicit_values_ready": False,
         "counterterm_local_density_action_inputs_allowed": False,
-        "primary_blocker": "explicit_L_ct_expression",
+        "primary_blocker": "explicit_alpha_res_component_values",
         "next_required": [
-            "derive_explicit_L_ct_expression_in_allowed_basis",
-            "evaluate_partial_L_ct_partial_h_ab",
-            "evaluate_partial_L_ct_partial_K_ab",
+            "emit_alpha_res_component_values_from_sigma_boundary_closure",
+            "evaluate_R_h_ab_from_alpha_res_metric_component",
+            "evaluate_R_K_ab_from_alpha_res_extrinsic_component",
             "then_write_counterterm_local_density_action_inputs_json",
         ],
     }

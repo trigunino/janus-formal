@@ -16,7 +16,11 @@ class CountertermVariationalCoefficientFormulaTests(unittest.TestCase):
         self.assertFalse(payload["counterterm_local_density_action_inputs_allowed"])
         self.assertIn("1/2 h^ab L_ct", payload["formulas"]["R_h_ab"])
         self.assertEqual(payload["formulas"]["R_K_ab"], "-partial L_ct/partial K_ab")
-        self.assertEqual(payload["primary_blocker"], "explicit_L_ct_expression")
+        self.assertEqual(payload["primary_blocker"], "explicit_alpha_res_component_values")
+        self.assertIn(
+            "emit_alpha_res_component_values_from_sigma_boundary_closure",
+            payload["next_required"],
+        )
 
 
 if __name__ == "__main__":

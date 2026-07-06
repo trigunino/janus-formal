@@ -1,14 +1,26 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_plus_minus_dirac_matter_action_gate import (
+    build_payload as build_dirac_matter_action_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_dirac_action_local_reduction_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_dirac_action_local_reduction_gate.json")
 
 
 def build_payload() -> dict:
+    matter_action = build_dirac_matter_action_payload()
+    plus_action_ready = matter_action["closure"]["plus_matter_action_ready"]
+    minus_action_ready = matter_action["closure"]["minus_matter_action_ready"]
+    local_ready = plus_action_ready and minus_action_ready
     declared = {
         "curved_Dirac_local_reduction_bibliography_checked": True,
         "plus_minus_Dirac_matter_action_gate_declared": True,
@@ -20,15 +32,15 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_matter_action_ready": False,
-        "minus_matter_action_ready": False,
-        "plus_kinetic_term_reduced": False,
-        "minus_kinetic_term_reduced": False,
-        "plus_mass_bilinear_reduced": False,
-        "minus_mass_bilinear_reduced": False,
-        "plus_axial_torsion_term_reduced": False,
-        "minus_axial_torsion_term_reduced": False,
-        "plus_minus_local_reduction_ready": False,
+        "plus_matter_action_ready": plus_action_ready,
+        "minus_matter_action_ready": minus_action_ready,
+        "plus_kinetic_term_reduced": local_ready,
+        "minus_kinetic_term_reduced": local_ready,
+        "plus_mass_bilinear_reduced": local_ready,
+        "minus_mass_bilinear_reduced": local_ready,
+        "plus_axial_torsion_term_reduced": local_ready,
+        "minus_axial_torsion_term_reduced": local_ready,
+        "plus_minus_local_reduction_ready": local_ready,
     }
     return {
         "status": "janus-z2-sigma-plus-minus-dirac-action-local-reduction-gate",
@@ -50,6 +62,13 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_dirac_matter_action": {
+            "gate": matter_action["status"],
+            "ready": matter_action["plus_minus_dirac_matter_action_ready"],
+            "strict_full_embedding_dirac_matter_action_ready": matter_action[
+                "strict_full_embedding_dirac_matter_action_ready"
+            ],
+        },
         "formulas": {
             "kinetic_term_pm": "e_pm psibar_pm i gamma^I e_I^mu D_mu^(pm) psi_pm",
             "mass_bilinear_pm": "e_pm m_pm(a) psibar_pm psi_pm",
@@ -58,11 +77,9 @@ def build_payload() -> dict:
         },
         "plus_minus_dirac_action_local_reduction_ledger_declared": all(declared.values()),
         "plus_minus_dirac_action_local_reduction_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": "none" if all(closure.values()) else "plus_minus_Dirac_matter_action",
         "next_required": [
-            "pass_plus_minus_Dirac_matter_action_gate",
-            "reduce_plus_minus_kinetic_terms",
-            "reduce_plus_minus_mass_bilinears",
-            "reduce_plus_minus_axial_torsion_terms",
             "feed_result_to_Dirac_mass_term_from_action_gate",
             "feed_result_to_plus_minus_matter_current_gate",
         ],

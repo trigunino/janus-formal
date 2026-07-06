@@ -11,15 +11,20 @@ class P0EFTJanusZ2SigmaCountertermMatterFluxResidualChannelGateTests(unittest.Te
         self.assertTrue(payload["declared"]["normal_tangent_flux_formula_declared"])
         self.assertIn("fit matter residual coefficient", payload["forbidden"])
 
-    def test_matter_flux_channel_remains_open_until_coefficient_is_explicit(self):
+    def test_matter_flux_channel_closes_for_selected_perfect_fluid_tangential_branch(self):
         payload = build_payload()
 
-        self.assertFalse(payload["closure"]["matter_residual_coefficient_explicit"])
-        self.assertFalse(payload["closure"]["matter_flux_frontier_ready"])
-        self.assertFalse(payload["closure"]["matter_residual_formula_from_flux_variation_ready"])
-        self.assertFalse(payload["upstream_frontiers"]["matter_flux"]["ready"])
-        self.assertFalse(payload["counterterm_matter_flux_residual_channel_ready"])
-        self.assertIn("compute_R_matter_from_active_normal_flux_variation", payload["next_required"])
+        self.assertTrue(payload["closure"]["matter_residual_coefficient_explicit"])
+        self.assertTrue(payload["closure"]["matter_flux_frontier_ready"])
+        self.assertTrue(payload["closure"]["matter_residual_formula_from_flux_variation_ready"])
+        self.assertTrue(payload["upstream_frontiers"]["matter_flux"]["ready"])
+        self.assertTrue(payload["counterterm_matter_flux_residual_channel_ready"])
+        self.assertEqual(payload["residual_coefficient"]["value"], "0")
+        self.assertEqual(
+            payload["residual_coefficient"]["scope"],
+            "perfect_fluid_tangential_matter_sector",
+        )
+        self.assertFalse(payload["residual_coefficient"]["full_sigma_transparency_claimed"])
 
 
 if __name__ == "__main__":

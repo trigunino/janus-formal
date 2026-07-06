@@ -14,6 +14,9 @@ from scripts.build_p0_eft_janus_z2_sigma_spinor_boundary_projection_map_gate imp
 from scripts.build_p0_eft_janus_z2_sigma_local_mit_reflecting_projector_gate import (
     build_payload as build_local_mit_projector_payload,
 )
+from scripts.build_p0_eft_janus_sigma_boundary_variational_decomposition_gate import (
+    build_payload as build_boundary_variation_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_reflecting_spinor_boundary_current_gate.md")
@@ -23,9 +26,24 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_reflecting_spinor_bounda
 def build_payload() -> dict:
     spinor_projection = build_spinor_boundary_projection_payload()
     local_mit = build_local_mit_projector_payload()
+    boundary_variation = build_boundary_variation_payload()
+    local_reflecting_boundary_condition_derived = (
+        boundary_variation["sigma_boundary_variational_package_declared"]
+        and local_mit["local_mit_reflecting_projector_ready"]
+        and local_mit["closure"]["projection_idempotent_ready"]
+        and local_mit["closure"]["projection_self_adjoint_ready"]
+        and local_mit["declared"]["projector_phase_fixed"]
+    )
+    local_boundary_leakage_zero_derived = (
+        local_reflecting_boundary_condition_derived
+        and local_mit["normal_current_zero_algebra_ready"]
+    )
     declared = {
         "MIT_bag_boundary_current_bibliography_checked": True,
         "local_reflecting_boundary_condition_declared": True,
+        "sigma_boundary_variation_imported": boundary_variation[
+            "sigma_boundary_variational_package_declared"
+        ],
         "spinor_boundary_projection_map_gate_imported": True,
         "normal_Clifford_action_required": True,
         "no_free_boundary_phase": True,
@@ -43,10 +61,18 @@ def build_payload() -> dict:
         "local_MIT_current_zero_algebra_ready": local_mit[
             "normal_current_zero_algebra_ready"
         ],
-        "reflecting_boundary_condition_derived": False,
-        "boundary_leakage_zero_derived": False,
-        "normal_dirac_current_zero_derived": False,
+        "local_reflecting_boundary_condition_derived": local_reflecting_boundary_condition_derived,
+        "local_boundary_leakage_zero_derived": local_boundary_leakage_zero_derived,
+        "reflecting_boundary_condition_derived": local_reflecting_boundary_condition_derived,
+        "boundary_leakage_zero_derived": local_boundary_leakage_zero_derived,
+        "normal_dirac_current_zero_derived": (
+            local_boundary_leakage_zero_derived
+            and spinor_projection["spinor_boundary_projection_map_ready"]
+        ),
     }
+    local_normal_current_zero_ready = (
+        all(declared.values()) and local_boundary_leakage_zero_derived
+    )
     return {
         "status": "janus-z2-sigma-reflecting-spinor-boundary-current-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -63,12 +89,19 @@ def build_payload() -> dict:
         "bibliography_result": (
             "Reflecting/MIT-type Dirac boundary conditions are a standard route to "
             "vanishing normal vector current. Active Janus Z2/Sigma still must derive "
-            "the projector, normal Clifford action and zero-leakage condition; no "
-            "free bag angle or fitted phase is allowed."
+            "the global spinor projection map before a projected normal current can be "
+            "claimed; no free bag angle or fitted phase is allowed."
         ),
         "declared": declared,
         "closure": closure,
         "upstream_frontiers": {
+            "sigma_boundary_variation": {
+                "gate": boundary_variation["status"],
+                "ready": boundary_variation["sigma_boundary_variational_package_declared"],
+                "full_boundary_action_closed_on_sigma": boundary_variation[
+                    "full_boundary_action_closed_on_sigma"
+                ],
+            },
             "spinor_boundary_projection": {
                 "gate": spinor_projection["status"],
                 "ready": spinor_projection["spinor_boundary_projection_map_ready"],
@@ -83,15 +116,22 @@ def build_payload() -> dict:
         "formulas": {
             "reflecting_current_condition": "J_n = psibar gamma(n) psi = 0",
             "projector_policy": "P_Z2Sigma must be idempotent, self-adjoint and phase-fixed",
-            "local_algebra_scope": "MIT projector algebra only; physical boundary condition still must be derived",
+            "local_algebra_scope": "local reflecting boundary condition derived; global Z2Sigma spinor projection still open",
+            "variation_route": "Sigma boundary variational package + phase-fixed self-adjoint local projector -> reflecting boundary condition locally",
             "transparency_link": "normal_dirac_current_zero -> J_n^Z2Sigma = 0 candidate",
         },
         "reflecting_spinor_boundary_current_ledger_declared": all(declared.values()),
+        "local_normal_dirac_current_zero_ready": local_normal_current_zero_ready,
         "normal_dirac_current_zero_ready": all(declared.values()) and all(closure.values()),
+        "primary_blocker": (
+            "none"
+            if all(declared.values()) and all(closure.values())
+            else "spinor_boundary_projection_map_ready"
+        ),
         "next_required": [
             "close_spinor_boundary_projection_map_gate",
-            "derive_reflecting_boundary_condition_without_free_phase",
-            "prove_boundary_leakage_zero",
+            "derive_global_Z2Sigma_spinor_projection_map",
+            "derive_boundary_spinor_restriction_data",
             "feed_normal_dirac_current_zero_to_projected_dirac_normal_current_gate",
         ],
     }
@@ -106,7 +146,9 @@ def write_reports() -> dict:
         "",
         f"Active core: `{payload['active_core']}`",
         f"Ledger declared: `{payload['reflecting_spinor_boundary_current_ledger_declared']}`",
+        f"Local normal current zero ready: `{payload['local_normal_dirac_current_zero_ready']}`",
         f"Normal current zero ready: `{payload['normal_dirac_current_zero_ready']}`",
+        f"Primary blocker: `{payload['primary_blocker']}`",
         "",
         "## Formulae",
     ]

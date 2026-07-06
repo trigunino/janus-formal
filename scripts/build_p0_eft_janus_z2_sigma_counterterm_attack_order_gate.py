@@ -50,6 +50,8 @@ def build_payload() -> dict:
         "throat_radius_solution_frontier_imported": True,
         "attack_order_is_diagnostic_only": True,
         "circular_radius_counterterm_dependency_checked": True,
+        "lct_profile_currently_requires_radius_values": True,
+        "non_circular_trace_route_required": True,
         "symbolic_local_counterterm_route_declared": True,
         "no_counterterm_channel_dropped": True,
         "no_fit_shortcut": True,
@@ -70,17 +72,18 @@ def build_payload() -> dict:
         "R_Sigma_solution_certificate_ready": throat_radius_ready,
         "symbolic_local_counterterm_route_ready": symbolic_ready,
         "counterterm_coefficient_expansion_explicit": coefficient_expansion_ready,
+        "radial_profile_from_residual_contractions_non_circular": False,
+        "trace_values_from_full_sigma_action_ready": False,
         "counterterm_attack_order_ready": False,
     }
-    upstream_blocker = (
-        "counterterm_coefficient_expansion"
-        if symbolic_ready and not coefficient_expansion_ready
-        else "symbolic_local_counterterm_route"
-        if not symbolic_ready
-        else "active_embedding_readiness"
-        if not active_embedding_ready
-        else "tetrad_residual_channel"
-    )
+    if not symbolic_ready:
+        upstream_blocker = "symbolic_local_counterterm_route"
+    elif not coefficient_expansion_ready:
+        upstream_blocker = "active_boundary_variational_trace_values"
+    elif not active_embedding_ready:
+        upstream_blocker = "active_embedding_readiness"
+    else:
+        upstream_blocker = "tetrad_residual_channel"
     return {
         "status": "janus-z2-sigma-counterterm-attack-order-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -88,14 +91,19 @@ def build_payload() -> dict:
         "closure": closure,
         "attack_order": [
             "derive_counterterm_residual_symbolically_in_local_boundary_basis",
-            "integrate_L_ct_primitive_without_R_Sigma_values",
+            "reduce_round_throat_tensor_residuals_to_R_h_trace_and_R_K_trace",
+            "derive_boundary_variational_ensemble_Dirichlet_h_or_mixed_hK",
+            "derive_R_h_trace_and_R_K_trace_from_full_Sigma_action_without_R_Sigma_certificate",
+            "derive_counterterm_trace_residual_inputs_json",
+            "materialize_R_h_ab_R_K_ab_from_trace_inputs",
+            "only_then_integrate_L_ct_profile_or_replace_by_symbolic_R_dependent_profile",
             "derive_counterterm_residual_scalar_contractions_inputs",
             "write_counterterm_lct_radial_profile_from_residual_contractions",
             "reduce_E_counterterm_radial_block",
             "then_solve_R_Sigma_solution_certificate",
             "then_materialize_active_embedding_geometry",
             "then_evaluate_deltaK_and_torsion_pullback_on_embedding",
-            "then_close_remaining_connection_spinor_embedding_matter_flux_channels",
+            "then_close_remaining_connection_embedding_matter_flux_channels",
             "then_form_exact_residual_one_form_and_counterterm_primitive",
         ],
         "upstream_frontiers": {
@@ -131,7 +139,10 @@ def build_payload() -> dict:
         "primary_blocker": upstream_blocker,
         "gate_passed": all(declared.values()) and all(closure.values()),
         "next_required": [
-            "expand_residual_coefficients_R_h_R_K_R_T_R_chi_in_allowed_basis",
+            "choose_and_derive_active_boundary_variational_ensemble",
+            "derive_R_h_trace_and_R_K_trace_from_active_sigma_boundary_variation",
+            "avoid_counterterm_lct_radial_profile_until_trace_values_are_non_circular",
+            "write_counterterm_trace_residual_inputs_json",
             "prove_explicit_coefficients_preserve_L_ct_cancellation",
             "materialize_counterterm_residual_scalar_contractions_inputs",
             "run_counterterm_lct_radial_profile_from_residual_contractions",

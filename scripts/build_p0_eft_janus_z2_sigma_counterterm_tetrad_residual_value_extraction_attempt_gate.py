@@ -66,7 +66,7 @@ def build_payload() -> dict:
         ),
         "next_required": [
             "refine_sigma_boundary_nonlinear_residual_closure_to_emit_alpha_res_component_values",
-            "or_provide_explicit_L_ct_expression_from_boundary_residual",
+            "derive_R_h_ab_R_K_ab_from_emitted_alpha_res_components",
             "then_run_residual_tensors_from_local_density_action",
         ],
     }

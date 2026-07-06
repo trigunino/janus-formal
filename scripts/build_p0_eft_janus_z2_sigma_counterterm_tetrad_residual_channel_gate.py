@@ -27,6 +27,32 @@ from scripts.derive_p0_eft_janus_z2_sigma_counterterm_residual_coefficients_part
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_residual_channel_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_tetrad_residual_channel_gate.json")
+UNIT_Q_PATH = Path("outputs/active_z2_sigma/unit_intrinsic_metric_q_ab_inputs.json")
+
+
+def _round_throat_trace_reduction() -> dict:
+    ready = False
+    dimension = None
+    if UNIT_Q_PATH.exists():
+        try:
+            q_payload = json.loads(UNIT_Q_PATH.read_text(encoding="utf-8"))
+            dimension = int(q_payload["intrinsic_dimension"])
+            ready = (
+                q_payload.get("active_core") == "Z2_tunnel_Sigma"
+                and q_payload.get("source") == "active_derived"
+                and dimension > 0
+            )
+        except Exception:
+            ready = False
+    return {
+        "gate": "unit_intrinsic_metric_q_ab_inputs",
+        "ready": ready,
+        "intrinsic_dimension": dimension,
+        "basis": "round projective Sigma throat isotropy",
+        "metric_tensor_shape": "R_h_ab = (R_h_trace / d) h_ab",
+        "extrinsic_tensor_shape": "R_K_ab = (R_K_trace / d) h_ab",
+        "does_not_supply": ["R_h_trace", "R_K_trace"],
+    }
 
 
 def build_payload() -> dict:
@@ -35,6 +61,7 @@ def build_payload() -> dict:
     metric_coefficient_writer = build_metric_coefficient_writer_payload()
     symbolic_primitive = build_symbolic_local_primitive_payload()
     partial_coefficients = build_partial_coefficients_payload()
+    trace_reduction = _round_throat_trace_reduction()
     declared = {
         "coframe_connection_pullback_gate_declared": True,
         "residual_one_form_decomposition_gate_declared": True,
@@ -71,6 +98,7 @@ def build_payload() -> dict:
         "active_sigma_boundary_variation_residual_formula_ready": boundary_residual_formula_ready,
         "tetrad_residual_coefficient_explicit": residual_coefficients_explicit,
         "tetrad_torsion_residual_coefficient_reduced": partial_coefficients["gate_passed"],
+        "round_throat_tensor_shape_reduced_to_trace": trace_reduction["ready"],
         "tetrad_residual_in_allowed_basis": residual_coefficients_explicit and basis_ready,
         "tetrad_residual_ready_for_one_form_decomposition": residual_coefficients_explicit and basis_ready,
     }
@@ -123,6 +151,7 @@ def build_payload() -> dict:
                 "output_manifest": partial_coefficients["output_manifest"],
                 "still_requires": partial_coefficients["coefficients"].get("still_requires", []),
             },
+            "round_throat_trace_reduction": trace_reduction,
         },
         "channel_template": "alpha_e = integral_Sigma R_e^a_I delta e_a^I",
         "transport_targets": [
@@ -141,8 +170,7 @@ def build_payload() -> dict:
                     "tetrad_metric_residual_coefficient_value_ready"
                 ],
                 "requires": [
-                    "active metric residual tensor R_h^{ab}",
-                    "active coframe trace e_bJ on Sigma",
+                    "active scalar trace h_ab R_h^{ab}",
                     "allowed local density basis transport",
                 ],
             },
@@ -151,6 +179,8 @@ def build_payload() -> dict:
                     "extrinsic_curvature_variation_transport_ready"
                 ],
                 "status": "transport_closed_coefficients_open",
+                "residual_coefficient": "R_K_ab = (R_K_trace / d) h_ab on the round projective throat",
+                "requires": ["active scalar trace h_ab R_K^{ab}"],
             },
             "torsion_pullback": {
                 "ready": transport_readiness["readiness"][
@@ -173,7 +203,7 @@ def build_payload() -> dict:
             if not ready
         ],
         "next_required": [
-            "expand_R_h_R_K_R_T_R_chi_coefficients_from_active_sigma_boundary_variation",
+            "derive_R_h_trace_and_R_K_trace_from_active_sigma_boundary_variation",
             "feed_coefficients_to_symbolic_local_primitive",
             "feed_R_e_to_residual_one_form_decomposition_gate",
         ],

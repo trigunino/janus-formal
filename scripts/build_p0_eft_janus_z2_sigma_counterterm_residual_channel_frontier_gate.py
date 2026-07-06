@@ -99,6 +99,19 @@ def build_payload() -> dict:
         primary_blocker = "tetrad_residual_coefficients"
     else:
         primary_blocker = f"{nearest_channel}_residual_channel"
+    next_required = []
+    if not channels["tetrad_residual_ready"]:
+        next_required.append("derive_tetrad_residual_coefficients_R_h_R_K_R_T_R_chi")
+    if not channels["connection_residual_ready"]:
+        next_required.append("close_connection_residual_channel_gate")
+    if not channels["spinor_residual_ready"]:
+        next_required.append("close_spinor_residual_channel_gate")
+    if not channels["embedding_residual_ready"]:
+        next_required.append("close_embedding_residual_channel_gate")
+    if not channels["matter_flux_residual_ready"]:
+        next_required.append("close_matter_flux_residual_channel_gate")
+    next_required.append("feed_all_coefficients_to_residual_one_form_decomposition_gate")
+
     return {
         "status": "janus-z2-sigma-counterterm-residual-channel-frontier-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -155,14 +168,7 @@ def build_payload() -> dict:
             for key, ready in channels.items()
             if not ready and key.endswith("_ready")
         ],
-        "next_required": [
-            "derive_tetrad_residual_coefficients_R_h_R_K_R_T_R_chi",
-            "close_connection_residual_channel_gate",
-            "close_spinor_residual_channel_gate",
-            "close_embedding_residual_channel_gate",
-            "close_matter_flux_residual_channel_gate",
-            "feed_all_coefficients_to_residual_one_form_decomposition_gate",
-        ],
+        "next_required": next_required,
     }
 
 

@@ -15,6 +15,8 @@ structure CountertermAttackOrderGate where
   throatRadiusSolutionFrontierImported : Prop
   attackOrderIsDiagnosticOnly : Prop
   circularRadiusCountertermDependencyChecked : Prop
+  lctProfileCurrentlyRequiresRadiusValues : Prop
+  nonCircularTraceRouteRequired : Prop
   symbolicLocalCountertermRouteDeclared : Prop
   noCountertermChannelDropped : Prop
   noFitShortcut : Prop
@@ -25,6 +27,8 @@ structure CountertermAttackOrderGate where
   activeEmbeddingReady : Prop
   rSigmaSolutionCertificateReady : Prop
   symbolicLocalCountertermRouteReady : Prop
+  traceValuesFromFullSigmaActionReady : Prop
+  radialProfileFromResidualContractionsNonCircular : Prop
   countertermAttackOrderReady : Prop
 
 def countertermAttackOrderLedgerDeclared
@@ -35,6 +39,8 @@ def countertermAttackOrderLedgerDeclared
   g.throatRadiusSolutionFrontierImported /\
   g.attackOrderIsDiagnosticOnly /\
   g.circularRadiusCountertermDependencyChecked /\
+  g.lctProfileCurrentlyRequiresRadiusValues /\
+  g.nonCircularTraceRouteRequired /\
   g.symbolicLocalCountertermRouteDeclared /\
   g.noCountertermChannelDropped /\
   g.noFitShortcut /\
@@ -47,6 +53,8 @@ def countertermAttackOrderGatePassed
   g.tetradChannelIsNearestNotReady /\
   g.radiusCountertermCircularDependencyDetected /\
   g.symbolicLocalCountertermRouteReady /\
+  g.traceValuesFromFullSigmaActionReady /\
+  g.radialProfileFromResidualContractionsNonCircular /\
   g.activeEmbeddingReady /\
   g.rSigmaSolutionCertificateReady /\
   g.countertermAttackOrderReady
@@ -55,8 +63,13 @@ theorem attack_order_requires_symbolic_local_counterterm_route
     (g : CountertermAttackOrderGate)
     (h : countertermAttackOrderGatePassed g) :
     g.symbolicLocalCountertermRouteReady := by
-  rcases h with ⟨_, _, _, _, hSymbolic, _, _, _⟩
-  exact hSymbolic
+  exact h.2.2.2.2.1
+
+theorem attack_order_requires_non_circular_trace_values
+    (g : CountertermAttackOrderGate)
+    (h : countertermAttackOrderGatePassed g) :
+    g.traceValuesFromFullSigmaActionReady := by
+  exact h.2.2.2.2.2.1
 
 theorem missing_symbolic_local_counterterm_route_blocks_attack_order
     (g : CountertermAttackOrderGate)
@@ -65,13 +78,19 @@ theorem missing_symbolic_local_counterterm_route_blocks_attack_order
   intro hReady
   exact hMissing (attack_order_requires_symbolic_local_counterterm_route g hReady)
 
+theorem missing_non_circular_trace_values_blocks_attack_order
+    (g : CountertermAttackOrderGate)
+    (hMissing : Not g.traceValuesFromFullSigmaActionReady) :
+    Not (countertermAttackOrderGatePassed g) := by
+  intro hReady
+  exact hMissing (attack_order_requires_non_circular_trace_values g hReady)
+
 theorem diagnostic_nearest_tetrad_does_not_close_attack_order
     (g : CountertermAttackOrderGate)
     (hNotReady : Not g.countertermAttackOrderReady) :
     Not (countertermAttackOrderGatePassed g) := by
   intro hReady
-  rcases hReady with ⟨_, _, _, _, _, _, _, hCounterterm⟩
-  exact hNotReady hCounterterm
+  exact hNotReady hReady.2.2.2.2.2.2.2.2.2
 
 end P0EFTJanusZ2SigmaCountertermAttackOrderGate
 end JanusFormal

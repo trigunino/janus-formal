@@ -14,12 +14,14 @@ class P0EFTJanusZ2SigmaPlusMinusDiracActionLocalReductionGateTests(unittest.Test
         self.assertTrue(payload["declared"]["axial_torsion_coupling_declared"])
         self.assertIn("mass_bilinear_pm", payload["formulas"])
 
-    def test_local_reduction_closure_remains_blocked(self):
+    def test_local_reduction_closes_from_active_matter_action(self):
         payload = build_payload()
 
-        self.assertFalse(payload["closure"]["plus_matter_action_ready"])
-        self.assertFalse(payload["closure"]["plus_mass_bilinear_reduced"])
-        self.assertFalse(payload["plus_minus_dirac_action_local_reduction_ready"])
+        self.assertTrue(payload["closure"]["plus_matter_action_ready"])
+        self.assertTrue(payload["closure"]["plus_mass_bilinear_reduced"])
+        self.assertTrue(payload["plus_minus_dirac_action_local_reduction_ready"])
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["primary_blocker"], "none")
         self.assertIn("feed_result_to_Dirac_mass_term_from_action_gate", payload["next_required"])
 
 

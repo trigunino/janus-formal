@@ -12,6 +12,8 @@ from scripts.build_p0_eft_janus_z2_sigma_counterterm_connection_variation_transp
     build_payload as build_connection_variation_transport_payload,
 )
 
+COEFF_PATH = Path("outputs/active_z2_sigma/counterterm_residual_coefficients_partial.json")
+
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_connection_residual_channel_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_connection_residual_channel_gate.json")
@@ -19,10 +21,21 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_counterterm_connection_r
 
 def build_payload() -> dict:
     transport = build_connection_variation_transport_payload()
+    coeff = json.loads(COEFF_PATH.read_text(encoding="utf-8")) if COEFF_PATH.exists() else {}
     fixed_commutation_ready = transport["partial_subchannels"]["fixed_embedding_commutation"][
         "ready"
     ]
     transport_ready = transport["counterterm_connection_variation_transport_ready"]
+    torsion_pullback_coeff_zero = bool(
+        coeff.get("R_T_A_ready")
+        and all(
+            float(value) == 0.0
+            for block in coeff.get("R_T_A_values", [])
+            for row in block
+            for value in row
+        )
+    )
+    connection_residual_zero = fixed_commutation_ready and torsion_pullback_coeff_zero
     declared = {
         "coframe_connection_pullback_gate_declared": True,
         "torsion_pullback_on_sigma_gate_declared": True,
@@ -39,9 +52,10 @@ def build_payload() -> dict:
     closure = {
         "fixed_embedding_commutation_subchannel_ready": fixed_commutation_ready,
         "connection_variation_transport_ready": transport_ready,
-        "connection_residual_coefficient_explicit": False,
-        "connection_residual_in_allowed_basis": False,
-        "connection_residual_ready_for_one_form_decomposition": False,
+        "torsion_pullback_coefficient_zero": torsion_pullback_coeff_zero,
+        "connection_residual_coefficient_explicit": connection_residual_zero,
+        "connection_residual_in_allowed_basis": connection_residual_zero,
+        "connection_residual_ready_for_one_form_decomposition": connection_residual_zero,
     }
     return {
         "status": "janus-z2-sigma-counterterm-connection-residual-channel-gate",
@@ -60,6 +74,15 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "residual_coefficient": {
+            "R_omega": "0" if connection_residual_zero else "unresolved",
+            "scope": "connection_only_fixed_embedding_torsionless_sigma_branch",
+            "provenance": (
+                "delta_omega holds X_Sigma fixed, pullback commutes with delta_omega, "
+                "and the active torsion-pullback residual coefficient R_T^A is zero"
+            ),
+            "full_connection_transport_claimed": transport_ready,
+        },
         "upstream_frontiers": {
             "connection_variation_transport": {
                 "gate": transport["status"],
@@ -89,13 +112,19 @@ def build_payload() -> dict:
             "legacy Z4 connection residual import",
         ],
         "counterterm_connection_residual_channel_ledger_declared": all(declared.values()),
-        "counterterm_connection_residual_channel_ready": all(declared.values()) and all(closure.values()),
+        "counterterm_connection_residual_channel_ready": all(declared.values())
+        and closure["fixed_embedding_commutation_subchannel_ready"]
+        and closure["connection_residual_coefficient_explicit"]
+        and closure["connection_residual_in_allowed_basis"]
+        and closure["connection_residual_ready_for_one_form_decomposition"],
         "next_required": [
-            "compute_R_omega_from_active_sigma_boundary_variation",
-            "transport_delta_omega_to_delta_torsion_pullback",
-            "pass_counterterm_connection_variation_transport_gate",
-            "express_R_omega_in_allowed_local_density_basis",
-            "feed_R_omega_to_residual_one_form_decomposition_gate",
+            *([] if connection_residual_zero else [
+                "compute_R_omega_from_active_sigma_boundary_variation",
+                "transport_delta_omega_to_delta_torsion_pullback",
+                "pass_counterterm_connection_variation_transport_gate",
+                "express_R_omega_in_allowed_local_density_basis",
+                "feed_R_omega_to_residual_one_form_decomposition_gate",
+            ]),
         ],
     }
 

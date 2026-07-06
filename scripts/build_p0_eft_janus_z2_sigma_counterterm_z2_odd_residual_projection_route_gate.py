@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_equivariant_flux_cancellation_gate impo
 from scripts.build_p0_eft_janus_sigma_boundary_nonlinear_residual_closure_gate import (
     build_payload as build_nonlinear_closure,
 )
+from scripts.build_p0_eft_janus_projective_tunnel_interface import (
+    build_payload as build_projective_tunnel,
+)
 
 
 REPORT_PATH = Path(
@@ -33,6 +36,14 @@ def build_payload() -> dict:
     orientation = build_orientation()
     flux = build_flux_cancellation()
     nonlinear = build_nonlinear_closure()
+    tunnel = build_projective_tunnel()
+    interface = tunnel["projective_tunnel_interface"]
+    paired_support = bool(
+        interface["projective_tunnel_closed"]
+        and interface["two_fold_cover_derived"]
+        and interface["tunnel_throat_sigma_defined"]
+        and nonlinear["sigma_nonlinear_boundary_residual_closed"]
+    )
     declared = {
         "Z2_orientation_reversal_available": orientation[
             "projective_gluing_normal_orientation_sign_ready"
@@ -51,9 +62,7 @@ def build_payload() -> dict:
             "alpha_res_components_available"
         ],
         "alpha_res_Z2_anti_invariance_proved": False,
-        "paired_sheet_residual_support_proved": flux["closure"].get(
-            "Z2_equivariant_embedding_derived", False
-        ),
+        "paired_sheet_residual_support_proved": paired_support,
         "quotient_projection_cancels_alpha_res": False,
         "E_counterterm_zero_without_density": False,
     }
@@ -73,6 +82,12 @@ def build_payload() -> dict:
             "quotient_cancellation": "pi_* alpha_res = 0 on Sigma/Z2",
             "consequence": "E_counterterm = 0 without constructing L_ct",
         },
+        "paired_sheet_support_route": {
+            "gate": tunnel["status"],
+            "ready": paired_support,
+            "basis": "projective two-fold tunnel cover with Sigma throat support",
+            "not_used_for": "matter_flux_equivariance_or_component_parity",
+        },
         "route_ready": ready,
         "gate_passed": ready,
         "primary_blocker": "alpha_res_Z2_anti_invariance"
@@ -86,7 +101,6 @@ def build_payload() -> dict:
         ),
         "next_required": [
             "prove_tau_Z2_pullback_alpha_res_equals_minus_alpha_res",
-            "prove_residual_support_is_paired_across_Sigma",
             "prove_quotient_projection_cancels_odd_residual",
             "then_set_E_counterterm_zero_or_return_to_L_ct_expression_route",
         ],

@@ -35,6 +35,7 @@ class P0EFTJanusZ2SigmaCountertermResidualChannelFrontierGateTests(unittest.Test
             "derive_tetrad_residual_coefficients_R_h_R_K_R_T_R_chi",
             payload["next_required"],
         )
+        self.assertNotIn("close_spinor_residual_channel_gate", payload["next_required"])
         self.assertIn("feed_all_coefficients_to_residual_one_form_decomposition_gate", payload["next_required"])
 
 

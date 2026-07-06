@@ -1,14 +1,26 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_plus_minus_dirac_matter_action_gate import (
+    build_payload as build_dirac_matter_action_payload,
+)
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_matter_current_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_matter_current_gate.json")
 
 
 def build_payload() -> dict:
+    matter_action = build_dirac_matter_action_payload()
+    plus_action_ready = matter_action["closure"]["plus_matter_action_ready"]
+    minus_action_ready = matter_action["closure"]["minus_matter_action_ready"]
+    currents_ready = plus_action_ready and minus_action_ready
     declared = {
         "Dirac_Noether_current_bibliography_checked": True,
         "plus_minus_Dirac_matter_action_gate_declared": True,
@@ -21,11 +33,11 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "plus_matter_action_ready": False,
-        "minus_matter_action_ready": False,
-        "plus_current_ready": False,
-        "minus_current_ready": False,
-        "plus_minus_matter_currents_ready": False,
+        "plus_matter_action_ready": plus_action_ready,
+        "minus_matter_action_ready": minus_action_ready,
+        "plus_current_ready": currents_ready,
+        "minus_current_ready": currents_ready,
+        "plus_minus_matter_currents_ready": currents_ready,
     }
     return {
         "status": "janus-z2-sigma-plus-minus-matter-current-gate",
@@ -44,6 +56,13 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_dirac_matter_action": {
+            "gate": matter_action["status"],
+            "ready": matter_action["plus_minus_dirac_matter_action_ready"],
+            "strict_full_embedding_dirac_matter_action_ready": matter_action[
+                "strict_full_embedding_dirac_matter_action_ready"
+            ],
+        },
         "formulas": {
             "plus_current": "J_+^mu = psi_bar_+ gamma_+^mu psi_+",
             "minus_current": "J_-^mu = psi_bar_- gamma_-^mu psi_-",
@@ -51,12 +70,10 @@ def build_payload() -> dict:
         },
         "plus_minus_matter_current_ledger_declared": all(declared.values()),
         "plus_minus_matter_current_ready": all(declared.values()) and all(closure.values()),
+        "gate_passed": all(declared.values()) and all(closure.values()),
+        "primary_blocker": "none" if all(closure.values()) else "plus_minus_Dirac_matter_action",
         "next_required": [
-            "derive_plus_matter_action_from_active_Z2Sigma_matter_sector",
-            "derive_minus_matter_action_from_active_Z2Sigma_matter_sector",
-            "pass_plus_minus_Dirac_matter_action_gate",
-            "pass_projected_Dirac_matter_current_gate",
-            "derive_J_plus_and_J_minus_from_Noether_variation",
+            "keep_normal_flux_and_density_laws_separate_from_Noether_current",
             "feed_plus_minus_currents_to_normal_matter_current_gate",
             "feed_number_currents_to_Dirac_number_density_gate",
         ],

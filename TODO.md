@@ -2557,6 +2557,58 @@ Completion rule:
     tetrad/connection/chi channels;
   - forbids treating quotient cancellation as proved before
     `tau_Z2^* alpha_res_i = - alpha_res_i` is verified componentwise.
+- [x] Isolate tetrad component parities:
+  - proves the variation-side parity obligations:
+    `delta h_ab` is Z2-even and `delta K_ab` is Z2-odd;
+  - blocks the full `alpha_h/alpha_K` parity proof on coefficient parities:
+    `R_h_ab` must be Z2-odd and `R_K_ab` must be Z2-even;
+  - keeps `E_counterterm=0` by quotient blocked until those coefficient
+    parities are derived from explicit component values.
+- [x] Derive coefficient parities conditionally from odd Sigma density:
+  - from `R_h_ab = -(1/2 h^ab L_ct + partial L_ct/partial h_ab)` and even
+    `h_ab`, an odd `L_ct` implies odd `R_h_ab`;
+  - from `R_K_ab = -partial L_ct/partial K_ab` and odd `K_ab`, an odd `L_ct`
+    implies even `R_K_ab`;
+  - keeps the route blocked on proving `tau_Z2^* L_ct = -L_ct`;
+  - records that `E_counterterm=0` is only the quotient-cancellation bypass,
+    not a required model condition.
+- [x] Test the `L_ct` Z2-odd density route:
+  - `L_ct = -integral alpha_res` plus zero-residual integration constant gives
+    `tau_Z2^* L_ct = -L_ct` only after `alpha_res` anti-invariance is already
+    proved;
+  - using `L_ct` oddness to prove the tetrad components of `alpha_res` is
+    circular;
+  - the non-circular options are now explicit `L_ct_expression` parity or a
+    derived nonzero `E_counterterm(a)` route.
+- [x] Add a toy exact finite-throat diagnostic:
+  - uses `h_ab=R^2 q_ab`, `K_ab^+=+R q_ab`, `K_ab^-=-R q_ab`;
+  - confirms linear `K` terms are Z2-odd, while `K^2` and intrinsic curvature
+    terms are Z2-even;
+  - shows point-collapse power-law integrals can vanish as `R -> 0`;
+  - keeps the result toy-only and not an active counterterm proof.
+- [x] Add a minimal torsionless density basis diagnostic:
+  - filters the candidate local basis to `epsilon_Z2*K`, `K^2`, and `R[h]`;
+  - removes the constant by zero-throat normalization;
+  - excludes torsion and Immirzi/radion gradient terms from the minimal
+    torsionless branch;
+  - shows the three coefficients are not solvable from symmetry alone;
+  - next required constraints are `R_h` trace and `R_K` trace.
+- [x] Vary the minimal density basis on the round-throat toy:
+  - `sqrt(h)L_min = sqrt(q)*(3*c1*epsilon_Z2*R^2 + (9*c2+6*c3)*R)`;
+  - `E_counterterm = partial_R(sqrt(h)L_min)`;
+  - imposing toy `E_counterterm=0` for all `R` gives `c1=0` and
+    `3*c2+2*c3=0`;
+  - one coefficient remains free, so active `R_h/R_K` trace targets are still
+    required.
+- [x] Test both non-circular counterterm routes:
+  - active trace route remains blocked because no active `R_h_trace/R_K_trace`
+    target payload exists;
+  - nonzero `E_counterterm` route is available only parametrically as
+    `E_ct(R)=sqrt(q)*(6*c1*epsilon_Z2*R + 9*c2 + 6*c3)`;
+  - numeric promotion still requires `c1,c2,c3`, `R_Sigma(a)` and volume
+    normalization;
+  - explicit policy: do not claim `E_counterterm=0` and do not fit
+    `c1,c2,c3`.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;

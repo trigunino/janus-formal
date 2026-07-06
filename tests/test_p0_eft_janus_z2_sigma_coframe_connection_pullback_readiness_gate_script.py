@@ -19,14 +19,18 @@ class P0EFTJanusZ2SigmaCoframeConnectionPullbackReadinessGateTests(unittest.Test
         self.assertTrue(payload["readiness"]["coframe_pullback_formula_ready"])
         self.assertTrue(payload["readiness"]["spin_connection_pullback_formula_ready"])
 
-    def test_active_embedding_still_blocks_actual_pullbacks(self):
+    def test_local_components_manifest_unblocks_actual_pullbacks(self):
         payload = build_payload()
 
         self.assertFalse(payload["readiness"]["active_embedding_ready"])
         self.assertFalse(payload["readiness"]["tangent_frame_ready"])
-        self.assertFalse(payload["readiness"]["coframe_pullback_ready"])
+        self.assertTrue(payload["readiness"]["coframe_pullback_ready"])
+        self.assertTrue(payload["readiness"]["spin_connection_pullback_ready"])
         self.assertFalse(payload["upstream_frontiers"]["active_embedding"]["ready"])
         self.assertFalse(payload["upstream_frontiers"]["tangent_normal_orientation"]["ready"])
+        self.assertTrue(
+            payload["upstream_frontiers"]["coframe_connection_components_manifest"]["valid"]
+        )
         self.assertFalse(payload["coframe_connection_pullback_readiness_ready"])
         self.assertFalse(payload["gate_passed"])
         self.assertEqual(payload["primary_blocker"], "R_Sigma_solution_certificate")

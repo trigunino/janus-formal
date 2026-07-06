@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_counterterm_spinor_residual_channel_gate import (
+    build_payload as build_spinor_residual_payload,
+)
+from scripts.derive_p0_eft_janus_z2_sigma_remaining_non_ghy_counterterm_channel_audit import (
+    build_payload as build_remaining_non_ghy,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_sigma_boundary_nonlinear_residual_closure_gate.md")
@@ -9,6 +21,27 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_sigma_boundary_nonlinear_residual
 
 
 def build_payload() -> dict:
+    spinor = build_spinor_residual_payload()
+    remaining = build_remaining_non_ghy()
+    spinor_ready = bool(spinor["counterterm_spinor_residual_channel_ready"])
+    known_component_values = {
+        "torsion_pullback_component": {
+            "R_T_A": "0",
+            "scope": "active_torsionless_boundary_branch",
+        }
+    }
+    if spinor_ready:
+        known_component_values["spinor_component"] = spinor["projected_residual_coefficients"]
+    if not remaining["open_non_GHY_channels"]["connection_residual_channel"]:
+        known_component_values["connection_component"] = {
+            "R_omega": "0",
+            "scope": "fixed_embedding_torsionless_sigma_branch",
+        }
+    if not remaining["open_non_GHY_channels"]["matter_flux_residual_channel"]:
+        known_component_values["matter_flux_component"] = {
+            "R_matter": "0",
+            "scope": "perfect_fluid_tangential_matter_sector",
+        }
     closure = {
         "sigma_boundary_variational_package_declared": True,
         "nonlinear_residual_obstruction_isolated": True,
@@ -48,14 +81,14 @@ def build_payload() -> dict:
         {
             "name": "connection_component",
             "symbol": "alpha_omega = integral_Sigma sqrt|h| R_omega delta omega",
-            "value_emitted": False,
+            "value_emitted": "connection_component" in known_component_values,
             "parity_obligation": "Z2 oriented pullback parity",
         },
         {
             "name": "spinor_component",
             "symbol": "alpha_psi = integral_Sigma sqrt|h| (R_psi delta psi + delta psibar R_psibar)",
-            "value_emitted": False,
-            "parity_obligation": "spinor soldering/current parity",
+            "value_emitted": spinor_ready,
+            "parity_obligation": "zero under local Sigma reflecting projected variation",
         },
         {
             "name": "embedding_component",
@@ -66,19 +99,22 @@ def build_payload() -> dict:
         {
             "name": "matter_flux_component",
             "symbol": "alpha_F = integral_Sigma sqrt|h| F_a delta X^a",
-            "value_emitted": False,
+            "value_emitted": "matter_flux_component" in known_component_values,
             "parity_obligation": "Z2 equivariant flux cancellation or transparency",
         },
     ]
     component_emission = {
         "alpha_res_components_available": True,
         "alpha_res_component_decomposition_available": True,
+        "alpha_res_partial_component_values_available": bool(known_component_values),
         "alpha_res_component_values_available": False,
         "alpha_res_component_names": [component["name"] for component in alpha_res_components],
         "alpha_res_components": alpha_res_components,
+        "known_alpha_res_component_values": known_component_values,
         "R_h_ab_emitted": False,
         "R_K_ab_emitted": False,
         "R_chi_emitted": False,
+        "R_psi_R_psibar_emitted": spinor_ready,
         "L_ct_expression_emitted": False,
     }
     return {
@@ -95,12 +131,12 @@ def build_payload() -> dict:
             "alpha_res_component_values_available"
         ],
         "component_emission_obligation": (
-            "The gate now emits the alpha_res component schema. It still must emit "
-            "explicit component values before deriving L_ct_expression or R_h/R_K values."
+            "The gate emits the alpha_res schema and known zero components. It still "
+            "must emit R_h/R_K/full R_chi values before deriving L_ct_expression."
         ),
         "next_required": [
-            "emit_alpha_res_component_values",
-            "emit_R_h_ab_R_K_ab_R_chi_or_L_ct_expression",
+            "emit_metric_extrinsic_immirzi_alpha_res_component_values",
+            "emit_R_h_ab_R_K_ab_full_R_chi_values",
         ],
         "interpretation": (
             "The isolated nonlinear Sigma boundary residual is cancelled by the "
@@ -121,6 +157,7 @@ def write_reports() -> dict:
             f"Nonlinear residual closed: `{payload['sigma_nonlinear_boundary_residual_closed']}`",
             f"Full boundary action closed: `{payload['sigma_full_boundary_action_closed']}`",
             f"Alpha component schema available: `{payload['component_emission']['alpha_res_component_decomposition_available']}`",
+            f"Partial component values available: `{payload['component_emission']['alpha_res_partial_component_values_available']}`",
             f"Alpha component values available: `{payload['component_emission']['alpha_res_component_values_available']}`",
         ]),
         encoding="utf-8",

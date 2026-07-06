@@ -21,8 +21,24 @@ def build_payload() -> dict:
     }
     closure = {
         "E_CartanGHY_structural_reduction_ready": True,
+        "E_CartanGHY_symbolic_R_block_ready": True,
         "E_CartanGHY_of_a_ready": False,
         "R_Sigma_of_a_required": True,
+    }
+    symbolic = {
+        "route": "isotropic_active_throat_collar",
+        "assumptions": [
+            "h_ab = R_Sigma^2 q_ab",
+            "K_ab = 1/2 partial_R h_ab = R_Sigma q_ab",
+            "dim Sigma = 3",
+        ],
+        "sqrt_abs_h": "R_Sigma^3 sqrt(det(q))",
+        "K_trace": "3/R_Sigma",
+        "partial_R_K_trace": "-3/R_Sigma^2",
+        "trace_h_inv_partial_R_h": "6/R_Sigma",
+        "E_CartanGHY_of_R": "6 eps_Z2 sqrt(det(q)) R_Sigma / kappa_Z2Sigma",
+        "non_circular_R_equation_input": True,
+        "not_an_R_Sigma_solution_certificate": True,
     }
     return {
         "status": "janus-z2-sigma-cartan-ghy-radial-block-gate",
@@ -44,16 +60,22 @@ def build_payload() -> dict:
             "E_CartanGHY = eps_Z2/kappa * delta_RSigma[ sqrt(|h|) K ] "
             "= eps_Z2/kappa * sqrt(|h|) * (partial_R K + 1/2 K h^ab partial_R h_ab)"
         ),
+        "symbolic_R_block": symbolic,
         "cartan_ghy_radial_ledger_declared": all(declared.values()),
         "cartan_ghy_radial_block_reduced": all(declared.values())
         and closure["E_CartanGHY_structural_reduction_ready"],
+        "cartan_ghy_symbolic_R_block_ready": all(declared.values())
+        and closure["E_CartanGHY_structural_reduction_ready"]
+        and closure["E_CartanGHY_symbolic_R_block_ready"],
         "cartan_ghy_radial_block_of_a_ready": all(declared.values())
         and closure["E_CartanGHY_structural_reduction_ready"]
         and closure["E_CartanGHY_of_a_ready"],
         "next_required": [
-            "insert_active_R_Sigma_of_a",
-            "insert_active_X_plus_minus_of_a",
-            "evaluate_partial_R_h_ab_and_partial_R_K_on_Sigma",
+            "use_symbolic_E_CartanGHY_of_R_in_E_RSigma_before_solving_R_Sigma_of_a",
+            "derive_counterterm_trace_residual_inputs_R_h_R_K",
+            "derive_E_counterterm_of_R_or_eliminate_it",
+            "solve_E_RSigma(R,a)=0_for_R_Sigma_of_a",
+            "then_insert_active_X_plus_minus_of_a",
             "propagate_E_CartanGHY_into_E_RSigma_block_sum",
         ],
     }
@@ -72,6 +94,10 @@ def write_reports() -> dict:
         "",
         "## Structural Formula",
         f"`{payload['structural_formula']}`",
+        "",
+        "## Symbolic R Block",
+        f"`{payload['symbolic_R_block']['E_CartanGHY_of_R']}`",
+        f"Ready: `{payload['cartan_ghy_symbolic_R_block_ready']}`",
         "",
         "## Next Required",
     ]

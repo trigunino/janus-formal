@@ -1,14 +1,27 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_projected_dirac_action_reduction_gate import (
+    EMBEDDING_MANIFEST_PATH,
+    build_payload as build_projected_dirac_action_reduction_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_dirac_matter_action_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_plus_minus_dirac_matter_action_gate.json")
 
 
-def build_payload() -> dict:
+def build_payload(*, embedding_manifest_path: Path = EMBEDDING_MANIFEST_PATH) -> dict:
+    reduction = build_projected_dirac_action_reduction_payload(
+        embedding_manifest_path=embedding_manifest_path
+    )
     declared = {
         "curved_Dirac_action_bibliography_checked": True,
         "Holst_fermion_bibliography_checked": True,
@@ -22,13 +35,23 @@ def build_payload() -> dict:
         "observational_fit_forbidden": True,
     }
     closure = {
-        "coframe_connection_pullback_ready": False,
-        "plus_spinor_data_ready": False,
-        "minus_spinor_data_ready": False,
-        "plus_matter_action_ready": False,
-        "minus_matter_action_ready": False,
-        "plus_minus_matter_actions_ready": False,
+        "coframe_connection_pullback_ready": reduction["closure"][
+            "coframe_connection_pullback_ready"
+        ],
+        "plus_spinor_data_ready": reduction["closure"][
+            "plus_minus_spinor_projection_ready"
+        ],
+        "minus_spinor_data_ready": reduction["closure"][
+            "plus_minus_spinor_projection_ready"
+        ],
+        "plus_matter_action_ready": reduction["closure"]["plus_Dirac_action_reduced"],
+        "minus_matter_action_ready": reduction["closure"]["minus_Dirac_action_reduced"],
+        "plus_minus_matter_actions_ready": reduction["closure"][
+            "plus_minus_matter_actions_ready"
+        ],
     }
+    ready = all(declared.values()) and all(closure.values())
+    blockers = [key for key, value in closure.items() if not value]
     return {
         "status": "janus-z2-sigma-plus-minus-dirac-matter-action-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -46,6 +69,12 @@ def build_payload() -> dict:
         ),
         "declared": declared,
         "closure": closure,
+        "upstream_projected_dirac_action_reduction": {
+            "gate": reduction["status"],
+            "ready": reduction["projected_dirac_action_reduction_ready"],
+            "primary_blocker": reduction["primary_blocker"],
+            "closure": reduction["closure"],
+        },
         "formulas": {
             "plus_action": "S_D,+ = integral_M+ e_+ psi_bar_+ (i gamma_+^I e_I^mu D_mu^+ - m_+) psi_+",
             "minus_action": "S_D,- = integral_M- e_- psi_bar_- (i gamma_-^I e_I^mu D_mu^- - m_-) psi_-",
@@ -53,7 +82,10 @@ def build_payload() -> dict:
             "projection": "S_D^Z2Sigma = P_Z2Sigma(S_D,+, S_D,-, Sigma spinor boundary data)",
         },
         "plus_minus_dirac_matter_action_ledger_declared": all(declared.values()),
-        "plus_minus_dirac_matter_action_ready": all(declared.values()) and all(closure.values()),
+        "local_plus_minus_dirac_matter_action_ready": ready,
+        "strict_full_embedding_dirac_matter_action_ready": False,
+        "plus_minus_dirac_matter_action_ready": ready,
+        "primary_blocker": "none" if ready else blockers[0],
         "next_required": [
             "pass_coframe_connection_pullback_gate",
             "derive_plus_minus_spinor_bundle_data_on_resolved_tunnel",

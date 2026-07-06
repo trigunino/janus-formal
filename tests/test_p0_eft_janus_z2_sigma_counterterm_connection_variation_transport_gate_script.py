@@ -13,7 +13,7 @@ class P0EFTJanusZ2SigmaCountertermConnectionVariationTransportGateTests(unittest
         self.assertIn("delta_omega T^I", payload["formulae"]["fixed_coframe_torsion_variation"])
         self.assertIn("fitted transport coefficient", payload["forbidden"])
 
-    def test_connection_variation_transport_remains_open_until_pullback_is_proved(self):
+    def test_connection_variation_transport_remains_open_until_full_pullback_is_proved(self):
         payload = build_payload()
 
         self.assertTrue(payload["closure"]["fixed_embedding_commutation_subchannel_ready"])

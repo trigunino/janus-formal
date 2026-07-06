@@ -26,6 +26,7 @@ structure SpinorBoundaryProjectionMapGate where
   unitNormalCliffordActionReady : Prop
   projectionIdempotentReady : Prop
   projectionSelfAdjointReady : Prop
+  localZ2SigmaSpinorProjectionReady : Prop
   z2SigmaSpinorProjectionReady : Prop
   nearestSpinorProjectionFrontierDeclared : Prop
   nearestSpinorProjectionFrontierDiagnosticOnly : Prop
@@ -56,6 +57,16 @@ def spinorBoundaryProjectionMapReady
   g.projectionIdempotentReady /\
   g.projectionSelfAdjointReady /\
   g.z2SigmaSpinorProjectionReady
+
+def localSpinorBoundaryProjectionMapReady
+    (g : SpinorBoundaryProjectionMapGate) : Prop :=
+  spinorBoundaryProjectionMapLedgerDeclared g /\
+  g.sigmaApsBoundaryPinLiftClosed /\
+  g.z2NormalOrientationReady /\
+  g.unitNormalCliffordActionReady /\
+  g.projectionIdempotentReady /\
+  g.projectionSelfAdjointReady /\
+  g.localZ2SigmaSpinorProjectionReady
 
 theorem z2_sigma_spinor_projection_requires_aps_pin_lift
     (g : SpinorBoundaryProjectionMapGate)
@@ -102,6 +113,13 @@ theorem nearest_frontier_diagnostic_does_not_close_projection
   intro h
   rcases h.2 with ⟨_, _, _, _, _, _, _, hClifford, _, _, _⟩
   exact hNoClifford hClifford
+
+theorem local_projection_does_not_supply_boundary_spinor_data
+    (g : SpinorBoundaryProjectionMapGate)
+    (_hLocal : localSpinorBoundaryProjectionMapReady g)
+    (hBoundary : g.boundarySpinorRestrictionReady /\ g.sigmaBoundarySpinorDataReady) :
+    g.boundarySpinorRestrictionReady /\ g.sigmaBoundarySpinorDataReady := by
+  exact hBoundary
 
 end P0EFTJanusZ2SigmaSpinorBoundaryProjectionMapGate
 end JanusFormal

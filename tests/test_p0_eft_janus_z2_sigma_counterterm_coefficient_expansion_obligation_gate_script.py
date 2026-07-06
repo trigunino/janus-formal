@@ -16,7 +16,8 @@ class CountertermCoefficientExpansionObligationGateTests(unittest.TestCase):
         self.assertFalse(payload["explicit_coefficient_expansion_ready"])
         self.assertFalse(payload["counterterm_local_density_action_inputs_allowed"])
         self.assertTrue(payload["variational_coefficient_formula_closed"])
-        self.assertEqual(payload["primary_blocker"], "explicit_L_ct_expression")
+        self.assertEqual(payload["primary_blocker"], "tetrad_residual_coefficients")
+        self.assertFalse(payload["residual_channel_frontier"]["ready"])
         self.assertFalse(payload["lct_expression_obstruction"]["L_ct_expression_derivable_now"])
         self.assertEqual(
             payload["lct_expression_obstruction"]["primary_blocker"],
@@ -27,7 +28,13 @@ class CountertermCoefficientExpansionObligationGateTests(unittest.TestCase):
         self.assertFalse(ready["R_h_ab"])
         self.assertFalse(ready["R_K_ab"])
         self.assertTrue(ready["R_T_A"])
-        self.assertIn("derive_explicit_L_ct_expression_in_allowed_basis", payload["next_required"])
+        self.assertIn("derive_R_h_trace_from_active_boundary_residual", payload["next_required"])
+        self.assertIn("write_counterterm_trace_residual_inputs_json", payload["next_required"])
+        self.assertEqual(
+            payload["trace_residual_tensor_writer"]["formula"],
+            "R^{ab} = (R_trace/d) q^{ab}",
+        )
+        self.assertIn("close_connection_residual_channel", payload["next_required"])
 
 
 if __name__ == "__main__":
