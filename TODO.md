@@ -2951,6 +2951,124 @@ Completion rule:
   - Lean ledger:
     `P0EFTJanusZ2CoverBianchiSigmaSourceFrontierGate` records that this is
     not a full Bianchi closure until the Sigma source is supplied.
+- MPLA singularity paper extraction:
+  - `MPLA_singularity_elimination_local_model` is now recorded as an auxiliary
+    local Schwarzschild-throat model with
+    `R(rho)=R_s*(1+log(cosh(rho)))`;
+  - it gives a regular Z2 throat diagnostic:
+    `R_Sigma/R_s=1`, `R'(0)=0`, `R''(0)/R_s=1`;
+  - it supports the Z2 fold/orientation/mass-inversion reading, but it does not
+    fix the absolute scale `R_s` or derive counterterm coefficients.
+- Surface-action no-extension decision:
+  - `P0EFTJanusZ2SigmaSurfaceActionOrNoGoGate` combines MPLA throat,
+    projective ratio, Souriau charge, flux transparency and the counterterm chain;
+  - current inputs underselect a unique active `L_Sigma(h,K,...)`;
+  - `E_counterterm` and `sigma_alpha_h` remain open unless a genuine local Sigma
+    density, boundary Hamiltonian variation, trace residual input, or explicit
+    surface-action extension is supplied.
+- Active pivot after reference review:
+  - do not change the model: keep `Z2_tunnel_Sigma`;
+  - change the route: start from the published bimetric bulk action plus Bianchi
+    source-slot reduction before trying to invent a local Sigma counterterm;
+  - next derivation order is interaction tensor slots -> reduced Bianchi closure
+    -> transport to Sigma -> decide whether any extra Sigma surface term remains.
+- Published interaction slots:
+  - `P0EFTJanusZ2PublishedInteractionSlotsGate` maps the PDF action terms to
+    active slots `T_plus`, `T_minus`, `T_minus_to_plus`, `T_plus_to_minus` and
+    determinant bridges `B_minus_to_plus`, `B_plus_to_minus`;
+  - the gate intentionally blocks Sigma transport until a reduced Bianchi closure
+    or complete nonlinear interaction tensor is derived.
+- Published FLRW Bianchi reduction:
+  - homogeneous dust scalar-density sector is closed with determinant/lapse guards;
+  - this is a valid reduced sector, not a generic nonlinear interaction tensor and
+    not a Sigma junction/source closure.
+- Published stationary SO(3)/TOV/Newtonian Bianchi reduction:
+  - same-sector attraction and opposite-sector repulsion are recorded as the
+    reduced compact-object sign sector;
+  - determinant-ratio unity and Bianchi closure are only asymptotic/reduced;
+  - this is not a generic nonlinear interaction tensor, not a Sigma source, and
+    not an `R_Sigma(a)` certificate.
+- SO(3) throat embedding manifest:
+  - MPLA radius law gives a Z2-even minimal throat stencil
+    `R(rho)=R_s*(1+log(cosh(rho)))`;
+  - this supplies a stationary SO(3) embedding skeleton for Sigma;
+  - metric functions, Christoffels, unit normals and `DeltaK_s/DeltaK_tau`
+    remain open.
+- Signed Schwarzschild SO(3) metric diagnostic:
+  - published exterior blocks reduce to `f_epsilon(R)=1-epsilon*R_s/R`;
+  - same-sign attractive block has `f(R_s)=0`, while opposite-sign repulsive
+    block has `f(R_s)=2`;
+  - the standard exterior-coordinate thin-shell `K_ab` formula is therefore
+    degenerate at the throat and cannot close active `DeltaK`;
+  - next concrete route is a regular throat collar/Kruskal-like chart at `R=R_s`,
+    or diagnostic-only tests at `R>R_s`.
+- Regular SO(3) throat collar frontier:
+  - active regular Sigma branch needs a non-degenerate `(T,rho)` collar block
+    `A(rho), B(rho), C(rho)`;
+  - MPLA degenerate bridge interpretation is kept diagnostic-only because it can
+    conflict with regular `h_ab`, `K_ab`, and `sqrt|h|` assumptions;
+  - `DeltaK` can only be derived after the regular collar functions are derived
+    from the Z2 bimetric field equations.
+- Eddington/PT cross-term throat diagnostic:
+  - chapter 6 supplies the useful clue: keep a `dr dt` cross term;
+  - in `(T,R)` coordinates, the block
+    `ds^2=(1-R_s/R)dT^2 - 2(R_s/R)dT dR - (1+R_s/R)dR^2`
+    has determinant `-1`, so the bulk chart is regular at `R=R_s`;
+  - however the induced `R=R_s` throat is null, and the even fold
+    `R(rho)` with `R'(0)=0` degenerates the `(T,rho)` block;
+  - therefore this is a null-Sigma/PT-bridge branch, not a closure of the
+    current regular `h_ab,K_ab` counterterm pipeline.
+- Null Sigma / PT bridge branch:
+  - explicit branch facade: `JanusFormal.NullSigmaPTBridge`;
+  - source alignment follows chapter 6/7 and EPJC summary:
+    retained `dr dt`, one-way bridge, PT-symmetric sheets, orientation/time
+    reversal, Souriau mass-energy inversion, projective/tubular topology;
+  - regular `h_ab,K_ab`, GHY/Israel/Cartan and `L_ct(h,K,...)` are forbidden on
+    this branch;
+  - next concrete objects are null-boundary variables
+    `l`, `n`, `q_AB`, `theta`, `sigma_AB`, `kappa` and a null junction/Bianchi
+    balance.
+- Parallel branch status:
+  - regular branch algebra now isolates the hard condition:
+    `A(0) != 0` is required for invertible induced `h_ab`; the Eddington/PT
+    horizon has `A(0)=0` and is therefore excluded from regular `h,K`;
+  - null branch declares concrete horizon variables:
+    `l=(1,0,0,0)`, `n=(-1,1,0,0)`, `l.n=-1`, `q_AB=R_s^2 dOmega^2`,
+    `theta_l=0`, `shear=0`, `kappa_l=1/(2R_s)`;
+  - null boundary density is now identified as `sqrt(q) kappa_l`, with
+    generator-rescaling ambiguity and corner/joint variation slots recorded;
+  - the SO(3) radial variation of `sqrt(q) kappa_l` is now reduced:
+    for `R_s=1`, `delta[sqrt(q) kappa_l]/sin(theta) = 0.5 deltaR_s`;
+  - the canonical PT joint term is reduced under `l_+ . n_- = -1`: the
+    logarithmic joint density and its variation vanish;
+  - Barrabes-Israel data are reduced only on the plus side:
+    `C_TT=1/(2R_s)`, `q^AB C_AB=-2/R_s`; null-shell stress still needs a
+    derived inter-sheet jump `[C_ab]`;
+  - source check against chapter 6.7 shows a better active route: the PT
+    transfer metric with sign-flipped integration constant has at `r=a`
+    `g_tt=2`, `g_rr=0`, `det(T,r)=-1`, so the induced surface is not
+    degenerate; therefore the null-shell branch is exhausted as diagnostic and
+    should not be promoted. Next active route: derive `h_ab,K_ab` for the
+    regular chapter-6.7 PT transfer surface.
+- Chapter-6.7 regular PT transfer surface:
+  - metric route encoded as
+    `A=1+R_s/r`, `B=1-R_s/r`, `C=epsilon R_s/r`, with
+    `epsilon=-1` on the first sheet and `epsilon=+1` on the second;
+  - at `r=R_s`: `det(T,r)=-1`, `h_TT=2`, `h_AB=-R_s^2 gamma_AB`,
+    so the induced surface is non-degenerate and the regular `h,K` pipeline is
+    locally allowed;
+  - local unit normal and extrinsic curvature are derived:
+    `n=dr/sqrt(2)`, `K_TT=1/(sqrt(2)R_s)`,
+    `K_AB=sqrt(2)R_s gamma_AB`;
+  - PT gluing orientation is now fixed by `dt -> -dt`, `dr -> dr`: the normal
+    covector is invariant, `K_TT` has two time tangents, and `K_AB` is screen
+    transported, hence `DeltaK_PT=0` without a free sign;
+  - this is a PT-transport raccord, not the standard outward-normal
+    Israel cut-and-paste jump.
+  - active writer:
+    `write_p0_eft_janus_z2_pt67_regular_sigma_hk_inputs.py` writes
+    `outputs/active_z2_sigma/pt67_regular_sigma_hk_inputs.json` with
+    nondegenerate `h_ab`, unit normal, local `K_ab`, and `DeltaK_PT=0`.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;
