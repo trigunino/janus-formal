@@ -19,7 +19,7 @@ class CountertermAlphaResExtractionAttemptGateTests(unittest.TestCase):
             self.assertEqual(payload["primary_blocker"], "tetrad_residual_coefficients")
             self.assertEqual(
                 payload["tetrad_value_extraction"]["primary_blocker"],
-                "nonlinear_closure_lacks_alpha_res_components",
+                "nonlinear_closure_lacks_alpha_res_component_values",
             )
             self.assertTrue(output.exists())
             written = json.loads(output.read_text(encoding="utf-8"))

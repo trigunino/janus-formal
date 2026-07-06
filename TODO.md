@@ -2537,8 +2537,26 @@ Completion rule:
     or `L_ct_expression`.
 - [x] Refine the nonlinear Sigma closure source gate:
   - keeps cancellation/uniqueness closed;
-  - exposes `component_emission.alpha_res_components_available = false`;
-  - records the next source-level obligation as `emit_alpha_res_components`.
+  - emits the `alpha_res` component schema:
+    metric tetrad, extrinsic tetrad, torsion pullback, Immirzi/radion,
+    connection, spinor, embedding and matter-flux;
+  - keeps `alpha_res_component_values_available = false`;
+  - records the next source-level obligation as `emit_alpha_res_component_values`.
+- [x] Add the Janus/Z2 odd-residual bypass route:
+  - tests whether `tau_Z2^* alpha_res = - alpha_res` could imply quotient
+    cancellation and `E_counterterm=0`;
+  - keeps the route blocked because anti-invariance of `alpha_res` is not proved.
+- [x] Expand the Z2 anti-invariance obligation channel by channel:
+  - confirms the route is `credible_but_blocked`, not closed;
+  - uses available Z2 normal reversal, component schema and torsionless Holst
+    boundary flux;
+  - proves the conditional Lean bridge: componentwise odd emitted components
+    imply `alpha_res` anti-invariance;
+  - blocks on componentwise parity proofs, paired residual support,
+    matter/stress equivariance, spinor-current parity and explicit values for
+    tetrad/connection/chi channels;
+  - forbids treating quotient cancellation as proved before
+    `tau_Z2^* alpha_res_i = - alpha_res_i` is verified componentwise.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;

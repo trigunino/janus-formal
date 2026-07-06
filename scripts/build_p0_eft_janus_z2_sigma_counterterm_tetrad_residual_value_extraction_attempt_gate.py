@@ -34,7 +34,7 @@ def build_payload() -> dict:
     tetrad = build_tetrad_channel()
     formula = build_formula()
     component_emission = nonlinear.get("component_emission", {})
-    closure_has_values = bool(component_emission.get("alpha_res_components_available"))
+    closure_has_values = bool(component_emission.get("alpha_res_component_values_available"))
     return {
         "status": "janus-z2-sigma-counterterm-tetrad-residual-value-extraction-attempt-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -56,15 +56,16 @@ def build_payload() -> dict:
         "R_K_ab_value_extractable": False,
         "counterterm_metric_residual_tensor_inputs_written": False,
         "counterterm_extrinsic_residual_tensor_inputs_written": False,
-        "primary_blocker": "nonlinear_closure_lacks_alpha_res_components",
+        "primary_blocker": "nonlinear_closure_lacks_alpha_res_component_values",
         "obstruction": (
             "The active nonlinear Sigma residual closure proves cancellation/uniqueness "
-            "but does not expose alpha_res components, L_ct_expression, R_h_ab, or R_K_ab. "
+            "and now exposes the alpha_res component schema, but it does not expose "
+            "component values, L_ct_expression, R_h_ab, or R_K_ab. "
             "The tetrad transport and variational formulas are closed, so the remaining "
             "missing input is the explicit residual tensor data, not transport."
         ),
         "next_required": [
-            "refine_sigma_boundary_nonlinear_residual_closure_to_emit_alpha_res_components",
+            "refine_sigma_boundary_nonlinear_residual_closure_to_emit_alpha_res_component_values",
             "or_provide_explicit_L_ct_expression_from_boundary_residual",
             "then_run_residual_tensors_from_local_density_action",
         ],

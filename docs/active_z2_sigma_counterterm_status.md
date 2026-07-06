@@ -18,9 +18,12 @@
 
 ## Active Blocker
 
-The nonlinear Sigma closure is still component-free:
+The nonlinear Sigma closure now emits a component schema but not component
+values:
 
-- `alpha_res_components_available = false`
+- `alpha_res_components_available = true`
+- `alpha_res_component_decomposition_available = true`
+- `alpha_res_component_values_available = false`
 - `R_h_ab_emitted = false`
 - `R_K_ab_emitted = false`
 - `R_chi_emitted = false`
@@ -49,10 +52,35 @@ Therefore the model cannot yet write:
 ## Next Physical Target
 
 Refine `P0EFTJanusSigmaBoundaryNonlinearResidualClosureGate` from boolean
-cancellation/uniqueness into component emission:
+cancellation/uniqueness into component-value emission:
 
-- emit `alpha_res_components`, or
+- emit explicit `alpha_res_component_values`, or
 - emit explicit `L_ct_expression`, or
 - emit `R_h_ab`, `R_K_ab`, `R_chi`.
 
 No downstream counterterm radial closure is allowed before this.
+
+## Outside-Box Z2 Route
+
+A possible bypass exists only if the residual one-form is odd under the Janus
+sheet exchange:
+
+`tau_Z2^* alpha_res = - alpha_res`.
+
+Then the quotient projection could cancel the Sigma residual and give
+`E_counterterm = 0` without constructing `L_ct`.
+
+Current status:
+
+- Z2 normal orientation reversal is available.
+- The torsionless Holst boundary flux slot is available.
+- The `alpha_res` component schema is available.
+- The anti-invariance of `alpha_res` is not proved.
+- Route status: `credible_but_blocked`.
+- Primary blocker: `componentwise_parity_proofs`.
+- Open channel tests:
+  - `all_emitted_components_odd = false`
+  - `matter_flux_channel = false`
+  - `stress_tensor_channel = false`
+  - `spinor_current_channel = false`
+  - `paired_sheet_residual_support = false`

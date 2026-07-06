@@ -726,16 +726,32 @@ Archived CMB/Z4 master-equation status:
   `S_ct` plus the variation formula is insufficient. The active residual
   one-form `alpha_res` must be explicit and exact before `L_ct_expression` can
   be integrated.
+- `build_p0_eft_janus_sigma_boundary_nonlinear_residual_closure_gate.py` now
+  emits the `alpha_res` component schema:
+  metric tetrad, extrinsic tetrad, torsion pullback, Immirzi/radion,
+  connection, spinor, embedding and matter-flux. It still does not emit the
+  component values needed for `R_h_ab/R_K_ab/R_chi` or `L_ct_expression`.
 - `build_p0_eft_janus_z2_sigma_counterterm_alpha_res_extraction_attempt_gate.py`
   writes the current partial `alpha_res`: torsion and Immirzi radial contractions
   are known on the active torsionless branch, while the tetrad channel still
-  blocks on explicit `R_h_ab/R_K_ab`.
+  blocks on explicit component values for `R_h_ab/R_K_ab`.
 - `build_p0_eft_janus_z2_sigma_counterterm_tetrad_residual_value_extraction_attempt_gate.py`
   confirms that the tetrad transport and variation formula are closed, but the
   current nonlinear Sigma closure is boolean-only: it proves cancellation, not
   the explicit `alpha_res` tensor components needed for `R_h_ab/R_K_ab`.
 - `docs/active_z2_sigma_counterterm_status.md` is the compact current index for
   the active counterterm branch and its live blocker.
+- `build_p0_eft_janus_z2_sigma_counterterm_z2_odd_residual_projection_route_gate.py`
+  records the only current Janus-specific bypass: if
+  `tau_Z2^* alpha_res = - alpha_res`, the quotient projection could set
+  `E_counterterm=0` without an explicit `L_ct`. This anti-invariance is not
+  proved yet.
+- `build_p0_eft_janus_z2_sigma_counterterm_alpha_res_z2_anti_invariance_obligation_gate.py`
+  expands that bypass into channel tests. The route is `credible_but_blocked`:
+  Z2 normal reversal, the component schema and the torsionless Holst boundary
+  slot are available, but componentwise parities, paired residual support,
+  matter/stress equivariance and spinor-current parity are not yet strong enough
+  to prove `tau_Z2^* alpha_res = - alpha_res`.
 - `P0EFTJanusZ2SigmaRSigmaCertificatePayloadInputWriterGate` now marks
   `rsigma_certificate_payload.json` as a template, not a solution certificate.
   Only the isotropic balance solver may promote it to

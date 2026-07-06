@@ -20,8 +20,62 @@ def build_payload() -> dict:
         "nonlinear_boundary_variation_on_sigma_closed": True,
         "full_boundary_action_closed_on_sigma": True,
     }
+    alpha_res_components = [
+        {
+            "name": "metric_tetrad_component",
+            "symbol": "alpha_h = integral_Sigma sqrt|h| R_h_ab delta h^ab",
+            "value_emitted": False,
+            "parity_obligation": "tau_Z2^* alpha_h = - alpha_h",
+        },
+        {
+            "name": "extrinsic_tetrad_component",
+            "symbol": "alpha_K = integral_Sigma sqrt|h| R_K_ab delta K^ab",
+            "value_emitted": False,
+            "parity_obligation": "tau_Z2^* alpha_K = - alpha_K",
+        },
+        {
+            "name": "torsion_pullback_component",
+            "symbol": "alpha_T = integral_Sigma sqrt|h| R_T^A delta T_A",
+            "value_emitted": True,
+            "parity_obligation": "zero_on_active_torsionless_branch_or_Z2_odd",
+        },
+        {
+            "name": "immirzi_radion_component",
+            "symbol": "alpha_chi = integral_Sigma sqrt|h| R_chi delta chi",
+            "value_emitted": False,
+            "parity_obligation": "radial contraction zero known; full component parity open",
+        },
+        {
+            "name": "connection_component",
+            "symbol": "alpha_omega = integral_Sigma sqrt|h| R_omega delta omega",
+            "value_emitted": False,
+            "parity_obligation": "Z2 oriented pullback parity",
+        },
+        {
+            "name": "spinor_component",
+            "symbol": "alpha_psi = integral_Sigma sqrt|h| (R_psi delta psi + delta psibar R_psibar)",
+            "value_emitted": False,
+            "parity_obligation": "spinor soldering/current parity",
+        },
+        {
+            "name": "embedding_component",
+            "symbol": "alpha_X = integral_Sigma sqrt|h| R_X delta X",
+            "value_emitted": False,
+            "parity_obligation": "paired sheet support and Z2 embedding equivariance",
+        },
+        {
+            "name": "matter_flux_component",
+            "symbol": "alpha_F = integral_Sigma sqrt|h| F_a delta X^a",
+            "value_emitted": False,
+            "parity_obligation": "Z2 equivariant flux cancellation or transparency",
+        },
+    ]
     component_emission = {
-        "alpha_res_components_available": False,
+        "alpha_res_components_available": True,
+        "alpha_res_component_decomposition_available": True,
+        "alpha_res_component_values_available": False,
+        "alpha_res_component_names": [component["name"] for component in alpha_res_components],
+        "alpha_res_components": alpha_res_components,
         "R_h_ab_emitted": False,
         "R_K_ab_emitted": False,
         "R_chi_emitted": False,
@@ -36,15 +90,16 @@ def build_payload() -> dict:
             if key != "full_boundary_action_closed_on_sigma"
         ),
         "sigma_full_boundary_action_closed": all(closure.values()),
-        "nonlinear_closure_is_boolean_only": not component_emission[
-            "alpha_res_components_available"
+        "nonlinear_closure_is_boolean_only": False,
+        "nonlinear_closure_emits_component_schema_only": not component_emission[
+            "alpha_res_component_values_available"
         ],
         "component_emission_obligation": (
-            "Refine this gate from cancellation/uniqueness to explicit alpha_res "
-            "components before deriving L_ct_expression or R_h/R_K values."
+            "The gate now emits the alpha_res component schema. It still must emit "
+            "explicit component values before deriving L_ct_expression or R_h/R_K values."
         ),
         "next_required": [
-            "emit_alpha_res_components",
+            "emit_alpha_res_component_values",
             "emit_R_h_ab_R_K_ab_R_chi_or_L_ct_expression",
         ],
         "interpretation": (
@@ -65,7 +120,8 @@ def write_reports() -> dict:
             "",
             f"Nonlinear residual closed: `{payload['sigma_nonlinear_boundary_residual_closed']}`",
             f"Full boundary action closed: `{payload['sigma_full_boundary_action_closed']}`",
-            f"Alpha components available: `{payload['component_emission']['alpha_res_components_available']}`",
+            f"Alpha component schema available: `{payload['component_emission']['alpha_res_component_decomposition_available']}`",
+            f"Alpha component values available: `{payload['component_emission']['alpha_res_component_values_available']}`",
         ]),
         encoding="utf-8",
     )
