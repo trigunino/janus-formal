@@ -12,6 +12,8 @@ structure MatterFluxTransparencyInputWriterGate where
   bulkStressProjectionReady : Prop
   bulkStressCancellationReady : Prop
   bulkStressFluxZeroReady : Prop
+  perfectFluidFluxZeroReady : Prop
+  holstBoundaryFluxZeroReady : Prop
   compressedPlanckLCDMForbidden : Prop
   archivedZ4ReuseForbidden : Prop
   phenomenologicalHolstBAOScanForbidden : Prop
@@ -21,16 +23,24 @@ structure MatterFluxTransparencyInputWriterGate where
   nearestTransparencyInputFrontierDeclared : Prop
   nearestTransparencyInputFrontierDiagnosticOnly : Prop
 
+def fullBulkTransparencyReady
+    (g : MatterFluxTransparencyInputWriterGate) : Prop :=
+  g.noNormalMatterCurrentReady /\
+  g.normalMatterCurrentGateReady /\
+  g.bulkStressProjectionReady /\
+  g.bulkStressCancellationReady /\
+  g.bulkStressFluxZeroReady
+
+def localSigmaFluxSlotReady
+    (g : MatterFluxTransparencyInputWriterGate) : Prop :=
+  g.perfectFluidFluxZeroReady /\ g.holstBoundaryFluxZeroReady
+
 def canWriteMatterFluxTransparencyInput
     (g : MatterFluxTransparencyInputWriterGate) : Prop :=
   g.activeCoreZ2Sigma /\
   g.activeDerivedSource /\
   g.aGridDeclared /\
-  g.noNormalMatterCurrentReady /\
-  g.normalMatterCurrentGateReady /\
-  g.bulkStressProjectionReady /\
-  g.bulkStressCancellationReady /\
-  g.bulkStressFluxZeroReady /\
+  (fullBulkTransparencyReady g \/ localSigmaFluxSlotReady g) /\
   g.compressedPlanckLCDMForbidden /\
   g.archivedZ4ReuseForbidden /\
   g.phenomenologicalHolstBAOScanForbidden /\
@@ -39,32 +49,45 @@ def canWriteMatterFluxTransparencyInput
   g.nearestTransparencyInputFrontierDeclared /\
   g.nearestTransparencyInputFrontierDiagnosticOnly
 
-theorem transparency_input_requires_current_and_flux_closure
+theorem transparency_input_requires_full_or_local_flux_closure
     (g : MatterFluxTransparencyInputWriterGate)
     (h : canWriteMatterFluxTransparencyInput g) :
-    g.noNormalMatterCurrentReady /\
-    g.normalMatterCurrentGateReady /\
-    g.bulkStressProjectionReady /\
-    g.bulkStressCancellationReady /\
-    g.bulkStressFluxZeroReady := by
-  rcases h with ⟨_, _, _, hCurrent, hCurrentGate, hProjection, hCancel, hZero, _⟩
-  exact ⟨hCurrent, hCurrentGate, hProjection, hCancel, hZero⟩
+    fullBulkTransparencyReady g \/ localSigmaFluxSlotReady g := by
+  exact h.right.right.right.left
+
+theorem local_sigma_flux_slot_suffices_for_transparency_input
+    (g : MatterFluxTransparencyInputWriterGate)
+    (hCore : g.activeCoreZ2Sigma)
+    (hSource : g.activeDerivedSource)
+    (hGrid : g.aGridDeclared)
+    (hLocal : localSigmaFluxSlotReady g)
+    (hPlanck : g.compressedPlanckLCDMForbidden)
+    (hZ4 : g.archivedZ4ReuseForbidden)
+    (hBAO : g.phenomenologicalHolstBAOScanForbidden)
+    (hCurrentFrontier : g.normalMatterCurrentFrontierDeclared)
+    (hBulkFrontier : g.bulkStressNormalFluxFrontierDeclared)
+    (hNearest : g.nearestTransparencyInputFrontierDeclared)
+    (hDiag : g.nearestTransparencyInputFrontierDiagnosticOnly) :
+    canWriteMatterFluxTransparencyInput g := by
+  exact ⟨hCore, hSource, hGrid, Or.inr hLocal, hPlanck, hZ4, hBAO,
+    hCurrentFrontier, hBulkFrontier, hNearest, hDiag⟩
 
 theorem transparency_input_forbids_legacy_inputs
     (g : MatterFluxTransparencyInputWriterGate)
     (h : canWriteMatterFluxTransparencyInput g) :
     g.compressedPlanckLCDMForbidden /\ g.archivedZ4ReuseForbidden := by
-  rcases h with ⟨_, _, _, _, _, _, _, _, hPlanck, hZ4, _⟩
-  exact ⟨hPlanck, hZ4⟩
+  exact ⟨h.right.right.right.right.left,
+    h.right.right.right.right.right.left⟩
 
-theorem nearest_transparency_frontier_diagnostic_does_not_write_input
+theorem missing_both_full_and_local_flux_closure_blocks_input
     (g : MatterFluxTransparencyInputWriterGate)
-    (_hDiag : g.nearestTransparencyInputFrontierDiagnosticOnly)
-    (hNoCurrent : Not g.noNormalMatterCurrentReady) :
-    Not (g.nearestTransparencyInputFrontierDiagnosticOnly /\
-      canWriteMatterFluxTransparencyInput g) := by
+    (hNoFull : Not (fullBulkTransparencyReady g))
+    (hNoLocal : Not (localSigmaFluxSlotReady g)) :
+    Not (canWriteMatterFluxTransparencyInput g) := by
   intro h
-  exact hNoCurrent (transparency_input_requires_current_and_flux_closure g h.2).1
+  cases transparency_input_requires_full_or_local_flux_closure g h with
+  | inl hFull => exact hNoFull hFull
+  | inr hLocal => exact hNoLocal hLocal
 
 end P0EFTJanusZ2SigmaMatterFluxTransparencyInputWriterGate
 end JanusFormal

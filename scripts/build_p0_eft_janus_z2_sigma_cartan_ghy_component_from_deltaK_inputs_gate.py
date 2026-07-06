@@ -14,6 +14,7 @@ from janus_lab.z2_sigma_cartan_ghy import build_cartan_ghy_component_payload
 
 DELTAK_INPUT_PATH = Path("outputs/active_z2_sigma/cartan_ghy_deltaK_inputs.json")
 BACKGROUND_SCALAR_PATH = Path("outputs/active_z2_sigma/background_scalars.json")
+RATIO_PATH = Path("outputs/active_z2_sigma/rsigma_over_ell_collar_solution.json")
 OUTPUT_PATH = Path("outputs/active_z2_sigma/cartan_ghy_components.json")
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_cartan_ghy_component_from_deltaK_inputs_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_cartan_ghy_component_from_deltaK_inputs_gate.json")
@@ -35,16 +36,37 @@ def _load_deltaK_inputs(path: Path) -> dict:
     return payload
 
 
+def _load_ratio_status(path: Path) -> dict:
+    if not path.exists():
+        return {
+            "ratio_manifest_exists": False,
+            "ratio_solution_ready": False,
+            "full_R_Sigma_solution_certificate_ready": False,
+            "R_Sigma_over_ell_collar": None,
+        }
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        "ratio_manifest_exists": True,
+        "ratio_solution_ready": bool(payload.get("ratio_solution_ready")),
+        "full_R_Sigma_solution_certificate_ready": bool(
+            payload.get("full_R_Sigma_solution_certificate_ready")
+        ),
+        "R_Sigma_over_ell_collar": payload.get("R_Sigma_over_ell_collar"),
+    }
+
+
 def build_payload(
     *,
     deltaK_input_path: Path = DELTAK_INPUT_PATH,
     background_scalar_path: Path = BACKGROUND_SCALAR_PATH,
+    ratio_path: Path = RATIO_PATH,
     output_path: Path = OUTPUT_PATH,
 ) -> dict:
     deltaK_exists = deltaK_input_path.exists()
     background_exists = background_scalar_path.exists()
     output_written = False
     validation_error = None
+    ratio_status = _load_ratio_status(ratio_path)
     missing_inputs = []
     if not deltaK_exists:
         missing_inputs.append("active_DeltaK_s_tau_inputs")
@@ -74,10 +96,12 @@ def build_payload(
         "active_core": "Z2_tunnel_Sigma",
         "deltaK_input_manifest": str(deltaK_input_path),
         "background_scalar_manifest": str(background_scalar_path),
+        "rsigma_ratio_manifest": str(ratio_path),
         "output_manifest": str(output_path),
         "deltaK_input_exists": deltaK_exists,
         "background_scalar_manifest_exists": background_exists,
         "upstream_frontiers": {
+            "rsigma_ratio_certificate": ratio_status,
             "deltaK_input_writer": {
                 "gate": "janus-z2-sigma-cartan-ghy-deltaK-input-writer-gate",
                 "path": str(deltaK_input_path),
@@ -98,6 +122,15 @@ def build_payload(
         "requires_active_DeltaK_s_of_a": True,
         "requires_active_DeltaK_tau_of_a": True,
         "requires_active_kappa_rho_crit0": True,
+        "R_Sigma_over_ell_collar_ready": ratio_status["ratio_solution_ready"],
+        "absolute_R_Sigma_solution_ready": ratio_status[
+            "full_R_Sigma_solution_certificate_ready"
+        ],
+        "ratio_only_cannot_write_DeltaK": bool(
+            ratio_status["ratio_solution_ready"]
+            and not ratio_status["full_R_Sigma_solution_certificate_ready"]
+            and not deltaK_exists
+        ),
         "cartan_ghy_component_values_ready": output_written,
         "cartan_ghy_component_output_written": output_written,
         "uses_compressed_planck_lcdm_background": False,

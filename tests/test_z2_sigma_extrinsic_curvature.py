@@ -90,6 +90,18 @@ class Z2SigmaExtrinsicCurvatureTests(unittest.TestCase):
 
         np.testing.assert_allclose(delta_s(np.asarray([1.0])), [3.0])
 
+    def test_projective_orientation_does_not_zero_normal_reversal_jump(self):
+        delta_s, delta_tau = make_z2_oriented_extrinsic_curvature_jumps(
+            k_s_plus_of_a=lambda a: 3.0 * a,
+            k_s_minus_of_a=lambda a: -3.0 * a,
+            k_tau_plus_of_a=lambda a: 5.0 * a,
+            k_tau_minus_of_a=lambda a: -5.0 * a,
+            z2_orientation_sign=-1.0,
+        )
+
+        np.testing.assert_allclose(delta_s(np.asarray([1.0])), [6.0])
+        np.testing.assert_allclose(delta_tau(np.asarray([1.0])), [10.0])
+
     def test_dynamic_spherical_shell_components_match_standard_formula(self):
         result = dynamic_spherical_shell_extrinsic_curvature_components(
             R=np.asarray([2.0]),

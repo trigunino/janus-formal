@@ -21,6 +21,104 @@
   The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but
   it leaves `R_Sigma` flat; the Z2-projected Dirac current is conserved, but it
   does not fix the absolute occupation number. Do not choose either by fit.
+- Current refinement: projective stereographic geometry fixes the relative
+  throat/collar ratio `R_Sigma_over_ell_collar_Z2Sigma = 1`. This is now written
+  to `outputs/active_z2_sigma/effective_partial_closure_from_projective_ratio.json`.
+  It does not fix the absolute collar scale.
+- Current charge refinement: Z2 projection fixes the weights and reduces the
+  deck-invariant charge to `N_Z2Sigma = N_occ`. Noether conservation does not
+  select `N_occ`; multiple positive occupations satisfy the same constraints.
+  Therefore BAO/plasma normalization remains blocked unless a state-selection
+  theorem is derived or `N_occ` is declared as effective initial data.
+- Practical effective path now exists:
+  `write_p0_eft_janus_z2_sigma_effective_closure_from_ratio_and_occupation.py`
+  combines the derived ratio with
+  `outputs/active_z2_sigma/projected_occupation_state_inputs.json`. In the live
+  workspace it is intentionally blocked because that occupation-state manifest
+  is absent. This is an effective-state input path, not a no-fit proof.
+- The same occupation-state input can now feed the plasma charge path through
+  `write_p0_eft_janus_z2_sigma_projected_charge_from_occupation_state.py`. It
+  converts `N_occ_Z2Sigma` into
+  `projected_baryon_noether_charge_source_inputs.json`, then lets the strict
+  projected-charge writer produce `projected_baryon_noether_charge_inputs.json`.
+  Live status is still blocked because
+  `outputs/active_z2_sigma/projected_occupation_state_inputs.json` is absent.
+- Once the projected charge exists,
+  `write_p0_eft_janus_z2_sigma_dimensionless_noether_density_from_charge.py`
+  derives the topology-fixed dimensionless density
+  `n_b0_Z2Sigma * R_curv_Z2Sigma^3 = N_b,Z2Sigma/(volume_factor*pi^2)`.
+  This removes the projective volume-factor ambiguity but still requires the
+  physical curvature scale `R_curv_Z2Sigma_m` before Saha/Thomson plasma inputs
+  can become dimensional.
+- If `H0_Z2Sigma*R_curv_Z2Sigma/c` is available,
+  `write_p0_eft_janus_z2_sigma_hubble_volume_noether_density.py` further derives
+  `n_b0_Z2Sigma*(c/H0_Z2Sigma)^3`. This is still dimensionless and cannot replace
+  the SI baryon density needed by Saha/Thomson recombination, but it isolates the
+  remaining dimensional blocker to `H0_Z2Sigma` or `R_curv_Z2Sigma_m`.
+- A short density-chain runner now exists:
+  `run_p0_eft_janus_z2_sigma_effective_state_density_chain.py`. It runs only the
+  occupation-to-charge and dimensionless-density reductions, not BAO. Live status
+  is blocked at `projected_occupation_state_inputs.json`, with
+  `background_dimensionless_curvature_scale_inputs.json` already present.
+- `write_p0_eft_janus_z2_sigma_baryon_density_si_from_dimensionless_invariants.py`
+  now converts the dimensionless Noether densities into the standard Saha input
+  `early_plasma_baryon_number_density_noether_volume_inputs.json` as soon as
+  either `R_curv_Z2Sigma_m` or `H0_Z2Sigma` is active. The conversion is tested
+  through the Saha history builder; live status is blocked because the SI scale
+  is still absent.
+- `run_p0_eft_janus_z2_sigma_plasma_unblock_chain.py` is the short active-plasma
+  runner. Current live status: FIRAS temperature and CODATA constants are valid;
+  baryon density is blocked by missing projected occupation/charge and missing
+  dimensional scale. The runner now continues through Saha inputs,
+  `early_plasma.json`, and the Thomson drag readiness check, so the next physical
+  blockers are explicit without running the long BAO materialization chain:
+  `projected_occupation_state_inputs.json`, then `H0_Z2Sigma` or
+  `R_curv_Z2Sigma_m`.
+- `run_p0_eft_janus_z2_sigma_scale_free_bao_unblock_chain.py` is the short BAO
+  runner. It combines the plasma chain, active primitive obligations, and the
+  existing component-to-primitive chi2 path. Current live status:
+  `background_scale_free_omega_k_inputs.json` is valid, while
+  `early_plasma_inputs.json` and `flrw_component_inputs.json` are missing; BAO
+  chi2 remains forbidden.
+- Counterterm/dynamic-shell plumbing now calls the minimal-basis coefficient
+  solver before consuming `counterterm_minimal_basis_coefficients.json`. The
+  live first blocker is therefore the physical trace input
+  `counterterm_trace_residual_inputs.json`, i.e. active `R_h_trace` and
+  `R_K_trace`, not a missing solver step.
+- The counterterm runner now records the actual trace/coefficient cycle:
+  minimal coefficients need trace residuals; trace residuals need
+  `alpha_res_radial_components`; alpha projection needs active surface
+  coefficients. The escape is not another runner: derive active
+  `R_h_trace/R_K_trace` from the full Sigma variation, or derive `a0..a3`
+  directly from the active Z2/Sigma surface action.
+- Lean now mirrors this blocker in
+  `P0EFTJanusZ2SigmaCountertermTraceCoefficientCycleGate`: coefficient closure
+  requires either active trace residual inputs or a direct active Sigma action
+  derivation, and `E_counterterm = 0` is not allowed as a closure shortcut.
+- A non-active template/schema for that occupation-state input is generated by
+  `build_p0_eft_janus_z2_sigma_projected_occupation_state_schema.py`; it writes
+  only `outputs/schemas/projected_occupation_state_inputs.schema.json` and
+  `outputs/templates/projected_occupation_state_inputs.template.md`. It also
+  writes `outputs/examples/projected_occupation_state_inputs.example.json`, which
+  is intentionally outside `outputs/active_z2_sigma` and does not unblock the
+  live effective closure path.
+- A diagnostic dry-run exists:
+  `run_p0_eft_janus_z2_sigma_effective_closure_example_dry_run.py` combines the
+  derived projective ratio with the non-active example occupation and writes only
+  `outputs/diagnostics/effective_closure_from_example_occupation.diagnostic.json`.
+  It confirms the plumbing works while leaving
+  `outputs/active_z2_sigma/effective_closure_inputs.json` absent.
+- Downstream diagnostic frontier:
+  `run_p0_eft_janus_z2_sigma_effective_bao_diagnostic_frontier.py` consumes that
+  diagnostic closure. A constant diagnostic primitive writer now exists for
+  plumbing only:
+  `write_p0_eft_janus_z2_sigma_effective_bao_constant_primitive_diagnostic.py`.
+  It can drive the frontier through a DESI DR2 BAO chi2 calculation, but the
+  result is marked `diagnostic_only_not_physical_primitives`; it writes no
+  active manifest and does not unlock no-fit status. The active primitives still
+  need `E_Z2Sigma(z)`, `c_s_over_c_Z2Sigma(z)`,
+  `Gamma_drag_over_H0_Z2Sigma(z)`, and `omega_k_Z2Sigma` with
+  non-Planck/non-LCDM/non-Z4/non-fit provenance.
 - Additional no-extension routes were audited:
   collar reduction of EH/GHY finds the operator `sqrt|h| R[h]`, but its
   coefficient is proportional to an unfixed finite collar thickness; smooth
@@ -28,6 +126,82 @@
   radius; APS/Pin fixes anomaly/parity/integrality classes but not occupied
   fermion number. These routes do not unlock BAO without a new theorem or an
   explicit effective closure.
+- New active route opened: `JanusZ2CoverMasterAction`. The target is a single
+  cover action on `M_hat` with a Z2 involution, whose projections produce the
+  plus/minus sectors and the Sigma junction equations. This is not the archived
+  Z4 branch and does not assume Z4 monodromy.
+- Initial master-action gates are in place:
+  `P0EFTJanusZ2CoverMasterActionGate` and
+  `P0EFTJanusZ2CoverMasterLagrangianSkeletonGate`. They enforce one master
+  action, no independent plus/minus actions, no `rho_eff` shortcut, no negative
+  thermodynamic density postulate, no Z4 reuse and no observational fit. The
+  route remains open until the explicit cover Lagrangian, projected variations,
+  Sigma junction variation, sign channel and paired Bianchi identity are
+  derived.
+- Concrete master-action projection code now exists:
+  `src/janus_lab/z2_cover_master_action.py` derives
+  `G_plus = kappa_J*(T_plus - B_minus_to_plus*T_minus_to_plus)+J_Sigma_plus`
+  and
+  `G_minus = kappa_J*(T_minus - B_plus_to_minus*T_plus_to_minus)+J_Sigma_minus`
+  from the single-cover projection signs. The active manifest lives at
+  `outputs/active_z2_cover/projected_equations.json`.
+- The paired Bianchi balance is explicit in `src/janus_lab/z2_cover_bianchi.py`:
+  Sigma sources must balance the projected divergence of the self and transported
+  cross-sector stress tensors. This is not closed until cross-measure transport
+  and Sigma variation are derived.
+- Measure transport has a concrete calculator:
+  `src/janus_lab/z2_cover_measure_transport.py` computes
+  `B_minus_to_plus = |J_tau(-,+)| sqrt|g_minus|/sqrt|g_plus|` and the reverse
+  factor from active cover determinant inputs. The live runner remains blocked
+  until `outputs/active_z2_cover/measure_transport_inputs.json` is supplied.
+- A local Sigma-restricted writer now feeds that calculator from the existing
+  active sector metrics:
+  `write_p0_eft_janus_z2_cover_measure_transport_from_sigma_metrics.py`.
+  Current local result on `a_grid=[0.25,0.5,1.0]` is
+  `B_minus_to_plus = B_plus_to_minus = 1`. This advances the projected-equation
+  bookkeeping, but it is only a local Sigma restriction; the global cover
+  determinant transport and Sigma variation are still open.
+- Sigma source extraction is now concrete:
+  `src/janus_lab/z2_cover_sigma_source.py` maps boundary metric-variation
+  coefficients to projected surface sources through
+  `T_Sigma^ab = -2 alpha_h^ab` and
+  `J_Sigma^ab = orientation*T_Sigma^ab`. The live source runner remains blocked
+  until `outputs/active_z2_cover/sigma_alpha_h_inputs.json` exists.
+- A strict bridge from surface h/K density to cover Sigma source inputs exists:
+  `write_p0_eft_janus_z2_cover_sigma_alpha_h_from_surface_hk.py` consumes
+  `outputs/active_z2_sigma/surface_hk_active_density_coefficients.json` and
+  `outputs/active_z2_sigma/surface_hk_isotropic_geometry.json`. It is currently
+  blocked because neither active manifest exists. This is the next physical
+  input needed for deriving `J_Sigma` rather than naming it symbolically.
+- Bianchi can now attach a derived Sigma source via
+  `derive_p0_eft_janus_z2_cover_bianchi_with_sigma_source.py`. It remains
+  blocked until `sigma_source.json` is produced; after that the remaining
+  closure is the divergence of `J_Sigma` plus cross-measure transport.
+- Active `R_Sigma` counterterm chain is now executable:
+  `run_p0_eft_janus_z2_sigma_counterterm_chain.py` writes the already-derived
+  geometry and torsionless Immirzi pieces, then attempts the concrete h/K route:
+  Riccati normal-flow primitives -> radial geometry -> alpha radial projection.
+  The live blocker is now
+  `outputs/active_z2_sigma/surface_hk_normal_flow_geometry_inputs.json`, which
+  must provide active `h_ab`, `K_ab`, and `R_nabn` on Sigma. Downstream this emits
+  `counterterm_alpha_res_radial_components.json`, then `R_h_trace/R_K_trace`,
+  `counterterm_lct_radial_profile.json`, and `rsigma_E_counterterm.json`. Do not
+  set `E_counterterm = 0` while this is open.
+- The round-throat counterterm now has an analytic closure:
+  `E_counterterm(R) = sqrt(det q) * (3 a0 R^2 + 6 epsilon_Z2 a1 R + 9 a2 + 3 a3)`.
+  This removes the need to sample `E_counterterm` before a radius is known. The
+  helper `positive_round_throat_radius_roots` solves the positive algebraic roots
+  once `a0..a3` are active. The remaining non-fit blockers are therefore the
+  active surface h/K density coefficients `a0..a3` and either the coupled radius
+  equation using that quadratic closure or an independent global regularity
+  equation.
+- Minimal h/K coefficient diagnostics are explicit: the basis
+  `L_Sigma = a0 + a1 K + a2 K^2 + a3 K_ab K^ab` is not enough by itself to fix
+  the coefficients. The active route must derive either
+  `counterterm_alpha_res_radial_components.json` from the full Sigma variation
+  or `surface_hk_active_density_coefficients.json` directly from the active
+  surface action. Reusing the linear `K` term as a new counterterm is forbidden
+  because it duplicates the Cartan/GHY partition.
 - Effective-closure branch has a strict input gate:
   `outputs/active_z2_sigma/effective_closure_inputs.json` may provide only
   `R_Sigma_over_ell_collar_Z2Sigma` and
@@ -2737,6 +2911,46 @@ Completion rule:
     normalization;
   - explicit policy: do not claim `E_counterterm=0` and do not fit
     `c1,c2,c3`.
+- [x] Formalize the M30/S_cross counterterm blocker:
+  - `P0EFTJanusZ2SigmaSCrossM30BoundaryReductionAuditGate` records that
+    M15/M30 provide the Janus two-layer/bivariational context but not an
+    explicit Sigma-local `S_cross` pullback or `phi/L` transport law;
+  - under strict Z2 descent, the bulk M30 force cancels on Sigma, so it cannot
+    source a nonzero `L_ct`;
+  - nonzero counterterm closure still requires an independent tunnel-defect
+    action or active `R_h_trace/R_K_trace` targets.
+- [x] Reduce the local Sigma flux slot where possible:
+  - `MatterFluxTransparencyInputWriterGate` now accepts the active local route
+    `perfect-fluid tangential flux zero + torsionless Holst/Nieh-Yan boundary
+    flux zero`;
+  - this does not claim full off-Sigma bulk-stress projection;
+  - `HolstNiehYanComponentFromInputsGate` can materialize a zero FLRW Holst
+    component from the active torsionless radial identity;
+  - `MatterFluxTransparencyInputWriterGate` can use the active Holst-zero
+    component grid when the complete non-matter FLRW grid is not assembled yet;
+  - `MatterFluxZeroComponentFromTransparencyGate` and
+    `RSigmaMatterFluxRadialTermFromTransparencyGate` now write
+    `matter_flux_zero_components.json` and `rsigma_E_matterFlux.json`;
+  - remaining FLRW blockers are Cartan/GHY `DeltaK`, counterterm component, and
+    active dimensionful background scalars.
+  - Cartan/GHY must not be set to zero by naive Z2 symmetry: with the active
+    projective convention `eps_Z2=-1`, `K_-=-K_+` gives
+    `DeltaK=K_+ - K_- = 2K_+`, not zero.
+  - `CartanGHYComponentFromDeltaKInputsGate` now records that the projective
+    collar ratio `R_Sigma/ell=1` is ready but insufficient for `DeltaK`; an
+    absolute embedding/radius certificate is still required.
+- Z2 cover master-action branch status:
+  - projected plus/minus equations are written from one cover action target,
+    not from two independent sector actions;
+  - cross-measure transport is now active on the Sigma-restricted metric data,
+    with `B_minus_to_plus = B_plus_to_minus = 1` on the current grid;
+  - paired Bianchi balance is formulated and measure transport is ready;
+  - closure still blocks on `sigma_source.json`, which in turn needs
+    `sigma_alpha_h_inputs.json`, i.e. the same unresolved surface-HK
+    coefficients/geometry route;
+  - Lean ledger:
+    `P0EFTJanusZ2CoverBianchiSigmaSourceFrontierGate` records that this is
+    not a full Bianchi closure until the Sigma source is supplied.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;

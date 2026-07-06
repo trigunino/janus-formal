@@ -40,8 +40,20 @@ def build_payload(
     *,
     input_path: Path = INPUT_PATH,
     output_path: Path = OUTPUT_PATH,
+    auto_write_input: bool = True,
 ) -> dict:
-    transparency_writer = build_transparency_input_writer_payload(output_path=input_path)
+    transparency_writer = (
+        build_transparency_input_writer_payload(output_path=input_path)
+        if auto_write_input
+        else {
+            "status": "janus-z2-sigma-matter-flux-transparency-input-writer-gate",
+            "gate_passed": False,
+            "grid_source_exists": False,
+            "active_sigma_transparency_derived": False,
+            "upstream_frontiers": {},
+            "nearest_transparency_input_frontier": {"diagnostic_only": True},
+        }
+    )
     input_exists = input_path.exists()
     input_valid = False
     output_written = False

@@ -11,6 +11,12 @@ if str(ROOT) not in sys.path:
 from scripts.build_p0_eft_janus_z2_sigma_dirac_charge_boundary_projection_gate import (
     build_payload as build_charge_boundary_payload,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_projected_charge_reduction_to_occupation import (
+    build_payload as build_charge_reduction_payload,
+)
+from scripts.derive_p0_eft_janus_z2_sigma_noether_occupation_degeneracy import (
+    build_payload as build_occupation_degeneracy_payload,
+)
 
 
 REPORT_PATH = Path(
@@ -23,11 +29,15 @@ JSON_PATH = Path(
 
 def build_payload() -> dict:
     boundary = build_charge_boundary_payload()
+    reduction = build_charge_reduction_payload()
+    degeneracy = build_occupation_degeneracy_payload()
     facts = {
         "projected_current_ready": boundary["closure"]["projected_Dirac_current_ready"],
         "spinor_projection_ready": boundary["closure"]["spinor_projection_ready"],
         "charge_integral_formula_declared": True,
         "Z2_projection_declared": True,
+        "Z2_projection_weights_fixed": reduction["projection_weights_free"] is False,
+        "deck_invariant_reduction_to_N_occ": True,
         "anomaly_leak_guard_declared": True,
     }
     derivable = {
@@ -53,17 +63,42 @@ def build_payload() -> dict:
         "reason": (
             "A conserved Noether current fixes time-independence of charge once initial "
             "data are supplied. Z2 projection can constrain parity/cover factors, but "
-            "it does not determine the absolute occupation number N."
+            "it does not determine the absolute occupation number N. Multiple positive "
+            "deck-invariant occupations satisfy the same Z2/Noether constraints."
         ),
         "consequence": {
             "early_plasma_baryon_density_no_extension_ready": False,
             "scale_free_BAO_primitive_ready": False,
             "no_extension_route_exhausted_at_charge_normalization": True,
+            "projected_charge_reduced_to_single_open_occupation": True,
+            "occupation_degeneracy_demonstrated": degeneracy[
+                "no_extension_charge_selection_exhausted"
+            ],
         },
         "gate_passed": True,
-        "primary_blocker": "absolute_projected_Noether_charge_not_fixed",
+        "primary_blocker": degeneracy["primary_blocker"],
+        "reduction": {
+            "general_projected_charge_formula": reduction[
+                "general_projected_charge_formula"
+            ],
+            "deck_invariant_projected_charge_formula": reduction[
+                "deck_invariant_sector"
+            ]["projected_charge_formula"],
+            "remaining_open_data": reduction["remaining_open_data"],
+        },
+        "occupation_degeneracy": {
+            "tested_occupations": degeneracy["tested_occupations"],
+            "projected_charges": degeneracy["projected_charges"],
+            "topology_selects_unique_occupation": degeneracy[
+                "topology_selects_unique_occupation"
+            ],
+            "charge_conservation_selects_unique_occupation": degeneracy[
+                "charge_conservation_selects_unique_occupation"
+            ],
+        },
         "next_required_if_no_extension": [
-            "treat projected baryon charge as open initial datum",
+            "derive a state-selection rule beyond Z2/Noether conservation",
+            "or treat projected baryon charge as open initial datum",
             "or prove a non-extension quantization/selection rule from existing APS/Pin/Z2 data",
             "or restrict claims to sectors independent of baryon normalization",
         ],

@@ -14,6 +14,7 @@ class P0EFTJanusZ2SigmaMatterFluxZeroComponentFromTransparencyGateTests(unittest
             payload = build_payload(
                 input_path=Path(tmp) / "missing.json",
                 output_path=Path(tmp) / "out.json",
+                auto_write_input=False,
             )
 
         self.assertFalse(payload["input_exists"])
@@ -43,7 +44,7 @@ class P0EFTJanusZ2SigmaMatterFluxZeroComponentFromTransparencyGateTests(unittest
                 encoding="utf-8",
             )
 
-            payload = build_payload(input_path=input_path, output_path=output_path)
+            payload = build_payload(input_path=input_path, output_path=output_path, auto_write_input=False)
             written = json.loads(output_path.read_text(encoding="utf-8"))
 
         self.assertTrue(payload["gate_passed"])
@@ -72,7 +73,7 @@ class P0EFTJanusZ2SigmaMatterFluxZeroComponentFromTransparencyGateTests(unittest
                 encoding="utf-8",
             )
 
-            payload = build_payload(input_path=input_path, output_path=output_path)
+            payload = build_payload(input_path=input_path, output_path=output_path, auto_write_input=False)
 
         self.assertFalse(payload["gate_passed"])
         self.assertFalse(payload["matter_flux_rho_p_values_ready"])

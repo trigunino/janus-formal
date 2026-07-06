@@ -47,6 +47,15 @@ def _background_scalars():
     }
 
 
+def _ratio_only():
+    return {
+        "active_core": "Z2_tunnel_Sigma",
+        "ratio_solution_ready": True,
+        "full_R_Sigma_solution_certificate_ready": False,
+        "R_Sigma_over_ell_collar": 1.0,
+    }
+
+
 class P0EFTJanusZ2SigmaCartanGHYComponentFromDeltaKInputsGateTests(unittest.TestCase):
     def test_missing_inputs_block_component_output(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -65,6 +74,23 @@ class P0EFTJanusZ2SigmaCartanGHYComponentFromDeltaKInputsGateTests(unittest.Test
             payload["nearest_cartan_component_frontier"]["blocks"],
         )
         self.assertTrue(payload["nearest_cartan_component_frontier"]["diagnostic_only"])
+
+    def test_ratio_only_is_reported_but_does_not_write_deltaK(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ratio_path = Path(tmp) / "ratio.json"
+            ratio_path.write_text(json.dumps(_ratio_only()), encoding="utf-8")
+
+            payload = build_payload(
+                deltaK_input_path=Path(tmp) / "deltaK.json",
+                background_scalar_path=Path(tmp) / "background.json",
+                ratio_path=ratio_path,
+                output_path=Path(tmp) / "cartan.json",
+            )
+
+        self.assertTrue(payload["R_Sigma_over_ell_collar_ready"])
+        self.assertFalse(payload["absolute_R_Sigma_solution_ready"])
+        self.assertTrue(payload["ratio_only_cannot_write_DeltaK"])
+        self.assertFalse(payload["gate_passed"])
 
     def test_active_inputs_write_cartan_components(self):
         with tempfile.TemporaryDirectory() as tmp:

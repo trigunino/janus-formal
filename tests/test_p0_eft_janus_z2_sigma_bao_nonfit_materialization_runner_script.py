@@ -1,6 +1,7 @@
 import unittest
 
 from scripts.build_p0_eft_janus_z2_sigma_bao_nonfit_materialization_runner import (
+    DEFAULT_STEPS,
     build_payload,
 )
 
@@ -446,6 +447,8 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
         self.assertIn("active_tunnel_embedding_from_radius", payload["steps_passed"])
         self.assertIn("embedding_tangent_frame_transport", payload["steps_passed"])
         self.assertIn("active_embedding_to_flrw_extrinsic_curvature", payload["steps_passed"])
+        self.assertIn("dynamic_shell_inputs_from_rsigma_and_bulk_f", payload["steps_passed"])
+        self.assertIn("flrw_extrinsic_curvature_from_dynamic_shell", payload["steps_passed"])
         self.assertIn("flrw_extrinsic_curvature_grid_builder", payload["steps_passed"])
         self.assertIn("flrw_extrinsic_curvature_grid_writer", payload["steps_passed"])
         self.assertIn("extrinsic_curvature_jump_builder", payload["steps_passed"])
@@ -492,23 +495,16 @@ class P0EFTJanusZ2SigmaBAONonFitMaterializationRunnerTests(unittest.TestCase):
         self.assertIn("baryon_density_noether_volume", payload["steps_passed"])
 
     def test_default_steps_include_projected_baryon_dirac_chain(self):
-        payload = build_payload(
-            real_state_builder=lambda: {
-                "gate_passed": False,
-                "bao_chi2_evaluated": False,
-                "missing_real_active_inputs": ["projected_baryon_charge"],
-                "fixture_result_is_not_physical_result": True,
-                "blocker": "real inputs incomplete",
-                "next_required": [],
-            },
-        )
+        steps_passed = {name: False for name, _ in DEFAULT_STEPS}
 
-        self.assertIn("spinor_bundle_projection", payload["steps_passed"])
-        self.assertIn("projected_dirac_action_reduction", payload["steps_passed"])
-        self.assertIn("projected_dirac_matter_current", payload["steps_passed"])
-        self.assertIn("dirac_charge_boundary_projection", payload["steps_passed"])
-        self.assertIn("dirac_number_normalization", payload["steps_passed"])
-        self.assertIn("projected_baryon_charge", payload["steps_passed"])
+        self.assertIn("spinor_bundle_projection", steps_passed)
+        self.assertIn("projected_dirac_action_reduction", steps_passed)
+        self.assertIn("projected_dirac_matter_current", steps_passed)
+        self.assertIn("dirac_charge_boundary_projection", steps_passed)
+        self.assertIn("dirac_number_normalization", steps_passed)
+        self.assertIn("projected_charge_reduction_to_occupation", steps_passed)
+        self.assertIn("projected_baryon_charge", steps_passed)
+        self.assertIn("effective_closure_from_ratio_and_occupation", steps_passed)
 
     def test_default_steps_include_codata_gravity_materialization(self):
         payload = build_payload(

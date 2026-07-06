@@ -10,10 +10,33 @@ from scripts.build_p0_eft_janus_z2_sigma_effective_closure_input_gate import (
 
 class JanusZ2SigmaEffectiveClosureInputGateTest(unittest.TestCase):
     def test_missing_input_blocks_gate(self):
-        payload = build_payload(input_path=Path("__missing_effective_closure__.json"))
+        payload = build_payload(
+            input_path=Path("__missing_effective_closure__.json"),
+            partial_path=Path("__missing_partial__.json"),
+            occupation_path=Path("__missing_occupation__.json"),
+        )
         self.assertFalse(payload["gate_passed"])
         self.assertFalse(payload["full_no_fit_prediction_ready"])
         self.assertEqual(payload["primary_blocker"], "effective_closure_inputs_json")
+
+    def test_partial_ratio_without_occupation_reports_precise_blocker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            partial = Path(tmp) / "partial.json"
+            partial.write_text("{}", encoding="utf-8")
+            payload = build_payload(
+                input_path=Path(tmp) / "missing_effective.json",
+                partial_path=partial,
+                occupation_path=Path(tmp) / "missing_occupation.json",
+            )
+
+        self.assertFalse(payload["gate_passed"])
+        self.assertTrue(payload["partial_projective_ratio_exists"])
+        self.assertFalse(payload["projected_occupation_state_input_exists"])
+        self.assertEqual(payload["primary_blocker"], "projected_occupation_state_inputs_json")
+        self.assertIn(
+            "write outputs/active_z2_sigma/projected_occupation_state_inputs.json",
+            payload["next_required"],
+        )
 
     def test_valid_input_passes_as_effective_not_no_fit(self):
         with tempfile.TemporaryDirectory() as tmp:

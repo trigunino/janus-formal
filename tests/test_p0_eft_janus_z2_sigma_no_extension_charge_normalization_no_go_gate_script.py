@@ -11,7 +11,12 @@ class JanusZ2SigmaNoExtensionChargeNormalizationNoGoGateTest(unittest.TestCase):
 
         self.assertTrue(payload["gate_passed"])
         self.assertEqual(
-            payload["primary_blocker"], "absolute_projected_Noether_charge_not_fixed"
+            payload["primary_blocker"], "superselection_state_or_initial_occupation_not_fixed"
+        )
+        self.assertTrue(payload["facts"]["Z2_projection_weights_fixed"])
+        self.assertEqual(
+            payload["reduction"]["deck_invariant_projected_charge_formula"],
+            "N_Z2Sigma = N_occ",
         )
         self.assertFalse(payload["policy"]["extension_allowed"])
         self.assertFalse(payload["policy"]["observational_baryon_fit_allowed"])
@@ -23,6 +28,17 @@ class JanusZ2SigmaNoExtensionChargeNormalizationNoGoGateTest(unittest.TestCase):
         )
         self.assertTrue(
             payload["consequence"]["no_extension_route_exhausted_at_charge_normalization"]
+        )
+        self.assertTrue(
+            payload["consequence"][
+                "projected_charge_reduced_to_single_open_occupation"
+            ]
+        )
+        self.assertTrue(
+            payload["consequence"]["occupation_degeneracy_demonstrated"]
+        )
+        self.assertFalse(
+            payload["occupation_degeneracy"]["topology_selects_unique_occupation"]
         )
         self.assertFalse(
             payload["consequence"]["early_plasma_baryon_density_no_extension_ready"]

@@ -288,6 +288,12 @@ from scripts.build_p0_eft_janus_z2_sigma_physical_inputs_to_scale_free_bao_chi2_
 from scripts.build_p0_eft_janus_z2_sigma_projected_baryon_noether_charge_input_gate import (
     build_payload as build_projected_charge_payload,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_projected_charge_reduction_to_occupation import (
+    build_payload as build_projected_charge_reduction_payload,
+)
+from scripts.write_p0_eft_janus_z2_sigma_effective_closure_from_ratio_and_occupation import (
+    build_payload as build_effective_closure_from_ratio_and_occupation_payload,
+)
 from scripts.build_p0_eft_janus_z2_sigma_spinor_bundle_projection_gate import (
     build_payload as build_spinor_bundle_projection_payload,
 )
@@ -368,6 +374,12 @@ from scripts.build_p0_eft_janus_z2_sigma_embedding_tangent_frame_transport_gate 
 )
 from scripts.build_p0_eft_janus_z2_sigma_active_embedding_to_flrw_extrinsic_curvature_input_gate import (
     build_payload as build_embedding_to_flrw_extrinsic_curvature_payload,
+)
+from scripts.write_p0_eft_janus_z2_sigma_dynamic_shell_inputs_from_rsigma_and_bulk_f import (
+    build_payload as build_dynamic_shell_inputs_from_rsigma_and_bulk_f_payload,
+)
+from scripts.write_p0_eft_janus_z2_sigma_flrw_extrinsic_curvature_from_dynamic_shell import (
+    build_payload as build_flrw_extrinsic_curvature_from_dynamic_shell_payload,
 )
 from scripts.build_p0_eft_janus_z2_sigma_scale_free_omega_k_from_curvature_scale_gate import (
     build_payload as build_omega_k_payload,
@@ -477,6 +489,8 @@ DEFAULT_STEPS: tuple[Step, ...] = (
     ("active_tunnel_embedding_from_radius", build_active_tunnel_embedding_from_radius_payload),
     ("embedding_tangent_frame_transport", build_embedding_tangent_frame_transport_payload),
     ("active_embedding_to_flrw_extrinsic_curvature", build_embedding_to_flrw_extrinsic_curvature_payload),
+    ("dynamic_shell_inputs_from_rsigma_and_bulk_f", build_dynamic_shell_inputs_from_rsigma_and_bulk_f_payload),
+    ("flrw_extrinsic_curvature_from_dynamic_shell", build_flrw_extrinsic_curvature_from_dynamic_shell_payload),
     ("flrw_extrinsic_curvature_grid_builder", build_flrw_extrinsic_curvature_grid_builder_payload),
     ("flrw_extrinsic_curvature_grid_writer", build_flrw_extrinsic_curvature_grid_writer_payload),
     ("extrinsic_curvature_jump_builder", build_extrinsic_curvature_jump_builder_payload),
@@ -494,7 +508,9 @@ DEFAULT_STEPS: tuple[Step, ...] = (
     ("projected_dirac_matter_current", build_projected_dirac_matter_current_payload),
     ("dirac_charge_boundary_projection", build_dirac_charge_boundary_projection_payload),
     ("dirac_number_normalization", build_dirac_number_normalization_payload),
+    ("projected_charge_reduction_to_occupation", build_projected_charge_reduction_payload),
     ("projected_baryon_charge", build_projected_charge_payload),
+    ("effective_closure_from_ratio_and_occupation", build_effective_closure_from_ratio_and_occupation_payload),
     ("baryon_density_noether_volume", build_baryon_density_payload),
     ("early_plasma_codata", build_plasma_codata_payload),
     ("photon_temperature_firas", build_photon_temperature_payload),

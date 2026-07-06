@@ -11,7 +11,11 @@ from scripts.build_p0_eft_janus_z2_sigma_holst_nieh_yan_component_from_inputs_ga
 class P0EFTJanusZ2SigmaHolstNiehYanComponentFromInputsGateTests(unittest.TestCase):
     def test_missing_input_blocks_output(self):
         with tempfile.TemporaryDirectory() as tmp:
-            payload = build_payload(input_path=Path(tmp) / "missing.json", output_path=Path(tmp) / "out.json")
+            payload = build_payload(
+                input_path=Path(tmp) / "missing.json",
+                radial_zero_path=Path(tmp) / "missing_radial.json",
+                output_path=Path(tmp) / "out.json",
+            )
         self.assertFalse(payload["gate_passed"])
         self.assertFalse(payload["holst_nieh_yan_component_values_ready"])
 
@@ -40,6 +44,36 @@ class P0EFTJanusZ2SigmaHolstNiehYanComponentFromInputsGateTests(unittest.TestCas
         self.assertTrue(payload["gate_passed"])
         self.assertEqual(written["flrw_components_over_rho_crit0"]["holst_nieh_yan_rho"], [0.1, 0.2, 0.3])
         self.assertFalse(written["archived_z4_reuse_used"])
+
+    def test_radial_zero_identity_writes_zero_component(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            radial_path = Path(tmp) / "radial.json"
+            output_path = Path(tmp) / "out.json"
+            radial_path.write_text(
+                json.dumps(
+                    {
+                        "active_core": "Z2_tunnel_Sigma",
+                        "source": "active_derived",
+                        "compressed_planck_lcdm_background_used": False,
+                        "archived_z4_reuse_used": False,
+                        "phenomenological_holst_bao_scan_used": False,
+                        "a_grid": [0.25, 0.5],
+                        "torsionless_Nieh_Yan_zero_identity_ready": True,
+                        "E_HolstNiehYan_values": [0.0, 0.0],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            payload = build_payload(
+                input_path=Path(tmp) / "missing.json",
+                radial_zero_path=radial_path,
+                output_path=output_path,
+            )
+            written = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertEqual(payload["selected_input_route"], "torsionless_radial_zero_identity")
+        self.assertEqual(written["flrw_components_over_rho_crit0"]["holst_nieh_yan_rho"], [0.0, 0.0])
 
     def test_forbidden_provenance_blocks(self):
         with tempfile.TemporaryDirectory() as tmp:

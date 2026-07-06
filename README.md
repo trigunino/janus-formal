@@ -16,7 +16,7 @@ Statut separe par niveau de preuve :
 - `aps_global_theorem_proved_without_axioms = False`
 - `orbifold_global_theorem_proved_without_axioms = False`
 - `unique_action_variation_proved_without_axioms = False`
-- `pure_math_model_closed_without_axioms = True`
+- `pure_math_model_closed_without_axioms = False`
 - `holst_geometric_lock_closed = Conditional`
 - `late_time_growth_branch_observationally_viable = True`
 - `cmb_bao_monommetric_camb_hooks_sufficient = False`
@@ -40,7 +40,7 @@ Statut separe par niveau de preuve :
 - `sigma_boundary_variational_package_declared = True`
 - `sigma_boundary_nonlinear_residual_closed = True`
 - `sigma_boundary_action_closed = True`
-- `z2_sigma_model_closed_without_axioms = True`
+- `z2_sigma_model_closed_without_axioms = False`
 - `z2_sigma_background_bibliography_checked = True`
 - `projected_sigma_stress_tensor_derived = True`
 - `z2_tunnel_junction_condition_derived = True`
@@ -155,6 +155,14 @@ Statut separe par niveau de preuve :
 - `z2_sigma_counterterm_component_from_inputs_ready = True`
 - `z2_sigma_counterterm_component_from_inputs_passed = False`
 - `z2_sigma_counterterm_component_from_inputs_requires_FLRW_and_radial_reduction = True`
+- `z2_sigma_counterterm_chain_runner_ready = True`
+- `z2_sigma_counterterm_chain_passed = False`
+- `z2_sigma_counterterm_chain_first_blocker = rsigma_radius_solution`
+- `z2_sigma_counterterm_round_throat_symbolic_E_of_R_ready = True`
+- `z2_sigma_counterterm_requires_active_surface_hk_coefficients = True`
+- `z2_sigma_counterterm_requires_coupled_radius_solution_or_global_regular_radius = True`
+- `z2_sigma_counterterm_requires_active_h_K_Rnabn_on_sigma = Downstream once radius exists`
+- `z2_sigma_counterterm_requires_alpha_h_alpha_K_radial_values = Downstream`
 - `z2_sigma_counterterm_tetrad_metric_residual_formula_declared = True`
 - `z2_sigma_counterterm_tetrad_metric_residual_coefficient_writer_ready = True`
 - `z2_sigma_counterterm_tetrad_metric_residual_coefficient_writer_passed = False`

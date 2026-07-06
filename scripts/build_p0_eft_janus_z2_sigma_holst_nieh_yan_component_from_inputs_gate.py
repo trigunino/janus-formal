@@ -12,6 +12,7 @@ from janus_lab.z2_sigma_flrw_component_inputs import build_active_flrw_component
 
 
 INPUT_PATH = Path("outputs/active_z2_sigma/holst_nieh_yan_component_inputs.json")
+RADIAL_ZERO_PATH = Path("outputs/active_z2_sigma/holst_nieh_yan_radial_inputs.json")
 OUTPUT_PATH = Path("outputs/active_z2_sigma/holst_nieh_yan_components.json")
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_holst_nieh_yan_component_from_inputs_gate.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_holst_nieh_yan_component_from_inputs_gate.json")
@@ -33,13 +34,44 @@ def _load_input(path: Path) -> dict:
     return payload
 
 
-def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_PATH) -> dict:
+def _load_radial_zero_input(path: Path) -> dict:
+    payload = _load_input(path)
+    if payload.get("torsionless_Nieh_Yan_zero_identity_ready") is not True:
+        raise ValueError("torsionless_Nieh_Yan_zero_identity_ready must be true")
+    values = payload.get("E_HolstNiehYan_values")
+    if not isinstance(values, list) or not values:
+        raise ValueError("E_HolstNiehYan_values must be a non-empty list")
+    if any(abs(float(value)) > 1e-12 for value in values):
+        raise ValueError("E_HolstNiehYan_values must be zero")
+    return {
+        "a_grid": payload["a_grid"],
+        "holst_nieh_yan_rho": [0.0 for _ in payload["a_grid"]],
+        "holst_nieh_yan_p": [0.0 for _ in payload["a_grid"]],
+        "holst_nieh_yan_provenance": (
+            "active torsionless Nieh-Yan identity: local Sigma Holst component zero"
+        ),
+    }
+
+
+def build_payload(
+    *,
+    input_path: Path = INPUT_PATH,
+    radial_zero_path: Path = RADIAL_ZERO_PATH,
+    output_path: Path = OUTPUT_PATH,
+) -> dict:
     input_exists = input_path.exists()
+    radial_zero_exists = radial_zero_path.exists()
     output_written = False
     validation_error = None
-    if input_exists:
+    selected_input_route = "none"
+    if input_exists or radial_zero_exists:
         try:
-            source = _load_input(input_path)
+            if input_exists:
+                source = _load_input(input_path)
+                selected_input_route = "explicit_active_flrw_reduction"
+            else:
+                source = _load_radial_zero_input(radial_zero_path)
+                selected_input_route = "torsionless_radial_zero_identity"
             component = build_active_flrw_component_pair_payload(
                 a_grid=source["a_grid"],
                 rho_field="holst_nieh_yan_rho",
@@ -58,9 +90,13 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
         "status": "janus-z2-sigma-holst-nieh-yan-component-from-inputs-gate",
         "active_core": "Z2_tunnel_Sigma",
         "input_manifest": str(input_path),
+        "radial_zero_manifest": str(radial_zero_path),
         "output_manifest": str(output_path),
         "input_exists": input_exists,
+        "radial_zero_input_exists": radial_zero_exists,
+        "selected_input_route": selected_input_route,
         "requires_active_Holst_Nieh_Yan_FLRW_reduction": True,
+        "allows_torsionless_radial_zero_identity": True,
         "holst_nieh_yan_component_values_ready": output_written,
         "holst_nieh_yan_component_output_written": output_written,
         "uses_compressed_planck_lcdm_background": False,
@@ -70,7 +106,7 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
         "validation_error": validation_error,
         "next_required": [
             "derive_Holst_Nieh_Yan_FLRW_stress_reduction",
-            "supply_outputs_active_z2_sigma_holst_nieh_yan_component_inputs_json",
+            "supply_outputs_active_z2_sigma_holst_nieh_yan_component_inputs_json_or_torsionless_radial_zero_identity",
             "run_flrw_non_matter_inputs_assembler_gate",
         ],
     }
@@ -84,6 +120,8 @@ def write_reports() -> dict:
         "# Janus Z2/Sigma Holst-Nieh-Yan Component From Inputs Gate",
         "",
         f"Input exists: `{payload['input_exists']}`",
+        f"Radial zero input exists: `{payload['radial_zero_input_exists']}`",
+        f"Selected route: `{payload['selected_input_route']}`",
         f"Component output written: `{payload['holst_nieh_yan_component_output_written']}`",
         f"Gate passed: `{payload['gate_passed']}`",
     ]

@@ -24,18 +24,22 @@ def _active_exists(path: Path) -> bool:
         return False
 
 
-def build_payload() -> dict:
-    coefficient_ready = _active_exists(COEFFICIENT_PATH)
-    trace_target_ready = _active_exists(TRACE_TARGET_PATH)
+def build_payload(
+    *,
+    coefficient_path: Path = COEFFICIENT_PATH,
+    trace_target_path: Path = TRACE_TARGET_PATH,
+) -> dict:
+    coefficient_ready = _active_exists(coefficient_path)
+    trace_target_ready = _active_exists(trace_target_path)
     routes = {
         "direct_active_density": {
             "ready": coefficient_ready,
-            "path": str(COEFFICIENT_PATH),
+            "path": str(coefficient_path),
             "meaning": "a0..a3 already derived from active Janus/Sigma action",
         },
         "residual_matching": {
             "ready": trace_target_ready,
-            "path": str(TRACE_TARGET_PATH),
+            "path": str(trace_target_path),
             "meaning": "solve a_i from active R_h/R_K trace targets, not observations",
         },
         "symmetry_no_go": {
