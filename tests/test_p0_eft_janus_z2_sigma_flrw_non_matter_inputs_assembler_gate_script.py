@@ -35,7 +35,10 @@ class P0EFTJanusZ2SigmaFLRWNonMatterInputsAssemblerGateTests(unittest.TestCase):
 
         self.assertFalse(payload["non_matter_flrw_inputs_written"])
         self.assertFalse(payload["gate_passed"])
-        self.assertEqual(payload["primary_blocker"], "cartan_holst_counterterm_components")
+        self.assertEqual(
+            payload["primary_blocker"],
+            "cartan_ghy_component,holst_nieh_yan_component,counterterm_component",
+        )
         self.assertIn("cartan_ghy_component", payload["upstream_frontiers"])
         self.assertIn("holst_nieh_yan_component", payload["upstream_frontiers"])
         self.assertIn("counterterm_component", payload["upstream_frontiers"])
@@ -87,6 +90,37 @@ class P0EFTJanusZ2SigmaFLRWNonMatterInputsAssemblerGateTests(unittest.TestCase):
         self.assertIn("holst_nieh_yan_p", written["flrw_components_over_rho_crit0"])
         self.assertIn("counterterm_p", written["flrw_components_over_rho_crit0"])
         self.assertFalse(written["archived_z4_reuse_used"])
+
+    def test_zero_cartan_component_does_not_require_background_scalar_frontier(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cartan = Path(tmp) / "cartan.json"
+            holst = Path(tmp) / "holst.json"
+            counterterm = Path(tmp) / "counterterm.json"
+            cartan_payload = _component_payload(["cartan_ghy_rho", "cartan_ghy_p"], values=[0.0, 0.0, 0.0])
+            cartan_payload["zero_deltaK_normalization_independent"] = True
+            cartan.write_text(json.dumps(cartan_payload), encoding="utf-8")
+            holst.write_text(
+                json.dumps(_component_payload(["holst_nieh_yan_rho", "holst_nieh_yan_p"])),
+                encoding="utf-8",
+            )
+
+            payload = build_payload(
+                cartan_path=cartan,
+                holst_path=holst,
+                counterterm_path=counterterm,
+                output_path=Path(tmp) / "partial.json",
+            )
+            cartan_frontier = payload["upstream_frontiers"]["cartan_ghy_component"]
+
+        self.assertTrue(payload["cartan_ghy_component_exists"])
+        self.assertFalse(payload["counterterm_component_exists"])
+        self.assertEqual(payload["primary_blocker"], "counterterm_component")
+        self.assertEqual(
+            cartan_frontier["next_required"],
+            ["cartan_ghy_component_ready_from_zero_DeltaK_PT67"],
+        )
+        self.assertEqual(len(cartan_frontier["required_inputs"]), 1)
+        self.assertEqual(payload["next_required"], ["derive_and_write_counterterm_component"])
 
     def test_grid_mismatch_blocks_assembler(self):
         with tempfile.TemporaryDirectory() as tmp:

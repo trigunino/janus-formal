@@ -113,6 +113,36 @@ class P0EFTJanusZ2SigmaCartanGHYComponentFromDeltaKInputsGateTests(unittest.Test
         self.assertEqual(written["flrw_components_over_rho_crit0"]["cartan_ghy_p"], [0.1, 0.2, 0.4])
         self.assertFalse(written["archived_z4_reuse_used"])
 
+    def test_zero_deltaK_writes_zero_components_without_background(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            deltaK = _deltaK_input()
+            deltaK["DeltaK_s_Z2Sigma"] = [0.0, 0.0, 0.0]
+            deltaK["DeltaK_tau_Z2Sigma"] = [0.0, 0.0, 0.0]
+            deltaK_path = Path(tmp) / "deltaK.json"
+            output_path = Path(tmp) / "cartan.json"
+            deltaK_path.write_text(json.dumps(deltaK), encoding="utf-8")
+
+            payload = build_payload(
+                deltaK_input_path=deltaK_path,
+                background_scalar_path=Path(tmp) / "missing_background.json",
+                output_path=output_path,
+            )
+            written = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertTrue(payload["zero_deltaK_normalization_independent"])
+        self.assertFalse(payload["requires_active_kappa_rho_crit0"])
+        self.assertEqual(
+            payload["next_required"],
+            ["merge_Cartan_GHY_components_into_flrw_component_inputs_without_matter_flux"],
+        )
+        self.assertEqual(
+            written["component_route"],
+            "cartan_ghy_from_zero_active_deltaK",
+        )
+        self.assertEqual(written["flrw_components_over_rho_crit0"]["cartan_ghy_rho"], [0.0, 0.0, 0.0])
+        self.assertEqual(written["flrw_components_over_rho_crit0"]["cartan_ghy_p"], [0.0, 0.0, 0.0])
+
     def test_forbidden_deltaK_provenance_blocks_component_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             deltaK = _deltaK_input()

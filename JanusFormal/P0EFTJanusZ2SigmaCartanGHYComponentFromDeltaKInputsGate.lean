@@ -14,6 +14,7 @@ structure CartanGHYComponentFromDeltaKInputsGate where
   deltaKtauOfAReady : Prop
   z2OrientationSignDeclared : Prop
   activeKappaRhoCrit0Ready : Prop
+  zeroDeltaKNormalizationIndependent : Prop
   deltaKProvenanceChecked : Prop
   compressedPlanckLCDMForbidden : Prop
   archivedZ4ReuseForbidden : Prop
@@ -33,7 +34,7 @@ def canWriteCartanGHYComponents
   g.deltaKsOfAReady /\
   g.deltaKtauOfAReady /\
   g.z2OrientationSignDeclared /\
-  g.activeKappaRhoCrit0Ready /\
+  (g.activeKappaRhoCrit0Ready \/ g.zeroDeltaKNormalizationIndependent) /\
   g.deltaKProvenanceChecked /\
   g.compressedPlanckLCDMForbidden /\
   g.archivedZ4ReuseForbidden /\
@@ -47,10 +48,19 @@ def canWriteCartanGHYComponents
 theorem cartan_components_require_deltaK_and_normalization
     (g : CartanGHYComponentFromDeltaKInputsGate)
     (h : canWriteCartanGHYComponents g) :
-    g.deltaKsOfAReady /\ g.deltaKtauOfAReady /\ g.activeKappaRhoCrit0Ready := by
-  exact ⟨h.right.right.right.left,
-    h.right.right.right.right.left,
-    h.right.right.right.right.right.right.left⟩
+    g.deltaKsOfAReady /\ g.deltaKtauOfAReady /\
+    (g.activeKappaRhoCrit0Ready \/ g.zeroDeltaKNormalizationIndependent) := by
+  rcases h with ⟨_, _, _, hKs, hKtau, _, hNorm, _, _, _, _, _, _, _, _, _⟩
+  exact ⟨hKs, hKtau, hNorm⟩
+
+theorem zero_deltaK_branch_can_skip_critical_normalization
+    (g : CartanGHYComponentFromDeltaKInputsGate)
+    (h : canWriteCartanGHYComponents g)
+    (hNoNorm : Not g.activeKappaRhoCrit0Ready) :
+    g.zeroDeltaKNormalizationIndependent := by
+  exact Or.resolve_left
+    (cartan_components_require_deltaK_and_normalization g h).right.right
+    hNoNorm
 
 theorem ratio_only_does_not_supply_deltaK
     (g : CartanGHYComponentFromDeltaKInputsGate)
@@ -64,8 +74,8 @@ theorem cartan_components_forbid_legacy_inputs
     (g : CartanGHYComponentFromDeltaKInputsGate)
     (h : canWriteCartanGHYComponents g) :
     g.compressedPlanckLCDMForbidden /\ g.archivedZ4ReuseForbidden := by
-  exact ⟨h.right.right.right.right.right.right.right.right.left,
-    h.right.right.right.right.right.right.right.right.right.left⟩
+  rcases h with ⟨_, _, _, _, _, _, _, _, hPlanck, hZ4, _, _, _, _, _, _⟩
+  exact ⟨hPlanck, hZ4⟩
 
 theorem cartan_component_declares_upstream_frontiers
     (g : CartanGHYComponentFromDeltaKInputsGate)
@@ -75,11 +85,8 @@ theorem cartan_component_declares_upstream_frontiers
     g.backgroundScalarFrontierDeclared /\
     g.nearestCartanComponentFrontierDeclared /\
     g.nearestCartanComponentFrontierDiagnosticOnly := by
-  exact ⟨h.right.right.right.right.right.right.right.right.right.right.right.left,
-    h.right.right.right.right.right.right.right.right.right.right.right.right.left,
-    h.right.right.right.right.right.right.right.right.right.right.right.right.right.left,
-    h.right.right.right.right.right.right.right.right.right.right.right.right.right.right.left,
-    h.right.right.right.right.right.right.right.right.right.right.right.right.right.right.right⟩
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, hRatio, hDelta, hBack, hFront, hDiag⟩
+  exact ⟨hRatio, hDelta, hBack, hFront, hDiag⟩
 
 end P0EFTJanusZ2SigmaCartanGHYComponentFromDeltaKInputsGate
 end JanusFormal

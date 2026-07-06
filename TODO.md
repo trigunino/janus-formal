@@ -2931,11 +2931,15 @@ Completion rule:
   - `MatterFluxZeroComponentFromTransparencyGate` and
     `RSigmaMatterFluxRadialTermFromTransparencyGate` now write
     `matter_flux_zero_components.json` and `rsigma_E_matterFlux.json`;
-  - remaining FLRW blockers are Cartan/GHY `DeltaK`, counterterm component, and
-    active dimensionful background scalars.
+  - remaining FLRW blockers are counterterm component and active dimensionful
+    background scalars. The PT67 subroute now supplies a strict zero
+    Cartan/GHY component from PT-transported `DeltaK=0`.
   - Cartan/GHY must not be set to zero by naive Z2 symmetry: with the active
     projective convention `eps_Z2=-1`, `K_-=-K_+` gives
     `DeltaK=K_+ - K_- = 2K_+`, not zero.
+  - PT67 is a separate transport convention: `dt -> -dt`, `dr -> dr`, and
+    screen transport give `DeltaK_TT=0` and `DeltaK_screen_trace=0`; this is
+    not the standard outward-normal Israel cut-and-paste jump.
   - `CartanGHYComponentFromDeltaKInputsGate` now records that the projective
     collar ratio `R_Sigma/ell=1` is ready but insufficient for `DeltaK`; an
     absolute embedding/radius certificate is still required.
@@ -3069,6 +3073,23 @@ Completion rule:
     `write_p0_eft_janus_z2_pt67_regular_sigma_hk_inputs.py` writes
     `outputs/active_z2_sigma/pt67_regular_sigma_hk_inputs.json` with
     nondegenerate `h_ab`, unit normal, local `K_ab`, and `DeltaK_PT=0`.
+  - Cartan/GHY writer:
+    `write_p0_eft_janus_z2_pt67_cartan_ghy_deltaK_inputs.py` writes the
+    standard `outputs/active_z2_sigma/cartan_ghy_deltaK_inputs.json` with
+    `DeltaK_s=DeltaK_tau=0` from PT transport, no free orientation sign and no
+    observational fit.
+  - `CartanGHYComponentFromDeltaKInputsGate` now accepts the strict zero
+    `DeltaK` branch without `background_scalars.json`, because
+    `rho_CGHY=p_CGHY=0` before critical normalization.
+  - Non-matter FLRW assembler status after PT67:
+    Cartan/GHY exists, Holst/Nieh-Yan exists, and the nearest blocker is now
+    only `counterterm_component`. The assembler reports
+    `primary_blocker = counterterm_component` and
+    `next_required = derive_and_write_counterterm_component`.
+  - Counterterm is not closed by the PT67 update:
+    `run_p0_eft_janus_z2_sigma_counterterm_chain.py` still blocks at
+    `counterterm_trace_residual_inputs`, requiring active
+    `R_h_trace/R_K_trace` or direct active surface density coefficients.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;

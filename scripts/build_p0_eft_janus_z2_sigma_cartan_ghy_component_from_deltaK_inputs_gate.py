@@ -55,6 +55,40 @@ def _load_ratio_status(path: Path) -> dict:
     }
 
 
+def _deltaK_is_zero(deltaK_payload: dict) -> bool:
+    return all(float(value) == 0.0 for value in deltaK_payload["DeltaK_s_Z2Sigma"]) and all(
+        float(value) == 0.0 for value in deltaK_payload["DeltaK_tau_Z2Sigma"]
+    )
+
+
+def _zero_component_payload(deltaK_payload: dict) -> dict:
+    grid = deltaK_payload["a_grid"]
+    zeros = [0.0 for _ in grid]
+    provenance = (
+        deltaK_payload["DeltaK_provenance"]
+        + "; zero DeltaK branch, Cartan-GHY rho/p vanish before critical normalization"
+    )
+    return {
+        "active_core": "Z2_tunnel_Sigma",
+        "source": "active_derived",
+        "component_route": "cartan_ghy_from_zero_active_deltaK",
+        "a_grid": grid,
+        "flrw_components_over_rho_crit0": {
+            "cartan_ghy_rho": zeros,
+            "cartan_ghy_p": zeros,
+        },
+        "component_provenance": {
+            "cartan_ghy_rho": provenance,
+            "cartan_ghy_p": provenance,
+        },
+        "critical_normalization_required": False,
+        "zero_deltaK_normalization_independent": True,
+        "compressed_planck_lcdm_background_used": False,
+        "archived_z4_reuse_used": False,
+        "phenomenological_holst_bao_scan_used": False,
+    }
+
+
 def build_payload(
     *,
     deltaK_input_path: Path = DELTAK_INPUT_PATH,
@@ -72,25 +106,37 @@ def build_payload(
         missing_inputs.append("active_DeltaK_s_tau_inputs")
     if not background_exists:
         missing_inputs.append("active_background_scalars_kappa_rho_crit0")
-    if deltaK_exists and background_exists:
+    zero_deltaK_normalization_independent = False
+    if deltaK_exists:
         try:
             deltaK_payload = _load_deltaK_inputs(deltaK_input_path)
-            background_payload = load_active_z2sigma_background_scalar_manifest(background_scalar_path)
-            component_payload = build_cartan_ghy_component_payload(
-                a_grid=deltaK_payload["a_grid"],
-                delta_k_s=deltaK_payload["DeltaK_s_Z2Sigma"],
-                delta_k_tau=deltaK_payload["DeltaK_tau_Z2Sigma"],
-                z2_orientation_sign=deltaK_payload["z2_orientation_sign"],
-                kappa_rho_crit0=background_payload["critical_normalization"][
-                    "kappa_rho_crit0_Z2Sigma_SI"
-                ],
-                component_provenance=deltaK_payload["DeltaK_provenance"],
-            )
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(json.dumps(component_payload, indent=2), encoding="utf-8")
-            output_written = True
+            if background_exists:
+                background_payload = load_active_z2sigma_background_scalar_manifest(
+                    background_scalar_path
+                )
+                component_payload = build_cartan_ghy_component_payload(
+                    a_grid=deltaK_payload["a_grid"],
+                    delta_k_s=deltaK_payload["DeltaK_s_Z2Sigma"],
+                    delta_k_tau=deltaK_payload["DeltaK_tau_Z2Sigma"],
+                    z2_orientation_sign=deltaK_payload["z2_orientation_sign"],
+                    kappa_rho_crit0=background_payload["critical_normalization"][
+                        "kappa_rho_crit0_Z2Sigma_SI"
+                    ],
+                    component_provenance=deltaK_payload["DeltaK_provenance"],
+                )
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                output_path.write_text(json.dumps(component_payload, indent=2), encoding="utf-8")
+                output_written = True
+            elif _deltaK_is_zero(deltaK_payload):
+                component_payload = _zero_component_payload(deltaK_payload)
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                output_path.write_text(json.dumps(component_payload, indent=2), encoding="utf-8")
+                output_written = True
+                zero_deltaK_normalization_independent = True
         except Exception as exc:
             validation_error = str(exc)
+    if zero_deltaK_normalization_independent and "active_background_scalars_kappa_rho_crit0" in missing_inputs:
+        missing_inputs.remove("active_background_scalars_kappa_rho_crit0")
     return {
         "status": "janus-z2-sigma-cartan-ghy-component-from-deltaK-inputs-gate",
         "active_core": "Z2_tunnel_Sigma",
@@ -121,7 +167,8 @@ def build_payload(
         },
         "requires_active_DeltaK_s_of_a": True,
         "requires_active_DeltaK_tau_of_a": True,
-        "requires_active_kappa_rho_crit0": True,
+        "requires_active_kappa_rho_crit0": not zero_deltaK_normalization_independent,
+        "zero_deltaK_normalization_independent": zero_deltaK_normalization_independent,
         "R_Sigma_over_ell_collar_ready": ratio_status["ratio_solution_ready"],
         "absolute_R_Sigma_solution_ready": ratio_status[
             "full_R_Sigma_solution_certificate_ready"
@@ -138,11 +185,15 @@ def build_payload(
         "uses_phenomenological_holst_bao_scan": False,
         "gate_passed": output_written,
         "validation_error": validation_error,
-        "next_required": [
-            "supply_outputs_active_z2_sigma_cartan_ghy_deltaK_inputs_json",
-            "supply_outputs_active_z2_sigma_background_scalars_json",
-            "merge_Cartan_GHY_components_into_flrw_component_inputs_without_matter_flux",
-        ],
+        "next_required": (
+            ["merge_Cartan_GHY_components_into_flrw_component_inputs_without_matter_flux"]
+            if output_written
+            else [
+                "supply_outputs_active_z2_sigma_cartan_ghy_deltaK_inputs_json",
+                "supply_outputs_active_z2_sigma_background_scalars_json",
+                "merge_Cartan_GHY_components_into_flrw_component_inputs_without_matter_flux",
+            ]
+        ),
     }
 
 

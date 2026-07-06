@@ -30,6 +30,49 @@ def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _cartan_required_inputs(cartan_path: Path) -> list[dict]:
+    deltaK_path = cartan_path.parent / CARTAN_DELTAK_INPUT_PATH.name
+    background_path = cartan_path.parent / BACKGROUND_SCALAR_PATH.name
+    required = [
+        {
+            "path": str(deltaK_path),
+            "exists": deltaK_path.exists(),
+            "gate": "janus-z2-sigma-cartan-ghy-deltaK-input-writer-gate",
+        }
+    ]
+    if not cartan_path.exists():
+        required.append(
+            {
+                "path": str(background_path),
+                "exists": background_path.exists(),
+                "gate": "janus-z2-sigma-background-scalar-manifest-writer-from-inputs-gate",
+            }
+        )
+        return required
+    payload = _read_json(cartan_path)
+    if not payload.get("zero_deltaK_normalization_independent", False):
+        required.append(
+            {
+                "path": str(background_path),
+                "exists": background_path.exists(),
+                "gate": "janus-z2-sigma-background-scalar-manifest-writer-from-inputs-gate",
+            }
+        )
+    return required
+
+
+def _cartan_next_required(cartan_path: Path) -> list[str]:
+    if not cartan_path.exists():
+        return [
+            "supply_active_DeltaK_s_and_DeltaK_tau_inputs",
+            "supply_active_kappa_rho_crit0_background_scalars",
+        ]
+    payload = _read_json(cartan_path)
+    if payload.get("zero_deltaK_normalization_independent", False):
+        return ["cartan_ghy_component_ready_from_zero_DeltaK_PT67"]
+    return ["supply_active_kappa_rho_crit0_background_scalars"]
+
+
 def _component_frontiers(
     *,
     cartan_path: Path,
@@ -41,22 +84,8 @@ def _component_frontiers(
             "gate": "janus-z2-sigma-cartan-ghy-component-from-deltaK-inputs-gate",
             "component_manifest": str(cartan_path),
             "component_exists": cartan_path.exists(),
-            "required_inputs": [
-                {
-                    "path": str(CARTAN_DELTAK_INPUT_PATH),
-                    "exists": CARTAN_DELTAK_INPUT_PATH.exists(),
-                    "gate": "janus-z2-sigma-cartan-ghy-deltaK-input-writer-gate",
-                },
-                {
-                    "path": str(BACKGROUND_SCALAR_PATH),
-                    "exists": BACKGROUND_SCALAR_PATH.exists(),
-                    "gate": "janus-z2-sigma-background-scalar-manifest-writer-from-inputs-gate",
-                },
-            ],
-            "next_required": [
-                "supply_active_DeltaK_s_and_DeltaK_tau_inputs",
-                "supply_active_kappa_rho_crit0_background_scalars",
-            ],
+            "required_inputs": _cartan_required_inputs(cartan_path),
+            "next_required": _cartan_next_required(cartan_path),
             "diagnostic_only": True,
         },
         "holst_nieh_yan_component": {
@@ -117,6 +146,14 @@ def build_payload(
         for key, frontier in upstream_frontiers.items()
         if not frontier["component_exists"]
     ]
+    next_required = (
+        ["run_flrw_inputs_merge_transparent_matter_flux_gate"]
+        if not missing_components
+        else [
+            f"derive_and_write_{name}"
+            for name in missing_components
+        ]
+    )
     output_written = False
     validation_error = None
     if cartan_exists and holst_exists and counterterm_exists:
@@ -151,14 +188,9 @@ def build_payload(
         "uses_archived_z4_inputs": False,
         "uses_phenomenological_holst_bao_scan": False,
         "gate_passed": output_written,
-        "primary_blocker": "none" if output_written else "cartan_holst_counterterm_components",
+        "primary_blocker": "none" if output_written else ",".join(missing_components),
         "validation_error": validation_error,
-        "next_required": [
-            "pass_Cartan_GHY_component_from_deltaK_inputs_gate",
-            "derive_and_write_Holst_Nieh_Yan_components",
-            "derive_and_write_counterterm_components",
-            "run_flrw_inputs_merge_transparent_matter_flux_gate",
-        ],
+        "next_required": next_required,
     }
 
 
