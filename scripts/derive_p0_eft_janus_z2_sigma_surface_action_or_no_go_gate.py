@@ -18,6 +18,9 @@ from scripts.derive_p0_eft_janus_z2_sigma_souriau_boundary_hamiltonian_attempt i
 from scripts.write_p0_eft_janus_z2_sigma_rsigma_over_ell_collar_from_projective_stereographic import (
     build_payload as projective_ratio,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_holst_palatini_boundary_theta_pt67_projection import (
+    build_payload as theta_projection,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_surface_action_or_no_go_gate.md")
@@ -29,12 +32,19 @@ def build_payload() -> dict:
     mpla = mpla_model()
     souriau = souriau_hamiltonian()
     ratio = projective_ratio()
+    theta = theta_projection()
+    theta_eliminates_non_ghy = bool(
+        theta["gate_passed"]
+        and theta["projection"]["projection_result"]["non_GHY_metric_trace_R_h_from_theta"] == "0"
+        and theta["projection"]["projection_result"]["non_GHY_extrinsic_trace_R_K_from_theta"] == "0"
+    )
     no_extension_inputs = {
         "mpla_local_throat": mpla["minimal_throat_ready"],
         "projective_ratio": ratio["ratio_solution_ready"],
         "souriau_global_charge": souriau["moment_map_charge_Q_sigma_declared"],
         "souriau_local_density": souriau["local_density_from_charge_available"],
         "counterterm_chain_passed": counterterm["chain_passed"],
+        "first_order_boundary_topological_density_eliminated": theta_eliminates_non_ghy,
         "surface_hk_coefficients_available": "surface_hk_active_density_coefficients"
         not in counterterm["independent_missing_inputs"],
         "counterterm_trace_inputs_available": "counterterm_trace_residual_inputs"
@@ -62,11 +72,16 @@ def build_payload() -> dict:
             "Souriau_charge_reduction": "Q_Sigma = N_occ",
             "matter_flux": "local Sigma flux zero",
             "Holst_Nieh_Yan": "torsionless radial zero",
+            "first_order_boundary_topological_terms": "theta_HP gives no non-GHY R_h/R_K source on PT67",
         },
+        "eliminated_surface_density_sources": [
+            "Holst/Palatini theta non-GHY trace channel",
+            "torsionless Holst/Nieh-Yan local source",
+            "topological or exact boundary terms under well-posed first-order boundary conditions",
+        ],
         "missing_for_closure": [
-            "active local Sigma surface density L_Sigma(h,K,...)",
-            "or alpha_h/alpha_K from a boundary Hamiltonian variation",
-            "or counterterm_trace_residual_inputs with R_h_trace/R_K_trace",
+            "independent joint/corner contribution not already in PT67 Cartan-GHY/junction partition",
+            "or non-topological cross-action Sigma source",
             "or explicit allowed surface-action extension",
         ],
         "forbidden_shortcuts": [
@@ -76,10 +91,11 @@ def build_payload() -> dict:
             "fit a0..a3 observationally",
             "reuse archived Z4 coefficients",
         ],
-        "decision": "no_extension_surface_action_underselected",
+        "decision": "first_order_boundary_sources_eliminated_but_cross_or_corner_source_open",
         "recommended_next": (
-            "Either allow an explicit Sigma surface-action extension, or keep the "
-            "pure model open and restrict claims to topology/local flux identities."
+            "Audit PT67 joint/corner and cross-action channels. If they are "
+            "absorbed by the existing Cartan-GHY/junction partition or forbidden "
+            "by the active first action, counterterm_component may be closed at zero."
         ),
     }
 
@@ -99,6 +115,8 @@ def write_reports() -> dict:
         "## Accepted Positive Results",
     ]
     lines.extend(f"- `{k}`: `{v}`" for k, v in payload["accepted_positive_results"].items())
+    lines.extend(["", "## Eliminated Surface Density Sources"])
+    lines.extend(f"- `{item}`" for item in payload["eliminated_surface_density_sources"])
     lines.extend(["", "## Missing For Closure"])
     lines.extend(f"- `{item}`" for item in payload["missing_for_closure"])
     lines.extend(["", "## Forbidden Shortcuts"])

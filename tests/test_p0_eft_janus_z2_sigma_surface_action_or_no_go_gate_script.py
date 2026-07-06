@@ -18,7 +18,19 @@ class SurfaceActionOrNoGoGateTests(unittest.TestCase):
         self.assertFalse(payload["E_counterterm_closed"])
         self.assertFalse(payload["sigma_alpha_h_closed"])
         self.assertFalse(payload["full_no_fit_prediction_ready"])
-        self.assertEqual(payload["decision"], "no_extension_surface_action_underselected")
+        self.assertTrue(
+            payload["no_extension_inputs"][
+                "first_order_boundary_topological_density_eliminated"
+            ]
+        )
+        self.assertEqual(
+            payload["decision"],
+            "first_order_boundary_sources_eliminated_but_cross_or_corner_source_open",
+        )
+        self.assertIn(
+            "Holst/Palatini theta non-GHY trace channel",
+            payload["eliminated_surface_density_sources"],
+        )
 
     def test_forbidden_shortcuts_are_explicit(self) -> None:
         payload = build_payload()

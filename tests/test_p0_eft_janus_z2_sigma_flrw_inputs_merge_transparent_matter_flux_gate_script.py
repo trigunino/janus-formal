@@ -55,6 +55,7 @@ class P0EFTJanusZ2SigmaFLRWInputsMergeTransparentMatterFluxGateTests(unittest.Te
                 partial_input_path=Path(tmp) / "partial.json",
                 matter_flux_path=Path(tmp) / "matter.json",
                 output_path=Path(tmp) / "out.json",
+                auto_write_matter_flux=False,
             )
 
         self.assertFalse(payload["partial_input_exists"])
@@ -77,6 +78,7 @@ class P0EFTJanusZ2SigmaFLRWInputsMergeTransparentMatterFluxGateTests(unittest.Te
                 partial_input_path=partial_path,
                 matter_flux_path=matter_path,
                 output_path=output_path,
+                auto_write_matter_flux=False,
             )
             written = json.loads(output_path.read_text(encoding="utf-8"))
 
@@ -100,6 +102,7 @@ class P0EFTJanusZ2SigmaFLRWInputsMergeTransparentMatterFluxGateTests(unittest.Te
                 partial_input_path=partial_path,
                 matter_flux_path=matter_path,
                 output_path=output_path,
+                auto_write_matter_flux=False,
             )
 
         self.assertFalse(payload["gate_passed"])

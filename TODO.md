@@ -21,6 +21,39 @@
   The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but
   it leaves `R_Sigma` flat; the Z2-projected Dirac current is conserved, but it
   does not fix the absolute occupation number. Do not choose either by fit.
+- Counterterm no-extension update: first-order Holst/Palatini/Nieh-Yan and
+  exact boundary/corner channels have now been projected through PT67 and do not
+  create an independent local Sigma density. With no published/adopted
+  non-topological cross-action, the remaining non-GHY audit proves
+  `E_counterterm = 0` under the strict no-extension policy. This writes
+  `counterterm_component_inputs.json`, `counterterm_components.json`,
+  `flrw_component_inputs_without_matter_flux.json`, `flrw_component_inputs.json`,
+  and `flrw_components.json`. The next strict BAO blockers are now
+  `background_scalars.json` and `early_plasma.json`, not the counterterm.
+- Boundary-Hamiltonian scalar route: `H0_Z2Sigma`, `R_curv_Z2Sigma_m`, and
+  `N_occ` are now classified as boundary/constraint targets, not free source
+  densities. `H0_Z2Sigma` must come from the 3+1 projected boundary Hamiltonian
+  and lapse/time-gauge normalization; `R_curv_Z2Sigma_m` from Gauss-Codazzi plus
+  volume/surface projection; `N_occ` from a spinor/projector state-selection law
+  or explicit effective initial-state status. The target gate is
+  `build_p0_eft_janus_z2_sigma_boundary_hamiltonian_scalar_targets_gate.py`.
+- Scalar target decomposition is now split into three concrete gates:
+  `build_p0_eft_janus_z2_sigma_h0_boundary_hamiltonian_projection_gate.py`
+  declares the 3+1 ADM/boundary generator route for `H0_Z2Sigma` and blocks on
+  active lapse/time-gauge plus on-shell Hamiltonian evaluation;
+  `build_p0_eft_janus_z2_sigma_rcurv_gauss_codazzi_projection_gate.py` declares
+  the Gauss-Codazzi/volume-surface route for `R_curv_Z2Sigma_m` and blocks on
+  the same dimensionful boundary-Hamiltonian scale;
+  `build_p0_eft_janus_z2_sigma_nocc_boundary_state_selection_gate.py` declares
+  `N_occ` as state/superselection data and blocks on a spinor boundary
+  state-selection law or explicit effective-initial-data manifest.
+- Hamiltonian-to-Friedmann update: the symbolic map is now fixed,
+  `rho_H = Q_boundary/V_eff` then
+  `H0^2 = (8*pi*G/3) rho_H - k c^2/R_curv^2`. The numeric H0 route remains
+  blocked because the active repo supplies only scale-free ratios, not any of
+  the required dimensionful alternatives: absolute `R_Sigma`, boundary/state
+  charge, or action scale. This is checked by
+  `build_p0_eft_janus_z2_sigma_h0_numeric_input_frontier_gate.py`.
 - Current refinement: projective stereographic geometry fixes the relative
   throat/collar ratio `R_Sigma_over_ell_collar_Z2Sigma = 1`. This is now written
   to `outputs/active_z2_sigma/effective_partial_closure_from_projective_ratio.json`.
@@ -3090,6 +3123,77 @@ Completion rule:
     `run_p0_eft_janus_z2_sigma_counterterm_chain.py` still blocks at
     `counterterm_trace_residual_inputs`, requiring active
     `R_h_trace/R_K_trace` or direct active surface density coefficients.
+  - Dual-route counterterm race:
+    `P0EFTJanusZ2SigmaCountertermMinimalBasisDualRouteDecisionGate` now checks
+    both routes explicitly. Trace route is blocked by missing active
+    `R_h/R_K` trace targets; direct surface-action route is blocked because
+    current Janus inputs do not determine a unique local Sigma density. The
+    only available expression is parametric
+    `E_ct(R)=sqrt(q)*(6*c1*epsilon_Z2*R + 9*c2 + 6*c3)`, not promotable to a
+    component without active coefficients or boundary conditions.
+  - Holst/Palatini boundary bibliography update:
+    Holst 1995, Corichi-Wilson-Ewing 2010, Corichi-RubalcavaGarcia-Vukasinac
+    2016, Oliveri-Speziale 2019, and Corichi-Reyes 2015 support reconstructing
+    the first-order boundary potential `theta(e,omega)` and checking the
+    tetrad/metric boundary map. They do not by themselves determine the
+    non-GHY counterterm traces. Next concrete target:
+    project the Holst/Palatini boundary variation to Sigma/PT67 variables and
+    extract or eliminate `R_h_trace/R_K_trace`.
+  - Holst/Palatini theta projection now computed for PT67:
+    `derive_p0_eft_janus_z2_sigma_holst_palatini_boundary_theta_pt67_projection.py`
+    projects `theta_HP = P_IJ(e) wedge delta omega^IJ` onto the regular
+    torsionless PT67 Sigma branch. Result:
+    Palatini belongs to the already partitioned Cartan/GHY/junction channel,
+    Holst is torsionless zero/exact-form only, and the non-GHY traces from this
+    source are `R_h_trace=0`, `R_K_trace=0`. This narrows but does not close the
+    counterterm, because independent Sigma surface densities and cross-action
+    sources are still not excluded.
+  - Boundary-Hamiltonian scalar route status:
+    `H0_Z2Sigma`, `R_curv_Z2Sigma_m`, and `N_occ` are now classified as
+    boundary/constraint targets, not independent densities. The FLRW
+    proper-time lapse convention can be fixed (`N=1` on the restricted
+    background), but it does not determine the dimensionful `H0` scale.
+    Boundary-reference subtraction is now the active normalization route:
+    set the quasilocal reference vacuum (`Minkowski/Milne`, depending on the
+    active slicing) to zero energy. This fixes the additive zero and excludes a
+    new independent Sigma density, but it still does not provide the physical
+    boundary charge above the reference. Brown-York reduction is now formulaic:
+    `E_BY = (1/kappa) integral_Sigma N sqrt(q) (k_ref-k_phys)`. Current
+    frontier: the active S3 throat gives `k_ref-k_phys = 3(1-eps_Z2)/R_Sigma`
+    and therefore `E_BY(eps=-1)=12*pi^2*R_Sigma^2/kappa_Z2Sigma`; the
+    optimal-reference/isometric-embedding prescription fixes the subtraction
+    and `k_ref` once the boundary metric is dimensionful. It does not by itself
+    choose the absolute collar/throat scale. The remaining blocker is therefore
+    still `R_Sigma` (or equivalently `ell_collar`). Once that is derived, map
+    the charge to `H0_Z2Sigma` before writing
+    `background_H0_normalization_inputs.json`.
+  - Global topology scale audit:
+    the active `S4/RP4 + resolved tunnel Sigma` topology fixes
+    `R_Sigma/ell_collar = 1`, but is homothetic under
+    `(R_Sigma, ell_collar) -> (L R_Sigma, L ell_collar)`. Therefore global
+    topology alone cannot derive an absolute tunnel length. A dimensionful
+    action/boundary/state input is required before `E_BY` can become numeric.
+  - Cover-level scale audit:
+    moving up to `JanusZ2CoverMasterAction` currently gives orientation,
+    measure transport and symbolic `kappa_J`, but no dimensionful cover radius,
+    length parameter, boundary charge value or descent map
+    `R_Sigma = F[g_cover, constants, state]`. The homothety degeneracy therefore
+    descends unchanged. The cover route can close `R_Sigma` only after the cover
+    action is supplied with a real dimensionful datum or state-selection theorem.
+  - `H0` closure route decision:
+    Route B (Brown-York/quasilocal reference) remains the shortest route for
+    fixing the boundary zero and `k_ref`. However the expression
+    `12*pi^2/kappa*(R_Sigma^2-R_ref^2)` is a boundary energy difference, not
+    directly a Hubble rate. Before writing `H0_Z2Sigma`, derive the
+    Hamiltonian-boundary-charge to Friedmann-`H0` map and provide either an
+    absolute `R_Sigma`, an action scale `ell_scale`, or a state/Noether charge.
+  - Hamiltonian charge to Friedmann map:
+    symbolic map is now fixed:
+    `rho_H = Q_boundary_kg/V_eff_m3` or
+    `rho_H = E_boundary_J/(c^2 V_eff_m3)`, then
+    `H0^2 = (8*pi*G/3) rho_H - k c^2/R_curv^2`.
+    Numeric closure still requires the charge convention/value, effective FLRW
+    volume, curvature radius or flat limit, and absolute `R_Sigma`/state charge.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;

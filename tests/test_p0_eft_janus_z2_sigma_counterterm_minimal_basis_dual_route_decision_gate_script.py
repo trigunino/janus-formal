@@ -17,6 +17,23 @@ class CountertermMinimalBasisDualRouteDecisionGateTests(unittest.TestCase):
             payload["routes"]["nonzero_parametric_E_counterterm_route"]["status"],
             "parametric_only",
         )
+        self.assertFalse(payload["routes"]["direct_surface_action_route"]["ready"])
+        self.assertEqual(payload["routes"]["direct_surface_action_route"]["status"], "blocked")
+        self.assertIn(
+            "independent joint/corner contribution",
+            payload["routes"]["direct_surface_action_route"]["missing_for_closure"][0],
+        )
+        self.assertTrue(payload["routes"]["holst_palatini_theta_projection_route"]["ready"])
+        self.assertEqual(
+            payload["routes"]["holst_palatini_theta_projection_route"]["R_h_trace_from_theta"],
+            "0",
+        )
+        self.assertFalse(
+            payload["routes"]["holst_palatini_theta_projection_route"][
+                "counterterm_component_unblocked"
+            ]
+        )
+        self.assertEqual(payload["decision"]["winner"], "none")
         self.assertTrue(payload["decision"]["do_not_claim_E_counterterm_zero"])
         self.assertTrue(payload["decision"]["do_not_fit_c1_c2_c3"])
 

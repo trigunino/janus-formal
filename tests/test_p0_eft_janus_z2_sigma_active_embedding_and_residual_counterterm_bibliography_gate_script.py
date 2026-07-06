@@ -30,7 +30,18 @@ class ActiveEmbeddingAndResidualCountertermBibliographyGateTests(unittest.TestCa
 
         self.assertIn("Mars-Senovilla-2002", markdown)
         self.assertIn("Capovilla-Guven-1995", markdown)
+        self.assertIn("Corichi-WilsonEwing-2010", markdown)
         self.assertIn("Non-GHY closes for free: `False`", markdown)
+
+    def test_holst_boundary_refs_do_not_close_counterterm(self) -> None:
+        payload = build_payload()
+
+        self.assertIn("Holst_boundary_variation_status", payload["route_decision"])
+        self.assertFalse(payload["non_GHY_counterterm_closes_for_free"])
+        self.assertIn(
+            "extract_or_eliminate_R_h_trace_and_R_K_trace_from_that_projection",
+            payload["next_required"],
+        )
 
 
 if __name__ == "__main__":

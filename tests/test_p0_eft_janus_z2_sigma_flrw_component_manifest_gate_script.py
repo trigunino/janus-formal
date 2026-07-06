@@ -1,11 +1,14 @@
 import unittest
+import tempfile
+from pathlib import Path
 
 from scripts.build_p0_eft_janus_z2_sigma_flrw_component_manifest_gate import build_payload
 
 
 class Z2SigmaFLRWComponentManifestGateScriptTests(unittest.TestCase):
     def test_gate_reports_writer_and_merge_ready_without_values(self):
-        payload = build_payload()
+        with tempfile.TemporaryDirectory() as tmp:
+            payload = build_payload(manifest_path=Path(tmp) / "missing.json")
 
         self.assertTrue(payload["writer_ready"])
         self.assertTrue(payload["loader_validation_ready"])

@@ -16,20 +16,20 @@ REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_flrw_component_manifes
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_flrw_component_manifest_gate.json")
 
 
-def build_payload() -> dict:
-    manifest_exists = MANIFEST_PATH.exists()
+def build_payload(*, manifest_path: Path = MANIFEST_PATH) -> dict:
+    manifest_exists = manifest_path.exists()
     validation_error = None
     values_ready = False
     if manifest_exists:
         try:
-            load_active_z2sigma_flrw_component_manifest(MANIFEST_PATH)
+            load_active_z2sigma_flrw_component_manifest(manifest_path)
             values_ready = True
         except Exception as exc:
             validation_error = str(exc)
     return {
         "status": "janus-z2-sigma-flrw-component-manifest-gate",
         "active_core": "Z2_tunnel_Sigma",
-        "manifest_path": str(MANIFEST_PATH),
+        "manifest_path": str(manifest_path),
         "manifest_exists": manifest_exists,
         "manifest_valid": values_ready,
         "validation_error": validation_error,

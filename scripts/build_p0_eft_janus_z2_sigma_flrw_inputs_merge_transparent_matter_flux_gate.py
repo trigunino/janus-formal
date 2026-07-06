@@ -29,8 +29,18 @@ def build_payload(
     partial_input_path: Path = PARTIAL_INPUT_PATH,
     matter_flux_path: Path = MATTER_FLUX_PATH,
     output_path: Path = OUTPUT_PATH,
+    auto_write_matter_flux: bool = True,
 ) -> dict:
-    zero_matter_flux = build_zero_matter_flux_payload(output_path=matter_flux_path)
+    matter_flux_input_path = (
+        Path("outputs/active_z2_sigma/matter_flux_transparency_inputs.json")
+        if auto_write_matter_flux
+        else matter_flux_path.with_name("disabled_matter_flux_transparency_inputs.json")
+    )
+    zero_matter_flux = build_zero_matter_flux_payload(
+        input_path=matter_flux_input_path,
+        output_path=matter_flux_path,
+        auto_write_input=auto_write_matter_flux,
+    )
     partial_exists = partial_input_path.exists()
     matter_flux_exists = matter_flux_path.exists()
     merged_input_written = False
