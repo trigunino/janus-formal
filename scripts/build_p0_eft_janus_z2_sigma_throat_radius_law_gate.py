@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.derive_p0_eft_janus_z2_sigma_rsigma_modulus_fixing_principles_gate import (
+    build_payload as build_modulus_payload,
+)
+from scripts.derive_p0_eft_janus_z2_sigma_rsigma_observable_modulus_audit_gate import (
+    build_payload as build_observable_modulus_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_throat_radius_law_gate.md")
@@ -9,6 +21,8 @@ JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_throat_radius_law_gate.j
 
 
 def build_payload() -> dict:
+    modulus = build_modulus_payload()
+    observable_modulus = build_observable_modulus_payload()
     declared = {
         "Janus_tunnel_bibliography_checked": True,
         "thin_shell_FRW_wormhole_bibliography_checked": True,
@@ -21,6 +35,7 @@ def build_payload() -> dict:
         "Janus_action_or_topology_derives_radius_law": False,
         "R_Sigma_of_a_ready": False,
         "R_Sigma_law_prediction_ready": False,
+        "R_Sigma_modulus_open": modulus["R_Sigma_modulus_open"],
     }
     return {
         "status": "janus-z2-sigma-throat-radius-law-gate",
@@ -42,13 +57,34 @@ def build_payload() -> dict:
             "fixed_physical_throat": "R_Sigma(a) = R0",
             "general_active_law": "R_Sigma(a) derived from Sigma action/topology",
         },
+        "modulus_fixing_principles": {
+            "gate": modulus["status"],
+            "fixed_by_known_internal_principle": modulus[
+                "fixed_by_known_internal_principle"
+            ],
+            "primary_blocker": modulus["primary_blocker"],
+            "next_physical_inputs": modulus["next_physical_inputs"],
+        },
+        "observable_modulus_audit": {
+            "gate": observable_modulus["status"],
+            "full_observable_RSigma_cancellation_proved": observable_modulus[
+                "full_observable_RSigma_cancellation_proved"
+            ],
+            "scale_free_branch_can_continue_without_extension": observable_modulus[
+                "scale_free_branch_can_be_pursued_without_extension"
+            ],
+            "official_dimensional_branch_requires_radius_or_scale_input": observable_modulus[
+                "official_dimensional_branch_requires_radius_or_scale_input"
+            ],
+        },
         "throat_radius_law_problem_declared": all(declared.values()),
         "throat_radius_law_closure_ready": all(declared.values()) and all(closure.values()),
         "next_required": [
-            "derive_R_Sigma_of_a_from_resolved_projective_tunnel_action_or_topology",
-            "reject_or_promote_comoving_throat_ansatz_by_internal_geometry_not_fit",
-            "propagate_R_Sigma_of_a_into_X_plus_minus_of_a",
-        ],
+        "derive_R_Sigma_of_a_from_resolved_projective_tunnel_action_or_topology",
+        "reject_or_promote_comoving_throat_ansatz_by_internal_geometry_not_fit",
+        "if_no_extension_allowed_continue_only_RSigma_free_scale_free_branch",
+        "propagate_R_Sigma_of_a_into_X_plus_minus_of_a",
+    ],
     }
 
 

@@ -21,6 +21,9 @@ from janus_lab.z2_sigma_extrinsic_curvature import (
 from scripts.build_p0_eft_janus_z2_sigma_active_tunnel_embedding_of_a_gate import (
     build_payload as build_active_tunnel_embedding_payload,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_rsigma_to_deltaK_formula_gate import (
+    build_payload as build_rsigma_to_deltaK,
+)
 
 
 INPUT_PATH = Path("outputs/active_z2_sigma/active_tunnel_embedding_geometry_inputs.json")
@@ -63,6 +66,7 @@ def _path_status(path: Path) -> dict:
 
 def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_PATH) -> dict:
     embedding = build_active_tunnel_embedding_payload()
+    rsigma_to_deltaK = build_rsigma_to_deltaK()
     manifest = _path_status(input_path)
     embedding_derived = embedding["derived"]
     embedding_missing = [
@@ -200,6 +204,12 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
                 "missing_second_form_fields": missing_second_form_fields,
                 "required_fields": REQUIRED_FIELDS,
             },
+            "rsigma_to_deltaK_formula": {
+                "gate": rsigma_to_deltaK["status"],
+                "formula_ready": rsigma_to_deltaK["formula_ready"],
+                "values_ready": rsigma_to_deltaK["values_ready"],
+                "primary_blocker": rsigma_to_deltaK["primary_blocker"],
+            },
         },
         "nearest_embedding_to_flrw_K_frontier": {
             "blocks": [] if can_write else embedding_missing + manifest_blocks,
@@ -220,6 +230,7 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
             "derive_X_plus_of_a_and_X_minus_of_a",
             "derive_tangent_frames_and_unit_normals",
             "derive_K_s_tau_plus_minus_of_a",
+            "derive_f_plus_f_minus_bulk_metric_functions_if_using_dynamic_shell_route",
             "then_write_flrw_extrinsic_curvature_grid_inputs_json",
         ],
     }

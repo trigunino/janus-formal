@@ -21,10 +21,10 @@ class P0JanusActiveCrossActionAcceptanceGateTests(unittest.TestCase):
         self.assertFalse(payload["active_cross_action_source_accepted"])
         self.assertTrue(payload["source_material"]["M15_source_card_exists"])
         self.assertTrue(payload["source_material"]["M30_source_card_exists"])
-        self.assertFalse(payload["source_material_sufficient_for_reaudit"])
+        self.assertTrue(payload["source_material_sufficient_for_reaudit"])
         self.assertEqual(
             payload["next_research_step"],
-            "acquire_or_restore_M15_M30_raw_sources_then_reaudit_S_cross",
+            "reopen_M15_M30_S_cross_phi_L_source_audit",
         )
         self.assertFalse(payload["can_adopt_as_published_janus"])
         self.assertTrue(payload["can_adopt_as_explicit_new_axiom"])

@@ -6,9 +6,39 @@ import json
 
 REPORT_PATH = Path("outputs/reports/p0_scouple_accepted_action_search.md")
 JSON_PATH = Path("outputs/reports/p0_scouple_accepted_action_search.json")
+TEXT_DIR = Path("data/raw/janus_library_text")
+M15_TEXT = TEXT_DIR / "M15_lagrangian-derivation-of-the-two-coupled-field-equations-in-the-janus-cosmologic.txt"
+M30_TEXT = TEXT_DIR / "M30_a-bimetric-cosmological-model-based-on-andrei-sakharov-s-twin-universe-approach.txt"
+
+
+def _line_evidence(path: Path, needle: str, window: int = 2) -> dict:
+    if not path.exists():
+        return {"path": str(path), "needle": needle, "found": False, "line": None, "excerpt": []}
+    lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    needle_lower = needle.lower()
+    for index, line in enumerate(lines):
+        if needle_lower in line.lower():
+            start = max(0, index - window)
+            end = min(len(lines), index + window + 1)
+            return {
+                "path": str(path),
+                "needle": needle,
+                "found": True,
+                "line": index + 1,
+                "excerpt": [item.strip() for item in lines[start:end] if item.strip()],
+            }
+    return {"path": str(path), "needle": needle, "found": False, "line": None, "excerpt": []}
 
 
 def build_payload() -> dict:
+    evidence = [
+        _line_evidence(M15_TEXT, "Now let’s build a bivariation"),
+        _line_evidence(M15_TEXT, "δg(+)μν =− δg(−)μν"),
+        _line_evidence(M15_TEXT, "Eq. ( 14) as the mathematical"),
+        _line_evidence(M30_TEXT, "two-layer action"),
+        _line_evidence(M30_TEXT, "interaction tensors"),
+        _line_evidence(M30_TEXT, "Bianchi identities"),
+    ]
     source_rows = [
         {
             "source": "M15",
@@ -20,6 +50,7 @@ def build_payload() -> dict:
             "passes": [
                 "derives determinant-weighted cross-source field equations under Janus bivariation",
                 "keeps pressure in the diagonal perfect-fluid stress form used by the paper",
+                "local text extract confirms the constrained variation δg_plus = -δg_minus",
             ],
             "fails_for_scouple": [
                 "no independent S_couple functional is supplied",
@@ -32,14 +63,16 @@ def build_payload() -> dict:
         },
         {
             "source": "M30",
-            "action_or_principle": "modern bimetric field-equation and geodesic presentation",
-            "accepted_for": "Janus bimetric/geodesic source anchor and Newtonian interaction laws",
+            "action_or_principle": "modern two-layer action, bimetric field equations, and geodesic presentation",
+            "accepted_for": "Janus bimetric/geodesic source anchor, interaction tensors, and Bianchi constraints",
             "passes": [
                 "anchors two metric/geodesic families",
                 "anchors weak-field interaction signs",
+                "local text extract states a two-layer action with interaction tensors",
+                "local text extract states Bianchi constraints for source terms",
             ],
             "fails_for_scouple": [
-                "does not provide an independent S_couple action",
+                "does not provide the local S_couple/Phi/L transport functional required by this gate",
                 "does not provide pressure/Pi variational closure",
             ],
             "accepted_as_scouple": False,
@@ -56,6 +89,8 @@ def build_payload() -> dict:
     return {
         "description": "Search result for an accepted Janus S_couple action that could close split Noether and pressure/Pi.",
         "status": "accepted-scouple-not-found",
+        "local_text_sources_available": M15_TEXT.exists() and M30_TEXT.exists(),
+        "text_evidence": evidence,
         "source_rows": source_rows,
         "required_acceptance": required_acceptance,
         "closest_published_action": "M15 bivariational total action",
@@ -70,10 +105,10 @@ def build_payload() -> dict:
         "physics_closed": False,
         "prediction_ready": False,
         "verdict": (
-            "The accepted Janus action found in M15 derives the coupled field equations "
-            "through a constrained bivariation, not through an independent S_couple. "
-            "It cannot by itself derive L/Q_cross transport, split Noether closure, or "
-            "anisotropic-stress Pi transport."
+            "The restored M15/M30 texts confirm accepted Janus bivariational/two-layer "
+            "actions and Bianchi constraints for the coupled field equations. They still "
+            "do not supply the local S_couple/Phi/L transport functional needed to close "
+            "split Noether, pressure, or anisotropic-stress Pi transport."
         ),
     }
 
@@ -85,6 +120,7 @@ def render_markdown(payload: dict) -> str:
         payload["description"],
         "",
         f"Status: {payload['status']}",
+        f"Local text sources available: {payload['local_text_sources_available']}",
         f"Closest published action: {payload['closest_published_action']}",
         f"M15 action accepted for field equations: {payload['m15_action_accepted_for_field_equations']}",
         f"M15 action accepted as S_couple: {payload['m15_action_accepted_as_scouple']}",
@@ -106,6 +142,11 @@ def render_markdown(payload: dict) -> str:
         lines.extend(f"  - fail: {item}" for item in row["fails_for_scouple"])
     lines.extend(["", "## Required Acceptance", ""])
     lines.extend(f"- {item}" for item in payload["required_acceptance"])
+    lines.extend(["", "## Text Evidence", ""])
+    for row in payload["text_evidence"]:
+        lines.append(f"- {row['needle']}: found={row['found']} line={row['line']} path={row['path']}")
+        for excerpt in row["excerpt"][:3]:
+            lines.append(f"  - {excerpt}")
     lines.extend(["", f"Verdict: {payload['verdict']}", ""])
     return "\n".join(lines)
 

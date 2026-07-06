@@ -1,0 +1,34 @@
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from scripts.build_p0_eft_janus_z2_sigma_global_regular_freg_primitives_schema_gate import (
+    build_payload,
+)
+
+
+class JanusZ2SigmaGlobalRegularFregPrimitivesSchemaGateTest(unittest.TestCase):
+    def test_schema_and_template_define_primitive_manifest(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmpdir = Path(tmp)
+            schema_path = tmpdir / "schema.json"
+            template_path = tmpdir / "template.md"
+            payload = build_payload(schema_path=schema_path, template_path=template_path)
+            self.assertTrue(schema_path.exists())
+            self.assertTrue(template_path.exists())
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+            template = template_path.read_text(encoding="utf-8")
+
+        self.assertTrue(payload["gate_passed"])
+        self.assertFalse(payload["writes_active_manifest"])
+        self.assertFalse(payload["full_no_fit_prediction_ready"])
+        self.assertIn("normal_connection_omega_perp_lambda_u", schema["required"])
+        self.assertIn("deck_frame_map_lambda", schema["required"])
+        self.assertIn("tau_Z2_pullback_matrix_on_endpoint_tangents", schema["required"])
+        self.assertIn("bulk_normal_flux_jump_lambda", schema["required"])
+        self.assertIn("not an executable manifest", template)
+
+
+if __name__ == "__main__":
+    unittest.main()

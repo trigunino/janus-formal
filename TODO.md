@@ -16,6 +16,134 @@
 - Native GR decomposition: required now; Planck rejection is suspended as a
   physical Janus verdict until an active Z2/Sigma observational model exists.
 - Therefore: do not claim full no-fit cosmology yet.
+- No-extension frontier: active Z2/Sigma BAO is now blocked by two independent
+  open quantities, `R_Sigma` and the absolute projected baryon Noether charge.
+  The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but
+  it leaves `R_Sigma` flat; the Z2-projected Dirac current is conserved, but it
+  does not fix the absolute occupation number. Do not choose either by fit.
+- Additional no-extension routes were audited:
+  collar reduction of EH/GHY finds the operator `sqrt|h| R[h]`, but its
+  coefficient is proportional to an unfixed finite collar thickness; smooth
+  Z2 throat regularity fixes parity/junction constraints but not an absolute
+  radius; APS/Pin fixes anomaly/parity/integrality classes but not occupied
+  fermion number. These routes do not unlock BAO without a new theorem or an
+  explicit effective closure.
+- Effective-closure branch has a strict input gate:
+  `outputs/active_z2_sigma/effective_closure_inputs.json` may provide only
+  `R_Sigma_over_ell_collar_Z2Sigma` and
+  `projected_baryon_number_charge_Z2Sigma`, with
+  `source = effective_initial_data`, no Planck/LCDM/Z4/fit provenance, and
+  `full_no_fit_prediction_ready = false`. The gate is intentionally red until
+  those effective initial data are explicitly supplied.
+- Effective BAO path gate is now explicit. Even after the two-parameter
+  effective closure is supplied, BAO is not ready from those two numbers alone:
+  it still needs `E_Z2Sigma(z)`, `omega_k_Z2Sigma`, `c_s/c`, and
+  `Gamma_drag/H0` from non-Planck, non-LCDM, non-Z4 provenance.
+- Effective scale-free BAO chi2 runner exists separately from the strict
+  `active_derived` path:
+  `outputs/active_z2_sigma/effective_bao_scale_free_primitive_inputs.json`
+  can feed `build_p0_eft_janus_z2_sigma_effective_bao_scale_free_chi2_gate.py`.
+  It solves `Gamma_drag/H0 = E`, integrates `H0*r_d/c`, and evaluates DESI DR2
+  BAO chi2 while keeping `full_no_fit_prediction_ready = false`.
+- One-command effective BAO end-to-end gate exists:
+  `build_p0_eft_janus_z2_sigma_effective_bao_end_to_end_gate.py`.
+  It requires both `effective_closure_inputs.json` and
+  `effective_bao_scale_free_primitive_inputs.json`, verifies the primitive
+  manifest hashes the closure manifest, then reports `z_d`, `H0*r_d/c`, DESI
+  prediction/residual vectors and effective chi2. In the live workspace it is
+  intentionally blocked until those manifests are supplied.
+- Parameter-entry effective BAO gate exists:
+  `build_p0_eft_janus_z2_sigma_effective_bao_from_parameter_inputs_gate.py`.
+  It consumes `outputs/active_z2_sigma/effective_bao_parameter_inputs.json`,
+  writes the two effective manifests canonically, hashes the closure manifest,
+  and runs the end-to-end effective BAO gate. It remains blocked until explicit
+  effective parameters and primitive arrays are supplied.
+- `effective_bao_parameter_inputs.json` now has a reusable validator in
+  `src/janus_lab/z2_sigma_effective_parameter_inputs.py`; it enforces aligned
+  positive primitive arrays, explicit two-parameter effective initial data, no
+  Planck/LCDM/Z4/fit flags, and `full_no_fit_prediction_ready = false`.
+- A schema/template gate now emits
+  `outputs/schemas/effective_bao_parameter_inputs.schema.json` and
+  `outputs/templates/effective_bao_parameter_inputs.template.md`. The template
+  is intentionally non-executable: it does not write an active manifest and
+  keeps `full_no_fit_prediction_ready = false`. The schema now requires the
+  dimensionless throat/collar ratio `R_Sigma_over_ell_collar_Z2Sigma` and
+  rejects the deprecated dimensionful `R_Sigma_effective_Mpc` closure.
+- Non-effective geometric route reopened:
+  `derive_p0_eft_janus_z2_sigma_global_regular_tunnel_radius_selection_gate.py`
+  formulates the active target
+  `F_reg(R_Sigma/ell_collar)=0` from global defect-free Z2 tunnel regularity.
+  This route uses no torus replacement, no Planck/LCDM/Z4 input and no fit. It
+  does not yet fix the ratio: the blocker is computing `F_reg` from the active
+  collar embedding, normal-frame holonomy, endpoint gluing mismatch and
+  distributional Bianchi/junction residual.
+- `F_reg` is now decomposed by
+  `derive_p0_eft_janus_z2_sigma_global_regular_functional_components_gate.py`
+  into three geometric channels:
+  normal-frame holonomy defect, collar endpoint mismatch, and
+  junction/Bianchi defect. The route remains blocked until active plus/minus
+  collar metrics, normal connection, Z2 deck pullback and Sigma stress/normal
+  flux data are derived.
+- A strict `F_reg(lambda)` solver now exists:
+  `build_p0_eft_janus_z2_sigma_global_regular_freg_solver_gate.py` consumes
+  `outputs/active_z2_sigma/global_regular_freg_components.json`, rejects
+  Planck/LCDM/Z4/fit/torus-replacement provenance, computes
+  `F_reg(lambda)` from the three defect channels, and selects
+  `R_Sigma/ell_collar` only if a unique regular root is present. It remains red
+  until the active component arrays are derived.
+- The expected component manifest is now indexed by
+  `build_p0_eft_janus_z2_sigma_global_regular_freg_components_schema_gate.py`,
+  which emits `outputs/schemas/global_regular_freg_components.schema.json` and
+  `outputs/templates/global_regular_freg_components.template.md` without writing
+  an active manifest.
+- The concrete primitive frontier for the `F_reg` components is listed by
+  `derive_p0_eft_janus_z2_sigma_global_regular_freg_data_frontier_gate.py`:
+  normal connection on the collar, endpoint collar metrics plus Z2 pullback,
+  and Sigma stress divergence plus bulk normal-flux jump.
+- A primitive materialization path now exists:
+  `build_p0_eft_janus_z2_sigma_global_regular_freg_from_primitives_gate.py`
+  consumes `outputs/active_z2_sigma/global_regular_freg_primitives.json`,
+  computes the three `F_reg` components, writes
+  `global_regular_freg_components.json`, and runs the unique-root solver. It
+  remains blocked until actual active collar/endpoint/Bianchi primitives exist.
+- The primitive manifest itself is indexed by
+  `build_p0_eft_janus_z2_sigma_global_regular_freg_primitives_schema_gate.py`,
+  which emits `outputs/schemas/global_regular_freg_primitives.schema.json` and
+  `outputs/templates/global_regular_freg_primitives.template.md`.
+- A local transparent collar probe now exists:
+  `build_p0_eft_janus_z2_sigma_global_regular_local_transparent_probe.py`.
+  It uses a zero normal connection, matched endpoint metrics and zero normal
+  flux. Result: every sampled `R_Sigma/ell_collar` has zero defect, so local
+  transparent regularity is scale-flat and cannot select the ratio. The next
+  required signal must be genuinely global/nonlocal.
+- A diagnostic projective twist probe now exists:
+  `build_p0_eft_janus_z2_sigma_global_twist_holonomy_probe.py`. It shows that a
+  nonlocal normal-frame holonomy twist can select a unique
+  `R_Sigma/ell_collar` inside the `F_reg` machinery. It is not an active proof:
+  the missing step is deriving that twist from the projective Z2 collar
+  geometry/action.
+- The proof obligation for promoting that probe is explicit in
+  `derive_p0_eft_janus_z2_sigma_projective_holonomy_twist_derivation_target_gate.py`:
+  derive the deck action on the normal frame bundle, derive
+  `omega_perp(lambda,u)` from the active collar metric, include the deck-frame
+  map in the closed collar loop, then prove non-flat unique-root behavior.
+- The first projective-holonomy sub-obligation is now isolated:
+  `derive_p0_eft_janus_z2_sigma_deck_normal_frame_action_gate.py` derives the
+  Z2 collar-normal reversal as `deck_frame_map = -1` on the normal line. This
+  does not fix the radius; it only supplies the projective frame map needed by
+  the deck-corrected holonomy.
+- The next normal-connection sub-obligation now has an executable calculator:
+  `src/janus_lab/z2_sigma_normal_connection.py` computes
+  `omega_perp_AB=<N_A,D_u N_B>` from active normal frames, frame derivatives,
+  the collar connection matrix and the ambient metric. The live gate
+  `build_p0_eft_janus_z2_sigma_normal_connection_from_frame_gate.py` remains
+  red until `outputs/active_z2_sigma/normal_connection_frame_primitives.json`
+  is supplied.
+- The expected normal-frame primitive manifest is indexed by
+  `build_p0_eft_janus_z2_sigma_normal_connection_frame_primitives_schema_gate.py`.
+  It emits `outputs/schemas/normal_connection_frame_primitives.schema.json` and
+  `outputs/templates/normal_connection_frame_primitives.template.md` without
+  writing active data.
 - Active next track: derive observational equations from the closed
   `Z2_tunnel_Sigma` base, not from archived cyclic Z4 modules.
 - BAO active readiness now reads the strict active manifest path

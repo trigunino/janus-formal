@@ -17,6 +17,9 @@ from scripts.build_p0_eft_janus_z2_sigma_connection_force_residual_matching_gate
 from scripts.build_p0_eft_janus_z2_sigma_scross_phi_l_variation_law_gate import (
     build_payload as build_phi_l,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_brane_normal_force_residual import (
+    build_payload as build_brane_residual,
+)
 
 
 REPORT_PATH = Path(
@@ -35,10 +38,44 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
         embedding = build_embedding(embedding_manifest_path=embedding_manifest_path)
         matching = build_connection_matching(embedding_manifest_path=embedding_manifest_path)
     phi_l = build_phi_l()
+    brane_residual = build_brane_residual()
     phi_l_ready = bool(phi_l["phi_l_variation_law_ready"])
     embedding_ready = bool(embedding["readiness"]["active_embedding_ready"])
-    source_route_available = phi_l_ready or embedding_ready
+    brane_normal_ready = bool(brane_residual["strict_Z2_closes_normal_force"])
+    source_route_available = phi_l_ready or embedding_ready or brane_normal_ready
     source_force_derived = False
+    brane_bibliography = [
+        {
+            "id": "battye-carter-2001",
+            "url": "https://arxiv.org/abs/hep-th/0101061",
+            "role": "codimension-one brane requires a Newton-second-law-like dynamical condition in addition to Darmois-Israel",
+            "janus_use": "Z2-enforced branch can make the normal force condition trivial; non-Z2 residual must be derived, not fitted",
+        },
+        {
+            "id": "carter-2000",
+            "url": "https://arxiv.org/abs/gr-qc/0012036",
+            "role": "surface stress contracted with second fundamental tensor equals orthogonal external force",
+            "janus_use": "source-force target formula for Sigma",
+        },
+        {
+            "id": "capovilla-guven-1995",
+            "url": "https://arxiv.org/abs/gr-qc/9411060",
+            "role": "normal deformations of membrane actions built from local worldsheet scalars",
+            "janus_use": "variation toolkit for local tunnel-defect action only if a defect is forced",
+        },
+        {
+            "id": "mars-senovilla-2002",
+            "url": "https://arxiv.org/abs/gr-qc/0201054",
+            "role": "general hypersurface geometry, junction conditions, and distributional Bianchi identities",
+            "janus_use": "Bianchi/distribution guard for active Sigma junction",
+        },
+        {
+            "id": "brill-hayward-1994",
+            "url": "https://arxiv.org/abs/gr-qc/9403018",
+            "role": "action changes under topological boundary identifications",
+            "janus_use": "possible corner/gluing correction audit; not a free counterterm source",
+        },
+    ]
     closure = {
         "connection_force_residual_matching_gate_imported": True,
         "S_cross_phi_L_variation_law_gate_imported": True,
@@ -53,6 +90,16 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
         "phi_L_variation_law_ready": phi_l_ready,
         "active_embedding_ready": embedding_ready,
         "source_route_available": source_route_available,
+        "brane_newton_second_law_bibliography_found": True,
+        "normal_force_formula_target_refined": True,
+        "brane_normal_force_residual_symbolic_ready": bool(
+            brane_residual["residual_symbolic_ready"]
+        ),
+        "brane_normal_force_residual_values_ready": bool(
+            brane_residual["residual_values_ready"]
+        ),
+        "brane_normal_force_equation_closed_by_strict_Z2": brane_normal_ready,
+        "strict_Z2_condition_may_trivialize_force": True,
         "plus_source_force_equation_derived": source_force_derived,
         "minus_source_force_equation_derived": source_force_derived,
         "source_force_equations_derived": source_force_derived,
@@ -96,7 +143,12 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
                 "mirror E_phi/E_L or embedding equation => minus receiver-force equation "
                 "cancelling -B_minus C.K residual"
             ),
+            "brane_normal_dynamics": (
+                "barT^{ab}_Sigma K_ab^rho = f_perp^rho; strict Z2 may set f_perp=0, "
+                "otherwise residual must come from active embedding/junction stress"
+            ),
         },
+        "brane_bibliography": brane_bibliography,
         "closure": closure,
         "target_ready": target_ready,
         "source_force_ready": source_ready,
@@ -119,6 +171,12 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
                 "matching_ready": matching["matching_ready"],
                 "primary_blocker": matching["primary_blocker"],
             },
+            "brane_normal_force_residual": {
+                "gate": brane_residual["status"],
+                "symbolic_ready": brane_residual["residual_symbolic_ready"],
+                "values_ready": brane_residual["residual_values_ready"],
+                "primary_blocker": brane_residual["primary_blocker"],
+            },
         },
         "forbidden_shortcuts": [
             "same-sector geodesics alone do not derive receiver-force equations",
@@ -126,13 +184,17 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
             "Q_cross cannot absorb force residuals",
         ],
         "next_required": [
+            "instantiate Carter/Battye normal brane equation on active Sigma",
+            "insert active S_ab and K_ab from the Z2 tunnel junction",
+            "test whether strict Z2 makes f_perp vanish or leaves a forced residual",
             "derive plus force equation from phi/L variation or embedding equation",
             "derive minus force equation from mirror variation or embedding equation",
             "feed sourceForceEquationsDerived into connection-force residual matching",
         ],
         "interpretation": (
-            "The source-force equations are now the explicit next target. The gate "
-            "does not close them from geodesics, Lorentz admissibility, or Q_cross."
+            "The source-force equations are now refined to the standard brane normal "
+            "dynamics target. The gate does not close them from geodesics, Lorentz "
+            "admissibility, or Q_cross."
         ),
     }
 
@@ -150,6 +212,11 @@ def render_markdown(payload: dict) -> str:
         "## Force Targets",
     ]
     lines.extend(f"- `{key}`: `{value}`" for key, value in payload["force_targets"].items())
+    lines.extend(["", "## Brane Dynamics Bibliography"])
+    lines.extend(
+        f"- `{row['id']}`: {row['url']} ({row['janus_use']})"
+        for row in payload["brane_bibliography"]
+    )
     lines.extend(["", "## Forbidden Shortcuts"])
     lines.extend(f"- `{item}`" for item in payload["forbidden_shortcuts"])
     lines.extend(["", "## Next Required"])

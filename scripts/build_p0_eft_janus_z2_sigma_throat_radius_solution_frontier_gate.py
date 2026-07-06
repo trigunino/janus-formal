@@ -23,6 +23,9 @@ from scripts.build_p0_eft_janus_z2_sigma_radius_to_embedding_conditional_closure
 from scripts.build_p0_eft_janus_z2_sigma_throat_radius_variational_equation_gate import (
     build_payload as build_variational_equation_payload,
 )
+from scripts.derive_p0_eft_janus_z2_sigma_sqrt_intrinsic_curvature_counterterm_gate import (
+    build_payload as build_sqrt_intrinsic_counterterm_payload,
+)
 
 
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_throat_radius_solution_frontier_gate.md")
@@ -33,6 +36,7 @@ def build_payload() -> dict:
     coupled_flux = build_coupled_radius_flux_payload()
     matter_flux_frontier = build_matter_flux_frontier_payload()
     counterterm = build_counterterm_frontier_payload()
+    sqrt_intrinsic_counterterm = build_sqrt_intrinsic_counterterm_payload()
     variational = build_variational_equation_payload()
     radius_to_embedding = build_radius_to_embedding_payload()
     declared = {
@@ -62,6 +66,12 @@ def build_payload() -> dict:
         "matter_flux_block_reduced": matter_flux_frontier["matter_flux_frontier_ready"]
         or coupled_flux["coupled_radius_flux_solution_ready"],
         "counterterm_block_reduced": counterterm["counterterm_radial_reduction_ready"],
+        "sqrt_intrinsic_counterterm_cancels_cartan": sqrt_intrinsic_counterterm[
+            "closure_result"
+        ]["counterterm_cancels_CartanGHY_for_any_positive_R"],
+        "sqrt_intrinsic_counterterm_fixes_radius": sqrt_intrinsic_counterterm[
+            "closure_result"
+        ]["R_Sigma_of_a_fixed"],
         "all_radial_blocks_reduced": False,
         "R_Sigma_equation_solved": variational["equation"]["R_Sigma_equation_solved"],
         "R_Sigma_of_a_ready": variational["equation"]["R_Sigma_of_a_ready"],
@@ -191,10 +201,26 @@ def build_payload() -> dict:
                 "primary_blocker": counterterm["primary_blocker"],
                 "current_frontier": counterterm["current_frontier"],
             },
+            "sqrt_intrinsic_counterterm": {
+                "gate": sqrt_intrinsic_counterterm["status"],
+                "cancels_CartanGHY_for_any_positive_R": sqrt_intrinsic_counterterm[
+                    "closure_result"
+                ]["counterterm_cancels_CartanGHY_for_any_positive_R"],
+                "R_Sigma_of_a_fixed": sqrt_intrinsic_counterterm["closure_result"][
+                    "R_Sigma_of_a_fixed"
+                ],
+                "primary_blocker": sqrt_intrinsic_counterterm["primary_blocker"],
+                "next_required": sqrt_intrinsic_counterterm["next_required"],
+            },
         },
         "solution_certificate_rule": (
             "E_RSigma(a)=0 can yield R_Sigma(a) only after matter-flux and "
-            "counterterm radial blocks are reduced; no observational radius fit is allowed."
+            "counterterm radial blocks are reduced and the radial equation is not a "
+            "flat direction; no observational radius fit is allowed."
+        ),
+        "new_counterterm_diagnostic": (
+            "The sqrt(R[h]) intrinsic counterterm cancels the round Cartan-GHY radial "
+            "block for any positive R_Sigma, but it leaves R_Sigma(a) unfixed."
         ),
         "current_frontier": current_frontier,
         "nearest_unresolved_radial_block": nearest_unresolved_radial_block,
@@ -245,6 +271,7 @@ def build_payload() -> dict:
             "close_matter_flux_radial_block_or_derive_transparency",
             "close_counterterm_residual_extraction_and_density_expansion",
             "reduce_counterterm_radial_block",
+            "if_using_sqrt_Rh_counterterm_derive_extra_boundary_condition_for_RSigma_modulus",
             "expand_full_E_RSigma",
             "solve_E_RSigma_equals_zero_without_fit",
         ],

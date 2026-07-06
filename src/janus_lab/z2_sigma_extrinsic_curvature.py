@@ -215,3 +215,53 @@ def build_flrw_extrinsic_curvature_grid_payload(
         "z2_orientation_sign": float(z2_orientation_sign),
         "K_provenance": provenance,
     }
+
+
+def dynamic_spherical_shell_extrinsic_curvature_components(
+    *,
+    R,
+    R_dot,
+    R_ddot,
+    f_plus,
+    f_minus,
+    df_plus_dR,
+    df_minus_dR,
+    epsilon_plus: float,
+    epsilon_minus: float,
+) -> dict:
+    """Poisson-Visser/Lobo-Crawford dynamic spherical shell K components.
+
+    K_s^pm = eps_pm sqrt(Rdot^2 + f_pm(R)) / R
+    K_tau^pm = eps_pm (Rddot + f'_pm(R)/2) / sqrt(Rdot^2 + f_pm(R))
+
+    Inputs are arrays on the same active shell grid. The helper is conditional:
+    the bulk functions f_pm and derivatives must be derived upstream.
+    """
+
+    if epsilon_plus not in (-1.0, 1.0) or epsilon_minus not in (-1.0, 1.0):
+        raise ValueError("epsilon_plus/minus must be +1.0 or -1.0")
+    radius = np.asarray(R, dtype=float)
+    r_dot = _checked_array(R_dot, radius.shape, "R_dot")
+    r_ddot = _checked_array(R_ddot, radius.shape, "R_ddot")
+    fp = _checked_array(f_plus, radius.shape, "f_plus")
+    fm = _checked_array(f_minus, radius.shape, "f_minus")
+    dfp = _checked_array(df_plus_dR, radius.shape, "df_plus_dR")
+    dfm = _checked_array(df_minus_dR, radius.shape, "df_minus_dR")
+    if np.any(radius <= 0.0):
+        raise ValueError("R must be positive")
+    rad_plus = r_dot * r_dot + fp
+    rad_minus = r_dot * r_dot + fm
+    if np.any(rad_plus <= 0.0) or np.any(rad_minus <= 0.0):
+        raise ValueError("dynamic shell square-root radicands must be positive")
+    sqrt_plus = np.sqrt(rad_plus)
+    sqrt_minus = np.sqrt(rad_minus)
+    k_s_plus = float(epsilon_plus) * sqrt_plus / radius
+    k_s_minus = float(epsilon_minus) * sqrt_minus / radius
+    k_tau_plus = float(epsilon_plus) * (r_ddot + 0.5 * dfp) / sqrt_plus
+    k_tau_minus = float(epsilon_minus) * (r_ddot + 0.5 * dfm) / sqrt_minus
+    return {
+        "K_s_plus": k_s_plus,
+        "K_s_minus": k_s_minus,
+        "K_tau_plus": k_tau_plus,
+        "K_tau_minus": k_tau_minus,
+    }

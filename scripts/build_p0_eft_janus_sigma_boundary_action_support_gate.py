@@ -21,6 +21,12 @@ def build_payload() -> dict:
         "sigma_boundary_support_declared": all(support.values()),
         "nonlinear_boundary_variation_on_sigma_closed": True,
         "full_boundary_action_closed_on_sigma": True,
+        "closure_level": "symbolic_support_and_variational_decomposition",
+        "component_level_metric_extrinsic_residuals_emitted": False,
+        "radial_alpha_coefficients_emitted": False,
+        "component_level_next_required": [
+            "emit_R_h_ab_R_K_ab_or_alpha_h_alpha_K_radial_coefficients",
+        ],
         "next_required": "none for Sigma boundary action",
     }
 

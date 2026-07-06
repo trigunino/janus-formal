@@ -55,6 +55,18 @@ class P0EFTJanusZ2SigmaThroatRadiusSolutionFrontierGateTests(unittest.TestCase):
             payload["nearest_radial_block_frontier"]["matter_flux"],
         )
         self.assertIn("counterterm", payload["nearest_radial_block_frontier"])
+        self.assertIn("sqrt_intrinsic_counterterm", payload["upstream_frontiers"])
+        self.assertTrue(
+            payload["status_flags"]["sqrt_intrinsic_counterterm_cancels_cartan"]
+        )
+        self.assertFalse(payload["status_flags"]["sqrt_intrinsic_counterterm_fixes_radius"])
+        self.assertEqual(
+            payload["upstream_frontiers"]["sqrt_intrinsic_counterterm"][
+                "primary_blocker"
+            ],
+            "R_Sigma_modulus_not_fixed",
+        )
+        self.assertIn("flat direction", payload["solution_certificate_rule"])
         self.assertIn(
             "do not fit R_Sigma(a)",
             payload["nearest_radial_block_frontier"]["priority_rule"],

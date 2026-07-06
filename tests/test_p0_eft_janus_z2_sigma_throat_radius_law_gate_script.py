@@ -18,6 +18,16 @@ class P0EFTJanusZ2SigmaThroatRadiusLawGateTests(unittest.TestCase):
         self.assertFalse(payload["closure"]["Janus_action_or_topology_derives_radius_law"])
         self.assertFalse(payload["closure"]["R_Sigma_of_a_ready"])
         self.assertFalse(payload["throat_radius_law_closure_ready"])
+        self.assertFalse(
+            payload["observable_modulus_audit"][
+                "full_observable_RSigma_cancellation_proved"
+            ]
+        )
+        self.assertTrue(
+            payload["observable_modulus_audit"][
+                "scale_free_branch_can_continue_without_extension"
+            ]
+        )
         self.assertIn("derive_R_Sigma_of_a_from_resolved_projective_tunnel", payload["next_required"][0])
 
 

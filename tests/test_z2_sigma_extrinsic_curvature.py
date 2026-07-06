@@ -4,6 +4,7 @@ import numpy as np
 
 from janus_lab.z2_sigma_extrinsic_curvature import (
     build_flrw_extrinsic_curvature_component_arrays,
+    dynamic_spherical_shell_extrinsic_curvature_components,
     extrinsic_curvature_from_embedding_second_form,
     make_z2_oriented_extrinsic_curvature_jumps,
     reduce_flrw_extrinsic_curvature_components,
@@ -88,6 +89,24 @@ class Z2SigmaExtrinsicCurvatureTests(unittest.TestCase):
         )
 
         np.testing.assert_allclose(delta_s(np.asarray([1.0])), [3.0])
+
+    def test_dynamic_spherical_shell_components_match_standard_formula(self):
+        result = dynamic_spherical_shell_extrinsic_curvature_components(
+            R=np.asarray([2.0]),
+            R_dot=np.asarray([0.0]),
+            R_ddot=np.asarray([0.5]),
+            f_plus=np.asarray([4.0]),
+            f_minus=np.asarray([9.0]),
+            df_plus_dR=np.asarray([2.0]),
+            df_minus_dR=np.asarray([4.0]),
+            epsilon_plus=1.0,
+            epsilon_minus=-1.0,
+        )
+
+        np.testing.assert_allclose(result["K_s_plus"], [1.0])
+        np.testing.assert_allclose(result["K_s_minus"], [-1.5])
+        np.testing.assert_allclose(result["K_tau_plus"], [0.75])
+        np.testing.assert_allclose(result["K_tau_minus"], [-5.0 / 6.0])
 
     def test_z2_oriented_jumps_reject_bad_inputs(self):
         with self.assertRaises(ValueError):
