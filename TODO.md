@@ -3967,6 +3967,37 @@ Completion rule:
     selection `n=1` from irreducibility/superselection. Without those, the
     composite selector remains an internally coherent spectrum, not a unique
     prediction.
+  - PT/Souriau symplectic integrality:
+    `P0EFTJanusZ2PTSouriauSymplecticIntegralityGate` states the exact
+    prequantization requirement: `Omega_PT/(2*pi*hbar)` must have integral
+    periods on boundary phase-space two-cycles, with the mass moment-map period
+    identified. Live status is blocked because those periods have not been
+    computed.
+  - PT/Souriau omega from theta:
+    `P0EFTJanusZ2PTSouriauOmegaFromThetaGate` tests the direct route
+    `Omega_PT = delta theta_PT`. On the current PT67 regular torsionless
+    branch, `theta_PT` has zero non-GHY `R_h/R_K` trace content, so this route
+    has no nonzero two-cycle period and cannot generate `m_charge`. A nonzero
+    `Omega_PT` now requires a distinct KKS/Souriau boundary density, torsionful
+    or null boundary sector, or matter/gauge boundary phase space.
+  - global Souriau orbit quantization:
+    `P0EFTJanusZ2GlobalSouriauOrbitQuantizationGate` moves the problem to the
+    correct level. Global Souriau/PT supplies the mass Casimir and PT sign
+    pairing, but ordinary massive Poincare coadjoint orbits are continuously
+    labeled by mass. `alpha_m` becomes quantized only if a separate integrality
+    condition on the global orbit derives a mass lattice and a minimal unit.
+  - global action-angle alpha quantization:
+    `P0EFTJanusZ2GlobalActionAngleAlphaQuantizationGate` tests the last
+    Bohr-Sommerfeld-style route. If a compact PT cycle, canonical pair,
+    symplectic one-form and action integral `I(alpha)=K alpha^p` are derived,
+    it gives `alpha_n=(2*pi*hbar*|n|/K)^(1/p)`. Live status is blocked because
+    the repo has the exact alpha-family but no derived canonical action
+    integral; using this route would therefore be a new quantum postulate.
+  - primitive sector `n=1`:
+    `P0EFTJanusZ2PrimitiveSectorNSelectionGate` gives the internal logic needed
+    for `n=1`: nonzero throat sector, no fusion/splitting/empty punctures,
+    monotone ground energy in `|n|`, and orientation identifying signs. Live
+    status is blocked until these are derived for Janus/PT.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;
