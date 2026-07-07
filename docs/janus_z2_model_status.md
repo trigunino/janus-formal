@@ -85,3 +85,15 @@ Recommended policy:
 - otherwise focus on a clear public-facing model status and, separately,
   observational sector selection for `alpha`.
 
+Current exhaustion verdict:
+
+- `spin_current_on_sigma = false` for the active assets: the Dirac/spin route is
+  physically standard, but the Janus/Sigma fermion distribution and spin
+  polarization are not derived;
+- `nieh_yan_charge_nonzero = false`: the active torsion pullback is zero;
+- `torsionful_boundary_condition = false`: PT67 uses torsionless boundary data;
+- `singular_defect_source = false` on the regular branch: the null/LL bridge is
+  a separate extension and still lacks `chi_LL` selection.
+
+Therefore `torsion_source_on_sigma = false` for the active model. This is a
+relative no-go, not a universal theorem against torsion.

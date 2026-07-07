@@ -8,6 +8,12 @@ Depot de travail pour formaliser et tester un pipeline Janus autour de :
 - donnees traitees minimales (`data/processed/`) ;
 - documentation scientifique et cartes de sources (`docs/`, `formal/`).
 
+Notes de statut utiles :
+
+- `docs/janus_z2_model_status.md` : statut court du noyau Janus/Z2 actif.
+- `docs/janus_alpha_no_fit_selection_matrix.md` : matrice des pistes possibles
+  pour transformer `alpha` en prediction no-fit.
+
 ## Etat actuel
 
 Statut separe par niveau de preuve :
@@ -27,7 +33,29 @@ Statut separe par niveau de preuve :
 - `z2_null_sigma_chi_LL_requires_state_law_or_extension_input = True`
 - `z2_alpha_branch_archive_ready = True`
 - `z2_alpha_classification = continuous_global_energy_state_sector`
+- `z2_alpha_observational_fit_available = True`
+- `z2_alpha_observable_proxy = q0_u0_not_dimensional_alpha`
+- `z2_alpha_best_SNdiag_plus_DESI_BAO_q0 = -0.001_boundary_limited`
+- `z2_alpha_observational_no_fit_claim = False`
+- `z2_s4l_projective_scale_geometry_active = True`
+- `z2_s4l_global_radius_L_fixed_by_current_geometry = False`
+- `z2_s4l_L_classification = continuous_global_state_sector`
+- `z2_ethroat_equals_Eglobal_structurally_allowed = True`
+- `z2_ethroat_derived_from_current_assets = False`
+- `z2_throat_quantum_topology_theory_status = new_layer_if_built_now`
+- `z2_ethroat_candidate_quantum_area_family_ready = True`
+- `z2_ethroat_candidate_unique_N_selected = False`
+- `z2_ethroat_required_N_order = 1e120`
+- `z2_ethroat_holographic_N_explains_magnitude_not_prediction = True`
+- `z2_ethroat_non_circular_N_selector_found = False`
+- `z2_ethroat_best_remaining_N_frontiers = boundary_Hilbert_space_or_TQFT`
+- `z2_ethroat_remaining_frontiers_exhausted = True`
+- `z2_ethroat_boundary_hilbert_space_selector_ready = False`
+- `z2_ethroat_tqft_level_selector_ready = False`
+- `z2_ethroat_N_remains_sector_label = True`
 - `torsionful_holst_nieh_yan_sigma_default_next = False`
+- `torsion_source_on_sigma_active = False`
+- `torsionful_holst_nieh_yan_sigma_archive_ready = True`
 - `z2_sigma_action_to_flrw_source_emits_zero = True`
 - `z2_sigma_flrw_source_requires_bulk_bimetric_or_boundary_state_channel = True`
 - `published_janus_flrw_source_is_bulk_bimetric_not_local_sigma = True`

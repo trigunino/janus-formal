@@ -16,6 +16,44 @@
 - Native GR decomposition: required now; Planck rejection is suspended as a
   physical Janus verdict until an active Z2/Sigma observational model exists.
 - Therefore: do not claim full no-fit cosmology yet.
+- Alpha observational fallback: `P0EFTJanusZ2AlphaObservationalFitGate` now
+  performs a fine-grid `q0/u0` sector fit using Pantheon+ diagonal errors and
+  DESI DR2 BAO covariance. Current combined SNdiag+BAO best point is
+  `q0=-0.001` at the grid boundary; this is observational sector selection, not
+  a no-fit derivation of dimensional `alpha`. Full Pantheon covariance remains
+  required before final claims.
+- Geometric scale branch: `P0EFTJanusZ2S4LProjectiveScaleGeometryGate` records
+  the faithful topology as `S4_L -> RP4_L` resolved by `Sigma`. The topology
+  supplies `Z2` and the tunnel cycle, but current regularity, boundary-charge,
+  area/flux and holonomy/spectral routes do not fix the dimensionful global
+  radius `L`; hence `L/alpha` remains a global state sector.
+- Throat-energy frontier: `P0EFTJanusZ2EThroatQuantumTopologyFrontierGate`
+  records that `E_throat = E_global` is structurally allowed, but current
+  Janus/Z2 assets do not derive `E_throat` through charge quantization,
+  topological vacuum energy, strong regularity, LL-brane tension, or boundary
+  action. A throat quantum/topology theory can be proposed, but it is a new
+  physical layer unless that normalization is derived from Janus.
+- Candidate quantum throat theory:
+  `P0EFTJanusZ2EThroatCandidateQuantumTopologyTheory` tests the natural
+  construction `A_Sigma=N*A_gap`, `L=sqrt(A/(4*pi))`, `alpha=L/c`,
+  `E_throat=E_global`. It gives a coherent discrete family, but `N=1` is
+  Planck-scale and no current Janus theorem selects the macroscopic `N`.
+- Holographic `N` candidate:
+  `P0EFTJanusZ2EThroatHolographicNSelectorCandidate` shows that the required
+  sector is `N~10^120`. Horizon entropy/de Sitter area/collective occupation
+  explain the magnitude after `H0/L` is known, but do not predict it. Primitive
+  topology is non-circular but gives the wrong scale.
+- Non-circular `N` frontier:
+  `P0EFTJanusZ2EThroatNonCircularNFrontierGate` rejects selectors that reuse
+  `H0`, `L`, `R_H`, `A_H`, `alpha`, or observed `Lambda`. No active route
+  selects `N~10^120`; the remaining serious directions are a Janus-derived
+  boundary Hilbert-space state law or a Janus-derived TQFT/level on `Sigma`.
+- Remaining non-circular `N` frontiers exhausted:
+  `P0EFTJanusZ2EThroatRemainingNonCircularFrontiersGate` checks both serious
+  routes. The boundary Hilbert-space route still lacks a Janus-derived boundary
+  phase space, Hilbert space, entropy formula and state law. The TQFT route
+  still lacks a Janus-derived boundary theory, level and primitive sector.
+  Therefore `N` remains a sector label, not a no-fit prediction.
 - No-extension frontier: active Z2/Sigma BAO is now blocked by two independent
   open quantities, `R_Sigma` and the absolute projected baryon Noether charge.
   The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but
