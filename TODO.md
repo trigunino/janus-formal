@@ -340,6 +340,60 @@
   density.
   It remains blocked because the live workspace still lacks the projected
   baryon Noether charge and active spatial volume normalization.
+- `rho_plus0_abs` symbolic closure:
+  `build_p0_eft_janus_z2_rho_plus0_abs_symbolic_closure_gate.py` closes the
+  non-extension formula:
+  `rho_plus0_abs = m_b*N_occ_Z2Sigma/(pi^2*R_curv_Z2Sigma^3)` for the active
+  RP3 spatial slice. The live status is intentionally not numeric: CODATA
+  baryon mass and published ratio are present, but `N_occ_Z2Sigma` and
+  `R_curv_Z2Sigma` are still independent missing inputs.
+- Bimetric bulk -> Sigma transfer:
+  `build_p0_eft_janus_z2_bimetric_bulk_to_sigma_stress_flux_runner.py` is the
+  concrete transfer runner. It consumes active `rho_±,p_±`, bulk metrics,
+  four-velocities, Sigma tangents/normals, builds `T_±|Sigma`, then projects
+  `F_a = T^+ e_a n_+ + eps_Z2 T^- e_a n_-`. Live status: runner works on
+  complete active inputs, but no live `bimetric_bulk_to_sigma_stress_flux_inputs.json`
+  exists. This means the bimetry is not yet physically transferred to the
+  throat; the transfer map is ready and waiting for active bulk/throat data.
+- Bimetric bulk -> Sigma input chain:
+  `build_p0_eft_janus_z2_sector_density_pressure_from_rho_plus0_abs_gate.py`
+  supplies the dust `rho_±(a),p_±(a)` block once `rho_plus0_abs` is ready.
+  `build_p0_eft_janus_z2_bimetric_bulk_to_sigma_flux_input_assembler.py`
+  then merges perfect-fluid data with embedding tangents/normals and radial
+  weights. Live blockers are now explicit: `rho_plus0_abs`, active tunnel
+  embedding geometry, and radial variation tangent weights.
+- `rho_plus0_abs` bottom frontier:
+  `run_p0_eft_janus_z2_rho_plus0_abs_bottom_frontier.py` aggregates the live
+  state/occupation and curvature-radius frontiers. It records that the formula
+  is closed, but the first physical blockers remain `N_occ_Z2Sigma` and
+  `R_curv_Z2Sigma`. Non-rustine exits are restricted to state/flux selection,
+  active `R_Sigma` embedding certification, or a single global bimetric state
+  solution deriving both.
+- Published Janus exact-solution scale route:
+  `build_p0_eft_janus_z2_published_exact_solution_scale_frontier_gate.py`
+  records the exact Janus expansion normalization:
+  `a(u)=alpha*cosh(u)^2`,
+  `H(u)=sinh(2u)/(alpha*cosh(u)^4)`, so
+  `alpha=h_shape(u0)/H0`. This explains how the published model obtains a
+  dimensioned cosmology: the shape is exact, but the absolute clock/scale is an
+  extra global state or observational normalization unless `alpha` is derived.
+- Published global-energy route:
+  `build_p0_eft_janus_z2_published_global_energy_constant_route_gate.py`
+  implements the cleanest non-rustine alternative to local `N_occ/R_curv`:
+  use the published conserved bimetric FLRW energy constant
+  `E = rho_plus*c_plus^2*w_plus + rho_minus*c_minus^2*w_minus` plus the
+  published relative sector ratio. Live status: missing
+  `published_global_energy_constant_inputs.json`, so this route is identified
+  but not closed.
+- Exact-solution alpha -> global-energy route:
+  `build_p0_eft_janus_z2_exact_solution_alpha_to_global_energy_gate.py`
+  derives the published acceleration identity
+  `a^2*d2a/dx0^2 = 2*alpha` from the exact solution, then combines it with
+  `a^2*d2a/dx0^2 = -4*pi*G*E/c^2` to obtain
+  `E_mass = -alpha*c^2/(2*pi*G)`. A synthetic test proves the chain
+  `alpha -> E_global -> rho_plus0_abs -> rho_±(a)` works without local
+  `N_occ/R_curv`; live status remains blocked only because `alpha_m` is not yet
+  derived from a non-observational Janus clock/scale.
 - Global state prerequisite derivability audit:
   `build_p0_eft_janus_z2_global_state_prerequisite_derivability_audit_gate.py`
   records whether those two prerequisites can be derived now. Current answer:
@@ -3872,6 +3926,47 @@ Completion rule:
     It remains blocked unless the PT symplectic projection, charge unit,
     charge-to-LL map, PT sign law, and non-observational bridge charge are all
     present.
+  - exact-solution alpha state sector:
+    `P0EFTJanusZ2AlphaStateSectorGate` records the clean non-rustine escape from
+    the absolute-density blockage: treat `alpha_m` as the dimensional
+    integration constant/state sector of the published exact Janus solution,
+    analogous to a mass/Noether sector. This unblocks conditional predictions
+    through `alpha -> E_global -> rho_plus0_abs`, but it is not a topology-only
+    no-fit prediction until a separate selector/quantization theorem fixes the
+    sector.
+  - alpha solution search:
+    `P0EFTJanusZ2AlphaSolutionSearchGate` ranks the obvious-to-exotic exits.
+    Current result: pure `RP4/Sigma/Z2` topology cannot fix a dimensionful
+    `alpha`; Brown-York/Wald/Souriau routes rename it as a boundary or orbit
+    charge unless that charge is independently selected; flux, Casimir,
+    horizon thermodynamics, moduli stabilization, or Planck-area routes all
+    require extra physical structure. The only currently honest working route
+    is therefore `alpha_m` as an exact-solution integration-constant state
+    sector, with `full_no_fit_prediction_ready = false`.
+  - alpha selection-law closure:
+    `P0EFTJanusZ2AlphaSelectionLawClosureGate` pushes the selector problem to
+    equations. Boundary charge gives
+    `alpha_m = -2*pi*G*M_boundary/c^2`; Souriau gives the same form with an
+    orbit mass; flux gives `alpha_n = gamma_flux*q_unit*n`; Casimir/topology
+    gives `alpha_m^2 = -2*pi*kappa_C*l_P^2`; horizon thermodynamics gives
+    first-law constraints; regular tunnel geometry remains scale invariant.
+    None selects a unique `alpha_m` with the current Janus/Z2/Sigma action
+    data. Positive status remains conditional state-sector prediction, not
+    full no-fit prediction.
+  - composite quantized alpha selector:
+    `P0EFTJanusZ2AlphaCompositeQuantizedSelectorGate` combines the only viable
+    ingredients: a Noether/Souriau charge-to-alpha map and a quantized charge
+    lattice. If both are derived, it gives the spectrum
+    `alpha_n = 2*pi*G*|n|*m_charge/c^2`. This is stronger than the continuous
+    state-sector route. It becomes a unique no-fit selector only if the charge
+    unit and primitive sector `n` are both derived internally.
+  - composite selector frontier:
+    `P0EFTJanusZ2AlphaCompositeSelectorFrontierGate` reduces the problem to
+    two hard theorems: derive the mass/charge unit `m_charge` from the
+    PT/Souriau boundary symplectic form, and derive the primitive sector
+    selection `n=1` from irreducibility/superselection. Without those, the
+    composite selector remains an internally coherent spectrum, not a unique
+    prediction.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;

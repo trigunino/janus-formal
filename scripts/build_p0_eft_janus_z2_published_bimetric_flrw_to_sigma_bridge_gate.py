@@ -24,6 +24,12 @@ from scripts.build_p0_eft_janus_z2_sigma_sector_density_pressure_of_a_gate impor
 from scripts.build_p0_eft_janus_z2_published_bimetric_flrw_sector_source_reduction_gate import (
     build_payload as sector_source_reduction,
 )
+from scripts.build_p0_eft_janus_z2_bimetric_bulk_to_sigma_stress_flux_runner import (
+    build_payload as bimetric_bulk_to_sigma_flux,
+)
+from scripts.build_p0_eft_janus_z2_bimetric_bulk_to_sigma_flux_input_assembler import (
+    build_payload as bimetric_bulk_to_sigma_flux_input,
+)
 
 
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_published_bimetric_flrw_to_sigma_bridge_gate.json")
@@ -41,6 +47,8 @@ def build_payload() -> dict[str, Any]:
     source_reduction = sector_source_reduction()
     sector = sector_density_pressure()
     k_pullback = embedding_to_k()
+    flux_input = bimetric_bulk_to_sigma_flux_input(write_output=False)
+    stress_flux = bimetric_bulk_to_sigma_flux(write_output=False)
 
     readiness = {
         "published_interaction_slots_ready": _ready(slots, "gate_passed"),
@@ -61,7 +69,9 @@ def build_payload() -> dict[str, Any]:
         "sigma_extrinsic_curvatures_ready": _ready(
             k_pullback, "gate_passed"
         ),
-        "sigma_stress_flux_projection_ready": False,
+        "sigma_stress_flux_projection_ready": bool(
+            stress_flux["sigma_stress_flux_projection_ready"]
+        ),
         "projected_bianchi_junction_ready": False,
     }
 
@@ -133,6 +143,16 @@ def build_payload() -> dict[str, Any]:
                 "status": k_pullback["status"],
                 "ready": k_pullback["gate_passed"],
                 "primary_blocker": k_pullback["primary_blocker"],
+            },
+            "bimetric_bulk_to_sigma_stress_flux": {
+                "status": stress_flux["status"],
+                "ready": stress_flux["sigma_stress_flux_projection_ready"],
+                "blocked_by": stress_flux["blocked_by"],
+            },
+            "bimetric_bulk_to_sigma_flux_input": {
+                "status": flux_input["status"],
+                "ready": flux_input["assembled_input_ready"],
+                "blocked_by": flux_input["blocked_by"],
             },
         },
         "strict_interpretation": {
