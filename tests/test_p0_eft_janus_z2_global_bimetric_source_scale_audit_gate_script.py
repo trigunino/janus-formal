@@ -12,6 +12,8 @@ class GlobalBimetricSourceScaleAuditGateTests(unittest.TestCase):
         self.assertFalse(payload["gate_passed"])
         self.assertTrue(payload["global_bimetric_equations_available"])
         self.assertTrue(payload["Souriau_PT_sign_pairing_available"])
+        self.assertTrue(payload["published_relative_sector_ratio_available"])
+        self.assertAlmostEqual(payload["rho_minus0_over_rho_plus0"], -19.0)
         self.assertFalse(payload["absolute_mass_scale_found"])
         self.assertTrue(payload["topology_only_scale_free"])
         self.assertIn(

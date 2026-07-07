@@ -30,6 +30,7 @@ class GlobalMatterStateFromNoetherBaryonVolumeGateTests(unittest.TestCase):
             density = base / "density.json"
             constants = base / "constants.json"
             volume = base / "volume.json"
+            ratio = base / "ratio.json"
             density.write_text(
                 """{
   "active_core": "Z2_tunnel_Sigma",
@@ -59,14 +60,26 @@ class GlobalMatterStateFromNoetherBaryonVolumeGateTests(unittest.TestCase):
 }""",
                 encoding="utf-8",
             )
+            ratio.write_text(
+                """{
+  "active_core": "Z2_tunnel_Sigma",
+  "source": "published_janus_reference",
+  "normalizations": {"rho_minus0_over_rho_plus0": -19.0}
+}""",
+                encoding="utf-8",
+            )
             payload = build_payload(
                 baryon_density_path=density,
                 constants_path=constants,
                 volume_path=volume,
+                sector_ratio_path=ratio,
             )
 
         self.assertTrue(payload["gate_passed"])
         self.assertEqual(payload["matter_payload"]["rho_plus_kg_m3"], 6.0)
+        self.assertEqual(payload["matter_payload"]["rho_plus0_abs_kg_m3"], 6.0)
+        self.assertEqual(payload["matter_payload"]["rho_minus0_over_rho_plus0"], -19.0)
+        self.assertEqual(payload["matter_payload"]["rho_minus0_abs_kg_m3"], -114.0)
         self.assertEqual(payload["matter_payload"]["M_plus_kg"], 30.0)
 
 

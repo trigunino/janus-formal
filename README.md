@@ -29,12 +29,17 @@ Statut separe par niveau de preuve :
 - `z2_sigma_flrw_source_requires_bulk_bimetric_or_boundary_state_channel = True`
 - `published_janus_flrw_source_is_bulk_bimetric_not_local_sigma = True`
 - `published_bimetric_flrw_sector_density_shape_ready = True`
+- `published_bimetric_sector_relative_ratio_ready = True`
 - `published_bimetric_flrw_sector_density_normalization_ready = False`
 - `global_bimetric_state_to_flrw_sector_normalization_ready = False`
+- `rho_plus0_abs_noether_volume_route_declared = True`
+- `rho_plus0_abs_ready = False`
 - `published_bimetric_flrw_to_sigma_bridge_declared = True`
 - `published_bimetric_flrw_to_sigma_bridge_ready = False`
 - `z2_sigma_boundary_leg_symbolic_inventory_ready = True`
 - `z2_sigma_boundary_leg_numeric_state_ready = False`
+- `z2_sigma_boundary_leg_pair_charge_reduction_ready = True`
+- `z2_sigma_boundary_leg_pair_charge_nonzero = False`
 - `legacy_z4_modules_archived = True`
 - `rp4_base_pin_sign_computed = True`
 - `rp4_base_pin_plus_exists = True`

@@ -43,8 +43,8 @@ def _validate(state: dict[str, Any]) -> list[str]:
         errors.append("PT_energy_sign_reversal_must_be_proved")
     if _bad_provenance(state.get("state_provenance")):
         errors.append("state_provenance_missing_or_forbidden")
-    if not _positive(state.get("rho_plus_kg_m3")):
-        errors.append("rho_plus_kg_m3_missing_or_nonpositive")
+    if not _positive(state.get("rho_plus0_abs_kg_m3")) and not _positive(state.get("rho_plus_kg_m3")):
+        errors.append("rho_plus0_abs_kg_m3_missing_or_nonpositive")
     if "rho_minus_kg_m3" in state and not _negative(state["rho_minus_kg_m3"]):
         errors.append("rho_minus_kg_m3_must_be_negative_if_present")
     for key in [
@@ -67,13 +67,19 @@ def build_payload(
     errors = ["missing_global_bimetric_stress_energy_state_inputs"] if state is None else _validate(state)
     normalized = None
     if state is not None and not errors:
-        rho_plus = float(state["rho_plus_kg_m3"])
-        rho_minus = float(state.get("rho_minus_kg_m3", -rho_plus))
+        rho_plus_value = state.get("rho_plus0_abs_kg_m3")
+        if rho_plus_value is None:
+            rho_plus_value = state["rho_plus_kg_m3"]
+        rho_plus = float(rho_plus_value)
+        rho_minus = float(state.get("rho_minus0_abs_kg_m3", state.get("rho_minus_kg_m3", -rho_plus)))
         normalized = {
             "active_core": "Z2_tunnel_Sigma",
             "source": "active_derived",
             "rho_plus0_kg_m3": rho_plus,
+            "rho_plus0_abs_kg_m3": rho_plus,
             "rho_minus0_kg_m3": rho_minus,
+            "rho_minus0_abs_kg_m3": rho_minus,
+            "rho_minus0_over_rho_plus0": state.get("rho_minus0_over_rho_plus0"),
             "p_plus0_pa": float(state.get("p_plus0_pa", 0.0)),
             "p_minus0_pa": float(state.get("p_minus0_pa", 0.0)),
             "equation_of_state": state.get("equation_of_state", "dust"),
@@ -104,7 +110,7 @@ def build_payload(
         if ready
         else [
             "derive_global_bimetric_stress_energy_state_inputs",
-            "include rho_plus_kg_m3 with active provenance",
+            "include rho_plus0_abs_kg_m3 with active provenance",
             "prove PT_energy_sign_reversal",
         ],
     }

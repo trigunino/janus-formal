@@ -27,7 +27,9 @@ class GlobalBimetricStateToFLRWSectorNormalizationGateTests(unittest.TestCase):
                         "source": "active_derived",
                         "stress_energy_state_proved": True,
                         "PT_energy_sign_reversal_proved": True,
-                        "rho_plus_kg_m3": 4.0,
+                        "rho_plus0_abs_kg_m3": 4.0,
+                        "rho_minus0_abs_kg_m3": -76.0,
+                        "rho_minus0_over_rho_plus0": -19.0,
                         "state_provenance": "active_global_bimetric_noether_state",
                         "observational_fit_used": False,
                         "compressed_planck_lcdm_background_used": False,
@@ -41,7 +43,9 @@ class GlobalBimetricStateToFLRWSectorNormalizationGateTests(unittest.TestCase):
 
         self.assertTrue(payload["gate_passed"])
         self.assertEqual(payload["normalized_sector_payload"]["rho_plus0_kg_m3"], 4.0)
-        self.assertEqual(payload["normalized_sector_payload"]["rho_minus0_kg_m3"], -4.0)
+        self.assertEqual(payload["normalized_sector_payload"]["rho_plus0_abs_kg_m3"], 4.0)
+        self.assertEqual(payload["normalized_sector_payload"]["rho_minus0_kg_m3"], -76.0)
+        self.assertEqual(payload["normalized_sector_payload"]["rho_minus0_over_rho_plus0"], -19.0)
 
     def test_rejects_fit_provenance(self):
         with tempfile.TemporaryDirectory() as tmp:

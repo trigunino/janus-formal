@@ -9,6 +9,7 @@ BASE = Path("outputs/active_z2_sigma")
 BARYON_DENSITY_PATH = BASE / "early_plasma_baryon_number_density_noether_volume_inputs.json"
 CONSTANTS_PATH = BASE / "early_plasma_codata_constants_inputs.json"
 VOLUME_PATH = BASE / "spatial_volume_normalization_inputs.json"
+SECTOR_RATIO_PATH = BASE / "published_bimetric_sector_ratio_inputs.json"
 OUTPUT_PATH = BASE / "global_bimetric_stress_energy_state_inputs.json"
 REPORT_PATH = Path(
     "outputs/reports/p0_eft_janus_z2_global_matter_state_from_noether_baryon_volume_gate.md"
@@ -49,12 +50,14 @@ def build_payload(
     baryon_density_path: Path = BARYON_DENSITY_PATH,
     constants_path: Path = CONSTANTS_PATH,
     volume_path: Path = VOLUME_PATH,
+    sector_ratio_path: Path = SECTOR_RATIO_PATH,
     output_path: Path = OUTPUT_PATH,
     write_output: bool = False,
 ) -> dict[str, Any]:
     density = _read(baryon_density_path)
     constants = _read(constants_path)
     volume = _read(volume_path)
+    sector_ratio = _read(sector_ratio_path)
     errors: list[str] = []
 
     if density is None:
@@ -83,12 +86,29 @@ def build_payload(
             if not errors:
                 rho_plus = n_b * m_b
                 m_plus = rho_plus * v_plus
+                ratio = None
+                rho_minus = None
+                if sector_ratio is not None:
+                    ratio = float(
+                        sector_ratio.get("normalizations", {}).get(
+                            "rho_minus0_over_rho_plus0", -1.0
+                        )
+                    )
+                    if ratio >= 0.0:
+                        raise ValueError("published_sector_ratio_must_be_negative")
+                    else:
+                        rho_minus = ratio * rho_plus
                 matter_payload = {
                     "active_core": "Z2_tunnel_Sigma",
                     "source": "active_derived",
                     "stress_energy_state_proved": True,
                     "PT_energy_sign_reversal_proved": True,
                     "rho_plus_kg_m3": rho_plus,
+                    "rho_plus0_abs_kg_m3": rho_plus,
+                    "rho_plus0_abs_provenance": "Noether_baryon_density_times_CODATA_baryon_mass",
+                    "rho_minus0_over_rho_plus0": ratio,
+                    "rho_minus_kg_m3": rho_minus,
+                    "rho_minus0_abs_kg_m3": rho_minus,
                     "V_plus_m3": v_plus,
                     "M_plus_kg": m_plus,
                     "state_provenance": (
@@ -111,6 +131,7 @@ def build_payload(
         "baryon_density_manifest_exists": density is not None,
         "constants_manifest_exists": constants is not None,
         "volume_manifest_exists": volume is not None,
+        "sector_ratio_manifest_exists": sector_ratio is not None,
         "validation_errors": errors,
         "global_matter_state_ready": ready,
         "matter_payload": matter_payload,

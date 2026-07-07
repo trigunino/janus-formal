@@ -23,6 +23,12 @@ from scripts.build_p0_eft_janus_z2_global_bimetric_stress_energy_mass_reducer_ga
 from scripts.build_p0_eft_janus_z2_global_bimetric_state_to_flrw_sector_normalization_gate import (
     build_payload as sector_normalization,
 )
+from scripts.build_p0_eft_janus_z2_published_bimetric_sector_ratio_gate import (
+    build_payload as sector_ratio,
+)
+from scripts.build_p0_eft_janus_z2_published_bimetric_symbolic_sector_sources import (
+    build_payload as symbolic_sources,
+)
 
 
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_published_bimetric_flrw_sector_source_reduction_gate.json")
@@ -36,6 +42,8 @@ def build_payload() -> dict[str, Any]:
     global_scale_payload = global_source_scale()
     global_mass_payload = global_mass_state()
     sector_norm_payload = sector_normalization()
+    sector_ratio_payload = sector_ratio()
+    symbolic_sources_payload = symbolic_sources()
     rho_p_shape_ready = bool(
         dust_payload["branch_closed"] and lapse_payload["determinant_formula_closed"]
     )
@@ -58,6 +66,18 @@ def build_payload() -> dict[str, Any]:
         "normalization_level": {
             "plus_normalization_derived": False,
             "minus_normalization_derived": False,
+            "relative_sector_ratio_ready": sector_ratio_payload[
+                "relative_sector_ratio_ready"
+            ],
+            "rho_minus0_over_rho_plus0": sector_ratio_payload["ratio_payload"][
+                "rho_minus0_over_rho_plus0"
+            ],
+            "absolute_density_scale_ready": sector_ratio_payload[
+                "absolute_density_scale_ready"
+            ],
+            "symbolic_sector_sources_ready": symbolic_sources_payload[
+                "symbolic_sector_sources_ready"
+            ],
             "global_bimetric_equations_available": global_scale_payload[
                 "global_bimetric_equations_available"
             ],
@@ -106,8 +126,24 @@ def build_payload() -> dict[str, Any]:
             "primary_blocker": sector_norm_payload["primary_blocker"],
             "next_required": sector_norm_payload["next_required"],
         },
+        "upstream_sector_ratio": {
+            "status": sector_ratio_payload["status"],
+            "relative_ready": sector_ratio_payload["relative_sector_ratio_ready"],
+            "absolute_scale_ready": sector_ratio_payload["absolute_density_scale_ready"],
+            "rho_minus0_over_rho_plus0": sector_ratio_payload["ratio_payload"][
+                "rho_minus0_over_rho_plus0"
+            ],
+        },
+        "upstream_symbolic_sector_sources": {
+            "status": symbolic_sources_payload["status"],
+            "ready": symbolic_sources_payload["symbolic_sector_sources_ready"],
+            "missing_input": symbolic_sources_payload["source_manifest"][
+                "missing_input"
+            ],
+        },
         "next_required": [
-            "derive rho_+0 and rho_-0 from a Janus bimetric state or Noether charge",
+            "derive absolute rho_+0 from a Janus bimetric state or Noether charge",
+            "then set rho_-0 from the published relative sector ratio",
             "or select a published exact Janus FLRW solution with its own normalization",
             "then write normalized sector stress T_±(a) before Sigma projection",
         ],
@@ -123,6 +159,7 @@ def write_reports() -> dict[str, Any]:
         "# Janus Z2 Published Bimetric FLRW Sector Source Reduction Gate",
         "",
         f"rho/p shape ready: `{payload['shape_level']['rho_p_shape_ready']}`",
+        f"relative sector ratio ready: `{payload['normalization_level']['relative_sector_ratio_ready']}`",
         f"rho/p normalized ready: `{payload['rho_p_normalized_ready']}`",
         f"Primary blocker: `{payload['primary_blocker']}`",
         "",

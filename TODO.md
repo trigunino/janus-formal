@@ -66,11 +66,13 @@
   `build_p0_eft_janus_z2_published_bimetric_flrw_sector_source_reduction_gate.py`
   records that the dust scalar density shape is ready from the Bianchi FLRW dust
   transport plus determinant/lapse audit. The physical blocker is now narrower:
-  `rho_+0` and `rho_-0` normalizations are not derived from a Janus state,
-  Noether charge, or exact published global solution. The gate now imports the
-  global bimetric source-scale audit and stress-energy mass reducer: M15/M30
-  supply the coupled equations and sign structure, but the live repo has no
-  active `global_bimetric_stress_energy_state_inputs.json`.
+  `rho_+0` is not derived from a Janus state, Noether charge, or exact
+  published global solution. `build_p0_eft_janus_z2_published_bimetric_sector_ratio_gate.py`
+  records the published relative split `rho_-0/rho_+0 ~= -19` from the
+  5% visible / 95% negative-mass statement, but this is not an absolute density.
+  M15/M30 supply the coupled equations, sign structure, and relative sector
+  split, but the live repo still has no active
+  `global_bimetric_stress_energy_state_inputs.json`.
 - Global bimetric state -> FLRW sector normalization:
   `build_p0_eft_janus_z2_global_bimetric_state_to_flrw_sector_normalization_gate.py`
   is the strict adapter from active global stress-energy state to
@@ -92,6 +94,14 @@
   and present as a route. This does not create a FLRW source by itself. Live
   blockers remain `boundary_projection_charge_ready = false` and
   `global_bimetric_state_ready = false`.
+- Boundary leg pair charge reduction:
+  `build_p0_eft_janus_z2_sigma_boundary_leg_pair_charge_reduction_gate.py`
+  evaluates the active plus/minus boundary legs together. Current result:
+  opposite normals, signed time coordinate, odd time parity, unit lapse, and
+  PT67 regular projection are all ready, but
+  `Q_boundary_minus_reference_unit = [0,0,0]`. Therefore the regular PT67
+  boundary-leg route cannot populate `rho_+0/rho_-0`; a nonzero source must come
+  from a non-PT67 boundary state or from the published bulk bimetric state.
 - Boundary-Hamiltonian scalar route: `H0_Z2Sigma`, `R_curv_Z2Sigma_m`, and
   `N_occ` are now classified as boundary/constraint targets, not free source
   densities. `H0_Z2Sigma` must come from the 3+1 projected boundary Hamiltonian
@@ -324,7 +334,10 @@
   `build_p0_eft_janus_z2_global_matter_state_from_noether_baryon_volume_gate.py`
   is the strict derivation route for the global matter state. It reduces
   projected Noether baryon number density plus CODATA baryon mass plus active
-  projective spatial volume into `rho_plus_kg_m3`, `V_plus_m3`, and `M_plus_kg`.
+  projective spatial volume into `rho_plus0_abs_kg_m3`, `V_plus_m3`, and
+  `M_plus_kg`. If the published sector split is available, it also propagates
+  `rho_minus0/rho_plus0 ~= -19` without treating that ratio as an absolute
+  density.
   It remains blocked because the live workspace still lacks the projected
   baryon Noether charge and active spatial volume normalization.
 - Global state prerequisite derivability audit:

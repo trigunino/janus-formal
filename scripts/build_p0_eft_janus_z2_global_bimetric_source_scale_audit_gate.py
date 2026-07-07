@@ -1,8 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_published_bimetric_sector_ratio_gate import (
+    build_payload as sector_ratio,
+)
 
 REPORT_PATH = Path(
     "outputs/reports/p0_eft_janus_z2_global_bimetric_source_scale_audit_gate.md"
@@ -13,6 +21,7 @@ JSON_PATH = Path(
 
 
 def build_payload() -> dict:
+    ratio_payload = sector_ratio()
     anchors = {
         "M15": {
             "role": "coupled field equations from a bimetric action",
@@ -21,7 +30,7 @@ def build_payload() -> dict:
         },
         "M30": {
             "role": "modern bimetric/Souriau/PT formulation",
-            "scale_result": "PT/Souriau fixes sign pairing, not mass magnitude",
+            "scale_result": "PT/Souriau fixes sign pairing and published 5/95 relative split, not mass magnitude",
             "absolute_scale_selected": False,
         },
         "topology_S4_to_RP4": {
@@ -42,6 +51,12 @@ def build_payload() -> dict:
         "anchors": anchors,
         "global_bimetric_equations_available": True,
         "Souriau_PT_sign_pairing_available": True,
+        "published_relative_sector_ratio_available": ratio_payload[
+            "relative_sector_ratio_ready"
+        ],
+        "rho_minus0_over_rho_plus0": ratio_payload["ratio_payload"][
+            "rho_minus0_over_rho_plus0"
+        ],
         "absolute_mass_scale_found": False,
         "topology_only_scale_free": True,
         "missing_inputs": missing_inputs,
@@ -63,6 +78,7 @@ def write_reports() -> dict:
         "",
         f"Global bimetric equations available: `{payload['global_bimetric_equations_available']}`",
         f"Souriau/PT sign pairing available: `{payload['Souriau_PT_sign_pairing_available']}`",
+        f"Published relative sector ratio available: `{payload['published_relative_sector_ratio_available']}`",
         f"Absolute mass scale found: `{payload['absolute_mass_scale_found']}`",
         "",
         "## Missing Inputs",
