@@ -25,6 +25,9 @@ Statut separe par niveau de preuve :
 - `z2_null_sigma_llbrane_chi_selection_exhausted = True`
 - `z2_null_sigma_chi_LL_abs_inverse_m_ready = False`
 - `z2_null_sigma_chi_LL_requires_state_law_or_extension_input = True`
+- `z2_alpha_branch_archive_ready = True`
+- `z2_alpha_classification = continuous_global_energy_state_sector`
+- `torsionful_holst_nieh_yan_sigma_default_next = False`
 - `z2_sigma_action_to_flrw_source_emits_zero = True`
 - `z2_sigma_flrw_source_requires_bulk_bimetric_or_boundary_state_channel = True`
 - `published_janus_flrw_source_is_bulk_bimetric_not_local_sigma = True`

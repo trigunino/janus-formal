@@ -3934,6 +3934,51 @@ Completion rule:
     through `alpha -> E_global -> rho_plus0_abs`, but it is not a topology-only
     no-fit prediction until a separate selector/quantization theorem fixes the
     sector.
+  - alpha state-sector advantage over published Janus:
+    `P0EFTJanusZ2AlphaStateSectorAdvantageGate` records the honest comparison.
+    There is no physical predictive advantage over published Janus for
+    `alpha`: both treat it as a scale/state sector. The advantage is
+    methodological and operational only: strict state provenance, no hidden
+    observational fit, no legacy Z4 reuse, no full no-fit promotion, indexed
+    failed selector routes, and a conditional pipeline to energy/density.
+  - final chance and reverse design:
+    `P0EFTJanusZ2AlphaFinalChanceAndReverseDesignGate` closes the last-pass
+    audit. The four direct routes remain blocked or conditional: global PT
+    charge lacks a derived value, sector quantization lacks charge unit and
+    primitive sector, bimetric `E_global` lacks a state law, and observations
+    can select a sector but not make it no-fit. The reverse-design options are
+    boundary charge law, PT/Souriau prequantization, bimetric vacuum-state law,
+    quantum geometry area/flux law, or observational sector selection.
+  - exact solution reduced phase space:
+    `P0EFTJanusZ2ExactSolutionReducedPhaseSpaceGate` collapses the previous
+    routes into one canonical object. The published exact solution gives
+    `a^2*d2a/dx0^2=2*alpha`, and the published energy equation gives
+    `alpha=-2*pi*G*E_global/c^2`. Thus `alpha`, `E_global` and a PT/boundary
+    mass charge are the same continuous solution label unless a reduced
+    symplectic action plus compact/integral cycle is derived. Current status:
+    continuous physical state label, not gauge and not internally quantized.
+  - published minisuperspace Hamiltonian reduction:
+    `P0EFTJanusZ2PublishedMinisuperspaceHamiltonianReductionGate` is the strict
+    next audit. It requires the published bimetric action reduced to
+    minisuperspace, lapse constraints, canonical momenta, Hamiltonian
+    constraint, symplectic pullback to the exact solution, an alpha-conjugate
+    coordinate, and finally a compact action cycle. Live status remains
+    `continuous_Casimir_charge`: the exact equations close
+    `alpha=-2*pi*G*E_global/c^2`, but no compact quantization cycle is present.
+  - global alpha condition matrix:
+    `P0EFTJanusZ2GlobalAlphaConditionMatrixGate` evaluates Janus-motivated
+    global conditions. The projective/tunnel topology supplies a Z2 cycle but
+    no quantum phase. Best discrete route: derive a PT monodromy holonomy phase
+    and action period. Best continuous route: derive a global bimetric vacuum
+    functional `V(alpha)` with unique minimum. Current status:
+    `alpha_generated_now = false`.
+  - two hard alpha routes:
+    `P0EFTJanusZ2AlphaTwoHardRoutesGate` tests the two remaining non-rustine
+    exits. PT holonomy from the existing Holst/Palatini boundary theta is
+    closed zero on the regular torsionless PT67 branch. The `V(alpha)` route is
+    blocked before on-shell action: the published minisuperspace Lagrangian,
+    finite boundary prescription for noncompact `u`, and unique minimum are not
+    materialized.
   - alpha solution search:
     `P0EFTJanusZ2AlphaSolutionSearchGate` ranks the obvious-to-exotic exits.
     Current result: pure `RP4/Sigma/Z2` topology cannot fix a dimensionful
@@ -3998,6 +4043,12 @@ Completion rule:
     for `n=1`: nonzero throat sector, no fusion/splitting/empty punctures,
     monotone ground energy in `|n|`, and orientation identifying signs. Live
     status is blocked until these are derived for Janus/PT.
+  - alpha branch archive readiness:
+    `P0EFTJanusZ2AlphaBranchArchiveReadinessGate` closes the current alpha pass.
+    Nonzero PT KKS/Souriau density, torsionful/null theta, matter/gauge boundary
+    phase space, and finite minisuperspace `V(alpha)` prescription are all absent
+    on current assets. The branch is archive-ready as conditional/inactive, not
+    deleted, and can be reopened only by one of those non-rustine inputs.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;
