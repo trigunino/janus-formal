@@ -41,6 +41,22 @@ def _normalization_frontier() -> dict:
     }
 
 
+def _deferred_normalization_frontier() -> dict:
+    return {
+        "source_gate": "P0EFTJanusZ2SigmaRSigmaSolutionToEmbeddingCurvatureBranchGate",
+        "source_certificate_manifest": "outputs/active_z2_sigma/rsigma_solution_certificate.json",
+        "throat_radius_solution_frontier_ready": False,
+        "embedding_unblocked_by_radius_solution": False,
+        "current_frontier": ["deferred_until_H0_normalization_input_exists"],
+        "blocks": [
+            "matter_flux_radial_block",
+            "counterterm_radial_block",
+            "solve_E_RSigma_equals_zero_without_fit",
+        ],
+        "diagnostic_only": True,
+    }
+
+
 def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_PATH) -> dict:
     input_exists = input_path.exists()
     output_written = False
@@ -68,7 +84,9 @@ def build_payload(*, input_path: Path = INPUT_PATH, output_path: Path = OUTPUT_P
         "background_h0_input_written": output_written,
         "requires_active_H0_scale_normalization": True,
         "dimensionless_H0R_over_c_insufficient_for_H0": True,
-        "normalization_source_frontier": _normalization_frontier(),
+        "normalization_source_frontier": _normalization_frontier()
+        if input_exists
+        else _deferred_normalization_frontier(),
         "uses_compressed_planck_lcdm_background": False,
         "uses_archived_z4_background": False,
         "uses_observational_H0_fit": False,

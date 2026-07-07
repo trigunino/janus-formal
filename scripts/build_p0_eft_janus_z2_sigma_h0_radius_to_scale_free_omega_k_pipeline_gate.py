@@ -49,15 +49,21 @@ def build_payload(
         radius_input_path=radius_input_path,
         output_path=scale_normalization_path,
     )
-    scale_writer = build_dimensionless_scale_writer_payload(
-        input_path=scale_normalization_path,
-        output_path=scale_input_path,
-    )
-    omega = build_scale_free_omega_k_payload(
-        sign_input_path=sign_input_path,
-        scale_input_path=scale_input_path,
-        output_path=omega_k_output_path,
-    )
+    if scale["gate_passed"]:
+        scale_writer = build_dimensionless_scale_writer_payload(
+            input_path=scale_normalization_path,
+            output_path=scale_input_path,
+        )
+    else:
+        scale_writer = {"gate_passed": False}
+    if scale_writer["gate_passed"]:
+        omega = build_scale_free_omega_k_payload(
+            sign_input_path=sign_input_path,
+            scale_input_path=scale_input_path,
+            output_path=omega_k_output_path,
+        )
+    else:
+        omega = {"gate_passed": False, "omega_k_value": None}
     return {
         "status": "janus-z2-sigma-h0-radius-to-scale-free-omega-k-pipeline-gate",
         "active_core": "Z2_tunnel_Sigma",

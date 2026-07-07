@@ -12,6 +12,11 @@ class HamiltonianChargeToFriedmannH0MapGateTests(unittest.TestCase):
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["symbolic_map_ready"])
         self.assertFalse(payload["numeric_H0_ready"])
+        self.assertTrue(payload["closure"]["boundary_charge_kind_fixed"])
+        self.assertEqual(
+            payload["boundary_charge_gate"]["charge_kind"],
+            "Hamiltonian_boundary_energy",
+        )
         self.assertIn("boundary_charge_value_available", payload["blocked_by"])
         self.assertIn("effective_volume_value_available", payload["blocked_by"])
         self.assertIn("curvature_radius_value_available", payload["blocked_by"])

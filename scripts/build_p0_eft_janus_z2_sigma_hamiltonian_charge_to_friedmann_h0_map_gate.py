@@ -1,8 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_p0_eft_janus_z2_sigma_noether_hamiltonian_boundary_charge_gate import (
+    build_payload as build_noether_boundary_charge,
+)
 
 REPORT_PATH = Path(
     "outputs/reports/"
@@ -15,12 +23,13 @@ JSON_PATH = Path(
 
 
 def build_payload() -> dict:
+    noether = build_noether_boundary_charge()
     closure = {
         "friedmann_constraint_formula_declared": True,
         "charge_to_density_formula_declared": True,
         "SI_mass_energy_convention_declared": True,
         "boundary_charge_value_available": False,
-        "boundary_charge_kind_fixed": False,
+        "boundary_charge_kind_fixed": noether["closure"]["charge_kind_fixed_as_energy"],
         "effective_volume_value_available": False,
         "curvature_radius_value_available": False,
         "absolute_RSigma_or_state_charge_available": False,
@@ -43,6 +52,12 @@ def build_payload() -> dict:
             "8piG_rho_over_3": "1/s^2",
             "curvature_term": "1/s^2",
         },
+        "boundary_charge_gate": {
+            "status": noether["status"],
+            "charge_kind": noether["charge_kind"],
+            "symbolic_ready": noether["symbolic_boundary_hamiltonian_ready"],
+            "numeric_ready": noether["numeric_boundary_hamiltonian_ready"],
+        },
         "closure": closure,
         "symbolic_map_ready": all(
             closure[key]
@@ -60,7 +75,6 @@ def build_payload() -> dict:
             "then inserted into the Friedmann constraint with the curvature term."
         ),
         "next_required": [
-            "choose_or_derive_boundary_charge_kind_mass_or_energy",
             "derive_Q_boundary_or_E_boundary_from_RSigma_or_state_charge",
             "derive_effective_FLRW_volume_V_eff_m3",
             "derive_R_curv_Z2Sigma_m_or_flat_limit",

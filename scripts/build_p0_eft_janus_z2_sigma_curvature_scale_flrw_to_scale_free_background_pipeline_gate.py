@@ -52,7 +52,20 @@ def build_payload(
     z_max: float | None = None,
     z_d_bracket: list[float] | tuple[float, float] | None = None,
 ) -> dict:
-    flrw_pipeline = build_flrw_components_pipeline_payload(flrw_manifest_path=flrw_component_path)
+    if flrw_component_path == FLRW_COMPONENT_PATH:
+        flrw_pipeline = build_flrw_components_pipeline_payload(
+            flrw_manifest_path=flrw_component_path
+        )
+    else:
+        flrw_pipeline = {
+            "status": "custom-flrw-component-manifest",
+            "gate_passed": flrw_component_path.exists(),
+            "upstream_frontiers": {},
+            "nearest_flrw_components_frontier": {
+                "blocks": [] if flrw_component_path.exists() else ["flrw_components"],
+                "diagnostic_only": True,
+            },
+        }
     scale_from_branch = build_scale_from_branch_payload(
         input_path=curvature_branch_path,
         output_path=scale_normalization_path,
@@ -75,6 +88,8 @@ def build_payload(
         blocker = None
     elif not omega["gate_passed"]:
         blocker = "missing active dimensionless curvature scale or curvature sign"
+    elif flrw_component_path.exists():
+        blocker = "background primitive validation failed"
     else:
         blocker = "missing active FLRW component manifest"
     return {
@@ -102,6 +117,7 @@ def build_payload(
         },
         "omega_k_value": omega["omega_k_value"],
         "z_grid_length": background["z_grid_length"],
+        "background_validation_error": background["validation_error"],
         "uses_compressed_planck_lcdm_background": False,
         "uses_archived_z4_background": False,
         "uses_observational_H0_fit": False,

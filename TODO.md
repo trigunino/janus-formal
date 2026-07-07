@@ -30,6 +30,20 @@
   `flrw_component_inputs_without_matter_flux.json`, `flrw_component_inputs.json`,
   and `flrw_components.json`. The next strict BAO blockers are now
   `background_scalars.json` and `early_plasma.json`, not the counterterm.
+- Strict no-extension background verdict: after PT67, the active FLRW component
+  manifest exists, but the scale-free background primitive rejects the branch
+  because `E_Z2Sigma^2` is not positive on the requested grid. This is a real
+  no-rustine stop: the local Sigma/boundary channels reduce to zero and do not
+  supply a positive Friedmann source. A physical continuation needs a derived
+  dimensionful/state/action input or a published Janus cross-sector source, not
+  a fitted replacement density.
+- Strict no-extension no-go is now algebraically recorded:
+  `E_Z2Sigma(a)^2 = rho_eff(a)/rho_crit0 + omega_k/a^2`; the active no-extension
+  PT67 branch has `rho_eff(a)=0`, while the closed projective branch has
+  `k_Z2Sigma=+1` and therefore `omega_k<0`. Hence `E^2<0` on the active grid.
+  Allowed exits are only a derived positive Friedmann source, a derived non-closed
+  spatial branch, or a dimensionful/state/action input that changes the boundary
+  Hamiltonian source.
 - Boundary-Hamiltonian scalar route: `H0_Z2Sigma`, `R_curv_Z2Sigma_m`, and
   `N_occ` are now classified as boundary/constraint targets, not free source
   densities. `H0_Z2Sigma` must come from the 3+1 projected boundary Hamiltonian
@@ -54,6 +68,260 @@
   the required dimensionful alternatives: absolute `R_Sigma`, boundary/state
   charge, or action scale. This is checked by
   `build_p0_eft_janus_z2_sigma_h0_numeric_input_frontier_gate.py`.
+- Brown-York boundary projection contract: Route B is now implemented as a
+  strict non-fit input reducer in
+  `build_p0_eft_janus_z2_sigma_boundary_projection_charge_contract_gate.py`.
+  It accepts `active_z2_sigma_boundary_projection.json` only if it contains
+  active `Q_boundary_raw`, same-surface `Q_reference_raw`, `R_Sigma_abs_m`,
+  `V_eff_m3`, `kappa_Z2Sigma`, a reference type, and clean provenance. It then
+  writes `projected_boundary_charge_inputs.json` for the existing H0 frontier.
+  No live input exists yet, so the gate blocks correctly.
+- PT67 theta/Brown-York projection exhausted: the active regular PT67 branch now
+  projects `theta_HP` and the GHY `DeltaK` channel into a unit-chart boundary
+  charge in `build_p0_eft_janus_z2_sigma_boundary_projection_from_theta_pt67_gate.py`.
+  Since `DeltaK_s=DeltaK_tau=0` and the Holst/Palatini non-GHY traces vanish,
+  `Q_boundary - Q_reference = 0` on the active grid. Therefore route B does not
+  supply the positive Friedmann source for the regular PT67 `k=+1` branch.
+- PT67 generalized-boundary frontier: standard same-boundary references
+  (`Minkowski/Milne`, isometric same-intrinsic-boundary, and Dirichlet
+  Brown-York) preserve the PT67 zero. This is now recorded by
+  `build_p0_eft_janus_z2_sigma_pt67_generalized_boundary_bc_reference_gate.py`.
+  A nonzero PT67 quasilocal charge therefore requires a derived generalized
+  boundary-condition/action choice with a well-posed variational principle, not
+  a different reference subtraction chosen by hand.
+- PT67 generalized-boundary action reduction: the operational density
+  `L_B = lambda_0 + lambda_R3 R3 + lambda_K K + lambda_K2 K^2
+  + lambda_Kab2 K_ab K^ab` is now reduced by
+  `build_p0_eft_janus_z2_sigma_pt67_generalized_boundary_action_reduction_gate.py`.
+  If derived coefficients and boundary/reference scalars are supplied, the gate
+  computes a symbolic `Q_ren(R_Sigma)`. The live repo has no derived coefficient
+  manifest yet, so no numeric `Q_boundary_raw` is emitted.
+- PT67 generalized-BC coefficient solver: under the strict no-extension policy,
+  `build_p0_eft_janus_z2_sigma_pt67_generalized_bc_coefficient_solver_gate.py`
+  fixes all generalized BC coefficients to zero. The linear `K` channel is a
+  forbidden Cartan/GHY duplicate and the remaining non-GHY residual channels are
+  proved absent. Therefore generalized BCs do not reopen PT67 unless a genuinely
+  new, published/adopted boundary action is admitted.
+- Noether Hamiltonian boundary update: the boundary charge kind is now fixed as
+  `Hamiltonian_boundary_energy` via the covariant phase-space formula
+  `delta H_xi = integral_Sigma(delta Q_xi - i_xi theta)` and its Brown-York
+  Dirichlet reduction. Numeric closure still requires the absolute surface
+  measure or `R_Sigma`, plus active boundary lapse normalization.
+- Boundary lapse update: the signed cover time and unit Sigma frame fix the
+  local dimensionless lapse `N_boundary_unit_chart = 1`. They do not fix the
+  physical time scale in SI units. Numeric Hamiltonian/H0 still requires the
+  absolute surface measure or `R_Sigma` and a physical time/length anchor.
+- Boundary surface-measure update: the active unit throat metric and topology
+  fix the symbolic measure `Vol_Sigma = 2*pi^2*R_Sigma^3`, and the projective
+  geometry fixes `R_Sigma/ell_collar = 1`. The absolute length `R_Sigma` remains
+  unproved, so the numeric Brown-York/Noether charge remains blocked.
+- Natural scale no-go: CODATA `G`, exact `c`, and `hbar` allow construction of
+  the Planck length, but the active Janus/Z2/Sigma action currently has no
+  theorem identifying `R_Sigma` or `ell_collar` with that length. Therefore
+  `R_Sigma = l_P` is not used in the strict branch.
+- Action scale inventory: active `G` fixes units/coupling only; Holst/Nieh-Yan
+  is zero on the torsionless Sigma branch; no active Lambda, scalar potential,
+  tension, mass parameter, or accepted Sigma counterterm scale is present.
+  Therefore the strict action inventory does not select an absolute throat
+  length.
+- Schwarzschild/PT bridge scale: the local MPLA/PT bridge fixes
+  `R_Sigma/R_s = 1`, but `R_s = 2GM/c^2` still requires an active mass/charge.
+  The Eddington/PT `R=R_s` throat is null, so it cannot be fed into the current
+  regular `h_ab,K_ab` Sigma pipeline without switching to a null-boundary
+  formalism.
+- Null Sigma scale route: the null-boundary density `sqrt(q) kappa_l` and its
+  radial variation are reduced, but still depend on the free Schwarzschild scale
+  `R_s`. The canonical PT joint term is reduced and zero. Without the
+  generator-rescaling quotient and Barrabes-Israel stress balance, the null
+  route does not select an absolute scale.
+- Null Barrabes-Israel update: if the missing minus-side transverse curvature
+  is proved to be the PT anti-equivariant image of the plus side, the shell
+  stress slots are computable conditionally. This is not promoted to active
+  closure until the minus-side metric pullback proves the anti-equivariance, and
+  it still does not select absolute `R_s`.
+- Null/PT bridge update: the Barrabes-Israel stress slots are now computed from
+  the active orientation-reversing PT pullback
+  `C_minus_ab = -C_plus_ab`; this is not an explicit minus-metric component
+  derivation, but it is no longer a free sign assumption. The canonical PT joint
+  normalization `l_plus . n_minus = -1` fixes the null-generator rescaling.
+  Therefore the remaining null/PT blockers are only structural:
+  the radial stationarity equation does not set a finite `R_s`, and no external
+  mass/charge/state or action scale is present.
+- Null/PT scale map: `build_p0_eft_janus_z2_null_sigma_mass_charge_to_rs_gate.py`
+  now gives the strict relation `R_s = 2 G M_bridge / c^2`. It writes a usable
+  `null_bridge_rs_scale_inputs.json` only if
+  `null_bridge_mass_charge_inputs.json` supplies an active-derived
+  `M_bridge_kg` with clean provenance. No such active mass/charge exists in the
+  live repo, so the bridge still cannot select an absolute scale.
+- Null/PT state-charge mass frontier:
+  `build_p0_eft_janus_z2_null_sigma_state_charge_to_mass_bridge_gate.py` now
+  provides the strict non-fit reducer
+  `M_bridge = N_occ_Z2Sigma * m_bridge_unit_kg`. It accepts only active-derived
+  occupation and mass-unit inputs with clean provenance and the explicit policy
+  `PT_abs_mass_for_radius`. No live input exists, so this narrows the blocker to
+  a real Janus state-selection law for `N_occ_Z2Sigma` and a derived matter/bridge
+  mass unit.
+- Null/PT global Noether/Souriau mass frontier:
+  `build_p0_eft_janus_z2_null_sigma_global_noether_souriau_mass_bridge_gate.py`
+  attacks `M_bridge` from the global bimetric/Souriau route. The PT/Souriau
+  law fixes the sign pairing `M_minus = -M_plus` and the bridge radius uses the
+  absolute mass. It does not fix the absolute magnitude by symmetry alone. A
+  live `M_bridge` can only be written from an active bimetric bulk solution mass
+  parameter or a global Noether/state charge with clean provenance.
+- Null/PT bulk-radius to mass route:
+  `build_p0_eft_janus_z2_null_sigma_bulk_rs_to_global_mass_gate.py` handles the
+  reverse strict map. If an active Schwarzschild/PT bulk solution supplies an
+  absolute `R_s_m` and proves `R_Sigma = R_s`, the gate writes the PT-paired
+  global mass solution with `M_plus = c^2 R_s/(2G)` and
+  `M_minus = -M_plus`. No such active absolute `R_s_m` exists in the live repo.
+- Null/PT LL-brane source extension:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_tension_to_rs_gate.py` records the
+  only local source route that currently appears mathematically capable of
+  selecting the Schwarzschild/PT scale. Following the lightlike-brane
+  Einstein-Rosen literature, an explicit LL-brane source at the throat gives
+  `m = 1/(16*pi*abs(chi_LL))`, `a0 = 1/8`, and therefore
+  `R_s = 1/(8*pi*abs(chi_LL))` in the geometrized inverse-length tension
+  convention. This is not a no-extension closure: it requires adopting a real
+  LL-brane worldvolume source and deriving `chi_LL`, not fitting it.
+- LL-brane bridge chain:
+  `run_p0_eft_janus_z2_null_sigma_llbrane_bridge_chain.py` now materializes the
+  full extension chain if the active tension input exists:
+  `chi_LL_abs_inverse_m -> R_s -> M_plus=-M_minus -> M_bridge -> R_s`.
+  In the live workspace the chain blocks at the first stage because
+  `null_bridge_llbrane_tension_inputs.json` is absent. The remaining non-fit
+  problem is therefore isolated to deriving `chi_LL_abs_inverse_m` from the
+  Janus/LL-brane worldvolume dynamics or a legitimate active state condition.
+- LL-brane tension frontier:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_tension_derivation_frontier_gate.py`
+  records the final blocker of this extension. The bibliography supplies the
+  LL-brane worldvolume framework, horizon straddling, and
+  `m = 1/(16*pi*abs(chi_LL))`; it does not supply a Janus-specific value of
+  `chi_LL`. A non-fit continuation needs either a Janus-specific LL-brane action,
+  an equation of state/boundary state condition, or a quantization/superselection
+  law fixing `chi_LL_abs_inverse_m`.
+- LL-brane worldvolume tension selection:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_worldvolume_tension_selection_gate.py`
+  exhausts the local LL-brane equations. The action makes
+  `chi_LL = Phi/sqrt(-gamma)` a dynamical composite tension, fixes the horizon
+  straddling and the matching constant `a0=1/8`, and relates
+  `m = 1/(16*pi*abs(chi_LL))`. It does not select the absolute magnitude of
+  `chi_LL`; that requires a Janus PT boundary state, quantization/superselection
+  law, or an explicit extension-state input.
+- Master action plus LL-brane extension:
+  `P0EFTJanusZ2CoverMasterLLBraneActionExtensionGate` and
+  `build_p0_eft_janus_z2_cover_master_llbrane_action_extension_gate.py` add
+  `S_LLbrane` to the single Janus Z2 cover master action without splitting into
+  independent plus/minus actions. The extension supplies a coherent Sigma null
+  source and the mass-radius relation, but the combined variation still does not
+  select the absolute `chi_LL` magnitude. The next non-fit target is a boundary
+  state, quantization, or superselection condition for `chi_LL`.
+- LL-brane chi selection audits:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_pt_boundary_state_condition_gate.py`
+  shows that PT boundary-state invariance fixes the sign/pairing/constancy
+  sector but not the magnitude of `chi_LL`. 
+  `build_p0_eft_janus_z2_null_sigma_llbrane_flux_quantization_gate.py` formulates
+  a plausible around-Sigma worldvolume flux quantization target, but does not
+  yet derive the flux quantum normalization or a non-circular relation from the
+  integer flux to `chi_LL_abs_inverse_m`.
+- LL-brane flux relation audit:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_flux_quantization_relation_audit_gate.py`
+  pushes the flux route further. For the 2+1 LL-brane worldvolume, the natural
+  gauge flux cycle is the throat `S2`, while `aroundSigma` is only the geometric
+  Z2 transport cycle unless a bundle pullback is derived. With
+  `integral_S2 F_LL = 2*pi*n/q_LL` and `F_theta_phi=B sin(theta)`, one gets
+  `B=n/(2*q_LL)`. This can select a scale only after deriving the charge quantum
+  `q_LL`, the auxiliary-metric/physical-area gauge, and the Janus on-shell
+  `F2_0`. Without those, flux quantization is only a superselection target and
+  does not yet fix `chi_LL`.
+- LL-brane branch archive:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_branch_archive_gate.py` freezes this
+  route as a viable state-parameter extension, not a no-fit closure. The strict
+  no-extension branch remains blocked at `chi_LL_abs_inverse_m_not_derived`.
+  Reopen is allowed only if `chi_LL` is derived from a global bimetric state,
+  a closed flux quantization law, or an explicitly declared extension-state
+  input.
+- Explicit `chi_LL` state branch:
+  `write_p0_eft_janus_z2_null_sigma_effective_chi_ll_state_input.py` can write
+  `null_bridge_llbrane_tension_inputs.json` only from a positive finite
+  `chi_LL_abs_inverse_m` with clean non-observational provenance. It has no
+  default value and must not be used to claim no-fit prediction.
+- Global bimetric mass/state scale search:
+  `build_p0_eft_janus_z2_global_bimetric_mass_state_scale_search_gate.py` opens
+  the parallel search for an absolute scale in the global bimetric/cosmological
+  model. Current routes are targets only: exact time-dependent bimetric solution,
+  Noether/Souriau state charge, compact-object mass parameter, early-universe
+  state, and topology-only. No route currently supplies an absolute scale.
+- Global bimetric source-scale audit:
+  `build_p0_eft_janus_z2_global_bimetric_source_scale_audit_gate.py` checks the
+  M15/M30 anchors. The coupled field equations and Souriau/PT sign pairing are
+  available, but they select signs/couplings rather than an absolute mass. The
+  remaining non-rustine inputs are a dimensional stress-energy state, a global
+  Noether/Hamiltonian mass charge, a coadjoint-orbit mass invariant with state
+  selection, or a compact-object mass parameter from an active bimetric solution.
+- Global bimetric state writer and bridge pipeline:
+  `write_p0_eft_janus_z2_global_bimetric_mass_state_input.py` can declare a
+  clean active global mass state with `M_minus=-M_plus`; it has no default and
+  rejects observational/legacy provenance. The pipeline
+  `run_p0_eft_janus_z2_global_bimetric_to_null_bridge_pipeline.py` then chains
+  global mass -> `M_bridge` -> `R_s`. In the live workspace it remains blocked
+  because no global bimetric mass state has been derived or declared.
+- Global stress-energy mass reducer:
+  `build_p0_eft_janus_z2_global_bimetric_stress_energy_mass_reducer_gate.py`
+  is the physical front before a direct mass-state declaration. It accepts only
+  an active global stress-energy state, either as `M_plus_kg` or as
+  `rho_plus_kg_m3 * V_plus_m3`, proves `M_minus=-M_plus`, and writes the same
+  global mass solution manifest. No live `global_bimetric_stress_energy_state`
+  exists yet.
+- Global matter state from Noether baryon volume:
+  `build_p0_eft_janus_z2_global_matter_state_from_noether_baryon_volume_gate.py`
+  is the strict derivation route for the global matter state. It reduces
+  projected Noether baryon number density plus CODATA baryon mass plus active
+  projective spatial volume into `rho_plus_kg_m3`, `V_plus_m3`, and `M_plus_kg`.
+  It remains blocked because the live workspace still lacks the projected
+  baryon Noether charge and active spatial volume normalization.
+- Global state prerequisite derivability audit:
+  `build_p0_eft_janus_z2_global_state_prerequisite_derivability_audit_gate.py`
+  records whether those two prerequisites can be derived now. Current answer:
+  no. The charge path is blocked by active plus/minus spinor bundle and Z2/Sigma
+  charge projection data. The volume path is blocked by the active
+  `R_Sigma_solution_certificate` / dimensional `R_curv` scale. These are real
+  non-rustine blockers, not missing Python reducers.
+- LL-brane/global-state matching:
+  `build_p0_eft_janus_z2_llbrane_global_state_matching_gate.py` relates the two
+  scale carriers by equating `R_s = 1/(8*pi*abs(chi_LL))` and
+  `R_s = 2*G*M_bridge/c^2`, hence
+  `M_bridge = c^2/(16*pi*G*abs(chi_LL))`. This prevents keeping `chi_LL` and
+  `M_bridge` as two independent knobs. It does not select the absolute scale:
+  an independent state law is still required.
+- LL-brane chi selection exhaustive audit:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_chi_selection_exhaustive_gate.py`
+  now aggregates the local worldvolume EOM, PT boundary state, S2 flux
+  quantization relation, and global mass/chi matching. Current verdict:
+  none of the active non-fit routes selects `chi_LL_abs_inverse_m`. The
+  remaining clean exits are a derived LL gauge-sector law fixing `q_LL`,
+  physical S2 area gauge and `F2_0`, an absolute global bimetric/Noether mass
+  state matched to `chi_LL`, or an explicitly declared extension-state input.
+- Effective initial-state branch: a controlled writer now exists for declaring
+  `N_occ_Z2Sigma` without promoting the no-fit branch:
+  `write_p0_eft_janus_z2_sigma_effective_initial_state_input.py --n-occ <value>
+  --provenance <explicit_non_fit_state_source>`. This writes
+  `projected_occupation_state_inputs.json`, which can feed the existing
+  effective closure and projected charge writers. No default value is supplied.
+- Effective initial-state pipeline: `build_p0_eft_janus_z2_sigma_effective_initial_state_pipeline_gate.py`
+  now chains effective closure, projected charge, dimensionless Noether density,
+  and Hubble-volume density. In the live workspace it blocks at
+  `projected_occupation_state_inputs.json` because no effective state value has
+  been declared.
+- Effective dimensional-anchor branch: `write_p0_eft_janus_z2_sigma_effective_dimensional_anchor_input.py`
+  can write explicit-state `H0_Z2Sigma` and/or `R_curv_Z2Sigma` normalization
+  manifests with non-fit provenance. It supplies no default value and rejects
+  Planck/LCDM/Z4/fit/demo provenance.
+- Effective dimensional-anchor pipeline:
+  `build_p0_eft_janus_z2_sigma_effective_dimensional_anchor_pipeline_gate.py`
+  now chains declared `H0/R_curv` anchors through the strict background writers
+  and into scale-free `omega_k`. Stale reuse is guarded: downstream scale/omega
+  steps do not run unless the upstream H0-radius normalization was freshly
+  accepted.
 - Current refinement: projective stereographic geometry fixes the relative
   throat/collar ratio `R_Sigma_over_ell_collar_Z2Sigma = 1`. This is now written
   to `outputs/active_z2_sigma/effective_partial_closure_from_projective_ratio.json`.

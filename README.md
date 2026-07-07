@@ -22,6 +22,9 @@ Statut separe par niveau de preuve :
 - `cmb_bao_monommetric_camb_hooks_sufficient = False`
 - `bi_sector_boltzmann_backend_required = Open`
 - `active_geometry_core = Z2_tunnel_Sigma`
+- `z2_null_sigma_llbrane_chi_selection_exhausted = True`
+- `z2_null_sigma_chi_LL_abs_inverse_m_ready = False`
+- `z2_null_sigma_chi_LL_requires_state_law_or_extension_input = True`
 - `legacy_z4_modules_archived = True`
 - `rp4_base_pin_sign_computed = True`
 - `rp4_base_pin_plus_exists = True`
