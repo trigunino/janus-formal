@@ -24,6 +24,45 @@ from scripts.build_p0_eft_janus_z2_sigma_flux_area_puncture_theorem_gate import 
 from scripts.build_p0_eft_janus_z2_sigma_chern_su2_puncture_bridge_gate import (
     build_payload as chern_su2_puncture_bridge,
 )
+from scripts.build_p0_eft_janus_z2_sigma_unit_flux_irreducibility_gate import (
+    build_payload as unit_flux_irreducibility,
+)
+from scripts.build_p0_eft_janus_z2_sigma_area_superselection_sector_manifest import (
+    build_payload as area_superselection,
+)
+from scripts.build_p0_eft_janus_z2_sigma_discrete_family_propagation import (
+    build_payload as discrete_family,
+)
+from scripts.build_p0_eft_janus_z2_sigma_discrete_sector_observation_readiness_gate import (
+    build_payload as discrete_readiness,
+)
+from scripts.build_p0_eft_janus_z2_sigma_discrete_sector_scan import (
+    build_payload as discrete_scan,
+)
+from scripts.build_p0_eft_janus_z2_sigma_discrete_sector_observation_trial import (
+    build_payload as discrete_observation_trial,
+)
+from scripts.build_p0_eft_janus_z2_sigma_discrete_sector_internal_constraints import (
+    build_payload as discrete_internal_constraints,
+)
+from scripts.build_p0_eft_janus_z2_sigma_discrete_path_end_to_end_audit import (
+    build_payload as discrete_e2e,
+)
+from scripts.build_p0_eft_janus_z2_sigma_ngap_selection_law_registry import (
+    build_payload as selection_law_registry,
+)
+from scripts.build_p0_eft_janus_z2_sigma_ngap_to_background_source_frontier import (
+    build_payload as ngap_background_frontier,
+)
+from scripts.build_p0_eft_janus_z2_sigma_action_to_flrw_source_audit import (
+    build_payload as action_to_flrw_source,
+)
+from scripts.build_p0_eft_janus_z2_sigma_primitive_flux_sector_law_investigation import (
+    build_payload as primitive_flux_law,
+)
+from scripts.build_p0_eft_janus_z2_sigma_primitive_flux_law_closure_audit import (
+    build_payload as primitive_flux_closure,
+)
 from scripts.build_p0_eft_janus_z2_sigma_route_b_max_closure_gate import (
     build_payload as route_b,
 )
@@ -75,6 +114,19 @@ def build_payload() -> dict:
     dual = area_flux_dual()
     no_rustine = no_rustine_lock()
     puncture = flux_area_puncture()
+    unit_flux = unit_flux_irreducibility()
+    area_super = area_superselection()
+    discrete = discrete_family()
+    readiness = discrete_readiness()
+    sector_scan = discrete_scan()
+    observation_trial = discrete_observation_trial()
+    internal_scan = discrete_internal_constraints()
+    e2e = discrete_e2e()
+    ngap_laws = selection_law_registry()
+    ngap_background = ngap_background_frontier()
+    action_source = action_to_flrw_source()
+    primitive_flux = primitive_flux_law()
+    primitive_closure = primitive_flux_closure()
     chern_bridge = chern_su2_puncture_bridge()
     route_b_max = route_b()
     af = area_flux()
@@ -143,6 +195,45 @@ def build_payload() -> dict:
         "no_rustine_area_flux_lock_status": no_rustine["status"],
         "flux_area_puncture_theorem_status": puncture["status"],
         "flux_area_puncture_theorem_ready": puncture["puncture_theorem_ready"],
+        "unit_flux_irreducibility_status": unit_flux["status"],
+        "unit_flux_irreducibility_ready": unit_flux["unit_flux_irreducibility_ready"],
+        "area_superselection_status": area_super["status"],
+        "area_superselection_family_ready": area_super["superselection_family_ready"],
+        "discrete_family_status": discrete["status"],
+        "discrete_family_propagation_ready": discrete["discrete_family_propagation_ready"],
+        "discrete_sector_observation_readiness_status": readiness["status"],
+        "discrete_sector_observation_readiness": readiness["observation_readiness"],
+        "discrete_sector_scan_status": sector_scan["status"],
+        "discrete_sector_scan_ready": sector_scan["scan_ready"],
+        "discrete_sector_survivors": sector_scan["surviving_sectors"],
+        "discrete_observation_trial_status": observation_trial["status"],
+        "discrete_observation_trial_ready": observation_trial["trial_ready"],
+        "discrete_observation_trial_blocked_by": observation_trial["blocked_by"],
+        "discrete_observation_trial_survivors": observation_trial["surviving_sectors"],
+        "discrete_internal_constraints_status": internal_scan["status"],
+        "discrete_internal_constraints_ready": internal_scan["internal_constraints_ready"],
+        "discrete_internal_survivors": internal_scan["surviving_sectors"],
+        "discrete_path_end_to_end_status": e2e["status"],
+        "discrete_path_end_to_end_ready": e2e["end_to_end_path_ready"],
+        "N_gap_selection_law_registry_status": ngap_laws["status"],
+        "N_gap_unique_prediction_ready": ngap_laws["N_gap_unique_prediction_ready"],
+        "N_gap_family_ready": ngap_laws["N_gap_family_ready"],
+        "N_gap_selection_current_best_status": ngap_laws["current_best_status"],
+        "N_gap_to_background_source_status": ngap_background["status"],
+        "N_gap_to_background_source_ready": ngap_background["N_gap_to_background_source_ready"],
+        "N_gap_to_background_missing_primitives": ngap_background["missing_effective_primitives"],
+        "action_to_FLRW_source_status": action_source["status"],
+        "rho_Sigma_status": action_source["rho_Sigma_status"],
+        "E_Z2Sigma_a2_ready": action_source["E_Z2Sigma_a2_ready"],
+        "primitive_flux_law_status": primitive_flux["status"],
+        "primitive_flux_law_ready": primitive_flux["primitive_flux_sector_law_ready"],
+        "primitive_flux_closure_status": primitive_closure["status"],
+        "primitive_flux_standard_no_go": primitive_closure[
+            "standard_bibliography_closes_as_no_go"
+        ],
+        "primitive_flux_recommended_active_route": primitive_closure[
+            "recommended_active_route"
+        ],
         "chern_su2_puncture_bridge_status": chern_bridge["status"],
         "chern_su2_puncture_bridge_ready": chern_bridge["chern_to_su2_puncture_bridge_ready"],
         "N_gap_equals_abs_n_ready": chern_bridge["N_gap_equals_abs_n_ready"],

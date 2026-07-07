@@ -44,6 +44,54 @@
   Allowed exits are only a derived positive Friedmann source, a derived non-closed
   spatial branch, or a dimensionful/state/action input that changes the boundary
   Hamiltonian source.
+- Paper-vs-Sigma source separation is now indexed by
+  `build_p0_eft_janus_z2_sigma_flrw_source_requirement_gate.py` and
+  `P0EFTJanusZ2SigmaFLRWSourceRequirementGate`: the regular Sigma/PT action
+  emits zero homogeneous FLRW source, while `The_Janus_Cosmological_Model`
+  obtains FLRW from global bimetric bulk equations. This is not a contradiction.
+  The preferred continuation is to formalize the published bimetric FLRW source
+  as an admitted bulk action/source; do not force `N_gap` into a background
+  density.
+- Published bimetric FLRW-to-Sigma bridge:
+  `build_p0_eft_janus_z2_published_bimetric_flrw_to_sigma_bridge_gate.py` and
+  `P0EFTJanusZ2PublishedBimetricFLRWToSigmaBridgeGate` now define the no-cheat
+  bridge: published interaction slots -> FLRW Bianchi reduction -> sector
+  `rho_±(a),p_±(a)` and normalizations -> Sigma pullback `h_±,K_±` -> Sigma
+  stress/flux projection -> projected Bianchi/junction -> `E_Z2Sigma(a)^2`.
+  Live status: interaction slots and FLRW Bianchi are ready, but sector
+  densities/normalizations, active Sigma embedding pullback, stress projection,
+  and projected junction closure are not ready. Therefore no observable
+  `E_Z2Sigma(a)^2` is emitted.
+- Published bimetric FLRW sector source reduction:
+  `build_p0_eft_janus_z2_published_bimetric_flrw_sector_source_reduction_gate.py`
+  records that the dust scalar density shape is ready from the Bianchi FLRW dust
+  transport plus determinant/lapse audit. The physical blocker is now narrower:
+  `rho_+0` and `rho_-0` normalizations are not derived from a Janus state,
+  Noether charge, or exact published global solution. The gate now imports the
+  global bimetric source-scale audit and stress-energy mass reducer: M15/M30
+  supply the coupled equations and sign structure, but the live repo has no
+  active `global_bimetric_stress_energy_state_inputs.json`.
+- Global bimetric state -> FLRW sector normalization:
+  `build_p0_eft_janus_z2_global_bimetric_state_to_flrw_sector_normalization_gate.py`
+  is the strict adapter from active global stress-energy state to
+  `rho_+0/rho_-0`. It writes only when
+  `global_bimetric_stress_energy_state_inputs.json` exists with active,
+  non-observational provenance. Live status: blocked because that state input
+  is absent.
+- Existing JanusFormal global-state assets are now indexed by
+  `build_p0_eft_janus_z2_global_state_formal_asset_inventory.py`. Relevant
+  pieces already exist for projected Noether charge, baryon Noether/volume
+  density, Souriau boundary Hamiltonian, cosmological charge projection, and the
+  new global-state-to-sector-normalization adapter. They identify the correct
+  routes but still do not select the absolute global bimetric stress-energy
+  state.
+- Boundary leg evaluation inventory:
+  `build_p0_eft_janus_z2_sigma_boundary_leg_evaluation_inventory_gate.py` records
+  that the plus/minus boundary legs, orientations, lapse/time generator,
+  reference subtraction, and joint/corner bookkeeping are symbolically required
+  and present as a route. This does not create a FLRW source by itself. Live
+  blockers remain `boundary_projection_charge_ready = false` and
+  `global_bimetric_state_ready = false`.
 - Boundary-Hamiltonian scalar route: `H0_Z2Sigma`, `R_curv_Z2Sigma_m`, and
   `N_occ` are now classified as boundary/constraint targets, not free source
   densities. `H0_Z2Sigma` must come from the 3+1 projected boundary Hamiltonian
@@ -3712,6 +3760,89 @@ Completion rule:
     constraint and transverse intersections are all active. This closes the
     bridge part, but it still does not prove `N_gap=|n|` unless an irreducible
     unit-flux sector excludes multi-charge punctures and empty spin punctures.
+  - unit-flux irreducibility:
+    `P0EFTJanusZ2SigmaUnitFluxIrreducibilityGate` records the bibliography
+    result explicitly. Isolated-horizon/LQG sources support CS defects carried
+    by spin-network punctures, but do not prove that total Chern charge `n`
+    decomposes into exactly `|n|` minimal punctures. `N_gap=|n|` needs a
+    Janus/PT primitive flux-sector law, normalized charge-lattice generator,
+    exclusion of multi-charge punctures, exclusion of empty spin punctures, and
+    selection of the minimal nonzero spin representation.
+  - area superselection sector manifest:
+    `P0EFTJanusZ2SigmaAreaSuperselectionSectorManifest` is the active no-rustine
+    route when `N_gap=|n|` is not proved. It treats `N_gap in N+` as a discrete
+    throat-sector label and propagates each sector to `A_Sigma`, `R_s`,
+    `chi_LL=-1/(8*pi*R_s)`, and the spectral scale `1/R_s`. It is not a unique
+    prediction and observations are forbidden from selecting `N_gap`.
+  - discrete family propagation:
+    `P0EFTJanusZ2SigmaDiscreteFamilyPropagation` takes the active `N_gap`
+    superselection family and computes each sector's `R_s`, `chi_LL`,
+    `M_bridge=c^2 R_s/(2G_eff)`, spectral scale, and optional
+    `lambda_F2/q_LL=R_s^2/(sqrt(8)*|n|)` if a flux integer is supplied. It keeps
+    `unique_prediction_ready=false`.
+  - discrete sector observation readiness and scan:
+    `P0EFTJanusZ2SigmaDiscreteSectorObservationReadinessGate` permits data
+    comparison only as fixed-sector rejection/ranking with non-overlap
+    accounting, no continuous throat fit, no sector relabeling and no legacy Z4
+    inputs. `P0EFTJanusZ2SigmaDiscreteSectorScan` then classifies the fixed
+    sectors against predeclared physical ranges; even if a single sector
+    survives, `unique_prediction_claim_allowed=false`.
+  - discrete sector observation trial:
+    `P0EFTJanusZ2SigmaDiscreteSectorObservationTrial` is now the live
+    observational frontier. It can rank/reject fixed `N_gap` sectors only after
+    a derived sector-to-observable map and non-overlap data vector are supplied.
+    The active input intentionally blocks at `sector_observable_map_derived=false`;
+    no continuous `R_s` fit, sector relabeling, or legacy Z4 evidence is allowed.
+  - observation data inventory:
+    `P0EFTJanusZ2SigmaObservationDataInventory` finds reusable local raw data
+    (`DESI DR2 BAO`, `Pantheon+`, `SDSS f_sigma8/BAO`, `KiDS1000`, and
+    `Planck2018 priors`) but marks old Holst/Z4/EFT scores as non-reusable
+    active evidence. These datasets can only be used after a derived
+    Z2/Sigma sector-to-observable map exists.
+  - `N_gap` to background source frontier:
+    `P0EFTJanusZ2SigmaNgapToBackgroundSourceFrontier` now checks all active
+    non-rustine channels that could promote fixed `N_gap` throat data to
+    cosmological observables. Current result: `N_gap` reaches `R_s`, `chi_LL`,
+    and `M_bridge`, but no channel emits a derived homogeneous
+    `E_Z2Sigma(a)^2`. DESI/Pantheon/SDSS/KiDS/Planck trials remain blocked
+    until `E(a)`, distances/growth, and sound-ruler maps are derived.
+  - action-to-FLRW source audit:
+    `P0EFTJanusZ2SigmaActionToFLRWSourceAudit` is the central non-choice
+    audit. It varies only the currently admitted Janus/Z2/Sigma action terms
+    against the homogeneous FLRW background. Current result:
+    `rho_Sigma(a)=0` for Cartan/GHY, Holst/Nieh-Yan, matter-flux,
+    no-extension counterterm, and PT67 Brown-York boundary projection.
+    Therefore `E_Z2Sigma(a)^2` is not ready; any nonzero background source now
+    requires an explicit extension or a new derivation, not a choice by hand.
+  - `N_gap` selection-law registry:
+    `P0EFTJanusZ2SigmaNgapSelectionLawRegistry` now separates true internal
+    selection laws from diagnostic rankings and observation trials. Current
+    status is `discrete_superselection_family`: the family is active, but no
+    unique non-rustine selector is proved. The primitive-flux shortcut is closed
+    negatively by standard isolated-horizon/LQG bibliography.
+  - discrete internal constraints and end-to-end audit:
+    `P0EFTJanusZ2SigmaDiscreteSectorInternalConstraints` applies internal
+    horizon/spectral/Casimir-style checks to each fixed sector without
+    observation fitting. The current active checks are minimal positivity checks,
+    so all sectors `1..8` survive. `P0EFTJanusZ2SigmaDiscretePathEndToEndAudit`
+    verifies the whole path: negative closure of `N_gap=|n|`, active
+    superselection family, propagation, readiness, scan, internal constraints,
+    and no unique-prediction claim.
+  - primitive flux-sector law investigation:
+    `P0EFTJanusZ2SigmaPrimitiveFluxSectorLawInvestigation` keeps the stronger
+    `N_gap=|n|` route open only if Janus/PT supplies a primitive charge-sector
+    law. The bridge prerequisites can be satisfied independently, but the law
+    still requires PT boundary-state selection of primitive charge, normalized
+    charge lattice, no fusion/splitting shortcuts, no empty spin punctures, and
+    minimal nonzero spin selection.
+  - primitive flux-law closure audit:
+    `P0EFTJanusZ2SigmaPrimitiveFluxLawClosureAudit` closes the current biblio
+    route negatively. Standard isolated-horizon/LQG gives CS defects on
+    punctures and SU(2) spin labels, but a fixed total `c1=n` admits multiple
+    puncture partitions, e.g. `2=[2]=[1+1]` and `3=[3]=[1+2]=[1+1+1]`.
+    Therefore `c1=n` does not count punctures. The active route must remain the
+    discrete `N_gap` superselection family unless a new Janus/PT boundary-state
+    law forbids fusion/splitting and empty spin punctures.
   - `chi_LL` route A lambda/q origin:
     `P0EFTJanusZ2ChiLLRouteALambdaOverQOriginGate` formalizes the action/charge
     route. It accepts only three coherent origins for the invariant ratio
