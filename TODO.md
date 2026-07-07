@@ -3552,6 +3552,71 @@ Completion rule:
     an actual theorem such as `R_s = l_P`, throat area equals an area gap, a
     derived fermion condensate on Sigma, or LL gauge normalization from a UV
     completion. Until then `chi_LL_uv_prediction_ready = false`.
+  - `chi_LL` UV no-go/exit conditions:
+    `P0EFTJanusZ2ChiLLUVNoGoExitConditionsGate` proves the current reduction:
+    a constructible UV scale is insufficient unless it is identified with the
+    active throat geometry, enters the LL/Sigma action, and normalizes to
+    `chi_LL` with non-observational provenance. Forbidden shortcuts are now
+    explicit: setting `R_s=l_P` by choice, using area gap without a throat-area
+    theorem, treating Holst gamma as a length, using Nieh-Yan as a density
+    without state data, or fitting `chi_LL` to observations. Search space is
+    reduced to four exits: area-gap theorem, spin-condensate theorem,
+    UV-normalized LL action, or state/Noether charge.
+  - `chi_LL` Casimir/topological exit:
+    `P0EFTJanusZ2ChiLLCasimirTopologicalExitGate` pushes the vacuum/topology
+    route to its current frontier. A compact throat may carry a renormalized
+    Casimir density `rho_C = C/R_s^4`, but this is predictive only after the
+    quantum field content, boundary conditions, renormalization reference,
+    Casimir coefficient `C`, and either absolute `R_s` or a stationarity equation
+    are active-derived. Forbidden shortcuts: choose `C` or `R_s` to fit
+    observations, use Casimir without field content/boundary data, or ignore the
+    reference subtraction. Current status: `chi_LL_prediction_ready = false`.
+  - `chi_LL` UV LL-action exit:
+    `P0EFTJanusZ2ChiLLUVLLActionExitGate` pushes the lightlike-brane action
+    route to its current no-rustine frontier. Literature and existing gates
+    support a well-defined LL worldvolume action, composite/conserved `chi_LL`,
+    PT negative sign, `S2` flux topology and bridge matching. They do not fix
+    Janus-specific `q_LL`, dimensionful `lambda_F2/power_p`, physical
+    `S2` area gauge, or the flux sector. Therefore the only remaining blocker
+    for this route is an active-derived LL gauge normalization manifest; without
+    it `chi_LL_prediction_ready = false`.
+  - `chi_LL` horizon thermodynamic exit:
+    `P0EFTJanusZ2ChiLLHorizonThermodynamicExitGate` pushes the null/apparent
+    horizon route. Standard horizon thermodynamics can map area, surface
+    gravity, entropy, temperature and horizon energy to
+    `chi_LL = -1/(8*pi*R_s)`, but only if Sigma/PT is proved to be a null or
+    apparent horizon with fixed surface-gravity normalization, active area
+    radius, entropy law, temperature law, energy law and first-law/unified-first-
+    law provenance. Forbidden shortcuts: declare horizon status without null
+    expansion/boundary data, choose `kappa_l` or `R_s` by fit, or use an entropy
+    extremum without first law. Current status: `chi_LL_prediction_ready=false`.
+  - `chi_LL` spectral stability exit:
+    `P0EFTJanusZ2ChiLLSpectralStabilityExitGate` pushes the spectral route.
+    Standard spectra on round `S2` scale as `lambda_l=l(l+1)/R_s^2` for the
+    scalar Laplacian and `|lambda_k|=(k+1)/R_s` for the Dirac operator. This
+    gives scale relations but does not select `R_s` unless the active model
+    derives a natural self-adjoint operator, domain/measure, boundary or spin
+    structure, stability criterion and a non-observational scale-selection law
+    such as a zero-mode/gap/stationarity condition. Current status:
+    `chi_LL_prediction_ready=false`.
+  - `chi_LL` spectral bridge matrix:
+    `P0EFTJanusZ2ChiLLSpectralBridgeMatrix` propagates the `1/R_s` scale into
+    the other exits. It does not unblock any route alone, but it makes concrete
+    couplings: Casimir gets the `rho_C ~ C/R_s^4` scaling, spin-condensate gets
+    Dirac level spacing and density-of-states input, horizon thermodynamics gets
+    a `kappa_l ~ 1/R_s` consistency scale, area-gap would fix spectral gaps once
+    `A_Sigma=N*A_gap` is proved, and a quantum LL action could use spectral
+    boundary modes to renormalize `lambda_F2/F2_0`. Status:
+    `routes_unblocked_by_spectral_scale_alone = []`.
+  - `chi_LL` eight-exit coverage audit:
+    `P0EFTJanusZ2ChiLLEightExitCoverageAudit` verifies the complete non-axiom
+    exit list has been pushed to a frontier gate or imported frontier:
+    `area_gap_exit`, `spin_condensate_exit`, `UV_LL_action_exit`,
+    `state_charge_exit`, `horizon_thermodynamic_exit`,
+    `spectral_stability_exit`, `Casimir_topological_exit`, and
+    `regularity_global_closure_exit`. Current result:
+    `all_eight_have_frontier_gate_or_imported_frontier = true`,
+    `ready_exits = []`, `chi_LL_prediction_ready = false`.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;
