@@ -301,6 +301,88 @@
   remaining clean exits are a derived LL gauge-sector law fixing `q_LL`,
   physical S2 area gauge and `F2_0`, an absolute global bimetric/Noether mass
   state matched to `chi_LL`, or an explicitly declared extension-state input.
+- Noether/Souriau superselection route for `chi_LL`:
+  `build_p0_eft_janus_z2_null_sigma_chi_ll_noether_souriau_superselection_gate.py`
+  now turns the global charge idea into an operational reducer. Souriau moment
+  maps and coadjoint-orbit language can make `chi_LL` a conserved
+  superselection label through the PT-paired global mass orbit, and the gate can
+  write `null_bridge_global_mass_solution_inputs.json` if a clean active
+  `mass_casimir_kg` is supplied. It still does not choose the orbit: a
+  Janus-derived mass Casimir/Hamiltonian moment-map value remains required.
+- Combined `chi_LL` superselection/flux route:
+  `build_p0_eft_janus_z2_null_sigma_chi_ll_superselection_flux_reducer_gate.py`
+  now makes the strongest current non-fit route calculable. With a proven
+  `S2_throat` flux sector, physical induced-area gauge, charge quantum `q_LL`,
+  integer `n`, and on-shell `F2_0`, it reduces
+  `integral_S2 F_LL = 2*pi*n/q_LL` through
+  `F_ab F^ab = 2*B^2/R_s^4` to
+  `R_s = (2*B^2/F2_0)^(1/4)`, then
+  `chi_LL = -1/(8*pi*R_s)` and
+  `M_bridge = c^2 R_s/(2G)`. No live flux-sector input exists yet, so this is a
+  conditional closure path, not an active no-fit prediction.
+- LL-brane gauge-sector derivability:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_gauge_sector_derivability_gate.py`
+  separates what follows from generic LL-brane modified-measure dynamics from
+  what still needs a Janus-specific gauge-sector action. Current derived pieces:
+  `chi_LL = Phi/sqrt(-gamma)`, local tension conservation, consistency of an
+  SO(3) `S2_throat` flux ansatz, PT negative-sign selection, and bridge matching.
+  Still not derived: global LL gauge bundle on `S2_throat`, integer sector
+  selection, `q_LL`, specific `L(F2)`, on-shell `F2_0`, and the auxiliary-to-
+  physical area gauge. Therefore no numeric `chi_LL` is available without an
+  extension-state choice or a derived Janus LL gauge action.
+- `chi_LL` option evaluation matrix:
+  `build_p0_eft_janus_z2_chi_ll_option_evaluation_matrix.py` compares the
+  remaining physical interpretations: explicit state sector, S2 flux
+  quantization, Souriau/Noether mass orbit, minimal LL gauge action, and UV
+  scale. Policy is fixed: observations must not choose a free `chi_LL`; they can
+  only test a route after it writes `chi_LL` or `R_s` from non-observational
+  theory provenance. Recommended order is flux quantization plus minimal LL
+  gauge action first, then Souriau/Noether orbit, explicit state, and UV scale.
+- LL-brane `S2` flux topology:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_s2_flux_topology_gate.py` closes the
+  topological part of the flux route: for a global U(1) LL worldvolume gauge
+  bundle on `S2_throat`, `H2(S2,Z)=Z` supplies an integer sector `n`. This does
+  not select `chi_LL`; `q_LL`, `F2_0`, and the physical area gauge are still
+  required.
+- Minimal LL gauge action reducer:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_minimal_gauge_action_reducer_gate.py`
+  reduces the matching condition `F2*dL/dF2 = 1/8`. A scale-free
+  `L=sqrt(F2)` gives `F2_0=1/16` only in auxiliary units, not SI units. A
+  monomial `L=lambda*F2^p` gives `F2_0=(1/(8*lambda*p))^(1/p)` and can feed the
+  flux reducer only if `lambda` and its units are active-derived rather than
+  fitted.
+- LL-brane flux closure frontier:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_flux_closure_frontier_gate.py`
+  aggregates the flux/action progress. Closed without rustine: integer flux
+  support on `S2_throat`, composite conserved `chi_LL`, PT negative sign, and
+  bridge matching. Remaining independent theory inputs are reduced to exactly
+  three: `q_LL`, dimensionful `F2_0`, and physical area gauge. Observations
+  remain forbidden until those are derived or explicitly declared as an
+  extension-state/gauge-sector choice.
+- LL-brane gauge-action normalization pipeline:
+  `build_p0_eft_janus_z2_null_sigma_llbrane_gauge_action_normalization_pipeline.py`
+  is the operational route for an active-derived LL gauge normalization. If a
+  clean manifest supplies `q_LL`, `lambda_F2`, `power_p`, flux integer `n`, and
+  physical induced `S2` area gauge, the pipeline writes both
+  `llbrane_minimal_gauge_action_inputs.json` and
+  `llbrane_s2_flux_superselection_inputs.json`, making the downstream
+  `chi_LL(n)` reducer ready. No live normalization manifest exists yet.
+- Cosmological total charge to bridge:
+  `build_p0_eft_janus_z2_cosmological_total_charge_to_bridge_gate.py` formalizes
+  the physical intuition that the visible-sector total charge flows back to the
+  Sigma/PT throat. It passes only if a visible total charge/global mass is active,
+  conservation to Sigma is proved, the Sigma projection is complete, and
+  `Q_Sigma = M_bridge c^2` is proved. In the live workspace it remains blocked
+  because both active global mass and projection manifests are absent.
+- Cosmological charge projection exhaustion:
+  `build_p0_eft_janus_z2_cosmological_charge_projection_exhaustion_gate.py`
+  pushes the same intuition to its current no-extension limit. The idea remains
+  physically plausible, but current data do not prove it. Baryon/occupation
+  charge is conserved but its absolute value is not selected; stress-energy
+  mass in a closed cosmology is definition-dependent; bridge quasilocal mass is
+  usable only after `Q_Sigma = M_bridge c^2` is proved. Minimal missing theorems:
+  absolute `N_occ` or global mass state, active volume/surface measure,
+  Sigma/PT projection completeness, and the equality to bridge mass.
 - Effective initial-state branch: a controlled writer now exists for declaring
   `N_occ_Z2Sigma` without promoting the no-fit branch:
   `write_p0_eft_janus_z2_sigma_effective_initial_state_input.py --n-occ <value>
@@ -3462,6 +3544,14 @@ Completion rule:
     `H0^2 = (8*pi*G/3) rho_H - k c^2/R_curv^2`.
     Numeric closure still requires the charge convention/value, effective FLRW
     volume, curvature radius or flat limit, and absolute `R_Sigma`/state charge.
+  - `chi_LL` UV-scale audit:
+    `P0EFTJanusZ2ChiLLUVScaleCandidateGate` closes the current UV shortcut:
+    Planck length is constructible, Holst/Immirzi is dimensionless, Nieh-Yan is
+    boundary/topological without an active state scale, and Einstein-Cartan
+    four-fermion terms need a spinor density/condensate. UV closure now requires
+    an actual theorem such as `R_s = l_P`, throat area equals an area gap, a
+    derived fermion condensate on Sigma, or LL gauge normalization from a UV
+    completion. Until then `chi_LL_uv_prediction_ready = false`.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;
