@@ -3617,6 +3617,117 @@ Completion rule:
     `regularity_global_closure_exit`. Current result:
     `all_eight_have_frontier_gate_or_imported_frontier = true`,
     `ready_exits = []`, `chi_LL_prediction_ready = false`.
+  - `chi_LL` composite closure route:
+    `P0EFTJanusZ2ChiLLCompositeClosureRouteGate` now treats the eight exits as a
+    coupled chain rather than isolated options. The consistent route is:
+    geometry/area selector -> spectral modes -> Casimir or spin source ->
+    horizon energy check -> LL tension map -> global charge interpretation. The
+    chain is mutually compatible, but currently every step remains conditional.
+    First blocker is `geometry_area_selector`: no active Sigma area operator,
+    no `A_Sigma=N*A_gap` theorem, and no theory/state selection of `N`. This is
+    upstream of all other maps; without it they remain functions of `R_s`.
+  - `chi_LL` area/flux compatibility:
+    `P0EFTJanusZ2ChiLLAreaFluxCompatibilityGate` tightens the upstream
+    `geometry_area_selector`. Area quantization and `S2` flux quantization must
+    agree on the same physical induced area:
+    `N_gap*A_gap = 4*pi*R_s(flux)^2`, with
+    `R_s(flux)=(2*(n/(2*q_LL))^2/F2_0)^(1/4)`. This is a real cross-check:
+    area gap cannot be used independently of the LL flux sector. Current status:
+    no area manifest and no flux manifest, so compatibility is blocked.
+  - `chi_LL` area/flux micro-parameter constraint:
+    `P0EFTJanusZ2ChiLLAreaFluxMicroParameterConstraint` reduces the microscopic
+    LL normalization search. Area-gap plus flux compatibility implies
+    `F2_0*q_LL^2 = 8*pi^2*n^2/(N_gap*A_gap)^2`. Therefore `q_LL` and `F2_0`
+    are not two independent missing scales once `n`, `N_gap` and `A_gap` are
+    derived. One of `q_LL` or `F2_0` is still required from the LL action/UV
+    normalization, but the other then follows.
+  - `chi_LL` single micro-normalization frontier:
+    `P0EFTJanusZ2ChiLLSingleMicroNormalizationFrontierGate` combines the
+    area/flux constraint with the monomial LL gauge action relation
+    `F2_0=(1/(8*lambda_F2*p))^(1/p)`. If `q_LL` is derived, `lambda_F2`
+    follows; if `lambda_F2` is derived, `q_LL` follows. If neither is derived,
+    the branch is a one-parameter UV family and `chi_LL_prediction_ready=false`.
+    The rescaling-invariant object is
+    `lambda_F2/q_LL^(2*p)=1/(8*p*C_area^p)`: flux topology fixes the integer
+    sector and this invariant ratio, not the absolute charge unit by itself.
+    Bibliography check: Guendelman/Nissimov/Pacheva WILL-brane papers support a
+    square-root Maxwell-type auxiliary action (`p=1/2`) as the Weyl-conformal
+    LL-brane option, but this only fixes the action family/power. It does not
+    fix the worldvolume charge unit `q_LL` or an absolute SI length scale.
+  - `chi_LL` WILL action power selection:
+    `P0EFTJanusZ2ChiLLWillActionPowerSelectionGate` makes that reduction
+    explicit. The action family is `L(F2)=lambda_F2*sqrt(F2)`, so
+    `lambda_F2/q_LL = 1/(4*sqrt(C_area))`. Remaining non-rustine blocker:
+    derive the worldvolume charge unit `q_LL`, or an equivalent absolute
+    normalization of `lambda_F2`, from the Janus/PT UV sector.
+  - `chi_LL` WILL flux-radius reducer:
+    `P0EFTJanusZ2ChiLLWillFluxRadiusReducerGate` eliminates the fake separation
+    between `q_LL` and `lambda_F2` after the WILL reduction. With
+    `F2_0=1/(16*lambda_F2^2)` and `B=n/(2*q_LL)`, the throat scale is
+    `R_s^4 = 8*n^2*(lambda_F2/q_LL)^2`. The physical missing datum is therefore
+    the invariant dimensionful ratio `lambda_F2/q_LL`, not `q_LL` alone.
+  - `Sigma` Holst area-spectrum closure:
+    `P0EFTJanusZ2SigmaAreaSpectrumClosureGate` computes the area gap from a
+    derived Holst/Sigma area-spectrum law:
+    `A_gap = 8*pi*|gamma|*l_P^2*sqrt(j_min*(j_min+1))`, then
+    `A_Sigma=N_gap*A_gap` and `R_s=sqrt(A_Sigma/(4*pi))` if `N_gap` is selected
+    by a theory/state condition. This advances route B from a raw `A_gap` input
+    to explicit blockers: Sigma area operator, Immirzi normalization,
+    representation `j_min`, physical induced-area gauge, and `N_gap`.
+  - `Sigma` Route B max closure:
+    `P0EFTJanusZ2SigmaRouteBMaxClosureGate` splits Route B into three strict
+    selectors: `SigmaAreaImmirziSourceGate`, `SigmaAreaRepresentationSelectorGate`,
+    and `SigmaAreaOccupationSelectionGate`. Route B becomes a unique prediction
+    only if `N_gap` is selected by a non-observational state/topology/stability
+    law. If `N_gap` is a superselection label, Route B closes only as a discrete
+    family of throats.
+  - `Sigma` area-flux dual closure:
+    `P0EFTJanusZ2SigmaAreaFluxDualClosureGate` combines Route A and Route B.
+    Route B supplies `R_s`; Route A supplies LL flux. Compatibility imposes
+    `lambda_F2/q_LL = R_s(B)^2/(sqrt(8)*|n|)`. If Route A is already active,
+    the gate checks exact compatibility; if Route A is absent but Route B and
+    flux `n` are active, the gate can write a Route-A payload from the area
+    quantization result. This turns the two separate blockers into one
+    area-flux duality condition.
+  - no-rustine area-flux lock closure:
+    `P0EFTJanusZ2SigmaNoRustineAreaFluxLockClosure` pushes the useful non-fit
+    reductions in one place. It attempts `N_gap=|n|` only if there is a global
+    `U(1)` bundle on `S2_throat`, one area puncture per flux unit, no puncture
+    without flux, and irreducible unit punctures. It also requires
+    `j_min=1/2` from nonzero `SU(2)`/spin flux and `|gamma|=2` from
+    `eta_H=-2` plus trace normalization matching the area spectrum. If flux-lock
+    is not derived, it can fall back to `N_gap=1` only with a strict minimal
+    nonzero throat state and stability check.
+  - flux-area puncture theorem:
+    `P0EFTJanusZ2SigmaFluxAreaPunctureTheoremGate` isolates the missing proof
+    for `N_gap=|n|`. It accepts the lock only when the `S2_throat` Chern flux
+    is mapped to `SU(2)`/spin area punctures by a derived local puncture theorem
+    in the physical induced-area gauge. Pure `c1=n` topology alone is explicitly
+    insufficient.
+  - Chern-to-`SU(2)` puncture bridge:
+    `P0EFTJanusZ2SigmaChernSU2PunctureBridgeGate` imports the isolated-horizon
+    mechanism in the active Sigma/PT language: Chern-Simons defects on the
+    punctured `S2` throat can be mapped to `SU(2)` spin punctures carrying area
+    when the Holst/Ashtekar-Barbero variables, inner-boundary condition, Gauss
+    constraint and transverse intersections are all active. This closes the
+    bridge part, but it still does not prove `N_gap=|n|` unless an irreducible
+    unit-flux sector excludes multi-charge punctures and empty spin punctures.
+  - `chi_LL` route A lambda/q origin:
+    `P0EFTJanusZ2ChiLLRouteALambdaOverQOriginGate` formalizes the action/charge
+    route. It accepts only three coherent origins for the invariant ratio
+    `lambda_F2/q_LL`: canonical U(1) connection normalization, PT/Noether
+    boundary charge, or a dimensionful UV action coupling. It forbids mixing
+    `lambda_F2` from one sector with `q_LL` from another, and writes the
+    `will_flux_radius_inputs.json` payload only when the selected origin route
+    is fully derived and non-observational.
+  - `chi_LL` PT/Noether charge to lambda/q:
+    `P0EFTJanusZ2ChiLLPTNoetherChargeToLambdaOverQGate` is the concrete Route A
+    reducer. If PT/Noether supplies `R_s`, `M_bridge`, or boundary energy in the
+    same LL connection normalization, it computes
+    `lambda_F2/q_LL = R_s^2/(sqrt(8)*|n|)` and writes the Route A payload.
+    It remains blocked unless the PT symplectic projection, charge unit,
+    charge-to-LL map, PT sign law, and non-observational bridge charge are all
+    present.
 - [ ] Expand the residual coefficients:
   - derive `R_h^{ab} q_ab` and `R_K^{ab} q_ab` from the active Sigma
     counterterm density/action;
