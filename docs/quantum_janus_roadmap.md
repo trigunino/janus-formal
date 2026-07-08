@@ -48,6 +48,15 @@ Current guardrail:
 - no cross-sector quantum transition term;
 - no coupling to particle-mesh, Vlasov, lensing, or cosmological modules.
 
+Complex-reality boundary candidate workbench:
+
+- `active_throat_S2`: direct geometric route, blocked by active
+  `Omega_Sigma` pullback;
+- `CP1_spinor_frame_orbit`: cleanest finite Hilbert-space candidate, blocked by
+  Janus/PT derivation and `j -> alpha_m`;
+- `aroundSigma_cross_compact_phase`: action-angle route, blocked by missing
+  compact phase.
+
 ## Phase 1: Clean Effective Quantum Kernel
 
 Purpose: make the current 1D effective model robust enough to serve as a testbed.

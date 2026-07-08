@@ -133,6 +133,75 @@
   `Z_Sigma=(G omega_Sigma,gamma_Sigma;0,0)`. The KKS pullback density is
   `<mu,[Z_Sigma(delta1),Z_Sigma(delta2)]>`. Active evaluation remains blocked by
   the missing nontrivial boundary variation basis and closed two-cycle.
+  Lean formalization now mirrors this status in
+  `JanusFormal.ComplexRealityStateLaw`; it proves the branch is formalized but
+  still does not generate `alpha`.
+  `ComplexRealityBoundaryVariationBasisGate` now declares the symbolic normal
+  embedding displacement, frame rotation/boost, and connection holonomy
+  channels. Tangential displacement is marked gauge. Active density is still
+  blocked by missing active embedding values and a closed boundary two-cycle.
+  `ComplexRealityClosedBoundaryTwoCycleGate` separates topology from KKS:
+  the throat angular `S2` is a closed topological two-cycle and `aroundSigma`
+  is a closed Z2 one-cycle, but neither is yet a closed KKS phase-space
+  two-cycle with a nonzero `Omega_Sigma` period.
+  `ComplexRealityActiveEmbeddingOrCompactPhaseGate` isolates the only two
+  remaining non-rustine exits: active pullback on the throat `S2`, or a
+  Janus-derived compact frame/phase paired with `aroundSigma`. Both are still
+  unavailable in the current source set.
+  `ComplexRealityTwoExitEvaluationGate` ranks the exits: first try active
+  embedding on the throat `S2`; only then try a compact phase/fiber paired with
+  `aroundSigma`. Topology alone is insufficient; the needed object is a closed
+  physical boundary phase-space two-cycle with nonzero `Omega_Sigma` period.
+  `ComplexRealityCandidateBoundaryPhaseSpaceGate` constructs one mathematical
+  candidate: a compact `CP1 ~= SU(2)/U(1)` boundary spinor/frame orbit with
+  `Integral_CP1 Omega_j = 4*pi*j`. This gives a real closed two-cycle and a
+  symbolic nonzero KKS period if `j != 0`, but it is not yet physically
+  accepted because Janus/PT has not derived this orbit nor the map `j -> alpha`.
+  `ComplexRealityCandidatePhaseSpaceMatrixGate` now limits the serious core
+  candidates to three families: active throat `S2`, `CP1` spinor/frame orbit,
+  and `aroundSigma x compact phase`. Extensions such as Moebius/Klein/twists
+  are useful only if they reduce to one of these with a nonzero KKS period.
+  `ComplexRealityQuantumCandidateWorkbenchGate` projects the three candidates
+  into the previous quantum frontier. `CP1` is the cleanest quantizable
+  candidate, active throat `S2` is the cleanest geometric route, and
+  `aroundSigma x phase` remains blocked by the missing compact phase. None is
+  `alpha`-ready.
+  `ComplexRealityCombinedPhaseSpaceCandidateGate` now keeps all three
+  candidates and combines them as `S2` throat support + `CP1` quantum fiber +
+  `aroundSigma` holonomy constraint. The combined candidate is coherent but not
+  closed: it still needs Janus/PT derivation of the `CP1` fiber, the
+  `aroundSigma` action on that fiber, a nonzero combined KKS period, sector
+  selection, and `alpha` map.
+  The first pass through those blockers is now explicit:
+  `CP1` is mathematically available from a local nonzero boundary spinor line,
+  but not globally Janus/PT-derived; `aroundSigma` action on `CP1` is classified
+  but not derived; the combined KKS period is symbolically nonzero
+  (`Integral_CP1 Omega_j = 4*pi*j`) but not Janus-derived because no sector law
+  selects `j != 0`.
+  Parking note: a more radical branch could replace the classical `Sigma`
+  support with emergent projective/twistor-like quantum geometry. This is not
+  active in the current branch.
+  `ComplexRealityNoncentralSpinLiftSearchGate` now checks the holonomy route.
+  The central lift `psi -> -psi` is admissible but trivial on `CP1`. A noncentral
+  pi-rotation would be useful, but the resolved tunnel Pin/spin geometry does
+  not currently force it or derive its axis.
+  Combined branch verdict: mathematical candidate survives, physical Janus
+  derivation remains open. No `alpha` law follows until global spinor/Pin
+  projection, noncentral `aroundSigma` lift, sector selection and `alpha` map
+  are derived.
+- Quantum-first boundary-state branch:
+  `JanusFormal.QuantumFirstBoundaryState` and
+  `docs/janus_quantum_first_boundary_state.md` implement the reversed program
+  `boundary quantum state -> CP1/TQFT phase space -> prequantization -> alpha
+  spectrum -> classical Janus limit`. Current result:
+  `conditional_alpha_spectrum_ready = true`,
+  `conditional_classical_limit_ready = true`, but
+  `no_fit_alpha_generated = false`. The hard blocker is a derived boundary
+  mass operator/energy function plus primitive sector law.
+  A deeper audit now exhausts the CP1 moment-map, CP1 Casimir, area-gap-like,
+  prequantization-only and closed-TQFT Hamiltonian routes. Result:
+  labels can be discrete, but no boundary mass operator or energy unit is
+  derived without an extra quantum action/time-generator/area-to-mass law.
 - No-extension frontier: active Z2/Sigma BAO is now blocked by two independent
   open quantities, `R_Sigma` and the absolute projected baryon Noether charge.
   The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but

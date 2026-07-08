@@ -109,8 +109,74 @@ KKS boundary-density, and Sigma boundary-projection gates. The formal status
 matches the scripts: symbolic branch ready, active density and `alpha`
 generation still blocked.
 
+`ComplexRealityBoundaryVariationBasisGate` adds the next symbolic layer:
+normal embedding displacement, frame rotation/boost, and connection holonomy
+are declared as the candidate boundary variation channels, while tangential
+displacement is treated as gauge. This does not yet activate the KKS density:
+active embedding values and a closed boundary two-cycle are still missing.
+
+`ComplexRealityClosedBoundaryTwoCycleGate` now audits the cycle candidates.
+The throat angular `S2` is a closed topological two-cycle and `aroundSigma`
+is a closed Z2 one-cycle. This is still not a KKS phase-space two-cycle with
+a nonzero `Omega_Sigma` period. The next hard object is either an active
+embedding pullback that evaluates the density on the throat `S2`, or a derived
+compact frame/phase direction pairing with `aroundSigma`.
+
+`ComplexRealityActiveEmbeddingOrCompactPhaseGate` makes the remaining fork
+explicit. Route A is an active embedding/coframe pullback evaluation of
+`Omega_Sigma` on the throat `S2`. Route B is a compact frame/phase direction
+paired with `aroundSigma`. Both routes are currently blocked, so the branch
+still has no internal `alpha` law.
+
+`ComplexRealityTwoExitEvaluationGate` ranks the two exits. The direct route is
+the throat `S2` with an active `Omega_Sigma` area component. The higher-risk
+route is `aroundSigma x compact_phase`, which would require a Janus-derived
+compact phase/fiber. Topology by itself is not enough: the closed two-cycle
+must live in physical boundary phase space and carry a nonzero KKS period.
+
+`ComplexRealityCandidateBoundaryPhaseSpaceGate` constructs the cleanest
+mathematical candidate: attach a compact `CP1 ~= SU(2)/U(1)` spinor/frame orbit
+to the boundary. Its KKS form is `Omega_j = j sin(theta) dtheta^dphi`, with
+period `4*pi*j` and prequantization condition `2*j/hbar in Z`. This answers
+what such an object would look like. It does not yet prove that Janus/PT
+requires this orbit, nor that `j` maps to `alpha_m`.
+
+See also `docs/janus_complex_reality_candidate_phase_space_matrix.md`.
+The core candidate set is restricted to three families: active throat `S2`,
+`CP1` spinor/frame orbit, and `aroundSigma x compact phase`. Extensions such
+as Moebius, Klein, Pin/spin lift, TQFT level or larger `CPn` are only useful if
+they produce one of those three mechanisms with nonzero KKS period.
+
+`ComplexRealityQuantumCandidateWorkbenchGate` plugs the three candidates into
+the previous quantum frontier. The result is not a prediction of `alpha`; it is
+a ranking of quantum viability. `CP1` gives the cleanest finite Hilbert-space
+candidate, active throat `S2` remains the direct geometric route, and
+`aroundSigma x phase` still needs a derived compact phase.
+
+`ComplexRealityCombinedPhaseSpaceCandidateGate` keeps the three candidates for
+later and starts with their combination:
+`S2 throat support + CP1 quantum fiber + aroundSigma holonomy constraint`.
+This is coherent, but not closed. The next concrete object is the action of
+`aroundSigma` on the `CP1` fiber.
+
+The first derivation pass closes the status sharply. `CP1` is mathematically
+available from a local boundary spinor line, but not globally Janus/PT-derived.
+The `aroundSigma` action is classified: the central lift is trivial on `CP1`,
+while a useful noncentral projective action would need a derived spin/Pin
+holonomy. The combined KKS period is symbolically nonzero if `j != 0`, but the
+Janus-derived nonzero period is still blocked by missing sector selection.
+
 The active hypothesis is:
 
 `X2026-complex-reality` may supply the missing Souriau/coadjoint machinery for
 the previous `alpha` blockage, but only if it yields a nonzero symplectic/KKS
 density and an integrality law.
+
+`ComplexRealityPrequantizationIntegralityGate` and
+`ComplexRealityAlphaStateLawVerdictGate` close the current pass. The branch has
+a sourced complex coadjoint scaffold and a symbolic KKS candidate, but it still
+does not provide a closed quantizable boundary cycle, a nonzero normalized KKS
+period, a mass/charge lattice, a primitive sector law, or a map to `alpha_m`.
+
+Current verdict: `branch_status = frozen_pending_state_law`.
+`alpha_generated_now = false`.
