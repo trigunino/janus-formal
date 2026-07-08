@@ -171,6 +171,12 @@
   Still missing: `q_LL`, `F2_0`, `lambda_F2` absolute normalization,
   primitive `N_gap`/boundary state, and the map to `E_Z2Sigma(a)`. Do not repeat
   the closed substeps.
+- Bridge state law:
+  `P0EFTJanusBridgeStateLawOpeningGate` opens the new conceptual branch. Core
+  statement: `alpha` is a bridge-state charge, not a local coupling. Candidate
+  routes are null-boundary Noether charge, LL worldvolume flux sector, and PT
+  minimal quantum state. Status: opened, not closed; no direct alpha fit and no
+  invented Sigma density allowed.
 - Remaining new-idea deep audit:
   `P0EFTJanusRemainingNewIdeaDeepAuditGate` audits Epp/RQF quasilocal energy,
   topological Casimir, minisuperspace quantization, flux/TQFT quantization, and
@@ -4342,3 +4348,27 @@ Completion rule:
 - [ ] Mark old mono-metric CMB hook failures as "CAMB-EFT tests", not Janus exclusion.
 - [ ] Keep `full_cosmology_prediction_ready_no_fit = False` until Planck + BAO + growth pass under one derived bi-sector model.
 - [x] Add a short architecture note explaining why Janus-orbifold may require a bi-sector Boltzmann backend.
+
+## Janus bridge state law
+
+- [x] Open the `janus_bridge_state_law` branch.
+- [x] Declare `alpha` as bridge-state charge, not a direct fit.
+- [x] Discriminate candidate routes:
+  - null/PT Noether charge defines the charge and alpha map;
+  - LL worldvolume flux discretizes `chi_LL`;
+  - PT minimal quantum state selects the primitive nonzero sector.
+- [ ] Implement `P0EFTJanusBridgeStateLawCompositeClosureGate`.
+- [ ] Close, or explicitly block, each composite link without observation-sector selection.
+- [x] Classify the remaining credible pistes:
+  - composite boundary state law: credible but not closed;
+  - alpha superselection sector: viable non-no-fit contract;
+  - paper-reference gap report: useful formal output.
+- [x] Distinguish radical quantum geometry reconstruction from the previous
+  quantum-first-on-Sigma branch.
+- [x] Audit radical quantum geometry candidate families down to the bottom
+  blocker: all require a new Janus-specific quantum geometry law.
+- [x] Close the `alpha_superselection_sector` idea as a sector-theory program:
+  alpha is a global state label, SN+BAO are the first observational endpoint,
+  and no no-fit claim is allowed.
+- [x] Materialize the observation endpoint: local SN/JLA enables shape-only
+  checks; BAO is required for full alpha-sector selection.

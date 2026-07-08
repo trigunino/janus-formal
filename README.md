@@ -123,6 +123,8 @@ Statut separe par niveau de preuve :
 - `janus_sector_theory_v0_observation_selected_sector_available = True`
 - `janus_new_idea_matrix_ready = True`
 - `janus_new_idea_matrix_no_fit_alpha_generated = False`
+- `janus_bridge_state_law_branch_opened = True`
+- `janus_bridge_state_law_chi_LL_selected_no_fit = False`
 - `janus_complex_reality_kks_boundary_density_ready = False`
 - `janus_complex_reality_lean_formalization_ready = True`
 - `janus_complex_reality_alpha_generated_now = False`
@@ -2147,3 +2149,12 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - residual diagnostics: TT peak shifts, TE zero shifts and EE peak shifts are
   zero in the tested high-l bands.
 - This is still not a full Planck validation.
+
+### Janus bridge state law
+
+- Active conceptual branch: `janus_bridge_state_law`.
+- Purpose: make `alpha` a bridge-state charge, not a local fitted coupling.
+- Current discriminator result: no single route is sufficient. The non-rustine
+  path is composite:
+  `null/PT Noether charge -> LL flux/tension lattice -> PT primitive state`.
+- Status: branch opened and ranked; `chi_LL_selected_no_fit = False`.

@@ -1,4 +1,5 @@
 import JanusFormal.ActiveZ2Sigma
+import JanusFormal.JanusBridgeStateLaw
 import JanusFormal.JanusNewIdeaSectorProgram
 import JanusFormal.P0EFTJanusUnimodularFourFormSectorGate
 import JanusFormal.JanusSectorTheoryV0
