@@ -4372,3 +4372,6 @@ Completion rule:
   and no no-fit claim is allowed.
 - [x] Materialize the observation endpoint: local SN/JLA enables shape-only
   checks; BAO is required for full alpha-sector selection.
+- [x] Run the alpha-superselection SN+BAO closure. Current proxy selects the
+  `q0 -> 0-` boundary and rejects an interior Janus sector.
+- [x] Add the global lock summary for the current alpha/background pass.

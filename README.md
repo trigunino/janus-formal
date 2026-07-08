@@ -2158,3 +2158,13 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   path is composite:
   `null/PT Noether charge -> LL flux/tension lattice -> PT primitive state`.
 - Status: branch opened and ranked; `chi_LL_selected_no_fit = False`.
+
+### Current global lock
+
+- See `docs/janus_current_global_lock.md`.
+- Alpha/background is closed as far as current assets allow.
+- `alpha_superselection_sector` is valid as a sector theory, not no-fit.
+- Current SN full-covariance + DESI DR2 BAO selects the `q0 -> 0-` boundary with
+  the current background-proxy BAO map.
+- Reopen only with a native Janus BAO/ruler contract, explicit boundary state
+  law, or a different concrete observable family.

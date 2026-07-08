@@ -40,3 +40,16 @@ Local JLA/SN files are sufficient for a shape-only/q0-sector check.
 
 Full alpha-sector selection requires BAO/ruler data because SN alone does not
 break the absolute scale degeneracy.
+
+## Current Observation Closure
+
+DESI DR2 BAO data are available through `data/external/bao_data`.
+
+The current SN full-covariance + BAO runner selects the `q0 -> 0-` boundary,
+not an interior Janus sector, with the present background-proxy BAO map.
+
+Closure status:
+
+`superselection_calibration_closes_negative_for_current_background_proxy`.
+
+Reopen only after deriving a native Janus BAO/ruler contract.
