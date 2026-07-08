@@ -23,6 +23,11 @@ class Janus2024PaperNativeMaterializationAuditTests(unittest.TestCase):
     def test_remaining_blockers_visible(self):
         payload = self.payload
         self.assertFalse(payload["strict_paper_only_background_materialization_closed"])
+        self.assertFalse(payload["paper_only_layer_closed"])
+        self.assertTrue(payload["paper_plus_cited_calibration_layer_closed_up_to_minus_init"])
+        self.assertTrue(payload["plus_history_fixed_by_cited_sources"])
+        self.assertTrue(payload["absolute_normalization_fixed_by_cited_sources_and_ratio"])
+        self.assertFalse(payload["minus_initialization_fixed_by_sources"])
         self.assertIn(
             "minus_history_initialization_not_fixed_explicitly_by_2024_text",
             payload["remaining_blockers"],

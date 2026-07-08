@@ -17,7 +17,22 @@ Tags: `math_symmetry`, `signed_mass_sector`, `compact_object_alternative`, `symm
 
 ## Formula And Equation Anchors
 
-- No curated formula yet. Use equation markers and PDF verification before formal use.
+- Curated source-law anchors:
+  - pages 16-17, eqs. 84-93: complex/Hermite metric and
+    `ds2 = dX_dagger G dX`;
+  - page 17, eqs. 97-98: complex Lorentz/Poincare group
+    `L_dagger G L = G`;
+  - pages 17-18, eqs. 103-110: inverse and Lie algebra action,
+    `Z = (G omega, gamma; 0,0)`;
+  - pages 18-19, eqs. 111-121: complex moment `mu={M,P}` and
+    pairing `1/2 Tr(M omega) + P_dagger G gamma`;
+  - pages 19-20, eqs. 122-132: complex coadjoint action;
+  - pages 21-23, appendix eqs. 1-15: real coadjoint action and
+    antisymmetrized translation term.
+
+Manual caveat: Eq. 131 should be checked against anti-Hermitian projection
+before using it as a boundary/KKS density. The real appendix explicitly keeps
+only the antisymmetric translation contribution.
 
 Equation markers found automatically:
 - `Equation (78)`

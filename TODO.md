@@ -64,6 +64,12 @@
   paper-native reference.
   The frozen paper-native SN/acceleration reference and exhaustive gap list now
   live in `docs/janus_paper_native_sn_freeze_gap_map.md`.
+  The full paper/cited frontier is now also frozen at the current source
+  boundary: step 1 has been pushed to its statistical source limit, while steps
+  2-5 remain open under the current source set. Do not continue this branch by
+  pretending the same texts close the missing background, normalization, or BAO
+  ruler layers. The next legitimate move is a new branch with an enlarged
+  theoretical source set.
   Repo helper layers remain available but excluded from the active paper
   reference:
   cited calibration,
@@ -101,6 +107,32 @@
   phase space, Hilbert space, entropy formula and state law. The TQFT route
   still lacks a Janus-derived boundary theory, level and primitive sector.
   Therefore `N` remains a sector label, not a no-fit prediction.
+- Complex-reality state-law branch:
+  `janus_complex_reality_state_law` is now open as a fundamental-state branch
+  using `X2026-complex-reality`. Its target is not SN/BAO/CMB. Its target is
+  the previous `alpha` blockage: derive or reject a nonzero Souriau/KKS
+  boundary density, an integrality law, and a mass/charge lattice that can map
+  to `alpha_m = -2*pi*G*M_boundary/c^2`. Current status: open plan ready,
+  `alpha_generated_now = false`.
+  First extension complete: the source formula curation now records the complex
+  metric, complex Poincare group, Lie algebra action, complex moment pair,
+  Souriau pairing, and complex coadjoint action. This improves the Souriau
+  route, but still does not provide a nonzero boundary KKS density or
+  integrality theorem.
+  Eq. 131 has been checked for KKS use: the source formula is retained, but the
+  raw translation term must be represented by its anti-Hermitian projection
+  before it can define a KKS-ready moment. The complex coadjoint state space is
+  now ready; the next hard block is the boundary/Sigma KKS density.
+  The global finite-dimensional KKS form is now nonzero on the complex
+  coadjoint orbit. This is a real improvement over the old generic Souriau
+  route. The remaining blocker is narrower: derive a nonzero `Sigma` boundary
+  density by mapping boundary variations to complex Poincare generators and
+  producing a nonzero two-cycle period.
+  The symbolic projection is now derived:
+  `gamma_Sigma=e delta X`, `omega_Sigma=antiHermitian(delta L L^{-1})`, and
+  `Z_Sigma=(G omega_Sigma,gamma_Sigma;0,0)`. The KKS pullback density is
+  `<mu,[Z_Sigma(delta1),Z_Sigma(delta2)]>`. Active evaluation remains blocked by
+  the missing nontrivial boundary variation basis and closed two-cycle.
 - No-extension frontier: active Z2/Sigma BAO is now blocked by two independent
   open quantities, `R_Sigma` and the absolute projected baryon Noether charge.
   The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but

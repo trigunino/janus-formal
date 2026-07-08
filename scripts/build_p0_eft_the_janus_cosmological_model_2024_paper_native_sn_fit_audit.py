@@ -180,6 +180,15 @@ def _evaluate_procedure(columns: dict[str, np.ndarray], spec: ProcedureSpec) -> 
         "beta": spec.beta,
         "use_delta_m": spec.use_delta_m,
         "covariance_kind": spec.covariance_kind,
+        "source_class": (
+            "official_jla_baseline"
+            if spec.name == "official_jla_full_stat_sys"
+            else (
+                "paper_cited_exact_q0_candidate"
+                if spec.name == "paper_like_stat_zhel_diag_total"
+                else "paper_cited_near_chi2_candidate"
+            )
+        ),
         "best_fit_q0": best["q0"],
         "best_fit_chi2": best["chi2"],
         "best_fit_offset": best["offset"],
@@ -231,6 +240,10 @@ def build_payload() -> dict:
     rows = [_evaluate_procedure(columns, spec) for spec in procedures]
     nearest_q0 = min(rows, key=lambda row: abs(row["best_fit_q0"] - PUBLISHED_Q0))
     nearest_chi2 = min(rows, key=lambda row: row["chi2_gap_to_published"])
+    simultaneous_match_closed = any(
+        row["published_q0_recovered_exactly"] and row["chi2_gap_to_published"] < 1.0
+        for row in rows
+    )
     return {
         "status": "the-janus-cosmological-model-2024-paper-native-sn-fit-audit",
         "dataset": "JLA 740 SN",
@@ -252,6 +265,9 @@ def build_payload() -> dict:
                 row["name"] != "official_jla_full_stat_sys" and row["published_q0_recovered_within_sigma"]
                 for row in rows
             ),
+            "paper_cited_exact_q0_procedure_name": nearest_q0["name"],
+            "paper_cited_near_chi2_procedure_name": nearest_chi2["name"],
+            "exact_published_q0_and_chi2_simultaneous_reproduction_closed": simultaneous_match_closed,
             "published_fit_pipeline_is_not_unique_from_paper_text": True,
         },
     }
@@ -273,6 +289,7 @@ def write_reports() -> dict:
                 "",
                 f"- nearest q0 procedure: `{payload['nearest_q0_procedure']['name']}` -> q0 `{payload['nearest_q0_procedure']['best_fit_q0']}`",
                 f"- nearest chi2 procedure: `{payload['nearest_chi2_procedure']['name']}` -> chi2 at published q0 `{payload['nearest_chi2_procedure']['published_q0_chi2']:.6g}`",
+                f"- simultaneous exact q0+chi2 closure: `{payload['verdict']['exact_published_q0_and_chi2_simultaneous_reproduction_closed']}`",
             ]
         )
         + "\n",

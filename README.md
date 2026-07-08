@@ -63,6 +63,8 @@ Statut separe par niveau de preuve :
 - `the_janus_cosmological_model_2024_active_background_reference_path_is_full_published_bulk = False`
 - `the_janus_cosmological_model_2024_historical_background_proxy_is_full_published_bulk = False`
 - `the_janus_cosmological_model_2024_branch_frozen = False`
+- `the_janus_cosmological_model_2024_frontier_branch_frozen = True`
+- `the_janus_cosmological_model_2024_current_source_set_exploration_exhausted = True`
 - `paper_native_sn_acceleration_branch_frozen = True`
 - `published_q0_branch_recovered = True`
 - `official_jla_likelihood_equivalent = False`
@@ -86,6 +88,15 @@ Statut separe par niveau de preuve :
 - `z2_ethroat_boundary_hilbert_space_selector_ready = False`
 - `z2_ethroat_tqft_level_selector_ready = False`
 - `z2_ethroat_N_remains_sector_label = True`
+- `janus_complex_reality_state_law_branch_opened = True`
+- `janus_complex_reality_state_law_alpha_generated_now = False`
+- `janus_complex_reality_state_law_first_plan_ready = True`
+- `janus_complex_reality_formula_anchors_curated = True`
+- `janus_complex_reality_coadjoint_state_space_ready = True`
+- `janus_complex_reality_global_kks_orbit_nonzero = True`
+- `janus_complex_reality_sigma_boundary_projection_symbolic_ready = True`
+- `janus_complex_reality_sigma_boundary_projection_active_ready = False`
+- `janus_complex_reality_kks_boundary_density_ready = False`
 - `torsionful_holst_nieh_yan_sigma_default_next = False`
 - `torsion_source_on_sigma_active = False`
 - `torsionful_holst_nieh_yan_sigma_archive_ready = True`

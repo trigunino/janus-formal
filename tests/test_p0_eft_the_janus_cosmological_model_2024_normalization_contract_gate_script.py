@@ -14,9 +14,12 @@ class Janus2024NormalizationContractGateTests(unittest.TestCase):
         )
         self.assertTrue(payload["contract_schema_present"])
         self.assertTrue(payload["cited_calibration_route_ready"])
+        self.assertFalse(payload["strict_paper_only_contract_ready"])
+        self.assertTrue(payload["cited_assisted_contract_ready"])
         self.assertTrue(payload["absolute_normalization_contract_instantiated"])
         self.assertTrue(payload["reference_object_buildable_from_contract"])
-        self.assertFalse(payload["paper_grade_inputs_missing"])
+        self.assertTrue(payload["paper_only_inputs_missing"])
+        self.assertTrue(payload["step3_source_boundary_reached"])
         self.assertTrue(payload["gate_passed"])
 
 

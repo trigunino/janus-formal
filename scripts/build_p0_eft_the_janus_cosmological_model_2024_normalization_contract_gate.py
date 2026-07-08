@@ -55,15 +55,20 @@ def build_payload() -> dict:
             c_minus_m_s=float(cited["reference_convention"]["c_minus_m_s"]),
             g_si=1.0,
         )
+    strict_paper_only_contract_ready = bool(route["global_energy_constant_route_ready"] and energy_input is not None)
+    cited_assisted_contract_ready = bool(cited["absolute_normalization_contract_ready"])
     return {
         "status": "the-janus-cosmological-model-2024-normalization-contract-gate",
         "contract_schema_present": True,
         "published_global_energy_route_ready": route["global_energy_constant_route_ready"],
         "published_global_energy_input_present": energy_input is not None,
         "cited_calibration_route_ready": cited["absolute_normalization_contract_ready"],
+        "strict_paper_only_contract_ready": strict_paper_only_contract_ready,
+        "cited_assisted_contract_ready": cited_assisted_contract_ready,
         "absolute_normalization_contract_instantiated": contract is not None,
         "reference_object_buildable_from_contract": contract is not None,
-        "paper_grade_inputs_missing": contract is None,
+        "paper_only_inputs_missing": not strict_paper_only_contract_ready,
+        "step3_source_boundary_reached": (not strict_paper_only_contract_ready) and cited_assisted_contract_ready,
         "gate_passed": True,
     }
 
@@ -81,9 +86,12 @@ def write_reports() -> dict:
                 f"Published global-energy route ready: `{payload['published_global_energy_route_ready']}`",
                 f"Published global-energy input present: `{payload['published_global_energy_input_present']}`",
                 f"Cited calibration route ready: `{payload['cited_calibration_route_ready']}`",
+                f"Strict paper-only contract ready: `{payload['strict_paper_only_contract_ready']}`",
+                f"Cited-assisted contract ready: `{payload['cited_assisted_contract_ready']}`",
                 f"Contract instantiated: `{payload['absolute_normalization_contract_instantiated']}`",
                 f"Reference object buildable: `{payload['reference_object_buildable_from_contract']}`",
-                f"Paper-grade inputs missing: `{payload['paper_grade_inputs_missing']}`",
+                f"Paper-only inputs missing: `{payload['paper_only_inputs_missing']}`",
+                f"Step-3 source boundary reached: `{payload['step3_source_boundary_reached']}`",
             ]
         )
         + "\n",
