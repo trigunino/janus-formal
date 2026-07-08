@@ -73,6 +73,9 @@ The work improves Janus by making the assumptions explicit:
 
 ## The Janus Cosmological Model 2024 Reference
 
+For the frozen paper-native SN/acceleration reference and its exhaustive gap
+map, see `docs/janus_paper_native_sn_freeze_gap_map.md`.
+
 The repo now has a paper-structured reference package for the 2024 published
 Janus line.
 

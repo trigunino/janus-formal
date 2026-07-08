@@ -21,9 +21,41 @@ class JanusExtended2026Core:
     source_ids: tuple[str, ...] = (
         "M30",
         "M18",
+        "X2025-bimetric-hal",
         "X2026-expansion-desi",
         "X2026-variable-constants",
         "X2025-technical-book",
+    )
+    supporting_cosmology_source_ids: tuple[str, ...] = (
+        "X2022-hal-acceleration-cosmic-expansion",
+        "C2015-cosmic-acceleration-reinterpretation",
+        "C2017-janus-forty-years",
+        "C2021-janus-antimatter-synthesis",
+        "C2021-janus-radiative-era",
+        "C2024-janus-consistent-hal",
+    )
+    supporting_math_source_ids: tuple[str, ...] = (
+        "M31",
+        "X2025-symplectic-hal",
+        "C2014-sakharov-meaning",
+    )
+    adjacent_noncore_source_ids: tuple[str, ...] = (
+        "C2014-negmass-gr",
+        "C2014-negmass-paradox",
+        "C2014-neggrav-lensing",
+        "C2014-spiral-structure",
+        "C2014-vls-compact-space",
+        "C2021-dipole-repeller",
+        "C2021-janus-crisis-fr",
+        "X2025-rebuttal-damour",
+        "X2025-modele-janus-impasse",
+        "X2025-kinetic-galactic",
+        "X2025-plugstars-jmp",
+        "X2026-questionable-black-holes",
+        "X2026-black-hole-inconsistency-I",
+        "X2026-black-hole-analytic-extension",
+        "X2026-black-hole-inconsistency-II",
+        "X2026-complex-reality",
     )
     verified_equation_anchors: tuple[str, ...] = (
         "M18 Eq. 10 exact expansion a(u), t(u)",
@@ -37,6 +69,14 @@ class JanusExtended2026Core:
         "X2026-expansion-desi claims stronger past acceleration consistent with DESI-era hints",
         "X2026-variable-constants proposes a variable-constants early-universe regime",
     )
+
+    def branch_layers(self) -> dict[str, tuple[str, ...]]:
+        return {
+            "core_active": self.source_ids,
+            "supporting_cosmology": self.supporting_cosmology_source_ids,
+            "supporting_math": self.supporting_math_source_ids,
+            "adjacent_noncore": self.adjacent_noncore_source_ids,
+        }
 
     def cited_calibration(self) -> Janus2024CitedCalibration:
         return published_janus_2024_cited_calibration()
@@ -68,6 +108,7 @@ class JanusExtended2026Core:
     @staticmethod
     def current_blockers() -> tuple[str, ...]:
         return (
+            "strict_minus_sector_history_not_closed_by_active_sources",
             "native_bao_ruler_derivation_missing",
             "absolute_background_normalization_not_paper-native",
             "full_cmb_observable_path_missing",

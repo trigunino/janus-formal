@@ -63,6 +63,11 @@ Statut separe par niveau de preuve :
 - `the_janus_cosmological_model_2024_active_background_reference_path_is_full_published_bulk = False`
 - `the_janus_cosmological_model_2024_historical_background_proxy_is_full_published_bulk = False`
 - `the_janus_cosmological_model_2024_branch_frozen = False`
+- `paper_native_sn_acceleration_branch_frozen = True`
+- `published_q0_branch_recovered = True`
+- `official_jla_likelihood_equivalent = False`
+- `published_full_statistical_pipeline_uniquely_recovered = False`
+- `paper_native_sn_acceleration_gap_map_ready = True`
 - `the_janus_cosmological_model_2024_active_bulk_completion_required = True`
 - `z2_alpha_observational_no_fit_claim = False`
 - `z2_s4l_projective_scale_geometry_active = True`

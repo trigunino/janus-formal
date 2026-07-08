@@ -27,6 +27,10 @@ from .janus_extended2026_core import (
     JanusExtended2026Core,
     published_janus_extended2026_core,
 )
+from .janus_extended2026_published_background import (
+    JanusExtended2026PublishedBackground,
+    published_janus_extended2026_background,
+)
 from .field_statistics import (
     DensityFieldSummary,
     RadialPowerSpectrum,
@@ -258,6 +262,8 @@ __all__ = [
     "load_janus_2024_reference_from_normalization",
     "JanusExtended2026Core",
     "published_janus_extended2026_core",
+    "JanusExtended2026PublishedBackground",
+    "published_janus_extended2026_background",
     "DensityFieldSummary",
     "RadialPowerSpectrum",
     "density_contrast",

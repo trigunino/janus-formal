@@ -62,6 +62,8 @@
   `paper_native_two_metric_background_history_not_materialized`.
   What is still intentionally not done is the first observational run on this
   paper-native reference.
+  The frozen paper-native SN/acceleration reference and exhaustive gap list now
+  live in `docs/janus_paper_native_sn_freeze_gap_map.md`.
   Repo helper layers remain available but excluded from the active paper
   reference:
   cited calibration,

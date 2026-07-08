@@ -7,8 +7,14 @@ class JanusExtended2026CoreTests(unittest.TestCase):
     def test_core_sources_and_eq40(self):
         core = published_janus_extended2026_core()
         self.assertIn("M30", core.source_ids)
+        self.assertIn("X2025-bimetric-hal", core.source_ids)
         self.assertIn("X2026-expansion-desi", core.source_ids)
         self.assertIn("X2026-variable-constants", core.source_ids)
+        self.assertIn(
+            "C2021-janus-radiative-era",
+            core.supporting_cosmology_source_ids,
+        )
+        self.assertIn("M31", core.supporting_math_source_ids)
         eq40 = core.variable_constants_eq40_exponents()
         self.assertEqual(eq40["c_hat"], -0.5)
         self.assertEqual(eq40["g_hat"], -1.0)

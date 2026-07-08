@@ -12,8 +12,11 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from janus_lab import published_janus_extended2026_core
-from scripts.build_p0_eft_janus_z2_background_observational_endpoint import (
-    build_payload as build_background_endpoint_payload,
+from scripts.build_p0_eft_janus_extended2026_published_background_status import (
+    build_payload as build_published_background_payload,
+)
+from scripts.build_p0_eft_janus_extended2026_observational_claim_map import (
+    build_payload as build_claim_map_payload,
 )
 from scripts.build_p0_eft_the_janus_cosmological_model_2024_bulk_observable_path_gate import (
     build_payload as build_bulk_path_payload,
@@ -32,13 +35,19 @@ def build_payload() -> dict:
     core = published_janus_extended2026_core()
     bulk_path = build_bulk_path_payload()
     normalization = build_normalization_payload()
-    endpoint = build_background_endpoint_payload()
+    published_background = build_published_background_payload()
+    claim_map = build_claim_map_payload()
     eq40 = core.variable_constants_eq40_exponents()
+    layers = core.branch_layers()
 
     return {
         "status": "janus-extended2026-core-status",
         "source_bundle_ready": True,
         "core_source_ids": list(core.source_ids),
+        "supporting_cosmology_source_ids": list(core.supporting_cosmology_source_ids),
+        "supporting_math_source_ids": list(core.supporting_math_source_ids),
+        "adjacent_noncore_source_ids": list(core.adjacent_noncore_source_ids),
+        "branch_layers": {key: list(value) for key, value in layers.items()},
         "verified_equation_anchors": list(core.verified_equation_anchors),
         "verified_source_claims": list(core.verified_source_claims),
         "variable_constants_eq40_exponents": eq40,
@@ -50,17 +59,39 @@ def build_payload() -> dict:
             "absolute_normalization_contract_present": bool(
                 normalization["absolute_normalization_contract_instantiated"]
             ),
-            "background_observational_endpoint_present": True,
+            "strict_published_plus_branch_present": bool(
+                published_background["published_plus_branch_executable"]
+            ),
+            "strict_published_sn_proxy_present": bool(
+                published_background["published_sn_proxy_executable"]
+            ),
+            "background_observational_endpoint_present": bool(
+                published_background["full_background_observational_endpoint_closed"]
+            ),
         },
-        "background_observational_endpoint": {
-            "verdict": endpoint["verdict"],
-            "best_baseline_family": endpoint["best_baseline_family"],
-            "delta_chi2_janus_minus_best_baseline": endpoint[
-                "delta_chi2_janus_minus_best_baseline"
+        "published_background_status": {
+            "source_policy": published_background["source_policy"],
+            "strict_minus_sector_history_closed": published_background[
+                "strict_minus_sector_history_closed"
             ],
-            "gr_limit_edge_preferred": endpoint["gr_limit_edge_preferred"],
-            "continuation_to_branch_3_recommended": endpoint[
-                "continuation_to_branch_3_recommended"
+            "native_bao_ruler_closed": published_background[
+                "native_bao_ruler_closed"
+            ],
+            "sn_full_covariance_chi2": published_background["sn_full_covariance"][
+                "chi2"
+            ],
+            "full_background_observational_endpoint_closed": published_background[
+                "full_background_observational_endpoint_closed"
+            ],
+        },
+        "observational_claim_map": {
+            "strictly_reproducible_claim_count": claim_map[
+                "strictly_reproducible_claim_count"
+            ],
+            "non_executable_claim_count": claim_map["non_executable_claim_count"],
+            "next_allowed_execution_scope": claim_map["next_allowed_execution_scope"],
+            "forbidden_scope_without_new_paper_level_derivation": claim_map[
+                "forbidden_scope_without_new_paper_level_derivation"
             ],
         },
         "native_2026_bao_ruler_executable": False,
@@ -87,8 +118,9 @@ def write_reports() -> dict:
                 f"Source bundle ready: `{payload['source_bundle_ready']}`",
                 f"Bulk two-metric path present: `{payload['executable_components']['bulk_two_metric_path_present']}`",
                 f"Absolute normalization contract present: `{payload['executable_components']['absolute_normalization_contract_present']}`",
-                f"Background observational endpoint verdict: `{payload['background_observational_endpoint']['verdict']}`",
-                f"GR-limit edge preferred: `{payload['background_observational_endpoint']['gr_limit_edge_preferred']}`",
+                f"Strict published plus branch present: `{payload['executable_components']['strict_published_plus_branch_present']}`",
+                f"Strict published SN proxy present: `{payload['executable_components']['strict_published_sn_proxy_present']}`",
+                f"Strictly reproducible observational claims: `{payload['observational_claim_map']['strictly_reproducible_claim_count']}`",
                 f"Native 2026 BAO ruler executable: `{payload['native_2026_bao_ruler_executable']}`",
                 f"Native 2026 CMB path executable: `{payload['native_2026_cmb_path_executable']}`",
                 f"Observational closure ready: `{payload['observational_closure_ready']}`",
@@ -96,6 +128,21 @@ def write_reports() -> dict:
                 "## Core sources",
                 "",
                 *[f"- `{item}`" for item in payload["core_source_ids"]],
+                "",
+                "## Supporting cosmology sources",
+                "",
+                *[
+                    f"- `{item}`"
+                    for item in payload["supporting_cosmology_source_ids"]
+                ],
+                "",
+                "## Supporting math sources",
+                "",
+                *[f"- `{item}`" for item in payload["supporting_math_source_ids"]],
+                "",
+                "## Adjacent non-core sources",
+                "",
+                *[f"- `{item}`" for item in payload["adjacent_noncore_source_ids"]],
                 "",
                 "## Current blockers",
                 "",

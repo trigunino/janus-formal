@@ -25,7 +25,7 @@ See:
 ## What matters most for cosmology
 
 If the goal is to reconstruct the Janus background/observation path, the useful
-core is still small:
+`core_active` layer is still small:
 
 1. `M30`
    - published bimetric cosmology baseline.
@@ -39,6 +39,17 @@ core is still small:
 5. `X2025-technical-book`
    - long lookup/synthesis layer, useful for tracing formulas and prose
      continuity, but not automatically equal to a published executable model.
+
+Support material now sits in separate layers:
+
+- `supporting_cosmology`: `X2022-hal-acceleration-cosmic-expansion`,
+  `C2015-cosmic-acceleration-reinterpretation`, `C2017-janus-forty-years`,
+  `C2021-janus-antimatter-synthesis`, `C2021-janus-radiative-era`,
+  `C2024-janus-consistent-hal`;
+- `supporting_math`: `M31`, `X2025-symplectic-hal`,
+  `C2014-sakharov-meaning`;
+- `adjacent_noncore`: galaxy, compact-object, controversy, and speculative
+  texts kept indexed but outside the active cosmology branch.
 
 ## What the 2026 sources add
 
