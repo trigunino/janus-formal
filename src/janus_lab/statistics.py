@@ -109,6 +109,25 @@ def fit_additive_offset(
     return float(np.sum(weights * (observed - predicted)) / np.sum(weights))
 
 
+def fit_additive_offset_covariance(
+    observed: np.ndarray,
+    predicted: np.ndarray,
+    covariance: np.ndarray,
+) -> float:
+    """Best additive offset for observed ~= predicted + offset under full covariance."""
+
+    observed = np.asarray(observed, dtype=float)
+    predicted = np.asarray(predicted, dtype=float)
+    covariance = np.asarray(covariance, dtype=float)
+    ones = np.ones_like(observed)
+    inv_ones = np.linalg.solve(covariance, ones)
+    inv_delta = np.linalg.solve(covariance, observed - predicted)
+    denom = float(ones @ inv_ones)
+    if denom == 0.0:
+        raise ValueError("covariance-weighted offset denominator is zero")
+    return float((ones @ inv_delta) / denom)
+
+
 def grid_search(
     scorer: Callable[[dict[str, float]], float],
     grid: dict[str, Iterable[float]],

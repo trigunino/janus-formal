@@ -58,6 +58,28 @@ class LinkParser(HTMLParser):
 
 EXTRA_ENTRIES = [
     Entry(
+        "X2022-hal-acceleration-cosmic-expansion",
+        "Janus, the only cosmological model that explains the acceleration of cosmic expansion",
+        "https://hal.science/hal-03834305v2",
+        "hal precursor",
+        "2022",
+        pdf_url="https://hal.science/hal-03834305v2/document",
+    ),
+    Entry(
+        "X2025-rebuttal-damour",
+        "Rebuttal of Damour's criticism of the Janus model",
+        "http://www.jp-petit.org/papers/cosmo/2025-06-19-Rebuttal%20of%20Damour%27s%20criticism%20of%20the%20Janus%20model.pdf",
+        "jp-petit recent",
+        "2025",
+    ),
+    Entry(
+        "X2025-modele-janus-impasse",
+        "Modele Janus Impasse",
+        "http://www.jp-petit.org/papers/cosmo/2025-08-28-Modele-Janus-Impasse.pdf",
+        "jp-petit recent",
+        "2025",
+    ),
+    Entry(
         "X2025-kinetic-galactic",
         "Contribution of Kinetic Theory to Galactic Dynamics",
         "http://www.jp-petit.org/papers/cosmo/2025-10-14-Astroph-and-Space-Sci-Contribution-of-Kinetic-Theory-to-Galactic-Dynamics.pdf",
@@ -74,7 +96,14 @@ EXTRA_ENTRIES = [
     Entry(
         "X2026-black-hole-inconsistency-I",
         "Mathematical and Geometrical Inconsistency of the Black Hole Model. Part I",
-        "http://www.jp-petit.org/papers/cosmo/2026-Mathematical-and-Geometrical-Inconsistency-of-the-Black-Hole-Model.Part%20I.pdf",
+        "http://www.jp-petit.org/papers/cosmo/2026-01-JMP-Mathematical-and-Geometrical-Inconsistency-of-the-Black-Hole-Model.Part%20I.pdf",
+        "jp-petit recent",
+        "2026",
+    ),
+    Entry(
+        "X2026-black-hole-analytic-extension",
+        "The black hole model goes with an analytic extension of spacetime",
+        "http://www.jp-petit.org/papers/cosmo/2026-06-JMP-The%20black%20hole%20model%20goes%20with%20an%20analytic%20extension%20of%20spacetime.pdf",
         "jp-petit recent",
         "2026",
     ),
@@ -109,7 +138,7 @@ EXTRA_ENTRIES = [
     Entry(
         "X2026-complex-reality",
         "The Real World as a part of a Complex Reality",
-        "http://www.jp-petit.org/papers/cosmo/2026-The-Real-World-as-a-part-of-a-Complex-Reality.pdf",
+        "http://www.jp-petit.org/papers/cosmo/2026-07-07-Is%20the%20real%20world%20as%20a%20part%20of%20a%20complex%20reality.pdf",
         "jp-petit recent",
         "2026",
     ),

@@ -25,6 +25,14 @@ Method: direct checks against the local PDF text extracts generated from `data/r
 | `M18` | `(1 - 2q) = c^2/(a^2 H^2)`, Eq. 14 | verified | PDF text gives this conversion relation. |
 | `M18` | Open marker distance, Eqs. 15-17 | verified | PDF text gives `l = 2u0 - 2ue`, `l = argsh(r)`, and `r = sinh(2u0 - 2ue)`. |
 | `M18` | `u0`, `ue` mappings, Eqs. 20-21 | verified | PDF text gives the `argch/argsh` mappings from `q0` and `z`. |
+| `X2022-hal-acceleration-cosmic-expansion` | Coupled equations, Eq. 12 | verified | HAL precursor restates the determinant-ratio Janus coupled equations and opposite sign in the second equation. Use `M15` as the cleaner journal anchor. |
+| `X2022-hal-acceleration-cosmic-expansion` | Global signed-energy conservation, Eq. 19 | verified | PDF text gives `rho(+) c(+)^2 a(+)^3 + rho(-) c(-)^2 a(-)^3 = Cst`. |
+| `X2022-hal-acceleration-cosmic-expansion` | Exact expansion `a(u)`, `t(u)`, Eqs. 22-23 | verified | PDF text gives `a(+)(u) = alpha^2 cosh^2(u)` and `t(+)(u)` with `1 + sinh(2u)/2 + u`. This is the same expansion branch later isolated in `M18`. |
+| `X2022-hal-acceleration-cosmic-expansion` | `q = -1/(2 sinh^2(u))`, Eq. 24 | verified | PDF text gives the deceleration relation on the open Janus branch. |
+| `X2022-hal-acceleration-cosmic-expansion` | SN magnitude-redshift proxy, Eq. 25 | verified | PDF text gives the bolometric magnitude relation. |
+| `X2022-hal-acceleration-cosmic-expansion` | `q0 = -0.087 +/- 0.015`, Eq. 26 | verified | PDF text gives the same SN fit value as the later journal source `M18`. |
+| `X2022-hal-acceleration-cosmic-expansion` | Best-fit age claim, Eq. 28 | verified | PDF text states `T0 = 1.07/H0 = 15.0 Gyr` for the preferred fit. |
+| `X2022-hal-acceleration-cosmic-expansion` | Negative-mass content split | verified-concept | Section V states `96%` invisible negative mass and `4%` positive mass. Treat as a paper-native model claim, not as an independently validated observational result. |
 | `M22` | Negative sector shorter Jeans time, Eq. 1 | verified | PDF text states greater negative density implies `t_J(-) << t_J(+)`; OCR of rho symbols is imperfect but the surrounding sentence is clear. |
 | `M20` | Negative-sector CMB imprint | verified-concept | Text states gravitational instability in the negative sector leaves an imprint in the positive sector corresponding to CMB inhomogeneities. |
 | `M20` | Negative lensing and galaxy/cluster lensing claim | verified-concept | Introduction claims observed gravitational lensing is mainly due to negative matter around galaxies/clusters, and that negative lensing can weaken high-redshift galaxy light. |

@@ -12,6 +12,21 @@ from .models import (
     janus_u0_from_q0,
     luminosity_distance_mpc,
 )
+from .janus_2024_reference import Janus2024FLRWReference
+from .janus_2024_cited_calibration import (
+    Janus2024CitedCalibration,
+    published_janus_2024_cited_calibration,
+)
+from .janus_2024_bulk_path import (
+    Janus2024AbsoluteNormalizationContract,
+    Janus2024BulkObservablePath,
+    absolute_normalization_contract_from_payload,
+    load_janus_2024_reference_from_normalization,
+)
+from .janus_extended2026_core import (
+    JanusExtended2026Core,
+    published_janus_extended2026_core,
+)
 from .field_statistics import (
     DensityFieldSummary,
     RadialPowerSpectrum,
@@ -231,9 +246,18 @@ __all__ = [
     "e_cpl",
     "e_lcdm",
     "janus_distance_modulus_proxy",
+    "Janus2024CitedCalibration",
+    "published_janus_2024_cited_calibration",
     "janus_q0_from_u0",
     "janus_u0_from_q0",
     "luminosity_distance_mpc",
+    "Janus2024FLRWReference",
+    "Janus2024AbsoluteNormalizationContract",
+    "Janus2024BulkObservablePath",
+    "absolute_normalization_contract_from_payload",
+    "load_janus_2024_reference_from_normalization",
+    "JanusExtended2026Core",
+    "published_janus_extended2026_core",
     "DensityFieldSummary",
     "RadialPowerSpectrum",
     "density_contrast",

@@ -16,12 +16,57 @@
 - Native GR decomposition: required now; Planck rejection is suspended as a
   physical Janus verdict until an active Z2/Sigma observational model exists.
 - Therefore: do not claim full no-fit cosmology yet.
+- Active alpha/global-energy branch: structurally closed, but the absolute
+  dimensional scale remains underdetermined. Treat the current branch as
+  archived for no-fit claims until a real state-selection/quantization/boundary
+  law fixes `alpha`, `E_global`, `M_bridge`, or an equivalent global scale.
 - Alpha observational fallback: `P0EFTJanusZ2AlphaObservationalFitGate` now
-  performs a fine-grid `q0/u0` sector fit using Pantheon+ diagonal errors and
-  DESI DR2 BAO covariance. Current combined SNdiag+BAO best point is
-  `q0=-0.001` at the grid boundary; this is observational sector selection, not
-  a no-fit derivation of dimensional `alpha`. Full Pantheon covariance remains
-  required before final claims.
+  performs the active `q0/u0` sector fit using Pantheon+ full covariance
+  (with the diagonal run kept as diagnostic) and DESI DR2 BAO covariance.
+  Current primary endpoint `SN_full_cov_plus_BAO` still runs to the
+  `q0 -> 0-` boundary, with best sampled point `q0=-1e-6`; this is
+  observational sector selection toward the GR-limit edge of the Janus shape
+  family, not a no-fit derivation of dimensional `alpha`.
+- Background observational endpoint: like-for-like comparison on
+  `Pantheon+ full covariance + DESI DR2 BAO` now gives a clean no-go for an
+  interior Janus background sector. The active Janus proxy is driven to the
+  `q0 -> 0-` boundary and still loses strongly to standard baselines
+  (`delta_chi2 ~= +590` vs best coarse CPL, `+573` vs best coarse LCDM).
+  Therefore branch `2` does not justify continuing to branch `3` as a
+  background-rescue program.
+- 2024 paper reference readiness:
+  `build_p0_eft_the_janus_cosmological_model_2024_reference_gate.py` now
+  defines a paper-structured reference package for the published Janus branch.
+  Paper-native pieces currently present:
+  published bulk bimetric equations,
+  paper-native two-metric FLRW equation object,
+  paper-native observational anchors (`70` direct-standard-candle H0
+  statement, `67` LCDM/CMB comparison statement, magnitude-redshift curve
+  claim),
+  published `5%/95%` sector ratio,
+  global energy equation shape,
+  sector dust-density laws,
+  and the `k = kbar = -1` published branch.
+  Therefore `paper_structured_reference_ready = true`,
+  `paper_only_branch_ready = true`,
+  `paper_plus_cited_comparison_branch_ready = true`,
+  `like_for_like_with_paper = false`,
+  `paper_explicit_only_reference_ready = true`,
+  `repo_implicit_closure_forbidden = true`, but
+  `strict_paper_only_reference_ready = false`.
+  Cited comparison helpers (`q0=-0.087` exact-shape proxy, plus-history proxy,
+  and comparison-side observation reference) remain available in the repo but
+  are excluded from the active paper-only branch.
+  The remaining strict full-bulk blockers are:
+  `paper_native_absolute_density_normalization_not_materialized` and
+  `paper_native_two_metric_background_history_not_materialized`.
+  What is still intentionally not done is the first observational run on this
+  paper-native reference.
+  Repo helper layers remain available but excluded from the active paper
+  reference:
+  cited calibration,
+  normalization contract,
+  repo-closed two-metric bulk path.
 - Geometric scale branch: `P0EFTJanusZ2S4LProjectiveScaleGeometryGate` records
   the faithful topology as `S4_L -> RP4_L` resolved by `Sigma`. The topology
   supplies `Z2` and the tunnel cycle, but current regularity, boundary-charge,

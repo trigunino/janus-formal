@@ -38,6 +38,7 @@ class PantheonDataset:
     z: np.ndarray
     mu: np.ndarray
     sigma_mu: np.ndarray
+    covariance: np.ndarray | None = None
 
 
 def download_file(url: str, destination: Path, force: bool = False) -> Path:
@@ -114,4 +115,37 @@ def load_pantheon_diag(path: Path = DATA_FILES["pantheon_shoes"]) -> PantheonDat
         z=np.asarray(data["zHD"], dtype=float),
         mu=np.asarray(data["MU_SH0ES"], dtype=float),
         sigma_mu=np.asarray(data["MU_SH0ES_ERR_DIAG"], dtype=float),
+        covariance=None,
+    )
+
+
+def load_pantheon_full_cov(
+    data_path: Path = DATA_FILES["pantheon_shoes"],
+    cov_path: Path = DATA_FILES["pantheon_shoes_cov"],
+) -> PantheonDataset:
+    """Load Pantheon+SH0ES with the published full covariance matrix."""
+
+    dataset = load_pantheon_diag(data_path)
+    lines = Path(cov_path).read_text(encoding="utf-8").splitlines()
+    if not lines:
+        raise ValueError(f"Empty Pantheon covariance file: {cov_path}")
+
+    size = int(lines[0].strip())
+    values = np.asarray([float(value.strip()) for value in lines[1:] if value.strip()], dtype=float)
+    if values.size != size * size:
+        raise ValueError(
+            f"Pantheon covariance length {values.size} does not match declared size {size}"
+        )
+
+    covariance = values.reshape(size, size)
+    if covariance.shape != (len(dataset.z), len(dataset.z)):
+        raise ValueError(
+            f"Pantheon covariance shape {covariance.shape} does not match data length {len(dataset.z)}"
+        )
+
+    return PantheonDataset(
+        z=dataset.z,
+        mu=dataset.mu,
+        sigma_mu=np.sqrt(np.diag(covariance)),
+        covariance=covariance,
     )

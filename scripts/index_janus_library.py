@@ -62,7 +62,13 @@ def count_keywords(text: str) -> dict[str, int]:
     return counts
 
 
-def classify(counts: dict[str, int]) -> str:
+def classify(ref_id: str, title: str, counts: dict[str, int]) -> str:
+    title_lower = title.lower()
+    if "desi" in title_lower or "expansion" in title_lower:
+        return "expansion"
+    if "variable constants" in title_lower or "inflation" in title_lower:
+        return "variable_constants"
+
     axes = Counter()
     axes["expansion"] = counts["DESI"] + counts["BAO"] + counts["supernova"] + counts["redshift"]
     axes["variable_constants"] = counts["variable constants"] + counts["speed of light"] + counts["VSL"]
@@ -99,7 +105,7 @@ def main() -> None:
                     "year": row["year"],
                     "title": row["title"],
                     "pages": str(pages),
-                    "axis": classify(counts),
+                    "axis": classify(row["ref_id"], row["title"], counts),
                     "text_path": str(text_path if text else ""),
                     "error": error,
                     **{keyword: str(count) for keyword, count in counts.items()},

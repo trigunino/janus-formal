@@ -6,8 +6,8 @@ PDF files are stored locally under `data/raw/janus_library/` and ignored by Git.
 
 ## Coverage
 
-- Entries: 42
-- Downloaded or already present: 42
+- Entries: 46
+- Downloaded or already present: 46
 - Missing direct PDF resolver: 0
 - Failed or non-PDF responses: 0
 
@@ -29,7 +29,7 @@ PDF files are stored locally under `data/raw/janus_library/` and ignored by Git.
 | M12 | 2007 | Bigravity as an interpretation of the cosmic acceleration | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M12_bigravity-as-an-interpretation-of-the-cosmic-acceleration.pdf |
 | M13 | 2014 | Negative mass hypothesis in cosmology and the nature of dark energy | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M13_negative-mass-hypothesis-in-cosmology-and-the-nature-of-dark-energy.pdf |
 | M14 | 2014 | Cosmological bimetric model with interacting positive and negative masses and two different speeds of light, in agreement with the observed acceleration of the Universe | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M14_cosmological-bimetric-model-with-interacting-positive-and-negative-masses-and-tw.pdf |
-| M15 | 2015 | Lagrangian derivation of the two coupled field equations in the Janus cosmological model | januscosmologicalmodel.com/map; mirror: https://ayuba.fr/pdf/janus_lagrangian.pdf | exists | data/raw/janus_library/M15_lagrangian-derivation-of-the-two-coupled-field-equations-in-the-janus-cosmologic.pdf |
+| M15 | 2015 | Lagrangian derivation of the two coupled field equations in the Janus cosmological model | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M15_lagrangian-derivation-of-the-two-coupled-field-equations-in-the-janus-cosmologic.pdf |
 | M16 | 2015 | Cancellation of the central singularity of the Schwarzschild solution with natural mass inversion process | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M16_cancellation-of-the-central-singularity-of-the-schwarzschild-solution-with-natur.pdf |
 | M17 | 2018 | A Symplectic Cosmological Model | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M17_a-symplectic-cosmological-model.pdf |
 | M18 | 2018 | Constraints on Janus Cosmological model from recent observations of supernovae type Ia | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M18_constraints-on-janus-cosmological-model-from-recent-observations-of-supernovae-t.pdf |
@@ -46,9 +46,13 @@ PDF files are stored locally under `data/raw/janus_library/` and ignored by Git.
 | M29 | 2024 | PT-symmetry in one-way wormholes | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M29_pt-symmetry-in-one-way-wormholes.pdf |
 | M30 | 2024 | A bimetric cosmological model based on Andrei Sakharov's twin universe approach | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M30_a-bimetric-cosmological-model-based-on-andrei-sakharov-s-twin-universe-approach.pdf |
 | M31 | 2024 | Study of symmetries through the action on torsors of the Janus symplectic group | januscosmologicalmodel.com/map | exists | data/raw/janus_library/M31_study-of-symmetries-through-the-action-on-torsors-of-the-janus-symplectic-group.pdf |
+| X2022-hal-acceleration-cosmic-expansion | 2022 | Janus, the only cosmological model that explains the acceleration of cosmic expansion | hal precursor | exists | data/raw/janus_library/X2022-hal-acceleration-cosmic-expansion_janus-the-only-cosmological-model-that-explains-the-acceleration-of-cosmic-expan.pdf |
+| X2025-rebuttal-damour | 2025 | Rebuttal of Damour's criticism of the Janus model | jp-petit recent | exists | data/raw/janus_library/X2025-rebuttal-damour_rebuttal-of-damour-s-criticism-of-the-janus-model.pdf |
+| X2025-modele-janus-impasse | 2025 | Modele Janus Impasse | jp-petit recent | exists | data/raw/janus_library/X2025-modele-janus-impasse_modele-janus-impasse.pdf |
 | X2025-kinetic-galactic | 2025 | Contribution of Kinetic Theory to Galactic Dynamics | jp-petit recent | exists | data/raw/janus_library/X2025-kinetic-galactic_contribution-of-kinetic-theory-to-galactic-dynamics.pdf |
 | X2025-plugstars-jmp | 2025 | Alternatives to Black Holes: Gravastars and Plugstars | jp-petit recent | exists | data/raw/janus_library/X2025-plugstars-jmp_alternatives-to-black-holes-gravastars-and-plugstars.pdf |
 | X2026-black-hole-inconsistency-I | 2026 | Mathematical and Geometrical Inconsistency of the Black Hole Model. Part I | jp-petit recent | exists | data/raw/janus_library/X2026-black-hole-inconsistency-I_mathematical-and-geometrical-inconsistency-of-the-black-hole-model-part-i.pdf |
+| X2026-black-hole-analytic-extension | 2026 | The black hole model goes with an analytic extension of spacetime | jp-petit recent | exists | data/raw/janus_library/X2026-black-hole-analytic-extension_the-black-hole-model-goes-with-an-analytic-extension-of-spacetime.pdf |
 | X2026-black-hole-inconsistency-II | 2026 | Mathematical and Geometrical Inconsistency of the Black Hole Model. Part II | jp-petit recent | exists | data/raw/janus_library/X2026-black-hole-inconsistency-II_mathematical-and-geometrical-inconsistency-of-the-black-hole-model-part-ii.pdf |
 | X2026-expansion-desi | 2026 | Janus exact expansion solution and DESI | jp-petit recent | exists | data/raw/janus_library/X2026-expansion-desi_janus-exact-expansion-solution-and-desi.pdf |
 | X2026-variable-constants | 2026 | Alternative to Inflation: Variable Constants Regime | jp-petit recent | exists | data/raw/janus_library/X2026-variable-constants_alternative-to-inflation-variable-constants-regime.pdf |

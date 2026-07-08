@@ -25,24 +25,24 @@ Equation markers found automatically:
 
 ## Core Ideas / Cues
 
-Keyword signals: `negative energy`=4, `symplectic`=4, `Dirac`=3, `black hole`=2, `CPT`=1, `dark energy`=1, `negative mass`=1, `torsor`=1.
+Keyword signals: `negative energy`=4, `symplectic`=4, `Dirac`=2, `CPT`=1, `black hole`=1, `dark energy`=1, `negative mass`=1, `torsor`=1.
 
 Short source windows for orientation:
 - is synonymous with a reversal of mass. Thus, the subsidiary question that arises is: can negative masses coexist with our positive masses in our spacetime? In 1970, this emergence of objects w
-- uantum theory of fields, Cambridge University Press, 2005. [13] J.P.Petit, G.D’Agostini : Negative Mass hypothesis in cosmology and the nature of dark energy. Astrophysics And Space Science,. A
+- uantum theory of fields, Cambridge University Press, 2005. [12] J.P.Petit, G.D’Agostini : Negative Mass hypothesis in cosmology and the nature of dark energy. Astrophysics And Space Science,. A
 
 ## Observational Hooks
 
-`black hole`=2.
+`black hole`=1.
 
 Short observable windows:
-- e one of the dimensions, that of time, is then purely imaginary. 5 4 - Minkowski space geodesics. Geodesics are the shortest paths, therefore falling under the variational approach: (2
-- e dimensions, that of time, is then purely imaginary. 5 4 - Minkowski space geodesics. Geodesics are the shortest paths, therefore falling under the variational approach: (26) 𝛿 ∫ √𝑑𝑥0
+- ere one of the dimensions, that of time, is then purely imaginary. 3 - Minkowski space geodesics. Geodesics are the shortest paths, therefore falling under the variational approach: (2
+- the dimensions, that of time, is then purely imaginary. 3 - Minkowski space geodesics. Geodesics are the shortest paths, therefore falling under the variational approach: (26) 𝛿 ∫ √𝑑𝑥0
 
 ## Verification Notes
 
 Short equation/formula windows to check in the PDF:
 - − 𝑥̇1 2 − 𝑥̇2 2 − 𝑥̇3 2 𝑑𝑝 = 0 We are therefore in a situation that leads to the Lagrange equations, with the Lagrangian: (28) 𝐿 = √ 𝑥̇0 2 − 𝑥̇1 2 − 𝑥̇2 2 − 𝑥̇3 2 And Lagrange equations :
-- nge equations, with the Lagrangian: (28) 𝐿 = √ 𝑥̇0 2 − 𝑥̇1 2 − 𝑥̇2 2 − 𝑥̇3 2 And Lagrange equations : 𝑑 𝑑𝑡 ( 𝜕𝐿 𝜕𝑥̇𝑖 ) = 𝜕𝐿 𝜕𝑥𝑖 But we saw [7,8] that if the derivatives were taken with res
+- nge equations, with the Lagrangian: (28) 𝐿 = √ 𝑥̇0 2 − 𝑥̇1 2 − 𝑥̇2 2 − 𝑥̇3 2 And Lagrange equations : 𝑑 𝑑𝑡 ( 𝜕𝐿 𝜕𝑥̇𝑖 ) = 𝜕𝐿 𝜕𝑥𝑖 But we saw [7] that if the derivatives were taken with respe
 
 Manual status: automatic first-pass card. Treat as navigation unless formulas are listed as curated above or verified in the PDF.

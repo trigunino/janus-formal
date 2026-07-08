@@ -20,15 +20,15 @@ Tags: `math_symmetry`, `signed_mass_sector`, `bimetric_geometry`, `symmetry_form
 - HAL mirror/continuation of the Janus symplectic group work; use with M31 as the published anchor
 
 Equation markers found automatically:
-- `Eq. (1)`
+- `equation (1)`
 
 ## Core Ideas / Cues
 
-Keyword signals: `symplectic`=26, `CPT`=5, `Sakharov`=5, `Dirac`=2, `negative mass`=1.
+Keyword signals: `symplectic`=25, `CPT`=5, `Sakharov`=5, `Dirac`=2, `negative mass`=1, `speed of light`=1.
 
 Short source windows for orientation:
-- tter–antimatter symmetry introduced by Dirac. bwhich converts matter into antimatter with negative mass, a concept we could name antimatter in the Feynman sense . 2450054-2 Rev. Math. Phys. 202
-- f the dual of its Lie algebra, called torsors. Special atten- tion is given to the charge symmetry, which highlights the matter–antimatter duality within both sets of components. Keywords:
+- tter-antimatter symmetry introduced by Dirac. 2which converts matter into antimatter with negative mass, a concept we could name antimatter in the Feynman sense. 6 ([20], [9], [19]), this appro
+- due to endowing the masses with an invariant electric charge. Then, by bringing in a new symmetry reflecting the inversion of the fifth dimension, synonymous with an inversion of the scal
 
 ## Observational Hooks
 
@@ -40,7 +40,7 @@ Short observable windows:
 ## Verification Notes
 
 Short equation/formula windows to check in the PDF:
-- 0 1 φ 0 0 1   CηPνTλ =   Ln ˜P ν ˜T λ 0 D 0 ( −1)η φ 0 0 1   and therefore by Eq. (1): Jan =      Ln ˜P ν ˜T λ 0 D 0 ( −1)η φ 0 0 1  , λ,η,ν ∈{ 0, 1} ∧φ∈ R
-- to spatial dimensions in the geometry of Minkowski space. Ten years later, with his ﬁeld equation, he explained phenomena such as the precession of Mercury’s perihe- lion and the deﬂectio
+- D 0 1 ϕ 0 0 1   CηPνTλ =   Ln ˜P ν ˜T λ 0 D 0 ( −1)η ϕ 0 0 1   and therefore by equation (1): J an =      Ln ˜P ν ˜T λ 0 D 0 ( −1)η ϕ 0 0 1   , λ, η, ν∈ {0, 1} ∧ ϕ ∈ R
+- to spatial dimensions in the geometry of Minkowski space. Ten years later, with his field equation, he explained phenomena such as the precession of Mercury’s perihelion and the deflection
 
 Manual status: automatic first-pass card. Treat as navigation unless formulas are listed as curated above or verified in the PDF.

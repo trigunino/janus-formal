@@ -6,8 +6,8 @@ Important: this is a navigation and traceability layer. Exact formulas must stil
 
 ## Coverage
 
-- Manifest sources: 42
-- Source cards: 42
+- Manifest sources: 46
+- Source cards: 46
 - Coverage CSV: `outputs\reports\janus_knowledge_coverage.csv`
 - Agent workflow: `docs\agent_handoff.md`
 
@@ -15,20 +15,20 @@ Important: this is a navigation and traceability layer. Exact formulas must stil
 
 | Axis | Count |
 |---|---:|
-| math_symmetry | 14 |
-| compact_objects | 7 |
+| math_symmetry | 15 |
+| compact_objects | 8 |
+| galaxies | 7 |
 | uncategorized | 6 |
-| galaxies | 6 |
 | variable_constants | 3 |
 | bimetric_geodesics | 3 |
-| expansion | 2 |
+| expansion | 3 |
 | cmb | 1 |
 
 ### By Status
 
 | Status | Count |
 |---|---:|
-| auto-indexed | 26 |
+| auto-indexed | 30 |
 | curated-anchor | 10 |
 | text-only | 5 |
 | weak-extraction | 1 |
@@ -68,9 +68,13 @@ Important: this is a navigation and traceability layer. Exact formulas must stil
 | M29 | 2024 | compact_objects | auto-indexed | [card](source_cards/M29.md) | PT-symmetry in one-way wormholes |
 | M30 | 2024 | bimetric_geodesics | curated-anchor | [card](source_cards/M30.md) | A bimetric cosmological model based on Andrei Sakharov's twin universe approach |
 | M31 | 2024 | math_symmetry | curated-anchor | [card](source_cards/M31.md) | Study of symmetries through the action on torsors of the Janus symplectic group |
+| X2022-hal-acceleration-cosmic-expansion | 2022 | expansion | auto-indexed | [card](source_cards/X2022-hal-acceleration-cosmic-expansion.md) | Janus, the only cosmological model that explains the acceleration of cosmic expansion |
+| X2025-rebuttal-damour | 2025 | galaxies | auto-indexed | [card](source_cards/X2025-rebuttal-damour.md) | Rebuttal of Damour's criticism of the Janus model |
+| X2025-modele-janus-impasse | 2025 | math_symmetry | auto-indexed | [card](source_cards/X2025-modele-janus-impasse.md) | Modele Janus Impasse |
 | X2025-kinetic-galactic | 2025 | galaxies | curated-anchor | [card](source_cards/X2025-kinetic-galactic.md) | Contribution of Kinetic Theory to Galactic Dynamics |
 | X2025-plugstars-jmp | 2025 | compact_objects | auto-indexed | [card](source_cards/X2025-plugstars-jmp.md) | Alternatives to Black Holes: Gravastars and Plugstars |
 | X2026-black-hole-inconsistency-I | 2026 | compact_objects | auto-indexed | [card](source_cards/X2026-black-hole-inconsistency-I.md) | Mathematical and Geometrical Inconsistency of the Black Hole Model. Part I |
+| X2026-black-hole-analytic-extension | 2026 | compact_objects | auto-indexed | [card](source_cards/X2026-black-hole-analytic-extension.md) | The black hole model goes with an analytic extension of spacetime |
 | X2026-black-hole-inconsistency-II | 2026 | compact_objects | auto-indexed | [card](source_cards/X2026-black-hole-inconsistency-II.md) | Mathematical and Geometrical Inconsistency of the Black Hole Model. Part II |
 | X2026-expansion-desi | 2026 | expansion | curated-anchor | [card](source_cards/X2026-expansion-desi.md) | Janus exact expansion solution and DESI |
 | X2026-variable-constants | 2026 | variable_constants | curated-anchor | [card](source_cards/X2026-variable-constants.md) | Alternative to Inflation: Variable Constants Regime |

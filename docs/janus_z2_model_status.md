@@ -58,10 +58,86 @@ The following routes have been pushed to their current endpoint:
 
 The work improves Janus by making the assumptions explicit:
 
+- the active `alpha/global-energy` branch is structurally closed;
+- its absolute dimensional scale remains underdetermined;
 - the active model is not a completed no-fit cosmology;
 - it is a structured family of Janus/Z2 states indexed by a global charge;
 - observation may select a sector, but that is not the same as deriving it;
 - a stronger theory must derive the state-selection law for `alpha`.
+- the active observational endpoint now uses Pantheon+ full covariance plus
+  DESI DR2 BAO and still drives the Janus shape proxy to the `q0 -> 0-`
+  boundary, i.e. the GR-limit edge rather than an interior Janus sector.
+- the like-for-like background comparison against coarse `LCDM`/`CPL`
+  baselines on the same dataset set gives a clean observational no-go for an
+  interior Janus background sector.
+
+## The Janus Cosmological Model 2024 Reference
+
+The repo now has a paper-structured reference package for the 2024 published
+Janus line.
+
+Two branch classes are now separated explicitly:
+
+- `paper_only`: active branch, only paper-explicit content;
+- `paper_plus_cited_comparison`: inactive helper branch, includes cited
+  comparison machinery kept outside the active paper-only status.
+- concrete local source index:
+  `docs/janus_2024_reference_branches_sources.md`.
+- post-2024 extension bundle index:
+  `docs/janus_extended2026_sources.md`.
+
+- published bulk bimetric equations: present;
+- paper-native two-metric FLRW equation object: present;
+- paper-native `k = kbar = -1` branch: present;
+- paper-native observational anchors: present (`70` direct-standard-candle
+  H0 statement, `67` LCDM/CMB comparison statement, magnitude-redshift curve
+  claim);
+- published cited exact shape layer: present in repo but excluded from the
+  active paper-only branch;
+- plus-history proxy: present in repo but excluded from the active paper-only
+  branch;
+- published relative `5% / 95%` sector ratio: present;
+- published comparison-side Janus observation reference: present in repo but
+  excluded from the active paper-only branch;
+- therefore `like_for_like_with_paper = false`;
+- therefore `paper_explicit_only_reference_ready = true`;
+- therefore `repo_implicit_closure_forbidden = true`;
+- therefore `paper_structured_reference_ready = true`.
+- but `strict_paper_only_reference_ready = false`.
+
+Still not done:
+
+- materialize a paper-native absolute density normalization object;
+- materialize a paper-native two-metric background history/path;
+- no active observational run has yet been executed on a strict full-bulk
+  two-metric reference path.
+
+Already active in code:
+
+- paper branch `k = kbar = -1`;
+- global conserved `E` equation;
+- sector dust-density laws;
+- two-metric FLRW RHS ready for a future solver path;
+- common-time `x0` FLRW published equation object;
+- cited exact plus-sector shape object.
+- helper-only layers exist in the repo but are explicitly excluded from the
+  strict paper-native reference:
+  cited calibration, normalization contract, and repo-closed two-metric bulk
+  history wrapper.
+
+So the correct reading is:
+
+- the 2024 paper reference is recreated as a reference branch;
+- the 2024 paper reference now contains only objects fixed explicitly by the
+  paper, with paper underdetermination left open;
+- cited comparison helpers remain available in the repo, but are not counted as
+  active paper-only reference content;
+- the 2024 paper reference is not yet a strict paper-text-only full-bulk
+  materialization;
+- the 2024 paper reference is not a completed no-fit cosmology here;
+- helper closures remain available in the repo but are not counted as the
+  active paper reference;
+- the next branch is paper-native materialization before any observational run.
 
 ## Torsionful Holst/Nieh-Yan Sigma
 

@@ -192,6 +192,19 @@ Important equations:
 
 Current implementation status: used directly in `models.py` and `bao.py`.
 
+### X2022-hal-acceleration-cosmic-expansion - HAL Precursor Bridge
+
+Use level: precursor bridge source only.
+
+Important content:
+
+- Eq. 12 restates the determinant-ratio Janus coupled equations.
+- Eq. 19 gives the global signed-energy conservation law.
+- Eqs. 22-28 package the exact open expansion solution, `q` relation, SN magnitude law, best-fit `q0`, and age claim in one place.
+- Section V states the paper-native `96%` negative-mass / `4%` positive-mass interpretation.
+
+Current implementation status: no direct code dependency needed because the executable pieces are already anchored more cleanly in `M15` and `M18`. Keep this source as a historical/traceability bridge.
+
 ### X2026-variable-constants - Alternative To Inflation
 
 Use level: author document / preprint-like source. Useful for hypothesis generation, not yet independent evidence.

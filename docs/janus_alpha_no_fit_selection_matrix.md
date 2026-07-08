@@ -121,9 +121,16 @@ Current route verdict:
 - the active observable background parameter is `q0/u0`, because the exact
   dimensional `alpha` cancels from dimensionless distance/expansion ratios;
 - `p0_eft_janus_z2_alpha_observational_fit_gate` runs a fine-grid
-  Pantheon+ diagonal + DESI DR2 BAO fit with SN offset and BAO scale profiled;
+  Pantheon+ full-covariance + DESI DR2 BAO fit with SN offset and BAO scale
+  profiled, while keeping the diagonal SN run as a diagnostic;
 - current status is observational sector selection, not a no-fit prediction.
   degenerate;
+- current primary endpoint still runs to the `q0 -> 0-` boundary, so the data
+  prefer the GR-limit edge of the Janus shape family rather than an interior
+  Janus sector;
+- a like-for-like comparison on `Pantheon+ full covariance + DESI DR2 BAO`
+  against coarse `LCDM`/`CPL` baselines gives a clean background no-go for an
+  interior Janus sector;
 - SN+BAO is the minimal serious background selection program;
 - this is scientifically useful, but it is not a no-fit derivation of `alpha`.
 
