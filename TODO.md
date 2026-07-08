@@ -114,6 +114,69 @@
   boundary density, an integrality law, and a mass/charge lattice that can map
   to `alpha_m = -2*pi*G*M_boundary/c^2`. Current status: open plan ready,
   `alpha_generated_now = false`.
+- Sector-theory v0 branch:
+  `P0EFTJanusSectorTheoryV0Gate` records explicit candidate sector laws and
+  forbids hidden alpha fitting. The branch can rank/test sectors against the
+  existing SN+BAO endpoint, but it does not derive alpha no-fit. Current
+  observation smoke: the published `q0=-0.087` sector is not selected by the
+  existing combined SN+BAO endpoint; the live interpretation is observational
+  sector selection, not a prediction.
+- New-idea matrix:
+  `P0EFTJanusNewIdeaMatrixGate` ranks the fresh routes: unimodular/four-form,
+  PT/CPT state law, LL-brane bridge source, Epp/RQF quasilocal energy,
+  topological Casimir, minisuperspace quantization, flux/TQFT, and null
+  boundary charge. All are useful, but none currently generates `alpha`
+  no-fit without an extra Janus-specific state, charge, flux, or boundary law.
+- Unimodular/four-form route:
+  `P0EFTJanusUnimodularFourFormSectorGate` has been pushed beyond the matrix.
+  The route is mathematically coherent: a HT/four-form sector can make the
+  missing scale a global integration constant or flux. It still does not
+  produce `alpha` no-fit because Janus has not derived the `A3/F4` sector,
+  compact cycle, charge unit, primitive flux sector, or flux-to-alpha map.
+- CPT/PT state-law route:
+  `P0EFTJanusCPTPTStateLawGate` has been pushed beyond the matrix. The
+  literature supports the mechanism "global CPT symmetry selects a preferred
+  vacuum", which is conceptually close to Janus. It still does not produce
+  `alpha` until Janus supplies field content on both sheets, a PT/CPT vacuum
+  prescription, renormalized state energy/boundary charge, and a map to
+  `M_bridge/alpha`.
+- LL-brane bridge source route:
+  `P0EFTJanusLLBraneBridgeSourceGate` has been pushed beyond the matrix. This
+  is the best bridge-mass route: null-throat literature supports a real
+  LL-brane source and bridge mass as a function of dynamical tension. It still
+  does not produce `alpha` no-fit until Janus derives or quantizes `chi_LL`
+  through a PT boundary condition, LL auxiliary flux, or global Noether charge.
+- chi_LL selection reprise:
+  `P0EFTJanusChiLLSelectionRepriseGate` confirms this was already partly done:
+  LL-brane source and mass/radius relation exist, discrete `N_gap` sector
+  families exist, and primitive-flux-only selection is a recorded no-go. The
+  remaining non-duplicative target is `PT_boundary_state_selects_chi`, not
+  another scan.
+- PT boundary chi stationarity:
+  `P0EFTJanusPTBoundaryChiStationarityGate` tests the cleanest remaining target.
+  PT symmetry alone can pair/sign-constrain `chi_LL`, but an even PT boundary
+  functional selects `chi=0` unless a boundary charge, flux unit, LL action
+  scale, or nonzero potential minimum is derived. Since `chi=0` removes the
+  bridge source, this route now reduces to a charge/flux/action-scale problem.
+- LL flux chi quantization:
+  `P0EFTJanusLLFluxChiQuantizationGate` records the formal equations connecting
+  LL flux, area, `R_s`, and `chi_LL`. They can discretize `chi_LL` only if the
+  LL charge unit `q_LL`, dynamical `F2_0`, compact worldvolume cycle, physical
+  area gauge, and primitive sector are derived. Current best remaining
+  non-rustine object: derive a minimal LL gauge action `L(F2)` with charge unit.
+- chi_LL derivation frontier verdict:
+  `P0EFTJanusChiLLDerivationFrontierVerdictGate` consolidates the branch.
+  Already closed: LL-brane mass-radius relation, PT symmetry-only stationarity
+  audit, formal LL flux equations, and WILL `p=1/2` action power selection.
+  Still missing: `q_LL`, `F2_0`, `lambda_F2` absolute normalization,
+  primitive `N_gap`/boundary state, and the map to `E_Z2Sigma(a)`. Do not repeat
+  the closed substeps.
+- Remaining new-idea deep audit:
+  `P0EFTJanusRemainingNewIdeaDeepAuditGate` audits Epp/RQF quasilocal energy,
+  topological Casimir, minisuperspace quantization, flux/TQFT quantization, and
+  asymptotic/internal null charge. None closes `alpha` now. Best survivors after
+  the deep audit are LL-brane bridge source, unimodular/four-form sector, and
+  CPT/PT state law.
   First extension complete: the source formula curation now records the complex
   metric, complex Poincare group, Lie algebra action, complex moment pair,
   Souriau pairing, and complex coadjoint action. This improves the Souriau
@@ -202,6 +265,13 @@
   prequantization-only and closed-TQFT Hamiltonian routes. Result:
   labels can be discrete, but no boundary mass operator or energy unit is
   derived without an extra quantum action/time-generator/area-to-mass law.
+- Asymptotic/null boundary symmetry branch:
+  `JanusFormal.AsymptoticNullBoundarySymmetry` and
+  `docs/janus_asymptotic_null_boundary_symmetry.md` test the BMS/Newman-Penrose/
+  covariant-phase-space route. This is the right framework for boundary energy
+  charges, but it does not close live because Janus has not supplied either an
+  asymptotically flat null infinity or an active internal null bridge with
+  boundary conditions, normalized generator, integrable charge and sector law.
 - No-extension frontier: active Z2/Sigma BAO is now blocked by two independent
   open quantities, `R_Sigma` and the absolute projected baryon Noether charge.
   The local `sqrt(R[h])` counterterm can cancel the Cartan/GHY radial block, but

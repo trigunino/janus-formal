@@ -1,4 +1,7 @@
 import JanusFormal.ActiveZ2Sigma
+import JanusFormal.JanusNewIdeaSectorProgram
+import JanusFormal.P0EFTJanusUnimodularFourFormSectorGate
+import JanusFormal.JanusSectorTheoryV0
 import JanusFormal.Basic
 import JanusFormal.P0ClosureAxiomatics
 import JanusFormal.P0DynamicSourceObligations
@@ -475,3 +478,4 @@ import JanusFormal.P0EFTJanusZ4NonlinearResidualFactorization
 import JanusFormal.P0EFTJanusZ4NonlinearELResidualObligationGate
 import JanusFormal.P0EFTJanusZ4GaugeFixingVariationUniquenessGate
 import JanusFormal.QuantumFirstBoundaryState
+import JanusFormal.AsymptoticNullBoundarySymmetry

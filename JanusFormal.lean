@@ -14,3 +14,6 @@ facade. Build them explicitly only when auditing history:
 import JanusFormal.ActiveZ2Sigma
 import JanusFormal.ComplexRealityStateLaw
 import JanusFormal.QuantumFirstBoundaryState
+import JanusFormal.AsymptoticNullBoundarySymmetry
+import JanusFormal.JanusSectorTheoryV0
+import JanusFormal.JanusNewIdeaSectorProgram

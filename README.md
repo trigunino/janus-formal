@@ -118,6 +118,11 @@ Statut separe par niveau de preuve :
 - `janus_complex_reality_combined_branch_mathematical_candidate_survives = True`
 - `janus_complex_reality_combined_branch_alpha_law_closed = False`
 - `janus_complex_reality_sigma_boundary_projection_active_ready = False`
+- `janus_sector_theory_v0_ready = True`
+- `janus_sector_theory_v0_no_fit_alpha_generated = False`
+- `janus_sector_theory_v0_observation_selected_sector_available = True`
+- `janus_new_idea_matrix_ready = True`
+- `janus_new_idea_matrix_no_fit_alpha_generated = False`
 - `janus_complex_reality_kks_boundary_density_ready = False`
 - `janus_complex_reality_lean_formalization_ready = True`
 - `janus_complex_reality_alpha_generated_now = False`
@@ -128,6 +133,11 @@ Statut separe par niveau de preuve :
 - `janus_quantum_first_boundary_mass_operator_routes_exhausted = True`
 - `janus_quantum_first_no_fit_alpha_generated = False`
 - `janus_quantum_first_blocker = boundary_mass_operator_or_primitive_sector_law`
+- `janus_asymptotic_null_boundary_symmetry_branch_opened = True`
+- `janus_asymptotic_null_boundary_best_route = internal_null_PT_bridge_if_integrable`
+- `janus_asymptotic_null_boundary_mass_charge_derived = False`
+- `janus_asymptotic_null_boundary_no_fit_alpha_generated = False`
+- `janus_asymptotic_null_boundary_blocker = Janus_null_or_asymptotic_boundary_data`
 - `torsionful_holst_nieh_yan_sigma_default_next = False`
 - `torsion_source_on_sigma_active = False`
 - `torsionful_holst_nieh_yan_sigma_archive_ready = True`
