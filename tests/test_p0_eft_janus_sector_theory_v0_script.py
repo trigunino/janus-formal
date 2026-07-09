@@ -6,7 +6,7 @@ from scripts.run_p0_eft_janus_sector_theory_v0_observation_smoke import (
 )
 
 
-class JanusSectorTheoryV0Tests(unittest.TestCase):
+class JanusAlphaSectorTheoryTests(unittest.TestCase):
     def test_matrix_keeps_no_fit_alpha_closed(self):
         payload = build_matrix()
 

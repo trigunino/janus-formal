@@ -29,7 +29,7 @@ def build_payload() -> dict[str, Any]:
             "observations_used_as_charge_reference",
         ],
         "branch_opened": True,
-        "next_gate": "AsymptoticNullBoundaryCandidateMatrixGate",
+        "next_gate": "AsymptoticNullBoundaryChargesCandidateMatrixGate",
         "gate_passed": True,
     }
 

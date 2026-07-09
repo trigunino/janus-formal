@@ -123,7 +123,7 @@ def build_payload() -> dict:
         "goal_scope_status": (
             "Diagnostic objective satisfied; observational Planck viability remains false. "
             "Internal CMB/Z4 closure triad is now separated from the observational Planck gate. "
-            "Standard active validation is JanusFormal only; CMBHistoricalDiagnostics is archive-only."
+            "Standard active validation is JanusFormal only; CMBPlanckDiagnosticAttempts is archive-only."
         ),
     }
 

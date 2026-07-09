@@ -10,7 +10,7 @@ class P0EFTJanusZ2SigmaDocsAlignmentAuditTests(unittest.TestCase):
         self.assertEqual(payload["forbidden_active_z4_snippets"], [])
         self.assertTrue(payload["docs_aligned_to_z2_sigma"])
         self.assertTrue(payload["required_markers"]["active_geometry_core_declared"])
-        self.assertTrue(payload["required_markers"]["legacy_z4_archived_declared"])
+        self.assertTrue(payload["required_markers"]["z4_cmb_non_evidence_declared"])
         self.assertTrue(payload["required_markers"]["active_audit_declared"])
 
 

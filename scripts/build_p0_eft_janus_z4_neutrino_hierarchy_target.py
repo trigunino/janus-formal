@@ -32,7 +32,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-neutrino-hierarchy-target",
-        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4NeutrinoHierarchyTarget",
+        "lean_module": "JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram.Gates.P0EFTJanusZ4NeutrinoHierarchyTarget",
         "equations": {key: str(value) for key, value in equations.items()},
         "checks": checks,
         "neutrino_target_ready": all(

@@ -55,7 +55,7 @@ def build_payload() -> dict[str, Any]:
             "The missing Janus-specific input is a promoted null/asymptotic boundary "
             "with boundary conditions, time generator and integrable charge."
         ),
-        "next_gate": "AsymptoticNullBoundaryAlphaBridgeGate",
+        "next_gate": "AsymptoticNullBoundaryChargesAlphaBridgeGate",
         "gate_passed": True,
     }
 

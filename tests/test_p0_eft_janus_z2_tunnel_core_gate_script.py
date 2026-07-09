@@ -11,7 +11,7 @@ class P0EFTJanusZ2TunnelCoreGateTests(unittest.TestCase):
         self.assertTrue(payload["core"]["z2_cover_is_active_geometry"])
         self.assertTrue(payload["core"]["around_sigma_maps_to_z2_generator"])
         self.assertFalse(payload["core"]["cyclic_z4_required"])
-        self.assertTrue(payload["core"]["legacy_z4_archived"])
+        self.assertTrue(payload["core"]["z4_cmb_marked_non_evidence"])
         self.assertTrue(payload["z2_tunnel_core_closed"])
         self.assertFalse(payload["full_cosmology_prediction_ready_no_fit"])
 

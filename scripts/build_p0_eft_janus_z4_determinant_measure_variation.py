@@ -27,7 +27,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-determinant-measure-variation",
-        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4DeterminantMeasureVariation",
+        "lean_module": "JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram.Gates.P0EFTJanusZ4DeterminantMeasureVariation",
         "delta_log_B": str(delta_log_b),
         "delta_B": str(delta_b),
         "delta_B_inverse": str(delta_b_inv),

@@ -5,7 +5,7 @@ from scripts.build_p0_eft_janus_complex_reality_state_law_opening_gate import (
 )
 
 
-class ComplexRealityStateLawOpeningGateTests(unittest.TestCase):
+class ComplexRealityQuantumStateLawOpeningGateTests(unittest.TestCase):
     def test_branch_is_opened_without_claiming_alpha(self):
         payload = build_payload()
 

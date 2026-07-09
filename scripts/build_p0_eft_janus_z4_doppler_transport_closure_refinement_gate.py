@@ -121,7 +121,7 @@ def build_payload() -> dict:
         "no_free_slip_parameter": True,
         "no_free_eta_ratio": True,
         "raw_toy_LOS_forbidden": True,
-        "next_required_gate": "P0EFTJanusZ4WeakSurfaceBranchArchiveGate"
+        "next_required_gate": "P0EFTJanusZ4WeakSurfaceBranchDiagnosticClosureGate"
         if refined_parallel >= 0.70
         else "P0EFTJanusZ4DerivedSlipSurfaceResidualDiagnosticGate",
         "profiled_planck_candidate": False,

@@ -33,7 +33,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-background-closure-scaffold",
-        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4BackgroundClosure",
+        "lean_module": "JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram.Gates.P0EFTJanusZ4BackgroundClosure",
         "master_density": str(master_rho),
         "master_pressure": str(master_p),
         "friedmann_constraint": str(friedmann),

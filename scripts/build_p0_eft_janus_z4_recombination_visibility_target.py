@@ -25,7 +25,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-recombination-visibility-target",
-        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4RecombinationVisibilityTarget",
+        "lean_module": "JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram.Gates.P0EFTJanusZ4RecombinationVisibilityTarget",
         "electron_density": str(n_e),
         "tau_dot": str(tau_dot),
         "visibility": str(visibility),

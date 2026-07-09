@@ -40,7 +40,7 @@ def build_payload() -> dict:
         "surface_term_orthogonal_residual_norm": float(surface["orthogonal_residual_norm"]),
         "surface_term_dominant_tangent_direction": surface["dominant_tangent_direction"],
         "surface_term_is_orthogonal_diagnostic": interesting,
-        "full_derived_slip_archived": tangent["interpretation_band"] == "carrier_tangent_archive_fast",
+        "full_derived_slip_closed_as_carrier_tangent": tangent["interpretation_band"] == "carrier_tangent_closure_recommended",
         "subchannel_rows": rows,
         "orthogonal_residual_combined": None,
         "orthogonal_residual_decomposed": None,

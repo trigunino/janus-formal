@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 ROOT_PATH = Path("JanusFormal.lean")
-BRANCH_HEAD = Path("JanusFormal/Branches/Z2SigmaRegular.lean")
+BRANCH_HEAD = Path("JanusFormal/Branches/Z2SigmaRegularThroat.lean")
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_branch_head_audit.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_z2_sigma_branch_head_audit.json")
 
@@ -39,10 +39,10 @@ def build_payload() -> dict:
     root_imports = _imports(ROOT_PATH)
     branch_imports = _imports(BRANCH_HEAD)
     expected_branch_imports = [
-        f"JanusFormal.Branches.Z2SigmaRegular.{name}" for name in SUBHEADS
+        f"JanusFormal.Branches.Z2SigmaRegularThroat.{name}" for name in SUBHEADS
     ]
     subhead_paths = [
-        Path(f"JanusFormal/Branches/Z2SigmaRegular/{name}.lean") for name in SUBHEADS
+        Path(f"JanusFormal/Branches/Z2SigmaRegularThroat/{name}.lean") for name in SUBHEADS
     ]
     subhead_import_counts = {
         path.stem: len(_imports(path)) for path in subhead_paths if path.exists()

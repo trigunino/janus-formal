@@ -56,7 +56,7 @@ def _delta(reference: list[dict[str, float]], source: dict, channel: str) -> dic
 
 def _classification(parallel: float) -> str:
     if parallel > 0.8:
-        return "archive_fast"
+        return "closure_recommended"
     if parallel >= 0.5:
         return "diagnostic_only"
     return "candidate_path_possible"
@@ -86,14 +86,14 @@ def build_payload() -> dict:
         "classification": _classification(full_parallel),
         "candidate_path_possible": full_parallel < 0.5,
         "diagnostic_only": 0.5 <= full_parallel <= 0.8,
-        "archive_fast": full_parallel > 0.8,
+        "closure_recommended": full_parallel > 0.8,
         "spectra_generation_allowed": False,
         "Planck_trial_allowed": False,
         "candidate_promotion_allowed": False,
         "rho_eff_shortcut_forbidden": True,
         "direct_Cl_patch_forbidden": True,
         "raw_toy_LOS_forbidden": True,
-        "next_required_gate": "P0EFTJanusZ4TwoSectorResidualDiagnosticGate" if full_parallel < 0.5 else "archive_or_refine_two_sector_source",
+        "next_required_gate": "P0EFTJanusZ4TwoSectorResidualDiagnosticGate" if full_parallel < 0.5 else "close_or_refine_two_sector_source",
         "profiled_planck_candidate": False,
         "full_planck_validation": False,
     }

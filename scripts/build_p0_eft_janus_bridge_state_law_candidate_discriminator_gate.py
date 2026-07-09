@@ -47,7 +47,7 @@ def build_payload() -> dict[str, Any]:
             "no_invented_sigma_density": True,
             "no_single_route_promotion": True,
         },
-        "next_gate": "P0EFTJanusBridgeStateLawCompositeClosureGate",
+        "next_gate": "P0EFTJanusAlphaBridgeStateLawCompositeClosureGate",
         "chi_LL_selected_no_fit": False,
         "gate_passed": True,
     }

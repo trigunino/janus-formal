@@ -4,12 +4,11 @@
 
 - `JanusFormal.lean` is intentionally minimal.
 - `JanusFormal/Core.lean` is the no-Mathlib shared kernel.
-- `JanusFormal/Lib/` contains reusable shared bricks.
+- `JanusFormal/Shared/` contains reusable shared bricks.
 - `JanusFormal/Branches/` contains one public head per branch.
 - `docs/janus_branch_registry.md` records branch status and blockers.
-- `JanusFormal/NullSigmaPTBridge.lean` is a separate diagnostic facade for the
-  null-Sigma/PT-bridge attempt and is exposed through
-  `JanusFormal.Branches.NullPTBridge`.
+- `JanusFormal/Branches/NullPTBridgeMass.lean` is the branch head for the
+  null-Sigma/PT-bridge mass attempt.
 - `P0EFTJanusZ2PT67*` modules are the active chapter-6.7 regular PT-transfer
   surface route. They are exposed through the Z2/Sigma branch head because they produce
   nondegenerate `h_ab`, unit normal, local `K_ab`, and `DeltaK_PT=0`.
@@ -27,19 +26,19 @@ Daily validation:
 python -m unittest tests.test_p0_eft_janus_z2_sigma_branch_head_audit_script
 python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script
 lake build JanusFormal
-lake build JanusFormal.Branches.Z2SigmaRegular
-lake build JanusFormal.Branches.NullPTBridge
+lake build JanusFormal.Branches.Z2SigmaRegularThroat
+lake build JanusFormal.Branches.NullPTBridgeMass
 ```
 
-## Historical Branches
+## Diagnostic And Blocked Branches
 
-- `JanusFormal/Branches/CMBHistoricalDiagnostics.lean` groups old CMB/Planck diagnostics.
-- `JanusFormal/Branches/Z4HistoricalProgram.lean` groups the old Z4/CMB solver route.
-- `JanusFormal/Branches/P0EarlyProgram.lean` groups first exploratory P0 modules.
-- `JanusFormal/Branches/P0EFTEarlyProgram.lean` groups old EFT/orbifold/Holst attempts.
-- These are real branch heads, not a separate `Legacy/` filesystem category.
-- Their status is historical/blocked unless a later branch explicitly revives one
-  as active evidence.
+- `JanusFormal/Branches/CMBPlanckDiagnosticAttempts.lean` groups CMB/Planck diagnostic attempts.
+- `JanusFormal/Branches/Z4CMBTopologyResetBlockedProgram.lean` groups the Z4/CMB solver route blocked by the topology reset.
+- `JanusFormal/Branches/P0BimetricOrbifoldPrototypeProgram.lean` groups first bimetric/orbifold prototype modules.
+- `JanusFormal/Branches/P0EFTOrbifoldHolstPrototypeProgram.lean` groups EFT/orbifold/Holst prototype modules.
+- These are real branch heads, not a separate catch-all old-attempt filesystem category.
+- Their status is diagnostic/blocked unless a later branch explicitly revives one
+  as active evidence with a new branch entry.
 - Old Git branches `codex/sigma-plugstar-ejection-threshold-gate` and
   `codex/sigma-point-collapse-limit-gate` are ancestors of `main`; their content
   is now organized by files/facades rather than needed as active branch state.
@@ -48,7 +47,7 @@ lake build JanusFormal.Branches.NullPTBridge
 
 - `src/janus_lab/bao.py`, `bao_maps.py`, `constants.py`, `data.py`,
   `statistics.py`, and geometry/numerics helpers are common library modules.
-- `src/janus_lab/z4_*.py` is historical diagnostic infrastructure and must not be
+- `src/janus_lab/z4_*.py` is diagnostic Z4/CMB infrastructure and must not be
   used as active Z2/Sigma evidence.
 - `src/janus_lab/z2_pt67_*.py` is active regular-Sigma geometry.
 - `src/janus_lab/z2_null_sigma_*.py` is diagnostic null-boundary geometry.
@@ -56,6 +55,6 @@ lake build JanusFormal.Branches.NullPTBridge
 ## Policy
 
 - Do not use a global all-import build in the normal loop.
-- Do not use archived Z4/CMB results as active model evidence.
+- Do not use Z4/CMB diagnostic results as active model evidence.
 - Add new branch entry points under `JanusFormal/Branches/`.
-- Put reusable code under `JanusFormal/Lib/`.
+- Put reusable code under `JanusFormal/Shared/`.

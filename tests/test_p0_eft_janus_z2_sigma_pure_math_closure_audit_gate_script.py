@@ -13,7 +13,7 @@ class P0EFTJanusZ2SigmaPureMathClosureAuditGateTests(unittest.TestCase):
             "p0_eft_janus_z2_sigma_hard_theorem_target_registry",
         )
         self.assertTrue(payload["z2_tunnel_core_closed"])
-        self.assertTrue(payload["legacy_z4_archived"])
+        self.assertTrue(payload["z4_cmb_marked_non_evidence"])
         self.assertTrue(payload["hard_locks"]["rp4_pin_sign_computed"])
         self.assertTrue(payload["hard_locks"]["sigma_aps_pin_lift_obligations_declared"])
         self.assertTrue(payload["hard_locks"]["sigma_aps_local_throat_model_closed"])

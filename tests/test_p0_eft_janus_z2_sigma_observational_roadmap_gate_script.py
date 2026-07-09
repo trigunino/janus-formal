@@ -9,7 +9,7 @@ class P0EFTJanusZ2SigmaObservationalRoadmapGateTests(unittest.TestCase):
 
         self.assertEqual(payload["active_core"], "Z2_tunnel_Sigma")
         self.assertTrue(payload["z2_sigma_pure_math_closed"])
-        self.assertTrue(payload["legacy_z4_archived"])
+        self.assertTrue(payload["z4_cmb_marked_non_evidence"])
         self.assertTrue(payload["z4_physics_reactivation_forbidden"])
         self.assertTrue(payload["equation_locks"]["background_equations_derived"])
         self.assertTrue(payload["equation_locks"]["sigma_photon_geodesic_map_derived"])

@@ -21,7 +21,7 @@ def build_payload() -> dict:
         "status": "janus-z2-sigma-observational-roadmap-gate",
         "active_core": "Z2_tunnel_Sigma",
         "z2_sigma_pure_math_closed": True,
-        "legacy_z4_archived": True,
+        "z4_cmb_marked_non_evidence": True,
         "z4_physics_reactivation_forbidden": True,
         "equation_locks": equation_locks,
         "observation_equation_locks_closed": all(
@@ -38,7 +38,7 @@ def build_payload() -> dict:
         ],
         "forbidden": [
             "reactivate_cyclic_z4_without_monodromy",
-            "reuse_archived_z4_cmb_candidate_as_active_evidence",
+            "reuse_z4_cmb_diagnostic_candidate_as_active_evidence",
             "claim_full_no_fit_cosmology",
             "use_planck_lcdm_compressed_parameters_as_validation",
         ],
@@ -54,7 +54,7 @@ def write_reports() -> dict:
         "",
         f"Active core: `{payload['active_core']}`",
         f"Pure math closed: `{payload['z2_sigma_pure_math_closed']}`",
-        f"Legacy Z4 archived: `{payload['legacy_z4_archived']}`",
+        f"Z4/CMB marked non-evidence: `{payload['z4_cmb_marked_non_evidence']}`",
         f"Observation equation locks closed: `{payload['observation_equation_locks_closed']}`",
         f"Observation prediction inputs ready: `{payload['observation_prediction_inputs_ready']}`",
         f"Full cosmology no-fit ready: `{payload['full_cosmology_prediction_ready_no_fit']}`",

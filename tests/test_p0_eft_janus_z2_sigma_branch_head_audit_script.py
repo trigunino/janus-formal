@@ -10,7 +10,7 @@ class P0EFTJanusZ2SigmaBranchHeadAuditTests(unittest.TestCase):
         self.assertTrue(payload["root_facade_minimal"])
         self.assertEqual(payload["root_imports"], ["JanusFormal.Core"])
         self.assertEqual(
-            payload["branch_head"], "JanusFormal/Branches/Z2SigmaRegular.lean"
+            payload["branch_head"], "JanusFormal/Branches/Z2SigmaRegularThroat.lean"
         )
         self.assertTrue(payload["branch_head_split"])
         self.assertTrue(payload["branch_layout_clean"])

@@ -37,8 +37,8 @@ def _route_status(route_id: int, payload: dict) -> str:
         return "selector_ready"
     if payload.get("archive_torsionful_branch_recommended") is True:
         return "archive_ready"
-    if payload.get("archive_branch_recommended") is True:
-        return "archive_ready"
+    if payload.get("state_sector_closure_blocked") is True:
+        return "state_sector_closure_blocked"
     if payload.get("chi_LL_derivation_ready") is False:
         return "evaluated_blocked_or_conditional"
     if payload.get("gate_passed") is True:

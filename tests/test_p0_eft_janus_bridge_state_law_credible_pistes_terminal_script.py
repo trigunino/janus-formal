@@ -5,7 +5,7 @@ from scripts.build_p0_eft_janus_bridge_state_law_credible_pistes_terminal_gate i
 )
 
 
-class JanusBridgeStateLawCrediblePistesTerminalTests(unittest.TestCase):
+class JanusAlphaBridgeStateLawCrediblePistesTerminalTests(unittest.TestCase):
     def test_terminal_verdict_blocks_no_fit_without_boundary_state_law(self):
         payload = build_payload()
 

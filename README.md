@@ -31,7 +31,7 @@ Statut separe par niveau de preuve :
 - `z2_null_sigma_llbrane_chi_selection_exhausted = True`
 - `z2_null_sigma_chi_LL_abs_inverse_m_ready = False`
 - `z2_null_sigma_chi_LL_requires_state_law_or_extension_input = True`
-- `z2_alpha_branch_archive_ready = True`
+- `z2_alpha_state_sector_closure_blocked = True`
 - `z2_alpha_classification = continuous_global_energy_state_sector`
 - `z2_alpha_branch_structural_closure = True`
 - `z2_alpha_absolute_scale_underdetermined = True`
@@ -61,7 +61,7 @@ Statut separe par niveau de preuve :
 - `the_janus_cosmological_model_2024_active_absolute_normalization_contract_present = False`
 - `the_janus_cosmological_model_2024_cited_calibration_bundle_present = True`
 - `the_janus_cosmological_model_2024_active_background_reference_path_is_full_published_bulk = False`
-- `the_janus_cosmological_model_2024_historical_background_proxy_is_full_published_bulk = False`
+- `the_janus_cosmological_model_2024_diagnostic_background_proxy_is_full_published_bulk = False`
 - `the_janus_cosmological_model_2024_branch_frozen = False`
 - `the_janus_cosmological_model_2024_frontier_branch_frozen = True`
 - `the_janus_cosmological_model_2024_current_source_set_exploration_exhausted = True`
@@ -158,7 +158,7 @@ Statut separe par niveau de preuve :
 - `z2_sigma_boundary_leg_numeric_state_ready = False`
 - `z2_sigma_boundary_leg_pair_charge_reduction_ready = True`
 - `z2_sigma_boundary_leg_pair_charge_nonzero = False`
-- `legacy_z4_modules_archived = True`
+- `z4_cmb_modules_marked_non_evidence = True`
 - `rp4_base_pin_sign_computed = True`
 - `rp4_base_pin_plus_exists = True`
 - `rp4_base_pin_minus_exists = False`
@@ -483,26 +483,26 @@ Historique CMB/Z4 archive :
   (`delta_chi2 ~= -9.20`, ratio de preservation `~=1.000`) ;
 - statut exact : `boltzmann_closed_effective_z4_cmb_candidate`, pas validation
   Planck globale.
-- la complétude likelihood autorise le trial candidat, mais bloque la validation
-  Planck complète car les standalone high-l TE/EE restent absents localement ;
+- la complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©tude likelihood autorise le trial candidat, mais bloque la validation
+  Planck complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨te car les standalone high-l TE/EE restent absents localement ;
 - la robustesse locale du candidat passe : meilleur point non-edge, courbure
-  locale détectée, gain conserve sous `lmax`/TCA.
-- le candidat est gelé pour la prochaine validation : pas de retuning, pas de
-  nouveau canal, pas d'ouverture slip/recombinaison/visibilité/miroir/primordial ;
-- prochain verrou externe : acquérir ou raccorder standalone high-l TE/EE, puis
-  tester exactement le même candidat.
-- le handshake standalone TE/EE doit vérifier `C_l/D_l`, unités, signe TE,
+  locale dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©tectÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e, gain conserve sous `lmax`/TCA.
+- le candidat est gelÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© pour la prochaine validation : pas de retuning, pas de
+  nouveau canal, pas d'ouverture slip/recombinaison/visibilitÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©/miroir/primordial ;
+- prochain verrou externe : acquÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rir ou raccorder standalone high-l TE/EE, puis
+  tester exactement le mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âªme candidat.
+- le handshake standalone TE/EE doit vÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rifier `C_l/D_l`, unitÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©s, signe TE,
   indexation `ell`, nuisance vector, foregrounds et sanity GR avant tout trial
-  de décomposition high-l.
+  de dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©composition high-l.
 
 Freeze rule after checkpoint `8ce53806`: no new Z4 physics or parameter
 retuning is allowed until standalone high-l TE/EE likelihood coverage is
 acquired and the frozen candidate is rerun unchanged.
 
-Archived CMB/Z4 master-equation status:
+Diagnostic CMB/Z4 master-equation status:
 
 - patchwork slip/surface/minus-sector branches are frozen as diagnostic-only;
-- the unique `U_Z4` master path is archived as diagnostic-only;
+- the unique `U_Z4` master path is closed as diagnostic-only;
 - localized-transition source replay is non-tangent (`parallel_fraction ~= 0.1906`);
 - raw diagnostic spectra are pre-likelihood locked by TT/EE shape artifacts;
 - bounded-tanh shape regularization clears those artifacts diagnostically, but
@@ -962,7 +962,7 @@ Archived CMB/Z4 master-equation status:
   solved certificate can feed Cartan-GHY without precomputed `K_*` arrays.
 - `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate` reduces the Cartan-GHY radial
   block structurally as `delta_RSigma[sqrt(|h|) K]`; evaluation as a function of
-  scale factor still requires active `R_Sigma(a)` and `X_±(a)`.
+  scale factor still requires active `R_Sigma(a)` and `X_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±(a)`.
 - `P0EFTJanusZ2SigmaHolstNiehYanRadialBlockGate` declares the Holst/Nieh-Yan
   radial block as the variation of the Sigma torsion pullback. Its scale-factor
   evaluation still requires the active torsion pullback and Immirzi radial
@@ -975,7 +975,7 @@ Archived CMB/Z4 master-equation status:
   conditional thin-shell map: if `R_Sigma(a)` is supplied, proper-time/radial
   gauge equations determine `X_+/-`. It does not derive `R_Sigma(a)`.
 - `P0EFTJanusZ2SigmaActiveTunnelEmbeddingFromRadiusGate` imports generic
-  dynamic-shell kinematics and declares the map `R_Sigma(a) -> X_±(a)`. It
+  dynamic-shell kinematics and declares the map `R_Sigma(a) -> X_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±(a)`. It
   remains open until the radial variational equation is solved without an
   observational radius fit.
 - `P0EFTJanusZ2SigmaActiveEmbeddingReadinessGate` records that primary
@@ -1042,7 +1042,7 @@ Archived CMB/Z4 master-equation status:
   for the shell flux projection `T_munu e_a^mu n^nu`: the active tunnel supplies
   Sigma and the Z2 coorientation sign, but the nondegenerate induced metric,
   tangent traces and unit normals remain blocked on the resolved frame bundle
-  and active `X_±(a)` embedding.
+  and active `X_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±(a)` embedding.
 - `P0EFTJanusZ2SigmaMatterFluxTransparencyReadinessGate` records the transparent
   thin-shell criteria `J_n^Z2Sigma=0` and `F_a^Z2Sigma=0`; it remains blocked
   until active embedding, Sigma normals, normal current and bulk-stress
@@ -1194,7 +1194,7 @@ Archived CMB/Z4 master-equation status:
   projected Dirac normal-current and bulk-stress flux frontiers, and is not yet
   derived for the active throat.
 - `P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate` records the non-transparent
-  branch: project `T^±_{μν}` on Sigma tangents/normals. It is blocked on active
+  branch: project `T^ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±_{ÃƒÆ’Ã†â€™Ãƒâ€¦Ã‚Â½ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€¦Ã‚Â½ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½}` on Sigma tangents/normals. It is blocked on active
   bulk stresses and active embedding data.
 - `P0EFTJanusZ2SigmaBulkStressOfAGate` declares the plus/minus bulk stress
   tensors on the active throat. It remains open until sector densities/pressures
@@ -1425,7 +1425,7 @@ Archived CMB/Z4 master-equation status:
   requires the live curvature-branch assembler before converting
   `R_curv_Z2Sigma` into the projective spatial-volume input.
 - `P0EFTJanusZ2SigmaActiveEmbeddingToFLRWExtrinsicCurvatureInputGate` declares
-  the missing adapter from active `R_Sigma(a), X_±(a)`, tangents and normals to
+  the missing adapter from active `R_Sigma(a), X_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±(a)`, tangents and normals to
   `flrw_extrinsic_curvature_grid_inputs.json`. It remains red until the active
   tunnel embedding is derived.
 - `P0EFTJanusZ2SigmaRSigmaSolutionToEmbeddingCurvatureBranchGate` declares the
@@ -1565,13 +1565,13 @@ Archived CMB/Z4 master-equation status:
   chain is still open and cannot feed `R_Sigma(a)` yet.
 - `P0EFTJanusZ2SigmaEmbeddingGaugePolicyGate` records the allowed shell
   proper-time/radial embedding gauges. These remove parametrization redundancy
-  but do not derive `R_Sigma(a)` or close `X_±(a)`.
+  but do not derive `R_Sigma(a)` or close `X_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±(a)`.
 - `P0EFTJanusZ2SigmaEmbeddingGaugeEquationGate` imports the standard thin-shell
-  induced-metric normalization equations. `T_±` derivatives are fixed once
+  induced-metric normalization equations. `T_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±` derivatives are fixed once
   `R_Sigma(a)` is known; the active throat-radius law remains open.
 - `P0EFTJanusZ2SigmaTunnelEmbeddingConstraintCountGate` records that the current
   matching, Z2-equivariance and regular-throat constraints declare the embedding
-  problem but do not determine `X_±(a)` without a throat-radius law and embedding
+  problem but do not determine `X_ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±(a)` without a throat-radius law and embedding
   gauge.
 - `P0EFTJanusZ2SigmaActiveTunnelEmbeddingOfAGate` is the active upstream
   embedding lock: `X_+^mu(a,xi)` and `X_-^mu(a,xi)` must be derived from the
@@ -1638,7 +1638,7 @@ Archived CMB/Z4 master-equation status:
 - `P0EFTJanusZ2SigmaNonCompressedObservationGate` is the current outer gate:
   equations are closed, but growth, BAO, and CMB must still pass direct
   non-compressed observational gates before any full no-fit claim.
-- `P0EFTJanusLegacyZ4ArchivePolicyGate` archives old Z4/CMB modules as
+- `P0EFTJanusZ4CMBNonEvidencePolicyGate` archives old Z4/CMB modules as
   diagnostic history; they are not active geometry.
 - Active replacement gates are:
   `P0EFTJanusRP4PinSignComputationGate`,
@@ -1811,9 +1811,9 @@ Point d'entree principal actif :
 
 - `JanusFormal.lean`
 - `JanusFormal/Core.lean`
-- `JanusFormal/Lib/`
+- `JanusFormal/Shared/`
 - `JanusFormal/Branches/`
-- `JanusFormal/Branches/Z2SigmaRegular/Topology/Gates/P0EFTJanusZ2SigmaPureMathClosureAuditGate.lean`
+- `JanusFormal/Branches/Z2SigmaRegularThroat/Topology/Gates/P0EFTJanusZ2SigmaPureMathClosureAuditGate.lean`
 - `scripts/build_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate.py`
 - `docs/janus_repository_layout.md`
 - `docs/janus_branch_registry.md`
@@ -1830,13 +1830,13 @@ lake build JanusFormal
 Validation par branche :
 
 ```bash
-lake build JanusFormal.Branches.Z2SigmaRegular
-lake build JanusFormal.Branches.NullPTBridge
-lake build JanusFormal.Branches.BridgeStateLaw
-lake build JanusFormal.Branches.NativeBAORuler
+lake build JanusFormal.Branches.Z2SigmaRegularThroat
+lake build JanusFormal.Branches.NullPTBridgeMass
+lake build JanusFormal.Branches.AlphaBridgeStateLaw
+lake build JanusFormal.Branches.NativeBAORulerContract
 ```
 
-Validation CMB/Z4 historique seulement si une branche dédiée est réouverte :
+Validation CMB/Z4 historique seulement si une branche dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©diÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e est rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ouverte :
 
 ```bash
 python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
@@ -1850,20 +1850,19 @@ python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_acquisition_gate_s
 python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_handshake_gate_script
 ```
 
-`JanusFormal.Branches.CMBHistoricalDiagnostics` est la branche historique des anciens essais
+`JanusFormal.Branches.CMBPlanckDiagnosticAttempts` est la branche historique des anciens essais
 mono-metriques CAMB/Planck. Ne pas l'utiliser comme validation standard du
 solveur Z4 natif ni comme preuve physique.
 
 ## Organisation utile
 
 - `JanusFormal.lean` importe seulement `JanusFormal.Core`.
-- `JanusFormal/Lib/` contient les petites librairies communes.
-- `JanusFormal/Branches/` contient une tête par branche.
+- `JanusFormal/Shared/` contient les briques communes.
+- `JanusFormal/Branches/` contient une tete buildable par branche.
 - `docs/janus_branch_registry.md` donne le statut et le build de chaque branche.
-- `JanusFormal/Branches/CMBHistoricalDiagnostics.lean` regroupe les anciens diagnostics mono-metriques
-  CAMB/Planck. Ils restent hors validation CMB/Z4 standard.
-- Les anciens `P0EFT*.lean` sont ranges sous `JanusFormal/Branches/`,
-  `JanusFormal/Lib/` selon leur proprietaire. Les anciens essais sont des branches historiques, pas un dossier `Legacy/`.
+- `JanusFormal/Branches/CMBPlanckDiagnosticAttempts.lean` regroupe les anciens diagnostics mono-metriques CAMB/Planck.
+- Les anciens `P0EFT*.lean` sont ranges sous `JanusFormal/Branches/` ou `JanusFormal/Shared/` selon leur proprietaire.
+- Les essais non actifs sont des branches diagnostiques avec bloqueur explicite, pas un dossier fourre-tout.
 - `scripts/build_p0_eft_run*.py` genere les payloads et rapports d'audit.
 - `tests/test_p0_eft_run*.py` verifie les statuts exposes par ces scripts.
 - `data/processed/p0_eft_fsigma8/sdss_dr16_fsigma8_points.csv` contient le jeu traite minimal suivi.
@@ -1881,7 +1880,7 @@ Le depot exclut volontairement :
 
 Ces elements sont regenerables localement et ne doivent pas etre pousses.
 
-## Archived CMB/Z4 checkpoint
+## CMB/Z4 Diagnostic Checkpoint
 
 - Standalone high-l TE/EE Cobaya wrappers and `.clik` data are available locally.
 - GR/CAMB standalone TE/EE handshake passes.
@@ -2054,9 +2053,9 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - two-sector carrier-tangent projection:
   - projects Weyl, monopole, Pi and full two-sector source diagnostics against GR/CAMB carrier tangents;
   - classifies the branch before any spectra or Planck trial;
-  - current full two-sector diagnostic is `archive_fast` (`parallel_fraction ~= 0.998`, A_s dominated).
-- two-sector carrier-degenerate archive:
-  - archives the current full two-sector source as carrier-degenerate while preserving the structural history;
+  - current full two-sector diagnostic is `closure_recommended` (`parallel_fraction ~= 0.998`, A_s dominated).
+- two-sector carrier-degenerate closure:
+  - closes the current full two-sector source as carrier-degenerate while preserving the structural trace;
   - keeps spectra, Planck, promotion and retuning blocked.
 - two-sector source construction audit:
   - decomposes plus, minus, symmetric, antisymmetric Z4, relative-isocurvature, projection-only, Weyl, Theta0 and Pi source components;
@@ -2169,9 +2168,9 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
 - `lake build JanusFormal` is now a lightweight root sanity build importing
   only `JanusFormal.Core`.
 - Build one branch head explicitly:
-  - `lake build JanusFormal.Branches.BridgeStateLaw`
-  - `lake build JanusFormal.Branches.NativeBAORuler`
-  - `lake build JanusFormal.Branches.Z2SigmaRegular`
-  - `lake build JanusFormal.Branches.NullPTBridge`
-  - `lake build JanusFormal.Branches.QuantumBoundaryState`
-  - `lake build JanusFormal.Branches.ComplexRealityStateLaw`
+  - `lake build JanusFormal.Branches.AlphaBridgeStateLaw`
+  - `lake build JanusFormal.Branches.NativeBAORulerContract`
+  - `lake build JanusFormal.Branches.Z2SigmaRegularThroat`
+  - `lake build JanusFormal.Branches.NullPTBridgeMass`
+  - `lake build JanusFormal.Branches.QuantumBoundaryStateLaw`
+  - `lake build JanusFormal.Branches.ComplexRealityQuantumStateLaw`

@@ -48,7 +48,7 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
         "S_cross_transport": "source-derived same-bridge transport/cross action for M_-+ and M_+-",
     }
     closure = {
-        "legacy_Z4_archive_policy_imported": True,
+        "z4_CMB_non_evidence_policy_imported": True,
         "Z4_action_reuse_forbidden": True,
         "active_core_is_Z2_tunnel_Sigma": True,
         "sigma_boundary_action_imported": True,
@@ -79,7 +79,7 @@ def build_payload(*, embedding_manifest_path: Path | None = None) -> dict:
     declared_ready = all(
         closure[key]
         for key in [
-            "legacy_Z4_archive_policy_imported",
+            "z4_CMB_non_evidence_policy_imported",
             "Z4_action_reuse_forbidden",
             "active_core_is_Z2_tunnel_Sigma",
             "sigma_boundary_action_imported",

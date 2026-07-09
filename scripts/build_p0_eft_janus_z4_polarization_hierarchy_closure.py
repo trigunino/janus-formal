@@ -63,7 +63,7 @@ def build_payload() -> dict:
             "derive c_v = 0 as absence of velocity leakage in the polarization source",
             "derive c_z4 = 0 as absence of an independent undetermined Z4 polarization source",
         ],
-        "upstream_formal_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4PhotonBaryonSourceClosure",
+        "upstream_formal_module": "JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram.Gates.P0EFTJanusZ4PhotonBaryonSourceClosure",
         "upstream_required_flag": "coefficientsFromFullZ4Action",
         "action_coefficients_derived": False,
         "polarization_hierarchy_physical_ready": False,

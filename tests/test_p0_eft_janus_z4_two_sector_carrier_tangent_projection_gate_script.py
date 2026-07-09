@@ -12,7 +12,7 @@ class P0EFTJanusZ4TwoSectorCarrierTangentProjectionGateTests(unittest.TestCase):
         self.assertIn("full_two_sector", payload["projected_channels"])
         self.assertGreaterEqual(payload["parallel_fraction_full_two_sector"], 0.0)
         self.assertGreaterEqual(payload["perpendicular_fraction_full_two_sector"], 0.0)
-        self.assertIn(payload["classification"], {"archive_fast", "diagnostic_only", "candidate_path_possible"})
+        self.assertIn(payload["classification"], {"closure_recommended", "diagnostic_only", "candidate_path_possible"})
         self.assertFalse(payload["spectra_generation_allowed"])
         self.assertFalse(payload["Planck_trial_allowed"])
         self.assertFalse(payload["candidate_promotion_allowed"])

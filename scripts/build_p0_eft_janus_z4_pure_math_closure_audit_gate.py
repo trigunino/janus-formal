@@ -77,9 +77,9 @@ def build_payload() -> dict:
         "z4_label_policy": "four_sector_packaging_until_order4_monodromy_proved",
         "rp4_pin_sign_recheck_required": True,
         "active_core_gate": "p0_eft_janus_z2_tunnel_core_gate",
-        "legacy_z4_archive_gate": "p0_eft_janus_legacy_z4_archive_policy_gate",
+        "z4_cmb_non_evidence_policy_gate": "p0_eft_janus_z4_cmb_non_evidence_policy_gate",
         "active_core": "Z2_tunnel_Sigma",
-        "legacy_z4_archived": True,
+        "z4_cmb_marked_non_evidence": True,
         "rp4_pin_sign_audit_gate": "p0_eft_janus_rp4_pin_sign_audit_gate",
         "projective_tunnel_cover_ratio_gate": "p0_eft_janus_projective_tunnel_cover_ratio_gate",
         "sigma_boundary_action_support_gate": "p0_eft_janus_sigma_boundary_action_support_gate",
@@ -89,7 +89,7 @@ def build_payload() -> dict:
         and orbifold["global_orbifold_theorem_proved_without_axioms"]
         and action["unique_action_full_variation_proved_without_axioms"]
         and topology_alignment["active_core"] == "Z2_tunnel_Sigma"
-        and topology_alignment["legacy_z4_archived"]
+        and topology_alignment["z4_cmb_marked_non_evidence"]
         and not topology_alignment["rp4_pin_sign_recheck_required"]
     )
     return {
@@ -140,7 +140,7 @@ def write_reports() -> dict:
         f"- natural four-sector group: `{topo['natural_four_sector_group']}`",
         f"- cyclic Z4 monodromy proved: `{topo['cyclic_z4_monodromy_proved']}`",
         f"- active core: `{topo['active_core']}`",
-        f"- legacy Z4 archived: `{topo['legacy_z4_archived']}`",
+        f"- Z4/CMB marked non-evidence: `{topo['z4_cmb_marked_non_evidence']}`",
         f"- RP4 Pin audit: `{topo['rp4_pin_sign_audit_gate']}`",
         f"- projective-tunnel ratio: `{topo['projective_tunnel_cover_ratio_gate']}`",
         f"- Sigma boundary support: `{topo['sigma_boundary_action_support_gate']}`",

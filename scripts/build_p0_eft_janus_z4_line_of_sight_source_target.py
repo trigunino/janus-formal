@@ -29,7 +29,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-line-of-sight-source-target",
-        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4LineOfSightSourceTarget",
+        "lean_module": "JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram.Gates.P0EFTJanusZ4LineOfSightSourceTarget",
         "sw_source": str(sw),
         "doppler_source": str(doppler),
         "isw_source": str(isw),

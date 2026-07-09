@@ -27,7 +27,7 @@ def build_payload() -> dict:
     hits = [snippet for snippet in FORBIDDEN_SNIPPETS if snippet in text]
     required = {
         "active_geometry_core_declared": "active_geometry_core = Z2_tunnel_Sigma" in text,
-        "legacy_z4_archived_declared": "legacy_z4_modules_archived = True" in text,
+        "z4_cmb_non_evidence_declared": "z4_cmb_modules_marked_non_evidence = True" in text,
         "active_audit_declared": "P0EFTJanusZ2SigmaPureMathClosureAuditGate" in text,
         "branch_facade_audit_declared": "branch facade audit" in text,
     }

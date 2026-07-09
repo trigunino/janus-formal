@@ -56,7 +56,7 @@ def build_payload() -> dict[str, Any]:
         "bms_route_ready": False,
         "internal_null_charge_route_ready": False,
         "finite_sigma_bms_route_ready": False,
-        "next_gate": "AsymptoticNullBoundaryChargeDerivationGate",
+        "next_gate": "AsymptoticNullBoundaryChargesChargeDerivationGate",
         "gate_passed": True,
     }
 

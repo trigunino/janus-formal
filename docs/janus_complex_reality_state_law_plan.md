@@ -103,7 +103,7 @@ then `<mu,[Z_Sigma(delta1),Z_Sigma(delta2)]>`. This closes the symbolic
 projection. The active nonzero density remains blocked until a nontrivial
 boundary variation basis and closed two-cycle are derived.
 
-Lean formalization is now present in `JanusFormal.Branches.ComplexRealityStateLaw`.
+Lean formalization is now present in `JanusFormal.Branches.ComplexRealityQuantumStateLaw`.
 It imports the source curation, Eq. 131 projection, coadjoint state-space,
 KKS boundary-density, and Sigma boundary-projection gates. The formal status
 matches the scripts: symbolic branch ready, active density and `alpha`

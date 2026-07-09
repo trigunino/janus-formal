@@ -3,7 +3,7 @@ import unittest
 from scripts.build_p0_eft_janus_bridge_state_law_opening_gate import build_payload
 
 
-class JanusBridgeStateLawTests(unittest.TestCase):
+class JanusAlphaBridgeStateLawTests(unittest.TestCase):
     def test_branch_opens_without_alpha_fit(self):
         payload = build_payload()
 

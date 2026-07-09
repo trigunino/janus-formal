@@ -57,7 +57,7 @@ class P0EFTJanusZ4PureMathClosureAuditGateTests(unittest.TestCase):
         self.assertFalse(payload["topology_layer_alignment"]["cyclic_z4_monodromy_proved"])
         self.assertFalse(payload["topology_layer_alignment"]["cyclic_z4_inference_allowed"])
         self.assertEqual(payload["topology_layer_alignment"]["active_core"], "Z2_tunnel_Sigma")
-        self.assertTrue(payload["topology_layer_alignment"]["legacy_z4_archived"])
+        self.assertTrue(payload["topology_layer_alignment"]["z4_cmb_marked_non_evidence"])
         self.assertEqual(
             payload["topology_layer_alignment"]["rp4_pin_sign_audit_gate"],
             "p0_eft_janus_rp4_pin_sign_audit_gate",

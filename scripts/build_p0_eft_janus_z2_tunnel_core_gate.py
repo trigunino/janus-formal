@@ -17,7 +17,7 @@ def build_payload() -> dict:
         "z2_cover_is_active_geometry": True,
         "four_sectors_are_product_z2x_z2": True,
         "cyclic_z4_required": False,
-        "legacy_z4_archived": True,
+        "z4_cmb_marked_non_evidence": True,
     }
     return {
         "status": "janus-z2-tunnel-core-gate",
@@ -43,7 +43,7 @@ def write_reports() -> dict:
         f"Active geometry: `{payload['active_geometry']}`",
         f"Z2 tunnel core closed: `{payload['z2_tunnel_core_closed']}`",
         f"Cyclic Z4 required: `{payload['core']['cyclic_z4_required']}`",
-        f"Legacy Z4 archived: `{payload['core']['legacy_z4_archived']}`",
+        f"Z4/CMB marked non-evidence: `{payload['core']['z4_cmb_marked_non_evidence']}`",
         f"No-fit ready: `{payload['full_cosmology_prediction_ready_no_fit']}`",
     ]
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")

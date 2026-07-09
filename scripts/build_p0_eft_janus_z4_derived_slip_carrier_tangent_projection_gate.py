@@ -102,7 +102,7 @@ def _projection_stats(vector: np.ndarray, matrix: np.ndarray, tangent_norms: dic
 
 def _classify(parallel_fraction: float) -> str:
     if parallel_fraction >= 0.85:
-        return "carrier_tangent_archive_fast"
+        return "carrier_tangent_closure_recommended"
     if parallel_fraction >= 0.70:
         return "weak_improvement_audit_projection"
     if parallel_fraction >= 0.50:

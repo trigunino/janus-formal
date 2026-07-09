@@ -14,7 +14,7 @@ from scripts.build_p0_eft_janus_asymptotic_null_boundary_exhaustion_verdict_gate
 )
 
 
-class AsymptoticNullBoundarySymmetryTests(unittest.TestCase):
+class AsymptoticNullBoundaryChargesSymmetryTests(unittest.TestCase):
     def test_candidate_matrix_identifies_best_route_but_blocks_live_charge(self):
         payload = build_matrix()
 

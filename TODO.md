@@ -4,21 +4,21 @@
 
 - Formal topology scaffold: closed.
 - Active geometry core: `Z2_tunnel_Sigma`.
-- Historical CMB/Z4 branches: diagnostic only, not active evidence.
+- CMB/Z4 diagnostic branches: not active evidence.
 - Pure math no-axiom closure: closed for the active `Z2_tunnel_Sigma` model.
 - Late-time growth / SDSS-eBOSS branch: viable as EFT diagnostic.
 - BAO `r_d`: requires a real pre-drag background contraction.
-- Archived CMB/Planck: native Z4 gate was executed historically after the
+- CMB/Planck diagnostic: native Z4 gate was executed after the
   primordial-imprint lock; those spectra are rejected by Planck and are not
   active model evidence.
-- Archived native GR baseline: failed against CAMB shape-only reference, so the
-  historical Z4 correction program is archived rather than extended.
+- Native GR diagnostic baseline: failed against CAMB shape-only reference, so the
+  Z4 correction program is closed as diagnostic rather than extended.
 - Native GR decomposition: required now; Planck rejection is suspended as a
   physical Janus verdict until an active Z2/Sigma observational model exists.
 - Therefore: do not claim full no-fit cosmology yet.
 - Active alpha/global-energy branch: structurally closed, but the absolute
   dimensional scale remains underdetermined. Treat the current branch as
-  archived for no-fit claims until a real state-selection/quantization/boundary
+  closed for no-fit claims until a real state-selection/quantization/boundary
   law fixes `alpha`, `E_global`, `M_bridge`, or an equivalent global scale.
 - Alpha observational fallback: `P0EFTJanusZ2AlphaObservationalFitGate` now
   performs the active `q0/u0` sector fit using Pantheon+ full covariance
@@ -115,7 +115,7 @@
   to `alpha_m = -2*pi*G*M_boundary/c^2`. Current status: open plan ready,
   `alpha_generated_now = false`.
 - Sector-theory v0 branch:
-  `P0EFTJanusSectorTheoryV0Gate` records explicit candidate sector laws and
+  `P0EFTJanusAlphaSectorTheoryGate` records explicit candidate sector laws and
   forbids hidden alpha fitting. The branch can rank/test sectors against the
   existing SN+BAO endpoint, but it does not derive alpha no-fit. Current
   observation smoke: the published `q0=-0.087` sector is not selected by the
@@ -172,7 +172,7 @@
   primitive `N_gap`/boundary state, and the map to `E_Z2Sigma(a)`. Do not repeat
   the closed substeps.
 - Bridge state law:
-  `P0EFTJanusBridgeStateLawOpeningGate` opens the new conceptual branch. Core
+  `P0EFTJanusAlphaBridgeStateLawOpeningGate` opens the new conceptual branch. Core
   statement: `alpha` is a bridge-state charge, not a local coupling. Candidate
   routes are null-boundary Noether charge, LL worldvolume flux sector, and PT
   minimal quantum state. Status: opened, not closed; no direct alpha fit and no
@@ -203,7 +203,7 @@
   `<mu,[Z_Sigma(delta1),Z_Sigma(delta2)]>`. Active evaluation remains blocked by
   the missing nontrivial boundary variation basis and closed two-cycle.
   Lean formalization now mirrors this status in
-  `JanusFormal.Branches.ComplexRealityStateLaw`; it proves the branch is formalized but
+  `JanusFormal.Branches.ComplexRealityQuantumStateLaw`; it proves the branch is formalized but
   still does not generate `alpha`.
   `ComplexRealityBoundaryVariationBasisGate` now declares the symbolic normal
   embedding displacement, frame rotation/boost, and connection holonomy
@@ -259,7 +259,7 @@
   projection, noncentral `aroundSigma` lift, sector selection and `alpha` map
   are derived.
 - Quantum-first boundary-state branch:
-  `JanusFormal.Branches.QuantumBoundaryState` and
+  `JanusFormal.Branches.QuantumBoundaryStateLaw` and
   `docs/janus_quantum_first_boundary_state.md` implement the reversed program
   `boundary quantum state -> CP1/TQFT phase space -> prequantization -> alpha
   spectrum -> classical Janus limit`. Current result:
@@ -272,7 +272,7 @@
   labels can be discrete, but no boundary mass operator or energy unit is
   derived without an extra quantum action/time-generator/area-to-mass law.
 - Asymptotic/null boundary symmetry branch:
-  `JanusFormal.Branches.AsymptoticNullBoundary` and
+  `JanusFormal.Branches.AsymptoticNullBoundaryCharges` and
   `docs/janus_asymptotic_null_boundary_symmetry.md` test the BMS/Newman-Penrose/
   covariant-phase-space route. This is the right framework for boundary energy
   charges, but it does not close live because Janus has not supplied either an
@@ -318,7 +318,7 @@
   `build_p0_eft_janus_z2_published_bimetric_flrw_to_sigma_bridge_gate.py` and
   `P0EFTJanusZ2PublishedBimetricFLRWToSigmaBridgeGate` now define the no-cheat
   bridge: published interaction slots -> FLRW Bianchi reduction -> sector
-  `rho_±(a),p_±(a)` and normalizations -> Sigma pullback `h_±,K_±` -> Sigma
+  `rho_Ãƒâ€šÃ‚Â±(a),p_Ãƒâ€šÃ‚Â±(a)` and normalizations -> Sigma pullback `h_Ãƒâ€šÃ‚Â±,K_Ãƒâ€šÃ‚Â±` -> Sigma
   stress/flux projection -> projected Bianchi/junction -> `E_Z2Sigma(a)^2`.
   Live status: interaction slots and FLRW Bianchi are ready, but sector
   densities/normalizations, active Sigma embedding pullback, stress projection,
@@ -554,7 +554,7 @@
   `F2_0`. Without those, flux quantization is only a superselection target and
   does not yet fix `chi_LL`.
 - LL-brane branch archive:
-  `build_p0_eft_janus_z2_null_sigma_llbrane_branch_archive_gate.py` freezes this
+  `build_p0_eft_janus_z2_null_sigma_llbrane_diagnostic_closure_gate.py` freezes this
   route as a viable state-parameter extension, not a no-fit closure. The strict
   no-extension branch remains blocked at `chi_LL_abs_inverse_m_not_derived`.
   Reopen is allowed only if `chi_LL` is derived from a global bimetric state,
@@ -611,15 +611,15 @@
   `R_curv_Z2Sigma` are still independent missing inputs.
 - Bimetric bulk -> Sigma transfer:
   `build_p0_eft_janus_z2_bimetric_bulk_to_sigma_stress_flux_runner.py` is the
-  concrete transfer runner. It consumes active `rho_±,p_±`, bulk metrics,
-  four-velocities, Sigma tangents/normals, builds `T_±|Sigma`, then projects
+  concrete transfer runner. It consumes active `rho_Ãƒâ€šÃ‚Â±,p_Ãƒâ€šÃ‚Â±`, bulk metrics,
+  four-velocities, Sigma tangents/normals, builds `T_Ãƒâ€šÃ‚Â±|Sigma`, then projects
   `F_a = T^+ e_a n_+ + eps_Z2 T^- e_a n_-`. Live status: runner works on
   complete active inputs, but no live `bimetric_bulk_to_sigma_stress_flux_inputs.json`
   exists. This means the bimetry is not yet physically transferred to the
   throat; the transfer map is ready and waiting for active bulk/throat data.
 - Bimetric bulk -> Sigma input chain:
   `build_p0_eft_janus_z2_sector_density_pressure_from_rho_plus0_abs_gate.py`
-  supplies the dust `rho_±(a),p_±(a)` block once `rho_plus0_abs` is ready.
+  supplies the dust `rho_Ãƒâ€šÃ‚Â±(a),p_Ãƒâ€šÃ‚Â±(a)` block once `rho_plus0_abs` is ready.
   `build_p0_eft_janus_z2_bimetric_bulk_to_sigma_flux_input_assembler.py`
   then merges perfect-fluid data with embedding tangents/normals and radial
   weights. Live blockers are now explicit: `rho_plus0_abs`, active tunnel
@@ -653,7 +653,7 @@
   `a^2*d2a/dx0^2 = 2*alpha` from the exact solution, then combines it with
   `a^2*d2a/dx0^2 = -4*pi*G*E/c^2` to obtain
   `E_mass = -alpha*c^2/(2*pi*G)`. A synthetic test proves the chain
-  `alpha -> E_global -> rho_plus0_abs -> rho_±(a)` works without local
+  `alpha -> E_global -> rho_plus0_abs -> rho_Ãƒâ€šÃ‚Â±(a)` works without local
   `N_occ/R_curv`; live status remains blocked only because `alpha_m` is not yet
   derived from a non-observational Janus clock/scale.
 - Global state prerequisite derivability audit:
@@ -1588,7 +1588,7 @@
       `rsigma_E_matterFlux` writer when those physical inputs are present.
   - [x] Centralize active matter-flux tensor contraction:
     - `janus_lab.z2_sigma_matter_flux.project_active_matter_flux_radial_values`
-      computes `T^±_{μν} e_a^μ n_±^ν` and radial reduction;
+      computes `T^Ãƒâ€šÃ‚Â±_{ÃƒÅ½Ã‚Â¼ÃƒÅ½Ã‚Â½} e_a^ÃƒÅ½Ã‚Â¼ n_Ãƒâ€šÃ‚Â±^ÃƒÅ½Ã‚Â½` and radial reduction;
     - the remaining blocker is the active input manifest with `T_pm`,
       tangents, normals and radial weights.
   - [x] Split `matter_flux_projection_components.json` into primitive active inputs:
@@ -1666,7 +1666,7 @@
     - a complete certificate alone cannot write embedding or curvature manifests.
   - [x] Add `P0EFTJanusZ2SigmaCartanGHYRadialBlockGate`:
     - reduces `E_CartanGHY` structurally from `delta_RSigma[sqrt(|h|) K]`;
-    - keeps `E_CartanGHY(a)` blocked on `R_Sigma(a)` and `X_±(a)`.
+    - keeps `E_CartanGHY(a)` blocked on `R_Sigma(a)` and `X_Ãƒâ€šÃ‚Â±(a)`.
   - [x] Add `P0EFTJanusZ2SigmaHolstNiehYanRadialBlockGate`:
     - declares `E_HolstNiehYan` as radial variation of the Sigma torsion/Nieh-Yan pullback;
     - keeps its scale-factor form blocked on torsion pullback and Immirzi profile.
@@ -1677,7 +1677,7 @@
     - closes the conditional thin-shell map `R_Sigma(a) -> X_+/-`;
     - keeps unconditional embedding blocked until the active throat-radius law is solved.
   - [x] Add `P0EFTJanusZ2SigmaActiveTunnelEmbeddingFromRadiusGate`:
-    - imports dynamic-shell kinematics for `R_Sigma(a) -> X_±(a)`;
+    - imports dynamic-shell kinematics for `R_Sigma(a) -> X_Ãƒâ€šÃ‚Â±(a)`;
     - keeps active embedding blocked until `R_Sigma(a)` is solved from the radial variational equation.
   - [x] Add `P0EFTJanusZ2SigmaActiveEmbeddingReadinessGate`:
     - records that the conditional thin-shell embedding map is ready;
@@ -1731,7 +1731,7 @@
   - [x] Add `P0EFTJanusZ2SigmaFluxProjectionDomainGate`:
     - records Sigma and Z2 coorientation as available from the projective tunnel;
     - keeps the flux projection domain blocked on resolved frame bundle,
-      active `X_±(a)`, tangent traces and unit normals;
+      active `X_Ãƒâ€šÃ‚Â±(a)`, tangent traces and unit normals;
     - does not derive transparency, active flux or `E_matterFlux`.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxTransparencyReadinessGate`:
     - records current and stress-flux transparency criteria from thin-shell literature;
@@ -1828,14 +1828,14 @@
     - imports live normal-current, projected Dirac normal-current and bulk-stress flux frontiers;
     - keeps transparency open until normal current or Z2 flux cancellation is derived.
   - [x] Add `P0EFTJanusZ2SigmaMatterFluxActiveProjectionGate`:
-    - declares the non-transparent branch `F_a^± = T^±_munu e_a^mu n_±^nu`;
+    - declares the non-transparent branch `F_a^Ãƒâ€šÃ‚Â± = T^Ãƒâ€šÃ‚Â±_munu e_a^mu n_Ãƒâ€šÃ‚Â±^nu`;
     - keeps active flux blocked on bulk stresses and active embedding data.
   - [x] Add `P0EFTJanusZ2SigmaBulkStressOfAGate`:
-    - declares `T^±_munu(a)` from sector perfect fluids plus Holst torsion stress;
+    - declares `T^Ãƒâ€šÃ‚Â±_munu(a)` from sector perfect fluids plus Holst torsion stress;
     - keeps bulk stress blocked on active sector densities/pressures and torsion stress.
   - [x] Add `P0EFTJanusZ2SigmaSectorDensityPressureOfAGate`:
     - imports FLRW perfect-fluid continuity per sector;
-    - keeps `rho_±(a), p_±(a)` blocked on derived equations of state and normalizations.
+    - keeps `rho_Ãƒâ€šÃ‚Â±(a), p_Ãƒâ€šÃ‚Â±(a)` blocked on derived equations of state and normalizations.
   - [x] Add `P0EFTJanusZ2SigmaHolstTorsionStressOfAGate`:
     - declares `T_HolstTorsion_munu(a)` by metric variation of the Holst/torsion action;
     - keeps the stress blocked on the active torsion solution and Immirzi profile.
@@ -1890,7 +1890,7 @@
     - imports the generic curved-space Dirac scalar mass-term fact;
     - keeps plus/minus mass laws blocked until derived from the projected Dirac action.
   - [x] Add `P0EFTJanusZ2SigmaDiracMassTermFromActionGate`:
-    - declares extraction of `m_±(a)` as the coefficient of `psibar_± psi_±`;
+    - declares extraction of `m_Ãƒâ€šÃ‚Â±(a)` as the coefficient of `psibar_Ãƒâ€šÃ‚Â± psi_Ãƒâ€šÃ‚Â±`;
     - keeps extraction blocked until the plus/minus projected Dirac actions are reduced.
   - [x] Add `P0EFTJanusZ2SigmaPlusMinusDiracActionLocalReductionGate`:
     - declares the local kinetic, mass-bilinear and axial-torsion decomposition;
@@ -2139,12 +2139,12 @@
   - blocks using gauge choice as a substitute for deriving `R_Sigma(a)`.
 - [x] Add `P0EFTJanusZ2SigmaEmbeddingGaugeEquationGate`:
   - imports induced-metric normalization for dynamic thin shells;
-  - fixes `T_±` derivatives conditionally on `R_Sigma(a)`;
-  - keeps `R_Sigma(a)` and therefore `X_±(a)` open.
+  - fixes `T_Ãƒâ€šÃ‚Â±` derivatives conditionally on `R_Sigma(a)`;
+  - keeps `R_Sigma(a)` and therefore `X_Ãƒâ€šÃ‚Â±(a)` open.
 - [x] Add `P0EFTJanusZ2SigmaTunnelEmbeddingConstraintCountGate`:
   - records unknown embedding functions and declared constraints;
   - isolates missing `R_Sigma(a)` throat-radius law and embedding gauge;
-  - prevents `X_±(a)` closure from being inferred by constraint naming alone.
+  - prevents `X_Ãƒâ€šÃ‚Â±(a)` closure from being inferred by constraint naming alone.
 - [x] Add `P0EFTJanusZ2SigmaActiveTunnelEmbeddingOfAGate`:
   - declares the active resolved-tunnel embedding problem `X_+^mu(a,xi)` and `X_-^mu(a,xi)`;
   - imports Janus projective/tunnel topology plus generic thin-shell embedding machinery;
@@ -2169,7 +2169,7 @@
     - keeps values blocked until active embedding, connection and normals are supplied.
 - [x] Add active embedding to FLRW extrinsic-curvature input adapter:
   - declares the contract
-    `R_Sigma(a), X_±(a), tangents, normals, Christoffels -> flrw_extrinsic_curvature_grid_inputs.json`;
+    `R_Sigma(a), X_Ãƒâ€šÃ‚Â±(a), tangents, normals, Christoffels -> flrw_extrinsic_curvature_grid_inputs.json`;
   - remains blocked until active tunnel embedding closure is derived;
   - prevents supplied K-array fixtures from being treated as Cartan-GHY source data.
 - [x] Add `R_Sigma` solution to embedding/curvature branch bridge:
@@ -2187,7 +2187,7 @@
   - records that orientation is explicit and must not be fitted or silently changed;
   - keeps values blocked until active `K_ab^pm(a)` are derived from the tunnel embedding.
 - [x] Add strict Cartan-GHY from extrinsic-curvature builder:
-  - composes `K_s/K_tau ± -> DeltaK_s/tau -> rho_CGHY/p_CGHY`;
+  - composes `K_s/K_tau Ãƒâ€šÃ‚Â± -> DeltaK_s/tau -> rho_CGHY/p_CGHY`;
   - requires active plus/minus curvature functions and explicit `kappa*rho_crit0`;
   - introduces no new formula beyond the existing active projection convention.
 - [x] Add strict critical-normalization builder:
@@ -2256,7 +2256,7 @@
   - Sigma photon map and Z2/Sigma `r_d` remain local derivations.
 - [x] Split repository layout:
   - root `JanusFormal.lean` imports only `JanusFormal.Core`;
-  - shared bricks live under `JanusFormal/Lib/`;
+  - shared bricks live under `JanusFormal/Shared/`;
   - branch heads live under `JanusFormal/Branches/`;
   - `docs/janus_branch_registry.md` indexes branch status and build commands.
 - [x] Add `P0EFTJanusZ2SigmaPhotonGeodesicDistanceMapGate`:
@@ -2360,8 +2360,8 @@
   - classifies `omega_k_Z2Sigma` as dependent on active projective curvature and tunnel embedding rather than an independent direct blocker;
   - classifies `rho_baryon_Z2Sigma` and `rho_photon_Z2Sigma` as dependent on active plasma normalizations rather than independent direct blockers;
   - classifies `Gamma_drag_Z2Sigma` as dependent on active photon/baryon plasma inputs instead of as an independent direct blocker;
-  - emits a `root_obligations` list headed by `R_Sigma(a) -> X_±(a) -> DeltaK_s/tau(a)`, torsion pullback, Sigma transparency/counterterm and active early-plasma normalization;
-  - reports the live radius/embedding frontier: conditional `R_Sigma(a) -> X_±(a)` is ready, but unconditional `R_Sigma(a)` and `X_±(a)` remain blocked by matter-flux, counterterm and `E_RSigma=0`;
+  - emits a `root_obligations` list headed by `R_Sigma(a) -> X_Ãƒâ€šÃ‚Â±(a) -> DeltaK_s/tau(a)`, torsion pullback, Sigma transparency/counterterm and active early-plasma normalization;
+  - reports the live radius/embedding frontier: conditional `R_Sigma(a) -> X_Ãƒâ€šÃ‚Â±(a)` is ready, but unconditional `R_Sigma(a)` and `X_Ãƒâ€šÃ‚Â±(a)` remain blocked by matter-flux, counterterm and `E_RSigma=0`;
   - keeps component-manifest writing blocked until active FLRW components, background scalars and early plasma are derived.
 - [x] Add `P0EFTJanusZ2SigmaBAOComponentManifestWriterGate`:
   - writes `bao_component_inputs.json` from active component functions with strict provenance;
@@ -2450,7 +2450,7 @@
   - old CMB/Z4 modules are legacy diagnostics, not a normal build target.
 - [x] Add docs alignment audit to prevent active-Z4 wording from returning.
 - [x] Archive legacy `Z4` as diagnostic-only with
-  `P0EFTJanusLegacyZ4ArchivePolicyGate`.
+  `P0EFTJanusZ4CMBNonEvidencePolicyGate`.
 - [x] Add Z2/Sigma replacement gates:
   - `P0EFTJanusRP4PinSignComputationGate`;
   - `P0EFTJanusRP4PinSignAuditGate`;
@@ -2549,11 +2549,11 @@
   - no promotion of `planck` verdict and no `full_cosmology_prediction_ready_no_fit`.
 - [x] Freeze CMB/observational gates separately from the active pure-math closure.
 
-## Archived CMB/Z4 master-equation lock
+## CMB/Z4 Diagnostic Master-Equation Lock
 
-- [x] Archive patchwork slip/surface/minus-sector attempts as diagnostic-only
+- [x] Close patchwork slip/surface/minus-sector attempts as diagnostic-only
   when their observable response remains carrier-tangent.
-- [x] Archive the unique Z4 master-equation path and require all observable
+- [x] Close the unique Z4 master-equation path and require all observable
   deltas to descend from one upstream `U_Z4` generator.
 - [x] Find a non-tangent localized-transition master ansatz:
   source-level replay parallel fraction is about `0.1906`.
@@ -3137,7 +3137,7 @@
   - compares surface, early-ISW, Pi and full-slip source signatures against GR/CAMB carrier tangents;
   - includes normal orientation flip as diagnostic-only;
   - keeps Planck trial and candidate promotion blocked.
-- [x] Archive full derived-slip source as carrier-tangent:
+- [x] Close full derived-slip source as carrier-tangent:
   - full source is `A_s` dominated and not promotable;
   - Planck trial remains blocked.
 - [x] Add surface-term orthogonality diagnostic:
@@ -3166,7 +3166,7 @@
 - [x] Decide branch fate after refined Doppler classification:
   - refined full-surface parallel fraction is `0.834`, worse than prior `0.794`;
   - branch remains weak/carrier-tangent.
-- [x] Archive weak surface branch:
+- [x] Close weak surface branch:
   - SW-only orthogonal component exists;
   - physical Doppler-completed surface is not promotable;
   - Planck trial remains blocked.
@@ -3198,10 +3198,10 @@
   - projects Weyl, monopole, Pi and full two-sector diagnostics against GR/CAMB carrier tangents;
   - keeps spectra, Planck and promotion blocked.
 - [x] Decide next action from two-sector tangent classification:
-  - full two-sector diagnostic is `archive_fast`;
+  - full two-sector diagnostic is `closure_recommended`;
   - full parallel fraction is `0.998`, dominated by `A_s`;
   - no spectra or Planck trial.
-- [x] Archive current two-sector full source as carrier-degenerate:
+- [x] Close current two-sector full source as carrier-degenerate:
   - full source is `A_s` dominated and not promotable;
   - variables/conservation/modes/evolution/stability/source history is preserved.
 - [x] Implement `TwoSectorSourceConstructionAuditGate`:
@@ -3783,7 +3783,7 @@ Completion rule:
   - therefore this is a null-Sigma/PT-bridge branch, not a closure of the
     current regular `h_ab,K_ab` counterterm pipeline.
 - Null Sigma / PT bridge branch:
-  - explicit branch head: `JanusFormal.Branches.NullPTBridge`;
+  - explicit branch head: `JanusFormal.Branches.NullPTBridgeMass`;
   - source alignment follows chapter 6/7 and EPJC summary:
     retained `dr dt`, one-way bridge, PT-symmetric sheets, orientation/time
     reversal, Souriau mass-energy inversion, projective/tubular topology;
@@ -4306,7 +4306,7 @@ Completion rule:
     monotone ground energy in `|n|`, and orientation identifying signs. Live
     status is blocked until these are derived for Janus/PT.
   - alpha branch archive readiness:
-    `P0EFTJanusZ2AlphaBranchArchiveReadinessGate` closes the current alpha pass.
+    `P0EFTJanusZ2AlphaStateSectorClosureReadinessGate` closes the current alpha pass.
     Nonzero PT KKS/Souriau density, torsionful/null theta, matter/gauge boundary
     phase space, and finite minisuperspace `V(alpha)` prescription are all absent
     on current assets. The branch is archive-ready as conditional/inactive, not
@@ -4357,7 +4357,7 @@ Completion rule:
   - null/PT Noether charge defines the charge and alpha map;
   - LL worldvolume flux discretizes `chi_LL`;
   - PT minimal quantum state selects the primitive nonzero sector.
-- [ ] Implement `P0EFTJanusBridgeStateLawCompositeClosureGate`.
+- [ ] Implement `P0EFTJanusAlphaBridgeStateLawCompositeClosureGate`.
 - [ ] Close, or explicitly block, each composite link without observation-sector selection.
 - [x] Classify the remaining credible pistes:
   - composite boundary state law: credible but not closed;
@@ -4380,6 +4380,6 @@ Completion rule:
 - [x] Split the Lean build facade:
   - lightweight root `JanusFormal`;
   - no-Mathlib shared kernel `JanusFormal.Core`;
-  - small reusable library namespace `JanusFormal.Lib.*`;
+  - small reusable library namespace `JanusFormal.Shared.*`;
   - one public head per branch under `JanusFormal.Branches.*`;
   - branch registry with status and blocking points.

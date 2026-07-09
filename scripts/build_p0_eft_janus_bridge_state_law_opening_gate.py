@@ -53,7 +53,7 @@ def build_payload() -> dict[str, Any]:
         },
         "initial_verdict": "branch_opened_not_closed",
         "chi_LL_selected_no_fit": False,
-        "next_concrete_gate": "BridgeStateLawCandidateDiscriminatorGate",
+        "next_concrete_gate": "AlphaBridgeStateLawCandidateDiscriminatorGate",
         "gate_passed": True,
     }
 

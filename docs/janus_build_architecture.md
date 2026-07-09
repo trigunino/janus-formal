@@ -16,7 +16,7 @@ make each research branch buildable through its own head module.
   - no-Mathlib shared kernel;
   - keep only tiny common declarations here.
 
-- `JanusFormal.Lib.*`
+- `JanusFormal.Shared.*`
   - small reusable libraries;
   - each library must build independently.
 
@@ -37,19 +37,19 @@ Prefer:
 
 ```powershell
 lake build JanusFormal
-lake build JanusFormal.Lib.Foundation
-lake build JanusFormal.Branches.BridgeStateLaw
-lake build JanusFormal.Branches.NativeBAORuler
+lake build JanusFormal.Shared.Foundation
+lake build JanusFormal.Branches.AlphaBridgeStateLaw
+lake build JanusFormal.Branches.NativeBAORulerContract
 ```
 
 Do not use a global all-import build as normal workflow.
 
 ## Refactor Policy
 
-- Keep common primitives in small shared modules such as `Core` and `Lib/*`.
+- Keep common primitives in small shared modules such as `Core` and `Shared/*`.
 - Use `Basic` only when a branch really needs `Mathlib` compatibility.
 - Keep branch logic and gate files under explicit `Branches/*` heads.
-- Put shared gates under `Lib/*`.
-- Put historical diagnostics under explicit branch heads too.
-- Do not import historical or experimental branches from the lightweight root.
+- Put shared gates under `Shared/*`.
+- Put diagnostic/blocked attempts under explicit branch heads too.
+- Do not import diagnostic or experimental branches from the lightweight root.
 - Do not grow umbrella modules that import every branch.
