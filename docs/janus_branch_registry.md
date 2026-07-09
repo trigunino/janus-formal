@@ -17,7 +17,8 @@ Build one branch head at a time.
 | --- | --- | --- |
 | Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | viable only as state-sector selection; no no-fit alpha law |
 | Native BAO/ruler contract | `lake build JanusFormal.Branches.NativeBAORulerContract` | formulated; blocked by missing native early-time/ruler primitives |
-| Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | four BAO/ruler rescue routes structured; all blocked at current non-rustine frontier |
+| Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | projected photon-baryon plasma pushed to formula-complete/input-blocked frontier; other BAO/ruler routes documented as blocked |
+| Early-universe native plasma | `lake build JanusFormal.Branches.JanusEarlyUniverseNativePlasma` | Eq40 microphysics, Maxwell/radiation extension, Saha visibility, symbolic drag, sound-horizon contracts, and C1 early-branch time-scale law closed; numeric BAO blocked until high-power photon/clock transport or early `a_min/N` selector is source-derived |
 | Regular Z2/Sigma throat | `lake build JanusFormal.Branches.Z2SigmaRegularThroat` | blocked by missing non-rustine scale/source closure |
 | Null Sigma / PT bridge | `lake build JanusFormal.Branches.NullPTBridgeMass` | blocked by missing derived bridge mass/LL state law |
 | Quantum boundary state law | `lake build JanusFormal.Branches.QuantumBoundaryStateLaw` | conditional spectra possible; no derived alpha selector |

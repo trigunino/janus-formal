@@ -7,3 +7,4 @@ fit alpha to repair BAO.
 Status is documented in docs/janus_branch_registry.md. -/
 
 import JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler.Gates.P0EFTJanusEarlyTimeOrbifoldRulerClosureGate
+import JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler.Gates.P0EFTJanusProjectedPhotonBaryonPlasmaFrontierGate

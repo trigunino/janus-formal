@@ -9,6 +9,9 @@
 - `docs/janus_branch_registry.md` records branch status and blockers.
 - `JanusFormal/Branches/NullPTBridgeMass.lean` is the branch head for the
   null-Sigma/PT-bridge mass attempt.
+- `JanusFormal/Branches/JanusEarlyUniverseNativePlasma.lean` is the branch head
+  for the post-SN early-universe plasma extension using the 2026 variable
+  constants gauge and active Z2/Sigma BAO machinery.
 - `P0EFTJanusZ2PT67*` modules are the active chapter-6.7 regular PT-transfer
   surface route. They are exposed through the Z2/Sigma branch head because they produce
   nondegenerate `h_ab`, unit normal, local `K_ab`, and `DeltaK_PT=0`.

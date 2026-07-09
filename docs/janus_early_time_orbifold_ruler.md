@@ -35,6 +35,33 @@ For `q0 = -0.087`, this gives `z_max ~= 5.747`, not a pre-drag domain.
 Topology matters only if it supplies a physical map, matching law, spectrum with
 scale, or plasma projection. Topology alone does not produce `r_d^J`.
 
+## Projected plasma frontier
+
+The projected photon-baryon plasma route has now been pushed to the current
+non-rustine bottom.
+
+Already calculable:
+
+- conserved baryon/photon histories after active normalizations;
+- `c_s^J` from `rho_b^J` and `rho_gamma^J`;
+- Saha/free-electron/Thomson drag machinery;
+- `z_d^J` from `Gamma_drag^J = H_J`;
+- `r_d^J = integral c_s^J/H_J dz`.
+
+Still blocked:
+
+- no active `early_plasma.json`;
+- no active `background_H0_inputs.json`;
+- no derived active baryon number density on `Z2/Sigma`;
+- no derived active photon/baryon normalization from the paper-native branch;
+- no pre-drag `E_J(z)` / `H_J(z)`.
+
+Report:
+
+```text
+outputs/reports/p0_eft_janus_projected_photon_baryon_plasma_frontier_gate.md
+```
+
 Generated report:
 
 ```text
