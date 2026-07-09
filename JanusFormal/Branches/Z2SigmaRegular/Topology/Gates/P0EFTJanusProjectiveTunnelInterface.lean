@@ -1,5 +1,5 @@
-import JanusFormal.Legacy.P0EFT.Gates.P0EFTOrbifoldSingularCycleGenerator
-import JanusFormal.Legacy.P0EFT.Gates.P0EFTOrbifoldHolonomyFluxQuantization
+import JanusFormal.Branches.P0EFTEarlyProgram.Gates.P0EFTOrbifoldSingularCycleGenerator
+import JanusFormal.Branches.P0EFTEarlyProgram.Gates.P0EFTOrbifoldHolonomyFluxQuantization
 
 namespace JanusFormal
 namespace P0EFTJanusProjectiveTunnelInterface

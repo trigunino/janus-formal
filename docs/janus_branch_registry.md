@@ -24,12 +24,16 @@ Build one branch head at a time.
 | Asymptotic null boundary | `lake build JanusFormal.Branches.AsymptoticNullBoundary` | audited; no derived boundary mass/alpha charge |
 | New idea sector program | `lake build JanusFormal.Branches.NewIdeaSectorProgram` | matrix of exits; no closed state law |
 | Sector theory V0 | `lake build JanusFormal.Branches.SectorTheoryV0` | baseline sector audit; alpha remains external |
-| Legacy CMB diagnostics | `lake build JanusFormal.Branches.LegacyCMB` | historical diagnostics only, not active evidence |
+| Historical CMB diagnostics | `lake build JanusFormal.Branches.CMBHistoricalDiagnostics` | old CAMB/Planck attempts; blocked as evidence, kept as branch |
+| Historical Z4 program | `lake build JanusFormal.Branches.Z4HistoricalProgram` | old Z4/CMB solver route; blocked by geometry/topology reset, kept as branch |
+| Early P0 program | `lake build JanusFormal.Branches.P0EarlyProgram` | first exploratory formal modules; kept as branch for traceability |
+| Early P0EFT program | `lake build JanusFormal.Branches.P0EFTEarlyProgram` | old EFT/orbifold/Holst attempts; kept as branch for traceability |
 
 ## Rules
 
 - Do not use a global all-import build as normal workflow.
 - Add a branch head under `JanusFormal/Branches/` for each branch.
 - Put reusable primitives under `JanusFormal/Lib/` or `JanusFormal/Core.lean`.
-- Keep gate files physically under their owning branch, shared library, or
-  legacy namespace.
+- Keep every attempt, including old/blocked attempts, under an explicit branch.
+- Do not use `Legacy/` as a filesystem category; put the status/blocker in this
+  registry instead.

@@ -31,12 +31,15 @@ lake build JanusFormal.Branches.Z2SigmaRegular
 lake build JanusFormal.Branches.NullPTBridge
 ```
 
-## Legacy Diagnostics
+## Historical Branches
 
-- `JanusFormal/Branches/LegacyCMB.lean` groups old CMB/Planck diagnostics.
-- `scripts/*z4*.py`, `scripts/*legacy*.py`, `tests/test_*z4*.py`, and
-  `tests/test_*legacy*.py` are legacy diagnostics unless explicitly revived by
-  a new gate.
+- `JanusFormal/Branches/CMBHistoricalDiagnostics.lean` groups old CMB/Planck diagnostics.
+- `JanusFormal/Branches/Z4HistoricalProgram.lean` groups the old Z4/CMB solver route.
+- `JanusFormal/Branches/P0EarlyProgram.lean` groups first exploratory P0 modules.
+- `JanusFormal/Branches/P0EFTEarlyProgram.lean` groups old EFT/orbifold/Holst attempts.
+- These are real branch heads, not a separate `Legacy/` filesystem category.
+- Their status is historical/blocked unless a later branch explicitly revives one
+  as active evidence.
 - Old Git branches `codex/sigma-plugstar-ejection-threshold-gate` and
   `codex/sigma-point-collapse-limit-gate` are ancestors of `main`; their content
   is now organized by files/facades rather than needed as active branch state.
@@ -45,7 +48,7 @@ lake build JanusFormal.Branches.NullPTBridge
 
 - `src/janus_lab/bao.py`, `bao_maps.py`, `constants.py`, `data.py`,
   `statistics.py`, and geometry/numerics helpers are common library modules.
-- `src/janus_lab/z4_*.py` is legacy diagnostic infrastructure and must not be
+- `src/janus_lab/z4_*.py` is historical diagnostic infrastructure and must not be
   used as active Z2/Sigma evidence.
 - `src/janus_lab/z2_pt67_*.py` is active regular-Sigma geometry.
 - `src/janus_lab/z2_null_sigma_*.py` is diagnostic null-boundary geometry.

@@ -21,7 +21,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-planck-adapter-contract",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4PlanckAdapterContract",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4PlanckAdapterContract",
         "required_columns": required_columns,
         "unit_contract": "dimensionless C_ell arrays on Planck likelihood ell grid",
         "checks": checks,

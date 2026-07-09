@@ -52,7 +52,7 @@ def build_payload() -> dict:
         },
         "consistency_residuals": consistency_residuals,
         "conditional_partial_closure_verified": True,
-        "upstream_formal_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4ScalarActionDerivation",
+        "upstream_formal_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4ScalarActionDerivation",
         "upstream_required_flag": "scalarActionDerivedReady",
         "low_l_tt_source_targeted": True,
         "joint_low_high_tt_required": True,

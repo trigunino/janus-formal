@@ -34,7 +34,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-action-variation-gate",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4ActionVariationGate",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4ActionVariationGate",
         "master_source": str(master),
         "matching_conditions": [str(condition) for condition in matching_conditions],
         "residual_after_substitution": str(residual_after_substitution),

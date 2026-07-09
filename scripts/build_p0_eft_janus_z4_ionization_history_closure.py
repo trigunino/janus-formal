@@ -24,7 +24,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-ionization-history-closure",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4IonizationHistoryClosure",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4IonizationHistoryClosure",
         "peebles_rhs": str(peebles_rhs),
         "baryon_temperature_rhs": str(temp_rhs),
         "checks": checks,

@@ -11,7 +11,11 @@ class P0EFTJanusRepositoryLayoutAuditTests(unittest.TestCase):
         self.assertEqual(payload["root_imports"], ["JanusFormal.Core"])
         self.assertTrue(payload["layout_clean"])
         self.assertEqual(payload["old_umbrellas_present"], [])
+        self.assertFalse(payload["legacy_dir_present"])
         self.assertIn("Z2SigmaRegular", payload["branch_heads"])
+        self.assertIn("Z4HistoricalProgram", payload["branch_heads"])
+        self.assertIn("P0EarlyProgram", payload["branch_heads"])
+        self.assertIn("P0EFTEarlyProgram", payload["branch_heads"])
         self.assertIn("Foundation", payload["lib_heads"])
 
     def test_daily_commands_do_not_use_global_archive(self):
@@ -20,7 +24,7 @@ class P0EFTJanusRepositoryLayoutAuditTests(unittest.TestCase):
         self.assertIn("lake build JanusFormal", payload["daily_commands"])
         self.assertIn("lake build JanusFormal.Branches.Z2SigmaRegular", payload["daily_commands"])
         self.assertTrue(all("AllImportsArchive" not in item for item in payload["daily_commands"]))
-        self.assertGreater(payload["legacy_z4_script_count"], 0)
+        self.assertGreater(payload["historical_z4_script_count"], 0)
 
 
 if __name__ == "__main__":

@@ -1850,7 +1850,7 @@ python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_acquisition_gate_s
 python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_handshake_gate_script
 ```
 
-`JanusFormal.Branches.LegacyCMB` est une archive compile-only des anciens essais
+`JanusFormal.Branches.CMBHistoricalDiagnostics` est la branche historique des anciens essais
 mono-metriques CAMB/Planck. Ne pas l'utiliser comme validation standard du
 solveur Z4 natif ni comme preuve physique.
 
@@ -1860,10 +1860,10 @@ solveur Z4 natif ni comme preuve physique.
 - `JanusFormal/Lib/` contient les petites librairies communes.
 - `JanusFormal/Branches/` contient une tête par branche.
 - `docs/janus_branch_registry.md` donne le statut et le build de chaque branche.
-- `JanusFormal/Branches/LegacyCMB.lean` regroupe les anciens diagnostics mono-metriques
+- `JanusFormal/Branches/CMBHistoricalDiagnostics.lean` regroupe les anciens diagnostics mono-metriques
   CAMB/Planck. Ils restent hors validation CMB/Z4 standard.
 - Les anciens `P0EFT*.lean` sont ranges sous `JanusFormal/Branches/`,
-  `JanusFormal/Lib/` ou `JanusFormal/Legacy/` selon leur proprietaire.
+  `JanusFormal/Lib/` selon leur proprietaire. Les anciens essais sont des branches historiques, pas un dossier `Legacy/`.
 - `scripts/build_p0_eft_run*.py` genere les payloads et rapports d'audit.
 - `tests/test_p0_eft_run*.py` verifie les statuts exposes par ces scripts.
 - `data/processed/p0_eft_fsigma8/sdss_dr16_fsigma8_points.csv` contient le jeu traite minimal suivi.

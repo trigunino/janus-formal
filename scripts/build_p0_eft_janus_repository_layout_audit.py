@@ -7,7 +7,13 @@ from pathlib import Path
 ROOT_PATH = Path("JanusFormal.lean")
 BRANCH_DIR = Path("JanusFormal/Branches")
 LIB_DIR = Path("JanusFormal/Lib")
-LEGACY_CMB_PATH = Path("JanusFormal/Branches/LegacyCMB.lean")
+HISTORICAL_BRANCH_HEADS = [
+    Path("JanusFormal/Branches/CMBHistoricalDiagnostics.lean"),
+    Path("JanusFormal/Branches/Z4HistoricalProgram.lean"),
+    Path("JanusFormal/Branches/P0EarlyProgram.lean"),
+    Path("JanusFormal/Branches/P0EFTEarlyProgram.lean"),
+]
+LEGACY_DIR = Path("JanusFormal/Legacy")
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_repository_layout_audit.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_repository_layout_audit.json")
 
@@ -35,8 +41,9 @@ def build_payload() -> dict:
     branch_heads = sorted(path.stem for path in BRANCH_DIR.glob("*.lean"))
     lib_heads = sorted(path.stem for path in LIB_DIR.glob("*.lean"))
     old_umbrellas_present = [path.as_posix() for path in OLD_UMBRELLAS if path.exists()]
-    legacy_z4_scripts = _files("scripts/*z4*.py") + _files("scripts/*legacy*.py")
-    legacy_z4_tests = _files("tests/test_*z4*.py") + _files("tests/test_*legacy*.py")
+    historical_z4_scripts = _files("scripts/*z4*.py") + _files("scripts/*legacy*.py")
+    historical_z4_tests = _files("tests/test_*z4*.py") + _files("tests/test_*legacy*.py")
+    historical_heads_present = [path.as_posix() for path in HISTORICAL_BRANCH_HEADS if path.exists()]
     daily_commands = [
         "python -m unittest tests.test_p0_eft_janus_z2_sigma_branch_head_audit_script",
         "python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script",
@@ -48,21 +55,24 @@ def build_payload() -> dict:
         "root_facade": ROOT_PATH.as_posix(),
         "branch_dir": BRANCH_DIR.as_posix(),
         "lib_dir": LIB_DIR.as_posix(),
-        "legacy_cmb": LEGACY_CMB_PATH.as_posix(),
+        "historical_branch_heads": [path.as_posix() for path in HISTORICAL_BRANCH_HEADS],
+        "historical_heads_present": historical_heads_present,
+        "legacy_dir_present": LEGACY_DIR.exists(),
         "root_imports": root_imports,
         "root_facade_minimal": root_imports == ["JanusFormal.Core"],
         "branch_heads": branch_heads,
         "lib_heads": lib_heads,
         "old_umbrellas_present": old_umbrellas_present,
-        "legacy_z4_script_count": len(legacy_z4_scripts),
-        "legacy_z4_test_count": len(legacy_z4_tests),
+        "historical_z4_script_count": len(historical_z4_scripts),
+        "historical_z4_test_count": len(historical_z4_tests),
         "daily_commands": daily_commands,
         "layout_clean": (
             root_imports == ["JanusFormal.Core"]
             and "Z2SigmaRegular" in branch_heads
             and "Foundation" in lib_heads
             and not old_umbrellas_present
-            and LEGACY_CMB_PATH.exists()
+            and len(historical_heads_present) == len(HISTORICAL_BRANCH_HEADS)
+            and not LEGACY_DIR.exists()
         ),
     }
 
@@ -79,9 +89,15 @@ def write_reports() -> dict:
         f"Lib dir: `{payload['lib_dir']}`",
         f"Layout clean: `{payload['layout_clean']}`",
         f"Old umbrellas present: `{payload['old_umbrellas_present']}`",
+        f"Legacy dir present: `{payload['legacy_dir_present']}`",
+        "",
+        "## Historical Branch Heads",
+    ]
+    lines.extend(f"- `{item}`" for item in payload["historical_heads_present"])
+    lines.extend([
         "",
         "## Daily Commands",
-    ]
+    ])
     lines.extend(f"- `{item}`" for item in payload["daily_commands"])
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
     return payload

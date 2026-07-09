@@ -50,6 +50,6 @@ Do not use a global all-import build as normal workflow.
 - Use `Basic` only when a branch really needs `Mathlib` compatibility.
 - Keep branch logic and gate files under explicit `Branches/*` heads.
 - Put shared gates under `Lib/*`.
-- Put historical diagnostics under `Legacy/*`.
+- Put historical diagnostics under explicit branch heads too.
 - Do not import historical or experimental branches from the lightweight root.
 - Do not grow umbrella modules that import every branch.

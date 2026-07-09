@@ -33,7 +33,7 @@ def build_payload() -> dict:
     return {
         "status": "janus-z4-linearized-equation-scaffold",
         "solver_name": "Janus Z4 CMB Solver",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4LinearizedEquation",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4LinearizedEquation",
         "checks": checks,
         "symbolic_projection": {
             "master_source": ["rho_plus", "rho_minus"],

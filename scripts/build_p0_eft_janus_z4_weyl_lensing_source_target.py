@@ -25,7 +25,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-weyl-lensing-source-target",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4WeylLensingSourceTarget",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4WeylLensingSourceTarget",
         "weyl_potential": str(weyl),
         "lensing_kernel": str(kernel),
         "finite_transfer_target": str(finite_transfer_target),

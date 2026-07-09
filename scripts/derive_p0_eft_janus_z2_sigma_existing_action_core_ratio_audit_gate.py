@@ -28,8 +28,8 @@ def build_payload() -> dict:
         "active_core": "Z2_tunnel_Sigma",
         "source": "active_symbolic_audit",
         "checked_formal_modules": [
-            "JanusFormal.Legacy.P0.Gates.P0ActionTermCoefficientDerivation",
-            "JanusFormal.Legacy.P0.Gates.P0CandidateOrbifoldActionInstantiation",
+            "JanusFormal.Branches.P0EarlyProgram.Gates.P0ActionTermCoefficientDerivation",
+            "JanusFormal.Branches.P0EarlyProgram.Gates.P0CandidateOrbifoldActionInstantiation",
             "JanusFormal.Branches.Z2SigmaRegular.BoundaryDynamics.Gates.P0EFTJanusSigmaBoundaryActionSupportGate",
         ],
         "candidate_terms": candidate_terms,

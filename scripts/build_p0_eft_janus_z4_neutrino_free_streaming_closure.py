@@ -45,7 +45,7 @@ def build_payload() -> dict:
     )
     return {
         "status": "janus-z4-neutrino-free-streaming-closure",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4NeutrinoFreeStreamingClosure",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4NeutrinoFreeStreamingClosure",
         "recursion": str(sp.Eq(sp.Symbol("F_l_prime"), declared_rhs)),
         "finite_tail_target": str(sp.Eq(sp.Symbol("F_8_prime"), finite_tail_target)),
         "recursion_residual": str(recursion_residual),

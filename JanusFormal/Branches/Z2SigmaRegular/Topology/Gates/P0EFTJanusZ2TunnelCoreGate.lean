@@ -1,5 +1,5 @@
 import JanusFormal.Branches.Z2SigmaRegular.Topology.Gates.P0EFTJanusProjectiveTunnelInterface
-import JanusFormal.Legacy.P0EFT.Gates.P0EFTOrbifoldSingularCycleGenerator
+import JanusFormal.Branches.P0EFTEarlyProgram.Gates.P0EFTOrbifoldSingularCycleGenerator
 
 namespace JanusFormal
 namespace P0EFTJanusZ2TunnelCoreGate

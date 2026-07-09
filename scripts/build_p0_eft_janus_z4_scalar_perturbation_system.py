@@ -28,7 +28,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-scalar-perturbation-system-scaffold",
-        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4ScalarPerturbationSystem",
+        "lean_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4ScalarPerturbationSystem",
         "master_source": str(master),
         "background_constraint": str(background_constraint),
         "poisson_constraint": str(poisson_constraint),

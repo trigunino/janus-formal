@@ -68,7 +68,7 @@ def build_payload() -> dict:
             "derive b_D = 0 as absence of determinant leakage into lensing",
             "derive b_X = 0 as absence of independent cross-sector leakage into lensing",
         ],
-        "upstream_formal_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4WeylLensingSourceTarget",
+        "upstream_formal_module": "JanusFormal.Branches.Z4HistoricalProgram.Gates.P0EFTJanusZ4WeylLensingSourceTarget",
         "upstream_required_flag": "sourceCoefficientsDerived",
         "geodesic_projection_derived": False,
         "weyl_source_derived": False,

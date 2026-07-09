@@ -4,7 +4,7 @@
 
 - Formal topology scaffold: closed.
 - Active geometry core: `Z2_tunnel_Sigma`.
-- Legacy CMB/Z4 paths: archived diagnostic only.
+- Historical CMB/Z4 branches: diagnostic only, not active evidence.
 - Pure math no-axiom closure: closed for the active `Z2_tunnel_Sigma` model.
 - Late-time growth / SDSS-eBOSS branch: viable as EFT diagnostic.
 - BAO `r_d`: requires a real pre-drag background contraction.
