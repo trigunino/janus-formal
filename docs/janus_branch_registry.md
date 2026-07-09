@@ -17,6 +17,7 @@ Build one branch head at a time.
 | --- | --- | --- |
 | Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | viable only as state-sector selection; no no-fit alpha law |
 | Native BAO/ruler contract | `lake build JanusFormal.Branches.NativeBAORulerContract` | formulated; blocked by missing native early-time/ruler primitives |
+| Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | four BAO/ruler rescue routes structured; all blocked at current non-rustine frontier |
 | Regular Z2/Sigma throat | `lake build JanusFormal.Branches.Z2SigmaRegularThroat` | blocked by missing non-rustine scale/source closure |
 | Null Sigma / PT bridge | `lake build JanusFormal.Branches.NullPTBridgeMass` | blocked by missing derived bridge mass/LL state law |
 | Quantum boundary state law | `lake build JanusFormal.Branches.QuantumBoundaryStateLaw` | conditional spectra possible; no derived alpha selector |
@@ -26,8 +27,8 @@ Build one branch head at a time.
 | Alpha sector theory | `lake build JanusFormal.Branches.AlphaSectorTheory` | baseline sector audit; alpha remains external |
 | CMB/Planck diagnostic attempts | `lake build JanusFormal.Branches.CMBPlanckDiagnosticAttempts` | CAMB/Planck attempts; blocked as active evidence |
 | Z4 CMB topology-reset blocked program | `lake build JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram` | Z4/CMB solver route; blocked by geometry/topology reset |
-| P0 bimetric/orbifold prototype program | `lake build JanusFormal.Branches.P0BimetricOrbifoldPrototypeProgram` | first bimetric/orbifold formal prototypes |
-| P0EFT orbifold/Holst prototype program | `lake build JanusFormal.Branches.P0EFTOrbifoldHolstPrototypeProgram` | EFT/orbifold/Holst prototype modules |
+| P0 bimetric/orbifold prototype program | `lake build JanusFormal.Branches.P0BimetricOrbifoldPrototypeProgram` | light inventory head for bimetric/orbifold prototypes |
+| P0EFT orbifold/Holst prototype program | `lake build JanusFormal.Branches.P0EFTOrbifoldHolstPrototypeProgram` | light inventory head for EFT/orbifold/Holst prototypes |
 
 ## Rules
 

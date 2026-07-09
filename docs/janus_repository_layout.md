@@ -34,8 +34,8 @@ lake build JanusFormal.Branches.NullPTBridgeMass
 
 - `JanusFormal/Branches/CMBPlanckDiagnosticAttempts.lean` groups CMB/Planck diagnostic attempts.
 - `JanusFormal/Branches/Z4CMBTopologyResetBlockedProgram.lean` groups the Z4/CMB solver route blocked by the topology reset.
-- `JanusFormal/Branches/P0BimetricOrbifoldPrototypeProgram.lean` groups first bimetric/orbifold prototype modules.
-- `JanusFormal/Branches/P0EFTOrbifoldHolstPrototypeProgram.lean` groups EFT/orbifold/Holst prototype modules.
+- `JanusFormal/Branches/P0BimetricOrbifoldPrototypeProgram.lean` is a light inventory head for bimetric/orbifold prototype modules.
+- `JanusFormal/Branches/P0EFTOrbifoldHolstPrototypeProgram.lean` is a light inventory head for EFT/orbifold/Holst prototype modules.
 - These are real branch heads, not a separate catch-all old-attempt filesystem category.
 - Their status is diagnostic/blocked unless a later branch explicitly revives one
   as active evidence with a new branch entry.

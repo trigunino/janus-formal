@@ -40,6 +40,7 @@ lake build JanusFormal
 lake build JanusFormal.Shared.Foundation
 lake build JanusFormal.Branches.AlphaBridgeStateLaw
 lake build JanusFormal.Branches.NativeBAORulerContract
+lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler
 ```
 
 Do not use a global all-import build as normal workflow.
