@@ -654,6 +654,531 @@ reduced to the single lower bound `a_min`. It is still not derived: we need a
 normal-channel spectral operator, or an equivalent boundary law, whose state
 count is `dim Sym^4(C^11)`.
 
+Spectral-operator audit:
+
+```text
+candidate operator = self-adjoint 1D normal/redshift Sturm-Liouville problem
+linear mode indexing = available
+spectrum without cutoff = infinite
+finite N selected by operator alone = false
+finite N selected by Sym4 sector = true, conditionally
+```
+
+This sharpens the missing theorem. A one-dimensional operator can justify linear
+mode counting, but it does not itself pick the finite bandlimit `N=1001`. The
+remaining no-fit requirement is:
+
+```text
+derive a Janus/PT boundary state law where Sym^4(C^11) is the finite bandlimit
+of the normal/redshift channel, then prove a_min = 1/N.
+```
+
+Stronger version:
+
+```text
+normal/redshift evolution = finite transfer operator on Sym^4(C^11)
+```
+
+This avoids imposing a cutoff on an infinite continuum spectrum. The finite
+dimension is then intrinsic:
+
+```text
+dim Sym^4(C^11) = 1001
+```
+
+But it still needs a real Janus/PT transfer generator:
+
+```text
+finite transfer matrix on Sym^4(C^11);
+unitary or self-adjoint evolution rule;
+Z2/PT covariance;
+ordered normal-resolution spectrum;
+proof that endpoint count gives a_min = 1/1001;
+proof that photon-baryon drag uses the same clock.
+```
+
+Transfer-generator matrix:
+
+```text
+M31 quadratic Casimir: anchored, finite on Sym4, but does not order 1001 normal states
+R4 number/stress-energy operator: anchored, finite, but constant on degree 4
+PT modular flow: anchored as symmetry, but no modular Hamiltonian/density matrix derived
+basis path graph: orders states, but arbitrary unless derived from Janus/PT
+boundary Hamiltonian from action: required object, not yet derived
+```
+
+So the current best route is precise:
+
+```text
+derive a Janus/PT boundary Hamiltonian or transfer generator on Sym^4(C^11)
+whose Z2/PT-covariant ordered spectrum supplies 1001 normal/redshift endpoint states.
+```
+
+Diagonal Hamiltonian audit:
+
+```text
+M31 physical blocks = ell(3), g(3), p(3), E(1), q(1)
+Sym4 basis states = 1001
+isotropic block occupation profiles = C(4+5-1,4) = C(8,4) = 70
+```
+
+Therefore a diagonal Hamiltonian that only distinguishes the published M31
+physical blocks cannot order all 1001 states. To get 1001 distinct normal
+levels one needs either:
+
+```text
+componentwise weights inside ell/g/p triplets, which requires an extra selector
+or breaks isotropy;
+or a non-diagonal boundary transfer generator derived from the Janus/PT action.
+```
+
+M31-to-Sym4 representation gap:
+
+```text
+available: M31 coadjoint/torsor action
+available: structural boundary mode space V = C^11
+missing: rho: janus_lie -> End(V)
+missing: lifted action on Sym^4(V)
+missing: selected normal/redshift Hamiltonian
+missing: ordered spectrum -> a_min map
+```
+
+This is the minimal non-diagonal route. It would not fit observations directly;
+it would define how the published Janus symmetry transports boundary states.
+
+Refinement:
+
+```text
+rho candidate = M31 coadjoint action on torsor components (l,g,p,E,q)
+lift to Sym^4(C^11) = standard once rho is accepted
+```
+
+This partially closes the representation gap. The remaining problem is not
+`rho` itself; it is the physical normal/redshift Hamiltonian. Natural M31 blocks
+do not provide it:
+
+```text
+Lorentz rotations: classify/isotropize, not cosmological normal time
+Lorentz boosts: observer-frame changes, not throat endpoint evolution
+translations: coadjoint shears, not a self-adjoint 1001-level clock
+charge reflection/translation: sector labels, not ordered redshift levels
+```
+
+Normal-Hamiltonian route ranking:
+
+```text
+best next route: PT/Sigma boundary action Hamiltonian
+second route: boundary modular Hamiltonian from a state law
+insufficient alone: geometric throat length operator, because scale returns
+blocked alone: KKS moment map, because no M31 generator is H_normal
+rejected: empirical or lexicographic basis ordering
+```
+
+The next real calculation is therefore:
+
+```text
+construct theta_Sigma and Omega_boundary;
+identify the normal/throat evolution vector field X_normal;
+derive delta H = i_X Omega_boundary;
+lift H to Sym^4(C^11);
+test whether its ordered spectrum supplies 1001 endpoint states.
+```
+
+Existing reusable brick:
+
+```text
+Z2/Sigma Noether boundary charge:
+delta H_xi = integral_Sigma (delta Q_xi - i_xi theta)
+Brown-York symbolic reduction: E_BY = kappa^-1 integral N sqrt(q)(k_ref-k_phys)
+symbolic H ready = true
+numeric H ready = false
+```
+
+This is the right symbolic source for `theta_Sigma/Omega_boundary`, but it does
+not yet close the early-ruler branch. Missing bridge:
+
+```text
+boundary H used as X_normal generator;
+boundary H -> End(Sym^4(C^11));
+Z2/PT covariance;
+ordered 1001-state spectrum;
+same clock for photon drag.
+```
+
+Scalar-vs-operator audit:
+
+```text
+Brown-York/Noether H_boundary = scalar energy charge
+action on Sym^4(C^11) = H_boundary * Identity
+number of ordered levels from scalar H = 1
+required ordered levels = 1001
+```
+
+Therefore the existing boundary energy is not enough as a transfer operator. The
+branch needs one of:
+
+```text
+M31-valued boundary charge H_A rho(T_A);
+non-diagonal H_normal from theta_Sigma/Omega_boundary;
+modular Hamiltonian from a derived boundary state.
+```
+
+Plus/minus leg audit:
+
+```text
+leg difference operator: at most 2 levels
+leg PT mixing operator: at most 2 levels
+leg operator tensor identity on Sym4: does not split Sym4 states
+leg operator tensor H_M31_normal: works only if H_M31_normal is independently derived
+```
+
+So the two boundary legs are physically meaningful as a PT doublet, but they do
+not replace the missing internal `Sym^4(C^11)` transfer generator.
+
+Frontier verdict:
+
+```text
+exhausted:
+- scalar Brown-York/Noether boundary energy;
+- M31 isotropic block diagonal Hamiltonian;
+- natural M31 coadjoint generators;
+- plus/minus PT leg operator;
+- manual basis ordering.
+
+remaining:
+- non-diagonal H_normal from PT/Sigma boundary action;
+- or modular Hamiltonian from a boundary state law.
+```
+
+So this subbranch should not continue by adding more combinatorial selectors.
+Further progress requires deriving `H_normal` from the action or from a modular
+state.
+
+Schur obstruction:
+
+```text
+Sym^4(C^11) is irreducible under the natural linear action.
+Any fully invariant Hamiltonian on this sector is scalar.
+A scalar Hamiltonian cannot order 1001 states.
+```
+
+So a useful `H_normal` must be derived symmetry breaking, not fully symmetric:
+
+```text
+PT/Sigma action selects a normal generator;
+or a boundary modular state selects a Hamiltonian;
+or a derived operator-valued boundary charge reduces the symmetry.
+```
+
+Symmetry-breaking candidates:
+
+```text
+recommended: PT/Sigma normal generator -> internal Sym4 matrix
+credible second route: boundary modular Hamiltonian
+not enough: cosmological time flow, currently scalar
+rejected: arbitrary componentwise triplet direction
+```
+
+So the next concrete theorem is:
+
+```text
+PT normal orientation must induce a non-scalar internal matrix on the M31/Sym4
+boundary sector.
+```
+
+PT-normal attempt:
+
+```text
+global PT sign on all modes: scalar on Sym4
+plus/minus leg exchange: external doublet only
+CPT/M31 block signs: finite block splitting, not 1001 ordering
+normal connection endomorphism A_normal on C^11: needed, not derived
+```
+
+So the refined missing object is:
+
+```text
+A_normal: C^11 -> C^11
+```
+
+derived from the pullback of the PT/Sigma normal connection on the boundary mode
+bundle, then lifted to `Sym^4(C^11)`.
+
+Existing normal-connection machinery:
+
+```text
+calculator: src/janus_lab/z2_sigma_normal_connection.py
+input: outputs/active_z2_sigma/normal_connection_frame_primitives.json
+output: outputs/active_z2_sigma/normal_connection_omega_perp_inputs.json
+status: calculator ready, active input manifest missing
+```
+
+Even an active `omega_perp` would still not be enough by itself. It is a
+normal-frame connection matrix. The missing bridge is:
+
+```text
+rho_perp: normal-frame algebra -> End(C^11)
+A_normal = rho_perp(omega_perp)
+lift A_normal to Sym^4(C^11)
+```
+
+Spectral condition for `A_normal`:
+
+```text
+If A_normal has C11 weights w_i,
+then Sym4(A_normal) has weights w_i+w_j+w_k+w_l.
+```
+
+To obtain 1001 ordered levels, those degree-4 multiset sums must all be
+distinct. Equivalently:
+
+```text
+the 11 C11 weights must be 4-dissociated.
+```
+
+Checks:
+
+```text
+scalar weights: 1 level
+M31 block weights: 70 profiles
+arithmetic component weights 0..10: too resonant
+base-5 weights: 1001 levels, but not Janus-derived
+```
+
+So the exact remaining theorem is:
+
+```text
+derive 4-dissociated A_normal eigenweights from PT/Sigma normal holonomy,
+normal connection, or a boundary modular state.
+```
+
+Weight-origin matrix:
+
+```text
+rejected no-fit closures:
+  scalar boundary charge
+  published M31 block weights
+  topological cycle number alone
+  generic base-5 weights
+
+credible remaining routes:
+  active PT/Sigma normal connection -> rho_perp -> A_normal
+  boundary modular state -> modular Hamiltonian on C11
+```
+
+Current status:
+
+```text
+frontier narrowed
+no-fit not closed
+```
+
+M31 compact-charge audit:
+
+```text
+source: EPJC 2024 Janus/Souriau-Kaluza compact charge sector, eqs. 43-72
+closes: compact charge dimensions, PT/C sign action, charge quantization motivation
+does not close: A_normal, rho_perp -> End(C11), four-dissociated weights
+```
+
+Interpretation:
+compact charge dimensions are relevant to a boundary-state route, but ordinary
+charge labels/signs do not yet give the native 1001-level early-ruler operator.
+
+Active normal-connection availability:
+
+```text
+current assets: local Sigma unit frame, torsionless baseline, zero torsion pullback
+missing: active collar embedding X(lambda,u)
+missing: normal frame N_A(lambda,u)
+missing: partial_u N_A(lambda,u)
+missing: ambient connection Gamma_u(lambda,u)
+```
+
+Therefore a zero/local manifest must not be used as proof of `A_normal`.
+
+Existing collar probes:
+
+```text
+round product collar: omega_perp = 0, no radius/weight selection
+pure deck sign twist: lambda-independent defect, no unique root
+nonlocal twist probe: can select a root, but diagnostic-only and not action-derived
+```
+
+So the required object is not a simple projective sign. It is a nontrivial
+active normal connection or boundary state law derived from Janus/PT data.
+
+### Quantum Fock no-carry candidate
+
+Constructive operator:
+
+```text
+A_no_carry = sum_i 5^i N_i on Sym^4(C^11)
+```
+
+Reason:
+
+```text
+Sym degree = 4
+occupations n_i range from 0 to 4
+minimal no-carry base = degree + 1 = 5
+```
+
+Result:
+
+```text
+distinct levels = 1001
+orders all Sym^4(C^11) states = true
+```
+
+This is the sharpest constructive candidate so far. It would make the
+1001-level early-ruler sector exact. It is not yet promoted because Janus/PT
+still has to derive:
+
+```text
+ordered 11-mode basis on C^11
+no-carry modular Hamiltonian or q=5 boundary state law
+rho_perp mapping normal/boundary transport to A_no_carry
+```
+
+Souriau torsor bridge:
+
+```text
+C11 can be anchored as mu={l,g,p,E,q}
+dimensions: 3 + 3 + 3 + 1 + 1 = 11
+```
+
+This removes part of the arbitrariness: the 11-dimensional carrier can be read
+as the published Janus/Souriau torsor component space. It does not yet derive
+the component order or the base-5 modular hierarchy.
+
+Coadjoint-action filtration:
+
+```text
+q' = lambda*mu*q
+P' = L P
+M' = L M L^T - L P C^T + C P^T L^T
+```
+
+This gives a natural `q / P / M` hierarchy with dimensions `1 + 4 + 6 = 11`.
+It is source-derived, but too coarse: on `Sym^4` it gives 15 block profiles,
+not 1001 ordered states.
+
+Isotropy obstruction:
+
+```text
+SO(3)-preserving torsor blocks: l(3), g(3), p(3), E(1), q(1)
+degree-4 block profiles: C(5+4-1,4) = 70
+full Sym^4(C^11) states: C(11+4-1,4) = 1001
+```
+
+Therefore a component-level no-carry Hamiltonian would break visible spatial
+isotropy unless it is reinterpreted as boundary microstate structure with a
+derived isotropic observable average.
+
+Boundary microstate interpretation:
+
+```text
+hidden boundary microstates: 1001
+visible isotropic macro profiles: 70
+```
+
+This avoids a visible preferred spatial direction only if a Janus/PT boundary
+state law proves:
+
+```text
+SO(3)-invariant boundary density matrix
+visible tensors depend only on triplet averages
+early ruler uses hidden microstate count rather than macro profile count
+```
+
+This is the current best place where the quantum/complex-reality branch can
+help.
+
+Microcanonical boundary state attempt:
+
+```text
+rho_boundary = Identity_on_Sym^4(C^11) / 1001
+SO(3)-invariant = true
+visible preferred direction = false
+S_boundary = log(1001)
+a_min candidate = exp(-S_boundary) = 1/1001
+```
+
+This closes the isotropy part of the hidden-microstate idea. It still does not
+derive why the photon-baryon ruler must use `exp(S_boundary)` rather than the
+70 isotropic macro profiles.
+
+Entropy-to-resolution map:
+
+```text
+S_boundary = log(1001)
+a_min = exp(-S_boundary) = 1/1001
+z_max = 1000
+```
+
+This closes the dimensionless resolution arithmetic. It does not yet close the
+physical coupling of this boundary resolution to the native photon-baryon drag
+epoch or sound-horizon integral.
+
+Entropy cutoff to sound horizon:
+
+```text
+r_d^J = int_{a_min}^{a_d} c_s^J(a)/(a^2 H_J(a)) da
+a_min = 1/1001
+```
+
+This conditionally removes the lower-limit obstruction and reaches `z=1000`.
+Still missing for an executable BAO/ruler:
+
+```text
+a_d^J
+H_J(a)
+R_b0 or baryon/photon normalization
+proof that Janus action couples boundary entropy to the plasma ruler
+```
+
+Drag readiness after entropy cutoff:
+
+```text
+closed/available:
+  a_min = 1/1001
+  CODATA constants
+  FIRAS photon temperature
+  photon density normalization
+  C_ion = E_ion/(k_B T0)
+
+still missing:
+  baryon number or eta_b normalization
+  native H_J(a)
+  A_drag normalization
+```
+
+Exact-shape compatibility:
+
+```text
+same cosh branch relation: z_max = -1/(2 q0)
+entropy cutoff z_max=1000 -> q0=-0.0005
+published late SN q0=-0.087 -> z_max~5.75
+```
+
+Therefore the entropy cutoff cannot be inserted into the same late SN exact
+branch without destroying the published late-time fit. A native early branch
+and an early-to-late matching surface are required.
+
+Two-cosh gluing obstruction:
+
+```text
+if early and late branches are both a=a_min cosh(u)^2
+and they are glued at the late branch throat:
+  C0 scale match possible
+  C1 shape match impossible without extra transition/lapse/surface
+```
+
+Reason:
+the late branch has zero shape velocity at its throat, while the entropy early
+branch reaches that same scale with nonzero shape velocity.
+
 Report:
 
 ```text
@@ -666,4 +1191,39 @@ Report:
 
 ```text
 outputs/reports/p0_eft_janus_early_universe_native_plasma_extension_gate.md
+```
+
+## Final early/late matching pass
+
+The current throat/entropy branch has been pushed to its non-rustine frontier.
+
+```text
+same late cosh branch: blocked
+two-cosh gluing at late throat: blocked by C1 mismatch
+entropy-cutoff sound horizon: partially progressed
+native drag epoch: partially progressed
+transition surface or lapse law: absent
+```
+
+What is genuinely gained:
+
+```text
+hidden 1001 microstate count can be isotropic via a microcanonical state
+a_min = 1/1001 gives z_max = 1000
+C_ion is available from CODATA/FIRAS
+```
+
+Remaining blockers:
+
+```text
+derive early H_J(a)
+derive baryon/eta_b normalization
+derive a transition surface or lapse matching law
+preserve the published late SN q0 branch
+```
+
+Next branch:
+
+```text
+JanusProjectivePointPTLimit
 ```
