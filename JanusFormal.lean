@@ -1,20 +1,15 @@
-/- Root Janus facade.
+/- Lightweight Janus root facade.
 
 Default build:
   `lake build JanusFormal`
 
-This imports only the active Z2/Sigma proof surface through
-`JanusFormal.ActiveZ2Sigma`.
+This imports only shared core definitions. Build branch facades explicitly:
 
-Archived CMB/Z4 and exploratory modules are intentionally outside the default
-facade. Build them explicitly only when auditing history:
+  `lake build JanusFormal.ActiveBranches`
+  `lake build JanusFormal.ActiveZ2Sigma`
+  `lake build JanusFormal.JanusBridgeStateLaw`
+  `lake build JanusFormal.QuantumFirstBoundaryState`
   `lake build JanusFormal.AllImportsArchive`
 -/
 
-import JanusFormal.ActiveZ2Sigma
-import JanusFormal.ComplexRealityStateLaw
-import JanusFormal.QuantumFirstBoundaryState
-import JanusFormal.AsymptoticNullBoundarySymmetry
-import JanusFormal.JanusSectorTheoryV0
-import JanusFormal.JanusNewIdeaSectorProgram
-import JanusFormal.JanusBridgeStateLaw
+import JanusFormal.Core

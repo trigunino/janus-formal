@@ -29,7 +29,7 @@ def build_payload() -> dict:
         "active_geometry_core_declared": "active_geometry_core = Z2_tunnel_Sigma" in text,
         "legacy_z4_archived_declared": "legacy_z4_modules_archived = True" in text,
         "active_audit_declared": "P0EFTJanusZ2SigmaPureMathClosureAuditGate" in text,
-        "facade_audit_declared": "active facade audit" in text,
+        "branch_facade_audit_declared": "branch facade audit" in text,
     }
     return {
         "status": "janus-z2-sigma-docs-alignment-audit",

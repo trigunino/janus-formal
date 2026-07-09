@@ -1,13 +1,17 @@
 # Janus Repository Layout
 
-## Daily Active Surface
+## Daily Surface
 
 - `JanusFormal.lean` is intentionally minimal.
-- `JanusFormal/ActiveZ2Sigma.lean` imports the active Z2/Sigma model.
+- `JanusFormal/Core.lean` is the no-Mathlib shared kernel.
+- `JanusFormal/Lib/` contains reusable shared bricks.
+- `JanusFormal/Branches/` contains one public head per branch.
+- `docs/janus_branch_registry.md` records branch status and blockers.
 - `JanusFormal/NullSigmaPTBridge.lean` is a separate diagnostic facade for the
-  null-Sigma/PT-bridge attempt. It is not imported by the normal active facade.
+  null-Sigma/PT-bridge attempt and is exposed through
+  `JanusFormal.Branches.NullPTBridge`.
 - `P0EFTJanusZ2PT67*` modules are the active chapter-6.7 regular PT-transfer
-  surface route. They live in the active facade because they produce
+  surface route. They are exposed through the Z2/Sigma branch head because they produce
   nondegenerate `h_ab`, unit normal, local `K_ab`, and `DeltaK_PT=0`.
 - `scripts/*z2_sigma*.py` and `tests/test_*z2_sigma*.py` are the active audit
   and verification surface.
@@ -20,28 +24,22 @@
 Daily validation:
 
 ```bash
-python -m unittest tests.test_p0_eft_janus_active_z2_sigma_facade_audit_script
+python -m unittest tests.test_p0_eft_janus_z2_sigma_branch_head_audit_script
 python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script
 lake build JanusFormal
+lake build JanusFormal.Branches.Z2SigmaRegular
+lake build JanusFormal.Branches.NullPTBridge
 ```
 
-## Archives
+## Legacy Diagnostics
 
-- `JanusFormal/AllImportsArchive.lean` is an optional compile audit for all
-  historical modules.
-- `JanusFormal/LegacyCMB.lean` groups old CMB/Planck diagnostics.
+- `JanusFormal/Branches/LegacyCMB.lean` groups old CMB/Planck diagnostics.
 - `scripts/*z4*.py`, `scripts/*legacy*.py`, `tests/test_*z4*.py`, and
-  `tests/test_*legacy*.py` are archived diagnostics unless explicitly revived by
+  `tests/test_*legacy*.py` are legacy diagnostics unless explicitly revived by
   a new gate.
 - Old Git branches `codex/sigma-plugstar-ejection-threshold-gate` and
   `codex/sigma-point-collapse-limit-gate` are ancestors of `main`; their content
   is now organized by files/facades rather than needed as active branch state.
-
-Optional archive validation:
-
-```bash
-lake build JanusFormal.AllImportsArchive
-```
 
 ## Shared Python Code
 
@@ -54,7 +52,7 @@ lake build JanusFormal.AllImportsArchive
 
 ## Policy
 
-- Do not build `JanusFormal.AllImportsArchive` in the normal loop.
+- Do not use a global all-import build in the normal loop.
 - Do not use archived Z4/CMB results as active model evidence.
-- Add new active gates through `JanusFormal/ActiveZ2Sigma.lean`.
-- Keep archival gates accessible through `JanusFormal/AllImportsArchive.lean`.
+- Add new branch entry points under `JanusFormal/Branches/`.
+- Put reusable code under `JanusFormal/Lib/`.

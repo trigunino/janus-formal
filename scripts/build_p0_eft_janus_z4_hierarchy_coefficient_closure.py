@@ -28,7 +28,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-hierarchy-coefficient-closure",
-        "lean_module": "JanusFormal.P0EFTJanusZ4HierarchyCoefficientClosure",
+        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4HierarchyCoefficientClosure",
         "baryon_loading_R": str(r_b),
         "sound_speed_squared": str(cs2_gamma_baryon),
         "tau_dot": str(tau_dot),

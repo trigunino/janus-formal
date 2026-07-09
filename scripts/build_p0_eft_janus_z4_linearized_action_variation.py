@@ -31,7 +31,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-linearized-action-variation",
-        "lean_module": "JanusFormal.P0EFTJanusZ4LinearizedActionVariation",
+        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4LinearizedActionVariation",
         "source_action_density": str(source_action_density),
         "master_source": str(master),
         "el_plus": str(el_plus),

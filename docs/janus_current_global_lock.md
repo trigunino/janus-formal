@@ -55,3 +55,15 @@ Either:
 - derive a native Janus BAO/ruler contract; or
 - move to another Janus observable family: structures, voids/repellers,
   negative lensing, galaxy dynamics, plugstars/compact objects.
+
+## BAO/Ruler Follow-Up
+
+The native BAO contract is now formulated in
+`docs/janus_native_bao_ruler_contract.md`.
+
+It adds a stronger obstruction: a published-like interior value `q0=-0.087`
+has `z_max ~= 5.747`, so it cannot reach a high-redshift drag epoch on the
+same normalized exact branch.
+
+Therefore BAO requires a native early-time/redshift/ruler sector, not only a
+different value of `alpha`.

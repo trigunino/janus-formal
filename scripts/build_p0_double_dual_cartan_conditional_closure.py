@@ -44,7 +44,7 @@ def build_payload() -> dict:
         "theorem_status": theorem_status,
         "assumptions": assumptions,
         "chain": chain,
-        "lean_module": "JanusFormal.P0DoubleDualCartanConditionalClosure",
+        "lean_module": "JanusFormal.Legacy.P0.Gates.P0DoubleDualCartanConditionalClosure",
         "verdict": (
             "This is the clean conditional route. It is not a hidden repair: "
             "A_DoubleDualCartanSource is explicit and remains the only non-published step."

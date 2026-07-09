@@ -54,7 +54,7 @@ def build_payload() -> dict:
         "theorem_status": theorem_status,
         "obligations": obligations,
         "chain": chain,
-        "lean_module": "JanusFormal.P0EFTLoopDoubleDualConditional",
+        "lean_module": "JanusFormal.Legacy.P0EFT.Gates.P0EFTLoopDoubleDualConditional",
         "verdict": (
             "This is the best non-classical no-rustine route: the double-dual term is treated "
             "as the local Wilsonian remnant of bulk loops. It remains conditional until the "

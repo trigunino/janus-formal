@@ -53,7 +53,7 @@ def build_payload() -> dict:
         "template_is_documentation_only": True,
         "required_fields": required_fields,
         "optional_fields": optional_fields,
-        "z_d_bracket_policy": "optional; if absent/null, ActiveZ2Sigma pipeline derives it from Gamma_drag_Z2Sigma-H_Z2Sigma on z_grid",
+        "z_d_bracket_policy": "optional; if absent/null, Z2/Sigma branch derives it from Gamma_drag_Z2Sigma-H_Z2Sigma on z_grid",
         "flrw_component_fields": flrw_components,
         "early_plasma_fields": early_plasma,
         "critical_normalization_fields": [

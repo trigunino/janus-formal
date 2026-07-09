@@ -36,7 +36,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-scalar-closure-scaffold",
-        "lean_module": "JanusFormal.P0EFTJanusZ4ScalarClosure",
+        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4ScalarClosure",
         "master_delta": str(master_delta),
         "master_theta": str(master_theta),
         "master_pi": str(master_pi),

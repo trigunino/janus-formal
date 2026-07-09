@@ -37,7 +37,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-tensor-operator-contract",
-        "lean_module": "JanusFormal.P0EFTJanusZ4TensorOperatorContract",
+        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4TensorOperatorContract",
         "source_equations": {
             "plus": "G_plus = chi * (T_plus + B*T_minus)",
             "minus": "G_minus = -chi * B^-1 * (T_plus + B*T_minus)",

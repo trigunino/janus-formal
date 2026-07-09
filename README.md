@@ -1810,44 +1810,35 @@ Archived CMB/Z4 master-equation status:
 Point d'entree principal actif :
 
 - `JanusFormal.lean`
-- `JanusFormal/ActiveZ2Sigma.lean`
-- `JanusFormal/P0EFTJanusZ2SigmaPureMathClosureAuditGate.lean`
+- `JanusFormal/Core.lean`
+- `JanusFormal/Lib/`
+- `JanusFormal/Branches/`
+- `JanusFormal/Branches/Z2SigmaRegular/Topology/Gates/P0EFTJanusZ2SigmaPureMathClosureAuditGate.lean`
 - `scripts/build_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate.py`
 - `docs/janus_repository_layout.md`
+- `docs/janus_branch_registry.md`
 
 ## Validation rapide
 
 ```bash
-python -m unittest tests.test_p0_eft_janus_active_z2_sigma_facade_audit_script
+python -m unittest tests.test_p0_eft_janus_z2_sigma_branch_head_audit_script
 python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script
 python -m unittest tests.test_p0_eft_janus_z2_sigma_pure_math_closure_audit_gate_script
 lake build JanusFormal
 ```
 
-Validation plus large active :
+Validation par branche :
 
 ```bash
-lake build
+lake build JanusFormal.Branches.Z2SigmaRegular
+lake build JanusFormal.Branches.NullPTBridge
+lake build JanusFormal.Branches.BridgeStateLaw
+lake build JanusFormal.Branches.NativeBAORuler
 ```
 
-Validation Lean active :
+Validation CMB/Z4 historique seulement si une branche dédiée est réouverte :
 
 ```bash
-lake build JanusFormal
-```
-
-`JanusFormal.lean` est volontairement une facade racine minimale qui importe
-`JanusFormal/ActiveZ2Sigma.lean`. Le graphe complet historique reste disponible
-en audit optionnel dans :
-
-```bash
-lake build JanusFormal.AllImportsArchive
-```
-
-Validation CMB/Z4 archive optionnelle :
-
-```bash
-lake build JanusFormal.AllImportsArchive
 python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_joint_consistency_gate_script
 python -m unittest tests.test_p0_eft_janus_z4_acoustic_polarization_closed_theta2_joint_gate_script
@@ -1859,18 +1850,20 @@ python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_acquisition_gate_s
 python -m unittest tests.test_p0_eft_janus_z4_standalone_teee_handshake_gate_script
 ```
 
-`JanusFormal.LegacyCMB` est une archive compile-only des anciens essais
+`JanusFormal.Branches.LegacyCMB` est une archive compile-only des anciens essais
 mono-metriques CAMB/Planck. Ne pas l'utiliser comme validation standard du
 solveur Z4 natif ni comme preuve physique.
 
 ## Organisation utile
 
-- `JanusFormal.lean` importe seulement `JanusFormal.ActiveZ2Sigma`.
-- `JanusFormal/ActiveZ2Sigma.lean` importe l'ensemble des modules Lean actifs.
-- `JanusFormal/AllImportsArchive.lean` est optionnel et conserve l'historique.
-- `JanusFormal/LegacyCMB.lean` regroupe les anciens diagnostics mono-metriques
+- `JanusFormal.lean` importe seulement `JanusFormal.Core`.
+- `JanusFormal/Lib/` contient les petites librairies communes.
+- `JanusFormal/Branches/` contient une tête par branche.
+- `docs/janus_branch_registry.md` donne le statut et le build de chaque branche.
+- `JanusFormal/Branches/LegacyCMB.lean` regroupe les anciens diagnostics mono-metriques
   CAMB/Planck. Ils restent hors validation CMB/Z4 standard.
-- `JanusFormal/P0EFT*.lean` contient les verrous formels EFT/topologie.
+- Les anciens `P0EFT*.lean` sont ranges sous `JanusFormal/Branches/`,
+  `JanusFormal/Lib/` ou `JanusFormal/Legacy/` selon leur proprietaire.
 - `scripts/build_p0_eft_run*.py` genere les payloads et rapports d'audit.
 - `tests/test_p0_eft_run*.py` verifie les statuts exposes par ces scripts.
 - `data/processed/p0_eft_fsigma8/sdss_dr16_fsigma8_points.csv` contient le jeu traite minimal suivi.
@@ -2168,3 +2161,17 @@ Ces elements sont regenerables localement et ne doivent pas etre pousses.
   the current background-proxy BAO map.
 - Reopen only with a native Janus BAO/ruler contract, explicit boundary state
   law, or a different concrete observable family.
+
+### Build architecture
+
+- See `docs/janus_build_architecture.md`.
+- See `docs/janus_branch_registry.md` for branch status.
+- `lake build JanusFormal` is now a lightweight root sanity build importing
+  only `JanusFormal.Core`.
+- Build one branch head explicitly:
+  - `lake build JanusFormal.Branches.BridgeStateLaw`
+  - `lake build JanusFormal.Branches.NativeBAORuler`
+  - `lake build JanusFormal.Branches.Z2SigmaRegular`
+  - `lake build JanusFormal.Branches.NullPTBridge`
+  - `lake build JanusFormal.Branches.QuantumBoundaryState`
+  - `lake build JanusFormal.Branches.ComplexRealityStateLaw`

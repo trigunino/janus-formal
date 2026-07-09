@@ -31,7 +31,7 @@ def build_payload() -> dict:
     }
     return {
         "status": "janus-z4-photon-baryon-hierarchy-target",
-        "lean_module": "JanusFormal.P0EFTJanusZ4PhotonBaryonHierarchyTarget",
+        "lean_module": "JanusFormal.Legacy.Z4.Gates.P0EFTJanusZ4PhotonBaryonHierarchyTarget",
         "equations": {key: str(value) for key, value in equations.items()},
         "checks": checks,
         "hierarchy_target_ready": all(

@@ -15,19 +15,19 @@ def _exists(path: str) -> bool:
 def build_payload() -> dict:
     assets = {
         "projected_baryon_noether_charge": {
-            "lean": "JanusFormal/P0EFTJanusZ2SigmaProjectedBaryonNoetherChargeInputGate.lean",
+            "lean": "JanusFormal/Branches/Z2SigmaRegular/MatterPlasmaSpinor/Gates/P0EFTJanusZ2SigmaProjectedBaryonNoetherChargeInputGate.lean",
             "role": "projects Dirac/Noether baryon charge to Sigma",
             "closes_absolute_normalization": False,
             "remaining_blocker": "authoritative charge manifest or Dirac number normalization",
         },
         "baryon_noether_volume_density": {
-            "lean": "JanusFormal/P0EFTJanusZ2SigmaBaryonNumberDensityNoetherVolumeGate.lean",
+            "lean": "JanusFormal/Branches/Z2SigmaRegular/MatterPlasmaSpinor/Gates/P0EFTJanusZ2SigmaBaryonNumberDensityNoetherVolumeGate.lean",
             "role": "turns projected charge plus active volume into density",
             "closes_absolute_normalization": False,
             "remaining_blocker": "projected charge and active spatial volume",
         },
         "souriau_boundary_hamiltonian": {
-            "lean": "JanusFormal/P0EFTJanusZ2SigmaSouriauBoundaryHamiltonianAttemptGate.lean",
+            "lean": "JanusFormal/Branches/Z2SigmaRegular/GlobalBimetricAlpha/Gates/P0EFTJanusZ2SigmaSouriauBoundaryHamiltonianAttemptGate.lean",
             "role": "global charge/Hamiltonian label and moment-map route",
             "closes_absolute_normalization": False,
             "remaining_blocker": "local density or metric/K variation from the charge",
@@ -39,7 +39,7 @@ def build_payload() -> dict:
             "remaining_blocker": "state/projection theorem plus absolute charge or volume",
         },
         "global_bimetric_state_to_sector_normalization": {
-            "lean": "JanusFormal/P0EFTJanusZ2GlobalBimetricStateToFLRWSectorNormalizationGate.lean",
+            "lean": "JanusFormal/Branches/Z2SigmaRegular/GlobalBimetricAlpha/Gates/P0EFTJanusZ2GlobalBimetricStateToFLRWSectorNormalizationGate.lean",
             "script": "scripts/build_p0_eft_janus_z2_global_bimetric_state_to_flrw_sector_normalization_gate.py",
             "role": "strict adapter from global stress-energy state to rho_+0/rho_-0",
             "closes_absolute_normalization": False,

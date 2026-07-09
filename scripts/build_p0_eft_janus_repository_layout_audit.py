@@ -5,11 +5,17 @@ from pathlib import Path
 
 
 ROOT_PATH = Path("JanusFormal.lean")
-ACTIVE_PATH = Path("JanusFormal/ActiveZ2Sigma.lean")
-ARCHIVE_PATH = Path("JanusFormal/AllImportsArchive.lean")
-LEGACY_CMB_PATH = Path("JanusFormal/LegacyCMB.lean")
+BRANCH_DIR = Path("JanusFormal/Branches")
+LIB_DIR = Path("JanusFormal/Lib")
+LEGACY_CMB_PATH = Path("JanusFormal/Branches/LegacyCMB.lean")
 REPORT_PATH = Path("outputs/reports/p0_eft_janus_repository_layout_audit.md")
 JSON_PATH = Path("outputs/reports/p0_eft_janus_repository_layout_audit.json")
+
+OLD_UMBRELLAS = [
+    Path("JanusFormal/ActiveBranches.lean"),
+    Path("JanusFormal/ActiveZ2Sigma.lean"),
+    Path("JanusFormal/AllImportsArchive.lean"),
+]
 
 
 def _imports(path: Path) -> list[str]:
@@ -26,50 +32,36 @@ def _files(pattern: str) -> list[str]:
 
 def build_payload() -> dict:
     root_imports = _imports(ROOT_PATH)
-    active_imports = _imports(ACTIVE_PATH)
-    archive_imports = _imports(ARCHIVE_PATH)
-    active_scripts = _files("scripts/*z2_sigma*.py") + _files("scripts/*active_z2_sigma*.py")
+    branch_heads = sorted(path.stem for path in BRANCH_DIR.glob("*.lean"))
+    lib_heads = sorted(path.stem for path in LIB_DIR.glob("*.lean"))
+    old_umbrellas_present = [path.as_posix() for path in OLD_UMBRELLAS if path.exists()]
     legacy_z4_scripts = _files("scripts/*z4*.py") + _files("scripts/*legacy*.py")
-    active_tests = _files("tests/test_*z2_sigma*.py") + _files("tests/test_*active_z2_sigma*.py")
     legacy_z4_tests = _files("tests/test_*z4*.py") + _files("tests/test_*legacy*.py")
-    forbidden_root_archive_imports = [
-        item for item in root_imports if item != "JanusFormal.ActiveZ2Sigma"
-    ]
-    forbidden_active_z4 = [
-        item
-        for item in active_imports
-        if "Z4" in item and item != "JanusFormal.P0EFTJanusLegacyZ4ArchivePolicyGate"
+    daily_commands = [
+        "python -m unittest tests.test_p0_eft_janus_z2_sigma_branch_head_audit_script",
+        "python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script",
+        "lake build JanusFormal",
+        "lake build JanusFormal.Branches.Z2SigmaRegular",
     ]
     return {
         "status": "janus-repository-layout-audit",
         "root_facade": ROOT_PATH.as_posix(),
-        "active_facade": ACTIVE_PATH.as_posix(),
-        "archive_facade": ARCHIVE_PATH.as_posix(),
-        "legacy_cmb_archive": LEGACY_CMB_PATH.as_posix(),
+        "branch_dir": BRANCH_DIR.as_posix(),
+        "lib_dir": LIB_DIR.as_posix(),
+        "legacy_cmb": LEGACY_CMB_PATH.as_posix(),
         "root_imports": root_imports,
-        "root_facade_minimal": root_imports == ["JanusFormal.ActiveZ2Sigma"],
-        "active_import_count": len(active_imports),
-        "archive_import_count": len(archive_imports),
-        "active_z2_sigma_script_count": len(active_scripts),
+        "root_facade_minimal": root_imports == ["JanusFormal.Core"],
+        "branch_heads": branch_heads,
+        "lib_heads": lib_heads,
+        "old_umbrellas_present": old_umbrellas_present,
         "legacy_z4_script_count": len(legacy_z4_scripts),
-        "active_z2_sigma_test_count": len(active_tests),
         "legacy_z4_test_count": len(legacy_z4_tests),
-        "forbidden_root_archive_imports": forbidden_root_archive_imports,
-        "forbidden_active_z4_imports": forbidden_active_z4,
-        "daily_commands": [
-            "python -m unittest tests.test_p0_eft_janus_active_z2_sigma_facade_audit_script",
-            "python -m unittest tests.test_p0_eft_janus_repository_layout_audit_script",
-            "lake build JanusFormal",
-        ],
-        "archive_commands_optional": [
-            "lake build JanusFormal.AllImportsArchive",
-            "python -m unittest tests.test_p0_eft_janus_z4_cmb_diagnostic_master_report_script",
-        ],
+        "daily_commands": daily_commands,
         "layout_clean": (
-            root_imports == ["JanusFormal.ActiveZ2Sigma"]
-            and not forbidden_root_archive_imports
-            and not forbidden_active_z4
-            and ARCHIVE_PATH.exists()
+            root_imports == ["JanusFormal.Core"]
+            and "Z2SigmaRegular" in branch_heads
+            and "Foundation" in lib_heads
+            and not old_umbrellas_present
             and LEGACY_CMB_PATH.exists()
         ),
     }
@@ -83,16 +75,14 @@ def write_reports() -> dict:
         "# Janus Repository Layout Audit",
         "",
         f"Root facade: `{payload['root_facade']}`",
-        f"Active facade: `{payload['active_facade']}`",
-        f"Archive facade: `{payload['archive_facade']}`",
-        f"Legacy CMB archive: `{payload['legacy_cmb_archive']}`",
+        f"Branch dir: `{payload['branch_dir']}`",
+        f"Lib dir: `{payload['lib_dir']}`",
         f"Layout clean: `{payload['layout_clean']}`",
+        f"Old umbrellas present: `{payload['old_umbrellas_present']}`",
         "",
         "## Daily Commands",
     ]
     lines.extend(f"- `{item}`" for item in payload["daily_commands"])
-    lines.extend(["", "## Archive Commands Optional"])
-    lines.extend(f"- `{item}`" for item in payload["archive_commands_optional"])
     REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
     return payload
 

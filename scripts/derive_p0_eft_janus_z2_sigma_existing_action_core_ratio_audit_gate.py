@@ -28,9 +28,9 @@ def build_payload() -> dict:
         "active_core": "Z2_tunnel_Sigma",
         "source": "active_symbolic_audit",
         "checked_formal_modules": [
-            "JanusFormal.P0ActionTermCoefficientDerivation",
-            "JanusFormal.P0CandidateOrbifoldActionInstantiation",
-            "JanusFormal.P0EFTJanusSigmaBoundaryActionSupportGate",
+            "JanusFormal.Legacy.P0.Gates.P0ActionTermCoefficientDerivation",
+            "JanusFormal.Legacy.P0.Gates.P0CandidateOrbifoldActionInstantiation",
+            "JanusFormal.Branches.Z2SigmaRegular.BoundaryDynamics.Gates.P0EFTJanusSigmaBoundaryActionSupportGate",
         ],
         "candidate_terms": candidate_terms,
         "core_radius_stationarity": {

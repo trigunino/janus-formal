@@ -203,7 +203,7 @@
   `<mu,[Z_Sigma(delta1),Z_Sigma(delta2)]>`. Active evaluation remains blocked by
   the missing nontrivial boundary variation basis and closed two-cycle.
   Lean formalization now mirrors this status in
-  `JanusFormal.ComplexRealityStateLaw`; it proves the branch is formalized but
+  `JanusFormal.Branches.ComplexRealityStateLaw`; it proves the branch is formalized but
   still does not generate `alpha`.
   `ComplexRealityBoundaryVariationBasisGate` now declares the symbolic normal
   embedding displacement, frame rotation/boost, and connection holonomy
@@ -259,7 +259,7 @@
   projection, noncentral `aroundSigma` lift, sector selection and `alpha` map
   are derived.
 - Quantum-first boundary-state branch:
-  `JanusFormal.QuantumFirstBoundaryState` and
+  `JanusFormal.Branches.QuantumBoundaryState` and
   `docs/janus_quantum_first_boundary_state.md` implement the reversed program
   `boundary quantum state -> CP1/TQFT phase space -> prequantization -> alpha
   spectrum -> classical Janus limit`. Current result:
@@ -272,7 +272,7 @@
   labels can be discrete, but no boundary mass operator or energy unit is
   derived without an extra quantum action/time-generator/area-to-mass law.
 - Asymptotic/null boundary symmetry branch:
-  `JanusFormal.AsymptoticNullBoundarySymmetry` and
+  `JanusFormal.Branches.AsymptoticNullBoundary` and
   `docs/janus_asymptotic_null_boundary_symmetry.md` test the BMS/Newman-Penrose/
   covariant-phase-space route. This is the right framework for boundary energy
   charges, but it does not close live because Janus has not supplied either an
@@ -2255,10 +2255,10 @@
   - BAO sound-horizon machinery is importable generically;
   - Sigma photon map and Z2/Sigma `r_d` remain local derivations.
 - [x] Split repository layout:
-  - root `JanusFormal.lean` imports only `JanusFormal.ActiveZ2Sigma`;
-  - active Z2/Sigma imports live in `JanusFormal/ActiveZ2Sigma.lean`;
-  - historical modules stay in optional `JanusFormal/AllImportsArchive.lean`;
-  - `docs/janus_repository_layout.md` indexes daily active vs archived commands.
+  - root `JanusFormal.lean` imports only `JanusFormal.Core`;
+  - shared bricks live under `JanusFormal/Lib/`;
+  - branch heads live under `JanusFormal/Branches/`;
+  - `docs/janus_branch_registry.md` indexes branch status and build commands.
 - [x] Add `P0EFTJanusZ2SigmaPhotonGeodesicDistanceMapGate`:
   - visible photon metric projection declared;
   - photon null geodesic and redshift map derived;
@@ -2445,9 +2445,9 @@
   - direct growth, BAO and CMB gates remain to run;
   - compressed LCDM validation remains forbidden;
   - full no-fit cosmology remains false.
-- [x] Add active facade audit:
-  - `JanusFormal.lean` imports only Z2/Sigma active gates;
-  - old CMB/Z4 modules stay in `JanusFormal.AllImportsArchive`.
+- [x] Add branch facade audit:
+  - `JanusFormal.lean` imports only `JanusFormal.Core`;
+  - old CMB/Z4 modules are legacy diagnostics, not a normal build target.
 - [x] Add docs alignment audit to prevent active-Z4 wording from returning.
 - [x] Archive legacy `Z4` as diagnostic-only with
   `P0EFTJanusLegacyZ4ArchivePolicyGate`.
@@ -3783,7 +3783,7 @@ Completion rule:
   - therefore this is a null-Sigma/PT-bridge branch, not a closure of the
     current regular `h_ab,K_ab` counterterm pipeline.
 - Null Sigma / PT bridge branch:
-  - explicit branch facade: `JanusFormal.NullSigmaPTBridge`;
+  - explicit branch head: `JanusFormal.Branches.NullPTBridge`;
   - source alignment follows chapter 6/7 and EPJC summary:
     retained `dr dt`, one-way bridge, PT-symmetric sheets, orientation/time
     reversal, Souriau mass-energy inversion, projective/tubular topology;
@@ -4375,3 +4375,11 @@ Completion rule:
 - [x] Run the alpha-superselection SN+BAO closure. Current proxy selects the
   `q0 -> 0-` boundary and rejects an interior Janus sector.
 - [x] Add the global lock summary for the current alpha/background pass.
+- [x] Formulate the native BAO/ruler contract and identify the deeper
+  redshift-domain obstruction for interior published-like `q0`.
+- [x] Split the Lean build facade:
+  - lightweight root `JanusFormal`;
+  - no-Mathlib shared kernel `JanusFormal.Core`;
+  - small reusable library namespace `JanusFormal.Lib.*`;
+  - one public head per branch under `JanusFormal.Branches.*`;
+  - branch registry with status and blocking points.
