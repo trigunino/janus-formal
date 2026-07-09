@@ -479,3 +479,84 @@ Omega boundary condition
 This is the bottom of the current non-throat Weyl-cusp branch. The old blocker
 is not gone; it has been reduced to a cleaner form without finite Sigma throat
 or arbitrary counterterm.
+
+## Global Conservation To Omega
+
+Using the published signed-energy conservation:
+
+```text
+rho_plus c_plus^2 a_plus^3 + rho_minus c_minus^2 a_minus^3 = E_global
+```
+
+and:
+
+```text
+a_plus = Omega a_hat
+```
+
+gives:
+
+```text
+Omega^3 =
+  (E_global - rho_minus c_minus^2 a_minus^3)
+  / (rho_plus c_plus^2 a_hat^3)
+```
+
+This is an algebraic Omega relation, not a prediction. It needs:
+
+```text
+E_global
+minus-sector history
+plus pre-drag density
+c-law tied to the Weyl cusp
+```
+
+## Internal Route Exhaustion
+
+Routes pushed:
+
+```text
+ProjectiveS4RP4Topology
+VisibleMatterJordanFrame
+ConformalEinstein00
+BimetricSourceContract
+DeterminantRatio
+GlobalSignedEnergyConservation
+BoundaryMicrostateEntropy1001
+Crosscap/Mobius/Lens/Branched variants
+```
+
+All stop at the same class of missing data:
+
+```text
+physical scale
+Lorentzian clock
+active pre-drag source
+boundary/state law
+```
+
+## Final Frontier
+
+Closed without rustine:
+
+```text
+Weyl-cusp redshift domain
+g(+) visible kinematics
+S4/RP4 hat conformal background
+bimetric plus-sector source contract
+global conservation Omega relation
+00 projection choice
+```
+
+Not closed without a new derived law:
+
+```text
+absolute L or E_global
+Lorentzian time slicing
+pre-drag source scalings
+Omega boundary condition
+```
+
+Final verdict: the branch is cleaner than the finite-throat route, but it is not
+a no-fit observable model until a real Janus state/source/clock law is added or
+derived.

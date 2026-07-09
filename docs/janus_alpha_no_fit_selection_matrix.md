@@ -22,9 +22,12 @@ Current baseline:
 | 7 | Bimetric vacuum equation of state | global +/- matter vacuum fixes density normalization | state law for `rho_+0`, `rho_-0`, or `E_global` | Open | published ratio is relative, not absolute | Yes |
 | 8 | Boundary reference / Brown-York normalization | `alpha` is a quasilocal boundary charge relative to a reference | nonzero `Q_boundary - Q_reference` with Janus reference | Mostly exhausted | active PT67 regular projection gives zero | Only if nonzero reference law derived |
 | 9 | Observational sector selection | `alpha` is like ADM mass: measured, not predicted | SN+BAO+H(z) selects sector | Viable but not no-fit | observational calibration required | No |
-| 10 | Alternative tunnel geometry | current Sigma too poor; another global tunnel carries a cycle | compact action-angle cycle or monodromy | Open | must derive from Janus, not replace it ad hoc | Maybe |
-| 11 | Moebius / twisted throat geometry | orientation reversal is geometrized as a twisted compact cycle | Pin/PT holonomy or compact cycle around a Moebius-like throat | New candidate | must lift from 2D analogy to 4D resolved tunnel with action | Maybe |
+| 10 | Alternative tunnel geometry | current Sigma too poor; another global tunnel carries a cycle | compact action-angle cycle or monodromy | Terminally audited | topology/cycles yes; no action, boundary period, source law, or scale | Maybe only with new active dynamics |
+| 11 | Moebius / twisted throat geometry | orientation reversal is geometrized as a twisted compact cycle | Pin/PT holonomy or compact cycle around a Moebius-like throat | Terminally audited | 2D/twisted intuition yes; no 4D active action, nonzero KKS period, or scale | Maybe only with new active dynamics |
 | 12 | Quantum state / superselection law | allowed universes are discrete sectors | primitive sector law, irreducibility, no fusion/splitting | Blocked | no internal proof of primitive sector | Yes |
+| 13 | Unimodular / four-form sector | `E_global` is a conserved four-form flux sector | Janus charge unit + PT flux selection | Partially investigated | no Janus-derived flux unit or selected integer | Yes |
+| 14 | Weyl / conformal anomaly state law | quantum fields on the PT/Weyl background generate a scale | anomaly-induced stress selects `L` or `E_global` | New hard frontier | no Janus field content, anomaly coefficients, or renormalization scale | Yes |
+| 15 | Euclidean `S4_L/RP4_L` saddle | `L` is selected by a projective no-boundary-like saddle | finite `S_E(L)` and saddle equation | New hard frontier | no finite Euclidean bimetric action, contour, or Lorentzian match | Yes |
 
 ## Moebius Candidate
 
@@ -61,6 +64,42 @@ Current route verdict:
 - no compact alpha-dependent action-angle cycle is derived;
 - therefore the Moebius route is not currently an `alpha` selector.
 
+Terminal update:
+
+- `alternative_tunnel_geometry` and `moebius_twisted_throat_geometry` are no
+  longer partial;
+- both are now terminally audited as topology/cycle diagnostics;
+- neither emits an active Janus action, nonzero boundary period, flux unit,
+  source law, or dimensionful scale.
+
+Formal/report anchor:
+
+- Lean gate: `P0EFTJanusAlphaTunnelMoebiusTerminalGate`;
+- script: `scripts/build_p0_eft_janus_alpha_tunnel_moebius_terminal_gate.py`;
+- report: `outputs/reports/p0_eft_janus_alpha_tunnel_moebius_terminal_gate.md`.
+
+## Combination Frontier Matrix
+
+The route combinations have also been pushed to their current terminal frontier.
+
+| Rank | Combination | Target | Closes no-fit now? | Terminal verdict |
+|---:|---|---|---:|---|
+| 1 | `unimodular_four_form_sector + flux_quantization_sigma_pt + PT_crosscap_boundary` | `E_global` | no | best no-fit candidate, but still needs Janus four-form action, charge unit, and PT flux selection |
+| 2 | `weyl_conformal_anomaly_state_law + non_throat_weyl_cusp + casimir_topological_vacuum` | `L` | no | best non-throat route, but needs Janus QFT content, anomaly coefficients, and PT renormalization |
+| 3 | `euclidean_s4_rp4_no_boundary_saddle + casimir/anomaly + bimetric_action` | `L` | no | clean action route, but no finite `V_eff(L)` exists yet |
+| 4 | `bimetric_vlasov_global_equilibrium + Noether_ADM_charge + published_96_4_sector_ratio` | `E_global` | no | most Janus-matter-native, but lacks active cosmological distribution |
+| 5 | `defect_anomaly_inflow_pt_boundary + LL_brane_bridge_tension + PT_boundary_current` | `M_bridge -> alpha` | no | sharp bridge-source route, but requires justified defect fields/anomaly polynomial |
+| 6 | `noncommutative_spectral_action + S4_RP4_projective_topology + bimetric_fields` | `L + action` | no | complete reconstruction program, not current closure |
+| 7 | `Souriau_KKS + Moebius_Klein_cycle + CP1_TQFT_phase` | discrete sector | no | topology exists, but nonzero period/source is absent |
+| 8 | `geometric_flow_yamabe_selector + euclidean_s4_rp4_no_boundary_saddle` | canonical geometry | no | useful action preprocessing, not scale selection |
+| 9 | `alpha_superselection_sector + SN_BAO_Hz_observations` | observed sector | calibrated yes; no-fit no | closes phenomenological sector, not a fundamental prediction |
+
+Formal/report anchor:
+
+- Lean gate: `P0EFTJanusAlphaCombinationFrontierMatrixGate`;
+- script: `scripts/build_p0_eft_janus_alpha_combination_frontier_matrix_gate.py`;
+- report: `outputs/reports/p0_eft_janus_alpha_combination_frontier_matrix_gate.md`.
+
 ## Evaluation Order
 
 1. Recheck global action/on-shell route.
@@ -78,6 +117,59 @@ Current route verdict:
 - Geometry analogies are diagnostic until lifted to the 4D Janus tunnel.
 - A route closes only if it emits a concrete selector for `alpha` or proves a
   route-specific no-go.
+
+## Three Current Hard Frontier Laws
+
+The active final shortlist is:
+
+1. `unimodular_four_form_sector`;
+2. `weyl_conformal_anomaly_state_law`;
+3. `euclidean_s4_rp4_no_boundary_saddle`.
+
+Verdict:
+
+- none currently predicts `alpha`;
+- each would be a real no-fit selector if closed;
+- none may use observed `H0`, `alpha`, `L`, or BAO/SN data as input.
+
+Formal/report anchor:
+
+- Lean gate: `P0EFTJanusAlphaThreeFrontierLawsGate`;
+- script: `scripts/build_p0_eft_janus_alpha_three_frontier_laws_gate.py`;
+- report: `outputs/reports/p0_eft_janus_alpha_three_frontier_laws_gate.md`.
+
+## Non-Fully Investigated Routes Frontier
+
+All routes that were not previously marked as fully investigated have now been
+pushed to an explicit frontier:
+
+| Route | Frontier reached | Hard blocker |
+|---|---|---|
+| `unimodular_four_form_sector` | flux-sector contract | Janus charge unit and PT flux selection |
+| `weyl_conformal_anomaly_state_law` | anomaly-source contract | Janus field content, anomaly coefficients, PT renormalization |
+| `euclidean_s4_rp4_no_boundary_saddle` | saddle-selection contract | finite Euclidean bimetric action, contour, Lorentzian match |
+| `casimir_topological_vacuum` | topological-vacuum source contract | spectrum, sign/coefficient, non-circular radius |
+| `geometric_flow_yamabe_selector` | scale-invariance obstruction | Yamabe selects representatives, not absolute scale |
+| `defect_anomaly_inflow_pt_boundary` | defect-source contract | chiral/gauge field content and anomaly polynomial |
+| `noncommutative_spectral_action` | spectral-action obstruction | Janus spectral triple and internal cutoff |
+| `bimetric_vlasov_global_equilibrium` | global-equilibrium source contract | active phase-space distribution and projection to background |
+
+Verdict:
+
+- none closes `alpha` now;
+- all have explicit blockers;
+- `unimodular_four_form_sector` remains the best first route;
+- `weyl_conformal_anomaly_state_law` is the best route coupled to the
+  non-throat Weyl-cusp branch;
+- `bimetric_vlasov_global_equilibrium` is the most Janus-matter-native route.
+
+Formal/report anchor:
+
+- Lean gate: `P0EFTJanusAlphaNonFullInvestigatedRoutesFrontierGate`;
+- script:
+  `scripts/build_p0_eft_janus_alpha_non_full_investigated_routes_frontier_gate.py`;
+- report:
+  `outputs/reports/p0_eft_janus_alpha_non_full_investigated_routes_frontier_gate.md`.
 
 ## Global Action Route
 

@@ -4569,6 +4569,694 @@ def omega_00_solvability_frontier_payload() -> dict:
     }
 
 
+def global_signed_energy_to_omega_contract_payload() -> dict:
+    """Use the published signed-energy conservation to isolate Omega algebraically."""
+
+    checks = {
+        "published_signed_energy_conservation_available": True,
+        "a_plus_weyl_relation_available": True,
+        "omega_algebraic_relation_declared": True,
+        "global_energy_constant_derived": False,
+        "minus_sector_history_derived": False,
+        "plus_sector_predrag_density_derived": False,
+        "variable_c_law_tied_to_weyl_cusp": False,
+    }
+    return {
+        "status": "janus-global-signed-energy-to-omega-contract",
+        "published_conservation": "rho_plus*c_plus^2*a_plus^3 + rho_minus*c_minus^2*a_minus^3 = E_global",
+        "weyl_substitution": "a_plus = Omega*a_hat",
+        "omega_relation": "Omega^3 = (E_global - rho_minus*c_minus^2*a_minus^3)/(rho_plus*c_plus^2*a_hat^3)",
+        "checks": checks,
+        "algebraic_contract_closed": all(
+            checks[key]
+            for key in [
+                "published_signed_energy_conservation_available",
+                "a_plus_weyl_relation_available",
+                "omega_algebraic_relation_declared",
+            ]
+        ),
+        "omega_fixed_by_conservation": all(
+            checks[key]
+            for key in [
+                "global_energy_constant_derived",
+                "minus_sector_history_derived",
+                "plus_sector_predrag_density_derived",
+                "variable_c_law_tied_to_weyl_cusp",
+            ]
+        ),
+        "bottom_line": (
+            "Global signed-energy conservation gives an algebraic Omega relation. "
+            "It still does not fix Omega unless E_global, minus-sector history, "
+            "plus pre-drag densities, and the c-law are derived."
+        ),
+    }
+
+
+def omega_internal_route_exhaustion_matrix_payload() -> dict:
+    """Collect every internal route tested for closing Omega without a new law."""
+
+    routes = [
+        {
+            "name": "ProjectiveS4RP4Topology",
+            "closed": False,
+            "what_it_closes": "conformal class and PT cusp",
+            "why_it_stops": "does not fix L, Lorentzian time, or source",
+        },
+        {
+            "name": "VisibleMatterJordanFrame",
+            "closed": False,
+            "what_it_closes": "physical visible clock is g(+)",
+            "why_it_stops": "does not derive g(+) pullback dynamics through cusp",
+        },
+        {
+            "name": "ConformalEinstein00",
+            "closed": False,
+            "what_it_closes": "correct radiation-sensitive projection",
+            "why_it_stops": "needs H_hat, rho_eff_plus, Omega boundary condition",
+        },
+        {
+            "name": "BimetricSourceContract",
+            "closed": False,
+            "what_it_closes": "T_eff_plus = T_plus + Q_det*T_minus",
+            "why_it_stops": "does not derive pre-drag radiation/baryon/minus scalings",
+        },
+        {
+            "name": "DeterminantRatio",
+            "closed": False,
+            "what_it_closes": "volume coupling and conformal special-case relation",
+            "why_it_stops": "volume ratio is not a unique metric conformal factor",
+        },
+        {
+            "name": "GlobalSignedEnergyConservation",
+            "closed": False,
+            "what_it_closes": "algebraic Omega relation",
+            "why_it_stops": "requires E_global and sector histories",
+        },
+        {
+            "name": "BoundaryMicrostateEntropy1001",
+            "closed": False,
+            "what_it_closes": "dimensionless lower cutoff candidate",
+            "why_it_stops": "does not source H_hat or rho_eff_plus",
+        },
+        {
+            "name": "CrosscapMobiusLensBranchedVariants",
+            "closed": False,
+            "what_it_closes": "alternative topology catalogue",
+            "why_it_stops": "no local dynamics/source law",
+        },
+    ]
+    return {
+        "status": "janus-omega-internal-route-exhaustion-matrix",
+        "routes": routes,
+        "any_internal_route_closed": any(row["closed"] for row in routes),
+        "remaining_non_rustine_exits": [
+            "derive a Janus boundary/state law fixing E_global or L",
+            "derive a Lorentzian time slicing from the projective PT geometry",
+            "derive pre-drag plus/minus matter scalings from the bimetric action",
+            "derive a near-PT conformality theorem linking Q_det to Omega",
+        ],
+        "bottom_line": (
+            "All internal routes currently reduce to the same missing data class: "
+            "scale, Lorentzian clock, active pre-drag source, or boundary state law."
+        ),
+    }
+
+
+def non_throat_weyl_cusp_final_frontier_payload() -> dict:
+    """Final frontier verdict for the current non-throat Weyl-cusp branch."""
+
+    omega = omega_00_solvability_frontier_payload()
+    conservation = global_signed_energy_to_omega_contract_payload()
+    exhaustion = omega_internal_route_exhaustion_matrix_payload()
+    return {
+        "status": "janus-non-throat-weyl-cusp-final-frontier",
+        "closed_without_rustine": {
+            "weyl_cusp_redshift_domain": True,
+            "gplus_visible_kinematics": True,
+            "s4_rp4_hat_conformal_background": True,
+            "bimetric_source_contract": True,
+            "global_conservation_omega_relation": conservation["algebraic_contract_closed"],
+            "00_projection_choice": True,
+        },
+        "not_closed_without_new_law": {
+            "absolute_L_or_E_global": True,
+            "lorentzian_time_slicing": True,
+            "predrag_source_scalings": True,
+            "omega_boundary_condition": True,
+        },
+        "can_solve_omega_now": omega["can_solve_omega_now"],
+        "any_internal_route_closed": exhaustion["any_internal_route_closed"],
+        "final_verdict": (
+            "bottom_reached: the branch is mathematically cleaner than the finite "
+            "throat route, but not a no-fit observable model until a real Janus "
+            "state/source/clock law is added or derived."
+        ),
+    }
+
+
+def alpha_three_frontier_laws_payload() -> dict:
+    """Audit the three hardest remaining no-fit routes for alpha/E_global/L."""
+
+    routes = [
+        {
+            "name": "unimodular_four_form_sector",
+            "idea": "E_global is a conserved four-form flux / integration constant.",
+            "world_interpretation": (
+                "The universe belongs to a flux sector; alpha is not local matter "
+                "but the value of a global conserved form."
+            ),
+            "repo_status": "partially_investigated",
+            "already_present": [
+                "CandidateMechanismMatrix unimodular gate",
+                "alpha <-> E_global map",
+            ],
+            "closed_inputs": [
+                "four-form can make a cosmological/integration constant sector",
+                "alpha map can be declared algebraically",
+            ],
+            "missing_inputs": [
+                "Janus-derived four-form action coupled to PT/projective sector",
+                "charge unit or membrane unit",
+                "PT boundary law selecting one flux integer",
+                "proof that the selected flux maps to the published alpha scale",
+            ],
+            "no_fit_alpha_generated": False,
+            "bottom_line": (
+                "Strongest conservative route. It turns alpha into a global flux "
+                "sector, but no Janus charge unit or boundary selection law is derived."
+            ),
+        },
+        {
+            "name": "weyl_conformal_anomaly_state_law",
+            "idea": "The Weyl/PT branch generates a scale through trace anomaly/RG breaking.",
+            "world_interpretation": (
+                "The classical Janus geometry is scale-free, but quantum fields on "
+                "the PT/Weyl background break scale invariance and select L."
+            ),
+            "repo_status": "new_frontier_adjacent_to_non_throat_weyl_cusp",
+            "already_present": [
+                "Non-throat Weyl-cusp geometry",
+                "hat conformal class",
+                "missing L/clock/source law identified",
+            ],
+            "closed_inputs": [
+                "anomaly mechanism is physically meaningful in curved QFT",
+                "route directly targets the missing Weyl scale",
+            ],
+            "missing_inputs": [
+                "Janus field content and anomaly coefficients",
+                "renormalization prescription tied to PT boundary",
+                "finite anomaly-induced effective action on S4/RP4 or PT cusp",
+                "map from anomaly stress to E_global/L",
+            ],
+            "no_fit_alpha_generated": False,
+            "bottom_line": (
+                "Best new route for the non-throat branch. It is not closed until "
+                "the Janus quantum field content and renormalization condition are fixed."
+            ),
+        },
+        {
+            "name": "euclidean_s4_rp4_no_boundary_saddle",
+            "idea": "L is selected by the dominant Euclidean S4_L/RP4_L path-integral saddle.",
+            "world_interpretation": (
+                "The universe starts in a projective no-boundary-like state; alpha "
+                "is chosen by saddle dominance rather than by late-time fitting."
+            ),
+            "repo_status": "new_frontier_related_to_global_action_route",
+            "already_present": [
+                "S4_L -> RP4_L topology",
+                "projective/tunnel/crosscap alternatives",
+                "global action route identified as open",
+            ],
+            "closed_inputs": [
+                "S4/RP4 gives the correct projective arena for a finite Euclidean candidate",
+                "a saddle equation dS_E(L)/dL=0 would be a true alpha selector",
+            ],
+            "missing_inputs": [
+                "finite Euclidean bimetric Janus action on S4/RP4",
+                "boundary/corner/crosscap prescription",
+                "path-integral contour or measure",
+                "matter/vacuum sector on the saddle",
+                "Lorentzian continuation to the published Janus branch",
+            ],
+            "no_fit_alpha_generated": False,
+            "bottom_line": (
+                "Most radical clean route. It would be no-fit if closed, but today "
+                "it lacks the Euclidean action, contour, and Lorentzian matching."
+            ),
+        },
+    ]
+    return {
+        "status": "janus-alpha-three-frontier-laws",
+        "routes": routes,
+        "any_route_closed_now": any(route["no_fit_alpha_generated"] for route in routes),
+        "recommended_order": [
+            "unimodular_four_form_sector",
+            "weyl_conformal_anomaly_state_law",
+            "euclidean_s4_rp4_no_boundary_saddle",
+        ],
+        "non_rustine_rule": (
+            "A route may close alpha only by deriving a selector from action, "
+            "charge, anomaly, saddle, or boundary state data. Observed H0/alpha/L "
+            "cannot be used as an input."
+        ),
+        "bottom_line": (
+            "The three frontier laws are now explicit. None predicts alpha yet; "
+            "each has a precise missing physical theorem/input rather than a vague blocker."
+        ),
+    }
+
+
+def alpha_non_full_investigated_routes_payload() -> dict:
+    """Push every route not previously marked as fully investigated to a frontier."""
+
+    routes = [
+        {
+            "name": "unimodular_four_form_sector",
+            "previous_investigation": "partial",
+            "pushed_to": "flux-sector contract",
+            "what_closes": [
+                "alpha can be mapped to a global integration/flux constant",
+                "four-form sectors are a known mechanism for vacuum constants",
+            ],
+            "what_still_blocks": [
+                "Janus-derived four-form action",
+                "charge or membrane unit",
+                "PT boundary selection of one integer",
+                "map from selected integer to published alpha",
+            ],
+            "frontier_verdict": "credible_best_first_but_not_closed",
+        },
+        {
+            "name": "weyl_conformal_anomaly_state_law",
+            "previous_investigation": "not_full",
+            "pushed_to": "anomaly-source contract",
+            "what_closes": [
+                "targets the exact missing scale of the non-throat Weyl-cusp branch",
+                "trace anomaly can generate a dimensionful stress scale after renormalization",
+            ],
+            "what_still_blocks": [
+                "Janus quantum field content",
+                "anomaly coefficients",
+                "PT renormalization condition",
+                "finite anomaly-induced action on S4/RP4 or cusp",
+            ],
+            "frontier_verdict": "best_new_weyl_branch_but_needs_qft_input",
+        },
+        {
+            "name": "euclidean_s4_rp4_no_boundary_saddle",
+            "previous_investigation": "not_full",
+            "pushed_to": "saddle-selection contract",
+            "what_closes": [
+                "S4/RP4 is the right finite projective arena",
+                "dS_E/dL=0 would be a genuine selector",
+            ],
+            "what_still_blocks": [
+                "finite Euclidean bimetric action",
+                "crosscap/boundary/corner prescription",
+                "path-integral contour or measure",
+                "Lorentzian continuation to the Janus exact branch",
+            ],
+            "frontier_verdict": "clean_radical_route_but_not_materialized",
+        },
+        {
+            "name": "casimir_topological_vacuum",
+            "previous_investigation": "partial",
+            "pushed_to": "topological-vacuum source contract",
+            "what_closes": [
+                "closed topology can support vacuum/Casimir energy terms",
+                "scalings like R^-4 or R^-2 are structurally possible",
+            ],
+            "what_still_blocks": [
+                "Janus field spectrum and boundary conditions",
+                "sign and coefficient of the vacuum term",
+                "absolute radius not already taken from H0/alpha",
+                "projection from vacuum energy to E_global",
+            ],
+            "frontier_verdict": "useful_source_class_but_coefficient_and_scale_missing",
+        },
+        {
+            "name": "geometric_flow_yamabe_selector",
+            "previous_investigation": "not_investigated",
+            "pushed_to": "scale-invariance obstruction",
+            "what_closes": [
+                "Yamabe/geometric flow can select constant-scalar-curvature representatives",
+                "it can rank conformal geometries inside a class",
+            ],
+            "what_still_blocks": [
+                "absolute scale is usually removed by volume normalization",
+                "no Janus volume/energy normalization",
+                "no unique Lorentzian continuation",
+                "no direct E_global map",
+            ],
+            "frontier_verdict": "good_geometry_cleaner_but_not_an_alpha_selector",
+        },
+        {
+            "name": "defect_anomaly_inflow_pt_boundary",
+            "previous_investigation": "not_investigated",
+            "pushed_to": "defect-source contract",
+            "what_closes": [
+                "PT/crosscap boundary could host anomaly inflow",
+                "inflow can produce a real conserved defect/boundary current",
+            ],
+            "what_still_blocks": [
+                "chiral/gauge field content on the PT defect",
+                "anomaly polynomial",
+                "inflow-to-mass/energy map",
+                "proof that the defect is part of published Janus, not added matter",
+            ],
+            "frontier_verdict": "physically sharp_but_requires_new_field_content",
+        },
+        {
+            "name": "noncommutative_spectral_action",
+            "previous_investigation": "not_investigated",
+            "pushed_to": "spectral-action obstruction",
+            "what_closes": [
+                "spectral action can turn geometry into an action with a cutoff scale",
+                "could package topology, fermions, and gauge data coherently",
+            ],
+            "what_still_blocks": [
+                "Janus spectral triple",
+                "Dirac operator on projective/PT geometry",
+                "cutoff scale derived internally",
+                "proof that spectral coefficients reproduce Janus bimetric equations",
+            ],
+            "frontier_verdict": "coherent_new_theory_program_not_a_current_closure",
+        },
+        {
+            "name": "bimetric_vlasov_global_equilibrium",
+            "previous_investigation": "partial",
+            "pushed_to": "global-equilibrium source contract",
+            "what_closes": [
+                "published Janus-related Vlasov work supports bimetric matter dynamics",
+                "a global equilibrium could in principle set E_global",
+            ],
+            "what_still_blocks": [
+                "active cosmological phase-space distribution",
+                "projection to homogeneous background density",
+                "global conserved energy from the distribution",
+                "proof that equilibrium selects the observed alpha without fitting",
+            ],
+            "frontier_verdict": "most_janus_matter_native_but_needs_active_distribution",
+        },
+    ]
+    return {
+        "status": "janus-alpha-non-full-investigated-routes-frontier",
+        "routes": routes,
+        "routes_pushed_count": len(routes),
+        "any_route_closes_alpha_now": False,
+        "best_remaining_order": [
+            "unimodular_four_form_sector",
+            "weyl_conformal_anomaly_state_law",
+            "bimetric_vlasov_global_equilibrium",
+            "euclidean_s4_rp4_no_boundary_saddle",
+            "defect_anomaly_inflow_pt_boundary",
+            "casimir_topological_vacuum",
+            "noncommutative_spectral_action",
+            "geometric_flow_yamabe_selector",
+        ],
+        "bottom_line": (
+            "Every not-fully-investigated route has been pushed to its current hard "
+            "frontier. None closes alpha without a new Janus-derived action, field "
+            "content, charge unit, anomaly coefficient, state law, or distribution."
+        ),
+    }
+
+
+def alpha_tunnel_moebius_routes_terminal_payload() -> dict:
+    """Terminal audit for alternative tunnel and Moebius/twisted throat routes."""
+
+    routes = [
+        {
+            "name": "alternative_tunnel_geometry",
+            "previous_status": "partial",
+            "investigated_to_end": True,
+            "what_it_provides": [
+                "a way to replace the finite Sigma obstruction by a different PT transition",
+                "candidate compact cycles through crosscap, lens, branched, or Weyl-cusp variants",
+                "a catalogue of non-throat alternatives already represented in the repo",
+            ],
+            "what_it_does_not_provide": [
+                "a Janus-derived action for the new transition",
+                "a nonzero boundary symplectic period",
+                "a dimensionful scale L or E_global",
+                "a source law for early-time/ruler physics",
+            ],
+            "terminal_verdict": (
+                "Topology can improve the obstruction class, but alternative tunnel "
+                "geometry alone does not select alpha."
+            ),
+        },
+        {
+            "name": "moebius_twisted_throat_geometry",
+            "previous_status": "partial",
+            "investigated_to_end": True,
+            "what_it_provides": [
+                "a concrete orientation-reversing loop intuition",
+                "a 2D shadow related to torus/Klein or Moebius-like transport",
+                "support for aroundSigma Z2 transport and possible Pin/PT holonomy",
+            ],
+            "what_it_does_not_provide": [
+                "a 4D active cosmological throat by itself",
+                "a nonzero KKS or boundary theta period",
+                "a compact alpha-dependent action-angle pair",
+                "a finite on-shell action or flux unit",
+            ],
+            "terminal_verdict": (
+                "Moebius/twisted geometry is useful intuition for orientation and "
+                "holonomy, but it remains topology-only unless a nonzero boundary "
+                "phase/source is derived."
+            ),
+        },
+    ]
+    return {
+        "status": "janus-alpha-tunnel-moebius-routes-terminal",
+        "routes": routes,
+        "routes_pushed_count": len(routes),
+        "all_investigated_to_end": all(route["investigated_to_end"] for route in routes),
+        "any_route_closes_alpha_now": False,
+        "common_blocker": (
+            "Both routes provide topology/cycle candidates, but neither produces a "
+            "nonzero action, symplectic period, charge unit, or dimensionful scale."
+        ),
+        "bottom_line": (
+            "The two previous partial routes are now terminally audited. They are "
+            "useful as topology diagnostics, not alpha selectors."
+        ),
+    }
+
+
+def alpha_combination_frontier_matrix_payload() -> dict:
+    """Evaluate combinations of alpha routes to their current terminal frontier."""
+
+    combinations = [
+        {
+            "rank": 1,
+            "name": "flux_pt_selector",
+            "components": [
+                "unimodular_four_form_sector",
+                "flux_quantization_sigma_pt",
+                "PT_crosscap_boundary",
+            ],
+            "target": "E_global",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "Janus four-form action is derived",
+                "charge/membrane unit is derived",
+                "PT/crosscap boundary selects one flux integer",
+                "selected integer maps to the published alpha scale",
+            ],
+            "terminal_assessment": (
+                "Best no-fit candidate. The combination is logically coherent, "
+                "but currently only converts alpha into a possible flux sector."
+            ),
+        },
+        {
+            "rank": 2,
+            "name": "weyl_anomaly_topological_vacuum",
+            "components": [
+                "weyl_conformal_anomaly_state_law",
+                "non_throat_weyl_cusp",
+                "casimir_topological_vacuum",
+            ],
+            "target": "L",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "Janus QFT field content is fixed",
+                "anomaly coefficients are computed",
+                "PT renormalization condition is derived",
+                "vacuum/anomaly stress maps to L or E_global",
+            ],
+            "terminal_assessment": (
+                "Best match for the non-throat branch. It can generate a scale "
+                "in principle, but needs real QFT data."
+            ),
+        },
+        {
+            "rank": 3,
+            "name": "euclidean_effective_saddle",
+            "components": [
+                "euclidean_s4_rp4_no_boundary_saddle",
+                "casimir_topological_vacuum",
+                "weyl_conformal_anomaly_state_law",
+                "bimetric_action",
+            ],
+            "target": "L",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "finite Euclidean bimetric action is materialized",
+                "boundary/crosscap/corner prescription is fixed",
+                "quantum correction V_eff(L) is derived",
+                "saddle dV_eff/dL=0 has a unique non-circular solution",
+            ],
+            "terminal_assessment": (
+                "Cleanest mathematical selector if completed. Currently blocked "
+                "before a finite V_eff(L) exists."
+            ),
+        },
+        {
+            "rank": 4,
+            "name": "janus_matter_global_energy",
+            "components": [
+                "bimetric_vlasov_global_equilibrium",
+                "Noether_ADM_charge",
+                "published_96_4_sector_ratio",
+            ],
+            "target": "E_global",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "active cosmological Vlasov distribution is derived",
+                "homogeneous background projection is defined",
+                "Noether/ADM charge is finite and nonzero",
+                "96/4 ratio becomes an absolute density law, not only relative content",
+            ],
+            "terminal_assessment": (
+                "Most Janus-matter-native route. It remains blocked by missing "
+                "active global matter state."
+            ),
+        },
+        {
+            "rank": 5,
+            "name": "defect_ll_boundary_source",
+            "components": [
+                "defect_anomaly_inflow_pt_boundary",
+                "LL_brane_bridge_tension",
+                "PT_boundary_current",
+            ],
+            "target": "M_bridge_to_alpha",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "PT defect field content is justified",
+                "anomaly polynomial is computed",
+                "inflow current fixes LL tension chi_LL",
+                "M_bridge(chi_LL) maps to alpha",
+            ],
+            "terminal_assessment": (
+                "Sharp bridge-source mechanism, but it adds or derives new boundary "
+                "field content. Not closed inside current Janus assets."
+            ),
+        },
+        {
+            "rank": 6,
+            "name": "spectral_projective_action",
+            "components": [
+                "noncommutative_spectral_action",
+                "S4_RP4_projective_topology",
+                "bimetric_fields",
+            ],
+            "target": "L_and_action",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "Janus spectral triple is defined",
+                "Dirac operator on projective/PT geometry is built",
+                "spectral cutoff is derived internally",
+                "spectral coefficients reproduce Janus bimetric equations",
+            ],
+            "terminal_assessment": (
+                "Deep reconstruction program, not a near-term alpha closure."
+            ),
+        },
+        {
+            "rank": 7,
+            "name": "kks_moebius_cp1_tqft",
+            "components": [
+                "Souriau_KKS",
+                "Moebius_Klein_cycle",
+                "CP1_TQFT_phase",
+            ],
+            "target": "discrete_quantum_sector",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "nonzero boundary KKS period is derived",
+                "aroundSigma action on CP1 is nontrivial",
+                "TQFT level is derived from Janus boundary action",
+                "quantized sector maps to alpha scale",
+            ],
+            "terminal_assessment": (
+                "Previously attractive, now effectively blocked: topology exists, "
+                "but the required nonzero period/source is absent."
+            ),
+        },
+        {
+            "rank": 8,
+            "name": "yamabe_euclidean_geometry_cleaner",
+            "components": [
+                "geometric_flow_yamabe_selector",
+                "euclidean_s4_rp4_no_boundary_saddle",
+            ],
+            "target": "canonical_geometry_for_action",
+            "can_close_alpha_now": False,
+            "could_close_if": [
+                "Yamabe representative is paired with an independent volume/energy law",
+                "finite Euclidean action is derived on that representative",
+                "scale is not removed by normalization",
+                "Lorentzian Janus continuation is fixed",
+            ],
+            "terminal_assessment": (
+                "Useful preprocessing for an action calculation. It does not select "
+                "alpha by itself."
+            ),
+        },
+        {
+            "rank": 9,
+            "name": "superselection_observational_sector",
+            "components": [
+                "alpha_superselection_sector",
+                "SN_BAO_Hz_observations",
+            ],
+            "target": "observed_alpha_sector",
+            "can_close_alpha_now": True,
+            "could_close_if": [
+                "alpha is accepted as a global state label",
+                "observations are used to select the sector",
+            ],
+            "terminal_assessment": (
+                "This can close a calibrated phenomenological sector, but it is not "
+                "a no-fit derivation."
+            ),
+        },
+    ]
+    no_fit_closed = [
+        c for c in combinations if c["can_close_alpha_now"] and c["name"] != "superselection_observational_sector"
+    ]
+    return {
+        "status": "janus-alpha-combination-frontier-matrix",
+        "combinations": combinations,
+        "combination_count": len(combinations),
+        "any_no_fit_combination_closes_now": bool(no_fit_closed),
+        "calibrated_sector_can_close": True,
+        "best_no_fit_candidate": "flux_pt_selector",
+        "best_non_throat_candidate": "weyl_anomaly_topological_vacuum",
+        "best_janus_matter_candidate": "janus_matter_global_energy",
+        "bottom_line": (
+            "Combinations improve the search structure but do not remove the hard "
+            "need for one real selector: flux unit, anomaly/QFT data, finite action, "
+            "global matter state, or boundary source. Only superselection plus "
+            "observations closes a calibrated, non-no-fit sector."
+        ),
+    }
+
+
 def active_normal_connection_primitives_availability_payload(
     root: Path | str = Path("."),
 ) -> dict:
