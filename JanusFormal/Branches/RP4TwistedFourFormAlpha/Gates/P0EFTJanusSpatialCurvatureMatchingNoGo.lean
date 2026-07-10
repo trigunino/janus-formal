@@ -6,11 +6,11 @@ namespace P0EFTJanusSpatialCurvatureMatchingNoGo
 set_option autoImplicit false
 
 /-- Spatial scalar curvature of a normalized three-dimensional `k = -1` FLRW slice. -/
-def openFLRWSpatialScalar (scale : ℝ) : ℝ :=
+noncomputable def openFLRWSpatialScalar (scale : ℝ) : ℝ :=
   -6 / scale ^ 2
 
 /-- Spatial scalar curvature of a round three-sphere/projective quotient slice. -/
-def roundProjectiveSpatialScalar (radius : ℝ) : ℝ :=
+noncomputable def roundProjectiveSpatialScalar (radius : ℝ) : ℝ :=
   6 / radius ^ 2
 
 /--
@@ -28,11 +28,11 @@ theorem whole_slice_round_matching_is_impossible
       roundProjectiveSpatialScalar projectiveRadius := by
   have hOpenNeg : openFLRWSpatialScalar flrwScale < 0 := by
     unfold openFLRWSpatialScalar
-    positivity
+    exact div_neg_of_neg_of_pos (by norm_num) (pow_pos hFLRW 2)
   have hRoundPos : 0 < roundProjectiveSpatialScalar projectiveRadius := by
     unfold roundProjectiveSpatialScalar
-    positivity
-  nlinarith
+    exact div_pos (by norm_num) (pow_pos hProjective 2)
+  exact ne_of_lt (lt_trans hOpenNeg hRoundPos)
 
 /--
 The viable matching object is therefore a finite spherical boundary (or a null
