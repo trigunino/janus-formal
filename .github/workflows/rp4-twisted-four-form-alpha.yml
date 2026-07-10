@@ -1,4 +1,4 @@
-name: RP4 twisted four-form alpha
+name: Janus deep alpha completion
 
 on:
   push:
@@ -7,6 +7,11 @@ on:
     paths:
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha.lean"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha/**"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha.lean"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha/**"
+      - "JanusFormal/Branches/AlphaDeepCompletionMatrix.lean"
       - "scripts/audit_janus_*"
       - "tests/test_janus_*"
       - "lean-toolchain"
@@ -19,6 +24,11 @@ on:
     paths:
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha.lean"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha/**"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha.lean"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha/**"
+      - "JanusFormal/Branches/AlphaDeepCompletionMatrix.lean"
       - "scripts/audit_janus_*"
       - "tests/test_janus_*"
       - "lean-toolchain"
@@ -39,10 +49,25 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build focused branch head
+      - name: Build all focused branch heads
         run: |
           set +e
-          lake build JanusFormal.Branches.RP4TwistedFourFormAlpha > lean-build.log 2>&1
+          {
+            echo "== RP4 conditional program =="
+            lake build JanusFormal.Branches.RP4TwistedFourFormAlpha
+            s1=$?
+            echo "== Quantum world-volume program =="
+            lake build JanusFormal.Branches.WorldvolumeQuantumAlpha
+            s2=$?
+            echo "== Nonlinear bimetric junction program =="
+            lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha
+            s3=$?
+            echo "== Combined completion matrix =="
+            lake build JanusFormal.Branches.AlphaDeepCompletionMatrix
+            s4=$?
+            echo "statuses: $s1 $s2 $s3 $s4"
+            test $s1 -eq 0 -a $s2 -eq 0 -a $s3 -eq 0 -a $s4 -eq 0
+          } > lean-build.log 2>&1
           status=$?
           cat lean-build.log
           exit $status
@@ -50,7 +75,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rp4-twisted-four-form-lean-log
+          name: janus-deep-alpha-lean-log
           path: lean-build.log
           if-no-files-found: error
 
@@ -65,7 +90,15 @@ jobs:
       - run: python -m pip install -e . pytest
       - run: python scripts/audit_janus_exact_solution_normalization.py
       - run: python scripts/audit_janus_finite_bridge_ll_closure.py
+      - run: python scripts/audit_janus_terminal_hierarchy.py
+      - run: python scripts/audit_janus_worldvolume_quantum_completion.py
+      - run: python scripts/audit_janus_nonlinear_bimetric_completion.py
       - name: Run focused Python tests
         env:
           PYTHONPATH: .
-        run: python -m pytest -q tests/test_janus_finite_bridge_ll_closure.py
+        run: |
+          python -m pytest -q \
+            tests/test_janus_exact_solution_normalization.py \
+            tests/test_janus_finite_bridge_ll_closure.py \
+            tests/test_janus_terminal_hierarchy.py \
+            tests/test_janus_deep_completion_programs.py
