@@ -34,7 +34,6 @@ theorem homogeneous_misner_sharp_reduces_to_global_mass
   unfold homogeneousMisnerSharpMass homogeneousSignedDensity
     finiteSphereArealRadius
   field_simp [pow_ne_zero 3 hScale]
-  ring
 
 /--
 Finite-sphere bridge data.  The sole Janus-specific sign input is
