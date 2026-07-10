@@ -1,12 +1,23 @@
 /-
-Experimental branch head: RP4 orientation-twisted four-form alpha route.
+Experimental branch head: RP4 twisted flux, finite PT bridge and LL-brane
+alpha-scale route.
 
-This branch proves the primitive odd-flux selector and audits the remaining
-scale bridge.  It does not promote a no-fit Janus value for alpha.
+The branch now proves the relational/conditional algebra and isolates the last
+two physical inputs.  It does not promote an absolute no-fit value of alpha.
 -/
 
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusRP4TwistedFluxPrimitiveSelector
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusRP4FourFormScaleAudit
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusExactCoshNormalizationAudit
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusSpatialCurvatureMatchingNoGo
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusFiniteSphereBridgeMatching
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusLLBraneAuxiliaryFluxClosure
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusBulkWorldvolumeFluxSeparation
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusConditionalAlphaSpectrumClosure
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusDustCurrentThreeFormBridge
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusScaleCovarianceNoGo
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusCasimirPlanckScaleAudit
+import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusBounceThroatScaleMatching
 
 namespace JanusFormal
 namespace JanusRP4TwistedFourFormAlpha
@@ -14,28 +25,43 @@ namespace JanusRP4TwistedFourFormAlpha
 set_option autoImplicit false
 
 structure ProgramStatus where
+  sourceNormalizationAudited : Prop
   primitiveTwistedFluxSelectorProved : Prop
   rp4PinPlusCompatibilityAudited : Prop
-  janusChargeUnitDerived : Prop
-  publishedDustEnergyMapDerived : Prop
-  lorentzianContinuationDerived : Prop
-  noFitAlphaSquaredOverLClosed : Prop
+  wholeSliceRoundMatchingNoGoProved : Prop
+  finiteSphereConditionalAlgebraClosed : Prop
+  llAuxiliaryInvariantOneHalfProved : Prop
+  conditionalAlphaSpectrumClosed : Prop
+  bulkWorldvolumeFluxSeparationAudited : Prop
+  signedBimetricJunctionDerived : Prop
+  llChargeUnitMagnitudeDerivedNoFit : Prop
+  absoluteAlphaScaleClosedNoFit : Prop
+
+
+def mathematicalAdvanceClosed (s : ProgramStatus) : Prop :=
+  s.sourceNormalizationAudited /\
+  s.primitiveTwistedFluxSelectorProved /\
+  s.rp4PinPlusCompatibilityAudited /\
+  s.wholeSliceRoundMatchingNoGoProved /\
+  s.finiteSphereConditionalAlgebraClosed /\
+  s.llAuxiliaryInvariantOneHalfProved /\
+  s.conditionalAlphaSpectrumClosed /\
+  s.bulkWorldvolumeFluxSeparationAudited
 
 
 def honestFrontier (s : ProgramStatus) : Prop :=
-  s.primitiveTwistedFluxSelectorProved /\
-  s.rp4PinPlusCompatibilityAudited /\
-  Not s.janusChargeUnitDerived /\
-  Not s.publishedDustEnergyMapDerived /\
-  Not s.lorentzianContinuationDerived /\
-  Not s.noFitAlphaSquaredOverLClosed
+  mathematicalAdvanceClosed s /\
+  Not s.signedBimetricJunctionDerived /\
+  Not s.llChargeUnitMagnitudeDerivedNoFit /\
+  Not s.absoluteAlphaScaleClosedNoFit
 
 
-theorem current_advance_does_not_claim_full_alpha_closure
+theorem current_advance_does_not_claim_absolute_alpha_closure
     (s : ProgramStatus)
     (h : honestFrontier s) :
-    Not s.noFitAlphaSquaredOverLClosed := by
-  exact h.2.2.2.2.2
+    Not s.absoluteAlphaScaleClosedNoFit := by
+  rcases h with ⟨_, _, _, hNotClosed⟩
+  exact hNotClosed
 
 end JanusRP4TwistedFourFormAlpha
 end JanusFormal
