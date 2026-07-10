@@ -16,6 +16,7 @@ Build one branch head at a time.
 | Branch | Build | Status |
 | --- | --- | --- |
 | Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | viable only as state-sector selection; no no-fit alpha law |
+| RP4 twisted four-form alpha | `lake build JanusFormal.Branches.RP4TwistedFourFormAlpha` | orientation-twisted flux and primitive odd-sector selector proved; charge unit, map to published dust-like `E_global`, and Lorentzian scale matching remain open |
 | Native BAO/ruler contract | `lake build JanusFormal.Branches.NativeBAORulerContract` | formulated; blocked by missing native early-time/ruler primitives |
 | Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | projected photon-baryon plasma pushed to formula-complete/input-blocked frontier; other BAO/ruler routes documented as blocked |
 | Early-universe native plasma | `lake build JanusFormal.Branches.JanusEarlyUniverseNativePlasma` | pushed to final early/late matching frontier; entropy cutoff can reach `z=1000`, but same late cosh branch and two-cosh throat gluing do not close without a new transition law or early `H_J(a)` |
