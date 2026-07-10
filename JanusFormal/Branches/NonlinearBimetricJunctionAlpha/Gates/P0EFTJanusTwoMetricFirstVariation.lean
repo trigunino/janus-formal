@@ -6,15 +6,15 @@ namespace P0EFTJanusTwoMetricFirstVariation
 set_option autoImplicit false
 
 variable {VPlus VMinus : Type*}
-variable [AddCommMonoid VPlus] [Module Real VPlus]
-variable [AddCommMonoid VMinus] [Module Real VMinus]
+variable [AddCommMonoid VPlus] [Module ℝ VPlus]
+variable [AddCommMonoid VMinus] [Module ℝ VMinus]
 
 /-- Total first variation for two independent metric variations. -/
 def totalFirstVariation
-    (equationPlus : VPlus ->L[Real] Real)
-    (equationMinus : VMinus ->L[Real] Real)
+    (equationPlus : LinearMap ℝ VPlus ℝ)
+    (equationMinus : LinearMap ℝ VMinus ℝ)
     (variationPlus : VPlus)
-    (variationMinus : VMinus) : Real :=
+    (variationMinus : VMinus) : ℝ :=
   equationPlus variationPlus + equationMinus variationMinus
 
 /--
@@ -22,10 +22,10 @@ Stationarity under all independent variations is equivalent to vanishing of
 both Euler-Lagrange linear functionals.
 -/
 theorem independent_metric_variations_split
-    (equationPlus : VPlus ->L[Real] Real)
-    (equationMinus : VMinus ->L[Real] Real)
+    (equationPlus : LinearMap ℝ VPlus ℝ)
+    (equationMinus : LinearMap ℝ VMinus ℝ)
     (hStationary :
-      forall variationPlus variationMinus,
+      ∀ variationPlus variationMinus,
         totalFirstVariation equationPlus equationMinus
           variationPlus variationMinus = 0) :
     equationPlus = 0 /\ equationMinus = 0 := by
@@ -39,11 +39,11 @@ theorem independent_metric_variations_split
 
 /-- The converse: two Euler-Lagrange equations imply total stationarity. -/
 theorem split_equations_imply_total_stationarity
-    (equationPlus : VPlus ->L[Real] Real)
-    (equationMinus : VMinus ->L[Real] Real)
+    (equationPlus : LinearMap ℝ VPlus ℝ)
+    (equationMinus : LinearMap ℝ VMinus ℝ)
     (hPlus : equationPlus = 0)
     (hMinus : equationMinus = 0) :
-    forall variationPlus variationMinus,
+    ∀ variationPlus variationMinus,
       totalFirstVariation equationPlus equationMinus
         variationPlus variationMinus = 0 := by
   intro variationPlus variationMinus
@@ -51,15 +51,15 @@ theorem split_equations_imply_total_stationarity
 
 /-- Bulk plus boundary first variation for one metric sector. -/
 def sectorFirstVariation
-    (bulk boundary : VPlus ->L[Real] Real) : VPlus ->L[Real] Real :=
+    (bulk boundary : LinearMap ℝ VPlus ℝ) : LinearMap ℝ VPlus ℝ :=
   bulk + boundary
 
 /-- Bulk equations alone do not close the variational problem if a boundary term remains. -/
 theorem nonzero_boundary_variation_blocks_full_stationarity
-    (bulk boundary : VPlus ->L[Real] Real)
+    (bulk boundary : LinearMap ℝ VPlus ℝ)
     (hBulk : bulk = 0)
-    (hBoundary : boundary != 0) :
-    sectorFirstVariation bulk boundary != 0 := by
+    (hBoundary : boundary ≠ 0) :
+    sectorFirstVariation bulk boundary ≠ 0 := by
   intro hTotal
   apply hBoundary
   rw [sectorFirstVariation, hBulk, zero_add] at hTotal
