@@ -52,11 +52,11 @@ def build_audit() -> NonlinearBimetricAudit:
     swap_residual = sp.factor(z**4 * reversed_at_inverse - potential)
 
     checks = [
-        defect == dx * dy * (-b + c),
+        sp.simplify(defect - dx * dy * (-b + c)) == 0,
         sp.simplify(3 * m_ms - 4 * pi_c * E * r**3) == 0,
         sp.simplify(3 * m_bridge + 4 * pi_c * E * r**3) == 0,
-        horizon_polynomial == -A * r * (r - 1) * (r + 1),
-        swap_residual == 0,
+        sp.simplify(horizon_polynomial + A * r * (r - 1) * (r + 1)) == 0,
+        sp.simplify(swap_residual) == 0,
     ]
 
     return NonlinearBimetricAudit(
