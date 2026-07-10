@@ -22,7 +22,17 @@ structure BounceThroatMetricMatching where
 theorem alpha_squared_length_eq_throat_radius
     (m : BounceThroatMetricMatching) :
     m.alphaSquaredLength = m.throatRadius := by
-  nlinarith [m.inducedMetricScaleMatch]
+  have hFactor :
+      (m.alphaSquaredLength - m.throatRadius) *
+        (m.alphaSquaredLength + m.throatRadius) = 0 := by
+    nlinarith [m.inducedMetricScaleMatch]
+  rcases mul_eq_zero.mp hFactor with hDifference | hSum
+  · linarith
+  · have hPositive :
+        0 < m.alphaSquaredLength + m.throatRadius :=
+      add_pos m.alphaSquaredLengthPositive m.throatRadiusPositive
+    exfalso
+    exact (ne_of_gt hPositive) hSum
 
 /-- The dimensionless exact-solution/throat ratio is one under metric matching. -/
 theorem alpha_squared_over_throat_eq_one
