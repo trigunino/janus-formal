@@ -12,6 +12,7 @@ on:
       - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha.lean"
       - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha/**"
       - "JanusFormal/Branches/AlphaDeepCompletionMatrix.lean"
+      - "JanusFormal/Branches/AlphaDeepCompletion/**"
       - "scripts/audit_janus_*"
       - "tests/test_janus_*"
       - "lean-toolchain"
@@ -29,6 +30,7 @@ on:
       - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha.lean"
       - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha/**"
       - "JanusFormal/Branches/AlphaDeepCompletionMatrix.lean"
+      - "JanusFormal/Branches/AlphaDeepCompletion/**"
       - "scripts/audit_janus_*"
       - "tests/test_janus_*"
       - "lean-toolchain"
@@ -92,6 +94,8 @@ jobs:
       - run: python scripts/audit_janus_finite_bridge_ll_closure.py
       - run: python scripts/audit_janus_terminal_hierarchy.py
       - run: python scripts/audit_janus_worldvolume_quantum_completion.py
+      - run: python scripts/audit_janus_worldvolume_one_log_vacuum.py
+      - run: python scripts/audit_janus_discrete_level_alpha.py
       - run: python scripts/audit_janus_nonlinear_bimetric_completion.py
       - name: Run focused Python tests
         env:
@@ -101,4 +105,6 @@ jobs:
             tests/test_janus_exact_solution_normalization.py \
             tests/test_janus_finite_bridge_ll_closure.py \
             tests/test_janus_terminal_hierarchy.py \
-            tests/test_janus_deep_completion_programs.py
+            tests/test_janus_deep_completion_programs.py \
+            tests/test_janus_worldvolume_one_log_vacuum.py \
+            tests/test_janus_discrete_level_alpha.py
