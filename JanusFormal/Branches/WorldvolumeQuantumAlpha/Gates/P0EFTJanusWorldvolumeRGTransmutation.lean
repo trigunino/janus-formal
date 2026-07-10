@@ -80,13 +80,19 @@ theorem same_beta_product_fixes_exponent
     (hProduct :
       s₁.betaCouplingProduct = s₂.betaCouplingProduct) :
     s₁.hierarchyExponent = s₂.hierarchyExponent := by
-  have hNonzero : s₁.betaCouplingProduct ≠ 0 :=
-    ne_of_gt s₁.betaCouplingProductPositive
   have h₁ := s₁.rgExponentLaw
   have h₂ := s₂.rgExponentLaw
   rw [← hProduct] at h₂
-  apply (mul_left_cancel₀ hNonzero)
-  exact h₁.trans h₂.symm
+  have hFactor :
+      s₁.betaCouplingProduct *
+        (s₁.hierarchyExponent - s₂.hierarchyExponent) = 0 := by
+    nlinarith [h₁, h₂]
+  have hNonzero : s₁.betaCouplingProduct ≠ 0 :=
+    ne_of_gt s₁.betaCouplingProductPositive
+  have hDifference :
+      s₁.hierarchyExponent - s₂.hierarchyExponent = 0 :=
+    (mul_eq_zero.mp hFactor).resolve_left hNonzero
+  linarith
 
 /-- The UV length and RG product uniquely determine the conditional Janus length. -/
 theorem same_uv_and_beta_product_fix_alpha
