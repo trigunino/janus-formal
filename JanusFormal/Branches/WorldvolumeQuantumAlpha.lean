@@ -4,9 +4,10 @@ Quantum world-volume route for generating the absolute Janus scale.
 This branch treats the LL world-volume as a compact gauge theory coupled to a
 classically scale-invariant scalar/Chern--Simons sector. It proves the field-
 dimension audit, parity-anomaly arithmetic, flat-direction no-go, one-log
-stable-vacuum algebra, RG hierarchy law and condensate-to-alpha map. It does not
-assume that a microscopic theory has already computed the exact renormalized
-coefficients and UV boundary condition.
+stable-vacuum algebra, Callan--Symanzik consistency, a level-locked discrete RG
+hierarchy and the condensate-to-alpha map. It does not assume that a microscopic
+theory has already computed the exact renormalized coefficients and UV boundary
+condition.
 -/
 
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusScaleInvariantWorldvolumeAction
@@ -15,6 +16,8 @@ import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusWorldvolumeP
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusWorldvolumeVacuumSelection
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusCondensateToAlphaMap
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusRGImprovedSexticVacuum
+import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusRGConsistentOneLogAlpha
+import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusChernSimonsLevelLockedAlpha
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusLLAuxiliaryBundleCompactnessGate
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusLLGaugeNormalizationScaleOrbit
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusConditionalAlphaSpectrumClosure
@@ -30,6 +33,9 @@ structure ProgramStatus where
   pairedParityAnomalyCancelled : Prop
   primitiveFluxSectorDerived : Prop
   oneLogVacuumAlgebraClosed : Prop
+  callanSymanzikConsistencyDerived : Prop
+  integerLevelLockDerived : Prop
+  discreteAlphaSpectrumDerived : Prop
   renormalizedQuantumActionDerived : Prop
   stableUniqueVacuumProved : Prop
   betaCoefficientComputed : Prop
@@ -48,6 +54,9 @@ def mathematicalQuantumProgramClosed (s : ProgramStatus) : Prop :=
   s.pairedParityAnomalyCancelled /\
   s.primitiveFluxSectorDerived /\
   s.oneLogVacuumAlgebraClosed /\
+  s.callanSymanzikConsistencyDerived /\
+  s.integerLevelLockDerived /\
+  s.discreteAlphaSpectrumDerived /\
   s.renormalizedQuantumActionDerived /\
   s.stableUniqueVacuumProved /\
   s.betaCoefficientComputed /\
@@ -66,6 +75,9 @@ def honestQuantumFrontier (s : ProgramStatus) : Prop :=
   s.pairedParityAnomalyCancelled /\
   s.primitiveFluxSectorDerived /\
   s.oneLogVacuumAlgebraClosed /\
+  s.callanSymanzikConsistencyDerived /\
+  s.integerLevelLockDerived /\
+  s.discreteAlphaSpectrumDerived /\
   Not s.renormalizedQuantumActionDerived /\
   Not s.stableUniqueVacuumProved /\
   Not s.betaCoefficientComputed /\
@@ -78,7 +90,7 @@ theorem current_quantum_frontier_does_not_claim_absolute_scale
     (s : ProgramStatus)
     (h : honestQuantumFrontier s) :
     Not s.absoluteAlphaScaleClosed := by
-  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, hNotClosed⟩
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, hNotClosed⟩
   exact hNotClosed
 
 end JanusWorldvolumeQuantumAlpha
