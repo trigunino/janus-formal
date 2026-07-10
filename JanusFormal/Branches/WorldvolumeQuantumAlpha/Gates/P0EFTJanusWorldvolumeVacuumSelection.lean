@@ -27,7 +27,9 @@ theorem exact_positive_flat_direction_blocks_unique_scale
     exact ⟨by norm_num, hFlat 2 (by norm_num)⟩
   have hOneEq : (1 : ℝ) = scale₀ := hOnly 1 hOne
   have hTwoEq : (2 : ℝ) = scale₀ := hOnly 2 hTwo
-  norm_num [hOneEq.trans hTwoEq.symm]
+  have hContradiction : (1 : ℝ) = 2 :=
+    hOneEq.trans hTwoEq.symm
+  norm_num at hContradiction
 
 /-- The LL scale selected by a condensate. -/
 def ScaleSelectedBy
