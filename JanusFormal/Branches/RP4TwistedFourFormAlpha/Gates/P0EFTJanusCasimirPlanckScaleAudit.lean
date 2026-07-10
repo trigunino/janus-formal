@@ -71,14 +71,25 @@ theorem casimir_radius_in_planck_units
       s.lightSpeed ^ 3 *
         (3 * s.length ^ 2 -
           8 * s.piConstant * s.casimirCoefficient * s.planckLength ^ 2) = 0 := by
-    rw [mul_sub]
-    rw [mul_assoc, hCasimir]
-    rw [mul_assoc]
-    rw [s.planckLengthLaw]
-    ring
+    calc
+      s.lightSpeed ^ 3 *
+          (3 * s.length ^ 2 -
+            8 * s.piConstant * s.casimirCoefficient * s.planckLength ^ 2) =
+          3 * s.lightSpeed ^ 3 * s.length ^ 2 -
+            8 * s.piConstant * s.casimirCoefficient *
+              (s.lightSpeed ^ 3 * s.planckLength ^ 2) := by ring
+      _ = 8 * s.piConstant * s.gravitationalConstant *
+            s.casimirCoefficient * s.hbar -
+          8 * s.piConstant * s.casimirCoefficient *
+            (s.gravitationalConstant * s.hbar) := by
+          rw [hCasimir, s.planckLengthLaw]
+      _ = 0 := by ring
   have hCubic : s.lightSpeed ^ 3 ≠ 0 :=
     pow_ne_zero 3 s.lightSpeedNonzero
-  have hBracket := (mul_eq_zero.mp hScaled).resolve_left hCubic
+  have hBracket :
+      3 * s.length ^ 2 -
+        8 * s.piConstant * s.casimirCoefficient * s.planckLength ^ 2 = 0 :=
+    (mul_eq_zero.mp hScaled).resolve_left hCubic
   linarith
 
 /--
