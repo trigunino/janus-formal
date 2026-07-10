@@ -1,16 +1,17 @@
 /-
-Serial completion matrix for the two deepest remaining Janus programs.
+Serial completion matrix for the deepest Janus alpha programs.
 
-The alternatives are not substitutes at the final level:
+The programs are not substitutes at the final level:
 
 * the nonlinear bimetric program determines the covariant field equations,
-  PT charge and junction map;
+  positive spin-2 spectrum, PT charge and junction map;
 * the quantum world-volume program generates and normalizes the dimensionful
-  LL charge scale.
+  LL charge scale, with a possible integer-level discrete spectrum;
+* the bulk/boundary compatibility program transports that normalization and
+  tests the Euclidean thermal-circle transgression.
 
-Absolute no-fit alpha closure requires both plus a compatibility theorem. Once
-those inputs are derived, the terminal synthesis fixes the entire relational
-spectrum.
+Absolute no-fit alpha closure requires all three plus a source and Lorentzian
+matching theorem.
 -/
 
 import JanusFormal.Branches.WorldvolumeQuantumAlpha
@@ -18,6 +19,8 @@ import JanusFormal.Branches.NonlinearBimetricJunctionAlpha
 import JanusFormal.Branches.RP4TwistedFourFormAlpha
 import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusAbsoluteAlphaSynthesis
 import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusBulkBoundaryChargeNormalization
+import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusThermalCircleTransgressionScale
+import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusDiscreteMicroscopicAlphaCandidate
 
 namespace JanusFormal
 namespace JanusAlphaDeepCompletionMatrix
@@ -28,6 +31,8 @@ structure DeepCompletionStatus where
   nonlinearBimetricJunctionClosed : Prop
   quantumWorldvolumeScaleClosed : Prop
   bulkBoundaryChargeCompatibilityProved : Prop
+  thermalCircleRouteAudited : Prop
+  discreteMicroscopicConsistencyDerived : Prop
   sourceNormalizationReconciled : Prop
   lorentzianProjectiveMatchingClosed : Prop
   terminalRelationalSpectrumDerived : Prop
@@ -39,6 +44,8 @@ def deepCompletionInputsClosed (s : DeepCompletionStatus) : Prop :=
   s.nonlinearBimetricJunctionClosed /\
   s.quantumWorldvolumeScaleClosed /\
   s.bulkBoundaryChargeCompatibilityProved /\
+  s.thermalCircleRouteAudited /\
+  s.discreteMicroscopicConsistencyDerived /\
   s.sourceNormalizationReconciled /\
   s.lorentzianProjectiveMatchingClosed /\
   s.terminalRelationalSpectrumDerived /\
@@ -73,15 +80,23 @@ theorem missing_bulk_boundary_compatibility_blocks_full_closure
   exact hMissing h.1.2.2.1
 
 
+theorem missing_discrete_consistency_blocks_full_closure
+    (s : DeepCompletionStatus)
+    (hMissing : Not s.discreteMicroscopicConsistencyDerived) :
+    Not (fullAbsoluteAlphaClosure s) := by
+  intro h
+  exact hMissing h.1.2.2.2.2.1
+
+
 theorem missing_terminal_spectrum_blocks_full_closure
     (s : DeepCompletionStatus)
     (hMissing : Not s.terminalRelationalSpectrumDerived) :
     Not (fullAbsoluteAlphaClosure s) := by
   intro h
-  exact hMissing h.1.2.2.2.2.2.1
+  exact hMissing h.1.2.2.2.2.2.2.2.1
 
-/-- A policy theorem turning the seven derived inputs into the final prediction. -/
-theorem both_programs_and_compatibility_transport_to_absolute_alpha
+/-- A policy theorem turning the nine derived inputs into the final prediction. -/
+theorem all_programs_transport_to_absolute_alpha
     (s : DeepCompletionStatus)
     (hInputs : deepCompletionInputsClosed s)
     (hTransport : deepCompletionInputsClosed s -> s.absoluteAlphaClosed) :
