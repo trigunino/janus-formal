@@ -23,16 +23,17 @@ def affineDustPressure (massUnit b : ℝ) : ℝ :=
 theorem affine_fluid_is_pressureless_dust (massUnit b : ℝ) :
     affineDustEnergyDensity massUnit b = massUnit * b /\
       affineDustPressure massUnit b = 0 := by
-  constructor <;> unfold affineDustEnergyDensity affineDustPressure affineDustLagrangian
-  · ring
-  · ring
+  constructor
+  · simp [affineDustEnergyDensity, affineDustLagrangian]
+  · unfold affineDustPressure affineDustLagrangian
+    ring
 
 /-- Homogeneous conserved number density on a three-dimensional spatial slice. -/
-def homogeneousNumberDensity (charge scaleFactor : ℝ) : ℝ :=
+noncomputable def homogeneousNumberDensity (charge scaleFactor : ℝ) : ℝ :=
   charge / scaleFactor ^ 3
 
 /-- Dust energy density carried by the conserved current. -/
-def homogeneousDustDensity
+noncomputable def homogeneousDustDensity
     (massUnit charge scaleFactor : ℝ) : ℝ :=
   massUnit * homogeneousNumberDensity charge scaleFactor
 
@@ -94,7 +95,13 @@ theorem negative_primitive_mass_unit_bridge_relation
     (hPrimitiveEnergy : globalEnergy = -massUnit)
     (hBridgeMap : 4 * piConstant * globalEnergy + 3 * bridgeMass = 0) :
     4 * piConstant * massUnit = 3 * bridgeMass := by
-  nlinarith
+  calc
+    4 * piConstant * massUnit =
+        -(4 * piConstant * globalEnergy) := by
+      rw [hPrimitiveEnergy]
+      ring
+    _ = 3 * bridgeMass := by
+      linarith [hBridgeMap]
 
 /--
 The mathematically corrected carrier separates the pieces that were conflated
