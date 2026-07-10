@@ -8,12 +8,15 @@ The alternatives are not substitutes at the final level:
 * the quantum world-volume program generates and normalizes the dimensionful
   LL charge scale.
 
-Absolute no-fit alpha closure requires both plus a compatibility theorem.
+Absolute no-fit alpha closure requires both plus a compatibility theorem.  Once
+those inputs are derived, the terminal synthesis fixes the entire relational
+spectrum.
 -/
 
 import JanusFormal.Branches.WorldvolumeQuantumAlpha
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha
 import JanusFormal.Branches.RP4TwistedFourFormAlpha
+import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusAbsoluteAlphaSynthesis
 
 namespace JanusFormal
 namespace JanusAlphaDeepCompletionMatrix
@@ -26,6 +29,7 @@ structure DeepCompletionStatus where
   bulkBoundaryChargeCompatibilityProved : Prop
   sourceNormalizationReconciled : Prop
   lorentzianProjectiveMatchingClosed : Prop
+  terminalRelationalSpectrumDerived : Prop
   noObservedScaleImported : Prop
   absoluteAlphaClosed : Prop
 
@@ -36,6 +40,7 @@ def deepCompletionInputsClosed (s : DeepCompletionStatus) : Prop :=
   s.bulkBoundaryChargeCompatibilityProved /\
   s.sourceNormalizationReconciled /\
   s.lorentzianProjectiveMatchingClosed /\
+  s.terminalRelationalSpectrumDerived /\
   s.noObservedScaleImported
 
 
@@ -66,7 +71,15 @@ theorem missing_bulk_boundary_compatibility_blocks_full_closure
   intro h
   exact hMissing h.1.2.2.1
 
-/-- A policy theorem turning the six derived inputs into the final prediction. -/
+
+theorem missing_terminal_spectrum_blocks_full_closure
+    (s : DeepCompletionStatus)
+    (hMissing : Not s.terminalRelationalSpectrumDerived) :
+    Not (fullAbsoluteAlphaClosure s) := by
+  intro h
+  exact hMissing h.1.2.2.2.2.1
+
+/-- A policy theorem turning the seven derived inputs into the final prediction. -/
 theorem both_programs_and_compatibility_transport_to_absolute_alpha
     (s : DeepCompletionStatus)
     (hInputs : deepCompletionInputsClosed s)
