@@ -31,14 +31,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: leanprover/lean-action@v1
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
         with:
           auto-config: false
-          build: true
-          build-args: JanusFormal.Branches.RP4TwistedFourFormAlpha
+          build: false
           test: false
           lint: false
           use-mathlib-cache: true
+      - name: Build focused branch head
+        run: |
+          set +e
+          lake build JanusFormal.Branches.RP4TwistedFourFormAlpha > lean-build.log 2>&1
+          status=$?
+          cat lean-build.log
+          exit $status
+      - name: Upload focused Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rp4-twisted-four-form-lean-log
+          path: lean-build.log
+          if-no-files-found: error
 
   python-audits:
     runs-on: ubuntu-latest
