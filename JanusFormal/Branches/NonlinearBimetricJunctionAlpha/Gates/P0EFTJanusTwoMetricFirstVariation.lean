@@ -11,8 +11,8 @@ variable [AddCommMonoid VMinus] [Module ℝ VMinus]
 
 /-- Total first variation for two independent metric variations. -/
 def totalFirstVariation
-    (equationPlus : LinearMap ℝ VPlus ℝ)
-    (equationMinus : LinearMap ℝ VMinus ℝ)
+    (equationPlus : VPlus →ₗ[ℝ] ℝ)
+    (equationMinus : VMinus →ₗ[ℝ] ℝ)
     (variationPlus : VPlus)
     (variationMinus : VMinus) : ℝ :=
   equationPlus variationPlus + equationMinus variationMinus
@@ -22,8 +22,8 @@ Stationarity under all independent variations is equivalent to vanishing of
 both Euler-Lagrange linear functionals.
 -/
 theorem independent_metric_variations_split
-    (equationPlus : LinearMap ℝ VPlus ℝ)
-    (equationMinus : LinearMap ℝ VMinus ℝ)
+    (equationPlus : VPlus →ₗ[ℝ] ℝ)
+    (equationMinus : VMinus →ₗ[ℝ] ℝ)
     (hStationary :
       ∀ variationPlus variationMinus,
         totalFirstVariation equationPlus equationMinus
@@ -39,8 +39,8 @@ theorem independent_metric_variations_split
 
 /-- The converse: two Euler-Lagrange equations imply total stationarity. -/
 theorem split_equations_imply_total_stationarity
-    (equationPlus : LinearMap ℝ VPlus ℝ)
-    (equationMinus : LinearMap ℝ VMinus ℝ)
+    (equationPlus : VPlus →ₗ[ℝ] ℝ)
+    (equationMinus : VMinus →ₗ[ℝ] ℝ)
     (hPlus : equationPlus = 0)
     (hMinus : equationMinus = 0) :
     ∀ variationPlus variationMinus,
@@ -51,19 +51,18 @@ theorem split_equations_imply_total_stationarity
 
 /-- Bulk plus boundary first variation for one metric sector. -/
 def sectorFirstVariation
-    (bulk boundary : LinearMap ℝ VPlus ℝ) : LinearMap ℝ VPlus ℝ :=
+    (bulk boundary : VPlus →ₗ[ℝ] ℝ) : VPlus →ₗ[ℝ] ℝ :=
   bulk + boundary
 
 /-- Bulk equations alone do not close the variational problem if a boundary term remains. -/
 theorem nonzero_boundary_variation_blocks_full_stationarity
-    (bulk boundary : LinearMap ℝ VPlus ℝ)
+    (bulk boundary : VPlus →ₗ[ℝ] ℝ)
     (hBulk : bulk = 0)
     (hBoundary : boundary ≠ 0) :
     sectorFirstVariation bulk boundary ≠ 0 := by
   intro hTotal
   apply hBoundary
-  rw [sectorFirstVariation, hBulk, zero_add] at hTotal
-  exact hTotal
+  simpa [sectorFirstVariation, hBulk] using hTotal
 
 /--
 A complete nonlinear Janus action must include all bulk, cross-sector and
