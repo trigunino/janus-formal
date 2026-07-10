@@ -1,0 +1,54 @@
+name: RP4 twisted four-form alpha
+
+on:
+  push:
+    branches:
+      - research/rp4-twisted-four-form-alpha
+    paths:
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
+      - "scripts/audit_janus_*"
+      - "tests/test_janus_*"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+      - ".github/workflows/rp4-twisted-four-form-alpha.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
+      - "scripts/audit_janus_*"
+      - "tests/test_janus_*"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          build-args: JanusFormal.Branches.RP4TwistedFourFormAlpha
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
+  python-audits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e . pytest
+      - run: python scripts/audit_janus_exact_solution_normalization.py
+      - run: python scripts/audit_janus_finite_bridge_ll_closure.py
+      - run: pytest -q tests/test_janus_finite_bridge_ll_closure.py
