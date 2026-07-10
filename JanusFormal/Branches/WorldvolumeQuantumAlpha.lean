@@ -5,9 +5,9 @@ This branch treats the LL world-volume as a compact gauge theory coupled to a
 classically scale-invariant scalar/Chern--Simons sector. It proves the field-
 dimension audit, parity-anomaly arithmetic, flat-direction no-go, one-log
 stable-vacuum algebra, Callan--Symanzik consistency, a level-locked discrete RG
-hierarchy and the condensate-to-alpha map. It does not assume that a microscopic
-theory has already computed the exact renormalized coefficients and UV boundary
-condition.
+hierarchy, Maxwell--Chern--Simons pole-mass normalization, and the
+subtraction-scale invariant alpha law. It does not assume that a microscopic
+theory has already computed the exact higher-order effective action.
 -/
 
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusScaleInvariantWorldvolumeAction
@@ -18,6 +18,9 @@ import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusCondensateTo
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusRGImprovedSexticVacuum
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusRGConsistentOneLogAlpha
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusChernSimonsLevelLockedAlpha
+import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusMaxwellChernSimonsChargeNormalization
+import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusRGInvariantMCSAlpha
+import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusMCSAmplitudeLock
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusLLAuxiliaryBundleCompactnessGate
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusLLGaugeNormalizationScaleOrbit
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusConditionalAlphaSpectrumClosure
@@ -36,8 +39,11 @@ structure ProgramStatus where
   callanSymanzikConsistencyDerived : Prop
   integerLevelLockDerived : Prop
   discreteAlphaSpectrumDerived : Prop
+  mcsPoleMassNormalizationDerived : Prop
+  chargeAmplitudeLevelLocked : Prop
+  rgInvariantMassAlphaLawDerived : Prop
   renormalizedQuantumActionDerived : Prop
-  stableUniqueVacuumProved : Prop
+  stableUniqueVacuumProvedBeyondLeadingLog : Prop
   betaCoefficientComputed : Prop
   uvCouplingBoundaryLawDerived : Prop
   bulkPlanckAnchorDerived : Prop
@@ -57,8 +63,11 @@ def mathematicalQuantumProgramClosed (s : ProgramStatus) : Prop :=
   s.callanSymanzikConsistencyDerived /\
   s.integerLevelLockDerived /\
   s.discreteAlphaSpectrumDerived /\
+  s.mcsPoleMassNormalizationDerived /\
+  s.chargeAmplitudeLevelLocked /\
+  s.rgInvariantMassAlphaLawDerived /\
   s.renormalizedQuantumActionDerived /\
-  s.stableUniqueVacuumProved /\
+  s.stableUniqueVacuumProvedBeyondLeadingLog /\
   s.betaCoefficientComputed /\
   s.uvCouplingBoundaryLawDerived /\
   s.bulkPlanckAnchorDerived /\
@@ -78,8 +87,11 @@ def honestQuantumFrontier (s : ProgramStatus) : Prop :=
   s.callanSymanzikConsistencyDerived /\
   s.integerLevelLockDerived /\
   s.discreteAlphaSpectrumDerived /\
+  s.mcsPoleMassNormalizationDerived /\
+  s.chargeAmplitudeLevelLocked /\
+  s.rgInvariantMassAlphaLawDerived /\
   Not s.renormalizedQuantumActionDerived /\
-  Not s.stableUniqueVacuumProved /\
+  Not s.stableUniqueVacuumProvedBeyondLeadingLog /\
   Not s.betaCoefficientComputed /\
   Not s.uvCouplingBoundaryLawDerived /\
   Not s.chargeOperatorNormalizationDerived /\
@@ -90,7 +102,8 @@ theorem current_quantum_frontier_does_not_claim_absolute_scale
     (s : ProgramStatus)
     (h : honestQuantumFrontier s) :
     Not s.absoluteAlphaScaleClosed := by
-  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, hNotClosed⟩
+  rcases h with
+    ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, hNotClosed⟩
   exact hNotClosed
 
 end JanusWorldvolumeQuantumAlpha
