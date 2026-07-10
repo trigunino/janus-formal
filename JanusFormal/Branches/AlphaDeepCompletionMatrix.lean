@@ -8,7 +8,7 @@ The alternatives are not substitutes at the final level:
 * the quantum world-volume program generates and normalizes the dimensionful
   LL charge scale.
 
-Absolute no-fit alpha closure requires both plus a compatibility theorem.  Once
+Absolute no-fit alpha closure requires both plus a compatibility theorem. Once
 those inputs are derived, the terminal synthesis fixes the entire relational
 spectrum.
 -/
@@ -17,6 +17,7 @@ import JanusFormal.Branches.WorldvolumeQuantumAlpha
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha
 import JanusFormal.Branches.RP4TwistedFourFormAlpha
 import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusAbsoluteAlphaSynthesis
+import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusBulkBoundaryChargeNormalization
 
 namespace JanusFormal
 namespace JanusAlphaDeepCompletionMatrix
@@ -77,7 +78,7 @@ theorem missing_terminal_spectrum_blocks_full_closure
     (hMissing : Not s.terminalRelationalSpectrumDerived) :
     Not (fullAbsoluteAlphaClosure s) := by
   intro h
-  exact hMissing h.1.2.2.2.2.1
+  exact hMissing h.1.2.2.2.2.2.1
 
 /-- A policy theorem turning the seven derived inputs into the final prediction. -/
 theorem both_programs_and_compatibility_transport_to_absolute_alpha
