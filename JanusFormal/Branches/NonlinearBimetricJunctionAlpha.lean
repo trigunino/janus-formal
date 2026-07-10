@@ -3,10 +3,11 @@ Nonlinear two-metric action and finite PT-junction route.
 
 This branch formalizes the variational architecture, common-action
 integrability, diagonal Noether exchange, the relative kinetic-sign obstruction,
-a positive-kinetic PT-symmetric proportional branch, the massless/massive mode
-decomposition, signed PT matter charges, quasi-local charge pairing and a
-reciprocal covariant interaction candidate. It derives relational bridge laws
-but does not generate the independent quantum charge scale.
+a classified positive-kinetic PT-symmetric proportional branch, the
+massless/massive mode decomposition, signed PT matter charges, quasi-local
+charge pairing and a reciprocal covariant interaction candidate. It derives
+relational bridge laws but does not generate the independent quantum charge
+scale.
 -/
 
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusTwoMetricFirstVariation
@@ -16,6 +17,7 @@ import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusRelat
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusPTQuasilocalChargePairing
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusReciprocalBimetricPotential
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusPTSymmetricFlatBimetricBranch
+import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusPTFlatCoefficientClassification
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusPositiveKineticMassEigenmodes
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusSignedMatterChargeNewtonianLimit
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusMisnerSharpPTBridge
@@ -33,6 +35,7 @@ structure ProgramStatus where
   mixedVariationIntegrabilityProved : Prop
   diagonalNoetherIdentityProved : Prop
   relativeKineticSignObstructionAudited : Prop
+  ptFlatCoefficientsClassified : Prop
   positiveKineticPTBranchConstructed : Prop
   masslessAndMassiveModesDerived : Prop
   signedMatterChargeLimitDerived : Prop
@@ -55,6 +58,7 @@ def classicalBimetricJunctionClosed (s : ProgramStatus) : Prop :=
   s.mixedVariationIntegrabilityProved /\
   s.diagonalNoetherIdentityProved /\
   s.relativeKineticSignObstructionAudited /\
+  s.ptFlatCoefficientsClassified /\
   s.positiveKineticPTBranchConstructed /\
   s.masslessAndMassiveModesDerived /\
   s.signedMatterChargeLimitDerived /\
