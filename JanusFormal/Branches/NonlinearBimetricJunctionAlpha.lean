@@ -1,15 +1,17 @@
 /-
 Nonlinear two-metric action and finite PT-junction route.
 
-This branch formalizes the variational architecture, cross-source integrability,
-diagonal Noether exchange, PT-odd quasi-local charge pairing and a reciprocal
-covariant interaction candidate.  It derives relational bridge laws but does
-not generate the independent quantum charge scale.
+This branch formalizes the variational architecture, common-action
+integrability, diagonal Noether exchange, relative kinetic-sign obstruction,
+PT-odd quasi-local charge pairing and a reciprocal covariant interaction
+candidate.  It derives relational bridge laws but does not generate the
+independent quantum charge scale.
 -/
 
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusTwoMetricFirstVariation
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusBimetricActionIntegrability
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusDiagonalNoetherExchange
+import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusRelativeKineticSignNoGo
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusPTQuasilocalChargePairing
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusReciprocalBimetricPotential
 import JanusFormal.Branches.RP4TwistedFourFormAlpha.Gates.P0EFTJanusMisnerSharpPTBridge
@@ -26,6 +28,7 @@ structure ProgramStatus where
   commonCrossInteractionConstructed : Prop
   mixedVariationIntegrabilityProved : Prop
   diagonalNoetherIdentityProved : Prop
+  relativeKineticSignResolved : Prop
   nonlinearConstraintAlgebraClosed : Prop
   stableLocalGRBranchProved : Prop
   ptOddQuasilocalChargeDerived : Prop
@@ -44,6 +47,7 @@ def classicalBimetricJunctionClosed (s : ProgramStatus) : Prop :=
   s.commonCrossInteractionConstructed /\
   s.mixedVariationIntegrabilityProved /\
   s.diagonalNoetherIdentityProved /\
+  s.relativeKineticSignResolved /\
   s.nonlinearConstraintAlgebraClosed /\
   s.stableLocalGRBranchProved /\
   s.ptOddQuasilocalChargeDerived /\
