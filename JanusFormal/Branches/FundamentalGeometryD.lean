@@ -15,8 +15,13 @@ import JanusFormal.Branches.JanusTwistedHopfGeometry
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedHopfCellularModel
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHopfBundleOrientationNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGlobalLineBundleNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleEmergence
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFixedThroatFluxDescentNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralIsotropyAlphaRatio
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPinObstructionAudit
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGeometryToPhysicsBridge
 
@@ -31,11 +36,15 @@ structure ProgramStatus where
   equatorialFixedSetCharacterized : Prop
   cellularTopBoundaryComputed : Prop
   degreeTwoModTwoCellularCochainsVanish : Prop
+  globalOrdinaryLineBundleNoGoDerived : Prop
   hopfBundleOrientationNoGoProved : Prop
+  fixedThroatConjugateFluxNoGoProved : Prop
   canonicalThroatMonopoleCandidateDerived : Prop
   compactCircleTransgressionDerived : Prop
   pinObstructionPatternsSeparated : Prop
   spectralIsotropyCandidateDerived : Prop
+  thermalAndSpectralCirclesSeparated : Prop
+  spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
   emergentWorldvolumeQFTDerived : Prop
   nonlinearBimetricGeometryDerived : Prop
@@ -50,11 +59,15 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.equatorialFixedSetCharacterized /\
   s.cellularTopBoundaryComputed /\
   s.degreeTwoModTwoCellularCochainsVanish /\
+  s.globalOrdinaryLineBundleNoGoDerived /\
   s.hopfBundleOrientationNoGoProved /\
+  s.fixedThroatConjugateFluxNoGoProved /\
   s.canonicalThroatMonopoleCandidateDerived /\
   s.compactCircleTransgressionDerived /\
   s.pinObstructionPatternsSeparated /\
   s.spectralIsotropyCandidateDerived /\
+  s.thermalAndSpectralCirclesSeparated /\
+  s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
 
 
