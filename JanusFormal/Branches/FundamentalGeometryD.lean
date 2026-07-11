@@ -14,6 +14,7 @@ separates three levels:
 import JanusFormal.Branches.JanusTwistedHopfGeometry
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedMappingGenerator
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPeriodCircleQuotient
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedHopfCellularModel
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGenericPinObstruction
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHopfBundleOrientationNoGo
@@ -39,6 +40,7 @@ structure ProgramStatus where
   equatorialFixedSetCharacterized : Prop
   twistedGeneratorConstructed : Prop
   generatorSquareIsDoubleTranslation : Prop
+  algebraicPeriodCircleConstructed : Prop
   fixedFiberDescendsToPeriodCircle : Prop
   cellularTopBoundaryComputed : Prop
   degreeTwoModTwoCellularCochainsVanish : Prop
@@ -67,6 +69,7 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.equatorialFixedSetCharacterized /\
   s.twistedGeneratorConstructed /\
   s.generatorSquareIsDoubleTranslation /\
+  s.algebraicPeriodCircleConstructed /\
   s.fixedFiberDescendsToPeriodCircle /\
   s.cellularTopBoundaryComputed /\
   s.degreeTwoModTwoCellularCochainsVanish /\
