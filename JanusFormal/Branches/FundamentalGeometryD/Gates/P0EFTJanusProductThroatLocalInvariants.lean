@@ -20,45 +20,47 @@ def throatVolume (s : ProductThroatInvariantData) : ℝ :=
   4 * s.piConstant * s.geometricLength ^ 3 * s.circleModulus
 
 /-- Scalar curvature of the round sphere factor. -/
-def scalarCurvature (s : ProductThroatInvariantData) : ℝ :=
+noncomputable def scalarCurvature (s : ProductThroatInvariantData) : ℝ :=
   2 / s.geometricLength ^ 2
 
 /-- Ricci-tensor norm squared on `S2 x S1`. -/
-def ricciSquaredDensity (s : ProductThroatInvariantData) : ℝ :=
+noncomputable def ricciSquaredDensity
+    (s : ProductThroatInvariantData) : ℝ :=
   2 / s.geometricLength ^ 4
 
 /-- Riemann-tensor norm squared on `S2 x S1`. -/
-def riemannSquaredDensity (s : ProductThroatInvariantData) : ℝ :=
+noncomputable def riemannSquaredDensity
+    (s : ProductThroatInvariantData) : ℝ :=
   4 / s.geometricLength ^ 4
 
 /-- Convention `F_{mu nu}F^{mu nu}=n^2/(2*L^4)` for the Dirac monopole. -/
-def monopoleFieldSquaredDensity
+noncomputable def monopoleFieldSquaredDensity
     (s : ProductThroatInvariantData) : ℝ :=
   (s.monopoleNumber : ℝ) ^ 2 /
     (2 * s.geometricLength ^ 4)
 
 /-- Integrated scalar curvature. -/
-def integratedScalarCurvature
+noncomputable def integratedScalarCurvature
     (s : ProductThroatInvariantData) : ℝ :=
   scalarCurvature s * throatVolume s
 
 /-- Integrated scalar-curvature square. -/
-def integratedScalarCurvatureSquared
+noncomputable def integratedScalarCurvatureSquared
     (s : ProductThroatInvariantData) : ℝ :=
   scalarCurvature s ^ 2 * throatVolume s
 
 /-- Integrated Ricci norm squared. -/
-def integratedRicciSquared
+noncomputable def integratedRicciSquared
     (s : ProductThroatInvariantData) : ℝ :=
   ricciSquaredDensity s * throatVolume s
 
 /-- Integrated Riemann norm squared. -/
-def integratedRiemannSquared
+noncomputable def integratedRiemannSquared
     (s : ProductThroatInvariantData) : ℝ :=
   riemannSquaredDensity s * throatVolume s
 
 /-- Integrated monopole field-strength square. -/
-def integratedMonopoleFieldSquared
+noncomputable def integratedMonopoleFieldSquared
     (s : ProductThroatInvariantData) : ℝ :=
   monopoleFieldSquaredDensity s * throatVolume s
 
@@ -127,7 +129,7 @@ theorem integrated_monopole_field_squared_formula
   ring
 
 /-- Pure geometric combination appearing in the universal closed-manifold `a4` coefficient. -/
-def integratedUniversalA4Geometry
+noncomputable def integratedUniversalA4Geometry
     (s : ProductThroatInvariantData) : ℝ :=
   5 * integratedScalarCurvatureSquared s -
     2 * integratedRicciSquared s +
