@@ -42,7 +42,8 @@ def bosonicInternalQuarterCharge : ProductZ4Charge :=
 @[simp] theorem bosonic_internal_quarter_is_pin_compatible :
     ProductZ4Compatible FieldStatistics.boson
       bosonicInternalQuarterCharge := by
-  native_decide
+  unfold ProductZ4Compatible bosonicInternalQuarterCharge
+  exact periodic_phase_is_bosonic
 
 /-- Yet its total determinant phase is an exact quarter turn. -/
 @[simp] theorem bosonic_internal_quarter_has_total_quarter_phase :
@@ -97,7 +98,7 @@ theorem bosonic_quarter_requires_independent_internal_z4 :
 /--
 This construction rescues the determinant signs of the arithmetic `1:5`
 candidate, but only by introducing a new internal symmetry not implied by the
-Pin lift itself.  Its principal bundle, geometric origin, rank-five
+Pin lift itself. Its principal bundle, geometric origin, rank-five
 representation and action on the bimetric/world-volume fields remain explicit
 research obligations.
 -/
