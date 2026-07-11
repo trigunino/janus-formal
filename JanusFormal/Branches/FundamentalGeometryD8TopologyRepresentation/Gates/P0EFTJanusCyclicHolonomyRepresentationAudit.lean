@@ -59,15 +59,25 @@ structure OrientationZ4GeneratorLift where
   phase : ZMod 4
   phaseIsQuarterOrThreeQuarter : phase = 1 \/ phase = 3
 
+/-- The equation `2*phase=2` classifies the two orientation fourth-roots. -/
+theorem phase_doubles_to_half_turn_iff
+    (phase : ZMod 4) :
+    phase + phase = 2 ↔ phase = 1 \/ phase = 3 := by
+  fin_cases phase <;> native_decide
+
+/-- The two odd phases are exactly the generator lifts of the orientation parity. -/
+theorem orientation_generator_lifts_are_exactly_two :
+    ∀ phase : ZMod 4,
+      phase + phase = 2 → phase = 1 \/ phase = 3 := by
+  intro phase hPhase
+  exact (phase_doubles_to_half_turn_iff phase).mp hPhase
+
 /-- Every allowed lift squares to the internal half-turn. -/
 theorem orientation_lift_squares_to_half_turn
     (s : OrientationZ4GeneratorLift) :
     s.phase + s.phase = 2 := by
-  rcases s.phaseIsQuarterOrThreeQuarter with hQuarter | hThreeQuarter
-  · subst s.phase
-    native_decide
-  · subst s.phase
-    native_decide
+  exact (phase_doubles_to_half_turn_iff s.phase).mpr
+    s.phaseIsQuarterOrThreeQuarter
 
 /-- Every allowed lift has fourth power equal to the identity phase. -/
 theorem orientation_lift_fourth_power_trivial
