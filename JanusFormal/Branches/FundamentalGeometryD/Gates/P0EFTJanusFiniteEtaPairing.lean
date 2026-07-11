@@ -6,7 +6,7 @@ namespace P0EFTJanusFiniteEtaPairing
 set_option autoImplicit false
 
 /-- Signed contribution of a nonzero real eigenvalue to a finite eta proxy. -/
-def spectralSign (eigenvalue : ℝ) : ℤ :=
+noncomputable def spectralSign (eigenvalue : ℝ) : ℤ :=
   if 0 < eigenvalue then 1
   else if eigenvalue < 0 then -1
   else 0
@@ -16,7 +16,8 @@ theorem spectral_sign_neg (eigenvalue : ℝ) :
     spectralSign (-eigenvalue) = -spectralSign eigenvalue := by
   by_cases hPositive : 0 < eigenvalue
   · have hNegNegative : -eigenvalue < 0 := neg_neg_of_pos hPositive
-    have hNotNegPositive : ¬ 0 < -eigenvalue := not_lt.mpr (le_of_lt hNegNegative)
+    have hNotNegPositive : ¬ 0 < -eigenvalue :=
+      not_lt.mpr (le_of_lt hNegNegative)
     simp [spectralSign, hPositive, hNegNegative, hNotNegPositive]
   · by_cases hNegative : eigenvalue < 0
     · have hNegPositive : 0 < -eigenvalue := neg_pos.mpr hNegative
@@ -25,8 +26,14 @@ theorem spectral_sign_neg (eigenvalue : ℝ) :
       simp [spectralSign, hZero]
 
 /-- Finite eta proxy obtained by summing spectral signs. -/
-def finiteEta (spectrum : List ℝ) : ℤ :=
+noncomputable def finiteEta (spectrum : List ℝ) : ℤ :=
   (spectrum.map spectralSign).sum
+
+/-- Eta is additive under concatenation of finite spectra. -/
+theorem finite_eta_append
+    (left right : List ℝ) :
+    finiteEta (left ++ right) = finiteEta left + finiteEta right := by
+  simp [finiteEta]
 
 /-- Negating every eigenvalue reverses the finite eta proxy. -/
 theorem finite_eta_negated_spectrum
@@ -36,21 +43,19 @@ theorem finite_eta_negated_spectrum
   induction spectrum with
   | nil => simp [finiteEta]
   | cons eigenvalue rest ih =>
-      simp [finiteEta, spectral_sign_neg, ih]
+      change
+        spectralSign (-eigenvalue) +
+            finiteEta (rest.map (fun value => -value)) =
+          -(spectralSign eigenvalue + finiteEta rest)
+      rw [spectral_sign_neg, ih]
+      ring
 
 /-- A spectrum paired eigenvalue-by-eigenvalue with its PT reverse has zero eta proxy. -/
 theorem pt_paired_spectrum_has_zero_finite_eta
     (spectrum : List ℝ) :
     finiteEta
       (spectrum ++ spectrum.map (fun eigenvalue => -eigenvalue)) = 0 := by
-  rw [finiteEta, List.map_append, List.sum_append]
-  have hNeg := finite_eta_negated_spectrum spectrum
-  unfold finiteEta at hNeg
-  rw [List.map_map] at hNeg
-  change
-    (spectrum.map spectralSign).sum +
-      ((spectrum.map fun eigenvalue => -eigenvalue).map spectralSign).sum = 0
-  rw [hNeg]
+  rw [finite_eta_append, finite_eta_negated_spectrum]
   ring
 
 /-- The two PT-related folds carry opposite finite eta proxies. -/
@@ -77,7 +82,7 @@ def finiteDeterminantProduct (spectrum : List ℝ) : ℝ :=
   simp [finiteDeterminantProduct]
 
 /--
-The finite pairing theorem isolates the analytic frontier.  For the actual
+The finite pairing theorem isolates the analytic frontier. For the actual
 Dirac operator one must prove spectral discreteness, define eta by analytic
 continuation, control zero modes and regulator phases, and verify gluing under
 the mapping-torus/bridge construction.
