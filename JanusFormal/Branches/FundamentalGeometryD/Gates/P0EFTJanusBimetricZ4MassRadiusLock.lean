@@ -127,7 +127,9 @@ theorem bimetric_interaction_alpha_target
     2 * Real.pi ^ 2 * s.interactionMassSquared *
         s.fpCombination * s.alphaSquaredLength ^ 2 =
       2 * Real.pi ^ 2 * s.physicalMass ^ 2 *
-        s.alphaSquaredLength ^ 2 := by rw [s.fpMassLaw]
+        s.alphaSquaredLength ^ 2 := by
+          rw [s.fpMassLaw]
+          ring
     _ = 2 * Real.pi ^ 2 *
         (s.physicalMass * s.alphaSquaredLength) ^ 2 := by ring
     _ = (Real.log 3) ^ 2 := hTarget
