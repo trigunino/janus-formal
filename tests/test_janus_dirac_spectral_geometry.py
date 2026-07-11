@@ -6,7 +6,10 @@ from scripts.audit_janus_dirac_spectral_geometry import (
     alpha_over_sphere_radius,
     build_audit,
     determinant_amplitude,
+    determinant_scaling_factor,
+    mode_kernel,
     monopole_gap_squared_times_l2,
+    truncated_log_determinant,
     zero_mode_eta,
 )
 
@@ -34,6 +37,22 @@ def test_half_holonomy_is_eta_neutral_and_determinant_maximal() -> None:
     assert math.isclose(zero_mode_eta(1, 0.8), -zero_mode_eta(1, 0.2))
 
 
+def test_nonzero_modes_also_select_half_holonomy() -> None:
+    audit = build_audit()
+
+    assert math.isclose(
+        audit.truncated_full_determinant_grid_maximizer,
+        0.5,
+        abs_tol=5.1e-4,
+    )
+    assert audit.truncated_log_determinant_half_advantage > 0.0
+    assert mode_kernel(2.0, 0.5) >= mode_kernel(2.0, 0.25)
+    modulus = math.pi / math.sqrt(2.0)
+    assert truncated_log_determinant(1, modulus, 0.5) > truncated_log_determinant(
+        1, modulus, 0.25
+    )
+
+
 def test_circle_ratio_is_not_the_alpha_ratio() -> None:
     audit = build_audit()
 
@@ -55,3 +74,14 @@ def test_general_monopole_bimetric_selection() -> None:
     assert alpha_over_sphere_radius(1) == 1.0
     assert alpha_over_sphere_radius(2) < 1.0
     assert alpha_over_sphere_radius(0) > 1.0
+
+
+def test_closed_odd_massless_determinant_does_not_fix_scale() -> None:
+    audit = build_audit()
+
+    assert math.isclose(audit.odd_dimensional_zeta_zero_scaling_factor, 1.0)
+    assert math.isclose(determinant_scaling_factor(0.0, 1.0e60), 1.0)
+    assert math.isclose(
+        audit.rescaled_alpha_over_sphere_radius,
+        audit.alpha_over_sphere_radius,
+    )
