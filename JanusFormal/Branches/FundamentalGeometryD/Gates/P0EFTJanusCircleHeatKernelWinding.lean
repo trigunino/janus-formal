@@ -5,7 +5,6 @@ namespace P0EFTJanusCircleHeatKernelWinding
 
 set_option autoImplicit false
 
-/-- Exact cosine weight `cos(pi*w/2)` for a quarter-holonomy winding, encoded by residue modulo four. -/
 def quarterWindingWeight (winding : ℕ) : ℤ :=
   match winding % 4 with
   | 0 => 1
@@ -13,39 +12,29 @@ def quarterWindingWeight (winding : ℕ) : ℤ :=
   | 2 => -1
   | _ => 0
 
-/-- Exact antiperiodic weight `cos(pi*w)=(-1)^w`. -/
 def antiperiodicWindingWeight (winding : ℕ) : ℤ :=
   if winding % 2 = 0 then 1 else -1
 
 @[simp] theorem quarter_weight_zero : quarterWindingWeight 0 = 1 := by
   norm_num [quarterWindingWeight]
-
 @[simp] theorem quarter_weight_one : quarterWindingWeight 1 = 0 := by
   norm_num [quarterWindingWeight]
-
 @[simp] theorem quarter_weight_two : quarterWindingWeight 2 = -1 := by
   norm_num [quarterWindingWeight]
-
 @[simp] theorem quarter_weight_three : quarterWindingWeight 3 = 0 := by
   norm_num [quarterWindingWeight]
-
 @[simp] theorem quarter_weight_four : quarterWindingWeight 4 = 1 := by
   norm_num [quarterWindingWeight]
-
 @[simp] theorem antiperiodic_weight_zero :
     antiperiodicWindingWeight 0 = 1 := by
   norm_num [antiperiodicWindingWeight]
-
 @[simp] theorem antiperiodic_weight_one :
     antiperiodicWindingWeight 1 = -1 := by
   norm_num [antiperiodicWindingWeight]
 
-/-- The first positive winding is absent in the quarter-holonomy sector. -/
 theorem quarter_first_positive_winding_vanishes :
-    quarterWindingWeight 1 = 0 :=
-  quarter_weight_one
+    quarterWindingWeight 1 = 0 := quarter_weight_one
 
-/-- The first nonzero positive quarter-holonomy winding is `w=2`. -/
 theorem quarter_first_nonzero_positive_winding_is_two :
     quarterWindingWeight 2 ≠ 0 /\
       ∀ winding : ℕ,
@@ -57,20 +46,14 @@ theorem quarter_first_nonzero_positive_winding_is_two :
     subst winding
     exact quarter_weight_one
 
-/-- Winding exponent in the Poisson-resummed heat kernel. -/
 noncomputable def windingExponent
     (circumference heatTime : ℝ) (winding : ℕ) : ℝ :=
-  circumference ^ 2 * (winding : ℝ) ^ 2 /
-    (4 * heatTime)
+  circumference ^ 2 * (winding : ℝ) ^ 2 / (4 * heatTime)
 
-/-- Weighted winding contribution, omitting the common local prefactor. -/
 noncomputable def weightedWindingTerm
-    (weight : ℤ)
-    (circumference heatTime : ℝ)
-    (winding : ℕ) : ℝ :=
+    (weight : ℤ) (circumference heatTime : ℝ) (winding : ℕ) : ℝ :=
   (weight : ℝ) * Real.exp (-windingExponent circumference heatTime winding)
 
-/-- The leading antiperiodic winding is suppressed by `exp(-beta^2/(4t))`. -/
 theorem antiperiodic_first_winding_term
     (circumference heatTime : ℝ) :
     weightedWindingTerm (antiperiodicWindingWeight 1)
@@ -78,14 +61,12 @@ theorem antiperiodic_first_winding_term
       -Real.exp (-(circumference ^ 2 / (4 * heatTime))) := by
   simp [weightedWindingTerm, windingExponent]
 
-/-- The `w=1` quarter-holonomy winding vanishes exactly. -/
 theorem quarter_first_winding_term_vanishes
     (circumference heatTime : ℝ) :
     weightedWindingTerm (quarterWindingWeight 1)
         circumference heatTime 1 = 0 := by
   simp [weightedWindingTerm]
 
-/-- The leading nonzero quarter-holonomy winding is `w=2`, suppressed by `exp(-beta^2/t)`. -/
 theorem quarter_second_winding_term
     (circumference heatTime : ℝ)
     (hHeatTime : heatTime ≠ 0) :
@@ -96,26 +77,21 @@ theorem quarter_second_winding_term
       windingExponent circumference heatTime 2 =
         circumference ^ 2 / heatTime := by
     unfold windingExponent
-    norm_num
     field_simp [hHeatTime]
     ring
   simp [weightedWindingTerm, hExponent]
 
-/-- The quarter-holonomy leading exponent is four times the antiperiodic leading exponent. -/
 theorem quarter_leading_exponent_is_four_times_antiperiodic
     (circumference heatTime : ℝ) :
     windingExponent circumference heatTime 2 =
       4 * windingExponent circumference heatTime 1 := by
   unfold windingExponent
-  norm_num
   ring
 
-/-- Holonomy-independent local term in the Poisson-resummed circle heat trace. -/
 noncomputable def localCircleHeatTerm
     (circumference heatTime piConstant : ℝ) : ℝ :=
   circumference / Real.sqrt (4 * piConstant * heatTime)
 
-/-- Equal circumference and heat time give the same local term, independently of holonomy. -/
 theorem same_geometry_same_local_circle_heat_term
     (firstCircumference secondCircumference
       firstHeatTime secondHeatTime piConstant : ℝ)
@@ -125,10 +101,6 @@ theorem same_geometry_same_local_circle_heat_term
       localCircleHeatTerm secondCircumference secondHeatTime piConstant := by
   rw [hCircumference, hHeatTime]
 
-/--
-Poisson-resummed circle heat trace interface. The `w=0` term is local and
-holonomy independent; all holonomy dependence is stored in positive windings.
--/
 structure CircleHeatKernelDecomposition where
   circumference : ℝ
   heatTime : ℝ
@@ -140,11 +112,6 @@ structure CircleHeatKernelDecomposition where
   decompositionLaw : fullTrace = localTerm + nonlocalWindingSum
   localTermIndependentOfHolonomy : Prop
 
-/--
-For exact quarter holonomy, the UV-sensitive local coefficients cannot see the
-holonomy and the first nonlocal winding vanishes. The first holonomy signal is
-therefore the more strongly suppressed `w=2` sector.
--/
 structure QuarterHolonomyHeatKernelStatus where
   poissonResummationDerived : Prop
   localTermSeparated : Prop
@@ -153,7 +120,6 @@ structure QuarterHolonomyHeatKernelStatus where
   leadingWindingTwoProved : Prop
   fullSphereProductHeatTraceDerived : Prop
   zetaEffectiveActionDerived : Prop
-
 
 def quarterHolonomyHeatKernelClosed
     (s : QuarterHolonomyHeatKernelStatus) : Prop :=
