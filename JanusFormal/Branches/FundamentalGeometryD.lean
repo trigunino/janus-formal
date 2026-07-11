@@ -39,7 +39,12 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPairedZ4Determi
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPeriodicQuarterCompetition
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusLocalHeatKernelScaling
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleHeatKernelWinding
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusProductThroatLocalInvariants
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusDiracSeeleyDeWittCandidate
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTruncatedSpectralActionNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHeatKernelCountertermScheme
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusRenormalizationSchemeNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPairedSpectralActionDecomposition
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -90,7 +95,12 @@ structure ProgramStatus where
   localHeatKernelNoMinimumProved : Prop
   circleHeatKernelWindingSeparationDerived : Prop
   quarterLeadingWindingSuppressionDerived : Prop
+  productThroatLocalInvariantsComputed : Prop
+  diracSeeleyDeWittCandidateComputed : Prop
+  localSpectralActionTrichotomyProved : Prop
   finiteCountertermTargetDegeneracyProved : Prop
+  finiteSchemeShiftMovesTargetProved : Prop
+  ptPairDoublesEvenSpectralActionProved : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
@@ -140,7 +150,12 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.localHeatKernelNoMinimumProved /\
   s.circleHeatKernelWindingSeparationDerived /\
   s.quarterLeadingWindingSuppressionDerived /\
+  s.productThroatLocalInvariantsComputed /\
+  s.diracSeeleyDeWittCandidateComputed /\
+  s.localSpectralActionTrichotomyProved /\
   s.finiteCountertermTargetDegeneracyProved /\
+  s.finiteSchemeShiftMovesTargetProved /\
+  s.ptPairDoublesEvenSpectralActionProved /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
