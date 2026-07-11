@@ -19,6 +19,7 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGenericPinObstr
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHopfBundleOrientationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGlobalLineBundleNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleEmergence
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusDiracMonopolePatching
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFixedThroatFluxDescentNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralIsotropyAlphaRatio
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
@@ -46,6 +47,7 @@ structure ProgramStatus where
   hopfBundleOrientationNoGoProved : Prop
   fixedThroatConjugateFluxNoGoProved : Prop
   canonicalThroatMonopoleCandidateDerived : Prop
+  diracMonopoleLocalPatchingDerived : Prop
   compactCircleTransgressionDerived : Prop
   pinObstructionPatternsSeparated : Prop
   spectralIsotropyCandidateDerived : Prop
@@ -73,6 +75,7 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.hopfBundleOrientationNoGoProved /\
   s.fixedThroatConjugateFluxNoGoProved /\
   s.canonicalThroatMonopoleCandidateDerived /\
+  s.diracMonopoleLocalPatchingDerived /\
   s.compactCircleTransgressionDerived /\
   s.pinObstructionPatternsSeparated /\
   s.spectralIsotropyCandidateDerived /\
