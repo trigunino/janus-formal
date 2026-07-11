@@ -1,7 +1,7 @@
 /-
 Program D2: twisted Dirac spectral geometry on the canonical Janus throat.
 
-The branch studies the SpinC Dirac operator on a primitive-monopole `S2`, its
+The branch studies the SpinC Dirac operator on a monopole-twisted `S2`, its
 product with the compact mapping-torus circle, the zero-mode eta invariant and
 the induced LL charge normalization.
 
@@ -16,6 +16,7 @@ import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusMon
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusCircleHolonomyEta
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusProductDiracPairing
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracSpectralGeometryLock
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracBimetricPrimitiveSelection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusSpectralRatioCorrection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusIndexParityAnomaly
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracScaleOrbitNoGo
@@ -26,14 +27,15 @@ namespace JanusFundamentalGeometryDiracSpectral
 set_option autoImplicit false
 
 structure ProgramStatus where
-  primitiveMonopoleIndexDerived : Prop
   twistedSphereDiracSpectrumDerived : Prop
   productDiracPairingDerived : Prop
   zeroModeEtaFormulaDerived : Prop
   halfHolonomyVacuumDerived : Prop
   oneEighthLLChargeLockDerived : Prop
+  primitiveMonopoleSelectedByBimetricMatch : Prop
   alphaEqualsSphereRadiusDerived : Prop
   circleToSphereRatioDerived : Prop
+  oldScalarRatioReinterpreted : Prop
   parityAnomalyPairingDerived : Prop
   absoluteScaleOrbitIdentified : Prop
   renormalizedDeterminantDerived : Prop
@@ -42,14 +44,15 @@ structure ProgramStatus where
 
 
 def firstDiracSpectralMilestoneClosed (s : ProgramStatus) : Prop :=
-  s.primitiveMonopoleIndexDerived /\
   s.twistedSphereDiracSpectrumDerived /\
   s.productDiracPairingDerived /\
   s.zeroModeEtaFormulaDerived /\
   s.halfHolonomyVacuumDerived /\
   s.oneEighthLLChargeLockDerived /\
+  s.primitiveMonopoleSelectedByBimetricMatch /\
   s.alphaEqualsSphereRadiusDerived /\
   s.circleToSphereRatioDerived /\
+  s.oldScalarRatioReinterpreted /\
   s.parityAnomalyPairingDerived /\
   s.absoluteScaleOrbitIdentified
 
