@@ -94,7 +94,7 @@ theorem antiperiodic_numerator_nonzero
     (mode : ℤ) :
     circleMomentumNumerator
       CircleSpinStructure.antiperiodic mode ≠ 0 := by
-  unfold circleMomentumNumerator
+  change 2 * mode + 1 ≠ 0
   omega
 
 /-- Momentum after multiplication by a nonzero geometric scale factor. -/
@@ -138,7 +138,7 @@ theorem antiperiodic_circle_lifts_sphere_zero_mode
 /--
 The robust conclusion is qualitative: a primitive monopole creates a chiral
 sphere kernel, but the product throat has zero modes only for a circle spin
-structure admitting zero momentum.  Computing the full spectrum, eta invariant
+structure admitting zero momentum. Computing the full spectrum, eta invariant
 and determinant remains a separate analytic theorem.
 -/
 structure TwistedDiracAnalyticStatus where
