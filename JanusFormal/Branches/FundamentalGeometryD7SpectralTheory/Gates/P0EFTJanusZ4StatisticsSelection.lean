@@ -25,6 +25,13 @@ def PinZ4Compatible
     (phase : PinZ4Phase) : Prop :=
   phase + phase = fermionParityPhase statistics
 
+instance pinZ4CompatibleDecidable
+    (statistics : FieldStatistics)
+    (phase : PinZ4Phase) :
+    Decidable (PinZ4Compatible statistics phase) := by
+  unfold PinZ4Compatible
+  infer_instance
+
 /-- Named holonomy phases. -/
 def periodicPhase : PinZ4Phase := 0
 
@@ -78,7 +85,7 @@ structure MassiveSpinTwoQuarterIdentification where
 
 /-- A bosonic massive spin-two tower cannot be the genuine Pin-Z4 quarter sector. -/
 theorem massive_spin_two_cannot_be_direct_quarter_sector :
-    Not (∃ s : MassiveSpinTwoQuarterIdentification, True) := by
+    Not (∃ _s : MassiveSpinTwoQuarterIdentification, True) := by
   rintro ⟨s, _⟩
   have hCompatibility := s.quarterHolonomyCompatibility
   rw [s.spinTwoIsBosonic] at hCompatibility
@@ -95,7 +102,7 @@ structure FivePolarizationQuarterIdentification where
 
 /-- No set of five ordinary bosonic polarizations can supply five Pin-Z4 quarter towers. -/
 theorem five_bosonic_polarizations_cannot_supply_quarter_towers :
-    Not (∃ s : FivePolarizationQuarterIdentification, True) := by
+    Not (∃ _s : FivePolarizationQuarterIdentification, True) := by
   rintro ⟨s, _⟩
   have hCompatibility := s.allQuarterCompatible 0
   rw [s.allBosonic 0] at hCompatibility
