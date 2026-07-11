@@ -43,13 +43,15 @@ structure ThroatMassiveSpinTwoWeightClaim where
 
 /-- The one-field, intrinsic-three-dimensional, weight-five interpretation is inconsistent. -/
 theorem no_intrinsic_throat_single_spin_two_weight_five :
-    Not (∃ s : ThroatMassiveSpinTwoWeightClaim, True) := by
+    Not (∃ _s : ThroatMassiveSpinTwoWeightClaim, True) := by
   rintro ⟨s, _⟩
-  have hWeight : s.determinantWeight = 2 := by
+  have hWeightTwo : s.determinantWeight = 2 := by
     rw [s.onePhysicalMassiveSpinTwo,
       s.intrinsicThroatDimension]
     exact massive_spin_two_in_three_dimensions_has_two_polarizations
-  omega
+  have hWeightFive : s.determinantWeight = 5 := s.claimedWeightFive
+  rw [hWeightTwo] at hWeightFive
+  norm_num at hWeightFive
 
 /-- The number five is instead the four-dimensional bulk massive-spin-two count. -/
 theorem five_is_bulk_four_dimensional_spin_two_count :
