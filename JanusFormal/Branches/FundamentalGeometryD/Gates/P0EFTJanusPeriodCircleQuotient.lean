@@ -44,9 +44,11 @@ theorem period_equivalent_trans
 def periodSetoid (period : ℝ) : Setoid ℝ where
   r := PeriodEquivalent period
   iseqv :=
-    { refl := period_equivalent_refl period
-      symm := period_equivalent_symm period
-      trans := period_equivalent_trans period }
+    { refl := fun u => period_equivalent_refl period u
+      symm := fun {u v} h =>
+        period_equivalent_symm period u v h
+      trans := fun {u v w} huv hvw =>
+        period_equivalent_trans period u v w huv hvw }
 
 /-- Algebraic circle of circumference/period `T`. -/
 abbrev PeriodCircle (period : ℝ) :=
@@ -54,13 +56,14 @@ abbrev PeriodCircle (period : ℝ) :=
 
 /-- Class of a logarithmic coordinate in the period circle. -/
 def periodClass (period u : ℝ) : PeriodCircle period :=
-  Quotient.mk' u
+  Quotient.mk (periodSetoid period) u
 
 /-- Adding one period does not change the circle class. -/
 theorem period_class_add_period
     (period u : ℝ) :
     periodClass period u = periodClass period (u + period) := by
   apply Quotient.sound
+  show PeriodEquivalent period u (u + period)
   refine ⟨1, ?_⟩
   norm_num
 
@@ -71,6 +74,7 @@ theorem period_class_add_integer_period
     periodClass period u =
       periodClass period (u + (n : ℝ) * period) := by
   apply Quotient.sound
+  show PeriodEquivalent period u (u + (n : ℝ) * period)
   exact ⟨n, rfl⟩
 
 /--
@@ -91,7 +95,7 @@ theorem fixed_fiber_step_descends_to_circle
   exact (period_class_add_period period u).symm
 
 /--
-The quotient is now constructed as a type.  The remaining geometric work is to
+The quotient is now constructed as a type. The remaining geometric work is to
 supply its quotient topology, prove it is homeomorphic/diffeomorphic to the
 standard circle for nonzero period, and combine it with the equatorial `S2`.
 -/
