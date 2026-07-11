@@ -29,6 +29,22 @@ def test_generic_interior_holonomy_and_mixed_sector_can_stabilize() -> None:
     assert not audit.mixed_and_unweighted_moduli_equal
 
 
+def test_periodic_quarter_competition_has_exact_threshold_and_first_integer_pair() -> None:
+    audit = build_audit()
+
+    assert math.isclose(
+        audit.periodic_quarter_threshold_ratio,
+        2.0 + 2.0 * math.sqrt(2.0),
+        rel_tol=1.0e-15,
+    )
+    assert audit.first_integer_quarter_weight == 5
+    assert math.isclose(audit.periodic_quarter_maximum_x, math.log(2.0), rel_tol=1.0e-15)
+    assert audit.periodic_quarter_maximum_second_derivative < 0.0
+    assert math.isclose(audit.periodic_quarter_minimum_x, math.log(3.0), rel_tol=1.0e-15)
+    assert audit.periodic_quarter_minimum_second_derivative > 0.0
+    assert audit.periodic_quarter_minimum_modulus_for_mass_sqrt2 > 0.0
+
+
 def test_finite_product_ratio_converges_to_analytic_holonomy_formula() -> None:
     finite = truncated_logdet_ratio(0.25, 1.7, 0.9, 1000)
     analytic = analytic_logdet_ratio(0.25, 1.7, 0.9)
