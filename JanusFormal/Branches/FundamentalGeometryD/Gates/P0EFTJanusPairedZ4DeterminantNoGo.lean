@@ -23,13 +23,8 @@ theorem paired_quarter_derivative_doubles
     quarterModeLogDerivative mode.positiveFold +
         quarterModeLogDerivative mode.negativeFold =
       2 * quarterModeLogDerivative mode.positiveFold := by
-  have hMode : mode.negativeFold = mode.positiveFold := by
-    cases mode.positiveFold with
-    | mk positiveWeight positiveRadial hPositiveWeight hPositiveRadial =>
-      cases mode.negativeFold with
-      | mk negativeWeight negativeRadial hNegativeWeight hNegativeRadial =>
-        simp_all
-  rw [hMode]
+  unfold quarterModeLogDerivative
+  rw [mode.equalWeight, mode.equalRadialMagnitude]
   ring
 
 /-- Hence the PT pair is still strictly monotone in determinant magnitude. -/
@@ -67,7 +62,7 @@ theorem eta_cancels_while_determinant_slope_adds
 /--
 This closes a decisive no-go: the two PT-related primitive `Z4` fermion towers
 can cancel the eta/anomaly phase, but their determinant magnitude cannot by
-itself generate the spectral-isotropy vacuum or a finite circle modulus.  A
+itself generate the spectral-isotropy vacuum or a finite circle modulus. A
 second holonomy/statistics sector, interaction, or local geometric potential is
 mathematically required.
 -/
