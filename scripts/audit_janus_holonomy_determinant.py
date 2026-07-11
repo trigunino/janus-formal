@@ -21,6 +21,13 @@ class HolonomyDeterminantAudit:
     mixed_stationary_exponential: float
     mixed_stationary_x: float
     mixed_stationary_modulus_for_mass_sqrt2: float
+    periodic_quarter_threshold_ratio: float
+    first_integer_quarter_weight: int
+    periodic_quarter_maximum_x: float
+    periodic_quarter_maximum_second_derivative: float
+    periodic_quarter_minimum_x: float
+    periodic_quarter_minimum_second_derivative: float
+    periodic_quarter_minimum_modulus_for_mass_sqrt2: float
     unweighted_first_mode_modulus: float
     mixed_and_unweighted_moduli_equal: bool
     conclusion: str
@@ -99,6 +106,21 @@ def fermionic_mixed_potential(
     return -(periodic_weight * periodic + antiperiodic_weight * antiperiodic)
 
 
+def periodic_quarter_potential(
+    x: float,
+    periodic_weight: float,
+    quarter_weight: float,
+) -> float:
+    """Bosonic-sign common-mass proxy after local linear subtraction."""
+
+    if x <= 0.0:
+        raise ValueError("x must be positive")
+    radial = math.exp(-x)
+    periodic = 2.0 * math.log1p(-radial)
+    quarter = math.log1p(radial * radial)
+    return periodic_weight * periodic + quarter_weight * quarter
+
+
 def build_audit() -> HolonomyDeterminantAudit:
     quarter_twist = 0.25
     quarter_cosine = math.cos(2.0 * math.pi * quarter_twist)
@@ -145,6 +167,21 @@ def build_audit() -> HolonomyDeterminantAudit:
         stationary_x,
     )
 
+    # Periodic versus exact-quarter competition requires q/p >= 2+2*sqrt(2).
+    threshold_ratio = 2.0 + 2.0 * math.sqrt(2.0)
+    first_integer_quarter_weight = 5
+    maximum_x = math.log(2.0)
+    minimum_x = math.log(3.0)
+    maximum_second = numerical_second_derivative(
+        lambda value: periodic_quarter_potential(value, 1.0, 5.0),
+        maximum_x,
+    )
+    minimum_second = numerical_second_derivative(
+        lambda value: periodic_quarter_potential(value, 1.0, 5.0),
+        minimum_x,
+    )
+    minimum_modulus = minimum_x / mass
+
     unweighted_modulus = math.sqrt(2.0) * math.pi
     moduli_equal = math.isclose(
         stationary_modulus, unweighted_modulus, rel_tol=1.0e-12
@@ -160,17 +197,11 @@ def build_audit() -> HolonomyDeterminantAudit:
         < 1.0e-12,
         interior_second > 0.0,
         math.isclose(stationary_exponential, 5.0, rel_tol=1.0e-15),
-        abs(
-            numerical_second_derivative(
-                lambda value: fermionic_mixed_potential(
-                    value, periodic_weight, antiperiodic_weight
-                ),
-                stationary_x,
-            )
-            - mixed_second
-        )
-        < 1.0e-10,
         mixed_second > 0.0,
+        4.8 < threshold_ratio < 4.9,
+        first_integer_quarter_weight > threshold_ratio,
+        maximum_second < 0.0,
+        minimum_second > 0.0,
         not moduli_equal,
     ]
 
@@ -189,15 +220,25 @@ def build_audit() -> HolonomyDeterminantAudit:
         mixed_stationary_exponential=stationary_exponential,
         mixed_stationary_x=stationary_x,
         mixed_stationary_modulus_for_mass_sqrt2=stationary_modulus,
+        periodic_quarter_threshold_ratio=threshold_ratio,
+        first_integer_quarter_weight=first_integer_quarter_weight,
+        periodic_quarter_maximum_x=maximum_x,
+        periodic_quarter_maximum_second_derivative=maximum_second,
+        periodic_quarter_minimum_x=minimum_x,
+        periodic_quarter_minimum_second_derivative=minimum_second,
+        periodic_quarter_minimum_modulus_for_mass_sqrt2=minimum_modulus,
         unweighted_first_mode_modulus=unweighted_modulus,
         mixed_and_unweighted_moduli_equal=moduli_equal,
         conclusion=(
             "The zeta-product ratio is reproduced numerically. A single exact "
-            "Z4 quarter-holonomy tower is monotone after local subtraction and "
-            "cannot stabilize the circle. A generic interior holonomy can, and "
-            "a fermionic 2:3 periodic/antiperiodic mixture has a local minimum "
-            "at exp(m*T)=5, but this modulus disagrees with the earlier "
-            "unweighted first-mode crossing. The field content must decide."
+            "Z4 quarter-holonomy tower, including a positive-weight finite tower "
+            "or its PT pair, is monotone and cannot stabilize the circle. A "
+            "generic interior holonomy can. Competing sectors can also work: a "
+            "fermionic 2:3 periodic/antiperiodic mixture has exp(m*T)=5, while "
+            "periodic versus quarter holonomy requires q/p >= 2+2*sqrt(2); the "
+            "first integer pair 1:5 gives a local minimum at m*T=log(3). None "
+            "of these derived moduli equals the old unweighted crossing, so the "
+            "microscopic field content and renormalization must decide."
         ),
         all_checks_pass=all(checks),
     )
