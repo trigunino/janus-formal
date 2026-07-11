@@ -24,15 +24,18 @@ Promoting this candidate to the actual Janus operator requires constructing the
 SpinC/Pin bundle and checking all sign and charge conventions.
 -/
 
+
 def reducedDiracA0 (s : ProductThroatInvariantData) : ℝ :=
   2 * throatVolume s
 
 
-def reducedDiracA2 (s : ProductThroatInvariantData) : ℝ :=
+noncomputable def reducedDiracA2
+    (s : ProductThroatInvariantData) : ℝ :=
   -integratedScalarCurvature s / 6
 
 
-def reducedDiracA4 (s : ProductThroatInvariantData) : ℝ :=
+noncomputable def reducedDiracA4
+    (s : ProductThroatInvariantData) : ℝ :=
   (5 * integratedScalarCurvatureSquared s -
       8 * integratedRicciSquared s -
       7 * integratedRiemannSquared s) / 720 +
@@ -78,17 +81,25 @@ theorem reduced_dirac_a0_positive
     (s : ProductThroatInvariantData) :
     0 < reducedDiracA0 s := by
   rw [reduced_dirac_a0_formula]
-  positivity
+  exact mul_pos
+    (mul_pos
+      (mul_pos (by norm_num) s.piConstantPositive)
+      (pow_pos s.geometricLengthPositive 3))
+    s.circleModulusPositive
 
 /-- The curvature coefficient is negative for the round product throat. -/
 theorem reduced_dirac_a2_negative
     (s : ProductThroatInvariantData) :
     reducedDiracA2 s < 0 := by
   rw [reduced_dirac_a2_formula]
-  have hPositive :
+  have hNumerator :
       0 < 4 * s.piConstant * s.geometricLength * s.circleModulus := by
-    positivity
-  nlinarith
+    exact mul_pos
+      (mul_pos
+        (mul_pos (by norm_num) s.piConstantPositive)
+        s.geometricLengthPositive)
+      s.circleModulusPositive
+  exact div_neg_of_neg_of_pos (neg_neg_of_pos hNumerator) (by norm_num)
 
 /-- Primitive monopole specialization `n^2=1`. -/
 theorem primitive_reduced_dirac_a4_formula
@@ -106,7 +117,11 @@ theorem primitive_reduced_dirac_a4_positive
     (hPrimitiveSquare : (s.monopoleNumber : ℝ) ^ 2 = 1) :
     0 < reducedDiracA4 s := by
   rw [primitive_reduced_dirac_a4_formula s hPrimitiveSquare]
-  positivity
+  exact div_pos
+    (mul_pos
+      (mul_pos (by norm_num) s.piConstantPositive)
+      s.circleModulusPositive)
+    (mul_pos (by norm_num) s.geometricLengthPositive)
 
 /-- All three reduced coefficients remain linear in the circle modulus. -/
 theorem reduced_coefficients_factor_circle_modulus
