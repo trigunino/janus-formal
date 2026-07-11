@@ -76,9 +76,13 @@ theorem one_eighth_coefficient_recovers_alpha_equals_geometry
       nlinarith [hFourth]
     rcases mul_eq_zero.mp hFactor with hDifference | hSum
     · linarith
-    · have hPositive :
+    · have hAlphaSquare : 0 < s.alphaSquaredLength ^ 2 :=
+        pow_pos s.alphaSquaredLengthPositive 2
+      have hGeometrySquare : 0 < s.geometricLength ^ 2 :=
+        pow_pos s.geometricLengthPositive 2
+      have hPositive :
           0 < s.alphaSquaredLength ^ 2 + s.geometricLength ^ 2 := by
-        positivity
+        exact add_pos hAlphaSquare hGeometrySquare
       exact False.elim ((ne_of_gt hPositive) hSum)
   have hFactor :
       (s.alphaSquaredLength - s.geometricLength) *
