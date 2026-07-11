@@ -7,7 +7,7 @@ set_option autoImplicit false
 
 /--
 Cellular top boundary of the mapping torus of an orientation-reversing
-reflection of `S3`.  On the top cell the monodromy contributes `1 - (-1) = 2`.
+reflection of `S3`. On the top cell the monodromy contributes `1 - (-1) = 2`.
 -/
 def topCellBoundary (n : ℤ) : ℤ := 2 * n
 
@@ -37,7 +37,7 @@ def degreeThreeTorsionClass (n : ℤ) : ZMod 2 := n
 @[simp] theorem twice_degree_three_class_vanishes
     (n : ℤ) :
     degreeThreeTorsionClass (2 * n) = 0 := by
-  norm_num [degreeThreeTorsionClass]
+  simp [degreeThreeTorsionClass]
 
 /--
 The minimal CW signature has one cell in degrees `0,1,3,4`, hence Euler
@@ -63,7 +63,7 @@ Invariant package of the proposed resolved Janus manifold
 
 `J4 = (R4 \ {0}) / <x ↦ lambda * rho(x)>`,
 
-where `rho` is an orientation-reversing reflection.  The package records the
+where `rho` is an orientation-reversing reflection. The package records the
 mathematical targets to be replaced by genuine manifold constructions.
 -/
 structure TwistedHopfInvariantPackage where
