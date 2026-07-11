@@ -111,7 +111,10 @@ theorem primitive_monopole_recovers_bimetric_radius_match
     s.alphaSquaredLength = s.sphereRadius := by
   have hFourth := general_radius_fourth_power_law s
   rw [hPrimitive] at hFourth
-  norm_num at hFourth
+  have hFourthEq :
+      s.alphaSquaredLength ^ 4 = s.sphereRadius ^ 4 := by
+    norm_num at hFourth
+    nlinarith [hFourth]
   have hSquares :
       s.alphaSquaredLength ^ 2 = s.sphereRadius ^ 2 := by
     have hFactor :
@@ -121,7 +124,7 @@ theorem primitive_monopole_recovers_bimetric_radius_match
         (s.alphaSquaredLength ^ 2 - s.sphereRadius ^ 2) *
             (s.alphaSquaredLength ^ 2 + s.sphereRadius ^ 2) =
             s.alphaSquaredLength ^ 4 - s.sphereRadius ^ 4 := by ring
-        _ = 0 := sub_eq_zero.mpr hFourth
+        _ = 0 := sub_eq_zero.mpr hFourthEq
     rcases mul_eq_zero.mp hFactor with hDifference | hSum
     · linarith
     · have hAlphaSquare : 0 < s.alphaSquaredLength ^ 2 :=
