@@ -40,8 +40,21 @@ theorem stationary_implies_nonnegative_discriminant
         quarterWeight ^ 2 -
           4 * periodicWeight *
             (periodicWeight + quarterWeight) := by
-    unfold stationarityPolynomial at hStationary
-    nlinarith [hStationary]
+    calc
+      (2 * (periodicWeight + quarterWeight) * radial -
+          quarterWeight) ^ 2 =
+        4 * (periodicWeight + quarterWeight) *
+            stationarityPolynomial periodicWeight quarterWeight radial +
+          quarterWeight ^ 2 -
+            4 * periodicWeight *
+              (periodicWeight + quarterWeight) := by
+        unfold stationarityPolynomial
+        ring
+      _ = quarterWeight ^ 2 -
+          4 * periodicWeight *
+            (periodicWeight + quarterWeight) := by
+        rw [hStationary]
+        ring
   rw [hIdentity] at hSquare
   exact hSquare
 
@@ -95,10 +108,10 @@ theorem one_to_five_stationary_iff
     · exact Or.inl (by linarith)
     · exact Or.inr (by linarith)
   · rintro (hHalf | hThird)
-    · have : 2 * radial - 1 = 0 := by linarith
-      rw [this, zero_mul]
-    · have : 3 * radial - 1 = 0 := by linarith
-      rw [this, mul_zero]
+    · have hZero : 2 * radial - 1 = 0 := by linarith
+      rw [hZero, zero_mul]
+    · have hZero : 3 * radial - 1 = 0 := by linarith
+      rw [hZero, mul_zero]
 
 /-- The larger radial root is one half. -/
 @[simp] theorem half_is_one_to_five_stationary :
@@ -156,7 +169,7 @@ theorem one_to_five_derivative_positive_above_half
 /--
 Since `r=exp(-x)` decreases as `x=m*T` increases, the root `r=1/2`
 corresponds to an extremum at `x=log 2`, while `r=1/3` corresponds to the
-opposite extremum at `x=log 3`.  For the bosonic-sign potential the sign pattern
+opposite extremum at `x=log 3`. For the bosonic-sign potential the sign pattern
 selects the latter as the local minimum; an overall fermionic sign exchanges
 their roles.
 -/
