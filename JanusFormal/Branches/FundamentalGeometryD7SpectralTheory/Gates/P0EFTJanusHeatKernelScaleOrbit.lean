@@ -47,8 +47,11 @@ theorem volume_moment_scale_invariant
         (rescaleHeatData scale data).a0 =
       data.cutoff ^ 3 * data.a0 := by
   have hScale : scale.factor ≠ 0 := ne_of_gt scale.factorPositive
-  unfold rescaleHeatData
-  field_simp [hScale] <;> ring
+  change
+    (data.cutoff / scale.factor) ^ 3 *
+        (scale.factor ^ 3 * data.a0) =
+      data.cutoff ^ 3 * data.a0
+  field_simp [hScale]
 
 /-- The `Lambda a2` term is invariant under simultaneous rescaling. -/
 theorem curvature_moment_scale_invariant
@@ -58,8 +61,11 @@ theorem curvature_moment_scale_invariant
         (rescaleHeatData scale data).a2 =
       data.cutoff * data.a2 := by
   have hScale : scale.factor ≠ 0 := ne_of_gt scale.factorPositive
-  unfold rescaleHeatData
-  field_simp [hScale] <;> ring
+  change
+    (data.cutoff / scale.factor) *
+        (scale.factor * data.a2) =
+      data.cutoff * data.a2
+  field_simp [hScale]
 
 /-- The `Lambda^(-1) a4` term is invariant under simultaneous rescaling. -/
 theorem quadratic_moment_scale_invariant
@@ -70,8 +76,11 @@ theorem quadratic_moment_scale_invariant
       data.cutoff⁻¹ * data.a4 := by
   have hScale : scale.factor ≠ 0 := ne_of_gt scale.factorPositive
   have hCutoff : data.cutoff ≠ 0 := data.cutoffNonzero
-  unfold rescaleHeatData
-  field_simp [hScale, hCutoff] <;> ring
+  change
+    (data.cutoff / scale.factor)⁻¹ *
+        (data.a4 / scale.factor) =
+      data.cutoff⁻¹ * data.a4
+  field_simp [hScale, hCutoff]
 
 /-- The complete local action through `a4` is invariant if the cutoff co-scales. -/
 theorem local_spectral_action_common_scale_invariant
@@ -81,10 +90,33 @@ theorem local_spectral_action_common_scale_invariant
     localSpectralAction volumeMoment curvatureMoment quadraticMoment
         (rescaleHeatData scale data) =
       localSpectralAction volumeMoment curvatureMoment quadraticMoment data := by
-  have hScale : scale.factor ≠ 0 := ne_of_gt scale.factorPositive
-  have hCutoff : data.cutoff ≠ 0 := data.cutoffNonzero
-  unfold localSpectralAction rescaleHeatData
-  field_simp [hScale, hCutoff] <;> ring
+  have h0 := volume_moment_scale_invariant scale data
+  have h2 := curvature_moment_scale_invariant scale data
+  have h4 := quadratic_moment_scale_invariant scale data
+  unfold localSpectralAction
+  calc
+    volumeMoment * (rescaleHeatData scale data).cutoff ^ 3 *
+          (rescaleHeatData scale data).a0 +
+        curvatureMoment * (rescaleHeatData scale data).cutoff *
+          (rescaleHeatData scale data).a2 +
+        quadraticMoment * (rescaleHeatData scale data).cutoff⁻¹ *
+          (rescaleHeatData scale data).a4 =
+      volumeMoment *
+          ((rescaleHeatData scale data).cutoff ^ 3 *
+            (rescaleHeatData scale data).a0) +
+        curvatureMoment *
+          ((rescaleHeatData scale data).cutoff *
+            (rescaleHeatData scale data).a2) +
+        quadraticMoment *
+          ((rescaleHeatData scale data).cutoff⁻¹ *
+            (rescaleHeatData scale data).a4) := by ring
+    _ = volumeMoment * (data.cutoff ^ 3 * data.a0) +
+        curvatureMoment * (data.cutoff * data.a2) +
+        quadraticMoment * (data.cutoff⁻¹ * data.a4) := by
+      rw [h0, h2, h4]
+    _ = volumeMoment * data.cutoff ^ 3 * data.a0 +
+        curvatureMoment * data.cutoff * data.a2 +
+        quadraticMoment * data.cutoff⁻¹ * data.a4 := by ring
 
 /-- Two distinct scale factors remain indistinguishable to the co-scaled local action. -/
 theorem local_action_cannot_select_common_scale
