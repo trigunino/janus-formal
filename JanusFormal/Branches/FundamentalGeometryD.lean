@@ -37,6 +37,9 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHolonomyDetermi
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusMixedCircleDeterminantStabilization
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPairedZ4DeterminantNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPeriodicQuarterCompetition
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusLocalHeatKernelScaling
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleHeatKernelWinding
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHeatKernelCountertermScheme
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -83,6 +86,11 @@ structure ProgramStatus where
   mixedHolonomyStabilizationCriterionDerived : Prop
   periodicQuarterThresholdDerived : Prop
   firstIntegerPeriodicQuarterCandidateDerived : Prop
+  localHeatKernelScalingDerived : Prop
+  localHeatKernelNoMinimumProved : Prop
+  circleHeatKernelWindingSeparationDerived : Prop
+  quarterLeadingWindingSuppressionDerived : Prop
+  finiteCountertermTargetDegeneracyProved : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
@@ -128,6 +136,11 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.mixedHolonomyStabilizationCriterionDerived /\
   s.periodicQuarterThresholdDerived /\
   s.firstIntegerPeriodicQuarterCandidateDerived /\
+  s.localHeatKernelScalingDerived /\
+  s.localHeatKernelNoMinimumProved /\
+  s.circleHeatKernelWindingSeparationDerived /\
+  s.quarterLeadingWindingSuppressionDerived /\
+  s.finiteCountertermTargetDegeneracyProved /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
