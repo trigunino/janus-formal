@@ -50,23 +50,6 @@ theorem truncated_local_action_factors_circle_modulus
     reduced_dirac_a4_formula]
   ring
 
-/-- Replace only the circle modulus in the product geometry. -/
-def withCircleModulus
-    (geometry : ProductThroatInvariantData)
-    (circleModulus : ℝ) : ProductThroatInvariantData :=
-  { geometricLength := geometry.geometricLength
-    circleModulus := circleModulus
-    piConstant := geometry.piConstant
-    monopoleNumber := geometry.monopoleNumber
-    geometricLengthPositive := geometry.geometricLengthPositive
-    circleModulusPositive := by
-      by_cases h : 0 < circleModulus
-      · exact h
-      · exact False.elim (by
-          have := geometry.circleModulusPositive
-          omega)
-    piConstantPositive := geometry.piConstantPositive }
-
 /-- Algebraic local action at an arbitrary modulus, avoiding positivity packaging. -/
 noncomputable def localActionAtModulus
     (moments : TruncatedSpectralMoments)
@@ -151,7 +134,7 @@ theorem truncated_local_spectral_action_no_strict_minimum
     (moments : TruncatedSpectralMoments)
     (geometry : ProductThroatInvariantData)
     (center displacement : ℝ)
-    (hDisplacement : 0 < displacement) :
+    (_hDisplacement : 0 < displacement) :
     Not (
       localActionAtModulus moments geometry center <
         localActionAtModulus moments geometry (center - displacement) /\
@@ -168,7 +151,7 @@ theorem truncated_local_spectral_action_no_strict_minimum
 
 /--
 The UV-local spectral action determines slopes and counterterms but cannot
-select a finite circle modulus.  A stable modulus must involve nonlocal winding
+select a finite circle modulus. A stable modulus must involve nonlocal winding
 terms or genuinely nonlinear interactions, and its finite local coefficients
 must be fixed independently of the target radius.
 -/
