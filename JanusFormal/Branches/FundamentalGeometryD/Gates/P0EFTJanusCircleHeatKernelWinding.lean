@@ -87,13 +87,19 @@ theorem quarter_first_winding_term_vanishes
 
 /-- The leading nonzero quarter-holonomy winding is `w=2`, suppressed by `exp(-beta^2/t)`. -/
 theorem quarter_second_winding_term
-    (circumference heatTime : ℝ) :
+    (circumference heatTime : ℝ)
+    (hHeatTime : heatTime ≠ 0) :
     weightedWindingTerm (quarterWindingWeight 2)
         circumference heatTime 2 =
       -Real.exp (-(circumference ^ 2 / heatTime)) := by
-  simp [weightedWindingTerm, windingExponent]
-  congr 2
-  ring
+  have hExponent :
+      windingExponent circumference heatTime 2 =
+        circumference ^ 2 / heatTime := by
+    unfold windingExponent
+    norm_num
+    field_simp [hHeatTime]
+    ring
+  simp [weightedWindingTerm, hExponent]
 
 /-- The quarter-holonomy leading exponent is four times the antiperiodic leading exponent. -/
 theorem quarter_leading_exponent_is_four_times_antiperiodic
@@ -103,6 +109,21 @@ theorem quarter_leading_exponent_is_four_times_antiperiodic
   unfold windingExponent
   norm_num
   ring
+
+/-- Holonomy-independent local term in the Poisson-resummed circle heat trace. -/
+noncomputable def localCircleHeatTerm
+    (circumference heatTime piConstant : ℝ) : ℝ :=
+  circumference / Real.sqrt (4 * piConstant * heatTime)
+
+/-- Equal circumference and heat time give the same local term, independently of holonomy. -/
+theorem same_geometry_same_local_circle_heat_term
+    (firstCircumference secondCircumference
+      firstHeatTime secondHeatTime piConstant : ℝ)
+    (hCircumference : firstCircumference = secondCircumference)
+    (hHeatTime : firstHeatTime = secondHeatTime) :
+    localCircleHeatTerm firstCircumference firstHeatTime piConstant =
+      localCircleHeatTerm secondCircumference secondHeatTime piConstant := by
+  rw [hCircumference, hHeatTime]
 
 /--
 Poisson-resummed circle heat trace interface. The `w=0` term is local and
@@ -118,17 +139,6 @@ structure CircleHeatKernelDecomposition where
   heatTimePositive : 0 < heatTime
   decompositionLaw : fullTrace = localTerm + nonlocalWindingSum
   localTermIndependentOfHolonomy : Prop
-
-/-- Two holonomies with the same geometry have identical local heat-kernel terms. -/
-theorem same_geometry_same_local_term
-    (first second : CircleHeatKernelDecomposition)
-    (hCircumference : first.circumference = second.circumference)
-    (hHeatTime : first.heatTime = second.heatTime)
-    (hLocalLaw :
-      ∀ circumference heatTime,
-        first.localTerm = second.localTerm) :
-    first.localTerm = second.localTerm := by
-  exact hLocalLaw first.circumference first.heatTime
 
 /--
 For exact quarter holonomy, the UV-sensitive local coefficients cannot see the
