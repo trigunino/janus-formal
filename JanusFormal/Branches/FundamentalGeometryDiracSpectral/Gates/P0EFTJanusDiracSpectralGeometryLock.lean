@@ -61,15 +61,33 @@ theorem dirac_isotropy_fixes_circle_modulus
 theorem circle_radius_to_sphere_radius_ratio
     (s : PrimitiveDiracThroatLock) :
     8 * s.circleRadius ^ 2 = s.sphereRadius ^ 2 := by
+  have hSquaredRaw := congrArg (fun x : ℝ => x ^ 2) s.circleRadiusLaw
   have hCircleSquared :
       4 * s.piConstant ^ 2 * s.circleRadius ^ 2 =
         s.sphereRadius ^ 2 * s.circleModulus ^ 2 := by
-    nlinarith [s.circleRadiusLaw]
+    calc
+      4 * s.piConstant ^ 2 * s.circleRadius ^ 2 =
+          (2 * s.piConstant * s.circleRadius) ^ 2 := by ring
+      _ = (s.sphereRadius * s.circleModulus) ^ 2 := hSquaredRaw
+      _ = s.sphereRadius ^ 2 * s.circleModulus ^ 2 := by ring
   have hModulus := dirac_isotropy_fixes_circle_modulus s
+  have hScaled :
+      8 * s.circleModulus ^ 2 * s.circleRadius ^ 2 =
+        s.sphereRadius ^ 2 * s.circleModulus ^ 2 := by
+    calc
+      8 * s.circleModulus ^ 2 * s.circleRadius ^ 2 =
+          4 * (2 * s.circleModulus ^ 2) * s.circleRadius ^ 2 := by ring
+      _ = 4 * s.piConstant ^ 2 * s.circleRadius ^ 2 := by rw [hModulus]
+      _ = s.sphereRadius ^ 2 * s.circleModulus ^ 2 := hCircleSquared
   have hFactor :
       s.circleModulus ^ 2 *
         (8 * s.circleRadius ^ 2 - s.sphereRadius ^ 2) = 0 := by
-    nlinarith [hCircleSquared, hModulus]
+    calc
+      s.circleModulus ^ 2 *
+          (8 * s.circleRadius ^ 2 - s.sphereRadius ^ 2) =
+          8 * s.circleModulus ^ 2 * s.circleRadius ^ 2 -
+            s.sphereRadius ^ 2 * s.circleModulus ^ 2 := by ring
+      _ = 0 := sub_eq_zero.mpr hScaled
   have hModulusNonzero : s.circleModulus ^ 2 ≠ 0 :=
     pow_ne_zero 2 (ne_of_gt s.circleModulusPositive)
   have hDifference :
@@ -152,7 +170,7 @@ theorem corrected_circle_alpha_ratio
 
 /--
 This package is conditional on the spectral formula, half-holonomy vacuum and
-the one-eighth LL normalization.  Those are the next operator/QFT theorems, not
+the one-eighth LL normalization. Those are the next operator/QFT theorems, not
 free numerical assumptions to hide in the final prediction.
 -/
 structure DiracGeometryClosureStatus where
