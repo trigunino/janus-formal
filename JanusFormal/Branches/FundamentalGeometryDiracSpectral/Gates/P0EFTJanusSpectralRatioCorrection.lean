@@ -7,8 +7,8 @@ set_option autoImplicit false
 
 /--
 An old scalar-mode interpretation assigned `8*A^2=L^2` to the exact-solution
-length `A` and the same throat sphere radius `L`.  The Dirac/LL lock instead
-gives `A=L`.  The two statements are incompatible at positive radius.
+length `A` and the same throat sphere radius `L`. The Dirac/LL lock instead
+gives `A=L`. The two statements are incompatible at positive radius.
 -/
 structure ConflictingAlphaRatioClaims where
   alphaSquaredLength : ℝ
@@ -21,10 +21,11 @@ structure ConflictingAlphaRatioClaims where
 /-- The old and new identifications cannot both describe the same two radii. -/
 theorem old_scalar_alpha_ratio_conflicts_with_dirac_lock
     (s : ConflictingAlphaRatioClaims) : False := by
-  rw [s.alphaEqualsSphereRadius] at s.oldScalarRatioClaim
+  have hOld := s.oldScalarRatioClaim
+  rw [s.alphaEqualsSphereRadius] at hOld
   have hSquare : 0 < s.sphereRadius ^ 2 :=
     pow_pos s.sphereRadiusPositive 2
-  nlinarith [s.oldScalarRatioClaim]
+  nlinarith [hOld]
 
 /--
 Consistent reinterpretation: the `1/(2*sqrt(2))` ratio belongs to the compact
