@@ -40,8 +40,11 @@ theorem stationary_exponent_gt_one
     unfold stationaryExponent
     field_simp [hDenNonzero]
     ring
-  rw [sub_pos, hDifference]
-  exact div_pos (by nlinarith) hDen
+  have hQuotient :
+      0 < (2 * periodicWeight) /
+        (antiperiodicWeight - periodicWeight) :=
+    div_pos (by nlinarith) hDen
+  nlinarith [hDifference, hQuotient]
 
 /-- The candidate satisfies the cleared stationarity equation. -/
 theorem stationary_exponent_satisfies_equation
@@ -82,7 +85,7 @@ theorem equal_positive_weights_have_no_stationary_exponent
 theorem nondominant_antiperiodic_weight_has_no_physical_stationary
     (periodicWeight antiperiodicWeight exponent : ℝ)
     (hPeriodic : 0 < periodicWeight)
-    (hAntiperiodic : 0 ≤ antiperiodicWeight)
+    (_hAntiperiodic : 0 ≤ antiperiodicWeight)
     (hNondominant : antiperiodicWeight ≤ periodicWeight)
     (hExponent : 1 < exponent) :
     Not (mixedStationarity periodicWeight antiperiodicWeight exponent) := by
