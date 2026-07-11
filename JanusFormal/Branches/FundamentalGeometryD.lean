@@ -29,9 +29,12 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusWeightedSpectra
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralWeightDecision
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedDiracZeroModes
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFiniteEtaPairing
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPrimitiveMonopoleDiracSpectrum
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPrimitiveMonopoleZ4Spectrum
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusZ4HolonomyEtaGap
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusZ4DiracAlphaLock
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHolonomyDeterminantNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusMixedCircleDeterminantStabilization
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -69,9 +72,12 @@ structure ProgramStatus where
   circleSpinStructureEffectDerived : Prop
   finitePTSpectralPairingDerived : Prop
   finiteEtaCancellationDerived : Prop
+  primitiveMonopoleComparisonSpectrumDerived : Prop
   primitiveMonopoleZ4SpectrumAlgebraDerived : Prop
   quarterHolonomyEtaGapAlgebraDerived : Prop
   pairedDiracChargeLockDerived : Prop
+  quarterHolonomyDeterminantNoGoProved : Prop
+  mixedHolonomyStabilizationCriterionDerived : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
@@ -108,9 +114,12 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.circleSpinStructureEffectDerived /\
   s.finitePTSpectralPairingDerived /\
   s.finiteEtaCancellationDerived /\
+  s.primitiveMonopoleComparisonSpectrumDerived /\
   s.primitiveMonopoleZ4SpectrumAlgebraDerived /\
   s.quarterHolonomyEtaGapAlgebraDerived /\
   s.pairedDiracChargeLockDerived /\
+  s.quarterHolonomyDeterminantNoGoProved /\
+  s.mixedHolonomyStabilizationCriterionDerived /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
