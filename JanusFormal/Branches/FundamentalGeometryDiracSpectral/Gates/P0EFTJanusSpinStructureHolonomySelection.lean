@@ -12,12 +12,12 @@ inductive CircleSpinStructure where
   deriving DecidableEq, Repr
 
 /-- Fractional momentum shift contributed by the spin structure. -/
-def spinShift : CircleSpinStructure → ℝ
+noncomputable def spinShift : CircleSpinStructure → ℝ
   | CircleSpinStructure.periodic => 0
   | CircleSpinStructure.antiperiodic => 1 / 2
 
 /-- Combined fermionic holonomy in a fixed real representative. -/
-def combinedHolonomy
+noncomputable def combinedHolonomy
     (spin : CircleSpinStructure) (gaugeHolonomy : ℝ) : ℝ :=
   spinShift spin + gaugeHolonomy
 
@@ -44,7 +44,7 @@ theorem selected_gauge_representatives_are_distinct :
   norm_num
 
 /--
-The determinant selects a combined fermionic boundary condition.  A global Pin
+The determinant selects a combined fermionic boundary condition. A global Pin
 lift and its restriction to the throat circle must determine the spin structure
 before the selected gauge holonomy is interpreted physically.
 -/
