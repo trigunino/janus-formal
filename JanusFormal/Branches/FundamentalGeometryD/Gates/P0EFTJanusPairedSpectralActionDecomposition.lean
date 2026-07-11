@@ -18,7 +18,9 @@ def ptTransform (s : SpectralActionParts) : SpectralActionParts :=
 @[simp] theorem pt_transform_involutive
     (s : SpectralActionParts) :
     ptTransform (ptTransform s) = s := by
-  ext <;> simp [ptTransform]
+  cases s with
+  | mk evenPart oddEtaPart =>
+      simp [ptTransform]
 
 /-- Pair two effective-action contributions componentwise. -/
 def pairAction
@@ -32,7 +34,10 @@ theorem pt_pair_doubles_even_cancels_odd
     pairAction s (ptTransform s) =
       { evenPart := 2 * s.evenPart
         oddEtaPart := 0 } := by
-  ext <;> simp [pairAction, ptTransform] <;> ring
+  cases s with
+  | mk evenPart oddEtaPart =>
+      simp [pairAction, ptTransform]
+      ring
 
 /-- Derivative bookkeeping for a modulus-dependent spectral action. -/
 structure SpectralActionDerivativeParts where
@@ -58,7 +63,10 @@ theorem pt_pair_doubles_even_slope
     pairDerivative s (ptDerivativeTransform s) =
       { evenDerivative := 2 * s.evenDerivative
         oddEtaDerivative := 0 } := by
-  ext <;> simp [pairDerivative, ptDerivativeTransform] <;> ring
+  cases s with
+  | mk evenDerivative oddEtaDerivative =>
+      simp [pairDerivative, ptDerivativeTransform]
+      ring
 
 /-- A strictly negative one-fold even slope remains strictly negative after pairing. -/
 theorem negative_even_runaway_survives_pt_pairing
