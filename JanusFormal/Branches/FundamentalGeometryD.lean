@@ -35,6 +35,7 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusZ4HolonomyEtaGa
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusZ4DiracAlphaLock
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHolonomyDeterminantNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusMixedCircleDeterminantStabilization
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPairedZ4DeterminantNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -77,6 +78,7 @@ structure ProgramStatus where
   quarterHolonomyEtaGapAlgebraDerived : Prop
   pairedDiracChargeLockDerived : Prop
   quarterHolonomyDeterminantNoGoProved : Prop
+  pairedZ4DeterminantRunawayProved : Prop
   mixedHolonomyStabilizationCriterionDerived : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
@@ -119,6 +121,7 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.quarterHolonomyEtaGapAlgebraDerived /\
   s.pairedDiracChargeLockDerived /\
   s.quarterHolonomyDeterminantNoGoProved /\
+  s.pairedZ4DeterminantRunawayProved /\
   s.mixedHolonomyStabilizationCriterionDerived /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
