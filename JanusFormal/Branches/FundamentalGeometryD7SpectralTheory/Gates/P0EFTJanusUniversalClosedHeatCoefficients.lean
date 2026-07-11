@@ -10,8 +10,8 @@ Integrated data for a Laplace-type operator written in the convention
 
 `P = -(g^{mu nu} nabla_mu nabla_nu + E)`
 
-on a compact manifold without boundary.  Total derivative terms are absent
-after integration.  All traces over the vector bundle are already included.
+on a compact manifold without boundary. Total derivative terms are absent
+after integration. All traces over the vector bundle are already included.
 The common factor `(4*pi)^(-dimension/2)` is intentionally omitted.
 -/
 structure ClosedLaplaceHeatData where
@@ -127,7 +127,7 @@ structure RankTwoDiracTraceData where
   integratedGaugeFieldSquared : ℝ
 
 /-- Convert the rank-two Dirac trace convention to universal Laplace data. -/
-def rankTwoDiracAsLaplaceData
+noncomputable def rankTwoDiracAsLaplaceData
     (s : RankTwoDiracTraceData) : ClosedLaplaceHeatData :=
   { bundleRank := 2
     volume := s.volume
@@ -176,7 +176,7 @@ theorem rank_two_dirac_reduced_a4
   ring
 
 /--
-The universal coefficients determine UV-local data only.  Their promotion to a
+The universal coefficients determine UV-local data only. Their promotion to a
 physical one-loop action additionally requires the common heat prefactor,
 statistics, zero-mode treatment, zeta/eta continuation and a renormalization
 prescription.
