@@ -30,8 +30,7 @@ def degreeThreeTorsionClass (n : ℤ) : ZMod 2 := n
 @[simp] theorem twice_degree_three_class_vanishes
     (n : ℤ) :
     degreeThreeTorsionClass (2 * n) = 0 := by
-  change (2 : ZMod 2) * (n : ZMod 2) = 0
-  norm_num
+  simp [degreeThreeTorsionClass]
 
 def twistedHopfEulerCharacteristic : ℤ :=
   1 - 1 - 1 + 1
