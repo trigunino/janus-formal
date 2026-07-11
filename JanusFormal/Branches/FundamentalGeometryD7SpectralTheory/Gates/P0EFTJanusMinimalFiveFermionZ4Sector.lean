@@ -22,12 +22,12 @@ theorem five_fermion_quarter_sector_is_statistics_compatible :
   intro index
   exact quarter_phase_is_fermionic
 
-/-- The one-to-five determinant candidate has its stable radial root at `1/3`. -/
+/-- The one-to-five determinant candidate has its arithmetic radial root at `1/3`. -/
 @[simp] theorem minimal_five_fermion_stationary_root :
     stationarityPolynomial 1 5 (1 / 3) = 0 := by
   exact third_is_one_to_five_stationary
 
-/-- Four or fewer quarter fermions cannot compete with one periodic determinant unit. -/
+/-- Four or fewer quarter fermions cannot satisfy the same-sign arithmetic equation. -/
 theorem fewer_than_five_fermions_cannot_stabilize
     (multiplicity : ℕ)
     (hBelow : multiplicity < 5)
@@ -52,8 +52,10 @@ theorem five_fermion_pt_pair_level_cancels :
   exact five_mode_pt_pair_is_globally_level_zero
 
 /--
-The minimal candidate simultaneously satisfies statistics, stabilization and
-global PT anomaly cancellation.
+The candidate satisfies central Pin statistics and the PT anomaly arithmetic.
+The determinant root below is only same-sign arithmetic: the physical fermion
+sign is audited separately and removes it unless another sector or interaction
+is derived.
 -/
 theorem minimal_five_fermion_candidate_matrix :
     (∀ index : Fin 5,
@@ -69,14 +71,14 @@ theorem minimal_five_fermion_candidate_matrix :
     five_fermion_negative_fold_doubled_level,
     five_fermion_pt_pair_level_cancels⟩
 
-/-- Two PT folds double the per-fold determinant weights from `1:5` to `2:10`. -/
+/-- Two PT folds scale the same-sign arithmetic weights from `1:5` to `2:10`. -/
 theorem pt_doubled_five_fermion_polynomial
     (radial : ℝ) :
     stationarityPolynomial 2 10 radial =
       2 * stationarityPolynomial 1 5 radial := by
-  exact doubled_weights_scale_stationarity_polynomial 1 5 radial
+  simpa using doubled_weights_scale_stationarity_polynomial 1 5 radial
 
-/-- The stable root survives the PT doubling. -/
+/-- The arithmetic root survives the common scaling of both weights. -/
 @[simp] theorem pt_doubled_five_fermion_stationary_root :
     stationarityPolynomial 2 10 (1 / 3) = 0 := by
   rw [pt_doubled_five_fermion_polynomial,
@@ -84,10 +86,10 @@ theorem pt_doubled_five_fermion_polynomial
   norm_num
 
 /--
-This is the first statistics-consistent realization of the arithmetic ratio
-`1:5`.  The missing theorem is geometric: derive exactly five light fermionic
-quarter-holonomy towers, their common mass and determinant signs, rather than
-borrowing the number five from bosonic massive-spin-two polarizations.
+This is a statistics-compatible realization of five central quarter towers and
+the PT anomaly pair, but not yet a stable determinant vacuum. Physical closure
+must include the standard fermion sign and an independently derived competing
+sector or interaction.
 -/
 structure MinimalFiveFermionPhysicalStatus where
   fiveFermionBundlesDerivedFromGeometry : Prop
@@ -95,6 +97,7 @@ structure MinimalFiveFermionPhysicalStatus where
   commonGeneratedMassDerived : Prop
   onePeriodicBosonicUnitDerived : Prop
   determinantStatisticsSignsDerived : Prop
+  statisticsSignNoGoExited : Prop
   gaugeGhostContributionsIncluded : Prop
   bareFoldLevelsDerived : Prop
   fullPTAnomalyCancellationProved : Prop
@@ -110,6 +113,7 @@ def minimalFiveFermionPhysicalClosure
   s.commonGeneratedMassDerived /\
   s.onePeriodicBosonicUnitDerived /\
   s.determinantStatisticsSignsDerived /\
+  s.statisticsSignNoGoExited /\
   s.gaugeGhostContributionsIncluded /\
   s.bareFoldLevelsDerived /\
   s.fullPTAnomalyCancellationProved /\
