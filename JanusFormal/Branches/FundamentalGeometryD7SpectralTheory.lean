@@ -16,6 +16,7 @@ import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanus
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusFiniteProductHeatTrace
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatKernelScaleOrbit
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD7AbsoluteAlphaSynthesis
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMinimalTwoTenD7Candidate
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusLocalHeatKernelScaling
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleHeatKernelWinding
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusProductThroatLocalInvariants
@@ -48,6 +49,7 @@ structure ProgramStatus where
   schemeShiftNoGoProved : Prop
   pureQuarterDeterminantRunawayProved : Prop
   competingSectorStabilizationCriterionDerived : Prop
+  minimalTwoTenCandidateFormalized : Prop
   actualGlobalDiracOperatorConstructed : Prop
   separatedInfiniteSpectrumProved : Prop
   heatTraceAsymptoticsProved : Prop
@@ -78,7 +80,8 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.finiteCountertermFitNoGoProved /\
   s.schemeShiftNoGoProved /\
   s.pureQuarterDeterminantRunawayProved /\
-  s.competingSectorStabilizationCriterionDerived
+  s.competingSectorStabilizationCriterionDerived /\
+  s.minimalTwoTenCandidateFormalized
 
 /-- Full analytic D7 closure before the absolute-scale interface. -/
 def analyticSpectralTheoryClosed (s : ProgramStatus) : Prop :=
