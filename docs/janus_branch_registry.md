@@ -16,6 +16,7 @@ Build one branch head at a time.
 | Branch | Build | Status |
 | --- | --- | --- |
 | Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | viable only as state-sector selection; no no-fit alpha law |
+| **Program D — fundamental geometry** | `lake build JanusFormal.Branches.FundamentalGeometryD` | active top-priority branch: proves the direct Hopf-`U(1)` descent no-go, constructs the primitive throat-monopole route, separates Pin obstruction patterns, and derives a conditional spectral prediction for `alpha/geometric-length` |
 | PT-twisted Hopf geometry | `lake build JanusFormal.Branches.JanusTwistedHopfGeometry` | proposed smooth resolution: real Hopf mapping torus, orientation cover `S3 x S1`, canonical throat `S2 x S1`, compact transgression circle, monodromy/RG scale law and precise Pin-lifted `Z4` criterion |
 | RP4 twisted four-form alpha | `lake build JanusFormal.Branches.RP4TwistedFourFormAlpha` | primitive twisted sector, finite bridge algebra and LL conditional spectrum derived; absolute LL normalization remains open |
 | Quantum world-volume alpha | `lake build JanusFormal.Branches.WorldvolumeQuantumAlpha` | classically scale-invariant scalar/compact-U1/CS candidate, anomaly arithmetic, RG hierarchy and condensate-to-alpha map formalized; stable renormalized vacuum and microscopic UV lock remain open |
