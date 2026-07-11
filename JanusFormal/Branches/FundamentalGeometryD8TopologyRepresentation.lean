@@ -8,12 +8,14 @@ The branch separates:
 1. the free smooth mapping-torus quotient;
 2. the one-sided equatorial throat and its orientation cover;
 3. the infinite-cyclic loop group and its order-four holonomy images;
-4. the Pin reflection-square convention;
-5. genuinely additional internal symmetry or flavor data.
+4. a genuinely singular mirror-orbifold alternative;
+5. the Pin reflection-square convention;
+6. genuinely additional internal symmetry or flavor data.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusFreeActionAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
 
 namespace JanusFormal
@@ -42,6 +44,10 @@ structure ProgramStatus where
   cyclicHolonomyRankFreedomProved : Prop
   irreducibleCyclicRepresentationDimensionAudited : Prop
   rankFiveBundleDerivedFromAdditionalData : Prop
+  mirrorOrbifoldAlternativeConstructed : Prop
+  mirrorIsotropyAndGlideTranslationSeparated : Prop
+  mirrorAndGlideLoopGroupsDistinguished : Prop
+  singularAndSmoothSpectralTheoriesCompared : Prop
   pinReflectionSquareConventionFixed : Prop
   euclideanLorentzianPinDictionaryDerived : Prop
   internalSymmetryGeometricallyDerived : Prop
@@ -72,10 +78,18 @@ def cyclicRepresentationAuditClosed (s : ProgramStatus) : Prop :=
   s.irreducibleCyclicRepresentationDimensionAudited /\
   s.rankFiveBundleDerivedFromAdditionalData
 
+/-- The singular mirror quotient is a separate geometry, not a relabeling of the glide quotient. -/
+def mirrorAlternativeAuditClosed (s : ProgramStatus) : Prop :=
+  s.mirrorOrbifoldAlternativeConstructed /\
+  s.mirrorIsotropyAndGlideTranslationSeparated /\
+  s.mirrorAndGlideLoopGroupsDistinguished /\
+  s.singularAndSmoothSpectralTheoriesCompared
+
 /-- Full D8 closure. -/
 def fullD8Closure (s : ProgramStatus) : Prop :=
   smoothMappingTorusCoreClosed s /\
   cyclicRepresentationAuditClosed s /\
+  mirrorAlternativeAuditClosed s /\
   s.pinReflectionSquareConventionFixed /\
   s.euclideanLorentzianPinDictionaryDerived /\
   s.internalSymmetryGeometricallyDerived
@@ -86,7 +100,7 @@ theorem missing_internal_symmetry_blocks_full_d8
     (hMissing : Not s.internalSymmetryGeometricallyDerived) :
     Not (fullD8Closure s) := by
   intro hClosed
-  rcases hClosed with ⟨_, _, _, _, hInternal⟩
+  rcases hClosed with ⟨_, _, _, _, _, hInternal⟩
   exact hMissing hInternal
 
 /-- Cyclic holonomy alone cannot close a rank-five field-content theorem. -/
@@ -104,8 +118,17 @@ theorem missing_pin_dictionary_blocks_full_d8
     (hMissing : Not s.euclideanLorentzianPinDictionaryDerived) :
     Not (fullD8Closure s) := by
   intro hClosed
-  rcases hClosed with ⟨_, _, _, hDictionary, _⟩
+  rcases hClosed with ⟨_, _, _, _, hDictionary, _⟩
   exact hMissing hDictionary
+
+/-- The mirror-orbifold alternative must be recomputed rather than imported into the smooth model. -/
+theorem missing_singular_smooth_comparison_blocks_full_d8
+    (s : ProgramStatus)
+    (hMissing : Not s.singularAndSmoothSpectralTheoriesCompared) :
+    Not (fullD8Closure s) := by
+  intro hClosed
+  rcases hClosed with ⟨_, _, hMirror, _, _, _⟩
+  exact hMissing hMirror.2.2.2
 
 end JanusFundamentalGeometryD8TopologyRepresentation
 end JanusFormal
