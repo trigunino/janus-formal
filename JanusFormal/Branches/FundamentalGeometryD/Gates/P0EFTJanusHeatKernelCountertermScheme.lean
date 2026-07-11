@@ -7,7 +7,7 @@ set_option autoImplicit false
 
 /--
 Stationarity equation for a local linear term plus the exact-quarter nonlocal
-determinant.  With `y = exp(2*x) > 1`, the derivative equation is
+determinant. With `y = exp(2*x) > 1`, the derivative equation is
 
 `c * (y + 1) = 2*w`,
 
@@ -51,7 +51,6 @@ theorem physical_stationary_exponent_gt_one
     (hLocal : 0 < localCoefficient)
     (hBelowWeight : localCoefficient < nonlocalWeight) :
     1 < stationaryExponent localCoefficient nonlocalWeight := by
-  have hLocalNonzero : localCoefficient ≠ 0 := ne_of_gt hLocal
   have hRatio : 2 < 2 * nonlocalWeight / localCoefficient := by
     apply (lt_div_iff₀ hLocal).2
     nlinarith
@@ -92,7 +91,6 @@ theorem target_coefficient_fits_target
       nonlocalWeight targetExponent := by
   unfold QuarterCountertermStationarity coefficientForTarget
   field_simp [hTarget]
-  ring
 
 /-- Positive curvature proxy of the quarter-holonomy nonlocal term. -/
 noncomputable def quarterCurvature
@@ -113,7 +111,7 @@ theorem quarter_curvature_positive
 
 /--
 Any desired positive finite modulus can be reproduced by choosing a finite local
-counterterm.  Therefore the local-plus-quarter determinant model is not
+counterterm. Therefore the local-plus-quarter determinant model is not
 predictive until a separate theorem fixes the finite coefficient.
 -/
 theorem every_target_modulus_can_be_fitted
@@ -148,12 +146,12 @@ theorem distinct_targets_require_distinct_coefficients
   unfold coefficientForTarget at hEqual
   field_simp [hFirstDen, hSecondDen] at hEqual
   apply hTargets
-  nlinarith [hEqual]
+  nlinarith [hEqual, hWeight]
 
 /--
 A predictive spectral theory must derive the finite local coefficient from a
-symmetry, matching condition, UV completion or measured-independent
-renormalization principle.  Merely choosing it to obtain the desired radius is
+symmetry, matching condition, UV completion or target-independent
+renormalization principle. Merely choosing it to obtain the desired radius is
 mathematically equivalent to fitting the radius.
 -/
 structure CountertermPredictivityStatus where
