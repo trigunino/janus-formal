@@ -46,7 +46,14 @@ theorem finite_heat_trace_append
   induction first with
   | nil => simp [finiteHeatTrace]
   | cons eigenvalue rest ih =>
-      simp [finiteHeatTrace, ih, add_assoc]
+      change
+        heatWeight heatTime eigenvalue +
+            finiteHeatTrace (rest ++ second) heatTime =
+          (heatWeight heatTime eigenvalue +
+            finiteHeatTrace rest heatTime) +
+            finiteHeatTrace second heatTime
+      rw [ih]
+      ring
 
 /-- Shifting every eigenvalue multiplies the finite heat trace by one heat weight. -/
 theorem finite_heat_trace_shift
@@ -58,7 +65,15 @@ theorem finite_heat_trace_shift
   induction spectrum with
   | nil => simp [finiteHeatTrace]
   | cons eigenvalue rest ih =>
-      simp [finiteHeatTrace, heat_weight_add, ih, mul_add]
+      change
+        heatWeight heatTime (base + eigenvalue) +
+            finiteHeatTrace
+              (rest.map (fun value => base + value)) heatTime =
+          heatWeight heatTime base *
+            (heatWeight heatTime eigenvalue +
+              finiteHeatTrace rest heatTime)
+      rw [heat_weight_add, ih]
+      ring
 
 /-- Finite product heat traces factorize exactly. -/
 theorem finite_product_heat_trace_factorizes
@@ -70,9 +85,17 @@ theorem finite_product_heat_trace_factorizes
   induction first with
   | nil => simp [finiteProductSpectrum, finiteHeatTrace]
   | cons firstEigenvalue rest ih =>
-      rw [finiteProductSpectrum, finite_heat_trace_append,
+      change
+        finiteHeatTrace
+            (second.map (fun secondEigenvalue =>
+                firstEigenvalue + secondEigenvalue) ++
+              finiteProductSpectrum rest second) heatTime =
+          (heatWeight heatTime firstEigenvalue +
+            finiteHeatTrace rest heatTime) *
+            finiteHeatTrace second heatTime
+      rw [finite_heat_trace_append,
         finite_heat_trace_shift, ih]
-      simp [finiteHeatTrace, add_mul]
+      ring
 
 /-- PT reflection of a finite real spectrum preserves the heat trace of its square. -/
 def squareSpectrum (spectrum : List ℝ) : List ℝ :=
