@@ -112,10 +112,14 @@ theorem unit_charge_lock_fixes_alpha_ratio_squared
     nlinarith [hSquares]
   rcases mul_eq_zero.mp hFactor with hDifference | hSum
   · linarith
-  · have hPositive :
+  · have hAlphaSquare : 0 < s.alphaSquaredLength ^ 2 :=
+      pow_pos s.alphaSquaredLengthPositive 2
+    have hLengthSquare : 0 < s.geometricLength ^ 2 :=
+      pow_pos s.geometricLengthPositive 2
+    have hPositive :
         0 < 8 * s.alphaSquaredLength ^ 2 +
           s.geometricLength ^ 2 := by
-      positivity
+      nlinarith
     exact False.elim ((ne_of_gt hPositive) hSum)
 
 /--
