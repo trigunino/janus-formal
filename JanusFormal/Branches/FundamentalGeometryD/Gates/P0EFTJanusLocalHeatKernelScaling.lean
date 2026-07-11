@@ -10,7 +10,7 @@ Dimensionless scaling skeleton for local integrated invariants on
 `S2_L x S1_(L*T)`.
 
 The exact numerical coefficients depend on the Laplace-type operator and field
-content.  The powers of `L` and the common linear factor `T` follow from the
+content. The powers of `L` and the common linear factor `T` follow from the
 product volume and the dimensions of the local invariant.
 -/
 structure ProductThroatLocalScales where
@@ -28,7 +28,8 @@ def curvatureScale (s : ProductThroatLocalScales) : ℝ :=
   s.geometricLength * s.circleModulus
 
 /-- Integrated curvature-squared or monopole-field-squared scaling. -/
-def quadraticInvariantScale (s : ProductThroatLocalScales) : ℝ :=
+noncomputable def quadraticInvariantScale
+    (s : ProductThroatLocalScales) : ℝ :=
   s.geometricLength⁻¹ * s.circleModulus
 
 /-- Each of the three leading local scales is linear in the circle modulus. -/
@@ -48,7 +49,7 @@ theorem leading_local_scales_factor_circle_modulus
       ring
 
 /-- Generic finite truncation of the local heat-kernel/spectral action. -/
-def localHeatKernelDensity
+noncomputable def localHeatKernelDensity
     (cosmological curvature quadratic : ℝ)
     (geometricLength : ℝ) : ℝ :=
   cosmological * geometricLength ^ 3 +
@@ -56,7 +57,7 @@ def localHeatKernelDensity
     quadratic * geometricLength⁻¹
 
 /-- The integrated local action is the circle modulus times a local density. -/
-def localHeatKernelAction
+noncomputable def localHeatKernelAction
     (cosmological curvature quadratic : ℝ)
     (geometricLength circleModulus : ℝ) : ℝ :=
   circleModulus *
@@ -93,7 +94,7 @@ theorem local_action_midpoint_identity
 theorem local_heat_kernel_terms_do_not_strictly_stabilize_circle
     (cosmological curvature quadratic geometricLength
       center displacement : ℝ)
-    (hDisplacement : 0 < displacement) :
+    (_hDisplacement : 0 < displacement) :
     Not (
       localHeatKernelAction cosmological curvature quadratic
           geometricLength center <
@@ -126,7 +127,7 @@ theorem finite_local_action_midpoint_identity
 theorem finite_local_heat_kernel_action_no_strict_minimum
     (densities : List ℝ)
     (center displacement : ℝ)
-    (hDisplacement : 0 < displacement) :
+    (_hDisplacement : 0 < displacement) :
     Not (
       finiteLocalAction densities center <
         finiteLocalAction densities (center - displacement) /\
