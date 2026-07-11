@@ -15,8 +15,11 @@ It deliberately separates:
 
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusMonopoleDiracSpectrum
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusCircleHolonomyEta
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusSpinStructureHolonomySelection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusProductDiracPairing
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusFullHolonomyDeterminant
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusHolonomySpectralFlow
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusEtaLargeGaugeAnomaly
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracSpectralGeometryLock
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracBimetricPrimitiveSelection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusSpectralRatioCorrection
@@ -34,7 +37,10 @@ structure ProgramStatus where
   productDiracPairingDerived : Prop
   zeroModeEtaFormulaDerived : Prop
   fullModeDeterminantKernelDerived : Prop
-  halfHolonomyVacuumDerived : Prop
+  combinedHalfHolonomyVacuumDerived : Prop
+  spinStructureRestrictionDerived : Prop
+  spectralFlowIndexBridgeDerived : Prop
+  largeGaugeEtaAnomalyDerived : Prop
   oneEighthLLChargeLockDerived : Prop
   primitiveMonopoleSelectedByBimetricMatch : Prop
   alphaEqualsSphereRadiusDerived : Prop
@@ -53,7 +59,10 @@ def firstDiracSpectralMilestoneClosed (s : ProgramStatus) : Prop :=
   s.productDiracPairingDerived /\
   s.zeroModeEtaFormulaDerived /\
   s.fullModeDeterminantKernelDerived /\
-  s.halfHolonomyVacuumDerived /\
+  s.combinedHalfHolonomyVacuumDerived /\
+  s.spinStructureRestrictionDerived /\
+  s.spectralFlowIndexBridgeDerived /\
+  s.largeGaugeEtaAnomalyDerived /\
   s.oneEighthLLChargeLockDerived /\
   s.primitiveMonopoleSelectedByBimetricMatch /\
   s.alphaEqualsSphereRadiusDerived /\
