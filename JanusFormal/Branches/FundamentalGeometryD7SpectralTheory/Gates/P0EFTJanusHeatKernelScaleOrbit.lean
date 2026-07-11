@@ -20,7 +20,7 @@ structure PositiveScale where
 
 /-- Under `g -> s^2 g`, the three-dimensional integrated coefficients scale as
 `a0 -> s^3 a0`, `a2 -> s a2`, and `a4 -> a4/s`. -/
-def rescaleHeatData
+noncomputable def rescaleHeatData
     (scale : PositiveScale)
     (data : ThreeDimensionalHeatScaleData) :
     ThreeDimensionalHeatScaleData where
