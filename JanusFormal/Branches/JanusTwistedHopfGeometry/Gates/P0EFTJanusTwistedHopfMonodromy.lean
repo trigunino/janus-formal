@@ -68,16 +68,16 @@ def fermionParity : PinPhase := 2
 
 @[simp] theorem pin_generator_square_is_fermion_parity :
     pinTunnelGenerator + pinTunnelGenerator = fermionParity := by
-  norm_num [pinTunnelGenerator, fermionParity]
+  native_decide
 
 @[simp] theorem pin_generator_fourth_power_is_identity :
     pinTunnelGenerator + pinTunnelGenerator +
       pinTunnelGenerator + pinTunnelGenerator = 0 := by
-  norm_num [pinTunnelGenerator]
+  native_decide
 
 @[simp] theorem pin_generator_square_is_nontrivial :
     pinTunnelGenerator + pinTunnelGenerator ≠ 0 := by
-  norm_num [pinTunnelGenerator]
+  native_decide
 
 /--
 This is the precise meaning of a genuine `Z4` in the resolved geometry:
