@@ -11,7 +11,7 @@ The standard twisted-sphere spectrum has
 
 `lambda_p^2 L^2 = p * (p + q)`,
 
-with `p = 0,1,...` and degeneracy `q + 2p`.  Here `q` is the positive magnitude
+with `p = 0,1,...` and degeneracy `q + 2p`. Here `q` is the positive magnitude
 of the integral monopole charge.
 -/
 def sphereDiracSquaredNumerator (chargeMagnitude level : ℕ) : ℕ :=
@@ -50,7 +50,7 @@ theorem positive_level_has_positive_sphere_numerator
     (hLevel : 0 < level) :
     0 < sphereDiracSquaredNumerator chargeMagnitude level := by
   unfold sphereDiracSquaredNumerator
-  exact Nat.mul_pos hLevel (Nat.add_pos_left level hCharge)
+  exact Nat.mul_pos hLevel (by omega)
 
 /-- Dimensionless squared circle momentum for periodic spin structure. -/
 noncomputable def periodicCircleSquared
@@ -120,10 +120,17 @@ theorem first_excitation_crossing_iff
     periodicProductSquared 1 1 piConstant circleModulus 0 =
         periodicProductSquared 1 0 piConstant circleModulus 1 ↔
       circleModulus ^ 2 = 2 * piConstant ^ 2 := by
-  rw [primitive_sphere_excitation_squared,
-    primitive_circle_excitation_squared]
-  field_simp [hCircle]
-  constructor <;> intro h <;> nlinarith
+  constructor
+  · intro hCross
+    rw [primitive_sphere_excitation_squared,
+      primitive_circle_excitation_squared] at hCross
+    field_simp [hCircle] at hCross
+    nlinarith [hCross]
+  · intro hModulus
+    rw [primitive_sphere_excitation_squared,
+      primitive_circle_excitation_squared]
+    field_simp [hCircle]
+    nlinarith [hModulus]
 
 /-- At the crossing, the sphere family has degeneracy three. -/
 def primitiveSphereFirstFamilyDegeneracy : ℕ :=
@@ -152,13 +159,16 @@ theorem first_family_weighted_balance_iff
     (hCircle : circleModulus ≠ 0) :
     firstFamilyWeightedBalance piConstant circleModulus ↔
       3 * circleModulus ^ 2 = 4 * piConstant ^ 2 := by
-  unfold firstFamilyWeightedBalance,
-    primitiveSphereFirstFamilyDegeneracy,
-    primitiveCircleFirstFamilyDegeneracy,
-    sphereDiracDegeneracy
-  norm_num
-  field_simp [hCircle]
-  constructor <;> intro h <;> nlinarith
+  change
+    (3 : ℝ) * 2 = 2 * (2 * piConstant / circleModulus) ^ 2 ↔
+      3 * circleModulus ^ 2 = 4 * piConstant ^ 2
+  constructor
+  · intro hBalance
+    field_simp [hCircle] at hBalance
+    nlinarith [hBalance]
+  · intro hModulus
+    field_simp [hCircle]
+    nlinarith [hModulus]
 
 /--
 The exact first-level spectrum therefore distinguishes two different candidate
@@ -167,7 +177,7 @@ moduli:
 * equal eigenvalues: `T^2 = 2*pi^2`;
 * degeneracy-weighted proxy: `3*T^2 = 4*pi^2`.
 
-Neither condition is yet a determinant minimum.  The full regularized effective
+Neither condition is yet a determinant minimum. The full regularized effective
 action must choose the physically relevant weighting.
 -/
 structure PrimitiveDiracSpectrumClosureStatus where
