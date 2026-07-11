@@ -79,10 +79,14 @@ theorem primitive_sector_has_unit_transition_winding
     (n : ℤ)
     (hPrimitive : n.natAbs = 1) :
     |(n : ℝ)| = 1 := by
-  exact_mod_cast hPrimitive
+  obtain hn | hn := Int.natAbs_eq n
+  · rw [hn, hPrimitive]
+    norm_num
+  · rw [hn, hPrimitive]
+    norm_num
 
 /--
-The local Dirac data are explicit.  The remaining geometric theorem is to build
+The local Dirac data are explicit. The remaining geometric theorem is to build
 these charts as a genuine principal `U(1)` bundle on the throat, prove the
 transition cocycle on the equatorial overlap, and match its connection
 normalization to the LL auxiliary field.
