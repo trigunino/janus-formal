@@ -12,6 +12,8 @@ separates three levels:
 -/
 
 import JanusFormal.Branches.JanusTwistedHopfGeometry
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedHopfCellularModel
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHopfBundleOrientationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleEmergence
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralIsotropyAlphaRatio
@@ -25,6 +27,10 @@ set_option autoImplicit false
 
 structure ProgramStatus where
   twistedHopfSeedImported : Prop
+  coordinateReflectionConstructed : Prop
+  equatorialFixedSetCharacterized : Prop
+  cellularTopBoundaryComputed : Prop
+  degreeTwoModTwoCellularCochainsVanish : Prop
   hopfBundleOrientationNoGoProved : Prop
   canonicalThroatMonopoleCandidateDerived : Prop
   compactCircleTransgressionDerived : Prop
@@ -40,6 +46,10 @@ structure ProgramStatus where
 
 def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.twistedHopfSeedImported /\
+  s.coordinateReflectionConstructed /\
+  s.equatorialFixedSetCharacterized /\
+  s.cellularTopBoundaryComputed /\
+  s.degreeTwoModTwoCellularCochainsVanish /\
   s.hopfBundleOrientationNoGoProved /\
   s.canonicalThroatMonopoleCandidateDerived /\
   s.compactCircleTransgressionDerived /\
