@@ -26,6 +26,7 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralIsotrop
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralMismatchVacuum
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralExchangeSymmetry
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusWeightedSpectralLock
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralWeightDecision
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedDiracZeroModes
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFiniteEtaPairing
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
@@ -60,6 +61,7 @@ structure ProgramStatus where
   unweightedSpectralCandidateDerived : Prop
   spectralExchangeConditionIdentified : Prop
   weightedSpectralCandidateDerived : Prop
+  competingSpectralLocksIncompatible : Prop
   twistedDiracZeroModeStructureDerived : Prop
   circleSpinStructureEffectDerived : Prop
   finitePTSpectralPairingDerived : Prop
@@ -95,6 +97,7 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.unweightedSpectralCandidateDerived /\
   s.spectralExchangeConditionIdentified /\
   s.weightedSpectralCandidateDerived /\
+  s.competingSpectralLocksIncompatible /\
   s.twistedDiracZeroModeStructureDerived /\
   s.circleSpinStructureEffectDerived /\
   s.finitePTSpectralPairingDerived /\
