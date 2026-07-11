@@ -23,6 +23,9 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleE
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusDiracMonopolePatching
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFixedThroatFluxDescentNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralIsotropyAlphaRatio
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralMismatchVacuum
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralExchangeSymmetry
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusWeightedSpectralLock
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -52,7 +55,9 @@ structure ProgramStatus where
   diracMonopoleLocalPatchingDerived : Prop
   compactCircleTransgressionDerived : Prop
   pinObstructionPatternsSeparated : Prop
-  spectralIsotropyCandidateDerived : Prop
+  unweightedSpectralCandidateDerived : Prop
+  spectralExchangeConditionIdentified : Prop
+  weightedSpectralCandidateDerived : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
@@ -81,7 +86,9 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.diracMonopoleLocalPatchingDerived /\
   s.compactCircleTransgressionDerived /\
   s.pinObstructionPatternsSeparated /\
-  s.spectralIsotropyCandidateDerived /\
+  s.unweightedSpectralCandidateDerived /\
+  s.spectralExchangeConditionIdentified /\
+  s.weightedSpectralCandidateDerived /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
@@ -95,7 +102,7 @@ def fullProgramDClosed (s : ProgramStatus) : Prop :=
   s.absoluteScaleDerived /\
   s.absoluteAlphaDerivedNoFit
 
-/-- The first milestone produces a ratio candidate, not an absolute prediction. -/
+/-- The first milestone produces ratios and obstruction theorems, not an absolute prediction. -/
 theorem first_milestone_does_not_claim_absolute_alpha
     (s : ProgramStatus)
     (hMilestone : firstResearchMilestoneClosed s)
