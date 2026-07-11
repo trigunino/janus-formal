@@ -15,6 +15,7 @@ import JanusFormal.Branches.JanusTwistedHopfGeometry
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedMappingGenerator
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedHopfCellularModel
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGenericPinObstruction
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHopfBundleOrientationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGlobalLineBundleNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleEmergence
@@ -40,6 +41,7 @@ structure ProgramStatus where
   fixedFiberDescendsToPeriodCircle : Prop
   cellularTopBoundaryComputed : Prop
   degreeTwoModTwoCellularCochainsVanish : Prop
+  cohomologicalPinObstructionsVanish : Prop
   globalOrdinaryLineBundleNoGoDerived : Prop
   hopfBundleOrientationNoGoProved : Prop
   fixedThroatConjugateFluxNoGoProved : Prop
@@ -66,6 +68,7 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.fixedFiberDescendsToPeriodCircle /\
   s.cellularTopBoundaryComputed /\
   s.degreeTwoModTwoCellularCochainsVanish /\
+  s.cohomologicalPinObstructionsVanish /\
   s.globalOrdinaryLineBundleNoGoDerived /\
   s.hopfBundleOrientationNoGoProved /\
   s.fixedThroatConjugateFluxNoGoProved /\
