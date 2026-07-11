@@ -18,8 +18,7 @@ def ptTransform (s : SpectralActionParts) : SpectralActionParts :=
 @[simp] theorem pt_transform_involutive
     (s : SpectralActionParts) :
     ptTransform (ptTransform s) = s := by
-  cases s
-  rfl
+  ext <;> simp [ptTransform]
 
 /-- Pair two effective-action contributions componentwise. -/
 def pairAction
@@ -33,9 +32,7 @@ theorem pt_pair_doubles_even_cancels_odd
     pairAction s (ptTransform s) =
       { evenPart := 2 * s.evenPart
         oddEtaPart := 0 } := by
-  cases s
-  simp [pairAction, ptTransform]
-  ring
+  ext <;> simp [pairAction, ptTransform] <;> ring
 
 /-- Derivative bookkeeping for a modulus-dependent spectral action. -/
 structure SpectralActionDerivativeParts where
@@ -61,9 +58,7 @@ theorem pt_pair_doubles_even_slope
     pairDerivative s (ptDerivativeTransform s) =
       { evenDerivative := 2 * s.evenDerivative
         oddEtaDerivative := 0 } := by
-  cases s
-  simp [pairDerivative, ptDerivativeTransform]
-  ring
+  ext <;> simp [pairDerivative, ptDerivativeTransform] <;> ring
 
 /-- A strictly negative one-fold even slope remains strictly negative after pairing. -/
 theorem negative_even_runaway_survives_pt_pairing
@@ -102,7 +97,7 @@ theorem paired_finite_counterterm_shift
 
 /--
 PT pairing is essential for anomaly cancellation but does not select the
-parity-even modulus or its finite counterterms.  That information must come from
+parity-even modulus or its finite counterterms. That information must come from
 the full even effective action and a microscopic renormalization law.
 -/
 structure PairedSpectralActionClosureStatus where
