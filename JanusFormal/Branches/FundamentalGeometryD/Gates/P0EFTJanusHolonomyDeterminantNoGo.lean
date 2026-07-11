@@ -107,6 +107,72 @@ theorem quarter_holonomy_has_no_positive_stationary_radial
   exact ne_of_lt
     (quarter_holonomy_derivative_strictly_negative radial hRadial)
 
+/-- A positive-weight massive mode in the exact-quarter sector. -/
+structure PositiveQuarterMode where
+  weight : ℝ
+  radial : ℝ
+  weightPositive : 0 < weight
+  radialPositive : 0 < radial
+
+/-- Logarithmic derivative contribution of one such mode. -/
+noncomputable def quarterModeLogDerivative
+    (mode : PositiveQuarterMode) : ℝ :=
+  mode.weight *
+    (holonomyDerivativeNumerator quarterHolonomyCosine mode.radial /
+      holonomyDeterminantFactor quarterHolonomyCosine mode.radial)
+
+/-- Every positive-weight exact-quarter mode contributes with the same strict sign. -/
+theorem quarter_mode_log_derivative_negative
+    (mode : PositiveQuarterMode) :
+    quarterModeLogDerivative mode < 0 := by
+  have hNumerator :=
+    quarter_holonomy_derivative_strictly_negative
+      mode.radial mode.radialPositive
+  have hFactor :
+      0 < holonomyDeterminantFactor
+        quarterHolonomyCosine mode.radial := by
+    rw [quarter_holonomy_factor]
+    nlinarith [sq_nonneg mode.radial]
+  unfold quarterModeLogDerivative
+  exact mul_neg_of_pos_of_neg mode.weightPositive
+    (div_neg_of_neg_of_pos hNumerator hFactor)
+
+/-- Finite exact-quarter tower derivative. -/
+noncomputable def finiteQuarterTowerDerivative :
+    List PositiveQuarterMode → ℝ
+  | [] => 0
+  | mode :: rest =>
+      quarterModeLogDerivative mode + finiteQuarterTowerDerivative rest
+
+/-- Every finite exact-quarter tower has nonpositive derivative. -/
+theorem finite_quarter_tower_derivative_nonpositive
+    (modes : List PositiveQuarterMode) :
+    finiteQuarterTowerDerivative modes ≤ 0 := by
+  induction modes with
+  | nil => simp [finiteQuarterTowerDerivative]
+  | cons mode rest ih =>
+      have hMode := quarter_mode_log_derivative_negative mode
+      simp [finiteQuarterTowerDerivative]
+      linarith
+
+/-- Every nonempty finite exact-quarter tower has strictly negative derivative. -/
+theorem nonempty_finite_quarter_tower_derivative_negative
+    (head : PositiveQuarterMode)
+    (tail : List PositiveQuarterMode) :
+    finiteQuarterTowerDerivative (head :: tail) < 0 := by
+  have hHead := quarter_mode_log_derivative_negative head
+  have hTail := finite_quarter_tower_derivative_nonpositive tail
+  simp [finiteQuarterTowerDerivative]
+  linarith
+
+/-- Flipping the overall determinant sign reverses monotonicity but still gives no stationary point. -/
+theorem fermionic_nonempty_quarter_tower_derivative_positive
+    (head : PositiveQuarterMode)
+    (tail : List PositiveQuarterMode) :
+    0 < -finiteQuarterTowerDerivative (head :: tail) := by
+  exact neg_pos.mpr
+    (nonempty_finite_quarter_tower_derivative_negative head tail)
+
 /-- Periodic holonomy has its formal stationary point only at the boundary `r=1`. -/
 theorem periodic_holonomy_stationary_requires_boundary
     (radial : ℝ)
@@ -129,9 +195,11 @@ theorem antiperiodic_holonomy_has_no_positive_stationary
 
 /--
 A phase with `0<cos(theta)<1` is the only single-tower case admitting an
-interior stationary radial variable `r=cos(theta)`.  The exact `Z4` quarter
-phase sits at the endpoint `cos(theta)=0`, so it cannot by itself stabilize the
-mapping-torus circle through the determinant magnitude.
+interior stationary radial variable `r=cos(theta)`. The exact `Z4` quarter
+phase sits at the endpoint `cos(theta)=0`. Moreover, any finite tower of
+positive-weight exact-quarter modes remains strictly monotone. A finite circle
+minimum therefore requires competing holonomies/statistics, interactions, or a
+separate local geometric term.
 -/
 structure HolonomyDeterminantPhysicalStatus where
   zetaRegularizedCircleProductDerived : Prop
