@@ -5,6 +5,8 @@ on:
     branches:
       - research/rp4-twisted-four-form-alpha
     paths:
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
       - "JanusFormal/Branches/WorldvolumeQuantumAlpha.lean"
@@ -23,6 +25,8 @@ on:
     branches:
       - main
     paths:
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
       - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
       - "JanusFormal/Branches/WorldvolumeQuantumAlpha.lean"
@@ -55,6 +59,9 @@ jobs:
         run: |
           set +e
           {
+            echo "== PT-twisted Hopf geometry =="
+            lake build JanusFormal.Branches.JanusTwistedHopfGeometry
+            s0=$?
             echo "== RP4 conditional program =="
             lake build JanusFormal.Branches.RP4TwistedFourFormAlpha
             s1=$?
@@ -67,8 +74,8 @@ jobs:
             echo "== Combined completion matrix =="
             lake build JanusFormal.Branches.AlphaDeepCompletionMatrix
             s4=$?
-            echo "statuses: $s1 $s2 $s3 $s4"
-            test $s1 -eq 0 -a $s2 -eq 0 -a $s3 -eq 0 -a $s4 -eq 0
+            echo "statuses: $s0 $s1 $s2 $s3 $s4"
+            test $s0 -eq 0 -a $s1 -eq 0 -a $s2 -eq 0 -a $s3 -eq 0 -a $s4 -eq 0
           } > lean-build.log 2>&1
           status=$?
           cat lean-build.log
@@ -90,6 +97,7 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e . pytest
+      - run: python scripts/audit_janus_twisted_hopf_geometry.py
       - run: python scripts/audit_janus_exact_solution_normalization.py
       - run: python scripts/audit_janus_finite_bridge_ll_closure.py
       - run: python scripts/audit_janus_terminal_hierarchy.py
@@ -103,6 +111,7 @@ jobs:
           PYTHONPATH: .
         run: |
           python -m pytest -q \
+            tests/test_janus_twisted_hopf_geometry.py \
             tests/test_janus_exact_solution_normalization.py \
             tests/test_janus_finite_bridge_ll_closure.py \
             tests/test_janus_terminal_hierarchy.py \
