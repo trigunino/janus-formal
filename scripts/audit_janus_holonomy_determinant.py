@@ -40,7 +40,7 @@ def truncated_logdet_ratio(
     reference_x: float,
     cutoff: int,
 ) -> float:
-    """Finite product approximation to a one-dimensional determinant ratio."""
+    """Finite-product approximation to a one-dimensional determinant ratio."""
 
     if cutoff < 1:
         raise ValueError("cutoff must be positive")
@@ -62,7 +62,7 @@ def analytic_logdet_ratio(
     x: float,
     reference_x: float,
 ) -> float:
-    """Zeta-product ratio: cosh(x)-cos(2*pi*a)."""
+    """Zeta-product ratio proportional to `cosh(x)-cos(2*pi*a)`."""
 
     cosine = math.cos(2.0 * math.pi * twist)
     return math.log(
@@ -142,9 +142,12 @@ def build_audit() -> HolonomyDeterminantAudit:
         renormalized_holonomy_derivative(quarter_twist, value)
         for value in quarter_grid
     ]
-    quarter_has_stationary = any(abs(value) < 1.0e-10 for value in quarter_derivatives)
+    # The exact quarter derivative is strictly negative for every finite x.
+    # A tiny magnitude at large x is asymptotic decay, not a stationary point.
+    quarter_all_strictly_negative = all(value < 0.0 for value in quarter_derivatives)
+    quarter_has_stationary = not quarter_all_strictly_negative
 
-    # theta=pi/3 gives cos(theta)=1/2, so exp(-x_*)=1/2 and x_*=log(2).
+    # theta=pi/3 gives cos(theta)=1/2, hence exp(-x_*)=1/2 and x_*=log(2).
     interior_twist = 1.0 / 6.0
     interior_x = math.log(2.0)
     interior_second = numerical_second_derivative(
@@ -191,7 +194,7 @@ def build_audit() -> HolonomyDeterminantAudit:
         abs(quarter_cosine) < 1.0e-14,
         product_error < 2.0e-4,
         quarter_derivative < 0.0,
-        all(value < 0.0 for value in quarter_derivatives),
+        quarter_all_strictly_negative,
         not quarter_has_stationary,
         abs(renormalized_holonomy_derivative(interior_twist, interior_x))
         < 1.0e-12,
