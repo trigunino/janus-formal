@@ -8,14 +8,14 @@ D7 separates four layers:
 2. specialization to the rank-two monopole-twisted Dirac candidate on
    `S2_L x S1_(L*T)`;
 3. local/nonlocal and PT-even/eta-odd decomposition of the effective action;
-4. the remaining analytic and renormalization theorems needed to select a
-   modulus and an absolute scale.
+4. RG scale generation plus the LL/bimetric charge-radius lock.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusUniversalClosedHeatCoefficients
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusProductThroatDiracHeatCoefficients
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusFiniteProductHeatTrace
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatKernelScaleOrbit
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD7AbsoluteAlphaSynthesis
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusLocalHeatKernelScaling
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleHeatKernelWinding
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusProductThroatLocalInvariants
@@ -54,7 +54,12 @@ structure ProgramStatus where
   zetaAndEtaContinuationProved : Prop
   finiteCountertermsDerivedMicroscopically : Prop
   stableModulusDerivedSchemeIndependently : Prop
+  terminalRGChargeSynthesisFormalized : Prop
+  generatedMassDerivedNoFit : Prop
   independentUVScaleDerived : Prop
+  diracLLBimetricLockDerived : Prop
+  bulkBoundaryChargeCompatibilityDerived : Prop
+  noObservedScaleImported : Prop
   absoluteAlphaDerivedNoFit : Prop
 
 /-- Algebraic/local D7 milestone. -/
@@ -75,7 +80,7 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.pureQuarterDeterminantRunawayProved /\
   s.competingSectorStabilizationCriterionDerived
 
-/-- Full analytic D7 closure. -/
+/-- Full analytic D7 closure before the absolute-scale interface. -/
 def analyticSpectralTheoryClosed (s : ProgramStatus) : Prop :=
   localSpectralFoundationClosed s /\
   s.actualGlobalDiracOperatorConstructed /\
@@ -85,10 +90,15 @@ def analyticSpectralTheoryClosed (s : ProgramStatus) : Prop :=
   s.finiteCountertermsDerivedMicroscopically /\
   s.stableModulusDerivedSchemeIndependently
 
-/-- Absolute predictive closure. -/
+/-- Absolute predictive D7 closure. -/
 def fullD7Closure (s : ProgramStatus) : Prop :=
   analyticSpectralTheoryClosed s /\
+  s.terminalRGChargeSynthesisFormalized /\
+  s.generatedMassDerivedNoFit /\
   s.independentUVScaleDerived /\
+  s.diracLLBimetricLockDerived /\
+  s.bulkBoundaryChargeCompatibilityDerived /\
+  s.noObservedScaleImported /\
   s.absoluteAlphaDerivedNoFit
 
 /-- Local heat coefficients and a co-scaled cutoff cannot close the absolute scale. -/
@@ -98,7 +108,8 @@ theorem local_foundation_without_uv_anchor_does_not_close_absolute_alpha
     (hMissing : Not s.independentUVScaleDerived) :
     Not (fullD7Closure s) := by
   intro hClosed
-  exact hMissing hClosed.2.1
+  rcases hClosed with ⟨_, _, _, hUV, _, _, _, _⟩
+  exact hMissing hUV
 
 /-- A fitted finite counterterm is not a scheme-independent modulus theorem. -/
 theorem fitted_counterterm_without_microscopic_derivation_blocks_analytic_closure
@@ -106,7 +117,17 @@ theorem fitted_counterterm_without_microscopic_derivation_blocks_analytic_closur
     (hMissing : Not s.finiteCountertermsDerivedMicroscopically) :
     Not (analyticSpectralTheoryClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.2.2.2.1
+  rcases hClosed with ⟨_, _, _, _, _, hCounterterm, _⟩
+  exact hMissing hCounterterm
+
+/-- Missing bulk/boundary charge compatibility prevents the final synthesis. -/
+theorem missing_charge_compatibility_blocks_full_d7
+    (s : ProgramStatus)
+    (hMissing : Not s.bulkBoundaryChargeCompatibilityDerived) :
+    Not (fullD7Closure s) := by
+  intro hClosed
+  rcases hClosed with ⟨_, _, _, _, _, hCompatibility, _, _⟩
+  exact hMissing hCompatibility
 
 end JanusFundamentalGeometryD7SpectralTheory
 end JanusFormal
