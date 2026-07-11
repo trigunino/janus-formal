@@ -27,6 +27,7 @@ import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralMismatc
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralExchangeSymmetry
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusWeightedSpectralLock
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedDiracZeroModes
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFiniteEtaPairing
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -61,6 +62,8 @@ structure ProgramStatus where
   weightedSpectralCandidateDerived : Prop
   twistedDiracZeroModeStructureDerived : Prop
   circleSpinStructureEffectDerived : Prop
+  finitePTSpectralPairingDerived : Prop
+  finiteEtaCancellationDerived : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
@@ -94,6 +97,8 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.weightedSpectralCandidateDerived /\
   s.twistedDiracZeroModeStructureDerived /\
   s.circleSpinStructureEffectDerived /\
+  s.finitePTSpectralPairingDerived /\
+  s.finiteEtaCancellationDerived /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
