@@ -56,7 +56,6 @@ theorem primitive_transgression_gives_primitive_monopole
     s.throatChernNumber.natAbs = 1 := by
   rw [s.transportLaw, Int.natAbs_mul,
     s.primitiveCircleWinding, s.primitiveBoundaryClass]
-  norm_num
 
 /--
 The topology fixes the integer sector but not the dimensionful normalization of
