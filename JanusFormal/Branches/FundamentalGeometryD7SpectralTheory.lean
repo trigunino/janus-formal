@@ -2,13 +2,15 @@
 Program D7: spectral geometry and the renormalized effective action on the Janus
 throat.
 
-D7 separates four layers:
+D7 separates five layers:
 
 1. universal heat-kernel coefficients for a closed Laplace-type operator;
 2. specialization to the rank-two monopole-twisted Dirac candidate on
    `S2_L x S1_(L*T)`;
 3. local/nonlocal and PT-even/eta-odd decomposition of the effective action;
-4. RG scale generation plus the LL/bimetric charge-radius lock.
+4. statistics, index multiplicity and internal-symmetry audits of the field
+   content entering the determinant;
+5. RG scale generation plus the LL/bimetric charge-radius lock.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusUniversalClosedHeatCoefficients
@@ -17,6 +19,12 @@ import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanus
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatKernelScaleOrbit
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD7AbsoluteAlphaSynthesis
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMinimalTwoTenD7Candidate
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusZ4StatisticsSelection
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMinimalFiveFermionZ4Sector
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusZ4StatisticsDeterminantSignNoGo
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusPrimitiveIndexFiveSelection
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusInternalZ4BosonicEscape
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusSpinTwoDimensionalityAudit
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusLocalHeatKernelScaling
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleHeatKernelWinding
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusProductThroatLocalInvariants
@@ -49,7 +57,12 @@ structure ProgramStatus where
   schemeShiftNoGoProved : Prop
   pureQuarterDeterminantRunawayProved : Prop
   competingSectorStabilizationCriterionDerived : Prop
-  minimalTwoTenCandidateFormalized : Prop
+  arithmeticTwoTenCandidateFormalized : Prop
+  centralPinBosonicQuarterNoGoProved : Prop
+  centralPinOneFiveStandardSignNoGoProved : Prop
+  primitiveIndexFiveSelectionDerived : Prop
+  intrinsicThreeDimensionalSpinTwoWeightFiveNoGoProved : Prop
+  independentInternalZ4BosonicEscapeFormalized : Prop
   actualGlobalDiracOperatorConstructed : Prop
   separatedInfiniteSpectrumProved : Prop
   heatTraceAsymptoticsProved : Prop
@@ -64,7 +77,7 @@ structure ProgramStatus where
   noObservedScaleImported : Prop
   absoluteAlphaDerivedNoFit : Prop
 
-/-- Algebraic/local D7 milestone. -/
+/-- Algebraic/local/statistics D7 milestone. -/
 def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.universalClosedA0A2A4Formalized /\
   s.rankTwoDiracTraceReductionFormalized /\
@@ -81,7 +94,12 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.schemeShiftNoGoProved /\
   s.pureQuarterDeterminantRunawayProved /\
   s.competingSectorStabilizationCriterionDerived /\
-  s.minimalTwoTenCandidateFormalized
+  s.arithmeticTwoTenCandidateFormalized /\
+  s.centralPinBosonicQuarterNoGoProved /\
+  s.centralPinOneFiveStandardSignNoGoProved /\
+  s.primitiveIndexFiveSelectionDerived /\
+  s.intrinsicThreeDimensionalSpinTwoWeightFiveNoGoProved /\
+  s.independentInternalZ4BosonicEscapeFormalized
 
 /-- Full analytic D7 closure before the absolute-scale interface. -/
 def analyticSpectralTheoryClosed (s : ProgramStatus) : Prop :=
