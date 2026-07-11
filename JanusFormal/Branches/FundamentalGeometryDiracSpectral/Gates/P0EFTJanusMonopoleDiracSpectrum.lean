@@ -7,7 +7,7 @@ set_option autoImplicit false
 
 /--
 Algebraic spectrum of the round two-sphere Dirac operator twisted by a monopole
-of absolute Chern number `m`.  The radial label is `k = 0,1,...` and the cleared
+of absolute Chern number `m`. The radial label is `k = 0,1,...` and the cleared
 spectral law is
 
 `lambda_k^2 * L^2 = k * (k + m)`.
@@ -35,7 +35,7 @@ def levelDegeneracy
     (monopoleMagnitude : ℕ) :
     clearedEigenvalueSquared monopoleMagnitude 1 =
       monopoleMagnitude + 1 := by
-  simp [clearedEigenvalueSquared]
+  simp [clearedEigenvalueSquared, Nat.add_comm]
 
 @[simp] theorem first_positive_level_degeneracy
     (monopoleMagnitude : ℕ) :
@@ -81,7 +81,7 @@ theorem primitive_index_has_one_zero_mode
 
 /--
 The explicit spectrum and the index theorem are primary mathematical inputs to
-the spectral program.  A complete geometric formalization must construct the
+the spectral program. A complete geometric formalization must construct the
 SpinC bundle, connection and self-adjoint Dirac operator rather than only carry
 these formulas.
 -/
