@@ -2,8 +2,9 @@
 Program D2: twisted Dirac spectral geometry on the canonical Janus throat.
 
 The branch studies the SpinC Dirac operator on a monopole-twisted `S2`, its
-product with the compact mapping-torus circle, the zero-mode eta invariant and
-the induced LL charge normalization.
+product with the compact mapping-torus circle, the zero-mode eta invariant, the
+full holonomy-dependent determinant kernel and the induced LL charge
+normalization.
 
 It deliberately separates:
 
@@ -15,11 +16,13 @@ It deliberately separates:
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusMonopoleDiracSpectrum
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusCircleHolonomyEta
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusProductDiracPairing
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusFullHolonomyDeterminant
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracSpectralGeometryLock
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracBimetricPrimitiveSelection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusSpectralRatioCorrection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusIndexParityAnomaly
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiracScaleOrbitNoGo
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusOddDimensionalDeterminantNoGo
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryDiracSpectral
@@ -30,6 +33,7 @@ structure ProgramStatus where
   twistedSphereDiracSpectrumDerived : Prop
   productDiracPairingDerived : Prop
   zeroModeEtaFormulaDerived : Prop
+  fullModeDeterminantKernelDerived : Prop
   halfHolonomyVacuumDerived : Prop
   oneEighthLLChargeLockDerived : Prop
   primitiveMonopoleSelectedByBimetricMatch : Prop
@@ -38,7 +42,8 @@ structure ProgramStatus where
   oldScalarRatioReinterpreted : Prop
   parityAnomalyPairingDerived : Prop
   absoluteScaleOrbitIdentified : Prop
-  renormalizedDeterminantDerived : Prop
+  oddDimensionalMasslessScaleNoGoDerived : Prop
+  renormalizedInfiniteDeterminantDerived : Prop
   absoluteScaleBreakerDerived : Prop
   absoluteAlphaDerivedNoFit : Prop
 
@@ -47,6 +52,7 @@ def firstDiracSpectralMilestoneClosed (s : ProgramStatus) : Prop :=
   s.twistedSphereDiracSpectrumDerived /\
   s.productDiracPairingDerived /\
   s.zeroModeEtaFormulaDerived /\
+  s.fullModeDeterminantKernelDerived /\
   s.halfHolonomyVacuumDerived /\
   s.oneEighthLLChargeLockDerived /\
   s.primitiveMonopoleSelectedByBimetricMatch /\
@@ -54,12 +60,13 @@ def firstDiracSpectralMilestoneClosed (s : ProgramStatus) : Prop :=
   s.circleToSphereRatioDerived /\
   s.oldScalarRatioReinterpreted /\
   s.parityAnomalyPairingDerived /\
-  s.absoluteScaleOrbitIdentified
+  s.absoluteScaleOrbitIdentified /\
+  s.oddDimensionalMasslessScaleNoGoDerived
 
 
 def fullDiracSpectralClosure (s : ProgramStatus) : Prop :=
   firstDiracSpectralMilestoneClosed s /\
-  s.renormalizedDeterminantDerived /\
+  s.renormalizedInfiniteDeterminantDerived /\
   s.absoluteScaleBreakerDerived /\
   s.absoluteAlphaDerivedNoFit
 
