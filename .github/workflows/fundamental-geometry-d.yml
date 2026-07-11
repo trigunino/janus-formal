@@ -9,6 +9,8 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD/**"
       - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory.lean"
       - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory/**"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/**"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
       - "scripts/audit_janus_fundamental_geometry_d.py"
@@ -29,6 +31,8 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD/**"
       - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory.lean"
       - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory/**"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/**"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
       - "scripts/audit_janus_fundamental_geometry_d.py"
@@ -57,12 +61,13 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build Program D and D7
+      - name: Build Program D, D7 and D8
         run: |
           set +e
           lake build \
             JanusFormal.Branches.FundamentalGeometryD \
             JanusFormal.Branches.FundamentalGeometryD7SpectralTheory \
+            JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation \
             > program-d-lean.log 2>&1
           status=$?
           cat program-d-lean.log
