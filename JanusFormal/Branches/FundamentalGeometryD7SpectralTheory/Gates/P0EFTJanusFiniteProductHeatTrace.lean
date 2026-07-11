@@ -10,16 +10,18 @@ noncomputable def heatWeight (heatTime eigenvalue : ℝ) : ℝ :=
   Real.exp (-heatTime * eigenvalue)
 
 /-- Finite heat trace used as an algebraic approximation to a discrete spectrum. -/
-noncomputable def finiteHeatTrace
-    (spectrum : List ℝ) (heatTime : ℝ) : ℝ :=
-  (spectrum.map (heatWeight heatTime)).sum
+noncomputable def finiteHeatTrace : List ℝ → ℝ → ℝ
+  | [], _ => 0
+  | eigenvalue :: rest, heatTime =>
+      heatWeight heatTime eigenvalue + finiteHeatTrace rest heatTime
 
 /-- Finite product spectrum: eigenvalues add on a product geometry. -/
-def finiteProductSpectrum
-    (first second : List ℝ) : List ℝ :=
-  first.flatMap (fun firstEigenvalue =>
-    second.map (fun secondEigenvalue =>
-      firstEigenvalue + secondEigenvalue))
+def finiteProductSpectrum : List ℝ → List ℝ → List ℝ
+  | [], _ => []
+  | firstEigenvalue :: rest, second =>
+      second.map (fun secondEigenvalue =>
+        firstEigenvalue + secondEigenvalue) ++
+      finiteProductSpectrum rest second
 
 /-- Heat weights multiply when eigenvalues add. -/
 theorem heat_weight_add
@@ -33,6 +35,18 @@ theorem heat_weight_add
         -heatTime * firstEigenvalue +
           -heatTime * secondEigenvalue by ring,
     Real.exp_add]
+
+/-- Finite heat trace is additive under concatenation. -/
+theorem finite_heat_trace_append
+    (first second : List ℝ)
+    (heatTime : ℝ) :
+    finiteHeatTrace (first ++ second) heatTime =
+      finiteHeatTrace first heatTime +
+        finiteHeatTrace second heatTime := by
+  induction first with
+  | nil => simp [finiteHeatTrace]
+  | cons eigenvalue rest ih =>
+      simp [finiteHeatTrace, ih, add_assoc]
 
 /-- Shifting every eigenvalue multiplies the finite heat trace by one heat weight. -/
 theorem finite_heat_trace_shift
@@ -56,8 +70,9 @@ theorem finite_product_heat_trace_factorizes
   induction first with
   | nil => simp [finiteProductSpectrum, finiteHeatTrace]
   | cons firstEigenvalue rest ih =>
-      simp [finiteProductSpectrum, finiteHeatTrace,
-        finite_heat_trace_shift, ih, add_mul]
+      rw [finiteProductSpectrum, finite_heat_trace_append,
+        finite_heat_trace_shift, ih]
+      simp [finiteHeatTrace, add_mul]
 
 /-- PT reflection of a finite real spectrum preserves the heat trace of its square. -/
 def squareSpectrum (spectrum : List ℝ) : List ℝ :=
@@ -73,7 +88,6 @@ theorem square_spectrum_negation
   | nil => rfl
   | cons eigenvalue rest ih =>
       simp [squareSpectrum, ih]
-      ring
 
 /-- Hence the parity-even finite heat trace is PT invariant. -/
 theorem pt_negation_preserves_squared_heat_trace
