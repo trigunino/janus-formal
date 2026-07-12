@@ -40,9 +40,9 @@ theorem corrected_local_jet_universality
         data.presentation.targetAction
         data.presentation.operator) :
     ∃! evaluator : Jet → Target,
-      (∀ section,
-        data.presentation.operator section =
-          evaluator (data.presentation.jet section)) /\
+      (∀ sectionValue,
+        data.presentation.operator sectionValue =
+          evaluator (data.presentation.jet sectionValue)) /\
       IsEquivariant data.presentation.jetAction
         data.presentation.targetAction evaluator :=
   exists_unique_equivariant_evaluator
