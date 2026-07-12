@@ -13,12 +13,38 @@ separates three levels:
 
 import JanusFormal.Branches.JanusTwistedHopfGeometry
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedMappingGenerator
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPeriodCircleQuotient
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedHopfCellularModel
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGenericPinObstruction
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHopfBundleOrientationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusGlobalLineBundleNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleEmergence
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusDiracMonopolePatching
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFixedThroatFluxDescentNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralIsotropyAlphaRatio
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralMismatchVacuum
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralExchangeSymmetry
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusWeightedSpectralLock
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralWeightDecision
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTwistedDiracZeroModes
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusFiniteEtaPairing
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPrimitiveMonopoleDiracSpectrum
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPrimitiveMonopoleZ4Spectrum
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusZ4HolonomyEtaGap
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusZ4DiracAlphaLock
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHolonomyDeterminantNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusMixedCircleDeterminantStabilization
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPairedZ4DeterminantNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPeriodicQuarterCompetition
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusLocalHeatKernelScaling
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleHeatKernelWinding
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusProductThroatLocalInvariants
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusDiracSeeleyDeWittCandidate
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusTruncatedSpectralActionNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusHeatKernelCountertermScheme
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusRenormalizationSchemeNoGo
+import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPairedSpectralActionDecomposition
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusCircleIdentificationNoGo
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusSpectralBimetricConsistency
 import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusAuxiliaryMetricSpectralLock
@@ -34,15 +60,47 @@ structure ProgramStatus where
   twistedHopfSeedImported : Prop
   coordinateReflectionConstructed : Prop
   equatorialFixedSetCharacterized : Prop
+  twistedGeneratorConstructed : Prop
+  generatorSquareIsDoubleTranslation : Prop
+  algebraicPeriodCircleConstructed : Prop
+  fixedFiberDescendsToPeriodCircle : Prop
   cellularTopBoundaryComputed : Prop
   degreeTwoModTwoCellularCochainsVanish : Prop
+  cohomologicalPinObstructionsVanish : Prop
   globalOrdinaryLineBundleNoGoDerived : Prop
   hopfBundleOrientationNoGoProved : Prop
   fixedThroatConjugateFluxNoGoProved : Prop
   canonicalThroatMonopoleCandidateDerived : Prop
+  diracMonopoleLocalPatchingDerived : Prop
   compactCircleTransgressionDerived : Prop
   pinObstructionPatternsSeparated : Prop
-  spectralIsotropyCandidateDerived : Prop
+  unweightedSpectralCandidateDerived : Prop
+  spectralExchangeConditionIdentified : Prop
+  weightedSpectralCandidateDerived : Prop
+  competingSpectralLocksIncompatible : Prop
+  twistedDiracZeroModeStructureDerived : Prop
+  circleSpinStructureEffectDerived : Prop
+  finitePTSpectralPairingDerived : Prop
+  finiteEtaCancellationDerived : Prop
+  primitiveMonopoleComparisonSpectrumDerived : Prop
+  primitiveMonopoleZ4SpectrumAlgebraDerived : Prop
+  quarterHolonomyEtaGapAlgebraDerived : Prop
+  pairedDiracChargeLockDerived : Prop
+  quarterHolonomyDeterminantNoGoProved : Prop
+  pairedZ4DeterminantRunawayProved : Prop
+  mixedHolonomyStabilizationCriterionDerived : Prop
+  periodicQuarterThresholdDerived : Prop
+  firstIntegerPeriodicQuarterCandidateDerived : Prop
+  localHeatKernelScalingDerived : Prop
+  localHeatKernelNoMinimumProved : Prop
+  circleHeatKernelWindingSeparationDerived : Prop
+  quarterLeadingWindingSuppressionDerived : Prop
+  productThroatLocalInvariantsComputed : Prop
+  diracSeeleyDeWittCandidateComputed : Prop
+  localSpectralActionTrichotomyProved : Prop
+  finiteCountertermTargetDegeneracyProved : Prop
+  finiteSchemeShiftMovesTargetProved : Prop
+  ptPairDoublesEvenSpectralActionProved : Prop
   thermalAndSpectralCirclesSeparated : Prop
   spectralCoefficientOneEighthDerived : Prop
   conditionalAlphaRatioDerived : Prop
@@ -57,15 +115,47 @@ def firstResearchMilestoneClosed (s : ProgramStatus) : Prop :=
   s.twistedHopfSeedImported /\
   s.coordinateReflectionConstructed /\
   s.equatorialFixedSetCharacterized /\
+  s.twistedGeneratorConstructed /\
+  s.generatorSquareIsDoubleTranslation /\
+  s.algebraicPeriodCircleConstructed /\
+  s.fixedFiberDescendsToPeriodCircle /\
   s.cellularTopBoundaryComputed /\
   s.degreeTwoModTwoCellularCochainsVanish /\
+  s.cohomologicalPinObstructionsVanish /\
   s.globalOrdinaryLineBundleNoGoDerived /\
   s.hopfBundleOrientationNoGoProved /\
   s.fixedThroatConjugateFluxNoGoProved /\
   s.canonicalThroatMonopoleCandidateDerived /\
+  s.diracMonopoleLocalPatchingDerived /\
   s.compactCircleTransgressionDerived /\
   s.pinObstructionPatternsSeparated /\
-  s.spectralIsotropyCandidateDerived /\
+  s.unweightedSpectralCandidateDerived /\
+  s.spectralExchangeConditionIdentified /\
+  s.weightedSpectralCandidateDerived /\
+  s.competingSpectralLocksIncompatible /\
+  s.twistedDiracZeroModeStructureDerived /\
+  s.circleSpinStructureEffectDerived /\
+  s.finitePTSpectralPairingDerived /\
+  s.finiteEtaCancellationDerived /\
+  s.primitiveMonopoleComparisonSpectrumDerived /\
+  s.primitiveMonopoleZ4SpectrumAlgebraDerived /\
+  s.quarterHolonomyEtaGapAlgebraDerived /\
+  s.pairedDiracChargeLockDerived /\
+  s.quarterHolonomyDeterminantNoGoProved /\
+  s.pairedZ4DeterminantRunawayProved /\
+  s.mixedHolonomyStabilizationCriterionDerived /\
+  s.periodicQuarterThresholdDerived /\
+  s.firstIntegerPeriodicQuarterCandidateDerived /\
+  s.localHeatKernelScalingDerived /\
+  s.localHeatKernelNoMinimumProved /\
+  s.circleHeatKernelWindingSeparationDerived /\
+  s.quarterLeadingWindingSuppressionDerived /\
+  s.productThroatLocalInvariantsComputed /\
+  s.diracSeeleyDeWittCandidateComputed /\
+  s.localSpectralActionTrichotomyProved /\
+  s.finiteCountertermTargetDegeneracyProved /\
+  s.finiteSchemeShiftMovesTargetProved /\
+  s.ptPairDoublesEvenSpectralActionProved /\
   s.thermalAndSpectralCirclesSeparated /\
   s.spectralCoefficientOneEighthDerived /\
   s.conditionalAlphaRatioDerived
@@ -79,7 +169,7 @@ def fullProgramDClosed (s : ProgramStatus) : Prop :=
   s.absoluteScaleDerived /\
   s.absoluteAlphaDerivedNoFit
 
-/-- The first milestone produces a ratio candidate, not an absolute prediction. -/
+/-- The first milestone produces ratios and obstruction theorems, not an absolute prediction. -/
 theorem first_milestone_does_not_claim_absolute_alpha
     (s : ProgramStatus)
     (hMilestone : firstResearchMilestoneClosed s)

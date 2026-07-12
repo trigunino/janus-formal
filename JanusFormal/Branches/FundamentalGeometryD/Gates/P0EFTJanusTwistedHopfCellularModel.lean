@@ -34,7 +34,10 @@ def degreeThreeParityClass (n : ℤ) : ZMod 2 := n
 @[simp] theorem top_boundary_has_zero_parity
     (n : ℤ) :
     degreeThreeParityClass (topBoundary n) = 0 := by
-  simp [degreeThreeParityClass, topBoundary]
+  change (((2 * n : ℤ) : ZMod 2)) = 0
+  push_cast
+  have hTwo : (2 : ZMod 2) = 0 := by native_decide
+  rw [hTwo, zero_mul]
 
 /-- The minimal cellular model has no degree-two cell. -/
 abbrev DegreeTwoModTwoCochain := Fin 0 → ZMod 2
