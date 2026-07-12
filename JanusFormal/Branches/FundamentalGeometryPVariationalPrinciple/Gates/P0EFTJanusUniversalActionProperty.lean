@@ -12,7 +12,9 @@ set_option autoImplicit false
   constant : ℝ
 
 /-- Action value. -/
-def actionValue (action : QuadraticAction) (coordinate : ℝ) : ℝ :=
+noncomputable def actionValue
+    (action : QuadraticAction)
+    (coordinate : ℝ) : ℝ :=
   action.hessian * coordinate ^ 2 / 2 +
     action.linear * coordinate + action.constant
 
@@ -71,7 +73,8 @@ structure ActionSpecification where
   hessianNonzero : hessian ≠ 0
 
 /-- Canonical action realizing the full specification. -/
-def canonicalAction (specification : ActionSpecification) : QuadraticAction :=
+noncomputable def canonicalAction
+    (specification : ActionSpecification) : QuadraticAction :=
   { hessian := specification.hessian
     linear := -specification.hessian * specification.criticalPoint
     constant := specification.referenceValue +
