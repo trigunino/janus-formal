@@ -8,36 +8,37 @@ set_option autoImplicit false
 universe u v
 
 /-- A tower of finite jets with truncation maps. -/
-structure JetTower (Section : Type u) where
+structure JetTower (SectionSpace : Type u) where
   Jet : ℕ → Type v
-  jet : ∀ order, Section → Jet order
+  jet : ∀ order, SectionSpace → Jet order
   truncate :
     ∀ {lower higher},
       lower ≤ higher → Jet higher → Jet lower
   truncateJet :
     ∀ {lower higher}
       (hOrder : lower ≤ higher)
-      (section : Section),
-      truncate hOrder (jet higher section) =
-        jet lower section
+      (sectionValue : SectionSpace),
+      truncate hOrder (jet higher sectionValue) =
+        jet lower sectionValue
 
 /-- One finite-order factorization of an operator. -/
 structure FiniteOrderFactorization
-    {Section : Type u}
-    (tower : JetTower Section)
+    {SectionSpace : Type u}
+    (tower : JetTower SectionSpace)
     (Target : Type v) where
   order : ℕ
-  operator : Section → Target
+  operator : SectionSpace → Target
   evaluator : tower.Jet order → Target
   factorization :
-    ∀ section,
-      operator section = evaluator (tower.jet order section)
+    ∀ sectionValue,
+      operator sectionValue =
+        evaluator (tower.jet order sectionValue)
 
 /-- Lift an evaluator to any higher jet order by truncation. -/
 def liftEvaluator
-    {Section : Type u}
+    {SectionSpace : Type u}
     {Target : Type v}
-    (tower : JetTower Section)
+    (tower : JetTower SectionSpace)
     (factorization : FiniteOrderFactorization tower Target)
     (higher : ℕ)
     (hOrder : factorization.order ≤ higher) :
@@ -48,19 +49,19 @@ def liftEvaluator
 
 /-- Raising the jet order does not change the represented operator. -/
 theorem lifted_evaluator_factorization
-    {Section : Type u}
+    {SectionSpace : Type u}
     {Target : Type v}
-    (tower : JetTower Section)
+    (tower : JetTower SectionSpace)
     (factorization : FiniteOrderFactorization tower Target)
     (higher : ℕ)
     (hOrder : factorization.order ≤ higher)
-    (section : Section) :
-    factorization.operator section =
+    (sectionValue : SectionSpace) :
+    factorization.operator sectionValue =
       liftEvaluator tower factorization higher hOrder
-        (tower.jet higher section) := by
+        (tower.jet higher sectionValue) := by
   unfold liftEvaluator
   rw [tower.truncateJet]
-  exact factorization.factorization section
+  exact factorization.factorization sectionValue
 
 /-- Sum of finitely many local orders, used as a simple uniform bound. -/
 def finiteCoverOrderBound (orders : List ℕ) : ℕ :=
@@ -136,10 +137,10 @@ theorem missing_finite_subcover_blocks_uniform_order
   exact hMissing hClosed.2.1
 
 /--
-Peetre--Slovak yields local factorization through finite jets.  A single global
+Peetre--Slovak yields local factorization through finite jets. A single global
 order follows on a region admitting finitely many such neighborhoods, after
 raising every local evaluator to the common order and proving compatibility on
-overlaps.  Compactness of the base alone is insufficient when the local order
+overlaps. Compactness of the base alone is insufficient when the local order
 also varies over an unbounded configuration/jet space.
 -/
 structure JanusUniformOrderPhysicalStatus where
