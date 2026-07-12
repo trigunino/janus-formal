@@ -107,8 +107,7 @@ theorem euclidean_vector_form_invariant
     rcases first with ⟨firstX, firstY, firstZ⟩
     rcases second with ⟨secondX, secondY, secondZ⟩
     simp [vectorBilinearValue, euclideanVectorForm,
-      flipX, flipY, flipZ, swapXY, swapYZ]
-    ring
+      flipX, flipY, flipZ, swapXY, swapYZ] <;> ring
 
 /-- Signed permutations force every tangent bilinear form to be Euclidean up to scale. -/
 theorem vector_bilinear_unique_up_to_scale
@@ -123,9 +122,8 @@ theorem vector_bilinear_unique_up_to_scale
   have hZY := hInvariant.flipYInvariant basisZ basisY
   have hYY := hInvariant.swapXYInvariant basisX basisX
   have hZZ := hInvariant.swapYZInvariant basisY basisY
-  norm_num [vectorBilinearValue, flipX, flipY,
-    swapXY, swapYZ, basisX, basisY, basisZ] at
-      hXY hXZ hYX hZX hYZ hZY hYY hZZ
+  norm_num [vectorBilinearValue, flipX, flipY, swapXY, swapYZ,
+    basisX, basisY, basisZ] at hXY hXZ hYX hZX hYZ hZY hYY hZZ
   have hXYZero : form.xy = 0 := by linarith
   have hXZZero : form.xz = 0 := by linarith
   have hYXZero : form.yx = 0 := by linarith
@@ -285,10 +283,9 @@ theorem scalar_traceless_invariant_is_zero
   have hYZ := hInvariant.flipYInvariant tensorBasisYZ
   have hAB := hInvariant.swapXYInvariant tensorBasisA
   have hB := hInvariant.swapYZInvariant tensorBasisB
-  norm_num [scalarTensorValue, tensorFlipX, tensorFlipY,
-    tensorSwapXY, tensorSwapYZ, tensorBasisA, tensorBasisB,
-    tensorBasisXY, tensorBasisXZ, tensorBasisYZ] at
-      hXY hXZ hYZ hAB hB
+  norm_num [scalarTensorValue, tensorFlipX, tensorFlipY, tensorSwapXY,
+    tensorSwapYZ, tensorBasisA, tensorBasisB, tensorBasisXY,
+    tensorBasisXZ, tensorBasisYZ] at hXY hXZ hYZ hAB hB
   have hXYZero : coupling.xy = 0 := by linarith
   have hXZZero : coupling.xz = 0 := by linarith
   have hYZZero : coupling.yz = 0 := by linarith
@@ -323,7 +320,7 @@ theorem inversion_forbids_odd_even_pairing
 /--
 P.E low-rank verdict: tangent-vector pairings are unique up to the Euclidean
 normalization, while scalar-vector, scalar-traceless and inversion-odd/even
-cross pairings vanish.  These are explicit finite-coordinate versions of the
+cross pairings vanish. These are explicit finite-coordinate versions of the
 multiplicity-zero/one statements usually obtained from `O(3)` representation
 theory.
 -/
