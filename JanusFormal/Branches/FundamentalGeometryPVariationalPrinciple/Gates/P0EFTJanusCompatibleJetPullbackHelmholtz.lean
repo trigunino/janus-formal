@@ -30,6 +30,20 @@ def pullbackOperator
   composeOperators (transposeOperator jetMap)
     (composeOperators targetHessian jetMap)
 
+/-- Apply a two-sector linear map. -/
+def applyOperator
+    (operator : LinearOperator2)
+    (x y : ℝ) : ℝ × ℝ :=
+  (operator.xx * x + operator.xy * y,
+    operator.yx * x + operator.yy * y)
+
+/-- Quadratic form represented by an arbitrary two-sector operator. -/
+noncomputable def quadraticFormValue
+    (operator : LinearOperator2)
+    (x y : ℝ) : ℝ :=
+  (x * (operator.xx * x + operator.xy * y) +
+    y * (operator.yx * x + operator.yy * y)) / 2
+
 /-- Transposition is involutive. -/
 @[simp] theorem transpose_operator_involutive
     (operator : LinearOperator2) :
@@ -67,6 +81,31 @@ theorem pullback_operator_formally_self_adjoint
   rw [hTarget]
   ring
 
+/-- The matrix pullback identity holds directly at the quadratic-form level. -/
+theorem pullback_quadratic_form_identity
+    (jetMap targetHessian : LinearOperator2)
+    (x y : ℝ) :
+    quadraticFormValue
+        (pullbackOperator jetMap targetHessian) x y =
+      quadraticFormValue targetHessian
+        (applyOperator jetMap x y).1
+        (applyOperator jetMap x y).2 := by
+  unfold quadraticFormValue pullbackOperator
+    composeOperators transposeOperator applyOperator
+  ring
+
+/-- For a self-adjoint operator, the canonical potential equals its quadratic form. -/
+theorem canonical_potential_value_eq_quadratic_form
+    (operator : LinearOperator2)
+    (hSelfAdjoint : FormallySelfAdjoint operator)
+    (x y : ℝ) :
+    potentialValue (canonicalPotential operator) x y =
+      quadraticFormValue operator x y := by
+  unfold potentialValue canonicalPotential quadraticFormValue
+  unfold FormallySelfAdjoint at hSelfAdjoint
+  rw [hSelfAdjoint]
+  ring
+
 /-- Every pullback of an actual Hessian passes the quadratic Helmholtz test. -/
 theorem pullback_of_hessian_is_helmholtz
     (jetMap : LinearOperator2)
@@ -91,6 +130,29 @@ theorem pullback_of_hessian_has_source_potential
       (hessianOperator targetPotential))).2
     (pullback_of_hessian_is_helmholtz
       jetMap targetPotential)
+
+/--
+Stronger positive bridge: the canonical source action is literally the target
+quadratic action restricted along the compatible-jet map.
+-/
+theorem pulled_back_canonical_action_identity
+    (jetMap targetHessian : LinearOperator2)
+    (hTarget : FormallySelfAdjoint targetHessian)
+    (x y : ℝ) :
+    potentialValue
+        (canonicalPotential
+          (pullbackOperator jetMap targetHessian)) x y =
+      potentialValue (canonicalPotential targetHessian)
+        (applyOperator jetMap x y).1
+        (applyOperator jetMap x y).2 := by
+  rw [canonical_potential_value_eq_quadratic_form
+      (pullbackOperator jetMap targetHessian)
+      (pullback_operator_formally_self_adjoint
+        jetMap targetHessian hTarget),
+    canonical_potential_value_eq_quadratic_form
+      targetHessian hTarget]
+  exact pullback_quadratic_form_identity
+    jetMap targetHessian x y
 
 /-- Identity compatible-jet map. -/
 def identityJetMap : LinearOperator2 :=
@@ -168,7 +230,9 @@ Corrected P.F verdict:
   its linearization `J`;
 * Helmholtz does not follow from that compatibility alone;
 * Helmholtz follows when the response on compatible invariants is represented
-  by a self-adjoint bilinear form `H`, because the source Hessian is `Jᵀ H J`.
+  by a self-adjoint bilinear form `H`, because the source Hessian is `Jᵀ H J`;
+* the resulting source action is exactly the target action restricted along
+  the compatible-jet map.
 -/
 structure CorrectedPFVerdict where
   geometrySuppliesCompatibleJetMap : Prop
@@ -177,6 +241,7 @@ structure CorrectedPFVerdict where
   pullbackHessianFormulaDerived : Prop
   pullbackAutomaticallyHelmholtz : Prop
   variationalPrimitiveExistsLocally : Prop
+  actionRestrictionIdentityProved : Prop
 
 
 def correctedPFVerdictClosed
@@ -186,7 +251,8 @@ def correctedPFVerdictClosed
   s.selfAdjointTargetPairingIsAdditional /\
   s.pullbackHessianFormulaDerived /\
   s.pullbackAutomaticallyHelmholtz /\
-  s.variationalPrimitiveExistsLocally
+  s.variationalPrimitiveExistsLocally /\
+  s.actionRestrictionIdentityProved
 
 end P0EFTJanusCompatibleJetPullbackHelmholtz
 end JanusFormal
