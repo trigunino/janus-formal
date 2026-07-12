@@ -13,8 +13,11 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/**"
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean"
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
+      - "docs/program_p_variational_principle.md"
       - "scripts/audit_janus_fundamental_geometry_d.py"
       - "scripts/audit_janus_holonomy_determinant.py"
       - "scripts/audit_janus_heat_kernel_effective_action.py"
@@ -37,8 +40,11 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/**"
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean"
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
+      - "docs/program_p_variational_principle.md"
       - "scripts/audit_janus_fundamental_geometry_d.py"
       - "scripts/audit_janus_holonomy_determinant.py"
       - "scripts/audit_janus_heat_kernel_effective_action.py"
@@ -65,7 +71,7 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build Program D, D7, D8 and D10
+      - name: Build Program D, D7, D8, D10 and P
         run: |
           set +e
           lake build \
@@ -73,6 +79,7 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryD7SpectralTheory \
             JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation \
             JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly \
+            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple \
             > program-d-lean.log 2>&1
           status=$?
           cat program-d-lean.log
