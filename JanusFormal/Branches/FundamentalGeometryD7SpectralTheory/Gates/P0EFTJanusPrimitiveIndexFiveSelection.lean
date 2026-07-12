@@ -9,7 +9,7 @@ set_option autoImplicit false
 open P0EFTJanusMinimalZ4AnomalyContent
 open P0EFTJanusPeriodicQuarterCompetition
 
-/-- Index bookkeeping for a rank-`r` fermion multiplet coupled to a monopole line. -/
+/-- Index bookkeeping for a rank-r fermion multiplet coupled to a monopole line. -/
 structure FlavorMonopoleIndexData where
   flavorRank : ℕ
   monopoleNumber : ℤ
@@ -76,7 +76,7 @@ theorem primitive_rank_below_five_cannot_stabilize
   exact below_five_modes_cannot_stabilize
     s.flavorRank hBelow radial
 
-/-- Primitive rank five reaches the arithmetic root `r=1/3`. -/
+/-- Primitive rank five reaches the arithmetic root r = 1/3. -/
 theorem primitive_rank_five_has_one_third_root
     (s : FlavorMonopoleIndexData)
     (hPrimitive : s.monopoleNumber.natAbs = 1)
@@ -87,7 +87,7 @@ theorem primitive_rank_five_has_one_third_root
     hRank]
   exact third_is_one_to_five_stationary
 
-/-- Odd multiplicity `2*k+1` leaves the minimal positive half-level at bare level `-k`. -/
+/-- Odd multiplicity 2*k+1 leaves the minimal positive half-level at bare level -k. -/
 theorem odd_multiplicity_minimal_positive_half_level
     (k : ℤ) :
     positiveFoldDoubledLevel (-k) (2 * k + 1) = 1 := by
@@ -101,7 +101,7 @@ theorem odd_multiplicity_minimal_negative_half_level
   unfold negativeFoldDoubledLevel
   ring
 
-/-- Primitive rank five gives five towers and the `+/-1/2` PT anomaly pair. -/
+/-- Primitive rank five gives five towers and the opposite PT half-level pair. -/
 theorem primitive_rank_five_index_anomaly_matrix
     (s : FlavorMonopoleIndexData)
     (hPrimitive : s.monopoleNumber.natAbs = 1)
