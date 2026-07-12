@@ -7,6 +7,7 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality.lean"
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/**"
+      - "docs/program_master_roadmap.md"
       - "docs/program_pe_jet_universality_proof.md"
       - "docs/program_pe_lemma2_naturality_equivariance.md"
       - "scripts/audit_janus_pe_jet_universality.py"
@@ -19,6 +20,7 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality.lean"
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/**"
+      - "docs/program_master_roadmap.md"
       - "docs/program_pe_jet_universality_proof.md"
       - "docs/program_pe_lemma2_naturality_equivariance.md"
       - "scripts/audit_janus_pe_jet_universality.py"
