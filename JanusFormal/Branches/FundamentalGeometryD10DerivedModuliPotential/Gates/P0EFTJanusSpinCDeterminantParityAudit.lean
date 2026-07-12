@@ -7,7 +7,7 @@ set_option autoImplicit false
 
 /--
 On a spin three-manifold, twisting a chosen spinor bundle by a complex line
-`E` produces a SpinC structure whose determinant line is `E^2`.  This module
+`E` produces a SpinC structure whose determinant line is `E^2`. This module
 records only the resulting Chern-number arithmetic.
 -/
 structure SpinTwistChernData where
@@ -48,8 +48,9 @@ theorem odd_determinant_excludes_spin_twist_realization
     (s : SpinTwistChernData)
     (hOdd : Odd s.determinantChernNumber) :
     False := by
-  have hEven := determinant_chern_number_even s
-  exact Int.not_even_and_odd s.determinantChernNumber ⟨hEven, hOdd⟩
+  rcases determinant_chern_number_even s with ⟨evenHalf, hEven⟩
+  rcases hOdd with ⟨oddHalf, hOdd⟩
+  omega
 
 /--
 Correct convention for the Janus primitive monopole candidate:
