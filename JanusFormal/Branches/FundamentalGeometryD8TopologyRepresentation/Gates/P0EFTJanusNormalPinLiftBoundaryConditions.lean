@@ -145,11 +145,11 @@ theorem normal_root_mode_phase
   cases choice
   · change ((4 * mode + 1 : ℤ) : ZMod 4) = 1
     push_cast
-    have hFour : (4 : ZMod 4) = 0 := by norm_num
+    have hFour : (4 : ZMod 4) = 0 := by native_decide
     rw [hFour, zero_mul, zero_add]
   · change ((4 * mode - 1 : ℤ) : ZMod 4) = 3
     push_cast
-    have hFour : (4 : ZMod 4) = 0 := by norm_num
+    have hFour : (4 : ZMod 4) = 0 := by native_decide
     rw [hFour, zero_mul, zero_sub]
     native_decide
 
