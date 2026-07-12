@@ -163,16 +163,21 @@ theorem invariant_pairing_is_scalar_dot
     (first second : Vector3) :
     pairingValue pairing first second =
       pairing.xx * dotProduct first second := by
-  rw [invariant_xy_zero pairing hInvariant,
-    invariant_xz_zero pairing hInvariant,
-    invariant_yx_zero pairing hInvariant,
-    invariant_yz_zero pairing hInvariant,
-    invariant_zx_zero pairing hInvariant,
-    invariant_zy_zero pairing hInvariant,
-    ← invariant_xx_eq_yy pairing hInvariant,
-    ← invariant_yy_eq_zz pairing hInvariant,
-    ← invariant_xx_eq_yy pairing hInvariant]
+  have hXY := invariant_xy_zero pairing hInvariant
+  have hXZ := invariant_xz_zero pairing hInvariant
+  have hYX := invariant_yx_zero pairing hInvariant
+  have hYZ := invariant_yz_zero pairing hInvariant
+  have hZX := invariant_zx_zero pairing hInvariant
+  have hZY := invariant_zy_zero pairing hInvariant
+  have hYY : pairing.yy = pairing.xx :=
+    (invariant_xx_eq_yy pairing hInvariant).symm
+  have hZZ : pairing.zz = pairing.xx := by
+    calc
+      pairing.zz = pairing.yy :=
+        (invariant_yy_eq_zz pairing hInvariant).symm
+      _ = pairing.xx := hYY
   unfold pairingValue dotProduct
+  rw [hXY, hXZ, hYX, hYZ, hZX, hZY, hYY, hZZ]
   ring
 
 /-- Canonical scalar multiple of the Euclidean metric. -/
