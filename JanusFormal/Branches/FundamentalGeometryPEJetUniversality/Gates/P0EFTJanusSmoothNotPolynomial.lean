@@ -8,24 +8,25 @@ set_option autoImplicit false
 /-- Pointwise exponential operation on scalar sections. -/
 noncomputable def pointwiseExp
     {Base : Type*}
-    (section : Base → ℝ) : Base → ℝ :=
-  fun point => Real.exp (section point)
+    (sectionValue : Base → ℝ) : Base → ℝ :=
+  fun point => Real.exp (sectionValue point)
 
 /-- Pointwise exponential commutes with every pullback. -/
 theorem pointwise_exp_natural
     {SourceBase TargetBase : Type*}
     (map : SourceBase → TargetBase)
-    (section : TargetBase → ℝ) :
-    pointwiseExp (section ∘ map) =
-      pointwiseExp section ∘ map := by
+    (sectionValue : TargetBase → ℝ) :
+    pointwiseExp (sectionValue ∘ map) =
+      pointwiseExp sectionValue ∘ map := by
   rfl
 
 /-- The operation depends only on the value, i.e. the zero jet, at a point. -/
 theorem pointwise_exp_factors_through_zero_jet
     {Base : Type*}
-    (section : Base → ℝ)
+    (sectionValue : Base → ℝ)
     (point : Base) :
-    pointwiseExp section point = Real.exp (section point) := by
+    pointwiseExp sectionValue point =
+      Real.exp (sectionValue point) := by
   rfl
 
 /-- Forward finite difference with unit step. -/
@@ -85,16 +86,16 @@ trivial scalar bundle and an order-zero natural operation. -/
 theorem smooth_local_natural_does_not_imply_polynomial :
     (∀ {SourceBase TargetBase : Type*}
       (map : SourceBase → TargetBase)
-      (section : TargetBase → ℝ),
-      pointwiseExp (section ∘ map) =
-        pointwiseExp section ∘ map) /\
+      (sectionValue : TargetBase → ℝ),
+      pointwiseExp (sectionValue ∘ map) =
+        pointwiseExp sectionValue ∘ map) /\
     Not (HasFiniteDifferencePolynomialCertificate Real.exp) := by
   exact ⟨pointwise_exp_natural,
     exp_has_no_finite_difference_polynomial_certificate⟩
 
 /--
 The correct target of the classification is therefore a smooth equivariant map
-on a finite jet fiber.  Polynomial invariant theory applies only after adding a
+on a finite jet fiber. Polynomial invariant theory applies only after adding a
 polynomial/algebraic dependence hypothesis.
 -/
 structure PolynomialUpgradeStatus where
