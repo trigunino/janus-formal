@@ -12,7 +12,9 @@ Read these files in order:
 2. [`docs/current_status.md`](docs/current_status.md) — current integration, CI and scientific status;
 3. [`docs/program_master_roadmap.md`](docs/program_master_roadmap.md) — detailed dependency graph;
 4. [`docs/program_p_variational_principle.md`](docs/program_p_variational_principle.md) — Program P in detail;
-5. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
+5. [`docs/program_pe_categorical_jet_equivalence.md`](docs/program_pe_categorical_jet_equivalence.md) — corrected categorical jet theorem and Janus groupoid obligations;
+6. [`docs/program_pd_global_pairing_modules.md`](docs/program_pd_global_pairing_modules.md) — correction from pointwise multiplicity to global coupling modules;
+7. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
 
 ## Repository layout
 
@@ -50,6 +52,7 @@ It imports the shared core only. Build focused programs explicitly, for example:
 ```bash
 lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
 ```
 
@@ -63,11 +66,12 @@ The strongest architecture presently supported is:
 mapping-torus / one-sided-throat geometry
   -> normal-line Z2 and candidate quarter-phase lift
   -> natural bundles and elliptic-symbol families
-  -> finite-jet equivariant classification
-  -> invariant pairings and compatibility pullbacks
+  -> regular-local finite-jet operators
+  -> structured-jet equivariant morphisms with holonomic composition
+  -> pointwise invariant pairings plus invariant scalar coefficient modules
   -> Helmholtz / Noether / anomaly tests
   -> action class plus finite renormalization
   -> stable vacuum and absolute-scale question
 ```
 
-The final three arrows remain open in the concrete Janus theory. See `docs/current_status.md` for the precise boundary between proved algebra, executable checks and open physics.
+The categorical equivalence is classical for ordinary natural and gauge-natural bundles, but its decorated SpinC-immersion specialization still requires a structured jet groupoid and descent theorem. Pointwise multiplicity-one pairings do not by themselves give one constant global coupling. The final variational, normalization and absolute-scale arrows also remain open in the concrete Janus theory. See `docs/current_status.md` for the precise boundary between proved algebra, executable checks and open physics.
