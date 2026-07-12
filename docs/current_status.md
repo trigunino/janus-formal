@@ -1,6 +1,6 @@
 # Janus Formal — Current Status
 
-This is the canonical status document for readers who did not follow the research conversation. Detailed derivations remain in the program-specific documents; this file states what is in the repository, what is validated and what remains open.
+This is the canonical status document for readers who did not follow the research conversation. Detailed derivations remain in the program-specific documents; this file states what is integrated, what is validated and what remains open.
 
 ## 1. Repository integration status
 
@@ -12,7 +12,7 @@ PR 2  research/rp4-twisted-four-form-alpha <- research/fundamental-geometry-d
 PR 3  research/fundamental-geometry-d <- research/fundamental-geometry-dirac-spectral
 ```
 
-They were merged from the bottom of the stack upward. Consequently, `main` received PR 1, while the later Program D/P/P.E and D2 changes remained on the intermediate research branches rather than propagating automatically to `main`.
+They were merged from the bottom of the stack upward. Consequently, `main` received PR 1, while the later Program D/P/P.E and D2 changes remained on intermediate research branches rather than propagating automatically to `main`.
 
 The consolidation branch
 
@@ -20,28 +20,54 @@ The consolidation branch
 agent/consolidate-programs-and-p-status
 ```
 
-is based on the top scientific branch and is intended to bring the complete stack, plus the documentation cleanup, into `main` through one final pull request.
+is based on the top scientific branch and is proposed to `main` through draft PR 5. It contains the complete stacked research history plus the documentation, entry-point and CI cleanup.
 
-No scientific files are being discarded in this cleanup. Historical and exploratory branches remain available; the cleanup only establishes canonical navigation and honest validation labels.
+No scientific files were discarded. Historical and exploratory branches remain available; the cleanup establishes canonical navigation, focused heads and explicit evidence labels.
 
-## 2. Validation truth
+## 2. Validation truth after consolidation
 
-### Last independently green focused workflows
+All four workflows attached to the current PR head pass:
 
-| Target | Last checked result | Interpretation |
-| --- | --- | --- |
-| `JanusFormal.Branches.FundamentalGeometryDiracSpectral` | green | focused D2 spectral arithmetic, Python audit and tests passed on its merged head |
-| `JanusFormal.Branches.FundamentalGeometryPEJetUniversality` | green | corrected finite-jet universality workflow passed on its merged head |
+```text
+Programs D and P integration matrix       success
+Program D2 Dirac spectral geometry       success
+Program PE jet universality              success
+Janus deep alpha completion              success
+```
 
-### Not globally green
+### Green focused Lean heads
 
-The broad `Program D fundamental geometry` workflow was red on the last pre-consolidation head. Its Python job passed the geometry, heat-kernel and invariant-pairing audits before failing in the spinor-pairing audit; its Lean job also had integration failures. Therefore:
+```text
+JanusFormal.Branches.FundamentalGeometryD
+JanusFormal.Branches.FundamentalGeometryDiracSpectral
+JanusFormal.Branches.FundamentalGeometryD7SpectralTheory
+JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation
+JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly
+JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+JanusFormal.Branches.FundamentalGeometryPEInvariantPairings
+JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
+```
 
-- individual theorems and focused heads may be valid;
-- the combined D/P integration must not be described as globally green;
-- all build claims in the registry must distinguish `green`, `present but unverified`, and `gate collection without a head`.
+D9 and D11 remain gate collections without supported standalone entry files; they are not advertised as buildable heads.
 
-CI on the consolidation pull request is the next source of truth.
+### Green executable audits
+
+The focused Python audits and tests pass for:
+
+- fundamental geometry;
+- holonomy determinant;
+- heat-kernel effective action;
+- D7 Seeley–DeWitt coefficients;
+- invariant pairings;
+- spinor pairings;
+- D2 spectral geometry;
+- P-E jet universality;
+- the separate deep-alpha audit suite.
+
+### Meaning of “green”
+
+A green Lean head means that its imported formal statements compile. It does **not** mean that every abstract proposition stored in a status structure has been realized by a concrete geometric or physical construction. The evidence labels below remain essential.
 
 ## 3. Stable scientific architecture
 
@@ -91,7 +117,7 @@ Thus `Z4` is a holonomy/lift phenomenon. The existence and physical assignment o
 
 Program P asks how one physical Janus action can be selected or reconstructed without fitting the desired radius or vacuum.
 
-### P0 — moduli geometry no-go
+### P0 — moduli-geometry no-go
 
 **Formalized in finite models:** a metric does not select a potential; a symplectic form does not select a Hamiltonian; a Kähler-like package still requires a moment map or functional.
 
@@ -111,9 +137,9 @@ Program P asks how one physical Janus action can be selected or reconstructed wi
 
 ### P-C — Helmholtz reconstruction
 
-**Formalized:** in finite quadratic models, Hessian realizability is equivalent to formal self-adjointness. PT and one normalization remove the affine ambiguity. Polynomial finite models demonstrate reconstruction of a cubic potential from a Helmholtz-compatible Euler source.
+**Formalized:** in finite quadratic models, Hessian realizability is equivalent to formal self-adjointness. PT and one normalization remove the affine ambiguity. Polynomial finite models reconstruct a cubic potential from a Helmholtz-compatible Euler source.
 
-**Open in Janus:** derive the complete nonlinear Euler–Lagrange source, prove gauge/Noether compatibility, all Helmholtz conditions, variational-bicomplex obstruction vanishing, and classify boundary/null Lagrangians.
+**Open in Janus:** derive the complete nonlinear Euler–Lagrange source, prove gauge/Noether compatibility, all nonlinear Helmholtz conditions, variational-bicomplex obstruction vanishing, and classify boundary/null Lagrangians.
 
 **Conclusion:** P-C is the strongest inverse route, but a Hessian at one background is not a proof of the global nonlinear action.
 
@@ -121,11 +147,13 @@ Program P asks how one physical Janus action can be selected or reconstructed wi
 
 **Formalized/audited in low-rank models:**
 
-- `Z4` charge neutrality forbids same-quarter quadratic masses and allows the conjugate `(+i,-i)` cross pairing;
+- `Z4` neutrality forbids same-quarter quadratic masses and allows the conjugate `(+i,-i)` cross pairing;
 - vector self-pairing is unique up to scale under the tested rotation group;
 - scalar–vector, scalar–traceless and vector–traceless scalar pairings vanish;
 - finite signed permutations leave two traceless-tensor quadratic forms, while a generic continuous rotation reduces them to the Frobenius pairing up to scale;
-- repeated irreducible sectors leave multiplicity-space matrices.
+- the fundamental `Spin(3)=SU(2)` spinor has one invariant complex bilinear epsilon pairing and one invariant Hermitian pairing up to scale;
+- repeated irreducible sectors leave multiplicity-space matrices;
+- graded fusion rules distinguish allowed bilinear/trilinear channels and show that bilinear multiplicity-one does not imply quartic uniqueness.
 
 **Conclusion:** P-D converts arbitrary couplings into invariant-space dimensions, but surviving normalizations and multiplicity matrices still require a parent or microscopic law.
 
@@ -176,25 +204,24 @@ actual decorated Janus field/category data
   -> absolute scale
 ```
 
-The repository has meaningful theorems and no-go results through the abstract/finitely modeled Helmholtz, pairing and jet layers. It does **not** yet contain the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
+The repository now has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, jet and compatibility stages. It does **not** yet contain the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
 
-## 7. Immediate cleanup and research priorities
+## 7. Immediate priorities
 
-### Repository priorities
+### Repository
 
-1. merge the consolidation branch into `main`;
-2. run focused CI per canonical head rather than one misleading all-program build;
-3. repair or quarantine failing integration modules;
-4. add standalone heads only after their imports build;
-5. keep historical documents but point status statements back to this file.
+1. review and merge PR 5 into `main`;
+2. retain focused CI rather than one opaque all-program job;
+3. add D9/D11 standalone heads only after their gate collections are integrated and buildable;
+4. keep historical documents, but route all status claims through this file.
 
-### Scientific priorities for Program P
+### Scientific Program P
 
-1. specify the exact field space and metric formulation without double counting;
-2. construct the concrete Janus compatibility map and its jet linearization;
-3. determine the target self-adjoint pairing from a derived parent action;
-4. classify the actual SpinC/PT/Z4/BRST invariant pairing spaces;
-5. derive the full Euler source and prove nonlinear Helmholtz/Noether conditions;
+1. specify the exact field space and choose induced, auxiliary or bulk metric formulation without double counting;
+2. construct the concrete Janus compatibility map `K` and its jet linearization `J`;
+3. derive the target self-adjoint pairing `H` from an actual parent or microscopic action;
+4. classify the actual SpinC/PT/Z4/BRST invariant pairing and fusion spaces;
+5. derive the full nonlinear Euler source and prove Helmholtz/Noether conditions;
 6. compute variational cohomology and boundary/null terms;
 7. apply anomaly cancellation in the same regulator and field content;
 8. derive normalization and finite counterterms without observed-radius input.
@@ -205,4 +232,4 @@ The repository has meaningful theorems and no-go results through the abstract/fi
 - `PROGRAM.md` is the stable high-level map.
 - `program_master_roadmap.md` is the detailed dependency tree.
 - program-specific documents contain derivations and theorem queues.
-- `janus_branch_registry.md` lists buildable heads and explicitly labels missing or unverified heads.
+- `janus_branch_registry.md` lists supported heads and explicitly labels gate-only collections.
