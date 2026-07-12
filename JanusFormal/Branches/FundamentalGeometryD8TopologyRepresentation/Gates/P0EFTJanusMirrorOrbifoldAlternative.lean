@@ -51,7 +51,9 @@ theorem glide_loop_has_no_nonzero_two_torsion
     (loop : GlideLoopGroup)
     (hDouble : loop + loop = 0) :
     loop = 0 := by
-  omega
+  have hTwice : (2 : ℤ) * loop = 0 := by
+    nlinarith [hDouble]
+  exact (mul_eq_zero.mp hTwice).resolve_left (by norm_num)
 
 /-- A torsion element distinguishes the mirror-orbifold group from the glide group. -/
 theorem mirror_group_has_two_torsion_but_glide_group_does_not :
