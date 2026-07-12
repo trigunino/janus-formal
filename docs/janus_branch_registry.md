@@ -33,7 +33,7 @@ This file is operational. Scientific status lives in `docs/current_status.md`; t
 | **D11 — natural immersion operators** | `JanusFormal/Branches/FundamentalGeometryD11NaturalImmersionOperators/Gates/` | **gate collection** | natural bundle, symbol and jet interfaces; no supported head yet |
 | **P — variational principle** | `lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple` | **present / revalidation required** | P0, P-A, P-B, P-C and invariant-pairing interfaces |
 | **P-E — jet universality** | `lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality` | **green** | corrected regular-local finite-jet/equivariance theorem architecture |
-| **P-D / P-E pairings** | `JanusFormal/Branches/FundamentalGeometryPEInvariantPairings/Gates/` and P-head gates | **gate collection + executable audits** | low-rank invariant pairings and graded fusion rules; no standalone head yet |
+| **P-D / P-E pairings** | `lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings` | **present / revalidation required** | low-rank invariant pairings, graded fusion rules and multiplicity-space freedom |
 | **P-F — compatibility/Helmholtz** | `lake build JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz` | **present / revalidation required** | pullback Hessian, nonlinear correction and Noether bridge |
 
 ## Main completion programs
