@@ -15,6 +15,12 @@ def normalHalfTurn : NormalRootPhase := 2
 def IsNormalSquareRoot (phase : NormalRootPhase) : Prop :=
   phase + phase = normalHalfTurn
 
+instance normalSquareRootDecidable
+    (phase : NormalRootPhase) :
+    Decidable (IsNormalSquareRoot phase) := by
+  unfold IsNormalSquareRoot
+  infer_instance
+
 /-- Exactly the phases `1` and `3` square to the normal half-turn. -/
 theorem normal_square_root_iff_one_or_three :
     ∀ phase : NormalRootPhase,
@@ -52,8 +58,8 @@ theorem pt_preserves_normal_square_roots
   have hClass :=
     (normal_square_root_iff_one_or_three phase).mp hRoot
   rcases hClass with rfl | rfl
-  · simpa using three_is_normal_square_root
-  · simpa using one_is_normal_square_root
+  · exact three_is_normal_square_root
+  · exact one_is_normal_square_root
 
 /-- Neither square root is invariant under PT. -/
 theorem normal_square_root_is_not_pt_fixed
@@ -114,7 +120,7 @@ theorem two_normal_root_characters_are_conjugate
 
 /--
 The one-sided normal line therefore has an order-four complex square-root local
-system, unique only up to PT conjugation.  Topology selects the pair `{+i,-i}`
+system, unique only up to PT conjugation. Topology selects the pair `{+i,-i}`
 but does not select one member without an additional orientation/Pin or vacuum
 choice.
 -/
