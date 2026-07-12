@@ -6,9 +6,7 @@ This file is operational. Scientific status lives in `docs/current_status.md`; t
 
 | Status | Meaning |
 | --- | --- |
-| **green** | focused CI passed on the last checked merged head |
-| **present / revalidation required** | entry file exists, but the post-merge focused build has not yet passed |
-| **integration red** | a broad workflow including the head failed |
+| **green** | focused CI passed on the current consolidation head |
 | **gate collection** | modules exist under `Gates/`, but no supported standalone head exists |
 | **parked** | retained for history or an alternative route; not the current priority |
 
@@ -24,25 +22,25 @@ This file is operational. Scientific status lives in `docs/current_status.md`; t
 
 | Program | Build / location | Status | Scope |
 | --- | --- | --- | --- |
-| **D — fundamental geometry** | `lake build JanusFormal.Branches.FundamentalGeometryD` | **integration red** | mapping-torus, throat, monopole, Pin and geometry-to-physics gates |
+| **D — fundamental geometry** | `lake build JanusFormal.Branches.FundamentalGeometryD` | **green** | mapping-torus, throat, monopole, Pin and geometry-to-physics gates |
 | **D2 — twisted Dirac spectral geometry** | `lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral` | **green** | focused monopole spectrum, eta/holonomy, ratio correction and scale-orbit no-go |
-| **D7 — spectral theory** | `lake build JanusFormal.Branches.FundamentalGeometryD7SpectralTheory` | **present / revalidation required** | heat coefficients, winding/determinant no-go results and conditional synthesis |
-| **D8 — topology and representations** | `lake build JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation` | **present / revalidation required** | free mapping torus, one-sided throat, normal line and quarter-lift audits |
+| **D7 — spectral theory** | `lake build JanusFormal.Branches.FundamentalGeometryD7SpectralTheory` | **green** | heat coefficients, winding/determinant no-go results and conditional synthesis |
+| **D8 — topology and representations** | `lake build JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation` | **green** | free mapping torus, one-sided throat, normal line and quarter-lift audits |
 | **D9 — immersed SpinC elliptic complex** | `JanusFormal/Branches/FundamentalGeometryD9ImmersedSpinCEllipticComplex/Gates/` | **gate collection** | symbol-level immersion, de Rham/Maxwell, metric/ghost and twisted-Dirac modules; no supported head yet |
-| **D10 — Quillen/anomaly** | `lake build JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly` | **present / revalidation required** | determinant-line, anomaly and partition-section interfaces |
+| **D10 — Quillen/anomaly** | `lake build JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly` | **green** | determinant-line, anomaly and partition-section interfaces |
 | **D11 — natural immersion operators** | `JanusFormal/Branches/FundamentalGeometryD11NaturalImmersionOperators/Gates/` | **gate collection** | natural bundle, symbol and jet interfaces; no supported head yet |
-| **P — variational principle** | `lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple` | **present / revalidation required** | P0, P-A, P-B, P-C and invariant-pairing interfaces |
+| **P — variational principle** | `lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple` | **green** | P0, P-A, P-B and P-C variational core plus integrated advanced gates |
+| **P-D — invariant pairings** | `lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings` | **green** | low-rank invariant pairings, graded fusion rules and multiplicity-space freedom |
 | **P-E — jet universality** | `lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality` | **green** | corrected regular-local finite-jet/equivariance theorem architecture |
-| **P-D / P-E pairings** | `lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings` | **present / revalidation required** | low-rank invariant pairings, graded fusion rules and multiplicity-space freedom |
-| **P-F — compatibility/Helmholtz** | `lake build JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz` | **present / revalidation required** | pullback Hessian, nonlinear correction and Noether bridge |
+| **P-F — compatibility/Helmholtz** | `lake build JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz` | **green** | pullback Hessian, nonlinear correction and Noether bridge |
 
 ## Main completion programs
 
 | Program | Build | Status |
 | --- | --- | --- |
-| Quantum world-volume alpha | `lake build JanusFormal.Branches.WorldvolumeQuantumAlpha` | conditional algebra advanced; stable renormalized vacuum and UV law open |
-| Nonlinear bimetric junction alpha | `lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha` | conditional classical chain advanced; full constraints and null charge open |
-| Alpha deep completion matrix | `lake build JanusFormal.Branches.AlphaDeepCompletionMatrix` | compatibility/dependency matrix; no absolute no-fit scale |
+| Quantum world-volume alpha | `lake build JanusFormal.Branches.WorldvolumeQuantumAlpha` | deep-alpha workflow green; physical stable vacuum and UV law remain conditional/open |
+| Nonlinear bimetric junction alpha | `lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha` | deep-alpha workflow green; full constraints and null charge remain open |
+| Alpha deep completion matrix | `lake build JanusFormal.Branches.AlphaDeepCompletionMatrix` | deep-alpha workflow green; no absolute no-fit scale |
 | RP4 twisted four-form alpha | `lake build JanusFormal.Branches.RP4TwistedFourFormAlpha` | retained alternative topological sector |
 | PT-twisted Hopf geometry | `lake build JanusFormal.Branches.JanusTwistedHopfGeometry` | retained geometric candidate; global analytic construction open |
 
