@@ -2,7 +2,7 @@
 Program P.E-J: proof program for finite-jet universality of natural operators on
 decorated SpinC immersions.
 
-The original strong conjecture is corrected in four ways:
+The original strong conjecture is corrected in five ways:
 
 1. Peetre--Slovak gives a local finite-jet factorization under regularity and
    locality hypotheses;
@@ -10,13 +10,16 @@ The original strong conjecture is corrected in four ways:
    holonomic jets are realizable/surjective;
 3. the evaluator is smooth, not automatically polynomial;
 4. a uniform global order, ellipticity and field-content selection require
-   independent hypotheses.
+   independent hypotheses;
+5. the categorical morphism law is holonomic jet composition, not ordinary
+   composition of maps between unprolonged representation fibers.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteOrderUniformization
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothNotPolynomial
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCorrectedJetUniversality
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusJetOperatorComposition
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -31,12 +34,14 @@ structure ProgramStatus where
   holonomicJetRealizationProved : Prop
   naturalityEquivarianceIffProved : Prop
   evaluatorUniquenessProved : Prop
+  holonomicJetCompositionProved : Prop
+  naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
   finiteCoverUniformizationProved : Prop
   unboundedGlobalOrderCounterexampleProved : Prop
   correctedTheoremStated : Prop
-  spinCImmersionJetGroupConstructed : Prop
+  spinCImmersionJetGroupoidConstructed : Prop
   actualJanusNaturalBundlesInserted : Prop
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
@@ -50,6 +55,8 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.holonomicJetRealizationProved /\
   s.naturalityEquivarianceIffProved /\
   s.evaluatorUniquenessProved /\
+  s.holonomicJetCompositionProved /\
+  s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
   s.finiteCoverUniformizationProved /\
@@ -59,16 +66,16 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
 /-- Full Janus specialization. -/
 def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=
   theoremCoreClosed s /\
-  s.spinCImmersionJetGroupConstructed /\
+  s.spinCImmersionJetGroupoidConstructed /\
   s.actualJanusNaturalBundlesInserted /\
   s.ellipticSymbolsClassified /\
   s.globalUniformOrderRegionDerived
 
 /-- The abstract theorem does not close the Janus specialization without the
-actual adapted SpinC jet group. -/
-theorem missing_janus_jet_group_blocks_full_specialization
+actual adapted SpinC structured-jet groupoid. -/
+theorem missing_janus_jet_groupoid_blocks_full_specialization
     (s : ProgramStatus)
-    (hMissing : Not s.spinCImmersionJetGroupConstructed) :
+    (hMissing : Not s.spinCImmersionJetGroupoidConstructed) :
     Not (fullJanusJetUniversalityClosed s) := by
   intro hClosed
   exact hMissing hClosed.2.1
