@@ -1,21 +1,39 @@
-# Program P.E — Invariant Pairings and Residual Coupling Space
+# Program P.D — Pointwise Invariant Pairings and Residual Coupling Shapes
+
+> Globalization correction: [`program_pd_global_pairing_modules.md`](program_pd_global_pairing_modules.md)  
+> Categorical jet setting: [`program_pe_categorical_jet_equivalence.md`](program_pe_categorical_jet_equivalence.md)
+
+## Scope correction
+
+This document classifies invariant pairing **shapes at a fixed representation
+fiber or frozen structured jet**. Its low-rank Lean and SymPy calculations remain
+valid in that scope.
+
+It does not prove that a one-dimensional pointwise pairing space gives one
+constant global natural coupling. Global pairing families form a module over the
+algebra of invariant scalar functions on the structured-jet base; isotropy and
+fiber dimensions can also change between strata. The separate globalization
+document proves this correction and records the remaining theorem queue.
 
 ## Purpose
 
 Programs P-A through P-C reduce the action-selection problem to the remaining
-quadratic and lower-order couplings between natural field sectors. Program P.E
-turns those coefficients into a representation-theory question:
+quadratic and lower-order couplings between natural field sectors. Program P.D
+first turns the **fiberwise shapes** of those coefficients into a
+representation-theory question:
 
 ```text
-Which scalar bilinear maps
+Which scalar bilinear maps at a fixed background jet
 
   E_i x E_j -> R or C
 
 are invariant under tangent rotations, PT, gauge charge and the normal-root Z4?
 ```
 
-The answer determines whether a coupling is forbidden, unique up to one scale,
-or genuinely multi-parameter.
+At that fixed jet, the answer determines whether a pairing is forbidden, unique
+up to a fiberwise scalar, or genuinely multi-parameter. Globalization then
+requires the invariant scalar coefficient algebra and the equivariant pairing
+module.
 
 ## Symmetry layers
 
@@ -31,8 +49,10 @@ Grassmann parity and BRST grading.
 
 The precise global group may be a central product rather than a direct product,
 because the square of the lifted normal generator can coincide with fermion
-parity. Program P.E therefore applies the selection rules layer by layer and
+parity. Program P.D therefore applies the selection rules layer by layer and
 does not silently identify the normal Z4 with gauge U(1) or tangent rotations.
+For a varying background, these local symmetry groups must ultimately be
+organized as isotropy groups of a structured jet groupoid.
 
 ## Discrete charge selection
 
@@ -70,15 +90,16 @@ Lean:
 P0EFTJanusPEChargeSelection.lean
 ```
 
-Exact result:
+Exact pointwise result:
 
 ```text
-conjugate (+i,-i) doublet: one quadratic coefficient up to scale;
-uncharged PT doublet: two coefficients remain (diagonal and cross).
+conjugate (+i,-i) doublet: one quadratic shape up to a fiberwise scalar;
+uncharged PT doublet: two fiberwise coefficients remain (diagonal and cross).
 ```
 
-Thus the Z4 does real work: it removes multiplicity-space freedom in the
-conjugate quarter sector. PT exchange alone does not.
+Thus the Z4 does real pointwise work: it removes multiplicity-space freedom in
+the conjugate quarter sector. PT exchange alone does not. This does not fix the
+allowed scalar as one background-independent constant.
 
 ## Tangent representation audit
 
@@ -119,11 +140,10 @@ coefficients. Hence
 B(v,w) = c * (v_x w_x + v_y w_y + v_z w_z).
 ```
 
-The tangent-vector pairing is unique up to one normalization.
-
-The same reflection tests prove that scalar-vector and scalar-traceless linear
-couplings vanish. Global inversion also forbids an odd vector from pairing to
-an even tensor into a scalar.
+At a fixed representation fiber, the tangent-vector pairing shape is unique up
+to one scalar. The same reflection tests prove that scalar-vector and
+scalar-traceless linear couplings vanish. Global inversion also forbids an odd
+vector from pairing to an even tensor into a scalar.
 
 ## Why finite monodromy is insufficient for the rank-five tensor sector
 
@@ -143,12 +163,12 @@ off-diagonal norm.
 ```
 
 They are independent. Therefore PT, Z4 and a finite cubic subgroup do **not**
-select a unique rank-five tensor kinetic term.
+select a unique rank-five tensor kinetic shape.
 
 A generic continuous rotation mixes the diagonal and off-diagonal subspaces and
-forces their coefficients to agree. The surviving pairing is the Frobenius
-contraction, up to scale. In the coordinates above, a convenient normalized
-matrix is
+forces their fiberwise coefficients to agree. The surviving pointwise pairing
+shape is the Frobenius contraction, up to scale. In the coordinates above, a
+convenient normalized matrix is
 
 ```text
 [[1,   1/2, 0, 0, 0],
@@ -170,7 +190,7 @@ vector               l=1,
 traceless Sym^2      l=2.
 ```
 
-The audit realizes the expected multiplicity rule:
+The audit realizes the expected pointwise multiplicity rule:
 
 ```text
 Hom_G(E_i tensor E_j, scalar)
@@ -178,60 +198,100 @@ Hom_G(E_i tensor E_j, scalar)
   and dimension 1 for the displayed self-pairings.
 ```
 
-However, repeated copies of the same irreducible introduce a multiplicity
-space. Its bilinear forms remain free unless PT, Z4, gauge charge or a
-microscopic law reduces them. This is the correct location of residual
-couplings.
+Repeated copies of the same irreducible introduce a multiplicity space. Its
+bilinear forms remain free unless PT, Z4, gauge charge or a microscopic law
+reduces them. This is one location of residual couplings.
 
-## What P.E has proved and what it has not
+There is a second, independent location: even when the fiberwise invariant
+space has rank one, its coefficient may be a nonconstant invariant function of
+the background jet. Thus the global object is an equivariant module, not merely
+one vector space over the constant scalars.
+
+## Invariant-coefficient module theorem
+
+The focused head now imports
+
+```text
+P0EFTJanusInvariantCoefficientModule.lean
+```
+
+which proves in an abstract action model:
+
+```text
+invariant scalar coefficient
+  * invariant background-dependent pairing
+  -> invariant background-dependent pairing.
+```
+
+It also gives a finite two-background counterexample with one fixed pointwise
+pairing shape but no single constant proportionality factor. This formally
+blocks the inference from pointwise multiplicity one to constant global
+uniqueness.
+
+## What P.D has proved and what it has not
 
 ### Proved/formalized
 
 - Z4 and PT charge-neutrality rules;
-- one-dimensional conjugate-quarter quadratic pairing;
-- two-dimensional uncharged PT-doublet pairing space;
-- uniqueness of the tangent metric pairing up to scale;
+- one-dimensional conjugate-quarter pointwise quadratic pairing shape;
+- two-dimensional uncharged PT-doublet pointwise pairing space;
+- uniqueness of the tangent metric pairing shape up to a fiberwise scalar;
 - vanishing of scalar-vector and scalar-traceless pairings;
 - existence of two independent cubic tensor pairings;
-- equality of their scales under a generic continuous rotation;
-- exact symbolic dimensions in the low-rank `O(3)` audit.
+- equality of their fiberwise scales under a generic continuous rotation;
+- exact symbolic dimensions in the low-rank `O(3)` audit;
+- module closure under invariant scalar coefficients;
+- a finite counterexample to one constant global scale.
 
 ### Still open
 
-- construction of the exact global local-symmetry group or groupoid;
-- `Spin(3)=SU(2)` classification of complex bilinear and Hermitian spinor
-  pairings in the same formal framework;
+- construction of the exact structured local-symmetry groupoid;
+- `Spin(3)=SU(2)` classification of all complex bilinear and Hermitian spinor
+  pairings in the same global framework;
 - gauge/ghost and BRST-graded invariant pairings;
 - all multiplicity spaces arising from flavors, folds and bulk reductions;
-- globalization from pointwise representations to bundle morphisms;
-- normalization of each surviving one-dimensional invariant space;
+- isotropy stratification and possible dimension jumps;
+- globalization from pointwise representations to smooth equivariant bundle
+  morphisms;
+- the invariant scalar algebra on the admissible Janus jet space;
+- finite generation of the equivariant pairing module in the declared
+  polynomial/weighted subclass;
+- normalization of each surviving generator;
 - compatibility with the full Helmholtz, anomaly and Fredholm families.
 
 ## Sharp verdict
 
 ```text
-P.E does not yet fix the action.
+P.D does not yet fix the action.
 
-It converts arbitrary coupling coefficients into:
-  1. forbidden pairings (dimension 0),
-  2. one normalization per multiplicity-one invariant (dimension 1),
+At a fixed structured jet it converts candidate couplings into:
+  1. forbidden pairing shapes (dimension 0),
+  2. one fiberwise shape per multiplicity-one invariant (dimension 1),
   3. explicit matrices on repeated-irrep multiplicity spaces (dimension >1).
+
+Globally it must additionally compute:
+  4. invariant scalar coefficient functions,
+  5. the equivariant pairing module across isotropy strata.
 ```
 
-The central new result is that the rank-five tensor sector is multiplicity one
-only under the full continuous tangent rotation group. Finite monodromy, PT and
-Z4 are insufficient. Conversely, the normal-root Z4 genuinely reduces the
-PT-conjugate quarter doublet to one cross pairing.
+The rank-five tensor sector is pointwise multiplicity one only under the full
+continuous tangent rotation group. Finite monodromy, PT and Z4 are insufficient.
+Conversely, the normal-root Z4 genuinely reduces the PT-conjugate quarter
+doublet to one cross-pairing shape. Neither result fixes a background-dependent
+coefficient or physical normalization.
 
 ## Next theorem queue
 
-1. Formalize the `Spin(3)` fundamental-spinor invariant epsilon tensor and
-   Hermitian metric, each unique up to scale.
-2. Add `U(1)` charge neutrality and BRST/Grassmann grading to the full sector
+1. Construct the structured SpinC/PT/Z4/BRST jet groupoid.
+2. Determine its isotropy stratification and the invariant scalar algebra.
+3. Formalize the `Spin(3)` fundamental-spinor invariant epsilon tensor and
+   Hermitian metric, each unique up to a fiberwise scalar.
+4. Add `U(1)` charge neutrality and BRST/Grassmann grading to the full sector
    label.
-3. Compute the multiplicity matrices for every repeated Janus sector.
-4. Prove the pointwise invariant classifications globalize to natural bundle
-   pairings.
-5. Insert the resulting pairing basis into the coupled Helmholtz operator.
-6. Use the parent bulk action, anomaly constraints and finite matching law to
-   fix the surviving normalizations.
+5. Compute the multiplicity matrices for every repeated Janus sector.
+6. Compute global pairing generators as a module over scalar invariants.
+7. Prove extension across singular isotropy strata.
+8. Insert a finite order/weight-restricted pairing basis into the coupled
+   Helmholtz operator.
+9. Use the parent bulk action, anomaly constraints and finite matching law to fix
+   the surviving normalizations.
