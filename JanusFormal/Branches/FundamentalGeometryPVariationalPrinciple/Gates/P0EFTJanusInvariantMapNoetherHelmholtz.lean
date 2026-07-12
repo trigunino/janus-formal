@@ -87,7 +87,7 @@ theorem gauge_invariant_map_implies_noether
   rw [induced_hessian_action_factorization]
   unfold GaugeInvariant at hInvariant
   rw [hInvariant]
-  rfl
+  apply FieldVector2.ext <;> simp
 
 /-- The same construction satisfies Helmholtz reciprocity. -/
 theorem invariant_map_pairing_implies_helmholtz
@@ -147,8 +147,10 @@ theorem helmholtz_does_not_imply_noether :
       { x := 0, y := 0 } := by
   constructor
   · rfl
-  · norm_num [applyLinearOperator,
-      identityResponse, standardGaugeDirection]
+  · intro hEqual
+    have hX := congrArg FieldVector2.x hEqual
+    norm_num [applyLinearOperator,
+      identityResponse, standardGaugeDirection] at hX
 
 /-- Non-self-adjoint response that nevertheless annihilates the gauge direction. -/
 def noetherButNonHelmholtzResponse : LinearOperator2 :=
@@ -160,7 +162,10 @@ theorem noether_does_not_imply_helmholtz :
         standardGaugeDirection = { x := 0, y := 0 } /\
     Not (FormallySelfAdjoint noetherButNonHelmholtzResponse) := by
   constructor
-  · rfl
+  · apply FieldVector2.ext <;>
+      norm_num [applyLinearOperator,
+        noetherButNonHelmholtzResponse,
+        standardGaugeDirection]
   · norm_num [FormallySelfAdjoint,
       noetherButNonHelmholtzResponse]
 
