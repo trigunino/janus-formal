@@ -16,6 +16,11 @@ Build one branch head at a time.
 | Branch | Build | Status |
 | --- | --- | --- |
 | Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | viable only as state-sector selection; no no-fit alpha law |
+| PT-twisted Hopf geometry | `lake build JanusFormal.Branches.JanusTwistedHopfGeometry` | proposed smooth resolution: real Hopf mapping torus, orientation cover `S3 x S1`, canonical throat `S2 x S1`, compact transgression circle, monodromy/RG scale law and precise Pin-lifted `Z4` criterion |
+| RP4 twisted four-form alpha | `lake build JanusFormal.Branches.RP4TwistedFourFormAlpha` | primitive twisted sector, finite bridge algebra and LL conditional spectrum derived; absolute LL normalization remains open |
+| Quantum world-volume alpha | `lake build JanusFormal.Branches.WorldvolumeQuantumAlpha` | classically scale-invariant scalar/compact-U1/CS candidate, anomaly arithmetic, RG hierarchy and condensate-to-alpha map formalized; stable renormalized vacuum and microscopic UV lock remain open |
+| Nonlinear bimetric junction alpha | `lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha` | common-action integrability, diagonal Noether exchange, PT quasi-local charge and reciprocal interaction candidate formalized; relative kinetic sign, full constraints and null junction require physical closure |
+| Alpha deep completion matrix | `lake build JanusFormal.Branches.AlphaDeepCompletionMatrix` | proves the geometry, classical bimetric junction, quantum world-volume normalization and charge compatibility must close together for absolute no-fit alpha |
 | Native BAO/ruler contract | `lake build JanusFormal.Branches.NativeBAORulerContract` | formulated; blocked by missing native early-time/ruler primitives |
 | Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | projected photon-baryon plasma pushed to formula-complete/input-blocked frontier; other BAO/ruler routes documented as blocked |
 | Early-universe native plasma | `lake build JanusFormal.Branches.JanusEarlyUniverseNativePlasma` | pushed to final early/late matching frontier; entropy cutoff can reach `z=1000`, but same late cosh branch and two-cosh throat gluing do not close without a new transition law or early `H_J(a)` |
