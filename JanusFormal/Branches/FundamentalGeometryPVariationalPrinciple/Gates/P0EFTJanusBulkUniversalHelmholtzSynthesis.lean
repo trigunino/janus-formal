@@ -11,7 +11,7 @@ open P0EFTJanusBulkReducedPotential
 open P0EFTJanusUniversalActionProperty
 
 /-- Action specification induced by a positive bulk Schur complement. -/
-def bulkReducedSpecification
+noncomputable def bulkReducedSpecification
     (bulk : QuadraticBulkBoundaryData)
     (hPositive : 0 < reducedBoundaryHessian bulk) :
     ActionSpecification :=
@@ -21,7 +21,7 @@ def bulkReducedSpecification
     hessianNonzero := ne_of_gt hPositive }
 
 /-- The universal quadratic action selected by the bulk-reduced specification. -/
-def bulkCanonicalAction
+noncomputable def bulkCanonicalAction
     (bulk : QuadraticBulkBoundaryData)
     (hPositive : 0 < reducedBoundaryHessian bulk) : QuadraticAction :=
   canonicalAction (bulkReducedSpecification bulk hPositive)
@@ -91,7 +91,7 @@ theorem parent_normalization_rescales_boundary_hessian
 /--
 Strongest current P-A/P-C synthesis: a well-posed parent bulk variational
 problem supplies an integrable, self-adjoint boundary Hessian and a relative
-universal action.  It is canonical relative to the parent action and boundary
+universal action. It is canonical relative to the parent action and boundary
 conditions, not from the throat moduli alone.
 -/
 structure BulkUniversalPhysicalStatus where
