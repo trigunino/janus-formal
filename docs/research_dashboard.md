@@ -17,29 +17,34 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 
 | Program | Role | Strongest current result | Terminal blocker |
 | --- | --- | --- | --- |
-| **D0/D8** | global geometry and normal lift | free mapping-torus correction; one-sided normal sign and quarter-lift algebra | actual global decorated geometry and Pin/root bundle |
-| **D2** | focused twisted Dirac spectrum | green focused arithmetic/eta/ratio head | global self-adjoint operator and full determinant |
-| **D7** | heat kernel/effective action | local/no-scale and pure-quarter stabilization no-go results | complete field/ghost determinant and finite renormalization |
+| **D0/D8** | global geometry and normal lift | free mapping-torus correction; one-sided normal sign and quarter-lift algebra; focused heads green | actual global decorated geometry and Pin/root bundle |
+| **D2** | focused twisted Dirac spectrum | green arithmetic/eta/ratio head | global self-adjoint operator and full determinant |
+| **D7** | heat kernel/effective action | green local/no-scale and pure-quarter stabilization no-go head | complete field/ghost determinant and finite renormalization |
 | **D9/D11** | elliptic and natural-operator gates | symbol/functor/jet schemas | supported global heads and concrete Janus Fredholm family |
-| **D10** | Quillen/anomalies | canonicity is relative to a specified family | actual family index, anomaly and partition section |
+| **D10** | Quillen/anomalies | green head; canonicity relative to a specified family | actual family index, anomaly and partition section |
 | **P0/P-A** | reject shortcuts and define relative selection | moduli geometry no-go; normalized quadratic uniqueness; parent Schur reduction | derive the parent theory |
 | **P-B** | anomaly consistency | independent of Helmholtz; can constrain discrete arithmetic | actual regulator, field content and global anomaly |
-| **P-C** | inverse variational problem | finite Helmholtz and polynomial reconstruction models | concrete nonlinear Janus Euler source and variational cohomology |
-| **P-D** | invariant pairings | low-rank pairing dimensions, `Z4` neutrality rules and a focused head | exact global symmetry category, multiplicity spaces and normalizations |
+| **P-C** | inverse variational problem | green finite Helmholtz and polynomial reconstruction models | concrete nonlinear Janus Euler source and variational cohomology |
+| **P-D** | invariant pairings | green low-rank pairing, spinor, fusion and `Z4` neutrality head | exact global symmetry category, multiplicity spaces and normalizations |
 | **P-E** | finite jets/equivariance | green corrected jet-universality head | concrete Janus jet group/bundles and elliptic classification |
-| **P-F** | compatibility pullback | `J^T H J` Helmholtz/Noether schema | actual compatibility complex and target pairing |
-| **A/B/C** | scale, junction and charge compatibility | advanced conditional chains | selected action, stable vacuum and common unit |
+| **P-F** | compatibility pullback | green `J^T H J` Helmholtz/Noether schema | actual compatibility complex and target pairing |
+| **A/B/C** | scale, junction and charge compatibility | deep-alpha workflow green; advanced conditional chains | selected action, stable vacuum and common unit |
 | **E** | observations | diagnostics only | native predictions from a closed theory |
 
 ## CI scorecard
 
 | Entry | Current label |
 | --- | --- |
-| `FundamentalGeometryDiracSpectral` | **green** on last focused merged head |
-| `FundamentalGeometryPEJetUniversality` | **green** on last focused merged head |
-| `FundamentalGeometryPEInvariantPairings` | new focused head; consolidation revalidation required |
-| broad Program-D integration | **red** on last pre-consolidation head |
-| D/D7/D8/D10/P/P-F focused heads | present; consolidation revalidation required |
+| `FundamentalGeometryD` | **green** |
+| `FundamentalGeometryDiracSpectral` | **green** |
+| `FundamentalGeometryD7SpectralTheory` | **green** |
+| `FundamentalGeometryD8TopologyRepresentation` | **green** |
+| `FundamentalGeometryD10QuillenAnomaly` | **green** |
+| `FundamentalGeometryPVariationalPrinciple` | **green** |
+| `FundamentalGeometryPEInvariantPairings` | **green** |
+| `FundamentalGeometryPEJetUniversality` | **green** |
+| `FundamentalGeometryPFCompatibilityHelmholtz` | **green** |
+| deep-alpha completion workflow | **green** |
 | D9/D11 collections | gates only; no supported standalone head |
 
 ## Program P scorecard
@@ -50,9 +55,9 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | P-A relative uniqueness | yes | parent action not derived |
 | P-B anomaly logic | yes | actual anomaly/regulator not computed |
 | P-C quadratic/polynomial Helmholtz | yes | nonlinear Euler source/cohomology open |
-| P-D low-rank pairings | partial Lean/Python plus focused head | global SpinC/PT/Z4/BRST classification open |
+| P-D low-rank pairings/fusion | focused Lean head and Python audits green | global SpinC/PT/Z4/BRST classification open |
 | P-E jet theorem architecture | focused head green | Janus specialization open |
-| P-F pullback schema | abstract gates | actual `K`, `J`, `H` and primitive open |
+| P-F pullback schema | focused head green | actual `K`, `J`, `H` and primitive open |
 | finite normalization/counterterms | no | microscopic law open |
 | stable vacuum | no | full renormalized action open |
 | absolute scale | no | scale-breaking and charge compatibility open |
@@ -63,7 +68,7 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 2. Specify the exact Janus field space and metric formulation without double counting.
 3. Build the concrete compatibility map `K`, its linearization `J` and the target pairing `H`.
 4. Construct the adapted SpinC/PT/Z4/BRST jet symmetry and natural bundles.
-5. Classify invariant pairings and smooth equivariant evaluators.
+5. Classify invariant pairings and smooth equivariant evaluators globally.
 6. Derive the full Euler source and prove nonlinear Helmholtz/Noether conditions.
 7. Compute variational cohomology, boundary terms and anomalies in one regulator.
 8. Derive action normalization and finite counterterms microscopically.
