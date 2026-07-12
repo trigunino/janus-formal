@@ -1,0 +1,121 @@
+name: Janus deep alpha completion
+
+on:
+  push:
+    branches:
+      - research/rp4-twisted-four-form-alpha
+    paths:
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha.lean"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha/**"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha.lean"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha/**"
+      - "JanusFormal/Branches/AlphaDeepCompletionMatrix.lean"
+      - "JanusFormal/Branches/AlphaDeepCompletion/**"
+      - "scripts/audit_janus_*"
+      - "tests/test_janus_*"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+      - ".github/workflows/rp4-twisted-four-form-alpha.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
+      - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha.lean"
+      - "JanusFormal/Branches/RP4TwistedFourFormAlpha/**"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha.lean"
+      - "JanusFormal/Branches/WorldvolumeQuantumAlpha/**"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha.lean"
+      - "JanusFormal/Branches/NonlinearBimetricJunctionAlpha/**"
+      - "JanusFormal/Branches/AlphaDeepCompletionMatrix.lean"
+      - "JanusFormal/Branches/AlphaDeepCompletion/**"
+      - "scripts/audit_janus_*"
+      - "tests/test_janus_*"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Build all focused branch heads
+        run: |
+          set +e
+          {
+            echo "== PT-twisted Hopf geometry =="
+            lake build JanusFormal.Branches.JanusTwistedHopfGeometry
+            s0=$?
+            echo "== RP4 conditional program =="
+            lake build JanusFormal.Branches.RP4TwistedFourFormAlpha
+            s1=$?
+            echo "== Quantum world-volume program =="
+            lake build JanusFormal.Branches.WorldvolumeQuantumAlpha
+            s2=$?
+            echo "== Nonlinear bimetric junction program =="
+            lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha
+            s3=$?
+            echo "== Combined completion matrix =="
+            lake build JanusFormal.Branches.AlphaDeepCompletionMatrix
+            s4=$?
+            echo "statuses: $s0 $s1 $s2 $s3 $s4"
+            test $s0 -eq 0 -a $s1 -eq 0 -a $s2 -eq 0 -a $s3 -eq 0 -a $s4 -eq 0
+          } > lean-build.log 2>&1
+          status=$?
+          cat lean-build.log
+          exit $status
+      - name: Upload focused Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: janus-deep-alpha-lean-log
+          path: lean-build.log
+          if-no-files-found: error
+
+  python-audits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e . pytest
+      - run: python scripts/audit_janus_twisted_hopf_geometry.py
+      - run: python scripts/audit_janus_exact_solution_normalization.py
+      - run: python scripts/audit_janus_finite_bridge_ll_closure.py
+      - run: python scripts/audit_janus_terminal_hierarchy.py
+      - run: python scripts/audit_janus_worldvolume_quantum_completion.py
+      - run: python scripts/audit_janus_worldvolume_one_log_vacuum.py
+      - run: python scripts/audit_janus_discrete_level_alpha.py
+      - run: python scripts/audit_janus_corrected_mcs_alpha.py
+      - run: python scripts/audit_janus_nonlinear_bimetric_completion.py
+      - name: Run focused Python tests
+        env:
+          PYTHONPATH: .
+        run: |
+          python -m pytest -q \
+            tests/test_janus_twisted_hopf_geometry.py \
+            tests/test_janus_exact_solution_normalization.py \
+            tests/test_janus_finite_bridge_ll_closure.py \
+            tests/test_janus_terminal_hierarchy.py \
+            tests/test_janus_deep_completion_programs.py \
+            tests/test_janus_worldvolume_one_log_vacuum.py \
+            tests/test_janus_discrete_level_alpha.py \
+            tests/test_janus_corrected_mcs_alpha.py
