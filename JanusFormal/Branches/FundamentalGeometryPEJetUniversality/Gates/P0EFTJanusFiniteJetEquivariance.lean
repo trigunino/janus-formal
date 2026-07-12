@@ -7,7 +7,7 @@ set_option autoImplicit false
 
 universe u v w x
 
-/-- A deliberately light action interface.  Group laws are irrelevant for the
+/-- A deliberately light action interface. Group laws are irrelevant for the
 finite-jet classification lemma; only the compatible actions matter. -/
 structure ActionData (Symmetry : Type u) (Space : Type v) where
   act : Symmetry → Space → Space
@@ -20,110 +20,110 @@ def IsEquivariant
     (sourceAction : ActionData Symmetry Source)
     (targetAction : ActionData Symmetry Target)
     (map : Source → Target) : Prop :=
-  ∀ symmetry source,
-    map (sourceAction.act symmetry source) =
-      targetAction.act symmetry (map source)
+  ∀ symmetry sourceValue,
+    map (sourceAction.act symmetry sourceValue) =
+      targetAction.act symmetry (map sourceValue)
 
 /-- Naturality of an operator under the same symmetry. -/
 def IsNaturalOperator
     {Symmetry : Type u}
-    {Section : Type v}
+    {SectionSpace : Type v}
     {Target : Type w}
-    (sectionAction : ActionData Symmetry Section)
+    (sectionAction : ActionData Symmetry SectionSpace)
     (targetAction : ActionData Symmetry Target)
-    (operator : Section → Target) : Prop :=
-  ∀ symmetry section,
-    operator (sectionAction.act symmetry section) =
-      targetAction.act symmetry (operator section)
+    (operator : SectionSpace → Target) : Prop :=
+  ∀ symmetry sectionValue,
+    operator (sectionAction.act symmetry sectionValue) =
+      targetAction.act symmetry (operator sectionValue)
 
 /-- Data of a finite-jet presentation. -/
 structure FiniteJetPresentation
     (Symmetry : Type u)
-    (Section : Type v)
+    (SectionSpace : Type v)
     (Jet : Type w)
     (Target : Type x) where
-  sectionAction : ActionData Symmetry Section
+  sectionAction : ActionData Symmetry SectionSpace
   jetAction : ActionData Symmetry Jet
   targetAction : ActionData Symmetry Target
-  jet : Section → Jet
+  jet : SectionSpace → Jet
   jetEquivariant :
-    ∀ symmetry section,
-      jet (sectionAction.act symmetry section) =
-        jetAction.act symmetry (jet section)
+    ∀ symmetry sectionValue,
+      jet (sectionAction.act symmetry sectionValue) =
+        jetAction.act symmetry (jet sectionValue)
   jetSurjective : Function.Surjective jet
-  operator : Section → Target
+  operator : SectionSpace → Target
   evaluator : Jet → Target
   factorization :
-    ∀ section,
-      operator section = evaluator (jet section)
+    ∀ sectionValue,
+      operator sectionValue = evaluator (jet sectionValue)
 
 /-- The jet evaluator is unique whenever the jet map is surjective. -/
 theorem evaluator_unique_of_surjective_jet
     {Symmetry : Type u}
-    {Section : Type v}
+    {SectionSpace : Type v}
     {Jet : Type w}
     {Target : Type x}
     (presentation :
-      FiniteJetPresentation Symmetry Section Jet Target)
+      FiniteJetPresentation Symmetry SectionSpace Jet Target)
     (otherEvaluator : Jet → Target)
     (hOtherFactorization :
-      ∀ section,
-        presentation.operator section =
-          otherEvaluator (presentation.jet section)) :
+      ∀ sectionValue,
+        presentation.operator sectionValue =
+          otherEvaluator (presentation.jet sectionValue)) :
     otherEvaluator = presentation.evaluator := by
   funext jetValue
   rcases presentation.jetSurjective jetValue with
-    ⟨section, rfl⟩
+    ⟨sectionValue, rfl⟩
   calc
-    otherEvaluator (presentation.jet section) =
-        presentation.operator section :=
-      (hOtherFactorization section).symm
+    otherEvaluator (presentation.jet sectionValue) =
+        presentation.operator sectionValue :=
+      (hOtherFactorization sectionValue).symm
     _ = presentation.evaluator
-        (presentation.jet section) :=
-      presentation.factorization section
+        (presentation.jet sectionValue) :=
+      presentation.factorization sectionValue
 
 /-- If the evaluator is equivariant, the induced operator is natural. -/
 theorem evaluator_equivariant_implies_operator_natural
     {Symmetry : Type u}
-    {Section : Type v}
+    {SectionSpace : Type v}
     {Jet : Type w}
     {Target : Type x}
     (presentation :
-      FiniteJetPresentation Symmetry Section Jet Target)
+      FiniteJetPresentation Symmetry SectionSpace Jet Target)
     (hEvaluator :
       IsEquivariant presentation.jetAction
         presentation.targetAction presentation.evaluator) :
     IsNaturalOperator presentation.sectionAction
       presentation.targetAction presentation.operator := by
-  intro symmetry section
+  intro symmetry sectionValue
   calc
     presentation.operator
-        (presentation.sectionAction.act symmetry section) =
+        (presentation.sectionAction.act symmetry sectionValue) =
       presentation.evaluator
         (presentation.jet
-          (presentation.sectionAction.act symmetry section)) :=
+          (presentation.sectionAction.act symmetry sectionValue)) :=
       presentation.factorization _
     _ = presentation.evaluator
         (presentation.jetAction.act symmetry
-          (presentation.jet section)) := by
+          (presentation.jet sectionValue)) := by
       rw [presentation.jetEquivariant]
     _ = presentation.targetAction.act symmetry
         (presentation.evaluator
-          (presentation.jet section)) :=
-      hEvaluator symmetry (presentation.jet section)
+          (presentation.jet sectionValue)) :=
+      hEvaluator symmetry (presentation.jet sectionValue)
     _ = presentation.targetAction.act symmetry
-        (presentation.operator section) := by
+        (presentation.operator sectionValue) := by
       rw [presentation.factorization]
 
 /-- If the factorized operator is natural and the jet map is surjective, the
 jet evaluator must be equivariant. -/
 theorem operator_natural_implies_evaluator_equivariant
     {Symmetry : Type u}
-    {Section : Type v}
+    {SectionSpace : Type v}
     {Jet : Type w}
     {Target : Type x}
     (presentation :
-      FiniteJetPresentation Symmetry Section Jet Target)
+      FiniteJetPresentation Symmetry SectionSpace Jet Target)
     (hOperator :
       IsNaturalOperator presentation.sectionAction
         presentation.targetAction presentation.operator) :
@@ -131,35 +131,35 @@ theorem operator_natural_implies_evaluator_equivariant
       presentation.targetAction presentation.evaluator := by
   intro symmetry jetValue
   rcases presentation.jetSurjective jetValue with
-    ⟨section, rfl⟩
+    ⟨sectionValue, rfl⟩
   calc
     presentation.evaluator
         (presentation.jetAction.act symmetry
-          (presentation.jet section)) =
+          (presentation.jet sectionValue)) =
       presentation.evaluator
         (presentation.jet
-          (presentation.sectionAction.act symmetry section)) := by
+          (presentation.sectionAction.act symmetry sectionValue)) := by
       rw [presentation.jetEquivariant]
     _ = presentation.operator
-        (presentation.sectionAction.act symmetry section) :=
+        (presentation.sectionAction.act symmetry sectionValue) :=
       (presentation.factorization _).symm
     _ = presentation.targetAction.act symmetry
-        (presentation.operator section) :=
-      hOperator symmetry section
+        (presentation.operator sectionValue) :=
+      hOperator symmetry sectionValue
     _ = presentation.targetAction.act symmetry
         (presentation.evaluator
-          (presentation.jet section)) := by
+          (presentation.jet sectionValue)) := by
       rw [presentation.factorization]
 
 /-- Exact finite-jet classification theorem: naturality of a factorized
 operator is equivalent to equivariance of its unique jet evaluator. -/
 theorem operator_natural_iff_evaluator_equivariant
     {Symmetry : Type u}
-    {Section : Type v}
+    {SectionSpace : Type v}
     {Jet : Type w}
     {Target : Type x}
     (presentation :
-      FiniteJetPresentation Symmetry Section Jet Target) :
+      FiniteJetPresentation Symmetry SectionSpace Jet Target) :
     IsNaturalOperator presentation.sectionAction
         presentation.targetAction presentation.operator ↔
       IsEquivariant presentation.jetAction
@@ -171,18 +171,18 @@ theorem operator_natural_iff_evaluator_equivariant
 /-- A natural factorized operator has a unique equivariant evaluator. -/
 theorem exists_unique_equivariant_evaluator
     {Symmetry : Type u}
-    {Section : Type v}
+    {SectionSpace : Type v}
     {Jet : Type w}
     {Target : Type x}
     (presentation :
-      FiniteJetPresentation Symmetry Section Jet Target)
+      FiniteJetPresentation Symmetry SectionSpace Jet Target)
     (hNatural :
       IsNaturalOperator presentation.sectionAction
         presentation.targetAction presentation.operator) :
     ∃! evaluator : Jet → Target,
-      (∀ section,
-        presentation.operator section =
-          evaluator (presentation.jet section)) /\
+      (∀ sectionValue,
+        presentation.operator sectionValue =
+          evaluator (presentation.jet sectionValue)) /\
       IsEquivariant presentation.jetAction
         presentation.targetAction evaluator := by
   refine ⟨presentation.evaluator, ?_, ?_⟩
