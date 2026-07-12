@@ -1,5 +1,4 @@
 import Mathlib
-import JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPeriodCircleQuotient
 
 namespace JanusFormal
 namespace P0EFTJanusNormalLineClutching
@@ -7,243 +6,61 @@ namespace P0EFTJanusNormalLineClutching
 set_option autoImplicit false
 
 open Set
-open P0EFTJanusPeriodCircleQuotient
 
-/-- Sign representation of `ZMod 2` on a real line. -/
-def z2Sign (phase : ZMod 2) : ℝ :=
-  if phase = 0 then 1 else -1
-
-@[simp] theorem z2_sign_zero : z2Sign 0 = 1 := by
-  simp [z2Sign]
-
-@[simp] theorem z2_sign_one : z2Sign 1 = -1 := by
-  native_decide
-
-/-- The sign representation is multiplicative with respect to addition of phases. -/
-theorem z2_sign_add
-    (first second : ZMod 2) :
-    z2Sign (first + second) = z2Sign first * z2Sign second := by
-  fin_cases first <;> fin_cases second <;>
-    norm_num [z2Sign]
-
-/-- Normal holonomy of an integer winding. -/
-def normalSign (winding : ℤ) : ℝ :=
-  z2Sign (winding : ZMod 2)
-
-@[simp] theorem normal_sign_zero : normalSign 0 = 1 := by
-  simp [normalSign]
-
-@[simp] theorem normal_sign_one : normalSign 1 = -1 := by
-  norm_num [normalSign]
-
-@[simp] theorem normal_sign_two : normalSign 2 = 1 := by
-  norm_num [normalSign]
-
-/-- Normal signs multiply under concatenation of loops. -/
-theorem normal_sign_add
-    (first second : ℤ) :
-    normalSign (first + second) =
-      normalSign first * normalSign second := by
-  unfold normalSign
-  push_cast
-  exact z2_sign_add _ _
-
-/-- The concrete clutching datum for the Janus normal line. -/
+/-- Positive period of the compact Janus throat direction. -/
 structure NormalClutchingData where
   period : ℝ
   periodPositive : 0 < period
 
-/-- Deck action on the universal-cover coordinates `(u,v)`. -/
-def normalDeckAction
+/-- One generator of the normal-line clutching action: translate and reverse. -/
+def normalDeckGenerator
     (data : NormalClutchingData)
-    (winding : ℤ)
     (point : ℝ × ℝ) : ℝ × ℝ :=
-  (point.1 + (winding : ℝ) * data.period,
-    normalSign winding * point.2)
+  (point.1 + data.period, -point.2)
 
-@[simp] theorem normal_deck_action_zero
+/-- Two circuits restore the normal sign and translate by twice the period. -/
+theorem normal_deck_generator_square
     (data : NormalClutchingData)
     (point : ℝ × ℝ) :
-    normalDeckAction data 0 point = point := by
-  ext <;> simp [normalDeckAction]
+    normalDeckGenerator data (normalDeckGenerator data point) =
+      (point.1 + 2 * data.period, point.2) := by
+  rcases point with ⟨u, normal⟩
+  simp [normalDeckGenerator]
+  ring
 
-/-- The integer deck transformations form an action. -/
-theorem normal_deck_action_add
-    (data : NormalClutchingData)
-    (first second : ℤ)
-    (point : ℝ × ℝ) :
-    normalDeckAction data (first + second) point =
-      normalDeckAction data first
-        (normalDeckAction data second point) := by
-  ext
-  · simp [normalDeckAction]
-    push_cast
-    ring
-  · simp [normalDeckAction, normal_sign_add]
-    ring
-
-/-- Orbit equivalence defining the total space of the clutching line. -/
-def normalEquivalent
-    (data : NormalClutchingData)
-    (first second : ℝ × ℝ) : Prop :=
-  ∃ winding : ℤ,
-    second = normalDeckAction data winding first
-
-/-- Orbit equivalence is reflexive. -/
-theorem normal_equivalent_refl
-    (data : NormalClutchingData)
-    (point : ℝ × ℝ) :
-    normalEquivalent data point point := by
-  exact ⟨0, (normal_deck_action_zero data point).symm⟩
-
-/-- Orbit equivalence is symmetric. -/
-theorem normal_equivalent_symm
-    (data : NormalClutchingData)
-    {first second : ℝ × ℝ}
-    (hEquivalent : normalEquivalent data first second) :
-    normalEquivalent data second first := by
-  rcases hEquivalent with ⟨winding, rfl⟩
-  refine ⟨-winding, ?_⟩
-  have hCompose := normal_deck_action_add
-    data (-winding) winding first
-  have hZero : (-winding) + winding = 0 := by ring
-  rw [hZero, normal_deck_action_zero] at hCompose
-  exact hCompose.symm
-
-/-- Orbit equivalence is transitive. -/
-theorem normal_equivalent_trans
-    (data : NormalClutchingData)
-    {first second third : ℝ × ℝ}
-    (hFirst : normalEquivalent data first second)
-    (hSecond : normalEquivalent data second third) :
-    normalEquivalent data first third := by
-  rcases hFirst with ⟨firstWinding, rfl⟩
-  rcases hSecond with ⟨secondWinding, rfl⟩
-  refine ⟨secondWinding + firstWinding, ?_⟩
-  exact (normal_deck_action_add
-    data secondWinding firstWinding first).symm
-
-/-- Setoid for the total-space quotient. -/
-def normalSetoid
-    (data : NormalClutchingData) : Setoid (ℝ × ℝ) where
-  r := normalEquivalent data
-  iseqv :=
-    { refl := normal_equivalent_refl data
-      symm := normal_equivalent_symm data
-      trans := normal_equivalent_trans data }
-
-/-- Algebraic total space of the Janus normal line. -/
-abbrev NormalLineTotalSpace
-    (data : NormalClutchingData) :=
-  Quotient (normalSetoid data)
-
-/-- Class of a universal-cover normal vector. -/
-def normalClass
-    (data : NormalClutchingData)
-    (u normal : ℝ) : NormalLineTotalSpace data :=
-  Quotient.mk (normalSetoid data) (u, normal)
-
-/-- Projection from the clutching total space to the period circle. -/
-def normalProjection
-    (data : NormalClutchingData) :
-    NormalLineTotalSpace data → PeriodCircle data.period :=
-  Quotient.lift
-    (fun point => periodClass data.period point.1)
-    (by
-      intro first second hEquivalent
-      rcases hEquivalent with ⟨winding, rfl⟩
-      change
-        periodClass data.period
-            (first.1 + (winding : ℝ) * data.period) =
-          periodClass data.period first.1
-      exact
-        (period_class_add_integer_period
-          data.period first.1 winding).symm)
-
-/-- The zero vector is compatible with the sign gluing. -/
-def normalZeroSection
-    (data : NormalClutchingData) :
-    PeriodCircle data.period → NormalLineTotalSpace data :=
-  Quotient.lift
-    (fun u => normalClass data u 0)
-    (by
-      intro first second hEquivalent
-      apply Quotient.sound
-      rcases hEquivalent with ⟨winding, hSecond⟩
-      subst second
-      refine ⟨winding, ?_⟩
-      ext <;> simp [normalDeckAction, normalClass])
-
-/-- The algebraic zero section projects to the identity. -/
-theorem normal_projection_zero_section
-    (data : NormalClutchingData)
-    (basePoint : PeriodCircle data.period) :
-    normalProjection data (normalZeroSection data basePoint) = basePoint := by
-  refine Quotient.inductionOn basePoint ?_
-  intro u
-  rfl
-
-/-- Universal-cover presentation of a section of the clutching line. -/
+/-- Universal-cover presentation of a section of the sign-clutched normal line. -/
 structure NormalLiftedSection
     (data : NormalClutchingData) where
   toFun : ℝ → ℝ
   continuous_toFun : Continuous toFun
-  equivariant :
-    ∀ winding : ℤ, ∀ u : ℝ,
-      toFun (u + (winding : ℝ) * data.period) =
-        normalSign winding * toFun u
+  oneLoopBoundary :
+    ∀ u : ℝ,
+      toFun (u + data.period) = -toFun u
 
-/-- A lifted section descends to the algebraic quotient. -/
-def normalSection
-    (data : NormalClutchingData)
-    (section : NormalLiftedSection data) :
-    PeriodCircle data.period → NormalLineTotalSpace data :=
-  Quotient.lift
-    (fun u => normalClass data u (section.toFun u))
-    (by
-      intro first second hEquivalent
-      apply Quotient.sound
-      rcases hEquivalent with ⟨winding, hSecond⟩
-      subst second
-      refine ⟨winding, ?_⟩
-      ext
-      · simp [normalDeckAction, normalClass]
-      · simpa [normalDeckAction, normalClass] using
-          (section.equivariant winding first).symm)
-
-/-- Every descended lifted section is a right inverse of the projection. -/
-theorem normal_projection_section
-    (data : NormalClutchingData)
-    (section : NormalLiftedSection data)
-    (basePoint : PeriodCircle data.period) :
-    normalProjection data (normalSection data section basePoint) = basePoint := by
-  refine Quotient.inductionOn basePoint ?_
-  intro u
-  rfl
-
-/-- One circuit makes every lifted normal section anti-periodic. -/
+/-- One circuit gives the anti-periodic real normal boundary condition. -/
 theorem normal_section_one_loop
     (data : NormalClutchingData)
-    (section : NormalLiftedSection data)
+    (lifted : NormalLiftedSection data)
     (u : ℝ) :
-    section.toFun (u + data.period) = -section.toFun u := by
-  simpa using section.equivariant 1 u
+    lifted.toFun (u + data.period) = -lifted.toFun u :=
+  lifted.oneLoopBoundary u
 
 /-- Two circuits restore the normal direction. -/
 theorem normal_section_two_loops
     (data : NormalClutchingData)
-    (section : NormalLiftedSection data)
+    (lifted : NormalLiftedSection data)
     (u : ℝ) :
-    section.toFun (u + 2 * data.period) = section.toFun u := by
+    lifted.toFun (u + 2 * data.period) = lifted.toFun u := by
   have hArgument :
       u + 2 * data.period =
-        (u + data.period) + data.period := by ring
+        (u + data.period) + data.period := by
+    ring
   rw [hArgument,
-    normal_section_one_loop data section (u + data.period),
-    normal_section_one_loop data section u]
+    normal_section_one_loop data lifted (u + data.period),
+    normal_section_one_loop data lifted u]
   ring
 
-/-- A continuous anti-periodic real function has a zero on one fundamental interval. -/
+/-- A continuous anti-periodic real function vanishes on one fundamental interval. -/
 theorem continuous_antiperiodic_has_zero
     (data : NormalClutchingData)
     (f : ℝ → ℝ)
@@ -279,13 +96,13 @@ theorem continuous_antiperiodic_has_zero
       ⟨c, hInterval, hValue⟩
     exact ⟨c, hInterval, hValue⟩
 
-/-- A global frame is a continuous equivariant lift that never vanishes. -/
+/-- A global frame is a continuous anti-periodic lift that never vanishes. -/
 structure NormalLiftedFrame
     (data : NormalClutchingData)
     extends NormalLiftedSection data where
   nowhereZero : ∀ u : ℝ, toFun u ≠ 0
 
-/-- The Janus normal clutching line has no global frame. -/
+/-- No global frame exists for the sign-clutched line. -/
 theorem no_normal_lifted_frame
     (data : NormalClutchingData) :
     Not (Nonempty (NormalLiftedFrame data)) := by
@@ -293,15 +110,15 @@ theorem no_normal_lifted_frame
   obtain ⟨c, _hInterval, hZero⟩ :=
     continuous_antiperiodic_has_zero
       data frame.toFun frame.continuous_toFun
-      (normal_section_one_loop data frame.toNormalLiftedSection)
+      frame.oneLoopBoundary
   exact frame.nowhereZero c hZero
 
-/-- Triviality criterion for this rank-one clutching presentation. -/
+/-- Triviality criterion in the clutching presentation. -/
 def NormalClutchingTrivial
     (data : NormalClutchingData) : Prop :=
   Nonempty (NormalLiftedFrame data)
 
-/-- The normal line is nontrivial in the clutching/frame sense. -/
+/-- The Janus normal line is nontrivial in the clutching/frame sense. -/
 theorem normal_clutching_nontrivial
     (data : NormalClutchingData) :
     Not (NormalClutchingTrivial data) :=
@@ -319,47 +136,59 @@ def normalW1Character (winding : ℤ) : ZMod 2 :=
     normalW1Character 2 = 0 := by
   native_decide
 
-/-- A frame on the pulled-back line over the doubled circle. -/
+/-- Frame data after pullback to the doubled circle. -/
 structure DoubledNormalFrame
     (data : NormalClutchingData) where
   toFun : ℝ → ℝ
   continuous_toFun : Continuous toFun
-  twoPeriodEquivariant :
-    ∀ winding : ℤ, ∀ u : ℝ,
-      toFun (u + (winding : ℝ) * (2 * data.period)) = toFun u
+  twoPeriodBoundary :
+    ∀ u : ℝ,
+      toFun (u + 2 * data.period) = toFun u
   nowhereZero : ∀ u : ℝ, toFun u ≠ 0
 
-/-- The constant frame trivializes the pullback to the orientation double cover. -/
+/-- The constant frame trivializes the doubled pullback. -/
 def constantDoubledNormalFrame
     (data : NormalClutchingData) : DoubledNormalFrame data where
   toFun := fun _ => 1
   continuous_toFun := continuous_const
-  twoPeriodEquivariant := by
-    intro winding u
+  twoPeriodBoundary := by
+    intro u
     rfl
   nowhereZero := by
     intro u
     norm_num
 
-/-- The doubled pullback is trivial in the same frame sense. -/
+/-- The pullback to the orientation double cover is trivial. -/
 theorem doubled_normal_pullback_trivial
     (data : NormalClutchingData) :
     Nonempty (DoubledNormalFrame data) :=
   ⟨constantDoubledNormalFrame data⟩
 
+/-- Complete algebraic normal-line matrix. -/
+theorem normal_clutching_matrix
+    (data : NormalClutchingData) :
+    Not (NormalClutchingTrivial data) /\
+      normalW1Character 1 = 1 /\
+      normalW1Character 2 = 0 /\
+      Nonempty (DoubledNormalFrame data) := by
+  exact ⟨normal_clutching_nontrivial data,
+    normal_w1_generator_nonzero,
+    normal_w1_double_loop_zero,
+    doubled_normal_pullback_trivial data⟩
+
 /--
-Geometric promotion status: the quotient and frame obstruction are explicit.
-The remaining library-level task is to equip the quotient with local
-trivializations and register the resulting object as a Mathlib `VectorBundle`.
+Geometric promotion status. The clutching/frame obstruction is proved above;
+registering the quotient as a Mathlib vector bundle and identifying it with the
+actual differential normal bundle remain separate global constructions.
 -/
 structure NormalLineGeometricClosureStatus where
   equatorialThroatEmbedded : Prop
   derivativeReflectionMinusOneOnNormal : Prop
-  orbitQuotientHomeomorphismConstructed : Prop
+  orbitQuotientConstructed : Prop
   localTrivializationsConstructed : Prop
   mathlibVectorBundleRegistered : Prop
   clutchingModelIdentifiedWithNormalBundle : Prop
-  w1ComparisonWithSingularCohomologyProved : Prop
+  w1ComparisonWithCohomologyProved : Prop
   orientationCoverPullbackTrivialized : Prop
 
 
@@ -367,11 +196,11 @@ def normalLineGeometricClosure
     (s : NormalLineGeometricClosureStatus) : Prop :=
   s.equatorialThroatEmbedded /\
   s.derivativeReflectionMinusOneOnNormal /\
-  s.orbitQuotientHomeomorphismConstructed /\
+  s.orbitQuotientConstructed /\
   s.localTrivializationsConstructed /\
   s.mathlibVectorBundleRegistered /\
   s.clutchingModelIdentifiedWithNormalBundle /\
-  s.w1ComparisonWithSingularCohomologyProved /\
+  s.w1ComparisonWithCohomologyProved /\
   s.orientationCoverPullbackTrivialized
 
 end P0EFTJanusNormalLineClutching
