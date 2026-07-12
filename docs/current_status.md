@@ -12,21 +12,17 @@ PR 2  research/rp4-twisted-four-form-alpha <- research/fundamental-geometry-d
 PR 3  research/fundamental-geometry-d <- research/fundamental-geometry-dirac-spectral
 ```
 
-They were merged from the bottom of the stack upward. Consequently, `main` received PR 1, while the later Program D/P/P.E and D2 changes remained on intermediate research branches rather than propagating automatically to `main`.
-
-The consolidation branch
+Because they were initially merged from the bottom of the stack upward, the later Program D/P/P.E and D2 changes did not immediately propagate to `main`. Draft PR 5 then consolidated the complete stack and was merged into `main` on 12 July 2026 at merge commit
 
 ```text
-agent/consolidate-programs-and-p-status
+d4b893b06983c5b65f481c24e2e71f2ba6ddd1ba.
 ```
 
-is based on the top scientific branch and is proposed to `main` through draft PR 5. It contains the complete stacked research history plus the documentation, entry-point and CI cleanup.
-
-No scientific files were discarded. Historical and exploratory branches remain available; the cleanup establishes canonical navigation, focused heads and explicit evidence labels.
+`main` therefore contains the consolidated scientific history, canonical documentation, focused entry points and CI cleanup. No scientific files were discarded. Historical and exploratory branches remain available, while current claims are routed through this file.
 
 ## 2. Validation truth after consolidation
 
-All four workflows attached to the current PR head pass:
+All four workflows attached to the consolidation head passed:
 
 ```text
 Programs D and P integration matrix       success
@@ -82,8 +78,8 @@ P0     moduli-geometry no-go
 P-A    relative action specification / parent-bulk reduction
 P-B    anomaly consistency and discrete selection
 P-C    Helmholtz inverse variational problem
-P-D    invariant bilinear pairings and residual couplings
-P-E    finite jets, naturality and equivariant evaluators
+P-D    pointwise invariant pairings and global invariant-coefficient modules
+P-E    finite jets, equivariant evaluators and holonomic jet composition
 P-F    compatibility-map pullbacks, Helmholtz and Noether identities
 
 A/B/C  quantum scale, nonlinear junction and charge compatibility
@@ -111,7 +107,7 @@ two lifted loops:                       -1
 four lifted loops:                      +1
 ```
 
-Thus `Z4` is a holonomy/lift phenomenon. The existence and physical assignment of the global Pin/normal-root bundle remain open geometric constructions.
+Thus `Z4` is a holonomy/lift phenomenon. The existence and physical assignment of the global Pin/normal-root bundle remain open geometric constructions. A square-root line or a `Z4` lift must be included as additional global data; it is not a canonical functor of the underlying line alone.
 
 ## 5. Program P — precise current position
 
@@ -143,23 +139,35 @@ Program P asks how one physical Janus action can be selected or reconstructed wi
 
 **Conclusion:** P-C is the strongest inverse route, but a Hessian at one background is not a proof of the global nonlinear action.
 
-### P-D — invariant pairings
+### P-D — invariant pairings and coefficient modules
 
 **Formalized/audited in low-rank models:**
 
 - `Z4` neutrality forbids same-quarter quadratic masses and allows the conjugate `(+i,-i)` cross pairing;
-- vector self-pairing is unique up to scale under the tested rotation group;
+- vector self-pairing is unique up to scale at a fixed representation fiber;
 - scalar–vector, scalar–traceless and vector–traceless scalar pairings vanish;
 - finite signed permutations leave two traceless-tensor quadratic forms, while a generic continuous rotation reduces them to the Frobenius pairing up to scale;
 - the fundamental `Spin(3)=SU(2)` spinor has one invariant complex bilinear epsilon pairing and one invariant Hermitian pairing up to scale;
 - repeated irreducible sectors leave multiplicity-space matrices;
-- graded fusion rules distinguish allowed bilinear/trilinear channels and show that bilinear multiplicity-one does not imply quartic uniqueness.
+- graded fusion rules distinguish allowed bilinear/trilinear channels and show that bilinear multiplicity one does not imply quartic uniqueness;
+- invariant background-dependent pairing families are closed under multiplication by invariant scalar coefficients;
+- an explicit finite Lean model proves that one pointwise pairing shape need not be one constant global multiple.
 
-**Conclusion:** P-D converts arbitrary couplings into invariant-space dimensions, but surviving normalizations and multiplicity matrices still require a parent or microscopic law.
+**Correction:** the pointwise space
 
-### P-E — finite jets and equivariance
+```text
+Hom_(H_b)(E_i,b tensor E_j,b, R)
+```
 
-The original unrestricted polynomial-universality claim has been corrected.
+classifies the fiberwise shape at a structured jet `b`. Global natural pairings form a module over the algebra of invariant scalar functions on the structured-jet base. Pointwise dimension one therefore does not imply one global coupling constant.
+
+**Open in Janus:** construct the structured jet groupoid, its isotropy strata, the actual invariant scalar algebra and the global equivariant pairing module; then impose order, weight, Helmholtz and parent-law restrictions.
+
+**Conclusion:** P-D converts arbitrary couplings into pointwise invariant spaces and a global coefficient-module problem. Surviving normalizations still require a parent or microscopic law.
+
+### P-E — finite jets, equivariance and the operator category
+
+The original unrestricted polynomial-universality and naive representation-category claims have been corrected.
 
 **Defensible architecture:**
 
@@ -172,11 +180,18 @@ finite-jet presentation + naturality
 
 surjective holonomic jet realization
   -> evaluator uniqueness
+
+operator composition
+  -> holonomic prolongation to a higher jet
 ```
 
-This does not imply polynomial dependence, ellipticity, a single global order or field-content selection.
+For ordinary natural and gauge-natural bundles, the finite-order classification by equivariant jet maps is a classical external theorem. Categorically, the morphisms are maps from jet prolongations and compose through the holonomic jet tower; they are not ordinary maps in one fixed linear representation category.
 
-**Open in Janus:** construct the adapted SpinC/PT/Z4/BRST jet symmetry group, actual natural bundles, locality/regularity hypotheses and equivariant evaluator classification.
+**Formalized in the repository:** naturality/equivariance in an abstract action model, evaluator uniqueness under surjective realization, local-versus-global order corrections, a smooth nonpolynomial counterexample, and the holonomic factorization law for composite jet evaluators.
+
+**Open in Janus:** construct a structured SpinC/PT/Z4/BRST jet groupoid over the background-jet space, prove effective descent for the declared field bundles, prove a jet-normal-form theorem and classify smooth equivariant maps across isotropy strata.
+
+This does not imply polynomial dependence, ellipticity, a single global order, finite invariant generation, global topology or field-content selection.
 
 ### P-F — compatibility pullback bridge
 
@@ -193,8 +208,9 @@ The current supported chain is:
 ```text
 actual decorated Janus field/category data
   -> regular local finite-jet presentation
-  -> adapted symmetry representations
-  -> invariant pairings and compatible Euler family
+  -> structured jet groupoid and holonomic equivariant category
+  -> pointwise isotropy representations plus invariant coefficient modules
+  -> compatible Euler family
   -> Helmholtz + Noether
   -> anomaly consistency
   -> global action class modulo boundary/null terms
@@ -204,32 +220,36 @@ actual decorated Janus field/category data
   -> absolute scale
 ```
 
-The repository now has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, jet and compatibility stages. It does **not** yet contain the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
+The repository has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, jet and compatibility stages. It does **not** yet contain the structured Janus jet groupoid, the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
 
 ## 7. Immediate priorities
 
 ### Repository
 
-1. review and merge PR 5 into `main`;
+1. keep this status document synchronized with merged PR and CI state;
 2. retain focused CI rather than one opaque all-program job;
 3. add D9/D11 standalone heads only after their gate collections are integrated and buildable;
-4. keep historical documents, but route all status claims through this file.
+4. keep historical documents, but route current status claims through this file.
 
 ### Scientific Program P
 
 1. specify the exact field space and choose induced, auxiliary or bulk metric formulation without double counting;
-2. construct the concrete Janus compatibility map `K` and its jet linearization `J`;
-3. derive the target self-adjoint pairing `H` from an actual parent or microscopic action;
-4. classify the actual SpinC/PT/Z4/BRST invariant pairing and fusion spaces;
-5. derive the full nonlinear Euler source and prove Helmholtz/Noether conditions;
-6. compute variational cohomology and boundary/null terms;
-7. apply anomaly cancellation in the same regulator and field content;
-8. derive normalization and finite counterterms without observed-radius input.
+2. construct the structured SpinC/PT/Z4/BRST jet groupoid and prove descent for the natural sectors;
+3. prove a structured jet-normal-form theorem and control isotropy strata;
+4. compute the invariant scalar algebra and global equivariant pairing modules;
+5. construct the concrete Janus compatibility map `K` and its jet linearization `J`;
+6. derive the target self-adjoint pairing `H` from an actual parent or microscopic action;
+7. derive the full nonlinear Euler source and prove Helmholtz/Noether conditions;
+8. compute variational cohomology and boundary/null terms;
+9. apply anomaly cancellation in the same regulator and field content;
+10. derive normalization and finite counterterms without observed-radius input.
 
 ## 8. Canonical navigation rule
 
 - This file is the current truth.
 - `PROGRAM.md` is the stable high-level map.
 - `program_master_roadmap.md` is the detailed dependency tree.
+- `program_pe_categorical_jet_equivalence.md` records the corrected categorical theorem.
+- `program_pd_global_pairing_modules.md` records the pointwise-to-global coupling correction.
 - program-specific documents contain derivations and theorem queues.
 - `janus_branch_registry.md` lists supported heads and explicitly labels gate-only collections.
