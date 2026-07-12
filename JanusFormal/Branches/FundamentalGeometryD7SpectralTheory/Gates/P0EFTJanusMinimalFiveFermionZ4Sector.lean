@@ -76,7 +76,8 @@ theorem pt_doubled_five_fermion_polynomial
     (radial : ℝ) :
     stationarityPolynomial 2 10 radial =
       2 * stationarityPolynomial 1 5 radial := by
-  simpa using doubled_weights_scale_stationarity_polynomial 1 5 radial
+  unfold stationarityPolynomial
+  ring
 
 /-- The arithmetic root survives the common scaling of both weights. -/
 @[simp] theorem pt_doubled_five_fermion_stationary_root :
