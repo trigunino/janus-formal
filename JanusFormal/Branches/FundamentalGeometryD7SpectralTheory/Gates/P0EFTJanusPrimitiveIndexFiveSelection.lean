@@ -9,17 +9,12 @@ set_option autoImplicit false
 open P0EFTJanusMinimalZ4AnomalyContent
 open P0EFTJanusPeriodicQuarterCompetition
 
-/--
-Index bookkeeping for a rank-`r` fermion multiplet coupled to a monopole line
-bundle.  The product formula is the finite-rank form of the two-dimensional
-SpinC index relation used by the candidate.
--/
+/-- Index bookkeeping for a rank-`r` fermion multiplet coupled to a monopole line. -/
 structure FlavorMonopoleIndexData where
   flavorRank : ℕ
   monopoleNumber : ℤ
   totalIndex : ℤ
-  indexLaw :
-    totalIndex = (flavorRank : ℤ) * monopoleNumber
+  indexLaw : totalIndex = (flavorRank : ℤ) * monopoleNumber
 
 /-- Number of chiral zero-mode towers supplied by the index magnitude. -/
 def quarterTowerMultiplicity
@@ -35,7 +30,7 @@ theorem primitive_index_multiplicity_eq_flavor_rank
   rw [s.indexLaw, Int.natAbs_mul, hPrimitive]
   simp
 
-/-- One flavor producing five indexed towers would require monopole magnitude five. -/
+/-- One flavor producing five indexed towers requires monopole magnitude five. -/
 theorem one_flavor_five_towers_forces_charge_five
     (s : FlavorMonopoleIndexData)
     (hOneFlavor : s.flavorRank = 1)
@@ -48,7 +43,7 @@ theorem one_flavor_five_towers_forces_charge_five
   rw [hIndex] at hFiveTowers
   exact hFiveTowers
 
-/-- Therefore a one-flavor explanation of five towers conflicts with primitive flux. -/
+/-- A one-flavor five-tower explanation is incompatible with primitive flux. -/
 theorem one_flavor_five_towers_are_not_primitive
     (s : FlavorMonopoleIndexData)
     (hOneFlavor : s.flavorRank = 1)
@@ -58,7 +53,7 @@ theorem one_flavor_five_towers_are_not_primitive
     s hOneFlavor hFiveTowers
   omega
 
-/-- With primitive flux, exactly five indexed towers force flavor rank five. -/
+/-- Primitive flux and exactly five indexed towers force flavor rank five. -/
 theorem primitive_five_towers_force_rank_five
     (s : FlavorMonopoleIndexData)
     (hPrimitive : s.monopoleNumber.natAbs = 1)
@@ -69,7 +64,7 @@ theorem primitive_five_towers_force_rank_five
       (primitive_index_multiplicity_eq_flavor_rank s hPrimitive).symm
     _ = 5 := hFiveTowers
 
-/-- Primitive rank below five cannot satisfy the one-periodic-unit stationarity law. -/
+/-- Primitive rank below five cannot satisfy the old same-sign stationarity law. -/
 theorem primitive_rank_below_five_cannot_stabilize
     (s : FlavorMonopoleIndexData)
     (hPrimitive : s.monopoleNumber.natAbs = 1)
@@ -81,7 +76,7 @@ theorem primitive_rank_below_five_cannot_stabilize
   exact below_five_modes_cannot_stabilize
     s.flavorRank hBelow radial
 
-/-- Primitive rank five reaches the arithmetic stable root `r=1/3`. -/
+/-- Primitive rank five reaches the arithmetic root `r=1/3`. -/
 theorem primitive_rank_five_has_one_third_root
     (s : FlavorMonopoleIndexData)
     (hPrimitive : s.monopoleNumber.natAbs = 1)
@@ -92,21 +87,21 @@ theorem primitive_rank_five_has_one_third_root
     hRank]
   exact third_is_one_to_five_stationary
 
-/-- Any odd multiplicity `2*k+1` has the minimal positive half-level for bare level `-k`. -/
+/-- Odd multiplicity `2*k+1` leaves the minimal positive half-level at bare level `-k`. -/
 theorem odd_multiplicity_minimal_positive_half_level
     (k : ℤ) :
     positiveFoldDoubledLevel (-k) (2 * k + 1) = 1 := by
   unfold positiveFoldDoubledLevel
   ring
 
-/-- The PT-related fold automatically carries the opposite half-level. -/
+/-- The PT-related fold carries the opposite half-level. -/
 theorem odd_multiplicity_minimal_negative_half_level
     (k : ℤ) :
     negativeFoldDoubledLevel (-k) (2 * k + 1) = -1 := by
   unfold negativeFoldDoubledLevel
   ring
 
-/-- Primitive rank five simultaneously gives five towers and the `+/-1/2` PT anomaly pair. -/
+/-- Primitive rank five gives five towers and the `+/-1/2` PT anomaly pair. -/
 theorem primitive_rank_five_index_anomaly_matrix
     (s : FlavorMonopoleIndexData)
     (hPrimitive : s.monopoleNumber.natAbs = 1)
@@ -130,17 +125,7 @@ theorem primitive_rank_five_index_anomaly_matrix
       five_mode_negative_fold_level,
       five_mode_pt_pair_is_globally_level_zero⟩
 
-/--
-The integer five is now selected by three simultaneous requirements inside the
-candidate algebra:
-
-1. primitive flux, so multiplicity comes from flavor rank rather than charge;
-2. the first determinant multiplicity capable of the old same-sign `1:5` root;
-3. an odd parity-anomalous fold content admitting the minimal `+/-1/2` PT pair.
-
-The statistics-sign no-go is separate: standard fermion determinant signs remove
-that same-sign vacuum unless another sector or interaction is derived.
--/
+/-- Physical obligations behind the primitive rank-five candidate. -/
 structure PrimitiveRankFivePhysicalStatus where
   globalRankFiveFermionBundleConstructed : Prop
   primitiveMonopoleIndexTheoremApplied : Prop
