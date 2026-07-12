@@ -27,13 +27,14 @@ def mirrorCircleLoop : MirrorOrbifoldLoopGroup :=
 theorem mirror_reflection_loop_nonzero :
     mirrorReflectionLoop ≠ 0 := by
   intro hZero
-  have hSecond := congrArg Prod.snd hZero
-  native_decide at hSecond
+  have hSecond : (1 : ZMod 2) = 0 := by
+    simpa [mirrorReflectionLoop] using congrArg Prod.snd hZero
+  exact one_ne_zero hSecond
 
 /-- Mirror reflection has additive order two. -/
 theorem mirror_reflection_loop_doubles_to_zero :
     mirrorReflectionLoop + mirrorReflectionLoop = 0 := by
-  native_decide
+  ext <;> native_decide
 
 /-- The circle loop has infinite order in the integer component. -/
 theorem nonzero_multiple_of_mirror_circle_nonzero
@@ -41,8 +42,8 @@ theorem nonzero_multiple_of_mirror_circle_nonzero
     (hMultiple : multiple ≠ 0) :
     multiple • mirrorCircleLoop ≠ 0 := by
   intro hZero
-  have hFirst := congrArg Prod.fst hZero
-  change multiple = 0 at hFirst
+  have hFirst : multiple = 0 := by
+    simpa [mirrorCircleLoop] using congrArg Prod.fst hZero
   exact hMultiple hFirst
 
 /-- The smooth mapping-torus loop group has no nonzero element of order two. -/
@@ -70,7 +71,7 @@ theorem no_add_equiv_glide_to_mirror :
   have hDoublePreimage : preimage + preimage = 0 := by
     apply equivalence.injective
     rw [map_add, map_zero]
-    simp [preimage, mirror_reflection_loop_doubles_to_zero]
+    simpa [preimage] using mirror_reflection_loop_doubles_to_zero
   have hPreimageZero : preimage = 0 :=
     glide_loop_has_no_nonzero_two_torsion preimage hDoublePreimage
   have hReflectionZero : mirrorReflectionLoop = 0 := by
@@ -105,7 +106,7 @@ def mirrorOrientationCharacter
 
 /--
 In the free mapping torus, reflection and translation are one inseparable
-infinite-order generator.  In the true mirror orbifold, reflection is an
+infinite-order generator. In the true mirror orbifold, reflection is an
 independent order-two isotropy element commuting with the circle loop.
 -/
 structure SmoothVersusMirrorPhysicalStatus where
