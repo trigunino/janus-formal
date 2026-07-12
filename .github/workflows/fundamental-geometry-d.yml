@@ -7,10 +7,30 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryD.lean"
       - "JanusFormal/Branches/FundamentalGeometryD/**"
+      - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory/**"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/**"
+      - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
+      - "docs/program_p_variational_principle.md"
+      - "docs/program_pe_invariant_pairings.md"
       - "scripts/audit_janus_fundamental_geometry_d.py"
+      - "scripts/audit_janus_holonomy_determinant.py"
+      - "scripts/audit_janus_heat_kernel_effective_action.py"
+      - "scripts/audit_janus_d7_seeley_dewitt.py"
+      - "scripts/audit_janus_pe_invariant_pairings.py"
+      - "scripts/audit_janus_pe_spinor_pairings.py"
       - "tests/test_janus_fundamental_geometry_d.py"
+      - "tests/test_janus_holonomy_determinant.py"
+      - "tests/test_janus_heat_kernel_effective_action.py"
+      - "tests/test_janus_d7_seeley_dewitt.py"
+      - "tests/test_janus_pe_invariant_pairings.py"
+      - "tests/test_janus_pe_spinor_pairings.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
@@ -19,10 +39,30 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryD.lean"
       - "JanusFormal/Branches/FundamentalGeometryD/**"
+      - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory/**"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/**"
+      - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean"
+      - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
+      - "docs/program_p_variational_principle.md"
+      - "docs/program_pe_invariant_pairings.md"
       - "scripts/audit_janus_fundamental_geometry_d.py"
+      - "scripts/audit_janus_holonomy_determinant.py"
+      - "scripts/audit_janus_heat_kernel_effective_action.py"
+      - "scripts/audit_janus_d7_seeley_dewitt.py"
+      - "scripts/audit_janus_pe_invariant_pairings.py"
+      - "scripts/audit_janus_pe_spinor_pairings.py"
       - "tests/test_janus_fundamental_geometry_d.py"
+      - "tests/test_janus_holonomy_determinant.py"
+      - "tests/test_janus_heat_kernel_effective_action.py"
+      - "tests/test_janus_d7_seeley_dewitt.py"
+      - "tests/test_janus_pe_invariant_pairings.py"
+      - "tests/test_janus_pe_spinor_pairings.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
@@ -41,10 +81,16 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build Program D
+      - name: Build Program D, D7, D8, D10 and P
         run: |
           set +e
-          lake build JanusFormal.Branches.FundamentalGeometryD > program-d-lean.log 2>&1
+          lake build \
+            JanusFormal.Branches.FundamentalGeometryD \
+            JanusFormal.Branches.FundamentalGeometryD7SpectralTheory \
+            JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation \
+            JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly \
+            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple \
+            > program-d-lean.log 2>&1
           status=$?
           cat program-d-lean.log
           exit $status
@@ -66,7 +112,19 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e . pytest
       - run: python scripts/audit_janus_fundamental_geometry_d.py
+      - run: python scripts/audit_janus_holonomy_determinant.py
+      - run: python scripts/audit_janus_heat_kernel_effective_action.py
+      - run: python scripts/audit_janus_d7_seeley_dewitt.py
+      - run: python scripts/audit_janus_pe_invariant_pairings.py
+      - run: python scripts/audit_janus_pe_spinor_pairings.py
       - name: Run focused tests
         env:
           PYTHONPATH: .
-        run: python -m pytest -q tests/test_janus_fundamental_geometry_d.py
+        run: |
+          python -m pytest -q \
+            tests/test_janus_fundamental_geometry_d.py \
+            tests/test_janus_holonomy_determinant.py \
+            tests/test_janus_heat_kernel_effective_action.py \
+            tests/test_janus_d7_seeley_dewitt.py \
+            tests/test_janus_pe_invariant_pairings.py \
+            tests/test_janus_pe_spinor_pairings.py

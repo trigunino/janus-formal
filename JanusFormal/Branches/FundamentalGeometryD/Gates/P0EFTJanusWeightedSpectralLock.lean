@@ -6,7 +6,7 @@ namespace P0EFTJanusWeightedSpectralLock
 set_option autoImplicit false
 
 /--
-Cleared weighted balance between the first `S2` and `S1` modes.  The positive
+Cleared weighted balance between the first `S2` and `S1` modes. The positive
 weights may encode degeneracy, statistics and one-loop determinant factors.
 -/
 structure WeightedModeBalance where
@@ -27,13 +27,14 @@ theorem equal_weights_recover_unweighted_isotropy
     (s : WeightedModeBalance)
     (hWeights : s.sphereWeight = s.circleWeight) :
     s.circleModulus ^ 2 = 2 * s.piConstant ^ 2 := by
-  rw [hWeights] at s.weightedBalance
+  have hBalance := s.weightedBalance
+  rw [hWeights] at hBalance
   have hWeightNonzero : s.circleWeight ≠ 0 :=
     ne_of_gt s.circleWeightPositive
   have hFactor :
       s.circleWeight *
         (s.circleModulus ^ 2 - 2 * s.piConstant ^ 2) = 0 := by
-    nlinarith [s.weightedBalance]
+    nlinarith [hBalance]
   have hDifference :=
     (mul_eq_zero.mp hFactor).resolve_left hWeightNonzero
   linarith
@@ -44,8 +45,9 @@ theorem scalar_degeneracy_weights_fix_modified_modulus
     (hSphere : s.sphereWeight = 3)
     (hCircle : s.circleWeight = 2) :
     3 * s.circleModulus ^ 2 = 4 * s.piConstant ^ 2 := by
-  rw [hSphere, hCircle] at s.weightedBalance
-  norm_num at s.weightedBalance ⊢
+  have hBalance := s.weightedBalance
+  rw [hSphere, hCircle] at hBalance
+  norm_num at hBalance ⊢
   linarith
 
 /-- Positive weights determine at most one positive modulus. -/
@@ -110,8 +112,8 @@ theorem weighted_mismatch_zero_iff_balance
     ring
 
 /--
-The mode weights are therefore physical data.  Program D must derive them from
-the actual field content and determinant, rather than assume equal weights.
+The mode weights are physical data. Program D must derive them from the actual
+field content and determinant, rather than assume equal weights.
 -/
 structure WeightedSpectralDerivationStatus where
   fieldContentDerivedFromGeometry : Prop

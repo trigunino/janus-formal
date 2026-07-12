@@ -32,16 +32,12 @@ class FundamentalGeometryDAudit:
 def build_audit() -> FundamentalGeometryDAudit:
     """Audit the first theorem-level consequences of Program D."""
 
-    # A primitive Hopf-bundle automorphism has matching fiber/base orientation
-    # signs. The product parity is their XOR, hence always preserving.
     hopf_reversal_possible = any(
         fiber == base and (fiber ^ base)
         for fiber in (False, True)
         for base in (False, True)
     )
 
-    # A pointwise-fixed S2 has base sign +1. Charge conjugation has fiber sign
-    # -1, so a descended integer flux obeys n=-n and is necessarily zero.
     fixed_throat_conjugate_nonzero_flux_possible = False
 
     T, pi_c, c_q, A, L, q = sp.symbols(
@@ -54,13 +50,14 @@ def build_audit() -> FundamentalGeometryDAudit:
         sp.Eq(sphere_mode, circle_mode), T**2, dict=True
     )[0][T**2]
 
-    # q L^2 = 2 c_q and 16 q^2 A^4 = 1.
+    # q L^2 = 2 c_q and 16 q^2 A^4 = 1 imply
+    # 64 c_q^2 A^4 - L^4 = 0 after multiplication by L^4.
     q_sub = 2 * c_q / L**2
     cleared_ratio = sp.factor(64 * c_q**2 * A**4 - L**4)
     flux_substituted = sp.factor(
         (16 * q**2 * A**4 - 1).subs(q, q_sub) * L**4
     )
-    ratio_residual = sp.simplify(flux_substituted - cleared_ratio / 4)
+    ratio_residual = sp.simplify(flux_substituted - cleared_ratio)
 
     unit_charge_alpha_ratio = 1.0 / (2.0 * math.sqrt(2.0))
     spectral_T = math.sqrt(2.0) * math.pi
@@ -69,18 +66,13 @@ def build_audit() -> FundamentalGeometryDAudit:
         spectral_T, thermal_T, rel_tol=1.0e-15, abs_tol=0.0
     )
 
-    # If the bimetric bridge says A=L, then 64*c_q^2=1 and positivity gives
-    # c_q=1/8. This equals the LL auxiliary-metric normalization.
     required_cq = 1.0 / 8.0
 
-    # Candidate integral Lee class T=2*pi*n. Adjacent levels are extremely
-    # coarse, so this route needs a further amplitude or fractional lock.
     planck_length_m = 1.616255e-35
     spacing = math.exp(2.0 * math.pi)
     alpha_n22 = 0.5 * planck_length_m * math.exp(2.0 * math.pi * 22.0)
     alpha_n23 = 0.5 * planck_length_m * math.exp(2.0 * math.pi * 23.0)
 
-    # Obstruction arithmetic in Z2.
     def pin_plus(w2: int) -> bool:
         return w2 % 2 == 0
 
