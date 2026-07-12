@@ -94,38 +94,38 @@ structure NormalRootLiftedSection
         normalRootMultiplier choice * toFun u
 
 /-- Two loops give the antiperiodic/central-sign boundary condition. -/
-theorem normal_root_section_two_loops
+theorem normal_root_lifted_two_loops
     (data : NormalClutchingData)
-    (section : NormalRootLiftedSection data)
+    (lifted : NormalRootLiftedSection data)
     (u : ℝ) :
-    section.toFun (u + 2 * data.period) = -section.toFun u := by
+    lifted.toFun (u + 2 * data.period) = -lifted.toFun u := by
   have hArgument :
       u + 2 * data.period =
         (u + data.period) + data.period := by ring
   rw [hArgument,
-    section.oneLoopBoundary (u + data.period),
-    section.oneLoopBoundary u]
+    lifted.oneLoopBoundary (u + data.period),
+    lifted.oneLoopBoundary u]
   calc
-    normalRootMultiplier section.choice *
-        (normalRootMultiplier section.choice * section.toFun u) =
-      (normalRootMultiplier section.choice *
-          normalRootMultiplier section.choice) * section.toFun u := by ring
-    _ = (-1 : ℂ) * section.toFun u := by
+    normalRootMultiplier lifted.choice *
+        (normalRootMultiplier lifted.choice * lifted.toFun u) =
+      (normalRootMultiplier lifted.choice *
+          normalRootMultiplier lifted.choice) * lifted.toFun u := by ring
+    _ = (-1 : ℂ) * lifted.toFun u := by
       rw [normal_root_multiplier_square]
-    _ = -section.toFun u := by ring
+    _ = -lifted.toFun u := by ring
 
 /-- Four loops restore periodicity. -/
-theorem normal_root_section_four_loops
+theorem normal_root_lifted_four_loops
     (data : NormalClutchingData)
-    (section : NormalRootLiftedSection data)
+    (lifted : NormalRootLiftedSection data)
     (u : ℝ) :
-    section.toFun (u + 4 * data.period) = section.toFun u := by
+    lifted.toFun (u + 4 * data.period) = lifted.toFun u := by
   have hArgument :
       u + 4 * data.period =
         (u + 2 * data.period) + 2 * data.period := by ring
   rw [hArgument,
-    normal_root_section_two_loops data section (u + 2 * data.period),
-    normal_root_section_two_loops data section u]
+    normal_root_lifted_two_loops data lifted (u + 2 * data.period),
+    normal_root_lifted_two_loops data lifted u]
   simp
 
 /-- Integer numerator of the shifted Fourier/Kaluza--Klein modes. -/
@@ -142,17 +142,29 @@ theorem normal_root_mode_phase
     (mode : ℤ) :
     (normalRootModeNumerator choice mode : ZMod 4) =
       normalRootPhase choice := by
-  cases choice <;>
-    simp [normalRootModeNumerator, normalRootPhase] <;>
-    push_cast <;> norm_num
+  cases choice
+  · change ((4 * mode + 1 : ℤ) : ZMod 4) = 1
+    push_cast
+    have hFour : (4 : ZMod 4) = 0 := by norm_num
+    rw [hFour, zero_mul, zero_add]
+  · change ((4 * mode - 1 : ℤ) : ZMod 4) = 3
+    push_cast
+    have hFour : (4 : ZMod 4) = 0 := by norm_num
+    rw [hFour, zero_mul, zero_sub]
+    native_decide
 
 /-- Quarter-twisted sectors have no zero momentum numerator. -/
 theorem normal_root_mode_numerator_nonzero
     (choice : NormalRootChoice)
     (mode : ℤ) :
     normalRootModeNumerator choice mode ≠ 0 := by
-  cases choice <;>
-    unfold normalRootModeNumerator <;> omega
+  cases choice
+  · intro hZero
+    change 4 * mode + 1 = 0 at hZero
+    omega
+  · intro hZero
+    change 4 * mode - 1 = 0 at hZero
+    omega
 
 /-- PT maps the positive-quarter mode tower to the negative-quarter tower. -/
 theorem pt_pairs_mode_numerators
@@ -205,15 +217,15 @@ theorem negative_quarter_momentum_formula
 /-- Full algebraic consequence of a normal-line square root. -/
 theorem normal_root_boundary_condition_matrix
     (data : NormalClutchingData)
-    (section : NormalRootLiftedSection data)
+    (lifted : NormalRootLiftedSection data)
     (u : ℝ) :
-    normalRootMultiplier section.choice *
-        normalRootMultiplier section.choice = -1 /\
-    section.toFun (u + 2 * data.period) = -section.toFun u /\
-    section.toFun (u + 4 * data.period) = section.toFun u := by
-  exact ⟨normal_root_multiplier_square section.choice,
-    normal_root_section_two_loops data section u,
-    normal_root_section_four_loops data section u⟩
+    normalRootMultiplier lifted.choice *
+        normalRootMultiplier lifted.choice = -1 /\
+    lifted.toFun (u + 2 * data.period) = -lifted.toFun u /\
+    lifted.toFun (u + 4 * data.period) = lifted.toFun u := by
+  exact ⟨normal_root_multiplier_square lifted.choice,
+    normal_root_lifted_two_loops data lifted u,
+    normal_root_lifted_four_loops data lifted u⟩
 
 /--
 Physical promotion status. The clutching line fixes the orientation sign and a
