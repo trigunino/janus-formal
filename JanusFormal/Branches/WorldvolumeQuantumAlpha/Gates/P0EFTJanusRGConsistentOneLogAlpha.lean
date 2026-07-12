@@ -117,7 +117,8 @@ theorem larger_sextic_coupling_gives_larger_alpha
         _ ≤ s₁.condensateMass * s₁.alphaSquaredLength :=
           mul_le_mul_of_nonneg_left hAlphaOrder
             (le_of_lt s₁.condensateMassPositive)
-    exact mul_lt_mul_of_pos_left hMixed hLeftPositive
+    have hScaled := mul_lt_mul_of_pos_left hMixed hLeftPositive
+    simpa [mul_assoc] using hScaled
   rw [hLaw₁, hLaw₂] at hProductStrict
   linarith
 
