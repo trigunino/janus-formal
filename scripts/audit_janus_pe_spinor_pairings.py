@@ -5,10 +5,20 @@ from dataclasses import asdict, dataclass
 
 import sympy as sp
 
-from scripts.audit_janus_pe_invariant_pairings import (
-    _invariant_bilinear_basis,
-    _matrix_as_strings,
-)
+# `python scripts/audit_janus_pe_spinor_pairings.py` places `scripts/` itself on
+# `sys.path`, while pytest imports this file as `scripts.<module>` from the
+# repository root. Support both execution modes without requiring `scripts` to
+# be an installed package.
+try:
+    from scripts.audit_janus_pe_invariant_pairings import (
+        _invariant_bilinear_basis,
+        _matrix_as_strings,
+    )
+except ModuleNotFoundError:
+    from audit_janus_pe_invariant_pairings import (  # type: ignore[no-redef]
+        _invariant_bilinear_basis,
+        _matrix_as_strings,
+    )
 
 
 @dataclass(frozen=True)
