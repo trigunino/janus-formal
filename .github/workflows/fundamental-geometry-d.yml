@@ -1,9 +1,11 @@
-name: Program D fundamental geometry
+name: Programs D and P integration matrix
 
 on:
   push:
     branches:
+      - main
       - research/fundamental-geometry-d
+      - "agent/**"
     paths:
       - "JanusFormal/Branches/FundamentalGeometryD.lean"
       - "JanusFormal/Branches/FundamentalGeometryD/**"
@@ -15,10 +17,9 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
-      - "docs/program_p_variational_principle.md"
-      - "docs/program_pe_invariant_pairings.md"
       - "scripts/audit_janus_fundamental_geometry_d.py"
       - "scripts/audit_janus_holonomy_determinant.py"
       - "scripts/audit_janus_heat_kernel_effective_action.py"
@@ -47,10 +48,9 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
-      - "docs/program_p_variational_principle.md"
-      - "docs/program_pe_invariant_pairings.md"
       - "scripts/audit_janus_fundamental_geometry_d.py"
       - "scripts/audit_janus_holonomy_determinant.py"
       - "scripts/audit_janus_heat_kernel_effective_action.py"
@@ -66,11 +66,29 @@ on:
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
+      - ".github/workflows/fundamental-geometry-d.yml"
   workflow_dispatch:
 
 jobs:
-  lean:
+  lean-head:
+    name: Lean — ${{ matrix.label }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: Program D geometry
+            target: JanusFormal.Branches.FundamentalGeometryD
+          - label: Program D7 spectral theory
+            target: JanusFormal.Branches.FundamentalGeometryD7SpectralTheory
+          - label: Program D8 topology
+            target: JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation
+          - label: Program D10 Quillen
+            target: JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly
+          - label: Program P variational
+            target: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+          - label: Program P-F compatibility
+            target: JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
     steps:
       - uses: actions/checkout@v4
       - name: Set up Lean and Mathlib cache
@@ -81,29 +99,34 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build Program D, D7, D8, D10 and P
-        run: |
-          set +e
-          lake build \
-            JanusFormal.Branches.FundamentalGeometryD \
-            JanusFormal.Branches.FundamentalGeometryD7SpectralTheory \
-            JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation \
-            JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly \
-            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple \
-            > program-d-lean.log 2>&1
-          status=$?
-          cat program-d-lean.log
-          exit $status
-      - name: Upload Lean log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: program-d-lean-log
-          path: program-d-lean.log
-          if-no-files-found: error
+      - name: Build focused head
+        run: lake build "${{ matrix.target }}"
 
   python-audit:
+    name: Python — ${{ matrix.label }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: fundamental geometry
+            script: scripts/audit_janus_fundamental_geometry_d.py
+            test: tests/test_janus_fundamental_geometry_d.py
+          - label: holonomy determinant
+            script: scripts/audit_janus_holonomy_determinant.py
+            test: tests/test_janus_holonomy_determinant.py
+          - label: heat-kernel action
+            script: scripts/audit_janus_heat_kernel_effective_action.py
+            test: tests/test_janus_heat_kernel_effective_action.py
+          - label: D7 Seeley-DeWitt
+            script: scripts/audit_janus_d7_seeley_dewitt.py
+            test: tests/test_janus_d7_seeley_dewitt.py
+          - label: invariant pairings
+            script: scripts/audit_janus_pe_invariant_pairings.py
+            test: tests/test_janus_pe_invariant_pairings.py
+          - label: spinor pairings
+            script: scripts/audit_janus_pe_spinor_pairings.py
+            test: tests/test_janus_pe_spinor_pairings.py
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -111,20 +134,9 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e . pytest
-      - run: python scripts/audit_janus_fundamental_geometry_d.py
-      - run: python scripts/audit_janus_holonomy_determinant.py
-      - run: python scripts/audit_janus_heat_kernel_effective_action.py
-      - run: python scripts/audit_janus_d7_seeley_dewitt.py
-      - run: python scripts/audit_janus_pe_invariant_pairings.py
-      - run: python scripts/audit_janus_pe_spinor_pairings.py
-      - name: Run focused tests
+      - name: Run audit
+        run: python "${{ matrix.script }}"
+      - name: Run focused test
         env:
           PYTHONPATH: .
-        run: |
-          python -m pytest -q \
-            tests/test_janus_fundamental_geometry_d.py \
-            tests/test_janus_holonomy_determinant.py \
-            tests/test_janus_heat_kernel_effective_action.py \
-            tests/test_janus_d7_seeley_dewitt.py \
-            tests/test_janus_pe_invariant_pairings.py \
-            tests/test_janus_pe_spinor_pairings.py
+        run: python -m pytest -q "${{ matrix.test }}"
