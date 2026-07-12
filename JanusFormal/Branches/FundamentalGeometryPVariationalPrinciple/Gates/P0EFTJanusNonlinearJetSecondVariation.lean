@@ -45,7 +45,7 @@ def pulledBackGradientAtOrigin
   action.gradientAtOrigin * jetMap.linearPart
 
 /--
-Formal Hessian coefficient of the nonlinear pullback.  It contains the usual
+Formal Hessian coefficient of the nonlinear pullback. It contains the usual
 `Jᵀ H J` term and a second-variation correction weighted by the target gradient.
 -/
 def pulledBackHessianAtOrigin
@@ -55,14 +55,14 @@ def pulledBackHessianAtOrigin
     action.gradientAtOrigin * jetMap.secondPart
 
 /-- Cubic coefficient in the exact pullback expansion. -/
-def pulledBackCubicCoefficient
+noncomputable def pulledBackCubicCoefficient
     (action : QuadraticTargetAction)
     (jetMap : QuadraticJetMap) : ℝ :=
   action.hessianAtOrigin *
     jetMap.linearPart * jetMap.secondPart / 2
 
 /-- Quartic coefficient in the exact pullback expansion. -/
-def pulledBackQuarticCoefficient
+noncomputable def pulledBackQuarticCoefficient
     (action : QuadraticTargetAction)
     (jetMap : QuadraticJetMap) : ℝ :=
   action.hessianAtOrigin * jetMap.secondPart ^ 2 / 8
@@ -134,8 +134,8 @@ theorem critical_point_removes_second_jet_dependence :
     criticalAction, linearJetMap, curvedJetMap]
 
 /--
-Correct nonlinear chain-rule status.  The formula `Jᵀ H J` is exact for the
-second variation of a pulled-back action at a target critical point.  Away from
+Correct nonlinear chain-rule status. The formula `Jᵀ H J` is exact for the
+second variation of a pulled-back action at a target critical point. Away from
 criticality, the target gradient contracts with the second derivative of the
 geometric/jet map and cannot be omitted.
 -/
