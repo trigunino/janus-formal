@@ -92,10 +92,9 @@ def Spin3BilinearSinglet
       fundamentalSpinorSpin fundamentalSpinorSpin spinTwoSpin) := by
   native_decide
 
-/-- Inversion parity needed to distinguish an `O(3)` scalar from a pseudoscalar. -/
+/-- Inversion parity distinguishes an `O(3)` scalar from a pseudoscalar. -/
 abbrev InversionParity := ZMod 2
 
-/-- Polar-vector parity and ordinary even tensor/scalar parity. -/
 def scalarInversionParity : InversionParity := 0
 
 def vectorInversionParity : InversionParity := 1
@@ -125,7 +124,7 @@ instance o3TripleScalarAllowedDecidable
       vectorInversionParity vectorInversionParity vectorInversionParity) := by
   native_decide
 
-/-- The standard spin-two coupling to two vectors is an ordinary `O(3)` scalar. -/
+/-- The spin-two coupling to two vectors is an ordinary `O(3)` scalar. -/
 @[simp] theorem vector_vector_spin_two_o3_scalar :
     O3TripleScalarAllowed
       vectorSpin vectorSpin spinTwoSpin
@@ -211,7 +210,18 @@ instance gradeNeutralDecidable (grade : QuantumGrade) :
 @[simp] theorem grade_pairs_with_dual
     (grade : QuantumGrade) :
     GradeNeutral (tensorGrade grade (dualGrade grade)) := by
-  ext <;> simp [GradeNeutral, tensorGrade, dualGrade, zeroGrade]
+  unfold GradeNeutral
+  apply QuantumGrade.ext
+  · change grade.inversion + (-grade.inversion) = 0
+    exact add_neg_self grade.inversion
+  · change grade.z4 + (-grade.z4) = 0
+    exact add_neg_self grade.z4
+  · change grade.u1 + (-grade.u1) = 0
+    exact add_neg_self grade.u1
+  · change grade.ghost + (-grade.ghost) = 0
+    exact add_neg_self grade.ghost
+  · change grade.grassmann + (-grade.grassmann) = 0
+    exact add_neg_self grade.grassmann
 
 /-- Grades of the core sectors. -/
 def periodicEvenGrade : QuantumGrade := zeroGrade
@@ -281,13 +291,13 @@ def antighostGrade : QuantumGrade :=
     GradeNeutral (tensorGrade ghostGrade antighostGrade) := by
   native_decide
 
-/-- Arithmetic neutrality condition for a monomial with normal modes and charged spinors. -/
+/-- Arithmetic neutrality for normal modes and charged spinors. -/
 def CountNeutral
     (normalCount positiveCount negativeCount : ℕ) : Prop :=
   4 ∣ (2 * normalCount + positiveCount + 3 * negativeCount) /\
   positiveCount = negativeCount
 
-/-- Gauge neutrality plus `Z4` neutrality force an even number of normal modes. -/
+/-- Gauge plus `Z4` neutrality force an even number of normal modes. -/
 theorem neutral_spinor_dressed_normal_count_even
     (normalCount positiveCount negativeCount : ℕ)
     (hNeutral : CountNeutral
@@ -338,7 +348,7 @@ theorem pure_normal_neutral_iff_even
     CountNeutral 2 1 1 := by
   norm_num [CountNeutral]
 
-/-- A normal mode repairs the `Z4` phase of two positive spinors but not their `U(1)` charge. -/
+/-- A normal mode repairs the `Z4` phase of two positive spinors but not their charge. -/
 @[simp] theorem normal_times_same_positive_spinors_still_forbidden :
     Not (CountNeutral 1 2 0) := by
   norm_num [CountNeutral]
@@ -362,9 +372,9 @@ def IdenticalFourPointChannelCount
 
 /--
 P.E fusion verdict: bilinear multiplicity-one does not imply nonlinear
-uniqueness.  Four identical vectors already have three raw recoupling channels,
-and four spin-two fields have five.  Statistics and permutation/crossing
-symmetry may reduce these numbers, but that is an additional theorem.
+uniqueness. Four identical vectors already have three raw recoupling channels,
+and four spin-two fields have five. Statistics and crossing symmetry may reduce
+these numbers, but that is an additional theorem.
 -/
 structure GradedFusionPhysicalStatus where
   actualSpin3RepresentationsConstructed : Prop
