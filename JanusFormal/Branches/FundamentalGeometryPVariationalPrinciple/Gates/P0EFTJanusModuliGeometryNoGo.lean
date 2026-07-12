@@ -11,7 +11,7 @@ structure PositiveModuliMetric where
   weightPositive : 0 < weight
 
 /-- Quadratic potential on one moduli coordinate. -/
-def quadraticPotential
+noncomputable def quadraticPotential
     (coefficient coordinate : ℝ) : ℝ :=
   coefficient * coordinate ^ 2 / 2
 
