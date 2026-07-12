@@ -67,8 +67,8 @@ theorem combined_tensor_pairing_cubic_invariant
     rcases second with ⟨secondA, secondB, secondXY, secondXZ, secondYZ⟩
     simp [combinedTensorPairing, tensorDiagonalPairing,
       tensorOffDiagonalPairing, tensorFlipX, tensorFlipY,
-      tensorSwapXY, tensorSwapYZ]
-    ring
+      tensorSwapXY, tensorSwapYZ] <;>
+      ring
 
 /-- The diagonal test recovers the first scale. -/
 theorem diagonal_test_recovers_scale
@@ -77,7 +77,8 @@ theorem diagonal_test_recovers_scale
         tensorBasisA tensorBasisA =
       2 * diagonalScale := by
   norm_num [combinedTensorPairing, tensorDiagonalPairing,
-    tensorOffDiagonalPairing, tensorBasisA]
+    tensorOffDiagonalPairing, tensorBasisA] <;>
+    ring
 
 /-- The off-diagonal test recovers the second scale. -/
 theorem off_diagonal_test_recovers_scale
@@ -86,7 +87,8 @@ theorem off_diagonal_test_recovers_scale
         tensorBasisXY tensorBasisXY =
       2 * offDiagonalScale := by
   norm_num [combinedTensorPairing, tensorDiagonalPairing,
-    tensorOffDiagonalPairing, tensorBasisXY]
+    tensorOffDiagonalPairing, tensorBasisXY] <;>
+    ring
 
 /-- The two cubic-invariant coefficients are genuinely independent. -/
 theorem combined_tensor_parameters_unique
