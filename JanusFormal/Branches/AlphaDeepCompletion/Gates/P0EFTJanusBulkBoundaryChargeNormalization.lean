@@ -85,7 +85,6 @@ theorem reversing_transgression_flips_charge_unit
       _ = (-t.auxiliaryChargeUnit) *
           (t.bulkFluxInteger : ℝ) := by
         norm_num
-        ring
   have hFactor :
       (t.bulkChargeUnit - (-t.auxiliaryChargeUnit)) *
         (t.bulkFluxInteger : ℝ) = 0 := by

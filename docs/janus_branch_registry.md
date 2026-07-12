@@ -1,48 +1,76 @@
-# Janus Branch Registry
+# Janus Branch and Build Registry
 
-This file is the navigation surface for active and parked research branches.
-Build one branch head at a time.
+This file is operational. Scientific status lives in `docs/current_status.md`; this registry says which Lean entry points exist and how honestly they may be described.
 
-## Shared Libraries
+## Status vocabulary
+
+| Status | Meaning |
+| --- | --- |
+| **green** | focused CI passed on the current consolidation head |
+| **gate collection** | modules exist under `Gates/`, but no supported standalone head exists |
+| **parked** | retained for history or an alternative route; not the current priority |
+
+## Shared libraries
 
 | Module | Build | Status |
 | --- | --- | --- |
-| `JanusFormal.Core` | `lake build JanusFormal.Core` | no-Mathlib shared kernel |
+| `JanusFormal.Core` | `lake build JanusFormal.Core` | lightweight shared core |
 | `JanusFormal.Shared.Foundation` | `lake build JanusFormal.Shared.Foundation` | branch-safe foundation facade |
-| `JanusFormal.Shared.MathCompat` | `lake build JanusFormal.Shared.MathCompat` | Mathlib compatibility for older modules |
+| `JanusFormal.Shared.MathCompat` | `lake build JanusFormal.Shared.MathCompat` | compatibility layer for older modules |
 
-## Branch Heads
+## Canonical fundamental-program entries
+
+| Program | Build / location | Status | Scope |
+| --- | --- | --- | --- |
+| **D — fundamental geometry** | `lake build JanusFormal.Branches.FundamentalGeometryD` | **green** | mapping-torus, throat, monopole, Pin and geometry-to-physics gates |
+| **D2 — twisted Dirac spectral geometry** | `lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral` | **green** | focused monopole spectrum, eta/holonomy, ratio correction and scale-orbit no-go |
+| **D7 — spectral theory** | `lake build JanusFormal.Branches.FundamentalGeometryD7SpectralTheory` | **green** | heat coefficients, winding/determinant no-go results and conditional synthesis |
+| **D8 — topology and representations** | `lake build JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation` | **green** | free mapping torus, one-sided throat, normal line and quarter-lift audits |
+| **D9 — immersed SpinC elliptic complex** | `JanusFormal/Branches/FundamentalGeometryD9ImmersedSpinCEllipticComplex/Gates/` | **gate collection** | symbol-level immersion, de Rham/Maxwell, metric/ghost and twisted-Dirac modules; no supported head yet |
+| **D10 — Quillen/anomaly** | `lake build JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly` | **green** | determinant-line, anomaly and partition-section interfaces |
+| **D11 — natural immersion operators** | `JanusFormal/Branches/FundamentalGeometryD11NaturalImmersionOperators/Gates/` | **gate collection** | natural bundle, symbol and jet interfaces; no supported head yet |
+| **P — variational principle** | `lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple` | **green** | P0, P-A, P-B and P-C variational core plus integrated advanced gates |
+| **P-D — invariant pairings** | `lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings` | **green** | low-rank invariant pairings, graded fusion rules and multiplicity-space freedom |
+| **P-E — jet universality** | `lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality` | **green** | corrected regular-local finite-jet/equivariance theorem architecture |
+| **P-F — compatibility/Helmholtz** | `lake build JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz` | **green** | pullback Hessian, nonlinear correction and Noether bridge |
+
+## Main completion programs
+
+| Program | Build | Status |
+| --- | --- | --- |
+| Quantum world-volume alpha | `lake build JanusFormal.Branches.WorldvolumeQuantumAlpha` | deep-alpha workflow green; physical stable vacuum and UV law remain conditional/open |
+| Nonlinear bimetric junction alpha | `lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha` | deep-alpha workflow green; full constraints and null charge remain open |
+| Alpha deep completion matrix | `lake build JanusFormal.Branches.AlphaDeepCompletionMatrix` | deep-alpha workflow green; no absolute no-fit scale |
+| RP4 twisted four-form alpha | `lake build JanusFormal.Branches.RP4TwistedFourFormAlpha` | retained alternative topological sector |
+| PT-twisted Hopf geometry | `lake build JanusFormal.Branches.JanusTwistedHopfGeometry` | retained geometric candidate; global analytic construction open |
+
+## Parked and diagnostic programs
 
 | Branch | Build | Status |
 | --- | --- | --- |
-| Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | viable only as state-sector selection; no no-fit alpha law |
-| PT-twisted Hopf geometry | `lake build JanusFormal.Branches.JanusTwistedHopfGeometry` | proposed smooth resolution: real Hopf mapping torus, orientation cover `S3 x S1`, canonical throat `S2 x S1`, compact transgression circle, monodromy/RG scale law and precise Pin-lifted `Z4` criterion |
-| RP4 twisted four-form alpha | `lake build JanusFormal.Branches.RP4TwistedFourFormAlpha` | primitive twisted sector, finite bridge algebra and LL conditional spectrum derived; absolute LL normalization remains open |
-| Quantum world-volume alpha | `lake build JanusFormal.Branches.WorldvolumeQuantumAlpha` | classically scale-invariant scalar/compact-U1/CS candidate, anomaly arithmetic, RG hierarchy and condensate-to-alpha map formalized; stable renormalized vacuum and microscopic UV lock remain open |
-| Nonlinear bimetric junction alpha | `lake build JanusFormal.Branches.NonlinearBimetricJunctionAlpha` | common-action integrability, diagonal Noether exchange, PT quasi-local charge and reciprocal interaction candidate formalized; relative kinetic sign, full constraints and null junction require physical closure |
-| Alpha deep completion matrix | `lake build JanusFormal.Branches.AlphaDeepCompletionMatrix` | proves the geometry, classical bimetric junction, quantum world-volume normalization and charge compatibility must close together for absolute no-fit alpha |
-| Native BAO/ruler contract | `lake build JanusFormal.Branches.NativeBAORulerContract` | formulated; blocked by missing native early-time/ruler primitives |
-| Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | projected photon-baryon plasma pushed to formula-complete/input-blocked frontier; other BAO/ruler routes documented as blocked |
-| Early-universe native plasma | `lake build JanusFormal.Branches.JanusEarlyUniverseNativePlasma` | pushed to final early/late matching frontier; entropy cutoff can reach `z=1000`, but same late cosh branch and two-cosh throat gluing do not close without a new transition law or early `H_J(a)` |
-| Projective point PT limit | `lake build JanusFormal.Branches.JanusProjectivePointPTLimit` | opened as non-throat limit; removes finite Sigma-radius obligations but requires a singular/projective initial law and native early ruler |
-| Non-throat PT transitions | `lake build JanusFormal.Branches.JanusNonThroatPTTransitions` | final frontier reached: Weyl-cusp domain, `g(+)` kinematics, `S4/RP4` conformal background, bimetric source contract, global conservation Omega relation, and 00 projection are closed; no internal route fixes `L/E_global`, Lorentzian time, pre-drag scalings, or Omega boundary data |
-| Regular Z2/Sigma throat | `lake build JanusFormal.Branches.Z2SigmaRegularThroat` | blocked by missing non-rustine scale/source closure |
-| Null Sigma / PT bridge | `lake build JanusFormal.Branches.NullPTBridgeMass` | blocked by missing derived bridge mass/LL state law |
-| Quantum boundary state law | `lake build JanusFormal.Branches.QuantumBoundaryStateLaw` | conditional spectra possible; no derived alpha selector |
-| Complex-reality quantum state law | `lake build JanusFormal.Branches.ComplexRealityQuantumStateLaw` | exploratory; no closed boundary mass law |
-| Asymptotic null-boundary charges | `lake build JanusFormal.Branches.AsymptoticNullBoundaryCharges` | audited; no derived boundary mass/alpha charge |
-| Candidate mechanism matrix | `lake build JanusFormal.Branches.CandidateMechanismMatrix` | matrix of exits; all alpha routes and route combinations pushed to explicit frontier; no no-fit state law closed |
-| Alpha sector theory | `lake build JanusFormal.Branches.AlphaSectorTheory` | baseline sector audit; alpha remains external |
-| CMB/Planck diagnostic attempts | `lake build JanusFormal.Branches.CMBPlanckDiagnosticAttempts` | CAMB/Planck attempts; blocked as active evidence |
-| Z4 CMB topology-reset blocked program | `lake build JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram` | Z4/CMB solver route; blocked by geometry/topology reset |
-| P0 bimetric/orbifold prototype program | `lake build JanusFormal.Branches.P0BimetricOrbifoldPrototypeProgram` | light inventory head for bimetric/orbifold prototypes |
-| P0EFT orbifold/Holst prototype program | `lake build JanusFormal.Branches.P0EFTOrbifoldHolstPrototypeProgram` | light inventory head for EFT/orbifold/Holst prototypes |
+| Alpha bridge state law / superselection | `lake build JanusFormal.Branches.AlphaBridgeStateLaw` | parked; state-sector selection only |
+| Native BAO/ruler contract | `lake build JanusFormal.Branches.NativeBAORulerContract` | parked; missing native early-time/ruler primitives |
+| Early-time orbifold ruler | `lake build JanusFormal.Branches.JanusEarlyTimeOrbifoldRuler` | parked/input-blocked |
+| Early-universe native plasma | `lake build JanusFormal.Branches.JanusEarlyUniverseNativePlasma` | parked; missing transition/early expansion law |
+| Projective point PT limit | `lake build JanusFormal.Branches.JanusProjectivePointPTLimit` | alternative non-throat limit |
+| Non-throat PT transitions | `lake build JanusFormal.Branches.JanusNonThroatPTTransitions` | alternative transition program; absolute inputs open |
+| Regular Z2/Sigma throat | `lake build JanusFormal.Branches.Z2SigmaRegularThroat` | parked/blocked |
+| Null Sigma / PT bridge | `lake build JanusFormal.Branches.NullPTBridgeMass` | parked/blocked |
+| Quantum boundary state law | `lake build JanusFormal.Branches.QuantumBoundaryStateLaw` | exploratory |
+| Complex-reality quantum state law | `lake build JanusFormal.Branches.ComplexRealityQuantumStateLaw` | exploratory |
+| Asymptotic null-boundary charges | `lake build JanusFormal.Branches.AsymptoticNullBoundaryCharges` | audited/no derived alpha charge |
+| Candidate mechanism matrix | `lake build JanusFormal.Branches.CandidateMechanismMatrix` | inventory/no closed selector |
+| Alpha sector theory | `lake build JanusFormal.Branches.AlphaSectorTheory` | baseline audit |
+| CMB/Planck diagnostic attempts | `lake build JanusFormal.Branches.CMBPlanckDiagnosticAttempts` | diagnostics only |
+| Z4 CMB topology-reset blocked program | `lake build JanusFormal.Branches.Z4CMBTopologyResetBlockedProgram` | blocked diagnostic route |
+| P0 bimetric/orbifold prototype | `lake build JanusFormal.Branches.P0BimetricOrbifoldPrototypeProgram` | light inventory head |
+| P0EFT orbifold/Holst prototype | `lake build JanusFormal.Branches.P0EFTOrbifoldHolstPrototypeProgram` | light inventory head |
 
 ## Rules
 
-- Do not use a global all-import build as normal workflow.
-- Add a branch head under `JanusFormal/Branches/` for each branch.
+- Build one focused head at a time.
+- Do not infer that a `Gates/` directory has a valid head.
+- Do not call a head green without a focused passing workflow or reproducible local build.
+- Do not use a global all-import build as the normal workflow.
 - Put reusable primitives under `JanusFormal/Shared/` or `JanusFormal/Core.lean`.
-- Keep every attempt, including old/blocked attempts, under an explicit branch.
-- Do not use catch-all old-attempt folders; put the status/blocker in this
-  registry instead.
+- Keep blocked or superseded attempts, but label them explicitly rather than presenting them as active closure paths.

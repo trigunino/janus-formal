@@ -74,7 +74,7 @@ theorem stationary_condensate_unique
     _ = s₂.condensateMass := s₂.condensateLaw.symm
 
 /-- Vacuum energy at the stationary point. -/
-def stationaryVacuumEnergy (s : OneLogCompositeVacuum) : ℝ :=
+noncomputable def stationaryVacuumEnergy (s : OneLogCompositeVacuum) : ℝ :=
   -(s.logCoefficient * s.condensateMass ^ 3 / 3)
 
 /-- Curvature with respect to the composite coordinate at the stationary point. -/
@@ -103,7 +103,7 @@ theorem stationary_composite_curvature_is_positive
     s.condensateMassPositive
 
 /-- First derivative in the logarithmic coordinate `x = log(σ/mu)`. -/
-def logCoordinateDerivative
+noncomputable def logCoordinateDerivative
     (s : OneLogCompositeVacuum) (x : ℝ) : ℝ :=
   s.renormalizationMass ^ 3 * Real.exp (3 * x) *
     (3 * s.sexticCoupling + s.logCoefficient +

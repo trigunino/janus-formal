@@ -62,8 +62,9 @@ theorem fundamental_volume_radius_law
       _ = 1 := by rw [s.bulkFundamentalVolumeLaw]; norm_num
   have hBulkNonzero : s.bulkChargeDensity ≠ 0 := by
     intro hZero
-    rw [hZero, zero_mul] at s.bulkFundamentalVolumeLaw
-    norm_num at s.bulkFundamentalVolumeLaw
+    have hFundamental := s.bulkFundamentalVolumeLaw
+    rw [hZero, zero_mul] at hFundamental
+    norm_num at hFundamental
   have hBulkSquareNonzero : s.bulkChargeDensity ^ 2 ≠ 0 :=
     pow_ne_zero 2 hBulkNonzero
   have hFactor :
