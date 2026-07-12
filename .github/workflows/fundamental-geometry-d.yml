@@ -17,6 +17,8 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "JanusFormal/Branches/FundamentalGeometryPEInvariantPairings.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPEInvariantPairings/**"
       - "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
@@ -48,6 +50,8 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/**"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "JanusFormal/Branches/FundamentalGeometryPEInvariantPairings.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPEInvariantPairings/**"
       - "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry.lean"
       - "JanusFormal/Branches/JanusTwistedHopfGeometry/**"
@@ -87,6 +91,8 @@ jobs:
             target: JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly
           - label: Program P variational
             target: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+          - label: Program P-D invariant pairings
+            target: JanusFormal.Branches.FundamentalGeometryPEInvariantPairings
           - label: Program P-F compatibility
             target: JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
     steps:
