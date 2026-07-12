@@ -7,7 +7,7 @@ set_option autoImplicit false
 
 /--
 Finite-dimensional proxy for a quadratic bulk field coupled to one throat
-field.  `bulkCoefficient` is assumed nonzero so the bulk Euler equation can be
+field. `bulkCoefficient` is assumed nonzero so the bulk Euler equation can be
 solved at fixed boundary data.
 -/
 structure QuadraticBulkBoundaryData where
@@ -81,7 +81,7 @@ theorem reduced_boundary_action_formula
   ring
 
 /-- Boundary Euler derivative of the reduced potential. -/
-def reducedBoundaryEulerDerivative
+noncomputable def reducedBoundaryEulerDerivative
     (s : QuadraticBulkBoundaryData)
     (boundary : ℝ) : ℝ :=
   reducedBoundaryHessian s * boundary
@@ -145,15 +145,14 @@ theorem reduced_hessian_rescaling
         (rescaleQuadraticData scale s hScale) =
       scale * reducedBoundaryHessian s := by
   unfold reducedBoundaryHessian rescaleQuadraticData
-  field_simp [hScale, s.bulkCoefficientNonzero]
-  ring
+  field_simp [hScale, s.bulkCoefficientNonzero] <;> ring
 
 /--
 The most natural throat potential is therefore **relative**, not intrinsic:
 choose a bulk action and admissible boundary/junction data, solve the bulk Euler
-problem, and evaluate the action on shell.  Its Hessian is the Schur complement
+problem, and evaluate the action on shell. Its Hessian is the Schur complement
 (or, for PDEs, a Dirichlet-to-Neumann/Calderon boundary operator plus local
-brane terms).  This produces the nonlocal information absent from local
+brane terms). This produces the nonlocal information absent from local
 Seeley--DeWitt coefficients, but it remains canonical only relative to the
 chosen bulk action, normalization and boundary conditions.
 -/
