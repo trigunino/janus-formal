@@ -25,7 +25,7 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | **P0/P-A** | reject shortcuts and define relative selection | moduli geometry no-go; normalized quadratic uniqueness; parent Schur reduction | derive the parent theory |
 | **P-B** | anomaly consistency | independent of Helmholtz; can constrain discrete arithmetic | actual regulator, field content and global anomaly |
 | **P-C** | inverse variational problem | finite Helmholtz and polynomial reconstruction models | concrete nonlinear Janus Euler source and variational cohomology |
-| **P-D** | invariant pairings | low-rank pairing dimensions and `Z4` neutrality rules | exact global symmetry category and multiplicity spaces |
+| **P-D** | invariant pairings | low-rank pairing dimensions, `Z4` neutrality rules and a focused head | exact global symmetry category, multiplicity spaces and normalizations |
 | **P-E** | finite jets/equivariance | green corrected jet-universality head | concrete Janus jet group/bundles and elliptic classification |
 | **P-F** | compatibility pullback | `J^T H J` Helmholtz/Noether schema | actual compatibility complex and target pairing |
 | **A/B/C** | scale, junction and charge compatibility | advanced conditional chains | selected action, stable vacuum and common unit |
@@ -37,9 +37,10 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | **green** on last focused merged head |
 | `FundamentalGeometryPEJetUniversality` | **green** on last focused merged head |
+| `FundamentalGeometryPEInvariantPairings` | new focused head; consolidation revalidation required |
 | broad Program-D integration | **red** on last pre-consolidation head |
 | D/D7/D8/D10/P/P-F focused heads | present; consolidation revalidation required |
-| D9/D11/P-D pairing collections | gate collections; no supported standalone head |
+| D9/D11 collections | gates only; no supported standalone head |
 
 ## Program P scorecard
 
@@ -49,7 +50,7 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | P-A relative uniqueness | yes | parent action not derived |
 | P-B anomaly logic | yes | actual anomaly/regulator not computed |
 | P-C quadratic/polynomial Helmholtz | yes | nonlinear Euler source/cohomology open |
-| P-D low-rank pairings | partial Lean/Python | global SpinC/PT/Z4/BRST classification open |
+| P-D low-rank pairings | partial Lean/Python plus focused head | global SpinC/PT/Z4/BRST classification open |
 | P-E jet theorem architecture | focused head green | Janus specialization open |
 | P-F pullback schema | abstract gates | actual `K`, `J`, `H` and primitive open |
 | finite normalization/counterterms | no | microscopic law open |
