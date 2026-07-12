@@ -63,8 +63,11 @@ theorem formally_self_adjoint_iff_transpose
     · exact hSelfAdjoint
     · rfl
   · intro hTranspose
+    unfold FormallySelfAdjoint
     have hXY := congrArg LinearOperator2.xy hTranspose
-    simpa [transposeOperator, FormallySelfAdjoint] using hXY
+    have hYX : operator.yx = operator.xy := by
+      simpa [transposeOperator] using hXY
+    exact hYX.symm
 
 /--
 Core bridge theorem: pulling back a symmetric target Hessian along any
