@@ -42,7 +42,7 @@ A theorem about an abstract closure structure is not evidence that its physical 
 | **D10** | Quillen/determinant-line and anomaly interfaces | quantization/anomaly layer | `FundamentalGeometryD10QuillenAnomaly` |
 | **D11** | natural bundles, symbols and jet interfaces | gate collection; no stable standalone head yet | `FundamentalGeometryD11NaturalImmersionOperators/Gates/` |
 | **P0/P-A/P-B/P-C** | no-go, relative action selection, anomaly filter and Helmholtz reconstruction | variational core | `FundamentalGeometryPVariationalPrinciple` |
-| **P-D** | invariant pairings and residual coupling spaces | representation-theory filter | P head plus `docs/program_pe_invariant_pairings.md` |
+| **P-D** | invariant pairings and residual coupling spaces | representation-theory filter | `FundamentalGeometryPEInvariantPairings` |
 | **P-E** | locality, finite jets and equivariant evaluators | corrected natural-operator theorem | `FundamentalGeometryPEJetUniversality` |
 | **P-F** | compatibility-map pullbacks, Helmholtz and Noether identities | bridge from geometry to a variational complex | `FundamentalGeometryPFCompatibilityHelmholtz` |
 | **A** | quantum world-volume and dimensionful scale generation | absolute-scale candidate | `WorldvolumeQuantumAlpha` |
