@@ -165,12 +165,20 @@ The concrete Janus category, regularity hypotheses and invariant-theory classifi
 
 ## P-D — Invariant pairings
 
+Focused head:
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings
+```
+
 - **T/X** `Z4` charge neutrality forbids same-quarter quadratic masses and allows the conjugate-quarter cross pairing;
 - **T/X** scalar/vector/tensor low-rank pairing dimensions are computed in finite and symbolic models;
 - **N** finite signed-permutation symmetry leaves two rank-five tensor quadratic forms;
 - **T/X** adding a generic continuous rotation reduces the tensor self-pairing to the Frobenius contraction up to scale;
 - **N** repeated irreducible sectors retain multiplicity-space matrices;
 - **O** globalize the pointwise pairings and compute the actual SpinC/PT/Z4/BRST multiplicities.
+
+This new focused head is **present / revalidation required** on the consolidation branch.
 
 ## P-E — Corrected finite-jet theorem
 
@@ -229,8 +237,9 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
 | `FundamentalGeometryPEJetUniversality` | focused CI green |
+| `FundamentalGeometryPEInvariantPairings` | new head; focused revalidation required |
 | `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | entry exists; post-consolidation focused revalidation required |
-| D9, D11, P-D/P-E pairing collections | gates exist; no supported standalone head |
+| D9 and D11 | gate collections; no supported standalone head |
 
 The broad Program-D integration workflow was red on the last pre-consolidation head. See `current_status.md` and `janus_branch_registry.md` for the exact operational status.
 
