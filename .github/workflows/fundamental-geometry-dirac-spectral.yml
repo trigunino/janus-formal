@@ -3,10 +3,14 @@ name: Program D2 Dirac spectral geometry
 on:
   push:
     branches:
+      - main
       - research/fundamental-geometry-dirac-spectral
+      - research/fundamental-geometry-d
+      - "agent/**"
     paths:
       - "JanusFormal/Branches/FundamentalGeometryDiracSpectral.lean"
       - "JanusFormal/Branches/FundamentalGeometryDiracSpectral/**"
+      - "docs/janus_program_d_dirac_spectral_geometry.md"
       - "scripts/audit_janus_dirac_spectral_geometry.py"
       - "tests/test_janus_dirac_spectral_geometry.py"
       - "lean-toolchain"
@@ -17,11 +21,13 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryDiracSpectral.lean"
       - "JanusFormal/Branches/FundamentalGeometryDiracSpectral/**"
+      - "docs/janus_program_d_dirac_spectral_geometry.md"
       - "scripts/audit_janus_dirac_spectral_geometry.py"
       - "tests/test_janus_dirac_spectral_geometry.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
+      - ".github/workflows/fundamental-geometry-dirac-spectral.yml"
   workflow_dispatch:
 
 jobs:
@@ -38,19 +44,7 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Build Dirac spectral branch head
-        run: |
-          set +e
-          lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral > dirac-spectral-lean.log 2>&1
-          status=$?
-          cat dirac-spectral-lean.log
-          exit $status
-      - name: Upload Lean log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dirac-spectral-lean-log
-          path: dirac-spectral-lean.log
-          if-no-files-found: error
+        run: lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral
 
   python-audit:
     runs-on: ubuntu-latest
