@@ -26,7 +26,7 @@ def FormallySelfAdjoint (operator : LinearOperator2) : Prop :=
   constant : ℝ
 
 /-- Potential value. -/
-def potentialValue
+noncomputable def potentialValue
     (potential : QuadraticPotential2)
     (x y : ℝ) : ℝ :=
   potential.xx * x ^ 2 / 2 +
@@ -116,10 +116,15 @@ theorem equal_hessian_difference_affine
       (first.linearX - second.linearX) * x +
       (first.linearY - second.linearY) * y +
       (first.constant - second.constant) := by
-  have hXX := congrArg LinearOperator2.xx hHessian
-  have hXY := congrArg LinearOperator2.xy hHessian
-  have hYY := congrArg LinearOperator2.yy hHessian
-  unfold hessianOperator at hXX hXY hYY
+  have hXX : first.xx = second.xx := by
+    simpa [hessianOperator] using
+      congrArg LinearOperator2.xx hHessian
+  have hXY : first.xy = second.xy := by
+    simpa [hessianOperator] using
+      congrArg LinearOperator2.xy hHessian
+  have hYY : first.yy = second.yy := by
+    simpa [hessianOperator] using
+      congrArg LinearOperator2.yy hHessian
   unfold potentialValue
   rw [hXX, hXY, hYY]
   ring
@@ -162,15 +167,21 @@ def ZeroNormalized (potential : QuadraticPotential2) : Prop :=
 /-- Fixed Hessian plus PT symmetry and one normalization reconstruct the quadratic action uniquely. -/
 theorem pt_normalized_hessian_reconstruction_unique
     (operator : LinearOperator2)
-    (hSelfAdjoint : FormallySelfAdjoint operator)
+    (_hSelfAdjoint : FormallySelfAdjoint operator)
     (potential : QuadraticPotential2)
     (hHessian : hessianOperator potential = operator)
     (hPT : PTEven potential)
     (hNormalized : ZeroNormalized potential) :
     potential = canonicalPotential operator := by
-  have hXX := congrArg LinearOperator2.xx hHessian
-  have hXY := congrArg LinearOperator2.xy hHessian
-  have hYY := congrArg LinearOperator2.yy hHessian
+  have hXX : potential.xx = operator.xx := by
+    simpa [hessianOperator] using
+      congrArg LinearOperator2.xx hHessian
+  have hXY : potential.xy = operator.xy := by
+    simpa [hessianOperator] using
+      congrArg LinearOperator2.xy hHessian
+  have hYY : potential.yy = operator.yy := by
+    simpa [hessianOperator] using
+      congrArg LinearOperator2.yy hHessian
   apply QuadraticPotential2.ext
   · exact hXX
   · exact hXY
@@ -204,7 +215,7 @@ theorem pt_normalized_reconstruction_unique_existence
       hProperties.1 hProperties.2.1 hProperties.2.2
 
 /--
-Nonlinear/local-field-theory Helmholtz contract.  Formal self-adjointness is
+Nonlinear/local-field-theory Helmholtz contract. Formal self-adjointness is
 necessary but generally not sufficient globally: one must also kill the
 variational-bicomplex obstruction and control boundary/null Lagrangians.
 -/
