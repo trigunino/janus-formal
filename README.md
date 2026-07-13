@@ -13,8 +13,9 @@ Read these files in order:
 3. [`docs/program_master_roadmap.md`](docs/program_master_roadmap.md) — detailed dependency graph;
 4. [`docs/program_p_variational_principle.md`](docs/program_p_variational_principle.md) — Program P in detail;
 5. [`docs/program_pe_categorical_jet_equivalence.md`](docs/program_pe_categorical_jet_equivalence.md) — corrected categorical jet theorem and Janus groupoid obligations;
-6. [`docs/program_pd_global_pairing_modules.md`](docs/program_pd_global_pairing_modules.md) — correction from pointwise multiplicity to global coupling modules;
-7. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
+6. [`docs/program_pe_structured_jet_reduction.md`](docs/program_pe_structured_jet_reduction.md) — action-groupoid core, low-order jet normal forms and isotropy locks;
+7. [`docs/program_pd_global_pairing_modules.md`](docs/program_pd_global_pairing_modules.md) — correction from pointwise multiplicity to global coupling modules;
+8. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
 
 ## Repository layout
 
@@ -67,11 +68,13 @@ mapping-torus / one-sided-throat geometry
   -> normal-line Z2 and candidate quarter-phase lift
   -> natural bundles and elliptic-symbol families
   -> regular-local finite-jet operators
-  -> structured-jet equivariant morphisms with holonomic composition
-  -> pointwise invariant pairings plus invariant scalar coefficient modules
+  -> action-groupoid and holonomic equivariant morphism cores
+  -> low-order immersion/connection jet orbit reductions
+  -> isotropy-stratified pointwise pairings
+  -> invariant scalar coefficient modules
   -> Helmholtz / Noether / anomaly tests
   -> action class plus finite renormalization
   -> stable vacuum and absolute-scale question
 ```
 
-The categorical equivalence is classical for ordinary natural and gauge-natural bundles, but its decorated SpinC-immersion specialization still requires a structured jet groupoid and descent theorem. Pointwise multiplicity-one pairings do not by themselves give one constant global coupling. The final variational, normalization and absolute-scale arrows also remain open in the concrete Janus theory. See `docs/current_status.md` for the precise boundary between proved algebra, executable checks and open physics.
+The categorical equivalence is classical for ordinary natural and gauge-natural bundles. The repository now proves abstract action-groupoid laws and low-order algebraic normal forms, but the decorated SpinC-immersion specialization still requires the actual smooth structured jet base, symmetry action, descent theorem and higher-order jet-isomorphism theorem. Pointwise multiplicity-one pairings do not by themselves give one constant global coupling, and their ranks can jump across isotropy strata. The final variational, normalization and absolute-scale arrows also remain open in the concrete Janus theory. See `docs/current_status.md` for the precise boundary between proved algebra, executable checks and open physics.
