@@ -23,11 +23,14 @@ low-order Spencer quotients and splittings, and the normal Ricci commutator. It
 constructs the shape operators from a finite-dimensional bilinear `II` by
 Fréchet--Riesz representation, bundles `xi ↦ A_xi` as a continuous linear map,
 proves residual orthogonal equivariance by conjugation, and proves joint smooth
-dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model. The
-remaining geometric locks are varying metric and subspace dependence on the
-structured-jet base, actual ambient and normal connection curvatures,
-determinant-line connection identification, higher-dimensional Clifford Spin
-covers, global principal-bundle packaging and characteristic-class matching.
+dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model. It
+also constructs the curvature of a local metric normal-connection one-jet and
+derives the Ricci normal equation from the curvature of the adapted block
+connection. The remaining geometric locks are varying metric and subspace
+dependence on the structured-jet base, insertion of the actual manifold
+Levi-Civita and normal connections, determinant-line connection identification,
+higher-dimensional Clifford Spin covers, global principal-bundle packaging and
+characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -70,6 +73,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperator
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorEquivariance
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothDependence
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMetricNormalConnectionCurvature
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -121,6 +125,7 @@ structure ProgramStatus where
   rieszShapeOperatorsConstructed : Prop
   rieszShapeOperatorEquivarianceBundled : Prop
   rieszShapeOperatorFixedModelSmoothnessProved : Prop
+  metricNormalConnectionCurvatureDerived : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -182,6 +187,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.rieszShapeOperatorsConstructed /\
   s.rieszShapeOperatorEquivarianceBundled /\
   s.rieszShapeOperatorFixedModelSmoothnessProved /\
+  s.metricNormalConnectionCurvatureDerived /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
