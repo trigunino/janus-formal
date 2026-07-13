@@ -21,11 +21,12 @@ residual symmetry descent to the reduced data. The latest concrete gates derive
 the normalized second-jet source action from the second-order chain-rule formula,
 classify concrete abelian connection one-jets by curvature, construct the first
 combined low-order quotient represented by `(B,F)`, prove the pointwise
-orthogonal splitting of a linear isometric immersion derivative, and identify
-the reduced normal quadratic tensor with the normal projection of the
-connection-corrected second derivative in the flat adapted model. They still do
-not construct the actual smooth Janus structured-jet space, manifold
-Levi-Civita connections or an adapted SpinC frame field.
+orthogonal splitting of a linear isometric immersion derivative, identify the
+reduced normal quadratic tensor with the normal projection of the
+connection-corrected second derivative in the flat adapted model, and prove its
+residual `O(T) × O(N)` equivariance. They still do not construct the actual
+smooth Janus structured-jet space, manifold Levi-Civita connections or an
+adapted SpinC frame field.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -44,6 +45,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderStructuredBackground
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedOrthogonalSplitting
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalFormJet
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalResidualEquivariance
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -70,6 +72,7 @@ structure ProgramStatus where
   combinedLowOrderStructuredQuotientProved : Prop
   pointwiseAdaptedOrthogonalSplittingProved : Prop
   pointwiseSecondFundamentalJetBridgeProved : Prop
+  pointwiseResidualOrthogonalEquivarianceProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -87,8 +90,8 @@ structure ProgramStatus where
 
 /-- Formal/logical theorem core, including orbitwise descent, concrete low-order
 orbit reductions, the combined `(B,F)` quotient, pointwise orthogonal splitting,
-the connection-corrected second fundamental-form bridge, universal factorization
-and residual symmetry models. -/
+the connection-corrected second fundamental-form bridge, residual orthogonal
+equivariance, universal factorization and residual symmetry models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -109,6 +112,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.combinedLowOrderStructuredQuotientProved /\
   s.pointwiseAdaptedOrthogonalSplittingProved /\
   s.pointwiseSecondFundamentalJetBridgeProved /\
+  s.pointwiseResidualOrthogonalEquivarianceProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -148,9 +152,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- Pointwise orthogonal factors and generic residual-frame formulas still
-require a smooth local frame field and the concrete SpinC lift before invariant
-theory can be applied to Janus jets. -/
+/-- Pointwise orthogonal factors and residual `O(T) × O(N)` laws still require
+a smooth local frame field and the concrete SpinC lift before invariant theory
+can be applied to Janus jets. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
