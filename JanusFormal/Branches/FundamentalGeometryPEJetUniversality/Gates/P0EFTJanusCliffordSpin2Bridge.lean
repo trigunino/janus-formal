@@ -148,7 +148,8 @@ theorem phaseEvenProduct_mem_unitary (phase : Circle) :
           (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
             CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) = 1
   constructor
-  · simp only [map_mul, CliffordAlgebra.star_ι, neg_mul_neg]
+  · rw [star_mul, CliffordAlgebra.star_ι,
+      CliffordAlgebra.star_ι, neg_mul_neg]
     calc
       (CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
           CliffordAlgebra.ι spin2PlaneForm referenceUnitVector) *
@@ -168,7 +169,8 @@ theorem phaseEvenProduct_mem_unitary (phase : Circle) :
           mul_assoc, CliffordAlgebra.ι_sq_scalar,
           spin2PlaneForm_phaseUnitVector, ← map_mul]
         norm_num
-  · simp only [map_mul, CliffordAlgebra.star_ι, neg_mul_neg]
+  · rw [star_mul, CliffordAlgebra.star_ι,
+      CliffordAlgebra.star_ι, neg_mul_neg]
     calc
       (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
           CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) *
@@ -259,7 +261,7 @@ theorem cliffordSpin2Complex_star (rotor : CliffordSpin2) :
       ⟨star (rotor : Spin2Clifford),
         spinGroup.mem_even
           (spinGroup.star_mem rotor.property)⟩ =
-      conj (cliffordSpin2Complex rotor) := by
+      Complex.conj (cliffordSpin2Complex rotor) := by
   let evenRotor : CliffordAlgebra.even spin2PlaneForm :=
     ⟨(rotor : Spin2Clifford), spinGroup.mem_even rotor.property⟩
   let starEvenRotor : CliffordAlgebra.even spin2PlaneForm :=
@@ -286,7 +288,14 @@ theorem cliffordSpin2Complex_star (rotor : CliffordSpin2) :
         have h := CliffordAlgebra.coe_toEven_reverse_involute
           (Q := spin2LineForm)
           (CliffordAlgebra.ofEven spin2LineForm evenRotor)
-        simpa [CliffordAlgebraComplex.reverse_apply] using h.symm
+        have hForward :
+            ((CliffordAlgebra.toEven spin2LineForm
+              (CliffordAlgebra.involute
+                (CliffordAlgebra.ofEven spin2LineForm evenRotor)) :
+              CliffordAlgebra.even spin2PlaneForm) : Spin2Clifford) =
+              CliffordAlgebra.reverse (evenRotor : Spin2Clifford) := by
+          simpa [CliffordAlgebraComplex.reverse_apply] using h
+        exact hForward.symm
   have hOfEven :
       CliffordAlgebra.ofEven spin2LineForm starEvenRotor =
         CliffordAlgebra.involute
@@ -299,7 +308,7 @@ theorem cliffordSpin2Complex_star (rotor : CliffordSpin2) :
   change
     CliffordAlgebraComplex.toComplex
       (CliffordAlgebra.ofEven spin2LineForm starEvenRotor) =
-      conj
+      Complex.conj
         (CliffordAlgebraComplex.toComplex
           (CliffordAlgebra.ofEven spin2LineForm evenRotor))
   rw [hOfEven, CliffordAlgebraComplex.toComplex_involute]
@@ -320,7 +329,7 @@ theorem cliffordSpin2Complex_norm (rotor : CliffordSpin2) :
           spin2EvenEquivComplex evenRotor = 1 := by
     simpa using congrArg spin2EvenEquivComplex hProduct
   have hConjMul :
-      conj (cliffordSpin2Complex rotor) *
+      Complex.conj (cliffordSpin2Complex rotor) *
           cliffordSpin2Complex rotor = 1 := by
     rw [← cliffordSpin2Complex_star rotor]
     change
