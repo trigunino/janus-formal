@@ -30,10 +30,10 @@ seeds and Gram--Schmidt, prove the formal two-jet transformation law under a
 moving adapted frame, construct canonical normal transport and moving-frame
 equivariance of the second fundamental form, prove the Čech cocycle laws for
 residual adapted-frame transitions, instantiate their determinant-one oriented
-reduction `SO(T) × SO(N)`, and formalize the central double-cover defect that
-obstructs lifting an oriented cocycle to Spin. They still do not construct the
-concrete Clifford-theoretic Spin-to-SO projection or the complete SpinC
-structured-jet groupoid.
+reduction `SO(T) × SO(N)`, formalize the central double-cover defect obstructing
+a Spin lift, and prove the abstract SpinC diagonal-cancellation theorem. They
+still do not instantiate the concrete Clifford Spin-to-SO projection or derive
+the compensating phase cocycle from the determinant line.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -60,6 +60,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedFrameOverlapCocycle
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantOrientedReduction
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCentralLiftCocycleObstruction
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSpinCDiagonalDefectCancellation
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -95,6 +96,7 @@ structure ProgramStatus where
   abstractOrientedSubcocycleProved : Prop
   determinantOrientedResidualReductionProved : Prop
   centralDoubleCoverDefectTheoryProved : Prop
+  spinCDiagonalDefectCancellationProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -113,11 +115,10 @@ structure ProgramStatus where
 /-- Formal/logical theorem core, including orbitwise descent, concrete low-order
 orbit reductions, the combined `(B,F)` quotient, pointwise orthogonal splitting,
 the connection-corrected second fundamental-form bridge, residual orthogonal
-equivariance, smooth projector fields, smooth adapted frames, the moving-frame
-two-jet cancellation law, moving normal transport and second-fundamental-form
-equivariance, adapted-frame Čech cocycles, determinant-one `SO(T) × SO(N)`
-reduction, central double-cover lift defects, universal factorization and
-residual symmetry models. -/
+equivariance, smooth projector fields, smooth adapted frames, moving-frame
+second-jet and normal-transport laws, adapted-frame Čech cocycles,
+determinant-one `SO(T) × SO(N)` reduction, central double-cover defects and
+SpinC diagonal defect cancellation. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -147,6 +148,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.abstractOrientedSubcocycleProved /\
   s.determinantOrientedResidualReductionProved /\
   s.centralDoubleCoverDefectTheoryProved /\
+  s.spinCDiagonalDefectCancellationProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -186,10 +188,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- Smooth adapted coordinate frames, their moving two-jet/normal transport
-laws, residual `O(T) × O(N)` cocycles, determinant-one oriented reduction and
-abstract central lift defects still require the concrete Clifford Spin cover,
-determinant-line compensation and smooth principal-bundle instantiation. -/
+/-- The proved local frame, oriented-cocycle and abstract SpinC cancellation
+layers still require concrete Clifford Spin projection, determinant-line phases,
+smooth principal bundles and their action on all Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
