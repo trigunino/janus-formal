@@ -2,7 +2,7 @@
 
 > Pointwise second fundamental form: [`program_pe_second_fundamental_form_jet.md`](program_pe_second_fundamental_form_jet.md)  
 > Low-order quotient: [`program_pe_low_order_structured_background.md`](program_pe_low_order_structured_background.md)  
-> Structured-jet roadmap: [`program_pe_structured_jet_reduction.md`](program_pe_structured_jet_reduction.md)
+> Subsequent overlap/SpinC stage: [`program_pe_spinC_cocycle_lift.md`](program_pe_spinC_cocycle_lift.md)
 
 ## Objective
 
@@ -282,8 +282,9 @@ This is the requested local adapted-frame theorem in coordinates.
   trivialization;
 - express the coordinate construction as `IsLocalFrameOn` sections of the
   pulled-back ambient tangent bundle;
-- prove compatibility under overlap changes of bundle trivialization;
-- construct the oriented reduction and SpinC lift.
+- extract smooth transition maps from genuine bundle-frame overlaps;
+- assemble the resulting local data into global oriented and SpinC principal
+  bundles.
 
 Mathlib already supplies smooth local frames from vector-bundle
 trivializations. It does not yet provide the planned general orthonormal-frame
@@ -303,14 +304,18 @@ pointwise tangent/normal splitting
   -> smooth adapted orthonormal frame.
 ```
 
-The next lock is S5.3:
+The formerly open S5.3 varying-frame calculation is now proved in
 
-> Compute the two-jet transformation under this varying adapted frame and prove
-> that the derivative-of-frame terms reproduce exactly the source and ambient
-> connection corrections already formalized pointwise.
+```text
+P0EFTJanusMovingAdaptedFrameSecondJet.lean
+P0EFTJanusMovingNormalTransport.lean.
+```
 
-After S5.3, the remaining local geometric step is the oriented/SpinC lift and
-determinant-line compatibility.
+Those modules show that derivative-of-frame terms reproduce the expected
+connection corrections and cancel in the connection-corrected second
+derivative. The subsequent overlap, oriented-reduction and SpinC-defect stages
+are documented in
+[`program_pe_spinC_cocycle_lift.md`](program_pe_spinC_cocycle_lift.md).
 
 # Lean correspondence
 
