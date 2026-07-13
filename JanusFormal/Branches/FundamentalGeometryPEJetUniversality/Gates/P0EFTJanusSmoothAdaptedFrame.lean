@@ -53,10 +53,7 @@ theorem varyingGramSchmidt_contDiffOn
       LinearIndependent ℝ (fun k => family k x)) :
     ∀ k, ContDiffOn ℝ ∞ (varyingGramSchmidt family k) u := by
   intro k
-  let wf : WellFounded ((· < ·) : κ → κ → Prop) := wellFounded_lt
-  refine wf.induction
-    (C := fun k => ContDiffOn ℝ ∞ (varyingGramSchmidt family k) u)
-    k ?_
+  apply wellFounded_lt.induction k
   intro k ih
   have hFormula :
       varyingGramSchmidt family k =
