@@ -9,7 +9,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped ContDiff InnerProductSpace
+open scoped ContDiff InnerProductSpace Topology
 open Set Filter
 
 universe u v
