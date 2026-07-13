@@ -86,9 +86,48 @@ theorem normalProjection_movingFrame
   change frame.value ((NormalSpace derivative).starProjection vector) =
     (NormalSpace (transformedDerivative frame derivative)).starProjection
       (frame.value vector)
-  have hProjection := frame.value.toLinearIsometry.map_starProjection
-    (NormalSpace derivative) vector
-  simpa only [map_normalSpace_eq frame derivative] using hProjection
+  refine (Submodule.eq_starProjection_of_mem_of_inner_eq_zero ?_ ?_).symm
+  · have hMapped :
+        frame.value ((NormalSpace derivative).starProjection vector) ∈
+          (NormalSpace derivative).map
+            frame.value.toLinearIsometry.toLinearMap :=
+      ⟨(NormalSpace derivative).starProjection vector,
+        (NormalSpace derivative).starProjection_apply_mem vector, rfl⟩
+    rw [map_normalSpace_eq frame derivative] at hMapped
+    exact hMapped
+  · intro normal hNormal
+    have hOldNormal : frame.value.symm normal ∈ NormalSpace derivative := by
+      intro tangentVector hTangent
+      rcases hTangent with ⟨x, rfl⟩
+      have hNewNormal := hNormal
+        (transformedDerivative frame derivative x)
+        (derivative_mem_tangentRange
+          (transformedDerivative frame derivative) x)
+      calc
+        inner ℝ (derivative x) (frame.value.symm normal) =
+            inner ℝ (frame.value (derivative x))
+              (frame.value (frame.value.symm normal)) :=
+          (frame.value.inner_map_map _ _).symm
+        _ = inner ℝ (transformedDerivative frame derivative x) normal := by
+          simp
+        _ = 0 := hNewNormal
+    calc
+      inner ℝ
+          (frame.value vector -
+            frame.value ((NormalSpace derivative).starProjection vector))
+          normal =
+        inner ℝ
+          (frame.value
+            (vector - (NormalSpace derivative).starProjection vector))
+          (frame.value (frame.value.symm normal)) := by
+            rw [frame.value.map_sub, frame.value.apply_symm_apply]
+      _ = inner ℝ
+          (vector - (NormalSpace derivative).starProjection vector)
+          (frame.value.symm normal) :=
+        frame.value.inner_map_map _ _
+      _ = 0 :=
+        (NormalSpace derivative).starProjection_inner_eq_zero
+          vector _ hOldNormal
 
 /-- The pointwise second fundamental form is equivariant under a moving ambient
 orthogonal frame once its derivative terms are compensated by the ambient
