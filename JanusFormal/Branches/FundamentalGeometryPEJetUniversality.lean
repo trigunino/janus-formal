@@ -42,10 +42,10 @@ that circle model with Mathlib's even-unitary Lipschitz
 resulting Clifford-valued central double cover and SpinC diagonal quotient,
 prove the first algebraic Gauss--Codazzi--Bianchi identities, and prove exact
 low-order Spencer quotient theorems for both the Codazzi tensor and the abelian
-Bianchi tensor. The remaining geometric locks are the smooth Lie/principal-
-bundle packaging, higher-dimensional Clifford Spin covers, actual ambient and
-normal curvature jets, Ricci compatibility, determinant-line connection
-identification and characteristic-class matching.
+connection curvature-derivative tensor. The remaining geometric locks are the
+smooth Lie/principal-bundle packaging, higher-dimensional Clifford Spin covers,
+actual ambient and normal curvature jets, Ricci compatibility, determinant-line
+connection identification and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -81,7 +81,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCliffordSpin2DoubleCover
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGaussCodazziBianchiIdentities
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCodazziJetExactness
-import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianBianchiJetExactness
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJet
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
