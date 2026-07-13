@@ -92,6 +92,11 @@ theorem symmetricRemainder_reconstructCodazziJet
     symmetricThirdJetBetweenEqualCodazzi,
     reconstructCodazziJet]
   rw [hReduce]
+  change
+    -(canonicalCovariantSecondFundamentalJet data).coefficient x y z +
+        ((canonicalCovariantSecondFundamentalJet data).coefficient x y z +
+          gauge.coefficient x y z) =
+      gauge.coefficient x y z
   module
 
 /-- Decomposition after reconstruction returns the original pair. -/
