@@ -87,7 +87,7 @@ theorem equivalent_iff_normal_eq
   · intro hNormal
     refine ⟨-first.tangentialQuadratic + second.tangentialQuadratic, ?_⟩
     ext
-    · simp [sourceQuadraticChange, add_assoc]
+    · simp [sourceQuadraticChange]
     · simpa [sourceQuadraticChange] using hNormal
 
 @[refl]
@@ -118,10 +118,10 @@ theorem equivalent_trans
     {first second third : SecondJetData Tangential Normal}
     (hFirst : EquivalentBySourceChange first second)
     (hSecond : EquivalentBySourceChange second third) :
-    EquivalentBySourceChange first third :=
-  (equivalent_iff_normal_eq first third).2
-    ((equivalent_iff_normal_eq first second).1 hFirst).trans
-      ((equivalent_iff_normal_eq second third).1 hSecond)
+    EquivalentBySourceChange first third := by
+  apply (equivalent_iff_normal_eq first third).2
+  exact ((equivalent_iff_normal_eq first second).1 hFirst).trans
+    ((equivalent_iff_normal_eq second third).1 hSecond)
 
 /-- Every orbit meets the zero-tangential slice. -/
 theorem every_orbit_meets_normal_slice
