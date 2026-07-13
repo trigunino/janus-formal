@@ -210,7 +210,8 @@ theorem source_change_preserves_symmetry
     IsSymmetricSplitJet (sourceQuadraticChange change jet) := by
   constructor
   · intro x y
-    simp only [sourceQuadraticChange]
+    change jet.tangentialQuadratic x y + change x y =
+      jet.tangentialQuadratic y x + change y x
     rw [hJet.1 x y, hChange x y]
   · exact hJet.2
 
