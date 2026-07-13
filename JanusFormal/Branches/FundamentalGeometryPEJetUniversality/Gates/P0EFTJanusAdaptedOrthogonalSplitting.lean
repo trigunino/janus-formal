@@ -97,7 +97,7 @@ theorem adapted_derivative_snd
   apply Subtype.ext
   change ((tangentRange derivative)ᗮ).starProjection (derivative x) = 0
   rw [Submodule.starProjection_apply_eq_zero_iff]
-  exact Submodule.le_orthogonal_orthogonal
+  exact Submodule.le_orthogonal_orthogonal (tangentRange derivative)
     (derivative_mem_tangentRange derivative x)
 
 /-- First-order adapted-frame theorem: after the canonical orthogonal splitting,
