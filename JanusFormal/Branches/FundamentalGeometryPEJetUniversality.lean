@@ -29,9 +29,11 @@ fields, construct a smooth local adapted orthonormal frame by projected normal
 seeds and Gram--Schmidt, prove the formal two-jet transformation law under a
 moving adapted frame, construct canonical normal transport and moving-frame
 equivariance of the second fundamental form, prove the Čech cocycle laws for
-residual adapted-frame transitions, and instantiate their oriented reduction as
-the determinant-one subgroup `SO(T) × SO(N)`. They still do not construct the
-complete smooth Janus structured-jet groupoid or its SpinC lift.
+residual adapted-frame transitions, instantiate their determinant-one oriented
+reduction `SO(T) × SO(N)`, and formalize the central double-cover defect that
+obstructs lifting an oriented cocycle to Spin. They still do not construct the
+concrete Clifford-theoretic Spin-to-SO projection or the complete SpinC
+structured-jet groupoid.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -57,6 +59,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMovingNormalTransport
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedFrameOverlapCocycle
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantOrientedReduction
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCentralLiftCocycleObstruction
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -91,6 +94,7 @@ structure ProgramStatus where
   adaptedFrameOverlapCocycleProved : Prop
   abstractOrientedSubcocycleProved : Prop
   determinantOrientedResidualReductionProved : Prop
+  centralDoubleCoverDefectTheoryProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -112,7 +116,8 @@ the connection-corrected second fundamental-form bridge, residual orthogonal
 equivariance, smooth projector fields, smooth adapted frames, the moving-frame
 two-jet cancellation law, moving normal transport and second-fundamental-form
 equivariance, adapted-frame Čech cocycles, determinant-one `SO(T) × SO(N)`
-reduction, universal factorization and residual symmetry models. -/
+reduction, central double-cover lift defects, universal factorization and
+residual symmetry models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -141,6 +146,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.adaptedFrameOverlapCocycleProved /\
   s.abstractOrientedSubcocycleProved /\
   s.determinantOrientedResidualReductionProved /\
+  s.centralDoubleCoverDefectTheoryProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -181,8 +187,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
   exact hMissing hNormalForm
 
 /-- Smooth adapted coordinate frames, their moving two-jet/normal transport
-laws, residual `O(T) × O(N)` cocycles and determinant-one oriented reduction
-still require their actual smooth principal-bundle and SpinC instantiation. -/
+laws, residual `O(T) × O(N)` cocycles, determinant-one oriented reduction and
+abstract central lift defects still require the concrete Clifford Spin cover,
+determinant-line compensation and smooth principal-bundle instantiation. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
