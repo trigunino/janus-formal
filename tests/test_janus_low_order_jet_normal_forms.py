@@ -11,6 +11,7 @@ from scripts.audit_janus_low_order_jet_normal_forms import (
     alternating_part,
     apply_abelian_gauge_two_jet,
     curvature_matrix,
+    gauge_between_equal_curvatures,
     is_symmetric,
     matrix_negate,
     normalize_abelian_connection_one_jet,
@@ -125,3 +126,43 @@ def test_normalizing_hessian_is_negative_symmetric_part() -> None:
     )
     _, gauge = normalize_abelian_connection_one_jet(jet)
     assert gauge.hessian == matrix_negate(symmetric_part(derivative))
+
+
+def test_equal_curvature_constructs_exact_gauge_between_jets() -> None:
+    first = AbelianConnectionOneJet(
+        value=(Fraction(2), Fraction(-5)),
+        derivative=(
+            (Fraction(1), Fraction(4)),
+            (Fraction(-2), Fraction(3)),
+        ),
+    )
+    known_gauge = AbelianGaugeTwoJet(
+        gradient=(Fraction(7), Fraction(1)),
+        hessian=(
+            (Fraction(5), Fraction(-3)),
+            (Fraction(-3), Fraction(2)),
+        ),
+    )
+    second = apply_abelian_gauge_two_jet(first, known_gauge)
+
+    reconstructed = gauge_between_equal_curvatures(first, second)
+
+    assert reconstructed == known_gauge
+    assert apply_abelian_gauge_two_jet(first, reconstructed) == second
+
+
+def test_unequal_curvature_blocks_gauge_between_jets() -> None:
+    first = AbelianConnectionOneJet(
+        value=(Fraction(0), Fraction(0)),
+        derivative=zero_matrix(2, 2),
+    )
+    second = AbelianConnectionOneJet(
+        value=(Fraction(0), Fraction(0)),
+        derivative=(
+            (Fraction(0), Fraction(1)),
+            (Fraction(0), Fraction(0)),
+        ),
+    )
+
+    with pytest.raises(ValueError, match="equal curvature"):
+        gauge_between_equal_curvatures(first, second)
