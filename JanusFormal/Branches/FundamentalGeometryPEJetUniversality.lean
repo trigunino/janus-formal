@@ -20,12 +20,13 @@ frames, the connection-corrected identity `B = II`, moving-frame and Čech laws,
 orientation reduction, central Spin and determinant-root defects, a concrete
 rank-two Clifford SpinC model, first Gauss--Codazzi--Bianchi identities, exact
 low-order Spencer quotients and splittings, and the normal Ricci commutator. It
-now also constructs the shape operators from a finite-dimensional bilinear `II`
-by Fréchet--Riesz representation, rather than assuming them as independent
-input. The remaining geometric locks are smooth background dependence, actual
-ambient and normal connection curvatures, determinant-line connection
-identification, higher-dimensional Clifford Spin covers, global principal-bundle
-packaging and characteristic-class matching.
+constructs the shape operators from a finite-dimensional bilinear `II` by
+Fréchet--Riesz representation, bundles `xi ↦ A_xi` as a continuous linear map,
+and proves residual orthogonal equivariance by conjugation. The remaining
+geometric locks are smooth background-jet dependence, actual ambient and normal
+connection curvatures, determinant-line connection identification,
+higher-dimensional Clifford Spin covers, global principal-bundle packaging and
+characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -66,6 +67,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJetSplitting
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRicciNormalEquation
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperator
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorEquivariance
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -115,6 +117,7 @@ structure ProgramStatus where
   abelianConnectionSecondJetSplittingProved : Prop
   ricciNormalEquationAlgebraProved : Prop
   rieszShapeOperatorsConstructed : Prop
+  rieszShapeOperatorEquivarianceBundled : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -174,6 +177,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.abelianConnectionSecondJetSplittingProved /\
   s.ricciNormalEquationAlgebraProved /\
   s.rieszShapeOperatorsConstructed /\
+  s.rieszShapeOperatorEquivarianceBundled /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
