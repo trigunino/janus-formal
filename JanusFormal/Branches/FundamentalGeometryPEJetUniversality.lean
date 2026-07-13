@@ -27,13 +27,14 @@ dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model. It
 constructs the curvature of a local metric normal-connection one-jet, derives
 the Ricci normal equation from the curvature of the adapted block connection,
 extracts the connection coefficients and their first derivatives from an
-orthonormal normal-frame two-jet, and proves the inhomogeneous coefficient law
-`omega' = g⁻¹ omega g + g⁻¹ dg` for the convention `E' = E ∘ g`. The remaining
-geometric locks are the second-gauge-jet/Maurer--Cartan curvature law, extraction
-of the frame jet from the smooth normal frame with ambient covariant derivatives,
-varying metric and subspace dependence on the structured-jet base,
-determinant-line connection identification, higher-dimensional Clifford Spin
-covers, global principal-bundle packaging and characteristic-class matching.
+orthonormal normal-frame two-jet, proves the inhomogeneous coefficient law
+`omega' = g⁻¹ omega g + g⁻¹ dg`, and proves homogeneous curvature covariance
+`R' = g⁻¹ R g` from the Maurer--Cartan identity. The remaining geometric locks
+are extraction of the gauge and frame jets from smooth overlap data with ambient
+covariant derivatives, varying metric and subspace dependence on the
+structured-jet base, determinant-line connection identification,
+higher-dimensional Clifford Spin covers, global principal-bundle packaging and
+characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -79,6 +80,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMetricNormalConnectionCurvature
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionFromFrameJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameConnectionGaugeLaw
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionCurvatureGaugeLaw
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -133,6 +135,7 @@ structure ProgramStatus where
   metricNormalConnectionCurvatureDerived : Prop
   normalConnectionExtractedFromFrameTwoJet : Prop
   normalFrameConnectionGaugeLawProved : Prop
+  normalConnectionCurvatureGaugeLawProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -148,7 +151,7 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core through the local connection-gauge stage. -/
+/-- Formal/logical theorem core through the local connection-curvature gauge stage. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -197,6 +200,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.metricNormalConnectionCurvatureDerived /\
   s.normalConnectionExtractedFromFrameTwoJet /\
   s.normalFrameConnectionGaugeLawProved /\
+  s.normalConnectionCurvatureGaugeLawProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -236,9 +240,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The proved local-frame, connection-gauge, oriented-cocycle and algebraic
-rank-two Clifford matching still require smooth principal-bundle packaging and
-actions on all Janus natural sectors. -/
+/-- The proved local-frame, connection-gauge, curvature-gauge, oriented-cocycle
+and algebraic rank-two Clifford matching still require smooth principal-bundle
+packaging and actions on all Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
