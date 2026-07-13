@@ -17,8 +17,11 @@ The original strong conjecture is corrected in five ways:
 The head also contains exact algebraic cores for an action groupoid, orbitwise
 descent, the second-immersion-jet normal slice, the abelian connection one-jet
 curvature slice, their universal invariant-factorization properties, and
-residual symmetry descent to the reduced data. These do not yet construct the
-actual smooth Janus structured-jet space.
+residual symmetry descent to the reduced data. The latest concrete gates derive
+the normalized second-jet source action from the second-order chain-rule formula
+and classify concrete abelian connection one-jets by curvature. They still do not
+construct the actual smooth Janus structured-jet space or its adapted SpinC
+frames and bundles.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -32,6 +35,8 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionJetNormalForm
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderJetQuotientUniversality
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusResidualJetSymmetry
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteSecondJetChainRule
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteAbelianConnectionJet
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -53,6 +58,8 @@ structure ProgramStatus where
   abstractAbelianConnectionNormalFormProved : Prop
   lowOrderInvariantQuotientUniversalityProved : Prop
   abstractResidualEquivariantReductionProved : Prop
+  concreteSecondJetChainRuleAndQuotientProved : Prop
+  concreteAbelianConnectionOrbitClassificationProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -68,8 +75,9 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core, including orbitwise descent, low-order orbit
-reduction, universal factorization and residual-equivariance models. -/
+/-- Formal/logical theorem core, including orbitwise descent, abstract and
+concrete low-order orbit reductions, universal factorization and residual
+symmetry models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -85,6 +93,8 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.abstractAbelianConnectionNormalFormProved /\
   s.lowOrderInvariantQuotientUniversalityProved /\
   s.abstractResidualEquivariantReductionProved /\
+  s.concreteSecondJetChainRuleAndQuotientProved /\
+  s.concreteAbelianConnectionOrbitClassificationProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -114,8 +124,8 @@ theorem missing_janus_jet_groupoid_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hGroupoid
 
-/-- The additive low-order normal forms do not replace a geometric jet
-isomorphism theorem for the actual constrained SpinC immersion data. -/
+/-- The low-order chain-rule and curvature quotients do not replace a geometric
+jet-isomorphism theorem for the actual constrained SpinC immersion data. -/
 theorem missing_structured_normal_form_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.structuredJetNormalFormProved) :
@@ -124,9 +134,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The abstract residual-equivariance theorem still requires the concrete
-tangent, normal and SpinC frame representations before invariant theory can be
-applied to Janus jets. -/
+/-- The generic residual-frame formulas still require the concrete tangent,
+normal and SpinC frame representations before invariant theory can be applied to
+Janus jets. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
