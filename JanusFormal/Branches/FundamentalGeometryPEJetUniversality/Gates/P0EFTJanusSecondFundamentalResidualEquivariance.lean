@@ -52,7 +52,8 @@ theorem actOnSecondFundamentalTensor_one
     actOnSecondFundamentalTensor derivative
         (1 : ResidualOrthogonalGroup derivative) form = form := by
   funext x y
-  simp [actOnSecondFundamentalTensor]
+  change form x y = form x y
+  rfl
 
 @[simp]
 theorem actOnSecondFundamentalTensor_mul
@@ -71,8 +72,9 @@ theorem actOnSecondFundamentalTensor_preserves_symmetry
     (derivative : Tangent →ₗᵢ[ℝ] Ambient)
     (frame : ResidualOrthogonalGroup derivative)
     (form : Tangent → Tangent → NormalSpace derivative)
-    (hSymmetric : IsSymmetricTensor form) :
-    IsSymmetricTensor
+    (hSymmetric :
+      P0EFTJanusSecondFundamentalFormJet.IsSymmetricTensor form) :
+    P0EFTJanusSecondFundamentalFormJet.IsSymmetricTensor
       (actOnSecondFundamentalTensor derivative frame form) := by
   intro x y
   simp only [actOnSecondFundamentalTensor]
@@ -109,7 +111,8 @@ theorem actOnAdaptedSplitJet_one
         (1 : ResidualOrthogonalGroup derivative) jet = jet := by
   apply P0EFTJanusSecondJetNormalForm.SecondJetData.ext
   · funext x y
-    simp [actOnAdaptedSplitJet]
+    change jet.tangentialQuadratic x y = jet.tangentialQuadratic x y
+    rfl
   · exact actOnSecondFundamentalTensor_one derivative jet.normalQuadratic
 
 @[simp]
