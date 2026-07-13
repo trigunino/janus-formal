@@ -28,7 +28,8 @@ vector `v`. The algebraic second-jet calculation below only needs these two
 coefficients. -/
 @[ext]
 structure MovingAmbientFrameOneJet
-    (Tangent : Type u) (Ambient : Type v) where
+    (Tangent : Type u) (Ambient : Type v)
+    [SeminormedAddCommGroup Ambient] [Module ℝ Ambient] where
   value : Ambient ≃ₗᵢ[ℝ] Ambient
   derivative : Tangent → Ambient → Ambient
 
