@@ -18,8 +18,9 @@ The head also contains exact algebraic cores for an action groupoid, orbitwise
 descent, the second-immersion-jet normal slice, the abelian connection one-jet
 curvature slice, their universal invariant-factorization properties, and
 residual symmetry descent to the reduced data. The latest concrete gates derive
-the normalized second-jet source action from the second-order chain-rule formula
-and classify concrete abelian connection one-jets by curvature. They still do not
+the normalized second-jet source action from the second-order chain-rule formula,
+classify concrete abelian connection one-jets by curvature, and construct the
+first combined low-order quotient represented by `(B,F)`. They still do not
 construct the actual smooth Janus structured-jet space or its adapted SpinC
 frames and bundles.
 -/
@@ -37,6 +38,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusResidualJetSymmetry
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteSecondJetChainRule
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteAbelianConnectionJet
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderStructuredBackground
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -60,6 +62,7 @@ structure ProgramStatus where
   abstractResidualEquivariantReductionProved : Prop
   concreteSecondJetChainRuleAndQuotientProved : Prop
   concreteAbelianConnectionOrbitClassificationProved : Prop
+  combinedLowOrderStructuredQuotientProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -76,8 +79,8 @@ structure ProgramStatus where
   globalUniformOrderRegionDerived : Prop
 
 /-- Formal/logical theorem core, including orbitwise descent, abstract and
-concrete low-order orbit reductions, universal factorization and residual
-symmetry models. -/
+concrete low-order orbit reductions, the combined `(B,F)` quotient, universal
+factorization and residual symmetry models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -95,6 +98,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.abstractResidualEquivariantReductionProved /\
   s.concreteSecondJetChainRuleAndQuotientProved /\
   s.concreteAbelianConnectionOrbitClassificationProved /\
+  s.combinedLowOrderStructuredQuotientProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
