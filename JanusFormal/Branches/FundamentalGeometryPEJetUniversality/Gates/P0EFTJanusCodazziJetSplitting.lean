@@ -84,6 +84,10 @@ theorem symmetricRemainder_reconstructCodazziJet
   apply SymmetricNormalThirdJet.ext
   funext x y z
   have hReduce := reduce_reconstructCodazziJet gauge data
+  change
+    reduceCodazziJet
+      (applySymmetricThirdJet gauge
+        (canonicalCovariantSecondFundamentalJet data)) = data at hReduce
   simp only [symmetricRemainder,
     symmetricThirdJetBetweenEqualCodazzi,
     reconstructCodazziJet]
