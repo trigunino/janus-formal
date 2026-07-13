@@ -122,8 +122,8 @@ theorem gauge_equivalent_iff_curvature_eq
         hessian := -first.symmetricDerivative + second.symmetricDerivative }
     refine ⟨gauge, ?_⟩
     ext
-    · simp [gauge, gaugeChange, add_assoc]
-    · simp [gauge, gaugeChange, add_assoc]
+    · simp [gauge, gaugeChange]
+    · simp [gauge, gaugeChange]
     · simpa [gaugeChange] using hCurvature
 
 @[refl]
@@ -161,10 +161,10 @@ theorem gauge_equivalent_trans
       ConnectionOneJet Value SymmetricDerivative Curvature}
     (hFirst : GaugeEquivalent first second)
     (hSecond : GaugeEquivalent second third) :
-    GaugeEquivalent first third :=
-  (gauge_equivalent_iff_curvature_eq first third).2
-    ((gauge_equivalent_iff_curvature_eq first second).1 hFirst).trans
-      ((gauge_equivalent_iff_curvature_eq second third).1 hSecond)
+    GaugeEquivalent first third := by
+  apply (gauge_equivalent_iff_curvature_eq first third).2
+  exact ((gauge_equivalent_iff_curvature_eq first second).1 hFirst).trans
+    ((gauge_equivalent_iff_curvature_eq second third).1 hSecond)
 
 /-- Every gauge orbit meets the curvature-only slice. -/
 theorem every_orbit_meets_curvature_slice
