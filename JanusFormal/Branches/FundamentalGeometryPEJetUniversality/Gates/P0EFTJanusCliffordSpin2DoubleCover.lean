@@ -30,7 +30,7 @@ theorem cliffordSpin2_mul_comm
 /-- The transported group structure is commutative. This local instance is used
 to construct the diagonal SpinC quotient. -/
 local instance cliffordSpin2CommGroup : CommGroup CliffordSpin2 :=
-  { inferInstanceAs (Group CliffordSpin2) with
+  { (inferInstance : Group CliffordSpin2) with
     mul_comm := cliffordSpin2_mul_comm }
 
 /-- Distinguished central kernel element in the Clifford model. -/
@@ -40,11 +40,9 @@ def cliffordSpin2MinusOne : CliffordSpin2 :=
 @[simp]
 theorem cliffordSpin2MinusOne_projection :
     cliffordSpin2ToMatrixSO2Projection cliffordSpin2MinusOne = 1 := by
-  change
-    cliffordSpin2ToMatrixSO2Projection
-        (circleEquivCliffordSpin2 (-1)) = 1
-  rw [cliffordSpin2ToMatrixSO2Projection_circle]
-  exact spin2ToMatrixSO2Projection_neg_one
+  rw [cliffordSpin2MinusOne,
+    cliffordSpin2ToMatrixSO2Projection_circle]
+  exact spin2MatrixSO2DoubleCover.minusOne_mem_kernel
 
 /-- The distinguished Clifford kernel element is nontrivial. -/
 theorem cliffordSpin2MinusOne_ne_one :
