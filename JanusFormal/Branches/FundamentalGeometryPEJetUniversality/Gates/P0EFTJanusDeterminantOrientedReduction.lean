@@ -23,7 +23,8 @@ type and multiplicativity is exact. -/
 def orthogonalDeterminant : (V ≃ₗᵢ[ℝ] V) →* ℝˣ where
   toFun frame := frame.toLinearEquiv.det
   map_one' := by
-    simp [LinearIsometryEquiv.one_def]
+    change LinearEquiv.det (LinearEquiv.refl ℝ V) = 1
+    exact LinearEquiv.det_refl
   map_mul' first second := by
     simp [LinearIsometryEquiv.mul_def]
 
