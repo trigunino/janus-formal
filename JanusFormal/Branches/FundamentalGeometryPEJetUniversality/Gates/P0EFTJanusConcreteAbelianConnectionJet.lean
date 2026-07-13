@@ -44,14 +44,14 @@ def curvature
   fun x y => jet.derivative x y - jet.derivative y x
 
 /-- Symmetric part of an arbitrary two-covariant real tensor. -/
-def symmetricPart
+noncomputable def symmetricPart
     {Tangent : Type u}
     (derivative : Tangent → Tangent → ℝ) :
     Tangent → Tangent → ℝ :=
   fun x y => (derivative x y + derivative y x) / 2
 
 /-- Alternating part of an arbitrary two-covariant real tensor. -/
-def alternatingPart
+noncomputable def alternatingPart
     {Tangent : Type u}
     (derivative : Tangent → Tangent → ℝ) :
     Tangent → Tangent → ℝ :=
@@ -121,7 +121,7 @@ theorem curvature_applyGauge
 
 /-- Gauge parameter that kills the connection value and the symmetric part of
 its first derivative. -/
-def concreteNormalizingGauge
+noncomputable def concreteNormalizingGauge
     {Tangent : Type u}
     (jet : ConcreteConnectionOneJet Tangent) :
     ConcreteGaugeTwoJet Tangent where
@@ -134,7 +134,7 @@ def concreteNormalizingGauge
 
 /-- Concrete curvature gauge slice. Its derivative is the alternating part, hence
 is uniquely determined by curvature. -/
-def concreteCurvatureNormalForm
+noncomputable def concreteCurvatureNormalForm
     {Tangent : Type u}
     (jet : ConcreteConnectionOneJet Tangent) :
     ConcreteConnectionOneJet Tangent where
@@ -223,7 +223,7 @@ theorem concrete_gauge_equivalent_iff_curvature_eq
 
 /-- Decomposition into the three components used by the abstract normal-form
 gate. -/
-def decomposeConnectionJet
+noncomputable def decomposeConnectionJet
     {Tangent : Type u}
     (jet : ConcreteConnectionOneJet Tangent) :
     ConnectionOneJet
@@ -257,8 +257,11 @@ theorem decomposition_commutes_with_gauge
   · rfl
   · funext x y
     have hSymmetric := gauge.hessian_symmetric x y
-    simp only [decomposeConnectionJet, applyGauge, gaugeChange,
-      abstractGaugeOfConcrete, symmetricPart]
+    change
+      ((jet.derivative x y + gauge.hessian x y) +
+          (jet.derivative y x + gauge.hessian y x)) / 2 =
+        (jet.derivative x y + jet.derivative y x) / 2 +
+          gauge.hessian x y
     rw [hSymmetric]
     ring
   · exact curvature_applyGauge gauge jet
