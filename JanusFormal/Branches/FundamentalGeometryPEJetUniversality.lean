@@ -24,13 +24,15 @@ constructs the shape operators from a finite-dimensional bilinear `II` by
 Fréchet--Riesz representation, bundles `xi ↦ A_xi` as a continuous linear map,
 proves residual orthogonal equivariance by conjugation, and proves joint smooth
 dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model. It
-also constructs the curvature of a local metric normal-connection one-jet and
-derives the Ricci normal equation from the curvature of the adapted block
-connection. The remaining geometric locks are varying metric and subspace
-dependence on the structured-jet base, insertion of the actual manifold
-Levi-Civita and normal connections, determinant-line connection identification,
-higher-dimensional Clifford Spin covers, global principal-bundle packaging and
-characteristic-class matching.
+constructs the curvature of a local metric normal-connection one-jet, derives
+the Ricci normal equation from the curvature of the adapted block connection,
+and now extracts the connection coefficients and their first derivatives from
+an orthonormal normal-frame two-jet using the differentiated metric identities.
+The remaining geometric locks are extraction of that frame jet from the smooth
+normal frame with ambient covariant derivatives, the varying-frame gauge law,
+varying metric and subspace dependence on the structured-jet base,
+determinant-line connection identification, higher-dimensional Clifford Spin
+covers, global principal-bundle packaging and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -74,6 +76,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorEquivariance
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothDependence
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMetricNormalConnectionCurvature
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionFromFrameJet
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -126,6 +129,7 @@ structure ProgramStatus where
   rieszShapeOperatorEquivarianceBundled : Prop
   rieszShapeOperatorFixedModelSmoothnessProved : Prop
   metricNormalConnectionCurvatureDerived : Prop
+  normalConnectionExtractedFromFrameTwoJet : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -188,6 +192,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.rieszShapeOperatorEquivarianceBundled /\
   s.rieszShapeOperatorFixedModelSmoothnessProved /\
   s.metricNormalConnectionCurvatureDerived /\
+  s.normalConnectionExtractedFromFrameTwoJet /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
