@@ -43,7 +43,7 @@ A theorem about an abstract closure structure is not evidence that its physical 
 | **D11** | natural bundles, symbols and jet interfaces | gate collection; no stable standalone head yet | `FundamentalGeometryD11NaturalImmersionOperators/Gates/` |
 | **P0/P-A/P-B/P-C** | no-go, relative action selection, anomaly filter and Helmholtz reconstruction | variational core | `FundamentalGeometryPVariationalPrinciple` |
 | **P-D** | pointwise invariant pairings, isotropy strata, invariant scalar algebra and global coupling modules | representation-theory filter with corrected globalization | `FundamentalGeometryPEInvariantPairings` |
-| **P-E** | locality, finite jets, action groupoids, holonomic composition and low-order normal forms | corrected local natural-operator and structured-jet program | `FundamentalGeometryPEJetUniversality` |
+| **P-E** | locality, finite jets, adapted-frame reduction, overlap cocycles and SpinC lift data | corrected local natural-operator and structured-jet program | `FundamentalGeometryPEJetUniversality` |
 | **P-F** | compatibility-map pullbacks, Helmholtz and Noether identities | bridge from geometry to a variational complex | `FundamentalGeometryPFCompatibilityHelmholtz` |
 | **A** | quantum world-volume and dimensionful scale generation | absolute-scale candidate | `WorldvolumeQuantumAlpha` |
 | **B** | nonlinear bimetric action and PT junction | parent/classical action candidate | `NonlinearBimetricJunctionAlpha` |
@@ -58,7 +58,13 @@ D0/D8 global decorated geometry
   -> D9/D11 natural bundles, symbols and local operators
   -> P-E regular-local finite-jet presentation
   -> action-groupoid and holonomic morphism cores
-  -> geometric structured-jet base and normal-form theorem
+  -> low-order quotient (II,F) and smooth adapted frames
+  -> moving-frame law and O(T) x O(N) overlap cocycle
+  -> SO(T) x SO(N) oriented reduction
+  -> central Spin / determinant-root defects and SpinC cancellation
+  -> concrete Spin(2) circle and matrix SO(2) model
+  -> higher Clifford Spin covers and characteristic-class matching
+  -> higher structured-jet isomorphism and effective descent
   -> P-D isotropy-stratified invariant spaces and coefficient modules
   -> P-F compatibility-map pullback and Noether bridge
   -> P-C nonlinear Helmholtz / variational cohomology
@@ -103,19 +109,24 @@ P-D  pointwise invariant Hom-spaces classify fiberwise pairing shapes;
      global pairings form modules over invariant scalar functions;
      ranks may jump between isotropy strata
 P-E  regular local natural operators are locally smooth finite-jet evaluators;
-     categorical composition uses holonomic prolongation;
-     low-order orbit reductions isolate normal and curvature data
+     composition uses holonomic prolongation;
+     low-order reduction isolates (II,F);
+     smooth adapted frames produce oriented overlap cocycles;
+     matching central Spin and determinant-root defects give a SpinC cocycle;
+     the rank-two circle model is identified explicitly with matrix SO(2)
 P-F  a self-adjoint target pairing pulls back to Helmholtz/Noether structure
 ```
 
-The ordinary natural/gauge-natural categorical theorem is classical. The repository now proves the abstract action-groupoid laws, a normalized immersion second-jet orbit theorem, an abelian connection one-jet curvature theorem and a finite isotropy-jump obstruction. The Janus specialization remains conditional on the actual smooth structured SpinC-immersion jet base, its symmetry action, effective descent and a higher-order jet-isomorphism theorem. Pointwise multiplicity one does not imply one constant global coupling without controlling the invariant scalar coefficient algebra and extension across isotropy strata.
+The ordinary natural/gauge-natural categorical theorem is classical. The repository now proves the action-groupoid and orbitwise-descent cores; concrete low-order immersion and abelian-connection quotients; smooth adapted-frame and moving-frame laws; determinant-one residual reduction; central lift-defect and SpinC diagonal-cancellation theorems; circle-valued two-torsion; a concrete `Spin(2)` double cover; and an explicit group equivalence `U(1) ≃ SO(2)`. The Janus specialization remains conditional on the even Clifford-algebra identification, the required higher-dimensional Spin covers, actual manifold and principal-bundle packaging, characteristic-class matching, effective descent and a higher-order structured jet-isomorphism theorem. Pointwise multiplicity one does not imply one constant global coupling without controlling the invariant scalar coefficient algebra and extension across isotropy strata.
 
 The shortest honest route is:
 
 ```text
 actual Janus category and field space
   -> adapted structured-jet base and finite jet symmetry action
-  -> low-order geometric normal forms and residual stabilizers
+  -> low-order geometric quotient (II,F)
+  -> smooth local adapted frames and overlap transitions
+  -> oriented / SpinC principal-bundle lift and determinant connection
   -> higher-order jet-isomorphism / integrability theorem
   -> effective descent and holonomic equivariant operator category
   -> isotropy-stratified invariant spaces and coefficient modules
@@ -136,9 +147,13 @@ actual Janus category and field space
 6. `docs/program_pe_jet_universality_proof.md`
 7. `docs/program_pe_categorical_jet_equivalence.md`
 8. `docs/program_pe_structured_jet_reduction.md`
-9. `docs/program_pe_invariant_pairings.md`
-10. `docs/program_pd_global_pairing_modules.md`
-11. `docs/janus_branch_registry.md`
+9. `docs/program_pe_low_order_structured_background.md`
+10. `docs/program_pe_second_fundamental_form_jet.md`
+11. `docs/program_pe_smooth_adapted_frames.md`
+12. `docs/program_pe_spinC_cocycle_lift.md`
+13. `docs/program_pe_invariant_pairings.md`
+14. `docs/program_pd_global_pairing_modules.md`
+15. `docs/janus_branch_registry.md`
 
 ## Repository rule
 
