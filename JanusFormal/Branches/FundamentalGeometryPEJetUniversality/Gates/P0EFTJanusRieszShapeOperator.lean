@@ -44,7 +44,12 @@ def pairedBilinearLinear
       (form.toLinear x)
   map_add' x y := by
     ext z
-    simp
+    rw [form.toLinear.map_add]
+    change
+      ⟪normal, (form.toLinear x) z + (form.toLinear y) z⟫_ℝ =
+        ⟪normal, (form.toLinear x) z⟫_ℝ +
+          ⟪normal, (form.toLinear y) z⟫_ℝ
+    exact inner_add_right _ _ _
   map_smul' scalar x := by
     ext z
     simp
@@ -87,6 +92,10 @@ theorem rieszShapeOperator_inner
     (normal : Normal) (x y : Tangent) :
     ⟪rieszShapeOperator form normal x, y⟫_ℝ =
       ⟪form x y, normal⟫_ℝ := by
+  change
+    ⟪InnerProductSpace.continuousLinearMapOfBilin
+        (pairedContinuousBilinear form normal) x, y⟫_ℝ =
+      ⟪form x y, normal⟫_ℝ
   rw [InnerProductSpace.continuousLinearMapOfBilin_apply]
   change ⟪normal, form x y⟫_ℝ = ⟪form x y, normal⟫_ℝ
   exact real_inner_comm _ _
