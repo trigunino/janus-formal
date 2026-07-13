@@ -81,6 +81,11 @@ theorem gaugeRemainder_reconstructConnectionSecondJet
     gaugeBetweenEqualCurvatureDerivatives,
     reconstructConnectionSecondJet]
   rw [hReduce]
+  change
+    -(canonicalSecondJet data).coefficient x y z +
+        ((canonicalSecondJet data).coefficient x y z +
+          gauge.coefficient x y z) =
+      gauge.coefficient x y z
   ring
 
 /-- Decomposition after reconstruction returns the original pair. -/
