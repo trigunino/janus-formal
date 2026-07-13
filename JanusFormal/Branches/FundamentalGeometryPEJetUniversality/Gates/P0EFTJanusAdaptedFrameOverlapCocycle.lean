@@ -66,30 +66,12 @@ theorem adaptedTransition_cocycle
         (adaptedTransition second third).2) =
       adaptedTransition first third := by
   apply Prod.ext
-  · simp only [adaptedTransition]
-    calc
-      (first.tangentGauge.symm.trans second.tangentGauge).trans
-          (second.tangentGauge.symm.trans third.tangentGauge) =
-        first.tangentGauge.symm.trans
-          (second.tangentGauge.trans
-            (second.tangentGauge.symm.trans third.tangentGauge)) :=
-        (LinearIsometryEquiv.trans_assoc _ _ _).symm
-      _ = first.tangentGauge.symm.trans third.tangentGauge := by
-        rw [LinearIsometryEquiv.trans_assoc,
-          LinearIsometryEquiv.self_trans_symm,
-          LinearIsometryEquiv.refl_trans]
-  · simp only [adaptedTransition]
-    calc
-      (first.normalGauge.symm.trans second.normalGauge).trans
-          (second.normalGauge.symm.trans third.normalGauge) =
-        first.normalGauge.symm.trans
-          (second.normalGauge.trans
-            (second.normalGauge.symm.trans third.normalGauge)) :=
-        (LinearIsometryEquiv.trans_assoc _ _ _).symm
-      _ = first.normalGauge.symm.trans third.normalGauge := by
-        rw [LinearIsometryEquiv.trans_assoc,
-          LinearIsometryEquiv.self_trans_symm,
-          LinearIsometryEquiv.refl_trans]
+  · apply LinearIsometryEquiv.ext
+    intro x
+    simp [adaptedTransition]
+  · apply LinearIsometryEquiv.ext
+    intro x
+    simp [adaptedTransition]
 
 /-- The cocycle law in the product-group multiplication convention used by Lean.
 Because multiplication of linear isometry equivalences is function composition,
@@ -180,8 +162,12 @@ theorem orientationPreserving_reverse
       (adaptedTransition second first) := by
   rw [adaptedTransition_reverse]
   constructor
-  · rw [map_inv, hTransition.1, inv_one]
-  · rw [map_inv, hTransition.2, inv_one]
+  · change characters.tangentCharacter
+      ((adaptedTransition first second).1)⁻¹ = 1
+    rw [map_inv, hTransition.1, inv_one]
+  · change characters.normalCharacter
+      ((adaptedTransition first second).2)⁻¹ = 1
+    rw [map_inv, hTransition.2, inv_one]
 
 end OrientationCharacters
 
