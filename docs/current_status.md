@@ -20,7 +20,9 @@ d4b893b06983c5b65f481c24e2e71f2ba6ddd1ba.
 
 `main` therefore contains the consolidated scientific history, canonical documentation, focused entry points and CI cleanup. No scientific files were discarded. Historical and exploratory branches remain available, while current claims are routed through this file.
 
-## 2. Validation truth after consolidation
+Draft PR 6 advances Programs P-D/P-E beyond that consolidated baseline. It corrects the categorical jet statement, globalizes invariant pairings as modules over scalar invariants, and adds formal action-groupoid, orbitwise-descent and low-order structured-jet reduction cores. Until PR 6 is merged, these additions belong to its feature branch rather than to `main`.
+
+## 2. Validation truth
 
 All four workflows attached to the consolidation head passed:
 
@@ -30,6 +32,8 @@ Program D2 Dirac spectral geometry       success
 Program PE jet universality              success
 Janus deep alpha completion              success
 ```
+
+On the active PR 6 branch, the focused P-E workflow also passes with the new action-groupoid, orbitwise descent, quotient-universality and residual-symmetry gates, together with the exact low-order jet-normal-form Python audit.
 
 ### Green focused Lean heads
 
@@ -59,6 +63,7 @@ The focused Python audits and tests pass for:
 - spinor pairings;
 - D2 spectral geometry;
 - P-E jet universality;
+- low-order immersion/abelian-connection jet normal forms;
 - the separate deep-alpha audit suite.
 
 ### Meaning of “green”
@@ -78,8 +83,8 @@ P0     moduli-geometry no-go
 P-A    relative action specification / parent-bulk reduction
 P-B    anomaly consistency and discrete selection
 P-C    Helmholtz inverse variational problem
-P-D    pointwise invariant pairings and global invariant-coefficient modules
-P-E    finite jets, equivariant evaluators and holonomic jet composition
+P-D    isotropy-stratified pairings and invariant-coefficient modules
+P-E    finite jets, action groupoids, orbitwise descent and jet reduction
 P-F    compatibility-map pullbacks, Helmholtz and Noether identities
 
 A/B/C  quantum scale, nonlinear junction and charge compatibility
@@ -139,7 +144,7 @@ Program P asks how one physical Janus action can be selected or reconstructed wi
 
 **Conclusion:** P-C is the strongest inverse route, but a Hessian at one background is not a proof of the global nonlinear action.
 
-### P-D — invariant pairings and coefficient modules
+### P-D — invariant pairings, coefficients and isotropy strata
 
 **Formalized/audited in low-rank models:**
 
@@ -151,7 +156,8 @@ Program P asks how one physical Janus action can be selected or reconstructed wi
 - repeated irreducible sectors leave multiplicity-space matrices;
 - graded fusion rules distinguish allowed bilinear/trilinear channels and show that bilinear multiplicity one does not imply quartic uniqueness;
 - invariant background-dependent pairing families are closed under multiplication by invariant scalar coefficients;
-- an explicit finite Lean model proves that one pointwise pairing shape need not be one constant global multiple.
+- an explicit finite Lean model proves that one pointwise pairing shape need not be one constant global multiple;
+- a second finite Lean model proves that invariant-fiber freedom can jump between a free orbit and a higher-isotropy fixed stratum.
 
 **Correction:** the pointwise space
 
@@ -159,13 +165,13 @@ Program P asks how one physical Janus action can be selected or reconstructed wi
 Hom_(H_b)(E_i,b tensor E_j,b, R)
 ```
 
-classifies the fiberwise shape at a structured jet `b`. Global natural pairings form a module over the algebra of invariant scalar functions on the structured-jet base. Pointwise dimension one therefore does not imply one global coupling constant.
+classifies the fiberwise shape at a structured jet `b`. Global natural pairings form a module over the algebra of invariant scalar functions on the structured-jet base. Pointwise dimension one therefore does not imply one global coupling constant. A generic-stratum dimension also need not extend across singular isotropy strata.
 
-**Open in Janus:** construct the structured jet groupoid, its isotropy strata, the actual invariant scalar algebra and the global equivariant pairing module; then impose order, weight, Helmholtz and parent-law restrictions.
+**Open in Janus:** construct the actual structured jet groupoid, classify its orbit types and stabilizers, compute the invariant scalar algebra and global equivariant pairing module, and prove smooth extension across strata; then impose order, weight, Helmholtz and parent-law restrictions.
 
-**Conclusion:** P-D converts arbitrary couplings into pointwise invariant spaces and a global coefficient-module problem. Surviving normalizations still require a parent or microscopic law.
+**Conclusion:** P-D converts arbitrary couplings into pointwise invariant spaces, a global coefficient-module problem and a stratified extension problem. Surviving normalizations still require a parent or microscopic law.
 
-### P-E — finite jets, equivariance and the operator category
+### P-E — finite jets, groupoids, reduction and the operator category
 
 The original unrestricted polynomial-universality and naive representation-category claims have been corrected.
 
@@ -178,20 +184,53 @@ regular + local
 finite-jet presentation + naturality
   <-> smooth equivariant evaluator         [formal action model]
 
-surjective holonomic jet realization
-  -> evaluator uniqueness
-
 operator composition
   -> holonomic prolongation to a higher jet
+
+structured jet action
+  -> action groupoid + isotropy
+
+transitive orbit + isotropy-fixed value
+  <-> equivariant section on that orbit
+
+source/gauge orbit reduction
+  -> normal immersion tensor / curvature data
+
+invariance under orbit directions
+  <-> unique factorization through reduced data
+
+residual frame equivariance
+  -> equivariant map on the reduced tensors
 ```
 
 For ordinary natural and gauge-natural bundles, the finite-order classification by equivariant jet maps is a classical external theorem. Categorically, the morphisms are maps from jet prolongations and compose through the holonomic jet tower; they are not ordinary maps in one fixed linear representation category.
 
-**Formalized in the repository:** naturality/equivariance in an abstract action model, evaluator uniqueness under surjective realization, local-versus-global order corrections, a smooth nonpolynomial counterexample, and the holonomic factorization law for composite jet evaluators.
+**Formalized in the repository:**
 
-**Open in Janus:** construct a structured SpinC/PT/Z4/BRST jet groupoid over the background-jet space, prove effective descent for the declared field bundles, prove a jet-normal-form theorem and classify smooth equivariant maps across isotropy strata.
+- naturality/equivariance and evaluator uniqueness in an abstract action model;
+- local-versus-global order corrections and a smooth nonpolynomial counterexample;
+- holonomic factorization of composite jet evaluators;
+- identity, composition, inverse, orbit and stabilizer laws for an abstract action groupoid;
+- an equivalence between equivariant sections on a transitive orbit and isotropy-fixed values in one chosen fiber;
+- an abstract second-immersion-jet normal form whose orbit quotient is the normal quadratic component;
+- an abstract abelian connection one-jet normal form whose gauge quotient is curvature;
+- universal factorization: every invariant observable factors uniquely through the normal component or curvature;
+- residual-equivariance descent: an invariant equivariant observable reduces uniquely to an equivariant map on the quotient data;
+- exact rational-matrix audits of the two low-order normalizations.
 
-This does not imply polynomial dependence, ellipticity, a single global order, finite invariant generation, global topology or field-content selection.
+These are genuine algebraic theorems for the declared models. They do not identify those models with the actual smooth SpinC-immersion jets without the missing geometric chain-rule, tensor and frame-action constructions.
+
+**Open in Janus:**
+
+- construct the finite-dimensional admissible structured-jet base and actual source/ambient/frame/gauge action;
+- derive the low-order action formulas geometrically and identify the residual tensors with the second fundamental form and SpinC/twist curvature;
+- identify the concrete residual tangent/normal/SpinC group and establish the compactness or reductivity needed by invariant theory;
+- prove the higher-order jet-isomorphism theorem with Gauss–Codazzi–Ricci–Bianchi and formal-integrability constraints;
+- classify orbit types and prove smooth extension between them;
+- prove effective descent for the declared natural tensor, spinor, twist and ghost bundles;
+- classify smooth equivariant maps on the resulting reduced stratified space.
+
+This still does not imply polynomial dependence, ellipticity, a single global order, finite invariant generation, global topology or field-content selection.
 
 ### P-F — compatibility pullback bridge
 
@@ -209,7 +248,9 @@ The current supported chain is:
 actual decorated Janus field/category data
   -> regular local finite-jet presentation
   -> structured jet groupoid and holonomic equivariant category
-  -> pointwise isotropy representations plus invariant coefficient modules
+  -> orbitwise descent and low-order quotient reduction
+  -> residual tensor representations and isotropy strata
+  -> invariant coefficient and pairing modules
   -> compatible Euler family
   -> Helmholtz + Noether
   -> anomaly consistency
@@ -220,7 +261,7 @@ actual decorated Janus field/category data
   -> absolute scale
 ```
 
-The repository has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, jet and compatibility stages. It does **not** yet contain the structured Janus jet groupoid, the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
+The repository has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, action-groupoid, orbitwise-descent, low-order quotient and compatibility stages. It does **not** yet contain the actual smooth Janus structured-jet groupoid, a higher-order jet-isomorphism theorem, the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
 
 ## 7. Immediate priorities
 
@@ -234,15 +275,15 @@ The repository has green focused formal and executable layers through the abstra
 ### Scientific Program P
 
 1. specify the exact field space and choose induced, auxiliary or bulk metric formulation without double counting;
-2. construct the structured SpinC/PT/Z4/BRST jet groupoid and prove descent for the natural sectors;
-3. prove a structured jet-normal-form theorem and control isotropy strata;
-4. compute the invariant scalar algebra and global equivariant pairing modules;
-5. construct the concrete Janus compatibility map `K` and its jet linearization `J`;
-6. derive the target self-adjoint pairing `H` from an actual parent or microscopic action;
-7. derive the full nonlinear Euler source and prove Helmholtz/Noether conditions;
-8. compute variational cohomology and boundary/null terms;
-9. apply anomaly cancellation in the same regulator and field content;
-10. derive normalization and finite counterterms without observed-radius input.
+2. construct the finite-dimensional structured SpinC/PT/Z4/BRST jet base and its source/ambient/frame/gauge action;
+3. promote the low-order algebraic normal forms to geometric theorems and identify the residual frame representations;
+4. prove a higher-order structured jet-isomorphism theorem and formal-integrability constraints;
+5. classify orbit types, stabilizers, invariant scalar functions and global pairing modules, including cross-stratum extension;
+6. prove effective descent for the actual Janus natural sectors;
+7. construct the concrete compatibility map `K` and its jet linearization `J`;
+8. derive the target self-adjoint pairing `H` from an actual parent or microscopic action;
+9. derive the full nonlinear Euler source and prove Helmholtz/Noether conditions;
+10. compute variational cohomology, anomalies, normalization and finite counterterms without observed-radius input.
 
 ## 8. Canonical navigation rule
 
@@ -250,6 +291,7 @@ The repository has green focused formal and executable layers through the abstra
 - `PROGRAM.md` is the stable high-level map.
 - `program_master_roadmap.md` is the detailed dependency tree.
 - `program_pe_categorical_jet_equivalence.md` records the corrected categorical theorem.
+- `program_pe_structured_jet_reduction.md` records the action-groupoid, quotient and residual-symmetry program.
 - `program_pd_global_pairing_modules.md` records the pointwise-to-global coupling correction.
 - program-specific documents contain derivations and theorem queues.
 - `janus_branch_registry.md` lists supported heads and explicitly labels gate-only collections.
