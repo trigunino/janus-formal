@@ -27,7 +27,7 @@ subspace of the transformed immersion derivative. -/
 theorem map_normalSpace_eq
     (frame : MovingAmbientFrameOneJet Tangent Ambient)
     (derivative : Tangent →ₗᵢ[ℝ] Ambient) :
-    (NormalSpace derivative).map frame.value.toLinearEquiv.toLinearMap =
+    (NormalSpace derivative).map frame.value.toLinearIsometry.toLinearMap =
       NormalSpace (transformedDerivative frame derivative) := by
   ext vector
   constructor
