@@ -14,42 +14,18 @@ The original strong conjecture is corrected in five ways:
 5. the categorical morphism law is holonomic jet composition, not ordinary
    composition of maps between unprolonged representation fibers.
 
-The head also contains exact algebraic cores for an action groupoid, orbitwise
-descent, the second-immersion-jet normal slice, the abelian connection one-jet
-curvature slice, their universal invariant-factorization properties, and
-residual symmetry descent to the reduced data. The latest concrete gates derive
-the normalized second-jet source action from the second-order chain-rule formula,
-classify concrete abelian connection one-jets by curvature, construct the first
-combined low-order quotient represented by `(B,F)`, prove the pointwise
-orthogonal splitting of a linear isometric immersion derivative, identify the
-reduced normal quadratic tensor with the normal projection of the
-connection-corrected second derivative in the flat adapted model, prove its
-residual `O(T) × O(N)` equivariance, prove smooth tangent/normal projector
-fields, construct a smooth local adapted orthonormal frame by projected normal
-seeds and Gram--Schmidt, prove the formal two-jet transformation law under a
-moving adapted frame, construct canonical normal transport and moving-frame
-equivariance of the second fundamental form, prove the Čech cocycle laws for
-residual adapted-frame transitions, instantiate their determinant-one oriented
-reduction `SO(T) × SO(N)`, formalize the central double-cover defect obstructing
-a Spin lift, prove the abstract SpinC diagonal-cancellation theorem, show that
-local square roots of a determinant-line cocycle have a two-torsion triple
-defect, instantiate that two-torsion by `±1` in the complex circle, construct
-the concrete rank-two circle double cover with projection `z ↦ z²`, kernel
-`{±1}`, an exact diagonal quotient and its specialized SpinC cocycle theorem,
-identify the circle group explicitly with the matrix group `SO(2)`, identify
-that circle model with Mathlib's even-unitary Lipschitz
-`CliffordAlgebra.spinGroup` for the negative Euclidean plane, package the
-resulting Clifford-valued central double cover and SpinC diagonal quotient,
-prove the first algebraic Gauss--Codazzi--Bianchi identities, prove exact
-low-order Spencer quotient theorems for both the Codazzi tensor and the abelian
-connection curvature-derivative tensor, split `∇II` jets exactly into a fully
-symmetric third-order tensor and a closed Codazzi tensor, split abelian
-connection second jets into a symmetric gauge third jet and a closed `∇F`
-tensor, and prove the algebraic normal Ricci equation from self-adjoint shape
-operators. The remaining geometric locks are the smooth Lie/principal-bundle
-packaging, higher-dimensional Clifford Spin covers, actual ambient and normal
-curvature jets, finite-dimensional Riesz construction of the shape operators,
-determinant-line connection identification and characteristic-class matching.
+The head contains exact algebraic cores for action groupoids, orbitwise descent,
+concrete immersion and abelian-connection jet quotients, adapted tangent/normal
+frames, the connection-corrected identity `B = II`, moving-frame and Čech laws,
+orientation reduction, central Spin and determinant-root defects, a concrete
+rank-two Clifford SpinC model, first Gauss--Codazzi--Bianchi identities, exact
+low-order Spencer quotients and splittings, and the normal Ricci commutator. It
+now also constructs the shape operators from a finite-dimensional bilinear `II`
+by Fréchet--Riesz representation, rather than assuming them as independent
+input. The remaining geometric locks are smooth background dependence, actual
+ambient and normal connection curvatures, determinant-line connection
+identification, higher-dimensional Clifford Spin covers, global principal-bundle
+packaging and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -89,6 +65,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJetSplitting
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRicciNormalEquation
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperator
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -137,6 +114,7 @@ structure ProgramStatus where
   abelianBianchiJetExactnessProved : Prop
   abelianConnectionSecondJetSplittingProved : Prop
   ricciNormalEquationAlgebraProved : Prop
+  rieszShapeOperatorsConstructed : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -152,19 +130,7 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core, including orbitwise descent, concrete low-order
-orbit reductions, the combined `(B,F)` quotient, pointwise orthogonal splitting,
-the connection-corrected second fundamental-form bridge, residual orthogonal
-equivariance, smooth projector fields, smooth adapted frames, moving-frame
-second-jet and normal-transport laws, adapted-frame Čech cocycles,
-determinant-one `SO(T) × SO(N)` reduction, central double-cover defects, SpinC
-diagonal cancellation, determinant square-root defect matching, concrete circle
-two-torsion, the rank-two circle and Clifford double-cover/diagonal-quotient
-models, the explicit matrix-group equivalence `U(1) ≃ SO(2)`, the first
-Gauss--Codazzi--Bianchi integrability identities, exact low-order Codazzi and
-abelian Bianchi Spencer quotients, the direct-product splitting of `∇II`, the
-direct-product gauge/closed-curvature splitting of abelian connection second
-jets, and the algebraic normal-Ricci commutator theorem. -/
+/-- Formal/logical theorem core through the first derived geometric stage. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -207,6 +173,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.abelianBianchiJetExactnessProved /\
   s.abelianConnectionSecondJetSplittingProved /\
   s.ricciNormalEquationAlgebraProved /\
+  s.rieszShapeOperatorsConstructed /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
