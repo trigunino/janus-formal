@@ -119,7 +119,7 @@ theorem equivalent_to_reducedSlice
     (jet : LowOrderStructuredJet Tangent Normal) :
     CombinedEquivalent jet (reducedSlice (reduceLowOrderJet jet)) := by
   apply (combined_equivalent_iff_reduced_eq _ _).2
-  exact reduce_reducedSlice (reduceLowOrderJet jet)
+  exact (reduce_reducedSlice (reduceLowOrderJet jet)).symm
 
 /-- An observable is invariant under the combined orbit directions when it is
 constant on `CombinedEquivalent` pairs. -/
@@ -172,7 +172,10 @@ theorem reduced_factorization_is_combined_invariant
       (fun jet : LowOrderStructuredJet Tangent Normal =>
         reduced (reduceLowOrderJet jet)) := by
   intro first second hEquivalent
-  rw [(combined_equivalent_iff_reduced_eq first second).1 hEquivalent]
+  change reduced (reduceLowOrderJet first) =
+    reduced (reduceLowOrderJet second)
+  exact congrArg reduced
+    ((combined_equivalent_iff_reduced_eq first second).1 hEquivalent)
 
 /-- Universal quotient property: combined invariance is equivalent to
 factorization through the reduced `(B,F)` data. -/
@@ -214,11 +217,11 @@ theorem combined_invariant_has_unique_reduction
   funext data
   have hAtSlice := hOther (reducedSlice data)
   calc
-    reducedObservable observable data =
-        observable (reducedSlice data) := by
+    other data = other (reduceLowOrderJet (reducedSlice data)) := by
+      rw [reduce_reducedSlice]
+    _ = observable (reducedSlice data) := hAtSlice.symm
+    _ = reducedObservable observable data := by
       rfl
-    _ = other (reduceLowOrderJet (reducedSlice data)) := hAtSlice
-    _ = other data := by rw [reduce_reducedSlice]
 
 section ResidualReducedAction
 
