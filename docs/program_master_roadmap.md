@@ -39,7 +39,7 @@ Program P — action selection and reconstruction
 ├── P-B    anomaly consistency and discrete selection
 ├── P-C    Helmholtz inverse variational problem
 ├── P-D    pointwise invariant pairings and global coefficient modules
-├── P-E    regular-local finite jets and holonomic equivariant morphisms
+├── P-E    finite jets, adapted frames, oriented overlaps and SpinC lifts
 └── P-F    compatibility-map pullbacks, Helmholtz and Noether identities
           ↓
 Programs A/B/C — quantum scale, nonlinear junction, charge compatibility
@@ -47,7 +47,7 @@ Programs A/B/C — quantum scale, nonlinear junction, charge compatibility
 Program E — observational falsification
 ```
 
-The ordering is logical, not chronological. P-B and P-C are independent filters; P-A may supply the Euler family used by P-C; P-E supplies the local operator/jet category; P-D classifies pointwise pairing shapes together with their invariant coefficient module; P-F explains one route by which compatibility geometry can inherit a variational pairing.
+The ordering is logical, not chronological. P-B and P-C are independent filters; P-A may supply the Euler family used by P-C; P-E supplies the local operator/jet category and its structured symmetry data; P-D classifies pointwise pairing shapes together with their invariant coefficient module; P-F explains one route by which compatibility geometry can inherit a variational pairing.
 
 # Program D
 
@@ -88,7 +88,7 @@ Current results:
 - **N** a common metric scale orbit survives;
 - **O** construct the actual self-adjoint global operator, prove the spectrum/eta analytically and compute the full determinant.
 
-Last focused CI: **green** on the merged D2 head.
+Last focused CI: **green**.
 
 ## D7 — Heat kernel and effective action
 
@@ -129,7 +129,7 @@ There is currently no supported standalone D11 head. The gate collection formali
 - lower-order nonuniqueness;
 - relative bridges to Quillen.
 
-The concrete Janus category, structured jet groupoid, regularity hypotheses, descent theorem and invariant-theory classification remain open.
+The concrete Janus category, global structured jet groupoid, regularity hypotheses, descent theorem and invariant-theory classification remain open.
 
 # Program P
 
@@ -184,8 +184,9 @@ Global correction:
 
 - **T** invariant background-dependent pairing families are closed under multiplication by invariant scalar coefficients;
 - **T/N** an explicit finite Lean model has the same one-dimensional pointwise pairing shape at every background but no single constant global proportionality factor;
+- **T/N** invariant-fiber dimensions can jump between isotropy strata;
 - **N** pointwise `dim Hom = 1` does not imply one constant natural coupling;
-- **O** construct the structured jet groupoid, isotropy stratification, invariant scalar algebra and global equivariant pairing module;
+- **O** construct the actual structured jet groupoid, invariant scalar algebra and global equivariant pairing module;
 - **O** restrict the coefficient class by differential order, polynomial degree, weight, scale symmetry, Helmholtz conditions or a parent law.
 
 Canonical correction document:
@@ -194,9 +195,9 @@ Canonical correction document:
 docs/program_pd_global_pairing_modules.md
 ```
 
-Last focused CI: **green** on the merged P-D head. Changes to the new coefficient-module gate require the focused workflow to pass before that extension is promoted.
+Last focused CI: **green**.
 
-## P-E — Corrected finite-jet and categorical theorem
+## P-E — Finite jets, adapted frames and SpinC lift data
 
 Focused head:
 
@@ -214,25 +215,66 @@ Categorical correction:
 
 For decorated SpinC immersions the analogous equivalence is conditional on a structured jet groupoid over the background-jet space, an effective descent theorem and separation of global topological data.
 
-Corrections retained:
+### Proven local and algebraic chain
+
+```text
+regular local operator
+  -> finite jet evaluator
+  -> action groupoid and orbitwise descent
+  -> source/gauge quotient (B,F)
+  -> B = II in adapted coordinates
+  -> smooth local adapted orthonormal frame
+  -> varying-frame connection law and normal transport
+  -> O(T) x O(N) overlap cocycle
+  -> SO(T) x SO(N) determinant-one subcocycle
+  -> central Spin-lift and determinant-root defects
+  -> SpinC diagonal cancellation
+  -> concrete circle Spin(2) double cover
+  -> explicit U(1) ≃ SO(2) matrix equivalence.
+```
+
+Current theorem evidence:
 
 - **I** Peetre–Slovák supplies local finite-order factorization only under regularity/locality hypotheses;
-- **T** naturality/equivariance equivalence in the formal action model;
-- **T** evaluator uniqueness under surjective realization;
-- **T** composite operators factor through a higher source jet by holonomic prolongation in the abstract Lean model;
+- **T** naturality/equivariance equivalence and evaluator uniqueness in the formal action model;
+- **T** holonomic factorization of composite evaluators;
+- **T** action-groupoid laws and orbitwise descent;
+- **T** concrete second-order immersion and abelian connection orbit classifications;
+- **T** unique universal reduction through `(B,F)`;
+- **T** pointwise and smooth local adapted-frame construction;
+- **T** connection-corrected `B = II` and residual equivariance;
+- **T** moving-frame second-jet law, connection cancellation and normal transport;
+- **T** adapted-frame Čech cocycle and determinant-one `SO(T) x SO(N)` reduction;
+- **T** central double-cover defects, determinant-root two-torsion and SpinC diagonal cancellation;
+- **T** concrete circle squaring with kernel `{±1}`, exact fibers and diagonal quotient;
+- **T** explicit group equivalence `U(1) ≃ SO(2)` and matrix-valued rank-two Spin double cover;
 - **T/N** local finite order need not give one global uniform order;
 - **T/N** smooth dependence is not automatically polynomial;
 - **N** equivariance plus finite-dimensionality does not by itself imply finite generation for nonreductive jet-group actions;
-- **T/N** naturality does not imply ellipticity or field-content selection;
-- **O** construct the actual Janus structured jet groupoid, prove descent and classify smooth equivariant maps across isotropy strata.
+- **T/N** naturality does not imply ellipticity or field-content selection.
 
-Canonical categorical document:
+Exact remaining locks:
+
+- **O** identify the circle model with Mathlib's even Clifford-algebra definition of `Spin(2)`;
+- **O** construct the required higher-dimensional Clifford Spin covers;
+- **O** package the local frame and overlap calculations in actual manifold vector and principal bundles;
+- **O** prove characteristic-class matching between the Spin and determinant-root defects;
+- **O** attach the determinant-line connection and all natural sector actions;
+- **O** construct the full differentiable structured jet groupoid and effective descent;
+- **O** prove the higher-order jet-isomorphism and integrability theorem;
+- **O** classify smooth equivariant maps across isotropy strata.
+
+Canonical documents:
 
 ```text
 docs/program_pe_categorical_jet_equivalence.md
+docs/program_pe_low_order_structured_background.md
+docs/program_pe_second_fundamental_form_jet.md
+docs/program_pe_smooth_adapted_frames.md
+docs/program_pe_spinC_cocycle_lift.md
 ```
 
-Last focused CI: **green** on the merged P-E head. Changes to the new holonomic-composition gate require the focused workflow to pass before that extension is promoted.
+Latest theorem-code validation: **green** at commit `1995bb68d5c06a1c627732f24ed27883c576ff36`, workflow run `29249977153`.
 
 ## P-F — Compatibility pullback, Helmholtz and Noether
 
@@ -266,9 +308,9 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | Entry | Status |
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
-| `FundamentalGeometryPEJetUniversality` | focused CI green on merged head; new categorical gate under focused validation |
-| `FundamentalGeometryPEInvariantPairings` | focused CI green on merged head; new coefficient-module gate under focused validation |
-| `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main |
+| `FundamentalGeometryPEJetUniversality` | focused CI green through the rank-two matrix Spin layer |
+| `FundamentalGeometryPEInvariantPairings` | focused CI green |
+| `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
 | D9 and D11 | gate collections; no supported standalone head |
 
 See `current_status.md` and `janus_branch_registry.md` for the exact operational status.
@@ -278,13 +320,16 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
 ```text
 1. construct the actual decorated Janus category and field space;
 2. choose induced/auxiliary/bulk metric formulation without double counting;
-3. construct the structured SpinC/PT/Z4/BRST jet groupoid and descent data;
-4. prove a structured jet-normal-form theorem and control isotropy strata;
-5. classify invariant scalar functions, global pairing modules and smooth equivariant evaluators;
-6. derive one concrete compatible Euler family from a parent or microscopic law;
-7. prove nonlinear Helmholtz, Noether and variational-cohomology closure;
-8. compute anomalies in the same regulator and field content;
-9. fix action normalization and finite counterterms microscopically;
-10. compute the renormalized effective action and prove one stable vacuum;
-11. close charge compatibility and the absolute scale.
+3. package local adapted frames and overlap cocycles in manifold bundles;
+4. identify Clifford Spin covers and construct the global SpinC lift;
+5. prove characteristic-class matching and attach the determinant connection;
+6. construct the structured SpinC/PT/Z4/BRST jet groupoid and descent data;
+7. prove the higher-order structured jet-normal-form/integrability theorem;
+8. classify invariant scalar functions, global pairing modules and smooth equivariant evaluators;
+9. derive one concrete compatible Euler family from a parent or microscopic law;
+10. prove nonlinear Helmholtz, Noether and variational-cohomology closure;
+11. compute anomalies in the same regulator and field content;
+12. fix action normalization and finite counterterms microscopically;
+13. compute the renormalized effective action and prove one stable vacuum;
+14. close charge compatibility and the absolute scale.
 ```
