@@ -132,8 +132,9 @@ theorem spinCTransition_defect_formula
       (spinCTransition spinCover base spinLift phase spinC i k)⁻¹ =
       spinC.quotient (pairedDefect spinCover base spinLift phase i j k) := by
   simp only [spinCTransition, pairedDefect, liftDefect, phaseDefect]
-  rw [← spinC.quotient.map_mul, ← spinC.quotient.map_mul,
-    ← spinC.quotient.map_inv]
+  rw [← spinC.quotient.map_mul]
+  rw [← spinC.quotient.map_inv]
+  rw [← spinC.quotient.map_mul]
   rfl
 
 /-- Main abstract SpinC cancellation theorem: matching central Spin and phase
