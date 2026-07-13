@@ -20,7 +20,7 @@ d4b893b06983c5b65f481c24e2e71f2ba6ddd1ba.
 
 `main` therefore contains the consolidated scientific history, canonical documentation, focused entry points and CI cleanup. No scientific files were discarded. Historical and exploratory branches remain available, while current claims are routed through this file.
 
-Draft PR 6 advances Programs P-D/P-E beyond that consolidated baseline. It corrects the categorical jet statement, globalizes invariant pairings as modules over scalar invariants, and adds formal action-groupoid, orbitwise-descent and low-order structured-jet reduction cores. Until PR 6 is merged, these additions belong to its feature branch rather than to `main`.
+Draft PR 6 advances Programs P-D/P-E beyond that consolidated baseline. It corrects the categorical jet statement, globalizes invariant pairings as modules over scalar invariants, adds formal action-groupoid and orbitwise-descent cores, proves the first concrete low-order structured-jet quotient `(B,F)`, constructs the pointwise adapted tangent/normal orthogonal splitting, and proves the pointwise connection-corrected identification `B = II` together with residual `O(T) x O(N)` equivariance. Until PR 6 is merged, these additions belong to its feature branch rather than to `main`.
 
 ## 2. Validation truth
 
@@ -33,7 +33,7 @@ Program PE jet universality              success
 Janus deep alpha completion              success
 ```
 
-On the active PR 6 branch, the focused P-E workflow also passes with the new action-groupoid, orbitwise descent, quotient-universality and residual-symmetry gates, together with the exact low-order jet-normal-form Python audit.
+On the active PR 6 branch, the focused P-E workflow passes with the action-groupoid, orbitwise descent, concrete quotient, adapted orthogonal splitting, second-fundamental-form jet and residual-equivariance gates, together with the exact low-order jet-normal-form Python audit.
 
 ### Green focused Lean heads
 
@@ -194,13 +194,19 @@ transitive orbit + isotropy-fixed value
   <-> equivariant section on that orbit
 
 source/gauge orbit reduction
-  -> normal immersion tensor / curvature data
+  -> (B,F)
+
+pointwise adapted orthogonal splitting
+  -> di = (id,0)
+
+connection-corrected second jet
+  -> B = II
+
+residual orthogonal frames
+  -> O(T) x O(N)-equivariance
 
 invariance under orbit directions
   <-> unique factorization through reduced data
-
-residual frame equivariance
-  -> equivariant map on the reduced tensors
 ```
 
 For ordinary natural and gauge-natural bundles, the finite-order classification by equivariant jet maps is a classical external theorem. Categorically, the morphisms are maps from jet prolongations and compose through the holonomic jet tower; they are not ordinary maps in one fixed linear representation category.
@@ -212,19 +218,28 @@ For ordinary natural and gauge-natural bundles, the finite-order classification 
 - holonomic factorization of composite jet evaluators;
 - identity, composition, inverse, orbit and stabilizer laws for an abstract action groupoid;
 - an equivalence between equivariant sections on a transitive orbit and isotropy-fixed values in one chosen fiber;
-- an abstract second-immersion-jet normal form whose orbit quotient is the normal quadratic component;
-- an abstract abelian connection one-jet normal form whose gauge quotient is curvature;
-- universal factorization: every invariant observable factors uniquely through the normal component or curvature;
-- residual-equivariance descent: an invariant equivariant observable reduces uniquely to an equivariant map on the quotient data;
-- exact rational-matrix audits of the two low-order normalizations.
+- concrete second-order source-coordinate action from the chain rule;
+- concrete abelian connection gauge action and orbit classification by curvature;
+- combined quotient whose orbit fibers are exactly the level sets of `(B,F)`;
+- unique factorization of every invariant observable through `(B,F)`;
+- pointwise orthogonal splitting of a linear isometric derivative and its standard-inclusion form;
+- connection-corrected second derivative and normal-projection definition of `II`;
+- source- and ambient-coordinate two-jet invariance of the connection-corrected tensor;
+- torsion-free symmetry of `II`;
+- exact flat-adapted equality `B = II`;
+- residual `O(T) x O(N)` action laws, symmetry preservation and equivariance of `B = II`;
+- exact rational-matrix audits of the low-order normalizations.
 
-These are genuine algebraic theorems for the declared models. They do not identify those models with the actual smooth SpinC-immersion jets without the missing geometric chain-rule, tensor and frame-action constructions.
+These are genuine theorems for the declared pointwise and Taylor-coefficient models. They do not yet construct smooth manifold Levi-Civita connections, a smooth adapted frame germ, the oriented/SpinC lift or the complete differentiable Janus structured-jet groupoid.
 
 **Open in Janus:**
 
-- construct the finite-dimensional admissible structured-jet base and actual source/ambient/frame/gauge action;
-- derive the low-order action formulas geometrically and identify the residual tensors with the second fundamental form and SpinC/twist curvature;
-- identify the concrete residual tangent/normal/SpinC group and establish the compactness or reductivity needed by invariant theory;
+- construct source and ambient Levi-Civita connections in the formal manifold environment;
+- construct a smooth local germ of adapted orthonormal frames;
+- prove the derivative-of-frame contribution and full varying-frame transformation law;
+- reduce the residual group to the required oriented subgroup and construct its SpinC lift;
+- attach the determinant-line connection;
+- construct the finite-dimensional admissible structured-jet base and full differentiable groupoid;
 - prove the higher-order jet-isomorphism theorem with Gauss–Codazzi–Ricci–Bianchi and formal-integrability constraints;
 - classify orbit types and prove smooth extension between them;
 - prove effective descent for the declared natural tensor, spinor, twist and ghost bundles;
@@ -249,6 +264,8 @@ actual decorated Janus field/category data
   -> regular local finite-jet presentation
   -> structured jet groupoid and holonomic equivariant category
   -> orbitwise descent and low-order quotient reduction
+  -> pointwise B = II and residual orthogonal equivariance
+  -> oriented/SpinC lift and smooth adapted frames
   -> residual tensor representations and isotropy strata
   -> invariant coefficient and pairing modules
   -> compatible Euler family
@@ -261,7 +278,7 @@ actual decorated Janus field/category data
   -> absolute scale
 ```
 
-The repository has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, action-groupoid, orbitwise-descent, low-order quotient and compatibility stages. It does **not** yet contain the actual smooth Janus structured-jet groupoid, a higher-order jet-isomorphism theorem, the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
+The repository has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, action-groupoid, orbitwise-descent, concrete low-order quotient, pointwise second-fundamental-form and compatibility stages. It does **not** yet contain the smooth Janus structured-jet groupoid, a SpinC residual lift, a higher-order jet-isomorphism theorem, the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
 
 ## 7. Immediate priorities
 
@@ -274,15 +291,15 @@ The repository has green focused formal and executable layers through the abstra
 
 ### Scientific Program P
 
-1. specify the exact field space and choose induced, auxiliary or bulk metric formulation without double counting;
-2. construct the finite-dimensional structured SpinC/PT/Z4/BRST jet base and its source/ambient/frame/gauge action;
-3. promote the low-order algebraic normal forms to geometric theorems and identify the residual frame representations;
-4. prove a higher-order structured jet-isomorphism theorem and formal-integrability constraints;
-5. classify orbit types, stabilizers, invariant scalar functions and global pairing modules, including cross-stratum extension;
-6. prove effective descent for the actual Janus natural sectors;
-7. construct the concrete compatibility map `K` and its jet linearization `J`;
-8. derive the target self-adjoint pairing `H` from an actual parent or microscopic action;
-9. derive the full nonlinear Euler source and prove Helmholtz/Noether conditions;
+1. construct smooth local adapted orthonormal frame germs;
+2. formalize source and ambient Levi-Civita connections and connect them to the pointwise jet coefficients;
+3. prove the varying-frame two-jet transformation law;
+4. construct the oriented residual group and the exact SpinC lift, including determinant-line data;
+5. construct the finite-dimensional smooth structured-jet base and differentiable groupoid;
+6. extend to one covariant derivative of `II` and derive the first Codazzi constraint;
+7. prove the higher-order structured jet-isomorphism theorem and formal-integrability constraints;
+8. classify orbit types, stabilizers, invariant scalar functions and global pairing modules, including cross-stratum extension;
+9. construct the concrete compatibility map `K`, the nonlinear Euler family and prove Helmholtz/Noether conditions;
 10. compute variational cohomology, anomalies, normalization and finite counterterms without observed-radius input.
 
 ## 8. Canonical navigation rule
@@ -291,7 +308,9 @@ The repository has green focused formal and executable layers through the abstra
 - `PROGRAM.md` is the stable high-level map.
 - `program_master_roadmap.md` is the detailed dependency tree.
 - `program_pe_categorical_jet_equivalence.md` records the corrected categorical theorem.
-- `program_pe_structured_jet_reduction.md` records the action-groupoid, quotient and residual-symmetry program.
+- `program_pe_structured_jet_reduction.md` records the action-groupoid and quotient program.
+- `program_pe_low_order_structured_background.md` records the first exact `(B,F)` quotient.
+- `program_pe_second_fundamental_form_jet.md` records the pointwise `B = II` theorem and residual orthogonal equivariance.
 - `program_pd_global_pairing_modules.md` records the pointwise-to-global coupling correction.
 - program-specific documents contain derivations and theorem queues.
 - `janus_branch_registry.md` lists supported heads and explicitly labels gate-only collections.
