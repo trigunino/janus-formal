@@ -40,9 +40,9 @@ def continuousIIPairedBilinear
         intro first second
         ext y
         change
-          ⟪normal, form first y + form second y⟫_ℝ =
+          ⟪normal, form (first + second) y⟫_ℝ =
             ⟪normal, form first y⟫_ℝ + ⟪normal, form second y⟫_ℝ
-        exact inner_add_right _ _ _
+        rw [map_add, inner_add_right]
       map_smul' := by
         intro scalar x
         ext y
@@ -215,17 +215,14 @@ theorem continuousIIRieszShape_joint_contDiff
           ContinuousSecondFundamentalForm
               (Tangent := Tangent) (Normal := Normal) × Normal =>
         continuousIIRieszShapeOperator point.1 point.2) := by
-  have hMap :
-      ContDiff ℝ ∞
-        (fun point :
-            ContinuousSecondFundamentalForm
-                (Tangent := Tangent) (Normal := Normal) × Normal =>
-          continuousIIRieszShapeContinuousBilinear
-            (Tangent := Tangent) (Normal := Normal) point.1) :=
-    (continuousIIRieszShapeContinuousBilinear
-      (Tangent := Tangent) (Normal := Normal)).contDiff.comp contDiff_fst
-  simpa only [continuousIIRieszShapeContinuousBilinear_apply] using
-    hMap.clm_apply contDiff_snd
+  change
+    ContDiff ℝ ∞
+      (fun point :
+          ContinuousSecondFundamentalForm
+              (Tangent := Tangent) (Normal := Normal) × Normal =>
+        continuousIIRieszShapeContinuousBilinear
+          (Tangent := Tangent) (Normal := Normal) point.1 point.2)
+  fun_prop
 
 /-- Smooth background families of coefficients and normal parameters produce a
 smooth family of shape operators, as long as the tangent and normal models are
@@ -241,12 +238,12 @@ theorem continuousIIRieszShape_family_contDiff
     (hNormal : ContDiff ℝ ∞ normal) :
     ContDiff ℝ ∞
       (fun base => continuousIIRieszShapeOperator (form base) (normal base)) := by
-  have hPair :
-      ContDiff ℝ ∞ (fun base : Base => (form base, normal base)) :=
-    hForm.prodMk hNormal
-  exact
-    (continuousIIRieszShape_joint_contDiff
-      (Tangent := Tangent) (Normal := Normal)).comp hPair
+  change
+    ContDiff ℝ ∞
+      (fun base =>
+        continuousIIRieszShapeContinuousBilinear
+          (Tangent := Tangent) (Normal := Normal) (form base) (normal base))
+  fun_prop
 
 /-- Convert the earlier finite bilinear model to the continuous coefficient
 space. -/
