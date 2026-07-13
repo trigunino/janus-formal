@@ -53,8 +53,7 @@ theorem circleToMatrixSO2_mul
   apply Subtype.ext
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [circleToMatrixSO2, circleRotationMatrix,
-      Matrix.mul_apply, Fin.sum_univ_two] <;>
+    simp [circleToMatrixSO2, circleRotationMatrix] <;>
     ring
 
 /-- The standard circle-to-rotation assignment as a group homomorphism. -/
@@ -62,6 +61,11 @@ def circleToMatrixSO2Hom : Circle →* MatrixSO2 where
   toFun := circleToMatrixSO2
   map_one' := circleToMatrixSO2_one
   map_mul' := circleToMatrixSO2_mul
+
+@[simp]
+theorem circleToMatrixSO2Hom_apply (phase : Circle) :
+    circleToMatrixSO2Hom phase = circleToMatrixSO2 phase := by
+  rfl
 
 /-- The real and imaginary parts of a matrix rotation recover its circle phase. -/
 def matrixSO2Complex (rotation : MatrixSO2) : ℂ :=
@@ -75,8 +79,7 @@ theorem matrixSO2Complex_norm (rotation : MatrixSO2) :
   have hSquare := hSO.2.2
   rw [hSO.2.1] at hSquare
   have hNormSq : Complex.normSq (matrixSO2Complex rotation) = 1 := by
-    simp only [matrixSO2Complex, Complex.normSq_apply,
-      Complex.normSq, Complex.mul_re, Complex.mul_im]
+    simp only [matrixSO2Complex, Complex.normSq]
     change
       rotation.1 0 0 * rotation.1 0 0 +
           rotation.1 1 0 * rotation.1 1 0 = 1
@@ -88,7 +91,7 @@ theorem matrixSO2Complex_norm (rotation : MatrixSO2) :
 phase. -/
 def matrixSO2ToCircle (rotation : MatrixSO2) : Circle where
   val := matrixSO2Complex rotation
-  property := Metric.mem_sphere_zero_iff_norm.mpr
+  property := mem_sphere_zero_iff_norm.mpr
     (matrixSO2Complex_norm rotation)
 
 @[simp]
@@ -178,7 +181,8 @@ def spin2MatrixSO2DoubleCover :
     have hMatrix :
         circleToMatrixSO2 (circleSquaringProjection phase) =
           circleToMatrixSO2 1 := by
-      simpa [spin2ToMatrixSO2Projection] using hKernel
+      simpa [spin2ToMatrixSO2Projection,
+        circleToMatrixSO2Hom] using hKernel
     have hCircle := circleToMatrixSO2_injective hMatrix
     change phase * phase = 1 at hCircle
     exact circle_square_eq_one_dichotomy phase hCircle
