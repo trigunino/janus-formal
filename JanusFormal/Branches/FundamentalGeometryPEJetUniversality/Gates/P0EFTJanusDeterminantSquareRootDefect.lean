@@ -38,7 +38,8 @@ theorem squareRoot_phaseDefect_sq
       (choice.root j k * choice.root j k) *
         (choice.root i j * choice.root i j) *
         (choice.root i k * choice.root i k)⁻¹ := by
-      abel
+      rw [mul_inv_rev]
+      ac_rfl
     _ = determinantLine.transition j k *
         determinantLine.transition i j *
         (determinantLine.transition i k)⁻¹ := by
