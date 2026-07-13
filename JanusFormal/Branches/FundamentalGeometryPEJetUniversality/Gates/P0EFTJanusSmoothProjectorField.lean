@@ -216,6 +216,9 @@ theorem eventually_projectedNormalSeed_linearIndependent
     exact (projectedNormalSeed_contDiff tangentFrame seed hTangent hSeed k).continuous
   have hOpen : IsOpen {family : κ → Ambient | LinearIndependent ℝ family} :=
     isOpen_setOf_linearIndependent
+  change {x : Base |
+    LinearIndependent ℝ
+      (fun k => normalProjector tangentFrame x (seed k x))} ∈ 𝓝 x₀
   simpa [projected] using
     hContinuous.continuousAt (hOpen.mem_nhds hIndependent)
 
