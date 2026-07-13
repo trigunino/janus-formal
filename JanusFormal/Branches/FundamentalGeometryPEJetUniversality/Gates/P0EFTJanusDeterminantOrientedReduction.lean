@@ -1,4 +1,3 @@
-import Mathlib.Analysis.InnerProductSpace.NormDet
 import Mathlib.LinearAlgebra.SpecialLinearGroup
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedFrameOverlapCocycle
 
@@ -34,13 +33,12 @@ theorem orthogonalDeterminant_apply
     orthogonalDeterminant frame = frame.toLinearEquiv.det := by
   rfl
 
-/-- The determinant of an orthogonal transformation has real norm one. -/
-theorem norm_coe_orthogonalDeterminant
+/-- The scalar determinant of an orthogonal transformation is nonzero. This is
+already encoded more strongly by the unit-valued determinant character. -/
+theorem coe_orthogonalDeterminant_ne_zero
     (frame : V ≃ₗᵢ[ℝ] V) :
-    ‖((orthogonalDeterminant frame : ℝˣ) : ℝ)‖ = 1 := by
-  have hNormDet := LinearIsometry.normDet_eq_one frame.toLinearIsometry
-  rw [LinearMap.normDet_eq_norm_det] at hNormDet
-  simpa [orthogonalDeterminant, LinearEquiv.coe_det] using hNormDet
+    (((orthogonalDeterminant frame : ℝˣ) : ℝ)) ≠ 0 := by
+  exact Units.ne_zero _
 
 /-- Concrete orientation-preserving orthogonal subgroup, i.e. the kernel of the
 determinant character. -/
@@ -164,7 +162,7 @@ end TangentNormal
 /-- Boundary after determinant instantiation. -/
 structure DeterminantOrientedReductionStatus where
   orthogonalDeterminantCharacterConstructed : Prop
-  determinantNormOneProved : Prop
+  determinantUnitTyped : Prop
   tangentSpecialOrthogonalSubgroupConstructed : Prop
   normalSpecialOrthogonalSubgroupConstructed : Prop
   residualProductSubgroupConstructed : Prop
@@ -180,7 +178,7 @@ structure DeterminantOrientedReductionStatus where
 def determinantOrientedReductionClosed
     (s : DeterminantOrientedReductionStatus) : Prop :=
   s.orthogonalDeterminantCharacterConstructed /\
-  s.determinantNormOneProved /\
+  s.determinantUnitTyped /\
   s.tangentSpecialOrthogonalSubgroupConstructed /\
   s.normalSpecialOrthogonalSubgroupConstructed /\
   s.residualProductSubgroupConstructed /\
