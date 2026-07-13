@@ -119,7 +119,8 @@ def Stabilizer (base : Base) : Type u :=
 
 /-- Endomorphisms of one action-groupoid object are exactly its stabilizer. -/
 def endomorphismEquivStabilizer (base : Base) :
-    ActionArrow (Symmetry := Symmetry) base base ≃ Stabilizer base where
+    ActionArrow (Symmetry := Symmetry) base base ≃
+      Stabilizer (Symmetry := Symmetry) base where
   toFun arrow := ⟨arrow.element, arrow.maps_source⟩
   invFun element := ⟨element.1, element.2⟩
   left_inv arrow := by
@@ -134,8 +135,9 @@ def SameOrbit (first second : Base) : Prop :=
   Nonempty (ActionArrow (Symmetry := Symmetry) first second)
 
 @[refl]
-theorem sameOrbit_refl (base : Base) : SameOrbit base base :=
-  ⟨idArrow base⟩
+theorem sameOrbit_refl (base : Base) :
+    SameOrbit (Symmetry := Symmetry) base base :=
+  ⟨idArrow (Symmetry := Symmetry) base⟩
 
 @[symm]
 theorem sameOrbit_symm
@@ -179,25 +181,25 @@ structure EquivariantFamily
       transport (comp second first) value =
         transport second (transport first value)
 
-/-- A section is equivariant when transport along every groupoid arrow sends its
-source value to its target value. -/
+/-- A field section is equivariant when transport along every groupoid arrow
+sends its source value to its target value. -/
 def IsEquivariantSection
     (family : EquivariantFamily Symmetry Base)
-    (section : ∀ base, family.Fiber base) : Prop :=
+    (fieldSection : ∀ base, family.Fiber base) : Prop :=
   ∀ {source target : Base}
     (arrow : ActionArrow (Symmetry := Symmetry) source target),
-    family.transport arrow (section source) = section target
+    family.transport arrow (fieldSection source) = fieldSection target
 
-/-- Every equivariant section is fixed by every isotropy arrow at each base
-point. This is the exact bridge from global equivariance to pointwise stabilizer
-representations. -/
+/-- Every equivariant field section is fixed by every isotropy arrow at each
+base point. This is the exact bridge from global equivariance to pointwise
+stabilizer representations. -/
 theorem equivariant_section_is_isotropy_fixed
     (family : EquivariantFamily Symmetry Base)
-    (section : ∀ base, family.Fiber base)
-    (hSection : IsEquivariantSection family section)
+    (fieldSection : ∀ base, family.Fiber base)
+    (hSection : IsEquivariantSection family fieldSection)
     (base : Base)
     (arrow : ActionArrow (Symmetry := Symmetry) base base) :
-    family.transport arrow (section base) = section base :=
+    family.transport arrow (fieldSection base) = fieldSection base :=
   hSection arrow
 
 end ActionGroupoid
