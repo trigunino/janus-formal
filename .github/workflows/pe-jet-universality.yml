@@ -55,7 +55,20 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Build corrected jet-universality head
-        run: lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+        run: |
+          set +e
+          lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality \
+            > focused-lean.log 2>&1
+          status=$?
+          cat focused-lean.log
+          exit $status
+      - name: Upload focused Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pe-jet-universality-lean-log
+          path: focused-lean.log
+          if-no-files-found: error
 
   python-audit:
     runs-on: ubuntu-latest
