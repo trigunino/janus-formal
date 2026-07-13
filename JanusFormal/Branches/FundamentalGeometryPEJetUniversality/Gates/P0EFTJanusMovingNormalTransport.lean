@@ -88,8 +88,7 @@ theorem normalProjection_movingFrame
       (frame.value vector)
   have hProjection := frame.value.toLinearIsometry.map_starProjection
     (NormalSpace derivative) vector
-  rw [map_normalSpace_eq frame derivative] at hProjection
-  exact hProjection
+  simpa only [map_normalSpace_eq frame derivative] using hProjection
 
 /-- The pointwise second fundamental form is equivariant under a moving ambient
 orthogonal frame once its derivative terms are compensated by the ambient
