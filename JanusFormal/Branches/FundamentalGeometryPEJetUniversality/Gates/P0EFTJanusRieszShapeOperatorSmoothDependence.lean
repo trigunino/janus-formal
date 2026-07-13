@@ -42,7 +42,7 @@ def continuousIIPairedBilinear
         change
           ⟪normal, form (first + second) y⟫_ℝ =
             ⟪normal, form first y⟫_ℝ + ⟪normal, form second y⟫_ℝ
-        rw [map_add, inner_add_right]
+        rw [map_add, ContinuousLinearMap.add_apply, inner_add_right]
       map_smul' := by
         intro scalar x
         ext y
