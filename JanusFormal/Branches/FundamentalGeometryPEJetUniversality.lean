@@ -25,9 +25,10 @@ orthogonal splitting of a linear isometric immersion derivative, identify the
 reduced normal quadratic tensor with the normal projection of the
 connection-corrected second derivative in the flat adapted model, prove its
 residual `O(T) × O(N)` equivariance, prove smooth tangent/normal projector
-fields, and construct a smooth local adapted orthonormal frame by projected
-normal seeds and Gram--Schmidt on the open independence locus. They still do not
-construct the complete smooth Janus structured-jet groupoid or its SpinC lift.
+fields, construct a smooth local adapted orthonormal frame by projected normal
+seeds and Gram--Schmidt, and prove the formal two-jet transformation law under a
+moving adapted frame. They still do not construct the complete smooth Janus
+structured-jet groupoid or its SpinC lift.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -49,6 +50,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalResidualEquivariance
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothProjectorField
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothAdaptedFrame
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMovingAdaptedFrameSecondJet
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -78,6 +80,7 @@ structure ProgramStatus where
   pointwiseResidualOrthogonalEquivarianceProved : Prop
   smoothProjectorFieldProved : Prop
   smoothAdaptedFrameProved : Prop
+  movingAdaptedFrameSecondJetLawProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -96,8 +99,8 @@ structure ProgramStatus where
 /-- Formal/logical theorem core, including orbitwise descent, concrete low-order
 orbit reductions, the combined `(B,F)` quotient, pointwise orthogonal splitting,
 the connection-corrected second fundamental-form bridge, residual orthogonal
-equivariance, smooth projector fields, smooth adapted frames, universal
-factorization and residual symmetry models. -/
+equivariance, smooth projector fields, smooth adapted frames, the moving-frame
+two-jet cancellation law, universal factorization and residual symmetry models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -121,6 +124,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.pointwiseResidualOrthogonalEquivarianceProved /\
   s.smoothProjectorFieldProved /\
   s.smoothAdaptedFrameProved /\
+  s.movingAdaptedFrameSecondJetLawProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -160,8 +164,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- Smooth adapted coordinate frames and residual `O(T) × O(N)` laws still
-require their actual manifold-bundle and SpinC instantiation. -/
+/-- Smooth adapted coordinate frames, their two-jet transformation law and
+residual `O(T) × O(N)` formulas still require their actual manifold-bundle and
+SpinC instantiation. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
