@@ -54,7 +54,9 @@ theorem varyingGramSchmidt_contDiffOn
     ∀ k, ContDiffOn ℝ ∞ (varyingGramSchmidt family k) u := by
   intro k
   let wf : WellFounded ((· < ·) : κ → κ → Prop) := wellFounded_lt
-  refine wf.induction k ?_
+  refine wf.induction
+    (C := fun k => ContDiffOn ℝ ∞ (varyingGramSchmidt family k) u)
+    k ?_
   intro k ih
   have hFormula :
       varyingGramSchmidt family k =
