@@ -2,9 +2,9 @@
 
 This is the canonical status document for readers who did not follow the research conversation. It distinguishes compiled algebraic theorems, executable audits, conditional geometric interfaces and genuinely open Janus constructions.
 
-## 1. Repository integration status
+## 1. Repository integration
 
-The consolidated scientific stack was merged into `main` on 12 July 2026 through PR 5 at commit
+The consolidated scientific stack was merged into `main` on 12 July 2026 through PR 5 at
 
 ```text
 d4b893b06983c5b65f481c24e2e71f2ba6ddd1ba.
@@ -16,45 +16,44 @@ Draft PR 6 advances Programs P-D and P-E on branch
 agent/categorical-jets-and-pairing-modules.
 ```
 
-It now contains:
+Until PR 6 is merged, its results must not be attributed to `main`.
 
-- the corrected category of natural finite-order jet operators;
+The branch now contains:
+
+- the corrected finite-jet operator category and holonomic composition;
 - invariant pairing modules and isotropy-stratification counterexamples;
 - an action-groupoid core and exact orbitwise descent;
 - concrete immersion and abelian-connection jet quotients;
 - the universal low-order quotient represented by `(B,F)`;
 - pointwise and smooth local adapted tangent/normal frames;
 - the connection-corrected identity `B = II` and residual equivariance;
-- moving-frame two-jet laws, normal transport and overlap Čech cocycles;
+- moving-frame laws, normal transport and overlap Čech cocycles;
 - oriented reduction to `SO(T) x SO(N)`;
 - central Spin-lift and determinant-root defects with SpinC diagonal cancellation;
 - concrete circle, matrix `SO(2)` and Mathlib Clifford `Spin(2)` models;
 - the first Gauss--Codazzi--Bianchi algebraic identities;
 - exact Codazzi and abelian Bianchi jet quotients;
 - direct-product splittings of `nabla II` and abelian connection second jets;
-- the algebraic normal Ricci equation through commutators of shape operators.
+- the algebraic normal Ricci equation;
+- finite-dimensional Fréchet--Riesz construction of the shape operators from `II`.
 
-Until PR 6 is merged, none of these additions should be attributed to `main`.
-
-## 2. Validation truth
+## 2. Validation
 
 The latest theorem head is
 
 ```text
-2825863c67e45630af445979a78a05ab11541dae.
+d4008fbcbe32f7e40ecad203ca36fc94d1af7c10.
 ```
 
-It was validated by **Program PE jet universality**, run `29266824488`:
+It was validated by:
 
 ```text
-Lean build of FundamentalGeometryPEJetUniversality   success
-P-E executable audits                               success
-focused Python tests                                success
+Program PE jet universality       run 29268187119   Lean/Python success
+Programs D and P integration      run 29268187102   all listed jobs success
+Janus deep alpha completion       run 29268187105   Lean/Python success
 ```
 
-The corresponding **Programs D and P integration matrix**, run `29266823478`, completed successfully across all listed Lean and Python jobs. **Janus deep alpha completion**, run `29266823577`, also completed successfully.
-
-### Supported focused Lean heads
+Supported focused Lean heads include:
 
 ```text
 JanusFormal.Branches.FundamentalGeometryD
@@ -68,12 +67,12 @@ JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
 ```
 
-A green Lean head means that every imported theorem statement and proof compiles. It does **not** turn uninstantiated fields of a status structure into geometric objects, and it does not establish the complete physical Janus theory.
+A green Lean head means that every imported theorem and proof compiles. It does **not** turn uninstantiated status fields into geometric objects or prove the complete physical Janus theory.
 
-## 3. Stable scientific architecture
+## 3. Stable architecture
 
 ```text
-D0/D8  global mapping-torus and one-sided-throat topology
+D0/D8  mapping-torus and one-sided-throat topology
 D2/D7  twisted Dirac, eta, heat-kernel and determinant constraints
 D9     gauge-fixed elliptic-symbol and BRST/ghost gates
 D10    determinant-line, Quillen and anomaly interfaces
@@ -91,17 +90,17 @@ A/B/C  quantum scale, nonlinear junction and charge compatibility
 E      observational falsification after theoretical closure
 ```
 
-## 4. Topology and Z4 verdict
+## 4. Topology and Z4
 
-For the candidate
+For
 
 ```text
 J(T,rho) = (S3 x R)/((x,u) ~ (rho(x),u+T)),  T != 0,
 ```
 
-the translated action is treated as a free smooth mapping-torus action, not as a reflection orbifold with a local singular fixed stratum. The expected fundamental group is `Z`, not `Z4`.
+the translated action is treated as a free smooth mapping-torus action. The expected fundamental group is `Z`, not `Z4`.
 
-The quarter phases arise conditionally from lifting the sign holonomy of a real normal line:
+Quarter phases arise conditionally by lifting the sign holonomy of a real normal line:
 
 ```text
 one real-normal loop       -1
@@ -110,151 +109,131 @@ two lifted loops           -1
 four lifted loops          +1
 ```
 
-Thus `Z4` is a lift/holonomy phenomenon. A square-root line or `Z4` lift is additional global data and is not a canonical functor of the underlying line bundle.
+Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additional global data, not a canonical functor of the underlying line bundle.
 
-## 5. Program P — precise position
+## 5. Program P
 
-### P0 — moduli-geometry no-go
+### P0, P-A, P-B and P-C
 
-**Formalized:** a metric does not select a potential; a symplectic form does not select a Hamiltonian; a Kähler-like package still requires a moment map or functional.
+- **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
+- **P-A:** a Hessian fixes an action only up to an affine functional; a critical point and reference value remove this ambiguity in the quadratic model.
+- **P-B:** anomaly cancellation is a consistency/discrete-selection filter, not a complete dynamics principle.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
 
-### P-A — relative action selection
+### P-D — pairings and coefficient modules
 
-**Formalized:** a quadratic Hessian fixes an action only up to an affine functional. A Hessian, critical point and reference value determine a normalized quadratic action. A quadratic parent-bulk problem yields a Schur-complement boundary action.
+Formalized/audited:
 
-**Open:** select and derive the actual Janus parent action and boundary data.
-
-### P-B — anomaly filter
-
-**Formalized in finite proxies:** PT pairing cancels the parity-odd contribution. Anomaly cancellation is independent of parity-even Helmholtz integrability and does not determine all even couplings or finite counterterms.
-
-### P-C — Helmholtz reconstruction
-
-**Formalized:** finite quadratic Hessian realizability is equivalent to formal self-adjointness; finite polynomial Helmholtz conditions reconstruct a cubic potential.
-
-**Open:** derive the nonlinear Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
-
-### P-D — invariant pairings and coefficient modules
-
-**Formalized/audited:**
-
-- `Z4` neutrality and PT selection rules;
+- `Z4` and PT selection rules;
 - low-rank scalar, vector, tensor and spinor pairing dimensions;
 - multiplicity-space freedom for repeated sectors;
-- closure under invariant scalar coefficient functions;
-- a counterexample showing that pointwise multiplicity one does not imply one constant global coupling;
-- a counterexample showing that invariant-fiber dimensions can jump across isotropy strata.
+- closure under invariant scalar coefficients;
+- failure of pointwise multiplicity one to imply one constant global coupling;
+- jumps of invariant-fiber dimensions across isotropy strata.
 
 The correct global object is an equivariant pairing module over the invariant scalar algebra, not only a pointwise Hom-space.
 
-### P-E — structured jets and geometric reduction
+### P-E — structured jets
 
 #### 5.1 Categorical and groupoid core
 
-The repository proves, in the declared abstract models:
+The branch proves, in the declared models:
 
 - local finite-jet factorization under the stated Peetre--Slovak hypotheses;
-- naturality/equivariance and uniqueness of jet evaluators;
-- holonomic composition of finite-order operators;
-- action-groupoid identity, composition, inverse, orbit and stabilizer laws;
-- exact reconstruction of equivariant sections on one transitive orbit from isotropy-fixed values;
-- the need for separate compatibility across different isotropy strata.
+- naturality/equivariance and evaluator uniqueness;
+- holonomic composition;
+- action-groupoid, orbit and stabilizer laws;
+- reconstruction of equivariant sections on one transitive orbit from isotropy-fixed values;
+- the need for separate compatibility across isotropy strata.
 
-The category is not an ordinary category of fixed linear representations with plain fiber maps. Its morphisms use jet prolongations and holonomic composition.
+The operator category is not an ordinary category of fixed linear representations with plain fiber maps.
 
-#### 5.2 Low-order source and gauge quotient
+#### 5.2 Low-order quotient
 
-For a first-order-normalized immersion two-jet, Lean derives from the second-order chain rule
+For an adapted immersion two-jet, the chain rule gives
 
 ```text
 Q_tangent -> Q_tangent + C
 Q_normal  -> Q_normal.
 ```
 
-The source orbit is classified exactly by the normal quadratic tensor. For a local abelian connection one-jet, gauge orbits are classified exactly by curvature.
+The source orbit is classified by the normal tensor. Abelian connection one-jet gauge orbits are classified by curvature. The combined quotient is `(B,F)` and has the universal invariant-factorization property.
 
-The combined low-order quotient has reduced data
-
-```text
-(B,F),
-```
-
-and satisfies a universal property: an observable is invariant under the source/gauge orbit directions exactly when it factors uniquely through `(B,F)`.
-
-#### 5.3 Adapted geometry and the second fundamental form
+#### 5.3 Adapted geometry and `B = II`
 
 Lean constructs:
 
-- the tangent image and orthogonal normal complement of an isometric derivative;
-- adapted coordinates in which `di(x) = (x,0)`;
-- smooth tangent and normal projectors;
+- tangent image and orthogonal normal complement;
+- coordinates with `di(x)=(x,0)`;
+- smooth tangent/normal projectors;
 - smooth local adapted orthonormal frames by projected Gram--Schmidt;
 - the connection-corrected second derivative;
-- the exact flat-adapted identity `B = II`;
+- the flat-adapted identity `B=II`;
 - residual `O(T) x O(N)` equivariance;
-- moving-frame correction laws and canonical normal transport;
-- identity, inverse and Čech laws for adapted-frame overlaps;
+- moving-frame corrections, normal transport and overlap Čech laws;
 - determinant-one reduction to `SO(T) x SO(N)`.
 
-These are local and algebraic/smooth-coordinate theorems. They have not yet been packaged as the complete global Janus frame and normal bundles.
+These local constructions are not yet the complete global Janus frame and normal bundles.
 
-#### 5.4 SpinC defect and rank-two Clifford model
+#### 5.4 SpinC and rank-two Clifford model
 
 Lean proves:
 
-- the central `±1` defect of chosen lifts through a double cover;
-- the two-torsion triple defect of local determinant-line square roots;
-- diagonal cancellation in `(Spin x U(1))/⟨(-1,-1)⟩` when the defects match;
-- the circle-squaring double cover `z -> z^2`, its kernel `{±1}` and two-sheeted fibers;
-- an explicit group equivalence `U(1) ≃ SO(2)`;
-- an equivalence between the circle model and Mathlib's even-unitary Lipschitz `CliffordAlgebra.spinGroup` for the negative Euclidean plane;
-- the resulting Clifford-valued central double-cover package and rank-two SpinC diagonal quotient.
+- central `±1` lift defects;
+- two-torsion determinant-root defects;
+- diagonal SpinC cancellation when the defects match;
+- the circle-squaring cover and kernel `{±1}`;
+- `U(1) ≃ SO(2)`;
+- equivalence with Mathlib's even-unitary Lipschitz `CliffordAlgebra.spinGroup` for the negative Euclidean plane;
+- the Clifford-valued rank-two central double cover and SpinC diagonal quotient.
 
-Still open are the higher-dimensional Clifford Spin covers required by the actual tangent and normal dimensions, smooth principal-bundle packaging, and characteristic-class matching for the Janus data.
+Higher-dimensional Clifford covers, smooth principal bundles and characteristic-class matching remain open.
 
-#### 5.5 First integrability and Spencer stages
+#### 5.5 Codazzi and abelian Bianchi exactness
 
-The repository now proves:
+The branch proves:
 
-- algebraic Gauss curvature symmetries generated from a symmetric second fundamental form;
-- the Codazzi skew/cyclic identities;
-- the abelian Bianchi skew/cyclic identities;
-- exact classification of Codazzi-jet fibers by fully symmetric third-order corrections;
-- exact classification of abelian connection second-jet fibers by symmetric gauge third jets;
-- canonical one-third sections for the closed Codazzi and closed `nabla F` targets;
-- universal quotient properties for invariant observables;
-- exact direct-product splittings
+- Gauss curvature symmetries from symmetric `II`;
+- Codazzi and abelian Bianchi skew/cyclic identities;
+- exact classification of Codazzi fibers by fully symmetric third-order corrections;
+- exact classification of connection second-jet fibers by symmetric gauge third jets;
+- canonical `1/3` sections and universal quotient properties;
+- exact splittings
 
 ```text
 j1(II)  ≃  Sym3(T*) tensor N  x  ClosedCodazzi,
 j2(A)   ≃  GaugeJet3_sym       x  Closed(nabla F).
 ```
 
-The first equality means that the Codazzi tensor is only the quotient component of `nabla II`; the fully symmetric third-order component remains independent reduced data unless another symmetry removes it.
+The Codazzi tensor is only the quotient component of `nabla II`; the fully symmetric third-order component remains independent data.
 
-#### 5.6 Algebraic normal Ricci equation
+#### 5.6 Normal Ricci equation and Riesz shape operators
 
-Given the Weingarten relation
-
-```text
-<A_xi x,y> = <II(x,y),xi>,
-```
-
-Lean proves that every shape operator is self-adjoint. Therefore
+The algebraic Ricci stage starts from
 
 ```text
-<[A_xi,A_eta]x,y>
+<A_xi x,y> = <II(x,y),xi>.
 ```
 
-is skew both in `x,y` and in `xi,eta`. Adding this term to the ambient mixed-curvature component produces an algebraic normal-curvature tensor satisfying the pointwise Ricci equation by construction.
+Lean proves self-adjointness of `A_xi` and the tangent/normal antisymmetries of
 
-This is not yet the curvature of the genuine Janus normal connection. The finite-dimensional Riesz construction of `A_xi`, insertion of actual ambient mixed curvature and actual normal-connection curvature remain geometric obligations.
+```text
+<[A_xi,A_eta]x,y>.
+```
+
+The branch now goes further: for a symmetric bilinear finite-dimensional `II`, it constructs `A_xi` by Fréchet--Riesz representation. Finite-dimensional bilinear continuity is supplied automatically by Mathlib. The Weingarten relation, self-adjointness, commutator symmetries and the algebraic Ricci reconstruction therefore follow from `II`, rather than from independently assumed shape operators.
+
+Still open:
+
+- identify this finite bilinear model with the actual geometric `II` family over the structured-jet base;
+- prove linearity/continuity in the normal parameter as a bundled map where required;
+- prove smooth dependence on background jets and residual-frame equivariance of the Riesz construction;
+- insert the genuine ambient mixed curvature and normal-connection curvature;
+- prove the manifold-level Ricci equation.
 
 ### P-F — compatibility pullback
 
-**Formalized:** a self-adjoint target Hessian pulls back through a compatibility-map linearization to a self-adjoint quadratic Helmholtz operator; gauge invariance gives the linearized Noether identity.
-
-**Open:** construct the actual Janus compatibility complex, target pairing and global variational primitive.
+A self-adjoint target Hessian pulls back to a self-adjoint quadratic Helmholtz operator; gauge invariance gives the linearized Noether identity. The actual Janus compatibility complex and global variational primitive remain open.
 
 ## 6. Current supported chain
 
@@ -267,6 +246,7 @@ actual decorated Janus data
   -> Spin/determinant defects and rank-two Clifford SpinC model
   -> first Gauss--Codazzi--Bianchi quotient stages
   -> split data: Sym3 + Codazzi and gauge3 + nabla F
+  -> Riesz shape operators from II
   -> algebraic normal Ricci equation
   -> actual ambient/normal/determinant connection jets
   -> higher structured jet-isomorphism theorem
@@ -277,22 +257,22 @@ actual decorated Janus data
   -> stable vacuum and absolute scale
 ```
 
-The repository does **not** yet contain the full differentiable Janus structured-jet groupoid, a global Janus SpinC principal bundle, a higher-order geometric jet-isomorphism theorem, the concrete nonlinear Janus Euler family, a selected microscopic action, a unique vacuum or an absolute no-fit scale.
+The repository does **not** yet contain the full differentiable Janus structured-jet groupoid, a global Janus SpinC principal bundle, the geometric higher-order jet-isomorphism theorem, the concrete nonlinear Janus Euler family, a selected microscopic action, a unique vacuum or an absolute no-fit scale.
 
 ## 7. Immediate theorem queue
 
-1. Construct shape operators from `II` by finite-dimensional Riesz representation and connect them to the existing algebraic Ricci theorem.
-2. Insert the curvature of an actual normal connection and the ambient mixed-curvature tensor; prove the geometric Ricci equation.
-3. Prove residual `O(T) x O(N)` equivariance and smooth jet-bundle compatibility of the Codazzi, `nabla F` and Ricci stages.
-4. Identify the reduced abelian curvature and its derivatives with those of the SpinC determinant-line connection.
-5. Construct the higher-dimensional Clifford Spin covers needed by the tangent and normal ranks.
-6. Package local frames, transitions and lifts into global oriented and SpinC principal bundles.
-7. Prove characteristic-class matching of the Spin and determinant-root defects for actual Janus data.
-8. Add ambient curvature jets and derive the complete Gauss--Codazzi--Ricci--Bianchi realizability conditions.
-9. Extend the exact Spencer splittings by one order and identify the first genuine higher-order obstruction.
-10. Construct the differentiable structured-jet groupoid and effective descent for tensor, spinor, twist and ghost sectors.
-11. Classify orbit types and smooth extension across higher-isotropy strata.
-12. Under explicit compact/reductive and polynomial/weight hypotheses, prove finite generation of invariant and equivariant modules.
+1. Bundle the Riesz shape operators linearly in the normal parameter and prove residual `O(T) x O(N)` equivariance.
+2. Prove smooth dependence of the Riesz construction on the structured background jet.
+3. Insert an actual normal connection and ambient mixed-curvature jet; prove the geometric Ricci equation.
+4. Prove smooth jet-bundle compatibility of the Codazzi, `nabla F` and Ricci stages.
+5. Identify `F` and its derivatives with the SpinC determinant-line connection.
+6. Construct higher-dimensional Clifford Spin covers for the required tangent and normal ranks.
+7. Package local frames, transitions and lifts into global oriented and SpinC principal bundles.
+8. Prove characteristic-class matching of Spin and determinant-root defects.
+9. Add ambient curvature jets and complete the Gauss--Codazzi--Ricci--Bianchi realizability conditions.
+10. Extend the Spencer splittings by one order and identify the first higher-order obstruction.
+11. Construct the differentiable structured-jet groupoid and effective descent for all natural sectors.
+12. Classify orbit types, invariant modules and smooth cross-stratum extension.
 13. Insert the resulting operator basis into the nonlinear Helmholtz/Noether system.
 
 ## 8. Navigation
@@ -302,6 +282,6 @@ The repository does **not** yet contain the full differentiable Janus structured
 - [`program_pe_categorical_jet_equivalence.md`](program_pe_categorical_jet_equivalence.md) — corrected operator category;
 - [`program_pe_structured_jet_reduction.md`](program_pe_structured_jet_reduction.md) — structured-jet reduction program;
 - [`program_pe_low_order_structured_background.md`](program_pe_low_order_structured_background.md) — concrete `(B,F)` quotient;
-- [`program_pe_spinC_cocycle_lift.md`](program_pe_spinC_cocycle_lift.md) — SpinC defect and lift program;
+- [`program_pe_spinC_cocycle_lift.md`](program_pe_spinC_cocycle_lift.md) — SpinC defect/lift program;
 - [`program_pd_global_pairing_modules.md`](program_pd_global_pairing_modules.md) — pointwise-to-global pairing correction;
 - [`janus_branch_registry.md`](janus_branch_registry.md) — supported heads and gate-only collections.
