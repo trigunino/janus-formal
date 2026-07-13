@@ -10,7 +10,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped ContDiff InnerProductSpace
-open Set
+open Set Filter
 
 universe u v
 
@@ -102,16 +102,7 @@ theorem tangentProjector_frame
     (j : ι) :
     tangentProjector frame x (frame j x) = frame j x := by
   classical
-  simp only [tangentProjector]
-  rw [← one_smul ℝ (frame j x)]
-  apply Finset.sum_eq_single j
-  · intro i hi hij
-    rw [hOrthonormal.inner_eq_zero hij]
-    simp
-  · intro hj
-    exact (hj (Finset.mem_univ j)).elim
-  · rw [inner_self_eq_norm_sq_to_K, hOrthonormal.norm_eq_one]
-    norm_num
+  simp [tangentProjector, orthonormal_iff_ite.mp hOrthonormal]
 
 /-- The normal projector kills every member of the tangent orthonormal frame. -/
 theorem normalProjector_frame
@@ -123,6 +114,22 @@ theorem normalProjector_frame
     normalProjector frame x (frame j x) = 0 := by
   rw [normalProjector, tangentProjector_frame frame x hOrthonormal j, sub_self]
 
+/-- Every normal projection is orthogonal to every tangent-frame vector. -/
+theorem inner_tangent_normalProjector_eq_zero
+    {ι : Type*} [Fintype ι]
+    (frame : ι → Base → Ambient)
+    (x : Base)
+    (hOrthonormal : Orthonormal ℝ (fun i => frame i x))
+    (j : ι)
+    (vector : Ambient) :
+    inner ℝ (frame j x) (normalProjector frame x vector) = 0 := by
+  classical
+  unfold normalProjector tangentProjector
+  rw [inner_sub_right,
+    hOrthonormal.inner_right_fintype
+      (fun i => inner ℝ (frame i x) vector) j,
+    sub_self]
+
 /-- The two projectors sum to the identity by construction. -/
 theorem tangent_add_normal_projector
     {ι : Type*} [Fintype ι]
@@ -132,9 +139,21 @@ theorem tangent_add_normal_projector
     tangentProjector frame x vector + normalProjector frame x vector = vector := by
   simp [normalProjector]
 
+/-- Tangent projection is additive with respect to subtraction. -/
+theorem tangentProjector_sub
+    {ι : Type*} [Fintype ι]
+    (frame : ι → Base → Ambient)
+    (x : Base)
+    (first second : Ambient) :
+    tangentProjector frame x (first - second) =
+      tangentProjector frame x first - tangentProjector frame x second := by
+  classical
+  simp [tangentProjector, inner_sub_right, sub_smul,
+    Finset.sum_sub_distrib]
+
 /-- Tangent projection is idempotent for an orthonormal frame. -/
 theorem tangentProjector_idempotent
-    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    {ι : Type*} [Fintype ι]
     (frame : ι → Base → Ambient)
     (x : Base)
     (hOrthonormal : Orthonormal ℝ (fun i => frame i x))
@@ -142,30 +161,25 @@ theorem tangentProjector_idempotent
     tangentProjector frame x (tangentProjector frame x vector) =
       tangentProjector frame x vector := by
   classical
-  simp only [tangentProjector]
-  rw [Finset.sum_apply]
-  simp_rw [map_sum]
+  unfold tangentProjector
   apply Finset.sum_congr rfl
   intro i hi
-  rw [map_smul, tangentProjector_frame frame x hOrthonormal i]
+  rw [hOrthonormal.inner_right_fintype
+    (fun j => inner ℝ (frame j x) vector) i]
 
 /-- The complementary normal projection is idempotent as well. -/
 theorem normalProjector_idempotent
-    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    {ι : Type*} [Fintype ι]
     (frame : ι → Base → Ambient)
     (x : Base)
     (hOrthonormal : Orthonormal ℝ (fun i => frame i x))
     (vector : Ambient) :
     normalProjector frame x (normalProjector frame x vector) =
       normalProjector frame x vector := by
-  simp only [normalProjector]
-  rw [show tangentProjector frame x
-      (vector - tangentProjector frame x vector) = 0 by
-    unfold tangentProjector
-    simp_rw [inner_sub_right, Finset.sum_sub_distrib]
-    rw [tangentProjector_idempotent frame x hOrthonormal]
-    simp]
-  simp
+  unfold normalProjector
+  rw [tangentProjector_sub,
+    tangentProjector_idempotent frame x hOrthonormal]
+  abel
 
 /-- Projecting smooth seed vector fields to the normal complement yields smooth
 normal sections. -/
@@ -197,13 +211,13 @@ theorem eventually_projectedNormalSeed_linearIndependent
   let projected : Base → κ → Ambient :=
     fun x k => normalProjector tangentFrame x (seed k x)
   have hContinuous : Continuous projected := by
-    rw [continuous_pi]
+    apply continuous_pi
     intro k
     exact (projectedNormalSeed_contDiff tangentFrame seed hTangent hSeed k).continuous
   have hOpen : IsOpen {family : κ → Ambient | LinearIndependent ℝ family} :=
     isOpen_setOf_linearIndependent
-  exact hContinuous.continuousAt
-    (hOpen.mem_nhds hIndependent)
+  simpa [projected] using
+    hContinuous.continuousAt (hOpen.mem_nhds hIndependent)
 
 /-- S5.1 closure status. -/
 structure SmoothProjectorStatus where
