@@ -42,12 +42,13 @@ that circle model with Mathlib's even-unitary Lipschitz
 resulting Clifford-valued central double cover and SpinC diagonal quotient,
 prove the first algebraic Gauss--Codazzi--Bianchi identities, prove exact
 low-order Spencer quotient theorems for both the Codazzi tensor and the abelian
-connection curvature-derivative tensor, and split `∇II` jets exactly into a
-fully symmetric third-order tensor and a closed Codazzi tensor. The remaining
-geometric locks are the smooth Lie/principal-bundle packaging,
-higher-dimensional Clifford Spin covers, actual ambient and normal curvature
-jets, Ricci compatibility, determinant-line connection identification and
-characteristic-class matching.
+connection curvature-derivative tensor, split `∇II` jets exactly into a fully
+symmetric third-order tensor and a closed Codazzi tensor, and split abelian
+connection second jets into a symmetric gauge third jet and a closed `∇F`
+tensor. The remaining geometric locks are the smooth Lie/principal-bundle
+packaging, higher-dimensional Clifford Spin covers, actual ambient and normal
+curvature jets, Ricci compatibility, determinant-line connection identification
+and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -85,6 +86,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCodazziJetExactness
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCodazziJetSplitting
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJet
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJetSplitting
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -131,6 +133,7 @@ structure ProgramStatus where
   codazziJetExactnessProved : Prop
   codazziJetSplittingProved : Prop
   abelianBianchiJetExactnessProved : Prop
+  abelianConnectionSecondJetSplittingProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -156,8 +159,9 @@ diagonal cancellation, determinant square-root defect matching, concrete circle
 two-torsion, the rank-two circle and Clifford double-cover/diagonal-quotient
 models, the explicit matrix-group equivalence `U(1) ≃ SO(2)`, the first
 Gauss--Codazzi--Bianchi integrability identities, exact low-order Codazzi and
-abelian Bianchi Spencer quotients, and the direct-product splitting of `∇II` into
-its symmetric and closed-Codazzi components. -/
+abelian Bianchi Spencer quotients, the direct-product splitting of `∇II`, and
+the direct-product gauge/closed-curvature splitting of abelian connection second
+jets. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -198,6 +202,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.codazziJetExactnessProved /\
   s.codazziJetSplittingProved /\
   s.abelianBianchiJetExactnessProved /\
+  s.abelianConnectionSecondJetSplittingProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
