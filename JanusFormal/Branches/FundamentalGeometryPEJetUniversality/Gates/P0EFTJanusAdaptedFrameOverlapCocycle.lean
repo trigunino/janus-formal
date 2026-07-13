@@ -75,7 +75,9 @@ theorem adaptedTransition_cocycle
             (second.tangentGauge.symm.trans third.tangentGauge)) :=
         (LinearIsometryEquiv.trans_assoc _ _ _).symm
       _ = first.tangentGauge.symm.trans third.tangentGauge := by
-        simp [LinearIsometryEquiv.trans_assoc]
+        rw [LinearIsometryEquiv.trans_assoc,
+          LinearIsometryEquiv.self_trans_symm,
+          LinearIsometryEquiv.refl_trans]
   · simp only [adaptedTransition]
     calc
       (first.normalGauge.symm.trans second.normalGauge).trans
@@ -85,7 +87,9 @@ theorem adaptedTransition_cocycle
             (second.normalGauge.symm.trans third.normalGauge)) :=
         (LinearIsometryEquiv.trans_assoc _ _ _).symm
       _ = first.normalGauge.symm.trans third.normalGauge := by
-        simp [LinearIsometryEquiv.trans_assoc]
+        rw [LinearIsometryEquiv.trans_assoc,
+          LinearIsometryEquiv.self_trans_symm,
+          LinearIsometryEquiv.refl_trans]
 
 /-- The cocycle law in the product-group multiplication convention used by Lean.
 Because multiplication of linear isometry equivalences is function composition,
@@ -154,8 +158,14 @@ theorem orientationPreserving_cocycle
       (adaptedTransition first third) := by
   rw [← adaptedTransition_mul first second third]
   constructor
-  · rw [map_mul, hSecondThird.1, hFirstSecond.1, mul_one]
-  · rw [map_mul, hSecondThird.2, hFirstSecond.2, mul_one]
+  · change characters.tangentCharacter
+      ((adaptedTransition second third).1 *
+        (adaptedTransition first second).1) = 1
+    rw [map_mul, hSecondThird.1, hFirstSecond.1, one_mul]
+  · change characters.normalCharacter
+      ((adaptedTransition second third).2 *
+        (adaptedTransition first second).2) = 1
+    rw [map_mul, hSecondThird.2, hFirstSecond.2, one_mul]
 
 /-- Reversing an orientation-preserving transition remains
 orientation-preserving. -/
