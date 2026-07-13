@@ -64,7 +64,7 @@ theorem residual_action_commutes_with_source_change
     [Add Tangential]
     [SMul Symmetry Tangential]
     [SMul Symmetry Normal]
-    (hAdd : ∀ symmetry first second : Tangential,
+    (hAdd : ∀ (symmetry : Symmetry) (first second : Tangential),
       symmetry • (first + second) =
         symmetry • first + symmetry • second)
     (symmetry : Symmetry)
@@ -87,7 +87,8 @@ def IsSecondJetResidualEquivariant
     [SMul Symmetry Normal]
     [SMul Symmetry Target]
     (observable : SecondJetData Tangential Normal → Target) : Prop :=
-  ∀ symmetry jet,
+  ∀ (symmetry : Symmetry)
+    (jet : SecondJetData Tangential Normal),
     observable (actOnSecondJet symmetry jet) =
       symmetry • observable jet
 
@@ -99,7 +100,7 @@ def IsNormalResidualEquivariant
     [SMul Symmetry Normal]
     [SMul Symmetry Target]
     (reduced : Normal → Target) : Prop :=
-  ∀ symmetry normal,
+  ∀ (symmetry : Symmetry) (normal : Normal),
     reduced (symmetry • normal) = symmetry • reduced normal
 
 /-- Restricting a residual-equivariant observable to the normal slice preserves
@@ -152,7 +153,8 @@ theorem source_invariant_residual_equivariant_has_unique_reduction
     (hResidual : IsSecondJetResidualEquivariant observable) :
     ∃! reduced : Normal → Target,
       (∀ jet, observable jet = reduced jet.normalQuadratic) /\
-        IsNormalResidualEquivariant reduced := by
+        IsNormalResidualEquivariant
+          (Symmetry := Symmetry) reduced := by
   refine ⟨reducedNormalObservable observable,
     ⟨source_invariant_factors_through_normal observable hSource,
       reduced_normal_observable_is_residual_equivariant
@@ -225,12 +227,13 @@ theorem residual_action_commutes_with_gauge_change
     [SMul Symmetry Value]
     [SMul Symmetry SymmetricDerivative]
     [SMul Symmetry Curvature]
-    (hValueAdd : ∀ symmetry first second : Value,
+    (hValueAdd : ∀ (symmetry : Symmetry) (first second : Value),
       symmetry • (first + second) =
         symmetry • first + symmetry • second)
-    (hDerivativeAdd : ∀ symmetry first second : SymmetricDerivative,
-      symmetry • (first + second) =
-        symmetry • first + symmetry • second)
+    (hDerivativeAdd :
+      ∀ (symmetry : Symmetry) (first second : SymmetricDerivative),
+        symmetry • (first + second) =
+          symmetry • first + symmetry • second)
     (symmetry : Symmetry)
     (gauge : GaugeTwoJet Value SymmetricDerivative)
     (jet : ConnectionOneJet Value SymmetricDerivative Curvature) :
@@ -257,7 +260,8 @@ def IsConnectionJetResidualEquivariant
     [SMul Symmetry Target]
     (observable :
       ConnectionOneJet Value SymmetricDerivative Curvature → Target) : Prop :=
-  ∀ symmetry jet,
+  ∀ (symmetry : Symmetry)
+    (jet : ConnectionOneJet Value SymmetricDerivative Curvature),
     observable (actOnConnectionJet symmetry jet) =
       symmetry • observable jet
 
@@ -269,7 +273,7 @@ def IsCurvatureResidualEquivariant
     [SMul Symmetry Curvature]
     [SMul Symmetry Target]
     (reduced : Curvature → Target) : Prop :=
-  ∀ symmetry curvature,
+  ∀ (symmetry : Symmetry) (curvature : Curvature),
     reduced (symmetry • curvature) = symmetry • reduced curvature
 
 /-- Restriction to the curvature slice preserves residual equivariance when the
@@ -333,7 +337,8 @@ theorem gauge_invariant_residual_equivariant_has_unique_reduction
     (hResidual : IsConnectionJetResidualEquivariant observable) :
     ∃! reduced : Curvature → Target,
       (∀ jet, observable jet = reduced jet.curvature) /\
-        IsCurvatureResidualEquivariant reduced := by
+        IsCurvatureResidualEquivariant
+          (Symmetry := Symmetry) reduced := by
   refine ⟨reducedCurvatureObservable observable,
     ⟨gauge_invariant_factors_through_curvature observable hGauge,
       reduced_curvature_observable_is_residual_equivariant
