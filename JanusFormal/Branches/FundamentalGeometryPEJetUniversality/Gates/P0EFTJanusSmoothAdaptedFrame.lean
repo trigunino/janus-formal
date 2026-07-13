@@ -53,40 +53,41 @@ theorem varyingGramSchmidt_contDiffOn
       LinearIndependent ℝ (fun k => family k x)) :
     ∀ k, ContDiffOn ℝ ∞ (varyingGramSchmidt family k) u := by
   intro k
-  induction k using wellFounded_lt.induction with
-  | h k ih =>
-      have hFormula :
-          varyingGramSchmidt family k =
-            fun x => family k x -
-              ∑ i ∈ Finset.Iio k,
-                (inner ℝ (varyingGramSchmidt family i x) (family k x) /
-                    ‖varyingGramSchmidt family i x‖ ^ 2) •
-                  varyingGramSchmidt family i x := by
-        funext x
-        simp only [varyingGramSchmidt]
-        rw [InnerProductSpace.gramSchmidt_def]
-        simp_rw [Submodule.starProjection_singleton]
-      rw [hFormula]
-      apply (hSmooth k).contDiffOn.sub
-      apply ContDiffOn.sum
-      intro i hi
-      have hi_lt : i < k := Finset.mem_Iio.mp hi
-      have hgi : ContDiffOn ℝ ∞ (varyingGramSchmidt family i) u :=
-        ih i hi_lt
-      have hInner : ContDiffOn ℝ ∞
-          (fun x => inner ℝ (varyingGramSchmidt family i x) (family k x)) u :=
-        hgi.inner ℝ (hSmooth k).contDiffOn
-      have hNormSq : ContDiffOn ℝ ∞
-          (fun x => ‖varyingGramSchmidt family i x‖ ^ 2) u :=
-        hgi.norm_sq ℝ
-      have hDenominator : ∀ x ∈ u,
-          ‖varyingGramSchmidt family i x‖ ^ 2 ≠ 0 := by
-        intro x hx
-        apply pow_ne_zero
-        exact norm_ne_zero_iff.mpr
-          (InnerProductSpace.gramSchmidt_ne_zero ℝ i
-            (hIndependent x hx))
-      exact (hInner.div hNormSq hDenominator).smul hgi
+  let wf : WellFounded ((· < ·) : κ → κ → Prop) := wellFounded_lt
+  refine wf.induction k ?_
+  intro k ih
+  have hFormula :
+      varyingGramSchmidt family k =
+        fun x => family k x -
+          ∑ i ∈ Finset.Iio k,
+            (inner ℝ (varyingGramSchmidt family i x) (family k x) /
+                ‖varyingGramSchmidt family i x‖ ^ 2) •
+              varyingGramSchmidt family i x := by
+    funext x
+    simp only [varyingGramSchmidt]
+    rw [InnerProductSpace.gramSchmidt_def]
+    simp [Submodule.starProjection_singleton]
+  rw [hFormula]
+  apply (hSmooth k).contDiffOn.sub
+  apply ContDiffOn.sum
+  intro i hi
+  have hi_lt : i < k := Finset.mem_Iio.mp hi
+  have hgi : ContDiffOn ℝ ∞ (varyingGramSchmidt family i) u :=
+    ih i hi_lt
+  have hInner : ContDiffOn ℝ ∞
+      (fun x => inner ℝ (varyingGramSchmidt family i x) (family k x)) u :=
+    hgi.inner ℝ (hSmooth k).contDiffOn
+  have hNormSq : ContDiffOn ℝ ∞
+      (fun x => ‖varyingGramSchmidt family i x‖ ^ 2) u :=
+    hgi.norm_sq ℝ
+  have hDenominator : ∀ x ∈ u,
+      ‖varyingGramSchmidt family i x‖ ^ 2 ≠ 0 := by
+    intro x hx
+    apply pow_ne_zero
+    exact norm_ne_zero_iff.mpr
+      (InnerProductSpace.gramSchmidt_ne_zero i
+        (hIndependent x hx))
+  exact (hInner.div hNormSq hDenominator).smul hgi
 
 /-- The normalized Gram--Schmidt frame is smooth on the same independence
 locus. -/
@@ -104,7 +105,7 @@ theorem varyingGramSchmidtNormed_contDiffOn
     varyingGramSchmidt_contDiffOn family hSmooth u hIndependent k
   have hg_ne : ∀ x ∈ u, varyingGramSchmidt family k x ≠ 0 := by
     intro x hx
-    exact InnerProductSpace.gramSchmidt_ne_zero ℝ k
+    exact InnerProductSpace.gramSchmidt_ne_zero k
       (hIndependent x hx)
   have hNorm : ContDiffOn ℝ ∞
       (fun x => ‖varyingGramSchmidt family k x‖) u :=
@@ -215,8 +216,20 @@ theorem smoothNormalFrame_mem_projected_span
     smoothNormalFrame tangentFrame seed k x ∈
       Submodule.span ℝ
         (Set.range (fun j => projectedNormalFamily tangentFrame seed j x)) := by
-  rw [← InnerProductSpace.span_gramSchmidtNormed_range]
-  exact Submodule.subset_span (Set.mem_range_self k)
+  change InnerProductSpace.gramSchmidtNormed ℝ
+      (fun j => projectedNormalFamily tangentFrame seed j x) k ∈
+    Submodule.span ℝ
+      (Set.range (fun j => projectedNormalFamily tangentFrame seed j x))
+  have hMember :
+      InnerProductSpace.gramSchmidtNormed ℝ
+          (fun j => projectedNormalFamily tangentFrame seed j x) k ∈
+        Submodule.span ℝ
+          (Set.range (InnerProductSpace.gramSchmidtNormed ℝ
+            (fun j => projectedNormalFamily tangentFrame seed j x))) :=
+    Submodule.subset_span (Set.mem_range_self k)
+  rw [InnerProductSpace.span_gramSchmidtNormed_range,
+    InnerProductSpace.span_gramSchmidt] at hMember
+  exact hMember
 
 /-- The smooth normal frame is orthogonal to the tangent frame. -/
 theorem tangent_inner_smoothNormalFrame_eq_zero
@@ -235,7 +248,10 @@ theorem tangent_inner_smoothNormalFrame_eq_zero
       Set.range (fun j => projectedNormalFamily tangentFrame seed j x) ⊆
         (ℝ ∙ tangentFrame i x)ᗮ := by
     rintro vector ⟨j, rfl⟩
+    change projectedNormalFamily tangentFrame seed j x ∈
+      (ℝ ∙ tangentFrame i x)ᗮ
     rw [Submodule.mem_orthogonal_singleton_iff_inner_left]
+    rw [real_inner_comm]
     exact inner_tangent_normalProjector_eq_zero
       tangentFrame x (hTangentOrthonormal x) i (seed j x)
   have hSpan :
@@ -245,7 +261,12 @@ theorem tangent_inner_smoothNormalFrame_eq_zero
     Submodule.span_le.2 hGenerators
   have hMem := hSpan
     (smoothNormalFrame_mem_projected_span tangentFrame seed x k)
-  exact Submodule.mem_orthogonal_singleton_iff_inner_left.mp hMem
+  calc
+    inner ℝ (tangentFrame i x)
+        (smoothNormalFrame tangentFrame seed k x) =
+      inner ℝ (smoothNormalFrame tangentFrame seed k x)
+        (tangentFrame i x) := real_inner_comm _ _
+    _ = 0 := Submodule.mem_orthogonal_singleton_iff_inner_left.mp hMem
 
 /-- Combined tangent/normal adapted frame. -/
 def combinedAdaptedFrame
@@ -270,6 +291,7 @@ theorem combinedAdaptedFrame_orthonormal
     (hx : x ∈ normalIndependenceLocus tangentFrame seed) :
     Orthonormal ℝ (fun index =>
       combinedAdaptedFrame tangentFrame seed index x) := by
+  classical
   rw [orthonormal_iff_ite]
   intro first second
   cases first with
@@ -279,21 +301,19 @@ theorem combinedAdaptedFrame_orthonormal
           simpa [combinedAdaptedFrame] using
             (orthonormal_iff_ite.mp (hTangentOrthonormal x) i j)
       | inr k =>
-          simp [combinedAdaptedFrame,
-            tangent_inner_smoothNormalFrame_eq_zero
-              tangentFrame seed hTangentOrthonormal x i k]
+          have hCross := tangent_inner_smoothNormalFrame_eq_zero
+            tangentFrame seed hTangentOrthonormal x i k
+          simpa [combinedAdaptedFrame] using hCross
   | inr k =>
       cases second with
       | inl i =>
-          rw [show inner ℝ
+          have hCross : inner ℝ
               (smoothNormalFrame tangentFrame seed k x)
-              (tangentFrame i x) =
-            inner ℝ (tangentFrame i x)
-              (smoothNormalFrame tangentFrame seed k x) by
-            exact real_inner_comm _ _]
-          simp [combinedAdaptedFrame,
-            tangent_inner_smoothNormalFrame_eq_zero
-              tangentFrame seed hTangentOrthonormal x i k]
+              (tangentFrame i x) = 0 := by
+            rw [real_inner_comm]
+            exact tangent_inner_smoothNormalFrame_eq_zero
+              tangentFrame seed hTangentOrthonormal x i k
+          simpa [combinedAdaptedFrame] using hCross
       | inr l =>
           simpa [combinedAdaptedFrame] using
             (orthonormal_iff_ite.mp
@@ -315,10 +335,11 @@ theorem combinedAdaptedFrame_span_eq_top
     Submodule.span ℝ
         (Set.range (fun index =>
           combinedAdaptedFrame tangentFrame seed index x)) = ⊤ := by
+  classical
   have hLI := (combinedAdaptedFrame_orthonormal
     tangentFrame seed hTangentOrthonormal hx).linearIndependent
   apply LinearIndependent.span_eq_top_of_card_eq_finrank' hLI
-  simpa using hDimension
+  simpa only [Fintype.card_sum] using hDimension
 
 /-- Existence of a genuine open neighborhood carrying the explicit smooth
 adapted frame. -/
