@@ -222,7 +222,15 @@ theorem splitExtrinsicTerm_eq_neg_rieszCommutator
       (rieszShapeOperator form firstNormal y),
     ← rieszShapeOperator_inner form secondNormal y
       (rieszShapeOperator form firstNormal x)]
-  simp only [rieszRicciShapeCommutator, ricciShapeCommutator]
+  change
+    -⟪rieszShapeOperator form secondNormal x,
+        rieszShapeOperator form firstNormal y⟫_ℝ +
+      ⟪rieszShapeOperator form secondNormal y,
+        rieszShapeOperator form firstNormal x⟫_ℝ =
+      -(⟪rieszShapeOperator form firstNormal
+            (rieszShapeOperator form secondNormal x), y⟫_ℝ -
+        ⟪rieszShapeOperator form secondNormal
+            (rieszShapeOperator form firstNormal x), y⟫_ℝ)
   rw [rieszShapeOperator_self_adjoint form firstNormal
       (rieszShapeOperator form secondNormal x) y,
     rieszShapeOperator_self_adjoint form secondNormal
