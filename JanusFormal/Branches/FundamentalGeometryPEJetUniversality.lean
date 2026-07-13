@@ -39,12 +39,13 @@ the concrete rank-two circle double cover with projection `z ↦ z²`, kernel
 identify the circle group explicitly with the matrix group `SO(2)`, identify
 that circle model with Mathlib's even-unitary Lipschitz
 `CliffordAlgebra.spinGroup` for the negative Euclidean plane, package the
-resulting Clifford-valued central double cover and SpinC diagonal quotient, and
-prove the first algebraic Gauss--Codazzi--Bianchi identities for the reduced jet
-tensors. The remaining geometric locks are the smooth Lie/principal-bundle
-packaging, higher-dimensional Clifford Spin covers, actual ambient and normal
-curvature jets, Ricci compatibility and characteristic-class matching for the
-Janus determinant line.
+resulting Clifford-valued central double cover and SpinC diagonal quotient,
+prove the first algebraic Gauss--Codazzi--Bianchi identities, and prove exact
+low-order Spencer quotient theorems for both the Codazzi tensor and the abelian
+Bianchi tensor. The remaining geometric locks are the smooth Lie/principal-
+bundle packaging, higher-dimensional Clifford Spin covers, actual ambient and
+normal curvature jets, Ricci compatibility, determinant-line connection
+identification and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -79,6 +80,8 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCliffordSpin2Bridge
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCliffordSpin2DoubleCover
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGaussCodazziBianchiIdentities
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCodazziJetExactness
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianBianchiJetExactness
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -122,6 +125,8 @@ structure ProgramStatus where
   cliffordSpin2BridgeProved : Prop
   cliffordSpin2DoubleCoverPackaged : Prop
   gaussCodazziBianchiIdentitiesProved : Prop
+  codazziJetExactnessProved : Prop
+  abelianBianchiJetExactnessProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -145,8 +150,9 @@ second-jet and normal-transport laws, adapted-frame Čech cocycles,
 determinant-one `SO(T) × SO(N)` reduction, central double-cover defects, SpinC
 diagonal cancellation, determinant square-root defect matching, concrete circle
 two-torsion, the rank-two circle and Clifford double-cover/diagonal-quotient
-models, the explicit matrix-group equivalence `U(1) ≃ SO(2)`, and the first
-Gauss--Codazzi--Bianchi integrability identities. -/
+models, the explicit matrix-group equivalence `U(1) ≃ SO(2)`, the first
+Gauss--Codazzi--Bianchi integrability identities, and exact low-order Codazzi and
+abelian Bianchi Spencer quotients. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -184,6 +190,8 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.cliffordSpin2BridgeProved /\
   s.cliffordSpin2DoubleCoverPackaged /\
   s.gaussCodazziBianchiIdentitiesProved /\
+  s.codazziJetExactnessProved /\
+  s.abelianBianchiJetExactnessProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -224,9 +232,8 @@ theorem missing_structured_normal_form_blocks_full_specialization
   exact hMissing hNormalForm
 
 /-- The proved local-frame, oriented-cocycle and algebraic rank-two Clifford
-SpinC double cover still require smooth Lie/principal-bundle packaging,
-higher-dimensional Clifford Spin projections, geometric characteristic-class
-matching and actions on all Janus natural sectors. -/
+matching still require smooth principal-bundle packaging and actions on all
+Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
