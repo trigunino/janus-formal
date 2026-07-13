@@ -33,13 +33,14 @@ residual adapted-frame transitions, instantiate their determinant-one oriented
 reduction `SO(T) × SO(N)`, formalize the central double-cover defect obstructing
 a Spin lift, prove the abstract SpinC diagonal-cancellation theorem, show that
 local square roots of a determinant-line cocycle have a two-torsion triple
-defect, instantiate that two-torsion by `±1` in the complex circle, and construct
+defect, instantiate that two-torsion by `±1` in the complex circle, construct
 the concrete rank-two circle double cover with projection `z ↦ z²`, kernel
-`{±1}`, an exact diagonal quotient and its specialized SpinC cocycle theorem.
-They still do not identify the circle model with the matrix/Clifford definitions
-of `SO(2)` and `Spin(2)`, instantiate the higher-dimensional Clifford Spin cover,
-or prove the characteristic-class matching for the actual Janus determinant
-line.
+`{±1}`, an exact diagonal quotient and its specialized SpinC cocycle theorem,
+and identify the circle group explicitly with the matrix group `SO(2)`, yielding
+a matrix-valued surjective two-sheeted Spin projection. They still do not
+identify the circle model with the even Clifford-algebra definition of
+`Spin(2)`, instantiate the higher-dimensional Clifford Spin cover, or prove the
+characteristic-class matching for the actual Janus determinant line.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -70,6 +71,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantSquareRootDefect
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCirclePhaseTwoTorsion
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSpin2CircleModel
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCircleSO2Equivalence
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -109,6 +111,7 @@ structure ProgramStatus where
   determinantSquareRootDefectTheoryProved : Prop
   circlePhaseTwoTorsionInstantiated : Prop
   spin2CircleDoubleCoverModelProved : Prop
+  circleSO2MatrixEquivalenceProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -131,7 +134,8 @@ equivariance, smooth projector fields, smooth adapted frames, moving-frame
 second-jet and normal-transport laws, adapted-frame Čech cocycles,
 determinant-one `SO(T) × SO(N)` reduction, central double-cover defects, SpinC
 diagonal cancellation, determinant square-root defect matching, concrete circle
-two-torsion and the rank-two circle double-cover/diagonal-quotient model. -/
+two-torsion, the rank-two circle double-cover/diagonal-quotient model and the
+explicit matrix-group equivalence `U(1) ≃ SO(2)`. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -165,6 +169,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.determinantSquareRootDefectTheoryProved /\
   s.circlePhaseTwoTorsionInstantiated /\
   s.spin2CircleDoubleCoverModelProved /\
+  s.circleSO2MatrixEquivalenceProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -204,11 +209,11 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The proved local frame, oriented-cocycle, circle two-torsion and rank-two
-double-cover layers still require the matrix/Clifford identification of the
-circle model, higher-dimensional Clifford Spin projections, geometric
-characteristic-class matching, smooth principal bundles and their actions on all
-Janus natural sectors. -/
+/-- The proved local frame, oriented-cocycle, circle two-torsion, rank-two
+double-cover and matrix `SO(2)` equivalence layers still require the even
+Clifford-algebra identification of `Spin(2)`, higher-dimensional Clifford Spin
+projections, geometric characteristic-class matching, smooth principal bundles
+and their actions on all Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
