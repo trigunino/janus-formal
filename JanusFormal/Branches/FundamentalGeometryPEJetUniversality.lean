@@ -20,10 +20,12 @@ curvature slice, their universal invariant-factorization properties, and
 residual symmetry descent to the reduced data. The latest concrete gates derive
 the normalized second-jet source action from the second-order chain-rule formula,
 classify concrete abelian connection one-jets by curvature, construct the first
-combined low-order quotient represented by `(B,F)`, and prove the pointwise
-orthogonal splitting of a linear isometric immersion derivative into its tangent
-image and orthogonal normal complement. They still do not construct the actual
-smooth Janus structured-jet space or its adapted SpinC frame field and bundles.
+combined low-order quotient represented by `(B,F)`, prove the pointwise
+orthogonal splitting of a linear isometric immersion derivative, and identify
+the reduced normal quadratic tensor with the normal projection of the
+connection-corrected second derivative in the flat adapted model. They still do
+not construct the actual smooth Janus structured-jet space, manifold
+Levi-Civita connections or an adapted SpinC frame field.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -41,6 +43,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteAbelianConnectionJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderStructuredBackground
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedOrthogonalSplitting
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalFormJet
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -66,6 +69,7 @@ structure ProgramStatus where
   concreteAbelianConnectionOrbitClassificationProved : Prop
   combinedLowOrderStructuredQuotientProved : Prop
   pointwiseAdaptedOrthogonalSplittingProved : Prop
+  pointwiseSecondFundamentalJetBridgeProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -81,9 +85,10 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core, including orbitwise descent, abstract and
-concrete low-order orbit reductions, the combined `(B,F)` quotient, pointwise
-orthogonal splitting, universal factorization and residual symmetry models. -/
+/-- Formal/logical theorem core, including orbitwise descent, concrete low-order
+orbit reductions, the combined `(B,F)` quotient, pointwise orthogonal splitting,
+the connection-corrected second fundamental-form bridge, universal factorization
+and residual symmetry models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -103,6 +108,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.concreteAbelianConnectionOrbitClassificationProved /\
   s.combinedLowOrderStructuredQuotientProved /\
   s.pointwiseAdaptedOrthogonalSplittingProved /\
+  s.pointwiseSecondFundamentalJetBridgeProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -132,9 +138,8 @@ theorem missing_janus_jet_groupoid_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hGroupoid
 
-/-- The low-order chain-rule, curvature and pointwise orthogonal-splitting
-results do not replace a geometric jet-isomorphism theorem for the actual
-constrained SpinC immersion data. -/
+/-- The pointwise connection-corrected second fundamental-form bridge does not
+replace a manifold-level structured jet-isomorphism theorem. -/
 theorem missing_structured_normal_form_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.structuredJetNormalFormProved) :
@@ -143,7 +148,7 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The pointwise orthogonal factors and generic residual-frame formulas still
+/-- Pointwise orthogonal factors and generic residual-frame formulas still
 require a smooth local frame field and the concrete SpinC lift before invariant
 theory can be applied to Janus jets. -/
 theorem missing_residual_actions_blocks_full_specialization
