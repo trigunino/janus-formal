@@ -68,11 +68,18 @@ def frameConnectionCoefficientBilinearLinear
     intro first second
     apply LinearMap.ext
     intro normal
+    change
+      ⟪frame.first x (first + second), frame.value normal⟫_ℝ =
+        ⟪frame.first x first, frame.value normal⟫_ℝ +
+          ⟪frame.first x second, frame.value normal⟫_ℝ
     rw [map_add, inner_add_left]
   map_smul' := by
     intro scalar normal
     apply LinearMap.ext
     intro secondNormal
+    change
+      ⟪frame.first x (scalar • normal), frame.value secondNormal⟫_ℝ =
+        scalar * ⟪frame.first x normal, frame.value secondNormal⟫_ℝ
     rw [map_smul, inner_smul_left]
     rfl
 
