@@ -117,8 +117,11 @@ theorem reduced_normal_observable_is_residual_equivariant
     (hZero : ∀ symmetry : Symmetry,
       symmetry • (0 : Tangential) = 0)
     (observable : SecondJetData Tangential Normal → Target)
-    (hEquivariant : IsSecondJetResidualEquivariant observable) :
+    (hEquivariant :
+      IsSecondJetResidualEquivariant
+        (Symmetry := Symmetry) observable) :
     IsNormalResidualEquivariant
+      (Symmetry := Symmetry)
       (reducedNormalObservable observable) := by
   intro symmetry normal
   calc
@@ -150,7 +153,9 @@ theorem source_invariant_residual_equivariant_has_unique_reduction
       symmetry • (0 : Tangential) = 0)
     (observable : SecondJetData Tangential Normal → Target)
     (hSource : IsSourceChangeInvariant observable)
-    (hResidual : IsSecondJetResidualEquivariant observable) :
+    (hResidual :
+      IsSecondJetResidualEquivariant
+        (Symmetry := Symmetry) observable) :
     ∃! reduced : Normal → Target,
       (∀ jet, observable jet = reduced jet.normalQuadratic) /\
         IsNormalResidualEquivariant
@@ -296,8 +301,11 @@ theorem reduced_curvature_observable_is_residual_equivariant
       symmetry • (0 : SymmetricDerivative) = 0)
     (observable :
       ConnectionOneJet Value SymmetricDerivative Curvature → Target)
-    (hEquivariant : IsConnectionJetResidualEquivariant observable) :
+    (hEquivariant :
+      IsConnectionJetResidualEquivariant
+        (Symmetry := Symmetry) observable) :
     IsCurvatureResidualEquivariant
+      (Symmetry := Symmetry)
       (reducedCurvatureObservable observable) := by
   intro symmetry curvature
   calc
@@ -334,7 +342,9 @@ theorem gauge_invariant_residual_equivariant_has_unique_reduction
     (observable :
       ConnectionOneJet Value SymmetricDerivative Curvature → Target)
     (hGauge : IsGaugeJetInvariant observable)
-    (hResidual : IsConnectionJetResidualEquivariant observable) :
+    (hResidual :
+      IsConnectionJetResidualEquivariant
+        (Symmetry := Symmetry) observable) :
     ∃! reduced : Curvature → Target,
       (∀ jet, observable jet = reduced jet.curvature) /\
         IsCurvatureResidualEquivariant
