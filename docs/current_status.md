@@ -16,11 +16,15 @@ Draft PR 6 advances Programs P-D/P-E beyond that baseline. It contains:
 - invariant pairing modules and isotropy-stratification locks;
 - action-groupoid and orbitwise-descent cores;
 - the first concrete low-order structured-jet quotient `(B,F)`;
-- the pointwise adapted tangent/normal orthogonal splitting;
-- the pointwise connection-corrected identity `B = II`;
-- residual `O(T) x O(N)` equivariance;
-- smooth tangent and normal projector fields;
-- a smooth local adapted orthonormal frame constructed by projected normal seeds and Gram--Schmidt.
+- pointwise and smooth local adapted tangent/normal frames;
+- the connection-corrected identity `B = II` and residual equivariance;
+- the varying-frame second-jet law and canonical normal transport;
+- Čech cocycles for adapted-frame overlap transitions;
+- determinant-one reduction to `SO(T) x SO(N)`;
+- central double-cover lift defects and abstract SpinC diagonal cancellation;
+- determinant-line square-root defects and their `±1` circle realization;
+- a concrete rank-two circle-squaring double cover;
+- an explicit group equivalence `U(1) ≃ SO(2)` and matrix-valued two-sheeted Spin projection.
 
 Until PR 6 is merged, these additions belong to branch
 
@@ -38,15 +42,15 @@ The consolidated `main` workflows are green. On PR 6, the focused head
 JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 ```
 
-also builds successfully with S5.1 and S5.2 included.
+builds successfully with the moving-frame, oriented-cocycle, SpinC defect and rank-two matrix layers imported.
 
-The S5 code was validated at commit
+The latest theorem code was validated at commit
 
 ```text
-700609f4dfa8e40d188601513a174be6c6a88e28
+1995bb68d5c06a1c627732f24ed27883c576ff36
 ```
 
-by workflow **Program PE jet universality**, run `29234536119`:
+by workflow **Program PE jet universality**, run `29249977153`:
 
 ```text
 Lean build                    success
@@ -86,7 +90,7 @@ P-A    relative action specification / parent-bulk reduction
 P-B    anomaly consistency and discrete selection
 P-C    Helmholtz inverse variational problem
 P-D    isotropy-stratified pairings and invariant-coefficient modules
-P-E    finite jets, action groupoids, reduction and adapted frames
+P-E    finite jets, reduction, adapted frames and SpinC lift data
 P-F    compatibility-map pullbacks, Helmholtz and Noether identities
 
 A/B/C  quantum scale, nonlinear junction and charge compatibility
@@ -149,7 +153,7 @@ Thus `Z4` is a holonomy/lift phenomenon. A square-root line or `Z4` lift is extr
 
 The correct global object is an equivariant pairing module over the invariant scalar algebra, not merely a pointwise Hom-space.
 
-### P-E — finite jets, reduction and smooth adapted frames
+### P-E — finite jets, reduction, adapted frames and SpinC defects
 
 The supported chain is now:
 
@@ -175,14 +179,26 @@ pointwise orthogonal splitting
 connection-corrected second jet
   -> B = II
 
-smooth tangent frame
-  -> smooth P_T and P_N
-
-projected normal seeds + Gram--Schmidt
+smooth tangent/normal projectors
   -> smooth local adapted orthonormal frame
 
-residual frames
-  -> O(T) x O(N)-equivariance
+varying adapted frame
+  -> exact connection correction and normal transport
+
+frame overlaps
+  -> O(T) x O(N) Čech cocycle
+
+orientation characters
+  -> SO(T) x SO(N) subcocycle
+
+chosen central lifts + determinant roots
+  -> matching ±1 defects
+  -> SpinC diagonal cocycle
+
+rank two
+  -> U(1) --square--> U(1)
+  -> U(1) ≃ SO(2)
+  -> matrix Spin(2) double cover.
 ```
 
 #### P-E results proved in Lean
@@ -199,17 +215,35 @@ residual frames
 - connection-corrected definition and coordinate invariance of `II`;
 - exact flat-adapted identity `B = II`;
 - residual `O(T) x O(N)` equivariance;
-- joint smoothness of explicit tangent and normal projectors;
-- projector identities and smooth projected normal seeds;
-- openness and local persistence of normal-seed independence;
-- smoothness of finite Gram--Schmidt on the independent locus;
-- construction of a smooth orthonormal normal frame;
-- tangent-normal cross orthogonality;
-- existence of an open neighborhood carrying a smooth adapted orthonormal basis.
+- joint smoothness and projector identities for tangent and normal projectors;
+- smooth local adapted orthonormal frames by projected Gram--Schmidt;
+- moving-frame raw two-jet formula;
+- cancellation of derivative-of-frame terms by the transformed connection;
+- canonical normal transport and moving-frame equivariance of `II`;
+- identity, inverse and Čech laws for adapted-frame overlap transitions;
+- determinant character and exact `SO(T) x SO(N)` residual subgroup;
+- central double-cover lift defect, centrality and `±1` dichotomy;
+- abstract SpinC diagonal defect cancellation;
+- two-torsion of determinant square-root triple defects;
+- concrete circle theorem `z²=1 -> z=±1`;
+- surjective circle-squaring double cover with kernel `{±1}` and exact fibers;
+- exact diagonal quotient and specialized rank-two SpinC cocycle theorem;
+- explicit matrix equivalence `U(1) ≃ SO(2)`;
+- surjective matrix-valued `Spin(2) -> SO(2)` projection with two-sheeted fibers.
 
 #### Exact boundary
 
-S5.1 and S5.2 are closed **in a finite-dimensional local coordinate model**. The repository has not yet packaged these functions as actual sections and endomorphisms of the source and pulled-back ambient tangent bundles over manifolds. Mathlib supplies smooth local frames from bundle trivializations, but not yet the planned general orthonormal-frame bundle API; the required coordinate Gram--Schmidt smoothness was therefore proved directly.
+The local coordinate, overlap-cocycle and rank-two group calculations are exact. The repository has not yet:
+
+- identified the circle model with Mathlib's even Clifford-algebra definition of `Spin(2)`;
+- constructed the required higher-dimensional Clifford Spin covers;
+- extracted all transition functions from actual smooth manifold frame bundles;
+- constructed the global oriented and SpinC principal bundles;
+- proved equality of the Spin obstruction and determinant-root obstruction for the actual Janus data;
+- attached and glued the determinant-line connection;
+- constructed the full differentiable structured-jet groupoid or effective descent for every natural sector.
+
+Detailed statements and theorem names are recorded in [`program_pe_spinC_cocycle_lift.md`](program_pe_spinC_cocycle_lift.md).
 
 ### P-F — compatibility pullback
 
@@ -225,8 +259,11 @@ actual decorated Janus field/category data
   -> structured jet groupoid and holonomic equivariant category
   -> low-order quotient (II,F)
   -> smooth local adapted orthonormal frame
-  -> varying-frame two-jet law
-  -> oriented/SpinC lift and determinant-line data
+  -> varying-frame tensorial law and oriented overlap cocycle
+  -> central Spin and determinant-root defects
+  -> SpinC diagonal cancellation
+  -> concrete rank-two Spin(2)/SO(2) model
+  -> higher Clifford Spin covers and characteristic-class matching
   -> higher reduced jets and integrability identities
   -> invariant coefficient and pairing modules
   -> compatible Euler family
@@ -235,35 +272,38 @@ actual decorated Janus field/category data
   -> stable vacuum and absolute scale
 ```
 
-The repository does **not** yet contain the full smooth Janus structured-jet groupoid, a SpinC residual lift, the higher-order jet-isomorphism theorem, a concrete global Janus Euler family, a selected parent action, a unique vacuum or an absolute no-fit scale.
+The repository does **not** yet contain the full smooth Janus structured-jet groupoid, the global Janus SpinC principal bundle, the higher-order jet-isomorphism theorem, a concrete global Janus Euler family, a selected parent action, a unique vacuum or an absolute no-fit scale.
 
 ## 7. Remaining lemma queue
 
-S5.1 and S5.2 are closed in the coordinate model. The next open lemmas are:
+The next open lemmas are:
 
-1. **S5.3 — varying-frame two-jet lemma.** Prove that derivatives of the smooth adapted frame generate exactly the source and ambient connection corrections in the already formalized pointwise covariant-second-derivative formula.
-2. **Bundle-packaging lemma.** Instantiate the tangent frame from an immersion chart and package the tangent/normal projectors and adapted frame as morphisms and sections of actual manifold vector bundles.
-3. **Overlap lemma.** Prove compatibility of the local constructions under changes of tangent and ambient bundle trivializations.
-4. **Oriented residual reduction lemma.** Reduce `O(T) x O(N)` to the correct oriented subgroup or fiber product.
-5. **SpinC lift lemma.** Construct the exact central extension/fiber product and its actions on tangent, normal, spinor and determinant-line sectors.
-6. **Determinant-connection compatibility lemma.** Identify the reduced curvature `F` with the curvature of the SpinC determinant-line connection.
-7. **First covariant-derivative reduction lemma.** Classify the next jet order by `nabla II`, `nabla F` and ambient curvature data.
-8. **Gauss--Codazzi--Ricci--Bianchi lemma.** Characterize the realizable reduced jets by their algebraic and differential identities.
-9. **Higher-order jet-isomorphism theorem.** Classify all finite structured jets by curvature data and covariant derivatives subject to integrability.
-10. **Stratified equivariant extension lemma.** Characterize smooth extension across higher-isotropy strata.
-11. **Finite-generation/module lemma.** Under a proved compact/reductive residual action and a fixed polynomial/weight class, prove finite generation of invariant and equivariant modules.
-12. **Concrete Helmholtz lemma.** Insert the resulting finite operator basis into the nonlinear Helmholtz system.
+1. **Clifford Spin(2) identification.** Identify the circle model with Mathlib's `CliffordAlgebra.spinGroup` for a two-dimensional Euclidean quadratic form.
+2. **Clifford action theorem.** Prove that Clifford conjugation corresponds to the standard matrix `SO(2)` rotation and to circle squaring.
+3. **Higher-dimensional Spin cover.** Instantiate the central double-cover data in the tangent and normal dimensions required by the Janus category.
+4. **Bundle-packaging lemma.** Package projectors, adapted frames and transitions as sections and morphisms of actual manifold vector bundles.
+5. **Smooth overlap lemma.** Prove smoothness of the extracted transition maps and construct the oriented principal frame bundle.
+6. **Characteristic-class matching.** Prove equality of the Spin-lift defect and determinant square-root defect for the actual Janus tangent/normal/determinant data.
+7. **Global SpinC bundle.** Construct the exact central fiber product, principal bundle and actions on tensor, spinor, twist and ghost sectors.
+8. **Determinant-connection compatibility.** Identify the reduced curvature `F` with the curvature of the SpinC determinant-line connection.
+9. **First covariant-derivative reduction.** Classify the next jet order by `nabla II`, `nabla F` and ambient curvature data.
+10. **Gauss--Codazzi--Ricci--Bianchi theorem.** Characterize realizable reduced jets by algebraic and differential identities.
+11. **Higher-order jet-isomorphism theorem.** Classify all finite structured jets by curvature data and covariant derivatives subject to integrability.
+12. **Stratified equivariant extension.** Characterize smooth extension across higher-isotropy strata.
+13. **Finite-generation/module theorem.** Under a proved compact/reductive residual action and a fixed polynomial/weight class, prove finite generation of invariant and equivariant modules.
+14. **Concrete Helmholtz theorem.** Insert the resulting finite operator basis into the nonlinear Helmholtz system.
 
 ## 8. Immediate priorities
 
-1. prove S5.3, the varying-frame two-jet transformation law;
-2. package S5.1/S5.2 in actual manifold vector bundles and local frames;
-3. construct the oriented residual group and SpinC lift;
-4. attach the determinant-line connection;
-5. construct the finite-dimensional smooth structured-jet groupoid;
-6. extend to `nabla II`, `nabla F` and Gauss--Codazzi--Ricci--Bianchi;
-7. prove the higher-order structured jet-isomorphism theorem;
-8. classify invariant modules and the concrete Helmholtz submodule.
+1. identify the concrete circle model with Clifford `Spin(2)`;
+2. prove the matrix/Clifford action compatibility;
+3. package the local frame and overlap constructions in actual vector bundles;
+4. prove characteristic-class matching and construct the global SpinC bundle;
+5. attach the determinant-line connection;
+6. construct the finite-dimensional smooth structured-jet groupoid;
+7. extend to `nabla II`, `nabla F` and Gauss--Codazzi--Ricci--Bianchi;
+8. prove the higher-order structured jet-isomorphism theorem;
+9. classify invariant modules and the concrete Helmholtz submodule.
 
 ## 9. Canonical navigation
 
@@ -273,6 +313,7 @@ S5.1 and S5.2 are closed in the coordinate model. The next open lemmas are:
 - `docs/program_pe_structured_jet_reduction.md` — action-groupoid and quotient program;
 - `docs/program_pe_low_order_structured_background.md` — exact `(B,F)` quotient;
 - `docs/program_pe_second_fundamental_form_jet.md` — pointwise `B = II` theorem;
-- `docs/program_pe_smooth_adapted_frames.md` — S5.1/S5.2 projectors and adapted frames;
+- `docs/program_pe_smooth_adapted_frames.md` — smooth projectors and adapted frames;
+- `docs/program_pe_spinC_cocycle_lift.md` — moving frames, oriented overlaps, SpinC defects and rank-two model;
 - `docs/program_pd_global_pairing_modules.md` — pointwise-to-global coupling correction;
 - `docs/janus_branch_registry.md` — supported heads and gate-only collections.
