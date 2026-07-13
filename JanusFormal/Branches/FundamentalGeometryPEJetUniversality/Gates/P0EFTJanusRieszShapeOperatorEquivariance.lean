@@ -246,7 +246,8 @@ theorem rieszShapeOperatorLinear_residual_equivariant
         frame.2.toLinearEquiv.toLinearMap =
       (conjugateShapeOperatorLinear frame.1).comp
         (rieszShapeOperatorLinear form) := by
-  ext normal
+  apply LinearMap.ext
+  intro normal
   exact rieszShapeOperator_residual_equivariant form frame normal
 
 /-- Equivariance of the continuous normal-parameter family. -/
