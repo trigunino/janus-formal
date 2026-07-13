@@ -280,7 +280,26 @@ actual decorated Janus field/category data
 
 The repository has green focused formal and executable layers through the abstract/finitely modeled Helmholtz, pairing, action-groupoid, orbitwise-descent, concrete low-order quotient, pointwise second-fundamental-form and compatibility stages. It does **not** yet contain the smooth Janus structured-jet groupoid, a SpinC residual lift, a higher-order jet-isomorphism theorem, the concrete global Janus Euler family, a selected parent action, a scheme-independent effective potential, a unique vacuum or an absolute no-fit scale.
 
-## 7. Immediate priorities
+## 7. Remaining lemma queue
+
+The pointwise S4 lemma `B = II` is closed. The next lemmas are genuinely new and remain open:
+
+1. **Smooth projector lemma.** For a smooth local family of injective isometric derivatives, the tangent orthogonal projector and normal projector depend smoothly on the base point.
+2. **Smooth adapted-frame lemma.** After shrinking the chart, the tangent image and normal complement admit smooth local orthonormal frames adapted to the immersion.
+3. **Varying-frame two-jet lemma.** The derivative-of-frame terms in a smooth adapted frame reproduce exactly the source/ambient connection corrections in the pointwise formula already formalized.
+4. **Oriented residual reduction lemma.** Under the declared orientation hypotheses, the residual frame group reduces from `O(T) x O(N)` to the correct special-orthogonal subgroup or fiber product.
+5. **SpinC lift lemma.** Construct the exact central extension/fiber product lifting the oriented residual group and prove its action on the tangent, normal, spinor and determinant-line sectors.
+6. **Determinant-connection compatibility lemma.** Relate the local `U(1)` connection jet and curvature `F` to the determinant-line connection of the SpinC structure.
+7. **First covariant-derivative reduction lemma.** Classify the next jet order by `nabla II`, `nabla F` and ambient curvature data modulo the prolonged coordinate/gauge action.
+8. **Gauss–Codazzi–Ricci–Bianchi lemma.** Prove the precise algebraic and differential identities cutting out the realizable reduced jets.
+9. **Higher-order jet-isomorphism theorem.** Prove that all finite structured jets are classified by curvature, second fundamental form, gauge curvature and their covariant derivatives subject to the integrability identities.
+10. **Stratified equivariant extension lemma.** Classify equivariants on principal orbit strata and characterize when they extend smoothly across higher-isotropy strata.
+11. **Finite-generation/module lemma.** Under the proved residual compact/reductive action and a specified polynomial/weight class, prove finite generation of scalar invariants and equivariant pairing/operator modules.
+12. **Concrete Helmholtz lemma.** Insert the resulting finite operator basis into the nonlinear Helmholtz equations and classify the variational submodule.
+
+These lemmas are not cosmetic. In particular, items 1–6 are needed before the current pointwise theorem can be promoted to a genuine local SpinC-immersion theorem, and items 7–11 are needed before Program P-E/P-D can feed a finite concrete system into Program P-C.
+
+## 8. Immediate priorities
 
 ### Repository
 
@@ -291,7 +310,7 @@ The repository has green focused formal and executable layers through the abstra
 
 ### Scientific Program P
 
-1. construct smooth local adapted orthonormal frame germs;
+1. prove the smooth-projector and smooth-adapted-frame lemmas;
 2. formalize source and ambient Levi-Civita connections and connect them to the pointwise jet coefficients;
 3. prove the varying-frame two-jet transformation law;
 4. construct the oriented residual group and the exact SpinC lift, including determinant-line data;
@@ -302,7 +321,7 @@ The repository has green focused formal and executable layers through the abstra
 9. construct the concrete compatibility map `K`, the nonlinear Euler family and prove Helmholtz/Noether conditions;
 10. compute variational cohomology, anomalies, normalization and finite counterterms without observed-radius input.
 
-## 8. Canonical navigation rule
+## 9. Canonical navigation rule
 
 - This file is the current truth.
 - `PROGRAM.md` is the stable high-level map.
