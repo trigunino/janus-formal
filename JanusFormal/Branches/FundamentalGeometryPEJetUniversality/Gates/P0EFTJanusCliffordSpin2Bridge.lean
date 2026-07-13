@@ -136,45 +136,58 @@ theorem phaseEvenProduct_mem_unitary (phase : Circle) :
     (phaseEvenProduct phase : Spin2Clifford) ∈
       unitary Spin2Clifford := by
   rw [Unitary.mem_iff]
-  constructor
-  · calc
-      star (phaseEvenProduct phase : Spin2Clifford) *
-          (phaseEvenProduct phase : Spin2Clifford) =
-        (CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
-            CliffordAlgebra.ι spin2PlaneForm referenceUnitVector) *
+  change
+    star
           (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
-            CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) := by
-              simp [phaseEvenProduct]
-      _ = CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
+            CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) *
+        (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
+          CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) = 1 /\
+      (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
+          CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) *
+        star
+          (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
+            CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) = 1
+  constructor
+  · simp only [map_mul, CliffordAlgebra.star_ι, neg_mul_neg]
+    calc
+      (CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
+          CliffordAlgebra.ι spin2PlaneForm referenceUnitVector) *
+          (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
+            CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) =
+        CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
           (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
             CliffordAlgebra.ι spin2PlaneForm referenceUnitVector) *
           CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) := by
             simp only [mul_assoc]
       _ = 1 := by
         rw [CliffordAlgebra.ι_sq_scalar,
-          spin2PlaneForm_referenceUnitVector,
-          CliffordAlgebra.ι_sq_scalar,
-          spin2PlaneForm_phaseUnitVector]
-        simp
-  · calc
-      (phaseEvenProduct phase : Spin2Clifford) *
-          star (phaseEvenProduct phase : Spin2Clifford) =
-        (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
-            CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) *
+          spin2PlaneForm_referenceUnitVector]
+        rw [(Algebra.commutes (-1)
+          (CliffordAlgebra.ι spin2PlaneForm
+            (phaseUnitVector phase))).eq.symm,
+          mul_assoc, CliffordAlgebra.ι_sq_scalar,
+          spin2PlaneForm_phaseUnitVector, ← map_mul]
+        norm_num
+  · simp only [map_mul, CliffordAlgebra.star_ι, neg_mul_neg]
+    calc
+      (CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
+          CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) *
           (CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
-            CliffordAlgebra.ι spin2PlaneForm referenceUnitVector) := by
-              simp [phaseEvenProduct]
-      _ = CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
+            CliffordAlgebra.ι spin2PlaneForm referenceUnitVector) =
+        CliffordAlgebra.ι spin2PlaneForm referenceUnitVector *
           (CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase) *
             CliffordAlgebra.ι spin2PlaneForm (phaseUnitVector phase)) *
           CliffordAlgebra.ι spin2PlaneForm referenceUnitVector := by
             simp only [mul_assoc]
       _ = 1 := by
         rw [CliffordAlgebra.ι_sq_scalar,
-          spin2PlaneForm_phaseUnitVector,
-          CliffordAlgebra.ι_sq_scalar,
-          spin2PlaneForm_referenceUnitVector]
-        simp
+          spin2PlaneForm_phaseUnitVector]
+        rw [(Algebra.commutes (-1)
+          (CliffordAlgebra.ι spin2PlaneForm
+            referenceUnitVector)).eq.symm,
+          mul_assoc, CliffordAlgebra.ι_sq_scalar,
+          spin2PlaneForm_referenceUnitVector, ← map_mul]
+        norm_num
 
 /-- The circle rotor belongs to Mathlib's pin group because it is the product of
 two vector generators and is unitary. -/
@@ -246,74 +259,74 @@ theorem cliffordSpin2Complex_star (rotor : CliffordSpin2) :
       ⟨star (rotor : Spin2Clifford),
         spinGroup.mem_even
           (spinGroup.star_mem rotor.property)⟩ =
-      Complex.conj (cliffordSpin2Complex rotor) := by
+      conj (cliffordSpin2Complex rotor) := by
   let evenRotor : CliffordAlgebra.even spin2PlaneForm :=
-    ⟨(rotor : Spin2Clifford),
-      spinGroup.mem_even rotor.property⟩
+    ⟨(rotor : Spin2Clifford), spinGroup.mem_even rotor.property⟩
+  let starEvenRotor : CliffordAlgebra.even spin2PlaneForm :=
+    ⟨star (rotor : Spin2Clifford),
+      spinGroup.mem_even (spinGroup.star_mem rotor.property)⟩
+  have hStarEven :
+      starEvenRotor =
+        CliffordAlgebra.toEven spin2LineForm
+          (CliffordAlgebra.involute
+            (CliffordAlgebra.ofEven spin2LineForm evenRotor)) := by
+    apply Subtype.ext
+    calc
+      (starEvenRotor : Spin2Clifford) =
+          CliffordAlgebra.reverse (evenRotor : Spin2Clifford) := by
+        dsimp only [starEvenRotor, evenRotor]
+        rw [CliffordAlgebra.star_def,
+          CliffordAlgebra.involute_eq_of_mem_even
+            (spinGroup.mem_even rotor.property)]
+      _ =
+          ((CliffordAlgebra.toEven spin2LineForm
+            (CliffordAlgebra.involute
+              (CliffordAlgebra.ofEven spin2LineForm evenRotor)) :
+            CliffordAlgebra.even spin2PlaneForm) : Spin2Clifford) := by
+        have h := CliffordAlgebra.coe_toEven_reverse_involute
+          (Q := spin2LineForm)
+          (CliffordAlgebra.ofEven spin2LineForm evenRotor)
+        simpa [CliffordAlgebraComplex.reverse_apply] using h.symm
   have hOfEven :
-      CliffordAlgebra.ofEven spin2LineForm
-          ⟨star (rotor : Spin2Clifford),
-            spinGroup.mem_even
-              (spinGroup.star_mem rotor.property)⟩ =
+      CliffordAlgebra.ofEven spin2LineForm starEvenRotor =
         CliffordAlgebra.involute
           (CliffordAlgebra.ofEven spin2LineForm evenRotor) := by
-    apply (CliffordAlgebra.equivEven spin2LineForm).injective
-    apply Subtype.ext
-    rw [AlgEquiv.apply_symm_apply]
-    change
-      star (rotor : Spin2Clifford) =
-        ((CliffordAlgebra.toEven spin2LineForm
-          (CliffordAlgebra.involute
-            (CliffordAlgebra.ofEven spin2LineForm evenRotor)) :
-            CliffordAlgebra.even spin2PlaneForm) : Spin2Clifford)
-    rw [CliffordAlgebra.star_def,
-      CliffordAlgebra.involute_eq_of_mem_even
-        (spinGroup.mem_even rotor.property)]
-    symm
-    calc
-      ((CliffordAlgebra.toEven spin2LineForm
-          (CliffordAlgebra.involute
-            (CliffordAlgebra.ofEven spin2LineForm evenRotor)) :
-          CliffordAlgebra.even spin2PlaneForm) : Spin2Clifford) =
-        ((CliffordAlgebra.toEven spin2LineForm
-          (CliffordAlgebra.reverse
-            (CliffordAlgebra.involute
-              (CliffordAlgebra.ofEven spin2LineForm evenRotor))) :
-          CliffordAlgebra.even spin2PlaneForm) : Spin2Clifford) := by
-            rw [CliffordAlgebraComplex.reverse_apply]
-      _ = CliffordAlgebra.reverse (evenRotor : Spin2Clifford) :=
-        CliffordAlgebra.coe_toEven_reverse_involute _
-      _ = CliffordAlgebra.reverse (rotor : Spin2Clifford) := by
-        rfl
+    rw [hStarEven]
+    simpa using AlgHom.congr_fun
+      (CliffordAlgebra.ofEven_comp_toEven spin2LineForm)
+      (CliffordAlgebra.involute
+        (CliffordAlgebra.ofEven spin2LineForm evenRotor))
   change
     CliffordAlgebraComplex.toComplex
-      (CliffordAlgebra.ofEven spin2LineForm
-        ⟨star (rotor : Spin2Clifford), _⟩) =
-      Complex.conj
+      (CliffordAlgebra.ofEven spin2LineForm starEvenRotor) =
+      conj
         (CliffordAlgebraComplex.toComplex
-          (CliffordAlgebra.ofEven spin2LineForm
-            ⟨(rotor : Spin2Clifford), _⟩))
+          (CliffordAlgebra.ofEven spin2LineForm evenRotor))
   rw [hOfEven, CliffordAlgebraComplex.toComplex_involute]
 
 /-- The complex coordinate of every Clifford spin rotor has norm one. -/
 theorem cliffordSpin2Complex_norm (rotor : CliffordSpin2) :
     ‖cliffordSpin2Complex rotor‖ = 1 := by
   let evenRotor : CliffordAlgebra.even spin2PlaneForm :=
-    ⟨(rotor : Spin2Clifford),
-      spinGroup.mem_even rotor.property⟩
+    ⟨(rotor : Spin2Clifford), spinGroup.mem_even rotor.property⟩
   let starEvenRotor : CliffordAlgebra.even spin2PlaneForm :=
     ⟨star (rotor : Spin2Clifford),
-      spinGroup.mem_even
-        (spinGroup.star_mem rotor.property)⟩
+      spinGroup.mem_even (spinGroup.star_mem rotor.property)⟩
   have hProduct : starEvenRotor * evenRotor = 1 := by
     apply Subtype.ext
     exact spinGroup.star_mul_self_of_mem rotor.property
-  have hComplex := congrArg spin2EvenEquivComplex hProduct
+  have hMapped :
+      spin2EvenEquivComplex starEvenRotor *
+          spin2EvenEquivComplex evenRotor = 1 := by
+    simpa using congrArg spin2EvenEquivComplex hProduct
   have hConjMul :
-      Complex.conj (cliffordSpin2Complex rotor) *
+      conj (cliffordSpin2Complex rotor) *
           cliffordSpin2Complex rotor = 1 := by
-    simpa [evenRotor, starEvenRotor, map_mul,
-      cliffordSpin2Complex_star] using hComplex
+    rw [← cliffordSpin2Complex_star rotor]
+    change
+      spin2EvenEquivComplex starEvenRotor *
+          spin2EvenEquivComplex evenRotor = 1
+    exact hMapped
   have hReal := congrArg Complex.re hConjMul
   have hNormSq : Complex.normSq (cliffordSpin2Complex rotor) = 1 := by
     simp only [Complex.mul_re, Complex.conj_re, Complex.conj_im,
@@ -343,10 +356,14 @@ theorem circleToCliffordSpin2_cliffordSpin2ToCircle
     circleToCliffordSpin2 (cliffordSpin2ToCircle rotor) = rotor := by
   apply Subtype.ext
   let evenRotor : CliffordAlgebra.even spin2PlaneForm :=
-    ⟨(rotor : Spin2Clifford),
-      spinGroup.mem_even rotor.property⟩
-  have hInverse := spin2EvenEquivComplex.symm_apply_apply evenRotor
-  exact congrArg Subtype.val hInverse
+    ⟨(rotor : Spin2Clifford), spinGroup.mem_even rotor.property⟩
+  change
+    ((spin2EvenEquivComplex.symm
+      (spin2EvenEquivComplex evenRotor) :
+      CliffordAlgebra.even spin2PlaneForm) : Spin2Clifford) =
+      (evenRotor : Spin2Clifford)
+  exact congrArg Subtype.val
+    (spin2EvenEquivComplex.symm_apply_apply evenRotor)
 
 /-- Concrete group equivalence between the circle model and Mathlib's
 Clifford-algebra definition of `Spin(2)`. -/
@@ -369,7 +386,7 @@ theorem cliffordSpin2ToMatrixSO2Projection_circle
     cliffordSpin2ToMatrixSO2Projection
         (circleEquivCliffordSpin2 phase) =
       spin2ToMatrixSO2Projection phase := by
-  rfl
+  simp [cliffordSpin2ToMatrixSO2Projection]
 
 /-- The Clifford-algebra Spin projection is surjective. -/
 theorem cliffordSpin2ToMatrixSO2Projection_surjective :
