@@ -74,6 +74,9 @@ theorem gaugeRemainder_reconstructConnectionSecondJet
   apply AbelianGaugeThirdJet.ext
   funext x y z
   have hReduce := reduce_reconstructConnectionSecondJet gauge data
+  change
+    reduceSecondJet
+      (applyGaugeThird gauge (canonicalSecondJet data)) = data at hReduce
   simp only [gaugeRemainder,
     gaugeBetweenEqualCurvatureDerivatives,
     reconstructConnectionSecondJet]
