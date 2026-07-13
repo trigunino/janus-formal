@@ -31,9 +31,11 @@ moving adapted frame, construct canonical normal transport and moving-frame
 equivariance of the second fundamental form, prove the Čech cocycle laws for
 residual adapted-frame transitions, instantiate their determinant-one oriented
 reduction `SO(T) × SO(N)`, formalize the central double-cover defect obstructing
-a Spin lift, and prove the abstract SpinC diagonal-cancellation theorem. They
-still do not instantiate the concrete Clifford Spin-to-SO projection or derive
-the compensating phase cocycle from the determinant line.
+a Spin lift, prove the abstract SpinC diagonal-cancellation theorem, and show
+that local square roots of a determinant-line cocycle have a two-torsion triple
+defect whose class can cancel the Spin defect. They still do not instantiate the
+concrete Clifford Spin-to-SO projection or prove the characteristic-class
+matching for the actual Janus determinant line.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -61,6 +63,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantOrientedReduction
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCentralLiftCocycleObstruction
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSpinCDiagonalDefectCancellation
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantSquareRootDefect
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -97,6 +100,7 @@ structure ProgramStatus where
   determinantOrientedResidualReductionProved : Prop
   centralDoubleCoverDefectTheoryProved : Prop
   spinCDiagonalDefectCancellationProved : Prop
+  determinantSquareRootDefectTheoryProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -117,8 +121,8 @@ orbit reductions, the combined `(B,F)` quotient, pointwise orthogonal splitting,
 the connection-corrected second fundamental-form bridge, residual orthogonal
 equivariance, smooth projector fields, smooth adapted frames, moving-frame
 second-jet and normal-transport laws, adapted-frame Čech cocycles,
-determinant-one `SO(T) × SO(N)` reduction, central double-cover defects and
-SpinC diagonal defect cancellation. -/
+determinant-one `SO(T) × SO(N)` reduction, central double-cover defects, SpinC
+diagonal cancellation and determinant square-root defect matching. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -149,6 +153,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.determinantOrientedResidualReductionProved /\
   s.centralDoubleCoverDefectTheoryProved /\
   s.spinCDiagonalDefectCancellationProved /\
+  s.determinantSquareRootDefectTheoryProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -189,8 +194,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
   exact hMissing hNormalForm
 
 /-- The proved local frame, oriented-cocycle and abstract SpinC cancellation
-layers still require concrete Clifford Spin projection, determinant-line phases,
-smooth principal bundles and their action on all Janus natural sectors. -/
+layers still require concrete Clifford Spin projection, the geometric
+characteristic-class match for determinant-line roots, smooth principal bundles
+and their action on all Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
