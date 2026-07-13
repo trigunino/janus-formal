@@ -15,8 +15,9 @@ The original strong conjecture is corrected in five ways:
    composition of maps between unprolonged representation fibers.
 
 The head also contains exact algebraic cores for an action groupoid, the
-second-immersion-jet normal slice, and the abelian connection one-jet curvature
-slice. These do not yet construct the actual smooth Janus structured-jet space.
+second-immersion-jet normal slice, the abelian connection one-jet curvature
+slice, and their universal invariant-factorization properties. These do not yet
+construct the actual smooth Janus structured-jet space.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -27,6 +28,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusStructuredJetActionGroupoid
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondJetNormalForm
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionJetNormalForm
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderJetQuotientUniversality
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -45,6 +47,7 @@ structure ProgramStatus where
   actionGroupoidLawsProved : Prop
   abstractSecondJetNormalFormProved : Prop
   abstractAbelianConnectionNormalFormProved : Prop
+  lowOrderInvariantQuotientUniversalityProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -53,11 +56,13 @@ structure ProgramStatus where
   correctedTheoremStated : Prop
   spinCImmersionJetGroupoidConstructed : Prop
   structuredJetNormalFormProved : Prop
+  residualFrameActionsConstructed : Prop
   actualJanusNaturalBundlesInserted : Prop
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core, including low-order orbit-reduction models. -/
+/-- Formal/logical theorem core, including low-order orbit-reduction and
+universal factorization models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -70,6 +75,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.actionGroupoidLawsProved /\
   s.abstractSecondJetNormalFormProved /\
   s.abstractAbelianConnectionNormalFormProved /\
+  s.lowOrderInvariantQuotientUniversalityProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -82,6 +88,7 @@ def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=
   theoremCoreClosed s /\
   s.spinCImmersionJetGroupoidConstructed /\
   s.structuredJetNormalFormProved /\
+  s.residualFrameActionsConstructed /\
   s.actualJanusNaturalBundlesInserted /\
   s.ellipticSymbolsClassified /\
   s.globalUniformOrderRegionDerived
@@ -92,7 +99,8 @@ theorem missing_janus_jet_groupoid_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.spinCImmersionJetGroupoidConstructed) :
     Not (fullJanusJetUniversalityClosed s) := by
-  rintro ⟨hCore, hGroupoid, hNormalForm, hBundles, hSymbols, hRegion⟩
+  rintro ⟨hCore, hGroupoid, hNormalForm, hResidual, hBundles,
+    hSymbols, hRegion⟩
   exact hMissing hGroupoid
 
 /-- The additive low-order normal forms do not replace a geometric jet
@@ -101,15 +109,27 @@ theorem missing_structured_normal_form_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.structuredJetNormalFormProved) :
     Not (fullJanusJetUniversalityClosed s) := by
-  rintro ⟨hCore, hGroupoid, hNormalForm, hBundles, hSymbols, hRegion⟩
+  rintro ⟨hCore, hGroupoid, hNormalForm, hResidual, hBundles,
+    hSymbols, hRegion⟩
   exact hMissing hNormalForm
+
+/-- The quotient universal properties still require the residual tangent,
+normal and SpinC frame actions before invariant theory can be applied. -/
+theorem missing_residual_actions_blocks_full_specialization
+    (s : ProgramStatus)
+    (hMissing : Not s.residualFrameActionsConstructed) :
+    Not (fullJanusJetUniversalityClosed s) := by
+  rintro ⟨hCore, hGroupoid, hNormalForm, hResidual, hBundles,
+    hSymbols, hRegion⟩
+  exact hMissing hResidual
 
 /-- Natural finite-jet classification does not imply ellipticity. -/
 theorem missing_symbol_classification_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.ellipticSymbolsClassified) :
     Not (fullJanusJetUniversalityClosed s) := by
-  rintro ⟨hCore, hGroupoid, hNormalForm, hBundles, hSymbols, hRegion⟩
+  rintro ⟨hCore, hGroupoid, hNormalForm, hResidual, hBundles,
+    hSymbols, hRegion⟩
   exact hMissing hSymbols
 
 /-- One global jet order still requires a bounded configuration region. -/
@@ -117,7 +137,8 @@ theorem missing_uniform_region_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.globalUniformOrderRegionDerived) :
     Not (fullJanusJetUniversalityClosed s) := by
-  rintro ⟨hCore, hGroupoid, hNormalForm, hBundles, hSymbols, hRegion⟩
+  rintro ⟨hCore, hGroupoid, hNormalForm, hResidual, hBundles,
+    hSymbols, hRegion⟩
   exact hMissing hRegion
 
 end JanusFundamentalGeometryPEJetUniversality
