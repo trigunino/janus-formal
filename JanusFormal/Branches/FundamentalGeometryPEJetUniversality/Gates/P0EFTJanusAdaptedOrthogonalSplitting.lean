@@ -74,6 +74,9 @@ theorem adapted_derivative_fst
     (x : Tangent) :
     (adaptedAmbientCoordinates derivative (derivative x)).fst =
       tangentRangePoint derivative x := by
+  change
+    (((tangentRange derivative).orthogonalDecomposition
+      (derivative x)).fst = tangentRangePoint derivative x)
   rw [Submodule.fst_orthogonalDecomposition_apply]
   apply Subtype.ext
   change (tangentRange derivative).starProjection (derivative x) =
@@ -87,11 +90,15 @@ theorem adapted_derivative_snd
     (derivative : Tangent →ₗᵢ[ℝ] Ambient)
     (x : Tangent) :
     (adaptedAmbientCoordinates derivative (derivative x)).snd = 0 := by
+  change
+    (((tangentRange derivative).orthogonalDecomposition
+      (derivative x)).snd = 0)
   rw [Submodule.snd_orthogonalDecomposition_apply]
   apply Subtype.ext
   change ((tangentRange derivative)ᗮ).starProjection (derivative x) = 0
   rw [Submodule.starProjection_apply_eq_zero_iff]
-  exact Submodule.le_orthogonal_orthogonal (derivative_mem_tangentRange derivative x)
+  exact Submodule.le_orthogonal_orthogonal
+    (derivative_mem_tangentRange derivative x)
 
 /-- First-order adapted-frame theorem: after the canonical orthogonal splitting,
 the immersion derivative is the standard inclusion into the tangent-image factor. -/
@@ -100,6 +107,7 @@ theorem adapted_derivative_is_standard_inclusion
     (x : Tangent) :
     adaptedAmbientCoordinates derivative (derivative x) =
       WithLp.toLp 2 (tangentRangePoint derivative x, 0) := by
+  apply WithLp.ofLp_injective 2
   apply Prod.ext
   · exact adapted_derivative_fst derivative x
   · exact adapted_derivative_snd derivative x
@@ -109,7 +117,8 @@ theorem tangent_range_finrank
     [FiniteDimensional ℝ Tangent]
     (derivative : Tangent →ₗᵢ[ℝ] Ambient) :
     finrank ℝ (tangentRange derivative) = finrank ℝ Tangent := by
-  exact LinearEquiv.finrank_eq (tangentEquivRange derivative).toLinearEquiv
+  exact LinearEquiv.finrank_eq
+    (tangentEquivRange derivative).symm.toLinearEquiv
 
 /-- The adapted splitting yields the expected codimension identity. -/
 theorem tangent_plus_normal_finrank
