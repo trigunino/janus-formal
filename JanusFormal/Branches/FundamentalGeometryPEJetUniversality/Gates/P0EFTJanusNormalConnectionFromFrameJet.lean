@@ -62,17 +62,19 @@ def frameConnectionCoefficientBilinearLinear
         rw [map_add, inner_add_right]
       map_smul' := by
         intro scalar normal
-        simp }
+        rw [map_smul, inner_smul_right]
+        rfl }
   map_add' := by
     intro first second
     apply LinearMap.ext
     intro normal
-    rw [map_add, ContinuousLinearMap.add_apply, inner_add_left]
+    rw [map_add, inner_add_left]
   map_smul' := by
     intro scalar normal
     apply LinearMap.ext
     intro secondNormal
-    simp
+    rw [map_smul, inner_smul_left]
+    rfl
 
 /-- Continuous bilinear coefficient form. Finite dimensionality of the normal
 model supplies continuity. -/
@@ -182,19 +184,23 @@ def frameConnectionDerivativeBilinearLinear
       map_add' := by
         intro first second
         simp [inner_add_right]
+        ring
       map_smul' := by
         intro scalar normal
-        simp [inner_smul_right] }
+        simp [inner_smul_right]
+        ring }
   map_add' := by
     intro first second
     apply LinearMap.ext
     intro normal
     simp [inner_add_left]
+    ring
   map_smul' := by
     intro scalar normal
     apply LinearMap.ext
     intro secondNormal
     simp [inner_smul_left]
+    ring
 
 /-- Continuous bilinear derivative form. -/
 def frameConnectionDerivativeBilinear
@@ -278,7 +284,7 @@ theorem frameNormalConnectionDerivative_add_second
   intro firstNormal
   apply ext_inner_right ℝ
   intro secondNormal
-  simp [inner_add_left, inner_add_right]
+  simp [inner_add_left]
   ring
 
 /-- Homogeneity in the second tangent direction. -/
@@ -291,7 +297,7 @@ theorem frameNormalConnectionDerivative_smul_second
   intro firstNormal
   apply ext_inner_right ℝ
   intro secondNormal
-  simp [inner_smul_left, inner_smul_right]
+  simp [inner_smul_left]
   ring
 
 /-- Additivity in the first tangent direction. -/
