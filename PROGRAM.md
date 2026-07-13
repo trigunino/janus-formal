@@ -42,8 +42,8 @@ A theorem about an abstract closure structure is not evidence that its physical 
 | **D10** | Quillen/determinant-line and anomaly interfaces | quantization/anomaly layer | `FundamentalGeometryD10QuillenAnomaly` |
 | **D11** | natural bundles, symbols and jet interfaces | gate collection; no stable standalone head yet | `FundamentalGeometryD11NaturalImmersionOperators/Gates/` |
 | **P0/P-A/P-B/P-C** | no-go, relative action selection, anomaly filter and Helmholtz reconstruction | variational core | `FundamentalGeometryPVariationalPrinciple` |
-| **P-D** | pointwise invariant pairings, invariant scalar algebra and global coupling modules | representation-theory filter with corrected globalization | `FundamentalGeometryPEInvariantPairings` |
-| **P-E** | locality, finite jets, equivariant evaluators and holonomic composition | corrected local natural-operator category | `FundamentalGeometryPEJetUniversality` |
+| **P-D** | pointwise invariant pairings, isotropy strata, invariant scalar algebra and global coupling modules | representation-theory filter with corrected globalization | `FundamentalGeometryPEInvariantPairings` |
+| **P-E** | locality, finite jets, action groupoids, holonomic composition and low-order normal forms | corrected local natural-operator and structured-jet program | `FundamentalGeometryPEJetUniversality` |
 | **P-F** | compatibility-map pullbacks, Helmholtz and Noether identities | bridge from geometry to a variational complex | `FundamentalGeometryPFCompatibilityHelmholtz` |
 | **A** | quantum world-volume and dimensionful scale generation | absolute-scale candidate | `WorldvolumeQuantumAlpha` |
 | **B** | nonlinear bimetric action and PT junction | parent/classical action candidate | `NonlinearBimetricJunctionAlpha` |
@@ -57,8 +57,9 @@ D0/D8 global decorated geometry
   -> D2/D7 spectral constraints
   -> D9/D11 natural bundles, symbols and local operators
   -> P-E regular-local finite-jet presentation
-  -> structured-jet groupoid, descent and holonomic morphism category
-  -> P-D pointwise invariant spaces plus invariant coefficient modules
+  -> action-groupoid and holonomic morphism cores
+  -> geometric structured-jet base and normal-form theorem
+  -> P-D isotropy-stratified invariant spaces and coefficient modules
   -> P-F compatibility-map pullback and Noether bridge
   -> P-C nonlinear Helmholtz / variational cohomology
   -> P-B anomaly consistency
@@ -99,20 +100,24 @@ P-A  action uniqueness is relative to Hessian, critical point, normalization
 P-B  anomaly cancellation is an independent consistency/discrete filter
 P-C  Helmholtz reconstructs an action class from a compatible Euler source
 P-D  pointwise invariant Hom-spaces classify fiberwise pairing shapes;
-     global pairings form modules over invariant scalar functions
+     global pairings form modules over invariant scalar functions;
+     ranks may jump between isotropy strata
 P-E  regular local natural operators are locally smooth finite-jet evaluators;
-     categorical composition uses holonomic prolongation
+     categorical composition uses holonomic prolongation;
+     low-order orbit reductions isolate normal and curvature data
 P-F  a self-adjoint target pairing pulls back to Helmholtz/Noether structure
 ```
 
-The ordinary natural/gauge-natural categorical theorem is classical, but the Janus specialization remains conditional on a structured SpinC-immersion jet groupoid, effective descent and a jet-normal-form theorem. Pointwise multiplicity one does not imply one constant global coupling without controlling the invariant scalar coefficient algebra.
+The ordinary natural/gauge-natural categorical theorem is classical. The repository now proves the abstract action-groupoid laws, a normalized immersion second-jet orbit theorem, an abelian connection one-jet curvature theorem and a finite isotropy-jump obstruction. The Janus specialization remains conditional on the actual smooth structured SpinC-immersion jet base, its symmetry action, effective descent and a higher-order jet-isomorphism theorem. Pointwise multiplicity one does not imply one constant global coupling without controlling the invariant scalar coefficient algebra and extension across isotropy strata.
 
 The shortest honest route is:
 
 ```text
 actual Janus category and field space
-  -> adapted structured-jet groupoid and finite-order descent
-  -> holonomic equivariant operator category
+  -> adapted structured-jet base and finite jet symmetry action
+  -> low-order geometric normal forms and residual stabilizers
+  -> higher-order jet-isomorphism / integrability theorem
+  -> effective descent and holonomic equivariant operator category
   -> isotropy-stratified invariant spaces and coefficient modules
   -> concrete compatible Euler family
   -> nonlinear Helmholtz + Noether + variational cohomology
@@ -130,9 +135,10 @@ actual Janus category and field space
 5. `docs/program_p_variational_principle.md`
 6. `docs/program_pe_jet_universality_proof.md`
 7. `docs/program_pe_categorical_jet_equivalence.md`
-8. `docs/program_pe_invariant_pairings.md`
-9. `docs/program_pd_global_pairing_modules.md`
-10. `docs/janus_branch_registry.md`
+8. `docs/program_pe_structured_jet_reduction.md`
+9. `docs/program_pe_invariant_pairings.md`
+10. `docs/program_pd_global_pairing_modules.md`
+11. `docs/janus_branch_registry.md`
 
 ## Repository rule
 
