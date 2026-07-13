@@ -40,7 +40,7 @@ def reduceLowOrderJet
 /-- Canonical representative of reduced data: zero tangential immersion
 quadratic term, zero connection value, and derivative equal to one half of the
 alternating curvature tensor. -/
-def reducedSlice
+noncomputable def reducedSlice
     {Tangent : Type u}
     {Normal : Type v}
     [Zero Tangent]
@@ -135,7 +135,7 @@ def IsCombinedInvariant
       observable first = observable second
 
 /-- Restriction of an observable to the canonical `(B,F)` slice. -/
-def reducedObservable
+noncomputable def reducedObservable
     {Tangent : Type u}
     {Normal : Type v}
     {Target : Type w}
