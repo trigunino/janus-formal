@@ -16,8 +16,9 @@ The original strong conjecture is corrected in five ways:
 
 The head also contains exact algebraic cores for an action groupoid, the
 second-immersion-jet normal slice, the abelian connection one-jet curvature
-slice, and their universal invariant-factorization properties. These do not yet
-construct the actual smooth Janus structured-jet space.
+slice, their universal invariant-factorization properties, and residual
+symmetry descent to the reduced data. These do not yet construct the actual
+smooth Janus structured-jet space.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -29,6 +30,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondJetNormalForm
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionJetNormalForm
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderJetQuotientUniversality
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusResidualJetSymmetry
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -48,6 +50,7 @@ structure ProgramStatus where
   abstractSecondJetNormalFormProved : Prop
   abstractAbelianConnectionNormalFormProved : Prop
   lowOrderInvariantQuotientUniversalityProved : Prop
+  abstractResidualEquivariantReductionProved : Prop
   naiveRepresentationCategoryCorrected : Prop
   smoothNonpolynomialCounterexampleProved : Prop
   polynomialClaimCorrected : Prop
@@ -61,8 +64,8 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core, including low-order orbit-reduction and
-universal factorization models. -/
+/-- Formal/logical theorem core, including low-order orbit reduction, universal
+factorization and residual-equivariance models. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -76,6 +79,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.abstractSecondJetNormalFormProved /\
   s.abstractAbelianConnectionNormalFormProved /\
   s.lowOrderInvariantQuotientUniversalityProved /\
+  s.abstractResidualEquivariantReductionProved /\
   s.naiveRepresentationCategoryCorrected /\
   s.smoothNonpolynomialCounterexampleProved /\
   s.polynomialClaimCorrected /\
@@ -113,8 +117,9 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The quotient universal properties still require the residual tangent,
-normal and SpinC frame actions before invariant theory can be applied. -/
+/-- The abstract residual-equivariance theorem still requires the concrete
+tangent, normal and SpinC frame representations before invariant theory can be
+applied to Janus jets. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
