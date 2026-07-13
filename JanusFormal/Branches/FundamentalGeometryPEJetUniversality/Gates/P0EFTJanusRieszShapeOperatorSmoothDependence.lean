@@ -39,7 +39,10 @@ def continuousIIPairedBilinear
       map_add' := by
         intro first second
         ext y
-        simp
+        change
+          ⟪normal, form first y + form second y⟫_ℝ =
+            ⟪normal, form first y⟫_ℝ + ⟪normal, form second y⟫_ℝ
+        exact inner_add_right _ _ _
       map_smul' := by
         intro scalar x
         ext y
@@ -89,6 +92,10 @@ theorem continuousIIRieszShapeOperator_add_normal
   intro x
   apply ext_inner_right ℝ
   intro y
+  change
+    ⟪continuousIIRieszShapeOperator form (first + second) x, y⟫_ℝ =
+      ⟪continuousIIRieszShapeOperator form first x +
+          continuousIIRieszShapeOperator form second x, y⟫_ℝ
   rw [continuousIIRieszShapeOperator_inner, inner_add_left,
     continuousIIRieszShapeOperator_inner,
     continuousIIRieszShapeOperator_inner, inner_add_right]
@@ -104,6 +111,9 @@ theorem continuousIIRieszShapeOperator_smul_normal
   intro x
   apply ext_inner_right ℝ
   intro y
+  change
+    ⟪continuousIIRieszShapeOperator form (scalar • normal) x, y⟫_ℝ =
+      ⟪scalar • continuousIIRieszShapeOperator form normal x, y⟫_ℝ
   rw [continuousIIRieszShapeOperator_inner, inner_smul_left,
     continuousIIRieszShapeOperator_inner, inner_smul_right]
   rfl
@@ -120,10 +130,17 @@ theorem continuousIIRieszShapeOperator_add_form
   intro x
   apply ext_inner_right ℝ
   intro y
+  change
+    ⟪continuousIIRieszShapeOperator (first + second) normal x, y⟫_ℝ =
+      ⟪continuousIIRieszShapeOperator first normal x +
+          continuousIIRieszShapeOperator second normal x, y⟫_ℝ
   rw [continuousIIRieszShapeOperator_inner, inner_add_left,
     continuousIIRieszShapeOperator_inner,
     continuousIIRieszShapeOperator_inner]
-  rfl
+  change
+    ⟪first x y + second x y, normal⟫_ℝ =
+      ⟪first x y, normal⟫_ℝ + ⟪second x y, normal⟫_ℝ
+  exact inner_add_left _ _ _
 
 /-- Homogeneity in the second-fundamental-form coefficient. -/
 theorem continuousIIRieszShapeOperator_smul_form
@@ -137,9 +154,14 @@ theorem continuousIIRieszShapeOperator_smul_form
   intro x
   apply ext_inner_right ℝ
   intro y
+  change
+    ⟪continuousIIRieszShapeOperator (scalar • form) normal x, y⟫_ℝ =
+      ⟪scalar • continuousIIRieszShapeOperator form normal x, y⟫_ℝ
   rw [continuousIIRieszShapeOperator_inner, inner_smul_left,
     continuousIIRieszShapeOperator_inner]
-  rfl
+  change
+    ⟪scalar • form x y, normal⟫_ℝ = scalar * ⟪form x y, normal⟫_ℝ
+  exact inner_smul_left _ _ _
 
 /-- The Riesz construction is bilinear in `(II,xi)` before adding joint
 continuity. -/
@@ -193,10 +215,17 @@ theorem continuousIIRieszShape_joint_contDiff
           ContinuousSecondFundamentalForm
               (Tangent := Tangent) (Normal := Normal) × Normal =>
         continuousIIRieszShapeOperator point.1 point.2) := by
-  exact
-    ((continuousIIRieszShapeContinuousBilinear
-        (Tangent := Tangent) (Normal := Normal)).contDiff.comp contDiff_fst).clm_apply
-      contDiff_snd
+  have hMap :
+      ContDiff ℝ ∞
+        (fun point :
+            ContinuousSecondFundamentalForm
+                (Tangent := Tangent) (Normal := Normal) × Normal =>
+          continuousIIRieszShapeContinuousBilinear
+            (Tangent := Tangent) (Normal := Normal) point.1) :=
+    (continuousIIRieszShapeContinuousBilinear
+      (Tangent := Tangent) (Normal := Normal)).contDiff.comp contDiff_fst
+  simpa only [continuousIIRieszShapeContinuousBilinear_apply] using
+    hMap.clm_apply contDiff_snd
 
 /-- Smooth background families of coefficients and normal parameters produce a
 smooth family of shape operators, as long as the tangent and normal models are
@@ -212,10 +241,12 @@ theorem continuousIIRieszShape_family_contDiff
     (hNormal : ContDiff ℝ ∞ normal) :
     ContDiff ℝ ∞
       (fun base => continuousIIRieszShapeOperator (form base) (normal base)) := by
+  have hPair :
+      ContDiff ℝ ∞ (fun base : Base => (form base, normal base)) :=
+    hForm.prodMk hNormal
   exact
     (continuousIIRieszShape_joint_contDiff
-      (Tangent := Tangent) (Normal := Normal)).comp
-        (hForm.prodMk hNormal)
+      (Tangent := Tangent) (Normal := Normal)).comp hPair
 
 /-- Convert the earlier finite bilinear model to the continuous coefficient
 space. -/
