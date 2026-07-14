@@ -142,6 +142,7 @@ jobs:
           if-no-files-found: error
 
   python-audit:
+    needs: lean-target
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
