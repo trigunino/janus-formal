@@ -149,7 +149,9 @@ theorem adjointFrameValue_hasFDerivAt
   change HasFDerivAt
     (fun point => adjointMap (frame.field point))
     (adjointMap.comp (frame.first base)) base
-  exact hOuter.comp base (frame.field_hasFDerivAt base)
+  exact hOuter.comp (f := frame.field)
+    (g := fun operator => adjointMap operator) base
+    (frame.field_hasFDerivAt base)
 
 /-- The first adjoint derivative has the adjointed second frame derivative. -/
 theorem adjointFrameFirst_hasFDerivAt
@@ -168,7 +170,9 @@ theorem adjointFrameFirst_hasFDerivAt
   change HasFDerivAt
     (fun point => postAdjoint (frame.first point))
     (postAdjoint.comp (frame.second base)) base
-  exact hOuter.comp base (frame.first_hasFDerivAt base)
+  exact hOuter.comp (f := frame.first)
+    (g := fun derivative => postAdjoint derivative) base
+    (frame.first_hasFDerivAt base)
 
 /-- First product-rule differentiation of `e₁†e₂`. -/
 theorem canonicalTransitionField_hasFDerivAt
@@ -201,7 +205,9 @@ theorem canonicalTransitionFirst_hasFDerivAt
   have hRightHead : HasFDerivAt
       (fun point => composition (adjointFrameValue first point))
       (composition.comp (adjointFrameFirst first base)) base :=
-    hComposition.comp base (adjointFrameValue_hasFDerivAt first base)
+    hComposition.comp (f := adjointFrameValue first)
+      (g := fun operator => composition operator) base
+      (adjointFrameValue_hasFDerivAt first base)
   have hRight := hRightHead.clm_comp (second.first_hasFDerivAt base)
   have hFlip : HasFDerivAt
       (fun operator : Normal →L[ℝ] Ambient => composition.flip operator)
@@ -210,7 +216,9 @@ theorem canonicalTransitionFirst_hasFDerivAt
   have hLeftHead : HasFDerivAt
       (fun point => composition.flip (second.field point))
       (composition.flip.comp (second.first base)) base :=
-    hFlip.comp base (second.field_hasFDerivAt base)
+    hFlip.comp (f := second.field)
+      (g := fun operator => composition.flip operator) base
+      (second.field_hasFDerivAt base)
   have hLeft := hLeftHead.clm_comp
     (adjointFrameFirst_hasFDerivAt first base)
   change HasFDerivAt
