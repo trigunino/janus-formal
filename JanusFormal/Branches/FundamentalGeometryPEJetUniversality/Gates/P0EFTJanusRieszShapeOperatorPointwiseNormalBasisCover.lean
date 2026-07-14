@@ -28,7 +28,9 @@ variable [LocallyFiniteOrderBot κ] [WellFoundedLT κ]
 each center supplies only one orthonormal normal basis used as a constant seed
 family for its own local chart. -/
 structure PointwiseNormalBasisData
-    (Base : Type u) (Ambient : Type v) (ι κ : Type*) where
+    (Base : Type u) (Ambient : Type v) (ι κ : Type*)
+    [NormedAddCommGroup Base] [NormedSpace ℝ Base]
+    [NormedAddCommGroup Ambient] [InnerProductSpace ℝ Ambient] where
   tangentFrame : ι → Base → Ambient
   tangent_contDiff : ∀ i, ContDiff ℝ ∞ (tangentFrame i)
   tangent_orthonormal : ∀ base,
@@ -59,7 +61,7 @@ theorem tangentProjector_normalBasisAt_center
   unfold tangentProjector
   apply Finset.sum_eq_zero
   intro i hi
-  rw [data.tangent_normal_orthogonal center i k, zero_smul]
+  simp [data.tangent_normal_orthogonal center i k]
 
 /-- Normal projection fixes each pointwise normal basis vector at its chart
 center. -/
