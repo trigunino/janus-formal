@@ -64,7 +64,7 @@ concurrency:
 env:
   # Keep only the current failing/new gate here. Clear this string once it is
   # covered by the full build and no longer needs a fast diagnostic pass.
-  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
+  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
 
 jobs:
   lean:
@@ -151,6 +151,7 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorCanonicalProjectedSeedAssembly \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
