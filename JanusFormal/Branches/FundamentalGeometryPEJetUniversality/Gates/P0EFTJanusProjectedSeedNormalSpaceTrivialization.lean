@@ -274,8 +274,8 @@ theorem projectedSeedActualJanusLocalJetData_normalQuadratic_apply
         hTangentBasis basisData base))
     (first second : Tangent) :
     (projectedSeedActualJanusLocalJetData tangentBasis hTangentBasis
-      normalBasis hNormalBasis basisData hDimension center base hValid data)
-        .normalQuadratic first second =
+      normalBasis hNormalBasis basisData hDimension center base hValid data).normalQuadratic
+        first second =
       projectedSeedNormalTrivialization tangentBasis hTangentBasis
         normalBasis hNormalBasis basisData hDimension center base hValid
         (data.normalQuadratic first second) := by
@@ -298,8 +298,8 @@ theorem projectedSeedActualJanusLocalJetData_normalQuadratic_eq_geometric
         hTangentBasis basisData base))
     (first second : Tangent) :
     (projectedSeedActualJanusLocalJetData tangentBasis hTangentBasis
-      normalBasis hNormalBasis basisData hDimension center base hValid data)
-        .normalQuadratic first second =
+      normalBasis hNormalBasis basisData hDimension center base hValid data).normalQuadratic
+        first second =
       projectedSeedNormalTrivialization tangentBasis hTangentBasis
         normalBasis hNormalBasis basisData hDimension center base hValid
         (P0EFTJanusSecondFundamentalFormJet.secondFundamentalForm
@@ -332,8 +332,8 @@ theorem projectedSeedActualJanusLocalJetData_reduced_curvature_apply
         hTangentBasis basisData base))
     (first second : Tangent) :
     (projectedSeedActualJanusLocalJetData tangentBasis hTangentBasis
-      normalBasis hNormalBasis basisData hDimension center base hValid data)
-        .toReducedJet.2 first second =
+      normalBasis hNormalBasis basisData hDimension center base hValid data).toReducedJet.2
+        first second =
       data.connectionDerivative first second -
         data.connectionDerivative second first := by
   rfl
