@@ -56,6 +56,7 @@ theorem projectedSeedSynthesisCLM_eq_sum
       projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base := by
   apply ContinuousLinearMap.ext
   intro vector
+  unfold projectedSeedSynthesisCLM projectedSeedSynthesisLinearMap
   rw [← coordinateBasis.sum_equivFun vector]
   simp [projectedSeedSynthesisSumCLM, basisRankOneSynthesisCLM]
 
