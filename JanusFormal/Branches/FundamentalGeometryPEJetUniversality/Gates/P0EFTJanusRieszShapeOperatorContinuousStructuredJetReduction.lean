@@ -12,7 +12,6 @@ noncomputable section
 open Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusConcreteSecondJetChainRule
-open P0EFTJanusConcreteAbelianConnectionJet
 open P0EFTJanusAdaptedOrthogonalSplitting
 open P0EFTJanusSecondFundamentalFormJet
 open P0EFTJanusLowOrderStructuredBackground
@@ -98,11 +97,11 @@ theorem continuousDerivativeFlip_apply
       derivative second first := by
   simp [continuousDerivativeFlip]
 
-/-- Continuous-linear antisymmetrization `dA ↦ dA-dAᵀ`. -/
 def continuousCurvatureFromDerivative :
     ContinuousConnectionDerivative (Tangent := Tangent) →L[ℝ]
       ContinuousConnectionDerivative (Tangent := Tangent) :=
-  ContinuousLinearMap.id ℝ _ -
+  ContinuousLinearMap.id ℝ
+      (ContinuousConnectionDerivative (Tangent := Tangent)) -
     continuousDerivativeFlip (Tangent := Tangent)
 
 @[simp]
@@ -155,8 +154,14 @@ theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderReduction
         (Tangent := Tangent) (Normal := Normal)) := by
-  exact (smoothLowOrderReduction
-    (Tangent := Tangent) (Normal := Normal)).contDiff
+  change ContDiff ℝ ∞
+    (fun jet : SmoothLowOrderStructuredJet
+        (Tangent := Tangent) (Normal := Normal) =>
+      (structuredNormalQuadraticProjection
+          (Tangent := Tangent) (Normal := Normal) jet,
+        structuredGaugeCurvatureProjection
+          (Tangent := Tangent) (Normal := Normal) jet))
+  fun_prop
 
 def forgetContinuousLowOrderStructuredJet
     (jet : SmoothLowOrderStructuredJet
@@ -324,9 +329,7 @@ theorem ContinuousStructuredJetRieszFamilyData.reducedJet_contDiff
   change ContDiff ℝ ∞
     (fun base => smoothLowOrderReduction
       (Tangent := Tangent) (Normal := Normal) (data.structuredJet base))
-  exact (smoothLowOrderReduction_contDiff
-    (Tangent := Tangent) (Normal := Normal)).fun_comp
-      data.structuredJet_contDiff
+  fun_prop
 
 theorem ContinuousStructuredJetRieszFamilyData.reducedJet_geometric
     (data : ContinuousStructuredJetRieszFamilyData
