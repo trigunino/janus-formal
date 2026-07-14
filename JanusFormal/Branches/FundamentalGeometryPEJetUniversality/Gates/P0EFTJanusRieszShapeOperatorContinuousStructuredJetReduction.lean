@@ -1,5 +1,4 @@
 import Mathlib
-import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalFormJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
 
 namespace JanusFormal
@@ -11,11 +10,8 @@ noncomputable section
 
 open Module
 open scoped ContDiff InnerProductSpace
-open P0EFTJanusConcreteSecondJetChainRule
-open P0EFTJanusAdaptedOrthogonalSplitting
-open P0EFTJanusSecondFundamentalFormJet
+open P0EFTJanusConcreteAbelianConnectionJet
 open P0EFTJanusLowOrderStructuredBackground
-open P0EFTJanusRieszShapeOperatorSmoothDependence
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
 open P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
 
@@ -99,10 +95,12 @@ theorem continuousDerivativeFlip_apply
 
 def continuousCurvatureFromDerivative :
     ContinuousConnectionDerivative (Tangent := Tangent) →L[ℝ]
-      ContinuousConnectionDerivative (Tangent := Tangent) :=
-  ContinuousLinearMap.id ℝ
-      (ContinuousConnectionDerivative (Tangent := Tangent)) -
-    continuousDerivativeFlip (Tangent := Tangent)
+      ContinuousConnectionDerivative (Tangent := Tangent) := by
+  let identity :
+      ContinuousConnectionDerivative (Tangent := Tangent) →L[ℝ]
+        ContinuousConnectionDerivative (Tangent := Tangent) :=
+    ContinuousLinearMap.id ℝ _
+  exact identity - continuousDerivativeFlip (Tangent := Tangent)
 
 @[simp]
 theorem continuousCurvatureFromDerivative_apply
@@ -154,14 +152,8 @@ theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderReduction
         (Tangent := Tangent) (Normal := Normal)) := by
-  change ContDiff ℝ ∞
-    (fun jet : SmoothLowOrderStructuredJet
-        (Tangent := Tangent) (Normal := Normal) =>
-      (structuredNormalQuadraticProjection
-          (Tangent := Tangent) (Normal := Normal) jet,
-        structuredGaugeCurvatureProjection
-          (Tangent := Tangent) (Normal := Normal) jet))
-  fun_prop
+  exact (smoothLowOrderReduction
+    (Tangent := Tangent) (Normal := Normal)).contDiff
 
 def forgetContinuousLowOrderStructuredJet
     (jet : SmoothLowOrderStructuredJet
@@ -186,7 +178,7 @@ def continuousReductionLiftsAlgebraic
     simp [forgetContinuousLowOrderStructuredJet, reduceLowOrderJet]
   gaugeCurvature_apply := by
     intro first second
-    simp [forgetContinuousLowOrderStructuredJet, reduceLowOrderJet, curvature]
+    rfl
 
 theorem smoothLowOrderReduction_isGeometric
     (jet : SmoothLowOrderStructuredJet
@@ -199,95 +191,6 @@ theorem smoothLowOrderReduction_isGeometric
     simpa using hJet.2 first second
   · intro first second
     simp
-
-section ConnectionCorrectedBridge
-
-variable {Ambient : Type x}
-variable [NormedAddCommGroup Ambient] [InnerProductSpace ℝ Ambient]
-variable [FiniteDimensional ℝ Ambient]
-
-abbrev ContinuousAmbientQuadratic :=
-  Tangent →L[ℝ] Tangent →L[ℝ] Ambient
-
-abbrev SmoothConnectionCorrectedSecondJet :=
-  (ContinuousAmbientQuadratic
-      (Tangent := Tangent) (Ambient := Ambient) ×
-    ContinuousAmbientQuadratic
-      (Tangent := Tangent) (Ambient := Ambient)) ×
-    ContinuousTangentialQuadratic (Tangent := Tangent)
-
-def forgetContinuousConnectionCorrectedSecondJet
-    (jet : SmoothConnectionCorrectedSecondJet
-      (Tangent := Tangent) (Ambient := Ambient)) :
-    ConnectionCorrectedSecondJet Tangent Ambient where
-  rawSecond first second := jet.1.1 first second
-  ambientConnection first second := jet.1.2 first second
-  sourceConnection first second := jet.2 first second
-
-def continuousCovariantSecondDerivative
-    (derivative : Tangent →ₗᵢ[ℝ] Ambient)
-    (jet : SmoothConnectionCorrectedSecondJet
-      (Tangent := Tangent) (Ambient := Ambient)) :
-    Tangent → Tangent → Ambient :=
-  fun first second =>
-    jet.1.1 first second + jet.1.2 first second -
-      derivative (jet.2 first second)
-
-theorem continuousCovariantSecondDerivative_eq_pointwise
-    (derivative : Tangent →ₗᵢ[ℝ] Ambient)
-    (jet : SmoothConnectionCorrectedSecondJet
-      (Tangent := Tangent) (Ambient := Ambient)) :
-    continuousCovariantSecondDerivative derivative jet =
-      covariantSecondDerivative derivative
-        (forgetContinuousConnectionCorrectedSecondJet jet) := by
-  rfl
-
-structure ContinuousConnectionCorrectedSecondJetLift
-    (derivative : Tangent →ₗᵢ[ℝ] Ambient) where
-  jet : SmoothConnectionCorrectedSecondJet
-    (Tangent := Tangent) (Ambient := Ambient)
-  secondFundamental : ContinuousSecondFundamentalForm
-    (Tangent := Tangent)
-    (Normal := P0EFTJanusAdaptedOrthogonalSplitting.NormalSpace derivative)
-  secondFundamental_apply :
-    ∀ first second,
-      secondFundamental first second =
-        normalProjection derivative
-          (continuousCovariantSecondDerivative derivative jet first second)
-  rawSecond_symmetric :
-    ∀ first second, jet.1.1 first second = jet.1.1 second first
-  ambientConnection_symmetric :
-    ∀ first second, jet.1.2 first second = jet.1.2 second first
-  sourceConnection_symmetric :
-    ∀ first second, jet.2 first second = jet.2 second first
-
-theorem ContinuousConnectionCorrectedSecondJetLift.secondFundamental_eq_pointwise
-    (derivative : Tangent →ₗᵢ[ℝ] Ambient)
-    (data : ContinuousConnectionCorrectedSecondJetLift derivative)
-    (first second : Tangent) :
-    data.secondFundamental first second =
-      secondFundamentalForm derivative
-        (forgetContinuousConnectionCorrectedSecondJet data.jet)
-        first second := by
-  rw [data.secondFundamental_apply first second]
-  rfl
-
-theorem ContinuousConnectionCorrectedSecondJetLift.secondFundamental_symmetric
-    (derivative : Tangent →ₗᵢ[ℝ] Ambient)
-    (data : ContinuousConnectionCorrectedSecondJetLift derivative) :
-    ∀ first second,
-      data.secondFundamental first second =
-        data.secondFundamental second first := by
-  intro first second
-  rw [data.secondFundamental_apply first second,
-    data.secondFundamental_apply second first]
-  apply congrArg (normalProjection derivative)
-  simp only [continuousCovariantSecondDerivative]
-  rw [data.rawSecond_symmetric first second,
-    data.ambientConnection_symmetric first second,
-    data.sourceConnection_symmetric first second]
-
-end ConnectionCorrectedBridge
 
 variable {Base : Type w} {Ambient : Type x}
 variable [NormedAddCommGroup Base] [NormedSpace ℝ Base]
@@ -326,10 +229,9 @@ theorem ContinuousStructuredJetRieszFamilyData.reducedJet_contDiff
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞ data.reducedJet := by
-  change ContDiff ℝ ∞
-    (fun base => smoothLowOrderReduction
-      (Tangent := Tangent) (Normal := Normal) (data.structuredJet base))
-  fun_prop
+  exact (smoothLowOrderReduction_contDiff
+    (Tangent := Tangent) (Normal := Normal)).comp
+      data.structuredJet_contDiff
 
 theorem ContinuousStructuredJetRieszFamilyData.reducedJet_geometric
     (data : ContinuousStructuredJetRieszFamilyData
@@ -381,124 +283,12 @@ theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_via_atl
     (AtlasTangent := AtlasTangent) (AtlasNormal := AtlasNormal)
     data.toSmoothReducedJetRieszFamilyData
 
-structure ContinuousStructuredJetComponentFamilyData where
-  basisData : PointwiseNormalBasisData Base Ambient ι κ
-  ambientDimension :
-    Fintype.card ι + Fintype.card κ = finrank ℝ Ambient
-  tangentBasis : Basis ι ℝ Tangent
-  tangentBasis_orthonormal : Orthonormal ℝ tangentBasis
-  normalBasis : Basis κ ℝ Normal
-  normalBasis_orthonormal : Orthonormal ℝ normalBasis
-  tangentialQuadratic : Base → ContinuousTangentialQuadratic
-    (Tangent := Tangent)
-  normalQuadratic : Base → ContinuousSecondFundamentalForm
-    (Tangent := Tangent) (Normal := Normal)
-  connectionValue : Base → ContinuousConnectionValue
-    (Tangent := Tangent)
-  connectionDerivative : Base → ContinuousConnectionDerivative
-    (Tangent := Tangent)
-  physicalNormal : Base → Normal
-  tangentialQuadratic_contDiff : ContDiff ℝ ∞ tangentialQuadratic
-  normalQuadratic_contDiff : ContDiff ℝ ∞ normalQuadratic
-  connectionValue_contDiff : ContDiff ℝ ∞ connectionValue
-  connectionDerivative_contDiff : ContDiff ℝ ∞ connectionDerivative
-  physicalNormal_contDiff : ContDiff ℝ ∞ physicalNormal
-  tangentialQuadratic_symmetric :
-    ∀ base first second,
-      tangentialQuadratic base first second =
-        tangentialQuadratic base second first
-  normalQuadratic_symmetric :
-    ∀ base first second,
-      normalQuadratic base first second =
-        normalQuadratic base second first
-
-def ContinuousStructuredJetComponentFamilyData.structuredJet
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    Base → SmoothLowOrderStructuredJet
-      (Tangent := Tangent) (Normal := Normal) :=
-  fun base =>
-    ((data.tangentialQuadratic base, data.normalQuadratic base),
-      (data.connectionValue base, data.connectionDerivative base))
-
-theorem ContinuousStructuredJetComponentFamilyData.structuredJet_contDiff
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    ContDiff ℝ ∞ data.structuredJet := by
-  exact
-    (data.tangentialQuadratic_contDiff.prodMk
-      data.normalQuadratic_contDiff).prodMk
-        (data.connectionValue_contDiff.prodMk
-          data.connectionDerivative_contDiff)
-
-theorem ContinuousStructuredJetComponentFamilyData.structuredJet_geometric
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    ∀ base, (data.structuredJet base).IsGeometric := by
-  intro base
-  exact ⟨data.tangentialQuadratic_symmetric base,
-    data.normalQuadratic_symmetric base⟩
-
-def ContinuousStructuredJetComponentFamilyData.toContinuousStructuredJetRieszFamilyData
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    ContinuousStructuredJetRieszFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ) where
-  basisData := data.basisData
-  ambientDimension := data.ambientDimension
-  tangentBasis := data.tangentBasis
-  tangentBasis_orthonormal := data.tangentBasis_orthonormal
-  normalBasis := data.normalBasis
-  normalBasis_orthonormal := data.normalBasis_orthonormal
-  structuredJet := data.structuredJet
-  physicalNormal := data.physicalNormal
-  structuredJet_contDiff := data.structuredJet_contDiff
-  physicalNormal_contDiff := data.physicalNormal_contDiff
-  structuredJet_geometric := data.structuredJet_geometric
-
-def ContinuousStructuredJetComponentFamilyData.physicalOperator
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    Base → Tangent →L[ℝ] Tangent :=
-  (SmoothReducedJetRieszFamilyData.toGlobalRieszCoefficientData
-    (ContinuousStructuredJetRieszFamilyData.toSmoothReducedJetRieszFamilyData
-      data.toContinuousStructuredJetRieszFamilyData)).physicalOperator
-
-theorem ContinuousStructuredJetComponentFamilyData.physicalOperator_contDiff_direct
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    ContDiff ℝ ∞ data.physicalOperator := by
-  unfold ContinuousStructuredJetComponentFamilyData.physicalOperator
-  exact ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_direct
-    data.toContinuousStructuredJetRieszFamilyData
-
-theorem ContinuousStructuredJetComponentFamilyData.physicalOperator_contDiff_via_atlas
-    {AtlasTangent AtlasNormal : Type y}
-    (data : ContinuousStructuredJetComponentFamilyData
-      (Base := Base) (Tangent := Tangent) (Normal := Normal)
-      (Ambient := Ambient) (ι := ι) (κ := κ)) :
-    ContDiff ℝ ∞ data.physicalOperator := by
-  unfold ContinuousStructuredJetComponentFamilyData.physicalOperator
-  exact ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_via_atlas
-    (AtlasTangent := AtlasTangent) (AtlasNormal := AtlasNormal)
-    data.toContinuousStructuredJetRieszFamilyData
-
 structure ContinuousStructuredJetReductionStatus where
-  continuousImmersionJetConstructed : Prop
-  continuousConnectionJetConstructed : Prop
+  continuousStructuredJetModelConstructed : Prop
   continuousCurvatureProjectionConstructed : Prop
   continuousReductionMapConstructed : Prop
   reductionMapSmooth : Prop
   algebraicReductionCompatibilityProved : Prop
-  connectionCorrectedLiftConnected : Prop
-  componentFamilyPackaged : Prop
   geometricityPreserved : Prop
   smoothFamilyReductionProved : Prop
   globalRieszSmoothnessDerived : Prop
@@ -506,14 +296,11 @@ structure ContinuousStructuredJetReductionStatus where
 
 def continuousStructuredJetReductionClosed
     (s : ContinuousStructuredJetReductionStatus) : Prop :=
-  s.continuousImmersionJetConstructed ∧
-  s.continuousConnectionJetConstructed ∧
+  s.continuousStructuredJetModelConstructed ∧
   s.continuousCurvatureProjectionConstructed ∧
   s.continuousReductionMapConstructed ∧
   s.reductionMapSmooth ∧
   s.algebraicReductionCompatibilityProved ∧
-  s.connectionCorrectedLiftConnected ∧
-  s.componentFamilyPackaged ∧
   s.geometricityPreserved ∧
   s.smoothFamilyReductionProved ∧
   s.globalRieszSmoothnessDerived ∧
@@ -524,7 +311,7 @@ theorem missing_genuine_janus_jet_family_blocks_closure
     (hMissing : Not s.genuineJanusJetFamilyConstructed) :
     Not (continuousStructuredJetReductionClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.2.2.2.2.2.2.2.2.2
+  exact hMissing hClosed.2.2.2.2.2.2.2.2
 
 end
 
