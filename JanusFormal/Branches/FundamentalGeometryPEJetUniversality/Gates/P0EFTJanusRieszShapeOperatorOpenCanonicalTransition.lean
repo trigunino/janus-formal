@@ -105,7 +105,7 @@ def openCanonicalFrameTransition
     apply (openAdjointTransitionCLM_contDiffOn second first).congr
     intro base hValid
     change
-      (openCanonicalFrameTransitionValue first second hRange base).symm
+      ((openCanonicalFrameTransitionValue first second hRange base).symm)
           .toContinuousLinearEquiv.toContinuousLinearMap =
         openAdjointTransitionCLM second first base
     rw [openCanonicalFrameTransitionValue]
@@ -144,7 +144,7 @@ theorem openCanonicalFrameTransition_spec
       (openCanonicalFrameTransitionValue first second hRange base vector) =
     second.frame base vector
   rw [openCanonicalFrameTransitionValue]
-  simp only [hValid, ↓reduceIte]
+  simp only [hValid]
   exact normalFrameTransition_spec
     (first.frame base) (second.frame base) (hRange base hValid) vector
 
