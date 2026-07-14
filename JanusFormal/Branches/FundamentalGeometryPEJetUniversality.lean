@@ -28,14 +28,15 @@ proves smoothness after passage through smooth moving tangent/normal frame
 trivializations. It constructs the curvature of a local metric normal-connection
 one-jet, derives the Ricci normal equation from the curvature of the adapted
 block connection, extracts the connection coefficients and their first
-derivatives from an orthonormal normal-frame two-jet, proves the inhomogeneous
-coefficient law `omega' = g⁻¹ omega g + g⁻¹ dg`, and proves homogeneous curvature
-covariance `R' = g⁻¹ R g` from the Maurer--Cartan identity. The remaining
-geometric locks are extraction of the gauge and frame jets from smooth overlap
-data with ambient covariant derivatives, variable overlap compatibility, varying
-metric and subspace dependence on the structured-jet base, determinant-line
-connection identification, higher-dimensional Clifford Spin covers, global
-principal-bundle packaging and characteristic-class matching.
+derivatives from an orthonormal normal-frame two-jet, and now extracts that frame
+two-jet itself from a twice Fréchet-differentiable orthonormal frame field. The
+inhomogeneous coefficient law `omega' = g⁻¹ omega g + g⁻¹ dg` and homogeneous
+curvature covariance `R' = g⁻¹ R g` are proved from the Maurer--Cartan identity.
+The remaining geometric locks are insertion of ambient covariant derivatives,
+extraction of the gauge jet from a smooth overlap map, variable overlap
+compatibility, varying metric and subspace dependence on the structured-jet
+base, determinant-line connection identification, higher-dimensional Clifford
+Spin covers, global principal-bundle packaging and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -81,6 +82,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorMovingFrame
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMetricNormalConnectionCurvature
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionFromFrameJet
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothNormalFrameJetExtraction
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameConnectionGaugeLaw
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionCurvatureGaugeLaw
 
@@ -137,6 +139,7 @@ structure ProgramStatus where
   rieszShapeOperatorMovingFrameSmoothnessProved : Prop
   metricNormalConnectionCurvatureDerived : Prop
   normalConnectionExtractedFromFrameTwoJet : Prop
+  smoothNormalFrameTwoJetExtractedFromFrechetData : Prop
   normalFrameConnectionGaugeLawProved : Prop
   normalConnectionCurvatureGaugeLawProved : Prop
   naiveRepresentationCategoryCorrected : Prop
@@ -154,8 +157,8 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core through moving-frame Riesz smoothness and the
-local connection-curvature gauge stage. -/
+/-- Formal/logical theorem core through smooth-frame two-jet extraction, moving
+Riesz frames and the local connection-curvature gauge stage. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -204,6 +207,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.rieszShapeOperatorMovingFrameSmoothnessProved /\
   s.metricNormalConnectionCurvatureDerived /\
   s.normalConnectionExtractedFromFrameTwoJet /\
+  s.smoothNormalFrameTwoJetExtractedFromFrechetData /\
   s.normalFrameConnectionGaugeLawProved /\
   s.normalConnectionCurvatureGaugeLawProved /\
   s.naiveRepresentationCategoryCorrected /\
