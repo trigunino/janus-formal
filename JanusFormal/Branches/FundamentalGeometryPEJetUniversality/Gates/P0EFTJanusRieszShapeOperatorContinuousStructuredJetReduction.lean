@@ -112,8 +112,10 @@ theorem continuousCurvatureFromDerivative_apply
 theorem continuousCurvatureFromDerivative_contDiff :
     ContDiff ℝ ∞
       (continuousCurvatureFromDerivative (Tangent := Tangent)) := by
-  exact contDiff_id.sub
-    (continuousDerivativeFlip (Tangent := Tangent)).contDiff
+  change ContDiff ℝ ∞
+    (fun derivative : ContinuousConnectionDerivative Tangent =>
+      derivative - continuousDerivativeFlip (Tangent := Tangent) derivative)
+  fun_prop
 
 /-- Smooth reduction `(Qᵀ,Qᴺ,A,dA) ↦ (Qᴺ,dA-dAᵀ)`. -/
 def smoothLowOrderReduction
@@ -144,15 +146,15 @@ theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal)) := by
   have hNormal : ContDiff ℝ ∞
-      (structuredNormalQuadraticProjection
-        (Tangent := Tangent) (Normal := Normal)) :=
-    (structuredNormalQuadraticProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff
+      (fun jet : SmoothLowOrderStructuredJet Tangent Normal =>
+        structuredNormalQuadraticProjection
+          (Tangent := Tangent) (Normal := Normal) jet) := by
+    fun_prop
   have hDerivative : ContDiff ℝ ∞
-      (structuredConnectionDerivativeProjection
-        (Tangent := Tangent) (Normal := Normal)) :=
-    (structuredConnectionDerivativeProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff
+      (fun jet : SmoothLowOrderStructuredJet Tangent Normal =>
+        structuredConnectionDerivativeProjection
+          (Tangent := Tangent) (Normal := Normal) jet) := by
+    fun_prop
   exact hNormal.prodMk
     ((continuousCurvatureFromDerivative_contDiff
       (Tangent := Tangent)).comp hDerivative)
