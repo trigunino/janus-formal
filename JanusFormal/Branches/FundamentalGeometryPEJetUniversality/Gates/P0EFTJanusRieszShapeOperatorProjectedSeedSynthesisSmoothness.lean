@@ -44,26 +44,6 @@ def projectedSeedSynthesisSumCLM
   ∑ k, basisRankOneSynthesisCLM coordinateBasis k
     (projectedSeedNormalFrame tangentFrame charts chart k base)
 
-@[simp]
-theorem projectedSeedSynthesisSumCLM_basis
-    {Chart : Type y} {ι : Type*}
-    [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
-    [WellFoundedLT κ]
-    (coordinateBasis : Basis κ ℝ Model)
-    (tangentFrame : ι → Base → Ambient)
-    (charts : ProjectedSeedChartFamily Chart Base Ambient κ)
-    (chart : Chart) (base : Base) (k : κ) :
-    projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base
-        (coordinateBasis k) =
-      projectedSeedNormalFrame tangentFrame charts chart k base := by
-  classical
-  unfold projectedSeedSynthesisSumCLM basisRankOneSynthesisCLM
-  change
-    (∑ j, coordinateBasis.coord j (coordinateBasis k) •
-      projectedSeedNormalFrame tangentFrame charts chart j base) =
-      projectedSeedNormalFrame tangentFrame charts chart k base
-  simp
-
 theorem projectedSeedSynthesisCLM_eq_sum
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -76,10 +56,25 @@ theorem projectedSeedSynthesisCLM_eq_sum
       projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base := by
   apply ContinuousLinearMap.ext
   intro vector
-  conv_lhs => rw [← coordinateBasis.sum_equivFun vector]
-  conv_rhs => rw [← coordinateBasis.sum_equivFun vector]
-  simp only [map_sum, map_smul]
-  simp
+  rw [← coordinateBasis.sum_equivFun vector]
+  simp [projectedSeedSynthesisSumCLM, basisRankOneSynthesisCLM]
+
+@[simp]
+theorem projectedSeedSynthesisSumCLM_basis
+    {Chart : Type y} {ι : Type*}
+    [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
+    [WellFoundedLT κ]
+    (coordinateBasis : Basis κ ℝ Model)
+    (tangentFrame : ι → Base → Ambient)
+    (charts : ProjectedSeedChartFamily Chart Base Ambient κ)
+    (chart : Chart) (base : Base) (k : κ) :
+    projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base
+        (coordinateBasis k) =
+      projectedSeedNormalFrame tangentFrame charts chart k base := by
+  rw [← projectedSeedSynthesisCLM_eq_sum
+    coordinateBasis tangentFrame charts chart base]
+  exact projectedSeedSynthesisCLM_basis
+    coordinateBasis tangentFrame charts chart base k
 
 theorem projectedSeedSynthesisCLM_contDiffOn
     {Chart : Type y} {ι : Type*}
