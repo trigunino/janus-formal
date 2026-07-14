@@ -107,6 +107,7 @@ def transformContinuousIIOnOverlap
     [NormedAddCommGroup Base] [NormedSpace ℝ Base]
     [NormedAddCommGroup Tangent] [InnerProductSpace ℝ Tangent]
     [NormedAddCommGroup Normal] [InnerProductSpace ℝ Normal]
+    [FiniteDimensional ℝ Tangent]
     (transition : SmoothResidualOrthogonalFrameFamily Base Tangent Normal)
     (form : Base → ContinuousSecondFundamentalForm
       (Tangent := Tangent) (Normal := Normal)) :
@@ -139,16 +140,9 @@ theorem framedRieszShapeFamily_variable_coordinate_invariant
         (fun base => transition.normal.frame base (normalCoordinates base)) =
       framedRieszShapeFamily tangentFrame form normalCoordinates := by
   funext base
-  change
-    conjugateShapeOperator
-        (((transition.tangent.frame base).symm).trans
-          (tangentFrame.frame base))
-        (continuousIIRieszShapeOperator
-          (actOnContinuousSecondFundamentalForm
-            (residualFrameAt transition base) (form base))
-          (transition.normal.frame base (normalCoordinates base))) =
-      conjugateShapeOperator (tangentFrame.frame base)
-        (continuousIIRieszShapeOperator (form base) (normalCoordinates base))
+  simp only [framedRieszShapeFamily, conjugatedOperatorFamily,
+    reparametrizeSmoothOrthogonalFrameFamilyVariable,
+    transformContinuousIIOnOverlap]
   rw [continuousIIRieszShapeOperator_residual_equivariant]
   apply ContinuousLinearMap.ext
   intro x
