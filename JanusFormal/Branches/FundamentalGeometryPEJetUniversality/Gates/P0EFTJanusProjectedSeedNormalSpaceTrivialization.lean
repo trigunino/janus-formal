@@ -220,7 +220,7 @@ end Transport
 /-- Transport one connection-corrected geometric jet through the canonical
 projected-seed normal trivialization.  The output is exactly the fixed-model
 local coefficient interface used by the reduced-jet and Riesz constructions. -/
-def ConnectionCorrectedActualJanusLocalJetData.toProjectedSeedActualJanusLocalJetData
+def projectedSeedActualJanusLocalJetData
     (tangentBasis : Basis ι ℝ Tangent)
     (hTangentBasis : Orthonormal ℝ tangentBasis)
     (normalBasis : Basis κ ℝ Normal)
@@ -259,7 +259,7 @@ def ConnectionCorrectedActualJanusLocalJetData.toProjectedSeedActualJanusLocalJe
           basisData base) data first second)
 
 @[simp]
-theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_normalQuadratic_apply
+theorem projectedSeedActualJanusLocalJetData_normalQuadratic_apply
     (tangentBasis : Basis ι ℝ Tangent)
     (hTangentBasis : Orthonormal ℝ tangentBasis)
     (normalBasis : Basis κ ℝ Normal)
@@ -273,9 +273,9 @@ theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_normalQuadrat
       (projectedSeedTangentDerivative tangentBasis
         hTangentBasis basisData base))
     (first second : Tangent) :
-    (data.toProjectedSeedActualJanusLocalJetData tangentBasis
-      hTangentBasis normalBasis hNormalBasis basisData hDimension
-      center base hValid).normalQuadratic first second =
+    (projectedSeedActualJanusLocalJetData tangentBasis hTangentBasis
+      normalBasis hNormalBasis basisData hDimension center base hValid data)
+        .normalQuadratic first second =
       projectedSeedNormalTrivialization tangentBasis hTangentBasis
         normalBasis hNormalBasis basisData hDimension center base hValid
         (data.normalQuadratic first second) := by
@@ -283,7 +283,7 @@ theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_normalQuadrat
 
 /-- The transported coefficient is the fixed-model image of the geometric
 second fundamental form obtained from the corrected jet. -/
-theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_normalQuadratic_eq_geometric
+theorem projectedSeedActualJanusLocalJetData_normalQuadratic_eq_geometric
     (tangentBasis : Basis ι ℝ Tangent)
     (hTangentBasis : Orthonormal ℝ tangentBasis)
     (normalBasis : Basis κ ℝ Normal)
@@ -297,18 +297,18 @@ theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_normalQuadrat
       (projectedSeedTangentDerivative tangentBasis
         hTangentBasis basisData base))
     (first second : Tangent) :
-    (data.toProjectedSeedActualJanusLocalJetData tangentBasis
-      hTangentBasis normalBasis hNormalBasis basisData hDimension
-      center base hValid).normalQuadratic first second =
+    (projectedSeedActualJanusLocalJetData tangentBasis hTangentBasis
+      normalBasis hNormalBasis basisData hDimension center base hValid data)
+        .normalQuadratic first second =
       projectedSeedNormalTrivialization tangentBasis hTangentBasis
         normalBasis hNormalBasis basisData hDimension center base hValid
         (P0EFTJanusSecondFundamentalFormJet.secondFundamentalForm
           (projectedSeedTangentDerivative tangentBasis
             hTangentBasis basisData base)
           data.toConnectionCorrectedSecondJet first second) := by
-  rw [data.toProjectedSeed_normalQuadratic_apply tangentBasis
-    hTangentBasis normalBasis hNormalBasis basisData hDimension
-    center base hValid first second]
+  rw [projectedSeedActualJanusLocalJetData_normalQuadratic_apply
+    tangentBasis hTangentBasis normalBasis hNormalBasis basisData hDimension
+    center base hValid data first second]
   exact congrArg
     (projectedSeedNormalTrivialization tangentBasis hTangentBasis
       normalBasis hNormalBasis basisData hDimension center base hValid)
@@ -317,7 +317,7 @@ theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_normalQuadrat
         basisData base) data first second)
 
 @[simp]
-theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_reduced_curvature_apply
+theorem projectedSeedActualJanusLocalJetData_reduced_curvature_apply
     (tangentBasis : Basis ι ℝ Tangent)
     (hTangentBasis : Orthonormal ℝ tangentBasis)
     (normalBasis : Basis κ ℝ Normal)
@@ -331,9 +331,9 @@ theorem ConnectionCorrectedActualJanusLocalJetData.toProjectedSeed_reduced_curva
       (projectedSeedTangentDerivative tangentBasis
         hTangentBasis basisData base))
     (first second : Tangent) :
-    (data.toProjectedSeedActualJanusLocalJetData tangentBasis
-      hTangentBasis normalBasis hNormalBasis basisData hDimension
-      center base hValid).toReducedJet.2 first second =
+    (projectedSeedActualJanusLocalJetData tangentBasis hTangentBasis
+      normalBasis hNormalBasis basisData hDimension center base hValid data)
+        .toReducedJet.2 first second =
       data.connectionDerivative first second -
         data.connectionDerivative second first := by
   rfl
