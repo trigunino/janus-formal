@@ -9,7 +9,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set
+open Set Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusAdaptedOrthogonalSplitting
 open P0EFTJanusNormalFramePointwiseTransition
