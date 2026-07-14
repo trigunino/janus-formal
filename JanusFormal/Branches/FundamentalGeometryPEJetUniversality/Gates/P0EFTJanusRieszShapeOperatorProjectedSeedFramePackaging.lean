@@ -128,8 +128,7 @@ def projectedSeedSynthesisCLM
     (tangentFrame : ι → Base → Ambient)
     (charts : ProjectedSeedChartFamily Chart Base Ambient κ)
     (chart : Chart) (base : Base) : Model →L[ℝ] Ambient :=
-  (projectedSeedSynthesisLinearMap coordinateBasis tangentFrame charts chart base)
-    .toContinuousLinearMap
+  (projectedSeedSynthesisLinearMap coordinateBasis tangentFrame charts chart base).toContinuousLinearMap
 
 @[simp]
 theorem projectedSeedSynthesisCLM_basis
@@ -143,10 +142,7 @@ theorem projectedSeedSynthesisCLM_basis
     projectedSeedSynthesisCLM coordinateBasis tangentFrame charts chart base
         (coordinateBasis k) =
       projectedSeedNormalFrame tangentFrame charts chart k base := by
-  change coordinateBasis.constr ℝ
-      (fun j => projectedSeedNormalFrame tangentFrame charts chart j base)
-      (coordinateBasis k) =
-    projectedSeedNormalFrame tangentFrame charts chart k base
+  unfold projectedSeedSynthesisCLM projectedSeedSynthesisLinearMap
   exact coordinateBasis.constr_basis ℝ _ k
 
 /-- Package one projected-seed Gram--Schmidt chart as a smooth open-domain
@@ -170,23 +166,23 @@ def projectedSeedSmoothIsometricFrameFamilyOn
         {base | projectedSeedChartValid tangentFrame charts chart base}) :
     SmoothIsometricFrameFamilyOn Base Model Ambient
       {base | projectedSeedChartValid tangentFrame charts chart base} :=
-  ({ coordinateBasis := coordinateBasis
-     coordinateBasis_orthonormal := hCoordinateOrthonormal
-     vector := fun k => projectedSeedNormalFrame tangentFrame charts chart k
-     vector_orthonormal := by
-       intro base hValid
-       exact projectedSeedNormalFrame_orthonormal
-         tangentFrame charts chart base hValid
-     synthesis := projectedSeedSynthesisCLM
-       coordinateBasis tangentFrame charts chart
-     synthesis_basis := projectedSeedSynthesisCLM_basis
-       coordinateBasis tangentFrame charts chart
-     synthesis_contDiffOn := hSynthesisSmooth
-     fallback := fallback } :
+  (({ coordinateBasis := coordinateBasis
+      coordinateBasis_orthonormal := hCoordinateOrthonormal
+      vector := fun k => projectedSeedNormalFrame tangentFrame charts chart k
+      vector_orthonormal := by
+        intro base hValid
+        exact projectedSeedNormalFrame_orthonormal
+          tangentFrame charts chart base hValid
+      synthesis := projectedSeedSynthesisCLM
+        coordinateBasis tangentFrame charts chart
+      synthesis_basis := projectedSeedSynthesisCLM_basis
+        coordinateBasis tangentFrame charts chart
+      synthesis_contDiffOn := hSynthesisSmooth
+      fallback := fallback } :
     OrthonormalFrameSynthesisOn
       (Base := Base) (Model := Model) (Ambient := Ambient) (κ := κ)
       {base | projectedSeedChartValid tangentFrame charts chart base})
-    .toSmoothIsometricFrameFamilyOn
+    .toSmoothIsometricFrameFamilyOn)
 
 /-- Ambient range of the packaged projected-seed frame is the span of the
 Gram--Schmidt normal vectors. -/
@@ -226,8 +222,7 @@ theorem projectedSeedSmoothIsometricFrameFamilyOn_range
       (projectedSeedSmoothIsometricFrameFamilyOn coordinateBasis
         hCoordinateOrthonormal fallback tangentFrame charts chart
         hSynthesisSmooth).frame base vector =
-      projectedSeedSynthesisLinearMap
-        coordinateBasis tangentFrame charts chart base vector
+      projectedSeedSynthesisCLM coordinateBasis tangentFrame charts chart base vector
     have hCLM := synthesizedIsometryValue_toContinuousLinearMap
       ({ coordinateBasis := coordinateBasis
          coordinateBasis_orthonormal := hCoordinateOrthonormal
@@ -248,7 +243,7 @@ theorem projectedSeedSmoothIsometricFrameFamilyOn_range
       base hValid
     exact congrArg (fun operator : Model →L[ℝ] Ambient => operator vector) hCLM
   rw [hFrame]
-  exact coordinateBasis.constr_range
+  exact coordinateBasis.constr_range ℝ
 
 /-- Exact boundary after projected-seed frame packaging. -/
 structure ProjectedSeedFramePackagingStatus where
@@ -278,7 +273,7 @@ theorem missing_synthesis_smoothness_blocks_frame_packaging
     (hMissing : Not s.synthesisOperatorContDiffOnProved) :
     Not (projectedSeedFramePackagingClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.1
+  exact hMissing hClosed.2.2.2.1
 
 end
 
