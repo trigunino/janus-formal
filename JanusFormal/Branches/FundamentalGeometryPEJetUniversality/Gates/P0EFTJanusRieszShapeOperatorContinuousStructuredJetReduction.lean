@@ -321,7 +321,7 @@ theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_via_atl
       (((data.toSmoothReducedJetRieszFamilyData)
         .toGlobalRieszCoefficientData).physicalOperator) :=
   (data.toSmoothReducedJetRieszFamilyData).physicalOperator_contDiff_via_atlas
-    (AtlasTangent := AtlasTangent) (NormalModel := AtlasNormal)
+    (AtlasTangent := AtlasTangent) (AtlasNormal := AtlasNormal)
 
 /-- Audit boundary after connecting continuous unreduced structured jets to the
 smooth reduced Riesz base. -/
