@@ -98,11 +98,13 @@ theorem continuousDerivativeFlip_apply
 def continuousCurvatureFromDerivative :
     ContinuousConnectionDerivative Tangent →L[ℝ]
       ContinuousConnectionDerivative Tangent :=
-  ((ContinuousLinearMap.id ℝ
+  (((ContinuousLinearMap.id ℝ
       (ContinuousConnectionDerivative Tangent)) :
     ContinuousConnectionDerivative Tangent →L[ℝ]
       ContinuousConnectionDerivative Tangent) -
-    continuousDerivativeFlip (Tangent := Tangent)
+    continuousDerivativeFlip (Tangent := Tangent) :
+      ContinuousConnectionDerivative Tangent →L[ℝ]
+        ContinuousConnectionDerivative Tangent)
 
 @[simp]
 theorem continuousCurvatureFromDerivative_apply
@@ -147,8 +149,18 @@ theorem smoothLowOrderReduction_curvature_apply
 
 theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
-      (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal)) :=
-  (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal)).contDiff
+      (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal)) := by
+  change ContDiff ℝ ∞
+    (fun jet : SmoothLowOrderStructuredJet Tangent Normal =>
+      (structuredNormalQuadraticProjection
+          (Tangent := Tangent) (Normal := Normal) jet,
+        structuredGaugeCurvatureProjection
+          (Tangent := Tangent) (Normal := Normal) jet))
+  exact
+    (structuredNormalQuadraticProjection
+      (Tangent := Tangent) (Normal := Normal)).contDiff.prodMk
+      (structuredGaugeCurvatureProjection
+        (Tangent := Tangent) (Normal := Normal)).contDiff
 
 def forgetContinuousLowOrderStructuredJet
     (jet : SmoothLowOrderStructuredJet Tangent Normal) :
@@ -168,10 +180,15 @@ def continuousReductionLiftsAlgebraic
     (Tangent := Tangent) (Normal := Normal) jet
   secondFundamental_apply := by
     intro first second
-    rfl
+    exact congrArg
+      (fun form => form first second)
+      (smoothLowOrderReduction_secondFundamental
+        (Tangent := Tangent) (Normal := Normal) jet)
   gaugeCurvature_apply := by
     intro first second
-    rfl
+    simpa [forgetContinuousLowOrderStructuredJet, reduceLowOrderJet, curvature] using
+      (smoothLowOrderReduction_curvature_apply
+        (Tangent := Tangent) (Normal := Normal) jet first second)
 
 theorem smoothLowOrderReduction_isGeometric
     (jet : SmoothLowOrderStructuredJet Tangent Normal)
