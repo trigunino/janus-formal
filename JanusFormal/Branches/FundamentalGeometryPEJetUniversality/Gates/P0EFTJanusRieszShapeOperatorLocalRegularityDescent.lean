@@ -72,7 +72,8 @@ theorem contDiff_isLocalRegularityProperty
   rw [contDiff_iff_contDiffAt]
   intro point
   obtain ⟨representative, hRepresentative, hEventually⟩ := hLocal point
-  exact hEventually.contDiffAt_iff.mpr hRepresentative.contDiffAt
+  exact (Filter.EventuallyEq.contDiffAt_iff hEventually).mpr
+    hRepresentative.contDiffAt
 
 /-- Smooth local representatives on a neighborhood-stable atlas descend to a
 smooth global representative. -/
