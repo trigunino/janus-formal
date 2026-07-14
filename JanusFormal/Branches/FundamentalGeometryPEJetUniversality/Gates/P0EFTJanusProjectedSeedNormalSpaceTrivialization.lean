@@ -237,9 +237,8 @@ def ConnectionCorrectedActualJanusLocalJetData.toProjectedSeedActualJanusLocalJe
       (Tangent := Tangent) (Normal := Normal) where
   tangentialQuadratic := data.sourceConnection
   normalQuadratic := transportContinuousSecondFundamentalForm
-    ((projectedSeedNormalTrivialization tangentBasis hTangentBasis
-      normalBasis hNormalBasis basisData hDimension center base hValid)
-        .toContinuousLinearEquiv).toContinuousLinearMap
+    (projectedSeedNormalTrivialization tangentBasis hTangentBasis
+      normalBasis hNormalBasis basisData hDimension center base hValid).toContinuousLinearEquiv.toContinuousLinearMap
     data.normalQuadratic
   connectionValue := data.connectionValue
   connectionDerivative := data.connectionDerivative
