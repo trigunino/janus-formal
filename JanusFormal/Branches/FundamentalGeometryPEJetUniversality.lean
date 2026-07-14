@@ -27,20 +27,22 @@ dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model, and
 proves smoothness after passage through smooth moving tangent/normal frame
 trivializations. It proves independence under smooth variable orthogonal
 transition functions on chart overlaps and residual covariance of the complete
-pointwise Ricci-normal equation. It constructs the curvature of a local metric
-normal-connection one-jet, derives the Ricci normal equation from the curvature
-of the adapted block connection, extracts the connection coefficients and their
-first derivatives from an orthonormal normal-frame two-jet, and extracts that
-frame two-jet itself from a twice Fréchet-differentiable orthonormal frame field.
-It also extracts `g⁻¹ dg`, its derivative and the full Maurer--Cartan two-jet from
-a twice differentiable orthogonal gauge field, so the homogeneous curvature law
-`R' = g⁻¹ R g` applies to actual smooth gauge data in the flat coefficient model.
-The remaining geometric locks are insertion of ambient covariant derivatives,
-realization of the gauge as the transition between two normal-frame
-trivializations, varying metric and subspace dependence on the structured-jet
-base, determinant-line connection identification, higher-dimensional Clifford
-Spin covers, global principal-bundle packaging and characteristic-class
-matching.
+pointwise Ricci-normal equation. It also constructs the unique pointwise
+orthogonal transition `g = e₁⁻¹e₂` between two normal frames with the same
+ambient image and proves its inverse and Čech cocycle laws. It constructs the
+curvature of a local metric normal-connection one-jet, derives the Ricci normal
+equation from the curvature of the adapted block connection, extracts the
+connection coefficients and their first derivatives from an orthonormal
+normal-frame two-jet, and extracts that frame two-jet itself from a twice
+Fréchet-differentiable orthonormal frame field. It also extracts `g⁻¹ dg`, its
+derivative and the full Maurer--Cartan two-jet from a twice differentiable
+orthogonal gauge field, so the homogeneous curvature law `R' = g⁻¹ R g` applies
+to actual smooth gauge data in the flat coefficient model. The remaining
+geometric locks are smooth dependence of the canonical frame transition,
+insertion of ambient covariant derivatives, varying metric and subspace
+dependence on the structured-jet base, determinant-line connection
+identification, higher-dimensional Clifford Spin covers, global
+principal-bundle packaging and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -65,6 +67,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMovingAdaptedFrameSecondJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMovingNormalTransport
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedFrameOverlapCocycle
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFramePointwiseTransition
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantOrientedReduction
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCentralLiftCocycleObstruction
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSpinCDiagonalDefectCancellation
@@ -124,6 +127,7 @@ structure ProgramStatus where
   movingAdaptedFrameSecondJetLawProved : Prop
   movingNormalTransportEquivarianceProved : Prop
   adaptedFrameOverlapCocycleProved : Prop
+  normalFramePointwiseTransitionProved : Prop
   abstractOrientedSubcocycleProved : Prop
   determinantOrientedResidualReductionProved : Prop
   centralDoubleCoverDefectTheoryProved : Prop
@@ -167,9 +171,9 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core through smooth variable-overlap and Ricci
-covariance, frame and gauge jet extraction, and the local connection-curvature
-gauge stage. -/
+/-- Formal/logical theorem core through canonical pointwise frame transitions,
+smooth variable-overlap and Ricci covariance, frame and gauge jet extraction,
+and the local connection-curvature gauge stage. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -196,6 +200,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.movingAdaptedFrameSecondJetLawProved /\
   s.movingNormalTransportEquivarianceProved /\
   s.adaptedFrameOverlapCocycleProved /\
+  s.normalFramePointwiseTransitionProved /\
   s.abstractOrientedSubcocycleProved /\
   s.determinantOrientedResidualReductionProved /\
   s.centralDoubleCoverDefectTheoryProved /\
@@ -263,10 +268,10 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The proved local-frame, variable-overlap, Ricci-covariance,
-connection-gauge, curvature-gauge, oriented-cocycle and algebraic rank-two
-Clifford matching still require smooth principal-bundle packaging and actions on
-all Janus natural sectors. -/
+/-- The proved local-frame, canonical pointwise transitions, variable-overlap,
+Ricci-covariance, connection-gauge, curvature-gauge, oriented-cocycle and
+algebraic rank-two Clifford matching still require smooth principal-bundle
+packaging and actions on all Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
