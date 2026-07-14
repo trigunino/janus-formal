@@ -84,7 +84,8 @@ def FixedNormalTrivializedActualJetFamilyData.localJet
     rw [data.normalQuadratic_apply base first second,
       data.normalQuadratic_apply base second first]
     exact congrArg (data.normalTrivialization base)
-      ((data.correctedJet base).normalQuadratic_symmetric first second)
+      ((data.correctedJet base).normalQuadratic_symmetric
+        (data.derivative base) first second)
 
 /-- Package the transported family into the fixed-model smooth family interface. -/
 def FixedNormalTrivializedActualJetFamilyData.toActualJanusLocalJetFamilyData
@@ -141,7 +142,7 @@ theorem FixedNormalTrivializedActualJetFamilyData.normalQuadratic_eq_transport_s
   rw [data.normalQuadratic_apply base first second]
   exact congrArg (data.normalTrivialization base)
     ((data.correctedJet base).normalQuadratic_eq_secondFundamentalForm
-      first second)
+      (data.derivative base) first second)
 
 /-- Status ledger for the varying-normal-space stage. -/
 structure FixedNormalTrivializationFamilyStatus where
