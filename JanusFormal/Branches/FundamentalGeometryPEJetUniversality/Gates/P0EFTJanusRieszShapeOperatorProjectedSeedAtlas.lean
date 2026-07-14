@@ -27,7 +27,9 @@ After projection to the normal complement, its validity domain is exactly the
 open locus where the projected family is linearly independent. -/
 structure ProjectedSeedChartFamily
     (Chart : Type u) (Base : Type v) (Ambient : Type w)
-    (κ : Type*) where
+    (κ : Type*)
+    [NormedAddCommGroup Base] [NormedSpace ℝ Base]
+    [NormedAddCommGroup Ambient] [NormedSpace ℝ Ambient] where
   seed : Chart → κ → Base → Ambient
   seed_contDiff : ∀ chart k, ContDiff ℝ ∞ (seed chart k)
 
