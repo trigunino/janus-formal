@@ -133,7 +133,7 @@ theorem sourceConnectionAmbientCorrection_contDiffOn
       (fun base => sourceConnectionPostcomposeCLM
         (Tangent := Tangent) (Ambient := Ambient) (derivative base)) domain := by
     fun_prop
-  exact hPostcompose.clm_apply hSourceConnection
+  exact hPostcompose.clm_comp hSourceConnection
 
 /-- Connection-corrected ambient second derivative as a bundled continuous
 bilinear map. -/
@@ -223,7 +223,7 @@ theorem projectedSeedFixedNormalQuadratic_contDiffOn
         (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
         (normalAdjoint base)) domain := by
     fun_prop
-  exact hPostcompose.clm_apply hAmbientForm
+  exact hPostcompose.clm_comp hAmbientForm
 
 /-- Ambient corrected-jet family on one projected-seed chart. -/
 structure ProjectedSeedSmoothAmbientJetFamilyOn
@@ -424,12 +424,10 @@ def ProjectedSeedSmoothAmbientJetFamilyOn.physicalOperator
 theorem ProjectedSeedSmoothAmbientJetFamilyOn.physicalOperator_contDiffOn
     (data : ProjectedSeedSmoothAmbientJetFamilyOn tangentBasis hTangentBasis
       normalBasis hNormalBasis basisData center) :
-    ContDiffOn ℝ ∞ data.physicalOperator
+    ContDiffOn ℝ ∞
+      (fun base => continuousIIRieszShapeOperator
+        (data.normalQuadratic base) (data.physicalNormal base))
       (projectedSeedCoefficientDomain basisData center) := by
-  change ContDiffOn ℝ ∞
-    (fun base => continuousIIRieszShapeOperator
-      (data.normalQuadratic base) (data.physicalNormal base))
-    (projectedSeedCoefficientDomain basisData center)
   have hPair : ContDiffOn ℝ ∞
       (fun base => (data.normalQuadratic base, data.physicalNormal base))
       (projectedSeedCoefficientDomain basisData center) :=
