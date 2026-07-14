@@ -30,9 +30,6 @@ variable [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal]
 variable [FiniteDimensional ℝ AmbientTangent]
 variable [FiniteDimensional ℝ AmbientNormal]
 
-/-- Reference and local adapted isometric frames in fixed ambient Hilbert models.
-The common-range fields say that the two frames describe the same tangent and
-normal physical subspaces at every base point. -/
 structure AdaptedFramePair where
   referenceTangent : SmoothIsometricNormalFrameFamily Base Tangent AmbientTangent
   localTangent : SmoothIsometricNormalFrameFamily Base Tangent AmbientTangent
@@ -45,7 +42,6 @@ structure AdaptedFramePair where
     normalFrameRange (referenceNormal.frame base) =
       normalFrameRange (localNormal.frame base)
 
-/-- Canonical smooth tangent coordinate transition. -/
 def AdaptedFramePair.tangentTransition
     (frames : AdaptedFramePair
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
@@ -54,7 +50,6 @@ def AdaptedFramePair.tangentTransition
   smoothCanonicalNormalFrameTransition
     frames.referenceTangent frames.localTangent frames.tangentRange
 
-/-- Canonical smooth normal coordinate transition. -/
 def AdaptedFramePair.normalTransition
     (frames : AdaptedFramePair
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
@@ -63,7 +58,6 @@ def AdaptedFramePair.normalTransition
   smoothCanonicalNormalFrameTransition
     frames.referenceNormal frames.localNormal frames.normalRange
 
-/-- Simultaneous residual tangent/normal overlap transition. -/
 def AdaptedFramePair.residualTransition
     (frames : AdaptedFramePair
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
@@ -72,8 +66,6 @@ def AdaptedFramePair.residualTransition
   tangent := frames.tangentTransition
   normal := frames.normalTransition
 
-/-- The tangent transition carries reference coordinates to the local tangent
-frame. -/
 theorem AdaptedFramePair.tangentTransition_spec
     (frames : AdaptedFramePair
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
@@ -85,8 +77,6 @@ theorem AdaptedFramePair.tangentTransition_spec
   exact smoothCanonicalNormalFrameTransition_spec
     frames.referenceTangent frames.localTangent frames.tangentRange base vector
 
-/-- The normal transition carries reference coordinates to the local normal
-frame. -/
 theorem AdaptedFramePair.normalTransition_spec
     (frames : AdaptedFramePair
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
@@ -98,14 +88,11 @@ theorem AdaptedFramePair.normalTransition_spec
   exact smoothCanonicalNormalFrameTransition_spec
     frames.referenceNormal frames.localNormal frames.normalRange base vector
 
-/-- A family of local adapted frames indexed by charts produces exactly the
-smooth residual transitions required by variable-overlap Riesz descent. -/
 structure AdaptedFrameAtlas (Chart : Type*) where
   frames : Chart → AdaptedFramePair
     (Base := Base) (Tangent := Tangent) (Normal := Normal)
     (AmbientTangent := AmbientTangent) (AmbientNormal := AmbientNormal)
 
-/-- Canonical residual transition family attached to each chart. -/
 def AdaptedFrameAtlas.transition
     {Chart : Type*}
     (atlas : AdaptedFrameAtlas
@@ -115,8 +102,6 @@ def AdaptedFrameAtlas.transition
     SmoothResidualOrthogonalFrameFamily Base Tangent Normal :=
   (atlas.frames chart).residualTransition
 
-/-- Constructor for the variable-overlap Riesz chart package from canonical
-adapted-frame transitions. -/
 def variableOverlapChartsOfAdaptedFrameAtlas
     {Chart : Type*}
     (atlas : AdaptedFrameAtlas
@@ -129,7 +114,8 @@ def variableOverlapChartsOfAdaptedFrameAtlas
     (physicalNormal : Base → Normal)
     (hForm : ContDiff ℝ ∞ form)
     (hPhysicalNormal : ContDiff ℝ ∞ physicalNormal) :
-    VariableOverlapRieszCharts Chart where
+    VariableOverlapRieszCharts
+      (JetBase := Base) (Tangent := Tangent) (Normal := Normal) Chart where
   referenceTangentFrame := referenceTangentFrame
   referenceNormalFrame := referenceNormalFrame
   transition := atlas.transition
@@ -138,8 +124,6 @@ def variableOverlapChartsOfAdaptedFrameAtlas
   form_contDiff := hForm
   physicalNormal_contDiff := hPhysicalNormal
 
-/-- Therefore canonical adapted-frame transitions discharge both final analytic
-Riesz obligations: local physical realization and local smoothness. -/
 theorem adaptedFrameAtlas_closes_riesz_obligations
     {Chart : Type*}
     (atlas : AdaptedFrameAtlas
@@ -152,9 +136,11 @@ theorem adaptedFrameAtlas_closes_riesz_obligations
     (physicalNormal : Base → Normal)
     (hForm : ContDiff ℝ ∞ form)
     (hPhysicalNormal : ContDiff ℝ ∞ physicalNormal) :
-    let charts := variableOverlapChartsOfAdaptedFrameAtlas atlas
-      referenceTangentFrame referenceNormalFrame form physicalNormal
-      hForm hPhysicalNormal
+    let charts : VariableOverlapRieszCharts
+        (JetBase := Base) (Tangent := Tangent) (Normal := Normal) Chart :=
+      variableOverlapChartsOfAdaptedFrameAtlas atlas
+        referenceTangentFrame referenceNormalFrame form physicalNormal
+        hForm hPhysicalNormal
     (∀ chart, charts.localRiesz chart = charts.physicalRiesz) ∧
       (∀ chart, ContDiff ℝ ∞ (charts.localRiesz chart)) := by
   exact variableOverlap_closes_final_obligations
@@ -162,8 +148,6 @@ theorem adaptedFrameAtlas_closes_riesz_obligations
       referenceTangentFrame referenceNormalFrame form physicalNormal
       hForm hPhysicalNormal)
 
-/-- Audit boundary after constructing canonical transitions from smooth adapted
-frames. -/
 structure CanonicalFrameBridgeStatus where
   smoothReferenceFramesSupplied : Prop
   smoothLocalFramesSupplied : Prop
@@ -175,7 +159,6 @@ structure CanonicalFrameBridgeStatus where
   localRieszObligationsDerived : Prop
   connectedToProjectedSeedGramSchmidtFrames : Prop
 
-/-- Closure of the canonical-frame bridge. -/
 def canonicalFrameBridgeClosed (s : CanonicalFrameBridgeStatus) : Prop :=
   s.smoothReferenceFramesSupplied ∧
   s.smoothLocalFramesSupplied ∧
@@ -187,9 +170,6 @@ def canonicalFrameBridgeClosed (s : CanonicalFrameBridgeStatus) : Prop :=
   s.localRieszObligationsDerived ∧
   s.connectedToProjectedSeedGramSchmidtFrames
 
-/-- The remaining geometric step is proving that the Gram--Schmidt frames built
-from projected seeds define smooth isometric frame families with the expected
-physical ranges. -/
 theorem missing_gramSchmidt_frame_connection_blocks_closure
     (s : CanonicalFrameBridgeStatus)
     (hMissing : Not s.connectedToProjectedSeedGramSchmidtFrames) :
