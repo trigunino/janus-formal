@@ -184,6 +184,13 @@ theorem smoothGaugeLogDerivativeDerivative_eq_frameNormalConnectionDerivative
       (orthogonalNormalGaugeOneJetAt gauge base) x
       (smoothGaugeLogDerivative gauge base y firstNormal)
       secondNormal
+  have hProduct' :
+      ⟪smoothGaugeLogDerivative gauge base x
+          (smoothGaugeLogDerivative gauge base y firstNormal),
+        secondNormal⟫_ℝ =
+        -⟪smoothGaugeLogDerivative gauge base y firstNormal,
+          smoothGaugeLogDerivative gauge base x secondNormal⟫_ℝ := by
+    exact hProduct
   have hCross :
       ⟪smoothGaugeLogDerivative gauge base y firstNormal,
           smoothGaugeLogDerivative gauge base x secondNormal⟫_ℝ =
@@ -206,8 +213,8 @@ theorem smoothGaugeLogDerivativeDerivative_eq_frameNormalConnectionDerivative
         smoothGaugeLogDerivative gauge base x
           (smoothGaugeLogDerivative gauge base y firstNormal),
       secondNormal⟫_ℝ = _
-  rw [inner_sub_left, hFirstTerm]
-  linarith
+  rw [inner_sub_left, hFirstTerm, hProduct', hCross]
+  ring
 
 /-- Maurer--Cartan identity derived from symmetry of the ordinary second
 Fréchet derivative. -/
