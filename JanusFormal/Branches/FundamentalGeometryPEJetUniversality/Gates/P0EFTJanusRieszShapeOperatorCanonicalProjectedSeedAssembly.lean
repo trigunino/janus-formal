@@ -150,7 +150,7 @@ def CanonicalProjectedSeedRieszData.toOpenRieszInstantiationData
 the reference realization identity; all frame and overlap obligations have been
 discharged by the projected-seed construction. -/
 theorem CanonicalProjectedSeedRieszData.physicalOperator_contDiff
-    {AtlasTangent AtlasNormal : Type*}
+    {AtlasTangent AtlasNormal : Type y}
     (data : CanonicalProjectedSeedRieszData
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
