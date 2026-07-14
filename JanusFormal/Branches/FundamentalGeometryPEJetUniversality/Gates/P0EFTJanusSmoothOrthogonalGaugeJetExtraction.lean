@@ -213,7 +213,7 @@ theorem smoothGaugeLogDerivativeDerivative_eq_frameNormalConnectionDerivative
         smoothGaugeLogDerivative gauge base x
           (smoothGaugeLogDerivative gauge base y firstNormal),
       secondNormal⟫_ℝ = _
-  rw [inner_sub_left, hFirstTerm, hProduct', hCross]
+  rw [inner_sub_left, hFirstTerm, hProduct', hCross, sub_neg_eq_add]
   change
     ⟪gauge.second base x y firstNormal,
         smoothGaugeValueAt gauge base secondNormal⟫_ℝ +
