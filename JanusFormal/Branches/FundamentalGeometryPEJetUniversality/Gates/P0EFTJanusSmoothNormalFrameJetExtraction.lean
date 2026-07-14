@@ -214,6 +214,7 @@ def frameValueAt
   toLinearMap := (frame.field base).toLinearMap
   norm_map' normal := by
     rw [← sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)]
+    change ‖frame.field base normal‖ ^ 2 = ‖normal‖ ^ 2
     simpa only [real_inner_self_eq_norm_sq] using
       frame.orthonormal base normal normal
 
