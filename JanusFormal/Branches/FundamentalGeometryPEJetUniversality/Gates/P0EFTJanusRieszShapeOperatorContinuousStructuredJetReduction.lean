@@ -97,8 +97,9 @@ coefficient. -/
 def continuousDerivativeFlip :
     ContinuousConnectionDerivative (Tangent := Tangent) →L[ℝ]
       ContinuousConnectionDerivative (Tangent := Tangent) :=
-  (ContinuousLinearMap.flipₗᵢ ℝ Tangent Tangent ℝ)
-    .toLinearIsometry.toContinuousLinearMap
+  (ContinuousLinearMap.flipₗᵢ ℝ Tangent Tangent ℝ :
+    ContinuousConnectionDerivative (Tangent := Tangent) →L[ℝ]
+      ContinuousConnectionDerivative (Tangent := Tangent))
 
 @[simp]
 theorem continuousDerivativeFlip_apply
@@ -172,11 +173,14 @@ theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderReduction
         (Tangent := Tangent) (Normal := Normal)) := by
-  exact
-    (structuredNormalQuadraticProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff.prod
-      (structuredGaugeCurvatureProjection
-        (Tangent := Tangent) (Normal := Normal)).contDiff
+  change ContDiff ℝ ∞
+    (fun jet : SmoothLowOrderStructuredJet
+        (Tangent := Tangent) (Normal := Normal) =>
+      (structuredNormalQuadraticProjection
+          (Tangent := Tangent) (Normal := Normal) jet,
+        structuredGaugeCurvatureProjection
+          (Tangent := Tangent) (Normal := Normal) jet))
+  fun_prop
 
 /-- Forget the continuous-linear bundling and recover the earlier algebraic
 low-order structured-jet carrier. -/
@@ -307,9 +311,10 @@ theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_direct
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞
-      (((data.toSmoothReducedJetRieszFamilyData)
-        .toGlobalRieszCoefficientData).physicalOperator) :=
-  (data.toSmoothReducedJetRieszFamilyData).physicalOperator_contDiff_direct
+      ((SmoothReducedJetRieszFamilyData.toGlobalRieszCoefficientData
+        data.toSmoothReducedJetRieszFamilyData).physicalOperator) := by
+  exact SmoothReducedJetRieszFamilyData.physicalOperator_contDiff_direct
+    data.toSmoothReducedJetRieszFamilyData
 
 /-- The same smoothness conclusion through projected-seed atlas descent. -/
 theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_via_atlas
@@ -318,10 +323,11 @@ theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_via_atl
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞
-      (((data.toSmoothReducedJetRieszFamilyData)
-        .toGlobalRieszCoefficientData).physicalOperator) :=
-  (data.toSmoothReducedJetRieszFamilyData).physicalOperator_contDiff_via_atlas
+      ((SmoothReducedJetRieszFamilyData.toGlobalRieszCoefficientData
+        data.toSmoothReducedJetRieszFamilyData).physicalOperator) := by
+  exact SmoothReducedJetRieszFamilyData.physicalOperator_contDiff_via_atlas
     (AtlasTangent := AtlasTangent) (AtlasNormal := AtlasNormal)
+    data.toSmoothReducedJetRieszFamilyData
 
 /-- Audit boundary after connecting continuous unreduced structured jets to the
 smooth reduced Riesz base. -/
