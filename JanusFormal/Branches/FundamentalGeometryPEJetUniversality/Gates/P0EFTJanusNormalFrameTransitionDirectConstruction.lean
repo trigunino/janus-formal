@@ -46,6 +46,16 @@ def adjointFrameFirst
   (realAdjointContinuousLinearMap
     (Normal := Normal) (Ambient := Ambient)).comp (frame.first base)
 
+/-- Fixed continuous linear operation applying the Hilbert adjoint pointwise to
+an operator-valued tangent one-form. -/
+def adjointOnFrameDerivatives :
+    (Tangent →L[ℝ] Normal →L[ℝ] Ambient) →L[ℝ]
+      Tangent →L[ℝ] Ambient →L[ℝ] Normal :=
+  compL ℝ Tangent
+    (Normal →L[ℝ] Ambient) (Ambient →L[ℝ] Normal)
+    (realAdjointContinuousLinearMap
+      (Normal := Normal) (Ambient := Ambient))
+
 /-- Second derivative of the adjoint frame field, bundled as a nested continuous
 linear map. -/
 def adjointFrameSecond
@@ -53,11 +63,9 @@ def adjointFrameSecond
       Tangent Normal Ambient)
     (base : Tangent) :
     Tangent →L[ℝ] Tangent →L[ℝ] Ambient →L[ℝ] Normal :=
-  (compL ℝ Tangent
-      (Normal →L[ℝ] Ambient) (Ambient →L[ℝ] Normal)
-      (realAdjointContinuousLinearMap
-        (Normal := Normal) (Ambient := Ambient))).comp
-    (frame.second base)
+  (adjointOnFrameDerivatives
+    (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)).comp
+      (frame.second base)
 
 /-- Composition of an ambient-to-normal operator with a normal-to-ambient
 operator. This is the bilinear operation underlying `e₁† e₂`. -/
@@ -80,11 +88,9 @@ def canonicalTransitionFirst
     (first second : SmoothOrthonormalNormalFrameTwoJetField
       Tangent Normal Ambient)
     (base : Tangent) : Tangent →L[ℝ] Normal →L[ℝ] Normal :=
-  ((normalFrameComposition
-      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient))
+  ((normalFrameComposition (Normal := Normal) (Ambient := Ambient))
       (adjointFrameValue first base)).comp (second.first base) +
-    ((normalFrameComposition
-      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)).flip
+    ((normalFrameComposition (Normal := Normal) (Ambient := Ambient)).flip
       (second.field base)).comp (adjointFrameFirst first base)
 
 /-- Derivative of the `e₁† · de₂` contribution to the first transition jet. -/
@@ -95,14 +101,12 @@ def canonicalTransitionSecondRight
     Tangent →L[ℝ] Tangent →L[ℝ] Normal →L[ℝ] Normal :=
   (compL ℝ Tangent
       (Normal →L[ℝ] Ambient) (Normal →L[ℝ] Normal)
-      ((normalFrameComposition
-        (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient))
+      ((normalFrameComposition (Normal := Normal) (Ambient := Ambient))
         (adjointFrameValue first base))).comp (second.second base) +
     ((compL ℝ Tangent
       (Normal →L[ℝ] Ambient) (Normal →L[ℝ] Normal)).flip
       (second.first base)).comp
-        ((normalFrameComposition
-          (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)).comp
+        ((normalFrameComposition (Normal := Normal) (Ambient := Ambient)).comp
           (adjointFrameFirst first base))
 
 /-- Derivative of the `(de₁)† · e₂` contribution to the first transition jet. -/
@@ -113,14 +117,13 @@ def canonicalTransitionSecondLeft
     Tangent →L[ℝ] Tangent →L[ℝ] Normal →L[ℝ] Normal :=
   (compL ℝ Tangent
       (Ambient →L[ℝ] Normal) (Normal →L[ℝ] Normal)
-      ((normalFrameComposition
-        (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)).flip
+      ((normalFrameComposition (Normal := Normal) (Ambient := Ambient)).flip
         (second.field base))).comp (adjointFrameSecond first base) +
     ((compL ℝ Tangent
       (Ambient →L[ℝ] Normal) (Normal →L[ℝ] Normal)).flip
       (adjointFrameFirst first base)).comp
         ((normalFrameComposition
-          (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)).flip.comp
+          (Normal := Normal) (Ambient := Ambient)).flip.comp
           (second.first base))
 
 /-- Full second derivative of the canonical transition. -/
@@ -140,7 +143,11 @@ theorem adjointFrameValue_hasFDerivAt
     (base : Tangent) :
     HasFDerivAt (adjointFrameValue frame)
       (adjointFrameFirst frame base) base := by
-  simpa [adjointFrameValue, adjointFrameFirst] using
+  change HasFDerivAt
+    (fun point => ContinuousLinearMap.adjoint (frame.field point))
+    (adjointFrameFirst frame base) base
+  simpa only [Function.comp_apply, adjointFrameFirst,
+    realAdjointContinuousLinearMap_apply] using
     (realAdjointContinuousLinearMap
       (Normal := Normal) (Ambient := Ambient)).hasFDerivAt.comp base
         (frame.field_hasFDerivAt base)
@@ -153,12 +160,13 @@ theorem adjointFrameFirst_hasFDerivAt
     (base : Tangent) :
     HasFDerivAt (adjointFrameFirst frame)
       (adjointFrameSecond frame base) base := by
-  simpa [adjointFrameFirst, adjointFrameSecond] using
-    (compL ℝ Tangent
-      (Normal →L[ℝ] Ambient) (Ambient →L[ℝ] Normal)
-      (realAdjointContinuousLinearMap
-        (Normal := Normal) (Ambient := Ambient))).hasFDerivAt.comp base
-          (frame.first_hasFDerivAt base)
+  let postAdjoint := adjointOnFrameDerivatives
+    (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+  change HasFDerivAt
+    (fun point => postAdjoint (frame.first point))
+    (adjointFrameSecond frame base) base
+  simpa only [Function.comp_apply, adjointFrameSecond, postAdjoint] using
+    postAdjoint.hasFDerivAt.comp base (frame.first_hasFDerivAt base)
 
 /-- First differentiation of `e₁†e₂`, with no derivative witness supplied by the
 caller. -/
@@ -182,7 +190,7 @@ theorem canonicalTransitionFirst_hasFDerivAt
     HasFDerivAt (canonicalTransitionFirst first second)
       (canonicalTransitionSecond first second base) base := by
   let composition := normalFrameComposition
-    (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+    (Normal := Normal) (Ambient := Ambient)
   have hRightHead : HasFDerivAt
       (fun point => composition (adjointFrameValue first point))
       (composition.comp (adjointFrameFirst first base)) base := by
@@ -210,8 +218,7 @@ theorem canonicalTransitionFirst_apply
       adjointTransitionFirstFormula first second base x := by
   simp only [canonicalTransitionFirst, adjointTransitionFirstFormula,
     normalFrameComposition, adjointFrameValue, adjointFrameFirst,
-    ContinuousLinearMap.add_apply, ContinuousLinearMap.comp_apply,
-    realAdjointContinuousLinearMap_apply]
+    add_apply, comp_apply, realAdjointContinuousLinearMap_apply]
   abel
 
 /-- The bundled second derivative agrees with the four-term Hessian formula in
@@ -227,8 +234,8 @@ theorem canonicalTransitionSecond_apply
   simp only [canonicalTransitionSecond, canonicalTransitionSecondRight,
     canonicalTransitionSecondLeft, adjointTransitionSecondFormula,
     normalFrameComposition, adjointFrameValue, adjointFrameFirst,
-    adjointFrameSecond, ContinuousLinearMap.add_apply,
-    ContinuousLinearMap.comp_apply, realAdjointContinuousLinearMap_apply]
+    adjointFrameSecond, adjointOnFrameDerivatives, add_apply,
+    comp_apply, realAdjointContinuousLinearMap_apply]
   abel
 
 /-- The second transition derivative is symmetric because it is the genuine
@@ -288,10 +295,11 @@ def canonicalNormalFrameGaugeTwoJet
   first_hasFDerivAt := canonicalTransitionFirst_hasFDerivAt first second
   orthonormal := by
     intro base firstNormal secondNormal
-    rw [canonicalTransitionField_eq_canonical first second hRange base,
+    rw [canonicalTransitionField_eq_canonical first second hRange base]
+    simpa using
       (normalFrameTransition
         (frameValueAt first base) (frameValueAt second base)
-        (hRange base)).inner_map_map]
+        (hRange base)).inner_map_map firstNormal secondNormal
   inverse := fun base =>
     ((normalFrameTransition
       (frameValueAt first base) (frameValueAt second base)
