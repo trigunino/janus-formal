@@ -58,7 +58,6 @@ theorem projectedSeedSynthesisSumCLM_basis
       projectedSeedNormalFrame tangentFrame charts chart k base := by
   classical
   unfold projectedSeedSynthesisSumCLM basisRankOneSynthesisCLM
-  simp only [Finset.sum_apply]
   change
     (∑ j, coordinateBasis.coord j (coordinateBasis k) •
       projectedSeedNormalFrame tangentFrame charts chart j base) =
