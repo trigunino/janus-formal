@@ -14,6 +14,7 @@ open P0EFTJanusRieszShapeOperatorEquivariance
 open P0EFTJanusRieszShapeOperatorSmoothDependence
 open P0EFTJanusRieszShapeOperatorOpenMovingFrame
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
+open P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation
 open P0EFTJanusRieszShapeOperatorCanonicalProjectedSeedAssembly
 
 universe u v w x y
@@ -80,6 +81,7 @@ theorem identity_geometricRieszShapeFamilyOn_apply
   simp [geometricRieszShapeFamilyOn, framedRieszShapeFamilyOn,
     movingFrameCoordinatesOn, conjugatedOperatorFamilyOn,
     identitySmoothOrthogonalFrameFamilyOn, conjugateShapeOperator]
+  rfl
 
 /-- Global coefficient data automatically fills the canonical projected-seed
 assembly. Chartwise regularity is obtained by restricting global smoothness, and
