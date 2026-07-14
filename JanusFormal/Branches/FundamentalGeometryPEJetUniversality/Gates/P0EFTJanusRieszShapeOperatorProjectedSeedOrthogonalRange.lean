@@ -53,14 +53,14 @@ theorem projectedSeedNormalSpan_eq_projectedNormalFamilySpan
       Submodule.span ℝ
         (Set.range (fun k => projectedNormalFamily
           basisData.tangentFrame
-          (pointwiseNormalSeedCharts basisData).seed center k base)) := by
+          ((pointwiseNormalSeedCharts basisData).seed center) k base)) := by
   change Submodule.span ℝ
       (Set.range (InnerProductSpace.gramSchmidtNormed ℝ
         (fun k => projectedNormalFamily basisData.tangentFrame
-          (pointwiseNormalSeedCharts basisData).seed center k base))) =
+          ((pointwiseNormalSeedCharts basisData).seed center) k base))) =
     Submodule.span ℝ
       (Set.range (fun k => projectedNormalFamily basisData.tangentFrame
-        (pointwiseNormalSeedCharts basisData).seed center k base))
+        ((pointwiseNormalSeedCharts basisData).seed center) k base))
   rw [InnerProductSpace.span_gramSchmidtNormed_range,
     InnerProductSpace.span_gramSchmidt]
 
@@ -80,10 +80,10 @@ theorem projectedSeedNormalSpan_le_tangentFrameSpan_orthogonal
     unfold tangentFrameSpan
     apply Submodule.span_le.2
     rintro tangent ⟨i, rfl⟩
-    rw [Submodule.mem_orthogonal_singleton_iff_inner_right]
-    exact tangent_inner_projectedSeedNormalFrame_eq_zero
-      basisData.tangentFrame (pointwiseNormalSeedCharts basisData)
-      basisData.tangent_orthonormal center base i k
+    exact Submodule.mem_orthogonal_singleton_iff_inner_right.mpr
+      (tangent_inner_projectedSeedNormalFrame_eq_zero
+        basisData.tangentFrame (pointwiseNormalSeedCharts basisData)
+        basisData.tangent_orthonormal center base i k)
   exact hTangentOrthoSingleton.symm
     (Submodule.mem_span_singleton_self _)
 
