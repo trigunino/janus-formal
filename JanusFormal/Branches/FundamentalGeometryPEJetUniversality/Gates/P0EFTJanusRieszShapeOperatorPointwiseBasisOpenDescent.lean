@@ -52,6 +52,7 @@ def PointwiseBasisOpenRieszData.openMetricAtlas
     P0EFTJanusRieszShapeOperatorOpenMetricAtlas.OpenMetricFiberAtlas
       Base Base TangentModel NormalModel PhysicalOperator :=
   openMetricAtlasOfProjectedSeedsPhysical
+    (TangentModel := TangentModel) (NormalModel := NormalModel)
     data.basisData.tangentFrame
     (pointwiseNormalSeedCharts data.basisData)
     data.basisData.tangent_contDiff
@@ -88,10 +89,14 @@ theorem PointwiseBasisOpenRieszData.local_eq_descended
       (pointwiseNormalSeedCharts data.basisData) center base) :
     data.localOperator center base =
       P0EFTJanusRieszShapeOperatorMetricAtlasInterface.descendedMetricOperator
-        data.openMetricAtlas.toMetricFiberAtlas base := by
+        ((data.openMetricAtlas
+          (TangentModel := TangentModel) (NormalModel := NormalModel)).toMetricFiberAtlas)
+        base := by
   exact
     P0EFTJanusRieszShapeOperatorOpenMetricAtlas.localOperator_eq_descended_openMetricOperator
-      data.openMetricAtlas center base hValid
+      (data.openMetricAtlas
+        (TangentModel := TangentModel) (NormalModel := NormalModel))
+      center base hValid
 
 /-- Audit boundary after pointwise-basis open descent. -/
 structure PointwiseBasisOpenDescentStatus where
