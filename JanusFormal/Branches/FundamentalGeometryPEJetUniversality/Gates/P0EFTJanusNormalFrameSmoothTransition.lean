@@ -49,8 +49,7 @@ theorem normalFrameAdjointTransition_eq_canonical
     (first second : Normal →ₗᵢ[ℝ] Ambient)
     (hRange : normalFrameRange first = normalFrameRange second) :
     normalFrameAdjointTransition first second =
-      (normalFrameTransition first second hRange).toContinuousLinearEquiv
-        .toContinuousLinearMap := by
+      (normalFrameTransition first second hRange).toContinuousLinearEquiv.toContinuousLinearMap := by
   apply ContinuousLinearMap.ext
   intro normal
   apply ext_inner_right ℝ
@@ -77,8 +76,8 @@ def realAdjointContinuousLinearMap :
     (Normal →L[ℝ] Ambient) →L[ℝ] (Ambient →L[ℝ] Normal) :=
   realAdjointLinearMap.mkContinuous 1 (by
     intro operator
-    have hNorm := ContinuousLinearMap.adjoint.norm_map operator
-    simpa using le_of_eq hNorm)
+    change ‖ContinuousLinearMap.adjoint operator‖ ≤ 1 * ‖operator‖
+    rw [ContinuousLinearMap.adjoint.norm_map, one_mul])
 
 @[simp]
 theorem realAdjointContinuousLinearMap_apply
@@ -124,7 +123,7 @@ theorem smoothAdjointTransitionCLM_contDiff
   have hAdjoint : ContDiff ℝ ∞
       (fun base => realAdjointContinuousLinearMap
         (first.frame base).toContinuousLinearMap) := by
-    simpa only [Function.comp_apply] using
+    simpa [Function.comp_def] using
       realAdjointContinuousLinearMap.contDiff.comp
         first.forward_contDiff
   exact hAdjoint.clm_comp second.forward_contDiff
@@ -174,7 +173,11 @@ def smoothCanonicalNormalFrameTransition
             (hRange base)).symm).toContinuousLinearEquiv.toContinuousLinearMap =
           (normalFrameTransition (second.frame base) (first.frame base)
             (hRange base).symm).toContinuousLinearEquiv.toContinuousLinearMap := by
-              rw [normalFrameTransition_reverse]
+              exact congrArg
+                (fun transition : Normal ≃ₗᵢ[ℝ] Normal =>
+                  transition.toContinuousLinearEquiv.toContinuousLinearMap)
+                (normalFrameTransition_reverse
+                  (first.frame base) (second.frame base) (hRange base)).symm
         _ = normalFrameAdjointTransition
             (second.frame base) (first.frame base) :=
           (normalFrameAdjointTransition_eq_canonical
