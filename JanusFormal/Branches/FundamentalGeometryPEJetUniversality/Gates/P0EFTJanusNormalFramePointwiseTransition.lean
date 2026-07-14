@@ -54,8 +54,13 @@ theorem normalFrameTransition_spec
       first.equivRange (first.equivRange.symm pointInFirst) =
         pointInFirst :=
     first.equivRange.apply_symm_apply pointInFirst
-  have hValues := congrArg Subtype.val hInverse
-  simpa [normalFrameTransition, pointInFirst, normalFrameRange] using hValues
+  change first (first.equivRange.symm pointInFirst) = second normal
+  calc
+    first (first.equivRange.symm pointInFirst) =
+        (pointInFirst : Ambient) := by
+      exact congrArg Subtype.val hInverse
+    _ = second normal := by
+      rfl
 
 /-- Any orthogonal coordinate transformation intertwining the two frames is the
 canonical transition. -/
