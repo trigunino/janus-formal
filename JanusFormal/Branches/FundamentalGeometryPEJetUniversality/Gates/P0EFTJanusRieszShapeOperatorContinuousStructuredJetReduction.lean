@@ -95,72 +95,67 @@ theorem continuousDerivativeFlip_apply
       derivative second first := by
   simp [continuousDerivativeFlip]
 
-def continuousCurvatureFromDerivative :
-    ContinuousConnectionDerivative Tangent →L[ℝ]
-      ContinuousConnectionDerivative Tangent :=
-  (((ContinuousLinearMap.id ℝ
-      (ContinuousConnectionDerivative Tangent)) :
-    ContinuousConnectionDerivative Tangent →L[ℝ]
-      ContinuousConnectionDerivative Tangent) -
-    continuousDerivativeFlip (Tangent := Tangent) :
-      ContinuousConnectionDerivative Tangent →L[ℝ]
-        ContinuousConnectionDerivative Tangent)
+/-- Smooth antisymmetrization `dA ↦ dA-dAᵀ`. -/
+def continuousCurvatureFromDerivative
+    (derivative : ContinuousConnectionDerivative Tangent) :
+    ContinuousGaugeCurvature (Tangent := Tangent) :=
+  derivative - continuousDerivativeFlip (Tangent := Tangent) derivative
 
 @[simp]
 theorem continuousCurvatureFromDerivative_apply
     (derivative : ContinuousConnectionDerivative Tangent)
     (first second : Tangent) :
-    continuousCurvatureFromDerivative (Tangent := Tangent) derivative first second =
+    continuousCurvatureFromDerivative derivative first second =
       derivative first second - derivative second first := by
   simp [continuousCurvatureFromDerivative]
 
-def structuredGaugeCurvatureProjection :
-    SmoothLowOrderStructuredJet Tangent Normal →L[ℝ]
-      ContinuousGaugeCurvature (Tangent := Tangent) :=
-  (continuousCurvatureFromDerivative (Tangent := Tangent)).comp
-    (structuredConnectionDerivativeProjection
-      (Tangent := Tangent) (Normal := Normal))
+theorem continuousCurvatureFromDerivative_contDiff :
+    ContDiff ℝ ∞
+      (continuousCurvatureFromDerivative (Tangent := Tangent)) := by
+  exact contDiff_id.sub
+    (continuousDerivativeFlip (Tangent := Tangent)).contDiff
 
-def smoothLowOrderReduction :
-    SmoothLowOrderStructuredJet Tangent Normal →L[ℝ]
-      SmoothLowOrderReducedJet
-        (Tangent := Tangent) (Normal := Normal) :=
+/-- Smooth reduction `(Qᵀ,Qᴺ,A,dA) ↦ (Qᴺ,dA-dAᵀ)`. -/
+def smoothLowOrderReduction
+    (jet : SmoothLowOrderStructuredJet Tangent Normal) :
+    SmoothLowOrderReducedJet
+      (Tangent := Tangent) (Normal := Normal) :=
   (structuredNormalQuadraticProjection
-    (Tangent := Tangent) (Normal := Normal)).prod
-      (structuredGaugeCurvatureProjection
-        (Tangent := Tangent) (Normal := Normal))
+      (Tangent := Tangent) (Normal := Normal) jet,
+    continuousCurvatureFromDerivative
+      (structuredConnectionDerivativeProjection
+        (Tangent := Tangent) (Normal := Normal) jet))
 
 @[simp]
 theorem smoothLowOrderReduction_secondFundamental
     (jet : SmoothLowOrderStructuredJet Tangent Normal) :
-    (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal) jet).1 =
-      jet.1.2 := by
+    (smoothLowOrderReduction jet).1 = jet.1.2 := by
   rfl
 
 @[simp]
 theorem smoothLowOrderReduction_curvature_apply
     (jet : SmoothLowOrderStructuredJet Tangent Normal)
     (first second : Tangent) :
-    (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal) jet).2
-        first second =
+    (smoothLowOrderReduction jet).2 first second =
       jet.2.2 first second - jet.2.2 second first := by
-  simp [smoothLowOrderReduction, structuredGaugeCurvatureProjection,
-    structuredConnectionDerivativeProjection]
+  simp [smoothLowOrderReduction, structuredConnectionDerivativeProjection]
 
 theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderReduction (Tangent := Tangent) (Normal := Normal)) := by
-  change ContDiff ℝ ∞
-    (fun jet : SmoothLowOrderStructuredJet Tangent Normal =>
+  have hNormal : ContDiff ℝ ∞
       (structuredNormalQuadraticProjection
-          (Tangent := Tangent) (Normal := Normal) jet,
-        structuredGaugeCurvatureProjection
-          (Tangent := Tangent) (Normal := Normal) jet))
-  exact
+        (Tangent := Tangent) (Normal := Normal)) :=
     (structuredNormalQuadraticProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff.prodMk
-      (structuredGaugeCurvatureProjection
-        (Tangent := Tangent) (Normal := Normal)).contDiff
+      (Tangent := Tangent) (Normal := Normal)).contDiff
+  have hDerivative : ContDiff ℝ ∞
+      (structuredConnectionDerivativeProjection
+        (Tangent := Tangent) (Normal := Normal)) :=
+    (structuredConnectionDerivativeProjection
+      (Tangent := Tangent) (Normal := Normal)).contDiff
+  exact hNormal.prodMk
+    ((continuousCurvatureFromDerivative_contDiff
+      (Tangent := Tangent)).comp hDerivative)
 
 def forgetContinuousLowOrderStructuredJet
     (jet : SmoothLowOrderStructuredJet Tangent Normal) :
@@ -176,25 +171,22 @@ def continuousReductionLiftsAlgebraic
     (jet : SmoothLowOrderStructuredJet Tangent Normal) :
     ContinuousLiftOfLowOrderReducedData
       (reduceLowOrderJet (forgetContinuousLowOrderStructuredJet jet)) where
-  smoothJet := smoothLowOrderReduction
-    (Tangent := Tangent) (Normal := Normal) jet
+  smoothJet := smoothLowOrderReduction jet
   secondFundamental_apply := by
     intro first second
-    exact congrArg
-      (fun form => form first second)
-      (smoothLowOrderReduction_secondFundamental
-        (Tangent := Tangent) (Normal := Normal) jet)
+    rfl
   gaugeCurvature_apply := by
     intro first second
-    simpa [forgetContinuousLowOrderStructuredJet, reduceLowOrderJet, curvature] using
-      (smoothLowOrderReduction_curvature_apply
-        (Tangent := Tangent) (Normal := Normal) jet first second)
+    change
+      jet.2.2 first second - jet.2.2 second first =
+        P0EFTJanusConcreteAbelianConnectionJet.curvature
+          (forgetContinuousLowOrderStructuredJet jet).connection first second
+    rfl
 
 theorem smoothLowOrderReduction_isGeometric
     (jet : SmoothLowOrderStructuredJet Tangent Normal)
     (hJet : jet.IsGeometric) :
-    (smoothLowOrderReduction
-      (Tangent := Tangent) (Normal := Normal) jet).IsGeometric := by
+    (smoothLowOrderReduction jet).IsGeometric := by
   constructor
   · intro first second
     exact hJet.2 first second
@@ -204,7 +196,7 @@ theorem smoothLowOrderReduction_isGeometric
 structure ContinuousStructuredJetReductionStatus where
   continuousStructuredJetModelConstructed : Prop
   continuousCurvatureProjectionConstructed : Prop
-  continuousReductionMapConstructed : Prop
+  smoothReductionMapConstructed : Prop
   reductionMapSmooth : Prop
   algebraicReductionCompatibilityProved : Prop
   geometricityPreserved : Prop
@@ -214,7 +206,7 @@ def continuousStructuredJetReductionClosed
     (s : ContinuousStructuredJetReductionStatus) : Prop :=
   s.continuousStructuredJetModelConstructed ∧
   s.continuousCurvatureProjectionConstructed ∧
-  s.continuousReductionMapConstructed ∧
+  s.smoothReductionMapConstructed ∧
   s.reductionMapSmooth ∧
   s.algebraicReductionCompatibilityProved ∧
   s.geometricityPreserved ∧
