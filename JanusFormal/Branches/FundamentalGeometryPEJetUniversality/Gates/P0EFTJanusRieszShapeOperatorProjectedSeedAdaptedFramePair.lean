@@ -50,8 +50,7 @@ def tangentFrameSynthesisCLM
     (coordinateBasis : Basis ι ℝ TangentModel)
     (basisData : PointwiseNormalBasisData Base Ambient ι κ)
     (base : Base) : TangentModel →L[ℝ] Ambient :=
-  (tangentFrameSynthesisLinearMap coordinateBasis basisData base)
-    .toContinuousLinearMap
+  (tangentFrameSynthesisLinearMap coordinateBasis basisData base).toContinuousLinearMap
 
 @[simp]
 theorem tangentFrameSynthesisCLM_basis
@@ -97,9 +96,12 @@ theorem tangentFrameSynthesisCLM_contDiff
     intro i hi
     exact (basisRankOneSynthesisCLM coordinateBasis i).contDiff.comp
       (basisData.tangent_contDiff i)
-  apply hSum.congr
-  intro base
-  exact tangentFrameSynthesisCLM_eq_sum coordinateBasis basisData base
+  have hEq : tangentFrameSynthesisCLM coordinateBasis basisData =
+      tangentFrameSynthesisSumCLM coordinateBasis basisData := by
+    funext base
+    exact tangentFrameSynthesisCLM_eq_sum coordinateBasis basisData base
+  rw [hEq]
+  exact hSum
 
 /-- Pointwise fallback tangent isometry obtained at a chart center. -/
 def tangentFrameFallback
@@ -162,34 +164,12 @@ theorem pointwiseBasisSmoothTangentFrameFamilyOn_range
           hCoordinateOrthonormal basisData center).frame base) =
       tangentFrameSpan basisData base := by
   unfold normalFrameRange tangentFrameSpan
-  have hFrame :
+  have hFrameCLM :
       ((pointwiseBasisSmoothTangentFrameFamilyOn coordinateBasis
-        hCoordinateOrthonormal basisData center).frame base).toLinearMap =
-        tangentFrameSynthesisLinearMap coordinateBasis basisData base := by
-    apply LinearMap.ext
-    intro vector
+        hCoordinateOrthonormal basisData center).frame base).toContinuousLinearMap =
+        tangentFrameSynthesisCLM coordinateBasis basisData base := by
     unfold pointwiseBasisSmoothTangentFrameFamilyOn
-    change synthesizedIsometryValue
-      ({ coordinateBasis := coordinateBasis
-         coordinateBasis_orthonormal := hCoordinateOrthonormal
-         vector := basisData.tangentFrame
-         vector_orthonormal := by
-           intro point hPoint
-           exact basisData.tangent_orthonormal point
-         synthesis := tangentFrameSynthesisCLM coordinateBasis basisData
-         synthesis_basis := tangentFrameSynthesisCLM_basis
-           coordinateBasis basisData
-         synthesis_contDiffOn :=
-           (tangentFrameSynthesisCLM_contDiff
-             coordinateBasis basisData).contDiffOn
-         fallback := tangentFrameFallback coordinateBasis
-           hCoordinateOrthonormal basisData center } :
-        OrthonormalFrameSynthesisOn
-          (Base := Base) (Model := TangentModel) (Ambient := Ambient) (κ := ι)
-          {point | projectedSeedChartValid basisData.tangentFrame
-            (pointwiseNormalSeedCharts basisData) center point})
-      base vector = tangentFrameSynthesisCLM coordinateBasis basisData base vector
-    have hCLM := synthesizedIsometryValue_toContinuousLinearMap
+    exact synthesizedIsometryValue_toContinuousLinearMap
       ({ coordinateBasis := coordinateBasis
          coordinateBasis_orthonormal := hCoordinateOrthonormal
          vector := basisData.tangentFrame
@@ -209,8 +189,14 @@ theorem pointwiseBasisSmoothTangentFrameFamilyOn_range
           {point | projectedSeedChartValid basisData.tangentFrame
             (pointwiseNormalSeedCharts basisData) center point})
       base hValid
+  have hFrame :
+      ((pointwiseBasisSmoothTangentFrameFamilyOn coordinateBasis
+        hCoordinateOrthonormal basisData center).frame base).toLinearMap =
+        tangentFrameSynthesisLinearMap coordinateBasis basisData base := by
+    apply LinearMap.ext
+    intro vector
     exact congrArg
-      (fun operator : TangentModel →L[ℝ] Ambient => operator vector) hCLM
+      (fun operator : TangentModel →L[ℝ] Ambient => operator vector) hFrameCLM
   rw [hFrame]
   exact coordinateBasis.constr_range ℝ
 
