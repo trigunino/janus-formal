@@ -57,7 +57,11 @@ theorem projectedSeedSynthesisSumCLM_basis
         (coordinateBasis k) =
       projectedSeedNormalFrame tangentFrame charts chart k base := by
   classical
-  simp [projectedSeedSynthesisSumCLM, basisRankOneSynthesisCLM]
+  unfold projectedSeedSynthesisSumCLM basisRankOneSynthesisCLM
+  rw [Fintype.sum_eq_single k]
+  · simp
+  · intro j hj hne
+    simp [hne]
 
 theorem projectedSeedSynthesisCLM_eq_sum
     {Chart : Type y} {ι : Type*}
