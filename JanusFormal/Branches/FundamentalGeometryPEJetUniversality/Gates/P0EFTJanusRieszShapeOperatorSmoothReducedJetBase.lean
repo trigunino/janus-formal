@@ -111,11 +111,7 @@ def smoothLowOrderRieszOperator
     (point : SmoothLowOrderRieszPoint
       (Tangent := Tangent) (Normal := Normal)) :
     Tangent →L[ℝ] Tangent :=
-  continuousIIRieszShapeOperator
-    (reducedRieszSecondFundamentalProjection
-      (Tangent := Tangent) (Normal := Normal) point)
-    (reducedRieszNormalProjection
-      (Tangent := Tangent) (Normal := Normal) point)
+  continuousIIRieszShapeOperator point.1.1 point.2
 
 /-- The Riesz evaluator is globally smooth on the explicit reduced jet vector
 space. -/
@@ -123,24 +119,14 @@ theorem smoothLowOrderRieszOperator_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderRieszOperator
         (Tangent := Tangent) (Normal := Normal)) := by
-  change ContDiff ℝ ∞
-    (fun point : SmoothLowOrderRieszPoint
-        (Tangent := Tangent) (Normal := Normal) =>
-      continuousIIRieszShapeOperator
-        (reducedRieszSecondFundamentalProjection
-          (Tangent := Tangent) (Normal := Normal) point)
-        (reducedRieszNormalProjection
-          (Tangent := Tangent) (Normal := Normal) point))
-  exact continuousIIRieszShape_family_contDiff
-    (Tangent := Tangent) (Normal := Normal)
-    (reducedRieszSecondFundamentalProjection
-      (Tangent := Tangent) (Normal := Normal))
-    (reducedRieszNormalProjection
-      (Tangent := Tangent) (Normal := Normal))
-    (reducedRieszSecondFundamentalProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff
-    (reducedRieszNormalProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff
+  have hPair : ContDiff ℝ ∞
+      (fun point : SmoothLowOrderRieszPoint
+          (Tangent := Tangent) (Normal := Normal) =>
+        (point.1.1, point.2)) := by
+    fun_prop
+  simpa [smoothLowOrderRieszOperator, Function.comp_def] using
+    ((continuousIIRieszShape_joint_contDiff
+      (Tangent := Tangent) (Normal := Normal)).comp hPair)
 
 variable {Base : Type w} {Ambient : Type x}
 variable [NormedAddCommGroup Base] [NormedSpace ℝ Base]
@@ -174,8 +160,7 @@ def SmoothReducedJetRieszFamilyData.secondFundamental
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     Base → ContinuousSecondFundamentalForm
       (Tangent := Tangent) (Normal := Normal) :=
-  fun base => reducedSecondFundamentalProjection
-    (Tangent := Tangent) (Normal := Normal) (data.reducedJet base)
+  fun base => (data.reducedJet base).1
 
 /-- Extraction of `II` from a smooth reduced-jet family is smooth. -/
 theorem SmoothReducedJetRieszFamilyData.secondFundamental_contDiff
@@ -183,11 +168,8 @@ theorem SmoothReducedJetRieszFamilyData.secondFundamental_contDiff
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞ data.secondFundamental := by
-  simpa [SmoothReducedJetRieszFamilyData.secondFundamental,
-    Function.comp_def] using
-    ((reducedSecondFundamentalProjection
-      (Tangent := Tangent) (Normal := Normal)).contDiff.comp
-        data.reducedJet_contDiff)
+  change ContDiff ℝ ∞ (fun base => (data.reducedJet base).1)
+  fun_prop
 
 /-- Smooth reduced-jet data automatically instantiates the global coefficient
 interface used by canonical projected-seed descent. -/
