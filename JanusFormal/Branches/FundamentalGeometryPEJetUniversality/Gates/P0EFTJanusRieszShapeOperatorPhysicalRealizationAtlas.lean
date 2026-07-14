@@ -8,6 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
+open Filter Topology
 open scoped ContDiff
 open P0EFTJanusRieszShapeOperatorBundleDescent
 open P0EFTJanusRieszShapeOperatorMetricAtlasInterface
