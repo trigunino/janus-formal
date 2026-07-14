@@ -143,14 +143,14 @@ theorem adjointFrameValue_hasFDerivAt
     (base : Tangent) :
     HasFDerivAt (adjointFrameValue frame)
       (adjointFrameFirst frame base) base := by
-  change HasFDerivAt
-    (fun point => ContinuousLinearMap.adjoint (frame.field point))
-    (adjointFrameFirst frame base) base
-  simpa only [Function.comp_apply, adjointFrameFirst,
-    realAdjointContinuousLinearMap_apply] using
+  have h :=
     (realAdjointContinuousLinearMap
-      (Normal := Normal) (Ambient := Ambient)).hasFDerivAt.comp base
-        (frame.field_hasFDerivAt base)
+      (Normal := Normal) (Ambient := Ambient)).hasFDerivAt
+      (x := frame.field base) |>.comp base (frame.field_hasFDerivAt base)
+  convert h using 1
+  · funext point
+    rfl
+  · rfl
 
 /-- The first adjoint-frame derivative itself has the expected second
 Fréchet derivative. -/
@@ -162,11 +162,12 @@ theorem adjointFrameFirst_hasFDerivAt
       (adjointFrameSecond frame base) base := by
   let postAdjoint := adjointOnFrameDerivatives
     (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
-  change HasFDerivAt
-    (fun point => postAdjoint (frame.first point))
-    (adjointFrameSecond frame base) base
-  simpa only [Function.comp_apply, adjointFrameSecond, postAdjoint] using
-    postAdjoint.hasFDerivAt.comp base (frame.first_hasFDerivAt base)
+  have h := postAdjoint.hasFDerivAt
+    (x := frame.first base) |>.comp base (frame.first_hasFDerivAt base)
+  convert h using 1
+  · funext point
+    rfl
+  · rfl
 
 /-- First differentiation of `e₁†e₂`, with no derivative witness supplied by the
 caller. -/
@@ -176,10 +177,12 @@ theorem canonicalTransitionField_hasFDerivAt
     (base : Tangent) :
     HasFDerivAt (canonicalTransitionField first second)
       (canonicalTransitionFirst first second base) base := by
-  simpa [canonicalTransitionField, canonicalTransitionFirst,
-    normalFrameComposition] using
-      (adjointFrameValue_hasFDerivAt first base).clm_comp
-        (second.field_hasFDerivAt base)
+  have h := (adjointFrameValue_hasFDerivAt first base).clm_comp
+    (second.field_hasFDerivAt base)
+  convert h using 1
+  · funext point
+    rfl
+  · rfl
 
 /-- Second differentiation of `e₁†e₂`, obtained by applying the continuous
 linear-map product rule to the two summands of its first derivative. -/
@@ -194,19 +197,23 @@ theorem canonicalTransitionFirst_hasFDerivAt
   have hRightHead : HasFDerivAt
       (fun point => composition (adjointFrameValue first point))
       (composition.comp (adjointFrameFirst first base)) base := by
-    exact composition.hasFDerivAt.comp base
-      (adjointFrameValue_hasFDerivAt first base)
+    exact (composition.hasFDerivAt
+      (x := adjointFrameValue first base)).comp base
+        (adjointFrameValue_hasFDerivAt first base)
   have hRight := hRightHead.clm_comp (second.first_hasFDerivAt base)
   have hLeftHead : HasFDerivAt
       (fun point => composition.flip (second.field point))
       (composition.flip.comp (second.first base)) base := by
-    exact composition.flip.hasFDerivAt.comp base
-      (second.field_hasFDerivAt base)
+    exact (composition.flip.hasFDerivAt
+      (x := second.field base)).comp base
+        (second.field_hasFDerivAt base)
   have hLeft := hLeftHead.clm_comp
     (adjointFrameFirst_hasFDerivAt first base)
-  simpa [canonicalTransitionFirst, canonicalTransitionSecond,
-    canonicalTransitionSecondRight, canonicalTransitionSecondLeft,
-    composition, normalFrameComposition] using hRight.add hLeft
+  have h := hRight.add hLeft
+  convert h using 1
+  · funext point
+    rfl
+  · rfl
 
 /-- The bundled first derivative agrees with the explicit differentiated-adjoint
 formula used by the existing bridge module. -/
@@ -216,10 +223,16 @@ theorem canonicalTransitionFirst_apply
     (base x : Tangent) :
     canonicalTransitionFirst first second base x =
       adjointTransitionFirstFormula first second base x := by
-  simp only [canonicalTransitionFirst, adjointTransitionFirstFormula,
-    normalFrameComposition, adjointFrameValue, adjointFrameFirst,
-    add_apply, comp_apply, realAdjointContinuousLinearMap_apply]
-  abel
+  change
+    (ContinuousLinearMap.adjoint (first.field base)).comp
+        (second.first base x) +
+      (ContinuousLinearMap.adjoint (first.first base x)).comp
+        (second.field base) =
+    (ContinuousLinearMap.adjoint (first.first base x)).comp
+        (second.field base) +
+      (ContinuousLinearMap.adjoint (first.field base)).comp
+        (second.first base x)
+  exact add_comm _ _
 
 /-- The bundled second derivative agrees with the four-term Hessian formula in
 the bridge module. -/
@@ -231,11 +244,23 @@ theorem canonicalTransitionSecond_apply
       adjointTransitionSecondFormula first second base x y := by
   apply ContinuousLinearMap.ext
   intro normal
-  simp only [canonicalTransitionSecond, canonicalTransitionSecondRight,
-    canonicalTransitionSecondLeft, adjointTransitionSecondFormula,
-    normalFrameComposition, adjointFrameValue, adjointFrameFirst,
-    adjointFrameSecond, adjointOnFrameDerivatives, add_apply,
-    comp_apply, realAdjointContinuousLinearMap_apply]
+  change
+    (ContinuousLinearMap.adjoint (first.field base))
+        (second.second base x y normal) +
+      ((ContinuousLinearMap.adjoint (first.first base x))
+          (second.first base y normal) +
+        ((ContinuousLinearMap.adjoint (first.second base x y))
+            (second.field base normal) +
+          (ContinuousLinearMap.adjoint (first.first base y))
+            (second.first base x normal))) =
+    (ContinuousLinearMap.adjoint (first.second base x y))
+        (second.field base normal) +
+      ((ContinuousLinearMap.adjoint (first.first base y))
+          (second.first base x normal) +
+        ((ContinuousLinearMap.adjoint (first.first base x))
+            (second.first base y normal) +
+          (ContinuousLinearMap.adjoint (first.field base))
+            (second.second base x y normal)))
   abel
 
 /-- The second transition derivative is symmetric because it is the genuine
