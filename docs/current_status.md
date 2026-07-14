@@ -10,15 +10,13 @@ The consolidated scientific stack was merged into `main` on 12 July 2026 through
 d4b893b06983c5b65f481c24e2e71f2ba6ddd1ba.
 ```
 
-Draft PR 6 advances Programs P-D and P-E on branch
+Programs P-D and P-E were then advanced and merged into `main` through PR 6 on 14 July 2026 at
 
 ```text
-agent/categorical-jets-and-pairing-modules.
+92ade09c4f9aaab064840f934a42a50fb59bd171.
 ```
 
-Until PR 6 is merged, its results must not be attributed to `main`.
-
-The branch now contains:
+The merged PR 6 stack contains:
 
 - the corrected finite-jet operator category and holonomic composition;
 - invariant pairing modules and isotropy-stratification counterexamples;
@@ -35,22 +33,36 @@ The branch now contains:
 - exact Codazzi and abelian Bianchi jet quotients;
 - direct-product splittings of `nabla II` and abelian connection second jets;
 - the algebraic normal Ricci equation;
-- finite-dimensional Fréchet--Riesz construction of the shape operators from `II`.
+- finite-dimensional Fréchet--Riesz construction of the shape operators from `II`;
+- canonical pointwise and smooth normal-frame transitions;
+- transition-jet bridges from frame derivatives to normal gauge extraction;
+- a direct construction of the normal-frame transition derivative.
 
 ## 2. Validation
 
-The latest theorem head is
+The current `main` head is
 
 ```text
-d4008fbcbe32f7e40ecad203ca36fc94d1af7c10.
+92ade09c4f9aaab064840f934a42a50fb59bd171.
 ```
 
-It was validated by:
+The theorem commits immediately below the merge were validated on the PR branch by the focused Lean and Python workflows added by PR 6. The merge commit itself currently has no separately reported combined status, so this document does not claim an independent post-merge CI run for `92ade09`.
+
+The previously recorded successful runs include:
 
 ```text
 Program PE jet universality       run 29268187119   Lean/Python success
 Programs D and P integration      run 29268187102   all listed jobs success
 Janus deep alpha completion       run 29268187105   Lean/Python success
+```
+
+PR 6 extends focused validation to include:
+
+```text
+JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameSmoothTransition
+JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameTransitionJetBridge
+JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameTransitionDirectConstruction
 ```
 
 Supported focused Lean heads include:
@@ -137,7 +149,7 @@ The correct global object is an equivariant pairing module over the invariant sc
 
 #### 5.1 Categorical and groupoid core
 
-The branch proves, in the declared models:
+The current `main` stack proves, in the declared models:
 
 - local finite-jet factorization under the stated Peetre--Slovak hypotheses;
 - naturality/equivariance and evaluator uniqueness;
@@ -171,7 +183,10 @@ Lean constructs:
 - the flat-adapted identity `B=II`;
 - residual `O(T) x O(N)` equivariance;
 - moving-frame corrections, normal transport and overlap Čech laws;
-- determinant-one reduction to `SO(T) x SO(N)`.
+- determinant-one reduction to `SO(T) x SO(N)`;
+- canonical pointwise normal-frame transitions;
+- smooth adjoint-formula transitions on overlaps;
+- transition jets and their direct derivative construction.
 
 These local constructions are not yet the complete global Janus frame and normal bundles.
 
@@ -191,7 +206,7 @@ Higher-dimensional Clifford covers, smooth principal bundles and characteristic-
 
 #### 5.5 Codazzi and abelian Bianchi exactness
 
-The branch proves:
+The current `main` stack proves:
 
 - Gauss curvature symmetries from symmetric `II`;
 - Codazzi and abelian Bianchi skew/cyclic identities;
@@ -221,7 +236,7 @@ Lean proves self-adjointness of `A_xi` and the tangent/normal antisymmetries of
 <[A_xi,A_eta]x,y>.
 ```
 
-The branch now goes further: for a symmetric bilinear finite-dimensional `II`, it constructs `A_xi` by Fréchet--Riesz representation. Finite-dimensional bilinear continuity is supplied automatically by Mathlib. The Weingarten relation, self-adjointness, commutator symmetries and the algebraic Ricci reconstruction therefore follow from `II`, rather than from independently assumed shape operators.
+The current `main` stack goes further: for a symmetric bilinear finite-dimensional `II`, it constructs `A_xi` by Fréchet--Riesz representation. Finite-dimensional bilinear continuity is supplied automatically by Mathlib. The Weingarten relation, self-adjointness, commutator symmetries and the algebraic Ricci reconstruction therefore follow from `II`, rather than from independently assumed shape operators.
 
 Still open:
 
@@ -243,6 +258,7 @@ actual decorated Janus data
   -> structured action groupoid and holonomic operator category
   -> low-order quotient (II,F)
   -> smooth local adapted frames and oriented overlap cocycle
+  -> canonical normal-frame transition jets and gauge extraction
   -> Spin/determinant defects and rank-two Clifford SpinC model
   -> first Gauss--Codazzi--Bianchi quotient stages
   -> split data: Sym3 + Codazzi and gauge3 + nabla F
@@ -258,30 +274,3 @@ actual decorated Janus data
 ```
 
 The repository does **not** yet contain the full differentiable Janus structured-jet groupoid, a global Janus SpinC principal bundle, the geometric higher-order jet-isomorphism theorem, the concrete nonlinear Janus Euler family, a selected microscopic action, a unique vacuum or an absolute no-fit scale.
-
-## 7. Immediate theorem queue
-
-1. Bundle the Riesz shape operators linearly in the normal parameter and prove residual `O(T) x O(N)` equivariance.
-2. Prove smooth dependence of the Riesz construction on the structured background jet.
-3. Insert an actual normal connection and ambient mixed-curvature jet; prove the geometric Ricci equation.
-4. Prove smooth jet-bundle compatibility of the Codazzi, `nabla F` and Ricci stages.
-5. Identify `F` and its derivatives with the SpinC determinant-line connection.
-6. Construct higher-dimensional Clifford Spin covers for the required tangent and normal ranks.
-7. Package local frames, transitions and lifts into global oriented and SpinC principal bundles.
-8. Prove characteristic-class matching of Spin and determinant-root defects.
-9. Add ambient curvature jets and complete the Gauss--Codazzi--Ricci--Bianchi realizability conditions.
-10. Extend the Spencer splittings by one order and identify the first higher-order obstruction.
-11. Construct the differentiable structured-jet groupoid and effective descent for all natural sectors.
-12. Classify orbit types, invariant modules and smooth cross-stratum extension.
-13. Insert the resulting operator basis into the nonlinear Helmholtz/Noether system.
-
-## 8. Navigation
-
-- [`PROGRAM.md`](../PROGRAM.md) — stable program map;
-- [`program_master_roadmap.md`](program_master_roadmap.md) — detailed dependency graph;
-- [`program_pe_categorical_jet_equivalence.md`](program_pe_categorical_jet_equivalence.md) — corrected operator category;
-- [`program_pe_structured_jet_reduction.md`](program_pe_structured_jet_reduction.md) — structured-jet reduction program;
-- [`program_pe_low_order_structured_background.md`](program_pe_low_order_structured_background.md) — concrete `(B,F)` quotient;
-- [`program_pe_spinC_cocycle_lift.md`](program_pe_spinC_cocycle_lift.md) — SpinC defect/lift program;
-- [`program_pd_global_pairing_modules.md`](program_pd_global_pairing_modules.md) — pointwise-to-global pairing correction;
-- [`janus_branch_registry.md`](janus_branch_registry.md) — supported heads and gate-only collections.
