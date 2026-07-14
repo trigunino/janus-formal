@@ -9,6 +9,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Filter Topology
+open scoped ContDiff
 open P0EFTJanusRieszShapeOperatorBundleDescent
 
 universe u v w
@@ -61,6 +62,32 @@ theorem regularity_descends
   refine ⟨data.localValue chart, hLocalRegular chart, ?_⟩
   exact descendedValue_eventuallyEq_localValue data chart base hValid
 
+/-- `ContDiff ℝ ∞` is local with respect to eventual equality on neighborhoods. -/
+theorem contDiff_isLocalRegularityProperty
+    {E : Type v} {F : Type w}
+    [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [NormedAddCommGroup F] [NormedSpace ℝ F] :
+    IsLocalRegularityProperty (fun function : E → F => ContDiff ℝ ∞ function) := by
+  intro function hLocal
+  rw [contDiff_iff_contDiffAt]
+  intro point
+  obtain ⟨representative, hRepresentative, hEventually⟩ := hLocal point
+  exact hRepresentative.contDiffAt.congr_of_eventuallyEq
+    hEventually hEventually.eq_of_nhds
+
+/-- Smooth local representatives on a neighborhood-stable atlas descend to a
+smooth global representative. -/
+theorem contDiff_descends
+    {E : Type v} {F : Type w}
+    [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [NormedAddCommGroup F] [NormedSpace ℝ F]
+    (data : NeighborhoodLocalDescentData Chart E F)
+    (hLocalSmooth : ∀ chart, ContDiff ℝ ∞ (data.localValue chart)) :
+    ContDiff ℝ ∞ (descendedValue data.toLocalDescentData) :=
+  regularity_descends data
+    (fun function : E → F => ContDiff ℝ ∞ function)
+    contDiff_isLocalRegularityProperty hLocalSmooth
+
 /-- Two local regularity proofs give the same descended object because abstract
 descent is unique before regularity is considered. -/
 theorem regularity_descent_value_unique
@@ -91,14 +118,14 @@ def rieszLocalRegularityClosed
   s.contDiffLocalityInstantiated ∧
   s.actualJanusMetricAtlasInstantiated
 
-/-- Abstract local-property descent does not by itself provide the concrete
-`ContDiff` locality instance or the Janus metric atlas. -/
-theorem missing_contDiff_instance_blocks_local_smooth_descent
+/-- The remaining obstruction is now the actual Janus metric atlas, not
+locality of `ContDiff`. -/
+theorem missing_janus_metric_atlas_blocks_local_smooth_descent
     (s : RieszLocalRegularityStatus)
-    (hMissing : Not s.contDiffLocalityInstantiated) :
+    (hMissing : Not s.actualJanusMetricAtlasInstantiated) :
     Not (rieszLocalRegularityClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.2.2.1
+  exact hMissing hClosed.2.2.2.2.2
 
 end
 
