@@ -92,6 +92,23 @@ def structuredConnectionDerivativeProjection :
         (Tangent := Tangent) (Normal := Normal))
       (SmoothConnectionOneJet (Tangent := Tangent)))
 
+/-- Continuous-linear flip of the two arguments of a bilinear connection
+coefficient. -/
+def continuousDerivativeFlip :
+    ContinuousConnectionDerivative (Tangent := Tangent) →L[ℝ]
+      ContinuousConnectionDerivative (Tangent := Tangent) :=
+  ((ContinuousLinearMap.flipₗᵢ ℝ Tangent Tangent ℝ)
+    .toContinuousLinearEquiv).toContinuousLinearMap
+
+@[simp]
+theorem continuousDerivativeFlip_apply
+    (derivative : ContinuousConnectionDerivative (Tangent := Tangent))
+    (first second : Tangent) :
+    continuousDerivativeFlip
+        (Tangent := Tangent) derivative first second =
+      derivative second first := by
+  simp [continuousDerivativeFlip]
+
 /-- Continuous-linear antisymmetrization `dA ↦ F`, with
 `F(x,y)=dA(x,y)-dA(y,x)`. -/
 def continuousCurvatureFromDerivative :
@@ -99,8 +116,7 @@ def continuousCurvatureFromDerivative :
       ContinuousGaugeCurvature (Tangent := Tangent) :=
   (ContinuousLinearMap.id ℝ
       (ContinuousConnectionDerivative (Tangent := Tangent))) -
-    (ContinuousLinearMap.flipₗᵢ ℝ Tangent Tangent ℝ)
-      .toContinuousLinearEquiv.toContinuousLinearMap
+    continuousDerivativeFlip (Tangent := Tangent)
 
 @[simp]
 theorem continuousCurvatureFromDerivative_apply
@@ -155,8 +171,13 @@ theorem smoothLowOrderReduction_curvature_apply
 theorem smoothLowOrderReduction_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderReduction
-        (Tangent := Tangent) (Normal := Normal)) :=
-  (smoothLowOrderReduction
+        (Tangent := Tangent) (Normal := Normal)) := by
+  change ContDiff ℝ ∞
+    (fun jet : SmoothLowOrderStructuredJet
+        (Tangent := Tangent) (Normal := Normal) =>
+      smoothLowOrderReduction
+        (Tangent := Tangent) (Normal := Normal) jet)
+  exact (smoothLowOrderReduction
     (Tangent := Tangent) (Normal := Normal)).contDiff
 
 /-- Forget the continuous-linear bundling and recover the earlier algebraic
@@ -201,7 +222,6 @@ theorem smoothLowOrderReduction_isGeometric
     simpa using hJet.2 first second
   · intro first second
     simp
-    ring
 
 variable {Base : Type w} {Ambient : Type x}
 variable [NormedAddCommGroup Base] [NormedSpace ℝ Base]
@@ -244,11 +264,12 @@ theorem ContinuousStructuredJetRieszFamilyData.reducedJet_contDiff
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞ data.reducedJet := by
-  simpa [ContinuousStructuredJetRieszFamilyData.reducedJet,
-    Function.comp_def] using
-    ((smoothLowOrderReduction_contDiff
-      (Tangent := Tangent) (Normal := Normal)).comp
-        data.structuredJet_contDiff)
+  change ContDiff ℝ ∞
+    (fun base => smoothLowOrderReduction
+      (Tangent := Tangent) (Normal := Normal) (data.structuredJet base))
+  exact (smoothLowOrderReduction_contDiff
+    (Tangent := Tangent) (Normal := Normal)).fun_comp
+      data.structuredJet_contDiff
 
 /-- Pointwise geometricity descends through the continuous quotient map. -/
 theorem ContinuousStructuredJetRieszFamilyData.reducedJet_geometric
@@ -288,8 +309,8 @@ theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_direct
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞
-      data.toSmoothReducedJetRieszFamilyData
-        .toGlobalRieszCoefficientData.physicalOperator :=
+      (data.toSmoothReducedJetRieszFamilyData
+        .toGlobalRieszCoefficientData.physicalOperator) :=
   data.toSmoothReducedJetRieszFamilyData.physicalOperator_contDiff_direct
 
 /-- The same smoothness conclusion through projected-seed atlas descent. -/
@@ -299,8 +320,8 @@ theorem ContinuousStructuredJetRieszFamilyData.physicalOperator_contDiff_via_atl
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞
-      data.toSmoothReducedJetRieszFamilyData
-        .toGlobalRieszCoefficientData.physicalOperator :=
+      (data.toSmoothReducedJetRieszFamilyData
+        .toGlobalRieszCoefficientData.physicalOperator) :=
   data.toSmoothReducedJetRieszFamilyData.physicalOperator_contDiff_via_atlas
     (AtlasTangent := AtlasTangent) (AtlasNormal := AtlasNormal)
 
