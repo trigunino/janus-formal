@@ -126,7 +126,7 @@ theorem GlobalRieszCoefficientData.physicalOperator_contDiff_direct
 construction and descent. This verifies that the abstract atlas machinery and
 the direct fixed-model theorem meet on the same physical family. -/
 theorem GlobalRieszCoefficientData.physicalOperator_contDiff_via_atlas
-    {AtlasTangent AtlasNormal : Type*}
+    {AtlasTangent AtlasNormal : Type y}
     (data : GlobalRieszCoefficientData
       (Base := Base) (Tangent := Tangent) (Normal := Normal)
       (Ambient := Ambient) (ι := ι) (κ := κ)) :
