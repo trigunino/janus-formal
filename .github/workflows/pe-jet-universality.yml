@@ -63,7 +63,7 @@ concurrency:
 env:
   # Keep only the current failing/new gate here. Clear this string once it is
   # covered by the full build and no longer needs a fast diagnostic pass.
-  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
+  LEAN_TARGET: ""
 
 jobs:
   lean:
