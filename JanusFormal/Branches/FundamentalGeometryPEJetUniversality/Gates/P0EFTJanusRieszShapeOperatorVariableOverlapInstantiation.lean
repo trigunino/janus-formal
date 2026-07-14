@@ -10,6 +10,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped ContDiff InnerProductSpace
+open P0EFTJanusRieszShapeOperatorSmoothDependence
 open P0EFTJanusRieszShapeOperatorMovingFrame
 open P0EFTJanusRieszShapeOperatorVariableOverlap
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
