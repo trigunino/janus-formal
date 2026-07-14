@@ -70,11 +70,11 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build projected-seed orthogonal range only
+      - name: Build projected-seed adapted frame pair only
         run: |
           set +e
           lake build \
-            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair \
             > targeted-lean.log 2>&1
           status=$?
           cat targeted-lean.log
@@ -130,6 +130,7 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedPhysicalRangeBridge \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
