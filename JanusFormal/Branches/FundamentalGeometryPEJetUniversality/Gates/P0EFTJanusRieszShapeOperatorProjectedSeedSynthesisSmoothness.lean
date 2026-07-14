@@ -61,7 +61,9 @@ theorem projectedSeedSynthesisSumCLM_basis
   rw [Fintype.sum_eq_single k]
   · simp
   · intro j hj hne
-    simp [hne]
+    apply ContinuousLinearMap.ext
+    intro vector
+    simp [basisRankOneSynthesisCLM, hne]
 
 theorem projectedSeedSynthesisCLM_eq_sum
     {Chart : Type y} {ι : Type*}
