@@ -1,4 +1,4 @@
-import Mathlib.Topology.Basic
+import Mathlib
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorBundleDescent
 
 namespace JanusFormal
@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Filter
+open Filter Topology
 open P0EFTJanusRieszShapeOperatorBundleDescent
 
 universe u v w
@@ -17,16 +17,13 @@ variable {Chart : Type u} {Base : Type v} {Fiber : Type w}
 variable [TopologicalSpace Base]
 
 /-- A predicate on global representatives is local when it can be checked using
-an eventually equal regular representative around every point.
-
-This is the precise sheaf-style principle needed for continuity, differentiability
-or smoothness. The analytic instantiation is deliberately separated from the
-pure descent argument. -/
+an eventually equal regular representative around every point. -/
 def IsLocalRegularityProperty
     (Regular : (Base → Fiber) → Prop) : Prop :=
   ∀ function : Base → Fiber,
-    (∀ base, ∃ local : Base → Fiber,
-      Regular local ∧ function =ᶠ[𝓝 base] local) →
+    (∀ base, ∃ localRepresentative : Base → Fiber,
+      Regular localRepresentative ∧
+        function =ᶠ[𝓝 base] localRepresentative) →
     Regular function
 
 /-- Local descent data with the additional fact that a chart valid at a point
@@ -51,19 +48,14 @@ theorem descendedValue_eventuallyEq_localValue
     chart nearby hNearby).symm
 
 /-- Any genuinely local regularity property descends from regular chart
-representatives.
-
-For the Riesz program, `Regular` can later be instantiated by continuity,
-`C^k`, or smoothness once the corresponding Mathlib locality lemma is connected.
-The proof itself uses only cover, overlap compatibility and neighborhood
-validity. -/
+representatives. -/
 theorem regularity_descends
     (data : NeighborhoodLocalDescentData Chart Base Fiber)
     (Regular : (Base → Fiber) → Prop)
     (hLocalProperty : IsLocalRegularityProperty Regular)
     (hLocalRegular : ∀ chart, Regular (data.localValue chart)) :
     Regular (descendedValue data.toLocalDescentData) := by
-  apply hLocalProperty
+  apply hLocalProperty (descendedValue data.toLocalDescentData)
   intro base
   obtain ⟨chart, hValid⟩ := data.cover base
   refine ⟨data.localValue chart, hLocalRegular chart, ?_⟩
