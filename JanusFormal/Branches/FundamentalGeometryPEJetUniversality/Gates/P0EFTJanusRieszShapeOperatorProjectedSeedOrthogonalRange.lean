@@ -80,7 +80,7 @@ theorem projectedSeedNormalSpan_le_tangentFrameSpan_orthogonal
     unfold tangentFrameSpan
     apply Submodule.span_le.2
     rintro tangent ⟨i, rfl⟩
-    exact Submodule.mem_orthogonal_singleton_iff_inner_right.mpr
+    exact Submodule.mem_orthogonal_singleton_iff_inner_left.mpr
       (tangent_inner_projectedSeedNormalFrame_eq_zero
         basisData.tangentFrame (pointwiseNormalSeedCharts basisData)
         basisData.tangent_orthonormal center base i k)
