@@ -91,6 +91,14 @@ theorem projectedSeedChartNormalAdjointCLM_contDiffOn
     (pointwiseBasisSmoothNormalFrameFamilyOn normalBasis
       hNormalBasis basisData center).forward_contDiffOn
 
+/-- Typed postcomposition operator used to apply the immersion derivative to a
+source-connection bilinear coefficient. -/
+def sourceConnectionPostcomposeCLM :
+    (Tangent →L[ℝ] Ambient) →L[ℝ]
+      ((Tangent →L[ℝ] Tangent) →L[ℝ]
+        (Tangent →L[ℝ] Ambient)) :=
+  ContinuousLinearMap.compL ℝ Tangent Tangent Ambient
+
 /-- Ambient contribution of the source connection after applying the immersion
 first derivative. -/
 def sourceConnectionAmbientCorrection
@@ -98,8 +106,9 @@ def sourceConnectionAmbientCorrection
     (sourceConnection : ContinuousTangentialQuadratic Tangent) :
     ContinuousAmbientQuadratic
       (Tangent := Tangent) (Ambient := Ambient) :=
-  (ContinuousLinearMap.compL ℝ Tangent Tangent Ambient derivative).comp
-    sourceConnection
+  (sourceConnectionPostcomposeCLM
+    (Tangent := Tangent) (Ambient := Ambient) derivative).comp
+      sourceConnection
 
 @[simp]
 theorem sourceConnectionAmbientCorrection_apply
@@ -120,10 +129,11 @@ theorem sourceConnectionAmbientCorrection_contDiffOn
       (fun base => sourceConnectionAmbientCorrection
         (derivative base) (sourceConnection base)) domain := by
   have hPostcompose : ContDiffOn ℝ ∞
-      (fun base => ContinuousLinearMap.compL ℝ Tangent Tangent Ambient
-        (derivative base)) domain := by
-    exact (ContinuousLinearMap.compL ℝ Tangent Tangent Ambient).contDiff
-      |>.comp_contDiffOn hDerivative
+      (fun base => sourceConnectionPostcomposeCLM
+        (Tangent := Tangent) (Ambient := Ambient) (derivative base)) domain := by
+    exact (sourceConnectionPostcomposeCLM
+      (Tangent := Tangent) (Ambient := Ambient)).contDiff.comp_contDiffOn
+        hDerivative
   exact hPostcompose.clm_apply hSourceConnection
 
 /-- Connection-corrected ambient second derivative as a bundled continuous
@@ -169,6 +179,14 @@ theorem projectedSeedAmbientCovariantSecondDerivative_contDiffOn
     (sourceConnectionAmbientCorrection_contDiffOn derivative sourceConnection
       hDerivative hSourceConnection)
 
+/-- Typed postcomposition operator used to transport an ambient-valued
+bilinear form into fixed normal coordinates. -/
+def normalQuadraticPostcomposeCLM :
+    (Ambient →L[ℝ] Normal) →L[ℝ]
+      ((Tangent →L[ℝ] Ambient) →L[ℝ]
+        (Tangent →L[ℝ] Normal)) :=
+  ContinuousLinearMap.compL ℝ Tangent Ambient Normal
+
 /-- Postcompose an ambient-valued continuous bilinear form by fixed-model normal
 coordinates. -/
 def projectedSeedFixedNormalQuadratic
@@ -177,8 +195,9 @@ def projectedSeedFixedNormalQuadratic
       (Tangent := Tangent) (Ambient := Ambient)) :
     ContinuousSecondFundamentalForm
       (Tangent := Tangent) (Normal := Normal) :=
-  (ContinuousLinearMap.compL ℝ Tangent Ambient Normal normalAdjoint).comp
-    ambientForm
+  (normalQuadraticPostcomposeCLM
+    (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+    normalAdjoint).comp ambientForm
 
 @[simp]
 theorem projectedSeedFixedNormalQuadratic_apply
@@ -201,10 +220,12 @@ theorem projectedSeedFixedNormalQuadratic_contDiffOn
       (fun base => projectedSeedFixedNormalQuadratic
         (normalAdjoint base) (ambientForm base)) domain := by
   have hPostcompose : ContDiffOn ℝ ∞
-      (fun base => ContinuousLinearMap.compL ℝ Tangent Ambient Normal
+      (fun base => normalQuadraticPostcomposeCLM
+        (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
         (normalAdjoint base)) domain := by
-    exact (ContinuousLinearMap.compL ℝ Tangent Ambient Normal).contDiff
-      |>.comp_contDiffOn hNormalAdjoint
+    exact (normalQuadraticPostcomposeCLM
+      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient))
+        .contDiff.comp_contDiffOn hNormalAdjoint
   exact hPostcompose.clm_apply hAmbientForm
 
 /-- Ambient corrected-jet family on one projected-seed chart. -/
@@ -246,6 +267,13 @@ structure ProjectedSeedSmoothAmbientJetFamilyOn
     ∀ base first second,
       sourceConnection base first second =
         sourceConnection base second first
+
+variable {tangentBasis : Basis ι ℝ Tangent}
+variable {hTangentBasis : Orthonormal ℝ tangentBasis}
+variable {normalBasis : Basis κ ℝ Normal}
+variable {hNormalBasis : Orthonormal ℝ normalBasis}
+variable {basisData : PointwiseNormalBasisData Base Ambient ι κ}
+variable {center : Base}
 
 /-- Corrected ambient second derivative associated with the chart family. -/
 def ProjectedSeedSmoothAmbientJetFamilyOn.correctedAmbientSecondDerivative
