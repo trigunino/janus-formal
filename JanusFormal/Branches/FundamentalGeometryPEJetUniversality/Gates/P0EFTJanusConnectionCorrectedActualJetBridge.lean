@@ -144,7 +144,7 @@ theorem ConnectionCorrectedActualJanusLocalJetData.toActual_reduced_curvature_ap
     data.toActualJanusLocalJetData.toReducedJet.2 first second =
       data.connectionDerivative first second -
         data.connectionDerivative second first := by
-  simp
+  rfl
 
 /-- Status ledger for the bridge.  The remaining hard boundary is a smooth
 family with varying immersion derivative, hence varying normal space. -/
