@@ -12,8 +12,20 @@ on:
       - "docs/program_master_roadmap.md"
       - "docs/program_pe_jet_universality_proof.md"
       - "docs/program_pe_lemma2_naturality_equivariance.md"
+      - "docs/program_pe_categorical_jet_equivalence.md"
+      - "docs/program_pe_structured_jet_reduction.md"
+      - "docs/program_pe_low_order_structured_background.md"
+      - "docs/program_pe_second_fundamental_form_jet.md"
+      - "docs/program_pe_smooth_adapted_frames.md"
+      - "docs/program_pe_spinC_cocycle_lift.md"
+      - "docs/program_pe_metric_normal_connection_curvature.md"
+      - "docs/program_pe_normal_connection_from_frame_jet.md"
       - "scripts/audit_janus_pe_jet_universality.py"
+      - "scripts/audit_janus_low_order_jet_normal_forms.py"
+      - "scripts/audit_janus_metric_normal_ricci.py"
       - "tests/test_janus_pe_jet_universality.py"
+      - "tests/test_janus_low_order_jet_normal_forms.py"
+      - "tests/test_janus_metric_normal_ricci.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
@@ -25,8 +37,20 @@ on:
       - "docs/program_master_roadmap.md"
       - "docs/program_pe_jet_universality_proof.md"
       - "docs/program_pe_lemma2_naturality_equivariance.md"
+      - "docs/program_pe_categorical_jet_equivalence.md"
+      - "docs/program_pe_structured_jet_reduction.md"
+      - "docs/program_pe_low_order_structured_background.md"
+      - "docs/program_pe_second_fundamental_form_jet.md"
+      - "docs/program_pe_smooth_adapted_frames.md"
+      - "docs/program_pe_spinC_cocycle_lift.md"
+      - "docs/program_pe_metric_normal_connection_curvature.md"
+      - "docs/program_pe_normal_connection_from_frame_jet.md"
       - "scripts/audit_janus_pe_jet_universality.py"
+      - "scripts/audit_janus_low_order_jet_normal_forms.py"
+      - "scripts/audit_janus_metric_normal_ricci.py"
       - "tests/test_janus_pe_jet_universality.py"
+      - "tests/test_janus_low_order_jet_normal_forms.py"
+      - "tests/test_janus_metric_normal_ricci.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
@@ -46,8 +70,25 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build corrected jet-universality head
-        run: lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+      - name: Build corrected jet-universality head and transition gates
+        run: |
+          set +e
+          lake build \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameSmoothTransition \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameTransitionJetBridge \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameTransitionDirectConstruction \
+            > focused-lean.log 2>&1
+          status=$?
+          cat focused-lean.log
+          exit $status
+      - name: Upload focused Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pe-jet-universality-lean-log
+          path: focused-lean.log
+          if-no-files-found: error
 
   python-audit:
     runs-on: ubuntu-latest
@@ -57,8 +98,16 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install --upgrade pip pytest
-      - run: python scripts/audit_janus_pe_jet_universality.py
+      - name: Run executable audits
+        run: |
+          python scripts/audit_janus_pe_jet_universality.py
+          python scripts/audit_janus_low_order_jet_normal_forms.py
+          python scripts/audit_janus_metric_normal_ricci.py
       - name: Run focused tests
         env:
           PYTHONPATH: .
-        run: python -m pytest -q tests/test_janus_pe_jet_universality.py
+        run: |
+          python -m pytest -q \
+            tests/test_janus_pe_jet_universality.py \
+            tests/test_janus_low_order_jet_normal_forms.py \
+            tests/test_janus_metric_normal_ricci.py
