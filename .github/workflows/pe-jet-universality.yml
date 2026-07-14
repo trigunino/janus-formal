@@ -58,7 +58,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  lean:
+  lean-target:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Build projected-seed synthesis smoothness only
+        run: |
+          set +e
+          lake build \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness \
+            > targeted-lean.log 2>&1
+          status=$?
+          cat targeted-lean.log
+          exit $status
+      - name: Upload targeted Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pe-jet-universality-targeted-lean-log
+          path: targeted-lean.log
+          if-no-files-found: error
+
+  lean-full:
+    needs: lean-target
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
