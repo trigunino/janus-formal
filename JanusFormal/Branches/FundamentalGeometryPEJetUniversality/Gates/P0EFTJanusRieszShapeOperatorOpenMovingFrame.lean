@@ -88,8 +88,18 @@ theorem continuousIIRieszShape_family_contDiffOn
     ContDiffOn ℝ ∞
       (fun base => continuousIIRieszShapeOperator (form base) (normal base))
       domain := by
-  exact continuousIIRieszShape_joint_contDiff.comp_contDiffOn
-    (hForm.prodMk hNormal)
+  change ContDiffOn ℝ ∞
+    (fun base =>
+      continuousIIRieszShapeContinuousBilinear
+        (Tangent := Tangent) (Normal := Normal) (form base) (normal base))
+    domain
+  have hFirst : ContDiffOn ℝ ∞
+      (fun base =>
+        continuousIIRieszShapeContinuousBilinear
+          (Tangent := Tangent) (Normal := Normal) (form base))
+      domain := by
+    exact contDiffOn_const.clm_apply hForm
+  exact hFirst.clm_apply hNormal
 
 /-- Riesz shape family written in one open moving tangent frame. -/
 def framedRieszShapeFamilyOn
@@ -185,6 +195,45 @@ def reparametrizeSmoothOrthogonalFrameFamilyOn
       domain
     exact transition.forward_contDiffOn.clm_comp family.inverse_contDiffOn
 
+@[simp]
+theorem reparametrizeSmoothOrthogonalFrameFamilyOn_apply
+    {Fiber : Type u}
+    [NormedAddCommGroup Fiber] [InnerProductSpace ℝ Fiber]
+    {domain : Set Base}
+    (family transition : SmoothOrthogonalFrameFamilyOn Base Fiber domain)
+    (base : Base) (vector : Fiber) :
+    (reparametrizeSmoothOrthogonalFrameFamilyOn family transition).frame
+        base vector =
+      family.frame base ((transition.frame base).symm vector) := by
+  rfl
+
+@[simp]
+theorem reparametrizeSmoothOrthogonalFrameFamilyOn_symm_apply
+    {Fiber : Type u}
+    [NormedAddCommGroup Fiber] [InnerProductSpace ℝ Fiber]
+    {domain : Set Base}
+    (family transition : SmoothOrthogonalFrameFamilyOn Base Fiber domain)
+    (base : Base) (vector : Fiber) :
+    ((reparametrizeSmoothOrthogonalFrameFamilyOn family transition).frame
+        base).symm vector =
+      transition.frame base ((family.frame base).symm vector) := by
+  rfl
+
+/-- Moving coordinates transform pointwise by the open overlap gauge. -/
+theorem movingFrameCoordinatesOn_variable_reparametrize
+    {Fiber : Type u}
+    [NormedAddCommGroup Fiber] [InnerProductSpace ℝ Fiber]
+    {domain : Set Base}
+    (family transition : SmoothOrthogonalFrameFamilyOn Base Fiber domain)
+    (vector : Base → Fiber) :
+    movingFrameCoordinatesOn
+        (reparametrizeSmoothOrthogonalFrameFamilyOn family transition)
+        vector =
+      fun base => transition.frame base
+        (movingFrameCoordinatesOn family vector base) := by
+  funext base
+  rfl
+
 /-- Pointwise residual transformation of `II` on an open overlap. -/
 def transformContinuousIIOnOpenOverlap
     {domain : Set Base}
@@ -196,6 +245,40 @@ def transformContinuousIIOnOpenOverlap
       (Tangent := Tangent) (Normal := Normal) :=
   fun base => actOnContinuousSecondFundamentalForm
     (transition.tangent.frame base, transition.normal.frame base) (form base)
+
+/-- The framed Riesz family is invariant under a simultaneous variable
+orthogonal coordinate change on an open chart. -/
+theorem framedRieszShapeFamilyOn_variable_coordinate_invariant
+    [FiniteDimensional ℝ Normal]
+    {domain : Set Base}
+    (tangentFrame : SmoothOrthogonalFrameFamilyOn Base Tangent domain)
+    (transition : SmoothResidualOrthogonalFrameFamilyOn
+      Base Tangent Normal domain)
+    (form : Base → ContinuousSecondFundamentalForm
+      (Tangent := Tangent) (Normal := Normal))
+    (normalCoordinates : Base → Normal) :
+    framedRieszShapeFamilyOn
+        (reparametrizeSmoothOrthogonalFrameFamilyOn
+          tangentFrame transition.tangent)
+        (transformContinuousIIOnOpenOverlap transition form)
+        (fun base => transition.normal.frame base (normalCoordinates base)) =
+      framedRieszShapeFamilyOn tangentFrame form normalCoordinates := by
+  funext base
+  change
+    conjugateShapeOperator
+        ((transition.tangent.frame base).symm.trans
+          (tangentFrame.frame base))
+        (continuousIIRieszShapeOperator
+          (actOnContinuousSecondFundamentalForm
+            (transition.tangent.frame base, transition.normal.frame base)
+            (form base))
+          (transition.normal.frame base (normalCoordinates base))) =
+      conjugateShapeOperator (tangentFrame.frame base)
+        (continuousIIRieszShapeOperator (form base) (normalCoordinates base))
+  rw [continuousIIRieszShapeOperator_residual_equivariant]
+  apply ContinuousLinearMap.ext
+  intro x
+  simp [conjugateShapeOperator]
 
 /-- The open-chart physical Riesz expression is invariant under a simultaneous
 variable orthogonal coordinate change. -/
@@ -217,15 +300,21 @@ theorem geometricRieszShapeFamilyOn_variable_coordinate_invariant
         (transformContinuousIIOnOpenOverlap transition form)
         physicalNormal =
       geometricRieszShapeFamilyOn tangentFrame normalFrame form physicalNormal := by
-  funext base
-  simp only [geometricRieszShapeFamilyOn, framedRieszShapeFamilyOn,
-    conjugatedOperatorFamilyOn, movingFrameCoordinatesOn,
-    reparametrizeSmoothOrthogonalFrameFamilyOn,
-    transformContinuousIIOnOpenOverlap]
-  rw [continuousIIRieszShapeOperator_residual_equivariant]
-  apply ContinuousLinearMap.ext
-  intro x
-  simp [conjugateShapeOperator]
+  change
+    framedRieszShapeFamilyOn
+        (reparametrizeSmoothOrthogonalFrameFamilyOn
+          tangentFrame transition.tangent)
+        (transformContinuousIIOnOpenOverlap transition form)
+        (movingFrameCoordinatesOn
+          (reparametrizeSmoothOrthogonalFrameFamilyOn
+            normalFrame transition.normal)
+          physicalNormal) =
+      framedRieszShapeFamilyOn tangentFrame form
+        (movingFrameCoordinatesOn normalFrame physicalNormal)
+  rw [movingFrameCoordinatesOn_variable_reparametrize]
+  exact framedRieszShapeFamilyOn_variable_coordinate_invariant
+    tangentFrame transition form
+      (movingFrameCoordinatesOn normalFrame physicalNormal)
 
 /-- The reparametrized local expression is smooth on the open chart. -/
 theorem geometricRieszShapeFamilyOn_variable_overlap_contDiffOn
