@@ -103,12 +103,19 @@ theorem projectedSeedFrame_range_eq_normalSpace
         ((pointwiseBasisSmoothNormalFrameFamilyOn normalBasis
           hNormalBasis basisData center).frame base) =
       NormalSpace (derivative base) := by
-  rw [pointwiseBasisSmoothNormalFrameFamilyOn_range
-    normalBasis hNormalBasis basisData center base hValid]
-  rw [projectedSeedNormalSpan_eq_tangentFrameSpan_orthogonal
-    basisData hDimension center base hValid]
-  exact congrArg (fun subspace : Submodule ℝ Ambient => subspaceᗮ)
-    hTangentRange
+  calc
+    normalFrameRange
+        ((pointwiseBasisSmoothNormalFrameFamilyOn normalBasis
+          hNormalBasis basisData center).frame base) =
+        projectedSeedNormalSpan basisData center base :=
+      pointwiseBasisSmoothNormalFrameFamilyOn_range
+        normalBasis hNormalBasis basisData center base hValid
+    _ = (tangentFrameSpan basisData base)ᗮ :=
+      projectedSeedNormalSpan_eq_tangentFrameSpan_orthogonal
+        basisData hDimension center base hValid
+    _ = NormalSpace (derivative base) :=
+      congrArg (fun subspace : Submodule ℝ Ambient => subspaceᗮ)
+        hTangentRange
 
 /-- Canonical projected-seed coordinates at one valid chart point. -/
 def projectedSeedNormalCoordinatesAt
