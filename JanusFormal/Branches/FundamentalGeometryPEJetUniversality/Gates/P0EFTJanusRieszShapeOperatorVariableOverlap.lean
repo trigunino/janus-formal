@@ -142,11 +142,11 @@ theorem framedRieszShapeFamily_variable_coordinate_invariant
   funext base
   simp only [framedRieszShapeFamily, conjugatedOperatorFamily,
     reparametrizeSmoothOrthogonalFrameFamilyVariable,
-    transformContinuousIIOnOverlap]
+    transformContinuousIIOnOverlap, residualFrameAt]
   rw [continuousIIRieszShapeOperator_residual_equivariant]
   apply ContinuousLinearMap.ext
   intro x
-  simp [residualFrameAt, conjugateShapeOperator]
+  simp [conjugateShapeOperator]
 
 /-- The chart-independent geometric family is unchanged when both tangent and
 normal local frames are reparametrized by a smooth variable overlap gauge. -/
