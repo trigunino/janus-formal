@@ -25,8 +25,6 @@ variable [FiniteDimensional ℝ Model]
 
 variable {κ : Type x} [Fintype κ]
 
-/-- A smooth family of synthesis operators that sends one fixed orthonormal
-coordinate basis to a pointwise orthonormal ambient family on an open domain. -/
 structure OrthonormalFrameSynthesisOn (domain : Set Base) where
   coordinateBasis : Basis κ ℝ Model
   coordinateBasis_orthonormal : Orthonormal ℝ coordinateBasis
@@ -39,9 +37,6 @@ structure OrthonormalFrameSynthesisOn (domain : Set Base) where
   synthesis_contDiffOn : ContDiffOn ℝ ∞ synthesis domain
   fallback : Model →ₗᵢ[ℝ] Ambient
 
-/-- Pointwise isometry obtained from the synthesis operator on the valid domain,
-and from a harmless fallback isometry outside it. No regularity is asserted
-outside the chart domain. -/
 def synthesizedIsometryValue
     {domain : Set Base}
     (data : OrthonormalFrameSynthesisOn
@@ -58,8 +53,6 @@ def synthesizedIsometryValue
       data.coordinateBasis_orthonormal hImage
   · exact data.fallback
 
-/-- On the chart domain, the bundled isometry has exactly the prescribed
-continuous-linear synthesis operator. -/
 theorem synthesizedIsometryValue_toContinuousLinearMap
     {domain : Set Base}
     (data : OrthonormalFrameSynthesisOn
@@ -75,8 +68,6 @@ theorem synthesizedIsometryValue_toContinuousLinearMap
   simp only [hValid, ↓reduceDIte]
   rfl
 
-/-- A smooth synthesis family with pointwise orthonormal basis images packages
-as an open-domain smooth isometric frame family. -/
 def OrthonormalFrameSynthesisOn.toSmoothIsometricFrameFamilyOn
     {domain : Set Base}
     (data : OrthonormalFrameSynthesisOn
@@ -89,8 +80,6 @@ def OrthonormalFrameSynthesisOn.toSmoothIsometricFrameFamilyOn
     intro base hValid
     exact synthesizedIsometryValue_toContinuousLinearMap data base hValid
 
-/-- The packaged frame sends each coordinate-basis vector to the prescribed
-ambient orthonormal vector on the chart domain. -/
 theorem OrthonormalFrameSynthesisOn.frame_basis
     {domain : Set Base}
     (data : OrthonormalFrameSynthesisOn
@@ -106,8 +95,6 @@ theorem OrthonormalFrameSynthesisOn.frame_basis
   simp only [hValid, ↓reduceDIte]
   exact data.synthesis_basis base k
 
-/-- Linear synthesis map whose values on a fixed coordinate basis are the
-projected-seed Gram--Schmidt vectors. -/
 def projectedSeedSynthesisLinearMap
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -119,7 +106,6 @@ def projectedSeedSynthesisLinearMap
   coordinateBasis.constr ℝ
     (fun k => projectedSeedNormalFrame tangentFrame charts chart k base)
 
-/-- Continuous-linear version of the projected-seed synthesis map. -/
 def projectedSeedSynthesisCLM
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -145,11 +131,6 @@ theorem projectedSeedSynthesisCLM_basis
   unfold projectedSeedSynthesisCLM projectedSeedSynthesisLinearMap
   exact coordinateBasis.constr_basis ℝ _ k
 
-/-- Package one projected-seed Gram--Schmidt chart as a smooth open-domain
-isometric frame, once smoothness of the finite synthesis operator is supplied.
-
-The remaining smoothness premise is finite-dimensional and no longer contains
-orthonormality or bundle-gluing obligations. -/
 def projectedSeedSmoothIsometricFrameFamilyOn
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -166,26 +147,24 @@ def projectedSeedSmoothIsometricFrameFamilyOn
         {base | projectedSeedChartValid tangentFrame charts chart base}) :
     SmoothIsometricFrameFamilyOn Base Model Ambient
       {base | projectedSeedChartValid tangentFrame charts chart base} :=
-  (({ coordinateBasis := coordinateBasis
-      coordinateBasis_orthonormal := hCoordinateOrthonormal
-      vector := fun k => projectedSeedNormalFrame tangentFrame charts chart k
-      vector_orthonormal := by
-        intro base hValid
-        exact projectedSeedNormalFrame_orthonormal
-          tangentFrame charts chart base hValid
-      synthesis := projectedSeedSynthesisCLM
-        coordinateBasis tangentFrame charts chart
-      synthesis_basis := projectedSeedSynthesisCLM_basis
-        coordinateBasis tangentFrame charts chart
-      synthesis_contDiffOn := hSynthesisSmooth
-      fallback := fallback } :
-    OrthonormalFrameSynthesisOn
-      (Base := Base) (Model := Model) (Ambient := Ambient) (κ := κ)
-      {base | projectedSeedChartValid tangentFrame charts chart base})
-    .toSmoothIsometricFrameFamilyOn)
+  OrthonormalFrameSynthesisOn.toSmoothIsometricFrameFamilyOn
+    ({ coordinateBasis := coordinateBasis
+       coordinateBasis_orthonormal := hCoordinateOrthonormal
+       vector := fun k => projectedSeedNormalFrame tangentFrame charts chart k
+       vector_orthonormal := by
+         intro base hValid
+         exact projectedSeedNormalFrame_orthonormal
+           tangentFrame charts chart base hValid
+       synthesis := projectedSeedSynthesisCLM
+         coordinateBasis tangentFrame charts chart
+       synthesis_basis := projectedSeedSynthesisCLM_basis
+         coordinateBasis tangentFrame charts chart
+       synthesis_contDiffOn := hSynthesisSmooth
+       fallback := fallback } :
+      OrthonormalFrameSynthesisOn
+        (Base := Base) (Model := Model) (Ambient := Ambient) (κ := κ)
+        {base | projectedSeedChartValid tangentFrame charts chart base})
 
-/-- Ambient range of the packaged projected-seed frame is the span of the
-Gram--Schmidt normal vectors. -/
 theorem projectedSeedSmoothIsometricFrameFamilyOn_range
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -218,11 +197,25 @@ theorem projectedSeedSmoothIsometricFrameFamilyOn_range
           coordinateBasis tangentFrame charts chart base := by
     apply LinearMap.ext
     intro vector
-    change
-      (projectedSeedSmoothIsometricFrameFamilyOn coordinateBasis
-        hCoordinateOrthonormal fallback tangentFrame charts chart
-        hSynthesisSmooth).frame base vector =
-      projectedSeedSynthesisCLM coordinateBasis tangentFrame charts chart base vector
+    unfold projectedSeedSmoothIsometricFrameFamilyOn
+    change synthesizedIsometryValue
+      ({ coordinateBasis := coordinateBasis
+         coordinateBasis_orthonormal := hCoordinateOrthonormal
+         vector := fun k => projectedSeedNormalFrame tangentFrame charts chart k
+         vector_orthonormal := by
+           intro point hPoint
+           exact projectedSeedNormalFrame_orthonormal
+             tangentFrame charts chart point hPoint
+         synthesis := projectedSeedSynthesisCLM
+           coordinateBasis tangentFrame charts chart
+         synthesis_basis := projectedSeedSynthesisCLM_basis
+           coordinateBasis tangentFrame charts chart
+         synthesis_contDiffOn := hSynthesisSmooth
+         fallback := fallback } :
+        OrthonormalFrameSynthesisOn
+          (Base := Base) (Model := Model) (Ambient := Ambient) (κ := κ)
+          {point | projectedSeedChartValid tangentFrame charts chart point})
+      base vector = projectedSeedSynthesisCLM coordinateBasis tangentFrame charts chart base vector
     have hCLM := synthesizedIsometryValue_toContinuousLinearMap
       ({ coordinateBasis := coordinateBasis
          coordinateBasis_orthonormal := hCoordinateOrthonormal
@@ -245,7 +238,6 @@ theorem projectedSeedSmoothIsometricFrameFamilyOn_range
   rw [hFrame]
   exact coordinateBasis.constr_range ℝ
 
-/-- Exact boundary after projected-seed frame packaging. -/
 structure ProjectedSeedFramePackagingStatus where
   coordinateModelBasisChosen : Prop
   coordinateBasisOrthonormal : Prop
@@ -255,7 +247,6 @@ structure ProjectedSeedFramePackagingStatus where
   frameRangeIdentified : Prop
   connectedToOpenCanonicalTransitions : Prop
 
-/-- Closure of projected-seed frame packaging. -/
 def projectedSeedFramePackagingClosed
     (s : ProjectedSeedFramePackagingStatus) : Prop :=
   s.coordinateModelBasisChosen ∧
@@ -266,8 +257,6 @@ def projectedSeedFramePackagingClosed
   s.frameRangeIdentified ∧
   s.connectedToOpenCanonicalTransitions
 
-/-- The only analytic sublemma left by this packaging is smoothness of the finite
-basis-synthesis operator. -/
 theorem missing_synthesis_smoothness_blocks_frame_packaging
     (s : ProjectedSeedFramePackagingStatus)
     (hMissing : Not s.synthesisOperatorContDiffOnProved) :
