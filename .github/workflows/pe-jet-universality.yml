@@ -57,12 +57,21 @@ on:
       - ".github/workflows/pe-jet-universality.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Keep only the current failing/new gate here. Clear this string once it is
+  # covered by the full build and no longer needs a fast diagnostic pass.
+  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation
+
 jobs:
-  lean-target:
+  lean:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Lean and Mathlib cache
+      - name: Set up Lean and Mathlib cache once
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
@@ -70,36 +79,21 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build global Riesz coefficient instantiation only
+      - name: Build current targeted Lean gate
+        if: ${{ env.LEAN_TARGET != '' }}
         run: |
           set +e
-          lake build \
-            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation \
-            > targeted-lean.log 2>&1
+          lake build "$LEAN_TARGET" > targeted-lean.log 2>&1
           status=$?
           cat targeted-lean.log
           exit $status
       - name: Upload targeted Lean log
-        if: always()
+        if: ${{ always() && env.LEAN_TARGET != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: pe-jet-universality-targeted-lean-log
           path: targeted-lean.log
           if-no-files-found: error
-
-  lean-full:
-    needs: lean-target
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Lean and Mathlib cache
-        uses: leanprover/lean-action@v1
-        with:
-          auto-config: false
-          build: false
-          test: false
-          lint: false
-          use-mathlib-cache: true
       - name: Build corrected jet-universality head and Riesz descent gates
         run: |
           set +e
@@ -138,7 +132,7 @@ jobs:
           cat focused-lean.log
           exit $status
       - name: Upload focused Lean log
-        if: always()
+        if: ${{ always() && hashFiles('focused-lean.log') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: pe-jet-universality-lean-log
@@ -146,7 +140,7 @@ jobs:
           if-no-files-found: error
 
   python-audit:
-    needs: lean-target
+    needs: lean
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
