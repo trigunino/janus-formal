@@ -71,12 +71,8 @@ theorem contDiff_isLocalRegularityProperty
   intro function hLocal
   rw [contDiff_iff_contDiffAt]
   intro point
-  rw [contDiffAt_infty]
-  intro order
   obtain ⟨representative, hRepresentative, hEventually⟩ := hLocal point
-  exact
-    (hRepresentative.contDiffAt.congr_of_eventuallyEq hEventually order)
-      (by simp)
+  exact hEventually.contDiffAt_iff.mpr hRepresentative.contDiffAt
 
 /-- Smooth local representatives on a neighborhood-stable atlas descend to a
 smooth global representative. -/
