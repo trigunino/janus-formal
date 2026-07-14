@@ -85,6 +85,7 @@ def openMetricAtlasOfProjectedSeedsPhysical
 /-- The physical operator realized by smooth projected-seed chart formulas is
 globally smooth. -/
 theorem projectedSeedPhysicalOperator_contDiff
+    {TangentModel : Type x} {NormalModel : Type y}
     {PhysicalOperator : Type*}
     [NormedAddCommGroup PhysicalOperator]
     [NormedSpace ℝ PhysicalOperator]
