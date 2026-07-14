@@ -19,6 +19,7 @@ open P0EFTJanusRieszShapeOperatorOpenCanonicalTransition
 open P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness
 open P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair
 open P0EFTJanusRieszShapeOperatorSmoothDependence
+open P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
 open P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
 open P0EFTJanusActualStructuredJetExtraction
 open P0EFTJanusConnectionCorrectedActualJetBridge
@@ -131,9 +132,7 @@ theorem sourceConnectionAmbientCorrection_contDiffOn
   have hPostcompose : ContDiffOn ℝ ∞
       (fun base => sourceConnectionPostcomposeCLM
         (Tangent := Tangent) (Ambient := Ambient) (derivative base)) domain := by
-    exact (sourceConnectionPostcomposeCLM
-      (Tangent := Tangent) (Ambient := Ambient)).contDiff.comp_contDiffOn
-        hDerivative
+    fun_prop
   exact hPostcompose.clm_apply hSourceConnection
 
 /-- Connection-corrected ambient second derivative as a bundled continuous
@@ -223,9 +222,7 @@ theorem projectedSeedFixedNormalQuadratic_contDiffOn
       (fun base => normalQuadraticPostcomposeCLM
         (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
         (normalAdjoint base)) domain := by
-    exact (normalQuadraticPostcomposeCLM
-      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient))
-        .contDiff.comp_contDiffOn hNormalAdjoint
+    fun_prop
   exact hPostcompose.clm_apply hAmbientForm
 
 /-- Ambient corrected-jet family on one projected-seed chart. -/
@@ -357,14 +354,27 @@ def ProjectedSeedSmoothAmbientJetFamilyOn.localJet
   tangentialQuadratic_symmetric := data.sourceConnection_symmetric base
   normalQuadratic_symmetric := by
     intro first second
-    rw [projectedSeedFixedNormalQuadratic_apply,
-      projectedSeedFixedNormalQuadratic_apply,
-      projectedSeedAmbientCovariantSecondDerivative_apply,
-      projectedSeedAmbientCovariantSecondDerivative_apply]
+    change
+      projectedSeedChartNormalAdjointCLM normalBasis hNormalBasis
+          basisData center base
+          (projectedSeedAmbientCovariantSecondDerivative
+            (projectedSeedChartTangentDerivativeCLM tangentBasis hTangentBasis
+              basisData center base)
+            (data.rawSecond base) (data.ambientConnection base)
+            (data.sourceConnection base) first second) =
+        projectedSeedChartNormalAdjointCLM normalBasis hNormalBasis
+          basisData center base
+          (projectedSeedAmbientCovariantSecondDerivative
+            (projectedSeedChartTangentDerivativeCLM tangentBasis hTangentBasis
+              basisData center base)
+            (data.rawSecond base) (data.ambientConnection base)
+            (data.sourceConnection base) second first)
     apply congrArg
       (projectedSeedChartNormalAdjointCLM normalBasis hNormalBasis
         basisData center base)
-    rw [data.rawSecond_symmetric base first second,
+    rw [projectedSeedAmbientCovariantSecondDerivative_apply,
+      projectedSeedAmbientCovariantSecondDerivative_apply,
+      data.rawSecond_symmetric base first second,
       data.ambientConnection_symmetric base first second,
       data.sourceConnection_symmetric base first second]
 
@@ -416,10 +426,16 @@ theorem ProjectedSeedSmoothAmbientJetFamilyOn.physicalOperator_contDiffOn
       normalBasis hNormalBasis basisData center) :
     ContDiffOn ℝ ∞ data.physicalOperator
       (projectedSeedCoefficientDomain basisData center) := by
+  change ContDiffOn ℝ ∞
+    (fun base => continuousIIRieszShapeOperator
+      (data.normalQuadratic base) (data.physicalNormal base))
+    (projectedSeedCoefficientDomain basisData center)
+  have hPair : ContDiffOn ℝ ∞
+      (fun base => (data.normalQuadratic base, data.physicalNormal base))
+      (projectedSeedCoefficientDomain basisData center) :=
+    data.normalQuadratic_contDiffOn.prodMk data.physicalNormal_contDiffOn
   exact (continuousIIRieszShape_joint_contDiff
-    (Tangent := Tangent) (Normal := Normal)).comp_contDiffOn
-      (data.normalQuadratic_contDiffOn.prodMk
-        data.physicalNormal_contDiffOn)
+    (Tangent := Tangent) (Normal := Normal)).comp_contDiffOn hPair
 
 /-- Exact fixed-coordinate formula for the transported second fundamental form. -/
 @[simp]
