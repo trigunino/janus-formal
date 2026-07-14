@@ -107,11 +107,17 @@ def curvatureFromDerivativeLinearMap :
   map_add' := by
     intro first second
     ext x y
-    simp
+    change
+      first x y + second x y - (first y x + second y x) =
+        (first x y - first y x) + (second x y - second y x)
+    ring
   map_smul' := by
     intro scalar derivative
     ext x y
-    simp
+    change
+      scalar * derivative x y - scalar * derivative y x =
+        scalar * (derivative x y - derivative y x)
+    ring
 
 /-- Continuous-linear antisymmetrization `dA ↦ dA-dAᵀ`. -/
 def continuousCurvatureFromDerivative :
@@ -119,12 +125,16 @@ def continuousCurvatureFromDerivative :
       ContinuousConnectionDerivative (Tangent := Tangent) :=
   (curvatureFromDerivativeLinearMap (Tangent := Tangent)).mkContinuous 2 (by
     intro derivative
+    change
+      ‖derivative - ContinuousLinearMap.flip derivative‖ ≤
+        2 * ‖derivative‖
     calc
       ‖derivative - ContinuousLinearMap.flip derivative‖ ≤
           ‖derivative‖ + ‖ContinuousLinearMap.flip derivative‖ := norm_sub_le _ _
-      _ = 2 * ‖derivative‖ := by
-        rw [ContinuousLinearMap.opNorm_flip]
-        ring)
+      _ = ‖derivative‖ + ‖derivative‖ := by
+        simpa using congrArg (fun value : ℝ => ‖derivative‖ + value)
+          (ContinuousLinearMap.opNorm_flip derivative)
+      _ = 2 * ‖derivative‖ := by ring)
 
 @[simp]
 theorem continuousCurvatureFromDerivative_apply
@@ -133,10 +143,11 @@ theorem continuousCurvatureFromDerivative_apply
     continuousCurvatureFromDerivative
         (Tangent := Tangent) derivative first second =
       derivative first second - derivative second first := by
+  unfold continuousCurvatureFromDerivative
   change
     (derivative - ContinuousLinearMap.flip derivative) first second =
       derivative first second - derivative second first
-  simp
+  rfl
 
 def structuredGaugeCurvatureProjection :
     SmoothLowOrderStructuredJet
