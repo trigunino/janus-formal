@@ -12,9 +12,8 @@ universe u v w x
 
 /-- Coordinate changes and physical realization maps for one local atlas.
 
-The identity `realize second ∘ transition first second = realize first` says
-that a coordinate vector transported to the second chart represents the same
-physical object. -/
+The realization law says directly that transporting coordinates from the first
+chart to the second does not change the represented physical object. -/
 structure EquivariantAtlas
     (Chart : Type u) (Base : Type v)
     (CoordinateFiber : Type w) (PhysicalFiber : Type x) where
@@ -25,8 +24,9 @@ structure EquivariantAtlas
   realize_transition :
     ∀ first second base,
       valid first base → valid second base →
-        (realize second base).trans
-          (transition first second base).symm = realize first base
+        ∀ coordinate,
+          realize second base (transition first second base coordinate) =
+            realize first base coordinate
 
 variable {Chart : Type u} {Base : Type v}
 variable {CoordinateFiber : Type w} {PhysicalFiber : Type x}
@@ -35,81 +35,73 @@ variable {CoordinateFiber : Type w} {PhysicalFiber : Type x}
 the atlas transition on overlaps. -/
 def IsEquivariantLocalFamily
     (atlas : EquivariantAtlas Chart Base CoordinateFiber PhysicalFiber)
-    (local : Chart → Base → CoordinateFiber) : Prop :=
+    (localFamily : Chart → Base → CoordinateFiber) : Prop :=
   ∀ first second base,
     atlas.valid first base → atlas.valid second base →
-      local second base = atlas.transition first second base (local first base)
+      localFamily second base =
+        atlas.transition first second base (localFamily first base)
 
 /-- Physical representative obtained by realizing one local coordinate value. -/
 def physicalLocalValue
     (atlas : EquivariantAtlas Chart Base CoordinateFiber PhysicalFiber)
-    (local : Chart → Base → CoordinateFiber)
+    (localFamily : Chart → Base → CoordinateFiber)
     (chart : Chart) (base : Base) : PhysicalFiber :=
-  atlas.realize chart base (local chart base)
+  atlas.realize chart base (localFamily chart base)
 
 /-- Equivariance of local coordinates implies equality of physical values on
-every overlap. This is the precise bridge from the existing Riesz overlap law
-to abstract global descent. -/
+every overlap. -/
 theorem physicalLocalValue_compatible
     (atlas : EquivariantAtlas Chart Base CoordinateFiber PhysicalFiber)
-    (local : Chart → Base → CoordinateFiber)
-    (hEquivariant : IsEquivariantLocalFamily atlas local)
+    (localFamily : Chart → Base → CoordinateFiber)
+    (hEquivariant : IsEquivariantLocalFamily atlas localFamily)
     (first second : Chart) (base : Base)
     (hFirst : atlas.valid first base)
     (hSecond : atlas.valid second base) :
-    physicalLocalValue atlas local first base =
-      physicalLocalValue atlas local second base := by
+    physicalLocalValue atlas localFamily first base =
+      physicalLocalValue atlas localFamily second base := by
   rw [physicalLocalValue, physicalLocalValue]
   rw [hEquivariant first second base hFirst hSecond]
-  have hRealize := atlas.realize_transition first second base hFirst hSecond
-  apply (atlas.realize second base).injective
-  change
-    (atlas.realize second base).symm
-        (atlas.realize first base (local first base)) =
-      atlas.transition first second base (local first base)
-  have hApply := congrArg
-    (fun equivalence : CoordinateFiber ≃ PhysicalFiber =>
-      equivalence (local first base)) hRealize
-  simpa using congrArg (atlas.realize second base).symm hApply
+  exact (atlas.realize_transition first second base hFirst hSecond
+    (localFamily first base)).symm
 
 /-- An equivariant local family canonically defines abstract descent data in the
 physical fiber. -/
 def descentDataOfEquivariantFamily
     (atlas : EquivariantAtlas Chart Base CoordinateFiber PhysicalFiber)
-    (local : Chart → Base → CoordinateFiber)
-    (hEquivariant : IsEquivariantLocalFamily atlas local) :
+    (localFamily : Chart → Base → CoordinateFiber)
+    (hEquivariant : IsEquivariantLocalFamily atlas localFamily) :
     P0EFTJanusRieszShapeOperatorBundleDescent.LocalDescentData
       Chart Base PhysicalFiber where
   valid := atlas.valid
-  localValue := physicalLocalValue atlas local
+  localValue := physicalLocalValue atlas localFamily
   cover := atlas.cover
   compatible := by
     intro first second base hFirst hSecond
-    exact physicalLocalValue_compatible atlas local hEquivariant
+    exact physicalLocalValue_compatible atlas localFamily hEquivariant
       first second base hFirst hSecond
 
 /-- Global physical object descended from an equivariant family of local
 coordinates. -/
 def descendedPhysicalValue
     (atlas : EquivariantAtlas Chart Base CoordinateFiber PhysicalFiber)
-    (local : Chart → Base → CoordinateFiber)
-    (hEquivariant : IsEquivariantLocalFamily atlas local) :
+    (localFamily : Chart → Base → CoordinateFiber)
+    (hEquivariant : IsEquivariantLocalFamily atlas localFamily) :
     Base → PhysicalFiber :=
   P0EFTJanusRieszShapeOperatorBundleDescent.descendedValue
-    (descentDataOfEquivariantFamily atlas local hEquivariant)
+    (descentDataOfEquivariantFamily atlas localFamily hEquivariant)
 
 /-- Every valid chart realizes exactly the descended physical value. -/
 theorem physicalLocalValue_eq_descended
     (atlas : EquivariantAtlas Chart Base CoordinateFiber PhysicalFiber)
-    (local : Chart → Base → CoordinateFiber)
-    (hEquivariant : IsEquivariantLocalFamily atlas local)
+    (localFamily : Chart → Base → CoordinateFiber)
+    (hEquivariant : IsEquivariantLocalFamily atlas localFamily)
     (chart : Chart) (base : Base)
     (hValid : atlas.valid chart base) :
-    physicalLocalValue atlas local chart base =
-      descendedPhysicalValue atlas local hEquivariant base := by
+    physicalLocalValue atlas localFamily chart base =
+      descendedPhysicalValue atlas localFamily hEquivariant base := by
   exact
     P0EFTJanusRieszShapeOperatorBundleDescent.localValue_eq_descendedValue
-      (descentDataOfEquivariantFamily atlas local hEquivariant)
+      (descentDataOfEquivariantFamily atlas localFamily hEquivariant)
       chart base hValid
 
 /-- Exact boundary of equivariant Riesz descent. -/
