@@ -103,7 +103,7 @@ connection derivatives. -/
 def curvatureFromDerivativeLinearMap :
     ContinuousConnectionDerivative (Tangent := Tangent) →ₗ[ℝ]
       ContinuousConnectionDerivative (Tangent := Tangent) where
-  toFun derivative := derivative - derivative.flip
+  toFun derivative := derivative - ContinuousLinearMap.flip derivative
   map_add' := by
     intro first second
     ext x y
@@ -120,8 +120,8 @@ def continuousCurvatureFromDerivative :
   (curvatureFromDerivativeLinearMap (Tangent := Tangent)).mkContinuous 2 (by
     intro derivative
     calc
-      ‖derivative - derivative.flip‖ ≤
-          ‖derivative‖ + ‖derivative.flip‖ := norm_sub_le _ _
+      ‖derivative - ContinuousLinearMap.flip derivative‖ ≤
+          ‖derivative‖ + ‖ContinuousLinearMap.flip derivative‖ := norm_sub_le _ _
       _ = 2 * ‖derivative‖ := by
         rw [ContinuousLinearMap.opNorm_flip]
         ring)
@@ -133,7 +133,10 @@ theorem continuousCurvatureFromDerivative_apply
     continuousCurvatureFromDerivative
         (Tangent := Tangent) derivative first second =
       derivative first second - derivative second first := by
-  rfl
+  change
+    (derivative - ContinuousLinearMap.flip derivative) first second =
+      derivative first second - derivative second first
+  simp
 
 def structuredGaugeCurvatureProjection :
     SmoothLowOrderStructuredJet
