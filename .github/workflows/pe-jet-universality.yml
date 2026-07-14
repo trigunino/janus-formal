@@ -70,12 +70,13 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Build corrected jet-universality head and smooth transition gate
+      - name: Build corrected jet-universality head and transition gates
         run: |
           set +e
           lake build \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameSmoothTransition \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameTransitionJetBridge \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
