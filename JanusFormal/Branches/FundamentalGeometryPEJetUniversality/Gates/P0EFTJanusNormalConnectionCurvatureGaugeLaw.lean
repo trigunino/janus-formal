@@ -16,6 +16,8 @@ universe u v
 variable {Tangent : Type u} {Normal : Type v}
 variable [NormedAddCommGroup Tangent] [InnerProductSpace ℝ Tangent]
 variable [NormedAddCommGroup Normal] [InnerProductSpace ℝ Normal]
+variable [FiniteDimensional ℝ Tangent]
+variable [FiniteDimensional ℝ Normal]
 
 /-- Maurer--Cartan two-jet of an orthogonal normal gauge in the convention
 `E' = E ∘ g`.
