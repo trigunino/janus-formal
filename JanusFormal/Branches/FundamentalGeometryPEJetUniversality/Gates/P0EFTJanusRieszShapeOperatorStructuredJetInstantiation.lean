@@ -12,11 +12,13 @@ open scoped ContDiff InnerProductSpace
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
 open P0EFTJanusRieszShapeOperatorCoveredPhysicalDescent
 
-universe u v w
+universe u v w x
 
 variable {JetBase : Type u} {Ambient : Type v} {PhysicalOperator : Type w}
 variable [NormedAddCommGroup JetBase] [NormedSpace ℝ JetBase]
 variable [NormedAddCommGroup Ambient] [InnerProductSpace ℝ Ambient]
+variable [NormedAddCommGroup PhysicalOperator]
+variable [NormedSpace ℝ PhysicalOperator]
 
 variable {ι κ : Type*}
 variable [Fintype ι] [Fintype κ] [LinearOrder κ]
@@ -58,9 +60,7 @@ def StructuredJetRieszData.toCoveredPhysicalRieszData
 /-- Every complete structured-jet Riesz package yields a globally smooth
 coordinate-free Riesz family. -/
 theorem StructuredJetRieszData.physicalRiesz_contDiff
-    {TangentModel NormalModel : Type*}
-    [NormedAddCommGroup PhysicalOperator]
-    [NormedSpace ℝ PhysicalOperator]
+    {TangentModel NormalModel : Type x}
     (data : StructuredJetRieszData
       (JetBase := JetBase) (Ambient := Ambient)
       (PhysicalOperator := PhysicalOperator) (ι := ι) (κ := κ)) :
@@ -72,7 +72,7 @@ theorem StructuredJetRieszData.physicalRiesz_contDiff
 /-- The descended atlas family agrees pointwise with the structured-jet physical
 Riesz family. -/
 theorem StructuredJetRieszData.descended_eq_physical
-    {TangentModel NormalModel : Type*}
+    {TangentModel NormalModel : Type x}
     (data : StructuredJetRieszData
       (JetBase := JetBase) (Ambient := Ambient)
       (PhysicalOperator := PhysicalOperator) (ι := ι) (κ := κ)) :
