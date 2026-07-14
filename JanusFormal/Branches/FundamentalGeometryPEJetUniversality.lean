@@ -25,21 +25,22 @@ Fréchet--Riesz representation, bundles `xi ↦ A_xi` as a continuous linear map
 proves residual orthogonal equivariance by conjugation, proves joint smooth
 dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model, and
 proves smoothness after passage through smooth moving tangent/normal frame
-trivializations. It now also proves independence under smooth variable
-orthogonal transition functions on chart overlaps. It constructs the curvature
-of a local metric normal-connection one-jet, derives the Ricci normal equation
-from the curvature of the adapted block connection, extracts the connection
-coefficients and their first derivatives from an orthonormal normal-frame
-two-jet, and extracts that frame two-jet itself from a twice
-Fréchet-differentiable orthonormal frame field. It also extracts `g⁻¹ dg`, its
-derivative and the full Maurer--Cartan two-jet from a twice differentiable
-orthogonal gauge field, so the homogeneous curvature law `R' = g⁻¹ R g` applies
-to actual smooth gauge data in the flat coefficient model. The remaining
-geometric locks are insertion of ambient covariant derivatives, realization of
-the gauge as the transition between two normal-frame trivializations, varying
-metric and subspace dependence on the structured-jet base, determinant-line
-connection identification, higher-dimensional Clifford Spin covers, global
-principal-bundle packaging and characteristic-class matching.
+trivializations. It proves independence under smooth variable orthogonal
+transition functions on chart overlaps and residual covariance of the complete
+pointwise Ricci-normal equation. It constructs the curvature of a local metric
+normal-connection one-jet, derives the Ricci normal equation from the curvature
+of the adapted block connection, extracts the connection coefficients and their
+first derivatives from an orthonormal normal-frame two-jet, and extracts that
+frame two-jet itself from a twice Fréchet-differentiable orthonormal frame field.
+It also extracts `g⁻¹ dg`, its derivative and the full Maurer--Cartan two-jet from
+a twice differentiable orthogonal gauge field, so the homogeneous curvature law
+`R' = g⁻¹ R g` applies to actual smooth gauge data in the flat coefficient model.
+The remaining geometric locks are insertion of ambient covariant derivatives,
+realization of the gauge as the transition between two normal-frame
+trivializations, varying metric and subspace dependence on the structured-jet
+base, determinant-line connection identification, higher-dimensional Clifford
+Spin covers, global principal-bundle packaging and characteristic-class
+matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -84,6 +85,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothDependence
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorMovingFrame
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorVariableOverlap
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRicciNormalResidualEquivariance
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMetricNormalConnectionCurvature
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionFromFrameJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothNormalFrameJetExtraction
@@ -143,6 +145,7 @@ structure ProgramStatus where
   rieszShapeOperatorFixedModelSmoothnessProved : Prop
   rieszShapeOperatorMovingFrameSmoothnessProved : Prop
   rieszShapeOperatorVariableOverlapDescentProved : Prop
+  ricciNormalResidualEquivarianceProved : Prop
   metricNormalConnectionCurvatureDerived : Prop
   normalConnectionExtractedFromFrameTwoJet : Prop
   smoothNormalFrameTwoJetExtractedFromFrechetData : Prop
@@ -164,8 +167,9 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core through smooth variable-overlap descent, frame
-and gauge jet extraction, and the local connection-curvature gauge stage. -/
+/-- Formal/logical theorem core through smooth variable-overlap and Ricci
+covariance, frame and gauge jet extraction, and the local connection-curvature
+gauge stage. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -213,6 +217,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.rieszShapeOperatorFixedModelSmoothnessProved /\
   s.rieszShapeOperatorMovingFrameSmoothnessProved /\
   s.rieszShapeOperatorVariableOverlapDescentProved /\
+  s.ricciNormalResidualEquivarianceProved /\
   s.metricNormalConnectionCurvatureDerived /\
   s.normalConnectionExtractedFromFrameTwoJet /\
   s.smoothNormalFrameTwoJetExtractedFromFrechetData /\
@@ -258,9 +263,10 @@ theorem missing_structured_normal_form_blocks_full_specialization
     hExtension, hBundles, hSymbols, hRegion⟩
   exact hMissing hNormalForm
 
-/-- The proved local-frame, variable-overlap, connection-gauge, curvature-gauge,
-oriented-cocycle and algebraic rank-two Clifford matching still require smooth
-principal-bundle packaging and actions on all Janus natural sectors. -/
+/-- The proved local-frame, variable-overlap, Ricci-covariance,
+connection-gauge, curvature-gauge, oriented-cocycle and algebraic rank-two
+Clifford matching still require smooth principal-bundle packaging and actions on
+all Janus natural sectors. -/
 theorem missing_residual_actions_blocks_full_specialization
     (s : ProgramStatus)
     (hMissing : Not s.residualFrameActionsConstructed) :
