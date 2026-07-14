@@ -11,6 +11,7 @@ noncomputable section
 open Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusLowOrderStructuredBackground
+open P0EFTJanusRieszShapeOperatorSmoothDependence
 open P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
 
 universe u v
