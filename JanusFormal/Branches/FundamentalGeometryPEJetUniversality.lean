@@ -22,19 +22,20 @@ rank-two Clifford SpinC model, first Gauss--Codazzi--Bianchi identities, exact
 low-order Spencer quotients and splittings, and the normal Ricci commutator. It
 constructs the shape operators from a finite-dimensional bilinear `II` by
 Fréchet--Riesz representation, bundles `xi ↦ A_xi` as a continuous linear map,
-proves residual orthogonal equivariance by conjugation, and proves joint smooth
-dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model. It
-constructs the curvature of a local metric normal-connection one-jet, derives
-the Ricci normal equation from the curvature of the adapted block connection,
-extracts the connection coefficients and their first derivatives from an
-orthonormal normal-frame two-jet, proves the inhomogeneous coefficient law
-`omega' = g⁻¹ omega g + g⁻¹ dg`, and proves homogeneous curvature covariance
-`R' = g⁻¹ R g` from the Maurer--Cartan identity. The remaining geometric locks
-are extraction of the gauge and frame jets from smooth overlap data with ambient
-covariant derivatives, varying metric and subspace dependence on the
-structured-jet base, determinant-line connection identification,
-higher-dimensional Clifford Spin covers, global principal-bundle packaging and
-characteristic-class matching.
+proves residual orthogonal equivariance by conjugation, proves joint smooth
+dependence on `(II,xi)` in a fixed finite-dimensional tangent/normal model, and
+proves smoothness after passage through smooth moving tangent/normal frame
+trivializations. It constructs the curvature of a local metric normal-connection
+one-jet, derives the Ricci normal equation from the curvature of the adapted
+block connection, extracts the connection coefficients and their first
+derivatives from an orthonormal normal-frame two-jet, proves the inhomogeneous
+coefficient law `omega' = g⁻¹ omega g + g⁻¹ dg`, and proves homogeneous curvature
+covariance `R' = g⁻¹ R g` from the Maurer--Cartan identity. The remaining
+geometric locks are extraction of the gauge and frame jets from smooth overlap
+data with ambient covariant derivatives, variable overlap compatibility, varying
+metric and subspace dependence on the structured-jet base, determinant-line
+connection identification, higher-dimensional Clifford Spin covers, global
+principal-bundle packaging and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -77,6 +78,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperator
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorEquivariance
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothDependence
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorMovingFrame
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMetricNormalConnectionCurvature
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionFromFrameJet
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameConnectionGaugeLaw
@@ -132,6 +134,7 @@ structure ProgramStatus where
   rieszShapeOperatorsConstructed : Prop
   rieszShapeOperatorEquivarianceBundled : Prop
   rieszShapeOperatorFixedModelSmoothnessProved : Prop
+  rieszShapeOperatorMovingFrameSmoothnessProved : Prop
   metricNormalConnectionCurvatureDerived : Prop
   normalConnectionExtractedFromFrameTwoJet : Prop
   normalFrameConnectionGaugeLawProved : Prop
@@ -151,7 +154,8 @@ structure ProgramStatus where
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
 
-/-- Formal/logical theorem core through the local connection-curvature gauge stage. -/
+/-- Formal/logical theorem core through moving-frame Riesz smoothness and the
+local connection-curvature gauge stage. -/
 def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.regularLocalOperatorSheafDefined /\
   s.peetreSlovakHypothesesVerified /\
@@ -197,6 +201,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.rieszShapeOperatorsConstructed /\
   s.rieszShapeOperatorEquivarianceBundled /\
   s.rieszShapeOperatorFixedModelSmoothnessProved /\
+  s.rieszShapeOperatorMovingFrameSmoothnessProved /\
   s.metricNormalConnectionCurvatureDerived /\
   s.normalConnectionExtractedFromFrameTwoJet /\
   s.normalFrameConnectionGaugeLawProved /\
