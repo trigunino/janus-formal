@@ -164,10 +164,17 @@ theorem bridge_logDerivative_formula
           (adjointTransitionFirstFormula
             bridge.firstFrame bridge.secondFrame base x normal) := by
   rw [smoothGaugeLogDerivative_apply, bridge.first_eq]
-  have hValue := bridge_gauge_value_eq_canonical bridge base
-  have hInverse := congrArg LinearIsometryEquiv.symm hValue
-  rw [hInverse]
-  rfl
+  let value := adjointTransitionFirstFormula
+    bridge.firstFrame bridge.secondFrame base x normal
+  calc
+    bridge.gauge.inverse base value =
+        (smoothGaugeValueAt bridge.gauge base).symm value :=
+      (smoothGaugeValueAt_symm_apply bridge.gauge base value).symm
+    _ = (normalFrameTransition
+          (frameValueAt bridge.firstFrame base)
+          (frameValueAt bridge.secondFrame base)
+          (bridge.sameRange base)).symm value := by
+      rw [bridge_gauge_value_eq_canonical]
 
 /-- The full Maurer--Cartan two-jet used by the normal-curvature gauge law is now
 canonically attached to the two frame jets through the bridge. -/
