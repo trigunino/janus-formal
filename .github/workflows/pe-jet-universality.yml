@@ -64,21 +64,42 @@ concurrency:
 env:
   # Keep only the current failing/new gate here. Clear this string once it is
   # covered by the full build and no longer needs a fast diagnostic pass.
-  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation
+  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
 
 jobs:
   lean:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Lean and Mathlib cache once
+
+      - name: Restore Lake build cache
+        id: lake-cache
+        uses: actions/cache/restore@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}
+
+      - name: Set up Lean once
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
           build: false
           test: false
           lint: false
-          use-mathlib-cache: true
+          use-github-cache: false
+          use-mathlib-cache: false
+
+      - name: Populate Mathlib cache only when missing
+        run: |
+          if [[ -n "$(find .lake/packages/mathlib/.lake/build -name Mathlib.olean -print -quit 2>/dev/null)" ]]; then
+            echo "Mathlib build cache restored from GitHub cache; skipping lake exe cache get."
+          else
+            echo "Mathlib build cache missing; downloading upstream Mathlib cache."
+            lake exe cache get
+          fi
+
       - name: Build current targeted Lean gate
         if: ${{ env.LEAN_TARGET != '' }}
         run: |
@@ -87,6 +108,7 @@ jobs:
           status=$?
           cat targeted-lean.log
           exit $status
+
       - name: Upload targeted Lean log
         if: ${{ always() && env.LEAN_TARGET != '' }}
         uses: actions/upload-artifact@v4
@@ -94,6 +116,7 @@ jobs:
           name: pe-jet-universality-targeted-lean-log
           path: targeted-lean.log
           if-no-files-found: error
+
       - name: Build corrected jet-universality head and Riesz descent gates
         run: |
           set +e
@@ -127,10 +150,12 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorCanonicalProjectedSeedAssembly \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
           exit $status
+
       - name: Upload focused Lean log
         if: ${{ always() && hashFiles('focused-lean.log') != '' }}
         uses: actions/upload-artifact@v4
@@ -138,6 +163,13 @@ jobs:
           name: pe-jet-universality-lean-log
           path: focused-lean.log
           if-no-files-found: error
+
+      - name: Save Lake build cache after successful custom builds
+        if: ${{ success() && steps.lake-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
 
   python-audit:
     needs: lean
