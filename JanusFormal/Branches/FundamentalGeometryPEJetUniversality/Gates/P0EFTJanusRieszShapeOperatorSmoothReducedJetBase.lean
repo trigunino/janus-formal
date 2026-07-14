@@ -9,6 +9,7 @@ set_option autoImplicit false
 
 noncomputable section
 
+open Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusLowOrderStructuredBackground
 open P0EFTJanusRieszShapeOperatorSmoothDependence
@@ -122,7 +123,16 @@ theorem smoothLowOrderRieszOperator_contDiff :
     ContDiff ℝ ∞
       (smoothLowOrderRieszOperator
         (Tangent := Tangent) (Normal := Normal)) := by
+  change ContDiff ℝ ∞
+    (fun point : SmoothLowOrderRieszPoint
+        (Tangent := Tangent) (Normal := Normal) =>
+      continuousIIRieszShapeOperator
+        (reducedRieszSecondFundamentalProjection
+          (Tangent := Tangent) (Normal := Normal) point)
+        (reducedRieszNormalProjection
+          (Tangent := Tangent) (Normal := Normal) point))
   exact continuousIIRieszShape_family_contDiff
+    (Tangent := Tangent) (Normal := Normal)
     (reducedRieszSecondFundamentalProjection
       (Tangent := Tangent) (Normal := Normal))
     (reducedRieszNormalProjection
