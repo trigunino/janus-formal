@@ -50,7 +50,7 @@ structure ProjectedSeedNormalCoordinateData
     ∀ base, NormalSpace (derivative base) ≃ₗᵢ[ℝ] NormalModel
   synthesis_spec :
     ∀ base
-      (hValid : projectedSeedChartValid basisData.tangentFrame
+      (_hValid : projectedSeedChartValid basisData.tangentFrame
         (pointwiseNormalSeedCharts basisData) center base)
       (normal : NormalSpace (derivative base)),
       (pointwiseBasisSmoothNormalFrameFamilyOn normalBasis
@@ -100,6 +100,7 @@ def ProjectedSeedFixedNormalFamilyData.toFixedNormalFamily
     (normalBasis : Basis κ ℝ NormalModel)
     (hNormalBasis : Orthonormal ℝ normalBasis)
     (data : ProjectedSeedFixedNormalFamilyData
+      (Tangent := Tangent) (NormalModel := NormalModel) (Ambient := Ambient)
       basisData center normalBasis hNormalBasis) :
     FixedNormalTrivializedActualJetFamilyData
       (Base := Base) (Tangent := Tangent)
@@ -112,6 +113,7 @@ theorem ProjectedSeedFixedNormalFamilyData.reducedJet_contDiff
     (normalBasis : Basis κ ℝ NormalModel)
     (hNormalBasis : Orthonormal ℝ normalBasis)
     (data : ProjectedSeedFixedNormalFamilyData
+      (Tangent := Tangent) (NormalModel := NormalModel) (Ambient := Ambient)
       basisData center normalBasis hNormalBasis) :
     ContDiff ℝ ∞
       data.toFixedNormalFamily.toActualJanusLocalJetFamilyData.reducedJet :=
