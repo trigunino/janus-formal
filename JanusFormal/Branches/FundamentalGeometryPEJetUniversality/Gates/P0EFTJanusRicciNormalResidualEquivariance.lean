@@ -36,7 +36,9 @@ theorem actOnRealNormalCurvatureTensor_one
         (1 : ResidualOrthogonalFrame (Tangent := Tangent) (Normal := Normal))
         tensor = tensor := by
   funext x y firstNormal secondNormal
-  simp [actOnRealNormalCurvatureTensor, LinearIsometryEquiv.one_def]
+  change tensor x y firstNormal secondNormal =
+    tensor x y firstNormal secondNormal
+  rfl
 
 @[simp]
 theorem actOnRealNormalCurvatureTensor_mul
