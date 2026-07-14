@@ -164,8 +164,8 @@ jobs:
           path: focused-lean.log
           if-no-files-found: error
 
-      - name: Save Lake build cache after successful custom builds
-        if: ${{ success() && steps.lake-cache.outputs.cache-hit != 'true' }}
+      - name: Save Lake build cache after targeted/full attempt
+        if: ${{ always() && steps.lake-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@v5
         with:
           path: .lake
