@@ -16,7 +16,7 @@ open P0EFTJanusNormalConnectionFromFrameJet
 universe u v w
 
 variable {Base : Type u} {Normal : Type v} {Ambient : Type w}
-variable [NormedAddCommGroup Base] [NormedSpace ℝ Base]
+variable [NormedAddCommGroup Base] [InnerProductSpace ℝ Base]
 variable [NormedAddCommGroup Normal] [InnerProductSpace ℝ Normal]
 variable [NormedAddCommGroup Ambient] [InnerProductSpace ℝ Ambient]
 
@@ -29,7 +29,7 @@ metric identities required by `OrthonormalNormalFrameTwoJet` can be derived from
 ordinary Fréchet calculus rather than postulated independently. -/
 structure SmoothOrthonormalNormalFrameTwoJetField
     (Base : Type u) (Normal : Type v) (Ambient : Type w)
-    [NormedAddCommGroup Base] [NormedSpace ℝ Base]
+    [NormedAddCommGroup Base] [InnerProductSpace ℝ Base]
     [NormedAddCommGroup Normal] [InnerProductSpace ℝ Normal]
     [NormedAddCommGroup Ambient] [InnerProductSpace ℝ Ambient] where
   field : Base → Normal →L[ℝ] Ambient
@@ -128,11 +128,12 @@ def firstMetricScalarField
     (frame : SmoothOrthonormalNormalFrameTwoJetField Base Normal Ambient)
     (direction : Base)
     (firstNormal secondNormal : Normal) : Base → ℝ :=
-  fun base =>
+  (fun base =>
     ⟪frame.first base direction firstNormal,
-        frame.field base secondNormal⟫_ℝ +
-      ⟪frame.field base firstNormal,
-        frame.first base direction secondNormal⟫_ℝ
+      frame.field base secondNormal⟫_ℝ) +
+  (fun base =>
+    ⟪frame.field base firstNormal,
+      frame.first base direction secondNormal⟫_ℝ)
 
 /-- The first metric scalar field vanishes identically. -/
 theorem firstMetricScalarField_eq_zero
@@ -141,6 +142,11 @@ theorem firstMetricScalarField_eq_zero
     (firstNormal secondNormal : Normal) :
     firstMetricScalarField frame direction firstNormal secondNormal = 0 := by
   funext base
+  change
+    ⟪frame.first base direction firstNormal,
+        frame.field base secondNormal⟫_ℝ +
+      ⟪frame.field base firstNormal,
+        frame.first base direction secondNormal⟫_ℝ = 0
   exact first_metric_identity frame base direction
     firstNormal secondNormal
 
@@ -178,7 +184,8 @@ theorem second_metric_identity
         (((frame.first base).flip firstNormal).prod
           (((frame.second base).flip y).flip secondNormal))))
       base := by
-    simpa [firstMetricScalarField] using hFirstTerm.add hSecondTerm
+    simpa only [firstMetricScalarField] using
+      hFirstTerm.add hSecondTerm
   have hZero : HasFDerivAt
       (firstMetricScalarField frame y firstNormal secondNormal)
       (0 : Base →L[ℝ] ℝ) base := by
@@ -207,7 +214,7 @@ def frameValueAt
   toLinearMap := (frame.field base).toLinearMap
   norm_map' normal := by
     rw [← sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)]
-    simpa only [inner_self_eq_norm_sq] using
+    simpa only [real_inner_self_eq_norm_sq] using
       frame.orthonormal base normal normal
 
 /-- Convert the continuous second derivative at one point to the nested algebraic
@@ -221,14 +228,14 @@ def frameSecondLinearAt
     intro first second
     apply LinearMap.ext
     intro y
-    apply LinearMap.ext
+    apply ContinuousLinearMap.ext
     intro normal
     simp
   map_smul' := by
     intro scalar x
     apply LinearMap.ext
     intro y
-    apply LinearMap.ext
+    apply ContinuousLinearMap.ext
     intro normal
     simp
 
