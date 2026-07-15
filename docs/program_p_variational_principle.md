@@ -568,12 +568,17 @@ Candidate A now instantiates part of them.  It supplies reciprocal
 four-eigenvalue cross densities, their genuine Frechet Hessian/Helmholtz test,
 a pointwise square-root-matrix potential, the actual metric-inverse and
 relative-product derivatives followed by an explicit Sylvester inverse on the
-open positive diagonal chart, a concrete co-diagonal Lorentz root chart and an
-exact finite-frame density weight, a typed gravitational boundary ledger with
-an actual local inverse-compatible determinant-measure GHY curve, a derived
-Gaussian-normal Palatini/EH cancellation, singular zero-expansion derivative
-behavior and null/joint endpoint transgression, a first-jet Gram `K/J` with
-source/ambient naturality and an exact finite principal-symbol kernel, an
+open positive diagonal chart, a first-Frechet-differentiable co-diagonal
+positive-scale Lorentz root chart with actual metric/inverse/target/root
+derivatives and an internally proved Sylvester derivative, and an exact
+finite-frame density weight, a typed
+gravitational boundary ledger with an actual local inverse-compatible
+determinant-measure GHY curve, a derived Gaussian-normal Palatini/EH
+cancellation, a continuous but formally non-differentiable zero-expansion
+extension, null/joint endpoint transgression, pointwise LL auxiliary
+metric/measure/flux variations with a conditional null-kernel branch, a
+first-jet Gram `K/J` with source/ambient naturality and an exact finite
+principal-symbol kernel, an
 explicit matrix covector and unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations, an exact reduced
 Legendre/Dirac-chain bridge plus a PT-flat vacuum rank no-go, a relative-source
@@ -585,17 +590,18 @@ nor a reduced finite even-counterterm proxy. See
 The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
-1. extend the co-diagonal chart and positive-diagonal Sylvester construction
-   to the smooth real Lorentzian square-root branch, and lift the selected
-   densities and their finite weight law from pointwise matrices to metric
-   functional derivatives on a manifold;
+1. extend the first-Frechet-differentiable co-diagonal positive-scale chart and
+   its explicit Sylvester derivative to a smooth real Lorentzian square-root
+   branch, and lift the selected densities and their finite weight law from
+   pointwise matrices to metric functional derivatives on a manifold;
 2. build the global Janus field space, independent variations and diagonal
    diffeomorphism action;
 3. lift the Gaussian-normal Palatini flux to arbitrary coordinates, derive the
    extrinsic-curvature tangent from an embedding-compatible boundary curve,
-   choose a zero-expansion variational prescription, derive the geometric
+   choose an admissible zero-expansion variational domain, derive the geometric
    null/joint transformation laws, instantiate and integrate all slots, and
-   construct the actual LL action and equations;
+   lift the pointwise LL model to composite measure fields, worldvolume PDEs
+   and a nonempty throat branch;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
 5. lift the natural first-jet Gram `K/J` and its finite normal-kernel symbol to

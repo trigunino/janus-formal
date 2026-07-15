@@ -56,6 +56,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootFrechetSylvester
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalSylvesterInverse
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootChart
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootFirstDerivative
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusRelativeMetricProductFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricInverseRelativeRootFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLedger
@@ -65,7 +66,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYExactInverseCurve
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussianNormalEHGHYCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermNonDifferentiable
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullJointReparametrizationCancellation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLLBraneAuxiliaryActionVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBulkBoundaryCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityNaturality
@@ -144,6 +147,7 @@ structure ProgramStatus where
   paMatrixSquaringSylvesterFrechetProved : Prop
   paPositiveDiagonalSylvesterInverseProved : Prop
   paCoDiagonalLorentzRootChartConstructed : Prop
+  paCoDiagonalLorentzRootFirstDerivativeProved : Prop
   paConditionalRelativeMetricRootFrechetBridgeProved : Prop
   paFixedGeometryBoundarySlotVariationsProved : Prop
   paNonNullGHYPointwiseFirstJetVariationProved : Prop
@@ -162,7 +166,9 @@ structure ProgramStatus where
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paNullExpansionCountertermVariationProved : Prop
+  paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
+  paLLBraneAuxiliaryVariationAndNullKernelProved : Prop
   paReducedFLRWBracketFactorizationFromInputHamiltoniansProved : Prop
   paReducedFLRWLegendreBridgeProved : Prop
   paPTFlatVacuumFLRWConstraintNoGoProved : Prop
@@ -252,6 +258,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paMatrixSquaringSylvesterFrechetProved /\
   s.paPositiveDiagonalSylvesterInverseProved /\
   s.paCoDiagonalLorentzRootChartConstructed /\
+  s.paCoDiagonalLorentzRootFirstDerivativeProved /\
   s.paConditionalRelativeMetricRootFrechetBridgeProved /\
   s.paFixedGeometryBoundarySlotVariationsProved /\
   s.paNonNullGHYPointwiseFirstJetVariationProved /\
@@ -270,7 +277,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paNullExpansionCountertermVariationProved /\
+  s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\
+  s.paLLBraneAuxiliaryVariationAndNullKernelProved /\
   s.paReducedFLRWBracketFactorizationFromInputHamiltoniansProved /\
   s.paReducedFLRWLegendreBridgeProved /\
   s.paPTFlatVacuumFLRWConstraintNoGoProved /\

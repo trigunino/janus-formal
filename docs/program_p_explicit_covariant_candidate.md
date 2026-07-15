@@ -48,9 +48,12 @@ A concrete nonempty subchart is now encoded: both Lorentz metrics are
 co-diagonal with one negative and three positive entries built from positive
 scales. Their inverses, the positive ratio root, `X^2 = g_plus^{-1} g_minus`,
 `det X > 0`, and uniqueness among positive diagonal roots are proved, and the
-positive-diagonal Sylvester witness is instantiated. This is a local
-co-diagonal chart and branch contract, not an open Hassan--Kocic domain or a
-smooth root selection for arbitrary Lorentz pairs.
+positive-diagonal Sylvester witness is instantiated. On the open positive
+scale-pair domain, the metric, inverse, relative target and root now have
+actual Frechet derivatives; differentiating the square identity proves the
+Sylvester equation internally. This proves a first Frechet derivative on the
+local co-diagonal chart, not higher regularity, an open Hassan--Kocic domain or
+a root selection for arbitrary Lorentz pairs.
 
 The corresponding pointwise matrix statement is now exact: a common
 invertible frame acts by simultaneous metric congruence and root similarity,
@@ -101,11 +104,20 @@ two gravitational sectors share one common worldvolume contribution rather
 than double counting it. The null counterterm uses the continuous zero branch
 at vanishing expansion. This is a convention-explicit EH ledger, not the LL
 auxiliary-field action, the integrated throat functional, or a proof that its
-variation cancels the Candidate-A bulk flux. The missing lightlike-brane slot
-must use its actual
+variation cancels the Candidate-A bulk flux. The full lightlike-brane slot
+must ultimately use its actual
 auxiliary metric/measure fields, as in the published
 [LL-brane action](https://arxiv.org/abs/hep-th/0703114), rather than a
 determinant measure of the degenerate induced metric.
+
+A finite pointwise LL model now instantiates that slot with an independent
+symmetric auxiliary inverse metric, a non-Riemannian measure density and a
+magnetic worldvolume flux. Actual metric, measure and flux derivatives give
+the symmetric auxiliary stress equation and the measure constraint. On the
+conditional auxiliary branch the induced metric has an explicit nonzero null
+vector. This verifies the local algebra only: it does not construct the
+measure from auxiliary scalars, prove branch non-emptiness, derive the
+worldvolume PDEs or integrate a throat solution.
 
 `P0EFTJanusExplicitBoundaryDensityLocalVariations.lean` computes exact affine
 one-parameter derivatives of the GHY extrinsic-curvature slot, null
@@ -138,8 +150,11 @@ For the null expansion counterterm, the actual derivative of
 nonzero expansion and lifted to the fixed-measure ledger density. Along the
 explicit path `theta = exp(-t)/lengthScale`, its derivative coefficient is
 `1-t` and is unbounded below while `theta -> 0`. Thus the continuous zero value
-does not silently provide a regular first variation; a zero-expansion
-prescription remains part of the admissible boundary problem.
+does not silently provide a regular first variation. More sharply, the zero
+extension is continuous, but the explicit sequence
+`theta_n = exp(-n)/lengthScale` has difference quotient `-n`; hence no finite
+derivative, and therefore no differentiability, exists at zero. A
+zero-expansion prescription remains part of the admissible boundary problem.
 
 For a one-dimensional null-generator model, actual derivatives satisfying
 `A' = A Theta` and the reparametrization shift `kappa -> kappa + sigma'`
@@ -343,7 +358,9 @@ Implemented in the current finite, spectral or pointwise models:
   an explicit two-sided Sylvester inverse on the open positive diagonal chart
   and a conditional derivative of a supplied differentiable square root;
 - explicit co-diagonal Lorentz metric pairs with shared signature, positive
-  root, determinant, diagonal-root uniqueness and Sylvester witness;
+  root, determinant, diagonal-root uniqueness and Sylvester witness, together
+  with actual metric/inverse/target/root Frechet derivatives on the open
+  positive scale chart and an internally proved differentiated square identity;
 - explicit pointwise EH-stratum ledger plus a generic supplied-measure
   worldvolume placeholder;
 - exact fixed-geometry affine variations of selected boundary/worldvolume
@@ -355,9 +372,13 @@ Implemented in the current finite, spectral or pointwise models:
 - derived Gaussian-normal Palatini/EH boundary flux and its exact pointwise
   cancellation with GHY for Dirichlet variations, with both orientation signs;
 - actual nonzero-expansion null-counterterm derivative and its explicit
-  singular approach to zero expansion;
+  singular approach to zero expansion, plus continuity but proved
+  non-differentiability of its zero extension;
 - actual null-generator product derivative and exact face/joint endpoint
   transgression cancellation in the typed one-dimensional ledger;
+- actual pointwise LL auxiliary-metric, measure and flux variations, the
+  symmetric auxiliary stress/measure equations and a conditional nonzero
+  induced-metric null kernel;
 - exact local two-sector bulk/GHY cancellation and a nonzero mismatch
   residual;
 - finite Gram-tensor map, its actual first and second derivatives, positivity
@@ -386,18 +407,19 @@ Implemented in the current finite, spectral or pointwise models:
 
 Still required before Candidate A is a completed Janus action:
 
-1. extend the co-diagonal Lorentz chart and diagonal Sylvester inverse to a
-   smooth real principal square-root branch on the full admissible Lorentz
-   field domain, lift the finite density weight to the manifold transformation
-   law and control branch changes;
+1. extend the first-Frechet-differentiable co-diagonal positive-scale chart and
+   its explicit Sylvester derivative to a smooth real principal square-root
+   branch on the full admissible Lorentz field domain, lift the finite density
+   weight to the manifold transformation law and control branch changes;
 2. lift the pointwise spectral/matter Euler equations to both covariant metric
    and spacetime matter Euler--Lagrange PDEs from `S_A`;
 3. lift the Gaussian-normal Palatini calculation to arbitrary coordinates,
    derive the extrinsic-curvature tangent from an embedding-compatible
    geometric boundary curve, instantiate and integrate all gravitational
-   strata,
-   construct the actual LL auxiliary-field action, specify the zero-expansion
-   variational domain, and prove cancellation of the physical bulk flux;
+   strata, select an admissible zero-expansion variational domain, lift the
+   pointwise LL auxiliary model to composite measure fields and worldvolume
+   PDEs, establish a nonempty throat branch, and prove cancellation of the
+   physical bulk flux;
 4. instantiate the diagonal diffeomorphism generator and covariant Noether--
    Bianchi identity;
 5. reproduce the Janus Newtonian sign matrix without a negative spin-2 kinetic
@@ -418,9 +440,9 @@ is used in its definition.
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
-| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, co-diagonal Lorentz root chart, diagonal Sylvester inverse and exact finite-frame density weight | smooth root/Sylvester inverse on the full causal-compatible Lorentz domain and full metric functional variation |
+| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal positive-scale Lorentz root with explicit Sylvester derivative, and exact finite-frame density weight | smooth root/Sylvester inverse on the full causal-compatible Lorentz domain and full metric functional variation |
 | 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector and unconditional finite-frame commutator pairing | global field space and actual diagonal diffeomorphism action |
-| 3. Bulk/boundary/worldvolume | typed ledger, exact local inverse-compatible GHY curve, derived Gaussian-normal EH cancellation, null-counterterm singularity audit and null/joint endpoint transgression | arbitrary-coordinate/embedding boundary geometry, integrated flux, zero-expansion prescription, throat data, LL action/EOM and full stratum integration |
+| 3. Bulk/boundary/worldvolume | typed ledger, exact local inverse-compatible GHY curve, derived Gaussian-normal EH cancellation, formal continuity/non-differentiability of the null zero extension, null/joint endpoint transgression, and pointwise LL auxiliary variations/stress/null-kernel branch | arbitrary-coordinate/embedding boundary geometry, integrated flux, admissible zero-expansion domain, composite LL measure fields, PDEs, throat data and full stratum integration |
 | 4. Concrete `K/J` | actual first-jet Gram `K/J`, source/ambient naturality, gauge-kernel directions and exact finite principal-symbol kernel | Lorentzian/global Janus compatibility PDE/jet complex and its symbol sequence/exactness |
 | 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, explicit finite-frame Noether, reduced Legendre/Dirac-chain bridge and PT-flat vacuum rank no-go | covariant metric/matter PDEs, diagonal Bianchi, covariant reduction, viable matter/curved PT branch and ADM shift/Poisson closure |
 | 6. Stability/scheme | explicit spectral interaction indefiniteness, source-mode rejection precursor and reduced Candidate-A anomaly-proxy scheme-freedom no-go | constrained kinetic stability, PPN derivation, covariantly admissible counterterms, actual regulated anomalies and a microscopic normalization/finite-part law |
