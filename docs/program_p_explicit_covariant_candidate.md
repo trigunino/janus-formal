@@ -78,6 +78,13 @@ auxiliary metric/measure fields, as in the published
 [LL-brane action](https://arxiv.org/abs/hep-th/0703114), rather than a
 determinant measure of the degenerate induced metric.
 
+`P0EFTJanusExplicitBoundaryDensityLocalVariations.lean` computes exact affine
+one-parameter derivatives of the GHY extrinsic-curvature slot, null
+inaffinity, joint angle, and local worldvolume Lagrangian/tension. Measures,
+metrics, inverses and the other geometric inputs are fixed in these curves.
+This is not the full metric variation, an integrated EH-flux cancellation, or
+an LL auxiliary-field equation.
+
 ## The two M30 density slots
 
 Let
@@ -112,6 +119,15 @@ explicit weights. The matrix gate separately derives
 and proves the end-to-end identification for a supplied real diagonalization.
 It still does not construct that diagonalization or the smooth branch.
 
+The pointwise derivative chain is now explicit. The map
+`(g_plus_inverse, g_minus) -> g_plus_inverse * g_minus` has its actual Frechet
+derivative, the squaring map has its actual first and second Frechet
+derivatives, and a supplied differentiable square-root selection has the
+Sylvester inverse formula for its derivative. The inverse plus metric remains
+an independent input, and both the differentiable Lorentz branch and the
+continuous-linear inverse of the Sylvester operator are hypotheses rather
+than constructed objects.
+
 The full four-eigenvalue identity, its proportional specialization, explicit
 matter independence and the weighted no-double-counting equality are proved in
 `P0EFTJanusExplicitReciprocalCrossDensities.lean`.
@@ -131,6 +147,13 @@ Frechet gradient, Hessian symmetry and nonlinear Helmholtz condition of the
 four-eigenvalue interaction, and checks its proportional derivative against
 the existing PT-flat force.  These are spectral-chart results, not metric
 functional derivatives.
+
+That full spectral chart also corrects the reduced stability reading: whenever
+the displayed `01` mixed Hessian coefficient is nonzero, two explicit
+eigenvalue directions have opposite interaction-Hessian signs. In particular,
+the positive PT-flat reduced cone remains interaction-Hessian indefinite in
+this larger chart. This is not a ghost theorem or a stability verdict because
+kinetic, gauge and constraint sectors are absent.
 
 ## PT/exchange branch
 
@@ -155,7 +178,19 @@ beta_3 = beta_1.
 ```
 
 The cone `beta_1 > 0`, `beta_2 >= 0` has a positive reduced relative-mode
-curvature.  This is necessary but not sufficient for nonlinear stability.
+curvature. It is not sufficient for nonlinear stability and does not make the
+full spectral interaction Hessian positive.
+
+On the FLRW diagonal spectrum `(N_minus/N_plus, r, r, r)`, the reciprocal
+interaction is exactly affine in both lapses. Its two lapse variations are
+primary-constraint precursors and all lapse Hessian entries vanish. A concrete
+ledger counterexample proves that lapse affinity alone does not supply the
+secondary constraint; shift redefinition and Poisson closure remain open.
+
+The source algebra is also explicit: a single-sheet matter source generically
+excites the relative mode, equal sources remove it, and opposite PT sources
+are purely relative. This is a PPN rejection precursor, not a propagator, PPN
+parameter, or observational bound.
 
 ## Acceptance ledger
 
@@ -170,20 +205,28 @@ Implemented in the current finite, spectral or pointwise models:
 - PT coefficient reversal and flat proportional coefficient family;
 - positive reduced relative-mode curvature in the selected cone;
 - actual spectral Frechet gradient, Hessian and Helmholtz symmetry;
+- explicit opposite-sign directions for a nonzero `01` spectral mixed Hessian;
 - pointwise matrix potential and invertible-frame similarity invariance;
+- actual derivative of `g_plus_inverse * g_minus` and a conditional
+  Sylvester-inverse derivative of a supplied differentiable square root;
 - explicit pointwise EH-stratum ledger plus a generic supplied-measure
   worldvolume placeholder;
+- exact fixed-geometry affine variations of selected boundary/worldvolume
+  slots;
 - finite Gram-tensor map, its actual first and second derivatives, positivity
   on the injective immersion domain, and the associated concrete finite
   compatibility map and Jacobian;
 - exact classification of additive reduced scale translation; relating it to
-  the covariant diagonal diffeomorphism remains a separate bridge.
+  the covariant diagonal diffeomorphism remains a separate bridge;
+- exact FLRW lapse affinity and primary-constraint precursors, with a proved
+  non-implication of the secondary constraint;
+- exact diagonal/relative source decomposition as a PPN rejection precursor.
 
 Still required before Candidate A is a completed Janus action:
 
-1. construct the smooth real principal matrix square root on the admissible
-   Lorentz field domain, prove the density transformation law and control
-   branch changes;
+1. construct the smooth real principal matrix square root and Sylvester inverse
+   on the admissible Lorentz field domain, derive `D(g_plus_inverse)` from
+   `g_plus`, prove the density transformation law and control branch changes;
 2. derive both metric and matter Euler--Lagrange equations from `S_A`;
 3. instantiate and integrate the declared gravitational strata, construct the
    actual LL auxiliary-field action, and prove cancellation of the bulk flux;
@@ -191,8 +234,9 @@ Still required before Candidate A is a completed Janus action:
    Bianchi identity;
 5. reproduce the Janus Newtonian sign matrix without a negative spin-2 kinetic
    mode;
-6. translate the primary/secondary constraint and stability analysis to the
-   exact candidate with its chosen matter actions;
+6. extend the FLRW primary precursor to the ADM shift, Poisson and independent
+   secondary constraint, then derive the kinetic/constrained stability and PPN
+   parameters for the exact matter couplings;
 7. compute anomalies, normalization and finite counterterms in the same
    scheme.
 
@@ -203,9 +247,9 @@ is used in its definition.
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
-| 1. Cross densities | explicit reciprocal pair, one common interaction, matter independence, spectral Frechet data | smooth Lorentz square-root domain and metric variation |
+| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual relative-product derivative and conditional Sylvester formula | derivative of metric inversion plus smooth Lorentz branch/Sylvester inverse and metric variation |
 | 2. Fields/induced/gauge | independent field choice and finite Gram tensor with an injective immersion domain | global field space and actual diagonal diffeomorphism action |
-| 3. Bulk/boundary/worldvolume | typed gravitational density ledger plus generic worldvolume placeholder | geometric throat data, actual LL action, integration and flux cancellation |
+| 3. Bulk/boundary/worldvolume | typed density ledger, generic worldvolume placeholder and fixed-geometry affine slot derivatives | full metric variation, geometric throat data, actual LL action/EOM, integration and flux cancellation |
 | 4. Concrete `K/J` | actual finite Gram compatibility map and Jacobian | full Janus compatibility PDE/jet complex |
-| 5. Euler/Helmholtz/Noether | spectral Hessian/Helmholtz and exact reduced proxy no-go | covariant Euler equations, Bianchi and constraints |
-| 6. Stability/scheme | positive reduced cone and published ghost-free candidate rationale | exact Janus constraint audit, anomalies, normalization and counterterms |
+| 5. Euler/Helmholtz/Noether | spectral Hessian/Helmholtz, reduced proxy no-go and exact FLRW primary-constraint precursor | covariant Euler equations, diagonal Bianchi, ADM shift/Poisson and secondary constraint |
+| 6. Stability/scheme | explicit spectral interaction indefiniteness and exact source-mode rejection precursor | constrained kinetic stability, PPN derivation, anomalies, normalization and counterterms |

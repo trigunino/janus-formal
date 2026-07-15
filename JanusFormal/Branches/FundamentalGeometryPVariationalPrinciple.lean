@@ -46,10 +46,16 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensities
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensityFrechet
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusSpectralInteractionHessianIndefinite
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootFrechetSylvester
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusRelativeMetricProductFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLedger
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLocalVariations
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateSourceModeDecomposition
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPETensorPairingFreedom
@@ -115,6 +121,12 @@ structure ProgramStatus where
   paExplicitGravitationalBoundaryLedgerDeclared : Prop
   paFiniteGramInducedMetricFrechetBridgeProved : Prop
   pcReducedActionAdditiveNoetherProxyClassified : Prop
+  paMatrixSquaringSylvesterFrechetProved : Prop
+  paConditionalRelativeMetricRootFrechetBridgeProved : Prop
+  paFixedGeometryBoundarySlotVariationsProved : Prop
+  paPTFlatSpectralInteractionIndefinitenessProved : Prop
+  paCandidateMinisuperspacePrimaryConstraintPrecursorProved : Prop
+  paCandidateSourceModeDecompositionProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -196,7 +208,13 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paMatrixSquareRootPointwisePotentialConstructed /\
   s.paExplicitGravitationalBoundaryLedgerDeclared /\
   s.paFiniteGramInducedMetricFrechetBridgeProved /\
-  s.pcReducedActionAdditiveNoetherProxyClassified
+  s.pcReducedActionAdditiveNoetherProxyClassified /\
+  s.paMatrixSquaringSylvesterFrechetProved /\
+  s.paConditionalRelativeMetricRootFrechetBridgeProved /\
+  s.paFixedGeometryBoundarySlotVariationsProved /\
+  s.paPTFlatSpectralInteractionIndefinitenessProved /\
+  s.paCandidateMinisuperspacePrimaryConstraintPrecursorProved /\
+  s.paCandidateSourceModeDecompositionProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=

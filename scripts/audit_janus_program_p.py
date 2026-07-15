@@ -286,6 +286,14 @@ PROGRAM_P_GATES = {
             "theorem commonInteractionGradient_ptFlat_proportionalSpectrum",
         ),
     ),
+    "P0EFTJanusSpectralInteractionHessianIndefinite.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem nonzero_mixed01_forces_spectral_interaction_indefinite",
+            "theorem positiveSemidefinite_forces_mixed01_zero",
+            "theorem positive_ptFlat_cone_spectral_interaction_indefinite",
+        ),
+    ),
     "P0EFTJanusMatrixSquareRootInteractionDensity.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -301,6 +309,25 @@ PROGRAM_P_GATES = {
             "theorem diagonalizable_two_M30_slots_eq_matrixCommonInteractionDensity",
         ),
     ),
+    "P0EFTJanusMatrixSquareRootFrechetSylvester.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem squareMap_hasFDerivAt",
+            "theorem squareMap_second_fderiv_apply",
+            "structure SylvesterInverseWitness",
+            "theorem squareRoot_derivative_equation",
+            "theorem differentiable_squareRoot_fderiv",
+        ),
+    ),
+    "P0EFTJanusRelativeMetricProductFrechet.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem relativeMetricTarget_hasFDerivAt",
+            "theorem relativeMetricTarget_fderiv",
+            "theorem relativeSquareRoot_hasFDerivAt",
+            "theorem relativeSquareRoot_fderiv",
+        ),
+    ),
     "P0EFTJanusExplicitBoundaryDensityLedger.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -314,6 +341,17 @@ PROGRAM_P_GATES = {
             "def gravitationalBoundaryDensityLedger",
             "def totalIntegratedTwoSectorBoundaryAction",
             "theorem totalIntegratedTwoSectorBoundaryAction_exchange",
+        ),
+    ),
+    "P0EFTJanusExplicitBoundaryDensityLocalVariations.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem nonNullGHYExtrinsicCurve_hasDerivAt",
+            "theorem nullGeneratorInaffinityCurve_hasDerivAt",
+            "theorem jointAngleCurve_hasDerivAt",
+            "theorem worldvolumeLocalCurve_hasDerivAt",
+            "theorem worldvolumeLocalLagrangianCurve_hasDerivAt",
+            "theorem worldvolumeTensionCurve_hasDerivAt",
         ),
     ),
     "P0EFTJanusFiniteGramInducedMetricFrechetBridge.lean": (
@@ -332,6 +370,26 @@ PROGRAM_P_GATES = {
             "theorem reducedTwoMetricAction_diagonalTranslation_hasDerivAt",
             "theorem additivelyDiagonalInvariant_iff_coefficients",
             "theorem positive_interaction_not_additivelyDiagonalInvariant",
+        ),
+    ),
+    "P0EFTJanusCandidateMinisuperspaceLapseConstraint.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem spectralPotential_on_flrwDiagonalSpectrum",
+            "theorem reciprocal_spectral_interaction_is_lapse_linear",
+            "theorem plus_lapse_variation_is_primary_constraint_precursor",
+            "theorem minus_lapse_variation_is_primary_constraint_precursor",
+            "theorem mixed_lapse_second_variation_vanishes",
+            "theorem lapse_linearity_alone_does_not_supply_secondary_constraint",
+        ),
+    ),
+    "P0EFTJanusCandidateSourceModeDecomposition.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem candidateA_source_coupling_mode_decomposition",
+            "theorem candidateA_relative_mode_unsourced_iff_equal_sources",
+            "theorem candidateA_single_sheet_source_excites_relative_mode",
+            "theorem candidateA_opposite_pt_sources_are_pure_relative",
         ),
     ),
 }
@@ -388,6 +446,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paExplicitGravitationalBoundaryLedgerDeclared",
         "paFiniteGramInducedMetricFrechetBridgeProved",
         "pcReducedActionAdditiveNoetherProxyClassified",
+        "paMatrixSquaringSylvesterFrechetProved",
+        "paConditionalRelativeMetricRootFrechetBridgeProved",
+        "paFixedGeometryBoundarySlotVariationsProved",
+        "paPTFlatSpectralInteractionIndefinitenessProved",
+        "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
+        "paCandidateSourceModeDecompositionProved",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1
