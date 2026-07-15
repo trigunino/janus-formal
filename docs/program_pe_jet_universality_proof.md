@@ -302,6 +302,22 @@ theorem control smooth scalar invariants. Extension across constrained jet loci
 and isotropy strata remains a separate theorem. Pseudo-Riemannian signatures
 require additional work because the residual orthogonal group is noncompact.
 
+## Scoped follow-on descent results
+
+In the low-order Euclidean model, all valid projected-seed chart jets at one
+fixed base lie in the same residual SpinC-frame orbit. Consequently every
+invariant observable has a unique chart-independent value there.
+
+Two further Cech constructions are conditional. Supplied oriented transition
+cocycles, Spin lifts, phases and matching diagonal defects determine a
+multi-chart pointwise SpinC transition presentation satisfying the Cech laws;
+transition continuity/smoothness and a principal-bundle total space are not
+constructed. Supplied local abelian
+potentials and additive overlap shifts satisfy the affine derivative law. When
+all overlap shifts are curvature-flat, their local curvatures glue uniquely to
+a global smooth curvature function. Neither theorem derives these inputs from actual Janus
+characteristic classes or determinant transitions.
+
 ## Janus specialization still open
 
 1. Define the actual category of decorated Janus SpinC immersions.
@@ -336,6 +352,9 @@ require additional work because the residual orthogonal group is noncompact.
 | one-chart rank-two SpinC bundle/connection | proved in Lean; nontrivial global sectors open |
 | valid-chart low-order residual/SpinC action groupoid | instantiated in Lean |
 | actual valid-chart overlap arrows | proved with identity and Cech composition in the low-order Euclidean model |
+| fixed-base low-order invariant-observable descent | proved in Lean; smooth global effective descent remains open |
+| multi-chart SpinC Cech transition presentation | conditional pointwise theorem from supplied cocycles, lifts, phases and matching defects; continuity and total space open |
+| abelian connection overlap curvature descent | conditional global smooth curvature theorem from supplied local potentials and flat additive shifts |
 | actual structured SpinC jet groupoid | open |
 | effective Janus descent theorem | open |
 | full smooth equivariant-map classification | open |

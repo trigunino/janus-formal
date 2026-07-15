@@ -20,7 +20,12 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalySelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHessianHelmholtzReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPolynomialHelmholtzReconstruction
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankPolynomialHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBulkUniversalHelmholtzSynthesis
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoupledSectorHelmholtzSelection
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankParentSchurHelmholtz
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPETensorPairingFreedom
@@ -40,15 +45,20 @@ structure ProgramStatus where
   paBulkOnShellReductionConstructed : Prop
   paDirichletToNeumannOrSchurHessianDerived : Prop
   paBoundaryActionUniqueRelativeToParentProved : Prop
+  paParentBulkTwoSectorReciprocitySynthesized : Prop
+  paFiniteRankCoefficientSchurHelmholtzSynthesized : Prop
   pbPTAnomalyCancellationProved : Prop
   pbParityEvenFreedomProved : Prop
   pbTrivializationFreedomProved : Prop
   pbDiscreteMultiplicitySelectorDerived : Prop
+  pbAnomalyHelmholtzLogicalIndependenceProved : Prop
   pcFormalSelfAdjointnessNecessaryProved : Prop
   pcQuadraticHelmholtzIffProved : Prop
   pcQuadraticEulerCubicHelmholtzIffProved : Prop
   pcAffineReconstructionAmbiguityProved : Prop
   pcPTNormalizedUniqueReconstructionProved : Prop
+  pcQuadraticCoupledSectorPTRealizabilityIffProved : Prop
+  pcFiniteRankCoefficientHelmholtzIffProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -85,15 +95,20 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paBulkOnShellReductionConstructed /\
   s.paDirichletToNeumannOrSchurHessianDerived /\
   s.paBoundaryActionUniqueRelativeToParentProved /\
+  s.paParentBulkTwoSectorReciprocitySynthesized /\
+  s.paFiniteRankCoefficientSchurHelmholtzSynthesized /\
   s.pbPTAnomalyCancellationProved /\
   s.pbParityEvenFreedomProved /\
   s.pbTrivializationFreedomProved /\
   s.pbDiscreteMultiplicitySelectorDerived /\
+  s.pbAnomalyHelmholtzLogicalIndependenceProved /\
   s.pcFormalSelfAdjointnessNecessaryProved /\
   s.pcQuadraticHelmholtzIffProved /\
   s.pcQuadraticEulerCubicHelmholtzIffProved /\
   s.pcAffineReconstructionAmbiguityProved /\
-  s.pcPTNormalizedUniqueReconstructionProved
+  s.pcPTNormalizedUniqueReconstructionProved /\
+  s.pcQuadraticCoupledSectorPTRealizabilityIffProved /\
+  s.pcFiniteRankCoefficientHelmholtzIffProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=

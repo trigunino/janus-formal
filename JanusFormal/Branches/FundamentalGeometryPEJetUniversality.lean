@@ -102,6 +102,9 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetActionGroupoidRealization
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapGroupoid
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapDescent
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGlobalSpinCCechDescent
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCechAbelianConnectionDescent
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -182,6 +185,9 @@ structure ProgramStatus where
   euclideanOneChartSpinCBundleConstructed : Prop
   euclideanLowOrderSpinCActionGroupoidConstructed : Prop
   euclideanLowOrderChartOverlapGroupoidConstructed : Prop
+  euclideanLowOrderInvariantOverlapDescentProved : Prop
+  suppliedPointwiseSpinCCechPresentationPackaged : Prop
+  conditionalSmoothAbelianCurvatureDescentProved : Prop
 
 /-- Formal/logical theorem core through canonical pointwise frame transitions,
 smooth variable-overlap and Ricci covariance, frame and gauge jet extraction,
@@ -251,7 +257,10 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.projectedSeedVaryingNormalAtlasConstructed /\
   s.euclideanOneChartSpinCBundleConstructed /\
   s.euclideanLowOrderSpinCActionGroupoidConstructed /\
-  s.euclideanLowOrderChartOverlapGroupoidConstructed
+  s.euclideanLowOrderChartOverlapGroupoidConstructed /\
+  s.euclideanLowOrderInvariantOverlapDescentProved /\
+  s.suppliedPointwiseSpinCCechPresentationPackaged /\
+  s.conditionalSmoothAbelianCurvatureDescentProved
 
 /-- Full Janus specialization. -/
 def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=

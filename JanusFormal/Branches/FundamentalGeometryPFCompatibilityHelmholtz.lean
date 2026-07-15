@@ -24,6 +24,8 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibleJetPullbackHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonlinearJetSecondVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusInvariantMapNoetherHelmholtz
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussCodazziHelmholtzBridge
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibilityBridgeHierarchy
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPFCompatibilityHelmholtz
@@ -45,6 +47,7 @@ structure ProgramStatus where
   gaugeInvariantMapConstructed : Prop
   noetherIdentityDerived : Prop
   helmholtzAndNoetherIndependenceProved : Prop
+  suppliedAbstractCompatibilityConsequencesProved : Prop
   actualGaussCodazziJetComplexConstructed : Prop
   actualJanusTargetPairingDerived : Prop
   globalVariationalPrimitiveConstructed : Prop
@@ -64,7 +67,8 @@ def programPFFoundationClosed (s : ProgramStatus) : Prop :=
   s.criticalPointRemovesSecondJetCorrectionProved /\
   s.gaugeInvariantMapConstructed /\
   s.noetherIdentityDerived /\
-  s.helmholtzAndNoetherIndependenceProved
+  s.helmholtzAndNoetherIndependenceProved /\
+  s.suppliedAbstractCompatibilityConsequencesProved
 
 /-- Full geometric/analytic P.F closure. -/
 def fullProgramPFClosure (s : ProgramStatus) : Prop :=

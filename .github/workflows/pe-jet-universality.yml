@@ -167,6 +167,9 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetActionGroupoidRealization \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapGroupoid \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapDescent \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGlobalSpinCCechDescent \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCechAbelianConnectionDescent \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
