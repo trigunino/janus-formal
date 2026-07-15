@@ -47,8 +47,10 @@ conditions are not yet encoded by the current finite matrix contracts.
 The corresponding pointwise matrix statement is now exact: a common
 invertible frame acts by simultaneous metric congruence and root similarity,
 leaving the interaction scalar invariant. The coordinate density is invariant
-for unit absolute determinant, while an explicit independent-frame example
-fails. The full matrix covector is now constructed by differentiating the
+for unit absolute determinant, and for a general invertible frame it carries
+the exact weight `|det Q|`; multiplication by the supplied inverse-frame
+Jacobian restores the original representative. An explicit independent-frame
+example fails. The full matrix covector is now constructed by differentiating the
 Leibniz determinant and the Newton formulas for `e_2` and `e_3`.
 Differentiating a supplied genuine similarity curve gives a commutator
 tangent, and this explicit covector annihilates it without a supplied-gradient
@@ -113,6 +115,14 @@ first-jet representative, not the exact inverse of `h + t delta h`; the
 extrinsic-curvature tangent is still supplied. Thus this is not yet a curve in
 the full geometric boundary-data space, the physical EH-flux cancellation, or
 an integrated boundary theorem.
+
+A stronger gate now replaces that inverse first-jet representative by the
+actual matrix inverse `(h + t delta h)^{-1}`. It proves local invertibility,
+the two-sided inverse identities, the forced inverse derivative, and the same
+determinant-measure GHY derivative along the resulting exact local algebraic
+curve. The curve is only inverse-compatible in the proved neighbourhood;
+`delta K` is still supplied independently, so an embedding-compatible
+geometric boundary curve, EH flux and integration remain open.
 
 For the null expansion counterterm, the actual derivative of
 `theta log(lengthScale * |theta|)` is now proved for positive length scale and
@@ -250,8 +260,24 @@ local witness has three independent constraint covectors and fixes
 actual derivatives along arbitrary affine phase-space lines on their regular
 domains. This witness uses unrestricted
 coefficients outside the committed PT/exchange-flat family. The covariant
-Legendre bridge, ADM shift/functional bracket, generic rank and BD closure
+EH/GHY reduction, ADM shift/functional bracket, generic rank and BD closure
 remain open.
+
+The input-Hamiltonian caveat has now been narrowed. Starting from an explicit
+spatially flat reduced Candidate-A Lagrangian, the velocity derivatives give
+the canonical momenta, the regular momentum--velocity maps are inverse, the
+common square-root interaction has the required lapse/volume normalization,
+and the Legendre transform is exactly `N_plus C_plus + N_minus C_minus`.
+The reduced kinetic Lagrangian itself is still supplied rather than derived
+from the covariant EH/GHY action.
+
+There is also a sharp rejection result on the selected vacuum PT-flat cone.
+For positive scale factors, Planck coefficients and interaction scale with
+`beta1 > 0`, `beta2 >= 0`, both primary constraints force
+`a_plus = a_minus` and `p_plus = p_minus = 0`; at that point their covectors
+are dependent. Therefore the unrestricted local rank witness cannot simply be
+moved onto this vacuum flat branch. Matter, spatial curvature or a different
+coefficient branch is required before attempting a generic constraint chain.
 
 The source algebra is also explicit: a single-sheet matter source generically
 excites the relative mode, equal sources remove it, and opposite PT sources
@@ -284,6 +310,8 @@ Implemented in the current finite, spectral or pointwise models:
 - simultaneous-frame interaction invariance, an independent-frame
   counterexample, an explicit matrix Frechet covector and its unconditional
   commutator pairing along supplied similarity curves;
+- exact finite-matrix density weight `|det Q|` and inverse-Jacobian
+  compensation under arbitrary invertible simultaneous frames;
 - actual derivatives of metric inversion and `g_plus_inverse * g_minus`, plus
   an explicit two-sided Sylvester inverse on the open positive diagonal chart
   and a conditional derivative of a supplied differentiable square root;
@@ -293,6 +321,8 @@ Implemented in the current finite, spectral or pointwise models:
   slots;
 - exact non-null GHY pointwise first jet, including the determinant-derived
   measure tangent and the linearized inverse-metric contribution;
+- actual local inverse-compatible non-null GHY curve and derivative, still
+  with independently supplied extrinsic-curvature tangent;
 - actual nonzero-expansion null-counterterm derivative and its explicit
   singular approach to zero expansion;
 - exact local two-sector bulk/GHY cancellation and a nonzero mismatch
@@ -302,11 +332,19 @@ Implemented in the current finite, spectral or pointwise models:
   compatibility map and Jacobian;
 - first-jet naturality of `K` and its actual `J` under source-frame changes and
   ambient isometries, with ambient infinitesimal isometries in `ker J`;
+- explicit finite principal symbol: for nonzero covector its kernel is exactly
+  the ambient normal space to `range F`, and it is injective in codimension
+  zero when `F` is surjective;
 - exact classification of additive reduced scale translation; relating it to
   the covariant diagonal diffeomorphism remains a separate bridge;
 - exact FLRW lapse affinity and primary-constraint precursors, plus reduced
   bracket factorization and an unrestricted-parameter local Dirac-chain
   witness for the secondary constraint and lapse ratio;
+- actual reduced velocity derivatives, regular Legendre inversion and exact
+  derivation of those Hamiltonian constraints from the displayed FLRW
+  Lagrangian;
+- PT-flat vacuum no-go: simultaneous primary constraints collapse to the
+  symmetric static point where their covectors are dependent;
 - exact diagonal/relative source decomposition as a PPN rejection precursor;
 - actual pointwise Euler equations and symmetric full Hessian for the spectral
   interaction plus two independent quadratic matter blocks;
@@ -316,23 +354,26 @@ Implemented in the current finite, spectral or pointwise models:
 Still required before Candidate A is a completed Janus action:
 
 1. extend the diagonal-chart Sylvester inverse to a smooth real principal
-   square-root branch on the admissible Lorentz field domain, prove the density
-   transformation law and control branch changes;
+   square-root branch on the admissible Lorentz field domain, lift the finite
+   density weight to the manifold transformation law and control branch
+   changes;
 2. lift the pointwise spectral/matter Euler equations to both covariant metric
    and spacetime matter Euler--Lagrange PDEs from `S_A`;
-3. replace the GHY first-jet representative by a genuine curve of geometric
-   boundary data, instantiate and integrate all gravitational strata,
+3. derive the supplied extrinsic-curvature tangent from an
+   embedding-compatible geometric boundary curve, instantiate and integrate
+   all gravitational strata,
    construct the actual LL auxiliary-field action, specify the zero-expansion
    variational domain, and prove cancellation of the physical bulk flux;
 4. instantiate the diagonal diffeomorphism generator and covariant Noether--
    Bianchi identity;
 5. reproduce the Janus Newtonian sign matrix without a negative spin-2 kinetic
    mode;
-6. derive the reduced Hamiltonians from the covariant Candidate-A Legendre
-   transform, move the local FLRW witness onto the selected PT branch, and
-   extend it to the ADM shift, functional Poisson bracket and generic
-   independent secondary-constraint closure; then derive constrained stability
-   and PPN parameters for the exact matter couplings;
+6. derive the displayed reduced kinetic Lagrangian from the covariant
+   Candidate-A EH/GHY action, add matter or spatial curvature to evade the
+   proved vacuum PT-flat rank collapse, and extend the viable branch to the
+   ADM shift, functional Poisson bracket and generic independent
+   secondary-constraint closure; then derive constrained stability and PPN
+   parameters for the exact matter couplings;
 7. compute the actual local/global anomalies in one regulator and supply a
    microscopic normalization/finite-part law in that same scheme.
 
@@ -343,9 +384,9 @@ is used in its definition.
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
-| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, and two-sided Sylvester inverse on the open positive diagonal chart | smooth Lorentz root/Sylvester inverse on the causal-compatible domain, density covariance and full metric functional variation |
+| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, two-sided Sylvester inverse on the open positive diagonal chart, and exact finite-frame density weight | smooth Lorentz root/Sylvester inverse on the causal-compatible domain and full metric functional variation |
 | 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector and unconditional finite-frame commutator pairing | global field space and actual diagonal diffeomorphism action |
-| 3. Bulk/boundary/worldvolume | typed ledger, determinant-measure GHY first jet, null-counterterm singularity audit and exact local matched bulk/GHY cancellation | genuine geometric boundary curve, physical EH metric flux, zero-expansion prescription, throat data, LL action/EOM and stratum integration |
-| 4. Concrete `K/J` | actual first-jet Gram `K/J`, source/ambient naturality and explicit gauge-kernel directions | Lorentzian/global Janus compatibility PDE/jet complex and symbol exactness |
-| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, explicit finite-frame Noether, FLRW primary precursor, reduced bracket factorization and local secondary/lapse witness | covariant metric/matter PDEs, diagonal Bianchi, Candidate-A Legendre bridge, PT-branch genericity and ADM shift/Poisson closure |
+| 3. Bulk/boundary/worldvolume | typed ledger, exact local inverse-compatible determinant-measure GHY curve, null-counterterm singularity audit and exact local matched bulk/GHY cancellation | embedding-compatible `delta K`, physical EH metric flux, zero-expansion prescription, throat data, LL action/EOM and stratum integration |
+| 4. Concrete `K/J` | actual first-jet Gram `K/J`, source/ambient naturality, gauge-kernel directions and exact finite principal-symbol kernel | Lorentzian/global Janus compatibility PDE/jet complex and its symbol sequence/exactness |
+| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, explicit finite-frame Noether, reduced Legendre/Dirac-chain bridge and PT-flat vacuum rank no-go | covariant metric/matter PDEs, diagonal Bianchi, covariant reduction, viable matter/curved PT branch and ADM shift/Poisson closure |
 | 6. Stability/scheme | explicit spectral interaction indefiniteness, source-mode rejection precursor and reduced Candidate-A anomaly-proxy scheme-freedom no-go | constrained kinetic stability, PPN derivation, covariantly admissible counterterms, actual regulated anomalies and a microscopic normalization/finite-part law |
