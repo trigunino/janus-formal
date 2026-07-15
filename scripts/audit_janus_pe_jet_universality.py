@@ -25,6 +25,8 @@ PROGRAMME_PE_GATES = {
         "theorem EuclideanMetricProjectedSeedImmersionData.global_spinC_jet_realization",
     "P0EFTJanusEuclideanStructuredJetActionGroupoidRealization.lean":
         "theorem euclidean_lowOrder_spinC_groupoid_realized",
+    "P0EFTJanusEuclideanStructuredJetOverlapGroupoid.lean":
+        "theorem euclideanLowOrderSpinCOverlapArrow_comp",
 }
 
 

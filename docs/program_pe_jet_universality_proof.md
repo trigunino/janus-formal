@@ -335,6 +335,7 @@ require additional work because the residual orthogonal group is noncompact.
 | projected-seed varying normal atlas | proved in Lean with smooth overlap laws |
 | one-chart rank-two SpinC bundle/connection | proved in Lean; nontrivial global sectors open |
 | valid-chart low-order residual/SpinC action groupoid | instantiated in Lean |
+| actual valid-chart overlap arrows | proved with identity and Cech composition in the low-order Euclidean model |
 | actual structured SpinC jet groupoid | open |
 | effective Janus descent theorem | open |
 | full smooth equivariant-map classification | open |

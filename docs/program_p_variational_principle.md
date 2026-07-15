@@ -237,10 +237,11 @@ The evaluator is smooth, not automatically polynomial. Local finite order need n
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 ```
 
-**Last recorded remote focused CI:** green on the merged P-E head. The PR 10
-working branch additionally builds locally with constructive Euclidean Koszul
-existence, projected-seed varying-normal transitions, one-chart rank-two SpinC
-connection data and a valid-chart low-order residual/SpinC action groupoid.
+**Current merged status:** PR 10 is on `main`. Its theorem head builds locally
+with constructive Euclidean Koszul existence, projected-seed varying-normal
+transitions, one-chart rank-two SpinC connection data and a valid-chart
+low-order residual/SpinC action groupoid. Independent post-merge remote CI is
+not claimed here.
 
 ### Open Janus specialization
 
@@ -332,5 +333,10 @@ The next concrete theorem package is not another abstract action proxy. It is:
 ## 13. Honest conclusion
 
 Program P has substantially reduced the logical freedom, but it has not selected the physical Janus action.
+
+The finite two-field polynomial P-C model now proves the exact equivalence
+between Helmholtz compatibility of a quadratic Euler system and realization as
+the gradient of a cubic potential. This does not discharge the nonlinear Janus
+Helmholtz or variational-cohomology obligations.
 
 What is established is a theorem/no-go architecture explaining exactly which inputs are needed and which proposed shortcuts fail. The decisive missing object is a concrete global Janus parent/target variational problem whose compatible Euler family can pass P-D/P-E/P-F classification and P-C/P-B consistency tests.
