@@ -182,6 +182,25 @@ analytic data: no GHY, null, corner or junction functional is constructed.
 **Lean:** `P0EFTJanusTwoSectorBulkBoundaryFrechetVariation.lean`
 **Evidence:** **T/C** for the declared normed variational interface.
 
+### 4.5 Boundary completion and induced-field variation
+
+For a supplied differentiable boundary flux with symmetric actual Jacobian,
+the negative radial primitive is a genuine counterterm with derivative exactly
+minus that flux. It cancels an exact supplied boundary one-form, is unique up
+to a constant, becomes unique after base normalization, and a non-Helmholtz
+flux obstructs any global `C^2` counterterm of this type. This is an acceptance
+criterion; it does not derive a bulk flux or construct GHY/null/corner data.
+
+If a second field is induced from the bulk field, the correct Euler one-form
+is the chain-rule combination `E_bulk + E_induced ∘ D(induced)`. Requiring
+both terms to vanish separately is stronger. The action `S(x,y)=x-y`
+restricted to `y=x` has zero actual derivative although both artificial
+independent Euler equations are nonzero.
+
+**Lean:** `P0EFTJanusBoundaryCountertermHelmholtz.lean`,
+`P0EFTJanusInducedFieldVariationNoDoubleCounting.lean`
+**Evidence:** **T/C/N** for supplied normed-space flux and induced-field data.
+
 ### P-A verdict
 
 A parent variational problem gives a canonical throat action **relative to that parent problem**. Different parent actions, normalizations or boundary terms give different reduced actions.
@@ -323,6 +342,14 @@ nonreciprocal block therefore rules out such an action. M30 leaves the two
 interaction densities and their matter dependence unspecified, so this gate
 does not assign a mismatch or contradiction to the paper.
 
+On the full product of plus, minus and matter normed spaces, the nonlinear
+test has six blocks: three diagonal symmetries and three cross reciprocities.
+They are pointwise equivalent to symmetry of the actual total Euler
+derivative. On an open convex domain they reconstruct a normalized common
+action, unique after normalization. A genuinely supplied failed cross block
+rules out a global `C^2` common action. This is a configuration-space
+primitive, not a local covariant density attributed to M30.
+
 For a genuine common reduced action invariant under diagonal translation, the
 strongest identity with supplied boundary data is
 `E_plus + E_minus + boundary_flux = 0`. Separate sector conservation is
@@ -331,9 +358,19 @@ example `(E_plus,E_minus,B) = (1,-1,0)` proves that combined Noether balance
 alone does not imply separate conservation. No spacetime diffeomorphism,
 Stokes theorem or contracted Bianchi identity is claimed.
 
+For a supplied field-dependent diagonal generator `K(q)`, the derivative
+along the frozen infinitesimal gauge line proves the exact equivalence between
+infinitesimal invariance, Euler annihilation and the formal pullback constraint
+`E(q) ∘ K(q) = 0`. The constraint is stable under maps of gauge parameters.
+A real counterexample again shows that the combined identity need not split
+into sector identities. No complete flow, Janus diffeomorphism generator or
+covariant Bianchi divergence is constructed.
+
 **Lean:** `P0EFTJanusReducedCrossMatterIntegrability.lean`,
-`P0EFTJanusReducedDiagonalNoetherExchangeBalance.lean`
-**Evidence:** **T/C/N** in the supplied reduced charts.
+`P0EFTJanusNonlinearCrossDensityHelmholtz.lean`,
+`P0EFTJanusReducedDiagonalNoetherExchangeBalance.lean`,
+`P0EFTJanusDiagonalGaugeNoetherIdentity.lean`
+**Evidence:** **T/C/N** in the supplied normed spaces and reduced charts.
 
 ### 6.4 Global field-theory obligations
 
@@ -525,16 +562,20 @@ parent or microscopic law                        P-A
 
 ## 12. Precise current frontier
 
-The reduced candidate, trace/lift, cross-reciprocity and combined-Noether gates
-are now explicit; the next package must leave these interfaces and close the
-covariant source/boundary problem:
+The reduced candidate, trace/lift, counterterm, induced-field,
+nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
+the next package must instantiate them and close the covariant source/boundary
+problem:
 
 1. specify or derive the two nonlinear cross densities and their matter dependence;
 2. define the exact Janus fields, independent variations and gauge symmetries;
-3. derive the GHY/null/worldvolume boundary functional and admissible data;
-4. choose induced, auxiliary or bulk metric formulation without double counting;
+3. derive the actual bulk flux and GHY/null/worldvolume functional rather than
+   only applying the boundary Helmholtz completion criterion;
+4. choose induced, auxiliary or bulk metric data and instantiate the proved
+   no-double-counting chain rule;
 5. build the actual compatibility map `K` and its jet linearization `J`;
-6. prove nonlinear Helmholtz, diagonal Noether/Bianchi and constraint closure;
+6. instantiate the nonlinear block Helmholtz and field-dependent Noether gates,
+   then prove covariant Bianchi and spacetime constraint closure;
 7. compute variational cohomology, anomalies and stability in one scheme;
 8. derive normalization and finite counterterms without observed-radius input.
 
@@ -542,10 +583,11 @@ covariant source/boundary problem:
 
 Program P has substantially reduced the logical freedom, but it has not selected the physical Janus action.
 
-The current gates now state exact acceptance tests for cross-source
-integrability, admissible boundary stationarity and combined exchange balance.
-They cannot be applied covariantly until the symbolic M30 interaction densities,
-matter variations and geometric boundary functional are supplied.
+The current gates now state exact acceptance tests for nonlinear cross-source
+integrability, admissible boundary completion, induced-field variation and
+diagonal gauge balance. They cannot be applied covariantly until the symbolic
+M30 interaction densities, matter variations, gauge generator and geometric
+boundary functional are supplied.
 
 The finite two-field polynomial P-C model now proves the exact equivalence
 between Helmholtz compatibility of a quadratic Euler system and realization as

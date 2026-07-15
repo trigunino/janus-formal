@@ -207,6 +207,13 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   Stationarity is exactly interior bulk vanishing plus lifted boundary balance;
   an accessible nonzero boundary flux obstructs it. The interface does not
   construct the physical GHY/null/corner/junction data.
+  A supplied differentiable Helmholtz boundary flux now admits a normalized
+  counterterm with genuine derivative `-flux`; it cancels the exact boundary
+  one-form, is unique up to a constant, and a non-Helmholtz flux blocks any
+  global `C^2` primitive of this type. This does not derive a physical GHY
+  flux. For induced fields, the actual chain rule gives
+  `E_bulk + E_induced ∘ D(induced)`; an exact diagonal counterexample proves
+  that imposing both slot equations separately can overconstrain the system.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
 - **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. No Janus flow, gauge group or PDE identity is constructed; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
   The set quotient by complete-flow orbits is constructed. For any target,
@@ -228,6 +235,15 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   Euler term, diagonal symmetry yields only
   `E_plus + E_minus + boundary_flux = 0`; separate conservation additionally
   requires zero exchange and zero boundary flux.
+  On the full plus--minus--matter product, three diagonal and three cross-block
+  conditions are exactly equivalent to symmetry of the nonlinear actual Euler
+  derivative. On an open convex domain they reconstruct a normalized common
+  action, while one supplied failed cross block gives a global `C^2` no-go.
+  For a supplied field-dependent diagonal generator `K(q)`, infinitesimal
+  invariance is exactly the formal constraint `E(q) ∘ K(q) = 0`; a cancelling
+  two-sector example shows that this combined identity still need not split.
+  Neither result constructs an M30 density, a Janus diffeomorphism generator or
+  a covariant Bianchi/constraint algebra.
 
 ### P-D — pairings and coefficient modules
 
