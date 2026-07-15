@@ -199,7 +199,11 @@ finite-sum potential has this gradient as its actual Fréchet derivative, so the
 reconstructed derivative pairs with the Euler source in every direction. The
 actual Euler map also has the displayed Jacobian as its Fréchet derivative,
 and the coefficient Helmholtz swaps make that Jacobian self-adjoint in the
-finite coordinate pairing.
+finite coordinate pairing. Conversely, self-adjointness of this actual
+Jacobian recovers both coefficient swaps by testing zero and coordinate-basis
+fields. The packaged actual polynomial-gradient witness records both this
+coefficient agreement and the genuine Fréchet derivative; no converse from
+derivative equality alone is claimed.
 
 **Lean:** `P0EFTJanusFiniteRankPolynomialHelmholtz.lean`
 **Evidence:** **T** coefficient-level; no global variational cohomology.
@@ -211,9 +215,16 @@ straight-segment integral gives an explicit primitive normalized at a chosen
 base point. Any two such actions on a nonempty convex domain differ by a
 constant, so fixing one base value removes this ambiguity. This is a
 configuration-space Poincaré lemma, not the local PDE variational bicomplex.
+If the domain is the whole configuration space and the Euler one-form
+annihilates a supplied additive linear gauge generator, the normalized radial
+primitive is invariant along all corresponding affine gauge orbits. This is a
+conditional linear Noether model, not a construction of the Janus gauge group
+or its PDE identity with boundary terms.
 
-**Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`
-**Evidence:** **T/C** on open convex configuration domains.
+**Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
+`P0EFTJanusLinearGaugeNoetherReconstruction.lean`
+**Evidence:** **T/C** on open convex domains and whole-space additive linear
+gauge models.
 
 ### 6.4 Global field-theory obligations
 

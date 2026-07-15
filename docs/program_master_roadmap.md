@@ -180,10 +180,16 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **T** the finite-rank Euler map has its displayed Jacobian as its actual
   Fréchet derivative, and the Helmholtz coefficient swaps make it pairing
   self-adjoint at every field value;
+- **T** for that finite polynomial family, actual Jacobian self-adjointness is
+  equivalent to the coefficient Helmholtz swaps; these conditions construct an
+  actual cubic polynomial gradient realization;
 - **T/C** on an open convex normed configuration domain, every differentiable
   Euler one-form with symmetric actual Jacobian has a scalar action primitive;
   on a nonempty convex domain equal Euler derivatives determine actions up to
   one additive constant, removed by a base-value normalization;
+- **T/C** on the whole configuration space, if the Euler one-form also
+  annihilates a supplied additive linear gauge generator, its normalized radial
+  primitive is invariant under every corresponding gauge translation;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
 

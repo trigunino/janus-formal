@@ -319,7 +319,10 @@ constructed. Supplied local abelian
 potentials and additive overlap shifts satisfy the affine derivative law. When
 all overlap shifts are curvature-flat, their local curvatures glue uniquely to
 a global smooth curvature function. Its actual Fréchet derivative satisfies
-the cyclic abelian Bianchi identity. Neither theorem derives these inputs from actual Janus
+the cyclic abelian Bianchi identity. Here `fderiv` is the ordinary derivative
+on the fixed Euclidean model, so the identity is `dF = 0`; no affine connection
+or torsion is modeled, and this is not the naive cyclic `∇F = 0` formula in a
+torsionful geometry. Neither theorem derives these inputs from actual Janus
 characteristic classes or determinant transitions.
 
 ## Janus specialization still open

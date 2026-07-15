@@ -22,6 +22,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPolynomialHelmholtzReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankPolynomialHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusConvexHelmholtzReconstruction
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLinearGaugeNoetherReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBulkUniversalHelmholtzSynthesis
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoupledSectorHelmholtzSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
@@ -64,7 +65,9 @@ structure ProgramStatus where
   pcFiniteRankCoefficientHelmholtzIffProved : Prop
   pcFiniteRankPolynomialFrechetGradientProved : Prop
   pcFiniteRankPolynomialJacobianSelfAdjointProved : Prop
+  pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved : Prop
   pcConvexOpenHelmholtzReconstructionProved : Prop
+  pcConditionalLinearGaugeNoetherReconstructionProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -119,7 +122,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcFiniteRankCoefficientHelmholtzIffProved /\
   s.pcFiniteRankPolynomialFrechetGradientProved /\
   s.pcFiniteRankPolynomialJacobianSelfAdjointProved /\
-  s.pcConvexOpenHelmholtzReconstructionProved
+  s.pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved /\
+  s.pcConvexOpenHelmholtzReconstructionProved /\
+  s.pcConditionalLinearGaugeNoetherReconstructionProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=
