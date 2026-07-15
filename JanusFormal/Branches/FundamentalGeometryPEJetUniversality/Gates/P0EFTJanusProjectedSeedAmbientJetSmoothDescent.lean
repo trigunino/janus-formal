@@ -49,12 +49,11 @@ theorem ProjectedSeedGlobalAmbientJetData.descendedPhysicalOperator_contDiff
         hNormalBasis basisData hDimension) := by
   rw [contDiff_iff_contDiffAt]
   intro base
-  have hValid : projectedSeedChartValid basisData.tangentFrame
-      (pointwiseNormalSeedCharts basisData) base base :=
-    pointwiseNormalSeedChart_valid_at_center basisData base
   have hDomainNhds : projectedSeedCoefficientDomain basisData base ∈ 𝓝 base := by
-    simpa [projectedSeedCoefficientDomain] using
-      (pointwiseNormalSeedChart_eventually_valid basisData base)
+    change ∀ᶠ nearby in 𝓝 base,
+      projectedSeedChartValid basisData.tangentFrame
+        (pointwiseNormalSeedCharts basisData) base nearby
+    exact pointwiseNormalSeedChart_eventually_valid basisData base
   have hLocalAt : ContDiffAt ℝ ∞
       (data.localPhysicalOperator tangentBasis hTangentBasis normalBasis
         hNormalBasis basisData base) base :=
