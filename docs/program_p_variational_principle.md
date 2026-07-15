@@ -168,6 +168,20 @@ sign obstruction, not a full covariant ghost theorem.
 `P0EFTJanusReducedBimetricQuadraticFrechetSpectrum.lean`
 **Evidence:** **T/C/N** in the declared reduced sectors.
 
+### 4.4 Abstract bulk/boundary variational domain
+
+A normed-space trace/lift interface now separates interior variations from an
+arbitrary submodule of admissible boundary modes. The sector action has its
+genuine Frechet derivative, and stationarity on admissible variations is
+equivalent to both the interior bulk equation and cancellation of the lifted
+bulk contribution by the boundary flux. The theorem extends to two independent
+sectors. If a bulk-on-shell sector has an accessible nonzero boundary flux,
+stationarity is impossible. The trace, lift and boundary action are supplied
+analytic data: no GHY, null, corner or junction functional is constructed.
+
+**Lean:** `P0EFTJanusTwoSectorBulkBoundaryFrechetVariation.lean`
+**Evidence:** **T/C** for the declared normed variational interface.
+
 ### P-A verdict
 
 A parent variational problem gives a canonical throat action **relative to that parent problem**. Different parent actions, normalizations or boundary terms give different reduced actions.
@@ -299,6 +313,27 @@ nonlinear cross density.
 
 **Lean:** `P0EFTJanusReducedTwoMetricEulerNoether.lean`
 **Evidence:** **T/C** in the supplied reduced chart.
+
+The cross-matter test is now upgraded from a rectangular path proxy to a true
+second-variation criterion. In a supplied three-direction chart, one common
+`C^2` action forces reciprocity of metric--metric, plus--matter and
+minus--matter blocks. Conversely, reciprocal blocks construct an explicit
+bilinear common action with the proposed genuine Frechet gradient. Any supplied
+nonreciprocal block therefore rules out such an action. M30 leaves the two
+interaction densities and their matter dependence unspecified, so this gate
+does not assign a mismatch or contradiction to the paper.
+
+For a genuine common reduced action invariant under diagonal translation, the
+strongest identity with supplied boundary data is
+`E_plus + E_minus + boundary_flux = 0`. Separate sector conservation is
+equivalent to zero exchange and zero boundary flux. The exact relative-mode
+example `(E_plus,E_minus,B) = (1,-1,0)` proves that combined Noether balance
+alone does not imply separate conservation. No spacetime diffeomorphism,
+Stokes theorem or contracted Bianchi identity is claimed.
+
+**Lean:** `P0EFTJanusReducedCrossMatterIntegrability.lean`,
+`P0EFTJanusReducedDiagonalNoetherExchangeBalance.lean`
+**Evidence:** **T/C/N** in the supplied reduced charts.
 
 ### 6.4 Global field-theory obligations
 
@@ -490,8 +525,9 @@ parent or microscopic law                        P-A
 
 ## 12. Precise current frontier
 
-The reduced candidate gates are now explicit; the next package must leave the
-reduced chart and close the covariant source/boundary problem:
+The reduced candidate, trace/lift, cross-reciprocity and combined-Noether gates
+are now explicit; the next package must leave these interfaces and close the
+covariant source/boundary problem:
 
 1. specify or derive the two nonlinear cross densities and their matter dependence;
 2. define the exact Janus fields, independent variations and gauge symmetries;
@@ -505,6 +541,11 @@ reduced chart and close the covariant source/boundary problem:
 ## 13. Honest conclusion
 
 Program P has substantially reduced the logical freedom, but it has not selected the physical Janus action.
+
+The current gates now state exact acceptance tests for cross-source
+integrability, admissible boundary stationarity and combined exchange balance.
+They cannot be applied covariantly until the symbolic M30 interaction densities,
+matter variations and geometric boundary functional are supplied.
 
 The finite two-field polynomial P-C model now proves the exact equivalence
 between Helmholtz compatibility of a quadratic Euler system and realization as

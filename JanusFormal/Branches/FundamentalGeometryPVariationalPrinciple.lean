@@ -34,6 +34,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricBoundaryFirstVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricEulerNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedBimetricQuadraticFrechetSpectrum
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusTwoSectorBulkBoundaryFrechetVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedCrossMatterIntegrability
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedDiagonalNoetherExchangeBalance
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchTransverseNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchHigherOrderNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
@@ -64,6 +67,7 @@ structure ProgramStatus where
   paReducedTwoMetricActualBoundaryVariationProved : Prop
   paConditionalReducedBimetricFrechetStabilityProved : Prop
   paReducedPublishedKappaMinusOneKineticNoGoProved : Prop
+  paTwoSectorBulkBoundaryFrechetVariationProved : Prop
   paProportionalBranchTransverseNonuniquenessProved : Prop
   paProportionalBranchTransverseTwoJetNonuniquenessProved : Prop
   pbPTAnomalyCancellationProved : Prop
@@ -89,6 +93,8 @@ structure ProgramStatus where
   pcGaugeOrbitQuotientDescentProved : Prop
   pcGaugeOrbitInvariantFunctionEquivalenceProved : Prop
   pcReducedTwoMetricEulerNoetherProved : Prop
+  pcReducedCrossMatterIntegrabilityIffProved : Prop
+  pcReducedDiagonalNoetherBoundaryExchangeProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -133,6 +139,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paReducedTwoMetricActualBoundaryVariationProved /\
   s.paConditionalReducedBimetricFrechetStabilityProved /\
   s.paReducedPublishedKappaMinusOneKineticNoGoProved /\
+  s.paTwoSectorBulkBoundaryFrechetVariationProved /\
   s.paProportionalBranchTransverseNonuniquenessProved /\
   s.paProportionalBranchTransverseTwoJetNonuniquenessProved /\
   s.pbPTAnomalyCancellationProved /\
@@ -157,7 +164,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcConditionalNonlinearGaugeInvariantRadialReconstructionProved /\
   s.pcGaugeOrbitQuotientDescentProved /\
   s.pcGaugeOrbitInvariantFunctionEquivalenceProved /\
-  s.pcReducedTwoMetricEulerNoetherProved
+  s.pcReducedTwoMetricEulerNoetherProved /\
+  s.pcReducedCrossMatterIntegrabilityIffProved /\
+  s.pcReducedDiagonalNoetherBoundaryExchangeProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=
