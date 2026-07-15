@@ -580,6 +580,10 @@ spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester
 identity, while remaining conjugate to its diagonal seed and reconstructing
 the metric pair from the selected root; it is not a new geometric branch.  The
+candidate also supplies an independent two-dimensional Lorentz-metric family
+whose relative matrix is a non-diagonalizable Jordan block for nonzero
+parameter, with an explicit square root, actual derivatives and a Sylvester
+identity.  This is one family, not a global principal-root branch.  The
 candidate further supplies an exact finite-frame density weight
 and an invariant finite-site weighted action under sitewise diagonal frames,
 a genuine affine 1D pullback `J_epsilon rho(phi_epsilon)` whose variation is
@@ -610,10 +614,16 @@ covector and unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations and, separately,
 an independent-coordinate scalar first-jet density with actual measure,
 inverse-metric, scalar and gradient variations but no holonomic/determinant
-relations or covariant PDE.  It also supplies an exact reduced
+relations or covariant PDE.  A finite periodic model now enforces the
+holonomic gradient relation, proves the actual scalar-action derivative,
+discrete summation by parts, the strong nearest-neighbour Euler equation and
+stationarity equivalence; it is not a continuum covariant PDE or determinant-
+measure result.  It also supplies an exact reduced
 Legendre/Dirac-chain bridge, a finite-site ultralocal mixed-primary functional
 bracket equal to the sum of local secondaries with localized primary
-preservation (not nonlinear algebra closure), a PT-flat vacuum rank no-go and
+preservation, followed by exact canonical Jacobi for arbitrary symmetric
+nonlinear second jets and actual quadratic-bracket derivatives (neither is an
+actual Candidate-A or continuum ADM closure), a PT-flat vacuum rank no-go and
 a positive-dust constrained witness with independent rank and fixed lapse
 ratio, a
 one-dimensional constrained-tangent audit separating its negative ambient
@@ -625,14 +635,18 @@ witnesses showing that the paired anomaly proxy fixes neither normalization
 nor a reduced finite even-counterterm proxy, together with the actual
 finite-mode heat-trace cancellation/even-doubling witness and a countable
 cutoff limit with exact cancellation and a summable infinite-trace bridge,
-then an explicit circle Fourier spectrum with algebraic diagonal Dirac action,
-Gaussian summability and symmetric-cutoff convergence. See
+then an explicit circle Fourier spectrum with Gaussian summability and
+symmetric-cutoff convergence, together with its maximal-domain diagonal
+operator proved dense, closed, unbounded and self-adjoint.  The operator is not
+yet the full Janus Dirac operator, and no operator-level bridge to the
+heat-trace anomaly and determinant problem is proved. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
-1. extend the co-diagonal root and its coordinate off-diagonal boost orbit,
+1. extend the co-diagonal root, its coordinate off-diagonal boost orbit and the
+   independent non-diagonalizable Jordan witness,
    together with the full interaction-density Frechet derivative, to a smooth
    real Lorentzian square-root branch for independently supplied metrics, and
    lift the selected densities and their finite weight law from pointwise
@@ -653,8 +667,9 @@ covariant source/boundary problem:
 5. lift the now arbitrary-nonzero-frequency Lorentz Gram--Saint-Venant symbol
    exactness to the global Janus compatibility differential/PDE complex,
    including boundary and global exactness;
-6. impose holonomic-jet and determinant-measure relations on the matter
-   variation, then lift spectral Helmholtz and the reduced proxy audit to the
+6. impose the determinant-measure relation and lift the finite periodic
+   holonomic scalar variation to the continuum matter field, then lift
+   spectral Helmholtz and the reduced proxy audit to the
    nonlinear block Helmholtz and field-dependent Noether gates, derive the
    displayed reduced kinetic Lagrangian and dust source from the covariant
    action, lift the
@@ -662,14 +677,15 @@ covariant source/boundary problem:
    law from the covariant Candidate-A weak-field equations, lift the local
    four-dimensional divergence and flat Einstein-symbol identities to the
    nonlinear curved covariant Bianchi identity, then extend the finite
-   ultralocal primary bracket to continuum ADM shift/spatial functional
-   Poisson and hypersurface-deformation closure, with independent
+   ultralocal primary bracket and nonlinear canonical second-jet Jacobi gate to
+   the actual Candidate-A constraints and continuum ADM shift/spatial
+   functional Poisson and hypersurface-deformation closure, with independent
    secondary-constraint closure and
    stability on the physical reduced tangent/quotient;
-7. promote the algebraic circle Fourier action to a self-adjoint unbounded
-   Janus Dirac operator with controlled domain, compute variational cohomology
-   and actual regulated local/global anomalies, and close constrained
-   stability in one scheme;
+7. extend the self-adjoint unbounded circle Fourier operator to the full Janus
+   Dirac operator, connect it to the heat-trace regulator, compute variational
+   cohomology, determinant data and actual regulated local/global anomalies,
+   and close constrained stability in one scheme;
 8. derive a microscopic normalization and finite-part law without
    observed-radius input.
 
@@ -681,7 +697,8 @@ The current gates now state exact acceptance tests for nonlinear cross-source
 integrability, admissible boundary completion, induced-field variation and
 diagonal gauge balance. Candidate A supplies explicit cross densities and an
 exact spectral Euler model plus a separate independent-coordinate metric-
-coupled scalar first-jet variation. They cannot yet be applied
+coupled scalar first-jet variation, a finite periodic holonomic scalar Euler
+model, and nonlinear canonical second-jet Jacobi. They cannot yet be applied
 covariantly until the smooth Lorentz field domain, metric/matter PDE
 variations, global spacetime gauge generator and physical geometric boundary
 functional are constructed.
@@ -689,6 +706,11 @@ functional are constructed.
 The candidate point chart now passes an actual nonlinear Helmholtz test with
 independent matter blocks. This does not discharge the covariant Janus PDE
 Helmholtz, Bianchi, constraint or variational-cohomology obligations.
+
+Likewise, the independent Jordan root family and self-adjoint unbounded circle
+Dirac operator remove two finite-model shortcuts without constructing the
+global Lorentz root branch, full Janus Dirac operator, heat-trace bridge,
+anomalies, determinant or normalization.
 
 What is established is a theorem/no-go architecture explaining exactly which
 inputs are needed and which proposed shortcuts fail. The decisive missing

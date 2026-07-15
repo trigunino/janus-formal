@@ -861,6 +861,20 @@ PROGRAM_P_GATES = {
             "theorem cutoffChiralHeatTrace_positive_add_pt_eq_zero",
         ),
     ),
+    "P0EFTJanusCircleUnboundedDiracDomain.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def circleDiracDomain",
+            "def circleUnboundedDirac",
+            "theorem circleFourierBasis_mem_domain",
+            "theorem circleDiracDomain_dense",
+            "theorem circleUnboundedDirac_isFormalAdjoint_self",
+            "theorem mem_circleUnboundedDirac_graph_iff",
+            "theorem circleUnboundedDirac_isClosed",
+            "theorem circleUnboundedDirac_not_uniformly_bounded",
+            "theorem circleUnboundedDirac_isSelfAdjoint",
+        ),
+    ),
     "P0EFTJanusCandidateSignedChargeNewtonianBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -885,6 +899,20 @@ PROGRAM_P_GATES = {
             "theorem lorentzBoostRootOrbit_gate",
         ),
     ),
+    "P0EFTJanusLorentzJordanIndependentMetricRoot.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem minusMetric_symmetric",
+            "theorem minusMetric_det",
+            "theorem metricRelative_eq_jordanRelative",
+            "theorem jordanRoot_square_eq_metricRelative",
+            "theorem jordanRelative_displacement_square",
+            "theorem jordanRelative_not_realDiagonalizable",
+            "theorem jordanRoot_hasDerivAt",
+            "theorem jordanRoot_derivative_sylvester",
+            "theorem lorentzJordanIndependentMetricRoot_gate",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -897,6 +925,19 @@ PROGRAM_P_GATES = {
             "theorem scalarMatterDensity_measureLine_hasDerivAt",
             "theorem twoSector_plusFieldLine_hasDerivAt",
             "theorem twoSector_mixed_field_increment_eq_zero",
+        ),
+    ),
+    "P0EFTJanusFinitePeriodicHolonomicScalarVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem discreteGradient_fieldLine",
+            "theorem scalarAction_fieldLine_hasDerivAt",
+            "theorem discrete_summation_by_parts",
+            "theorem strongEuler_eq_nearestNeighbour",
+            "theorem scalarActionFirstVariation_eq_strongEuler_pairing",
+            "theorem stationary_iff_strongEuler_eq_zero",
+            "theorem twoSectorAction_fieldLines_hasDerivAt",
+            "theorem twoSector_mixed_increment_eq_zero",
         ),
     ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
@@ -926,6 +967,20 @@ PROGRAM_P_GATES = {
             "theorem secondary_at_site_of_local_primary_preservation",
             "theorem twoSiteWitness_local_constraint_covectors_independent",
             "theorem twoSiteWitness_secondary_preservation_fixes_each_lapse_ratio",
+        ),
+    ),
+    "P0EFTJanusNonlinearCanonicalPoissonJetJacobi.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SymmetricHessian4",
+            "theorem hessianMatrix_symmetric",
+            "theorem poisson_antisymmetric",
+            "theorem poisson_covectorVector_eq_canonicalPoisson",
+            "def bracketDifferential",
+            "theorem nonlinear_poisson_secondJet_jacobi",
+            "theorem quadraticFunctional_vectorLine_hasDerivAt",
+            "theorem quadraticPoisson_vectorLine_hasDerivAt",
+            "theorem nonlinearHessianWitness_nonzero",
         ),
     ),
 }
@@ -987,6 +1042,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCoDiagonalLorentzRootChartConstructed",
         "paCoDiagonalLorentzRootFirstDerivativeProved",
         "paLorentzBoostCoordinateOrbitRootVariationProved",
+        "paLorentzJordanIndependentMetricRootProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
@@ -1011,6 +1067,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paExplicitBulkBoundaryLocalCancellationProved",
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paIndependentMetricMatterJetVariationProved",
+        "paFinitePeriodicHolonomicScalarEulerProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",
@@ -1024,6 +1081,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paLLBraneCompositeMeasureFrechetProved",
         "paReducedFLRWBracketFactorizationFromInputHamiltoniansProved",
         "paFiniteUltralocalPrimaryBracketLiftProved",
+        "paNonlinearCanonicalPoissonSecondJetJacobiProved",
         "paReducedFLRWLegendreBridgeProved",
         "paPTFlatVacuumFLRWConstraintNoGoProved",
         "paMatterCurvatureFLRWConstraintBranchProved",
@@ -1031,6 +1089,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFiniteModeHeatKernelAnomalyRegulatorProved",
         "paCountablePairedHeatKernelCutoffLimitProved",
         "paCircleFourierDiracHeatTraceCancellationProved",
+        "paCircleUnboundedDiracSelfAdjointProved",
         "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
