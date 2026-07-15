@@ -50,8 +50,8 @@ theorem frameAdjointCoordinates_transition
     (first second : Normal →ₗᵢ[ℝ] Ambient)
     (hRange : normalFrameRange first = normalFrameRange second) :
     frameAdjointCoordinates first =
-      ((normalFrameTransition first second hRange)
-        .toContinuousLinearEquiv.toContinuousLinearMap).comp
+      (((normalFrameTransition first second hRange).toLinearIsometry)
+        .toContinuousLinearMap).comp
           (frameAdjointCoordinates second) := by
   apply ContinuousLinearMap.ext
   intro ambient
