@@ -159,10 +159,11 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is
   the unique global minimizer on `c > 0`; this is not the full Janus metric
   field theory;
-- **T/N** two explicit two-variable extensions have exactly the same
-  proportional branch and genuine longitudinal derivatives but transverse
-  curvatures `0` and `2 lambda`; for `lambda != 0`, proportional data do not
-  select a bimetric extension;
+- **T/N** explicit quadratic and quartically deformed two-variable extensions
+  have the same proportional branch, genuine longitudinal derivatives and
+  complete transverse two-jet with Hessian `2 kappa`, but a nonzero
+  `lambda * y^4` distinguishes them off branch; even the local transverse
+  Hessian does not select the nonlinear extension;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -211,9 +212,10 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   generator; horizontal Helmholtz data yield an invariant normalized radial
   primitive;
 - **T/C** the set quotient by full orbits of that supplied flow is constructed;
-  every invariant action, and in particular the reconstructed radial action,
-  factors uniquely through it, without any quotient topology or smooth
-  structure;
+  for any target, functions on the quotient are equivalent to invariant
+  configuration-space functions, with real-valued functions specializing to
+  invariant actions, including the reconstructed radial action; no quotient
+  topology or smooth structure is supplied;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** construct the Janus flow/gauge group and derive the complete Euler
   source, PDE Noether identities, nonlinear Helmholtz conditions, variational
@@ -389,6 +391,10 @@ compatibility map K
 - **T/C** a target critical point gives genuine pullback criticality, and the
   actual pullback Hessian annihilates `ker J` in both arguments and therefore
   `im R` whenever `J ∘ R = 0`; this is an abstract Fréchet theorem;
+- **T/C** for any source submodule contained in `ker J`, that genuine critical
+  Hessian descends uniquely as a symmetric bilinear form on the algebraic
+  module quotient; continuity of the descent and a normed, topological or
+  smooth quotient are not proved;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
 - **O** construct the actual Janus compatibility map/jet complex, target

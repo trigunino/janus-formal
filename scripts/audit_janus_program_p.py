@@ -100,6 +100,14 @@ PROGRAM_P_GATES = {
             "theorem radial_reconstruction_unique_orbit_factor",
         ),
     ),
+    "P0EFTJanusGaugeOrbitInvariantEquiv.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem pullbackOrbitFunction_invariant",
+            "def orbitFunctionsEquivFlowInvariantFunctions",
+            "def orbitActionsEquivFlowGaugeInvariant",
+        ),
+    ),
     "P0EFTJanusPTFlatBimetricVariationalBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -116,6 +124,22 @@ PROGRAM_P_GATES = {
             "theorem extensions_agree_on_proportional_branch",
             "theorem proportional_branch_does_not_determine_transverse_curvature",
             "theorem extensions_differ_off_proportional_branch",
+        ),
+    ),
+    "P0EFTJanusProportionalBranchHigherOrderNoGo.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem transverse_first_derivatives_agree_on_branch",
+            "theorem transverse_hessians_agree_on_branch",
+            "theorem branch_and_transverse_twoJet_do_not_determine_nonlinear_extension",
+        ),
+    ),
+    "P0EFTJanusFrechetPullbackQuotientHessian.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean",
+        (
+            "theorem quotientHessian_mkQ",
+            "theorem quotientHessian_unique",
+            "theorem actualPullbackHessian_descends_to_gauge_quotient",
         ),
     ),
     "P0EFTJanusFiniteRankParentSchurHelmholtz.lean": (
@@ -160,12 +184,14 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     for status in (
         "paPTFlatProportionalActualVariationalStabilityProved",
         "paProportionalBranchTransverseNonuniquenessProved",
+        "paProportionalBranchTransverseTwoJetNonuniquenessProved",
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
         "pcConditionalLinearGaugeNoetherReconstructionProved",
         "pcConditionalLinearGaugeNoetherIffProved",
         "pcConditionalNonlinearGaugeFlowNoetherIffProved",
         "pcConditionalNonlinearGaugeInvariantRadialReconstructionProved",
         "pcGaugeOrbitQuotientDescentProved",
+        "pcGaugeOrbitInvariantFunctionEquivalenceProved",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1
@@ -180,6 +206,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "actualFrechetSecondVariationFormulaProved",
         "actualFrechetPullbackHelmholtzSymmetryProved",
         "actualFrechetPullbackGaugeDegeneracyProved",
+        "actualFrechetPullbackQuotientHessianDescentProved",
     ):
         if (
             pf_facade.count(f"{status} : Prop") != 1

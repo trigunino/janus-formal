@@ -127,14 +127,17 @@ positive and `c = 1` is the unique global minimizer on `c > 0`. This does not
 establish a variational principle or stability theorem on the full Janus metric
 field space.
 
-This proportional information does not reconstruct transverse dynamics. Two
-explicit functions of `(c,y)` have exactly the same restriction at `y = 0` and
-the same genuine longitudinal derivatives, but their genuine transverse
-curvatures there are `0` and `2 lambda`. For `lambda != 0` they define distinct
-extensions. This is a reconstruction no-go, not a candidate full metric action.
+This proportional information does not reconstruct transverse dynamics. A
+quadratic extension and its `lambda * y^4` deformation have exactly the same
+restriction at `y = 0`, the same genuine longitudinal derivatives and the same
+complete transverse two-jet, with Hessian `2 kappa`, all along that branch. For
+nonzero `lambda` they are nevertheless distinct off branch. Thus even the local
+transverse Hessian does not determine the nonlinear extension. This is a
+reduced reconstruction no-go, not a candidate full metric action.
 
 **Lean:** `P0EFTJanusPTFlatBimetricVariationalBridge.lean`,
-`P0EFTJanusProportionalBranchTransverseNoGo.lean`
+`P0EFTJanusProportionalBranchTransverseNoGo.lean`,
+`P0EFTJanusProportionalBranchHigherOrderNoGo.lean`
 **Evidence:** **T/C** on the one-dimensional proportional branch and **T/N**
 for reconstruction of a transverse extension from that branch alone.
 
@@ -243,16 +246,19 @@ For a supplied complete differentiable one-parameter flow, the analogous
 nonlinear statement is exact: full-orbit invariance is equivalent to the actual
 Euler derivative annihilating the field-dependent generator everywhere, and
 horizontal Helmholtz data reconstruct an invariant normalized radial action.
-The full orbits of the supplied flow form a set quotient through which every
-invariant action factors uniquely; the reconstructed radial action has the same
-unique factorization. No topology or smooth structure is constructed on this
-quotient. These results do not construct a Janus flow, gauge group or PDE
-identity with boundary terms.
+The full orbits of the supplied flow form a set quotient. For any target type,
+pullback and descent give an equivalence between functions on that quotient and
+configuration-space functions invariant under the flow. Real-valued functions
+specialize this equivalence to invariant actions, including the reconstructed
+radial action. No topology or smooth structure is constructed on this quotient.
+These results do not construct a Janus flow, gauge group or PDE identity with
+boundary terms.
 
 **Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
 `P0EFTJanusLinearGaugeNoetherReconstruction.lean`,
 `P0EFTJanusNonlinearGaugeFlowNoether.lean`,
-`P0EFTJanusGaugeOrbitDescent.lean`
+`P0EFTJanusGaugeOrbitDescent.lean`,
+`P0EFTJanusGaugeOrbitInvariantEquiv.lean`
 **Evidence:** **T/C** on open convex domains and, on the whole space, for
 additive linear or supplied complete nonlinear gauge-flow models.
 
@@ -393,11 +399,16 @@ In the abstract finite model:
 - a target critical point pulls back to genuine criticality, and the actual
   pullback Hessian annihilates `ker J` in either argument. Consequently it
   annihilates the generated directions `im R` whenever `J ∘ R = 0`. This is an
-  abstract normed-space statement, not a concrete Janus field complex.
+  abstract normed-space statement, not a concrete Janus field complex;
+- for every source submodule contained in `ker J`, this genuine critical
+  Hessian descends uniquely as a symmetric bilinear form to the algebraic
+  module quotient. Continuity of the descended form and any normed,
+  topological or smooth quotient structure are not proved.
 
 **Lean:** `P0EFTJanusFrechetPullbackSecondVariation.lean`,
 `P0EFTJanusFrechetPullbackHelmholtz.lean`,
-`P0EFTJanusFrechetPullbackGaugeDegeneracy.lean`
+`P0EFTJanusFrechetPullbackGaugeDegeneracy.lean`,
+`P0EFTJanusFrechetPullbackQuotientHessian.lean`
 
 **Lean head:**
 
