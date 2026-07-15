@@ -23,6 +23,7 @@ is false without an additional variational pairing.  The corrected bridge is:
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCorrectedJetUniversality
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibleJetPullbackHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonlinearJetSecondVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackSecondVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusInvariantMapNoetherHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussCodazziHelmholtzBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibilityBridgeHierarchy
@@ -43,6 +44,7 @@ structure ProgramStatus where
   pullbackHelmholtzProved : Prop
   pulledBackActionIdentityProved : Prop
   nonlinearSecondVariationFormulaProved : Prop
+  actualFrechetSecondVariationFormulaProved : Prop
   criticalPointRemovesSecondJetCorrectionProved : Prop
   gaugeInvariantMapConstructed : Prop
   noetherIdentityDerived : Prop
@@ -64,6 +66,7 @@ def programPFFoundationClosed (s : ProgramStatus) : Prop :=
   s.pullbackHelmholtzProved /\
   s.pulledBackActionIdentityProved /\
   s.nonlinearSecondVariationFormulaProved /\
+  s.actualFrechetSecondVariationFormulaProved /\
   s.criticalPointRemovesSecondJetCorrectionProved /\
   s.gaugeInvariantMapConstructed /\
   s.noetherIdentityDerived /\

@@ -27,6 +27,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoupledSectorHelmholtzSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankParentSchurHelmholtz
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPTFlatBimetricVariationalBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
@@ -51,6 +52,7 @@ structure ProgramStatus where
   paFiniteRankCoefficientSchurHelmholtzSynthesized : Prop
   paFiniteRankSchurFrechetDerivativesProved : Prop
   paFiniteRankBulkSignStabilityClassified : Prop
+  paPTFlatProportionalActualVariationalStabilityProved : Prop
   pbPTAnomalyCancellationProved : Prop
   pbParityEvenFreedomProved : Prop
   pbTrivializationFreedomProved : Prop
@@ -68,6 +70,7 @@ structure ProgramStatus where
   pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved : Prop
   pcConvexOpenHelmholtzReconstructionProved : Prop
   pcConditionalLinearGaugeNoetherReconstructionProved : Prop
+  pcConditionalLinearGaugeNoetherIffProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -108,6 +111,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteRankCoefficientSchurHelmholtzSynthesized /\
   s.paFiniteRankSchurFrechetDerivativesProved /\
   s.paFiniteRankBulkSignStabilityClassified /\
+  s.paPTFlatProportionalActualVariationalStabilityProved /\
   s.pbPTAnomalyCancellationProved /\
   s.pbParityEvenFreedomProved /\
   s.pbTrivializationFreedomProved /\
@@ -124,7 +128,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcFiniteRankPolynomialJacobianSelfAdjointProved /\
   s.pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved /\
   s.pcConvexOpenHelmholtzReconstructionProved /\
-  s.pcConditionalLinearGaugeNoetherReconstructionProved
+  s.pcConditionalLinearGaugeNoetherReconstructionProved /\
+  s.pcConditionalLinearGaugeNoetherIffProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=
