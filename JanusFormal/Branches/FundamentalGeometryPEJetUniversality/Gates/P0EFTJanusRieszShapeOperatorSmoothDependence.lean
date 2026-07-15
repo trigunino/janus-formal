@@ -245,6 +245,29 @@ theorem continuousIIRieszShape_family_contDiff
           (Tangent := Tangent) (Normal := Normal) (form base) (normal base))
   fun_prop
 
+/-- Local smoothness on a subset for fixed tangent and normal models.  This is
+proved directly from the continuous bilinear evaluator, avoiding expensive
+normalization through the packaged joint map. -/
+theorem continuousIIRieszShape_family_contDiffOn
+    [FiniteDimensional ℝ Normal]
+    {Base : Type w}
+    [NormedAddCommGroup Base] [NormedSpace ℝ Base]
+    (domain : Set Base)
+    (form : Base → ContinuousSecondFundamentalForm
+      (Tangent := Tangent) (Normal := Normal))
+    (normal : Base → Normal)
+    (hForm : ContDiffOn ℝ ∞ form domain)
+    (hNormal : ContDiffOn ℝ ∞ normal domain) :
+    ContDiffOn ℝ ∞
+      (fun base => continuousIIRieszShapeOperator (form base) (normal base))
+      domain := by
+  change ContDiffOn ℝ ∞
+    (fun base =>
+      continuousIIRieszShapeContinuousBilinear
+        (Tangent := Tangent) (Normal := Normal) (form base) (normal base))
+    domain
+  fun_prop
+
 /-- Convert the earlier finite bilinear model to the continuous coefficient
 space. -/
 def continuousSecondFundamentalFormOfFinite
@@ -290,15 +313,15 @@ structure RieszSmoothDependenceStatus where
 
 /-- Closure of the genuine varying-background Riesz stage. -/
 def rieszSmoothDependenceClosed (s : RieszSmoothDependenceStatus) : Prop :=
-  s.continuousIICoefficientSpaceConstructed /\
-  s.bilinearityInIIAndNormalProved /\
-  s.jointContinuityProved /\
-  s.jointSmoothnessProved /\
-  s.smoothFixedModelFamiliesProved /\
-  s.compatibilityWithFiniteIIModelProved /\
-  s.varyingMetricDependenceProved /\
-  s.varyingTangentNormalSubspacesHandled /\
-  s.smoothStructuredJetBundleMapConstructed /\
+  s.continuousIICoefficientSpaceConstructed ∧
+  s.bilinearityInIIAndNormalProved ∧
+  s.jointContinuityProved ∧
+  s.jointSmoothnessProved ∧
+  s.smoothFixedModelFamiliesProved ∧
+  s.compatibilityWithFiniteIIModelProved ∧
+  s.varyingMetricDependenceProved ∧
+  s.varyingTangentNormalSubspacesHandled ∧
+  s.smoothStructuredJetBundleMapConstructed ∧
   s.manifoldNormalConnectionInserted
 
 /-- Fixed-model smoothness does not solve varying metric and subspace dependence
