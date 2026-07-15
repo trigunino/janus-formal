@@ -118,6 +118,40 @@ PROGRAM_P_GATES = {
             "theorem symmetric_point_unique_positive_global_minimizer",
         ),
     ),
+    "P0EFTJanusReducedTwoMetricBoundaryFirstVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedInteractionAction_on_unit_plus",
+            "theorem reducedInteractionAction_exchange",
+            "theorem reducedTwoMetricAction_hasFDerivAt_canonical",
+            "theorem reducedTwoMetricAction_line_hasDerivAt",
+            "theorem reduced_stationarity_iff_euler_components_zero",
+            "theorem unspecified_boundary_can_stationarize_any_scale_pair",
+        ),
+    ),
+    "P0EFTJanusReducedTwoMetricEulerNoether.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedInteractionAction_hasFDerivAt",
+            "theorem full_stationarity_iff_both_euler_zero",
+            "theorem diagonal_variation_sees_only_euler_sum",
+            "theorem sign_linked_variation_sees_euler_difference",
+            "theorem diagonal_noether_of_translation_invariance",
+            "theorem reducedInteractionAction_diagonal_noether",
+        ),
+    ),
+    "P0EFTJanusReducedBimetricQuadraticFrechetSpectrum.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedQuadraticAction_hasFDerivAt",
+            "theorem reducedQuadraticGradient_hasFDerivAt",
+            "theorem reducedQuadraticAction_second_fderiv",
+            "theorem conditional_reduced_hessian_positive",
+            "theorem interaction_hessian_kernel_is_diagonal",
+            "theorem relativeSectorHessian_positive",
+            "theorem published_kappa_minus_one_has_negative_actual_hessian_direction",
+        ),
+    ),
     "P0EFTJanusProportionalBranchTransverseNoGo.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -183,6 +217,9 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     ]
     for status in (
         "paPTFlatProportionalActualVariationalStabilityProved",
+        "paReducedTwoMetricActualBoundaryVariationProved",
+        "paConditionalReducedBimetricFrechetStabilityProved",
+        "paReducedPublishedKappaMinusOneKineticNoGoProved",
         "paProportionalBranchTransverseNonuniquenessProved",
         "paProportionalBranchTransverseTwoJetNonuniquenessProved",
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
@@ -192,6 +229,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcConditionalNonlinearGaugeInvariantRadialReconstructionProved",
         "pcGaugeOrbitQuotientDescentProved",
         "pcGaugeOrbitInvariantFunctionEquivalenceProved",
+        "pcReducedTwoMetricEulerNoetherProved",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1

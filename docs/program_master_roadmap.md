@@ -164,6 +164,17 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   complete transverse two-jet with Hessian `2 kappa`, but a nonzero
   `lambda * y^4` distinguishes them off branch; even the local transverse
   Hessian does not select the nonlinear extension;
+- **T/C** an explicit exchange-symmetric two-scale PT-flat lift has the exact
+  first variation of its bulk, interaction and reduced boundary channels for
+  every independent affine variation; stationarity is exactly the two Euler
+  equations;
+- **T/N** unspecified reduced boundary coefficients can stationarize every
+  scale pair, so the physical boundary functional remains selection data;
+- **T/C** a reduced quadratic two-mode candidate has genuine Frechet gradient
+  and Hessian, positive full Hessian for positive kinetic signs, and a positive
+  algebraic relative-sector quotient for positive PT-flat mass;
+- **T/N** the reduced pure-kinetic `kappa = -1` choice has a strictly negative
+  actual Hessian direction in the ordinary positive-Hilbert interpretation;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -216,6 +227,11 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   configuration-space functions, with real-valued functions specializing to
   invariant actions, including the reconstructed radial action; no quotient
   topology or smooth structure is supplied;
+- **T/C** in a supplied reduced two-metric chart, the relative quadratic
+  action has its genuine Frechet derivative; independent variations recover
+  both Euler components, diagonal/sign-linked variations recover their
+  sum/difference, and diagonal translation symmetry yields the reduced Noether
+  identity;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** construct the Janus flow/gauge group and derive the complete Euler
   source, PDE Noether identities, nonlinear Helmholtz conditions, variational

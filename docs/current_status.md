@@ -193,6 +193,15 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   them distinct off the branch, so even the local transverse Hessian does not
   select the nonlinear extension. This is a reduced reconstruction no-go, not
   a full metric action.
+  The two-scale PT-flat lift now has an exact directional first variation for
+  arbitrary independent variations, including explicit bulk, interaction and
+  reduced boundary channels. Both Euler components characterize stationarity,
+  while unfixed boundary coefficients can stationarize any scale pair. A
+  separate quadratic candidate has genuine Frechet gradient and Hessian,
+  diagonal interaction kernel, positive relative quotient under positive-sign
+  assumptions, and a strict negative pure-kinetic Hessian direction for the
+  published reduced sign `kappa = -1`. These remain reduced conditional/no-go
+  statements, not the missing covariant Janus action or ghost analysis.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
 - **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. No Janus flow, gauge group or PDE identity is constructed; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
   The set quotient by complete-flow orbits is constructed. For any target,
@@ -201,6 +210,11 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   equivalence for actions, including the radial action. No topology or smooth
   structure is put on this quotient, and the supplied flow is not a concrete
   Janus flow.
+  In a supplied reduced two-metric chart, the relative quadratic action now has
+  its actual Frechet derivative: independent variations recover both Euler
+  components, diagonal/sign-linked variations recover their sum/difference,
+  and finite diagonal translation symmetry yields the reduced Noether identity.
+  This is not yet the covariant diffeomorphism/Bianchi system.
 
 ### P-D — pairings and coefficient modules
 
