@@ -26,6 +26,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackSecondVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackGaugeDegeneracy
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackQuotientHessian
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusInvariantMapNoetherHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussCodazziHelmholtzBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibilityBridgeHierarchy
@@ -49,6 +50,7 @@ structure ProgramStatus where
   actualFrechetSecondVariationFormulaProved : Prop
   actualFrechetPullbackHelmholtzSymmetryProved : Prop
   actualFrechetPullbackGaugeDegeneracyProved : Prop
+  actualFrechetPullbackQuotientHessianDescentProved : Prop
   criticalPointRemovesSecondJetCorrectionProved : Prop
   gaugeInvariantMapConstructed : Prop
   noetherIdentityDerived : Prop
@@ -73,6 +75,7 @@ def programPFFoundationClosed (s : ProgramStatus) : Prop :=
   s.actualFrechetSecondVariationFormulaProved /\
   s.actualFrechetPullbackHelmholtzSymmetryProved /\
   s.actualFrechetPullbackGaugeDegeneracyProved /\
+  s.actualFrechetPullbackQuotientHessianDescentProved /\
   s.criticalPointRemovesSecondJetCorrectionProved /\
   s.gaugeInvariantMapConstructed /\
   s.noetherIdentityDerived /\
