@@ -45,6 +45,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchHigherOrderNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateSchemeFreedomAudit
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteModeHeatKernelAnomalyRegulator
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensities
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusSpectralInteractionHessianIndefinite
@@ -59,6 +60,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootChart
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootFirstDerivative
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalInteractionDensityFrechet
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDiagonalReparametrizationDensityNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusRelativeMetricProductFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricInverseRelativeRootFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLedger
@@ -66,6 +68,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYFirstVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYMeasureVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYExactInverseCurve
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYExtrinsicTraceCurve
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussianNormalEHGHYCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermNonDifferentiable
@@ -77,6 +80,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityNaturality
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityPrincipalSymbol
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzianGramCompatibilityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
@@ -155,11 +159,13 @@ structure ProgramStatus where
   paCoDiagonalLorentzRootChartConstructed : Prop
   paCoDiagonalLorentzRootFirstDerivativeProved : Prop
   paCoDiagonalInteractionDensityFrechetProved : Prop
+  paDiagonalReparametrizationDensityPullbackNoetherProved : Prop
   paConditionalRelativeMetricRootFrechetBridgeProved : Prop
   paFixedGeometryBoundarySlotVariationsProved : Prop
   paNonNullGHYPointwiseFirstJetVariationProved : Prop
   paNonNullGHYDeterminantMeasureFirstJetProved : Prop
   paNonNullGHYExactInverseCurveVariationProved : Prop
+  paNonNullGHYExtrinsicTraceCurveVariationProved : Prop
   paGaussianNormalEHGHYCancellationDerived : Prop
   paPTFlatSpectralInteractionIndefinitenessProved : Prop
   paCandidateMinisuperspacePrimaryConstraintPrecursorProved : Prop
@@ -173,6 +179,7 @@ structure ProgramStatus where
   pcExplicitCandidatePointwiseEulerHelmholtzProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
+  paLorentzianGramCompatibilityFrechetProved : Prop
   paNullExpansionCountertermVariationProved : Prop
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
@@ -184,6 +191,7 @@ structure ProgramStatus where
   paPTFlatVacuumFLRWConstraintNoGoProved : Prop
   paMatterCurvatureFLRWConstraintBranchProved : Prop
   paDustFLRWConstrainedSecondVariationAuditProved : Prop
+  paFiniteModeHeatKernelAnomalyRegulatorProved : Prop
   pbCandidateSchemeFreedomNoGoProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
@@ -272,11 +280,13 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCoDiagonalLorentzRootChartConstructed /\
   s.paCoDiagonalLorentzRootFirstDerivativeProved /\
   s.paCoDiagonalInteractionDensityFrechetProved /\
+  s.paDiagonalReparametrizationDensityPullbackNoetherProved /\
   s.paConditionalRelativeMetricRootFrechetBridgeProved /\
   s.paFixedGeometryBoundarySlotVariationsProved /\
   s.paNonNullGHYPointwiseFirstJetVariationProved /\
   s.paNonNullGHYDeterminantMeasureFirstJetProved /\
   s.paNonNullGHYExactInverseCurveVariationProved /\
+  s.paNonNullGHYExtrinsicTraceCurveVariationProved /\
   s.paGaussianNormalEHGHYCancellationDerived /\
   s.paPTFlatSpectralInteractionIndefinitenessProved /\
   s.paCandidateMinisuperspacePrimaryConstraintPrecursorProved /\
@@ -290,6 +300,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcExplicitCandidatePointwiseEulerHelmholtzProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
+  s.paLorentzianGramCompatibilityFrechetProved /\
   s.paNullExpansionCountertermVariationProved /\
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\
@@ -301,6 +312,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paPTFlatVacuumFLRWConstraintNoGoProved /\
   s.paMatterCurvatureFLRWConstraintBranchProved /\
   s.paDustFLRWConstrainedSecondVariationAuditProved /\
+  s.paFiniteModeHeatKernelAnomalyRegulatorProved /\
   s.pbCandidateSchemeFreedomNoGoProved
 
 /-- P-E discrete and tangent-representation classification. -/

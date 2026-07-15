@@ -211,7 +211,11 @@ A parent variational problem gives a canonical throat action **relative to that 
 
 ### 5.1 Positive result
 
-PT pairing reverses the parity-odd anomaly proxy, so the paired anomaly cancels.
+PT pairing reverses the parity-odd anomaly proxy, so the paired proxy cancels.
+A separate finite-mode heat-kernel regulator now computes an actual chiral
+trace for nonnegative squared spectrum and regulator time: the isospectral
+opposite-chirality PT partner cancels it at every time while the parity-even
+heat trace doubles. This is not yet the continuum Janus anomaly.
 
 ### 5.2 No-go result
 
@@ -574,15 +578,20 @@ derivatives and an internally proved Sylvester derivative, and an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse, an exact finite-frame density weight
 and an invariant finite-site weighted action under sitewise diagonal frames,
+a genuine affine 1D pullback `J_epsilon rho(phi_epsilon)` whose variation is
+the total derivative `(xi rho)'`,
 a typed gravitational boundary ledger with an actual local inverse-compatible
-determinant-measure GHY curve, a derived Gaussian-normal Palatini/EH
-cancellation, a continuous but formally non-differentiable zero-expansion
+determinant-measure GHY curve, an actual
+`K(t)=tr(h(t)^{-1}B(t))` derivative with no supplied `delta K`, a derived
+Gaussian-normal Palatini/EH cancellation, a continuous but formally
+non-differentiable zero-expansion
 extension, null/joint endpoint transgression, pointwise LL auxiliary
 metric/measure/flux variations with a conditional null-kernel branch, an
 affine signed composite LL measure built from three auxiliary-scalar first
 jets with actual line variations, coordinate compensation and a genuine
-Frobenius-space Frechet derivative, a first-jet Gram `K/J` with source/ambient
-naturality and an exact finite principal-symbol kernel, an explicit matrix
+Frobenius-space Frechet derivative, Euclidean and explicit Minkowski Gram
+`K/J` models with source/ambient naturality, exact infinitesimal kernels and
+finite principal-symbol kernels, an explicit matrix
 covector and unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations, an exact reduced
 Legendre/Dirac-chain bridge, a PT-flat vacuum rank no-go and a positive-dust
@@ -591,7 +600,8 @@ one-dimensional constrained-tangent audit separating its negative ambient
 Hessian from zero variation along an exact nonlinear constraint curve, a
 relative-source rejection precursor, and explicit Candidate-A
 witnesses showing that the paired anomaly proxy fixes neither normalization
-nor a reduced finite even-counterterm proxy. See
+nor a reduced finite even-counterterm proxy, together with the actual
+finite-mode heat-trace cancellation/even-doubling witness. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the
@@ -601,27 +611,31 @@ covariant source/boundary problem:
    to a smooth real Lorentzian square-root branch, and lift the selected
    densities and their finite weight law from pointwise matrices to metric
    functional derivatives on a manifold;
-2. lift the finite-site field/frame model to the global Janus field space,
-   independent variations and diagonal diffeomorphism action;
+2. lift the finite-site frame model and affine 1D pullback to the global Janus
+   field space, independent variations and four-dimensional diagonal
+   diffeomorphism action;
 3. lift the Gaussian-normal Palatini flux to arbitrary coordinates, derive the
-   extrinsic-curvature tangent from an embedding-compatible boundary curve,
-   choose an admissible zero-expansion variational domain, derive the geometric
-   null/joint transformation laws, instantiate and integrate all slots, and
-   lift the affine composite LL measure and pointwise auxiliary action to
-   global fields, worldvolume PDEs and a nonempty throat branch;
+   affine normal `h/B/K` jet from an embedding-compatible boundary curve with
+   unit normal and Levi-Civita data, choose an admissible zero-expansion
+   variational domain, derive the geometric null/joint transformation laws,
+   instantiate and integrate all slots, and lift the affine composite LL
+   measure and pointwise auxiliary action to global fields, worldvolume PDEs
+   and a nonempty throat branch;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
-5. lift the natural first-jet Gram `K/J` and its finite normal-kernel symbol to
-   the Lorentzian global Janus compatibility PDE/jet complex and prove its
-   full symbol sequence;
+5. lift the finite Minkowski Gram `K/J` and its Lorentz-orthogonal symbol
+   kernel to the global Janus compatibility PDE/jet complex and prove its full
+   symbol sequence;
 6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
    Helmholtz and field-dependent Noether gates, derive the displayed reduced
    kinetic Lagrangian and dust source from the covariant action, lift the
-   explicit dust-supported branch, then prove covariant Bianchi, ADM
-   shift/functional Poisson, independent secondary-constraint closure and
+   explicit dust-supported branch, lift the 1D total-derivative identity to
+   covariant Bianchi, then prove ADM shift/functional Poisson, independent
+   secondary-constraint closure and
    stability on the physical reduced tangent/quotient;
-7. compute variational cohomology, actual regulated local/global anomalies and
-   constrained stability in one scheme;
+7. lift the finite heat trace to the continuum Janus operator, compute
+   variational cohomology and actual regulated local/global anomalies, and
+   close constrained stability in one scheme;
 8. derive a microscopic normalization and finite-part law without
    observed-radius input.
 

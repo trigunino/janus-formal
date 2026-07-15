@@ -378,6 +378,17 @@ PROGRAM_P_GATES = {
             "theorem coDiagonalInteractionDensity_eq_pointwiseCandidateA",
         ),
     ),
+    "P0EFTJanusDiagonalReparametrizationDensityNoether.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CandidateDensityCurve",
+            "theorem candidateDensity_hasDerivAt",
+            "theorem affineParameterPullback_parameter_hasDerivAt",
+            "theorem candidateDensityPullbackCurve_hasDerivAt",
+            "theorem densityNoetherPrimitive_hasDerivAt",
+            "theorem exactDensityEndpointLedger_totalShift_zero",
+        ),
+    ),
     "P0EFTJanusMatrixDiagonalGaugeNoether.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -492,6 +503,17 @@ PROGRAM_P_GATES = {
             "theorem eventually_exactInducedInverseCurve_inverseWitness",
             "theorem exactInducedInverseCurve_hasDerivAt",
             "theorem nonNullGHYExactInverseCurve_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusNonNullGHYExtrinsicTraceCurve.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem secondFundamentalFormCurve_hasDerivAt",
+            "def extrinsicTraceDerivative",
+            "theorem exactExtrinsicTraceCurve_hasDerivAt",
+            "theorem nonNullGHYExtrinsicTraceCurve_hasDerivAt",
+            "theorem affineNormalMetricJet_normal_hasDerivAt",
+            "theorem eventually_exactInverseWitness",
         ),
     ),
     "P0EFTJanusGaussianNormalEHGHYCancellation.lean": (
@@ -618,6 +640,19 @@ PROGRAM_P_GATES = {
             "theorem principalSymbol_injective_of_surjective",
         ),
     ),
+    "P0EFTJanusLorentzianGramCompatibilityFrechet.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem lorentzPair_coordinate_formula",
+            "theorem lorentzPair_left_nondegenerate",
+            "theorem lorentzGramCompatibilityOperator_hasFDerivAt",
+            "theorem lorentzGramCompatibilityOperator_source_natural",
+            "theorem lorentzGramCompatibilityOperator_ambient_invariant",
+            "theorem lorentzGramLinearization_kernel_exact_of_equiv",
+            "theorem lorentzGramPrincipalSymbol_eq_zero_iff_range_etaOrthogonal",
+            "theorem lorentzGramPrincipalSymbol_injective_of_surjective",
+        ),
+    ),
     "P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -722,6 +757,18 @@ PROGRAM_P_GATES = {
             "theorem anomaly_cancellation_alone_cannot_fix_candidateA_scheme",
         ),
     ),
+    "P0EFTJanusFiniteModeHeatKernelAnomalyRegulator.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FiniteChiralSpectrum",
+            "abbrev RegulatorTime",
+            "def regulatedChiralTrace",
+            "theorem regulatedChiralTrace_ptPartner",
+            "theorem pairedRegulatedChiralTrace_eq_zero",
+            "theorem pairedRegulatedEvenHeatTrace_eq_two_mul",
+            "theorem oneZeroMode_regulated_witness",
+        ),
+    ),
 }
 
 
@@ -781,11 +828,13 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCoDiagonalLorentzRootChartConstructed",
         "paCoDiagonalLorentzRootFirstDerivativeProved",
         "paCoDiagonalInteractionDensityFrechetProved",
+        "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paConditionalRelativeMetricRootFrechetBridgeProved",
         "paFixedGeometryBoundarySlotVariationsProved",
         "paNonNullGHYPointwiseFirstJetVariationProved",
         "paNonNullGHYDeterminantMeasureFirstJetProved",
         "paNonNullGHYExactInverseCurveVariationProved",
+        "paNonNullGHYExtrinsicTraceCurveVariationProved",
         "paGaussianNormalEHGHYCancellationDerived",
         "paPTFlatSpectralInteractionIndefinitenessProved",
         "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
@@ -799,6 +848,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
+        "paLorentzianGramCompatibilityFrechetProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
@@ -810,6 +860,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paPTFlatVacuumFLRWConstraintNoGoProved",
         "paMatterCurvatureFLRWConstraintBranchProved",
         "paDustFLRWConstrainedSecondVariationAuditProved",
+        "paFiniteModeHeatKernelAnomalyRegulatorProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
         if (
