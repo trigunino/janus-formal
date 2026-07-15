@@ -340,6 +340,18 @@ PROGRAM_P_GATES = {
             "theorem positiveDiagonal_squareRoot_fderiv",
         ),
     ),
+    "P0EFTJanusCoDiagonalLorentzRootChart.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem lorentzMetricInverse_mul_metric",
+            "theorem rootMatrix_square_eq_relativeMetric",
+            "theorem rootMatrix_det_pos",
+            "theorem positiveDiagonalRoot_unique",
+            "def coDiagonalSquareRootPointData",
+            "def coDiagonalSylvesterInverseWitness",
+            "theorem coDiagonal_squareRoot_hasFDerivAt",
+        ),
+    ),
     "P0EFTJanusMatrixDiagonalGaugeNoether.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -446,6 +458,19 @@ PROGRAM_P_GATES = {
             "theorem nonNullGHYExactInverseCurve_hasDerivAt",
         ),
     ),
+    "P0EFTJanusGaussianNormalEHGHYCancellation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem gaussianInverse_mul_gaussianMetric",
+            "theorem gaussianMetric_mul_gaussianInverse",
+            "theorem palatiniNormalVector_eq",
+            "theorem stokesContractedPalatini_plus_sign",
+            "theorem stokesContractedPalatini_minus_sign",
+            "theorem einsteinHilbertDirichletBoundaryFlux_eq",
+            "theorem einsteinHilbert_add_exactGHYDirichletDerivative_eq_zero",
+            "theorem exactGHYCurve_hasDerivative_neg_einsteinHilbertFlux",
+        ),
+    ),
     "P0EFTJanusNullExpansionCountertermVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -455,6 +480,17 @@ PROGRAM_P_GATES = {
             "theorem zeroExpansionApproach_tendsto_zero",
             "theorem derivativeCoefficient_zeroExpansionApproach",
             "theorem derivativeCoefficient_unbounded_below_along_zeroExpansionApproach",
+        ),
+    ),
+    "P0EFTJanusNullJointReparametrizationCancellation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure NullGeneratorReparametrizationData",
+            "theorem shiftedInaffinity_sub_inaffinity",
+            "theorem area_mul_sigma_hasDerivAt",
+            "theorem localFaceShift_eq_productDerivative",
+            "theorem exactEndpointLedger_faceTransgression",
+            "theorem exactEndpointLedger_totalShift_zero",
         ),
     ),
     "P0EFTJanusExplicitBulkBoundaryCancellation.lean": (
@@ -628,11 +664,13 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcReducedActionAdditiveNoetherProxyClassified",
         "paMatrixSquaringSylvesterFrechetProved",
         "paPositiveDiagonalSylvesterInverseProved",
+        "paCoDiagonalLorentzRootChartConstructed",
         "paConditionalRelativeMetricRootFrechetBridgeProved",
         "paFixedGeometryBoundarySlotVariationsProved",
         "paNonNullGHYPointwiseFirstJetVariationProved",
         "paNonNullGHYDeterminantMeasureFirstJetProved",
         "paNonNullGHYExactInverseCurveVariationProved",
+        "paGaussianNormalEHGHYCancellationDerived",
         "paPTFlatSpectralInteractionIndefinitenessProved",
         "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
         "paCandidateSourceModeDecompositionProved",
@@ -645,6 +683,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paNullExpansionCountertermVariationProved",
+        "paNullJointReparametrizationCancellationProved",
         "paReducedFLRWBracketFactorizationFromInputHamiltoniansProved",
         "paReducedFLRWLegendreBridgeProved",
         "paPTFlatVacuumFLRWConstraintNoGoProved",
