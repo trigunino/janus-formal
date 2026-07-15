@@ -30,12 +30,14 @@ on:
       - "scripts/audit_janus_d7_seeley_dewitt.py"
       - "scripts/audit_janus_pe_invariant_pairings.py"
       - "scripts/audit_janus_pe_spinor_pairings.py"
+      - "scripts/audit_janus_program_p.py"
       - "tests/test_janus_fundamental_geometry_d.py"
       - "tests/test_janus_holonomy_determinant.py"
       - "tests/test_janus_heat_kernel_effective_action.py"
       - "tests/test_janus_d7_seeley_dewitt.py"
       - "tests/test_janus_pe_invariant_pairings.py"
       - "tests/test_janus_pe_spinor_pairings.py"
+      - "tests/test_janus_program_p.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
@@ -65,12 +67,14 @@ on:
       - "scripts/audit_janus_d7_seeley_dewitt.py"
       - "scripts/audit_janus_pe_invariant_pairings.py"
       - "scripts/audit_janus_pe_spinor_pairings.py"
+      - "scripts/audit_janus_program_p.py"
       - "tests/test_janus_fundamental_geometry_d.py"
       - "tests/test_janus_holonomy_determinant.py"
       - "tests/test_janus_heat_kernel_effective_action.py"
       - "tests/test_janus_d7_seeley_dewitt.py"
       - "tests/test_janus_pe_invariant_pairings.py"
       - "tests/test_janus_pe_spinor_pairings.py"
+      - "tests/test_janus_program_p.py"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
@@ -149,6 +153,9 @@ jobs:
           - label: spinor pairings
             script: scripts/audit_janus_pe_spinor_pairings.py
             test: tests/test_janus_pe_spinor_pairings.py
+          - label: Program P/P-F integrity
+            script: scripts/audit_janus_program_p.py
+            test: tests/test_janus_program_p.py
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

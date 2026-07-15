@@ -99,9 +99,20 @@ The reduced Hessian is a Schur complement. In a PDE theory, the analogue is a Di
 ```text
 P0EFTJanusBulkReducedPotential.lean
 P0EFTJanusBulkUniversalHelmholtzSynthesis.lean
+P0EFTJanusParentBulkHelmholtzReciprocity.lean
+P0EFTJanusFiniteRankParentSchurHelmholtz.lean
 ```
 
 **Evidence:** **T/C**.
+
+The finite two-sector synthesis proves uniqueness of the stationary bulk mode,
+the exact Schur-complement on-shell action, and reciprocal PT-even reduced
+Hessian. A pair of explicit parents also shows that equal reduced diagonal
+terms do not fix the surviving same-parity mixing.
+
+The finite-rank extension permits any finite boundary index and proves the
+exact on-shell reduction, symmetric Schur kernel and pairing-level
+self-adjointness. It remains a coefficient model, not a Janus bulk PDE.
 
 ### P-A verdict
 
@@ -130,6 +141,10 @@ P0EFTJanusAnomalySelection.lean
 P0EFTJanusAnomalyHelmholtzIndependence.lean
 ```
 
+Four explicit finite candidates realize all truth patterns of the anomaly and
+Helmholtz filters. This proves both non-implications and their joint
+compatibility in the declared algebraic proxy, not the anomaly of Janus.
+
 ### P-B verdict
 
 Anomaly cancellation is an independent consistency filter and sometimes a discrete selector. It does not reconstruct the parity-even action and does not replace Helmholtz.
@@ -156,6 +171,8 @@ A nonsymmetric operator is not variational. Equal Hessians differ by affine term
 In the finite normal/trace/PT-odd model:
 
 - Helmholtz imposes reciprocal cross couplings;
+- a linear operator is the Hessian of a PT-invariant quadratic potential iff
+  it is reciprocal and its two even-to-odd coefficients vanish;
 - PT forbids even–odd quadratic mixing;
 - same-parity normal–trace mixing remains free;
 - fixed diagonal symbols + Helmholtz + PT do not select a unique action.
@@ -169,6 +186,13 @@ For a finite quadratic Euler source in two variables, equality of cross derivati
 
 **Lean:** `P0EFTJanusPolynomialHelmholtzReconstruction.lean`  
 **Evidence:** **T** in the polynomial proxy.
+
+At arbitrary finite coefficient rank, an affine/quadratic Euler family is the
+formal gradient data of linear/quadratic/cubic potential coefficients exactly
+when linear reciprocity and the quadratic Helmholtz swap hold.
+
+**Lean:** `P0EFTJanusFiniteRankPolynomialHelmholtz.lean`
+**Evidence:** **T** coefficient-level; no global variational cohomology.
 
 ### 6.4 Global field-theory obligations
 
@@ -243,6 +267,18 @@ transitions, one-chart rank-two SpinC connection data and a valid-chart
 low-order residual/SpinC action groupoid. Independent post-merge remote CI is
 not claimed here.
 
+**Active follow-on scope:** at one fixed Euclidean base point, invariant
+low-order observables have a unique value independent of the valid
+projected-seed chart. Separately, supplied multi-chart oriented cocycles, Spin
+lifts, phases and matching defects are packaged as a pointwise SpinC Cech
+transition presentation; no transition continuity/smoothness or principal
+bundle total space is constructed. Supplied local abelian potentials and
+additive gauge shifts give affine connection descent and a unique global smooth
+curvature function when all overlap shifts are flat. These are
+conditional/fixed-base theorems, not full
+effective descent or construction of the actual global Janus SpinC bundle and
+determinant connection.
+
 ### Open Janus specialization
 
 - full adapted SpinC/PT/Z4/BRST jet symmetry group beyond the low-order
@@ -278,6 +314,9 @@ In the abstract finite model:
 
 - `J^T H J` is self-adjoint and satisfies quadratic Helmholtz;
 - gauge invariance `K R = 0` yields the linearized Noether identity;
+- the strong compatibility-complex synthesis also packages `B K = 0`,
+  gauge-Hessian degeneracy, compatible gauge variations and restricted
+  Helmholtz;
 - Helmholtz and Noether remain logically distinct in general;
 - for nonlinear `K`, the complete second variation equals `J^T H J` only at a target critical point; off shell there is a gradient-times-second-jet correction.
 
@@ -290,6 +329,9 @@ lake build JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
 ### P-F verdict
 
 Compatibility geometry can transmit a variational structure supplied by a target pairing/action. It cannot create that pairing from compatibility identities alone.
+
+The synthesis assumes the abstract algebraic complex and target pairing; it
+does not construct the concrete nonlinear Janus compatibility complex.
 
 ## 10. Route matrix
 

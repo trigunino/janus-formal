@@ -98,7 +98,7 @@ noncomputable def reducedPotential
     oo := 0
     nt := reducedMixingCoefficient data
     no := 0
-    to := 0 }
+    trOdd := 0 }
 
 /-- On-shell boundary action. -/
 noncomputable def reducedAction
@@ -145,6 +145,29 @@ theorem parent_reduction_supplies_helmholtz_witness
       PTInvariant potential := by
   exact ⟨reducedPotential data, rfl,
     reduced_potential_pt_invariant data⟩
+
+/--
+Scoped parent-bulk synthesis for this finite-dimensional quadratic model: the
+bulk stationary point is unique, its on-shell action has the stated Schur
+complement, and the reduced Hessian is reciprocal and PT invariant.
+-/
+theorem parent_bulk_helmholtz_reciprocity_synthesis
+    (data : ParentBulkTwoSectorData)
+    (normal trace : ℝ) :
+    (∃! bulk : ℝ,
+      bulkEulerDerivative data bulk normal trace = 0) /\
+    reducedAction data normal trace =
+      potentialValue (reducedPotential data) normal trace 0 /\
+    FormallySelfAdjoint
+      (hessianOperator (reducedPotential data)) /\
+    PTInvariant (reducedPotential data) := by
+  refine ⟨?_, reduced_action_formula data normal trace,
+    reduced_hessian_formally_self_adjoint data,
+    reduced_potential_pt_invariant data⟩
+  refine ⟨stationaryBulk data normal trace,
+    stationary_bulk_solves_euler data normal trace, ?_⟩
+  intro bulk hBulk
+  exact stationary_bulk_unique data bulk normal trace hBulk
 
 /-- Two parent theories can induce different reciprocal throat interactions. -/
 def firstParent : ParentBulkTwoSectorData :=

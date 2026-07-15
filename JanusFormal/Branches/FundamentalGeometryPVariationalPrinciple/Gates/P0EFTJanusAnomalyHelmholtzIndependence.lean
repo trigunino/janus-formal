@@ -21,12 +21,24 @@ def AnomalyFree (theory : CandidateTheory) : Prop :=
 def HelmholtzAdmissible (theory : CandidateTheory) : Prop :=
   FormallySelfAdjoint theory.linearizedEulerOperator
 
+/-- Realizability by a quadratic potential in the finite three-sector model. -/
+def VariationallyRealizable (theory : CandidateTheory) : Prop :=
+  ∃ potential : QuadraticPotential3,
+    hessianOperator potential = theory.linearizedEulerOperator
+
+/-- In this finite model, Helmholtz admissibility is exactly realizability. -/
+theorem variationally_realizable_iff_helmholtz
+    (theory : CandidateTheory) :
+    VariationallyRealizable theory ↔ HelmholtzAdmissible theory := by
+  simpa [VariationallyRealizable, HelmholtzAdmissible] using
+    helmholtz_realizability_iff theory.linearizedEulerOperator
+
 /-- Anomaly-free but nonreciprocal candidate. -/
 def anomalyFreeNonVariational : CandidateTheory :=
   { anomalyCoefficient := 0
     linearizedEulerOperator :=
       { nn := 1, nt := 1, no := 0
-        tn := 0, tt := 1, to := 0
+        tn := 0, tt := 1, trOdd := 0
         on := 0, ot := 0, oo := 1 } }
 
 /-- Variational but anomalous candidate. -/
@@ -34,7 +46,7 @@ def variationalAnomalous : CandidateTheory :=
   { anomalyCoefficient := 1
     linearizedEulerOperator :=
       { nn := 1, nt := 0, no := 0
-        tn := 0, tt := 1, to := 0
+        tn := 0, tt := 1, trOdd := 0
         on := 0, ot := 0, oo := 1 } }
 
 /-- Fully consistent algebraic candidate. -/
@@ -42,7 +54,15 @@ def anomalyFreeVariational : CandidateTheory :=
   { anomalyCoefficient := 0
     linearizedEulerOperator :=
       { nn := 1, nt := 0, no := 0
-        tn := 0, tt := 1, to := 0
+        tn := 0, tt := 1, trOdd := 0
+        on := 0, ot := 0, oo := 1 } }
+
+/-- Candidate failing both the anomaly and variational filters. -/
+def anomalousNonVariational : CandidateTheory :=
+  { anomalyCoefficient := 1
+    linearizedEulerOperator :=
+      { nn := 1, nt := 1, no := 0
+        tn := 0, tt := 1, trOdd := 0
         on := 0, ot := 0, oo := 1 } }
 
 /-- Anomaly cancellation does not imply Helmholtz integrability. -/
@@ -52,7 +72,8 @@ theorem anomaly_free_does_not_imply_helmholtz :
   constructor
   · rfl
   · intro hHelmholtz
-    exact (by norm_num) hHelmholtz.1
+    norm_num [HelmholtzAdmissible, FormallySelfAdjoint,
+      anomalyFreeNonVariational] at hHelmholtz
 
 /-- Helmholtz integrability does not imply anomaly cancellation. -/
 theorem helmholtz_does_not_imply_anomaly_free :
@@ -67,6 +88,51 @@ theorem anomaly_and_helmholtz_are_compatible :
     AnomalyFree anomalyFreeVariational /\
       HelmholtzAdmissible anomalyFreeVariational := by
   exact ⟨rfl, ⟨rfl, rfl, rfl⟩⟩
+
+/-- Both filters can fail on the same algebraic candidate. -/
+theorem anomaly_and_helmholtz_can_both_fail :
+    Not (AnomalyFree anomalousNonVariational) /\
+      Not (HelmholtzAdmissible anomalousNonVariational) := by
+  constructor
+  · norm_num [AnomalyFree, anomalousNonVariational]
+  · intro hHelmholtz
+    norm_num [HelmholtzAdmissible, FormallySelfAdjoint,
+      anomalousNonVariational] at hHelmholtz
+
+/--
+The four explicit candidates synthesize every Boolean truth pattern of the two
+filters.  This is only a finite algebraic independence theorem for the declared
+proxies; it makes no claim about the anomaly of the physical Janus theory.
+-/
+theorem every_filter_truth_pattern_is_realized
+    (anomaly helmholtz : Bool) :
+    ∃ theory : CandidateTheory,
+      (AnomalyFree theory ↔ anomaly = true) /\
+      (HelmholtzAdmissible theory ↔ helmholtz = true) := by
+  cases anomaly <;> cases helmholtz
+  · refine ⟨anomalousNonVariational, ?_, ?_⟩
+    · simpa using anomaly_and_helmholtz_can_both_fail.1
+    · simpa using anomaly_and_helmholtz_can_both_fail.2
+  · refine ⟨variationalAnomalous, ?_, ?_⟩
+    · simpa using helmholtz_does_not_imply_anomaly_free.2
+    · simpa using helmholtz_does_not_imply_anomaly_free.1
+  · refine ⟨anomalyFreeNonVariational, ?_, ?_⟩
+    · simpa using anomaly_free_does_not_imply_helmholtz.1
+    · simpa using anomaly_free_does_not_imply_helmholtz.2
+  · refine ⟨anomalyFreeVariational, ?_, ?_⟩
+    · simpa using anomaly_and_helmholtz_are_compatible.1
+    · simpa using anomaly_and_helmholtz_are_compatible.2
+
+/-- The same four-state synthesis stated directly with potential realizability. -/
+theorem every_anomaly_variational_truth_pattern_is_realized
+    (anomaly variational : Bool) :
+    ∃ theory : CandidateTheory,
+      (AnomalyFree theory ↔ anomaly = true) /\
+      (VariationallyRealizable theory ↔ variational = true) := by
+  obtain ⟨theory, hAnomaly, hHelmholtz⟩ :=
+    every_filter_truth_pattern_is_realized anomaly variational
+  exact ⟨theory, hAnomaly,
+    (variationally_realizable_iff_helmholtz theory).trans hHelmholtz⟩
 
 /-- Complete two-filter status. -/
 def FullyConsistent (theory : CandidateTheory) : Prop :=

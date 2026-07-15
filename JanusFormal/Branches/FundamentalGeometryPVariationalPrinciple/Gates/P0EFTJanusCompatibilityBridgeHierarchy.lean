@@ -45,7 +45,6 @@ def strongPullbackAsConstraintBridge
     have hSymmetry :=
       complex.fieldPairingSymmetric
         (sourceHessian complex first) second
-    simp only
     rw [← hAdjoint, hSymmetry]
     ring
 
@@ -91,6 +90,35 @@ theorem strong_bridge_matrix
   exact ⟨source_hessian_formally_self_adjoint
       complex first second,
     source_hessian_annihilates_gauge complex gauge,
+    strong_pullback_implies_restricted_helmholtz complex⟩
+
+/--
+Abstract synthesis of the strong compatibility-complex route.  The two
+successive compositions vanish, the pulled-back Hessian is self-adjoint and
+restricted Helmholtz, and gauge directions obey the linearized Noether
+degeneracy.  This is an algebraic theorem about the supplied complex; it does
+not construct the nonlinear Janus complex.
+-/
+theorem abstract_compatibility_variational_synthesis
+    (complex :
+      CompatibilityVariationalComplex Gauge Field Invariant Identity)
+    (gauge : Gauge)
+    (first second : Field) :
+    complex.compatibilityMap (complex.gaugeAction gauge) = 0 /\
+    complex.bianchiMap (complex.compatibilityMap first) = 0 /\
+    complex.fieldPairing (sourceHessian complex first) second =
+      complex.fieldPairing first (sourceHessian complex second) /\
+    sourceHessian complex (complex.gaugeAction gauge) = 0 /\
+    IsCompatibleVariation
+      (strongPullbackAsConstraintBridge complex)
+      (complex.gaugeAction gauge) /\
+    RestrictedHelmholtz
+      (strongPullbackAsConstraintBridge complex) := by
+  exact ⟨compatibility_after_gauge_zero complex gauge,
+    bianchi_after_compatibility_zero complex first,
+    source_hessian_formally_self_adjoint complex first second,
+    source_hessian_annihilates_gauge complex gauge,
+    gauge_direction_is_compatible_variation complex gauge,
     strong_pullback_implies_restricted_helmholtz complex⟩
 
 /--

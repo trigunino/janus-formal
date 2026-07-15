@@ -143,7 +143,11 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 
 - **T** a quadratic Hessian fixes an action only up to an affine functional;
 - **T** Hessian + critical point + reference value yield unique normalized quadratic action;
-- **T/C** a quadratic parent bulk problem yields a Schur-complement boundary action;
+- **T/C** a finite two-sector quadratic parent bulk problem has a unique stationary mode and yields an exact Schur-complement boundary action with reciprocal, PT-even Hessian;
+- **T/C** the scalar-bulk Schur coefficient theorem extends to an arbitrary
+  finite boundary rank, including exact on-shell formula, reciprocal kernel and
+  pairing-level self-adjointness;
+- **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
 
@@ -151,16 +155,20 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 
 - **T** PT-paired anomaly proxies cancel;
 - **T/N** anomaly cancellation leaves parity-even couplings and finite even counterterms free;
-- **T/N** anomaly cancellation and Helmholtz integrability are logically independent;
+- **T/N** anomaly cancellation and Helmholtz integrability are logically independent; four finite candidates realize all Boolean truth patterns;
 - **C** discrete multiplicity selection requires independently fixed regulator data;
 - **O** compute the actual local/global anomaly in the same field content and regulator used by the action.
 
 ## P-C — Helmholtz reconstruction
 
 - **T** quadratic Hessian realizability iff formal self-adjointness in the finite models;
+- **T** three-sector PT-invariant quadratic realizability iff reciprocity holds and both even--odd couplings vanish;
 - **T** equal Hessians differ by affine terms;
 - **T** PT plus normalization removes the quadratic affine ambiguity;
 - **T** finite polynomial Helmholtz conditions reconstruct a cubic potential;
+- **T** the coefficient-level affine/quadratic Euler problem over any finite
+  field index reconstructs linear/quadratic/cubic potential coefficients iff
+  its linear and quadratic Helmholtz swaps hold;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
 
@@ -235,7 +243,9 @@ regular local operator
   -> projected-seed varying-normal atlas
   -> one-chart rank-two SpinC bundle/connection
   -> valid-chart low-order residual/SpinC action groupoid
-  -> canonical groupoid arrows between actual overlapping chart extractions.
+  -> canonical groupoid arrows between actual overlapping chart extractions
+  -> fixed-base descent of invariant low-order observables
+  -> conditional multi-chart SpinC Cech and abelian-connection packages.
 ```
 
 Current theorem evidence:
@@ -260,6 +270,14 @@ Current theorem evidence:
 - **T** valid-chart low-order residual/SpinC action-groupoid realization;
 - **T** canonical low-order action-groupoid arrow between two actual valid
   projected-seed chart extractions on an overlap;
+- **T** unique chart-independent value of an invariant low-order observable at
+  a fixed Euclidean base point;
+- **T/C** multi-chart SpinC Cech transition presentation from a supplied
+  oriented cocycle, lifts, phases and matching diagonal defects, with pointwise
+  laws but no transition continuity/smoothness or bundle total space;
+- **T/C** local abelian connection potentials obey affine first-jet descent and,
+  when all supplied additive shifts are flat, their curvatures glue uniquely to
+  a global smooth curvature function;
 - **T/N** local finite order need not give one global uniform order;
 - **T/N** smooth dependence is not automatically polynomial;
 - **N** equivariance plus finite-dimensionality does not by itself imply finite generation for nonreductive jet-group actions;
@@ -270,7 +288,8 @@ Exact remaining locks:
 - **O** define the actual Janus category and source/target natural bundles, then
   verify locality, regularity and the required holonomic realizations;
 - **O** construct the required higher-dimensional Clifford Spin covers;
-- **O** extend the projected-seed atlas and one-chart SpinC model to the actual
+- **O** derive the conditional Cech inputs from the actual projected-seed atlas,
+  determinant transitions and Janus characteristic classes, then construct the
   nontrivial global Janus vector and principal bundles;
 - **O** prove characteristic-class matching between the Spin and determinant-root defects;
 - **O** identify the global determinant-line connection and attach every natural sector action;
@@ -307,6 +326,9 @@ compatibility map K
 
 - **T/C** the pulled-back finite model is self-adjoint and satisfies quadratic Helmholtz;
 - **T/C** gauge invariance `K R = 0` yields a linearized Noether identity;
+- **T/C** one abstract synthesis packages `K R = 0`, `B K = 0`, pulled-back
+  self-adjointness, gauge-Hessian degeneracy and restricted Helmholtz for the
+  supplied compatibility complex;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
 - **O** construct the actual Janus compatibility jet complex, target pairing and global action primitive.
@@ -326,7 +348,7 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | Entry | Status |
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
-| `FundamentalGeometryPEJetUniversality` | local validation green through the scoped PR 10 Koszul, projected-normal, one-chart SpinC and low-order groupoid gates |
+| `FundamentalGeometryPEJetUniversality` | PR 10 merged; active follow-on adds fixed-base overlap descent and conditional multi-chart SpinC/connection Cech gates |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
 | `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
 | D9 and D11 | gate collections; no supported standalone head |

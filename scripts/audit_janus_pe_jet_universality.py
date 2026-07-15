@@ -27,6 +27,12 @@ PROGRAMME_PE_GATES = {
         "theorem euclidean_lowOrder_spinC_groupoid_realized",
     "P0EFTJanusEuclideanStructuredJetOverlapGroupoid.lean":
         "theorem euclideanLowOrderSpinCOverlapArrow_comp",
+    "P0EFTJanusEuclideanStructuredJetOverlapDescent.lean":
+        "theorem euclideanLowOrderInvariantObservable_existsUnique_descended",
+    "P0EFTJanusGlobalSpinCCechDescent.lean":
+        "def globalSpinCCechPresentation",
+    "P0EFTJanusCechAbelianConnectionDescent.lean":
+        "theorem CechAbelianConnectionDescentData.descendedCurvature_contDiff",
 }
 
 

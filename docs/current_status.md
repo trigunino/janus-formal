@@ -117,8 +117,23 @@ global Janus SpinC bundle.
 The current follow-on branch also proves that two actual valid projected-seed
 chart extractions at the same base point are related by the canonical residual
 normal-frame action, packages that relation as an action-groupoid arrow and
-proves its identity and Cech composition laws. This remains a low-order
-Euclidean overlap theorem, not full effective descent.
+proves its identity and Cech composition laws. For invariant observables it
+also constructs the unique chart-independent value at that fixed base point.
+This remains low-order Euclidean fixed-base descent, not smooth effective
+descent for the full Janus structured-jet groupoid.
+
+The same branch supplies two conditional multi-chart packages. Given an open
+cover, oriented cocycles, chosen Spin lifts, phase transitions and matching
+diagonal defects, Lean packages the resulting SpinC transitions with pointwise
+identity, inverse and Cech laws. This is a supplied transition presentation,
+not a continuity/smoothness theorem or a geometric principal-bundle total-space
+construction. Given local abelian potentials and additive overlap shifts, Lean
+proves the affine first-jet law and, when every overlap shift is curvature-flat,
+uniquely glues the local curvatures to a global smooth curvature function. These
+packages do not
+derive their input from actual Janus characteristic classes, determinant-line
+transitions or logarithms, and therefore do not construct the global physical
+Janus SpinC bundle or connection.
 
 ## 3. Stable architecture
 
@@ -167,9 +182,9 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
 ### P0, P-A, P-B and P-C
 
 - **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
-- **P-A:** a Hessian fixes an action only up to an affine functional; a critical point and reference value remove this ambiguity in the quadratic model.
-- **P-B:** anomaly cancellation is a consistency/discrete-selection filter, not a complete dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-A:** the two-sector parent-bulk result now extends coefficientwise to an arbitrary finite boundary rank: the declared scalar bulk Euler equation has a unique solution and the exact Schur kernel is reciprocal/self-adjoint; changing the parent can still change surviving mixing.
+- **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion and a finite-rank coefficient theorem through cubic potential order; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
 
 ### P-D — pairings and coefficient modules
 
@@ -245,11 +260,17 @@ Lean proves:
 - equivalence with Mathlib's even-unitary Lipschitz `CliffordAlgebra.spinGroup` for the negative Euclidean plane;
 - the Clifford-valued rank-two central double cover and SpinC diagonal quotient;
 - the canonical one-chart Cech principal bundle and a connection from the
-  supplied global smooth gauge potential.
+  supplied global smooth gauge potential;
+- conditional multi-chart SpinC Cech transition packaging from supplied
+  pointwise cocycles, lifts, phases and matching defects, without transition
+  continuity/smoothness or a principal-bundle total-space construction;
+- conditional abelian connection overlap descent from supplied local
+  potentials and additive gauge shifts, with unique global smooth curvature
+  descent under the flat-shift condition.
 
-Higher-dimensional Clifford covers, nontrivial/global Janus principal-bundle
-descent, determinant-line identification and characteristic-class matching
-remain open.
+Higher-dimensional Clifford covers, derivation of the supplied cocycles from
+actual Janus bundles, nontrivial/global Janus principal-bundle construction,
+determinant-line identification and characteristic-class matching remain open.
 
 #### 5.5 Codazzi and abelian Bianchi exactness
 
@@ -294,7 +315,12 @@ Still open:
 
 ### P-F — compatibility pullback
 
-A self-adjoint target Hessian pulls back to a self-adjoint quadratic Helmholtz operator; gauge invariance gives the linearized Noether identity. The actual Janus compatibility complex and global variational primitive remain open.
+A self-adjoint target Hessian pulls back to a self-adjoint quadratic Helmholtz
+operator; gauge invariance gives the linearized Noether identity. The abstract
+compatibility-complex synthesis now packages `K R = 0`, `B K = 0`, pulled-back
+self-adjointness, gauge-Hessian degeneracy and restricted Helmholtz in one
+theorem. It assumes the algebraic complex and pairing; the actual nonlinear
+Janus compatibility complex and global variational primitive remain open.
 
 ## 6. Current supported chain
 
