@@ -1,4 +1,5 @@
 import Mathlib.Analysis.Calculus.FDeriv.Symmetric
+import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanImmersionConnectionJetExtraction
 
 namespace JanusFormal
@@ -12,6 +13,7 @@ open Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
+open P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair
 open P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
 open P0EFTJanusConnectionCorrectedActualJetBridge
 open P0EFTJanusEuclideanImmersionConnectionJetExtraction
@@ -108,6 +110,27 @@ variable [NormedAddCommGroup Ambient] [InnerProductSpace ℝ Ambient]
 variable [FiniteDimensional ℝ Tangent]
 variable [FiniteDimensional ℝ Ambient]
 
+/-- Continuous dependence of right precomposition on the bilinear map. -/
+def precompRFamilyCLM :
+    (Tangent →L[ℝ] (Ambient →L[ℝ] Ambient)) →L[ℝ]
+      (Tangent →L[ℝ] ((Tangent →L[ℝ] Ambient) →L[ℝ]
+        (Tangent →L[ℝ] Ambient))) :=
+  (ContinuousLinearMap.compL ℝ Tangent
+    (Ambient →L[ℝ] Ambient)
+    ((Tangent →L[ℝ] Ambient) →L[ℝ] (Tangent →L[ℝ] Ambient)))
+      (ContinuousLinearMap.compL ℝ Tangent Ambient Ambient)
+
+/-- Bundled flip used to evaluate the common pullback derivative in the second
+ambient slot. -/
+def flipPullbackCLM :
+    (Tangent →L[ℝ] ((Tangent →L[ℝ] Ambient) →L[ℝ]
+      (Tangent →L[ℝ] Ambient))) →L[ℝ]
+      ((Tangent →L[ℝ] Ambient) →L[ℝ]
+        (Tangent →L[ℝ] (Tangent →L[ℝ] Ambient))) :=
+  (LinearIsometryEquiv.toLinearIsometry
+    (ContinuousLinearMap.flipₗᵢ ℝ Tangent
+      (Tangent →L[ℝ] Ambient) (Tangent →L[ℝ] Ambient))).toContinuousLinearMap
+
 /-- Pull a continuous ambient bilinear connection coefficient back through the
 first derivative of an immersion. -/
 def pullbackAmbientConnection
@@ -117,9 +140,9 @@ def pullbackAmbientConnection
     Tangent → ContinuousAmbientQuadratic
       (Tangent := Tangent) (Ambient := Ambient) :=
   fun base =>
-    (ContinuousLinearMap.precompR ℝ Tangent Ambient Ambient Tangent)
-      ((ContinuousLinearMap.precompL ℝ Ambient Ambient Ambient Tangent)
-        (ambientConnection (immersion base)) (derivative base))
+    flipPullbackCLM (Tangent := Tangent) (Ambient := Ambient)
+      (precompRFamilyCLM (Tangent := Tangent) (Ambient := Ambient)
+        ((ambientConnection (immersion base)).comp (derivative base)))
       (derivative base)
 
 @[simp]
@@ -144,17 +167,14 @@ theorem pullbackAmbientConnection_contDiff
     (hDerivative : ContDiff ℝ ∞ derivative) :
     ContDiff ℝ ∞
       (pullbackAmbientConnection ambientConnection immersion derivative) := by
-  have hAlong : ContDiff ℝ ∞
-      (fun base => ambientConnection (immersion base)) :=
-    hAmbientConnection.comp hImmersion
-  have hLeft : ContDiff ℝ ∞
-      (fun base =>
-        (ContinuousLinearMap.precompL ℝ Ambient Ambient Ambient Tangent)
-          (ambientConnection (immersion base)) (derivative base)) := by
-    exact ((ContinuousLinearMap.precompL ℝ Ambient Ambient Ambient Tangent)
-      .contDiff.comp hAlong).clm_apply hDerivative
-  exact ((ContinuousLinearMap.precompR ℝ Tangent Ambient Ambient Tangent)
-    .contDiff.comp hLeft).clm_apply hDerivative
+  apply contDiff_clm_apply_iff.mpr
+  intro first
+  apply contDiff_clm_apply_iff.mpr
+  intro second
+  change ContDiff ℝ ∞ (fun base =>
+    ambientConnection (immersion base)
+      (derivative base first) (derivative base second))
+  fun_prop
 
 /-- Pullback preserves torsion-free symmetry. -/
 theorem pullbackAmbientConnection_symmetric

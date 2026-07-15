@@ -27,9 +27,9 @@ theorem cliffordSpin2_mul_comm
   rw [map_mul, map_mul]
   exact mul_comm _ _
 
-/-- The transported group structure is commutative. This local instance is used
-to construct the diagonal SpinC quotient. -/
-local instance cliffordSpin2CommGroup : CommGroup CliffordSpin2 :=
+/-- The transported group structure is commutative, so the diagonal SpinC
+quotient inherits its group structure in downstream gates. -/
+instance cliffordSpin2CommGroup : CommGroup CliffordSpin2 :=
   { (inferInstance : Group CliffordSpin2) with
     mul_comm := cliffordSpin2_mul_comm }
 
