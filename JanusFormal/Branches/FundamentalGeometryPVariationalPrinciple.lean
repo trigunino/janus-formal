@@ -55,6 +55,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixInteractionDensityCovariance
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootFrechetSylvester
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalSylvesterInverse
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootChart
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusRelativeMetricProductFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricInverseRelativeRootFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLedger
@@ -62,7 +63,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYFirstVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYMeasureVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYExactInverseCurve
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussianNormalEHGHYCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullJointReparametrizationCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBulkBoundaryCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityNaturality
@@ -140,11 +143,13 @@ structure ProgramStatus where
   pcReducedActionAdditiveNoetherProxyClassified : Prop
   paMatrixSquaringSylvesterFrechetProved : Prop
   paPositiveDiagonalSylvesterInverseProved : Prop
+  paCoDiagonalLorentzRootChartConstructed : Prop
   paConditionalRelativeMetricRootFrechetBridgeProved : Prop
   paFixedGeometryBoundarySlotVariationsProved : Prop
   paNonNullGHYPointwiseFirstJetVariationProved : Prop
   paNonNullGHYDeterminantMeasureFirstJetProved : Prop
   paNonNullGHYExactInverseCurveVariationProved : Prop
+  paGaussianNormalEHGHYCancellationDerived : Prop
   paPTFlatSpectralInteractionIndefinitenessProved : Prop
   paCandidateMinisuperspacePrimaryConstraintPrecursorProved : Prop
   paCandidateSourceModeDecompositionProved : Prop
@@ -157,6 +162,7 @@ structure ProgramStatus where
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paNullExpansionCountertermVariationProved : Prop
+  paNullJointReparametrizationCancellationProved : Prop
   paReducedFLRWBracketFactorizationFromInputHamiltoniansProved : Prop
   paReducedFLRWLegendreBridgeProved : Prop
   paPTFlatVacuumFLRWConstraintNoGoProved : Prop
@@ -245,11 +251,13 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcReducedActionAdditiveNoetherProxyClassified /\
   s.paMatrixSquaringSylvesterFrechetProved /\
   s.paPositiveDiagonalSylvesterInverseProved /\
+  s.paCoDiagonalLorentzRootChartConstructed /\
   s.paConditionalRelativeMetricRootFrechetBridgeProved /\
   s.paFixedGeometryBoundarySlotVariationsProved /\
   s.paNonNullGHYPointwiseFirstJetVariationProved /\
   s.paNonNullGHYDeterminantMeasureFirstJetProved /\
   s.paNonNullGHYExactInverseCurveVariationProved /\
+  s.paGaussianNormalEHGHYCancellationDerived /\
   s.paPTFlatSpectralInteractionIndefinitenessProved /\
   s.paCandidateMinisuperspacePrimaryConstraintPrecursorProved /\
   s.paCandidateSourceModeDecompositionProved /\
@@ -262,6 +270,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paNullExpansionCountertermVariationProved /\
+  s.paNullJointReparametrizationCancellationProved /\
   s.paReducedFLRWBracketFactorizationFromInputHamiltoniansProved /\
   s.paReducedFLRWLegendreBridgeProved /\
   s.paPTFlatVacuumFLRWConstraintNoGoProved /\
