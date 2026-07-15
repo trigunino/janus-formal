@@ -127,8 +127,16 @@ positive and `c = 1` is the unique global minimizer on `c > 0`. This does not
 establish a variational principle or stability theorem on the full Janus metric
 field space.
 
-**Lean:** `P0EFTJanusPTFlatBimetricVariationalBridge.lean`
-**Evidence:** **T/C** on the one-dimensional proportional branch.
+This proportional information does not reconstruct transverse dynamics. Two
+explicit functions of `(c,y)` have exactly the same restriction at `y = 0` and
+the same genuine longitudinal derivatives, but their genuine transverse
+curvatures there are `0` and `2 lambda`. For `lambda != 0` they define distinct
+extensions. This is a reconstruction no-go, not a candidate full metric action.
+
+**Lean:** `P0EFTJanusPTFlatBimetricVariationalBridge.lean`,
+`P0EFTJanusProportionalBranchTransverseNoGo.lean`
+**Evidence:** **T/C** on the one-dimensional proportional branch and **T/N**
+for reconstruction of a transverse extension from that branch alone.
 
 ### P-A verdict
 
@@ -235,12 +243,16 @@ For a supplied complete differentiable one-parameter flow, the analogous
 nonlinear statement is exact: full-orbit invariance is equivalent to the actual
 Euler derivative annihilating the field-dependent generator everywhere, and
 horizontal Helmholtz data reconstruct an invariant normalized radial action.
-Neither result constructs a Janus flow, gauge group or PDE identity with
-boundary terms.
+The full orbits of the supplied flow form a set quotient through which every
+invariant action factors uniquely; the reconstructed radial action has the same
+unique factorization. No topology or smooth structure is constructed on this
+quotient. These results do not construct a Janus flow, gauge group or PDE
+identity with boundary terms.
 
 **Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
 `P0EFTJanusLinearGaugeNoetherReconstruction.lean`,
-`P0EFTJanusNonlinearGaugeFlowNoether.lean`
+`P0EFTJanusNonlinearGaugeFlowNoether.lean`,
+`P0EFTJanusGaugeOrbitDescent.lean`
 **Evidence:** **T/C** on open convex domains and, on the whole space, for
 additive linear or supplied complete nonlinear gauge-flow models.
 
@@ -377,10 +389,15 @@ In the abstract finite model:
   gradient `dL` vanishes;
 - Schwarz symmetry makes the complete actual second variation symmetric even
   off criticality; at a target critical point this proves symmetry of
-  `J^T H J` without separately postulating symmetry of `H`.
+  `J^T H J` without separately postulating symmetry of `H`;
+- a target critical point pulls back to genuine criticality, and the actual
+  pullback Hessian annihilates `ker J` in either argument. Consequently it
+  annihilates the generated directions `im R` whenever `J ∘ R = 0`. This is an
+  abstract normed-space statement, not a concrete Janus field complex.
 
 **Lean:** `P0EFTJanusFrechetPullbackSecondVariation.lean`,
-`P0EFTJanusFrechetPullbackHelmholtz.lean`
+`P0EFTJanusFrechetPullbackHelmholtz.lean`,
+`P0EFTJanusFrechetPullbackGaugeDegeneracy.lean`
 
 **Lean head:**
 

@@ -159,6 +159,10 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is
   the unique global minimizer on `c > 0`; this is not the full Janus metric
   field theory;
+- **T/N** two explicit two-variable extensions have exactly the same
+  proportional branch and genuine longitudinal derivatives but transverse
+  curvatures `0` and `2 lambda`; for `lambda != 0`, proportional data do not
+  select a bimetric extension;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -206,6 +210,10 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   full-flow invariance is equivalent to annihilation of the field-dependent
   generator; horizontal Helmholtz data yield an invariant normalized radial
   primitive;
+- **T/C** the set quotient by full orbits of that supplied flow is constructed;
+  every invariant action, and in particular the reconstructed radial action,
+  factors uniquely through it, without any quotient topology or smooth
+  structure;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** construct the Janus flow/gauge group and derive the complete Euler
   source, PDE Noether identities, nonlinear Helmholtz conditions, variational
@@ -378,6 +386,9 @@ compatibility map K
 - **T/C** the complete actual second variation is symmetric even off a target
   critical point; consequently the critical `J^T H J` is symmetric without a
   separate symmetry postulate for `H`;
+- **T/C** a target critical point gives genuine pullback criticality, and the
+  actual pullback Hessian annihilates `ker J` in both arguments and therefore
+  `im R` whenever `J ∘ R = 0`; this is an abstract Fréchet theorem;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
 - **O** construct the actual Janus compatibility map/jet complex, target
