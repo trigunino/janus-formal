@@ -31,6 +31,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankParentSchurHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPTFlatBimetricVariationalBridge
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricBoundaryFirstVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricEulerNoether
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedBimetricQuadraticFrechetSpectrum
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchTransverseNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchHigherOrderNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
@@ -58,6 +61,9 @@ structure ProgramStatus where
   paFiniteRankSchurFrechetDerivativesProved : Prop
   paFiniteRankBulkSignStabilityClassified : Prop
   paPTFlatProportionalActualVariationalStabilityProved : Prop
+  paReducedTwoMetricActualBoundaryVariationProved : Prop
+  paConditionalReducedBimetricFrechetStabilityProved : Prop
+  paReducedPublishedKappaMinusOneKineticNoGoProved : Prop
   paProportionalBranchTransverseNonuniquenessProved : Prop
   paProportionalBranchTransverseTwoJetNonuniquenessProved : Prop
   pbPTAnomalyCancellationProved : Prop
@@ -82,6 +88,7 @@ structure ProgramStatus where
   pcConditionalNonlinearGaugeInvariantRadialReconstructionProved : Prop
   pcGaugeOrbitQuotientDescentProved : Prop
   pcGaugeOrbitInvariantFunctionEquivalenceProved : Prop
+  pcReducedTwoMetricEulerNoetherProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -123,6 +130,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteRankSchurFrechetDerivativesProved /\
   s.paFiniteRankBulkSignStabilityClassified /\
   s.paPTFlatProportionalActualVariationalStabilityProved /\
+  s.paReducedTwoMetricActualBoundaryVariationProved /\
+  s.paConditionalReducedBimetricFrechetStabilityProved /\
+  s.paReducedPublishedKappaMinusOneKineticNoGoProved /\
   s.paProportionalBranchTransverseNonuniquenessProved /\
   s.paProportionalBranchTransverseTwoJetNonuniquenessProved /\
   s.pbPTAnomalyCancellationProved /\
@@ -146,7 +156,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcConditionalNonlinearGaugeFlowNoetherIffProved /\
   s.pcConditionalNonlinearGaugeInvariantRadialReconstructionProved /\
   s.pcGaugeOrbitQuotientDescentProved /\
-  s.pcGaugeOrbitInvariantFunctionEquivalenceProved
+  s.pcGaugeOrbitInvariantFunctionEquivalenceProved /\
+  s.pcReducedTwoMetricEulerNoetherProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=

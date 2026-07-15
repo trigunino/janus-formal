@@ -141,6 +141,33 @@ reduced reconstruction no-go, not a candidate full metric action.
 **Evidence:** **T/C** on the one-dimensional proportional branch and **T/N**
 for reconstruction of a transverse extension from that branch alone.
 
+### 4.3 Reduced two-metric action, boundary and spectrum audit
+
+The M30 action writes two Einstein--Hilbert sectors plus matter and cross
+densities, but does not specify the cross densities as functionals. The new
+formal result therefore uses an explicit reduced candidate and does not
+attribute that candidate to M30. Its homogeneous exchange-symmetric
+interaction restricts exactly to the audited PT-flat proportional potential.
+For arbitrary independent scale variations, the bulk, interaction and two
+linear boundary channels have the displayed genuine directional derivative;
+stationarity is equivalent to both reduced Euler components vanishing. Since
+unspecified boundary coefficients can stationarize any scale pair, the bulk
+candidate cannot select a scale before the physical GHY/null/worldvolume
+functional is derived.
+
+A separate quadratic two-mode candidate has genuine first and second Frechet
+derivatives. Positive kinetic coefficients and nonnegative relative mass give
+a positive reduced Hessian. The interaction Hessian has exactly the diagonal
+kernel and descends to a positive algebraic relative-sector quotient for
+positive PT-flat mass. Conversely, the reduced pure-kinetic action with the
+published relative sign `kappa = -1` has a strictly negative actual Hessian
+direction in an ordinary positive-Hilbert interpretation. This is a reduced
+sign obstruction, not a full covariant ghost theorem.
+
+**Lean:** `P0EFTJanusReducedTwoMetricBoundaryFirstVariation.lean`,
+`P0EFTJanusReducedBimetricQuadraticFrechetSpectrum.lean`
+**Evidence:** **T/C/N** in the declared reduced sectors.
+
 ### P-A verdict
 
 A parent variational problem gives a canonical throat action **relative to that parent problem**. Different parent actions, normalizations or boundary terms give different reduced actions.
@@ -261,6 +288,17 @@ boundary terms.
 `P0EFTJanusGaugeOrbitInvariantEquiv.lean`
 **Evidence:** **T/C** on open convex domains and, on the whole space, for
 additive linear or supplied complete nonlinear gauge-flow models.
+
+For a supplied reduced two-metric chart, the explicit relative quadratic
+interaction now has its genuine Frechet derivative. Independent plus/minus
+variations recover both Euler components; diagonal and sign-linked variations
+recover respectively their sum and difference. Finite diagonal translation
+invariance implies the corresponding reduced Noether identity. This does not
+construct the covariant diagonal diffeomorphism, Bianchi identity or published
+nonlinear cross density.
+
+**Lean:** `P0EFTJanusReducedTwoMetricEulerNoether.lean`
+**Evidence:** **T/C** in the supplied reduced chart.
 
 ### 6.4 Global field-theory obligations
 
@@ -452,15 +490,16 @@ parent or microscopic law                        P-A
 
 ## 12. Precise current frontier
 
-The next concrete theorem package is not another abstract action proxy. It is:
+The reduced candidate gates are now explicit; the next package must leave the
+reduced chart and close the covariant source/boundary problem:
 
-1. define the exact Janus fields and gauge symmetries;
-2. choose induced, auxiliary or bulk metric formulation without double counting;
-3. build the actual compatibility map `K` and its jet linearization `J`;
-4. derive a target pairing/Hessian `H` from a parent or microscopic action;
-5. classify all invariant pairings in the actual symmetry category;
-6. prove the concrete Euler family satisfies nonlinear Helmholtz and Noether identities;
-7. compute variational cohomology, boundary terms and anomalies in one scheme;
+1. specify or derive the two nonlinear cross densities and their matter dependence;
+2. define the exact Janus fields, independent variations and gauge symmetries;
+3. derive the GHY/null/worldvolume boundary functional and admissible data;
+4. choose induced, auxiliary or bulk metric formulation without double counting;
+5. build the actual compatibility map `K` and its jet linearization `J`;
+6. prove nonlinear Helmholtz, diagonal Noether/Bianchi and constraint closure;
+7. compute variational cohomology, anomalies and stability in one scheme;
 8. derive normalization and finite counterterms without observed-radius input.
 
 ## 13. Honest conclusion
