@@ -230,14 +230,19 @@ If the domain is the whole configuration space and an action has the supplied
 Euler one-form as its actual derivative everywhere, additive linear gauge
 invariance is equivalent to Euler horizontality. In particular, the normalized
 radial primitive built from horizontal Euler data is invariant along all
-corresponding affine gauge orbits. This is a conditional linear Noether model,
-not a construction of the Janus gauge group or its PDE identity with boundary
-terms.
+corresponding affine gauge orbits. This is a conditional linear Noether model.
+For a supplied complete differentiable one-parameter flow, the analogous
+nonlinear statement is exact: full-orbit invariance is equivalent to the actual
+Euler derivative annihilating the field-dependent generator everywhere, and
+horizontal Helmholtz data reconstruct an invariant normalized radial action.
+Neither result constructs a Janus flow, gauge group or PDE identity with
+boundary terms.
 
 **Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
-`P0EFTJanusLinearGaugeNoetherReconstruction.lean`
-**Evidence:** **T/C** on open convex domains and whole-space additive linear
-gauge models.
+`P0EFTJanusLinearGaugeNoetherReconstruction.lean`,
+`P0EFTJanusNonlinearGaugeFlowNoether.lean`
+**Evidence:** **T/C** on open convex domains and, on the whole space, for
+additive linear or supplied complete nonlinear gauge-flow models.
 
 ### 6.4 Global field-theory obligations
 
@@ -369,7 +374,13 @@ In the abstract finite model:
 - in normed spaces with the supplied differentiability hypotheses, the actual
   Fréchet second variation of `L ∘ K` is
   `H(Ju)(Jv) + dL(D²K(u,v))`; it reduces to `H(Ju)(Jv)` when the target
-  gradient `dL` vanishes.
+  gradient `dL` vanishes;
+- Schwarz symmetry makes the complete actual second variation symmetric even
+  off criticality; at a target critical point this proves symmetry of
+  `J^T H J` without separately postulating symmetry of `H`.
+
+**Lean:** `P0EFTJanusFrechetPullbackSecondVariation.lean`,
+`P0EFTJanusFrechetPullbackHelmholtz.lean`
 
 **Lean head:**
 
@@ -381,8 +392,9 @@ lake build JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
 
 Compatibility geometry can transmit a variational structure supplied by a target pairing/action. It cannot create that pairing from compatibility identities alone.
 
-The synthesis assumes the abstract algebraic complex and target pairing; it
-does not construct the concrete nonlinear Janus compatibility complex.
+The synthesis assumes the abstract algebraic complex and target pairing; the
+Fréchet theorems likewise supply no concrete compatibility map. They do not
+construct the nonlinear Janus compatibility complex or its PDE realization.
 
 ## 10. Route matrix
 

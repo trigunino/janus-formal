@@ -201,8 +201,15 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   invariance is equivalent to Euler horizontality; the horizontal normalized
   radial primitive is therefore invariant under every corresponding gauge
   translation;
+- **T/C** for a supplied complete differentiable one-parameter flow, when the
+  supplied Euler one-form is the action's actual derivative everywhere,
+  full-flow invariance is equivalent to annihilation of the field-dependent
+  generator; horizontal Helmholtz data yield an invariant normalized radial
+  primitive;
 - **N** a Hessian at one background does not determine a global nonlinear action;
-- **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
+- **O** construct the Janus flow/gauge group and derive the complete Euler
+  source, PDE Noether identities, nonlinear Helmholtz conditions, variational
+  cohomology and boundary/null terms.
 
 ## P-D — Invariant pairings and global coefficient modules
 
@@ -368,9 +375,14 @@ compatibility map K
 - **T/C** the actual Fréchet second variation of a nonlinear pullback is
   `H(Ju)(Jv) + dL(D²K(u,v))` and reduces to `H(Ju)(Jv)` at a target critical
   point;
+- **T/C** the complete actual second variation is symmetric even off a target
+  critical point; consequently the critical `J^T H J` is symmetric without a
+  separate symmetry postulate for `H`;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
-- **O** construct the actual Janus compatibility jet complex, target pairing and global action primitive.
+- **O** construct the actual Janus compatibility map/jet complex, target
+  pairing and global action primitive; no concrete compatibility object is
+  supplied by these Fréchet theorems.
 
 # Programs A/B/C and absolute scale
 

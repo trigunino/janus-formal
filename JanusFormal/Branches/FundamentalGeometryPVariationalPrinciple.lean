@@ -23,6 +23,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankPolynomialHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusConvexHelmholtzReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLinearGaugeNoetherReconstruction
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonlinearGaugeFlowNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBulkUniversalHelmholtzSynthesis
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoupledSectorHelmholtzSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
@@ -71,6 +72,8 @@ structure ProgramStatus where
   pcConvexOpenHelmholtzReconstructionProved : Prop
   pcConditionalLinearGaugeNoetherReconstructionProved : Prop
   pcConditionalLinearGaugeNoetherIffProved : Prop
+  pcConditionalNonlinearGaugeFlowNoetherIffProved : Prop
+  pcConditionalNonlinearGaugeInvariantRadialReconstructionProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -129,7 +132,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved /\
   s.pcConvexOpenHelmholtzReconstructionProved /\
   s.pcConditionalLinearGaugeNoetherReconstructionProved /\
-  s.pcConditionalLinearGaugeNoetherIffProved
+  s.pcConditionalLinearGaugeNoetherIffProved /\
+  s.pcConditionalNonlinearGaugeFlowNoetherIffProved /\
+  s.pcConditionalNonlinearGaugeInvariantRadialReconstructionProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=
