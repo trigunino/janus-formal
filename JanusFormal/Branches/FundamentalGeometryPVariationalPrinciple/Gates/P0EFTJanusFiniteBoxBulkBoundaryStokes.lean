@@ -1,6 +1,4 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Ring
+import Mathlib
 
 /-!
 # Exact bulk/boundary cancellation on a finite three-dimensional box
@@ -277,6 +275,167 @@ theorem twoSectorBulkBoundaryFirstVariation_sectorExchange
         minusFluxVariation plusFluxVariation := by
   rw [twoSectorBulkBoundaryFirstVariation_eq_zero,
     twoSectorBulkBoundaryFirstVariation_eq_zero]
+
+/-- Affine curve in the space of the three variable face-flux families. -/
+def fluxLine (flux variation : VariableFlux3) (epsilon : ℝ) : VariableFlux3 where
+  xFlux i j k := flux.xFlux i j k + epsilon * variation.xFlux i j k
+  yFlux i j k := flux.yFlux i j k + epsilon * variation.yFlux i j k
+  zFlux i j k := flux.zFlux i j k + epsilon * variation.zFlux i j k
+
+/-- Bulk action whose first variation is the integrated divergence. -/
+def bulkFluxAction (shape : BoxShape3) (flux : VariableFlux3) : ℝ :=
+  bulkDivergence shape flux
+
+/-- Six-face boundary action with the cancelling orientation. -/
+def boundaryFluxAction (shape : BoxShape3) (flux : VariableFlux3) : ℝ :=
+  -orientedBoundaryFlux shape flux
+
+/-- Matched finite-box bulk-plus-boundary action. -/
+def matchedBulkBoundaryAction
+    (shape : BoxShape3) (flux : VariableFlux3) : ℝ :=
+  bulkFluxAction shape flux + boundaryFluxAction shape flux
+
+private theorem sum_line {Index : Type*} [DecidableEq Index]
+    (indices : Finset Index) (base variation : Index → ℝ) (epsilon : ℝ) :
+    (∑ index ∈ indices, (base index + epsilon * variation index)) =
+      (∑ index ∈ indices, base index) +
+        epsilon * ∑ index ∈ indices, variation index := by
+  rw [Finset.sum_add_distrib, Finset.mul_sum]
+
+private theorem doubleSum_line
+    (firstCount secondCount : ℕ)
+    (base variation : ℕ → ℕ → ℝ) (epsilon : ℝ) :
+    (∑ first ∈ Finset.range firstCount,
+      ∑ second ∈ Finset.range secondCount,
+        (base first second + epsilon * variation first second)) =
+      (∑ first ∈ Finset.range firstCount,
+        ∑ second ∈ Finset.range secondCount, base first second) +
+      epsilon *
+        ∑ first ∈ Finset.range firstCount,
+          ∑ second ∈ Finset.range secondCount, variation first second := by
+  calc
+    _ = ∑ first ∈ Finset.range firstCount,
+        ((∑ second ∈ Finset.range secondCount, base first second) +
+          epsilon *
+            ∑ second ∈ Finset.range secondCount,
+              variation first second) := by
+          apply Finset.sum_congr rfl
+          intro first _
+          exact sum_line (Finset.range secondCount)
+            (base first) (variation first) epsilon
+    _ = _ := sum_line (Finset.range firstCount)
+      (fun first => ∑ second ∈ Finset.range secondCount, base first second)
+      (fun first => ∑ second ∈ Finset.range secondCount,
+        variation first second) epsilon
+
+private theorem boxSum_line
+    (shape : BoxShape3) (base variation : ℕ → ℕ → ℕ → ℝ)
+    (epsilon : ℝ) :
+    boxSum shape
+        (fun i j k => base i j k + epsilon * variation i j k) =
+      boxSum shape base + epsilon * boxSum shape variation := by
+  unfold boxSum
+  calc
+    _ = ∑ i ∈ Finset.range shape.xCells,
+        ((∑ j ∈ Finset.range shape.yCells,
+            ∑ k ∈ Finset.range shape.zCells, base i j k) +
+          epsilon *
+            ∑ j ∈ Finset.range shape.yCells,
+              ∑ k ∈ Finset.range shape.zCells, variation i j k) := by
+          apply Finset.sum_congr rfl
+          intro i _
+          exact doubleSum_line shape.yCells shape.zCells
+            (base i) (variation i) epsilon
+    _ = _ := sum_line (Finset.range shape.xCells)
+      (fun i => ∑ j ∈ Finset.range shape.yCells,
+        ∑ k ∈ Finset.range shape.zCells, base i j k)
+      (fun i => ∑ j ∈ Finset.range shape.yCells,
+        ∑ k ∈ Finset.range shape.zCells, variation i j k) epsilon
+
+private theorem cellDivergence_fluxLine
+    (flux variation : VariableFlux3) (epsilon : ℝ) (i j k : ℕ) :
+    cellDivergence (fluxLine flux variation epsilon) i j k =
+      cellDivergence flux i j k +
+        epsilon * cellDivergence variation i j k := by
+  simp [cellDivergence, fluxLine]
+  ring
+
+theorem bulkDivergence_fluxLine
+    (shape : BoxShape3) (flux variation : VariableFlux3) (epsilon : ℝ) :
+    bulkDivergence shape (fluxLine flux variation epsilon) =
+      bulkDivergence shape flux + epsilon * bulkDivergence shape variation := by
+  unfold bulkDivergence
+  calc
+    boxSum shape (cellDivergence (fluxLine flux variation epsilon)) =
+        boxSum shape (fun i j k =>
+          cellDivergence flux i j k +
+            epsilon * cellDivergence variation i j k) := by
+      apply congrArg (boxSum shape)
+      funext i j k
+      exact cellDivergence_fluxLine flux variation epsilon i j k
+    _ = _ := boxSum_line shape (cellDivergence flux)
+      (cellDivergence variation) epsilon
+
+theorem orientedBoundaryFlux_fluxLine
+    (shape : BoxShape3) (flux variation : VariableFlux3) (epsilon : ℝ) :
+    orientedBoundaryFlux shape (fluxLine flux variation epsilon) =
+      orientedBoundaryFlux shape flux +
+        epsilon * orientedBoundaryFlux shape variation := by
+  simp only [orientedBoundaryFlux, xNegativeFaceFlux, xPositiveFaceFlux,
+    yNegativeFaceFlux, yPositiveFaceFlux, zNegativeFaceFlux,
+    zPositiveFaceFlux, fluxLine]
+  repeat' rw [doubleSum_line]
+  ring
+
+private theorem affineLine_hasDerivAt (base tangent : ℝ) :
+    HasDerivAt (fun epsilon : ℝ => base + epsilon * tangent) tangent 0 := by
+  simpa using
+    ((hasDerivAt_id (x := (0 : ℝ))).mul_const tangent).const_add base
+
+/-- The displayed bulk ledger is the actual derivative of the bulk action. -/
+theorem bulkFluxAction_fluxLine_hasDerivAt
+    (shape : BoxShape3) (flux variation : VariableFlux3) :
+    HasDerivAt
+      (fun epsilon => bulkFluxAction shape (fluxLine flux variation epsilon))
+      (bulkDivergence shape variation) 0 := by
+  have h := affineLine_hasDerivAt
+    (bulkDivergence shape flux) (bulkDivergence shape variation)
+  refine h.congr_of_eventuallyEq (Filter.Eventually.of_forall ?_)
+  intro epsilon
+  simp only [bulkFluxAction, bulkDivergence_fluxLine]
+
+/-- The displayed six-face ledger is the actual derivative of the boundary
+action. -/
+theorem boundaryFluxAction_fluxLine_hasDerivAt
+    (shape : BoxShape3) (flux variation : VariableFlux3) :
+    HasDerivAt
+      (fun epsilon => boundaryFluxAction shape (fluxLine flux variation epsilon))
+      (-orientedBoundaryFlux shape variation) 0 := by
+  have h := (affineLine_hasDerivAt
+    (orientedBoundaryFlux shape flux)
+    (orientedBoundaryFlux shape variation)).neg
+  refine h.congr_of_eventuallyEq (Filter.Eventually.of_forall ?_)
+  intro epsilon
+  simp only [boundaryFluxAction, orientedBoundaryFlux_fluxLine]
+  rfl
+
+/-- The actual derivative of the matched action vanishes for every variable
+flux variation. -/
+theorem matchedBulkBoundaryAction_fluxLine_hasDerivAt
+    (shape : BoxShape3) (flux variation : VariableFlux3) :
+    HasDerivAt
+      (fun epsilon =>
+        matchedBulkBoundaryAction shape (fluxLine flux variation epsilon))
+      0 0 := by
+  have hBulk := bulkFluxAction_fluxLine_hasDerivAt shape flux variation
+  have hBoundary := boundaryFluxAction_fluxLine_hasDerivAt shape flux variation
+  have hSum := hBulk.add hBoundary
+  refine (hSum.congr_of_eventuallyEq
+    (Filter.Eventually.of_forall ?_)).congr_deriv ?_
+  · intro epsilon
+    rfl
+  · rw [bulkDivergence_eq_orientedBoundaryFlux]
+    ring
 
 end P0EFTJanusFiniteBoxBulkBoundaryStokes
 end JanusFormal

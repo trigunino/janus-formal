@@ -18,10 +18,10 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | Program | Role | Strongest current result | Terminal blocker |
 | --- | --- | --- | --- |
 | **D0/D8** | global geometry and normal lift | free mapping-torus correction; one-sided normal sign and quarter-lift algebra; focused heads green | actual global decorated geometry and Pin/root bundle |
-| **D2** | focused twisted Dirac spectrum | green arithmetic/eta/ratio head | global self-adjoint operator and full determinant |
-| **D7** | heat kernel/effective action | green local/no-scale and pure-quarter stabilization no-go head | complete field/ghost determinant and finite renormalization |
-| **D9/D11** | elliptic and natural-operator gates | symbol/functor/jet schemas | supported global heads and concrete Janus Fredholm family |
-| **D10** | Quillen/anomalies | green head; canonicity relative to a specified family | actual family index, anomaly and partition section |
+| **D2** | focused twisted Dirac spectrum | green `l2`, self-adjointness, compact resolvent, renormalized-determinant interface and fixed-scheme uniqueness | prove convergence of one common local counterterm for the holonomy family |
+| **D7** | heat kernel/effective action | green D2 operator bridge plus explicit `a0/a2/a4` common counterterm and fixed-scheme determinant uniqueness | prove convergence of the locally subtracted holonomy remainder |
+| **D9/D11** | elliptic and natural-operator gates | green D9 symbol/BRST and D11 naturality/jet heads | concrete Janus Fredholm family |
+| **D10** | Quillen/anomalies | green transgression/inflow and explicit D2 mode-phase bridge | analytic family index, eta holonomy and partition section |
 | **P0/P-A** | reject shortcuts and define relative selection | moduli geometry no-go; normalized quadratic uniqueness; parent Schur reduction | derive the parent theory |
 | **P-B** | anomaly consistency | independent of Helmholtz; can constrain discrete arithmetic | actual regulator, field content and global anomaly |
 | **P-C** | inverse variational problem | green finite Helmholtz and polynomial reconstruction models | concrete nonlinear Janus Euler source and variational cohomology |
@@ -39,13 +39,14 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | `FundamentalGeometryDiracSpectral` | **green** |
 | `FundamentalGeometryD7SpectralTheory` | **green** |
 | `FundamentalGeometryD8TopologyRepresentation` | **green** |
+| `FundamentalGeometryD9ImmersedSpinCEllipticComplex` | **green** |
 | `FundamentalGeometryD10QuillenAnomaly` | **green** |
 | `FundamentalGeometryPVariationalPrinciple` | **green** |
 | `FundamentalGeometryPEInvariantPairings` | **green** |
 | `FundamentalGeometryPEJetUniversality` | **green** |
 | `FundamentalGeometryPFCompatibilityHelmholtz` | **green** |
 | deep-alpha completion workflow | **green** |
-| D9/D11 collections | gates only; no supported standalone head |
+| `FundamentalGeometryD11NaturalImmersionOperators` | **green** |
 
 ## Program P scorecard
 

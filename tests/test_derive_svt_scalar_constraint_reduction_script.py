@@ -52,6 +52,16 @@ class DeriveSVTScalarConstraintReductionScriptTests(unittest.TestCase):
         self.assertIn("psi_m", payload["lapse_compatibility_condition"])
         self.assertFalse(payload["prediction_ready"])
 
+    def test_primary_shift_closure_is_separated_from_secondary_constraint(self) -> None:
+        closure = build_payload()["constraint_closure"]
+
+        self.assertTrue(closure["encoded_primary_lapse_equations_present"])
+        self.assertTrue(closure["shift_system_solved_algebraically"])
+        self.assertTrue(closure["bending_solved_after_lapse_substitution"])
+        self.assertFalse(closure["lapse_compatibility_derived_from_full_eh_action"])
+        self.assertFalse(closure["secondary_hamiltonian_constraint_derived"])
+        self.assertFalse(closure["boulware_deser_mode_removed"])
+
     def test_radion_canonical_mass_uses_user_specification(self) -> None:
         payload = build_payload()
 

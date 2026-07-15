@@ -11,6 +11,7 @@ scale.
 -/
 
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusTwoMetricFirstVariation
+import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusTwoSheetActionNoGo
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusBimetricActionIntegrability
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusDiagonalNoetherExchange
 import JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusRelativeKineticSignNoGo

@@ -224,9 +224,11 @@ covariance and boundary integration remain open.
 For arbitrary variable fluxes on a finite three-dimensional rectangular
 lattice, a separate gate now proves exact telescoping from the bulk divergence
 to all six oriented faces and cancellation by the matching boundary
-counterterm, including two sectors.  This is a discrete box Stokes theorem,
-not a continuum manifold result or a construction of GHY, null, joint or
-corner terms.
+counterterm, including two sectors.  The bulk, boundary and matched ledgers
+are also realized as actual derivatives along arbitrary affine flux curves,
+with the matched derivative equal to zero.  This is a discrete box Stokes
+theorem, not a continuum manifold result or a construction of GHY, null,
+joint or corner terms.
 
 The compatibility gate now also has a genuinely Lorentzian finite model.
 With explicit `eta = diag(-1,1,1,1)`, it proves nondegeneracy,
@@ -578,7 +580,8 @@ Implemented in the current finite, spectral or pointwise models:
   tangential box, including integrability,
   orientation cases and two-sector cancellation;
 - exact finite-box Stokes telescoping for arbitrary variable three-dimensional
-  fluxes, all six oriented faces and the cancelling boundary counterterm;
+  fluxes, all six oriented faces and the cancelling boundary counterterm,
+  promoted to actual bulk, boundary and matched action derivatives;
 - actual nonzero-expansion null-counterterm derivative and its explicit
   singular approach to zero expansion, plus continuity but proved
   non-differentiability of its zero extension;
@@ -718,7 +721,7 @@ is used in its definition.
 | --- | --- | --- |
 | 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, coordinate off-diagonal boost orbit still conjugate to its diagonal seed, an independent non-diagonalizable Lorentz Jordan family, a continuous three-parameter two-dimensional Cayley--Hamilton root chart, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | unique global smooth root/Sylvester inverse on the causal-compatible four-dimensional Lorentz domain and full metric functional variation for independently supplied metrics |
 | 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector, invariant finite-site action, actual affine 1D and local affine `R^4` density pullbacks, independent scalar first-jet coordinate slots, a finite periodic holonomic scalar Euler model, and its positive one-dimensional metric version with induced `sqrt(g)` measure and inverse weight | manifold field space, four-dimensional continuum holonomic matter variation and stress tensor, arbitrary spacetime diagonal diffeomorphisms and covariant density law |
-| 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, actual threefold integration of constant EH/GHY densities, exact finite-box Stokes for variable fluxes and six faces, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure | arbitrary-coordinate global embedding and variable-field continuum flux, physical GHY/null/joint/corner completion, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
+| 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, actual threefold integration of constant EH/GHY densities, exact finite-box Stokes for variable fluxes and six faces with actual matched-action derivative, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure | arbitrary-coordinate global embedding and variable-field continuum flux, physical GHY/null/joint/corner completion, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, and coefficientwise exactness for finite families of nonzero Fourier modes | zero-mode and boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |
 | 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, stress tensor and Bianchi identity, four-dimensional continuum matter variations, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
 | 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, and a genuine contractive diagonal heat semigroup | physical quotient stability, PPN, covariant counterterms, equality with abstract `D^2` functional calculus and trace class, full Janus Dirac and local/global anomalies, determinant data and microscopic normalization/finite-part law |

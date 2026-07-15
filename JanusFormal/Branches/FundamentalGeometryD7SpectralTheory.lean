@@ -14,6 +14,10 @@ D7 separates five layers:
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusUniversalClosedHeatCoefficients
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusAbstractDiracPTFredholmFoundation
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD2GlobalAnalyticBridge
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD2HeatCountertermBridge
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatRemainderConvergence
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusProductThroatDiracHeatCoefficients
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusFiniteProductHeatTrace
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatKernelScaleOrbit
@@ -46,6 +50,9 @@ structure ProgramStatus where
   rankTwoDiracTraceReductionFormalized : Prop
   productThroatCurvatureIntegralsComputed : Prop
   productThroatDiracCoefficientsMatched : Prop
+  productThroatLocalCountertermConstructed : Prop
+  commonHolonomyCountertermBridgeConstructed : Prop
+  fixedHeatSchemeDeterminantUniqueProved : Prop
   finiteProductHeatTraceFactorizationProved : Prop
   localCircleAffinenessProved : Prop
   localNoMinimumProved : Prop
@@ -83,6 +90,9 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.rankTwoDiracTraceReductionFormalized /\
   s.productThroatCurvatureIntegralsComputed /\
   s.productThroatDiracCoefficientsMatched /\
+  s.productThroatLocalCountertermConstructed /\
+  s.commonHolonomyCountertermBridgeConstructed /\
+  s.fixedHeatSchemeDeterminantUniqueProved /\
   s.finiteProductHeatTraceFactorizationProved /\
   s.localCircleAffinenessProved /\
   s.localNoMinimumProved /\

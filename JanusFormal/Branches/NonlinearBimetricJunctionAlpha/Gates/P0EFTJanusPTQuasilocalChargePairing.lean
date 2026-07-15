@@ -53,6 +53,35 @@ theorem bridge_mass_eq_positive_charge
       rw [paired_charges_are_opposite p.toPTOddChargePair]
       ring
 
+/-- PT-paired boundary first-variation data. -/
+structure PTOddBoundaryVariationPair (BoundaryVariation : Type*) where
+  pt : BoundaryVariation → BoundaryVariation
+  boundaryTerm : BoundaryVariation → ℝ
+  plusVariation : BoundaryVariation
+  minusVariation : BoundaryVariation
+  ptInvolutive : ∀ variation, pt (pt variation) = variation
+  boundaryTermPTOdd : ∀ variation,
+    boundaryTerm (pt variation) = -boundaryTerm variation
+  pairedVariationLaw : minusVariation = pt plusVariation
+
+/-- PT-paired boundary variations cancel in the total first variation. -/
+theorem paired_boundary_variations_cancel
+    {BoundaryVariation : Type*}
+    (p : PTOddBoundaryVariationPair BoundaryVariation) :
+    p.boundaryTerm p.plusVariation +
+        p.boundaryTerm p.minusVariation = 0 := by
+  rw [p.pairedVariationLaw, p.boundaryTermPTOdd]
+  ring
+
+/--
+Cancellation on the PT-paired subspace is weaker than independent boundary
+stationarity; the latter must still be derived from the full junction action.
+-/
+theorem paired_cancellation_does_not_force_independent_vanishing :
+    ∃ plusTerm minusTerm : ℝ,
+      plusTerm + minusTerm = 0 ∧ plusTerm ≠ 0 ∧ minusTerm ≠ 0 := by
+  exact ⟨1, -1, by norm_num, by norm_num, by norm_num⟩
+
 /--
 The algebraic sign reversal is closed.  The physical work is to construct the
 quasi-local charge from the nonlinear two-metric action and prove its PT oddness

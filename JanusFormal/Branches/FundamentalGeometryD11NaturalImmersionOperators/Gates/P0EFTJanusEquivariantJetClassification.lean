@@ -121,8 +121,9 @@ theorem scalar_jet_operators_distinct
     scalarJetOperator first ≠ scalarJetOperator second := by
   intro hEqual
   have hAtOne := congrArg
-    (fun operator => operator.toFun 1) hEqual
-  simp [scalarJetOperator] at hAtOne
+    (fun operator => operator.toFun (1 : ℝ)) hEqual
+  change first * 1 = second * 1 at hAtOne
+  norm_num at hAtOne
   exact hDistinct hAtOne
 
 /-- The trivial jet problem is not uniquely classified. -/

@@ -67,6 +67,8 @@ Current results:
 - **N** the candidate is a smooth mapping-torus model, not automatically a singular orbifold;
 - **N** expected `pi_1` is `Z`, not `Z4`;
 - **T/C** the normal clutching sign is `-1`, its doubled pullback is trivial, and the two complex square roots are `+i` and `-i`;
+- **T/C** the associated sign representation identifies the orientation cover with the even-winding kernel and proves pulled-back `w1 = 0`;
+- **T/C** the integer deck action on the normal-line cover satisfies the identity and composition laws;
 - **T/C** the two `Z4` lifts obey the cyclic cocycle law, are exchanged by PT, and reproduce the one-, two- and four-loop boundary-condition hierarchy;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
@@ -84,6 +86,16 @@ lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral
 Current results:
 
 - **T/C/X** monopole-spectrum arithmetic and product pairing;
+- **T/C** an explicit separated product-mode model gives a positive spectral gap and PT invariance of the squared spectrum;
+- **T/C** finite Hilbert truncations now have a proved symmetric diagonal Dirac action, nonnegative square and explicit two-sided resolvent away from the finite spectrum;
+- **T/C** the separated modes now generate an actual complete real `l2` Hilbert space; the maximal weighted diagonal operator is densely defined, linear, formally symmetric and closed, while its finite-mode span is dense and contained in every weighted domain;
+- **T/C** after complexification, both `(D-i)^{-1}` and `(D+i)^{-1}` are explicit mode multipliers; dense domain, formal symmetry and surjectivity of both non-real shifts are assembled into a concrete von Neumann self-adjointness certificate;
+- **T/C** properness of the diagonal eigenvalue weight is proved sufficient for every nonzero superlevel set of the `(D-i)^{-1}` multiplier to be finite, isolating the exact compact-resolvent growth obligation;
+- **T/C** bounded mode boxes are finite, coercivity implies spectral properness, and every finite diagonal resolvent truncation is now an actual Mathlib `IsCompactOperator` built from compact coordinate rank-one maps;
+- **T/C** the truncations converge in operator norm whenever the multiplier vanishes at infinity; closedness of compact operators therefore promotes the full diagonal `(D-i)^{-1}` to an actual `IsCompactOperator` under spectral properness;
+- **T/C** the explicit product eigenvalue `sqrt(lambda_S2^2 + lambda_S1^2)` is coercive in both the sphere level and circle mode; its bounded windows are finite and its full separated D2 resolvent is proved compact without a remaining analytic hypothesis;
+- **T/C** finite-cutoff log determinants, a holonomy-independent local subtraction, the positive renormalized determinant and fixed-scheme uniqueness are formalized; compact resolvent is fed directly into the closure certificate;
+- **I/O** the sole remaining determinant input is existence/convergence of one common local subtraction for the full holonomy family; compact resolvent alone does not imply that stronger zeta/heat-kernel statement;
 - **T/C** eta/holonomy relations and primitive-sector gap laws;
 - **T/N** correction: `1/(2*sqrt(2))` is a compact-circle/sphere ratio, not `alpha/L_sphere`;
 - **C** primitive compatibility can give `A=L_sphere` under the declared LL/bimetric inputs;
@@ -96,6 +108,10 @@ Last focused CI: **green**.
 
 - **T/C** an abstract P-independent Dirac/PT package proves spectral pairing `lambda <-> -lambda` from PT anticommutation;
 - **C** principal symbol, formal self-adjointness and global Fredholm realization are separated into explicit hypotheses, including domain, elliptic boundary condition and compact resolvent;
+- **C** a consolidated analytic certificate transports Sobolev-domain, Green-formula, self-adjointness and compact-resolvent inputs into the Fredholm ledger;
+- **C** an explicit D2-to-D7 bridge maps completed separated-mode obligations into that certificate;
+- **T/C** the product-throat `a0/a2/a4` coefficients now generate an explicit cubic/linear/inverse cutoff subtraction, manifestly independent of holonomy;
+- **T/C** a D7 heat-remainder family maps directly to the D2 renormalized determinant, and fixed heat coefficients give a unique determinant;
 - **T/X** local heat-kernel coefficients for the declared product-throat convention;
 - **T/N** finite local truncations are affine in the circle modulus and cannot isolate a minimum;
 - **T/X** local/nonlocal winding separation and quarter-phase cancellation structure;
@@ -128,18 +144,27 @@ zero-mode cohomology and nonlinear BV closure remain explicit obligations.
 
 - **N** Quillen/Bismut–Freed is canonical only relative to a specified smooth Fredholm family;
 - **N** determinant-line data do not choose field content, domains, finite counterterms or the scalar effective action;
+- **T/C** additive transgression preserves stacking and opposite bulk inflow cancels the boundary anomaly class;
+- **T/C** the explicit D2 PT mode family has cancelling `Z4` anomaly phases and an opposite-inflow relative class;
 - **I/O** construct the actual family index object, local/global anomaly, partition section and common regulator.
 
 ## D11 — Natural operators
 
-There is currently no supported standalone D11 head. The gate collection formalizes:
+Supported head:
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators
+```
+
+The consolidated head formalizes:
 
 - an abstract category of decorated immersions;
 - natural bundle/section functors;
 - natural operator and jet interfaces;
 - principal-symbol composition/product closure;
 - lower-order nonuniqueness;
-- relative bridges to Quillen.
+- relative bridges to Quillen;
+- a concrete one-object cyclic immersion groupoid with integer morphisms and functorial `Z4` jet monodromy.
 
 The concrete Janus category, global structured jet groupoid, regularity hypotheses, descent theorem and invariant-theory classification remain open.
 
@@ -493,7 +518,7 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
 | `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
 | D9 | supported symbol/linear-BRST head; global Fredholm realization open |
-| D11 | gate collection; no supported standalone head |
+| D11 | supported naturality/finite-jet head; global Fredholm realization open |
 
 See `current_status.md` and `janus_branch_registry.md` for the exact operational status.
 

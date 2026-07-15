@@ -85,6 +85,30 @@ theorem reduced_hamiltonian_at_pt_vacuum
   simp [relativeMode, interaction_energy_at_symmetric_point]
 
 /--
+Exact reduced local-GR restriction: on the equal-metric fluctuation and `c=1`
+branch, all relative interaction terms vanish and only the positive diagonal
+kinetic energy remains.
+-/
+theorem reduced_hamiltonian_on_diagonal_gr_branch
+    (planckSquared relativeMassSquared beta1 beta2 h : ℝ) :
+    reducedHamiltonian
+        planckSquared relativeMassSquared beta1 beta2 1 h h =
+      2 * planckSquared * h ^ 2 := by
+  unfold reducedHamiltonian
+  rw [equal_metric_fluctuations_have_zero_relative_mass]
+  simp [interaction_energy_at_symmetric_point]
+
+/-- Nonzero diagonal fluctuations have positive local-GR energy. -/
+theorem diagonal_gr_branch_energy_positive
+    (planckSquared relativeMassSquared beta1 beta2 h : ℝ)
+    (hPlanck : 0 < planckSquared)
+    (hMode : h ≠ 0) :
+    0 < reducedHamiltonian
+        planckSquared relativeMassSquared beta1 beta2 1 h h := by
+  rw [reduced_hamiltonian_on_diagonal_gr_branch]
+  positivity
+
+/--
 The reduced branch has one global nonnegative vacuum in the positive
 proportional sector. Extending this result to the full field theory requires the
 Hassan--Rosen constraint, boundary terms and nonlinear matter stability.
