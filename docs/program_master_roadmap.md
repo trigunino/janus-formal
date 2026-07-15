@@ -67,6 +67,8 @@ Current results:
 - **N** the candidate is a smooth mapping-torus model, not automatically a singular orbifold;
 - **N** expected `pi_1` is `Z`, not `Z4`;
 - **T/C** the normal clutching sign is `-1`, its doubled pullback is trivial, and the two complex square roots are `+i` and `-i`;
+- **T/C** the two `Z4` lifts obey the cyclic cocycle law, are exchanged by PT, and reproduce the one-, two- and four-loop boundary-condition hierarchy;
+- **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
 - **O** construct the actual global decorated mapping torus, throat embedding, ambient Pin structure and physical square-root bundle.
@@ -92,6 +94,8 @@ Last focused CI: **green**.
 
 ## D7 — Heat kernel and effective action
 
+- **T/C** an abstract P-independent Dirac/PT package proves spectral pairing `lambda <-> -lambda` from PT anticommutation;
+- **C** principal symbol, formal self-adjointness and global Fredholm realization are separated into explicit hypotheses, including domain, elliptic boundary condition and compact resolvent;
 - **T/X** local heat-kernel coefficients for the declared product-throat convention;
 - **T/N** finite local truncations are affine in the circle modulus and cannot isolate a minimum;
 - **T/X** local/nonlocal winding separation and quarter-phase cancellation structure;
@@ -101,7 +105,13 @@ Last focused CI: **green**.
 
 ## D9 — Elliptic and BRST symbol gates
 
-There is currently no supported standalone D9 head. The `Gates/` collection contains:
+Supported head:
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex
+```
+
+The consolidated P-independent foundation contains:
 
 - tangent/normal immersion splitting;
 - de Rham and Maxwell symbols;
@@ -110,7 +120,9 @@ There is currently no supported standalone D9 head. The `Gates/` collection cont
 - abstract Clifford/Dirac symbol;
 - linear BRST and gauge-fixed block models.
 
-These are local algebraic/symbol interfaces. They are not yet a global Fredholm complex on the Janus throat.
+These form a supported algebraic symbol/linear-BRST head. They are not yet a
+global Fredholm complex on the Janus throat: the action, Hessian, global domains,
+zero-mode cohomology and nonlinear BV closure remain explicit obligations.
 
 ## D10 — Determinant line and anomalies
 
@@ -268,6 +280,19 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **O** construct the Janus flow/gauge group and derive the complete Euler
   source, PDE Noether identities, nonlinear Helmholtz conditions, variational
   cohomology and boundary/null terms.
+
+### Candidate A implementation checkpoint
+
+The active branch now contains explicit reciprocal cross densities, their
+actual spectral Frechet/Hessian/Helmholtz data, a pointwise square-root matrix
+potential, a typed gravitational-stratum ledger with a generic worldvolume
+placeholder, a finite Gram-tensor compatibility map with genuine `K/J`, and an
+exact reduced Noether-proxy classification. These close finite or pointwise
+subgates only. Smooth Lorentz
+metric variation, integrated boundary flux cancellation, covariant
+Bianchi/constraints, full stability, anomalies, normalization and finite
+counterterms remain open. The scoped ledger is
+`docs/program_p_explicit_covariant_candidate.md`.
 
 ## P-D — Invariant pairings and global coefficient modules
 
@@ -466,8 +491,9 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | `FundamentalGeometryDiracSpectral` | focused CI green |
 | `FundamentalGeometryPEJetUniversality` | PR 10 merged; active follow-on adds smooth low-order observable descent and conditional multi-chart SpinC/connection Cech gates |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
-| `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
-| D9 and D11 | gate collections; no supported standalone head |
+| `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
+| D9 | supported symbol/linear-BRST head; global Fredholm realization open |
+| D11 | gate collection; no supported standalone head |
 
 See `current_status.md` and `janus_branch_registry.md` for the exact operational status.
 

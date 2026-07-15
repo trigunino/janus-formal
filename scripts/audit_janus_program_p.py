@@ -269,6 +269,71 @@ PROGRAM_P_GATES = {
             "theorem stationary_bulk_unique_global_maximizer",
         ),
     ),
+    "P0EFTJanusExplicitReciprocalCrossDensities.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem spectralPotential_reciprocity",
+            "theorem crossDensities_matter_independent",
+            "theorem two_M30_density_slots_eq_one_common_interaction",
+        ),
+    ),
+    "P0EFTJanusExplicitReciprocalCrossDensityFrechet.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem spectralPotential_hasFDerivAt",
+            "theorem spectralPotential_second_fderiv",
+            "theorem commonInteractionGradient_helmholtzJacobianAt",
+            "theorem commonInteractionGradient_ptFlat_proportionalSpectrum",
+        ),
+    ),
+    "P0EFTJanusMatrixSquareRootInteractionDensity.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matrixSpectralPotential_diagonal",
+            "theorem matrixSpectralPotential_conjugate",
+            "structure SquareRootBranch",
+            "structure SquareRootPointData",
+            "theorem sqrt_abs_det_minus_eq_sqrt_abs_det_plus_mul_det_root",
+            "theorem diagonalizable_volumeRatio_is_metric_measure_ratio",
+            "theorem matrixSpectralPotential_of_diagonalizable_root",
+            "def matrixCommonInteractionDensity",
+            "theorem matrixCommonInteractionDensity_of_diagonal_root",
+            "theorem diagonalizable_two_M30_slots_eq_matrixCommonInteractionDensity",
+        ),
+    ),
+    "P0EFTJanusExplicitBoundaryDensityLedger.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def nonNullGHYDensity",
+            "def nullGeneratorDensity",
+            "theorem expansionLogFactor_zero",
+            "def nullReparametrizationCountertermDensity",
+            "def jointDensity",
+            "def worldvolumeDensity",
+            "structure PointwiseBoundaryDensityLedger",
+            "def gravitationalBoundaryDensityLedger",
+            "def totalIntegratedTwoSectorBoundaryAction",
+            "theorem totalIntegratedTwoSectorBoundaryAction_exchange",
+        ),
+    ),
+    "P0EFTJanusFiniteGramInducedMetricFrechetBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem inducedGramMetric_pos_of_admissible",
+            "theorem inducedGramMetric_hasFDerivAt",
+            "theorem inducedGramMetric_second_fderiv",
+            "theorem gramCompatibilityMap_hasFDerivAt",
+            "theorem gramPulledBackAction_hasFDerivAt",
+        ),
+    ),
+    "P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedTwoMetricAction_diagonalTranslation_hasDerivAt",
+            "theorem additivelyDiagonalInvariant_iff_coefficients",
+            "theorem positive_interaction_not_additivelyDiagonalInvariant",
+        ),
+    ),
 }
 
 
@@ -317,6 +382,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcNonlinearCrossDensityHelmholtzReconstructionProved",
         "pcReducedDiagonalNoetherBoundaryExchangeProved",
         "pcDiagonalGaugeNoetherConstraintProved",
+        "paExplicitReciprocalCrossDensitiesProved",
+        "paSpectralCrossDensityFrechetHelmholtzProved",
+        "paMatrixSquareRootPointwisePotentialConstructed",
+        "paExplicitGravitationalBoundaryLedgerDeclared",
+        "paFiniteGramInducedMetricFrechetBridgeProved",
+        "pcReducedActionAdditiveNoetherProxyClassified",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1

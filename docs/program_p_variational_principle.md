@@ -564,17 +564,27 @@ parent or microscopic law                        P-A
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
-the next package must instantiate them and close the covariant source/boundary
-problem:
+Candidate A now instantiates part of them.  It supplies reciprocal
+four-eigenvalue cross densities, their genuine Frechet Hessian/Helmholtz test,
+a pointwise square-root-matrix potential, a typed gravitational boundary
+ledger with a generic worldvolume placeholder, a finite Gram-tensor map with
+concrete `K/J`, and a reduced Noether-proxy audit. See
+`docs/program_p_explicit_covariant_candidate.md`.
 
-1. specify or derive the two nonlinear cross densities and their matter dependence;
-2. define the exact Janus fields, independent variations and gauge symmetries;
-3. derive the actual bulk flux and GHY/null/worldvolume functional rather than
-   only applying the boundary Helmholtz completion criterion;
-4. choose induced, auxiliary or bulk metric data and instantiate the proved
-   no-double-counting chain rule;
-5. build the actual compatibility map `K` and its jet linearization `J`;
-6. instantiate the nonlinear block Helmholtz and field-dependent Noether gates,
+The remaining package must lift these finite/pointwise results and close the
+covariant source/boundary problem:
+
+1. construct the smooth real Lorentzian square-root branch and lift the
+   selected densities from spectra/matrices to metric functional derivatives;
+2. build the global Janus field space, independent variations and diagonal
+   diffeomorphism action;
+3. instantiate and integrate the declared GHY/null/joint slots, construct the
+   actual LL action and prove cancellation of the actual bulk flux;
+4. lift the finite Gram-tensor map and no-double-counting chain rule to the
+   chosen immersion/bulk geometry;
+5. replace the finite Gram `K/J` by the actual compatibility PDE/jet complex;
+6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
+   Helmholtz and field-dependent Noether gates,
    then prove covariant Bianchi and spacetime constraint closure;
 7. compute variational cohomology, anomalies and stability in one scheme;
 8. derive normalization and finite counterterms without observed-radius input.
