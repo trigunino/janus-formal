@@ -39,6 +39,9 @@ PROGRAM_P_GATES = {
             "theorem reconstructed_potential_fderiv_apply",
             "theorem eulerVector_fderiv",
             "theorem eulerVector_fderiv_pairing_self_adjoint",
+            "theorem actual_finite_helmholtz_iff_coefficient_helmholtz",
+            "theorem actual_finite_helmholtz_iff_actual_polynomial_gradient",
+            "theorem actual_finite_helmholtz_hasFDerivAt_polynomial_primitive",
         ),
     ),
     "P0EFTJanusConvexHelmholtzReconstruction.lean": (
@@ -49,6 +52,13 @@ PROGRAM_P_GATES = {
             "theorem radial_action_hasFDerivAt",
             "theorem convex_actions_same_euler_differ_by_constant",
             "theorem convex_actions_same_euler_eqOn_of_eq_at_base",
+        ),
+    ),
+    "P0EFTJanusLinearGaugeNoetherReconstruction.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem translation_gauge_invariant_of_hasFDerivAt_horizontal",
+            "theorem normalized_gauge_invariant_radial_reconstruction",
         ),
     ),
     "P0EFTJanusFiniteRankParentSchurHelmholtz.lean": (
@@ -86,6 +96,19 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         gate_import = f"Gates.{filename.removesuffix('.lean')}"
         if gate_import not in facade:
             raise AssertionError(f"Program facade omits {filename}")
+
+    primary_facade = facades[
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+    ]
+    for status in (
+        "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
+        "pcConditionalLinearGaugeNoetherReconstructionProved",
+    ):
+        if (
+            f"{status} : Prop" not in primary_facade
+            or f"s.{status}" not in primary_facade
+        ):
+            raise AssertionError(f"Program P facade omits status: {status}")
 
 
 def run_audit() -> None:

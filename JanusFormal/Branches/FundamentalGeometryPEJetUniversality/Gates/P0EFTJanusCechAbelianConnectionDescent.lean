@@ -500,8 +500,11 @@ def CechAbelianConnectionDescentData.descendedClosedCurvatureDerivative
     rw [data.descendedCurvature_fderiv_eq_local hFlat index base hBase]
     exact (data.localClosedCurvatureDerivative index base hBase).cyclic x y z
 
-/-- Global differential Bianchi identity for the genuinely differentiated
-curvature glued from smooth local potentials and curvature-flat shifts. -/
+/-- Global abelian `dF = 0` identity for the genuinely differentiated curvature
+glued from smooth local potentials and curvature-flat shifts.  Here `fderiv`
+is the ordinary derivative on the fixed Euclidean model: no affine connection
+or torsion is present, so this is not the naive cyclic `∇F = 0` formula for a
+torsionful geometry. -/
 theorem CechAbelianConnectionDescentData.descendedCurvature_fderiv_cyclic
     (data : CechAbelianConnectionDescentData Tangent Index)
     (hFlat : data.AllOverlapGaugeShiftsCurvatureFlat)

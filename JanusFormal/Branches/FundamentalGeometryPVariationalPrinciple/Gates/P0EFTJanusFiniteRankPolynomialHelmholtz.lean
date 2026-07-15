@@ -406,6 +406,61 @@ theorem eulerVector_fderiv_pairing_self_adjoint
   exact eulerJacobian_pairing_self_adjoint
     euler hLinear hQuadratic x left right
 
+/-- Actual finite-dimensional Helmholtz condition: the genuine Jacobian of
+the Euler vector is self-adjoint in the standard coordinate pairing at every
+field value. -/
+def ActualFiniteHelmholtz
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι) : Prop :=
+  ∀ x left right : ι → ℝ,
+    (∑ i, (fderiv ℝ (eulerVector euler) x) left i * right i) =
+      ∑ i, left i * (fderiv ℝ (eulerVector euler) x) right i
+
+/-- Pairing-level self-adjointness recovers symmetry of every displayed
+Jacobian coefficient by testing coordinate basis vectors. -/
+theorem actual_finite_helmholtz_implies_jacobian_coefficient_symmetric
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (hActual : ActualFiniteHelmholtz euler)
+    (x : ι → ℝ) (i j : ι) :
+    eulerJacobianCoefficient euler x i j =
+      eulerJacobianCoefficient euler x j i := by
+  classical
+  let basis (index : ι) : ι → ℝ :=
+    fun coordinate => if coordinate = index then 1 else 0
+  have hPairing := hActual x (basis j) (basis i)
+  simpa [eulerVector_fderiv, eulerJacobian_apply, basis] using hPairing
+
+/-- For a finite quadratic Euler family, self-adjointness of the actual
+Jacobian at every field value is exactly the pair of coefficient Helmholtz
+conditions. -/
+theorem actual_finite_helmholtz_iff_coefficient_helmholtz
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι) :
+    ActualFiniteHelmholtz euler ↔
+      LinearReciprocity euler ∧ QuadraticHelmholtzSwap euler := by
+  classical
+  constructor
+  · intro hActual
+    have hJacobian :=
+      actual_finite_helmholtz_implies_jacobian_coefficient_symmetric
+        euler hActual
+    have hLinear : LinearReciprocity euler := by
+      intro i j
+      simpa [eulerJacobianCoefficient] using
+        hJacobian (0 : ι → ℝ) i j
+    refine ⟨hLinear, ?_⟩
+    intro i j k
+    have hAtBasis := hJacobian
+      (fun coordinate => if coordinate = k then (1 : ℝ) else 0) i j
+    simp [eulerJacobianCoefficient] at hAtBasis
+    rw [hLinear i j] at hAtBasis
+    linarith
+  · rintro ⟨hLinear, hQuadratic⟩
+    intro x left right
+    exact eulerVector_fderiv_pairing_self_adjoint
+      euler hLinear hQuadratic x left right
+
 /-- Normalized finite-sum value of a potential through cubic order. -/
 noncomputable def potentialValue {ι : Type*} [Fintype ι]
     (potential : CubicPotentialCoefficients ι)
@@ -467,6 +522,40 @@ theorem formalGradientFunctional_apply
     formalGradientFunctional potential x direction =
       ∑ i, formalGradientValue potential x i * direction i := by
   simp [formalGradientFunctional]
+
+/-- Continuous linear functional represented by the original Euler vector in
+the standard finite coordinate pairing. -/
+noncomputable def eulerGradientFunctional
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ) : (ι → ℝ) →L[ℝ] ℝ :=
+  ∑ i, eulerValue euler x i •
+    (ContinuousLinearMap.proj i : (ι → ℝ) →L[ℝ] ℝ)
+
+@[simp]
+theorem eulerGradientFunctional_apply
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x direction : ι → ℝ) :
+    eulerGradientFunctional euler x direction =
+      ∑ i, eulerValue euler x i * direction i := by
+  simp [eulerGradientFunctional]
+
+/-- Formal coefficient agreement identifies the polynomial gradient
+functional with the functional represented by the Euler vector. -/
+theorem formalGradientFunctional_eq_eulerGradientFunctional
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (potential : CubicPotentialCoefficients ι)
+    (hGradient : IsFormalGradient euler potential)
+    (x : ι → ℝ) :
+    formalGradientFunctional potential x =
+      eulerGradientFunctional euler x := by
+  ext direction
+  rw [formalGradientFunctional_apply, eulerGradientFunctional_apply]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [eulerValue_eq_formalGradientValue euler potential hGradient x i]
 
 /-- Raw product-rule derivative of the normalized polynomial potential. -/
 noncomputable def potentialDerivativeRaw
@@ -718,6 +807,70 @@ theorem reconstructed_potential_fderiv_apply
   apply Finset.sum_congr rfl
   intro i _
   rw [← reconstructed_gradient_agreement euler hLinear hQuadratic x i]
+
+/-- A finite polynomial potential is an actual gradient realization of the
+Euler family when its coefficients agree and its genuine Fréchet derivative
+is the Euler pairing functional at every field value. -/
+def IsActualPolynomialGradient
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (potential : CubicPotentialCoefficients ι) : Prop :=
+  IsFormalGradient euler potential ∧
+    ∀ x : ι → ℝ,
+      HasFDerivAt (potentialValue potential)
+        (eulerGradientFunctional euler x) x
+
+/-- Formal gradient coefficient agreement upgrades to a verified actual
+Fréchet-gradient realization for the normalized polynomial potential. -/
+theorem formal_gradient_is_actual_polynomial_gradient
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (potential : CubicPotentialCoefficients ι)
+    (hGradient : IsFormalGradient euler potential) :
+    IsActualPolynomialGradient euler potential := by
+  refine ⟨hGradient, ?_⟩
+  intro x
+  exact (potentialValue_hasFDerivAt potential x).congr_fderiv
+    (formalGradientFunctional_eq_eulerGradientFunctional
+      euler potential hGradient x)
+
+/-- Exact finite-rank actual Helmholtz theorem: self-adjointness of the true
+Euler Jacobian is equivalent to realization by a normalized cubic polynomial
+whose true Fréchet derivative is the Euler pairing functional. -/
+theorem actual_finite_helmholtz_iff_actual_polynomial_gradient
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι) :
+    ActualFiniteHelmholtz euler ↔
+      ∃ potential : CubicPotentialCoefficients ι,
+        IsActualPolynomialGradient euler potential := by
+  constructor
+  · intro hActual
+    rcases (actual_finite_helmholtz_iff_coefficient_helmholtz euler).1
+      hActual with ⟨hLinear, hQuadratic⟩
+    let potential := reconstructedPotential euler hLinear hQuadratic
+    refine ⟨potential, ?_⟩
+    exact formal_gradient_is_actual_polynomial_gradient
+      euler potential
+        (reconstructed_is_formal_gradient euler hLinear hQuadratic)
+  · rintro ⟨potential, hGradient⟩
+    apply (actual_finite_helmholtz_iff_coefficient_helmholtz euler).2
+    exact formal_gradient_implies_helmholtz
+      euler potential hGradient.1
+
+/-- Constructive actual-derivative corollary: every finite quadratic Euler
+family satisfying the actual Helmholtz condition has a normalized cubic
+polynomial primitive with the prescribed genuine derivative everywhere. -/
+theorem actual_finite_helmholtz_hasFDerivAt_polynomial_primitive
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (hActual : ActualFiniteHelmholtz euler) :
+    ∃ potential : CubicPotentialCoefficients ι,
+      ∀ x : ι → ℝ,
+        HasFDerivAt (potentialValue potential)
+          (eulerGradientFunctional euler x) x := by
+  rcases (actual_finite_helmholtz_iff_actual_polynomial_gradient euler).1
+    hActual with ⟨potential, _, hDerivative⟩
+  exact ⟨potential, hDerivative⟩
 
 end P0EFTJanusFiniteRankPolynomialHelmholtz
 end JanusFormal
