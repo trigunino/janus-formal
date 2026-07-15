@@ -567,13 +567,15 @@ nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
 Candidate A now instantiates part of them.  It supplies reciprocal
 four-eigenvalue cross densities, their genuine Frechet Hessian/Helmholtz test,
 a pointwise square-root-matrix potential, the actual metric-inverse and
-relative-product derivatives followed by its conditional Sylvester chain, a
-typed gravitational boundary ledger with fixed-geometry slot variations and
-singular zero-expansion derivative behavior plus matched local bulk/GHY
-cancellation, a first-jet Gram `K/J` with source/ambient naturality, a
-conditional pointwise simultaneous-frame Noether identity, actual
-spectral-plus-matter Euler/Hessian/Helmholtz equations, FLRW primary-constraint
-precursors, a relative-source rejection precursor, and explicit Candidate-A
+relative-product derivatives followed by an explicit Sylvester inverse on the
+open positive diagonal chart, a typed gravitational boundary ledger with a
+determinant-measure non-null GHY first jet, singular zero-expansion derivative
+behavior and matched local bulk/GHY cancellation, a first-jet Gram `K/J` with
+source/ambient naturality, an explicit matrix covector and unconditional
+finite-frame commutator pairing, actual spectral-plus-matter
+Euler/Hessian/Helmholtz equations, FLRW primary precursors plus a reduced
+bracket factorization and local secondary/lapse witness from supplied reduced
+Hamiltonians, a relative-source rejection precursor, and explicit Candidate-A
 witnesses showing that the paired anomaly proxy fixes neither normalization
 nor a reduced finite even-counterterm proxy. See
 `docs/program_p_explicit_covariant_candidate.md`.
@@ -581,21 +583,23 @@ nor a reduced finite even-counterterm proxy. See
 The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
-1. construct the smooth real Lorentzian square-root branch and Sylvester
-   inverse, and lift the selected densities from pointwise matrices to metric
-   functional derivatives;
+1. extend the positive-diagonal Sylvester construction to the smooth real
+   Lorentzian square-root branch, and lift the selected densities from
+   pointwise matrices to metric functional derivatives;
 2. build the global Janus field space, independent variations and diagonal
    diffeomorphism action;
-3. replace the matched local bulk/GHY model by the physical EH metric flux,
-   choose a zero-expansion variational prescription, instantiate and integrate
-   the GHY/null/joint slots, and construct the actual LL action and equations;
+3. replace the metric first-jet GHY representative and matched local model by
+   a genuine geometric boundary curve and the physical EH metric flux, choose
+   a zero-expansion variational prescription, instantiate and integrate the
+   GHY/null/joint slots, and construct the actual LL action and equations;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
 5. lift the natural first-jet Gram `K/J` to the Lorentzian global Janus
    compatibility PDE/jet complex and prove its symbol sequence;
 6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
-   Helmholtz and field-dependent Noether gates, then prove covariant Bianchi,
-   ADM shift/Poisson and independent secondary-constraint closure;
+   Helmholtz and field-dependent Noether gates, derive the reduced Hamiltonians
+   from Candidate A, then prove covariant Bianchi, PT-branch genericity, ADM
+   shift/functional Poisson and independent secondary-constraint closure;
 7. compute variational cohomology, actual regulated local/global anomalies and
    constrained stability in one scheme;
 8. derive a microscopic normalization and finite-part law without
