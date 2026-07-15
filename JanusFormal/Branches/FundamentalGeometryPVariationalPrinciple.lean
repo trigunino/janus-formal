@@ -69,6 +69,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermNonDifferentiable
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullJointReparametrizationCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLLBraneAuxiliaryActionVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLLBraneCompositeMeasureVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBulkBoundaryCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityNaturality
@@ -78,6 +79,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWLegendreBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPTFlatVacuumFLRWConstraintNoGo
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatterCurvatureFLRWConstraintBranch
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateSourceModeDecomposition
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
@@ -169,9 +171,11 @@ structure ProgramStatus where
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
   paLLBraneAuxiliaryVariationAndNullKernelProved : Prop
+  paLLBraneCompositeMeasureVariationProved : Prop
   paReducedFLRWBracketFactorizationFromInputHamiltoniansProved : Prop
   paReducedFLRWLegendreBridgeProved : Prop
   paPTFlatVacuumFLRWConstraintNoGoProved : Prop
+  paMatterCurvatureFLRWConstraintBranchProved : Prop
   pbCandidateSchemeFreedomNoGoProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
@@ -280,9 +284,11 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\
   s.paLLBraneAuxiliaryVariationAndNullKernelProved /\
+  s.paLLBraneCompositeMeasureVariationProved /\
   s.paReducedFLRWBracketFactorizationFromInputHamiltoniansProved /\
   s.paReducedFLRWLegendreBridgeProved /\
   s.paPTFlatVacuumFLRWConstraintNoGoProved /\
+  s.paMatterCurvatureFLRWConstraintBranchProved /\
   s.pbCandidateSchemeFreedomNoGoProved
 
 /-- P-E discrete and tangent-representation classification. -/

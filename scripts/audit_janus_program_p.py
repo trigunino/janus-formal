@@ -533,6 +533,19 @@ PROGRAM_P_GATES = {
             "theorem lightlikeBranch_inducedMetric_has_nonzero_kernel",
         ),
     ),
+    "P0EFTJanusLLBraneCompositeMeasureVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def affineAuxiliaryFields",
+            "theorem affineAuxiliaryFields_coordinate_curve_hasDerivAt",
+            "def compositeMeasure",
+            "theorem compositeMeasure_curve_hasDerivAt",
+            "theorem compositeMeasure_coordinateReparametrized",
+            "theorem compositeMeasure_coordinateVolume_compensated",
+            "theorem identityAuxiliaryJet_measure_nonzero",
+            "theorem identityAuxiliaryJet_measure_has_nonzero_variation",
+        ),
+    ),
     "P0EFTJanusExplicitBulkBoundaryCancellation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -625,6 +638,22 @@ PROGRAM_P_GATES = {
             "theorem simultaneous_primary_constraints_force_symmetric_vacuum",
             "theorem primary_differentials_dependent_on_symmetric_vacuum",
             "theorem ptFlat_vacuum_FLRW_constraint_noGo",
+        ),
+    ),
+    "P0EFTJanusMatterCurvatureFLRWConstraintBranch.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure MatterCurvatureParameters",
+            "theorem extendedPlusConstraint_phaseLine_hasDerivAt",
+            "theorem extendedMinusConstraint_phaseLine_hasDerivAt",
+            "theorem extended_primary_poisson_eq_secondary",
+            "theorem witness_lies_on_both_primary_constraints",
+            "theorem witness_lies_on_dynamical_secondary_branch",
+            "theorem witness_primary_covectors_independent",
+            "theorem witness_constraintJacobianMinor_exact",
+            "theorem witness_constraintJacobianMinor_nonzero",
+            "theorem witness_secondary_preservation_relation",
+            "theorem witness_secondary_preservation_fixes_lapse_ratio",
         ),
     ),
     "P0EFTJanusCandidateSourceModeDecomposition.lean": (
@@ -727,9 +756,11 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
         "paLLBraneAuxiliaryVariationAndNullKernelProved",
+        "paLLBraneCompositeMeasureVariationProved",
         "paReducedFLRWBracketFactorizationFromInputHamiltoniansProved",
         "paReducedFLRWLegendreBridgeProved",
         "paPTFlatVacuumFLRWConstraintNoGoProved",
+        "paMatterCurvatureFLRWConstraintBranchProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
         if (
