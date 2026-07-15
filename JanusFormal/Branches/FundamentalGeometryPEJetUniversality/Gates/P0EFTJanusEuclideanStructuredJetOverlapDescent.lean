@@ -7,11 +7,16 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped InnerProductSpace
+open Set Filter
+open scoped ContDiff InnerProductSpace Topology
 open P0EFTJanusStructuredJetActionGroupoid
 open P0EFTJanusLowOrderStructuredBackground
+open P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
+open P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
+open P0EFTJanusActualStructuredJetExtraction
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
+open P0EFTJanusProjectedSeedSmoothCoefficientTransport
 open P0EFTJanusEuclideanImmersionConnectionJetExtraction
 open P0EFTJanusEuclideanMetricKoszulConnection
 open P0EFTJanusEuclideanStructuredJetActionGroupoidRealization
@@ -166,6 +171,90 @@ def euclideanLowOrderDescendedObservableAt
   observable (euclideanLowOrderValidChartJetAt data base
     (euclideanLowOrderCanonicalCenterAt data base))
 
+/-- A smooth realization of an observable on the normed space of continuous
+reduced coefficients.  Agreement is required on every actual local jet, so
+this is a structural regularity condition on the observable rather than an
+assumption about the descended composite. -/
+structure SmoothEuclideanLowOrderObservableRealization
+    {Target : Type z}
+    [NormedAddCommGroup Target] [NormedSpace ℝ Target]
+    (observable : LowOrderReducedData Tangent Normal → Target) where
+  continuousObservable :
+    SmoothLowOrderReducedJet (Tangent := Tangent) (Normal := Normal) → Target
+  continuousObservable_contDiff : ContDiff ℝ ∞ continuousObservable
+  agrees_on_actual_jets :
+    ∀ jet : ActualJanusLocalJetData
+        (Tangent := Tangent) (Normal := Normal),
+      observable (actualJetToLowOrderReducedData jet) =
+        continuousObservable jet.toReducedJet
+
+/-- On a fixed projected-seed chart, the continuous reduced coefficient pair
+underlying the concrete Euclidean low-order jet. -/
+def euclideanLowOrderContinuousChartJet
+    (data : EuclideanMetricProjectedSeedImmersionData
+      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+      (ι := ι) (κ := κ))
+    (center base : Tangent) :
+    SmoothLowOrderReducedJet (Tangent := Tangent) (Normal := Normal) :=
+  let globalData := data.coefficients.toEuclideanImmersionConnectionJetData
+    |>.toProjectedSeedGlobalAmbientJetData
+  let chartData := globalData.toChartData data.tangentBasis
+    data.tangentBasis_orthonormal data.normalBasis
+    data.normalBasis_orthonormal data.basisData center
+  chartData.reducedJet base
+
+/-- The fixed-center continuous representative is smooth on its valid chart
+domain, directly from projected-seed coefficient transport. -/
+theorem euclideanLowOrderContinuousChartJet_contDiffOn
+    (data : EuclideanMetricProjectedSeedImmersionData
+      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+      (ι := ι) (κ := κ))
+    (center : Tangent) :
+    ContDiffOn ℝ ∞ (euclideanLowOrderContinuousChartJet data center)
+      (projectedSeedCoefficientDomain data.basisData center) := by
+  exact
+    (data.coefficients.toEuclideanImmersionConnectionJetData
+      |>.toProjectedSeedGlobalAmbientJetData
+      |>.toChartData data.tangentBasis data.tangentBasis_orthonormal
+        data.normalBasis data.normalBasis_orthonormal data.basisData center)
+      |>.reducedJet_contDiffOn
+
+/-- At every valid point, the proof-carrying groupoid jet and the continuous
+coefficient representative give the same value to a smoothly realized
+observable. -/
+theorem euclideanLowOrderSmoothObservable_validChart_eq_continuous
+    {Target : Type z}
+    [NormedAddCommGroup Target] [NormedSpace ℝ Target]
+    (data : EuclideanMetricProjectedSeedImmersionData
+      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+      (ι := ι) (κ := κ))
+    (observable : LowOrderReducedData Tangent Normal → Target)
+    (realization : SmoothEuclideanLowOrderObservableRealization observable)
+    (base : Tangent)
+    (center : EuclideanLowOrderValidChartCenterAt data base) :
+    observable (euclideanLowOrderValidChartJetAt data base center) =
+      realization.continuousObservable
+        (euclideanLowOrderContinuousChartJet data center.1 base) := by
+  exact realization.agrees_on_actual_jets _
+
+/-- A smoothly realized observable is smooth on every fixed-center valid
+chart. -/
+theorem euclideanLowOrderSmoothObservable_fixedChart_contDiffOn
+    {Target : Type z}
+    [NormedAddCommGroup Target] [NormedSpace ℝ Target]
+    (data : EuclideanMetricProjectedSeedImmersionData
+      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+      (ι := ι) (κ := κ))
+    (observable : LowOrderReducedData Tangent Normal → Target)
+    (realization : SmoothEuclideanLowOrderObservableRealization observable)
+    (center : Tangent) :
+    ContDiffOn ℝ ∞
+      (fun base => realization.continuousObservable
+        (euclideanLowOrderContinuousChartJet data center base))
+      (projectedSeedCoefficientDomain data.basisData center) := by
+  exact realization.continuousObservable_contDiff.comp_contDiffOn
+    (euclideanLowOrderContinuousChartJet_contDiffOn data center)
+
 /-- Every valid-chart evaluation equals the canonical descended value. -/
 theorem euclideanLowOrderInvariantObservable_eq_descended
     {Target : Type z}
@@ -180,6 +269,52 @@ theorem euclideanLowOrderInvariantObservable_eq_descended
       euclideanLowOrderDescendedObservableAt data observable base := by
   exact euclideanLowOrderInvariantObservable_chart_independent data observable
     hInvariant base center (euclideanLowOrderCanonicalCenterAt data base)
+
+/-- The descended observable is globally smooth.  Around each point the proof
+keeps that point as a fixed chart center; invariance identifies the moving
+canonical representative with this smooth fixed-chart representative.  Thus
+no unproved joint smoothness of the point-centered seed chart is assumed. -/
+theorem euclideanLowOrderDescendedObservable_contDiff
+    {Target : Type z}
+    [NormedAddCommGroup Target] [NormedSpace ℝ Target]
+    (data : EuclideanMetricProjectedSeedImmersionData
+      (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
+      (ι := ι) (κ := κ))
+    (observable : LowOrderReducedData Tangent Normal → Target)
+    (hInvariant : IsEuclideanLowOrderSpinCInvariant observable)
+    (realization : SmoothEuclideanLowOrderObservableRealization observable) :
+    ContDiff ℝ ∞
+      (euclideanLowOrderDescendedObservableAt data observable) := by
+  rw [contDiff_iff_contDiffAt]
+  intro base
+  have hDomainNhds :
+      projectedSeedCoefficientDomain data.basisData base ∈ nhds base := by
+    change ∀ᶠ nearby in nhds base,
+      projectedSeedChartValid data.basisData.tangentFrame
+        (pointwiseNormalSeedCharts data.basisData) base nearby
+    exact pointwiseNormalSeedChart_eventually_valid data.basisData base
+  have hLocalAt : ContDiffAt ℝ ∞
+      (fun nearby => realization.continuousObservable
+        (euclideanLowOrderContinuousChartJet data base nearby)) base :=
+    (euclideanLowOrderSmoothObservable_fixedChart_contDiffOn
+      data observable realization base).contDiffAt hDomainNhds
+  have hEventuallyEq :
+      euclideanLowOrderDescendedObservableAt data observable =ᶠ[nhds base]
+        fun nearby => realization.continuousObservable
+          (euclideanLowOrderContinuousChartJet data base nearby) := by
+    filter_upwards [hDomainNhds] with nearby hNearby
+    let center : EuclideanLowOrderValidChartCenterAt data nearby :=
+      ⟨base, hNearby⟩
+    calc
+      euclideanLowOrderDescendedObservableAt data observable nearby =
+          observable (euclideanLowOrderValidChartJetAt data nearby center) :=
+        (euclideanLowOrderInvariantObservable_eq_descended data observable
+          hInvariant nearby center).symm
+      _ = realization.continuousObservable
+          (euclideanLowOrderContinuousChartJet data base nearby) :=
+        euclideanLowOrderSmoothObservable_validChart_eq_continuous
+          data observable realization nearby center
+  exact hLocalAt.congr_of_eventuallyEq hEventuallyEq
 
 /-- The descended value exists uniquely because the point-centered chart is
 always valid. This is fixed-base, low-order Euclidean descent, not a claim of

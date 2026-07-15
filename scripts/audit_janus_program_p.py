@@ -34,11 +34,20 @@ PROGRAM_P_GATES = {
     ),
     "P0EFTJanusFiniteRankPolynomialHelmholtz.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
-        ("theorem finite_rank_polynomial_helmholtz_iff",),
+        (
+            "theorem finite_rank_polynomial_helmholtz_iff",
+            "theorem reconstructed_potential_fderiv_apply",
+        ),
     ),
     "P0EFTJanusFiniteRankParentSchurHelmholtz.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
-        ("theorem finite_rank_parent_schur_helmholtz_synthesis",),
+        (
+            "theorem finite_rank_parent_schur_helmholtz_synthesis",
+            "theorem finite_rank_parent_actual_variational_synthesis",
+            "theorem parent_action_hasDerivAt_bulk",
+            "theorem reduced_action_fderiv",
+            "theorem reduced_hessian_operator_fderiv",
+        ),
     ),
 }
 

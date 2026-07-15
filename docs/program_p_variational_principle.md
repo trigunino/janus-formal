@@ -112,7 +112,10 @@ terms do not fix the surviving same-parity mixing.
 
 The finite-rank extension permits any finite boundary index and proves the
 exact on-shell reduction, symmetric Schur kernel and pairing-level
-self-adjointness. It remains a coefficient model, not a Janus bulk PDE.
+self-adjointness. It also proves that the bulk Euler expression is the actual
+derivative of the parent action and computes the Fréchet derivative and
+constant Hessian of the reduced action. It remains finite-dimensional, not a
+Janus bulk PDE.
 
 ### P-A verdict
 
@@ -189,7 +192,9 @@ For a finite quadratic Euler source in two variables, equality of cross derivati
 
 At arbitrary finite coefficient rank, an affine/quadratic Euler family is the
 formal gradient data of linear/quadratic/cubic potential coefficients exactly
-when linear reciprocity and the quadratic Helmholtz swap hold.
+when linear reciprocity and the quadratic Helmholtz swap hold. The normalized
+finite-sum potential has this gradient as its actual Fréchet derivative, so the
+reconstructed derivative pairs with the Euler source in every direction.
 
 **Lean:** `P0EFTJanusFiniteRankPolynomialHelmholtz.lean`
 **Evidence:** **T** coefficient-level; no global variational cohomology.
@@ -269,7 +274,9 @@ not claimed here.
 
 **Active follow-on scope:** at one fixed Euclidean base point, invariant
 low-order observables have a unique value independent of the valid
-projected-seed chart. Separately, supplied multi-chart oriented cocycles, Spin
+projected-seed chart. When an observable admits a smooth realization on the
+continuous reduced coefficients, these values form a globally smooth function
+by local fixed-chart gluing. Separately, supplied multi-chart oriented cocycles, Spin
 lifts, phases and matching defects are packaged as a pointwise SpinC Cech
 transition presentation; no transition continuity/smoothness or principal
 bundle total space is constructed. Supplied local abelian potentials and

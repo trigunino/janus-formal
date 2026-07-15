@@ -147,6 +147,9 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **T/C** the scalar-bulk Schur coefficient theorem extends to an arbitrary
   finite boundary rank, including exact on-shell formula, reciprocal kernel and
   pairing-level self-adjointness;
+- **T/C** in that finite model the displayed bulk Euler equation is the actual
+  derivative of the parent action, while the reduced Schur gradient and
+  constant Hessian are exact Fréchet derivatives;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -169,6 +172,8 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **T** the coefficient-level affine/quadratic Euler problem over any finite
   field index reconstructs linear/quadratic/cubic potential coefficients iff
   its linear and quadratic Helmholtz swaps hold;
+- **T** the normalized reconstructed cubic potential has the Euler source as
+  its actual Fréchet derivative in every finite-dimensional direction;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
 
@@ -245,6 +250,7 @@ regular local operator
   -> valid-chart low-order residual/SpinC action groupoid
   -> canonical groupoid arrows between actual overlapping chart extractions
   -> fixed-base descent of invariant low-order observables
+  -> smooth descended observables when a smooth coefficient realization exists
   -> conditional multi-chart SpinC Cech and abelian-connection packages.
 ```
 
@@ -272,6 +278,8 @@ Current theorem evidence:
   projected-seed chart extractions on an overlap;
 - **T** unique chart-independent value of an invariant low-order observable at
   a fixed Euclidean base point;
+- **T/C** such an observable descends to a globally smooth function when it
+  admits a smooth realization on the continuous reduced-jet coefficient space;
 - **T/C** multi-chart SpinC Cech transition presentation from a supplied
   oriented cocycle, lifts, phases and matching diagonal defects, with pointwise
   laws but no transition continuity/smoothness or bundle total space;
@@ -348,7 +356,7 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | Entry | Status |
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
-| `FundamentalGeometryPEJetUniversality` | PR 10 merged; active follow-on adds fixed-base overlap descent and conditional multi-chart SpinC/connection Cech gates |
+| `FundamentalGeometryPEJetUniversality` | PR 10 merged; active follow-on adds smooth low-order observable descent and conditional multi-chart SpinC/connection Cech gates |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
 | `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
 | D9 and D11 | gate collections; no supported standalone head |
