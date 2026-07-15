@@ -39,6 +39,13 @@ PROGRAM_P_GATES = {
             "theorem pulledBackAction_second_fderiv_at_critical",
         ),
     ),
+    "P0EFTJanusFrechetPullbackHelmholtz.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean",
+        (
+            "theorem sourceSecondVariation_symmetric",
+            "theorem jacobianPullbackHessian_symmetric_at_critical",
+        ),
+    ),
     "P0EFTJanusFiniteRankPolynomialHelmholtz.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -68,6 +75,13 @@ PROGRAM_P_GATES = {
             "theorem translation_gauge_invariant_of_hasFDerivAt_horizontal",
             "theorem translation_gauge_invariant_iff_euler_horizontal",
             "theorem normalized_gauge_invariant_radial_reconstruction",
+        ),
+    ),
+    "P0EFTJanusNonlinearGaugeFlowNoether.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem flow_gauge_invariant_iff_euler_annihilates_generator",
+            "theorem normalized_flow_gauge_invariant_radial_reconstruction",
         ),
     ),
     "P0EFTJanusPTFlatBimetricVariationalBridge.lean": (
@@ -124,6 +138,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
         "pcConditionalLinearGaugeNoetherReconstructionProved",
         "pcConditionalLinearGaugeNoetherIffProved",
+        "pcConditionalNonlinearGaugeFlowNoetherIffProved",
+        "pcConditionalNonlinearGaugeInvariantRadialReconstructionProved",
     ):
         if (
             f"{status} : Prop" not in primary_facade
@@ -134,9 +150,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     pf_facade = facades[
         "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean"
     ]
-    status = "actualFrechetSecondVariationFormulaProved"
-    if f"{status} : Prop" not in pf_facade or f"s.{status}" not in pf_facade:
-        raise AssertionError(f"Program P-F facade omits status: {status}")
+    for status in (
+        "actualFrechetSecondVariationFormulaProved",
+        "actualFrechetPullbackHelmholtzSymmetryProved",
+    ):
+        if f"{status} : Prop" not in pf_facade or f"s.{status}" not in pf_facade:
+            raise AssertionError(f"Program P-F facade omits status: {status}")
 
 
 def run_audit() -> None:

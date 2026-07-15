@@ -187,7 +187,7 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
 - **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
 - **P-A:** the two-sector parent-bulk result now extends to an arbitrary finite boundary rank: the bulk Euler expression is the actual derivative, the reduced action has the Schur gradient and constant Hessian as its Fréchet derivatives, and exact square completion classifies the fixed-boundary stationary bulk mode as the unique global minimum/maximum according to the sign of the bulk coefficient; the Schur kernel is reciprocal/self-adjoint, while changing the parent can still change surviving mixing. In the concrete one-dimensional positive PT-flat proportional bimetric branch, the reduced interaction has its actual derivative, `c = 1` is stationary, its actual Hessian is twelve times the Fierz--Pauli mass combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is the unique global minimizer on `c > 0`; this is not the full Janus metric field theory.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. The nonlinear Janus PDE Euler family, gauge group, Noether system and variational cohomology remain open.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. No Janus flow, gauge group or PDE identity is constructed; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
 
 ### P-D — pairings and coefficient modules
 
@@ -326,8 +326,10 @@ self-adjointness, gauge-Hessian degeneracy and restricted Helmholtz in one
 theorem. It assumes the algebraic complex and pairing; the actual nonlinear
 second-variation chain rule is also proved in normed spaces as
 `H(Ju)(Jv) + dL(D²K(u,v))`, reducing to `H(Ju)(Jv)` when the target gradient
-`dL` vanishes. The Janus compatibility complex and global variational primitive
-remain open.
+`dL` vanishes. Schwarz symmetry makes this complete second variation symmetric
+even off criticality and therefore makes the critical `J^T H J` symmetric
+without a separate symmetry postulate for `H`. No concrete Janus compatibility
+map or complex is constructed; the global variational primitive remains open.
 
 ## 6. Current supported chain
 
