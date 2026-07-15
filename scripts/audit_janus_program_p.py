@@ -667,6 +667,20 @@ PROGRAM_P_GATES = {
             "theorem mismatched_plus_coefficient_leaves_nonzero_flux",
         ),
     ),
+    "P0EFTJanusFiniteBoxBulkBoundaryStokes.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem orientedBoundaryFlux_eq_six_faces",
+            "theorem sum_forwardDifference",
+            "theorem boxSum_forwardDifference_x",
+            "theorem boxSum_forwardDifference_y",
+            "theorem boxSum_forwardDifference_z",
+            "theorem bulkDivergence_eq_orientedBoundaryFlux",
+            "theorem matchedBulkBoundaryFirstVariation_eq_zero",
+            "theorem twoSectorBulkBoundaryFirstVariation_eq_zero",
+            "theorem twoSectorBulkBoundaryFirstVariation_sectorExchange",
+        ),
+    ),
     "P0EFTJanusFiniteGramInducedMetricFrechetBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -875,6 +889,36 @@ PROGRAM_P_GATES = {
             "theorem circleUnboundedDirac_isSelfAdjoint",
         ),
     ),
+    "P0EFTJanusCircleDiracHeatFunctionalBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem circleUnboundedDirac_basis_image_mem_domain",
+            "theorem circleUnboundedDirac_squared_on_basis",
+            "theorem circleOperatorHeatWeight_eq_heatWeight",
+            "theorem circleSpectralHeatMode_diagonal",
+            "theorem circleOperatorHeatWeight_summable",
+            "theorem circleOperatorEvenHeatTrace_eq_evenHeatTrace",
+            "theorem circleOperatorChiralHeatTrace_eq_regulatedChiralTrace",
+            "theorem circleOperatorCutoffChiralHeatTrace_positive_add_pt_eq_zero",
+            "theorem circleOperatorChiralHeatTrace_positive_add_pt_eq_zero",
+        ),
+    ),
+    "P0EFTJanusCircleHeatSemigroupOperator.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem circleHeatMultiplier_norm_le_one",
+            "noncomputable def circleHeatSemigroup",
+            "theorem circleHeatSemigroup_apply",
+            "theorem circleHeatSemigroup_opNorm_le_one",
+            "theorem circleHeatSemigroup_on_basis",
+            "theorem circleHeatSemigroup_zero",
+            "theorem circleHeatSemigroup_add",
+            "theorem circleHeatMultiplier_of_heatTime_eq_operatorHeatWeight",
+            "theorem circleHeatSemigroupDiagonalTrace_eq_operatorEvenHeatTrace",
+            "theorem circleHeatSemigroupChiralDiagonalTrace_eq_operatorChiralHeatTrace",
+            "theorem circleHeatSemigroupChiralDiagonalTrace_positive_add_pt_eq_zero",
+        ),
+    ),
     "P0EFTJanusCandidateSignedChargeNewtonianBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -913,6 +957,19 @@ PROGRAM_P_GATES = {
             "theorem lorentzJordanIndependentMetricRoot_gate",
         ),
     ),
+    "P0EFTJanusLorentzPrincipalRootChart2D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def RootChartCondition",
+            "theorem relativeMatrix_is_metric_relative",
+            "theorem minusMetric_lorentzByDet",
+            "theorem chartRoot_square_eq_metricRelative",
+            "theorem chartRoot_det_pos",
+            "theorem chartRoot_trace",
+            "theorem chartRoot_continuousAt",
+            "theorem lorentzPrincipalRootChart2D_gate",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -940,6 +997,18 @@ PROGRAM_P_GATES = {
             "theorem twoSector_mixed_increment_eq_zero",
         ),
     ),
+    "P0EFTJanusFiniteMetricHolonomicScalarVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem metricKineticWeight_line_hasDerivAt",
+            "theorem metricMassWeight_line_hasDerivAt",
+            "theorem metricHolonomicAction_line_hasDerivAt",
+            "theorem metricHolonomicFirstVariation_fixedMetric",
+            "theorem fixedMetric_firstVariation_eq_strongEuler_pairing",
+            "theorem fixedMetric_stationary_iff_strongEuler_eq_zero",
+            "theorem metricHolonomicAction_metricLine_hasDerivAt",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -949,6 +1018,19 @@ PROGRAM_P_GATES = {
             "theorem lorentzGramSymbol_injective",
             "theorem range_lorentzGramSymbol_eq_symmetric_saintVenant_kernel",
             "theorem arbitrary_frequency_saintVenant_symbol_sequence_exact",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierSaintVenantExactness.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem coefficientSupport_finite",
+            "theorem finiteFourierSaintVenant_finiteFourierLorentzGram_eq_zero",
+            "theorem finiteFourierLorentzGram_reconstructed_eq",
+            "theorem finiteFourierLorentzGram_injective",
+            "theorem finiteFourierSaintVenant_eq_zero_iff_exists_potential",
+            "theorem range_finiteFourierLorentzGram_eq_symmetric_saintVenant_kernel",
+            "theorem finite_fourier_saintVenant_sequence_exact",
+            "theorem finite_fourier_saintVenant_exactness_gate",
         ),
     ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
@@ -1043,6 +1125,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCoDiagonalLorentzRootFirstDerivativeProved",
         "paLorentzBoostCoordinateOrbitRootVariationProved",
         "paLorentzJordanIndependentMetricRootProved",
+        "paLorentzPrincipalRootChart2DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
@@ -1065,14 +1148,17 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paMatrixInteractionDensityCovarianceProved",
         "paFiniteFieldLocalFrameGaugeInvarianceProved",
         "paExplicitBulkBoundaryLocalCancellationProved",
+        "paFiniteBoxBulkBoundaryStokesProved",
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paIndependentMetricMatterJetVariationProved",
         "paFinitePeriodicHolonomicScalarEulerProved",
+        "paFiniteMetricHolonomicScalarVariationProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",
         "paCanonicalLorentzGramSaintVenantSymbolExactnessProved",
         "paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved",
+        "paFiniteFourierSaintVenantExactnessProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
@@ -1090,6 +1176,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCountablePairedHeatKernelCutoffLimitProved",
         "paCircleFourierDiracHeatTraceCancellationProved",
         "paCircleUnboundedDiracSelfAdjointProved",
+        "paCircleDiracHeatFunctionalBridgeProved",
+        "paCircleHeatSemigroupOperatorProved",
         "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
