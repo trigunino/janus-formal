@@ -20,6 +20,7 @@ Read these files in order:
 10. [`docs/program_pe_spinC_cocycle_lift.md`](docs/program_pe_spinC_cocycle_lift.md) — moving-frame law, oriented overlaps, central lift defects, SpinC cancellation and the rank-two `Spin(2) -> SO(2)` model;
 11. [`docs/program_pd_global_pairing_modules.md`](docs/program_pd_global_pairing_modules.md) — correction from pointwise multiplicity to global coupling modules;
 12. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
+13. [`docs/six_new_research_programs.md`](docs/six_new_research_programs.md) — six exploratory physics programs.
 
 ## Repository layout
 

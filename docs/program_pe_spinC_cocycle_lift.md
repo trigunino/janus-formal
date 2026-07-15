@@ -338,8 +338,9 @@ spin2MatrixSO2DoubleCover.
 ```
 
 Therefore the matrix definition of `SO(2)` is now connected explicitly to the
-circle model. The remaining rank-two lock is the identification with Mathlib's
-even Clifford-algebra `spinGroup` definition.
+circle model. The current `main` stack also identifies the circle model with
+Mathlib's even Clifford-algebra `spinGroup` definition and transports this
+matrix projection to that Clifford model.
 
 ## 10. Exact evidence boundary
 
@@ -357,16 +358,24 @@ even Clifford-algebra `spinGroup` definition.
 - surjective circle-squaring double cover with exact kernel and fibers;
 - explicit diagonal quotient in the rank-two model;
 - explicit group equivalence `U(1) ≃ SO(2)`;
-- matrix-valued rank-two Spin projection with exact two-sheeted fibers.
+- matrix-valued rank-two Spin projection with exact two-sheeted fibers;
+- explicit group equivalence between the circle model and Mathlib's rank-two
+  Clifford `spinGroup`;
+- transported Clifford Spin-to-`SO(2)` projection with exact fibers;
+- conditional multi-chart pointwise SpinC Cech transition packaging from
+  supplied oriented cocycles, chosen Spin lifts, phase transitions and matching
+  defects, without transition continuity/smoothness or a bundle total space;
+- conditional abelian connection affine overlap law and unique global smooth
+  curvature descent when all supplied additive gauge shifts are curvature-flat.
 
 ### Still open
 
-- identify the circle model with Mathlib's even Clifford-algebra definition of
-  `Spin(2)`;
 - prove the analogous Clifford Spin-to-SO projection in the required tangent and
   normal dimensions;
-- extract smooth overlap maps from actual manifold frame bundles;
-- construct the oriented and SpinC principal bundles globally;
+- extract the required smooth group-valued overlap maps from actual manifold
+  frame bundles and prove their compatibility with the supplied Cech inputs;
+- instantiate the conditional package to construct the actual oriented and
+  SpinC principal bundles globally;
 - prove equality of the Spin obstruction and determinant-root obstruction for the
   actual Janus data, equivalently the relevant characteristic-class matching;
 - attach and glue the determinant-line connection;
@@ -376,19 +385,21 @@ even Clifford-algebra `spinGroup` definition.
 
 ## 11. Validation
 
-The matrix and rank-two SpinC layer is imported by
+The matrix, Clifford rank-two SpinC and scoped PR 10 layers are imported by
 
 ```text
 JanusFormal.Branches.FundamentalGeometryPEJetUniversality.
 ```
 
-It was validated on commit
+The current merged head is
 
 ```text
-1995bb68d5c06a1c627732f24ed27883c576ff36
+96e60eb4df1db049f8488858c5a6b1fdb717b224
 ```
 
-by workflow **Program PE jet universality**, run `29249977153`:
+The theorem head passed focused Lean/Python validation locally before merge;
+no independent post-merge workflow is claimed here. The earlier matrix layer
+was remotely validated by **Program PE jet universality**, run `29249977153`:
 
 ```text
 Lean focused head       success
@@ -396,21 +407,23 @@ P-E executable audits   success
 focused Python tests    success
 ```
 
+The conditional multi-chart SpinC and abelian-connection descent gates belong
+to the active follow-on branch; they do not change the merged-head claim above.
+
 ## 12. Next theorem queue
 
-1. Instantiate a two-dimensional Euclidean quadratic form in Mathlib's
-   `CliffordAlgebra.spinGroup` and identify its even unitary subgroup with the
-   circle model.
-2. Prove that Clifford conjugation on vectors corresponds, under the matrix
-   equivalence, to the standard `SO(2)` rotation and to circle squaring.
-3. Generalize the concrete central double-cover data to the tangent and normal
+1. Identify the transported rank-two projection with Clifford conjugation on
+   embedded vectors and the standard `SO(2)` rotation.
+2. Generalize the concrete central double-cover data to the tangent and normal
    dimensions required by the Janus category.
-4. Package adapted-frame transitions as smooth maps of actual frame bundles.
-5. Prove the characteristic-class equality matching Spin and determinant-root
+3. Derive the conditional package's transition cocycles and smoothness from
+   actual adapted frame bundles.
+4. Prove the characteristic-class equality matching Spin and determinant-root
    defects.
-6. Construct the global SpinC principal bundle and determinant-line connection.
-7. Extend the reduced jet theorem to `nabla II`, `nabla F` and ambient curvature,
-   then impose Gauss--Codazzi--Ricci--Bianchi identities.
+5. Instantiate the conditional Cech packages to construct the actual global
+   SpinC principal bundle and determinant-line connection.
+6. Globalize the existing `nabla II`, `nabla F` and curvature gates over the
+   actual bundles and prove the higher-order structured jet-isomorphism theorem.
 
 ## 13. Lean correspondence
 
@@ -426,4 +439,9 @@ JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/
   P0EFTJanusCirclePhaseTwoTorsion.lean
   P0EFTJanusSpin2CircleModel.lean
   P0EFTJanusCircleSO2Equivalence.lean
+  P0EFTJanusCliffordSpin2Bridge.lean
+  P0EFTJanusCliffordSpin2DoubleCover.lean
+  P0EFTJanusEuclideanGlobalSpinCJetRealization.lean
+  P0EFTJanusGlobalSpinCCechDescent.lean
+  P0EFTJanusCechAbelianConnectionDescent.lean
 ```

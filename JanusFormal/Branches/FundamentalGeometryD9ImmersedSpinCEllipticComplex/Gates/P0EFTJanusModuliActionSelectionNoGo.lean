@@ -11,7 +11,7 @@ structure ModuliSkeleton where
   gaugeRank : ℕ
 
 /-- Quadratic action coefficient on a one-dimensional test field. -/
-def quadraticAction
+noncomputable def quadraticAction
     (coefficient field : ℝ) : ℝ :=
   coefficient * field ^ 2 / 2
 

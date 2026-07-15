@@ -59,13 +59,77 @@ theorem relative_mode_has_positive_eigenvalue
         (2 * massSquared) * h /\
       massMatrixMinus massSquared h (-h) =
         (2 * massSquared) * (-h) := by
-  constructor <;> unfold massMatrixPlus massMatrixMinus <;> ring
+  constructor
+  · unfold massMatrixPlus
+    ring
+  · unfold massMatrixMinus
+    ring
 
 /-- Positive mass coefficient makes the relative eigenvalue positive. -/
 theorem relative_eigenvalue_positive
     (massSquared : ℝ)
     (hMass : 0 < massSquared) :
     0 < 2 * massSquared := by
+  positivity
+
+/-- Generalized mass operator after division by unequal positive kinetic weights. -/
+noncomputable def weightedMassOperatorPlus
+    (planckPlusSquared massSquared hPlus hMinus : ℝ) : ℝ :=
+  massSquared / planckPlusSquared * (hPlus - hMinus)
+
+noncomputable def weightedMassOperatorMinus
+    (planckMinusSquared massSquared hPlus hMinus : ℝ) : ℝ :=
+  massSquared / planckMinusSquared * (hMinus - hPlus)
+
+/-- The equal-metric mode remains massless for unequal kinetic normalizations. -/
+theorem unequal_kinetic_diagonal_mode_is_massless
+    (planckPlusSquared planckMinusSquared massSquared h : ℝ) :
+    weightedMassOperatorPlus planckPlusSquared massSquared h h = 0 ∧
+      weightedMassOperatorMinus planckMinusSquared massSquared h h = 0 := by
+  constructor <;>
+    simp [weightedMassOperatorPlus, weightedMassOperatorMinus]
+
+/-- Generalized positive relative-mode eigenvalue. -/
+noncomputable def weightedRelativeEigenvalue
+    (planckPlusSquared planckMinusSquared massSquared : ℝ) : ℝ :=
+  massSquared *
+    (1 / planckPlusSquared + 1 / planckMinusSquared)
+
+/--
+For unequal kinetic weights, the massive eigenvector is the weighted relative
+mode `(M_-² h, -M_+² h)`.
+-/
+theorem unequal_kinetic_weighted_relative_mode
+    (planckPlusSquared planckMinusSquared massSquared h : ℝ)
+    (hPlus : planckPlusSquared ≠ 0)
+    (hMinus : planckMinusSquared ≠ 0) :
+    weightedMassOperatorPlus planckPlusSquared massSquared
+        (planckMinusSquared * h) (-planckPlusSquared * h) =
+      weightedRelativeEigenvalue
+          planckPlusSquared planckMinusSquared massSquared *
+        (planckMinusSquared * h) ∧
+    weightedMassOperatorMinus planckMinusSquared massSquared
+        (planckMinusSquared * h) (-planckPlusSquared * h) =
+      weightedRelativeEigenvalue
+          planckPlusSquared planckMinusSquared massSquared *
+        (-planckPlusSquared * h) := by
+  constructor
+  · unfold weightedMassOperatorPlus weightedRelativeEigenvalue
+    field_simp [hPlus, hMinus]
+    ring
+  · unfold weightedMassOperatorMinus weightedRelativeEigenvalue
+    field_simp [hPlus, hMinus]
+    ring
+
+/-- Positive kinetic weights and positive mass give a positive massive eigenvalue. -/
+theorem weighted_relative_eigenvalue_positive
+    (planckPlusSquared planckMinusSquared massSquared : ℝ)
+    (hPlanckPlus : 0 < planckPlusSquared)
+    (hPlanckMinus : 0 < planckMinusSquared)
+    (hMass : 0 < massSquared) :
+    0 < weightedRelativeEigenvalue
+        planckPlusSquared planckMinusSquared massSquared := by
+  unfold weightedRelativeEigenvalue
   positivity
 
 /-- Full reduced quadratic energy with two positive kinetic directions. -/

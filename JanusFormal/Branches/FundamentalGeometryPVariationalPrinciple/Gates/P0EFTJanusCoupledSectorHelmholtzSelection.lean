@@ -16,7 +16,7 @@ used by the PT theorem; the Helmholtz theorem is purely algebraic.
   no : ℝ
   tn : ℝ
   tt : ℝ
-  to : ℝ
+  trOdd : ℝ
   on : ℝ
   ot : ℝ
   oo : ℝ
@@ -26,7 +26,7 @@ def FormallySelfAdjoint
     (operator : LinearOperator3) : Prop :=
   operator.nt = operator.tn /\
   operator.no = operator.on /\
-  operator.to = operator.ot
+  operator.trOdd = operator.ot
 
 /-- Quadratic potential for the three sectors. -/
 @[ext] structure QuadraticPotential3 where
@@ -35,10 +35,10 @@ def FormallySelfAdjoint
   oo : ℝ
   nt : ℝ
   no : ℝ
-  to : ℝ
+  trOdd : ℝ
 
 /-- Value of the quadratic potential. -/
-def potentialValue
+noncomputable def potentialValue
     (potential : QuadraticPotential3)
     (normal trace odd : ℝ) : ℝ :=
   potential.nn * normal ^ 2 / 2 +
@@ -46,7 +46,7 @@ def potentialValue
     potential.oo * odd ^ 2 / 2 +
     potential.nt * normal * trace +
     potential.no * normal * odd +
-    potential.to * trace * odd
+    potential.trOdd * trace * odd
 
 /-- Hessian operator of the potential. -/
 def hessianOperator
@@ -56,9 +56,9 @@ def hessianOperator
     no := potential.no
     tn := potential.nt
     tt := potential.tt
-    to := potential.to
+    trOdd := potential.trOdd
     on := potential.no
-    ot := potential.to
+    ot := potential.trOdd
     oo := potential.oo }
 
 /-- Every quadratic Hessian satisfies all reciprocity conditions. -/
@@ -75,7 +75,7 @@ def canonicalPotential
     oo := operator.oo
     nt := operator.nt
     no := operator.no
-    to := operator.to }
+    trOdd := operator.trOdd }
 
 /-- A self-adjoint operator is the Hessian of its canonical potential. -/
 theorem canonical_potential_hessian
@@ -105,7 +105,7 @@ theorem nonreciprocal_cross_coupling_not_variational
     (hFailure :
       operator.nt ≠ operator.tn \/
       operator.no ≠ operator.on \/
-      operator.to ≠ operator.ot) :
+      operator.trOdd ≠ operator.ot) :
     Not (∃ potential : QuadraticPotential3,
       hessianOperator potential = operator) := by
   intro hPotential
@@ -127,7 +127,7 @@ def PTInvariant
 theorem mixed_odd_couplings_zero_imply_pt_invariant
     (potential : QuadraticPotential3)
     (hNO : potential.no = 0)
-    (hTO : potential.to = 0) :
+    (hTO : potential.trOdd = 0) :
     PTInvariant potential := by
   intro normal trace odd
   unfold potentialValue
@@ -147,7 +147,7 @@ theorem pt_invariant_forces_normal_odd_zero
 theorem pt_invariant_forces_trace_odd_zero
     (potential : QuadraticPotential3)
     (hPT : PTInvariant potential) :
-    potential.to = 0 := by
+    potential.trOdd = 0 := by
   have hTest := hPT 0 1 1
   unfold potentialValue at hTest
   nlinarith
@@ -156,7 +156,7 @@ theorem pt_invariant_forces_trace_odd_zero
 theorem pt_invariant_iff_mixed_odd_couplings_zero
     (potential : QuadraticPotential3) :
     PTInvariant potential ↔
-      potential.no = 0 /\ potential.to = 0 := by
+      potential.no = 0 /\ potential.trOdd = 0 := by
   constructor
   · intro hPT
     exact ⟨pt_invariant_forces_normal_odd_zero potential hPT,
@@ -164,6 +164,29 @@ theorem pt_invariant_iff_mixed_odd_couplings_zero
   · rintro ⟨hNO, hTO⟩
     exact mixed_odd_couplings_zero_imply_pt_invariant
       potential hNO hTO
+
+/--
+Exact quadratic coupled-sector selection criterion: an operator is the Hessian
+of a PT-invariant potential precisely when it is reciprocal and its two
+even-to-odd entries vanish.
+-/
+theorem helmholtz_pt_realizability_iff
+    (operator : LinearOperator3) :
+    (∃ potential : QuadraticPotential3,
+      hessianOperator potential = operator /\
+      PTInvariant potential) ↔
+      FormallySelfAdjoint operator /\
+      operator.no = 0 /\ operator.trOdd = 0 := by
+  constructor
+  · rintro ⟨potential, rfl, hPT⟩
+    exact ⟨hessian_formally_self_adjoint potential,
+      pt_invariant_forces_normal_odd_zero potential hPT,
+      pt_invariant_forces_trace_odd_zero potential hPT⟩
+  · rintro ⟨hSelfAdjoint, hNO, hTO⟩
+    refine ⟨canonicalPotential operator,
+      canonical_potential_hessian operator hSelfAdjoint, ?_⟩
+    exact mixed_odd_couplings_zero_imply_pt_invariant
+      (canonicalPotential operator) hNO hTO
 
 /-- Equality of the three diagonal/principal coefficients. -/
 def SameDiagonal
@@ -179,7 +202,7 @@ def unmixedCandidate : QuadraticPotential3 :=
     oo := 1
     nt := 0
     no := 0
-    to := 0 }
+    trOdd := 0 }
 
 /-- Same diagonal and PT parity, but with an even-even interaction. -/
 def evenMixedCandidate : QuadraticPotential3 :=
@@ -188,7 +211,7 @@ def evenMixedCandidate : QuadraticPotential3 :=
     oo := 1
     nt := 1
     no := 0
-    to := 0 }
+    trOdd := 0 }
 
 /-- Both candidates obey Helmholtz and PT, yet are different. -/
 theorem fixed_diagonal_helmholtz_pt_data_do_not_select_unique_action :

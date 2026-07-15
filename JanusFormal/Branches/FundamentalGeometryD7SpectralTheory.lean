@@ -14,6 +14,13 @@ D7 separates five layers:
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusUniversalClosedHeatCoefficients
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusAbstractDiracPTFredholmFoundation
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD2GlobalAnalyticBridge
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD2HeatCountertermBridge
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatRemainderConvergence
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusQuarterDeterminantConvergence
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleSphereHeatTrace
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleHeatAsymptoticMatch
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusProductThroatDiracHeatCoefficients
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusFiniteProductHeatTrace
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatKernelScaleOrbit
@@ -46,6 +53,18 @@ structure ProgramStatus where
   rankTwoDiracTraceReductionFormalized : Prop
   productThroatCurvatureIntegralsComputed : Prop
   productThroatDiracCoefficientsMatched : Prop
+  productThroatLocalCountertermConstructed : Prop
+  commonHolonomyCountertermBridgeConstructed : Prop
+  fixedHeatSchemeDeterminantUniqueProved : Prop
+  monopoleSphereSpectrumMultiplicityFormalized : Prop
+  circleReducedDeterminantCutoffConstructed : Prop
+  cutoffRemainderTelescopeProved : Prop
+  geometricRemainderConvergenceCriterionProved : Prop
+  quadraticRemainderConvergenceCriterionProved : Prop
+  z4QuarterRemainderSummableProved : Prop
+  z4RenormalizedDeterminantConstructed : Prop
+  infiniteMonopoleSphereHeatTraceConstructed : Prop
+  spectralHeatCoefficientAlgebraMatched : Prop
   finiteProductHeatTraceFactorizationProved : Prop
   localCircleAffinenessProved : Prop
   localNoMinimumProved : Prop
@@ -83,6 +102,18 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.rankTwoDiracTraceReductionFormalized /\
   s.productThroatCurvatureIntegralsComputed /\
   s.productThroatDiracCoefficientsMatched /\
+  s.productThroatLocalCountertermConstructed /\
+  s.commonHolonomyCountertermBridgeConstructed /\
+  s.fixedHeatSchemeDeterminantUniqueProved /\
+  s.monopoleSphereSpectrumMultiplicityFormalized /\
+  s.circleReducedDeterminantCutoffConstructed /\
+  s.cutoffRemainderTelescopeProved /\
+  s.geometricRemainderConvergenceCriterionProved /\
+  s.quadraticRemainderConvergenceCriterionProved /\
+  s.z4QuarterRemainderSummableProved /\
+  s.z4RenormalizedDeterminantConstructed /\
+  s.infiniteMonopoleSphereHeatTraceConstructed /\
+  s.spectralHeatCoefficientAlgebraMatched /\
   s.finiteProductHeatTraceFactorizationProved /\
   s.localCircleAffinenessProved /\
   s.localNoMinimumProved /\

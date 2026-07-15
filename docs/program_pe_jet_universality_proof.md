@@ -302,6 +302,29 @@ theorem control smooth scalar invariants. Extension across constrained jet loci
 and isotropy strata remains a separate theorem. Pseudo-Riemannian signatures
 require additional work because the residual orthogonal group is noncompact.
 
+## Scoped follow-on descent results
+
+In the low-order Euclidean model, all valid projected-seed chart jets at one
+fixed base lie in the same residual SpinC-frame orbit. Consequently every
+invariant observable has a unique chart-independent value there. If it admits
+a smooth realization on the continuous reduced-jet coefficient space, these
+values form a globally smooth function: locally one freezes a valid chart
+center and uses invariance to identify it with the moving canonical value.
+
+Two further Cech constructions are conditional. Supplied oriented transition
+cocycles, Spin lifts, phases and matching diagonal defects determine a
+multi-chart pointwise SpinC transition presentation satisfying the Cech laws;
+transition continuity/smoothness and a principal-bundle total space are not
+constructed. Supplied local abelian
+potentials and additive overlap shifts satisfy the affine derivative law. When
+all overlap shifts are curvature-flat, their local curvatures glue uniquely to
+a global smooth curvature function. Its actual Fréchet derivative satisfies
+the cyclic abelian Bianchi identity. Here `fderiv` is the ordinary derivative
+on the fixed Euclidean model, so the identity is `dF = 0`; no affine connection
+or torsion is modeled, and this is not the naive cyclic `∇F = 0` formula in a
+torsionful geometry. Neither theorem derives these inputs from actual Janus
+characteristic classes or determinant transitions.
+
 ## Janus specialization still open
 
 1. Define the actual category of decorated Janus SpinC immersions.
@@ -335,6 +358,10 @@ require additional work because the residual orthogonal group is noncompact.
 | projected-seed varying normal atlas | proved in Lean with smooth overlap laws |
 | one-chart rank-two SpinC bundle/connection | proved in Lean; nontrivial global sectors open |
 | valid-chart low-order residual/SpinC action groupoid | instantiated in Lean |
+| actual valid-chart overlap arrows | proved with identity and Cech composition in the low-order Euclidean model |
+| low-order invariant-observable descent | unique chart-independent values; globally smooth under a smooth coefficient realization |
+| multi-chart SpinC Cech transition presentation | conditional pointwise theorem from supplied cocycles, lifts, phases and matching defects; continuity and total space open |
+| abelian connection overlap curvature descent | conditional global smooth curvature with actual cyclic Bianchi derivative from supplied local potentials and flat additive shifts |
 | actual structured SpinC jet groupoid | open |
 | effective Janus descent theorem | open |
 | full smooth equivariant-map classification | open |

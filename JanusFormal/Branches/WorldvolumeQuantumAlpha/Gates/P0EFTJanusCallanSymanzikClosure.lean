@@ -47,6 +47,87 @@ theorem positive_log_coefficient_from_rg
   rw [r.callanSymanzikLaw]
   linarith
 
+/-- Insert the computed pure-scalar two-loop beta coefficient in repository
+normalization. Gauge and LL additions are not included in this theorem. -/
+theorem positive_log_coefficient_from_pure_scalar_beta
+    (r : CompositeRGData)
+    (hBeta :
+      r.sexticBeta =
+        (25 / (2 * Real.pi ^ 2)) * r.sexticCoupling ^ 2)
+    (hAnomalousBound :
+      3 * r.compositeAnomalousDimension * r.sexticCoupling <
+        (25 / (2 * Real.pi ^ 2)) * r.sexticCoupling ^ 2) :
+    0 < r.logCoefficient := by
+  apply positive_log_coefficient_from_rg r
+  rw [hBeta]
+  exact hAnomalousBound
+
+/-- Insert the conditional two-loop non-LL coefficient while retaining the LL
+beta contribution as an explicit input. -/
+theorem positive_log_coefficient_from_non_ll_beta
+    (r : CompositeRGData) (betaLL : ℝ)
+    (hBeta :
+      r.sexticBeta =
+        (475 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL)
+    (hAnomalousBound :
+      3 * r.compositeAnomalousDimension * r.sexticCoupling <
+        (475 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL) :
+    0 < r.logCoefficient := by
+  apply positive_log_coefficient_from_rg r
+  rw [hBeta]
+  exact hAnomalousBound
+
+/-- Exact separation of the computed non-LL beta/anomalous terms from the
+still-open LL contributions. -/
+theorem log_coefficient_non_ll_ll_decomposition
+    (r : CompositeRGData) (betaLL gammaLL : ℝ)
+    (hBeta :
+      r.sexticBeta =
+        (475 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL)
+    (hGamma :
+      r.compositeAnomalousDimension =
+        (5 / (16 * Real.pi ^ 2)) * r.sexticCoupling + gammaLL) :
+    r.logCoefficient =
+      (445 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 +
+        betaLL - 3 * gammaLL * r.sexticCoupling := by
+  rw [r.callanSymanzikLaw, hBeta, hGamma]
+  ring
+
+theorem positive_log_from_controlled_ll_remainder
+    (r : CompositeRGData) (betaLL gammaLL : ℝ)
+    (hBeta :
+      r.sexticBeta =
+        (475 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL)
+    (hGamma :
+      r.compositeAnomalousDimension =
+        (5 / (16 * Real.pi ^ 2)) * r.sexticCoupling + gammaLL)
+    (hLLBound :
+      3 * gammaLL * r.sexticCoupling <
+        (445 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL) :
+    0 < r.logCoefficient := by
+  rw [log_coefficient_non_ll_ll_decomposition r betaLL gammaLL hBeta hGamma]
+  linarith
+
+/-- The remaining local-stability question is now a concrete comparison of
+the total anomalous-dimension term with the total beta function. -/
+structure ComputedCSInputStatus where
+  pureScalarBetaComputed : Prop
+  mixedNonLLBetaComputed : Prop
+  gaugeBetaContributionComputed : Prop
+  llBetaContributionComputed : Prop
+  compositeAnomalousDimensionComputed : Prop
+  anomalousDimensionBoundProved : Prop
+  positiveLogCoefficientDerived : Prop
+
+def computedCSInputsClosed (s : ComputedCSInputStatus) : Prop :=
+  s.pureScalarBetaComputed ∧
+  s.mixedNonLLBetaComputed ∧
+  s.gaugeBetaContributionComputed ∧
+  s.llBetaContributionComputed ∧
+  s.compositeAnomalousDimensionComputed ∧
+  s.anomalousDimensionBoundProved ∧
+  s.positiveLogCoefficientDerived
+
 /-- Critical-line data with the finite-N RG correction identified. -/
 structure RGClosedCriticalVacuum where
   criticalVacuum : CriticalLineAlphaVacuum

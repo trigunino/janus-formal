@@ -40,6 +40,22 @@ def sqrt_expansion_for(delta_metric: sp.Matrix) -> sp.Matrix:
     return background_sqrt() + EPS * x1 + EPS**2 * x2
 
 
+def sqrt_residual_coefficients(delta_metric: sp.Matrix) -> dict[str, sp.Matrix]:
+    sqrt_series = sqrt_expansion_for(delta_metric)
+    target = background_sqrt() ** 2 + EPS * delta_metric
+    residual = sp.expand(sqrt_series * sqrt_series - target)
+    return {
+        "eps1": residual.applyfunc(lambda entry: sp.factor(entry.coeff(EPS, 1))),
+        "eps2": residual.applyfunc(lambda entry: sp.factor(entry.coeff(EPS, 2))),
+    }
+
+
+def residual_vanishes_through_second_order(delta_metric: sp.Matrix) -> bool:
+    coefficients = sqrt_residual_coefficients(delta_metric)
+    zero = sp.zeros(4)
+    return coefficients["eps1"] == zero and coefficients["eps2"] == zero
+
+
 def elementary_polynomials(matrix: sp.Matrix) -> dict[str, sp.Expr]:
     tr1 = sp.trace(matrix)
     tr2 = sp.trace(matrix**2)
@@ -125,6 +141,11 @@ def derived_hessians() -> dict:
 
 def build_payload() -> dict:
     values = derived_hessians()
+    residual_checks = {
+        "tensor": residual_vanishes_through_second_order(tensor_metric_perturbation()),
+        "vector": residual_vanishes_through_second_order(vector_metric_perturbation()),
+        "scalar": residual_vanishes_through_second_order(scalar_metric_perturbation()),
+    }
     return {
         "artifact": "svt_hr_second_order_hessian",
         "status": "hr_second_order_sqrt_hessian_projected_but_scalar_constraints_open",
@@ -132,6 +153,7 @@ def build_payload() -> dict:
         "free_parameters_fitted_to_data": [],
         "beta_line": {"beta1": 1, "beta2": 3, "beta3": 3, "beta4": 1},
         "sqrt_method": "S=S0+eps*X1+eps^2*X2, S0*X1+X1*S0=H, S0*X2+X2*S0=-X1^2",
+        "sqrt_residual_through_eps2": residual_checks,
         "projected_eps2_potentials": {
             "tensor": expr_text(values["tensor_eps2"]),
             "vector": expr_text(values["vector_eps2"]),
@@ -147,6 +169,7 @@ def build_payload() -> dict:
             "scalar_det": expr_text(values["scalar_det_hessian"]),
         },
         "closure": {
+            "sqrt_expansion_verified_through_second_order": all(residual_checks.values()),
             "tensor_projected_hr_hessian_closed": True,
             "vector_projected_hr_hessian_closed": True,
             "scalar_raw_lapse_spatial_hessian_closed": True,

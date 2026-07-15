@@ -21,7 +21,7 @@ structure NaturalJetFunctor
       sectionFunctor.Section object → Jet object order
   pullbackJet :
     ∀ {source target}
-      (morphism :
+      (_morphism :
         AdmissibleMorphism immersionCategory source target)
       (order : ℕ),
       Jet target order → Jet source order

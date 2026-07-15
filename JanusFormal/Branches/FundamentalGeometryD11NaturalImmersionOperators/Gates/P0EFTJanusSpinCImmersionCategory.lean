@@ -175,8 +175,9 @@ def fixedGeometryCategory
 theorem fixed_geometry_category_exists
     (geometry : SpinCImmersionGeometry) :
     ∃ immersionCategory : SpinCImmersionCategory,
-      immersionCategory.geometry () = geometry := by
-  exact ⟨fixedGeometryCategory geometry, rfl⟩
+      ∃ object : immersionCategory.category.Obj,
+        immersionCategory.geometry object = geometry := by
+  exact ⟨fixedGeometryCategory geometry, (), rfl⟩
 
 /--
 The one-object construction proves existence of a categorical shell, not of the

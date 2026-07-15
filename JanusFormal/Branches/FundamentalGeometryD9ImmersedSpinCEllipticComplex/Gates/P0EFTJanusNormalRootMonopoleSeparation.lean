@@ -26,8 +26,9 @@ theorem normal_root_line_not_primitive_monopole
       monopole.firstChernNumber = normalRoot.firstChernNumber :=
         hEqual.symm
       _ = 0 := normalRoot.flatnessForcesChernZero
-  rw [hMonopoleZero] at monopole.primitive
-  norm_num at monopole.primitive
+  have hPrimitive := monopole.primitive
+  rw [hMonopoleZero] at hPrimitive
+  norm_num at hPrimitive
 
 /-- The normal-root line has no primitive sphere flux. -/
 theorem flat_normal_root_cannot_carry_unit_sphere_flux
@@ -41,8 +42,9 @@ theorem primitive_monopole_cannot_have_zero_chern_number
     (monopole : PrimitiveMonopoleLineChernData) :
     monopole.firstChernNumber ≠ 0 := by
   intro hZero
-  rw [hZero] at monopole.primitive
-  norm_num at monopole.primitive
+  have hPrimitive := monopole.primitive
+  rw [hZero] at hPrimitive
+  norm_num at hPrimitive
 
 /-- Minimal geometric input required by the twisted Dirac sector. -/
 structure ImmersedSpinCInput where

@@ -53,8 +53,7 @@ theorem primitive_monopole_has_one_zero_mode
     (hPrimitive : PrimitiveMonopole monopoleMagnitude) :
     levelDegeneracy monopoleMagnitude 0 = 1 := by
   simp [PrimitiveMonopole] at hPrimitive
-  simpa [hPrimitive] using
-    zero_level_degeneracy_is_monopole_magnitude monopoleMagnitude
+  simp [hPrimitive, zero_level_degeneracy_is_monopole_magnitude]
 
 /-- Its first nonzero squared gap is `2/L^2`. -/
 theorem primitive_first_gap_is_two

@@ -38,9 +38,9 @@ A theorem about an abstract closure structure is not evidence that its physical 
 | **D0/D8** | mapping torus, throat, normal line, Pin/SpinC and `Z4` lift | global topology and bundle seed | `FundamentalGeometryD`, `FundamentalGeometryD8TopologyRepresentation` |
 | **D2** | monopole-twisted Dirac spectrum, eta and geometric ratios | strongest focused spectral head | `FundamentalGeometryDiracSpectral` |
 | **D7** | heat kernel, winding determinants and scale no-go results | local/nonlocal spectral layer | `FundamentalGeometryD7SpectralTheory` |
-| **D9** | de Rham/Maxwell, metric, normal, Dirac and ghost symbols | gate collection; no stable standalone head yet | `FundamentalGeometryD9ImmersedSpinCEllipticComplex/Gates/` |
+| **D9** | de Rham/Maxwell, metric, normal, Dirac and ghost symbols | consolidated P-independent symbol/linear-BRST head | `FundamentalGeometryD9ImmersedSpinCEllipticComplex` |
 | **D10** | Quillen/determinant-line and anomaly interfaces | quantization/anomaly layer | `FundamentalGeometryD10QuillenAnomaly` |
-| **D11** | natural bundles, symbols and jet interfaces | gate collection; no stable standalone head yet | `FundamentalGeometryD11NaturalImmersionOperators/Gates/` |
+| **D11** | natural bundles, symbols and jet interfaces | consolidated naturality/finite-jet head | `FundamentalGeometryD11NaturalImmersionOperators` |
 | **P0/P-A/P-B/P-C** | no-go, relative action selection, anomaly filter and Helmholtz reconstruction | variational core | `FundamentalGeometryPVariationalPrinciple` |
 | **P-D** | pointwise invariant pairings, isotropy strata, invariant scalar algebra and global coupling modules | representation-theory filter with corrected globalization | `FundamentalGeometryPEInvariantPairings` |
 | **P-E** | locality, finite jets, adapted-frame reduction, overlap cocycles and SpinC lift data | corrected local natural-operator and structured-jet program | `FundamentalGeometryPEJetUniversality` |
@@ -157,6 +157,7 @@ actual Janus category and field space
 13. `docs/program_pe_invariant_pairings.md`
 14. `docs/program_pd_global_pairing_modules.md`
 15. `docs/janus_branch_registry.md`
+16. `docs/six_new_research_programs.md`
 
 ## Repository rule
 
