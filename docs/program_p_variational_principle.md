@@ -237,11 +237,15 @@ The evaluator is smooth, not automatically polynomial. Local finite order need n
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 ```
 
-**Last focused CI:** green on the merged P-E head.
+**Last recorded remote focused CI:** green on the merged P-E head. The PR 10
+working branch additionally builds locally with constructive Euclidean Koszul
+existence, projected-seed varying-normal transitions, one-chart rank-two SpinC
+connection data and a valid-chart low-order residual/SpinC action groupoid.
 
 ### Open Janus specialization
 
-- adapted SpinC/PT/Z4/BRST jet symmetry group;
+- full adapted SpinC/PT/Z4/BRST jet symmetry group beyond the low-order
+  residual/SpinC realization;
 - actual source and target natural bundles;
 - locality and regularity proof;
 - holonomic realization/surjectivity;

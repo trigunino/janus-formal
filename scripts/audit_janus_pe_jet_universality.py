@@ -9,7 +9,43 @@ finite-difference counterexample and finite-jet equivariance identities.
 from __future__ import annotations
 
 import math
+import re
 from collections.abc import Callable, Iterable
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+PROGRAMME_PE_GATES = {
+    "P0EFTJanusEuclideanKoszulConnectionExistence.lean":
+        "theorem smoothEuclideanKoszulConnection_exists",
+    "P0EFTJanusProjectedSeedVaryingNormalBundle.lean":
+        "def projectedSeedVaryingNormalBundleFamily",
+    "P0EFTJanusEuclideanGlobalSpinCJetRealization.lean":
+        "theorem EuclideanMetricProjectedSeedImmersionData.global_spinC_jet_realization",
+    "P0EFTJanusEuclideanStructuredJetActionGroupoidRealization.lean":
+        "theorem euclidean_lowOrder_spinC_groupoid_realized",
+}
+
+
+def assert_programme_pe_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
+    """Require the new constructive gates and reject proof placeholders."""
+    gate_root = repo_root / (
+        "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates"
+    )
+    facade = (
+        repo_root
+        / "JanusFormal/Branches/FundamentalGeometryPEJetUniversality.lean"
+    ).read_text(encoding="utf-8")
+
+    for filename, declaration in PROGRAMME_PE_GATES.items():
+        source = (gate_root / filename).read_text(encoding="utf-8")
+        if declaration not in source:
+            raise AssertionError(f"missing Programme P-E declaration: {declaration}")
+        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+            raise AssertionError(f"proof placeholder found in {filename}")
+        if f"Gates.{filename.removesuffix('.lean')}" not in facade:
+            raise AssertionError(f"Programme P-E facade omits {filename}")
 
 
 def forward_difference(function: Callable[[float], float], x: float) -> float:
@@ -63,6 +99,8 @@ def odd_evaluator(jet_value: float) -> float:
 
 
 def run_audit() -> None:
+    assert_programme_pe_gate_integrity()
+
     # Exact formula checked numerically on a broad deterministic grid.
     for order in range(9):
         for x in (-3.0, -1.25, 0.0, 0.5, 2.0):

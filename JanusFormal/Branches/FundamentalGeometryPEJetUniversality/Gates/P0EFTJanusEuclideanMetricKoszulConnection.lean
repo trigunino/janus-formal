@@ -383,9 +383,8 @@ def euclideanMetricKoszulConnectionClosed
   s.koszulConnectionExistenceConstructedFromMetric ∧
   s.globalSpinCConnectionPotentialConstructed
 
-/-- The remaining metric boundary is existence of the continuously bundled
-Koszul connection from the metric alone; uniqueness and all downstream descent
-are already formalized here. -/
+/-- Omitting constructive Koszul existence still blocks this stage, even when
+uniqueness and the downstream descent interfaces are available. -/
 theorem missing_koszul_existence_blocks_closure
     (s : EuclideanMetricKoszulConnectionStatus)
     (hMissing : Not s.koszulConnectionExistenceConstructedFromMetric) :
