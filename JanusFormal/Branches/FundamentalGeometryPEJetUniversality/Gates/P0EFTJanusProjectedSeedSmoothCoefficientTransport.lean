@@ -413,24 +413,6 @@ theorem ProjectedSeedSmoothAmbientJetFamilyOn.reducedJet_contDiffOn
     (Tangent := Tangent) (Normal := Normal)).comp_contDiffOn
       data.structuredJet_contDiffOn
 
-/-- Generic local smoothness of the physical Riesz family from smooth fixed-model
-coefficients.  This non-dependent formulation avoids expensive normalization of
-the fully packaged chart structure while retaining the exact theorem needed by
-all chart instances. -/
-theorem continuousIIRieszShapeOperator_family_contDiffOn
-    (domain : Set Base)
-    (form : Base → ContinuousSecondFundamentalForm
-      (Tangent := Tangent) (Normal := Normal))
-    (normal : Base → Normal)
-    (hForm : ContDiffOn ℝ ∞ form domain)
-    (hNormal : ContDiffOn ℝ ∞ normal domain) :
-    ContDiffOn ℝ ∞
-      (fun base => continuousIIRieszShapeOperator
-        (form base) (normal base)) domain := by
-  exact (continuousIIRieszShape_joint_contDiff
-    (Tangent := Tangent) (Normal := Normal)).comp_contDiffOn
-      (hForm.prodMk hNormal)
-
 /-- Physical Riesz shape-operator family on the chart. -/
 def ProjectedSeedSmoothAmbientJetFamilyOn.physicalOperator
     (data : ProjectedSeedSmoothAmbientJetFamilyOn tangentBasis hTangentBasis
@@ -438,6 +420,21 @@ def ProjectedSeedSmoothAmbientJetFamilyOn.physicalOperator
     (base : Base) : Tangent →L[ℝ] Tangent :=
   continuousIIRieszShapeOperator
     (data.normalQuadratic base) (data.physicalNormal base)
+
+/-- Local Riesz smoothness now delegates to the direct fixed-model `ContDiffOn`
+lemma in the core smooth-dependence module, avoiding the expensive normalization
+of the packaged joint map. -/
+theorem ProjectedSeedSmoothAmbientJetFamilyOn.physicalOperator_contDiffOn
+    (data : ProjectedSeedSmoothAmbientJetFamilyOn tangentBasis hTangentBasis
+      normalBasis hNormalBasis basisData center) :
+    ContDiffOn ℝ ∞
+      (fun base => continuousIIRieszShapeOperator
+        (data.normalQuadratic base) (data.physicalNormal base))
+      (projectedSeedCoefficientDomain basisData center) := by
+  exact continuousIIRieszShape_family_contDiffOn
+    (projectedSeedCoefficientDomain basisData center)
+    data.normalQuadratic data.physicalNormal
+    data.normalQuadratic_contDiffOn data.physicalNormal_contDiffOn
 
 /-- Exact fixed-coordinate formula for the transported second fundamental form. -/
 @[simp]
