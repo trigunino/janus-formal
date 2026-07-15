@@ -581,13 +581,17 @@ and an invariant finite-site weighted action under sitewise diagonal frames,
 a genuine affine 1D pullback `J_epsilon rho(phi_epsilon)` whose variation is
 the total derivative `(xi rho)'`, followed by a local affine `R^4` flow whose
 actual Jacobian-determinant derivative and density pullback equal the
-four-coordinate flux divergence,
+four-coordinate flux divergence, and a flat Minkowski linearized-Einstein
+symbol with directly proved Bianchi contraction and gauge annihilation,
 a typed gravitational boundary ledger with an actual local inverse-compatible
 determinant-measure GHY curve, an actual
 `K(t)=tr(h(t)^{-1}B(t))` derivative with no supplied `delta K`, a derived
 Gaussian-normal Palatini/EH cancellation, and an explicit local embedded
 hypersurface with two-sided surface inverse, Levi-Civita Christoffels, signed
-unit normal and derived `B_ab` and `K`, a continuous but formally
+unit normal and derived `B_ab` and `K`, followed by actual threefold interval
+integration of the already-derived constant EH boundary-flux and GHY
+first-variation densities on a compact tangent box, a
+continuous but formally
 non-differentiable zero-expansion
 extension, null/joint endpoint transgression, pointwise LL auxiliary
 metric/measure/flux variations with a conditional null-kernel branch, an
@@ -595,7 +599,8 @@ affine signed composite LL measure built from three auxiliary-scalar first
 jets with actual line variations, coordinate compensation and a genuine
 Frobenius-space Frechet derivative, Euclidean and explicit Minkowski Gram
 `K/J` models with source/ambient naturality, exact infinitesimal kernels and
-finite principal-symbol kernels, an explicit matrix
+finite principal-symbol kernels, plus an exact canonical-frequency
+Lorentzian Gram--Saint-Venant symbol sequence, an explicit matrix
 covector and unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations, an exact reduced
 Legendre/Dirac-chain bridge, a PT-flat vacuum rank no-go and a positive-dust
@@ -608,7 +613,9 @@ Newtonian sign table (with the charge law still supplied), and explicit Candidat
 witnesses showing that the paired anomaly proxy fixes neither normalization
 nor a reduced finite even-counterterm proxy, together with the actual
 finite-mode heat-trace cancellation/even-doubling witness and a countable
-cutoff limit with exact cancellation and a summable infinite-trace bridge. See
+cutoff limit with exact cancellation and a summable infinite-trace bridge,
+then an explicit circle Fourier spectrum with algebraic diagonal Dirac action,
+Gaussian summability and symmetric-cutoff convergence. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the
@@ -622,8 +629,9 @@ covariant source/boundary problem:
    to the global Janus field space, independent variations and arbitrary
    diagonal diffeomorphism action;
 3. lift the Gaussian-normal Palatini flux and explicit local embedded
-   `h/B/K` chart to arbitrary coordinates and a global boundary curve, choose
-   an admissible zero-expansion
+   `h/B/K` chart to arbitrary coordinates and a global boundary curve, extend
+   the constant-box integral to variable geometric data, choose an admissible
+   zero-expansion
    variational domain, derive the geometric null/joint transformation laws,
    instantiate and integrate all slots, and lift the affine composite LL
    measure and pointwise auxiliary action to global fields, worldvolume PDEs
@@ -631,20 +639,22 @@ covariant source/boundary problem:
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
 5. lift the finite Minkowski Gram `K/J` and its Lorentz-orthogonal symbol
-   kernel to the global Janus compatibility PDE/jet complex and prove its full
-   symbol sequence;
+   kernel plus canonical-frequency Saint-Venant exactness to arbitrary
+   frequencies and the global Janus compatibility PDE/jet complex;
 6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
    Helmholtz and field-dependent Noether gates, derive the displayed reduced
    kinetic Lagrangian and dust source from the covariant action, lift the
    explicit dust-supported branch, derive the supplied reduced signed-charge
    law from the covariant Candidate-A weak-field equations, lift the local
-   four-dimensional divergence identity to covariant Bianchi, then prove ADM
+   four-dimensional divergence and flat Einstein-symbol identities to the
+   nonlinear curved covariant Bianchi identity, then prove ADM
    shift/functional Poisson, independent
    secondary-constraint closure and
    stability on the physical reduced tangent/quotient;
-7. construct the continuum Janus operator underlying the supplied countable
-   spectrum, compute variational cohomology and actual regulated local/global
-   anomalies, and close constrained stability in one scheme;
+7. promote the algebraic circle Fourier action to a self-adjoint unbounded
+   Janus Dirac operator with controlled domain, compute variational cohomology
+   and actual regulated local/global anomalies, and close constrained
+   stability in one scheme;
 8. derive a microscopic normalization and finite-part law without
    observed-radius input.
 
