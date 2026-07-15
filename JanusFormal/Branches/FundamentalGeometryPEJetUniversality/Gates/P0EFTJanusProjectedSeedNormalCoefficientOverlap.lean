@@ -45,16 +45,14 @@ def frameAdjointCoordinates
   realAdjointContinuousLinearMap frame.toContinuousLinearMap
 
 /-- If two isometric normal frames have the same ambient image, their adjoint
-coordinate maps differ exactly by the canonical orthogonal transition. -/
+coordinate maps differ pointwise exactly by the canonical orthogonal transition. -/
 theorem frameAdjointCoordinates_transition
     (first second : Normal →ₗᵢ[ℝ] Ambient)
-    (hRange : normalFrameRange first = normalFrameRange second) :
-    frameAdjointCoordinates first =
-      (((normalFrameTransition first second hRange).toLinearIsometry)
-        .toContinuousLinearMap).comp
-          (frameAdjointCoordinates second) := by
-  apply ContinuousLinearMap.ext
-  intro ambient
+    (hRange : normalFrameRange first = normalFrameRange second)
+    (ambient : Ambient) :
+    frameAdjointCoordinates first ambient =
+      normalFrameTransition first second hRange
+        (frameAdjointCoordinates second ambient) := by
   apply ext_inner_right ℝ
   intro normal
   let transition := normalFrameTransition first second hRange
@@ -93,11 +91,8 @@ theorem frameAdjointCoordinates_transition_apply
     (ambient : Ambient) :
     frameAdjointCoordinates first ambient =
       normalFrameTransition first second hRange
-        (frameAdjointCoordinates second ambient) := by
-  have hAt := congrArg
-    (fun operator : Ambient →L[ℝ] Normal => operator ambient)
-    (frameAdjointCoordinates_transition first second hRange)
-  exact hAt
+        (frameAdjointCoordinates second ambient) :=
+  frameAdjointCoordinates_transition first second hRange ambient
 
 /-- Normal coefficient extracted from one ambient bilinear tensor through one
 isometric normal frame. -/
