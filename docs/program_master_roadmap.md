@@ -153,6 +153,12 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **T/C** exact square completion makes the stationary scalar bulk mode at
   fixed boundary data the unique global minimum for positive bulk coefficient
   and the unique global maximum for negative bulk coefficient;
+- **T/C** on the concrete one-dimensional positive PT-flat proportional
+  bimetric branch, the reduced interaction has its actual derivative, `c = 1`
+  is stationary, its actual Hessian is twelve times the Fierz--Pauli mass
+  combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is
+  the unique global minimizer on `c > 0`; this is not the full Janus metric
+  field theory;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -177,6 +183,9 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   its linear and quadratic Helmholtz swaps hold;
 - **T** the normalized reconstructed cubic potential has the Euler source as
   its actual Fréchet derivative in every finite-dimensional direction;
+- **T** conversely, equality of the genuine derivative with the prescribed
+  finite Euler pairing at every field value alone recovers the normalized
+  affine, quadratic and cubic potential coefficients;
 - **T** the finite-rank Euler map has its displayed Jacobian as its actual
   Fréchet derivative, and the Helmholtz coefficient swaps make it pairing
   self-adjoint at every field value;
@@ -187,9 +196,11 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   Euler one-form with symmetric actual Jacobian has a scalar action primitive;
   on a nonempty convex domain equal Euler derivatives determine actions up to
   one additive constant, removed by a base-value normalization;
-- **T/C** on the whole configuration space, if the Euler one-form also
-  annihilates a supplied additive linear gauge generator, its normalized radial
-  primitive is invariant under every corresponding gauge translation;
+- **T/C** on the whole configuration space, for an action whose actual
+  derivative is the supplied Euler one-form everywhere, additive linear gauge
+  invariance is equivalent to Euler horizontality; the horizontal normalized
+  radial primitive is therefore invariant under every corresponding gauge
+  translation;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
 
@@ -354,6 +365,9 @@ compatibility map K
 - **T/C** one abstract synthesis packages `K R = 0`, `B K = 0`, pulled-back
   self-adjointness, gauge-Hessian degeneracy and restricted Helmholtz for the
   supplied compatibility complex;
+- **T/C** the actual Fréchet second variation of a nonlinear pullback is
+  `H(Ju)(Jv) + dL(D²K(u,v))` and reduces to `H(Ju)(Jv)` at a target critical
+  point;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
 - **O** construct the actual Janus compatibility jet complex, target pairing and global action primitive.

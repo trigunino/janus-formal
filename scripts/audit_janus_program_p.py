@@ -32,6 +32,13 @@ PROGRAM_P_GATES = {
         "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean",
         ("theorem abstract_compatibility_variational_synthesis",),
     ),
+    "P0EFTJanusFrechetPullbackSecondVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean",
+        (
+            "theorem pulledBackAction_second_fderiv_apply",
+            "theorem pulledBackAction_second_fderiv_at_critical",
+        ),
+    ),
     "P0EFTJanusFiniteRankPolynomialHelmholtz.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -42,6 +49,7 @@ PROGRAM_P_GATES = {
             "theorem actual_finite_helmholtz_iff_coefficient_helmholtz",
             "theorem actual_finite_helmholtz_iff_actual_polynomial_gradient",
             "theorem actual_finite_helmholtz_hasFDerivAt_polynomial_primitive",
+            "theorem hasFDerivAt_eulerGradientFunctional_implies_formal_gradient",
         ),
     ),
     "P0EFTJanusConvexHelmholtzReconstruction.lean": (
@@ -58,7 +66,18 @@ PROGRAM_P_GATES = {
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "theorem translation_gauge_invariant_of_hasFDerivAt_horizontal",
+            "theorem translation_gauge_invariant_iff_euler_horizontal",
             "theorem normalized_gauge_invariant_radial_reconstruction",
+        ),
+    ),
+    "P0EFTJanusPTFlatBimetricVariationalBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem proportionalInteractionEnergy_hasDerivAt",
+            "theorem proportionalInteractionForce_hasDerivAt_symmetric_point",
+            "theorem symmetric_hessian_eq_twelve_fp_mass",
+            "theorem proportionalInteractionEnergy_second_deriv_symmetric_point",
+            "theorem symmetric_point_unique_positive_global_minimizer",
         ),
     ),
     "P0EFTJanusFiniteRankParentSchurHelmholtz.lean": (
@@ -101,14 +120,23 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
     ]
     for status in (
+        "paPTFlatProportionalActualVariationalStabilityProved",
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
         "pcConditionalLinearGaugeNoetherReconstructionProved",
+        "pcConditionalLinearGaugeNoetherIffProved",
     ):
         if (
             f"{status} : Prop" not in primary_facade
             or f"s.{status}" not in primary_facade
         ):
             raise AssertionError(f"Program P facade omits status: {status}")
+
+    pf_facade = facades[
+        "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean"
+    ]
+    status = "actualFrechetSecondVariationFormulaProved"
+    if f"{status} : Prop" not in pf_facade or f"s.{status}" not in pf_facade:
+        raise AssertionError(f"Program P-F facade omits status: {status}")
 
 
 def run_audit() -> None:

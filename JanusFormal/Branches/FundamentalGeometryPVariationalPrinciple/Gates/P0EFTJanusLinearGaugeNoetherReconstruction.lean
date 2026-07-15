@@ -95,6 +95,67 @@ theorem translation_gauge_invariant_of_hasFDerivAt_horizontal
     is_const_of_deriv_eq_zero hCurveDifferentiable hCurveDerivZero 1 0
   simpa [curve, endpoint, linearGaugeTranslate] using hConstant
 
+/-- Conversely, invariance under every additive linear gauge translation
+forces the actual Euler one-form to annihilate every gauge direction. -/
+theorem euler_horizontal_of_translation_gauge_invariant_hasFDerivAt
+    {Configuration Gauge : Type*}
+    [NormedAddCommGroup Configuration] [NormedSpace ℝ Configuration]
+    [NormedAddCommGroup Gauge] [NormedSpace ℝ Gauge]
+    (generator : Gauge →L[ℝ] Configuration)
+    (euler : EulerOneForm Configuration)
+    (action : Configuration → ℝ)
+    (hGradient : ∀ x, HasFDerivAt action (euler x) x)
+    (hInvariant : TranslationGaugeInvariant generator action) :
+    EulerHorizontal generator euler := by
+  intro x parameter
+  let endpoint := linearGaugeTranslate generator x parameter
+  let curve : ℝ → ℝ :=
+    fun t => action (AffineMap.lineMap x endpoint t)
+  have hLineTranslate (t : ℝ) :
+      AffineMap.lineMap x endpoint t =
+        linearGaugeTranslate generator x (t • parameter) := by
+    simp [endpoint, linearGaugeTranslate, AffineMap.lineMap_apply, add_comm]
+  have hCurveDeriv :
+      HasDerivAt curve (euler x (generator parameter)) 0 := by
+    have hLine :
+        HasDerivAt (AffineMap.lineMap (k := ℝ) x endpoint)
+          (endpoint - x) 0 :=
+      AffineMap.hasDerivAt_lineMap
+    have hComp :=
+      (hGradient (AffineMap.lineMap (k := ℝ) x endpoint 0)).comp_hasDerivAt
+        0 hLine
+    simpa [curve, endpoint, linearGaugeTranslate, Function.comp_def] using hComp
+  have hCurveConstant : curve = fun _ => action x := by
+    funext t
+    change action (AffineMap.lineMap x endpoint t) = action x
+    rw [hLineTranslate t]
+    exact hInvariant x (t • parameter)
+  have hConstantDeriv : HasDerivAt curve 0 0 := by
+    rw [hCurveConstant]
+    exact hasDerivAt_const (x := (0 : ℝ)) (c := action x)
+  exact hCurveDeriv.unique hConstantDeriv
+
+/-- For an action with the supplied Euler one-form as its actual derivative
+everywhere, additive linear gauge invariance is equivalent to Euler
+horizontality. -/
+theorem translation_gauge_invariant_iff_euler_horizontal
+    {Configuration Gauge : Type*}
+    [NormedAddCommGroup Configuration] [NormedSpace ℝ Configuration]
+    [NormedAddCommGroup Gauge] [NormedSpace ℝ Gauge]
+    (generator : Gauge →L[ℝ] Configuration)
+    (euler : EulerOneForm Configuration)
+    (action : Configuration → ℝ)
+    (hGradient : ∀ x, HasFDerivAt action (euler x) x) :
+    TranslationGaugeInvariant generator action ↔
+      EulerHorizontal generator euler := by
+  constructor
+  · intro hInvariant
+    exact euler_horizontal_of_translation_gauge_invariant_hasFDerivAt
+      generator euler action hGradient hInvariant
+  · intro hHorizontal
+    exact translation_gauge_invariant_of_hasFDerivAt_horizontal
+      generator euler action hGradient hHorizontal
+
 /-- Under whole-space differentiability, Helmholtz symmetry and gauge
 horizontality, the radial primitive is gauge invariant. -/
 theorem radial_action_translation_gauge_invariant

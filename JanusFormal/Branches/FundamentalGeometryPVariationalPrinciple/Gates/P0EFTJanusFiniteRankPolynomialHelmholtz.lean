@@ -808,17 +808,90 @@ theorem reconstructed_potential_fderiv_apply
   intro i _
   rw [← reconstructed_gradient_agreement euler hLinear hQuadratic x i]
 
+/-- Equality with the prescribed actual derivative determines every component
+of the polynomial gradient. -/
+theorem eulerValue_eq_formalGradientValue_of_hasFDerivAt
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (potential : CubicPotentialCoefficients ι)
+    (hDerivative : ∀ x : ι → ℝ,
+      HasFDerivAt (potentialValue potential)
+        (eulerGradientFunctional euler x) x)
+    (x : ι → ℝ) (i : ι) :
+    eulerValue euler x i = formalGradientValue potential x i := by
+  classical
+  let basis : ι → ℝ := fun coordinate => if coordinate = i then 1 else 0
+  have hMaps :
+      formalGradientFunctional potential x =
+        eulerGradientFunctional euler x := by
+    calc
+      formalGradientFunctional potential x =
+          fderiv ℝ (potentialValue potential) x :=
+        (potentialValue_fderiv potential x).symm
+      _ = eulerGradientFunctional euler x := (hDerivative x).fderiv
+  have hEvaluation := congrArg (fun functional => functional basis) hMaps
+  simpa [formalGradientFunctional_apply, eulerGradientFunctional_apply,
+    basis] using hEvaluation.symm
+
+/-- A normalized cubic potential whose genuine derivative is the Euler
+pairing functional everywhere necessarily has the matching formal
+coefficients. -/
+theorem hasFDerivAt_eulerGradientFunctional_implies_formal_gradient
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (potential : CubicPotentialCoefficients ι)
+    (hDerivative : ∀ x : ι → ℝ,
+      HasFDerivAt (potentialValue potential)
+        (eulerGradientFunctional euler x) x) :
+    IsFormalGradient euler potential := by
+  classical
+  let basis (index : ι) : ι → ℝ :=
+    fun coordinate => if coordinate = index then 1 else 0
+  have hValue (x : ι → ℝ) (i : ι) :=
+    eulerValue_eq_formalGradientValue_of_hasFDerivAt
+      euler potential hDerivative x i
+  have hAffine : ∀ i, euler.affine i = potential.linear i := by
+    intro i
+    simpa [eulerValue, formalGradientValue] using
+      hValue (0 : ι → ℝ) i
+  have hLinear : ∀ i j, euler.linear i j = potential.quadratic i j := by
+    intro i j
+    have hPositive := hValue (basis j) i
+    have hNegative := hValue (fun coordinate => -basis j coordinate) i
+    simp [eulerValue, formalGradientValue, basis] at hPositive hNegative
+    linarith
+  refine ⟨hAffine, hLinear, ?_⟩
+  intro i j k
+  by_cases hIndices : j = k
+  · subst k
+    have hPositive := hValue (basis j) i
+    have hNegative := hValue (fun coordinate => -basis j coordinate) i
+    have hZero := hValue (0 : ι → ℝ) i
+    simp [eulerValue, formalGradientValue, basis] at hPositive hNegative hZero
+    linarith
+  · have hSum := hValue (fun coordinate =>
+        basis j coordinate + basis k coordinate) i
+    have hFirst := hValue (basis j) i
+    have hSecond := hValue (basis k) i
+    have hZero := hValue (0 : ι → ℝ) i
+    simp [eulerValue, formalGradientValue, basis] at hFirst hSecond hZero
+    simp only [eulerValue, formalGradientValue] at hSum
+    simp_rw [mul_add, add_mul, Finset.sum_add_distrib] at hSum
+    simp [basis] at hSum
+    rw [euler.quadratic_field_symmetric i k j] at hSum
+    rw [(potential.cubic_fully_symmetric i k j).1] at hSum
+    linarith
+
 /-- A finite polynomial potential is an actual gradient realization of the
-Euler family when its coefficients agree and its genuine Fréchet derivative
-is the Euler pairing functional at every field value. -/
+Euler family when its genuine Fréchet derivative is the Euler pairing
+functional at every field value. -/
 def IsActualPolynomialGradient
     {ι : Type*} [Fintype ι]
     (euler : QuadraticEulerCoefficients ι)
     (potential : CubicPotentialCoefficients ι) : Prop :=
-  IsFormalGradient euler potential ∧
-    ∀ x : ι → ℝ,
-      HasFDerivAt (potentialValue potential)
-        (eulerGradientFunctional euler x) x
+  ∀ x : ι → ℝ,
+    HasFDerivAt (potentialValue potential)
+      (eulerGradientFunctional euler x) x
 
 /-- Formal gradient coefficient agreement upgrades to a verified actual
 Fréchet-gradient realization for the normalized polynomial potential. -/
@@ -828,7 +901,6 @@ theorem formal_gradient_is_actual_polynomial_gradient
     (potential : CubicPotentialCoefficients ι)
     (hGradient : IsFormalGradient euler potential) :
     IsActualPolynomialGradient euler potential := by
-  refine ⟨hGradient, ?_⟩
   intro x
   exact (potentialValue_hasFDerivAt potential x).congr_fderiv
     (formalGradientFunctional_eq_eulerGradientFunctional
@@ -855,7 +927,9 @@ theorem actual_finite_helmholtz_iff_actual_polynomial_gradient
   · rintro ⟨potential, hGradient⟩
     apply (actual_finite_helmholtz_iff_coefficient_helmholtz euler).2
     exact formal_gradient_implies_helmholtz
-      euler potential hGradient.1
+      euler potential
+        (hasFDerivAt_eulerGradientFunctional_implies_formal_gradient
+          euler potential hGradient)
 
 /-- Constructive actual-derivative corollary: every finite quadratic Euler
 family satisfying the actual Helmholtz condition has a normalized cubic
@@ -869,7 +943,7 @@ theorem actual_finite_helmholtz_hasFDerivAt_polynomial_primitive
         HasFDerivAt (potentialValue potential)
           (eulerGradientFunctional euler x) x := by
   rcases (actual_finite_helmholtz_iff_actual_polynomial_gradient euler).1
-    hActual with ⟨potential, _, hDerivative⟩
+    hActual with ⟨potential, hDerivative⟩
   exact ⟨potential, hDerivative⟩
 
 end P0EFTJanusFiniteRankPolynomialHelmholtz

@@ -176,7 +176,15 @@ Lean file:
 
 ```text
 P0EFTJanusReciprocalBimetricPotential.lean
+P0EFTJanusPTFlatBimetricVariationalBridge.lean
 ```
+
+On the concrete one-dimensional positive PT-flat proportional branch, the
+reduced interaction has its actual derivative, `c = 1` is stationary, and its
+actual Hessian is twelve times the Fierz--Pauli mass combination. For
+`beta1 > 0`, `beta2 >= 0`, the Hessian is positive and `c = 1` is the unique
+global minimizer on `c > 0`. This is a reduced candidate-sector result, not a
+variational or stability theorem for the full Janus metric field theory.
 
 This is a candidate completion, not something already derived from the Janus
 paper.  It must still pass:

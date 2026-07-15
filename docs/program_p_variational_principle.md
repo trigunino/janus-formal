@@ -119,6 +119,17 @@ stationary bulk value, at fixed boundary data, as the unique global minimum
 for a positive bulk coefficient and the unique global maximum for a negative
 one. It remains finite-dimensional, not a Janus bulk PDE.
 
+A concrete one-dimensional bridge to the positive PT-flat proportional
+bimetric branch proves the actual derivative of the reduced interaction,
+stationarity at `c = 1`, and an actual Hessian equal to twelve times the
+Fierz--Pauli mass combination. For `beta1 > 0`, `beta2 >= 0`, that Hessian is
+positive and `c = 1` is the unique global minimizer on `c > 0`. This does not
+establish a variational principle or stability theorem on the full Janus metric
+field space.
+
+**Lean:** `P0EFTJanusPTFlatBimetricVariationalBridge.lean`
+**Evidence:** **T/C** on the one-dimensional proportional branch.
+
 ### P-A verdict
 
 A parent variational problem gives a canonical throat action **relative to that parent problem**. Different parent actions, normalizations or boundary terms give different reduced actions.
@@ -201,9 +212,9 @@ actual Euler map also has the displayed Jacobian as its Fréchet derivative,
 and the coefficient Helmholtz swaps make that Jacobian self-adjoint in the
 finite coordinate pairing. Conversely, self-adjointness of this actual
 Jacobian recovers both coefficient swaps by testing zero and coordinate-basis
-fields. The packaged actual polynomial-gradient witness records both this
-coefficient agreement and the genuine Fréchet derivative; no converse from
-derivative equality alone is claimed.
+fields. Conversely, equality of the genuine derivative with the prescribed
+Euler pairing at every field value alone recovers the normalized affine,
+quadratic and cubic potential coefficients.
 
 **Lean:** `P0EFTJanusFiniteRankPolynomialHelmholtz.lean`
 **Evidence:** **T** coefficient-level; no global variational cohomology.
@@ -215,11 +226,13 @@ straight-segment integral gives an explicit primitive normalized at a chosen
 base point. Any two such actions on a nonempty convex domain differ by a
 constant, so fixing one base value removes this ambiguity. This is a
 configuration-space Poincaré lemma, not the local PDE variational bicomplex.
-If the domain is the whole configuration space and the Euler one-form
-annihilates a supplied additive linear gauge generator, the normalized radial
-primitive is invariant along all corresponding affine gauge orbits. This is a
-conditional linear Noether model, not a construction of the Janus gauge group
-or its PDE identity with boundary terms.
+If the domain is the whole configuration space and an action has the supplied
+Euler one-form as its actual derivative everywhere, additive linear gauge
+invariance is equivalent to Euler horizontality. In particular, the normalized
+radial primitive built from horizontal Euler data is invariant along all
+corresponding affine gauge orbits. This is a conditional linear Noether model,
+not a construction of the Janus gauge group or its PDE identity with boundary
+terms.
 
 **Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
 `P0EFTJanusLinearGaugeNoetherReconstruction.lean`
@@ -353,7 +366,10 @@ In the abstract finite model:
   gauge-Hessian degeneracy, compatible gauge variations and restricted
   Helmholtz;
 - Helmholtz and Noether remain logically distinct in general;
-- for nonlinear `K`, the complete second variation equals `J^T H J` only at a target critical point; off shell there is a gradient-times-second-jet correction.
+- in normed spaces with the supplied differentiability hypotheses, the actual
+  Fréchet second variation of `L ∘ K` is
+  `H(Ju)(Jv) + dL(D²K(u,v))`; it reduces to `H(Ju)(Jv)` when the target
+  gradient `dL` vanishes.
 
 **Lean head:**
 
