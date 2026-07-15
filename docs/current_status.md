@@ -131,7 +131,8 @@ identity, inverse and Cech laws. This is a supplied transition presentation,
 not a continuity/smoothness theorem or a geometric principal-bundle total-space
 construction. Given local abelian potentials and additive overlap shifts, Lean
 proves the affine first-jet law and, when every overlap shift is curvature-flat,
-uniquely glues the local curvatures to a global smooth curvature function. These
+uniquely glues the local curvatures to a global smooth curvature function. Its
+actual Fréchet derivative satisfies the cyclic abelian Bianchi identity. These
 packages do not
 derive their input from actual Janus characteristic classes, determinant-line
 transitions or logarithms, and therefore do not construct the global physical
@@ -184,9 +185,9 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
 ### P0, P-A, P-B and P-C
 
 - **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
-- **P-A:** the two-sector parent-bulk result now extends to an arbitrary finite boundary rank: the bulk Euler expression is the actual derivative, the reduced action has the Schur gradient and constant Hessian as its Fréchet derivatives, and the exact Schur kernel is reciprocal/self-adjoint; changing the parent can still change surviving mixing.
+- **P-A:** the two-sector parent-bulk result now extends to an arbitrary finite boundary rank: the bulk Euler expression is the actual derivative, the reduced action has the Schur gradient and constant Hessian as its Fréchet derivatives, and exact square completion classifies the fixed-boundary stationary bulk mode as the unique global minimum/maximum according to the sign of the bulk coefficient; the Schur kernel is reciprocal/self-adjoint, while changing the parent can still change surviving mixing.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion and a finite-rank cubic potential whose actual Fréchet derivative equals the reconstructed Euler source; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion, an actual finite-rank Euler Jacobian that is self-adjoint under the Helmholtz swaps, and a cubic potential whose Fréchet derivative equals the Euler source. A Poincaré--Helmholtz theorem also reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; the nonlinear Janus PDE Euler family, Noether system and variational cohomology remain open.
 
 ### P-D — pairings and coefficient modules
 
@@ -268,7 +269,8 @@ Lean proves:
   continuity/smoothness or a principal-bundle total-space construction;
 - conditional abelian connection overlap descent from supplied local
   potentials and additive gauge shifts, with unique global smooth curvature
-  descent under the flat-shift condition.
+  descent under the flat-shift condition and a cyclic Bianchi identity for its
+  actual Fréchet derivative.
 
 Higher-dimensional Clifford covers, derivation of the supplied cocycles from
 actual Janus bundles, nontrivial/global Janus principal-bundle construction,

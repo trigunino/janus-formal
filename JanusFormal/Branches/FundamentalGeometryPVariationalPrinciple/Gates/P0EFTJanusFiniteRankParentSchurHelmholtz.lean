@@ -629,6 +629,152 @@ theorem parent_action_on_shell
   field_simp [data.bulkCoefficientNonzero]
   ring
 
+/-- Exact square completion of the parent action at fixed boundary data. -/
+theorem parent_action_sub_reduced_action_eq_square
+    (data : FiniteRankParentData ι)
+    (bulk : ℝ)
+    (boundary : ι → ℝ) :
+    parentAction data bulk boundary - reducedAction data boundary =
+      data.bulkCoefficient / 2 *
+        (bulk - stationaryBulk data boundary) ^ 2 := by
+  unfold parentAction reducedAction stationaryBulk
+  field_simp [data.bulkCoefficientNonzero]
+  ring
+
+/-- Square completion relative to the stationary parent-action value. -/
+theorem parent_action_sub_stationary_action_eq_square
+    (data : FiniteRankParentData ι)
+    (bulk : ℝ)
+    (boundary : ι → ℝ) :
+    parentAction data bulk boundary -
+        parentAction data (stationaryBulk data boundary) boundary =
+      data.bulkCoefficient / 2 *
+        (bulk - stationaryBulk data boundary) ^ 2 := by
+  rw [parent_action_on_shell data boundary]
+  exact parent_action_sub_reduced_action_eq_square data bulk boundary
+
+/-- A positive bulk coefficient makes the stationary bulk value a global
+minimum at every fixed boundary value. -/
+theorem stationary_bulk_global_minimum
+    (data : FiniteRankParentData ι)
+    (boundary : ι → ℝ)
+    (_hPositive : 0 < data.bulkCoefficient)
+    (bulk : ℝ) :
+    parentAction data (stationaryBulk data boundary) boundary ≤
+      parentAction data bulk boundary := by
+  have hSquare : 0 ≤ (bulk - stationaryBulk data boundary) ^ 2 :=
+    sq_nonneg _
+  have hCompletion :=
+    parent_action_sub_stationary_action_eq_square data bulk boundary
+  nlinarith
+
+/-- Equality in the positive-coefficient minimum bound occurs only at the
+stationary bulk value. -/
+theorem stationary_bulk_global_minimum_eq_iff
+    (data : FiniteRankParentData ι)
+    (boundary : ι → ℝ)
+    (_hPositive : 0 < data.bulkCoefficient)
+    (bulk : ℝ) :
+    parentAction data bulk boundary =
+        parentAction data (stationaryBulk data boundary) boundary ↔
+      bulk = stationaryBulk data boundary := by
+  constructor
+  · intro hEqual
+    have hCompletion :=
+      parent_action_sub_stationary_action_eq_square data bulk boundary
+    have hProduct :
+        data.bulkCoefficient / 2 *
+            (bulk - stationaryBulk data boundary) ^ 2 = 0 := by
+      rw [← hCompletion]
+      exact sub_eq_zero.mpr hEqual
+    have hCoefficient : data.bulkCoefficient / 2 ≠ 0 :=
+      div_ne_zero data.bulkCoefficientNonzero (by norm_num)
+    have hSquare : (bulk - stationaryBulk data boundary) ^ 2 = 0 :=
+      (mul_eq_zero.mp hProduct).resolve_left hCoefficient
+    nlinarith
+  · intro hBulk
+    rw [hBulk]
+
+/-- For a positive bulk coefficient, the stationary bulk value is the
+unique global minimizer with the boundary data held fixed. -/
+theorem stationary_bulk_unique_global_minimizer
+    (data : FiniteRankParentData ι)
+    (boundary : ι → ℝ)
+    (hPositive : 0 < data.bulkCoefficient) :
+    ∃! minimizingBulk : ℝ, ∀ bulk : ℝ,
+      parentAction data minimizingBulk boundary ≤
+        parentAction data bulk boundary := by
+  refine ⟨stationaryBulk data boundary,
+    stationary_bulk_global_minimum data boundary hPositive, ?_⟩
+  intro minimizingBulk hMinimum
+  have hForward := hMinimum (stationaryBulk data boundary)
+  have hBackward :=
+    stationary_bulk_global_minimum data boundary hPositive minimizingBulk
+  exact (stationary_bulk_global_minimum_eq_iff
+    data boundary hPositive minimizingBulk).1
+      (le_antisymm hForward hBackward)
+
+/-- A negative bulk coefficient makes the stationary bulk value a global
+maximum at every fixed boundary value. -/
+theorem stationary_bulk_global_maximum
+    (data : FiniteRankParentData ι)
+    (boundary : ι → ℝ)
+    (_hNegative : data.bulkCoefficient < 0)
+    (bulk : ℝ) :
+    parentAction data bulk boundary ≤
+      parentAction data (stationaryBulk data boundary) boundary := by
+  have hSquare : 0 ≤ (bulk - stationaryBulk data boundary) ^ 2 :=
+    sq_nonneg _
+  have hCompletion :=
+    parent_action_sub_stationary_action_eq_square data bulk boundary
+  nlinarith
+
+/-- Equality in the negative-coefficient maximum bound occurs only at the
+stationary bulk value. -/
+theorem stationary_bulk_global_maximum_eq_iff
+    (data : FiniteRankParentData ι)
+    (boundary : ι → ℝ)
+    (_hNegative : data.bulkCoefficient < 0)
+    (bulk : ℝ) :
+    parentAction data bulk boundary =
+        parentAction data (stationaryBulk data boundary) boundary ↔
+      bulk = stationaryBulk data boundary := by
+  constructor
+  · intro hEqual
+    have hCompletion :=
+      parent_action_sub_stationary_action_eq_square data bulk boundary
+    have hProduct :
+        data.bulkCoefficient / 2 *
+            (bulk - stationaryBulk data boundary) ^ 2 = 0 := by
+      rw [← hCompletion]
+      exact sub_eq_zero.mpr hEqual
+    have hCoefficient : data.bulkCoefficient / 2 ≠ 0 :=
+      div_ne_zero data.bulkCoefficientNonzero (by norm_num)
+    have hSquare : (bulk - stationaryBulk data boundary) ^ 2 = 0 :=
+      (mul_eq_zero.mp hProduct).resolve_left hCoefficient
+    nlinarith
+  · intro hBulk
+    rw [hBulk]
+
+/-- For a negative bulk coefficient, the stationary bulk value is the
+unique global maximizer with the boundary data held fixed. -/
+theorem stationary_bulk_unique_global_maximizer
+    (data : FiniteRankParentData ι)
+    (boundary : ι → ℝ)
+    (hNegative : data.bulkCoefficient < 0) :
+    ∃! maximizingBulk : ℝ, ∀ bulk : ℝ,
+      parentAction data bulk boundary ≤
+        parentAction data maximizingBulk boundary := by
+  refine ⟨stationaryBulk data boundary,
+    stationary_bulk_global_maximum data boundary hNegative, ?_⟩
+  intro maximizingBulk hMaximum
+  have hForward :=
+    stationary_bulk_global_maximum data boundary hNegative maximizingBulk
+  have hBackward := hMaximum (stationaryBulk data boundary)
+  exact (stationary_bulk_global_maximum_eq_iff
+    data boundary hNegative maximizingBulk).1
+      (le_antisymm hForward hBackward)
+
 /--
 Finite-rank synthesis: the bulk stationary point is unique, its on-shell
 action is the Schur reduction, and the reduced Hessian is Helmholtz/self-adjoint.

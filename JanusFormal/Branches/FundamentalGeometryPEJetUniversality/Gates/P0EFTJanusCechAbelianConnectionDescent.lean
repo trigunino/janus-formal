@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionSecondJet
 
 namespace JanusFormal
 namespace P0EFTJanusCechAbelianConnectionDescent
@@ -12,6 +13,7 @@ open scoped ContDiff InnerProductSpace Topology
 open P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
 open P0EFTJanusRieszShapeOperatorSmoothReducedJetBase
 open P0EFTJanusEuclideanGlobalSpinCJetRealization
+open P0EFTJanusAbelianConnectionSecondJet
 
 universe u v
 
@@ -324,6 +326,192 @@ theorem CechAbelianConnectionDescentData.descendedCurvature_contDiff
     filter_upwards [(data.domain_isOpen index).mem_nhds hIndex] with point hPoint
     exact data.descendedCurvature_eq_local hFlat index point hPoint
   exact hLocalAt.congr_of_eventuallyEq hEventuallyEq
+
+section ActualBianchi
+
+/-- Evaluating both slots of a differentiable continuous bilinear field
+commutes with its actual Fréchet derivative. -/
+theorem fderiv_continuousConnectionDerivative_apply_apply
+    (field : Tangent → ContinuousConnectionDerivative Tangent)
+    (base direction y z : Tangent)
+    (hField : DifferentiableAt ℝ field base) :
+    fderiv ℝ (fun point => field point y z) base direction =
+      fderiv ℝ field base direction y z := by
+  have hFirst := fderiv_clm_apply hField
+    (differentiableAt_const (c := y))
+  have hFirstDiff : DifferentiableAt ℝ (fun point => field point y) base :=
+    hField.clm_apply (differentiableAt_const (c := y))
+  have hSecond := fderiv_clm_apply hFirstDiff
+    (differentiableAt_const (c := z))
+  rw [hSecond, hFirst]
+  simp
+
+/-- The actual second derivative of a smooth local connection potential,
+viewed as the algebraic second jet used by the abelian Bianchi theorem. -/
+def CechAbelianConnectionDescentData.localConnectionSecondJet
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (index : Index) (base : Tangent)
+    (hBase : base ∈ data.domain index) :
+    AbelianConnectionSecondJet Tangent where
+  coefficient x y z :=
+    fderiv ℝ (data.localPotentialDerivative index) base x y z
+  mixedSymmetric := by
+    intro x y z
+    have hPotentialAt : ContDiffAt ℝ ∞ (data.potential index) base :=
+      (data.potential_contDiffOn index).contDiffAt
+        ((data.domain_isOpen index).mem_nhds hBase)
+    have hSymmetric :
+        IsSymmSndFDerivAt ℝ (data.potential index) base :=
+      hPotentialAt.isSymmSndFDerivAt (by
+        simp only [minSmoothness_of_isRCLikeNormedField]
+        exact WithTop.coe_le_coe.2 (OrderTop.le_top _))
+    exact congrArg
+      (fun value : ContinuousConnectionValue Tangent ↦ value z)
+      (hSymmetric.eq x y)
+
+/-- The actual derivative of local curvature is the curvature derivative of
+the actual local connection second jet. -/
+theorem CechAbelianConnectionDescentData.localCurvature_fderiv_apply
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (index : Index) (base : Tangent)
+    (hBase : base ∈ data.domain index)
+    (x y z : Tangent) :
+    fderiv ℝ (data.localCurvature index) base x y z =
+      curvatureDerivative
+        (data.localConnectionSecondJet index base hBase) x y z := by
+  have hDerivativeAt :
+      DifferentiableAt ℝ (data.localPotentialDerivative index) base :=
+    ((data.localPotentialDerivative_contDiffOn index).contDiffAt
+      ((data.domain_isOpen index).mem_nhds hBase)).differentiableAt (by simp)
+  have hCurvatureAt : DifferentiableAt ℝ (data.localCurvature index) base :=
+    ((data.localCurvature_contDiffOn index).contDiffAt
+      ((data.domain_isOpen index).mem_nhds hBase)).differentiableAt (by simp)
+  have hEvalYZ : DifferentiableAt ℝ
+      (fun point => data.localPotentialDerivative index point y z) base :=
+    (hDerivativeAt.clm_apply (differentiableAt_const (c := y))).clm_apply
+      (differentiableAt_const (c := z))
+  have hEvalZY : DifferentiableAt ℝ
+      (fun point => data.localPotentialDerivative index point z y) base :=
+    (hDerivativeAt.clm_apply (differentiableAt_const (c := z))).clm_apply
+      (differentiableAt_const (c := y))
+  calc
+    fderiv ℝ (data.localCurvature index) base x y z =
+        fderiv ℝ (fun point => data.localCurvature index point y z) base x :=
+      (fderiv_continuousConnectionDerivative_apply_apply
+        (data.localCurvature index) base x y z hCurvatureAt).symm
+    _ = fderiv ℝ (fun point =>
+          data.localPotentialDerivative index point y z -
+            data.localPotentialDerivative index point z y) base x := rfl
+    _ = fderiv ℝ
+          (fun point => data.localPotentialDerivative index point y z) base x -
+        fderiv ℝ
+          (fun point => data.localPotentialDerivative index point z y) base x := by
+      have hFunction :
+          (fun point => data.localPotentialDerivative index point y z -
+              data.localPotentialDerivative index point z y) =
+            (fun point => data.localPotentialDerivative index point y z) -
+              (fun point => data.localPotentialDerivative index point z y) := by
+        funext point
+        rfl
+      rw [hFunction]
+      exact congrArg (fun derivative => derivative x)
+        (fderiv_sub hEvalYZ hEvalZY)
+    _ = fderiv ℝ (data.localPotentialDerivative index) base x y z -
+        fderiv ℝ (data.localPotentialDerivative index) base x z y := by
+      rw [fderiv_continuousConnectionDerivative_apply_apply
+          (data.localPotentialDerivative index) base x y z hDerivativeAt,
+        fderiv_continuousConnectionDerivative_apply_apply
+          (data.localPotentialDerivative index) base x z y hDerivativeAt]
+    _ = curvatureDerivative
+        (data.localConnectionSecondJet index base hBase) x y z := rfl
+
+/-- The derivative of a local curvature from a smooth potential is an actual
+closed curvature derivative, not merely an algebraic assumed tensor. -/
+def CechAbelianConnectionDescentData.localClosedCurvatureDerivative
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (index : Index) (base : Tangent)
+    (hBase : base ∈ data.domain index) :
+    ClosedCurvatureDerivative Tangent where
+  tensor x y z := fderiv ℝ (data.localCurvature index) base x y z
+  skewLast := by
+    intro x y z
+    rw [data.localCurvature_fderiv_apply index base hBase,
+      data.localCurvature_fderiv_apply index base hBase]
+    exact (reduceSecondJet
+      (data.localConnectionSecondJet index base hBase)).skewLast x y z
+  cyclic := by
+    intro x y z
+    rw [data.localCurvature_fderiv_apply index base hBase,
+      data.localCurvature_fderiv_apply index base hBase,
+      data.localCurvature_fderiv_apply index base hBase]
+    exact (reduceSecondJet
+      (data.localConnectionSecondJet index base hBase)).cyclic x y z
+
+/-- Local differential Bianchi identity for the genuinely differentiated
+curvature of a smooth local connection potential. -/
+theorem CechAbelianConnectionDescentData.localCurvature_fderiv_cyclic
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (index : Index) (base : Tangent)
+    (hBase : base ∈ data.domain index)
+    (x y z : Tangent) :
+    fderiv ℝ (data.localCurvature index) base x y z +
+        fderiv ℝ (data.localCurvature index) base y z x +
+        fderiv ℝ (data.localCurvature index) base z x y = 0 :=
+  (data.localClosedCurvatureDerivative index base hBase).cyclic x y z
+
+/-- On a valid chart, the actual derivative of the globally descended
+curvature is the derivative of that chart's local curvature. -/
+theorem CechAbelianConnectionDescentData.descendedCurvature_fderiv_eq_local
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (hFlat : data.AllOverlapGaugeShiftsCurvatureFlat)
+    (index : Index) (base : Tangent)
+    (hBase : base ∈ data.domain index) :
+    fderiv ℝ (data.descendedCurvature hFlat) base =
+      fderiv ℝ (data.localCurvature index) base := by
+  have hEventuallyEq :
+      data.descendedCurvature hFlat =ᶠ[nhds base]
+        data.localCurvature index := by
+    filter_upwards [(data.domain_isOpen index).mem_nhds hBase]
+      with point hPoint
+    exact data.descendedCurvature_eq_local hFlat index point hPoint
+  exact hEventuallyEq.fderiv_eq
+
+/-- The actual derivative of the globally descended curvature, packaged as a
+closed curvature derivative.  This uses only the supplied flat-overlap
+hypothesis and does not assert a determinant-line realization. -/
+def CechAbelianConnectionDescentData.descendedClosedCurvatureDerivative
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (hFlat : data.AllOverlapGaugeShiftsCurvatureFlat)
+    (base : Tangent) : ClosedCurvatureDerivative Tangent where
+  tensor x y z :=
+    fderiv ℝ (data.descendedCurvature hFlat) base x y z
+  skewLast := by
+    intro x y z
+    let index := data.selectedCurvatureChart base
+    have hBase : base ∈ data.domain index :=
+      data.selectedCurvatureChart_mem base
+    rw [data.descendedCurvature_fderiv_eq_local hFlat index base hBase]
+    exact (data.localClosedCurvatureDerivative index base hBase).skewLast x y z
+  cyclic := by
+    intro x y z
+    let index := data.selectedCurvatureChart base
+    have hBase : base ∈ data.domain index :=
+      data.selectedCurvatureChart_mem base
+    rw [data.descendedCurvature_fderiv_eq_local hFlat index base hBase]
+    exact (data.localClosedCurvatureDerivative index base hBase).cyclic x y z
+
+/-- Global differential Bianchi identity for the genuinely differentiated
+curvature glued from smooth local potentials and curvature-flat shifts. -/
+theorem CechAbelianConnectionDescentData.descendedCurvature_fderiv_cyclic
+    (data : CechAbelianConnectionDescentData Tangent Index)
+    (hFlat : data.AllOverlapGaugeShiftsCurvatureFlat)
+    (base x y z : Tangent) :
+    fderiv ℝ (data.descendedCurvature hFlat) base x y z +
+        fderiv ℝ (data.descendedCurvature hFlat) base y z x +
+        fderiv ℝ (data.descendedCurvature hFlat) base z x y = 0 :=
+  (data.descendedClosedCurvatureDerivative hFlat base).cyclic x y z
+
+end ActualBianchi
 
 /-- The former equality-only model embeds as the zero-shift special case on
 the full-overlap cover. -/
