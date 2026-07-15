@@ -115,7 +115,7 @@ theorem EuclideanImmersionConnectionJetData.rawSecond_symmetric
   have hSmooth : minSmoothness ℝ 2 ≤ (∞ : ℕ∞ω) := by
     rw [minSmoothness_of_isRCLikeNormedField]
     change ((2 : ℕ∞) : ℕ∞ω) ≤ ((⊤ : ℕ∞) : ℕ∞ω)
-    simp
+    exact WithTop.coe_le_coe.mpr le_top
   exact (ContDiffAt.isSymmSndFDerivAt
     (n := ∞) data.immersion_contDiff.contDiffAt hSmooth) first second
 
