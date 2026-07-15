@@ -113,7 +113,8 @@ theorem EuclideanImmersionConnectionJetData.rawSecond_symmetric
   change fderiv ℝ (fderiv ℝ data.immersion) base first second =
     fderiv ℝ (fderiv ℝ data.immersion) base second first
   exact (ContDiffAt.isSymmSndFDerivAt
-    (n := ∞) data.immersion_contDiff.contDiffAt (by exact le_top)) first second
+    (n := ∞) data.immersion_contDiff.contDiffAt
+      (by simpa using (le_top : (2 : ℕ∞ω) ≤ ∞))) first second
 
 /-- The actual immersion and gauge-potential data instantiate the global ambient
 coefficient interface used by projected-seed descent. -/
