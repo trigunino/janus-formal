@@ -571,20 +571,24 @@ relative-product derivatives followed by an explicit Sylvester inverse on the
 open positive diagonal chart, a first-Frechet-differentiable co-diagonal
 positive-scale Lorentz root chart with actual metric/inverse/target/root
 derivatives and an internally proved Sylvester derivative, and an exact
-finite-frame density weight, a typed
-gravitational boundary ledger with an actual local inverse-compatible
+Frechet derivative of the full co-diagonal Candidate-A density through the
+spectral covector and Sylvester inverse, an exact finite-frame density weight
+and an invariant finite-site weighted action under sitewise diagonal frames,
+a typed gravitational boundary ledger with an actual local inverse-compatible
 determinant-measure GHY curve, a derived Gaussian-normal Palatini/EH
 cancellation, a continuous but formally non-differentiable zero-expansion
 extension, null/joint endpoint transgression, pointwise LL auxiliary
 metric/measure/flux variations with a conditional null-kernel branch, an
 affine signed composite LL measure built from three auxiliary-scalar first
-jets with actual line variations and coordinate compensation, a
-first-jet Gram `K/J` with source/ambient naturality and an exact finite
-principal-symbol kernel, an
-explicit matrix covector and unconditional finite-frame commutator pairing,
+jets with actual line variations, coordinate compensation and a genuine
+Frobenius-space Frechet derivative, a first-jet Gram `K/J` with source/ambient
+naturality and an exact finite principal-symbol kernel, an explicit matrix
+covector and unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations, an exact reduced
 Legendre/Dirac-chain bridge, a PT-flat vacuum rank no-go and a positive-dust
 constrained witness with independent rank and fixed lapse ratio, a
+one-dimensional constrained-tangent audit separating its negative ambient
+Hessian from zero variation along an exact nonlinear constraint curve, a
 relative-source rejection precursor, and explicit Candidate-A
 witnesses showing that the paired anomaly proxy fixes neither normalization
 nor a reduced finite even-counterterm proxy. See
@@ -593,12 +597,12 @@ nor a reduced finite even-counterterm proxy. See
 The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
-1. extend the first-Frechet-differentiable co-diagonal positive-scale chart and
-   its explicit Sylvester derivative to a smooth real Lorentzian square-root
-   branch, and lift the selected densities and their finite weight law from
-   pointwise matrices to metric functional derivatives on a manifold;
-2. build the global Janus field space, independent variations and diagonal
-   diffeomorphism action;
+1. extend the co-diagonal root and full interaction-density Frechet derivative
+   to a smooth real Lorentzian square-root branch, and lift the selected
+   densities and their finite weight law from pointwise matrices to metric
+   functional derivatives on a manifold;
+2. lift the finite-site field/frame model to the global Janus field space,
+   independent variations and diagonal diffeomorphism action;
 3. lift the Gaussian-normal Palatini flux to arbitrary coordinates, derive the
    extrinsic-curvature tangent from an embedding-compatible boundary curve,
    choose an admissible zero-expansion variational domain, derive the geometric
@@ -614,7 +618,8 @@ covariant source/boundary problem:
    Helmholtz and field-dependent Noether gates, derive the displayed reduced
    kinetic Lagrangian and dust source from the covariant action, lift the
    explicit dust-supported branch, then prove covariant Bianchi, ADM
-   shift/functional Poisson and independent secondary-constraint closure;
+   shift/functional Poisson, independent secondary-constraint closure and
+   stability on the physical reduced tangent/quotient;
 7. compute variational cohomology, actual regulated local/global anomalies and
    constrained stability in one scheme;
 8. derive a microscopic normalization and finite-part law without

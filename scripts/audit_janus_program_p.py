@@ -366,6 +366,18 @@ PROGRAM_P_GATES = {
             "theorem ambientRootMatrixDerivative_eq_explicitSylvester",
         ),
     ),
+    "P0EFTJanusCoDiagonalInteractionDensityFrechet.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coDiagonalInteractionDensity",
+            "theorem ambientPlusMetricVolume_hasFDerivAt",
+            "theorem coDiagonalSpectralPotential_hasFDerivAt",
+            "theorem coDiagonalSpectralPotentialDerivative_eq_explicitSylvester",
+            "theorem coDiagonalInteractionDensity_hasFDerivAt",
+            "theorem coDiagonalInteractionDensityDerivative_apply",
+            "theorem coDiagonalInteractionDensity_eq_pointwiseCandidateA",
+        ),
+    ),
     "P0EFTJanusMatrixDiagonalGaugeNoether.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -394,6 +406,16 @@ PROGRAM_P_GATES = {
             "theorem abs_det_inverse_eq_inv_abs_det_frame",
             "theorem pointwiseInteractionDensity_diagonal_weight",
             "theorem pointwiseInteractionDensity_inverseJacobian_compensated",
+        ),
+    ),
+    "P0EFTJanusFiniteFieldLocalFrameGauge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localDiagonalFrameAction",
+            "def finiteInteractionAction",
+            "theorem localInteractionDensity_inverseJacobian_compensated",
+            "theorem finiteInteractionAction_localDiagonal_invariant",
+            "theorem independent_sheet_frames_not_a_local_gauge_symmetry",
         ),
     ),
     "P0EFTJanusRelativeMetricProductFrechet.lean": (
@@ -546,6 +568,16 @@ PROGRAM_P_GATES = {
             "theorem identityAuxiliaryJet_measure_has_nonzero_variation",
         ),
     ),
+    "P0EFTJanusLLBraneCompositeMeasureFrechet.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def FrobeniusHasFDerivAt",
+            "def entryCovector",
+            "def compositeMeasureFrechetDerivative",
+            "theorem compositeMeasureFrechetDerivative_apply",
+            "theorem compositeMeasure_hasFDerivAt",
+        ),
+    ),
     "P0EFTJanusExplicitBulkBoundaryCancellation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -656,6 +688,19 @@ PROGRAM_P_GATES = {
             "theorem witness_secondary_preservation_fixes_lapse_ratio",
         ),
     ),
+    "P0EFTJanusDustFLRWConstrainedStability.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem constrainedTangent_iff_multiple",
+            "theorem tangentGenerator_is_constrained",
+            "theorem fixedLapseHamiltonian_tangentAffineLine_hasDerivAt",
+            "theorem fixedLapseHamiltonian_tangentGenerator_secondVariation",
+            "theorem exactConstraintCurve_has_tangentGenerator",
+            "theorem exactConstraintCurve_lies_on_constraints",
+            "theorem fixedLapseHamiltonian_exactConstraintCurve_hasDerivAt",
+            "theorem fixedLapseHamiltonian_exactConstraintCurve_secondVariation",
+        ),
+    ),
     "P0EFTJanusCandidateSourceModeDecomposition.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -735,6 +780,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paPositiveDiagonalSylvesterInverseProved",
         "paCoDiagonalLorentzRootChartConstructed",
         "paCoDiagonalLorentzRootFirstDerivativeProved",
+        "paCoDiagonalInteractionDensityFrechetProved",
         "paConditionalRelativeMetricRootFrechetBridgeProved",
         "paFixedGeometryBoundarySlotVariationsProved",
         "paNonNullGHYPointwiseFirstJetVariationProved",
@@ -748,6 +794,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcConditionalMatrixDiagonalGaugeNoetherProved",
         "pcExplicitMatrixInteractionFrechetNoetherProved",
         "paMatrixInteractionDensityCovarianceProved",
+        "paFiniteFieldLocalFrameGaugeInvarianceProved",
         "paExplicitBulkBoundaryLocalCancellationProved",
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paFiniteJetCompatibilityNaturalityProved",
@@ -757,10 +804,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paNullJointReparametrizationCancellationProved",
         "paLLBraneAuxiliaryVariationAndNullKernelProved",
         "paLLBraneCompositeMeasureVariationProved",
+        "paLLBraneCompositeMeasureFrechetProved",
         "paReducedFLRWBracketFactorizationFromInputHamiltoniansProved",
         "paReducedFLRWLegendreBridgeProved",
         "paPTFlatVacuumFLRWConstraintNoGoProved",
         "paMatterCurvatureFLRWConstraintBranchProved",
+        "paDustFLRWConstrainedSecondVariationAuditProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
         if (
