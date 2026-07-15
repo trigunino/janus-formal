@@ -566,31 +566,40 @@ The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
 Candidate A now instantiates part of them.  It supplies reciprocal
 four-eigenvalue cross densities, their genuine Frechet Hessian/Helmholtz test,
-a pointwise square-root-matrix potential, its conditional Sylvester derivative
-chain, a typed gravitational boundary ledger with fixed-geometry local slot
-variations, a finite Gram-tensor map with concrete `K/J`, a reduced
-Noether-proxy audit, FLRW primary-constraint precursors, and a relative-source
-rejection precursor. See
+a pointwise square-root-matrix potential, the actual metric-inverse and
+relative-product derivatives followed by its conditional Sylvester chain, a
+typed gravitational boundary ledger with fixed-geometry slot variations and
+singular zero-expansion derivative behavior plus matched local bulk/GHY
+cancellation, a first-jet Gram `K/J` with source/ambient naturality, a
+conditional pointwise simultaneous-frame Noether identity, actual
+spectral-plus-matter Euler/Hessian/Helmholtz equations, FLRW primary-constraint
+precursors, a relative-source rejection precursor, and explicit Candidate-A
+witnesses showing that the paired anomaly proxy fixes neither normalization
+nor a reduced finite even-counterterm proxy. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
 1. construct the smooth real Lorentzian square-root branch and Sylvester
-   inverse, derive metric inversion, and lift the selected densities from
-   spectra/matrices to metric functional derivatives;
+   inverse, and lift the selected densities from pointwise matrices to metric
+   functional derivatives;
 2. build the global Janus field space, independent variations and diagonal
    diffeomorphism action;
-3. instantiate and integrate the declared GHY/null/joint slots, construct the
-   actual LL action and prove cancellation of the actual bulk flux;
+3. replace the matched local bulk/GHY model by the physical EH metric flux,
+   choose a zero-expansion variational prescription, instantiate and integrate
+   the GHY/null/joint slots, and construct the actual LL action and equations;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
-5. replace the finite Gram `K/J` by the actual compatibility PDE/jet complex;
+5. lift the natural first-jet Gram `K/J` to the Lorentzian global Janus
+   compatibility PDE/jet complex and prove its symbol sequence;
 6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
    Helmholtz and field-dependent Noether gates, then prove covariant Bianchi,
    ADM shift/Poisson and independent secondary-constraint closure;
-7. compute variational cohomology, anomalies and stability in one scheme;
-8. derive normalization and finite counterterms without observed-radius input.
+7. compute variational cohomology, actual regulated local/global anomalies and
+   constrained stability in one scheme;
+8. derive a microscopic normalization and finite-part law without
+   observed-radius input.
 
 ## 13. Honest conclusion
 
@@ -598,13 +607,18 @@ Program P has substantially reduced the logical freedom, but it has not selected
 
 The current gates now state exact acceptance tests for nonlinear cross-source
 integrability, admissible boundary completion, induced-field variation and
-diagonal gauge balance. They cannot be applied covariantly until the symbolic
-M30 interaction densities, matter variations, gauge generator and geometric
-boundary functional are supplied.
+diagonal gauge balance. Candidate A supplies explicit cross densities and an
+exact pointwise spectral/matter Euler model. They cannot yet be applied
+covariantly until the smooth Lorentz field domain, metric/matter PDE
+variations, spacetime gauge generator and physical geometric boundary
+functional are constructed.
 
-The finite two-field polynomial P-C model now proves the exact equivalence
-between Helmholtz compatibility of a quadratic Euler system and realization as
-the gradient of a cubic potential. This does not discharge the nonlinear Janus
-Helmholtz or variational-cohomology obligations.
+The candidate point chart now passes an actual nonlinear Helmholtz test with
+independent matter blocks. This does not discharge the covariant Janus PDE
+Helmholtz, Bianchi, constraint or variational-cohomology obligations.
 
-What is established is a theorem/no-go architecture explaining exactly which inputs are needed and which proposed shortcuts fail. The decisive missing object is a concrete global Janus parent/target variational problem whose compatible Euler family can pass P-D/P-E/P-F classification and P-C/P-B consistency tests.
+What is established is a theorem/no-go architecture explaining exactly which
+inputs are needed and which proposed shortcuts fail. The decisive missing
+object is the global covariant realization of Candidate A, including its
+admissible square-root domain, boundary/worldvolume problem, constrained Euler
+system and one regulated microscopic normalization scheme.

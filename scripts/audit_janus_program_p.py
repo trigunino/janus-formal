@@ -294,6 +294,17 @@ PROGRAM_P_GATES = {
             "theorem positive_ptFlat_cone_spectral_interaction_indefinite",
         ),
     ),
+    "P0EFTJanusExplicitCandidatePointwiseEuler.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem candidatePointwiseAction_hasFDerivAt",
+            "theorem candidatePointwiseEuler_hasFDerivAt",
+            "theorem candidatePointwiseHessian_symmetric",
+            "theorem candidatePointwiseEuler_helmholtzJacobianAt",
+            "theorem candidatePointwiseStationary_iff_euler_components",
+            "theorem interaction_matter_cross_hessian_vanishes",
+        ),
+    ),
     "P0EFTJanusMatrixSquareRootInteractionDensity.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -319,9 +330,30 @@ PROGRAM_P_GATES = {
             "theorem differentiable_squareRoot_fderiv",
         ),
     ),
+    "P0EFTJanusMatrixDiagonalGaugeNoether.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem pointwiseInteractionScalar_diagonal_invariant",
+            "theorem pointwiseInteractionDensity_diagonal_invariant",
+            "theorem independent_frame_interaction_counterexample",
+            "theorem conjugationCurve_hasDerivAt",
+            "theorem matrixInteraction_noether_pairing",
+        ),
+    ),
     "P0EFTJanusRelativeMetricProductFrechet.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
+            "theorem relativeMetricTarget_hasFDerivAt",
+            "theorem relativeMetricTarget_fderiv",
+            "theorem relativeSquareRoot_hasFDerivAt",
+            "theorem relativeSquareRoot_fderiv",
+        ),
+    ),
+    "P0EFTJanusMetricInverseRelativeRootFrechet.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matrixInverse_hasFDerivAt",
+            "theorem matrixInverse_fderiv",
             "theorem relativeMetricTarget_hasFDerivAt",
             "theorem relativeMetricTarget_fderiv",
             "theorem relativeSquareRoot_hasFDerivAt",
@@ -354,6 +386,27 @@ PROGRAM_P_GATES = {
             "theorem worldvolumeTensionCurve_hasDerivAt",
         ),
     ),
+    "P0EFTJanusNullExpansionCountertermVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem expansionCountertermFactor_hasDerivAt",
+            "theorem varying_expansionLogFactor_eq",
+            "theorem declaredNullCountertermExpansionFamily_hasDerivAt",
+            "theorem zeroExpansionApproach_tendsto_zero",
+            "theorem derivativeCoefficient_zeroExpansionApproach",
+            "theorem derivativeCoefficient_unbounded_below_along_zeroExpansionApproach",
+        ),
+    ),
+    "P0EFTJanusExplicitBulkBoundaryCancellation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ghyBoundaryAction_hasFDerivAt_zero",
+            "theorem matched_sector_firstVariation_eq_interior",
+            "theorem matched_localTwoSectorAction_fderiv",
+            "theorem matched_stationary_iff_interiorEuler_zero",
+            "theorem mismatched_plus_coefficient_leaves_nonzero_flux",
+        ),
+    ),
     "P0EFTJanusFiniteGramInducedMetricFrechetBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -362,6 +415,17 @@ PROGRAM_P_GATES = {
             "theorem inducedGramMetric_second_fderiv",
             "theorem gramCompatibilityMap_hasFDerivAt",
             "theorem gramPulledBackAction_hasFDerivAt",
+        ),
+    ),
+    "P0EFTJanusFiniteJetCompatibilityNaturality.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteJetCompatibilityOperator_hasFDerivAt",
+            "theorem finiteJetCompatibilityOperator_source_natural",
+            "theorem finiteJetCompatibilityLinearization_source_intertwines",
+            "theorem finiteJetCompatibilityOperator_ambient_invariant",
+            "theorem finiteJetCompatibilityLinearization_ambient_intertwines",
+            "theorem ambientInfinitesimalDirection_mem_ker",
         ),
     ),
     "P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit.lean": (
@@ -390,6 +454,18 @@ PROGRAM_P_GATES = {
             "theorem candidateA_relative_mode_unsourced_iff_equal_sources",
             "theorem candidateA_single_sheet_source_excites_relative_mode",
             "theorem candidateA_opposite_pt_sources_are_pure_relative",
+        ),
+    ),
+    "P0EFTJanusCandidateSchemeFreedomAudit.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CandidateASchemeParameters",
+            "theorem candidateA_commonInteraction_eq_scaled_ptFlatEnergy",
+            "theorem candidateA_flat_compatible",
+            "theorem candidateA_pt_paired_anomaly_proxy_cancels",
+            "theorem finite_even_scheme_freedom_witness",
+            "theorem overall_normalization_freedom_witness",
+            "theorem anomaly_cancellation_alone_cannot_fix_candidateA_scheme",
         ),
     ),
 }
@@ -452,6 +528,13 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paPTFlatSpectralInteractionIndefinitenessProved",
         "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
         "paCandidateSourceModeDecompositionProved",
+        "paConditionalMetricInverseRelativeRootFrechetBridgeProved",
+        "pcConditionalMatrixDiagonalGaugeNoetherProved",
+        "paExplicitBulkBoundaryLocalCancellationProved",
+        "pcExplicitCandidatePointwiseEulerHelmholtzProved",
+        "paFiniteJetCompatibilityNaturalityProved",
+        "paNullExpansionCountertermVariationProved",
+        "pbCandidateSchemeFreedomNoGoProved",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1
