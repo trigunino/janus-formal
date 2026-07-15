@@ -113,7 +113,7 @@ theorem EuclideanImmersionConnectionJetData.rawSecond_symmetric
   change fderiv ℝ (fderiv ℝ data.immersion) base first second =
     fderiv ℝ (fderiv ℝ data.immersion) base second first
   exact (ContDiffAt.isSymmSndFDerivAt
-    (n := ∞) data.immersion_contDiff.contDiffAt (by simp)) first second
+    (n := ∞) data.immersion_contDiff.contDiffAt (by exact le_top)) first second
 
 /-- The actual immersion and gauge-potential data instantiate the global ambient
 coefficient interface used by projected-seed descent. -/
@@ -218,6 +218,7 @@ theorem EuclideanProjectedSeedImmersionData.correctedAmbientSecondDerivative_app
         tangentFrameSynthesisCLM data.tangentBasis data.basisData base
           (data.coefficients.sourceConnection base first second) = _
   rw [← data.immersion_fderiv_eq_tangentSynthesis base]
+  rfl
 
 /-- On every valid projected-seed chart, the fixed-model second fundamental
 coefficient is the normal-frame adjoint applied to the actual corrected second
@@ -252,6 +253,7 @@ theorem EuclideanProjectedSeedImmersionData.chart_normalQuadratic_apply
     data.tangentBasis data.tangentBasis_orthonormal data.basisData
     center base hValid]
   rw [← data.immersion_fderiv_eq_tangentSynthesis base]
+  rfl
 
 /-- Audit boundary after extracting fixed-chart Janus coefficients from actual
 smooth maps. -/
