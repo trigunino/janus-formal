@@ -95,6 +95,13 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameConnectionGaugeLaw
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalConnectionCurvatureGaugeLaw
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothOrthogonalGaugeJetExtraction
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorCanonicalFrameBridge
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoordinates
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanMetricKoszulConnection
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanKoszulConnectionExistence
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedVaryingNormalBundle
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetActionGroupoidRealization
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -170,6 +177,10 @@ structure ProgramStatus where
   actualJanusNaturalBundlesInserted : Prop
   ellipticSymbolsClassified : Prop
   globalUniformOrderRegionDerived : Prop
+  euclideanMetricKoszulExistenceConstructed : Prop
+  projectedSeedVaryingNormalAtlasConstructed : Prop
+  euclideanOneChartSpinCBundleConstructed : Prop
+  euclideanLowOrderSpinCActionGroupoidConstructed : Prop
 
 /-- Formal/logical theorem core through canonical pointwise frame transitions,
 smooth variable-overlap and Ricci covariance, frame and gauge jet extraction,
@@ -234,7 +245,11 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.polynomialClaimCorrected /\
   s.finiteCoverUniformizationProved /\
   s.unboundedGlobalOrderCounterexampleProved /\
-  s.correctedTheoremStated
+  s.correctedTheoremStated /\
+  s.euclideanMetricKoszulExistenceConstructed /\
+  s.projectedSeedVaryingNormalAtlasConstructed /\
+  s.euclideanOneChartSpinCBundleConstructed /\
+  s.euclideanLowOrderSpinCActionGroupoidConstructed
 
 /-- Full Janus specialization. -/
 def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=

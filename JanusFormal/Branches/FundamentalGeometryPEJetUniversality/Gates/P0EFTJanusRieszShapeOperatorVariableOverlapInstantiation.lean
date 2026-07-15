@@ -10,6 +10,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped ContDiff InnerProductSpace
+open P0EFTJanusRieszShapeOperatorSmoothDependence
 open P0EFTJanusRieszShapeOperatorMovingFrame
 open P0EFTJanusRieszShapeOperatorVariableOverlap
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
@@ -40,7 +41,8 @@ variable {Chart : Type x}
 
 /-- Coordinate-free physical Riesz family in the reference trivialization. -/
 def VariableOverlapRieszCharts.physicalRiesz
-    (charts : VariableOverlapRieszCharts Chart) :
+    (charts : VariableOverlapRieszCharts
+      (JetBase := JetBase) (Tangent := Tangent) (Normal := Normal) Chart) :
     JetBase → Tangent →L[ℝ] Tangent :=
   geometricRieszShapeFamily charts.referenceTangentFrame
     charts.referenceNormalFrame charts.form charts.physicalNormal
@@ -48,7 +50,8 @@ def VariableOverlapRieszCharts.physicalRiesz
 /-- Local Riesz expression in the chart obtained by the selected variable
 orthogonal reparametrization. -/
 def VariableOverlapRieszCharts.localRiesz
-    (charts : VariableOverlapRieszCharts Chart)
+    (charts : VariableOverlapRieszCharts
+      (JetBase := JetBase) (Tangent := Tangent) (Normal := Normal) Chart)
     (chart : Chart) : JetBase → Tangent →L[ℝ] Tangent :=
   geometricRieszShapeFamily
     (reparametrizeSmoothOrthogonalFrameFamilyVariable
@@ -60,7 +63,8 @@ def VariableOverlapRieszCharts.localRiesz
 
 /-- Every local chart expression realizes the same physical Riesz family. -/
 theorem VariableOverlapRieszCharts.localRiesz_eq_physicalRiesz
-    (charts : VariableOverlapRieszCharts Chart)
+    (charts : VariableOverlapRieszCharts
+      (JetBase := JetBase) (Tangent := Tangent) (Normal := Normal) Chart)
     (chart : Chart) :
     charts.localRiesz chart = charts.physicalRiesz := by
   exact geometricRieszShapeFamily_variable_coordinate_invariant
@@ -69,7 +73,8 @@ theorem VariableOverlapRieszCharts.localRiesz_eq_physicalRiesz
 
 /-- Each local chart expression is smooth. -/
 theorem VariableOverlapRieszCharts.localRiesz_contDiff
-    (charts : VariableOverlapRieszCharts Chart)
+    (charts : VariableOverlapRieszCharts
+      (JetBase := JetBase) (Tangent := Tangent) (Normal := Normal) Chart)
     (chart : Chart) :
     ContDiff ℝ ∞ (charts.localRiesz chart) := by
   exact geometricRieszShapeFamily_variable_overlap_contDiff
@@ -79,7 +84,8 @@ theorem VariableOverlapRieszCharts.localRiesz_contDiff
 
 /-- The physical Riesz family itself is smooth. -/
 theorem VariableOverlapRieszCharts.physicalRiesz_contDiff
-    (charts : VariableOverlapRieszCharts Chart) :
+    (charts : VariableOverlapRieszCharts
+      (JetBase := JetBase) (Tangent := Tangent) (Normal := Normal) Chart) :
     ContDiff ℝ ∞ charts.physicalRiesz := by
   exact geometricRieszShapeFamily_contDiff
     charts.referenceTangentFrame charts.referenceNormalFrame
@@ -89,7 +95,8 @@ theorem VariableOverlapRieszCharts.physicalRiesz_contDiff
 /-- Convert the variable-overlap construction into the two final theorem
 obligations expected by `StructuredJetRieszData`. -/
 theorem variableOverlap_closes_final_obligations
-    (charts : VariableOverlapRieszCharts Chart) :
+    (charts : VariableOverlapRieszCharts
+      (JetBase := JetBase) (Tangent := Tangent) (Normal := Normal) Chart) :
     (∀ chart, charts.localRiesz chart = charts.physicalRiesz) ∧
     (∀ chart, ContDiff ℝ ∞ (charts.localRiesz chart)) := by
   exact ⟨charts.localRiesz_eq_physicalRiesz,

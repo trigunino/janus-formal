@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - research/fundamental-geometry-d
-      - "agent/**"
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality.lean"
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/**"
@@ -57,19 +56,66 @@ on:
       - ".github/workflows/pe-jet-universality.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Keep only the current failing/new gate here. Clear this string once it is
+  # covered by the full build and no longer needs a fast diagnostic pass.
+  LEAN_TARGET: ''
+
 jobs:
   lean:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Lean and Mathlib cache
+
+      - name: Restore Lake build cache
+        id: lake-cache
+        uses: actions/cache/restore@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}
+
+      - name: Set up Lean once
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
           build: false
           test: false
           lint: false
-          use-mathlib-cache: true
+          use-github-cache: false
+          use-mathlib-cache: false
+
+      - name: Populate Mathlib cache only when missing
+        run: |
+          if [[ -n "$(find .lake/packages/mathlib/.lake/build -name Mathlib.olean -print -quit 2>/dev/null)" ]]; then
+            echo "Mathlib build cache restored from GitHub cache; skipping lake exe cache get."
+          else
+            echo "Mathlib build cache missing; downloading upstream Mathlib cache."
+            lake exe cache get
+          fi
+
+      - name: Build current targeted Lean gate
+        if: ${{ env.LEAN_TARGET != '' }}
+        run: |
+          set +e
+          lake build "$LEAN_TARGET" > targeted-lean.log 2>&1
+          status=$?
+          cat targeted-lean.log
+          exit $status
+
+      - name: Upload targeted Lean log
+        if: ${{ always() && env.LEAN_TARGET != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pe-jet-universality-targeted-lean-log
+          path: targeted-lean.log
+          if-no-files-found: error
+
       - name: Build corrected jet-universality head and Riesz descent gates
         run: |
           set +e
@@ -98,19 +144,50 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedPhysicalRangeBridge \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorCanonicalProjectedSeedAssembly \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusActualStructuredJetExtraction \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConnectionCorrectedActualJetBridge \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFixedNormalTrivializationFamily \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoordinates \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalSpaceTrivialization \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedSmoothCoefficientTransport \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoefficientOverlap \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedAmbientJetDescent \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedAmbientJetSmoothDescent \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanImmersionConnectionJetExtraction \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanMetricKoszulConnection \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanKoszulConnectionExistence \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedVaryingNormalBundle \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetActionGroupoidRealization \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
           exit $status
+
       - name: Upload focused Lean log
-        if: always()
+        if: ${{ always() && hashFiles('focused-lean.log') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: pe-jet-universality-lean-log
           path: focused-lean.log
           if-no-files-found: error
 
+      - name: Save Lake build cache after targeted/full attempt
+        if: ${{ always() && steps.lake-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+
   python-audit:
+    needs: lean
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

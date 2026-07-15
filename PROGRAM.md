@@ -113,11 +113,14 @@ P-E  regular local natural operators are locally smooth finite-jet evaluators;
      low-order reduction isolates (II,F);
      smooth adapted frames produce oriented overlap cocycles;
      matching central Spin and determinant-root defects give a SpinC cocycle;
-     the rank-two circle model is identified explicitly with matrix SO(2)
+     the rank-two circle model is identified with matrix SO(2) and Mathlib Spin(2);
+     Euclidean metrics construct their Koszul connections;
+     projected-seed normal spaces form a smooth overlap atlas;
+     one-chart SpinC data and a low-order action groupoid are instantiated
 P-F  a self-adjoint target pairing pulls back to Helmholtz/Noether structure
 ```
 
-The ordinary natural/gauge-natural categorical theorem is classical. The repository now proves the action-groupoid and orbitwise-descent cores; concrete low-order immersion and abelian-connection quotients; smooth adapted-frame and moving-frame laws; determinant-one residual reduction; central lift-defect and SpinC diagonal-cancellation theorems; circle-valued two-torsion; a concrete `Spin(2)` double cover; and an explicit group equivalence `U(1) ≃ SO(2)`. The Janus specialization remains conditional on the even Clifford-algebra identification, the required higher-dimensional Spin covers, actual manifold and principal-bundle packaging, characteristic-class matching, effective descent and a higher-order structured jet-isomorphism theorem. Pointwise multiplicity one does not imply one constant global coupling without controlling the invariant scalar coefficient algebra and extension across isotropy strata.
+The ordinary natural/gauge-natural categorical theorem is classical. The repository now also constructs metric-derived Euclidean Koszul connections, a projected-seed varying-normal atlas, canonical one-chart rank-two SpinC connection data and a valid-chart low-order residual/SpinC action groupoid. The full Janus specialization remains conditional on higher-dimensional Spin covers, nontrivial global manifold/principal-bundle packaging, characteristic-class matching, effective descent and a higher-order structured jet-isomorphism theorem. Pointwise multiplicity one does not imply one constant global coupling without controlling the invariant scalar coefficient algebra and extension across isotropy strata.
 
 The shortest honest route is:
 

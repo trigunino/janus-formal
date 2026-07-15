@@ -81,6 +81,29 @@ JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
 
 A green Lean head means that every imported theorem and proof compiles. It does **not** turn uninstantiated status fields into geometric objects or prove the complete physical Janus theory.
 
+### PR 10 working-branch update (15 July 2026)
+
+The current PR 10 branch has been validated locally with
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+```
+
+The integrated head compiles. Remote PR CI is not claimed here. New proved,
+scoped constructions are:
+
+- existence of the smooth finite-dimensional Euclidean Levi-Civita/Koszul
+  coefficient from a smooth positive-definite metric;
+- a projected-seed atlas for the varying intrinsic normal spaces, with smooth
+  orthogonal overlap maps and coefficient transition laws;
+- the canonical one-chart rank-two Clifford SpinC Cech bundle with the supplied
+  smooth abelian potential as connection data;
+- a valid-chart low-order residual/SpinC action groupoid extracted from actual
+  Euclidean immersion, metric-Koszul and gauge-potential derivatives.
+
+These do not assert the full differentiable Janus jet groupoid or a nontrivial
+global Janus SpinC bundle.
+
 ## 3. Stable architecture
 
 ```text
@@ -156,6 +179,7 @@ The current `main` stack proves, in the declared models:
 - holonomic composition;
 - action-groupoid, orbit and stabilizer laws;
 - reconstruction of equivariant sections on one transitive orbit from isotropy-fixed values;
+- a concrete valid-chart low-order residual/SpinC action-groupoid realization;
 - the need for separate compatibility across isotropy strata.
 
 The operator category is not an ordinary category of fixed linear representations with plain fiber maps.
@@ -187,8 +211,11 @@ Lean constructs:
 - canonical pointwise normal-frame transitions;
 - smooth adjoint-formula transitions on overlaps;
 - transition jets and their direct derivative construction.
+- a projected-seed varying-normal atlas with smooth transition and coefficient laws;
+- constructive smooth Euclidean metric-Koszul connection existence.
 
-These local constructions are not yet the complete global Janus frame and normal bundles.
+These constructions package a genuine projected-seed normal atlas, but not yet
+the complete global Janus frame/normal bundle over the full background space.
 
 #### 5.4 SpinC and rank-two Clifford model
 
@@ -200,9 +227,13 @@ Lean proves:
 - the circle-squaring cover and kernel `{±1}`;
 - `U(1) ≃ SO(2)`;
 - equivalence with Mathlib's even-unitary Lipschitz `CliffordAlgebra.spinGroup` for the negative Euclidean plane;
-- the Clifford-valued rank-two central double cover and SpinC diagonal quotient.
+- the Clifford-valued rank-two central double cover and SpinC diagonal quotient;
+- the canonical one-chart Cech principal bundle and a connection from the
+  supplied global smooth gauge potential.
 
-Higher-dimensional Clifford covers, smooth principal bundles and characteristic-class matching remain open.
+Higher-dimensional Clifford covers, nontrivial/global Janus principal-bundle
+descent, determinant-line identification and characteristic-class matching
+remain open.
 
 #### 5.5 Codazzi and abelian Bianchi exactness
 
