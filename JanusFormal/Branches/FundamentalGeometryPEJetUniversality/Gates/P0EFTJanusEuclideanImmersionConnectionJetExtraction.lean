@@ -10,7 +10,9 @@ noncomputable section
 
 open Module
 open scoped ContDiff InnerProductSpace
+open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
+open P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging
 open P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness
 open P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
 open P0EFTJanusConnectionCorrectedActualJetBridge
@@ -110,7 +112,7 @@ theorem EuclideanImmersionConnectionJetData.rawSecond_symmetric
   change fderiv ℝ (fderiv ℝ data.immersion) base first second =
     fderiv ℝ (fderiv ℝ data.immersion) base second first
   exact (data.immersion_contDiff.contDiffAt.isSymmSndFDerivAt
-    (by simp)) first second
+    (by exact le_top)) first second
 
 /-- The actual immersion and gauge-potential data instantiate the global ambient
 coefficient interface used by projected-seed descent. -/
@@ -178,10 +180,10 @@ def EuclideanProjectedSeedImmersionData.physicalOperator
       (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
       (ι := ι) (κ := κ)) :
     Tangent → Tangent →L[ℝ] Tangent :=
-  data.coefficients.toProjectedSeedGlobalAmbientJetData
-    .descendedPhysicalOperator data.tangentBasis
-      data.tangentBasis_orthonormal data.normalBasis
-      data.normalBasis_orthonormal data.basisData data.ambientDimension
+  ProjectedSeedGlobalAmbientJetData.descendedPhysicalOperator
+    data.coefficients.toProjectedSeedGlobalAmbientJetData data.tangentBasis
+    data.tangentBasis_orthonormal data.normalBasis
+    data.normalBasis_orthonormal data.basisData data.ambientDimension
 
 /-- The physical shape operator extracted from genuine fixed-chart derivatives
 is globally smooth. -/
@@ -190,10 +192,10 @@ theorem EuclideanProjectedSeedImmersionData.physicalOperator_contDiff
       (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
       (ι := ι) (κ := κ)) :
     ContDiff ℝ ∞ data.physicalOperator := by
-  exact data.coefficients.toProjectedSeedGlobalAmbientJetData
-    .descendedPhysicalOperator_contDiff data.tangentBasis
-      data.tangentBasis_orthonormal data.normalBasis
-      data.normalBasis_orthonormal data.basisData data.ambientDimension
+  exact ProjectedSeedGlobalAmbientJetData.descendedPhysicalOperator_contDiff
+    data.coefficients.toProjectedSeedGlobalAmbientJetData data.tangentBasis
+    data.tangentBasis_orthonormal data.normalBasis
+    data.normalBasis_orthonormal data.basisData data.ambientDimension
 
 /-- The center-independent corrected ambient coefficient is exactly
 `D²i + Γᴹ - Di(ΓΣ)`, with both derivatives computed from the actual immersion. -/
@@ -202,9 +204,9 @@ theorem EuclideanProjectedSeedImmersionData.correctedAmbientSecondDerivative_app
       (Tangent := Tangent) (Normal := Normal) (Ambient := Ambient)
       (ι := ι) (κ := κ))
     (base first second : Tangent) :
-    (data.coefficients.toProjectedSeedGlobalAmbientJetData
-      .correctedAmbientSecondDerivative data.tangentBasis data.basisData base)
-        first second =
+    (ProjectedSeedGlobalAmbientJetData.correctedAmbientSecondDerivative
+      data.coefficients.toProjectedSeedGlobalAmbientJetData
+      data.tangentBasis data.basisData base) first second =
       fderiv ℝ (fderiv ℝ data.coefficients.immersion) base first second +
         data.coefficients.ambientConnection base first second -
         fderiv ℝ data.coefficients.immersion base
@@ -227,9 +229,10 @@ theorem EuclideanProjectedSeedImmersionData.chart_normalQuadratic_apply
     (hValid : projectedSeedChartValid data.basisData.tangentFrame
       (pointwiseNormalSeedCharts data.basisData) center base)
     (first second : Tangent) :
-    (data.coefficients.toProjectedSeedGlobalAmbientJetData.toChartData
+    ((ProjectedSeedGlobalAmbientJetData.toChartData
+      data.coefficients.toProjectedSeedGlobalAmbientJetData
       data.tangentBasis data.tangentBasis_orthonormal data.normalBasis
-      data.normalBasis_orthonormal data.basisData center).normalQuadratic base
+      data.normalBasis_orthonormal data.basisData center).normalQuadratic base)
         first second =
       projectedSeedChartNormalAdjointCLM data.normalBasis
         data.normalBasis_orthonormal data.basisData center base
@@ -238,11 +241,12 @@ theorem EuclideanProjectedSeedImmersionData.chart_normalQuadratic_apply
           fderiv ℝ data.coefficients.immersion base
             (data.coefficients.sourceConnection base first second)) := by
   rw [ProjectedSeedSmoothAmbientJetFamilyOn.normalQuadratic_apply]
-  rw [data.coefficients.toProjectedSeedGlobalAmbientJetData
-    .chart_corrected_eq_global data.tangentBasis
-      data.tangentBasis_orthonormal data.normalBasis
-      data.normalBasis_orthonormal data.basisData center base hValid]
-  rw [data.correctedAmbientSecondDerivative_apply]
+  rw [ProjectedSeedGlobalAmbientJetData.chart_corrected_eq_global
+    data.coefficients.toProjectedSeedGlobalAmbientJetData data.tangentBasis
+    data.tangentBasis_orthonormal data.normalBasis
+    data.normalBasis_orthonormal data.basisData center base hValid]
+  rw [EuclideanProjectedSeedImmersionData.correctedAmbientSecondDerivative_apply
+    data base first second]
 
 /-- Audit boundary after extracting fixed-chart Janus coefficients from actual
 smooth maps. -/
