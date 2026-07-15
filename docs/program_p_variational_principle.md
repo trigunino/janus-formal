@@ -588,6 +588,12 @@ candidate further has a continuous three-parameter two-dimensional
 null-coordinate Cayley--Hamilton root chart for independently supplied Lorentz
 metrics, covering diagonalizable and Jordan points.  It proves neither
 uniqueness nor a global or four-dimensional principal branch.  The candidate
+now also supplies, on that chart, an explicit two-sided Sylvester inverse,
+bijectivity and a unique solution for every target variation.  Differentiating
+the square identity identifies any supplied differentiable explicit-chart
+root curve's derivative with that inverse.  These are local two-dimensional
+statements, not a global
+four-dimensional root or Sylvester theorem.  The candidate
 further supplies an exact finite-frame density weight
 and an invariant finite-site weighted action under sitewise diagonal frames,
 a genuine affine 1D pullback `J_epsilon rho(phi_epsilon)` whose variation is
@@ -619,7 +625,10 @@ Frobenius-space Frechet derivative, Euclidean and explicit Minkowski Gram
 finite principal-symbol kernels, plus an exact arbitrary-nonzero-frequency
 Lorentzian Gram--Saint-Venant symbol sequence by explicit pivot reconstruction,
 now lifted coefficientwise to arbitrary finite families of nonzero Fourier
-modes.  Zero modes, infinite-series convergence, PDE solvability and boundary
+modes.  A separate finite gate uniquely decomposes every symmetric compatible
+family into a normalized Gram image and a symmetric zero-frequency residual,
+with an idempotent residual projection and the resulting finite cohomology
+characterization.  Infinite-series convergence, PDE solvability and boundary
 conditions remain open.  It also has an explicit matrix covector and
 unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations and, separately,
@@ -632,7 +641,11 @@ stationarity equivalence; it is not a continuum covariant PDE or determinant-
 measure result.  A positive one-dimensional metric version now induces
 `sqrt(g)`, the inverse kinetic weight and the holonomic scalar variation from
 the same metric and field variables.  This remains finite and periodic, not a
-four-dimensional covariant scalar PDE or stress tensor.  It also supplies an
+four-dimensional covariant scalar PDE or stress tensor.  Under every bijection
+of finite site sets, its transported action is invariant, its first variation
+and strong Euler field are equivariant, and fixed-metric stationarity is
+preserved.  This remains finite reindexing, not a spacetime diffeomorphism.  It
+also supplies an
 exact reduced
 Legendre/Dirac-chain bridge, a finite-site ultralocal mixed-primary functional
 bracket equal to the sum of local secondaries with localized primary
@@ -655,10 +668,13 @@ symmetric-cutoff convergence, together with its maximal-domain diagonal
 operator proved dense, closed, unbounded and self-adjoint.  Its actual square
 on Fourier basis vectors is now bridged to the existing finite and summable
 diagonal traces.  A genuine bounded continuous diagonal heat operator is also
-contractive, equals the identity at zero and satisfies the semigroup law.  The
-basiswise bridge is not a global functional-calculus construction, the heat
-operator is not yet proved equal to the abstract exponential of `D^2`, and no
-abstract trace-class or full Janus anomaly/determinant theorem is proved. See
+contractive, equals the identity at zero and satisfies the semigroup law.
+Strong continuity is proved for every Hilbert-space state at every
+nonnegative time, and each orbit in the dense Fourier basis has the expected
+`-lambda_n^2` derivative.  The maximal generator domain is not identified with
+the domain of `D^2`; the operator is not yet proved equal to the abstract
+functional-calculus exponential, and no abstract trace-class or full Janus
+anomaly/determinant theorem is proved. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the
@@ -666,15 +682,16 @@ covariant source/boundary problem:
 
 1. extend the co-diagonal root, its coordinate off-diagonal boost orbit, the
    independent non-diagonalizable Jordan witness and the continuous
-   three-parameter two-dimensional Cayley--Hamilton chart,
+   three-parameter two-dimensional Cayley--Hamilton chart with its explicit
+   bijective Sylvester inverse and derivative identity,
    together with the full interaction-density Frechet derivative, to a smooth
    unique real Lorentzian square-root branch for independently supplied
    four-dimensional metrics, and lift the selected densities and their finite
    weight law from pointwise matrices to metric functional derivatives on a
    manifold;
-2. lift the finite-site frame model and local affine four-dimensional pullback
-   to the global Janus field space, independent variations and arbitrary
-   diagonal diffeomorphism action;
+2. lift the finite-site frame model, the finite scalar reindexing covariance and
+   the local affine four-dimensional pullback to the global Janus field space,
+   independent variations and arbitrary diagonal diffeomorphism action;
 3. lift the Gaussian-normal Palatini flux and explicit local embedded
    `h/B/K` chart to arbitrary coordinates and a global boundary curve, extend
    the finite variable-flux six-face Stokes result to continuum variable
@@ -686,9 +703,9 @@ covariant source/boundary problem:
    and a nonempty throat branch;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
-5. extend the finite nonzero-mode Fourier exactness through zero-mode,
-   convergence and boundary analysis to the global Janus Lorentz
-   compatibility differential/PDE complex;
+5. extend the finite zero-mode cohomology decomposition through infinite-series
+   convergence and boundary analysis to the global Janus Lorentz compatibility
+   differential/PDE complex;
 6. lift the finite positive-metric periodic holonomic scalar variation, where
    measure and inverse already come from one metric, to a four-dimensional
    continuum matter field and stress tensor, then lift
@@ -706,11 +723,11 @@ covariant source/boundary problem:
    secondary-constraint closure and
    stability on the physical reduced tangent/quotient;
 7. extend the self-adjoint unbounded circle Fourier operator to the full Janus
-   Dirac operator, identify the concrete diagonal heat semigroup with the
-   abstract functional calculus of `D^2`, prove the required trace-class
-   statements, compute variational cohomology, determinant data and actual
-   regulated local/global anomalies, and close constrained stability in one
-   scheme;
+   Dirac operator, identify the concrete diagonal heat-semigroup generator on
+   its maximal domain and the semigroup with the abstract functional calculus
+   of `D^2`, prove the required trace-class statements, compute variational
+   cohomology, determinant data and actual regulated local/global anomalies,
+   and close constrained stability in one scheme;
 8. derive a microscopic normalization and finite-part law without
    observed-radius input.
 
@@ -734,11 +751,13 @@ independent matter blocks. This does not discharge the covariant Janus PDE
 Helmholtz, Bianchi, constraint or variational-cohomology obligations.
 
 Likewise, the Jordan family and continuous two-dimensional Cayley--Hamilton
-chart do not construct the unique global Lorentz root branch.  The
+chart, including its bijective Sylvester inverse and derivative identity, do
+not construct the unique global Lorentz root branch.  The
 self-adjoint circle Dirac operator, its basiswise `D^2` trace bridge and the
-contractive diagonal heat semigroup do not yet construct the full Janus Dirac
-operator, identify the abstract functional-calculus exponential, prove trace
-class, or compute anomalies, determinant or normalization.
+strongly continuous contractive diagonal heat semigroup do not yet construct
+the full Janus Dirac operator, identify its maximal generator domain or the
+abstract functional-calculus exponential, prove trace class, or compute
+anomalies, determinant or normalization.
 
 What is established is a theorem/no-go architecture explaining exactly which
 inputs are needed and which proposed shortcuts fail. The decisive missing
