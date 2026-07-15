@@ -403,6 +403,18 @@ PROGRAM_P_GATES = {
             "theorem densityPullbackCurve_hasDerivAt_coordinateFluxDivergence",
         ),
     ),
+    "P0EFTJanusLinearizedEinsteinBianchiSymbol.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SymmetricPerturbation",
+            "def linearizedEinsteinSymbol",
+            "theorem linearizedEinsteinSymbol_symmetric",
+            "def einsteinSymbolDivergence",
+            "theorem linearizedEinsteinSymbol_bianchi",
+            "def pureGaugePerturbation",
+            "theorem linearizedEinsteinSymbol_pureGauge_eq_zero",
+        ),
+    ),
     "P0EFTJanusMatrixDiagonalGaugeNoether.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -557,6 +569,23 @@ PROGRAM_P_GATES = {
             "theorem extrinsicTrace_eq",
         ),
     ),
+    "P0EFTJanusGaussianNormalIntegratedBoundaryBox.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CompactTangentBox",
+            "theorem tangentBoxSet_volume_lt_top",
+            "def tangentBoxIntegral",
+            "structure BoxIntervalIntegrable",
+            "theorem boxIntervalIntegrable_const",
+            "theorem localEH_add_GHY_density_eq_zero",
+            "theorem einsteinHilbertFluxDensity_boxIntervalIntegrable",
+            "theorem exactGHYDerivativeDensity_boxIntervalIntegrable",
+            "theorem integrated_EH_add_exact_GHY_eq_zero",
+            "theorem integrated_cancellation_orientation_cases",
+            "theorem integratedTwoSectorBoundaryLedger_eq_zero",
+            "theorem oppositeOrientedTwoSectorBoundaryLedger_eq_zero",
+        ),
+    ),
     "P0EFTJanusNullExpansionCountertermVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -679,6 +708,17 @@ PROGRAM_P_GATES = {
             "theorem lorentzGramLinearization_kernel_exact_of_equiv",
             "theorem lorentzGramPrincipalSymbol_eq_zero_iff_range_etaOrthogonal",
             "theorem lorentzGramPrincipalSymbol_injective_of_surjective",
+        ),
+    ),
+    "P0EFTJanusSaintVenantCompatibilitySymbolExactness.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def lorentzGramCanonicalSymbol",
+            "def saintVenantSymbol",
+            "theorem saintVenantSymbol_lorentzGramCanonicalSymbol_eq_zero",
+            "theorem lorentzGramCanonicalSymbol_injective",
+            "theorem tensor_eq_strainSymbol_reconstructed_of_symmetric_of_kernel",
+            "theorem canonical_lorentzGram_saintVenant_symbol_sequence_exact",
         ),
     ),
     "P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit.lean": (
@@ -807,6 +847,20 @@ PROGRAM_P_GATES = {
             "theorem pairedCutoffChiralTrace_tendsto_infinitePair",
         ),
     ),
+    "P0EFTJanusCircleDiracHeatTraceCancellation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CircleTwist",
+            "abbrev HeatTime",
+            "def circleDiracAction",
+            "theorem pt_eigenvalueSq_eq_positive",
+            "theorem heatWeight_positive_summable",
+            "theorem cutoffEvenHeatTrace_tendsto",
+            "theorem cutoffChiralHeatTrace_tendsto",
+            "theorem pairedRegulatedChiralTrace_eq_zero",
+            "theorem cutoffChiralHeatTrace_positive_add_pt_eq_zero",
+        ),
+    ),
     "P0EFTJanusCandidateSignedChargeNewtonianBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -879,6 +933,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
+        "paLinearizedEinsteinBianchiAndGaugeSymbolProved",
         "paConditionalRelativeMetricRootFrechetBridgeProved",
         "paFixedGeometryBoundarySlotVariationsProved",
         "paNonNullGHYPointwiseFirstJetVariationProved",
@@ -887,6 +942,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paNonNullGHYExtrinsicTraceCurveVariationProved",
         "paGaussianNormalEHGHYCancellationDerived",
         "paGaussianNormalEmbeddedHypersurfaceLeviCivitaProved",
+        "paGaussianNormalIntegratedBoundaryBoxCancellationProved",
         "paPTFlatSpectralInteractionIndefinitenessProved",
         "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
         "paCandidateSourceModeDecompositionProved",
@@ -900,6 +956,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",
+        "paCanonicalLorentzGramSaintVenantSymbolExactnessProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
@@ -913,6 +970,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paDustFLRWConstrainedSecondVariationAuditProved",
         "paFiniteModeHeatKernelAnomalyRegulatorProved",
         "paCountablePairedHeatKernelCutoffLimitProved",
+        "paCircleFourierDiracHeatTraceCancellationProved",
         "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
