@@ -183,7 +183,8 @@ theorem fixedMetric_stationary_transport_iff {Site Target : Type*}
       _ = 0 := h (pullbackField reindex variation)
 
 /-- Combined finite reindexing gate: action invariance, first-variation
-covariance, strong-Euler covariance, and stationarity equivalence. -/
+covariance, and strong-Euler covariance.  Stationarity equivalence is the
+separate theorem immediately above. -/
 theorem finiteMetricHolonomicReindexingCovariance_gate
     {Site Target : Type*} [Fintype Site] [Fintype Target]
     (reindex : Site ≃ Target) (shift : Equiv.Perm Site)
