@@ -114,8 +114,10 @@ The finite-rank extension permits any finite boundary index and proves the
 exact on-shell reduction, symmetric Schur kernel and pairing-level
 self-adjointness. It also proves that the bulk Euler expression is the actual
 derivative of the parent action and computes the Fréchet derivative and
-constant Hessian of the reduced action. It remains finite-dimensional, not a
-Janus bulk PDE.
+constant Hessian of the reduced action. Exact square completion classifies the
+stationary bulk value, at fixed boundary data, as the unique global minimum
+for a positive bulk coefficient and the unique global maximum for a negative
+one. It remains finite-dimensional, not a Janus bulk PDE.
 
 ### P-A verdict
 
@@ -194,10 +196,24 @@ At arbitrary finite coefficient rank, an affine/quadratic Euler family is the
 formal gradient data of linear/quadratic/cubic potential coefficients exactly
 when linear reciprocity and the quadratic Helmholtz swap hold. The normalized
 finite-sum potential has this gradient as its actual Fréchet derivative, so the
-reconstructed derivative pairs with the Euler source in every direction.
+reconstructed derivative pairs with the Euler source in every direction. The
+actual Euler map also has the displayed Jacobian as its Fréchet derivative,
+and the coefficient Helmholtz swaps make that Jacobian self-adjoint in the
+finite coordinate pairing.
 
 **Lean:** `P0EFTJanusFiniteRankPolynomialHelmholtz.lean`
 **Evidence:** **T** coefficient-level; no global variational cohomology.
+
+More generally, on an open convex real normed configuration domain, a
+differentiable Euler one-form with symmetric actual Jacobian admits a scalar
+action whose Fréchet derivative is that one-form. On the whole space, the
+straight-segment integral gives an explicit primitive normalized at a chosen
+base point. Any two such actions on a nonempty convex domain differ by a
+constant, so fixing one base value removes this ambiguity. This is a
+configuration-space Poincaré lemma, not the local PDE variational bicomplex.
+
+**Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`
+**Evidence:** **T/C** on open convex configuration domains.
 
 ### 6.4 Global field-theory obligations
 
@@ -281,7 +297,8 @@ lifts, phases and matching defects are packaged as a pointwise SpinC Cech
 transition presentation; no transition continuity/smoothness or principal
 bundle total space is constructed. Supplied local abelian potentials and
 additive gauge shifts give affine connection descent and a unique global smooth
-curvature function when all overlap shifts are flat. These are
+curvature function when all overlap shifts are flat. The derivative of that
+descended curvature also obeys the abelian cyclic Bianchi identity. These are
 conditional/fixed-base theorems, not full
 effective descent or construction of the actual global Janus SpinC bundle and
 determinant connection.

@@ -150,6 +150,9 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **T/C** in that finite model the displayed bulk Euler equation is the actual
   derivative of the parent action, while the reduced Schur gradient and
   constant Hessian are exact Fréchet derivatives;
+- **T/C** exact square completion makes the stationary scalar bulk mode at
+  fixed boundary data the unique global minimum for positive bulk coefficient
+  and the unique global maximum for negative bulk coefficient;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -174,6 +177,13 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   its linear and quadratic Helmholtz swaps hold;
 - **T** the normalized reconstructed cubic potential has the Euler source as
   its actual Fréchet derivative in every finite-dimensional direction;
+- **T** the finite-rank Euler map has its displayed Jacobian as its actual
+  Fréchet derivative, and the Helmholtz coefficient swaps make it pairing
+  self-adjoint at every field value;
+- **T/C** on an open convex normed configuration domain, every differentiable
+  Euler one-form with symmetric actual Jacobian has a scalar action primitive;
+  on a nonempty convex domain equal Euler derivatives determine actions up to
+  one additive constant, removed by a base-value normalization;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
 
@@ -285,7 +295,8 @@ Current theorem evidence:
   laws but no transition continuity/smoothness or bundle total space;
 - **T/C** local abelian connection potentials obey affine first-jet descent and,
   when all supplied additive shifts are flat, their curvatures glue uniquely to
-  a global smooth curvature function;
+  a global smooth curvature function whose actual derivative satisfies the
+  cyclic abelian Bianchi identity;
 - **T/N** local finite order need not give one global uniform order;
 - **T/N** smooth dependence is not automatically polynomial;
 - **N** equivariance plus finite-dimensionality does not by itself imply finite generation for nonreductive jet-group actions;

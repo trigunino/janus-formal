@@ -318,7 +318,8 @@ transition continuity/smoothness and a principal-bundle total space are not
 constructed. Supplied local abelian
 potentials and additive overlap shifts satisfy the affine derivative law. When
 all overlap shifts are curvature-flat, their local curvatures glue uniquely to
-a global smooth curvature function. Neither theorem derives these inputs from actual Janus
+a global smooth curvature function. Its actual Fréchet derivative satisfies
+the cyclic abelian Bianchi identity. Neither theorem derives these inputs from actual Janus
 characteristic classes or determinant transitions.
 
 ## Janus specialization still open
@@ -357,7 +358,7 @@ characteristic classes or determinant transitions.
 | actual valid-chart overlap arrows | proved with identity and Cech composition in the low-order Euclidean model |
 | low-order invariant-observable descent | unique chart-independent values; globally smooth under a smooth coefficient realization |
 | multi-chart SpinC Cech transition presentation | conditional pointwise theorem from supplied cocycles, lifts, phases and matching defects; continuity and total space open |
-| abelian connection overlap curvature descent | conditional global smooth curvature theorem from supplied local potentials and flat additive shifts |
+| abelian connection overlap curvature descent | conditional global smooth curvature with actual cyclic Bianchi derivative from supplied local potentials and flat additive shifts |
 | actual structured SpinC jet groupoid | open |
 | effective Janus descent theorem | open |
 | full smooth equivariant-map classification | open |

@@ -189,6 +189,7 @@ structure ProgramStatus where
   euclideanLowOrderSmoothInvariantObservableDescentProved : Prop
   suppliedPointwiseSpinCCechPresentationPackaged : Prop
   conditionalSmoothAbelianCurvatureDescentProved : Prop
+  conditionalSmoothAbelianCurvatureBianchiProved : Prop
 
 /-- Formal/logical theorem core through canonical pointwise frame transitions,
 smooth variable-overlap and Ricci covariance, frame and gauge jet extraction,
@@ -262,7 +263,8 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.euclideanLowOrderInvariantOverlapDescentProved /\
   s.euclideanLowOrderSmoothInvariantObservableDescentProved /\
   s.suppliedPointwiseSpinCCechPresentationPackaged /\
-  s.conditionalSmoothAbelianCurvatureDescentProved
+  s.conditionalSmoothAbelianCurvatureDescentProved /\
+  s.conditionalSmoothAbelianCurvatureBianchiProved
 
 /-- Full Janus specialization. -/
 def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=

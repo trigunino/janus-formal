@@ -37,6 +37,18 @@ PROGRAM_P_GATES = {
         (
             "theorem finite_rank_polynomial_helmholtz_iff",
             "theorem reconstructed_potential_fderiv_apply",
+            "theorem eulerVector_fderiv",
+            "theorem eulerVector_fderiv_pairing_self_adjoint",
+        ),
+    ),
+    "P0EFTJanusConvexHelmholtzReconstruction.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem action_gradient_helmholtz_at",
+            "theorem convex_open_helmholtz_reconstruction",
+            "theorem radial_action_hasFDerivAt",
+            "theorem convex_actions_same_euler_differ_by_constant",
+            "theorem convex_actions_same_euler_eqOn_of_eq_at_base",
         ),
     ),
     "P0EFTJanusFiniteRankParentSchurHelmholtz.lean": (
@@ -47,6 +59,9 @@ PROGRAM_P_GATES = {
             "theorem parent_action_hasDerivAt_bulk",
             "theorem reduced_action_fderiv",
             "theorem reduced_hessian_operator_fderiv",
+            "theorem parent_action_sub_reduced_action_eq_square",
+            "theorem stationary_bulk_unique_global_minimizer",
+            "theorem stationary_bulk_unique_global_maximizer",
         ),
     ),
 }

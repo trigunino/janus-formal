@@ -153,6 +153,259 @@ noncomputable def eulerValue {ι : Type*} [Fintype ι]
     ∑ j, euler.linear i j * x j +
     (1 / 2 : ℝ) * ∑ j, ∑ k, euler.quadratic i j k * x j * x k
 
+/-- The actual finite-dimensional Euler map assembled from its components. -/
+noncomputable def eulerVector {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι) :
+    (ι → ℝ) → (ι → ℝ) :=
+  fun x i => eulerValue euler x i
+
+@[simp]
+theorem eulerVector_apply
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ)
+    (i : ι) :
+    eulerVector euler x i = eulerValue euler x i := rfl
+
+/-- Matrix coefficient of the Jacobian of the quadratic Euler map. -/
+noncomputable def eulerJacobianCoefficient
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ)
+    (i j : ι) : ℝ :=
+  euler.linear i j + ∑ k, euler.quadratic i j k * x k
+
+/-- The Jacobian as an actual continuous linear operator on field space. -/
+noncomputable def eulerJacobian
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ) :
+    (ι → ℝ) →L[ℝ] (ι → ℝ) :=
+  ContinuousLinearMap.pi fun i =>
+    ∑ j, (eulerJacobianCoefficient euler x i j) •
+      (ContinuousLinearMap.proj j : (ι → ℝ) →L[ℝ] ℝ)
+
+@[simp]
+theorem eulerJacobian_apply
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x direction : ι → ℝ)
+    (i : ι) :
+    eulerJacobian euler x direction i =
+      ∑ j, eulerJacobianCoefficient euler x i j * direction j := by
+  simp [eulerJacobian, smul_eq_mul]
+
+/-- The unsimplified product-rule derivative of one Euler component. -/
+noncomputable def eulerComponentDerivativeRaw
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ)
+    (i : ι) :
+    (ι → ℝ) →L[ℝ] ℝ :=
+  (∑ j, euler.linear i j •
+      (ContinuousLinearMap.proj j : (ι → ℝ) →L[ℝ] ℝ)) +
+    (1 / 2 : ℝ) •
+      (∑ j, ∑ k, (
+        (euler.quadratic i j k * x j) •
+            (ContinuousLinearMap.proj k : (ι → ℝ) →L[ℝ] ℝ) +
+          (euler.quadratic i j k * x k) •
+            (ContinuousLinearMap.proj j : (ι → ℝ) →L[ℝ] ℝ)))
+
+/-- Product-rule derivative of one normalized Euler component. -/
+theorem eulerValue_hasFDerivAt_raw
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ)
+    (i : ι) :
+    HasFDerivAt (fun y : ι → ℝ => eulerValue euler y i)
+      (eulerComponentDerivativeRaw euler x i) x := by
+  let coordinate (j : ι) : (ι → ℝ) →L[ℝ] ℝ :=
+    ContinuousLinearMap.proj j
+  have hCoordinate (j : ι) :
+      HasFDerivAt (fun y : ι → ℝ => y j) (coordinate j) x := by
+    exact (coordinate j).hasFDerivAt
+  have hLinear :
+      HasFDerivAt
+        (fun y : ι → ℝ => ∑ j, euler.linear i j * y j)
+        (∑ j, euler.linear i j • coordinate j) x := by
+    apply HasFDerivAt.fun_sum
+    intro j _
+    exact (hCoordinate j).const_mul (euler.linear i j)
+  have hQuadratic :
+      HasFDerivAt
+        (fun y : ι → ℝ =>
+          ∑ j, ∑ k, euler.quadratic i j k * y j * y k)
+        (∑ j, ∑ k, (
+          (euler.quadratic i j k * x j) • coordinate k +
+            (euler.quadratic i j k * x k) • coordinate j)) x := by
+    apply HasFDerivAt.fun_sum
+    intro j _
+    apply HasFDerivAt.fun_sum
+    intro k _
+    convert ((hCoordinate j).const_mul
+      (euler.quadratic i j k)).mul (hCoordinate k) using 1
+    all_goals
+      ext direction
+      simp [coordinate]
+      try ring
+  have hCombined :=
+    (hLinear.add (hQuadratic.const_mul (1 / 2 : ℝ))).const_add
+      (euler.affine i)
+  simpa [eulerValue, eulerComponentDerivativeRaw, coordinate,
+    add_assoc] using hCombined
+
+/-- Field-slot symmetry collapses the raw derivative to the Jacobian row. -/
+theorem eulerComponentDerivativeRaw_eq_jacobian_row
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ)
+    (i : ι) :
+    eulerComponentDerivativeRaw euler x i =
+      ∑ j, (eulerJacobianCoefficient euler x i j) •
+        (ContinuousLinearMap.proj j : (ι → ℝ) →L[ℝ] ℝ) := by
+  classical
+  ext direction
+  have hSwap :
+      (∑ j, ∑ k,
+        euler.quadratic i j k * x j * direction k) =
+        ∑ j, ∑ k,
+          euler.quadratic i j k * x k * direction j := by
+    calc
+      (∑ j, ∑ k,
+          euler.quadratic i j k * x j * direction k) =
+          ∑ j, ∑ k,
+            euler.quadratic i k j * x j * direction k := by
+        apply Finset.sum_congr rfl
+        intro j _
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [euler.quadratic_field_symmetric i j k]
+      _ = ∑ j, ∑ k,
+          euler.quadratic i j k * x k * direction j := by
+        rw [Finset.sum_comm]
+  simp [eulerComponentDerivativeRaw, eulerJacobianCoefficient,
+    Finset.sum_add_distrib, smul_eq_mul]
+  rw [hSwap]
+  have hHalf :
+      (2 : ℝ)⁻¹ * (∑ j, ∑ k,
+          euler.quadratic i j k * x k * direction j) +
+        (2 : ℝ)⁻¹ * (∑ j, ∑ k,
+          euler.quadratic i j k * x k * direction j) =
+        ∑ j, ∑ k,
+          euler.quadratic i j k * x k * direction j := by
+    ring
+  rw [hHalf]
+  simp only [add_mul, Finset.sum_add_distrib]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [Finset.sum_mul]
+
+/-- Each Euler component has the corresponding Jacobian row as its actual
+Fréchet derivative. -/
+theorem eulerValue_hasFDerivAt
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ)
+    (i : ι) :
+    HasFDerivAt (fun y : ι → ℝ => eulerValue euler y i)
+      (∑ j, (eulerJacobianCoefficient euler x i j) •
+        (ContinuousLinearMap.proj j : (ι → ℝ) →L[ℝ] ℝ)) x :=
+  (eulerValue_hasFDerivAt_raw euler x i).congr_fderiv
+    (eulerComponentDerivativeRaw_eq_jacobian_row euler x i)
+
+/-- The actual Euler vector has the stated Jacobian as its Fréchet
+derivative. -/
+theorem eulerVector_hasFDerivAt
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ) :
+    HasFDerivAt (eulerVector euler) (eulerJacobian euler x) x := by
+  unfold eulerVector eulerJacobian
+  rw [hasFDerivAt_pi]
+  intro i
+  exact eulerValue_hasFDerivAt euler x i
+
+/-- Exact `fderiv` formula for the actual quadratic Euler map. -/
+theorem eulerVector_fderiv
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (x : ι → ℝ) :
+    fderiv ℝ (eulerVector euler) x = eulerJacobian euler x :=
+  (eulerVector_hasFDerivAt euler x).fderiv
+
+/-- The coefficient Helmholtz conditions make every Jacobian matrix
+symmetric. -/
+theorem eulerJacobianCoefficient_symmetric
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (hLinear : LinearReciprocity euler)
+    (hQuadratic : QuadraticHelmholtzSwap euler)
+    (x : ι → ℝ)
+    (i j : ι) :
+    eulerJacobianCoefficient euler x i j =
+      eulerJacobianCoefficient euler x j i := by
+  unfold eulerJacobianCoefficient
+  rw [hLinear i j]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [hQuadratic i j k]
+
+/-- Coefficient Helmholtz symmetry implies pairing-level self-adjointness of
+the actual Jacobian at every field value. -/
+theorem eulerJacobian_pairing_self_adjoint
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (hLinear : LinearReciprocity euler)
+    (hQuadratic : QuadraticHelmholtzSwap euler)
+    (x left right : ι → ℝ) :
+    (∑ i, eulerJacobian euler x left i * right i) =
+      ∑ i, left i * eulerJacobian euler x right i := by
+  simp only [eulerJacobian_apply]
+  calc
+    (∑ i, (∑ j,
+        eulerJacobianCoefficient euler x i j * left j) * right i) =
+        ∑ i, ∑ j,
+          eulerJacobianCoefficient euler x i j * left j * right i := by
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [Finset.sum_mul]
+    _ = ∑ i, ∑ j,
+        eulerJacobianCoefficient euler x j i * left j * right i := by
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [eulerJacobianCoefficient_symmetric euler hLinear hQuadratic x i j]
+    _ = ∑ i, ∑ j,
+        left i * (eulerJacobianCoefficient euler x i j * right j) := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      ring
+    _ = ∑ i, left i *
+        (∑ j, eulerJacobianCoefficient euler x i j * right j) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [Finset.mul_sum]
+
+/-- The actual derivative of the Euler vector is self-adjoint in the standard
+finite coordinate pairing under the coefficient Helmholtz conditions. -/
+theorem eulerVector_fderiv_pairing_self_adjoint
+    {ι : Type*} [Fintype ι]
+    (euler : QuadraticEulerCoefficients ι)
+    (hLinear : LinearReciprocity euler)
+    (hQuadratic : QuadraticHelmholtzSwap euler)
+    (x left right : ι → ℝ) :
+    (∑ i, (fderiv ℝ (eulerVector euler) x) left i * right i) =
+      ∑ i, left i * (fderiv ℝ (eulerVector euler) x) right i := by
+  rw [eulerVector_fderiv]
+  exact eulerJacobian_pairing_self_adjoint
+    euler hLinear hQuadratic x left right
+
 /-- Normalized finite-sum value of a potential through cubic order. -/
 noncomputable def potentialValue {ι : Type*} [Fintype ι]
     (potential : CubicPotentialCoefficients ι)
