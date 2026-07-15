@@ -7,23 +7,39 @@ namespace P0EFTJanusRenormalizedSpectralDeterminant
 set_option autoImplicit false
 
 open P0EFTJanusGlobalSeparatedDiracModel
-open P0EFTJanusInfiniteL2DiracDomain
 open P0EFTJanusFullHolonomyDeterminant
 open P0EFTJanusSeparatedSpectrumProperness
 
 noncomputable section
 
-def cutoffModes (N : ℕ) : Finset ProductDiracMode :=
-  (product_mode_bounding_box_finite N).toFinset
+def cutoffSphereLevels (N : ℕ) : Finset ℕ :=
+  Finset.range (N + 1)
 
-def separatedModeKernel (data : ProductThroatSpectralData)
-    (holonomy : ℝ) (mode : ProductDiracMode) : ℝ :=
+/-- The circle momentum product has already been zeta-regularized in this kernel. -/
+def sphereLevelKernel (data : ProductThroatSpectralData)
+    (holonomy : ℝ) (level : ℕ) : ℝ :=
   modeDeterminantKernel
-    (data.circlePeriod * separatedDiracWeight data mode) holonomy
+    (data.circlePeriod * Real.sqrt (sphereEigenvalueSquared data level)) holonomy
 
+/--
+Cut off only the sphere levels.  Circle modes must not be summed here because
+`sphereLevelKernel` already represents their regularized infinite product.
+-/
 def finiteCutoffLogDeterminant (data : ProductThroatSpectralData)
     (N : ℕ) (holonomy : ℝ) : ℝ :=
-  ∑ mode ∈ cutoffModes N, Real.log (separatedModeKernel data holonomy mode)
+  ∑ level ∈ cutoffSphereLevels N,
+    (sphereMultiplicity data level : ℝ) *
+      Real.log (sphereLevelKernel data holonomy level)
+
+theorem finite_cutoff_is_circle_reduced (data : ProductThroatSpectralData)
+    (N : ℕ) (holonomy : ℝ) :
+    finiteCutoffLogDeterminant data N holonomy =
+      ∑ level ∈ Finset.range (N + 1),
+        (sphereMultiplicity data level : ℝ) *
+          Real.log (modeDeterminantKernel
+            (data.circlePeriod * Real.sqrt (sphereEigenvalueSquared data level))
+            holonomy) := by
+  rfl
 
 /-- A regulator-independent family requires one holonomy-independent local subtraction. -/
 structure RenormalizedDeterminantFamily (data : ProductThroatSpectralData) where

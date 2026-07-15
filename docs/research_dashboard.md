@@ -18,8 +18,8 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | Program | Role | Strongest current result | Terminal blocker |
 | --- | --- | --- | --- |
 | **D0/D8** | global geometry and normal lift | free mapping-torus correction; one-sided normal sign and quarter-lift algebra; focused heads green | actual global decorated geometry and Pin/root bundle |
-| **D2** | focused twisted Dirac spectrum | green `l2`, self-adjointness, compact resolvent, renormalized-determinant interface and fixed-scheme uniqueness | prove convergence of one common local counterterm for the holonomy family |
-| **D7** | heat kernel/effective action | green D2 operator bridge plus explicit `a0/a2/a4` common counterterm and fixed-scheme determinant uniqueness | prove convergence of the locally subtracted holonomy remainder |
+| **D2** | focused twisted Dirac spectrum | green monopole eigenvalue/multiplicity law, `l2`, self-adjointness, compact resolvent and circle-reduced determinant | prove the monopole spectrum/heat-trace match |
+| **D7** | heat kernel/effective action | green monopole spectral law, single-counted circle product, common counterterm and convergence criteria | match the spectrum to the heat trace, then prove a summable shell bound |
 | **D9/D11** | elliptic and natural-operator gates | green D9 symbol/BRST and D11 naturality/jet heads | concrete Janus Fredholm family |
 | **D10** | Quillen/anomalies | green transgression/inflow and explicit D2 mode-phase bridge | analytic family index, eta holonomy and partition section |
 | **P0/P-A** | reject shortcuts and define relative selection | moduli geometry no-go; normalized quadratic uniqueness; parent Schur reduction | derive the parent theory |

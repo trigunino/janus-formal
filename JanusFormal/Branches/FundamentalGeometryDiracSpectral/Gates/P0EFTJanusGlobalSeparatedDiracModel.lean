@@ -22,9 +22,24 @@ structure ProductThroatSpectralData where
   circlePeriodPositive : 0 < circlePeriod
   monopoleCharge : ℤ
 
+def monopoleAbsCharge (data : ProductThroatSpectralData) : ℕ :=
+  data.monopoleCharge.natAbs
+
+/-- Multiplicity `|q| + 2n` of the positive level `n = level + 1`. -/
+def sphereMultiplicity (data : ProductThroatSpectralData) (level : ℕ) : ℕ :=
+  monopoleAbsCharge data + 2 * (level + 1)
+
 noncomputable def sphereEigenvalueSquared
     (data : ProductThroatSpectralData) (level : ℕ) : ℝ :=
-  ((level + 1 : ℕ) : ℝ) ^ 2 / data.sphereRadius ^ 2
+  ((level + 1 : ℕ) : ℝ) *
+    ((level + 1 + monopoleAbsCharge data : ℕ) : ℝ) /
+      data.sphereRadius ^ 2
+
+theorem sphere_multiplicity_positive
+    (data : ProductThroatSpectralData) (level : ℕ) :
+    0 < sphereMultiplicity data level := by
+  unfold sphereMultiplicity
+  omega
 
 noncomputable def circleEigenvalue
     (data : ProductThroatSpectralData) (choice : NormalRootChoice)
@@ -43,7 +58,9 @@ theorem sphere_eigenvalue_squared_positive
     0 < sphereEigenvalueSquared data level := by
   have hRadius : data.sphereRadius ^ 2 > 0 := sq_pos_of_pos data.sphereRadiusPositive
   have hLevel : (0 : ℝ) < ((level + 1 : ℕ) : ℝ) := by positivity
-  exact div_pos (sq_pos_of_pos hLevel) hRadius
+  have hShifted : (0 : ℝ) <
+      ((level + 1 + monopoleAbsCharge data : ℕ) : ℝ) := by positivity
+  exact div_pos (mul_pos hLevel hShifted) hRadius
 
 theorem circle_eigenvalue_nonzero
     (data : ProductThroatSpectralData) (choice : NormalRootChoice)
