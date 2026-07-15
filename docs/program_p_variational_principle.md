@@ -576,13 +576,16 @@ gravitational boundary ledger with an actual local inverse-compatible
 determinant-measure GHY curve, a derived Gaussian-normal Palatini/EH
 cancellation, a continuous but formally non-differentiable zero-expansion
 extension, null/joint endpoint transgression, pointwise LL auxiliary
-metric/measure/flux variations with a conditional null-kernel branch, a
+metric/measure/flux variations with a conditional null-kernel branch, an
+affine signed composite LL measure built from three auxiliary-scalar first
+jets with actual line variations and coordinate compensation, a
 first-jet Gram `K/J` with source/ambient naturality and an exact finite
 principal-symbol kernel, an
 explicit matrix covector and unconditional finite-frame commutator pairing,
 actual spectral-plus-matter Euler/Hessian/Helmholtz equations, an exact reduced
-Legendre/Dirac-chain bridge plus a PT-flat vacuum rank no-go, a relative-source
-rejection precursor, and explicit Candidate-A
+Legendre/Dirac-chain bridge, a PT-flat vacuum rank no-go and a positive-dust
+constrained witness with independent rank and fixed lapse ratio, a
+relative-source rejection precursor, and explicit Candidate-A
 witnesses showing that the paired anomaly proxy fixes neither normalization
 nor a reduced finite even-counterterm proxy. See
 `docs/program_p_explicit_covariant_candidate.md`.
@@ -600,8 +603,8 @@ covariant source/boundary problem:
    extrinsic-curvature tangent from an embedding-compatible boundary curve,
    choose an admissible zero-expansion variational domain, derive the geometric
    null/joint transformation laws, instantiate and integrate all slots, and
-   lift the pointwise LL model to composite measure fields, worldvolume PDEs
-   and a nonempty throat branch;
+   lift the affine composite LL measure and pointwise auxiliary action to
+   global fields, worldvolume PDEs and a nonempty throat branch;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
 5. lift the natural first-jet Gram `K/J` and its finite normal-kernel symbol to
@@ -609,8 +612,8 @@ covariant source/boundary problem:
    full symbol sequence;
 6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
    Helmholtz and field-dependent Noether gates, derive the displayed reduced
-   kinetic Lagrangian from the covariant action, add matter or curvature to
-   evade the proved vacuum PT-flat collapse, then prove covariant Bianchi, ADM
+   kinetic Lagrangian and dust source from the covariant action, lift the
+   explicit dust-supported branch, then prove covariant Bianchi, ADM
    shift/functional Poisson and independent secondary-constraint closure;
 7. compute variational cohomology, actual regulated local/global anomalies and
    constrained stability in one scheme;

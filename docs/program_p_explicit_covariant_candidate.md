@@ -115,9 +115,13 @@ symmetric auxiliary inverse metric, a non-Riemannian measure density and a
 magnetic worldvolume flux. Actual metric, measure and flux derivatives give
 the symmetric auxiliary stress equation and the measure constraint. On the
 conditional auxiliary branch the induced metric has an explicit nonzero null
-vector. This verifies the local algebra only: it does not construct the
-measure from auxiliary scalars, prove branch non-emptiness, derive the
-worldvolume PDEs or integrate a throat solution.
+vector. A companion affine `2+1` first-jet model realizes the measure as the
+signed determinant of the Jacobian of three auxiliary scalars. It proves the
+actual determinant variation along every affine line, its signed coordinate
+weight and compensation, and a nondegenerate identity-jet witness. This
+verifies local algebra only: it does not construct global auxiliary fields or
+an orientation-changing absolute density, prove branch non-emptiness, derive
+the worldvolume PDEs or integrate a throat solution.
 
 `P0EFTJanusExplicitBoundaryDensityLocalVariations.lean` computes exact affine
 one-parameter derivatives of the GHY extrinsic-curvature slot, null
@@ -321,6 +325,17 @@ are dependent. Therefore the unrestricted local rank witness cannot simply be
 moved onto this vacuum flat branch. Matter, spatial curvature or a different
 coefficient branch is required before attempting a generic constraint chain.
 
+The reduced model now supplies one explicit matter-supported answer. Adding
+fixed comoving dust energies and the standard scale-linear curvature terms
+preserves the factorized primary bracket. At the flat witness
+`a_plus = a_minus = p_plus = p_minus = 1` with positive dust
+`rho_plus = rho_minus = 1/12`, both primaries and the dynamical secondary
+vanish, the primary covectors are independent, and a three-constraint minor is
+exactly `145/144`. Secondary preservation is
+`(145/12) (N_plus - N_minus) = 0`, hence `N_minus = N_plus`. The witness uses
+dust, not curvature; its source Hamiltonians remain reduced inputs and imply
+no covariant matter, ADM or BD conclusion.
+
 The source algebra is also explicit: a single-sheet matter source generically
 excites the relative mode, equal sources remove it, and opposite PT sources
 are purely relative. This is a PPN rejection precursor, not a propagator, PPN
@@ -379,6 +394,9 @@ Implemented in the current finite, spectral or pointwise models:
 - actual pointwise LL auxiliary-metric, measure and flux variations, the
   symmetric auxiliary stress/measure equations and a conditional nonzero
   induced-metric null kernel;
+- affine auxiliary scalars whose `3 x 3` Jacobian gives the signed composite
+  LL measure, with actual line derivatives, coordinate-density compensation
+  and a nondegenerate first-jet witness;
 - exact local two-sector bulk/GHY cancellation and a nonzero mismatch
   residual;
 - finite Gram-tensor map, its actual first and second derivatives, positivity
@@ -399,6 +417,9 @@ Implemented in the current finite, spectral or pointwise models:
   Lagrangian;
 - PT-flat vacuum no-go: simultaneous primary constraints collapse to the
   symmetric static point where their covectors are dependent;
+- explicit positive-dust PT-flat witness with both primary constraints and the
+  secondary zero, independent primary covectors, nonzero three-constraint
+  minor and secondary preservation fixing `N_minus = N_plus`;
 - exact diagonal/relative source decomposition as a PPN rejection precursor;
 - actual pointwise Euler equations and symmetric full Hessian for the spectral
   interaction plus two independent quadratic matter blocks;
@@ -417,18 +438,18 @@ Still required before Candidate A is a completed Janus action:
    derive the extrinsic-curvature tangent from an embedding-compatible
    geometric boundary curve, instantiate and integrate all gravitational
    strata, select an admissible zero-expansion variational domain, lift the
-   pointwise LL auxiliary model to composite measure fields and worldvolume
-   PDEs, establish a nonempty throat branch, and prove cancellation of the
-   physical bulk flux;
+   affine composite LL measure and pointwise auxiliary action to global fields
+   and worldvolume PDEs, establish a nonempty throat branch, and prove
+   cancellation of the physical bulk flux;
 4. instantiate the diagonal diffeomorphism generator and covariant Noether--
    Bianchi identity;
 5. reproduce the Janus Newtonian sign matrix without a negative spin-2 kinetic
    mode;
-6. derive the displayed reduced kinetic Lagrangian from the covariant
-   Candidate-A EH/GHY action, add matter or spatial curvature to evade the
-   proved vacuum PT-flat rank collapse, and extend the viable branch to the
-   ADM shift, functional Poisson bracket and generic independent
-   secondary-constraint closure; then derive constrained stability and PPN
+6. derive the displayed reduced kinetic Lagrangian and dust source from the
+   covariant Candidate-A EH/GHY/matter action, extend the explicit
+   dust-supported branch to the ADM shift, functional Poisson bracket and
+   generic independent secondary-constraint closure; then derive constrained
+   stability and PPN
    parameters for the exact matter couplings;
 7. compute the actual local/global anomalies in one regulator and supply a
    microscopic normalization/finite-part law in that same scheme.
@@ -442,7 +463,7 @@ is used in its definition.
 | --- | --- | --- |
 | 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal positive-scale Lorentz root with explicit Sylvester derivative, and exact finite-frame density weight | smooth root/Sylvester inverse on the full causal-compatible Lorentz domain and full metric functional variation |
 | 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector and unconditional finite-frame commutator pairing | global field space and actual diagonal diffeomorphism action |
-| 3. Bulk/boundary/worldvolume | typed ledger, exact local inverse-compatible GHY curve, derived Gaussian-normal EH cancellation, formal continuity/non-differentiability of the null zero extension, null/joint endpoint transgression, and pointwise LL auxiliary variations/stress/null-kernel branch | arbitrary-coordinate/embedding boundary geometry, integrated flux, admissible zero-expansion domain, composite LL measure fields, PDEs, throat data and full stratum integration |
+| 3. Bulk/boundary/worldvolume | typed ledger, exact local inverse-compatible GHY curve, derived Gaussian-normal EH cancellation, formal continuity/non-differentiability of the null zero extension, null/joint endpoint transgression, pointwise LL auxiliary variations/stress/null-kernel branch, and an affine signed composite measure from three auxiliary scalars | arbitrary-coordinate/embedding boundary geometry, integrated flux, admissible zero-expansion domain, global composite LL fields, PDEs, throat data and full stratum integration |
 | 4. Concrete `K/J` | actual first-jet Gram `K/J`, source/ambient naturality, gauge-kernel directions and exact finite principal-symbol kernel | Lorentzian/global Janus compatibility PDE/jet complex and its symbol sequence/exactness |
-| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, explicit finite-frame Noether, reduced Legendre/Dirac-chain bridge and PT-flat vacuum rank no-go | covariant metric/matter PDEs, diagonal Bianchi, covariant reduction, viable matter/curved PT branch and ADM shift/Poisson closure |
+| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, explicit finite-frame Noether, reduced Legendre/Dirac-chain bridge, PT-flat vacuum rank no-go, and a dust-supported constrained witness with independent rank and fixed lapse ratio | covariant metric/matter PDEs, diagonal Bianchi, covariant reduction of the dust branch and ADM shift/Poisson closure |
 | 6. Stability/scheme | explicit spectral interaction indefiniteness, source-mode rejection precursor and reduced Candidate-A anomaly-proxy scheme-freedom no-go | constrained kinetic stability, PPN derivation, covariantly admissible counterterms, actual regulated anomalies and a microscopic normalization/finite-part law |
