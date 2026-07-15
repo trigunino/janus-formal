@@ -576,7 +576,11 @@ open positive diagonal chart, a first-Frechet-differentiable co-diagonal
 positive-scale Lorentz root chart with actual metric/inverse/target/root
 derivatives and an internally proved Sylvester derivative, and an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
-spectral covector and Sylvester inverse, an exact finite-frame density weight
+spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
+also gives coordinate off-diagonal root/target derivatives and a Sylvester
+identity, while remaining conjugate to its diagonal seed and reconstructing
+the metric pair from the selected root; it is not a new geometric branch.  The
+candidate further supplies an exact finite-frame density weight
 and an invariant finite-site weighted action under sitewise diagonal frames,
 a genuine affine 1D pullback `J_epsilon rho(phi_epsilon)` whose variation is
 the total derivative `(xi rho)'`, followed by a local affine `R^4` flow whose
@@ -599,12 +603,19 @@ affine signed composite LL measure built from three auxiliary-scalar first
 jets with actual line variations, coordinate compensation and a genuine
 Frobenius-space Frechet derivative, Euclidean and explicit Minkowski Gram
 `K/J` models with source/ambient naturality, exact infinitesimal kernels and
-finite principal-symbol kernels, plus an exact canonical-frequency
-Lorentzian Gram--Saint-Venant symbol sequence, an explicit matrix
+finite principal-symbol kernels, plus an exact arbitrary-nonzero-frequency
+Lorentzian Gram--Saint-Venant symbol sequence by explicit pivot reconstruction,
+an explicit matrix
 covector and unconditional finite-frame commutator pairing,
-actual spectral-plus-matter Euler/Hessian/Helmholtz equations, an exact reduced
-Legendre/Dirac-chain bridge, a PT-flat vacuum rank no-go and a positive-dust
-constrained witness with independent rank and fixed lapse ratio, a
+actual spectral-plus-matter Euler/Hessian/Helmholtz equations and, separately,
+an independent-coordinate scalar first-jet density with actual measure,
+inverse-metric, scalar and gradient variations but no holonomic/determinant
+relations or covariant PDE.  It also supplies an exact reduced
+Legendre/Dirac-chain bridge, a finite-site ultralocal mixed-primary functional
+bracket equal to the sum of local secondaries with localized primary
+preservation (not nonlinear algebra closure), a PT-flat vacuum rank no-go and
+a positive-dust constrained witness with independent rank and fixed lapse
+ratio, a
 one-dimensional constrained-tangent audit separating its negative ambient
 Hessian from zero variation along an exact nonlinear constraint curve, a
 relative-source rejection precursor, a reduced PT-signed source bridge with
@@ -621,10 +632,11 @@ Gaussian summability and symmetric-cutoff convergence. See
 The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
-1. extend the co-diagonal root and full interaction-density Frechet derivative
-   to a smooth real Lorentzian square-root branch, and lift the selected
-   densities and their finite weight law from pointwise matrices to metric
-   functional derivatives on a manifold;
+1. extend the co-diagonal root and its coordinate off-diagonal boost orbit,
+   together with the full interaction-density Frechet derivative, to a smooth
+   real Lorentzian square-root branch for independently supplied metrics, and
+   lift the selected densities and their finite weight law from pointwise
+   matrices to metric functional derivatives on a manifold;
 2. lift the finite-site frame model and local affine four-dimensional pullback
    to the global Janus field space, independent variations and arbitrary
    diagonal diffeomorphism action;
@@ -638,17 +650,20 @@ covariant source/boundary problem:
    and a nonempty throat branch;
 4. lift the finite Gram-tensor map and no-double-counting chain rule to the
    chosen immersion/bulk geometry;
-5. lift the finite Minkowski Gram `K/J` and its Lorentz-orthogonal symbol
-   kernel plus canonical-frequency Saint-Venant exactness to arbitrary
-   frequencies and the global Janus compatibility PDE/jet complex;
-6. lift spectral Helmholtz and the reduced proxy audit to the nonlinear block
-   Helmholtz and field-dependent Noether gates, derive the displayed reduced
-   kinetic Lagrangian and dust source from the covariant action, lift the
+5. lift the now arbitrary-nonzero-frequency Lorentz Gram--Saint-Venant symbol
+   exactness to the global Janus compatibility differential/PDE complex,
+   including boundary and global exactness;
+6. impose holonomic-jet and determinant-measure relations on the matter
+   variation, then lift spectral Helmholtz and the reduced proxy audit to the
+   nonlinear block Helmholtz and field-dependent Noether gates, derive the
+   displayed reduced kinetic Lagrangian and dust source from the covariant
+   action, lift the
    explicit dust-supported branch, derive the supplied reduced signed-charge
    law from the covariant Candidate-A weak-field equations, lift the local
    four-dimensional divergence and flat Einstein-symbol identities to the
-   nonlinear curved covariant Bianchi identity, then prove ADM
-   shift/functional Poisson, independent
+   nonlinear curved covariant Bianchi identity, then extend the finite
+   ultralocal primary bracket to continuum ADM shift/spatial functional
+   Poisson and hypersurface-deformation closure, with independent
    secondary-constraint closure and
    stability on the physical reduced tangent/quotient;
 7. promote the algebraic circle Fourier action to a self-adjoint unbounded
@@ -665,7 +680,8 @@ Program P has substantially reduced the logical freedom, but it has not selected
 The current gates now state exact acceptance tests for nonlinear cross-source
 integrability, admissible boundary completion, induced-field variation and
 diagonal gauge balance. Candidate A supplies explicit cross densities and an
-exact pointwise spectral/matter Euler model. They cannot yet be applied
+exact spectral Euler model plus a separate independent-coordinate metric-
+coupled scalar first-jet variation. They cannot yet be applied
 covariantly until the smooth Lorentz field domain, metric/matter PDE
 variations, global spacetime gauge generator and physical geometric boundary
 functional are constructed.
