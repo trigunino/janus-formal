@@ -47,6 +47,29 @@ def inverseScalarSquareDimension : MassDimension :=
 def dressedMaxwellDensityDimension : MassDimension :=
   inverseScalarSquareDimension + maxwellDensityDimension
 
+/- A compact, auditable specification of the local bosonic part of the
+   candidate.  The LL measure term is kept separate because its dynamics is
+   not fixed by the ordinary metric density. -/
+structure BosonicActionData where
+  lambdaSix : ℝ
+  chernSimonsLevel : ℤ
+  lambdaSixNonnegative : 0 ≤ lambdaSix
+  scalarNonzeroSector : Prop
+  llMeasureCoupling : Prop
+
+noncomputable def sexticPotential (s : BosonicActionData) (phi : ℝ) : ℝ :=
+  s.lambdaSix * phi ^ 6 / 6
+
+theorem sextic_potential_nonnegative
+    (s : BosonicActionData) (phi : ℝ) :
+    0 ≤ sexticPotential s phi := by
+  unfold sexticPotential
+  exact div_nonneg (mul_nonneg s.lambdaSixNonnegative (by positivity)) (by norm_num)
+
+theorem cs_level_is_discrete (s : BosonicActionData) :
+    ∃ k : ℤ, s.chernSimonsLevel = k := by
+  exact ⟨s.chernSimonsLevel, rfl⟩
+
 /-- Every proposed classical term has the required dimension three. -/
 theorem candidate_terms_are_classically_marginal :
     scalarKineticDimension = dWorldvolume /\
@@ -58,6 +81,14 @@ theorem candidate_terms_are_classically_marginal :
     inverseScalarSquareDimension, maxwellDensityDimension,
     fieldStrengthDimension, derivativeDimension, scalarDimension,
     csGaugeFieldDimension, dWorldvolume]
+
+theorem bosonic_action_has_no_classical_mass_parameter
+    (_s : BosonicActionData) :
+    scalarKineticDimension = dWorldvolume ∧
+    scalarSexticDimension = dWorldvolume ∧
+    chernSimonsDensityDimension = dWorldvolume ∧
+    dressedMaxwellDensityDimension = dWorldvolume := by
+  exact candidate_terms_are_classically_marginal
 
 /-- An undressed Maxwell term needs a coefficient of mass dimension minus one. -/
 def ordinaryMaxwellCoefficientDimension : MassDimension :=
@@ -84,11 +115,13 @@ Concrete candidate field content:
 `S = integral sqrt(-gamma) [ (d phi)^2/2 - lambda6 phi^6/6
       - F^2/(4 phi^2) ] + k/(4*pi) integral A dA + S_LL`.
 
-A nonzero quantum condensate gives the Maxwell scale and can normalize the LL
-charge without inserting a classical mass parameter.
+Here `phi` is neutral under the compact `U(1)`. A nonzero quantum condensate
+gives the Maxwell scale and can normalize the LL charge without inserting a
+classical mass parameter.
 -/
 structure ScaleInvariantWorldvolumeCandidateStatus where
   realScalarDefined : Prop
+  neutralRealScalarRepresentationDerived : Prop
   compactU1ConnectionDefined : Prop
   scalarKineticTermDefined : Prop
   sexticPotentialDefined : Prop
@@ -106,6 +139,7 @@ structure ScaleInvariantWorldvolumeCandidateStatus where
 def scaleInvariantCandidateClosed
     (s : ScaleInvariantWorldvolumeCandidateStatus) : Prop :=
   s.realScalarDefined /\
+  s.neutralRealScalarRepresentationDerived /\
   s.compactU1ConnectionDefined /\
   s.scalarKineticTermDefined /\
   s.sexticPotentialDefined /\

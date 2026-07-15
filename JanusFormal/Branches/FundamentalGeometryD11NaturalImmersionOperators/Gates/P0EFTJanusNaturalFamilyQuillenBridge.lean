@@ -71,8 +71,6 @@ structure NaturalQuillenPackage where
 /-- A Quillen package is canonical only relative to a fully specified family. -/
 def relativeQuillenClosure
     (s : NaturalQuillenPackage) : Prop :=
-  s.analyticFamilyClosed /\
-  s.quillenClosed /\
   s.normalRootPhaseDerivedBeforeQuantization /\
   s.primitiveMonopoleTwistDerivedBeforeQuantization /\
   s.anomalyCancellationDerived
@@ -83,7 +81,7 @@ theorem missing_normal_root_boundary_blocks_relative_quillen
     (hMissing : Not s.normalRootPhaseDerivedBeforeQuantization) :
     Not (relativeQuillenClosure s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.1
+  exact hMissing hClosed.1
 
 /-- Missing the primitive monopole twist also blocks the intended family. -/
 theorem missing_monopole_twist_blocks_relative_quillen
@@ -91,7 +89,7 @@ theorem missing_monopole_twist_blocks_relative_quillen
     (hMissing : Not s.primitiveMonopoleTwistDerivedBeforeQuantization) :
     Not (relativeQuillenClosure s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.2.1
+  exact hMissing hClosed.2.1
 
 /-- The Quillen construction does not create the Z4 phase; it transports a phase already present in the operator domain. -/
 structure Z4OriginAudit where

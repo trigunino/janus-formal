@@ -9,14 +9,18 @@ set_option autoImplicit false
 open P0EFTJanusImmersionFiberAlgebra
 open P0EFTJanusGaugeFixedPrincipalSymbols
 
+local notation "janusCross" =>
+  P0EFTJanusGaugeFixedPrincipalSymbols.crossProduct
+
 /-- Cross product is linear in its second argument. -/
 theorem cross_scale_right
     (covector field : TangentVector3)
     (scalar : ℝ) :
-    crossProduct covector (scaleTangent scalar field) =
-      scaleTangent scalar (crossProduct covector field) := by
+    janusCross covector (scaleTangent scalar field) =
+      scaleTangent scalar (janusCross covector field) := by
   ext <;>
-    simp [crossProduct, scaleTangent] <;>
+    simp [P0EFTJanusGaugeFixedPrincipalSymbols.crossProduct,
+      scaleTangent] <;>
     ring
 
 /-- The gradient symbol is injective for nonzero covector. -/
@@ -41,17 +45,18 @@ theorem cross_kernel_is_gradient_image
     (covector : TangentVector3)
     (hCovector : covector ≠ zeroTangent)
     (field : TangentVector3)
-    (hKernel : crossProduct covector field = zeroTangent) :
+    (hKernel : janusCross covector field = zeroTangent) :
     ∃ scalar : ℝ,
       gradientSymbol covector scalar = field := by
   have hNorm : normSquared covector ≠ 0 :=
     ne_of_gt (norm_squared_positive_of_nonzero
       covector hCovector)
   have hDouble :
-      crossProduct covector (crossProduct covector field) =
+      janusCross covector (janusCross covector field) =
         zeroTangent := by
     rw [hKernel]
-    ext <;> simp [crossProduct, zeroTangent]
+    ext <;> simp [P0EFTJanusGaugeFixedPrincipalSymbols.crossProduct,
+      zeroTangent]
   have hTriple := cross_cross_identity covector field
   rw [hDouble] at hTriple
   have hx := congrArg TangentVector3.x hTriple
@@ -77,18 +82,19 @@ theorem divergence_kernel_is_cross_image
     (field : TangentVector3)
     (hKernel : divergenceSymbol covector field = 0) :
     ∃ potential : TangentVector3,
-      crossProduct covector potential = field := by
+      janusCross covector potential = field := by
   have hNorm : normSquared covector ≠ 0 :=
     ne_of_gt (norm_squared_positive_of_nonzero
       covector hCovector)
+  have hDot : tangentDot covector field = 0 := by
+    exact hKernel
   refine ⟨scaleTangent
     (-1 / normSquared covector)
-    (crossProduct covector field), ?_⟩
+    (janusCross covector field), ?_⟩
   rw [cross_scale_right, cross_cross_identity]
   apply TangentVector3.ext <;>
-    simp [scaleTangent, subTangent, hKernel] <;>
-    field_simp [hNorm] <;>
-    ring
+    simp [scaleTangent, subTangent, hDot] <;>
+    field_simp [hNorm]
 
 /-- Divergence is surjective for nonzero covector. -/
 theorem divergence_symbol_surjective
@@ -112,13 +118,13 @@ theorem de_rham_symbol_complex_exact
     (∀ scalar : ℝ,
       gradientSymbol covector scalar = zeroTangent → scalar = 0) /\
     (∀ field : TangentVector3,
-      crossProduct covector field = zeroTangent →
+      janusCross covector field = zeroTangent →
         ∃ scalar : ℝ,
           gradientSymbol covector scalar = field) /\
     (∀ field : TangentVector3,
       divergenceSymbol covector field = 0 →
         ∃ potential : TangentVector3,
-          crossProduct covector potential = field) /\
+          janusCross covector potential = field) /\
     (∀ target : ℝ,
       ∃ field : TangentVector3,
         divergenceSymbol covector field = target) := by

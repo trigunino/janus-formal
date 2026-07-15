@@ -604,8 +604,10 @@ unit normal and derived `B_ab` and `K`, followed by actual threefold interval
 integration of the already-derived constant EH boundary-flux and GHY
 first-variation densities on a compact tangent box, and an exact finite-box
 Stokes theorem for arbitrary variable three-dimensional fluxes, all six
-oriented faces and the cancelling counterterm.  The latter is not a continuum
-manifold, GHY, null, joint or corner theorem.  It also supplies a
+oriented faces and the cancelling counterterm.  Its bulk, boundary and matched
+ledgers are actual derivatives along affine flux curves, and the matched
+derivative vanishes.  The latter is not a continuum manifold, GHY, null,
+joint or corner theorem.  It also supplies a
 continuous but formally
 non-differentiable zero-expansion
 extension, null/joint endpoint transgression, pointwise LL auxiliary

@@ -63,7 +63,7 @@ theorem scale_fiber_kernel_trivial
   funext index
   have hCoordinate := congrFun hKernel index
   simp [scaleFiber, zeroFiber] at hCoordinate ⊢
-  exact (mul_eq_zero.mp hCoordinate).resolve_left hScalar
+  exact hCoordinate.resolve_left hScalar
 
 /--
 Gauge-fixed local fields naturally associated with an immersed SpinC throat.

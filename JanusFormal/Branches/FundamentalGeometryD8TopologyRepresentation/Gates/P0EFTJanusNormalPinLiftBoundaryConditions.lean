@@ -14,7 +14,7 @@ open P0EFTJanusNormalOrientationZ4Lift
 inductive NormalRootChoice where
   | positiveQuarter
   | negativeQuarter
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, Fintype
 
 /-- Complex multiplier carried by one loop around the throat circle. -/
 def normalRootMultiplier : NormalRootChoice → ℂ

@@ -14,6 +14,12 @@ It deliberately separates:
 -/
 
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusMonopoleDiracSpectrum
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusGlobalSeparatedDiracModel
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusFiniteHilbertDiracTruncation
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusInfiniteL2DiracDomain
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusDiagonalCompactResolvent
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusSeparatedSpectrumProperness
+import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusRenormalizedSpectralDeterminant
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusCircleHolonomyEta
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusSpinStructureHolonomySelection
 import JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusProductDiracPairing
@@ -49,6 +55,25 @@ structure ProgramStatus where
   parityAnomalyPairingDerived : Prop
   absoluteScaleOrbitIdentified : Prop
   oddDimensionalMasslessScaleNoGoDerived : Prop
+  finiteHilbertTruncationSymmetryProved : Prop
+  finiteResolventFormulaProved : Prop
+  infiniteL2HilbertSpaceConstructed : Prop
+  maximalWeightedDiracDomainConstructed : Prop
+  finiteModeVectorsInDomainProved : Prop
+  finiteModeSpanDenseProved : Prop
+  infiniteL2DomainDenseProved : Prop
+  infiniteL2FormalSymmetryProved : Prop
+  infiniteL2ClosedGraphProved : Prop
+  complexL2FormalSymmetryProved : Prop
+  nonrealShiftResolventProved : Prop
+  resolventDecayFromProperWeightProved : Prop
+  finiteRankResolventTruncationsCompactProved : Prop
+  resolventDecayPromotedToCompactOperatorProved : Prop
+  explicitSeparatedSpectrumCoerciveProved : Prop
+  renormalizedDeterminantInterfaceConstructed : Prop
+  fixedRenormalizationSchemeUniquenessProved : Prop
+  selfAdjointResolventCriterionProved : Prop
+  compactResolventProved : Prop
   renormalizedInfiniteDeterminantDerived : Prop
   absoluteScaleBreakerDerived : Prop
   absoluteAlphaDerivedNoFit : Prop
@@ -70,11 +95,50 @@ def firstDiracSpectralMilestoneClosed (s : ProgramStatus) : Prop :=
   s.oldScalarRatioReinterpreted /\
   s.parityAnomalyPairingDerived /\
   s.absoluteScaleOrbitIdentified /\
-  s.oddDimensionalMasslessScaleNoGoDerived
+  s.oddDimensionalMasslessScaleNoGoDerived /\
+  s.finiteHilbertTruncationSymmetryProved /\
+  s.finiteResolventFormulaProved /\
+  s.infiniteL2HilbertSpaceConstructed /\
+  s.maximalWeightedDiracDomainConstructed /\
+  s.finiteModeVectorsInDomainProved /\
+  s.finiteModeSpanDenseProved /\
+  s.infiniteL2DomainDenseProved /\
+  s.infiniteL2FormalSymmetryProved /\
+  s.infiniteL2ClosedGraphProved /\
+  s.complexL2FormalSymmetryProved /\
+  s.nonrealShiftResolventProved /\
+  s.resolventDecayFromProperWeightProved /\
+  s.finiteRankResolventTruncationsCompactProved /\
+  s.resolventDecayPromotedToCompactOperatorProved /\
+  s.explicitSeparatedSpectrumCoerciveProved /\
+  s.renormalizedDeterminantInterfaceConstructed /\
+  s.fixedRenormalizationSchemeUniquenessProved
+
+def hilbertDiracClosure (s : ProgramStatus) : Prop :=
+  s.finiteHilbertTruncationSymmetryProved /\
+  s.finiteResolventFormulaProved /\
+  s.infiniteL2HilbertSpaceConstructed /\
+  s.maximalWeightedDiracDomainConstructed /\
+  s.finiteModeVectorsInDomainProved /\
+  s.finiteModeSpanDenseProved /\
+  s.infiniteL2DomainDenseProved /\
+  s.infiniteL2FormalSymmetryProved /\
+  s.infiniteL2ClosedGraphProved /\
+  s.complexL2FormalSymmetryProved /\
+  s.nonrealShiftResolventProved /\
+  s.resolventDecayFromProperWeightProved /\
+  s.finiteRankResolventTruncationsCompactProved /\
+  s.resolventDecayPromotedToCompactOperatorProved /\
+  s.explicitSeparatedSpectrumCoerciveProved /\
+  s.renormalizedDeterminantInterfaceConstructed /\
+  s.fixedRenormalizationSchemeUniquenessProved /\
+  s.selfAdjointResolventCriterionProved /\
+  s.compactResolventProved
 
 
 def fullDiracSpectralClosure (s : ProgramStatus) : Prop :=
   firstDiracSpectralMilestoneClosed s /\
+  hilbertDiracClosure s /\
   s.renormalizedInfiniteDeterminantDerived /\
   s.absoluteScaleBreakerDerived /\
   s.absoluteAlphaDerivedNoFit
@@ -82,11 +146,11 @@ def fullDiracSpectralClosure (s : ProgramStatus) : Prop :=
 /-- The milestone fixes geometry ratios and charge relations, not an absolute length. -/
 theorem milestone_without_scale_breaker_does_not_close_alpha
     (s : ProgramStatus)
-    (hMilestone : firstDiracSpectralMilestoneClosed s)
+    (_hMilestone : firstDiracSpectralMilestoneClosed s)
     (hMissing : Not s.absoluteScaleBreakerDerived) :
     Not (fullDiracSpectralClosure s) := by
   intro h
-  exact hMissing h.2.2.1
+  exact hMissing h.2.2.2.1
 
 end JanusFundamentalGeometryDiracSpectral
 end JanusFormal

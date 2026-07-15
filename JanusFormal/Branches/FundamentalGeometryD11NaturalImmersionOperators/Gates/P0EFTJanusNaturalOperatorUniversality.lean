@@ -133,7 +133,7 @@ theorem geometry_without_parent_action_is_not_full_universality
     (hMissing : Not s.dynamics.parentActionDerived) :
     Not (relativeUniversalityClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.1
+  exact hMissing hClosed.2.2.1.1
 
 /-- Finite-order naturality without invariant-theory classification is incomplete. -/
 theorem peetre_without_equivariant_classification_is_incomplete
@@ -149,7 +149,7 @@ theorem quillen_without_dynamic_family_is_not_full_universality
     (hMissing : Not s.dynamics.hessianIdentified) :
     Not (relativeUniversalityClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.2.1
+  exact hMissing hClosed.2.2.1.2.1
 
 /-- Missing finite counterterms prevents a unique predictive family. -/
 theorem missing_finite_parts_blocks_relative_universality
@@ -157,7 +157,7 @@ theorem missing_finite_parts_blocks_relative_universality
     (hMissing : Not s.dynamics.finiteCountertermsFixedMicroscopically) :
     Not (relativeUniversalityClosed s) := by
   intro hClosed
-  exact hMissing hClosed.2.2.2.2.2.2.1
+  exact hMissing hClosed.2.2.1.2.2.2.2.2.1
 
 /--
 Sharp verdict: the theory is universal only **relative** to a decorated SpinC

@@ -679,6 +679,11 @@ PROGRAM_P_GATES = {
             "theorem matchedBulkBoundaryFirstVariation_eq_zero",
             "theorem twoSectorBulkBoundaryFirstVariation_eq_zero",
             "theorem twoSectorBulkBoundaryFirstVariation_sectorExchange",
+            "theorem bulkDivergence_fluxLine",
+            "theorem orientedBoundaryFlux_fluxLine",
+            "theorem bulkFluxAction_fluxLine_hasDerivAt",
+            "theorem boundaryFluxAction_fluxLine_hasDerivAt",
+            "theorem matchedBulkBoundaryAction_fluxLine_hasDerivAt",
         ),
     ),
     "P0EFTJanusFiniteGramInducedMetricFrechetBridge.lean": (
@@ -919,6 +924,18 @@ PROGRAM_P_GATES = {
             "theorem circleHeatSemigroupChiralDiagonalTrace_positive_add_pt_eq_zero",
         ),
     ),
+    "P0EFTJanusCircleHeatSemigroupStrongContinuity.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem circleHeatMultiplier_continuous",
+            "theorem circleHeatCoordinateDifferenceSquare_tendsto",
+            "theorem circleHeatCoordinateBound_summable",
+            "theorem circleHeatSemigroup_stronglyContinuous",
+            "theorem circleHeatSemigroup_tendsto_zero",
+            "theorem circleHeatBasisOrbitReal_hasDerivAt",
+            "theorem circleHeatBasisOrbitReal_hasDerivAt_zero",
+        ),
+    ),
     "P0EFTJanusCandidateSignedChargeNewtonianBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -970,6 +987,20 @@ PROGRAM_P_GATES = {
             "theorem lorentzPrincipalRootChart2D_gate",
         ),
     ),
+    "P0EFTJanusLorentzRootSylvesterChart2D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def sylvesterLinear",
+            "theorem equalDiagonalSylvesterInverse_right",
+            "theorem equalDiagonal_sylvester_bijective",
+            "theorem chartSylvesterInverse_right",
+            "theorem chart_sylvester_bijective",
+            "theorem squareCurve_derivative_sylvester",
+            "theorem chartRoot_directionalDerivative_eq_sylvesterInverse",
+            "theorem explicitChartRoot_directionalDerivative_eq_sylvesterInverse",
+            "theorem lorentzRootSylvesterChart2D_gate",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1009,6 +1040,19 @@ PROGRAM_P_GATES = {
             "theorem metricHolonomicAction_metricLine_hasDerivAt",
         ),
     ),
+    "P0EFTJanusFiniteMetricHolonomicReindexingCovariance.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def transportShift",
+            "def transportField",
+            "theorem discreteGradient_transport",
+            "theorem metricHolonomicAction_transport",
+            "theorem metricHolonomicFirstVariation_transport",
+            "theorem strongEuler_transport",
+            "theorem fixedMetric_stationary_transport_iff",
+            "theorem finiteMetricHolonomicReindexingCovariance_gate",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1031,6 +1075,18 @@ PROGRAM_P_GATES = {
             "theorem range_finiteFourierLorentzGram_eq_symmetric_saintVenant_kernel",
             "theorem finite_fourier_saintVenant_sequence_exact",
             "theorem finite_fourier_saintVenant_exactness_gate",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierZeroModeCohomology.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroModeResidual",
+            "theorem zeroModeResidual_supported",
+            "theorem finiteFourier_zeroMode_decomposition",
+            "theorem finiteFourier_zeroMode_decomposition_unique",
+            "theorem compatible_iff_existsUnique_zeroMode_decomposition",
+            "theorem zeroModeResidual_eq_zero_iff_exists_normalized_potential",
+            "theorem finite_fourier_zeroMode_cohomology_gate",
         ),
     ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
@@ -1126,6 +1182,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paLorentzBoostCoordinateOrbitRootVariationProved",
         "paLorentzJordanIndependentMetricRootProved",
         "paLorentzPrincipalRootChart2DProved",
+        "paLorentzRootSylvesterChart2DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
@@ -1153,12 +1210,14 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paIndependentMetricMatterJetVariationProved",
         "paFinitePeriodicHolonomicScalarEulerProved",
         "paFiniteMetricHolonomicScalarVariationProved",
+        "paFiniteMetricHolonomicReindexingCovarianceProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",
         "paCanonicalLorentzGramSaintVenantSymbolExactnessProved",
         "paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved",
         "paFiniteFourierSaintVenantExactnessProved",
+        "paFiniteFourierZeroModeCohomologyProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
@@ -1178,6 +1237,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCircleUnboundedDiracSelfAdjointProved",
         "paCircleDiracHeatFunctionalBridgeProved",
         "paCircleHeatSemigroupOperatorProved",
+        "paCircleHeatSemigroupStrongContinuityProved",
         "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):

@@ -54,95 +54,27 @@ theorem identity_symbol_elliptic
   intro object covector hCovector first second hEqual
   exact hEqual
 
-/-- Composition of two symbol families with common covector data. -/
-def composeSymbolFamilies
-    (immersionCategory : SpinCImmersionCategory)
-    (firstFamily : PrincipalSymbolFamily immersionCategory)
-    (secondFamily : PrincipalSymbolFamily immersionCategory)
-    (hCovector : secondFamily.Covector = firstFamily.Covector)
-    (hZero : HEq secondFamily.zeroCovector firstFamily.zeroCovector)
-    (hMiddle : secondFamily.Source = firstFamily.Target) :
-    PrincipalSymbolFamily immersionCategory := by
-  subst hCovector
-  subst hMiddle
-  have hZeroEq : secondFamily.zeroCovector = firstFamily.zeroCovector := by
-    exact eq_of_heq hZero
-  exact
-    { Covector := firstFamily.Covector
-      Source := firstFamily.Source
-      Target := secondFamily.Target
-      zeroCovector := firstFamily.zeroCovector
-      symbol := fun object covector value =>
-        secondFamily.symbol object covector
-          (firstFamily.symbol object covector value) }
+/-- Pointwise composition law used after the family fibers have been matched. -/
+theorem symbol_composition_injective
+    {Source Middle Target : Type*}
+    (first : Source → Middle) (second : Middle → Target)
+    (hFirst : Function.Injective first)
+    (hSecond : Function.Injective second) :
+    Function.Injective (second ∘ first) :=
+  hSecond.comp hFirst
 
-/-- Composition of elliptic symbols is elliptic. -/
-theorem compose_symbol_families_elliptic
-    (immersionCategory : SpinCImmersionCategory)
-    (firstFamily : PrincipalSymbolFamily immersionCategory)
-    (secondFamily : PrincipalSymbolFamily immersionCategory)
-    (hCovector : secondFamily.Covector = firstFamily.Covector)
-    (hZero : HEq secondFamily.zeroCovector firstFamily.zeroCovector)
-    (hMiddle : secondFamily.Source = firstFamily.Target)
-    (hFirst : IsElliptic immersionCategory firstFamily)
-    (hSecond : IsElliptic immersionCategory secondFamily) :
-    IsElliptic immersionCategory
-      (composeSymbolFamilies immersionCategory
-        firstFamily secondFamily hCovector hZero hMiddle) := by
-  subst hCovector
-  subst hMiddle
-  have hZeroEq : secondFamily.zeroCovector = firstFamily.zeroCovector :=
-    eq_of_heq hZero
-  subst hZeroEq
-  intro object covector hCovectorValue first second hEqual
-  apply hFirst object covector hCovectorValue
-  apply hSecond object covector hCovectorValue
-  exact hEqual
-
-/-- Direct sum/product of two symbol families with common covector data. -/
-def productSymbolFamilies
-    (immersionCategory : SpinCImmersionCategory)
-    (firstFamily secondFamily :
-      PrincipalSymbolFamily immersionCategory)
-    (hCovector : secondFamily.Covector = firstFamily.Covector)
-    (hZero : HEq secondFamily.zeroCovector firstFamily.zeroCovector) :
-    PrincipalSymbolFamily immersionCategory := by
-  subst hCovector
-  have hZeroEq : secondFamily.zeroCovector = firstFamily.zeroCovector :=
-    eq_of_heq hZero
-  exact
-    { Covector := firstFamily.Covector
-      Source := fun object =>
-        firstFamily.Source object × secondFamily.Source object
-      Target := fun object =>
-        firstFamily.Target object × secondFamily.Target object
-      zeroCovector := firstFamily.zeroCovector
-      symbol := fun object covector value =>
-        (firstFamily.symbol object covector value.1,
-          secondFamily.symbol object covector value.2) }
-
-/-- Product of elliptic symbols is elliptic. -/
-theorem product_symbol_families_elliptic
-    (immersionCategory : SpinCImmersionCategory)
-    (firstFamily secondFamily :
-      PrincipalSymbolFamily immersionCategory)
-    (hCovector : secondFamily.Covector = firstFamily.Covector)
-    (hZero : HEq secondFamily.zeroCovector firstFamily.zeroCovector)
-    (hFirst : IsElliptic immersionCategory firstFamily)
-    (hSecond : IsElliptic immersionCategory secondFamily) :
-    IsElliptic immersionCategory
-      (productSymbolFamilies immersionCategory
-        firstFamily secondFamily hCovector hZero) := by
-  subst hCovector
-  have hZeroEq : secondFamily.zeroCovector = firstFamily.zeroCovector :=
-    eq_of_heq hZero
-  subst hZeroEq
-  intro object covector hCovectorValue first second hEqual
+/-- Direct-product symbol law used for block-diagonal natural operators. -/
+theorem symbol_product_injective
+    {Source₁ Source₂ Target₁ Target₂ : Type*}
+    (first : Source₁ → Target₁) (second : Source₂ → Target₂)
+    (hFirst : Function.Injective first)
+    (hSecond : Function.Injective second) :
+    Function.Injective (fun value : Source₁ × Source₂ =>
+      (first value.1, second value.2)) := by
+  intro firstValue secondValue hEqual
   apply Prod.ext
-  · apply hFirst object covector hCovectorValue
-    exact congrArg Prod.fst hEqual
-  · apply hSecond object covector hCovectorValue
-    exact congrArg Prod.snd hEqual
+  · exact hFirst (congrArg Prod.fst hEqual)
+  · exact hSecond (congrArg Prod.snd hEqual)
 
 /-- Symbol family obtained by multiplying every fiber by a real weight. -/
 def scalarSymbolFamily
