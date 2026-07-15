@@ -702,7 +702,16 @@ Implemented in the current finite, spectral or pointwise models:
   semigroup law, global strong continuity, the expected diagonal trace sums and
   the expected generator derivative on the dense Fourier basis; its maximal
   generator domain, equality with the abstract functional-calculus exponential
-  and abstract trace class are open.
+  and abstract trace class are open;
+- an exact bridge from the quarter-twisted Program-P circle operator to the two
+  PT-related D7 root towers, compactness of every fixed sphere-level heat block,
+  and an explicit common-counterterm renormalized determinant certificate for
+  both physical `Z4` roots;
+- an infinite monopole heat trace and exact algebraic agreement of the spectral
+  and universal product coefficients `a0/a2/a4`; only the uniform
+  Euler--Maclaurin remainder estimate isolated by
+  `EulerMaclaurinRemainderControlled` remains conditional in the small-time
+  limit.
 
 Still required before Candidate A is a completed Janus action:
 
@@ -745,12 +754,13 @@ Still required before Candidate A is a completed Janus action:
    constraint closure; then derive constrained
    stability on the physical reduced tangent/quotient and PPN parameters for
    the exact matter couplings;
-7. extend the self-adjoint unbounded circle Fourier operator to the full Janus
-   Dirac operator, identify the constructed contractive diagonal heat semigroup
+7. prove the isolated uniform Euler--Maclaurin remainder estimate, extend the
+   self-adjoint unbounded circle Fourier operator to the full Janus Dirac
+   operator, identify the constructed contractive diagonal heat-semigroup
    generator on its maximal domain and the semigroup with the abstract
    functional calculus of `D^2`, prove the required trace-class statements,
-   compute local/global anomalies and determinant data, and supply a
-   microscopic normalization/finite-part law in the same scheme.
+   construct the smooth Fredholm/Quillen family, compute local/global anomalies
+   and supply a microscopic normalization/finite-part law in the same scheme.
 
 Candidate A is rejected if any of items 1--7 fails.  No observed-radius input
 is used in its definition.
@@ -764,4 +774,4 @@ is used in its definition.
 | 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, actual threefold integration of constant EH/GHY densities, exact finite-box Stokes for variable fluxes and six faces with actual matched-action derivative, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure | arbitrary-coordinate global embedding and variable-field continuum flux, physical GHY/null/joint/corner completion, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, coefficientwise exactness for finite nonzero Fourier families, and unique normalized decomposition with a finite zero-mode cohomology residual | boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |
 | 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, stress tensor and Bianchi identity, four-dimensional continuum matter variations, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
-| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, and a contractive diagonal heat semigroup with global strong continuity and the expected generator on the dense Fourier basis | physical quotient stability, PPN, covariant counterterms, maximal generator-domain identification, equality with abstract `D^2` functional calculus and trace class, full Janus Dirac and local/global anomalies, determinant data and microscopic normalization/finite-part law |
+| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup, compact D7 level blocks, convergent physical `Z4` determinants and exact spectral/universal `a0/a2/a4` algebra | uniform Euler--Maclaurin remainder, physical quotient stability, PPN, covariant counterterms, maximal generator-domain identification, abstract `D^2` functional calculus and trace class, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |

@@ -161,6 +161,14 @@ A/B/C  quantum scale, nonlinear junction and charge compatibility
 E      observational falsification after theoretical closure
 ```
 
+Current D7 frontier: the infinite monopole heat trace and the two physical
+`Z4` renormalized determinants are constructed, and the spectral product
+coefficients agree exactly with the universal `a0/a2/a4` formulas. The only
+remaining conditional step in that coefficient chain is the uniform
+Euler--Maclaurin remainder estimate isolated by
+`EulerMaclaurinRemainderControlled`; this is distinct from the still-open full
+Fredholm/Quillen family and field/ghost-weighted anomaly problem.
+
 ## 4. Topology and Z4
 
 For
@@ -183,6 +191,9 @@ four lifted loops          +1
 Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additional global data, not a canonical functor of the underlying line bundle.
 
 ## 5. Program P
+
+The exhaustive remaining-work checklist is
+[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
 
 ### P0, P-A, P-B and P-C
 

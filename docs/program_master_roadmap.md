@@ -114,12 +114,18 @@ Last focused CI: **green**.
 - **T/C** a D7 heat-remainder family maps directly to the D2 renormalized determinant, and fixed heat coefficients give a unique determinant;
 - **T/C** the monopole sphere law `lambda_n^2 = n(n+|q|)/L^2`, with multiplicity `|q|+2n`, is integrated into the separated operator and determinant cutoff; the already zeta-regularized circle product is counted exactly once;
 - **T/C** the cutoff remainder is an exact telescoping sum of shell increments; summable increments imply convergence, and either a uniform geometric bound or the expected `C/(N+1)^2` bound constructs the full renormalized family and closes the D2 determinant certificate;
+- **T/C** in the physical `Z4` root sectors, the exact spectral subtraction leaves `(|q|+2n) log(1+exp(-2 beta lambda_n))`; it is explicitly dominated by a polynomially weighted geometric series, hence both quarter-root determinants converge and agree by PT;
+- **T/C** the infinite monopole-sphere heat trace is constructed as an actual `tsum`; for every positive heat time its terms are dominated by the same polynomially weighted geometric mechanism;
+- **T/C** Euler--Maclaurin boundary jets give the spectral coefficients `2`, `-1/3`, `(5*q^2-1)/30`; after the circle factor these match the universal product-throat `a0/a2/a4` formulas exactly;
 - **T/X** local heat-kernel coefficients for the declared product-throat convention;
 - **T/N** finite local truncations are affine in the circle modulus and cannot isolate a minimum;
 - **T/X** local/nonlocal winding separation and quarter-phase cancellation structure;
 - **N** pure and PT-paired quarter determinants do not stabilize the modulus;
 - **N** a finite local coefficient can fit a chosen target and therefore is not predictive unless derived;
-- **O** prove the monopole spectrum/heat-trace match and an explicit summable product-throat shell bound; field/ghost weights and the final vacuum remain downstream.
+- **O** prove `EulerMaclaurinRemainderControlled`, the sole remaining
+  conditional analytic lemma for the small-time limit; the spectral/universal
+  `a0/a2/a4` correspondence itself is closed. Field/ghost weights and the final
+  vacuum remain downstream of P.
 
 ## D9 — Elliptic and BRST symbol gates
 
@@ -171,6 +177,9 @@ The consolidated head formalizes:
 The concrete Janus category, global structured jet groupoid, regularity hypotheses, descent theorem and invariant-theory classification remain open.
 
 # Program P
+
+Exhaustive closure checklist:
+[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
 
 ## P0 — Moduli-geometry no-go
 
@@ -309,6 +318,27 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   cohomology and boundary/null terms.
 
 ### Candidate A implementation checkpoint
+
+New controlled subgates are now checked:
+
+- **T/C** compatible symmetric coefficients in the countable axial Fourier
+  model decompose into an explicit Lorentz--Gram image plus their zero-mode
+  residual; zero-residual exactness and coordinatewise square-summability
+  preservation are proved, but not global PDE or boundary solvability;
+- **T/C** an invertible Sylvester derivative at a supplied real `4 x 4` root
+  produces a genuine local differentiable matrix-root branch, with a concrete
+  identity-base instance; no global/principal Lorentz-causal or smooth-field
+  root selection is claimed;
+- **T/C** at positive time, the diagonal circle heat semigroup is the
+  operator-norm limit of compact finite Fourier truncations and is compact on
+  the full circle Fourier Hilbert space; this is not a trace-class theorem or
+  the full Janus Dirac heat kernel;
+- **T/C** the quarter-twisted Program-P circle operator now identifies exactly
+  with both PT-related D7 normal-root towers after the geometric rescaling
+  `2 pi / circlePeriod`; each fixed sphere-level heat block is compact and the
+  two physical `Z4` determinants have an explicit common-counterterm
+  convergence certificate. A smooth all-holonomy Fredholm/Quillen family is
+  still open.
 
 The active branch now contains explicit reciprocal cross densities, their
 actual spectral Frechet/Hessian/Helmholtz data, a pointwise square-root matrix

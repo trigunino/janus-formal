@@ -936,6 +936,27 @@ PROGRAM_P_GATES = {
             "theorem circleHeatBasisOrbitReal_hasDerivAt_zero",
         ),
     ),
+    "P0EFTJanusCircleHeatSemigroupCompactness.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def circleHeatFiniteTruncation",
+            "theorem circleHeatFiniteTruncation_isCompact",
+            "theorem circleHeatSemigroup_sub_truncation_opNorm_le",
+            "theorem circleHeatTailBound_tendsto_zero",
+            "theorem circleHeatFiniteTruncation_tendsto_heatSemigroup",
+            "theorem circleHeatSemigroup_isCompact",
+        ),
+    ),
+    "P0EFTJanusProgramPD7CircleHeatRegulatorBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d7_circleEigenvalue_eq_scaled_programP",
+            "theorem programP_heatWeight_eq_d7_circleHeatWeight",
+            "theorem d7CircleHeatOperator_isCompact",
+            "theorem d7SeparatedLevelHeatOperator_on_basis",
+            "theorem circle_compactness_and_quadratic_remainder_close_d7_regulator",
+        ),
+    ),
     "P0EFTJanusCandidateSignedChargeNewtonianBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -999,6 +1020,18 @@ PROGRAM_P_GATES = {
             "theorem chartRoot_directionalDerivative_eq_sylvesterInverse",
             "theorem explicitChartRoot_directionalDerivative_eq_sylvesterInverse",
             "theorem lorentzRootSylvesterChart2D_gate",
+        ),
+    ),
+    "P0EFTJanusLorentzLocalRootBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SylvesterEquivWitness",
+            "theorem matrixSquare_hasStrictFDerivAt",
+            "def localRootBranch",
+            "theorem eventually_matrixSquare_localRootBranch",
+            "theorem localRootBranch_hasFDerivAt",
+            "def identitySylvesterWitness",
+            "theorem lorentzLocalRootBranch4D_gate",
         ),
     ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
@@ -1087,6 +1120,17 @@ PROGRAM_P_GATES = {
             "theorem compatible_iff_existsUnique_zeroMode_decomposition",
             "theorem zeroModeResidual_eq_zero_iff_exists_normalized_potential",
             "theorem finite_fourier_zeroMode_cohomology_gate",
+        ),
+    ),
+    "P0EFTJanusCountableFourierSaintVenantExactness.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroModeResidual",
+            "theorem countable_zeroMode_decomposition",
+            "theorem compatible_zeroModeFree_iff_exists_normalizedPotential",
+            "theorem axialReconstructedPotential_squareSummable",
+            "theorem zeroModeResidual_squareSummable",
+            "theorem countable_fourier_saintVenant_exactness_gate",
         ),
     ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
@@ -1183,6 +1227,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paLorentzJordanIndependentMetricRootProved",
         "paLorentzPrincipalRootChart2DProved",
         "paLorentzRootSylvesterChart2DProved",
+        "paConditionalRealMatrixLocalRootBranch4DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
@@ -1218,6 +1263,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved",
         "paFiniteFourierSaintVenantExactnessProved",
         "paFiniteFourierZeroModeCohomologyProved",
+        "paCountableAxialFourierSaintVenantExactnessProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
@@ -1238,6 +1284,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCircleDiracHeatFunctionalBridgeProved",
         "paCircleHeatSemigroupOperatorProved",
         "paCircleHeatSemigroupStrongContinuityProved",
+        "paCircleHeatSemigroupCompactnessProved",
+        "paProgramPD7CircleHeatRegulatorBridgeProved",
         "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):

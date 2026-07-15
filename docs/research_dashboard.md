@@ -18,12 +18,12 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | Program | Role | Strongest current result | Terminal blocker |
 | --- | --- | --- | --- |
 | **D0/D8** | global geometry and normal lift | free mapping-torus correction; one-sided normal sign and quarter-lift algebra; focused heads green | actual global decorated geometry and Pin/root bundle |
-| **D2** | focused twisted Dirac spectrum | green monopole eigenvalue/multiplicity law, `l2`, self-adjointness, compact resolvent and circle-reduced determinant | prove the monopole spectrum/heat-trace match |
-| **D7** | heat kernel/effective action | green monopole spectral law, single-counted circle product, common counterterm and convergence criteria | match the spectrum to the heat trace, then prove a summable shell bound |
+| **D2** | focused twisted Dirac spectrum | green monopole eigenvalue/multiplicity law, `l2`, self-adjointness, compact resolvent and circle-reduced determinant | discharge the isolated uniform Euler--Maclaurin remainder in D7 |
+| **D7** | heat kernel/effective action | green convergent heat trace, exact spectral/universal `a0/a2/a4` algebra and convergent `Z4` determinant | prove the uniform Euler--Maclaurin remainder estimate |
 | **D9/D11** | elliptic and natural-operator gates | green D9 symbol/BRST and D11 naturality/jet heads | concrete Janus Fredholm family |
 | **D10** | Quillen/anomalies | green transgression/inflow and explicit D2 mode-phase bridge | analytic family index, eta holonomy and partition section |
-| **P0/P-A** | reject shortcuts and define relative selection | moduli geometry no-go; normalized quadratic uniqueness; parent Schur reduction | derive the parent theory |
-| **P-B** | anomaly consistency | independent of Helmholtz; can constrain discrete arithmetic | actual regulator, field content and global anomaly |
+| **P0/P-A** | reject shortcuts and define relative selection | moduli no-go; parent Schur reduction; controlled countable axial compatibility and local `4 x 4` root branch | derive the parent theory and global PDE/root selection |
+| **P-B** | anomaly consistency | independent of Helmholtz; compact D7 heat blocks, exact quarter-root bridge and convergent `Z4` determinant | common Fredholm family/regulator, full field/ghost content and global anomaly |
 | **P-C** | inverse variational problem | green finite Helmholtz and polynomial reconstruction models | concrete nonlinear Janus Euler source and variational cohomology |
 | **P-D** | invariant pairings | green low-rank pairing, spinor, fusion and `Z4` neutrality head | exact global symmetry category, multiplicity spaces and normalizations |
 | **P-E** | finite jets/equivariance | green corrected jet-universality head | concrete Janus jet group/bundles and elliptic classification |
@@ -53,8 +53,8 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | Layer | Closed in abstract/finite models | Concrete Janus closure |
 | --- | --- | --- |
 | P0 moduli no-go | yes | applies generally |
-| P-A relative uniqueness | yes | parent action not derived |
-| P-B anomaly logic | yes | actual anomaly/regulator not computed |
+| P-A relative uniqueness | yes; countable axial compatibility and local `4 x 4` root subgates | parent action and global PDE/root selection not derived |
+| P-B anomaly logic | yes; positive-time compactness, exact fixed-level D7 bridge and physical `Z4` determinant | full Janus Fredholm family/regulator and anomaly not computed |
 | P-C quadratic/polynomial Helmholtz | yes | nonlinear Euler source/cohomology open |
 | P-D low-rank pairings/fusion | focused Lean head and Python audits green | global SpinC/PT/Z4/BRST classification open |
 | P-E jet theorem architecture | focused head green | Janus specialization open |
@@ -64,6 +64,9 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | absolute scale | no | scale-breaking and charge compatibility open |
 
 ## Highest-priority theorem queue
+
+The exhaustive dependency-aware checklist is
+[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
 
 1. Construct the actual decorated mapping torus, throat embedding and normal-root/SpinC data.
 2. Specify the exact Janus field space and metric formulation without double counting.
