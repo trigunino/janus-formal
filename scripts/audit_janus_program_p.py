@@ -46,6 +46,14 @@ PROGRAM_P_GATES = {
             "theorem jacobianPullbackHessian_symmetric_at_critical",
         ),
     ),
+    "P0EFTJanusFrechetPullbackGaugeDegeneracy.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPFCompatibilityHelmholtz.lean",
+        (
+            "theorem pulledBackAction_fderiv_eq_zero_at_target_critical",
+            "theorem pulledBackAction_second_fderiv_annihilates_jacobian_kernel",
+            "theorem pulledBackAction_second_fderiv_annihilates_generated_gauge",
+        ),
+    ),
     "P0EFTJanusFiniteRankPolynomialHelmholtz.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -84,6 +92,14 @@ PROGRAM_P_GATES = {
             "theorem normalized_flow_gauge_invariant_radial_reconstruction",
         ),
     ),
+    "P0EFTJanusGaugeOrbitDescent.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem orbitRel_trans",
+            "theorem flow_gauge_invariant_unique_orbit_factor",
+            "theorem radial_reconstruction_unique_orbit_factor",
+        ),
+    ),
     "P0EFTJanusPTFlatBimetricVariationalBridge.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -92,6 +108,14 @@ PROGRAM_P_GATES = {
             "theorem symmetric_hessian_eq_twelve_fp_mass",
             "theorem proportionalInteractionEnergy_second_deriv_symmetric_point",
             "theorem symmetric_point_unique_positive_global_minimizer",
+        ),
+    ),
+    "P0EFTJanusProportionalBranchTransverseNoGo.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem extensions_agree_on_proportional_branch",
+            "theorem proportional_branch_does_not_determine_transverse_curvature",
+            "theorem extensions_differ_off_proportional_branch",
         ),
     ),
     "P0EFTJanusFiniteRankParentSchurHelmholtz.lean": (
@@ -135,15 +159,17 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     ]
     for status in (
         "paPTFlatProportionalActualVariationalStabilityProved",
+        "paProportionalBranchTransverseNonuniquenessProved",
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
         "pcConditionalLinearGaugeNoetherReconstructionProved",
         "pcConditionalLinearGaugeNoetherIffProved",
         "pcConditionalNonlinearGaugeFlowNoetherIffProved",
         "pcConditionalNonlinearGaugeInvariantRadialReconstructionProved",
+        "pcGaugeOrbitQuotientDescentProved",
     ):
         if (
-            f"{status} : Prop" not in primary_facade
-            or f"s.{status}" not in primary_facade
+            primary_facade.count(f"{status} : Prop") != 1
+            or primary_facade.count(f"s.{status}") != 1
         ):
             raise AssertionError(f"Program P facade omits status: {status}")
 
@@ -153,8 +179,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     for status in (
         "actualFrechetSecondVariationFormulaProved",
         "actualFrechetPullbackHelmholtzSymmetryProved",
+        "actualFrechetPullbackGaugeDegeneracyProved",
     ):
-        if f"{status} : Prop" not in pf_facade or f"s.{status}" not in pf_facade:
+        if (
+            pf_facade.count(f"{status} : Prop") != 1
+            or pf_facade.count(f"s.{status}") != 1
+        ):
             raise AssertionError(f"Program P-F facade omits status: {status}")
 
 

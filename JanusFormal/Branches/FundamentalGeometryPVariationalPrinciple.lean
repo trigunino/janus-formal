@@ -24,11 +24,13 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusConvexHelmholtzReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLinearGaugeNoetherReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonlinearGaugeFlowNoether
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeOrbitDescent
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBulkUniversalHelmholtzSynthesis
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoupledSectorHelmholtzSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankParentSchurHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPTFlatBimetricVariationalBridge
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchTransverseNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
@@ -54,6 +56,7 @@ structure ProgramStatus where
   paFiniteRankSchurFrechetDerivativesProved : Prop
   paFiniteRankBulkSignStabilityClassified : Prop
   paPTFlatProportionalActualVariationalStabilityProved : Prop
+  paProportionalBranchTransverseNonuniquenessProved : Prop
   pbPTAnomalyCancellationProved : Prop
   pbParityEvenFreedomProved : Prop
   pbTrivializationFreedomProved : Prop
@@ -74,6 +77,7 @@ structure ProgramStatus where
   pcConditionalLinearGaugeNoetherIffProved : Prop
   pcConditionalNonlinearGaugeFlowNoetherIffProved : Prop
   pcConditionalNonlinearGaugeInvariantRadialReconstructionProved : Prop
+  pcGaugeOrbitQuotientDescentProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -115,6 +119,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteRankSchurFrechetDerivativesProved /\
   s.paFiniteRankBulkSignStabilityClassified /\
   s.paPTFlatProportionalActualVariationalStabilityProved /\
+  s.paProportionalBranchTransverseNonuniquenessProved /\
   s.pbPTAnomalyCancellationProved /\
   s.pbParityEvenFreedomProved /\
   s.pbTrivializationFreedomProved /\
@@ -134,7 +139,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcConditionalLinearGaugeNoetherReconstructionProved /\
   s.pcConditionalLinearGaugeNoetherIffProved /\
   s.pcConditionalNonlinearGaugeFlowNoetherIffProved /\
-  s.pcConditionalNonlinearGaugeInvariantRadialReconstructionProved
+  s.pcConditionalNonlinearGaugeInvariantRadialReconstructionProved /\
+  s.pcGaugeOrbitQuotientDescentProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=
