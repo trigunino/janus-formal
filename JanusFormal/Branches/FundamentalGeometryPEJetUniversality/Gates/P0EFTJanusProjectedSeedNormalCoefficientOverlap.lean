@@ -9,6 +9,7 @@ set_option autoImplicit false
 
 noncomputable section
 
+open Module
 open scoped InnerProductSpace
 open P0EFTJanusNormalFramePointwiseTransition
 open P0EFTJanusNormalFrameSmoothTransition
@@ -49,8 +50,8 @@ theorem frameAdjointCoordinates_transition
     (first second : Normal →ₗᵢ[ℝ] Ambient)
     (hRange : normalFrameRange first = normalFrameRange second) :
     frameAdjointCoordinates first =
-      (normalFrameTransition first second hRange)
-        .toContinuousLinearEquiv.toContinuousLinearMap.comp
+      ((normalFrameTransition first second hRange)
+        .toContinuousLinearEquiv.toContinuousLinearMap).comp
           (frameAdjointCoordinates second) := by
   apply ContinuousLinearMap.ext
   intro ambient
@@ -96,7 +97,7 @@ theorem frameAdjointCoordinates_transition_apply
   have hAt := congrArg
     (fun operator : Ambient →L[ℝ] Normal => operator ambient)
     (frameAdjointCoordinates_transition first second hRange)
-  simpa using hAt
+  exact hAt
 
 /-- Normal coefficient extracted from one ambient bilinear tensor through one
 isometric normal frame. -/
@@ -181,7 +182,7 @@ theorem openFrameAdjointCoordinates_transition_apply
     openCanonicalFrameTransitionValue first second hRange base
       (frameAdjointCoordinates (second.frame base) ambient)
   rw [openCanonicalFrameTransitionValue]
-  simp only [hBase, ↓reduceIte]
+  simp only [hBase]
   exact frameAdjointCoordinates_transition_apply
     (first.frame base) (second.frame base) (hRange base hBase) ambient
 
