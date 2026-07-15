@@ -360,6 +360,16 @@ PROGRAM_P_GATES = {
             "theorem explicit_matrixInteraction_noether_pairing",
         ),
     ),
+    "P0EFTJanusMatrixInteractionDensityCovariance.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem metricVolume_diagonal_weight",
+            "theorem frame_det_ne_zero",
+            "theorem abs_det_inverse_eq_inv_abs_det_frame",
+            "theorem pointwiseInteractionDensity_diagonal_weight",
+            "theorem pointwiseInteractionDensity_inverseJacobian_compensated",
+        ),
+    ),
     "P0EFTJanusRelativeMetricProductFrechet.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -426,6 +436,16 @@ PROGRAM_P_GATES = {
             "theorem nonNullGHYIndependentMetricFirstJetCurve_hasDerivAt",
         ),
     ),
+    "P0EFTJanusNonNullGHYExactInverseCurve.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matrixInverse_hasFDerivAt",
+            "theorem eventually_inducedMetricCurve_isUnit",
+            "theorem eventually_exactInducedInverseCurve_inverseWitness",
+            "theorem exactInducedInverseCurve_hasDerivAt",
+            "theorem nonNullGHYExactInverseCurve_hasDerivAt",
+        ),
+    ),
     "P0EFTJanusNullExpansionCountertermVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -468,6 +488,15 @@ PROGRAM_P_GATES = {
             "theorem ambientInfinitesimalDirection_mem_ker",
         ),
     ),
+    "P0EFTJanusFiniteJetCompatibilityPrincipalSymbol.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteJetCompatibilityPrincipalSymbol",
+            "theorem finiteJetCompatibilityPrincipalSymbol_apply",
+            "theorem principalSymbol_eq_zero_iff_range_orthogonal",
+            "theorem principalSymbol_injective_of_surjective",
+        ),
+    ),
     "P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -499,6 +528,27 @@ PROGRAM_P_GATES = {
             "theorem witness_is_outside_pt_exchange_flat_family",
             "theorem witness_constraint_differentials_independent",
             "theorem witness_secondary_preservation_fixes_lapse_ratio",
+        ),
+    ),
+    "P0EFTJanusReducedFLRWLegendreBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedCandidateLagrangian_plusVelocity_hasDerivAt",
+            "theorem reducedCandidateLagrangian_minusVelocity_hasDerivAt",
+            "theorem plusMomentum_after_velocityFromMomentum",
+            "theorem minusMomentum_after_velocityFromMomentum",
+            "theorem flrw_commonInteraction_eq_reducedInteractionLagrangian",
+            "theorem reducedLegendreTransform_eq_lapse_constraints",
+        ),
+    ),
+    "P0EFTJanusPTFlatVacuumFLRWConstraintNoGo.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ptFlat_plusPotential_factor",
+            "theorem ptFlat_minusPotential_factor",
+            "theorem simultaneous_primary_constraints_force_symmetric_vacuum",
+            "theorem primary_differentials_dependent_on_symmetric_vacuum",
+            "theorem ptFlat_vacuum_FLRW_constraint_noGo",
         ),
     ),
     "P0EFTJanusCandidateSourceModeDecomposition.lean": (
@@ -582,17 +632,22 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFixedGeometryBoundarySlotVariationsProved",
         "paNonNullGHYPointwiseFirstJetVariationProved",
         "paNonNullGHYDeterminantMeasureFirstJetProved",
+        "paNonNullGHYExactInverseCurveVariationProved",
         "paPTFlatSpectralInteractionIndefinitenessProved",
         "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
         "paCandidateSourceModeDecompositionProved",
         "paConditionalMetricInverseRelativeRootFrechetBridgeProved",
         "pcConditionalMatrixDiagonalGaugeNoetherProved",
         "pcExplicitMatrixInteractionFrechetNoetherProved",
+        "paMatrixInteractionDensityCovarianceProved",
         "paExplicitBulkBoundaryLocalCancellationProved",
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paFiniteJetCompatibilityNaturalityProved",
+        "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paNullExpansionCountertermVariationProved",
         "paReducedFLRWBracketFactorizationFromInputHamiltoniansProved",
+        "paReducedFLRWLegendreBridgeProved",
+        "paPTFlatVacuumFLRWConstraintNoGoProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
         if (
