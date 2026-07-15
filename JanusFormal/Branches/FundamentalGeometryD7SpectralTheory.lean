@@ -53,6 +53,11 @@ structure ProgramStatus where
   productThroatLocalCountertermConstructed : Prop
   commonHolonomyCountertermBridgeConstructed : Prop
   fixedHeatSchemeDeterminantUniqueProved : Prop
+  monopoleSphereSpectrumMultiplicityFormalized : Prop
+  circleReducedDeterminantCutoffConstructed : Prop
+  cutoffRemainderTelescopeProved : Prop
+  geometricRemainderConvergenceCriterionProved : Prop
+  quadraticRemainderConvergenceCriterionProved : Prop
   finiteProductHeatTraceFactorizationProved : Prop
   localCircleAffinenessProved : Prop
   localNoMinimumProved : Prop
@@ -93,6 +98,11 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.productThroatLocalCountertermConstructed /\
   s.commonHolonomyCountertermBridgeConstructed /\
   s.fixedHeatSchemeDeterminantUniqueProved /\
+  s.monopoleSphereSpectrumMultiplicityFormalized /\
+  s.circleReducedDeterminantCutoffConstructed /\
+  s.cutoffRemainderTelescopeProved /\
+  s.geometricRemainderConvergenceCriterionProved /\
+  s.quadraticRemainderConvergenceCriterionProved /\
   s.finiteProductHeatTraceFactorizationProved /\
   s.localCircleAffinenessProved /\
   s.localNoMinimumProved /\

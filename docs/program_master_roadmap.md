@@ -112,12 +112,14 @@ Last focused CI: **green**.
 - **C** an explicit D2-to-D7 bridge maps completed separated-mode obligations into that certificate;
 - **T/C** the product-throat `a0/a2/a4` coefficients now generate an explicit cubic/linear/inverse cutoff subtraction, manifestly independent of holonomy;
 - **T/C** a D7 heat-remainder family maps directly to the D2 renormalized determinant, and fixed heat coefficients give a unique determinant;
+- **T/C** the monopole sphere law `lambda_n^2 = n(n+|q|)/L^2`, with multiplicity `|q|+2n`, is integrated into the separated operator and determinant cutoff; the already zeta-regularized circle product is counted exactly once;
+- **T/C** the cutoff remainder is an exact telescoping sum of shell increments; summable increments imply convergence, and either a uniform geometric bound or the expected `C/(N+1)^2` bound constructs the full renormalized family and closes the D2 determinant certificate;
 - **T/X** local heat-kernel coefficients for the declared product-throat convention;
 - **T/N** finite local truncations are affine in the circle modulus and cannot isolate a minimum;
 - **T/X** local/nonlocal winding separation and quarter-phase cancellation structure;
 - **N** pure and PT-paired quarter determinants do not stabilize the modulus;
 - **N** a finite local coefficient can fit a chosen target and therefore is not predictive unless derived;
-- **O** common zeta/eta regulator, complete field/ghost weights, finite renormalization and stable vacuum.
+- **O** prove the monopole spectrum/heat-trace match and an explicit summable product-throat shell bound; field/ghost weights and the final vacuum remain downstream.
 
 ## D9 — Elliptic and BRST symbol gates
 

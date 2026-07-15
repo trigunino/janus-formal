@@ -40,11 +40,21 @@ theorem sphere_level_cast_le_of_weight_le
       unfold productDiracEigenvalueSquared
       exact le_add_of_nonneg_right (sq_nonneg _))
       (spectrum_squared_le_of_weight_le data mode R hWeight)
-  unfold sphereEigenvalueSquared at hSphere
+  have hBase :
+      (((mode.sphereLevel + 1 : ℕ) : ℝ) ^ 2) / data.sphereRadius ^ 2 ≤
+        sphereEigenvalueSquared data mode.sphereLevel := by
+    unfold sphereEigenvalueSquared monopoleAbsCharge
+    have hLevel : (0 : ℝ) ≤ ((mode.sphereLevel + 1 : ℕ) : ℝ) := by positivity
+    have hCharge : (0 : ℝ) ≤ ((data.monopoleCharge.natAbs : ℕ) : ℝ) := by positivity
+    have hRadius : 0 < data.sphereRadius ^ 2 := sq_pos_of_pos data.sphereRadiusPositive
+    apply (div_le_div_iff_of_pos_right hRadius).2
+    push_cast
+    nlinarith
+  have hSphereBase := hBase.trans hSphere
   have hRadiusSq : 0 < data.sphereRadius ^ 2 := sq_pos_of_pos data.sphereRadiusPositive
   have hSq : (((mode.sphereLevel + 1 : ℕ) : ℝ)) ^ 2 ≤
       (R * data.sphereRadius) ^ 2 := by
-    apply (div_le_iff₀ hRadiusSq).1 at hSphere
+    apply (div_le_iff₀ hRadiusSq).1 at hSphereBase
     nlinarith
   exact (sq_le_sq₀ (by positivity)
     (mul_nonneg hR data.sphereRadiusPositive.le)).1 hSq
