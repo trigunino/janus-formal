@@ -202,6 +202,11 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   assumptions, and a strict negative pure-kinetic Hessian direction for the
   published reduced sign `kappa = -1`. These remain reduced conditional/no-go
   statements, not the missing covariant Janus action or ghost analysis.
+  A general normed trace/lift interface now gives the genuine Frechet and
+  directional variation of independent two-sector bulk-plus-boundary actions.
+  Stationarity is exactly interior bulk vanishing plus lifted boundary balance;
+  an accessible nonzero boundary flux obstructs it. The interface does not
+  construct the physical GHY/null/corner/junction data.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
 - **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. No Janus flow, gauge group or PDE identity is constructed; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
   The set quotient by complete-flow orbits is constructed. For any target,
@@ -215,6 +220,14 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   components, diagonal/sign-linked variations recover their sum/difference,
   and finite diagonal translation symmetry yields the reduced Noether identity.
   This is not yet the covariant diffeomorphism/Bianchi system.
+  In a supplied metric--metric--matter chart, existence of one common `C^2`
+  action is now equivalent to reciprocity of all three cross-block pairs; a
+  genuine bilinear primitive proves sufficiency, and an explicit mismatch gives
+  a conditional no-go. Since M30 does not specify its interaction densities or
+  matter dependence, no mismatch is attributed to it. With a supplied boundary
+  Euler term, diagonal symmetry yields only
+  `E_plus + E_minus + boundary_flux = 0`; separate conservation additionally
+  requires zero exchange and zero boundary flux.
 
 ### P-D — pairings and coefficient modules
 

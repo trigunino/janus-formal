@@ -175,6 +175,11 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   algebraic relative-sector quotient for positive PT-flat mass;
 - **T/N** the reduced pure-kinetic `kappa = -1` choice has a strictly negative
   actual Hessian direction in the ordinary positive-Hilbert interpretation;
+- **T/C** a normed trace/lift interface with arbitrary admissible boundary
+  submodules gives exact Frechet/directional variations and an iff between
+  stationarity and interior-bulk plus lifted-boundary balance in both sectors;
+- **T/N** a nonzero accessible boundary flux obstructs stationarity when its
+  sector bulk Euler functional already vanishes;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -232,6 +237,17 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   both Euler components, diagonal/sign-linked variations recover their
   sum/difference, and diagonal translation symmetry yields the reduced Noether
   identity;
+- **T/C** in a supplied metric--metric--matter chart, a common `C^2` action
+  exists with the proposed linear cross sources iff all three ordered
+  cross-block pairs are reciprocal; the sufficient action has a genuine
+  Frechet derivative;
+- **T/N** any explicitly supplied nonreciprocal cross block rules out that
+  common reduced action, while unspecified M30 cross densities do not decide
+  the criterion;
+- **T/C/N** a genuine common reduced action with diagonal symmetry and supplied
+  boundary Euler term yields only `E_plus + E_minus + boundary_flux = 0`;
+  separate sector conservation additionally requires zero exchange and zero
+  boundary flux, as shown by the exact `(1,-1,0)` counterexample;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** construct the Janus flow/gauge group and derive the complete Euler
   source, PDE Noether identities, nonlinear Helmholtz conditions, variational

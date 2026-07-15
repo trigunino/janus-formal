@@ -152,6 +152,42 @@ PROGRAM_P_GATES = {
             "theorem published_kappa_minus_one_has_negative_actual_hessian_direction",
         ),
     ),
+    "P0EFTJanusTwoSectorBulkBoundaryFrechetVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem sectorAction_hasFDerivAt",
+            "theorem sectorAction_line_hasDerivAt",
+            "theorem sectorFirstVariation_annihilates_iff_bulk_boundary_balance",
+            "theorem sectorStationaryAt_iff_bulk_boundary_balance",
+            "theorem nonzero_boundary_flux_blocks_sector_stationarity",
+            "theorem twoSectorAction_hasFDerivAt",
+            "theorem twoSectorAction_line_hasDerivAt",
+            "theorem twoSectorStationaryAt_iff_bulk_boundary_balance",
+            "theorem nonzero_boundary_flux_blocks_two_sector_stationarity",
+        ),
+    ),
+    "P0EFTJanusReducedCrossMatterIntegrability.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem crossEuler_hasFDerivAt",
+            "theorem common_action_forces_cross_blocks_adjoint",
+            "theorem commonCrossAction_hasFDerivAt",
+            "theorem cross_blocks_adjoint_iff_common_action",
+            "theorem nonadjoint_cross_blocks_no_common_action",
+            "theorem metric_cross_mismatch_no_common_action",
+        ),
+    ),
+    "P0EFTJanusReducedDiagonalNoetherExchangeBalance.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem diagonal_noether_combined_balance",
+            "theorem combined_bulk_balance_eq_negative_boundary_flux",
+            "theorem separate_conservation_iff_zero_exchange_and_boundary",
+            "theorem zero_boundary_separate_conservation_iff_zero_exchange",
+            "theorem exact_counterexample_sector_balances",
+            "theorem combined_balance_does_not_imply_separate_conservation",
+        ),
+    ),
     "P0EFTJanusProportionalBranchTransverseNoGo.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -220,6 +256,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paReducedTwoMetricActualBoundaryVariationProved",
         "paConditionalReducedBimetricFrechetStabilityProved",
         "paReducedPublishedKappaMinusOneKineticNoGoProved",
+        "paTwoSectorBulkBoundaryFrechetVariationProved",
         "paProportionalBranchTransverseNonuniquenessProved",
         "paProportionalBranchTransverseTwoJetNonuniquenessProved",
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
@@ -230,6 +267,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcGaugeOrbitQuotientDescentProved",
         "pcGaugeOrbitInvariantFunctionEquivalenceProved",
         "pcReducedTwoMetricEulerNoetherProved",
+        "pcReducedCrossMatterIntegrabilityIffProved",
+        "pcReducedDiagonalNoetherBoundaryExchangeProved",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1
