@@ -230,7 +230,11 @@ regular local operator
   -> central Spin-lift and determinant-root defects
   -> SpinC diagonal cancellation
   -> concrete circle Spin(2) double cover
-  -> explicit U(1) ≃ SO(2) matrix equivalence.
+  -> explicit U(1) ≃ SO(2) matrix equivalence
+  -> metric-derived Euclidean Koszul connection
+  -> projected-seed varying-normal atlas
+  -> one-chart rank-two SpinC bundle/connection
+  -> valid-chart low-order residual/SpinC action groupoid.
 ```
 
 Current theorem evidence:
@@ -248,6 +252,11 @@ Current theorem evidence:
 - **T** central double-cover defects, determinant-root two-torsion and SpinC diagonal cancellation;
 - **T** concrete circle squaring with kernel `{±1}`, exact fibers and diagonal quotient;
 - **T** explicit group equivalence `U(1) ≃ SO(2)` and matrix-valued rank-two Spin double cover;
+- **T** equivalence with Mathlib's rank-two Clifford Spin model;
+- **T** smooth Euclidean Koszul connection existence from a smooth positive-definite metric;
+- **T** projected-seed varying-normal atlas and overlap coefficient laws;
+- **T** canonical one-chart rank-two SpinC Cech bundle and supplied-potential connection;
+- **T** valid-chart low-order residual/SpinC action-groupoid realization;
 - **T/N** local finite order need not give one global uniform order;
 - **T/N** smooth dependence is not automatically polynomial;
 - **N** equivariance plus finite-dimensionality does not by itself imply finite generation for nonreductive jet-group actions;
@@ -255,11 +264,11 @@ Current theorem evidence:
 
 Exact remaining locks:
 
-- **O** identify the circle model with Mathlib's even Clifford-algebra definition of `Spin(2)`;
 - **O** construct the required higher-dimensional Clifford Spin covers;
-- **O** package the local frame and overlap calculations in actual manifold vector and principal bundles;
+- **O** extend the projected-seed atlas and one-chart SpinC model to the actual
+  nontrivial global Janus vector and principal bundles;
 - **O** prove characteristic-class matching between the Spin and determinant-root defects;
-- **O** attach the determinant-line connection and all natural sector actions;
+- **O** identify the global determinant-line connection and attach every natural sector action;
 - **O** construct the full differentiable structured jet groupoid and effective descent;
 - **O** prove the higher-order jet-isomorphism and integrability theorem;
 - **O** classify smooth equivariant maps across isotropy strata.
