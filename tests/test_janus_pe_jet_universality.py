@@ -5,6 +5,7 @@ import math
 import pytest
 
 from scripts.audit_janus_pe_jet_universality import (
+    assert_programme_pe_gate_integrity,
     even_evaluator,
     exponential_difference_formula,
     finite_cover_order_bound,
@@ -12,6 +13,10 @@ from scripts.audit_janus_pe_jet_universality import (
     odd_evaluator,
     sign_action,
 )
+
+
+def test_constructive_programme_pe_gates_are_integrated() -> None:
+    assert_programme_pe_gate_integrity()
 
 
 def test_exponential_finite_difference_formula() -> None:

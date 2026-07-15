@@ -331,6 +331,10 @@ require additional work because the residual orthogonal group is noncompact.
 | smooth natural does not imply polynomial | explicit counterexample and Lean finite-difference proof |
 | classical natural/gauge-natural categorical theorem | external theorem; documented, not formalized in Lean |
 | Peetre–Slovák for actual Janus category | analytic interface; specialization open |
+| Euclidean Koszul connection from a positive metric | proved constructively in Lean |
+| projected-seed varying normal atlas | proved in Lean with smooth overlap laws |
+| one-chart rank-two SpinC bundle/connection | proved in Lean; nontrivial global sectors open |
+| valid-chart low-order residual/SpinC action groupoid | instantiated in Lean |
 | actual structured SpinC jet groupoid | open |
 | effective Janus descent theorem | open |
 | full smooth equivariant-map classification | open |

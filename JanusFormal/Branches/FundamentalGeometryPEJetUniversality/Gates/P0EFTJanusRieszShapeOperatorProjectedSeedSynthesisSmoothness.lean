@@ -9,7 +9,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set
+open Set Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusNormalFramePointwiseTransition
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
@@ -27,14 +27,12 @@ variable [FiniteDimensional ℝ Model]
 
 variable {κ : Type x} [Fintype κ]
 
-/-- Rank-one synthesis operator associated with one coordinate functional. -/
 def basisRankOneSynthesisCLM
     (coordinateBasis : Basis κ ℝ Model) (k : κ) :
     Ambient →L[ℝ] Model →L[ℝ] Ambient :=
   (ContinuousLinearMap.smulRightL ℝ Model Ambient)
     (coordinateBasis.coord k).toContinuousLinearMap
 
-/-- Finite rank-one expansion of a basis synthesis operator. -/
 def projectedSeedSynthesisSumCLM
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -45,6 +43,22 @@ def projectedSeedSynthesisSumCLM
     (chart : Chart) (base : Base) : Model →L[ℝ] Ambient :=
   ∑ k, basisRankOneSynthesisCLM coordinateBasis k
     (projectedSeedNormalFrame tangentFrame charts chart k base)
+
+theorem projectedSeedSynthesisCLM_eq_sum
+    {Chart : Type y} {ι : Type*}
+    [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
+    [WellFoundedLT κ]
+    (coordinateBasis : Basis κ ℝ Model)
+    (tangentFrame : ι → Base → Ambient)
+    (charts : ProjectedSeedChartFamily Chart Base Ambient κ)
+    (chart : Chart) (base : Base) :
+    projectedSeedSynthesisCLM coordinateBasis tangentFrame charts chart base =
+      projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base := by
+  apply ContinuousLinearMap.ext
+  intro vector
+  unfold projectedSeedSynthesisCLM projectedSeedSynthesisLinearMap
+  rw [← coordinateBasis.sum_equivFun vector]
+  simp [projectedSeedSynthesisSumCLM, basisRankOneSynthesisCLM]
 
 @[simp]
 theorem projectedSeedSynthesisSumCLM_basis
@@ -58,33 +72,11 @@ theorem projectedSeedSynthesisSumCLM_basis
     projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base
         (coordinateBasis k) =
       projectedSeedNormalFrame tangentFrame charts chart k base := by
-  classical
-  change
-    (∑ j, coordinateBasis.coord j (coordinateBasis k) •
-      projectedSeedNormalFrame tangentFrame charts chart j base) =
-      projectedSeedNormalFrame tangentFrame charts chart k base
-  simp
+  rw [← projectedSeedSynthesisCLM_eq_sum
+    coordinateBasis tangentFrame charts chart base]
+  exact projectedSeedSynthesisCLM_basis
+    coordinateBasis tangentFrame charts chart base k
 
-/-- The `Basis.constr` synthesis map is exactly its finite rank-one expansion. -/
-theorem projectedSeedSynthesisCLM_eq_sum
-    {Chart : Type y} {ι : Type*}
-    [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
-    [WellFoundedLT κ]
-    (coordinateBasis : Basis κ ℝ Model)
-    (tangentFrame : ι → Base → Ambient)
-    (charts : ProjectedSeedChartFamily Chart Base Ambient κ)
-    (chart : Chart) (base : Base) :
-    projectedSeedSynthesisCLM coordinateBasis tangentFrame charts chart base =
-      projectedSeedSynthesisSumCLM coordinateBasis tangentFrame charts chart base := by
-  apply ContinuousLinearMap.ext
-  intro vector
-  conv_lhs => rw [← coordinateBasis.sum_equivFun vector]
-  conv_rhs => rw [← coordinateBasis.sum_equivFun vector]
-  simp only [map_sum, map_smul]
-  simp
-
-/-- Smoothness of every Gram--Schmidt vector implies smoothness of the finite
-basis synthesis operator on the projected-seed chart domain. -/
 theorem projectedSeedSynthesisCLM_contDiffOn
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -109,11 +101,9 @@ theorem projectedSeedSynthesisCLM_contDiffOn
         tangentFrame charts hTangent chart k)
   apply hSum.congr
   intro base hValid
-  exact (projectedSeedSynthesisCLM_eq_sum
-    coordinateBasis tangentFrame charts chart base).symm
+  exact projectedSeedSynthesisCLM_eq_sum
+    coordinateBasis tangentFrame charts chart base
 
-/-- Projected-seed Gram--Schmidt frames package automatically as smooth
-open-domain isometric frame families. -/
 def projectedSeedSmoothIsometricFrameFamilyOnOfSmooth
     {Chart : Type y} {ι : Type*}
     [Fintype ι] [LinearOrder κ] [LocallyFiniteOrderBot κ]
@@ -132,8 +122,6 @@ def projectedSeedSmoothIsometricFrameFamilyOnOfSmooth
     (projectedSeedSynthesisCLM_contDiffOn
       coordinateBasis tangentFrame charts hTangent chart)
 
-/-- A pointwise normal orthonormal family supplies the fallback isometric
-embedding for its centered chart. -/
 def pointwiseNormalBasisFallback
     {ι : Type*}
     (coordinateBasis : Basis κ ℝ Model)
@@ -142,13 +130,15 @@ def pointwiseNormalBasisFallback
     (center : Base) : Model →ₗᵢ[ℝ] Ambient := by
   let synthesis : Model →ₗ[ℝ] Ambient :=
     coordinateBasis.constr ℝ (basisData.normalBasisAt center)
+  have hBasisImage :
+      synthesis ∘ coordinateBasis = basisData.normalBasisAt center := by
+    funext k
+    exact coordinateBasis.constr_basis ℝ _ k
   have hImage : Orthonormal ℝ (synthesis ∘ coordinateBasis) := by
-    simpa [synthesis, Function.comp_def] using
-      basisData.normal_orthonormal center
+    rw [hBasisImage]
+    exact basisData.normal_orthonormal center
   exact synthesis.isometryOfOrthonormal hCoordinateOrthonormal hImage
 
-/-- Complete smooth normal-frame packaging on the pointwise-basis chart centered
-at `center`. -/
 def pointwiseBasisSmoothNormalFrameFamilyOn
     {ι : Type*} [Fintype ι]
     [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ]
@@ -166,8 +156,6 @@ def pointwiseBasisSmoothNormalFrameFamilyOn
     basisData.tangentFrame (pointwiseNormalSeedCharts basisData)
     basisData.tangent_contDiff center
 
-/-- The packaged pointwise-basis frame has the expected Gram--Schmidt ambient
-range on every valid point of its chart. -/
 theorem pointwiseBasisSmoothNormalFrameFamilyOn_range
     {ι : Type*} [Fintype ι]
     [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ]
@@ -194,7 +182,6 @@ theorem pointwiseBasisSmoothNormalFrameFamilyOn_range
       basisData.tangent_contDiff center)
     base hValid
 
-/-- Exact closure status after finite-sum synthesis smoothness. -/
 structure ProjectedSeedSynthesisSmoothnessStatus where
   rankOneExpansionConstructed : Prop
   rankOneExpansionEqualsBasisConstruction : Prop
@@ -205,7 +192,6 @@ structure ProjectedSeedSynthesisSmoothnessStatus where
   frameRangeIdentified : Prop
   connectedToPhysicalNormalRange : Prop
 
-/-- Closure of projected-seed synthesis smoothness. -/
 def projectedSeedSynthesisSmoothnessClosed
     (s : ProjectedSeedSynthesisSmoothnessStatus) : Prop :=
   s.rankOneExpansionConstructed ∧
@@ -217,8 +203,6 @@ def projectedSeedSynthesisSmoothnessClosed
   s.frameRangeIdentified ∧
   s.connectedToPhysicalNormalRange
 
-/-- The remaining geometric statement is equality with the actual physical
-normal range, not smoothness or isometric frame packaging. -/
 theorem missing_physical_range_identification_blocks_closure
     (s : ProjectedSeedSynthesisSmoothnessStatus)
     (hMissing : Not s.connectedToPhysicalNormalRange) :

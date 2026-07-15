@@ -94,8 +94,7 @@ def openCanonicalFrameTransition
     apply (openAdjointTransitionCLM_contDiffOn first second).congr
     intro base hValid
     change
-      (openCanonicalFrameTransitionValue first second hRange base)
-          .toContinuousLinearEquiv.toContinuousLinearMap =
+      ((openCanonicalFrameTransitionValue first second hRange base).toContinuousLinearEquiv.toContinuousLinearMap) =
         openAdjointTransitionCLM first second base
     rw [openCanonicalFrameTransitionValue]
     simp only [hValid, ↓reduceIte, openAdjointTransitionCLM]
@@ -105,8 +104,7 @@ def openCanonicalFrameTransition
     apply (openAdjointTransitionCLM_contDiffOn second first).congr
     intro base hValid
     change
-      ((openCanonicalFrameTransitionValue first second hRange base).symm)
-          .toContinuousLinearEquiv.toContinuousLinearMap =
+      (((openCanonicalFrameTransitionValue first second hRange base).symm).toContinuousLinearEquiv.toContinuousLinearMap) =
         openAdjointTransitionCLM second first base
     rw [openCanonicalFrameTransitionValue]
     simp only [hValid, ↓reduceIte, openAdjointTransitionCLM]
