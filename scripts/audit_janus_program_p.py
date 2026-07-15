@@ -389,6 +389,20 @@ PROGRAM_P_GATES = {
             "theorem exactDensityEndpointLedger_totalShift_zero",
         ),
     ),
+    "P0EFTJanusFourDimensionalDensityLieDerivativeNoether.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def affineFlow",
+            "theorem affineFlow_hasFDerivAt",
+            "theorem jacobianDeterminant_exact_expansion",
+            "theorem jacobianDeterminant_hasDerivAt",
+            "structure DifferentiableScalarDensity",
+            "theorem densityPullbackCurve_hasDerivAt",
+            "theorem densityFluxComponent_coordinateLine_hasDerivAt",
+            "theorem coordinateFluxDivergence_eq_densityLieDerivative",
+            "theorem densityPullbackCurve_hasDerivAt_coordinateFluxDivergence",
+        ),
+    ),
     "P0EFTJanusMatrixDiagonalGaugeNoether.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -527,6 +541,20 @@ PROGRAM_P_GATES = {
             "theorem einsteinHilbertDirichletBoundaryFlux_eq",
             "theorem einsteinHilbert_add_exactGHYDirichletDerivative_eq_zero",
             "theorem exactGHYCurve_hasDerivative_neg_einsteinHilbertFlux",
+        ),
+    ),
+    "P0EFTJanusGaussianNormalEmbeddedHypersurface.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GaussianAffineData",
+            "theorem hypersurfaceEmbedding_injective",
+            "theorem point_mem_hypersurface_range_iff",
+            "theorem surfaceInverse_mul_metric",
+            "theorem spacetimeMetric_normalLine_hasDerivAt",
+            "theorem leviCivitaChristoffel_lower_symmetric",
+            "theorem signedUnitNormal_norm_sq",
+            "theorem covariantNormalSecondFundamentalForm_eq",
+            "theorem extrinsicTrace_eq",
         ),
     ),
     "P0EFTJanusNullExpansionCountertermVariation.lean": (
@@ -769,6 +797,27 @@ PROGRAM_P_GATES = {
             "theorem oneZeroMode_regulated_witness",
         ),
     ),
+    "P0EFTJanusPairedHeatKernelCutoffLimit.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CountableChiralSpectrum",
+            "theorem pairedCutoffChiralTrace_tendsto_zero",
+            "theorem cutoffChiralTrace_tendsto_infiniteTrace",
+            "theorem pairedInfiniteChiralTrace_eq_zero",
+            "theorem pairedCutoffChiralTrace_tendsto_infinitePair",
+        ),
+    ),
+    "P0EFTJanusCandidateSignedChargeNewtonianBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def candidateAPTChargedMatter",
+            "theorem candidateA_pt_matter_hessian_positive",
+            "theorem candidateA_mediator_quadratic_positive",
+            "theorem candidateA_mediator_energy_at_stationary",
+            "theorem candidateA_signed_mediator_cross_term",
+            "theorem candidateA_positive_kinetic_full_janus_sign_matrix",
+        ),
+    ),
 }
 
 
@@ -829,6 +878,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCoDiagonalLorentzRootFirstDerivativeProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
+        "paFourDimensionalDensityLieDerivativeNoetherProved",
         "paConditionalRelativeMetricRootFrechetBridgeProved",
         "paFixedGeometryBoundarySlotVariationsProved",
         "paNonNullGHYPointwiseFirstJetVariationProved",
@@ -836,6 +886,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paNonNullGHYExactInverseCurveVariationProved",
         "paNonNullGHYExtrinsicTraceCurveVariationProved",
         "paGaussianNormalEHGHYCancellationDerived",
+        "paGaussianNormalEmbeddedHypersurfaceLeviCivitaProved",
         "paPTFlatSpectralInteractionIndefinitenessProved",
         "paCandidateMinisuperspacePrimaryConstraintPrecursorProved",
         "paCandidateSourceModeDecompositionProved",
@@ -861,6 +912,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paMatterCurvatureFLRWConstraintBranchProved",
         "paDustFLRWConstrainedSecondVariationAuditProved",
         "paFiniteModeHeatKernelAnomalyRegulatorProved",
+        "paCountablePairedHeatKernelCutoffLimitProved",
+        "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):
         if (

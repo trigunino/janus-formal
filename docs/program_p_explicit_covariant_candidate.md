@@ -434,6 +434,9 @@ Implemented in the current finite, spectral or pointwise models:
   inverse-Jacobian coordinate weights and invariant weighted action sum;
 - actual affine one-dimensional density pullback and Jacobian, whose variation
   is the total derivative `(xi rho)'`, with exact endpoint-ledger cancellation;
+- actual local four-dimensional affine flow, Frechet Jacobian, determinant
+  derivative `d det(I + epsilon A)/d epsilon|_0 = tr A`, density pullback and
+  equality of its variation with the four-coordinate flux divergence;
 - actual derivatives of metric inversion and `g_plus_inverse * g_minus`, plus
   an explicit two-sided Sylvester inverse on the open positive diagonal chart
   and a conditional derivative of a supplied differentiable square root;
@@ -455,6 +458,10 @@ Implemented in the current finite, spectral or pointwise models:
   supplied scalar `delta K` or measure tangent;
 - derived Gaussian-normal Palatini/EH boundary flux and its exact pointwise
   cancellation with GHY for Dirichlet variations, with both orientation signs;
+- explicit embedded `n = 0` hypersurface in an affine Gaussian-normal chart,
+  with two-sided surface inverse, actual coordinate metric derivatives,
+  Levi-Civita Christoffels, signed unit normal, orthogonality, and derived
+  `B_ab = sigma partial_n h_ab / 2` and `K = h^{ab} B_ab`;
 - actual nonzero-expansion null-counterterm derivative and its explicit
   singular approach to zero expansion, plus continuity but proved
   non-differentiability of its zero extension;
@@ -497,12 +504,19 @@ Implemented in the current finite, spectral or pointwise models:
   ambient Hessian is separated from the zero second variation along an exact
   nonlinear constraint curve, preventing a false stability/ghost verdict;
 - exact diagonal/relative source decomposition as a PPN rejection precursor;
+- reduced PT-signed source bridge: positive Candidate-A matter Hessian,
+  opposite pure-relative sources, a positive mediator cross term and the full
+  Janus sign table alongside two positive spin-2 kinetic coefficients; the
+  charge law remains imported reduced input rather than a covariant result;
 - actual pointwise Euler equations and symmetric full Hessian for the spectral
   interaction plus two independent quadratic matter blocks;
 - explicit Candidate-A witnesses proving that the paired anomaly proxy fixes
   neither overall normalization nor the reduced finite even-counterterm proxy;
 - actual finite-mode heat-kernel chiral trace with typed nonnegative spectrum
-  and time, exact PT cancellation, parity-even doubling and a nonzero witness.
+  and time, exact PT cancellation, parity-even doubling and a nonzero witness;
+- countable supplied spectrum with exact cancellation at every finite cutoff,
+  convergence of the paired cutoff sequence to zero, and, under explicit
+  summability, convergence to a well-defined cancelling infinite trace.
 
 Still required before Candidate A is a completed Janus action:
 
@@ -513,25 +527,27 @@ Still required before Candidate A is a completed Janus action:
 2. lift the pointwise spectral/matter Euler equations to both covariant metric
    and spacetime matter Euler--Lagrange PDEs from `S_A`;
 3. lift the Gaussian-normal Palatini calculation to arbitrary coordinates,
-   lift the affine normal `h/B/K` jet to an embedding-compatible geometric
-   boundary curve with unit normal and Levi-Civita data, instantiate and
-   integrate all gravitational strata, select an admissible zero-expansion
+   lift the explicit local embedded Gaussian chart and its `h/B/K` data to a
+   geometric boundary curve on the manifold, instantiate and integrate all
+   gravitational strata, select an admissible zero-expansion
    variational domain, lift the affine composite LL measure and pointwise
    auxiliary action to global fields and worldvolume PDEs, establish a
    nonempty throat branch, and prove cancellation of the physical bulk flux;
-4. lift the actual one-dimensional density pullback to the four-dimensional
-   diagonal diffeomorphism generator and covariant Noether--Bianchi identity;
-5. reproduce the Janus Newtonian sign matrix without a negative spin-2 kinetic
-   mode;
+4. lift the actual local affine four-dimensional density pullback and flux
+   divergence to an arbitrary diagonal diffeomorphism generator and the
+   covariant Noether--Bianchi identity;
+5. derive the reduced PT-signed charge law and resulting Janus Newtonian sign
+   matrix from the covariant Candidate-A weak-field equations while retaining
+   positive spin-2 kinetic terms;
 6. derive the displayed reduced kinetic Lagrangian and dust source from the
    covariant Candidate-A EH/GHY/matter action, extend the explicit
    dust-supported branch to the ADM shift, functional Poisson bracket and
    generic independent secondary-constraint closure; then derive constrained
    stability on the physical reduced tangent/quotient and PPN parameters for
    the exact matter couplings;
-7. lift the finite-mode heat-kernel trace to the actual continuum Janus
-   operator, compute its local/global anomalies in that regulator, and supply
-   a microscopic normalization/finite-part law in the same scheme.
+7. construct the actual continuum Janus operator behind the supplied
+   countable spectrum, compute its local/global anomalies in that regulator,
+   and supply a microscopic normalization/finite-part law in the same scheme.
 
 Candidate A is rejected if any of items 1--7 fails.  No observed-radius input
 is used in its definition.
@@ -541,8 +557,8 @@ is used in its definition.
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
 | 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | smooth root/Sylvester inverse on the full causal-compatible Lorentz domain and full metric functional variation |
-| 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector, invariant finite-site action, and an actual affine 1D density pullback/Jacobian | manifold field space and four-dimensional diagonal diffeomorphism action |
-| 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure with Frechet derivative | arbitrary-coordinate embedding/unit-normal/Levi-Civita geometry, integrated flux, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
+| 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector, invariant finite-site action, actual affine 1D pullback, and a local affine `R^4` density pullback/Jacobian/flux-divergence identity | manifold field space, arbitrary spacetime diagonal diffeomorphisms and covariant density law |
+| 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure with Frechet derivative | arbitrary-coordinate global embedding and integrated flux, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels and finite principal-symbol kernels | global Lorentzian Janus compatibility PDE/jet complex and its full symbol sequence/exactness |
-| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, finite-frame and 1D pullback Noether identities, reduced Legendre/Dirac chain, PT-flat vacuum no-go and dust-supported independent-rank/lapse witness | covariant metric/matter PDEs, four-dimensional diagonal Bianchi, covariant dust reduction and ADM shift/Poisson closure |
-| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, and an actual finite-mode heat-kernel trace with PT cancellation/even doubling | physical quotient stability, PPN, covariant counterterms, continuum local/global anomalies and microscopic normalization/finite-part law |
+| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, finite-frame, 1D and local affine `R^4` density Noether identities, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, PT-flat vacuum no-go and dust-supported independent-rank/lapse witness | covariant metric/matter PDEs and Bianchi identity, covariant derivation of the signed charge, dust reduction and ADM shift/Poisson closure |
+| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite-mode heat trace, and countable cutoff/infinite-sum PT cancellation | physical quotient stability, PPN, covariant counterterms, actual continuum operator and local/global anomalies, microscopic normalization/finite-part law |
