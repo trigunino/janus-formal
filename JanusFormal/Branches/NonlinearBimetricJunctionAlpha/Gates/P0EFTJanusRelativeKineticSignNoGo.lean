@@ -37,6 +37,41 @@ theorem every_nonzero_negative_mode_has_negative_energy
   rw [negative_mode_quadratic_scaling]
   exact mul_neg_of_neg_of_pos hMinus (sq_pos_of_ne_zero hAmplitude)
 
+/-- Kinetic form after an arbitrary reparametrization of the two modes. -/
+def reparametrizedKineticForm
+    (plusCoefficient minusCoefficient : ℝ)
+    (change : ℝ × ℝ → ℝ × ℝ)
+    (mode : ℝ × ℝ) : ℝ :=
+  kineticQuadraticForm plusCoefficient minusCoefficient
+    (change mode).1 (change mode).2
+
+/--
+An invertible (in particular, surjective) field redefinition cannot remove the
+negative kinetic direction: take the preimage of the original negative mode.
+-/
+theorem surjective_reparametrization_preserves_negative_direction
+    (plusCoefficient minusCoefficient : ℝ)
+    (change : ℝ × ℝ → ℝ × ℝ)
+    (hChange : Function.Surjective change)
+    (hMinus : minusCoefficient < 0) :
+    ∃ mode, reparametrizedKineticForm
+        plusCoefficient minusCoefficient change mode < 0 := by
+  obtain ⟨mode, hMode⟩ := hChange (0, 1)
+  refine ⟨mode, ?_⟩
+  simp [reparametrizedKineticForm, hMode, kineticQuadraticForm, hMinus]
+
+/-- A surjective reparametrization also preserves a positive direction. -/
+theorem surjective_reparametrization_preserves_positive_direction
+    (plusCoefficient minusCoefficient : ℝ)
+    (change : ℝ × ℝ → ℝ × ℝ)
+    (hChange : Function.Surjective change)
+    (hPlus : 0 < plusCoefficient) :
+    ∃ mode, 0 < reparametrizedKineticForm
+        plusCoefficient minusCoefficient change mode := by
+  obtain ⟨mode, hMode⟩ := hChange (1, 0)
+  refine ⟨mode, ?_⟩
+  simp [reparametrizedKineticForm, hMode, kineticQuadraticForm, hPlus]
+
 /--
 A relative negative kinetic coefficient is therefore not a harmless sign
 convention when both spin-2 modes propagate in an ordinary positive-definite

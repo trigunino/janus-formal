@@ -55,7 +55,7 @@ def crossProduct
 @[simp] theorem scale_zero_tangent
     (scalar : ℝ) :
     scaleTangent scalar zeroTangent = zeroTangent := by
-  rfl
+  ext <;> simp [scaleTangent, zeroTangent]
 
 /-- Nonzero covectors have positive Euclidean norm squared. -/
 theorem norm_squared_positive_of_nonzero
@@ -96,6 +96,7 @@ theorem divergence_gradient_symbol
       normSquared covector * scalar := by
   unfold divergenceSymbol gradientSymbol
     tangentDot scaleTangent normSquared
+  unfold tangentDot
   ring
 
 /-- The de Rham symbol squares to zero at the first stage. -/
@@ -148,9 +149,7 @@ theorem maxwell_gauge_fixed_symbol_is_laplacian
     cross_cross_identity]
   ext <;>
     simp [gradientSymbol, divergenceSymbol,
-      subTangent, addTangent, scaleTangent,
-      tangentDot, normSquared] <;>
-    ring
+      subTangent, scaleTangent, tangentDot, normSquared]
 
 /-- Symmetrized derivative/gauge symbol for metric perturbations. -/
 def symGradientSymbol
@@ -168,7 +167,7 @@ def symmetricTrace
   tensor.xx + tensor.yy + tensor.zz
 
 /-- de Donder gauge symbol. -/
-def deDonderSymbol
+noncomputable def deDonderSymbol
     (covector : TangentVector3)
     (tensor : SymmetricTensor3) : TangentVector3 :=
   { x := covector.x * tensor.xx +
@@ -225,9 +224,9 @@ theorem scale_tangent_eq_zero
   have hz := congrArg TangentVector3.z hZero
   apply TangentVector3.ext <;>
     simp [scaleTangent, zeroTangent] at hx hy hz ⊢
-  · exact (mul_eq_zero.mp hx).resolve_left hScalar
-  · exact (mul_eq_zero.mp hy).resolve_left hScalar
-  · exact (mul_eq_zero.mp hz).resolve_left hScalar
+  · exact hx.resolve_left hScalar
+  · exact hy.resolve_left hScalar
+  · exact hz.resolve_left hScalar
 
 /-- Nonzero scalar multiplication is injective on symmetric tensors. -/
 theorem scale_symmetric_eq_zero
@@ -243,14 +242,13 @@ theorem scale_symmetric_eq_zero
   have hxz := congrArg SymmetricTensor3.xz hZero
   have hyz := congrArg SymmetricTensor3.yz hZero
   apply SymmetricTensor3.ext <;>
-    simp [scaleSymmetric, zeroSymmetric] at
-      hxx hyy hzz hxy hxz hyz ⊢
-  · exact (mul_eq_zero.mp hxx).resolve_left hScalar
-  · exact (mul_eq_zero.mp hyy).resolve_left hScalar
-  · exact (mul_eq_zero.mp hzz).resolve_left hScalar
-  · exact (mul_eq_zero.mp hxy).resolve_left hScalar
-  · exact (mul_eq_zero.mp hxz).resolve_left hScalar
-  · exact (mul_eq_zero.mp hyz).resolve_left hScalar
+    simp [scaleSymmetric, zeroSymmetric] at hxx hyy hzz hxy hxz hyz ⊢
+  · exact hxx.resolve_left hScalar
+  · exact hyy.resolve_left hScalar
+  · exact hzz.resolve_left hScalar
+  · exact hxy.resolve_left hScalar
+  · exact hxz.resolve_left hScalar
+  · exact hyz.resolve_left hScalar
 
 /-- Maxwell is elliptic after gauge fixing. -/
 theorem maxwell_symbol_kernel_trivial
@@ -357,7 +355,7 @@ structure GaugeFixedSymbolPhysicalStatus where
 def gaugeFixedSymbolPhysicalClosure
     (s : GaugeFixedSymbolPhysicalStatus) : Prop :=
   s.throatMetricConstructed /\
-  s.leviCivitaConnectionConstructed /\
+  s.LeviCivitaConnectionConstructed /\
   s.immersionSecondFundamentalFormConstructed /\
   s.maxwellGaugeFixingDerived /\
   s.diffeomorphismGaugeFixingDerived /\

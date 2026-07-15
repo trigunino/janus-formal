@@ -53,6 +53,17 @@ class DeriveSVTHRSecondOrderHessianScriptTests(unittest.TestCase):
         self.assertFalse(closure["scalar_reduced_after_constraints_closed"])
         self.assertFalse(payload["prediction_ready"])
 
+    def test_square_root_residual_vanishes_through_second_order(self) -> None:
+        payload = build_payload()
+
+        self.assertEqual(
+            payload["sqrt_residual_through_eps2"],
+            {"tensor": True, "vector": True, "scalar": True},
+        )
+        self.assertTrue(
+            payload["closure"]["sqrt_expansion_verified_through_second_order"]
+        )
+
     def test_script_writes_report_and_declares_needed_inputs(self) -> None:
         payload = self.run_script_payload()
 

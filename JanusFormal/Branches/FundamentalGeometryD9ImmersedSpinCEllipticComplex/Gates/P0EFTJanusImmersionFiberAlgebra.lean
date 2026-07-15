@@ -107,7 +107,7 @@ theorem normal_projection_surjective
   yz : ℝ
 
 /-- Scalar trace component, normalized so that `h = τ g + h₀`. -/
-def traceScalar
+noncomputable def traceScalar
     (tensor : SymmetricTensor3) : ℝ :=
   (tensor.xx + tensor.yy + tensor.zz) / 3
 
@@ -146,6 +146,7 @@ noncomputable def splitTraceTraceless
       traceScalar, tracelessPart] <;>
     ring
 
+set_option linter.unnecessarySeqFocus false in
 @[simp] theorem combine_split_trace_traceless
     (tensor : SymmetricTensor3) :
     combineTraceTraceless (splitTraceTraceless tensor) = tensor := by

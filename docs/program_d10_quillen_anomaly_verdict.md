@@ -234,7 +234,10 @@ Modules:
 
 ```text
 P0EFTJanusAnomalyObjectDimensionParity.lean
+P0EFTJanusAnomalyTransgressionInflow.lean
+P0EFTJanusD2ModeFamilyInflowBridge.lean
 P0EFTJanusPartitionFunctionSectionNoGo.lean
+P0EFTJanusPTPairedAnomalyCancellation.lean
 P0EFTJanusQuillenFamilyCanonicity.lean
 P0EFTJanusQuillenAnomalySynthesis.lean
 ```
@@ -244,6 +247,8 @@ The formal layer encodes
 - the determinant-line/index-gerbe parity distinction;
 - the extra structures required to reduce an odd family to line data;
 - the dependence of scalar actions on trivialization and finite counterterms;
+- additive PT-pair and bulk-inflow cancellation, while keeping class vanishing
+  distinct from constructing a partition-function trivialization;
 - the two PT-conjugate normal-root phases;
 - the exact closure matrix for a predictive Janus potential.
 

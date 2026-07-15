@@ -225,7 +225,7 @@ theorem example_pairing_symmetric_on_compatible_variations
   simp at hFirst hSecond
   subst firstX
   subst secondX
-  simp [badMatrixPairing]
+  simp [badMatrixPairing, mul_comm]
 
 /--
 Geometric/PDE obligations needed to apply the corrected lemma to the actual

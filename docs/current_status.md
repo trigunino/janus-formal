@@ -38,15 +38,25 @@ The merged PR 6 stack contains:
 - transition-jet bridges from frame derivatives to normal gauge extraction;
 - a direct construction of the normal-frame transition derivative.
 
+Program P-E was advanced again and merged into `main` through PR 10 on
+15 July 2026 at
+
+```text
+96e60eb4df1db049f8488858c5a6b1fdb717b224.
+```
+
 ## 2. Validation
 
 The current `main` head is
 
 ```text
-92ade09c4f9aaab064840f934a42a50fb59bd171.
+96e60eb4df1db049f8488858c5a6b1fdb717b224.
 ```
 
-The theorem commits immediately below the merge were validated on the PR branch by the focused Lean and Python workflows added by PR 6. The merge commit itself currently has no separately reported combined status, so this document does not claim an independent post-merge CI run for `92ade09`.
+The theorem commits below the PR 6 merge were validated by its focused Lean
+and Python workflows. The PR 10 theorem head was validated locally before
+merge; this document does not claim an independent post-merge CI run for
+`96e60eb4`.
 
 The previously recorded successful runs include:
 
@@ -72,7 +82,9 @@ JanusFormal.Branches.FundamentalGeometryD
 JanusFormal.Branches.FundamentalGeometryDiracSpectral
 JanusFormal.Branches.FundamentalGeometryD7SpectralTheory
 JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation
+JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex
 JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly
+JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators
 JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
 JanusFormal.Branches.FundamentalGeometryPEInvariantPairings
 JanusFormal.Branches.FundamentalGeometryPEJetUniversality
@@ -81,16 +93,16 @@ JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
 
 A green Lean head means that every imported theorem and proof compiles. It does **not** turn uninstantiated status fields into geometric objects or prove the complete physical Janus theory.
 
-### PR 10 working-branch update (15 July 2026)
+### PR 10 merged update (15 July 2026)
 
-The current PR 10 branch has been validated locally with
+The PR 10 theorem head, now merged into `main`, was validated locally with
 
 ```text
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 ```
 
-The integrated head compiles. Remote PR CI is not claimed here. New proved,
-scoped constructions are:
+The integrated head compiles. Independent post-merge remote CI is not claimed
+here. New proved, scoped constructions are:
 
 - existence of the smooth finite-dimensional Euclidean Levi-Civita/Koszul
   coefficient from a smooth positive-definite metric;
@@ -103,6 +115,30 @@ scoped constructions are:
 
 These do not assert the full differentiable Janus jet groupoid or a nontrivial
 global Janus SpinC bundle.
+
+The current follow-on branch also proves that two actual valid projected-seed
+chart extractions at the same base point are related by the canonical residual
+normal-frame action, packages that relation as an action-groupoid arrow and
+proves its identity and Cech composition laws. For invariant observables it
+also constructs the unique chart-independent value at that fixed base point.
+If the observable admits a smooth realization on the normed continuous-jet
+coefficients, the descended observable is globally smooth by fixed-chart local
+gluing. This remains low-order Euclidean descent, not effective descent for the
+full Janus structured-jet groupoid.
+
+The same branch supplies two conditional multi-chart packages. Given an open
+cover, oriented cocycles, chosen Spin lifts, phase transitions and matching
+diagonal defects, Lean packages the resulting SpinC transitions with pointwise
+identity, inverse and Cech laws. This is a supplied transition presentation,
+not a continuity/smoothness theorem or a geometric principal-bundle total-space
+construction. Given local abelian potentials and additive overlap shifts, Lean
+proves the affine first-jet law and, when every overlap shift is curvature-flat,
+uniquely glues the local curvatures to a global smooth curvature function. Its
+actual Fréchet derivative satisfies the cyclic abelian Bianchi identity. These
+packages do not
+derive their input from actual Janus characteristic classes, determinant-line
+transitions or logarithms, and therefore do not construct the global physical
+Janus SpinC bundle or connection.
 
 ## 3. Stable architecture
 
@@ -124,6 +160,14 @@ P-F    compatibility pullbacks, Helmholtz and Noether identities
 A/B/C  quantum scale, nonlinear junction and charge compatibility
 E      observational falsification after theoretical closure
 ```
+
+Current D7 frontier: the infinite monopole heat trace and the two physical
+`Z4` renormalized determinants are constructed, and the spectral product
+coefficients agree exactly with the universal `a0/a2/a4` formulas. The only
+remaining conditional step in that coefficient chain is the uniform
+Euler--Maclaurin remainder estimate isolated by
+`EulerMaclaurinRemainderControlled`; this is distinct from the still-open full
+Fredholm/Quillen family and field/ghost-weighted anomaly problem.
 
 ## 4. Topology and Z4
 
@@ -148,12 +192,95 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
 
 ## 5. Program P
 
+The exhaustive remaining-work checklist is
+[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
+
 ### P0, P-A, P-B and P-C
 
 - **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
-- **P-A:** a Hessian fixes an action only up to an affine functional; a critical point and reference value remove this ambiguity in the quadratic model.
-- **P-B:** anomaly cancellation is a consistency/discrete-selection filter, not a complete dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-A:** the two-sector parent-bulk result now extends to an arbitrary finite boundary rank: the bulk Euler expression is the actual derivative, the reduced action has the Schur gradient and constant Hessian as its Fréchet derivatives, and exact square completion classifies the fixed-boundary stationary bulk mode as the unique global minimum/maximum according to the sign of the bulk coefficient; the Schur kernel is reciprocal/self-adjoint, while changing the parent can still change surviving mixing. In the concrete one-dimensional positive PT-flat proportional bimetric branch, the reduced interaction has its actual derivative, `c = 1` is stationary, its actual Hessian is twelve times the Fierz--Pauli mass combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is the unique global minimizer on `c > 0`; this is not the full Janus metric field theory.
+  More strongly, explicit quadratic and quartically deformed two-variable
+  extensions have the same proportional branch, the same genuine longitudinal
+  derivatives and the same complete transverse two-jet, with Hessian
+  `2 kappa`, all along that branch. A nonzero `lambda * y^4` term still makes
+  them distinct off the branch, so even the local transverse Hessian does not
+  select the nonlinear extension. This is a reduced reconstruction no-go, not
+  a full metric action.
+  The two-scale PT-flat lift now has an exact directional first variation for
+  arbitrary independent variations, including explicit bulk, interaction and
+  reduced boundary channels. Both Euler components characterize stationarity,
+  while unfixed boundary coefficients can stationarize any scale pair. A
+  separate quadratic candidate has genuine Frechet gradient and Hessian,
+  diagonal interaction kernel, positive relative quotient under positive-sign
+  assumptions, and a strict negative pure-kinetic Hessian direction for the
+  published reduced sign `kappa = -1`. These remain reduced conditional/no-go
+  statements, not the missing covariant Janus action or ghost analysis.
+  A general normed trace/lift interface now gives the genuine Frechet and
+  directional variation of independent two-sector bulk-plus-boundary actions.
+  Stationarity is exactly interior bulk vanishing plus lifted boundary balance;
+  an accessible nonzero boundary flux obstructs it. The interface does not
+  construct the physical GHY/null/corner/junction data.
+  A supplied differentiable Helmholtz boundary flux now admits a normalized
+  counterterm with genuine derivative `-flux`; it cancels the exact boundary
+  one-form, is unique up to a constant, and a non-Helmholtz flux blocks any
+  global `C^2` primitive of this type. This does not derive a physical GHY
+  flux. For induced fields, the actual chain rule gives
+  `E_bulk + E_induced ∘ D(induced)`; an exact diagonal counterexample proves
+  that imposing both slot equations separately can overconstrain the system.
+- **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. No Janus flow, gauge group or PDE identity is constructed; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+  The set quotient by complete-flow orbits is constructed. For any target,
+  functions on this quotient are equivalent to configuration-space functions
+  invariant under the flow; the real-valued specialization gives the same
+  equivalence for actions, including the radial action. No topology or smooth
+  structure is put on this quotient, and the supplied flow is not a concrete
+  Janus flow.
+  In a supplied reduced two-metric chart, the relative quadratic action now has
+  its actual Frechet derivative: independent variations recover both Euler
+  components, diagonal/sign-linked variations recover their sum/difference,
+  and finite diagonal translation symmetry yields the reduced Noether identity.
+  This is not yet the covariant diffeomorphism/Bianchi system.
+  In a supplied metric--metric--matter chart, existence of one common `C^2`
+  action is now equivalent to reciprocity of all three cross-block pairs; a
+  genuine bilinear primitive proves sufficiency, and an explicit mismatch gives
+  a conditional no-go. Since M30 does not specify its interaction densities or
+  matter dependence, no mismatch is attributed to it. With a supplied boundary
+  Euler term, diagonal symmetry yields only
+  `E_plus + E_minus + boundary_flux = 0`; separate conservation additionally
+  requires zero exchange and zero boundary flux.
+  On the full plus--minus--matter product, three diagonal and three cross-block
+  conditions are exactly equivalent to symmetry of the nonlinear actual Euler
+  derivative. On an open convex domain they reconstruct a normalized common
+  action, while one supplied failed cross block gives a global `C^2` no-go.
+  For a supplied field-dependent diagonal generator `K(q)`, infinitesimal
+  invariance is exactly the formal constraint `E(q) ∘ K(q) = 0`; a cancelling
+  two-sector example shows that this combined identity still need not split.
+  Those earlier generic results construct neither an M30 density nor a Janus
+  diffeomorphism generator or covariant Bianchi/constraint algebra.
+
+#### Candidate A active-branch checkpoint
+
+- **T/C** the two symbolic M30 cross-density slots are instantiated as
+  reciprocal halves of one elementary-symmetric interaction; matter dependence
+  is explicitly absent and weighted double counting is excluded;
+- **T/C** the full four-eigenvalue interaction has an actual Frechet gradient,
+  second derivative and symmetric Helmholtz Jacobian;
+- **T/C** a pointwise `4 x 4` square-root matrix realizes the same Newton
+  invariants, specializes to the spectral formula and is similarity invariant;
+- **T/C** the finite Gram tensor has actual first/second derivatives, is
+  positive definite on the injective immersion domain, and gives a concrete
+  compatibility map `K` and Jacobian `J`;
+- **T/C/N** typed non-null, null and joint gravitational slots plus a generic
+  supplied-measure worldvolume placeholder are explicit; the actual LL action,
+  throat integration and bulk-flux cancellation are not proved;
+- **T/N** additive translation of reduced scale variables is classified and
+  fails for a concrete positive interaction; any relation to the covariant
+  diagonal diffeomorphism still requires a separate bridge;
+- **O** smooth Lorentz square-root domain, metric Euler equations, physical
+  GHY/null/joint variation, Bianchi/constraint algebra, exact stability,
+  anomalies, normalization and finite counterterms.
+
+Canonical candidate document: `docs/program_p_explicit_covariant_candidate.md`.
 
 ### P-D — pairings and coefficient modules
 
@@ -229,11 +356,18 @@ Lean proves:
 - equivalence with Mathlib's even-unitary Lipschitz `CliffordAlgebra.spinGroup` for the negative Euclidean plane;
 - the Clifford-valued rank-two central double cover and SpinC diagonal quotient;
 - the canonical one-chart Cech principal bundle and a connection from the
-  supplied global smooth gauge potential.
+  supplied global smooth gauge potential;
+- conditional multi-chart SpinC Cech transition packaging from supplied
+  pointwise cocycles, lifts, phases and matching defects, without transition
+  continuity/smoothness or a principal-bundle total-space construction;
+- conditional abelian connection overlap descent from supplied local
+  potentials and additive gauge shifts, with unique global smooth curvature
+  descent under the flat-shift condition and a cyclic Bianchi identity for its
+  actual Fréchet derivative.
 
-Higher-dimensional Clifford covers, nontrivial/global Janus principal-bundle
-descent, determinant-line identification and characteristic-class matching
-remain open.
+Higher-dimensional Clifford covers, derivation of the supplied cocycles from
+actual Janus bundles, nontrivial/global Janus principal-bundle construction,
+determinant-line identification and characteristic-class matching remain open.
 
 #### 5.5 Codazzi and abelian Bianchi exactness
 
@@ -271,15 +405,30 @@ The current `main` stack goes further: for a symmetric bilinear finite-dimension
 
 Still open:
 
-- identify this finite bilinear model with the actual geometric `II` family over the structured-jet base;
-- prove linearity/continuity in the normal parameter as a bundled map where required;
-- prove smooth dependence on background jets and residual-frame equivariance of the Riesz construction;
+- identify the proved projected-seed/fixed-model family with the actual global
+  Janus `II` bundle over the full structured-jet base;
 - insert the genuine ambient mixed curvature and normal-connection curvature;
 - prove the manifold-level Ricci equation.
 
 ### P-F — compatibility pullback
 
-A self-adjoint target Hessian pulls back to a self-adjoint quadratic Helmholtz operator; gauge invariance gives the linearized Noether identity. The actual Janus compatibility complex and global variational primitive remain open.
+A self-adjoint target Hessian pulls back to a self-adjoint quadratic Helmholtz
+operator; gauge invariance gives the linearized Noether identity. The abstract
+compatibility-complex synthesis now packages `K R = 0`, `B K = 0`, pulled-back
+self-adjointness, gauge-Hessian degeneracy and restricted Helmholtz in one
+theorem. It assumes the algebraic complex and pairing; the actual nonlinear
+second-variation chain rule is also proved in normed spaces as
+`H(Ju)(Jv) + dL(D²K(u,v))`, reducing to `H(Ju)(Jv)` when the target gradient
+`dL` vanishes. Schwarz symmetry makes this complete second variation symmetric
+even off criticality and therefore makes the critical `J^T H J` symmetric
+without a separate symmetry postulate for `H`. At a target critical point the
+pullback is genuinely critical, and its actual Hessian annihilates `ker J` in
+either slot; hence it annihilates `im R` when `J ∘ R = 0`. These are abstract
+Fréchet statements. For every source submodule contained in `ker J`, this
+critical Hessian descends uniquely and symmetrically to the algebraic module
+quotient. Continuity of the descended form and any normed, topological or
+smooth quotient structure are not proved. No concrete Janus compatibility map
+or complex is constructed; the global variational primitive remains open.
 
 ## 6. Current supported chain
 

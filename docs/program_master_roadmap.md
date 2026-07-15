@@ -67,6 +67,10 @@ Current results:
 - **N** the candidate is a smooth mapping-torus model, not automatically a singular orbifold;
 - **N** expected `pi_1` is `Z`, not `Z4`;
 - **T/C** the normal clutching sign is `-1`, its doubled pullback is trivial, and the two complex square roots are `+i` and `-i`;
+- **T/C** the associated sign representation identifies the orientation cover with the even-winding kernel and proves pulled-back `w1 = 0`;
+- **T/C** the integer deck action on the normal-line cover satisfies the identity and composition laws;
+- **T/C** the two `Z4` lifts obey the cyclic cocycle law, are exchanged by PT, and reproduce the one-, two- and four-loop boundary-condition hierarchy;
+- **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
 - **O** construct the actual global decorated mapping torus, throat embedding, ambient Pin structure and physical square-root bundle.
@@ -82,6 +86,16 @@ lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral
 Current results:
 
 - **T/C/X** monopole-spectrum arithmetic and product pairing;
+- **T/C** an explicit separated product-mode model gives a positive spectral gap and PT invariance of the squared spectrum;
+- **T/C** finite Hilbert truncations now have a proved symmetric diagonal Dirac action, nonnegative square and explicit two-sided resolvent away from the finite spectrum;
+- **T/C** the separated modes now generate an actual complete real `l2` Hilbert space; the maximal weighted diagonal operator is densely defined, linear, formally symmetric and closed, while its finite-mode span is dense and contained in every weighted domain;
+- **T/C** after complexification, both `(D-i)^{-1}` and `(D+i)^{-1}` are explicit mode multipliers; dense domain, formal symmetry and surjectivity of both non-real shifts are assembled into a concrete von Neumann self-adjointness certificate;
+- **T/C** properness of the diagonal eigenvalue weight is proved sufficient for every nonzero superlevel set of the `(D-i)^{-1}` multiplier to be finite, isolating the exact compact-resolvent growth obligation;
+- **T/C** bounded mode boxes are finite, coercivity implies spectral properness, and every finite diagonal resolvent truncation is now an actual Mathlib `IsCompactOperator` built from compact coordinate rank-one maps;
+- **T/C** the truncations converge in operator norm whenever the multiplier vanishes at infinity; closedness of compact operators therefore promotes the full diagonal `(D-i)^{-1}` to an actual `IsCompactOperator` under spectral properness;
+- **T/C** the explicit product eigenvalue `sqrt(lambda_S2^2 + lambda_S1^2)` is coercive in both the sphere level and circle mode; its bounded windows are finite and its full separated D2 resolvent is proved compact without a remaining analytic hypothesis;
+- **T/C** finite-cutoff log determinants, a holonomy-independent local subtraction, the positive renormalized determinant and fixed-scheme uniqueness are formalized; compact resolvent is fed directly into the closure certificate;
+- **I/O** the sole remaining determinant input is existence/convergence of one common local subtraction for the full holonomy family; compact resolvent alone does not imply that stronger zeta/heat-kernel statement;
 - **T/C** eta/holonomy relations and primitive-sector gap laws;
 - **T/N** correction: `1/(2*sqrt(2))` is a compact-circle/sphere ratio, not `alpha/L_sphere`;
 - **C** primitive compatibility can give `A=L_sphere` under the declared LL/bimetric inputs;
@@ -92,16 +106,36 @@ Last focused CI: **green**.
 
 ## D7 — Heat kernel and effective action
 
+- **T/C** an abstract P-independent Dirac/PT package proves spectral pairing `lambda <-> -lambda` from PT anticommutation;
+- **C** principal symbol, formal self-adjointness and global Fredholm realization are separated into explicit hypotheses, including domain, elliptic boundary condition and compact resolvent;
+- **C** a consolidated analytic certificate transports Sobolev-domain, Green-formula, self-adjointness and compact-resolvent inputs into the Fredholm ledger;
+- **C** an explicit D2-to-D7 bridge maps completed separated-mode obligations into that certificate;
+- **T/C** the product-throat `a0/a2/a4` coefficients now generate an explicit cubic/linear/inverse cutoff subtraction, manifestly independent of holonomy;
+- **T/C** a D7 heat-remainder family maps directly to the D2 renormalized determinant, and fixed heat coefficients give a unique determinant;
+- **T/C** the monopole sphere law `lambda_n^2 = n(n+|q|)/L^2`, with multiplicity `|q|+2n`, is integrated into the separated operator and determinant cutoff; the already zeta-regularized circle product is counted exactly once;
+- **T/C** the cutoff remainder is an exact telescoping sum of shell increments; summable increments imply convergence, and either a uniform geometric bound or the expected `C/(N+1)^2` bound constructs the full renormalized family and closes the D2 determinant certificate;
+- **T/C** in the physical `Z4` root sectors, the exact spectral subtraction leaves `(|q|+2n) log(1+exp(-2 beta lambda_n))`; it is explicitly dominated by a polynomially weighted geometric series, hence both quarter-root determinants converge and agree by PT;
+- **T/C** the infinite monopole-sphere heat trace is constructed as an actual `tsum`; for every positive heat time its terms are dominated by the same polynomially weighted geometric mechanism;
+- **T/C** Euler--Maclaurin boundary jets give the spectral coefficients `2`, `-1/3`, `(5*q^2-1)/30`; after the circle factor these match the universal product-throat `a0/a2/a4` formulas exactly;
 - **T/X** local heat-kernel coefficients for the declared product-throat convention;
 - **T/N** finite local truncations are affine in the circle modulus and cannot isolate a minimum;
 - **T/X** local/nonlocal winding separation and quarter-phase cancellation structure;
 - **N** pure and PT-paired quarter determinants do not stabilize the modulus;
 - **N** a finite local coefficient can fit a chosen target and therefore is not predictive unless derived;
-- **O** common zeta/eta regulator, complete field/ghost weights, finite renormalization and stable vacuum.
+- **O** prove `EulerMaclaurinRemainderControlled`, the sole remaining
+  conditional analytic lemma for the small-time limit; the spectral/universal
+  `a0/a2/a4` correspondence itself is closed. Field/ghost weights and the final
+  vacuum remain downstream of P.
 
 ## D9 — Elliptic and BRST symbol gates
 
-There is currently no supported standalone D9 head. The `Gates/` collection contains:
+Supported head:
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex
+```
+
+The consolidated P-independent foundation contains:
 
 - tangent/normal immersion splitting;
 - de Rham and Maxwell symbols;
@@ -110,28 +144,42 @@ There is currently no supported standalone D9 head. The `Gates/` collection cont
 - abstract Clifford/Dirac symbol;
 - linear BRST and gauge-fixed block models.
 
-These are local algebraic/symbol interfaces. They are not yet a global Fredholm complex on the Janus throat.
+These form a supported algebraic symbol/linear-BRST head. They are not yet a
+global Fredholm complex on the Janus throat: the action, Hessian, global domains,
+zero-mode cohomology and nonlinear BV closure remain explicit obligations.
 
 ## D10 — Determinant line and anomalies
 
 - **N** Quillen/Bismut–Freed is canonical only relative to a specified smooth Fredholm family;
 - **N** determinant-line data do not choose field content, domains, finite counterterms or the scalar effective action;
+- **T/C** additive transgression preserves stacking and opposite bulk inflow cancels the boundary anomaly class;
+- **T/C** the explicit D2 PT mode family has cancelling `Z4` anomaly phases and an opposite-inflow relative class;
 - **I/O** construct the actual family index object, local/global anomaly, partition section and common regulator.
 
 ## D11 — Natural operators
 
-There is currently no supported standalone D11 head. The gate collection formalizes:
+Supported head:
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators
+```
+
+The consolidated head formalizes:
 
 - an abstract category of decorated immersions;
 - natural bundle/section functors;
 - natural operator and jet interfaces;
 - principal-symbol composition/product closure;
 - lower-order nonuniqueness;
-- relative bridges to Quillen.
+- relative bridges to Quillen;
+- a concrete one-object cyclic immersion groupoid with integer morphisms and functorial `Z4` jet monodromy.
 
 The concrete Janus category, global structured jet groupoid, regularity hypotheses, descent theorem and invariant-theory classification remain open.
 
 # Program P
+
+Exhaustive closure checklist:
+[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
 
 ## P0 — Moduli-geometry no-go
 
@@ -143,7 +191,52 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 
 - **T** a quadratic Hessian fixes an action only up to an affine functional;
 - **T** Hessian + critical point + reference value yield unique normalized quadratic action;
-- **T/C** a quadratic parent bulk problem yields a Schur-complement boundary action;
+- **T/C** a finite two-sector quadratic parent bulk problem has a unique stationary mode and yields an exact Schur-complement boundary action with reciprocal, PT-even Hessian;
+- **T/C** the scalar-bulk Schur coefficient theorem extends to an arbitrary
+  finite boundary rank, including exact on-shell formula, reciprocal kernel and
+  pairing-level self-adjointness;
+- **T/C** in that finite model the displayed bulk Euler equation is the actual
+  derivative of the parent action, while the reduced Schur gradient and
+  constant Hessian are exact Fréchet derivatives;
+- **T/C** exact square completion makes the stationary scalar bulk mode at
+  fixed boundary data the unique global minimum for positive bulk coefficient
+  and the unique global maximum for negative bulk coefficient;
+- **T/C** on the concrete one-dimensional positive PT-flat proportional
+  bimetric branch, the reduced interaction has its actual derivative, `c = 1`
+  is stationary, its actual Hessian is twelve times the Fierz--Pauli mass
+  combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is
+  the unique global minimizer on `c > 0`; this is not the full Janus metric
+  field theory;
+- **T/N** explicit quadratic and quartically deformed two-variable extensions
+  have the same proportional branch, genuine longitudinal derivatives and
+  complete transverse two-jet with Hessian `2 kappa`, but a nonzero
+  `lambda * y^4` distinguishes them off branch; even the local transverse
+  Hessian does not select the nonlinear extension;
+- **T/C** an explicit exchange-symmetric two-scale PT-flat lift has the exact
+  first variation of its bulk, interaction and reduced boundary channels for
+  every independent affine variation; stationarity is exactly the two Euler
+  equations;
+- **T/N** unspecified reduced boundary coefficients can stationarize every
+  scale pair, so the physical boundary functional remains selection data;
+- **T/C** a reduced quadratic two-mode candidate has genuine Frechet gradient
+  and Hessian, positive full Hessian for positive kinetic signs, and a positive
+  algebraic relative-sector quotient for positive PT-flat mass;
+- **T/N** the reduced pure-kinetic `kappa = -1` choice has a strictly negative
+  actual Hessian direction in the ordinary positive-Hilbert interpretation;
+- **T/C** a normed trace/lift interface with arbitrary admissible boundary
+  submodules gives exact Frechet/directional variations and an iff between
+  stationarity and interior-bulk plus lifted-boundary balance in both sectors;
+- **T/N** a nonzero accessible boundary flux obstructs stationarity when its
+  sector bulk Euler functional already vanishes;
+- **T/C/N** a supplied differentiable Helmholtz boundary flux has a normalized
+  actual counterterm with derivative `-flux`; cancelling counterterms are
+  unique up to a constant, while one non-Helmholtz Jacobian blocks a global
+  `C^2` primitive. No physical GHY/null/corner flux is derived;
+- **T/C/N** for an induced second field, the actual Euler equation is
+  `E_bulk + E_induced ∘ D(induced) = 0`; the exact action `x-y` on the
+  diagonal proves that treating both slots independently can add two nonzero
+  equations;
+- **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
 
@@ -151,18 +244,112 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 
 - **T** PT-paired anomaly proxies cancel;
 - **T/N** anomaly cancellation leaves parity-even couplings and finite even counterterms free;
-- **T/N** anomaly cancellation and Helmholtz integrability are logically independent;
+- **T/N** anomaly cancellation and Helmholtz integrability are logically independent; four finite candidates realize all Boolean truth patterns;
 - **C** discrete multiplicity selection requires independently fixed regulator data;
 - **O** compute the actual local/global anomaly in the same field content and regulator used by the action.
 
 ## P-C — Helmholtz reconstruction
 
 - **T** quadratic Hessian realizability iff formal self-adjointness in the finite models;
+- **T** three-sector PT-invariant quadratic realizability iff reciprocity holds and both even--odd couplings vanish;
 - **T** equal Hessians differ by affine terms;
 - **T** PT plus normalization removes the quadratic affine ambiguity;
 - **T** finite polynomial Helmholtz conditions reconstruct a cubic potential;
+- **T** the coefficient-level affine/quadratic Euler problem over any finite
+  field index reconstructs linear/quadratic/cubic potential coefficients iff
+  its linear and quadratic Helmholtz swaps hold;
+- **T** the normalized reconstructed cubic potential has the Euler source as
+  its actual Fréchet derivative in every finite-dimensional direction;
+- **T** conversely, equality of the genuine derivative with the prescribed
+  finite Euler pairing at every field value alone recovers the normalized
+  affine, quadratic and cubic potential coefficients;
+- **T** the finite-rank Euler map has its displayed Jacobian as its actual
+  Fréchet derivative, and the Helmholtz coefficient swaps make it pairing
+  self-adjoint at every field value;
+- **T** for that finite polynomial family, actual Jacobian self-adjointness is
+  equivalent to the coefficient Helmholtz swaps; these conditions construct an
+  actual cubic polynomial gradient realization;
+- **T/C** on an open convex normed configuration domain, every differentiable
+  Euler one-form with symmetric actual Jacobian has a scalar action primitive;
+  on a nonempty convex domain equal Euler derivatives determine actions up to
+  one additive constant, removed by a base-value normalization;
+- **T/C** on the whole configuration space, for an action whose actual
+  derivative is the supplied Euler one-form everywhere, additive linear gauge
+  invariance is equivalent to Euler horizontality; the horizontal normalized
+  radial primitive is therefore invariant under every corresponding gauge
+  translation;
+- **T/C** for a supplied complete differentiable one-parameter flow, when the
+  supplied Euler one-form is the action's actual derivative everywhere,
+  full-flow invariance is equivalent to annihilation of the field-dependent
+  generator; horizontal Helmholtz data yield an invariant normalized radial
+  primitive;
+- **T/C** the set quotient by full orbits of that supplied flow is constructed;
+  for any target, functions on the quotient are equivalent to invariant
+  configuration-space functions, with real-valued functions specializing to
+  invariant actions, including the reconstructed radial action; no quotient
+  topology or smooth structure is supplied;
+- **T/C** in a supplied reduced two-metric chart, the relative quadratic
+  action has its genuine Frechet derivative; independent variations recover
+  both Euler components, diagonal/sign-linked variations recover their
+  sum/difference, and diagonal translation symmetry yields the reduced Noether
+  identity;
+- **T/C** in a supplied metric--metric--matter chart, a common `C^2` action
+  exists with the proposed linear cross sources iff all three ordered
+  cross-block pairs are reciprocal; the sufficient action has a genuine
+  Frechet derivative;
+- **T/N** any explicitly supplied nonreciprocal cross block rules out that
+  common reduced action, while unspecified M30 cross densities do not decide
+  the criterion;
+- **T/C/N** on the nonlinear plus--minus--matter product, three diagonal and
+  three cross-block conditions are equivalent to symmetry of the total actual
+  Euler derivative; on an open convex domain they reconstruct a unique
+  normalized common action, and a supplied failed block excludes a global
+  `C^2` action;
+- **T/C/N** a genuine common reduced action with diagonal symmetry and supplied
+  boundary Euler term yields only `E_plus + E_minus + boundary_flux = 0`;
+  separate sector conservation additionally requires zero exchange and zero
+  boundary flux, as shown by the exact `(1,-1,0)` counterexample;
+- **T/C/N** for a supplied field-dependent diagonal generator `K(q)`, genuine
+  infinitesimal action invariance is equivalent to `E(q) ∘ K(q) = 0`; the
+  identity is stable under parameter maps but need not split between sectors;
 - **N** a Hessian at one background does not determine a global nonlinear action;
-- **O** derive the complete Janus Euler source, Noether identities, nonlinear Helmholtz conditions, variational cohomology and boundary/null terms.
+- **O** construct the Janus flow/gauge group and derive the complete Euler
+  source, PDE Noether identities, nonlinear Helmholtz conditions, variational
+  cohomology and boundary/null terms.
+
+### Candidate A implementation checkpoint
+
+New controlled subgates are now checked:
+
+- **T/C** compatible symmetric coefficients in the countable axial Fourier
+  model decompose into an explicit Lorentz--Gram image plus their zero-mode
+  residual; zero-residual exactness and coordinatewise square-summability
+  preservation are proved, but not global PDE or boundary solvability;
+- **T/C** an invertible Sylvester derivative at a supplied real `4 x 4` root
+  produces a genuine local differentiable matrix-root branch, with a concrete
+  identity-base instance; no global/principal Lorentz-causal or smooth-field
+  root selection is claimed;
+- **T/C** at positive time, the diagonal circle heat semigroup is the
+  operator-norm limit of compact finite Fourier truncations and is compact on
+  the full circle Fourier Hilbert space; this is not a trace-class theorem or
+  the full Janus Dirac heat kernel;
+- **T/C** the quarter-twisted Program-P circle operator now identifies exactly
+  with both PT-related D7 normal-root towers after the geometric rescaling
+  `2 pi / circlePeriod`; each fixed sphere-level heat block is compact and the
+  two physical `Z4` determinants have an explicit common-counterterm
+  convergence certificate. A smooth all-holonomy Fredholm/Quillen family is
+  still open.
+
+The active branch now contains explicit reciprocal cross densities, their
+actual spectral Frechet/Hessian/Helmholtz data, a pointwise square-root matrix
+potential, a typed gravitational-stratum ledger with a generic worldvolume
+placeholder, a finite Gram-tensor compatibility map with genuine `K/J`, and an
+exact reduced Noether-proxy classification. These close finite or pointwise
+subgates only. Smooth Lorentz
+metric variation, integrated boundary flux cancellation, covariant
+Bianchi/constraints, full stability, anomalies, normalization and finite
+counterterms remain open. The scoped ledger is
+`docs/program_p_explicit_covariant_candidate.md`.
 
 ## P-D — Invariant pairings and global coefficient modules
 
@@ -234,7 +421,11 @@ regular local operator
   -> metric-derived Euclidean Koszul connection
   -> projected-seed varying-normal atlas
   -> one-chart rank-two SpinC bundle/connection
-  -> valid-chart low-order residual/SpinC action groupoid.
+  -> valid-chart low-order residual/SpinC action groupoid
+  -> canonical groupoid arrows between actual overlapping chart extractions
+  -> fixed-base descent of invariant low-order observables
+  -> smooth descended observables when a smooth coefficient realization exists
+  -> conditional multi-chart SpinC Cech and abelian-connection packages.
 ```
 
 Current theorem evidence:
@@ -257,6 +448,19 @@ Current theorem evidence:
 - **T** projected-seed varying-normal atlas and overlap coefficient laws;
 - **T** canonical one-chart rank-two SpinC Cech bundle and supplied-potential connection;
 - **T** valid-chart low-order residual/SpinC action-groupoid realization;
+- **T** canonical low-order action-groupoid arrow between two actual valid
+  projected-seed chart extractions on an overlap;
+- **T** unique chart-independent value of an invariant low-order observable at
+  a fixed Euclidean base point;
+- **T/C** such an observable descends to a globally smooth function when it
+  admits a smooth realization on the continuous reduced-jet coefficient space;
+- **T/C** multi-chart SpinC Cech transition presentation from a supplied
+  oriented cocycle, lifts, phases and matching diagonal defects, with pointwise
+  laws but no transition continuity/smoothness or bundle total space;
+- **T/C** local abelian connection potentials obey affine first-jet descent and,
+  when all supplied additive shifts are flat, their curvatures glue uniquely to
+  a global smooth curvature function whose actual derivative satisfies the
+  cyclic abelian Bianchi identity;
 - **T/N** local finite order need not give one global uniform order;
 - **T/N** smooth dependence is not automatically polynomial;
 - **N** equivariance plus finite-dimensionality does not by itself imply finite generation for nonreductive jet-group actions;
@@ -264,14 +468,19 @@ Current theorem evidence:
 
 Exact remaining locks:
 
+- **O** define the actual Janus category and source/target natural bundles, then
+  verify locality, regularity and the required holonomic realizations;
 - **O** construct the required higher-dimensional Clifford Spin covers;
-- **O** extend the projected-seed atlas and one-chart SpinC model to the actual
+- **O** derive the conditional Cech inputs from the actual projected-seed atlas,
+  determinant transitions and Janus characteristic classes, then construct the
   nontrivial global Janus vector and principal bundles;
 - **O** prove characteristic-class matching between the Spin and determinant-root defects;
 - **O** identify the global determinant-line connection and attach every natural sector action;
 - **O** construct the full differentiable structured jet groupoid and effective descent;
 - **O** prove the higher-order jet-isomorphism and integrability theorem;
 - **O** classify smooth equivariant maps across isotropy strata.
+- **O** classify the required elliptic symbols and specify any bounded
+  background region used for a uniform-order theorem.
 
 Canonical documents:
 
@@ -283,7 +492,9 @@ docs/program_pe_smooth_adapted_frames.md
 docs/program_pe_spinC_cocycle_lift.md
 ```
 
-Latest theorem-code validation: **green** at commit `1995bb68d5c06a1c627732f24ed27883c576ff36`, workflow run `29249977153`.
+Latest merged theorem-code head: `96e60eb4df1db049f8488858c5a6b1fdb717b224`
+(PR 10). Its theorem head passed focused Lean/Python validation locally; no
+independent post-merge workflow is claimed here.
 
 ## P-F — Compatibility pullback, Helmholtz and Noether
 
@@ -298,9 +509,27 @@ compatibility map K
 
 - **T/C** the pulled-back finite model is self-adjoint and satisfies quadratic Helmholtz;
 - **T/C** gauge invariance `K R = 0` yields a linearized Noether identity;
+- **T/C** one abstract synthesis packages `K R = 0`, `B K = 0`, pulled-back
+  self-adjointness, gauge-Hessian degeneracy and restricted Helmholtz for the
+  supplied compatibility complex;
+- **T/C** the actual Fréchet second variation of a nonlinear pullback is
+  `H(Ju)(Jv) + dL(D²K(u,v))` and reduces to `H(Ju)(Jv)` at a target critical
+  point;
+- **T/C** the complete actual second variation is symmetric even off a target
+  critical point; consequently the critical `J^T H J` is symmetric without a
+  separate symmetry postulate for `H`;
+- **T/C** a target critical point gives genuine pullback criticality, and the
+  actual pullback Hessian annihilates `ker J` in both arguments and therefore
+  `im R` whenever `J ∘ R = 0`; this is an abstract Fréchet theorem;
+- **T/C** for any source submodule contained in `ker J`, that genuine critical
+  Hessian descends uniquely as a symmetric bilinear form on the algebraic
+  module quotient; continuity of the descent and a normed, topological or
+  smooth quotient are not proved;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
-- **O** construct the actual Janus compatibility jet complex, target pairing and global action primitive.
+- **O** construct the actual Janus compatibility map/jet complex, target
+  pairing and global action primitive; no concrete compatibility object is
+  supplied by these Fréchet theorems.
 
 # Programs A/B/C and absolute scale
 
@@ -317,10 +546,11 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | Entry | Status |
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
-| `FundamentalGeometryPEJetUniversality` | focused CI green through the rank-two matrix Spin layer |
+| `FundamentalGeometryPEJetUniversality` | PR 10 merged; active follow-on adds smooth low-order observable descent and conditional multi-chart SpinC/connection Cech gates |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
-| `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
-| D9 and D11 | gate collections; no supported standalone head |
+| `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
+| D9 | supported symbol/linear-BRST head; global Fredholm realization open |
+| D11 | supported naturality/finite-jet head; global Fredholm realization open |
 
 See `current_status.md` and `janus_branch_registry.md` for the exact operational status.
 

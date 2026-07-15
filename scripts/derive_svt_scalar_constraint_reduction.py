@@ -158,6 +158,14 @@ def build_payload() -> dict:
             "field_definition": "chi = deltaPhi/sqrt(v)",
             "mass2": expr_text(canonical_radion_mass2()),
         },
+        "constraint_closure": {
+            "encoded_primary_lapse_equations_present": True,
+            "shift_system_solved_algebraically": bool(shifts),
+            "bending_solved_after_lapse_substitution": True,
+            "lapse_compatibility_derived_from_full_eh_action": False,
+            "secondary_hamiltonian_constraint_derived": False,
+            "boulware_deser_mode_removed": False,
+        },
         "closed_primitives": [
             "provided lapse/shift/bending constraints encoded",
             "shift multipliers solved algebraically",

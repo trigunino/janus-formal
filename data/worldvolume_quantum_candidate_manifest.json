@@ -1,0 +1,69 @@
+{
+  "status": "conditional_candidate_not_selected_by_program_p",
+  "worldvolume_dimension": 3,
+  "gauge_group": "U(1)",
+  "gauge_group_compact": true,
+  "scalar": {
+    "kind": "real",
+    "multiplicity": 1,
+    "u1_charge": 0,
+    "mass_dimension": 0.5
+  },
+  "fermions": {
+    "multiplicity_per_fold": 0,
+    "u1_charges": []
+  },
+  "chern_simons": {
+    "level_plus": 1,
+    "level_minus": -1,
+    "paired_pt": true
+  },
+  "interactions": [
+    "scalar_kinetic",
+    "scalar_sextic",
+    "scalar_dressed_maxwell",
+    "gauge_chern_simons",
+    "ll_non_riemannian_measure"
+  ],
+  "perturbative_background": {
+    "scalar_condensate_nonzero": true,
+    "field_split": "phi=v+eta",
+    "dressed_maxwell_expansion_order": 6,
+    "effective_action_projection": "constant_scalar_background_potential",
+    "maximum_external_derivative_order": 0
+  },
+  "gauge_fixing": "background_covariant_lorenz_xi_1",
+  "regulator": "gauge_invariant_higher_derivative_plus_pv",
+  "subtraction_scheme": "momentum_subtraction_at_mu",
+  "renormalization_prescriptions": {
+    "logarithmic_residues": {
+      "regulator": "dimensional_regularization_d_3_minus_2epsilon",
+      "subtraction": "minimal_subtraction"
+    },
+    "finite_physical_matching": {
+      "regulator": "gauge_invariant_higher_derivative_plus_pv",
+      "subtraction": "momentum_subtraction_at_mu"
+    },
+    "cross_scheme_matching": {
+      "one_log_covariance": "derived",
+      "leading_beta_invariance": "derived",
+      "finite_matching_constant": "not_yet_computed"
+    }
+  },
+  "loop_order": 2,
+  "conditional_ms_results": {
+    "pure_scalar_beta_quadratic_coefficient": "25/(2*pi^2)",
+    "mixed_beta_quadratic_coefficient": "75/(32*pi^2)",
+    "non_ll_beta_quadratic_coefficient": "475/(32*pi^2)",
+    "one_loop_non_ll_anomalous_dimension": "0",
+    "two_loop_non_ll_composite_anomalous_coefficient": "5/(16*pi^2)",
+    "non_ll_callan_symanzik_quadratic_coefficient": "445/(32*pi^2)"
+  },
+  "ll_quantum_completion": {
+    "local_measure_fields": "not_yet_fixed",
+    "reducibility_tower": "not_yet_fixed",
+    "gauge_fermion": "not_yet_fixed",
+    "fp_bv_operator": "not_yet_fixed",
+    "zero_mode_prescription": "not_yet_fixed"
+  }
+}

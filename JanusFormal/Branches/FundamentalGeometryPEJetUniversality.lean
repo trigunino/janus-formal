@@ -38,11 +38,10 @@ Fréchet-differentiable orthonormal frame field. It also extracts `g⁻¹ dg`, i
 derivative and the full Maurer--Cartan two-jet from a twice differentiable
 orthogonal gauge field, so the homogeneous curvature law `R' = g⁻¹ R g` applies
 to actual smooth gauge data in the flat coefficient model. The remaining
-geometric locks are smooth dependence of the canonical frame transition,
-insertion of ambient covariant derivatives, varying metric and subspace
-dependence on the structured-jet base, determinant-line connection
-identification, higher-dimensional Clifford Spin covers, global
-principal-bundle packaging and characteristic-class matching.
+geometric locks are promotion of these local transitions to the actual global
+Janus natural and principal bundles, higher-order structured-jet descent,
+determinant-line connection identification, higher-dimensional Clifford Spin
+covers and characteristic-class matching.
 -/
 
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance
@@ -102,6 +101,10 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedVaryingNormalBundle
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetActionGroupoidRealization
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapGroupoid
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapDescent
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGlobalSpinCCechDescent
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCechAbelianConnectionDescent
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -181,6 +184,12 @@ structure ProgramStatus where
   projectedSeedVaryingNormalAtlasConstructed : Prop
   euclideanOneChartSpinCBundleConstructed : Prop
   euclideanLowOrderSpinCActionGroupoidConstructed : Prop
+  euclideanLowOrderChartOverlapGroupoidConstructed : Prop
+  euclideanLowOrderInvariantOverlapDescentProved : Prop
+  euclideanLowOrderSmoothInvariantObservableDescentProved : Prop
+  suppliedPointwiseSpinCCechPresentationPackaged : Prop
+  conditionalSmoothAbelianCurvatureDescentProved : Prop
+  conditionalSmoothAbelianCurvatureBianchiProved : Prop
 
 /-- Formal/logical theorem core through canonical pointwise frame transitions,
 smooth variable-overlap and Ricci covariance, frame and gauge jet extraction,
@@ -249,7 +258,13 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.euclideanMetricKoszulExistenceConstructed /\
   s.projectedSeedVaryingNormalAtlasConstructed /\
   s.euclideanOneChartSpinCBundleConstructed /\
-  s.euclideanLowOrderSpinCActionGroupoidConstructed
+  s.euclideanLowOrderSpinCActionGroupoidConstructed /\
+  s.euclideanLowOrderChartOverlapGroupoidConstructed /\
+  s.euclideanLowOrderInvariantOverlapDescentProved /\
+  s.euclideanLowOrderSmoothInvariantObservableDescentProved /\
+  s.suppliedPointwiseSpinCCechPresentationPackaged /\
+  s.conditionalSmoothAbelianCurvatureDescentProved /\
+  s.conditionalSmoothAbelianCurvatureBianchiProved
 
 /-- Full Janus specialization. -/
 def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=

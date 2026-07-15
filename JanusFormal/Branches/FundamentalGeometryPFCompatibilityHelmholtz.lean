@@ -23,7 +23,13 @@ is false without an additional variational pairing.  The corrected bridge is:
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCorrectedJetUniversality
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibleJetPullbackHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonlinearJetSecondVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackSecondVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackHelmholtz
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackGaugeDegeneracy
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackQuotientHessian
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusInvariantMapNoetherHelmholtz
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussCodazziHelmholtzBridge
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompatibilityBridgeHierarchy
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPFCompatibilityHelmholtz
@@ -41,10 +47,15 @@ structure ProgramStatus where
   pullbackHelmholtzProved : Prop
   pulledBackActionIdentityProved : Prop
   nonlinearSecondVariationFormulaProved : Prop
+  actualFrechetSecondVariationFormulaProved : Prop
+  actualFrechetPullbackHelmholtzSymmetryProved : Prop
+  actualFrechetPullbackGaugeDegeneracyProved : Prop
+  actualFrechetPullbackQuotientHessianDescentProved : Prop
   criticalPointRemovesSecondJetCorrectionProved : Prop
   gaugeInvariantMapConstructed : Prop
   noetherIdentityDerived : Prop
   helmholtzAndNoetherIndependenceProved : Prop
+  suppliedAbstractCompatibilityConsequencesProved : Prop
   actualGaussCodazziJetComplexConstructed : Prop
   actualJanusTargetPairingDerived : Prop
   globalVariationalPrimitiveConstructed : Prop
@@ -61,10 +72,15 @@ def programPFFoundationClosed (s : ProgramStatus) : Prop :=
   s.pullbackHelmholtzProved /\
   s.pulledBackActionIdentityProved /\
   s.nonlinearSecondVariationFormulaProved /\
+  s.actualFrechetSecondVariationFormulaProved /\
+  s.actualFrechetPullbackHelmholtzSymmetryProved /\
+  s.actualFrechetPullbackGaugeDegeneracyProved /\
+  s.actualFrechetPullbackQuotientHessianDescentProved /\
   s.criticalPointRemovesSecondJetCorrectionProved /\
   s.gaugeInvariantMapConstructed /\
   s.noetherIdentityDerived /\
-  s.helmholtzAndNoetherIndependenceProved
+  s.helmholtzAndNoetherIndependenceProved /\
+  s.suppliedAbstractCompatibilityConsequencesProved
 
 /-- Full geometric/analytic P.F closure. -/
 def fullProgramPFClosure (s : ProgramStatus) : Prop :=

@@ -95,8 +95,7 @@ theorem metric_symbol_gauge_transverse_decomposition
         (transverseProjection covector tensor) = tensor := by
   ext <;>
     simp [pureGaugeProjection, transverseProjection,
-      addSymmetric, subSymmetric] <;>
-    ring
+      addSymmetric, subSymmetric]
 
 /-- The diffeomorphism symbol is injective at nonzero covector. -/
 theorem sym_gradient_symbol_injective

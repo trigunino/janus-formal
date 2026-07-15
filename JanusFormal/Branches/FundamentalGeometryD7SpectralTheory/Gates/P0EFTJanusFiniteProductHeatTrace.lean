@@ -109,8 +109,8 @@ theorem square_spectrum_negation
       squareSpectrum spectrum := by
   induction spectrum with
   | nil => rfl
-  | cons eigenvalue rest ih =>
-      simp [squareSpectrum, ih]
+  | cons eigenvalue rest _ =>
+      simp [squareSpectrum]
 
 /-- Hence the parity-even finite heat trace is PT invariant. -/
 theorem pt_negation_preserves_squared_heat_trace

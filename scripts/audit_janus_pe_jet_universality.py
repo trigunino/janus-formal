@@ -25,6 +25,17 @@ PROGRAMME_PE_GATES = {
         "theorem EuclideanMetricProjectedSeedImmersionData.global_spinC_jet_realization",
     "P0EFTJanusEuclideanStructuredJetActionGroupoidRealization.lean":
         "theorem euclidean_lowOrder_spinC_groupoid_realized",
+    "P0EFTJanusEuclideanStructuredJetOverlapGroupoid.lean":
+        "theorem euclideanLowOrderSpinCOverlapArrow_comp",
+    "P0EFTJanusEuclideanStructuredJetOverlapDescent.lean":
+        "theorem euclideanLowOrderDescendedObservable_contDiff",
+    "P0EFTJanusGlobalSpinCCechDescent.lean":
+        "def globalSpinCCechPresentation",
+    "P0EFTJanusCechAbelianConnectionDescent.lean": (
+        "theorem CechAbelianConnectionDescentData.descendedCurvature_contDiff",
+        "def CechAbelianConnectionDescentData.descendedClosedCurvatureDerivative",
+        "theorem CechAbelianConnectionDescentData.descendedCurvature_fderiv_cyclic",
+    ),
 }
 
 
@@ -38,14 +49,22 @@ def assert_programme_pe_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         / "JanusFormal/Branches/FundamentalGeometryPEJetUniversality.lean"
     ).read_text(encoding="utf-8")
 
-    for filename, declaration in PROGRAMME_PE_GATES.items():
+    for filename, required in PROGRAMME_PE_GATES.items():
         source = (gate_root / filename).read_text(encoding="utf-8")
-        if declaration not in source:
-            raise AssertionError(f"missing Programme P-E declaration: {declaration}")
+        declarations = (required,) if isinstance(required, str) else required
+        for declaration in declarations:
+            if declaration not in source:
+                raise AssertionError(
+                    f"missing Programme P-E declaration: {declaration}"
+                )
         if re.search(r"\b(?:sorry|admit|axiom)\b", source):
             raise AssertionError(f"proof placeholder found in {filename}")
         if f"Gates.{filename.removesuffix('.lean')}" not in facade:
             raise AssertionError(f"Programme P-E facade omits {filename}")
+
+    status = "conditionalSmoothAbelianCurvatureBianchiProved"
+    if f"{status} : Prop" not in facade or f"s.{status}" not in facade:
+        raise AssertionError("Programme P-E facade omits the Bianchi status")
 
 
 def forward_difference(function: Callable[[float], float], x: float) -> float:

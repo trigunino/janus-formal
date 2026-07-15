@@ -57,6 +57,101 @@ S_EH[g_plus] + S_EH[g_minus]
 + S_LL_worldvolume.
 ```
 
+## Two-sheet reduction and the M15 variation constraint
+
+Writing the fields as one block object over `M x Z2` is a useful packaging,
+but it does not generate an interaction by itself.  With ordinary locality on
+the disconnected two-sheet space, the action is a sum of sheet actions.  A
+cross coupling requires an additional link field, a discrete derivative, a
+common interaction potential, or a matter coupling involving both blocks.
+
+The 2015 M15 derivation instead imposes
+
+```text
+delta g_minus = - delta g_plus.
+```
+
+For Euler functionals `E_plus` and `E_minus`, the restricted first variation is
+
+```text
+E_plus(h) + E_minus(-h) = (E_plus - E_minus)(h).
+```
+
+Stationarity for every linked variation therefore proves only
+
+```text
+E_plus = E_minus,
+```
+
+not `E_plus = 0` and `E_minus = 0` separately.  Setting both published bracket
+expressions to zero is sufficient for restricted stationarity, but is stronger
+than the Euler--Lagrange conclusion of that constrained variation.
+
+Lean file:
+
+```text
+P0EFTJanusTwoSheetActionNoGo.lean
+```
+
+The same file proves a second obstruction: exchange symmetry alone admits the
+distinct local family `V_lambda(x,y) = lambda (x-y)^2`.  Thus `M x Z2`,
+locality and sheet exchange do not select a unique Janus action.
+
+### Minimal independent-block ansatz
+
+Treat the two sheets as an internal two-state fiber over the same base `M`, so
+that couplings at the same base point are local on `M`.  The minimal covariant
+ansatz is
+
+```text
+S = S_EH[g_plus] + S_EH[g_minus]
+  + S_matter_plus[g_plus, psi_plus]
+  + S_matter_minus[g_minus, psi_minus]
+  + S_interaction[g_plus, g_minus]
+  + boundary terms.
+```
+
+Independent variation gives
+
+```text
+E_plus(g_plus)  + delta_plus S_interaction  = T_plus,
+E_minus(g_minus) + delta_minus S_interaction = T_minus.
+```
+
+This does not reproduce the M15 source pattern, where `T_minus` appears
+directly in the plus equation and `T_plus` directly in the minus equation.  To
+obtain those exact sources one must add and justify at least one of:
+
+1. a common matter action depending on both metrics;
+2. a composite effective metric seen by matter;
+3. a dynamical link field between the sheets;
+4. a holonomic constraint relating the metrics, varied with its own multiplier.
+
+The resulting cross variations must satisfy the mixed-variation integrability
+and diagonal Noether tests below.  Generic direct coupling of one matter species
+to both metrics is also known to endanger the bimetric constraint that removes
+the Boulware--Deser mode.
+
+### Strongest available uniqueness statement
+
+In four dimensions, locality, covariance and second-order metric equations
+select an Einstein--Hilbert plus cosmological term on each isolated sheet
+(Lovelock sector).  They do not select the interaction between the sheets.
+
+Adding the absence of the Boulware--Deser ghost narrows the pure spin-2
+interaction to the elementary-symmetric square-root family
+
+```text
+X = sqrt(g_plus^-1 g_minus),
+V = sum_n beta_n e_n(X).
+```
+
+Sheet exchange imposes equal kinetic normalizations and, in four dimensions,
+the reciprocal coefficient condition `beta_n = beta_(4-n)`.  Free coefficients
+remain.  Therefore this is a controlled candidate family, not a unique Janus
+action.  Reproducing the determinant-weighted M15 matter sources remains an
+additional independent requirement.
+
 ## Common-action integrability
 
 Two cross-source equations cannot be selected independently if they are to come
@@ -176,7 +271,15 @@ Lean file:
 
 ```text
 P0EFTJanusReciprocalBimetricPotential.lean
+P0EFTJanusPTFlatBimetricVariationalBridge.lean
 ```
+
+On the concrete one-dimensional positive PT-flat proportional branch, the
+reduced interaction has its actual derivative, `c = 1` is stationary, and its
+actual Hessian is twelve times the Fierz--Pauli mass combination. For
+`beta1 > 0`, `beta2 >= 0`, the Hessian is positive and `c = 1` is the unique
+global minimizer on `c > 0`. This is a reduced candidate-sector result, not a
+variational or stability theorem for the full Janus metric field theory.
 
 This is a candidate completion, not something already derived from the Janus
 paper.  It must still pass:
