@@ -36,14 +36,24 @@ The metrics are independent variables.  No induced metric is varied again as
 an independent field.  The interaction breaks the product of the two metric
 diffeomorphism groups to their diagonal subgroup.
 
+The admissible Lorentz domain cannot be all metric pairs. The square-root and
+causal-compatibility analysis of
+[Hassan--Kocic](https://arxiv.org/abs/1706.07806) and the geometric-mean
+parametrization of [Kocic](https://arxiv.org/abs/1803.09752) provide the target
+local domain: compatible null-cone/time orientations with a covariantly
+selected real root and compatible `3+1` split. Those analytic and causal
+conditions are not yet encoded by the current finite matrix contracts.
+
 The corresponding pointwise matrix statement is now exact: a common
 invertible frame acts by simultaneous metric congruence and root similarity,
 leaving the interaction scalar invariant. The coordinate density is invariant
 for unit absolute determinant, while an explicit independent-frame example
-fails. Differentiating a genuine similarity curve gives a commutator tangent;
-for a supplied actual derivative witness, that tangent is annihilated. This is
-a conditional finite-frame Noether identity, not yet the spacetime diagonal
-diffeomorphism or Bianchi identity.
+fails. The full matrix covector is now constructed by differentiating the
+Leibniz determinant and the Newton formulas for `e_2` and `e_3`.
+Differentiating a supplied genuine similarity curve gives a commutator
+tangent, and this explicit covector annihilates it without a supplied-gradient
+hypothesis. This remains a finite-frame Noether identity, not yet the
+spacetime diagonal diffeomorphism or Bianchi identity.
 
 ## Candidate action
 
@@ -93,6 +103,16 @@ inaffinity, joint angle, and local worldvolume Lagrangian/tension. Measures,
 metrics, inverses and the other geometric inputs are fixed in these curves.
 This is not the full metric variation, an integrated EH-flux cancellation, or
 an LL auxiliary-field equation.
+
+The non-null GHY gate now also proves the linearized inverse identities,
+varies the inverse-metric/extrinsic-curvature trace, and derives the variation
+of `sqrt(|det h|)` from the actual affine metric curve. Their product gives the
+exact pointwise first jet of the GHY density with no supplied measure tangent.
+The inverse used away from the base point is deliberately labelled an affine
+first-jet representative, not the exact inverse of `h + t delta h`; the
+extrinsic-curvature tangent is still supplied. Thus this is not yet a curve in
+the full geometric boundary-data space, the physical EH-flux cancellation, or
+an integrated boundary theorem.
 
 For the null expansion counterterm, the actual derivative of
 `theta log(lengthScale * |theta|)` is now proved for positive length scale and
@@ -151,9 +171,12 @@ derivatives, and a supplied differentiable square-root selection has the
 Sylvester inverse formula for its derivative. A further gate removes the
 independent-inverse shortcut: for an invertible `g_plus` it proves
 `D(g_plus^{-1})[delta g] = -g_plus^{-1} delta g g_plus^{-1}` and composes this
-with `g_minus` before applying Sylvester. The differentiable Lorentz root
-selection and continuous-linear inverse of the Sylvester operator remain
-hypotheses rather than constructed objects.
+with `g_minus` before applying Sylvester. On the open positive diagonal
+spectrum chart, the Sylvester operator now has an explicit entrywise
+continuous-linear two-sided inverse, and the conditional square-root
+derivative specializes to it. The differentiable Lorentzian root selection
+and a Sylvester inverse on the full causal-compatible matrix domain remain to
+be constructed.
 
 The full four-eigenvalue identity, its proportional specialization, explicit
 matter independence and the weighted no-double-counting equality are proved in
@@ -218,9 +241,17 @@ full spectral interaction Hessian positive.
 
 On the FLRW diagonal spectrum `(N_minus/N_plus, r, r, r)`, the reciprocal
 interaction is exactly affine in both lapses. Its two lapse variations are
-primary-constraint precursors and all lapse Hessian entries vanish. A concrete
-ledger counterexample proves that lapse affinity alone does not supply the
-secondary constraint; shift redefinition and Poisson closure remain open.
+primary-constraint precursors and all lapse Hessian entries vanish. For the
+vacuum reduced Hamiltonians taken as explicit model inputs, the canonical
+bracket is now factorized into a kinematic and a potential factor, primary
+preservation forces the resulting reduced secondary constraint, and an exact
+local witness has three independent constraint covectors and fixes
+`N_minus = 2 N_plus`. The primary and secondary covectors are also verified as
+actual derivatives along arbitrary affine phase-space lines on their regular
+domains. This witness uses unrestricted
+coefficients outside the committed PT/exchange-flat family. The covariant
+Legendre bridge, ADM shift/functional bracket, generic rank and BD closure
+remain open.
 
 The source algebra is also explicit: a single-sheet matter source generically
 excites the relative mode, equal sources remove it, and opposite PT sources
@@ -251,14 +282,17 @@ Implemented in the current finite, spectral or pointwise models:
 - explicit opposite-sign directions for a nonzero `01` spectral mixed Hessian;
 - pointwise matrix potential and invertible-frame similarity invariance;
 - simultaneous-frame interaction invariance, an independent-frame
-  counterexample and a conditional actual-derivative commutator pairing;
+  counterexample, an explicit matrix Frechet covector and its unconditional
+  commutator pairing along supplied similarity curves;
 - actual derivatives of metric inversion and `g_plus_inverse * g_minus`, plus
-  a conditional Sylvester-inverse derivative of a supplied differentiable
-  square root;
+  an explicit two-sided Sylvester inverse on the open positive diagonal chart
+  and a conditional derivative of a supplied differentiable square root;
 - explicit pointwise EH-stratum ledger plus a generic supplied-measure
   worldvolume placeholder;
 - exact fixed-geometry affine variations of selected boundary/worldvolume
   slots;
+- exact non-null GHY pointwise first jet, including the determinant-derived
+  measure tangent and the linearized inverse-metric contribution;
 - actual nonzero-expansion null-counterterm derivative and its explicit
   singular approach to zero expansion;
 - exact local two-sector bulk/GHY cancellation and a nonzero mismatch
@@ -270,8 +304,9 @@ Implemented in the current finite, spectral or pointwise models:
   ambient isometries, with ambient infinitesimal isometries in `ker J`;
 - exact classification of additive reduced scale translation; relating it to
   the covariant diagonal diffeomorphism remains a separate bridge;
-- exact FLRW lapse affinity and primary-constraint precursors, with a proved
-  non-implication of the secondary constraint;
+- exact FLRW lapse affinity and primary-constraint precursors, plus reduced
+  bracket factorization and an unrestricted-parameter local Dirac-chain
+  witness for the secondary constraint and lapse ratio;
 - exact diagonal/relative source decomposition as a PPN rejection precursor;
 - actual pointwise Euler equations and symmetric full Hessian for the spectral
   interaction plus two independent quadratic matter blocks;
@@ -280,21 +315,24 @@ Implemented in the current finite, spectral or pointwise models:
 
 Still required before Candidate A is a completed Janus action:
 
-1. construct the smooth real principal matrix square root and Sylvester inverse
-   on the admissible Lorentz field domain, prove the density transformation
-   law and control branch changes;
+1. extend the diagonal-chart Sylvester inverse to a smooth real principal
+   square-root branch on the admissible Lorentz field domain, prove the density
+   transformation law and control branch changes;
 2. lift the pointwise spectral/matter Euler equations to both covariant metric
    and spacetime matter Euler--Lagrange PDEs from `S_A`;
-3. instantiate and integrate the declared gravitational strata, construct the
-   actual LL auxiliary-field action, specify the zero-expansion variational
-   domain, and prove cancellation of the physical bulk flux;
+3. replace the GHY first-jet representative by a genuine curve of geometric
+   boundary data, instantiate and integrate all gravitational strata,
+   construct the actual LL auxiliary-field action, specify the zero-expansion
+   variational domain, and prove cancellation of the physical bulk flux;
 4. instantiate the diagonal diffeomorphism generator and covariant Noether--
    Bianchi identity;
 5. reproduce the Janus Newtonian sign matrix without a negative spin-2 kinetic
    mode;
-6. extend the FLRW primary precursor to the ADM shift, Poisson and independent
-   secondary constraint, then derive the kinetic/constrained stability and PPN
-   parameters for the exact matter couplings;
+6. derive the reduced Hamiltonians from the covariant Candidate-A Legendre
+   transform, move the local FLRW witness onto the selected PT branch, and
+   extend it to the ADM shift, functional Poisson bracket and generic
+   independent secondary-constraint closure; then derive constrained stability
+   and PPN parameters for the exact matter couplings;
 7. compute the actual local/global anomalies in one regulator and supply a
    microscopic normalization/finite-part law in that same scheme.
 
@@ -305,9 +343,9 @@ is used in its definition.
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
-| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives and conditional Sylvester formula | smooth Lorentz branch/Sylvester inverse, density covariance and full metric functional variation |
-| 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample and conditional pointwise commutator Noether pairing | global field space, constructed matrix gradient and actual diagonal diffeomorphism action |
-| 3. Bulk/boundary/worldvolume | typed ledger, fixed-geometry slot derivatives, null-counterterm singularity audit and exact local matched bulk/GHY cancellation | physical EH metric flux, zero-expansion prescription, geometric throat data, actual LL action/EOM and stratum integration |
+| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, and two-sided Sylvester inverse on the open positive diagonal chart | smooth Lorentz root/Sylvester inverse on the causal-compatible domain, density covariance and full metric functional variation |
+| 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector and unconditional finite-frame commutator pairing | global field space and actual diagonal diffeomorphism action |
+| 3. Bulk/boundary/worldvolume | typed ledger, determinant-measure GHY first jet, null-counterterm singularity audit and exact local matched bulk/GHY cancellation | genuine geometric boundary curve, physical EH metric flux, zero-expansion prescription, throat data, LL action/EOM and stratum integration |
 | 4. Concrete `K/J` | actual first-jet Gram `K/J`, source/ambient naturality and explicit gauge-kernel directions | Lorentzian/global Janus compatibility PDE/jet complex and symbol exactness |
-| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, pointwise Noether and FLRW primary precursor | covariant metric/matter PDEs, diagonal Bianchi, ADM shift/Poisson and secondary constraint |
+| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, explicit finite-frame Noether, FLRW primary precursor, reduced bracket factorization and local secondary/lapse witness | covariant metric/matter PDEs, diagonal Bianchi, Candidate-A Legendre bridge, PT-branch genericity and ADM shift/Poisson closure |
 | 6. Stability/scheme | explicit spectral interaction indefiniteness, source-mode rejection precursor and reduced Candidate-A anomaly-proxy scheme-freedom no-go | constrained kinetic stability, PPN derivation, covariantly admissible counterterms, actual regulated anomalies and a microscopic normalization/finite-part law |
