@@ -180,6 +180,14 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
   stationarity and interior-bulk plus lifted-boundary balance in both sectors;
 - **T/N** a nonzero accessible boundary flux obstructs stationarity when its
   sector bulk Euler functional already vanishes;
+- **T/C/N** a supplied differentiable Helmholtz boundary flux has a normalized
+  actual counterterm with derivative `-flux`; cancelling counterterms are
+  unique up to a constant, while one non-Helmholtz Jacobian blocks a global
+  `C^2` primitive. No physical GHY/null/corner flux is derived;
+- **T/C/N** for an induced second field, the actual Euler equation is
+  `E_bulk + E_induced ∘ D(induced) = 0`; the exact action `x-y` on the
+  diagonal proves that treating both slots independently can add two nonzero
+  equations;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -244,10 +252,18 @@ The concrete Janus category, global structured jet groupoid, regularity hypothes
 - **T/N** any explicitly supplied nonreciprocal cross block rules out that
   common reduced action, while unspecified M30 cross densities do not decide
   the criterion;
+- **T/C/N** on the nonlinear plus--minus--matter product, three diagonal and
+  three cross-block conditions are equivalent to symmetry of the total actual
+  Euler derivative; on an open convex domain they reconstruct a unique
+  normalized common action, and a supplied failed block excludes a global
+  `C^2` action;
 - **T/C/N** a genuine common reduced action with diagonal symmetry and supplied
   boundary Euler term yields only `E_plus + E_minus + boundary_flux = 0`;
   separate sector conservation additionally requires zero exchange and zero
   boundary flux, as shown by the exact `(1,-1,0)` counterexample;
+- **T/C/N** for a supplied field-dependent diagonal generator `K(q)`, genuine
+  infinitesimal action invariance is equivalent to `E(q) ∘ K(q) = 0`; the
+  identity is stable under parameter maps but need not split between sectors;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **O** construct the Janus flow/gauge group and derive the complete Euler
   source, PDE Noether identities, nonlinear Helmholtz conditions, variational

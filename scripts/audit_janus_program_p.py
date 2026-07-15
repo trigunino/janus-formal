@@ -166,6 +166,29 @@ PROGRAM_P_GATES = {
             "theorem nonzero_boundary_flux_blocks_two_sector_stationarity",
         ),
     ),
+    "P0EFTJanusBoundaryCountertermHelmholtz.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem boundaryCounterterm_hasFDerivAt",
+            "theorem completedBoundaryAction_hasFDerivAt_zero",
+            "theorem completedSectorAction_hasFDerivAt_bulk",
+            "theorem normalized_boundaryCounterterm_unique",
+            "theorem actual_smooth_counterterm_implies_helmholtz_at",
+            "theorem nonhelmholtz_flux_blocks_smooth_counterterm",
+        ),
+    ),
+    "P0EFTJanusInducedFieldVariationNoDoubleCounting.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem jointEuler_comp_inducedGraphDerivative",
+            "theorem inducedAction_hasFDerivAt",
+            "theorem independentlyStationary_implies_constrainedStationary",
+            "theorem cancellationRestrictedAction_fderiv",
+            "theorem cancellation_bulkPartial_ne_zero",
+            "theorem cancellation_inducedPartial_ne_zero",
+            "theorem constrained_stationarity_does_not_imply_independent",
+        ),
+    ),
     "P0EFTJanusReducedCrossMatterIntegrability.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -177,6 +200,17 @@ PROGRAM_P_GATES = {
             "theorem metric_cross_mismatch_no_common_action",
         ),
     ),
+    "P0EFTJanusNonlinearCrossDensityHelmholtz.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem blockDerivativeReciprocityAt_iff_helmholtzJacobianAt",
+            "theorem blockDerivativeReciprocityOn_iff_helmholtzJacobianOn",
+            "theorem open_convex_block_reciprocity_reconstructs_normalized_action",
+            "theorem normalized_common_action_unique_on_domain",
+            "theorem global_common_action_forces_block_reciprocity",
+            "theorem failed_plus_minus_block_no_global_common_action",
+        ),
+    ),
     "P0EFTJanusReducedDiagonalNoetherExchangeBalance.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -186,6 +220,16 @@ PROGRAM_P_GATES = {
             "theorem zero_boundary_separate_conservation_iff_zero_exchange",
             "theorem exact_counterexample_sector_balances",
             "theorem combined_balance_does_not_imply_separate_conservation",
+        ),
+    ),
+    "P0EFTJanusDiagonalGaugeNoetherIdentity.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem action_gaugeLine_hasDerivAt",
+            "theorem infinitesimal_invariance_at_iff_euler_bianchi_annihilation",
+            "theorem infinitesimal_invariance_iff_formalAdjoint_bianchi_constraint",
+            "theorem formalAdjoint_constraint_closed_under_parameter_map",
+            "theorem combined_identity_does_not_imply_separate_sector_identities",
         ),
     ),
     "P0EFTJanusProportionalBranchTransverseNoGo.lean": (
@@ -257,6 +301,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paConditionalReducedBimetricFrechetStabilityProved",
         "paReducedPublishedKappaMinusOneKineticNoGoProved",
         "paTwoSectorBulkBoundaryFrechetVariationProved",
+        "paBoundaryCountertermHelmholtzCompletionProved",
+        "paInducedFieldVariationNoDoubleCountingProved",
         "paProportionalBranchTransverseNonuniquenessProved",
         "paProportionalBranchTransverseTwoJetNonuniquenessProved",
         "pcFiniteRankActualHelmholtzIffActualPolynomialGradientProved",
@@ -268,7 +314,9 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "pcGaugeOrbitInvariantFunctionEquivalenceProved",
         "pcReducedTwoMetricEulerNoetherProved",
         "pcReducedCrossMatterIntegrabilityIffProved",
+        "pcNonlinearCrossDensityHelmholtzReconstructionProved",
         "pcReducedDiagonalNoetherBoundaryExchangeProved",
+        "pcDiagonalGaugeNoetherConstraintProved",
     ):
         if (
             primary_facade.count(f"{status} : Prop") != 1

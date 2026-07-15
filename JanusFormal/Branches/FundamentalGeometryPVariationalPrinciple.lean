@@ -35,8 +35,12 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricEulerNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedBimetricQuadraticFrechetSpectrum
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusTwoSectorBulkBoundaryFrechetVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBoundaryCountertermHelmholtz
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusInducedFieldVariationNoDoubleCounting
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedCrossMatterIntegrability
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonlinearCrossDensityHelmholtz
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedDiagonalNoetherExchangeBalance
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDiagonalGaugeNoetherIdentity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchTransverseNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchHigherOrderNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
@@ -68,6 +72,8 @@ structure ProgramStatus where
   paConditionalReducedBimetricFrechetStabilityProved : Prop
   paReducedPublishedKappaMinusOneKineticNoGoProved : Prop
   paTwoSectorBulkBoundaryFrechetVariationProved : Prop
+  paBoundaryCountertermHelmholtzCompletionProved : Prop
+  paInducedFieldVariationNoDoubleCountingProved : Prop
   paProportionalBranchTransverseNonuniquenessProved : Prop
   paProportionalBranchTransverseTwoJetNonuniquenessProved : Prop
   pbPTAnomalyCancellationProved : Prop
@@ -94,7 +100,9 @@ structure ProgramStatus where
   pcGaugeOrbitInvariantFunctionEquivalenceProved : Prop
   pcReducedTwoMetricEulerNoetherProved : Prop
   pcReducedCrossMatterIntegrabilityIffProved : Prop
+  pcNonlinearCrossDensityHelmholtzReconstructionProved : Prop
   pcReducedDiagonalNoetherBoundaryExchangeProved : Prop
+  pcDiagonalGaugeNoetherConstraintProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -140,6 +148,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paConditionalReducedBimetricFrechetStabilityProved /\
   s.paReducedPublishedKappaMinusOneKineticNoGoProved /\
   s.paTwoSectorBulkBoundaryFrechetVariationProved /\
+  s.paBoundaryCountertermHelmholtzCompletionProved /\
+  s.paInducedFieldVariationNoDoubleCountingProved /\
   s.paProportionalBranchTransverseNonuniquenessProved /\
   s.paProportionalBranchTransverseTwoJetNonuniquenessProved /\
   s.pbPTAnomalyCancellationProved /\
@@ -166,7 +176,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcGaugeOrbitInvariantFunctionEquivalenceProved /\
   s.pcReducedTwoMetricEulerNoetherProved /\
   s.pcReducedCrossMatterIntegrabilityIffProved /\
-  s.pcReducedDiagonalNoetherBoundaryExchangeProved
+  s.pcNonlinearCrossDensityHelmholtzReconstructionProved /\
+  s.pcReducedDiagonalNoetherBoundaryExchangeProved /\
+  s.pcDiagonalGaugeNoetherConstraintProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=
