@@ -44,6 +44,12 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchTransverseNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProportionalBranchHigherOrderNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalyHelmholtzIndependence
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensities
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensityFrechet
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLedger
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPETensorPairingFreedom
@@ -103,6 +109,12 @@ structure ProgramStatus where
   pcNonlinearCrossDensityHelmholtzReconstructionProved : Prop
   pcReducedDiagonalNoetherBoundaryExchangeProved : Prop
   pcDiagonalGaugeNoetherConstraintProved : Prop
+  paExplicitReciprocalCrossDensitiesProved : Prop
+  paSpectralCrossDensityFrechetHelmholtzProved : Prop
+  paMatrixSquareRootPointwisePotentialConstructed : Prop
+  paExplicitGravitationalBoundaryLedgerDeclared : Prop
+  paFiniteGramInducedMetricFrechetBridgeProved : Prop
+  pcReducedActionAdditiveNoetherProxyClassified : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -178,7 +190,13 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcReducedCrossMatterIntegrabilityIffProved /\
   s.pcNonlinearCrossDensityHelmholtzReconstructionProved /\
   s.pcReducedDiagonalNoetherBoundaryExchangeProved /\
-  s.pcDiagonalGaugeNoetherConstraintProved
+  s.pcDiagonalGaugeNoetherConstraintProved /\
+  s.paExplicitReciprocalCrossDensitiesProved /\
+  s.paSpectralCrossDensityFrechetHelmholtzProved /\
+  s.paMatrixSquareRootPointwisePotentialConstructed /\
+  s.paExplicitGravitationalBoundaryLedgerDeclared /\
+  s.paFiniteGramInducedMetricFrechetBridgeProved /\
+  s.pcReducedActionAdditiveNoetherProxyClassified
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=

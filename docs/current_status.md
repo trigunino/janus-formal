@@ -82,6 +82,7 @@ JanusFormal.Branches.FundamentalGeometryD
 JanusFormal.Branches.FundamentalGeometryDiracSpectral
 JanusFormal.Branches.FundamentalGeometryD7SpectralTheory
 JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation
+JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex
 JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly
 JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
 JanusFormal.Branches.FundamentalGeometryPEInvariantPairings
@@ -242,8 +243,32 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
   For a supplied field-dependent diagonal generator `K(q)`, infinitesimal
   invariance is exactly the formal constraint `E(q) ∘ K(q) = 0`; a cancelling
   two-sector example shows that this combined identity still need not split.
-  Neither result constructs an M30 density, a Janus diffeomorphism generator or
-  a covariant Bianchi/constraint algebra.
+  Those earlier generic results construct neither an M30 density nor a Janus
+  diffeomorphism generator or covariant Bianchi/constraint algebra.
+
+#### Candidate A active-branch checkpoint
+
+- **T/C** the two symbolic M30 cross-density slots are instantiated as
+  reciprocal halves of one elementary-symmetric interaction; matter dependence
+  is explicitly absent and weighted double counting is excluded;
+- **T/C** the full four-eigenvalue interaction has an actual Frechet gradient,
+  second derivative and symmetric Helmholtz Jacobian;
+- **T/C** a pointwise `4 x 4` square-root matrix realizes the same Newton
+  invariants, specializes to the spectral formula and is similarity invariant;
+- **T/C** the finite Gram tensor has actual first/second derivatives, is
+  positive definite on the injective immersion domain, and gives a concrete
+  compatibility map `K` and Jacobian `J`;
+- **T/C/N** typed non-null, null and joint gravitational slots plus a generic
+  supplied-measure worldvolume placeholder are explicit; the actual LL action,
+  throat integration and bulk-flux cancellation are not proved;
+- **T/N** additive translation of reduced scale variables is classified and
+  fails for a concrete positive interaction; any relation to the covariant
+  diagonal diffeomorphism still requires a separate bridge;
+- **O** smooth Lorentz square-root domain, metric Euler equations, physical
+  GHY/null/joint variation, Bianchi/constraint algebra, exact stability,
+  anomalies, normalization and finite counterterms.
+
+Canonical candidate document: `docs/program_p_explicit_covariant_candidate.md`.
 
 ### P-D — pairings and coefficient modules
 
