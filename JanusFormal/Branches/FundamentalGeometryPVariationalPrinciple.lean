@@ -47,6 +47,7 @@ structure ProgramStatus where
   paBoundaryActionUniqueRelativeToParentProved : Prop
   paParentBulkTwoSectorReciprocitySynthesized : Prop
   paFiniteRankCoefficientSchurHelmholtzSynthesized : Prop
+  paFiniteRankSchurFrechetDerivativesProved : Prop
   pbPTAnomalyCancellationProved : Prop
   pbParityEvenFreedomProved : Prop
   pbTrivializationFreedomProved : Prop
@@ -59,6 +60,7 @@ structure ProgramStatus where
   pcPTNormalizedUniqueReconstructionProved : Prop
   pcQuadraticCoupledSectorPTRealizabilityIffProved : Prop
   pcFiniteRankCoefficientHelmholtzIffProved : Prop
+  pcFiniteRankPolynomialFrechetGradientProved : Prop
   peZ4ChargeNeutralityDerived : Prop
   peConjugateQuarterPairingUniqueUpToScale : Prop
   peUnchargedPTDoubletRetainsTwoCoefficients : Prop
@@ -97,6 +99,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paBoundaryActionUniqueRelativeToParentProved /\
   s.paParentBulkTwoSectorReciprocitySynthesized /\
   s.paFiniteRankCoefficientSchurHelmholtzSynthesized /\
+  s.paFiniteRankSchurFrechetDerivativesProved /\
   s.pbPTAnomalyCancellationProved /\
   s.pbParityEvenFreedomProved /\
   s.pbTrivializationFreedomProved /\
@@ -108,7 +111,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcAffineReconstructionAmbiguityProved /\
   s.pcPTNormalizedUniqueReconstructionProved /\
   s.pcQuadraticCoupledSectorPTRealizabilityIffProved /\
-  s.pcFiniteRankCoefficientHelmholtzIffProved
+  s.pcFiniteRankCoefficientHelmholtzIffProved /\
+  s.pcFiniteRankPolynomialFrechetGradientProved
 
 /-- P-E discrete and tangent-representation classification. -/
 def invariantPairingFoundationClosed (s : ProgramStatus) : Prop :=

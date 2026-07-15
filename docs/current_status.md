@@ -119,8 +119,10 @@ chart extractions at the same base point are related by the canonical residual
 normal-frame action, packages that relation as an action-groupoid arrow and
 proves its identity and Cech composition laws. For invariant observables it
 also constructs the unique chart-independent value at that fixed base point.
-This remains low-order Euclidean fixed-base descent, not smooth effective
-descent for the full Janus structured-jet groupoid.
+If the observable admits a smooth realization on the normed continuous-jet
+coefficients, the descended observable is globally smooth by fixed-chart local
+gluing. This remains low-order Euclidean descent, not effective descent for the
+full Janus structured-jet groupoid.
 
 The same branch supplies two conditional multi-chart packages. Given an open
 cover, oriented cocycles, chosen Spin lifts, phase transitions and matching
@@ -182,9 +184,9 @@ Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additiona
 ### P0, P-A, P-B and P-C
 
 - **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
-- **P-A:** the two-sector parent-bulk result now extends coefficientwise to an arbitrary finite boundary rank: the declared scalar bulk Euler equation has a unique solution and the exact Schur kernel is reciprocal/self-adjoint; changing the parent can still change surviving mixing.
+- **P-A:** the two-sector parent-bulk result now extends to an arbitrary finite boundary rank: the bulk Euler expression is the actual derivative, the reduced action has the Schur gradient and constant Hessian as its Fréchet derivatives, and the exact Schur kernel is reciprocal/self-adjoint; changing the parent can still change surviving mixing.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion and a finite-rank coefficient theorem through cubic potential order; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion and a finite-rank cubic potential whose actual Fréchet derivative equals the reconstructed Euler source; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
 
 ### P-D — pairings and coefficient modules
 

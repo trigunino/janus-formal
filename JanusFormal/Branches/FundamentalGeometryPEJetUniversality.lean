@@ -186,6 +186,7 @@ structure ProgramStatus where
   euclideanLowOrderSpinCActionGroupoidConstructed : Prop
   euclideanLowOrderChartOverlapGroupoidConstructed : Prop
   euclideanLowOrderInvariantOverlapDescentProved : Prop
+  euclideanLowOrderSmoothInvariantObservableDescentProved : Prop
   suppliedPointwiseSpinCCechPresentationPackaged : Prop
   conditionalSmoothAbelianCurvatureDescentProved : Prop
 
@@ -259,6 +260,7 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.euclideanLowOrderSpinCActionGroupoidConstructed /\
   s.euclideanLowOrderChartOverlapGroupoidConstructed /\
   s.euclideanLowOrderInvariantOverlapDescentProved /\
+  s.euclideanLowOrderSmoothInvariantObservableDescentProved /\
   s.suppliedPointwiseSpinCCechPresentationPackaged /\
   s.conditionalSmoothAbelianCurvatureDescentProved
 

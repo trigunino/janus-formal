@@ -306,7 +306,10 @@ require additional work because the residual orthogonal group is noncompact.
 
 In the low-order Euclidean model, all valid projected-seed chart jets at one
 fixed base lie in the same residual SpinC-frame orbit. Consequently every
-invariant observable has a unique chart-independent value there.
+invariant observable has a unique chart-independent value there. If it admits
+a smooth realization on the continuous reduced-jet coefficient space, these
+values form a globally smooth function: locally one freezes a valid chart
+center and uses invariance to identify it with the moving canonical value.
 
 Two further Cech constructions are conditional. Supplied oriented transition
 cocycles, Spin lifts, phases and matching diagonal defects determine a
@@ -352,7 +355,7 @@ characteristic classes or determinant transitions.
 | one-chart rank-two SpinC bundle/connection | proved in Lean; nontrivial global sectors open |
 | valid-chart low-order residual/SpinC action groupoid | instantiated in Lean |
 | actual valid-chart overlap arrows | proved with identity and Cech composition in the low-order Euclidean model |
-| fixed-base low-order invariant-observable descent | proved in Lean; smooth global effective descent remains open |
+| low-order invariant-observable descent | unique chart-independent values; globally smooth under a smooth coefficient realization |
 | multi-chart SpinC Cech transition presentation | conditional pointwise theorem from supplied cocycles, lifts, phases and matching defects; continuity and total space open |
 | abelian connection overlap curvature descent | conditional global smooth curvature theorem from supplied local potentials and flat additive shifts |
 | actual structured SpinC jet groupoid | open |
