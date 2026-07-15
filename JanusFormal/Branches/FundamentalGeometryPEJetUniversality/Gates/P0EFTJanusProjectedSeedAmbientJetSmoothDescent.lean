@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set Filter
+open Set Filter Module
 open scoped ContDiff InnerProductSpace Topology
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
