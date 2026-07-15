@@ -18,6 +18,9 @@ import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanus
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD2GlobalAnalyticBridge
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusD2HeatCountertermBridge
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatRemainderConvergence
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusQuarterDeterminantConvergence
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleSphereHeatTrace
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleHeatAsymptoticMatch
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusProductThroatDiracHeatCoefficients
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusFiniteProductHeatTrace
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatKernelScaleOrbit
@@ -58,6 +61,10 @@ structure ProgramStatus where
   cutoffRemainderTelescopeProved : Prop
   geometricRemainderConvergenceCriterionProved : Prop
   quadraticRemainderConvergenceCriterionProved : Prop
+  z4QuarterRemainderSummableProved : Prop
+  z4RenormalizedDeterminantConstructed : Prop
+  infiniteMonopoleSphereHeatTraceConstructed : Prop
+  spectralHeatCoefficientAlgebraMatched : Prop
   finiteProductHeatTraceFactorizationProved : Prop
   localCircleAffinenessProved : Prop
   localNoMinimumProved : Prop
@@ -103,6 +110,10 @@ def localSpectralFoundationClosed (s : ProgramStatus) : Prop :=
   s.cutoffRemainderTelescopeProved /\
   s.geometricRemainderConvergenceCriterionProved /\
   s.quadraticRemainderConvergenceCriterionProved /\
+  s.z4QuarterRemainderSummableProved /\
+  s.z4RenormalizedDeterminantConstructed /\
+  s.infiniteMonopoleSphereHeatTraceConstructed /\
+  s.spectralHeatCoefficientAlgebraMatched /\
   s.finiteProductHeatTraceFactorizationProved /\
   s.localCircleAffinenessProved /\
   s.localNoMinimumProved /\
