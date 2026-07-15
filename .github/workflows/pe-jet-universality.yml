@@ -63,7 +63,7 @@ concurrency:
 env:
   # Keep only the current failing/new gate here. Clear this string once it is
   # covered by the full build and no longer needs a fast diagnostic pass.
-  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedSmoothCoefficientTransport
+  LEAN_TARGET: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoefficientOverlap
 
 jobs:
   lean:
@@ -157,6 +157,7 @@ jobs:
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoordinates \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalSpaceTrivialization \
             JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedSmoothCoefficientTransport \
+            JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoefficientOverlap \
             > focused-lean.log 2>&1
           status=$?
           cat focused-lean.log
