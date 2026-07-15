@@ -9,6 +9,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Set
+open Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusNormalFramePointwiseTransition
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
@@ -99,7 +100,7 @@ theorem pointwiseBasisSmoothNormalFrameFamilyOn_range_eq
     exact (LinearEquiv.finrank_eq hEquiv).symm.trans (hNormalRank base)
 
 /-- Restrict an open-domain smooth isometric frame family to a smaller domain. -/
-def SmoothIsometricFrameFamilyOn.restrict
+def restrictSmoothIsometricFrameFamilyOn
     {domain restricted : Set Base}
     (family : SmoothIsometricFrameFamilyOn Base Model Ambient domain)
     (hSubset : restricted ⊆ domain) :
@@ -131,15 +132,17 @@ def pointwiseBasisNormalTransitionOnOverlap
       Base Model (pointwiseBasisOverlapDomain basisData first second) := by
   let firstFrame : SmoothIsometricFrameFamilyOn
       Base Model Ambient (pointwiseBasisOverlapDomain basisData first second) :=
-    (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
-      hCoordinateOrthonormal basisData first).restrict
+    restrictSmoothIsometricFrameFamilyOn
+      (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
+        hCoordinateOrthonormal basisData first)
         (by
           intro base hBase
           exact hBase.1)
   let secondFrame : SmoothIsometricFrameFamilyOn
       Base Model Ambient (pointwiseBasisOverlapDomain basisData first second) :=
-    (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
-      hCoordinateOrthonormal basisData second).restrict
+    restrictSmoothIsometricFrameFamilyOn
+      (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
+        hCoordinateOrthonormal basisData second)
         (by
           intro base hBase
           exact hBase.2)
@@ -175,15 +178,17 @@ theorem pointwiseBasisNormalTransitionOnOverlap_spec
         hCoordinateOrthonormal basisData second).frame base normal := by
   let firstFrame : SmoothIsometricFrameFamilyOn
       Base Model Ambient (pointwiseBasisOverlapDomain basisData first second) :=
-    (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
-      hCoordinateOrthonormal basisData first).restrict
+    restrictSmoothIsometricFrameFamilyOn
+      (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
+        hCoordinateOrthonormal basisData first)
         (by
           intro point hPoint
           exact hPoint.1)
   let secondFrame : SmoothIsometricFrameFamilyOn
       Base Model Ambient (pointwiseBasisOverlapDomain basisData first second) :=
-    (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
-      hCoordinateOrthonormal basisData second).restrict
+    restrictSmoothIsometricFrameFamilyOn
+      (pointwiseBasisSmoothNormalFrameFamilyOn coordinateBasis
+        hCoordinateOrthonormal basisData second)
         (by
           intro point hPoint
           exact hPoint.2)
