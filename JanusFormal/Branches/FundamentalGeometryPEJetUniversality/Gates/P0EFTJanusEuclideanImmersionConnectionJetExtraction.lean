@@ -14,6 +14,7 @@ open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
 open P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging
 open P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness
+open P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair
 open P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction
 open P0EFTJanusConnectionCorrectedActualJetBridge
 open P0EFTJanusProjectedSeedSmoothCoefficientTransport
@@ -111,8 +112,8 @@ theorem EuclideanImmersionConnectionJetData.rawSecond_symmetric
   intro base first second
   change fderiv ℝ (fderiv ℝ data.immersion) base first second =
     fderiv ℝ (fderiv ℝ data.immersion) base second first
-  exact (data.immersion_contDiff.contDiffAt.isSymmSndFDerivAt
-    (by exact le_top)) first second
+  exact (ContDiffAt.isSymmSndFDerivAt
+    (n := ∞) data.immersion_contDiff.contDiffAt (by simp)) first second
 
 /-- The actual immersion and gauge-potential data instantiate the global ambient
 coefficient interface used by projected-seed descent. -/
@@ -240,13 +241,17 @@ theorem EuclideanProjectedSeedImmersionData.chart_normalQuadratic_apply
           data.coefficients.ambientConnection base first second -
           fderiv ℝ data.coefficients.immersion base
             (data.coefficients.sourceConnection base first second)) := by
-  rw [ProjectedSeedSmoothAmbientJetFamilyOn.normalQuadratic_apply]
-  rw [ProjectedSeedGlobalAmbientJetData.chart_corrected_eq_global
-    data.coefficients.toProjectedSeedGlobalAmbientJetData data.tangentBasis
-    data.tangentBasis_orthonormal data.normalBasis
-    data.normalBasis_orthonormal data.basisData center base hValid]
-  rw [EuclideanProjectedSeedImmersionData.correctedAmbientSecondDerivative_apply
-    data base first second]
+  change projectedSeedChartNormalAdjointCLM data.normalBasis
+      data.normalBasis_orthonormal data.basisData center base
+      (fderiv ℝ (fderiv ℝ data.coefficients.immersion) base first second +
+        data.coefficients.ambientConnection base first second -
+        projectedSeedChartTangentDerivativeCLM data.tangentBasis
+          data.tangentBasis_orthonormal data.basisData center base
+          (data.coefficients.sourceConnection base first second)) = _
+  rw [projectedSeedChartTangentDerivativeCLM_eq_synthesis
+    data.tangentBasis data.tangentBasis_orthonormal data.basisData
+    center base hValid]
+  rw [← data.immersion_fderiv_eq_tangentSynthesis base]
 
 /-- Audit boundary after extracting fixed-chart Janus coefficients from actual
 smooth maps. -/
