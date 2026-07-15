@@ -52,6 +52,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusSpectralInteractionHessianIndefinite
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitCandidatePointwiseEuler
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricCoupledScalarMatterJetVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixDiagonalGaugeNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixInteractionFrechetNoether
@@ -61,6 +62,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalSylvesterInverse
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootChart
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalLorentzRootFirstDerivative
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzBoostRootOrbit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalInteractionDensityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDiagonalReparametrizationDensityNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFourDimensionalDensityLieDerivativeNoether
@@ -88,9 +90,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityPrincipalSymbol
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzianGramCompatibilityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusSaintVenantCompatibilitySymbolExactness
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusArbitraryFrequencySaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteSpatialFunctionalPoisson
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWLegendreBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPTFlatVacuumFLRWConstraintNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatterCurvatureFLRWConstraintBranch
@@ -166,6 +170,7 @@ structure ProgramStatus where
   paPositiveDiagonalSylvesterInverseProved : Prop
   paCoDiagonalLorentzRootChartConstructed : Prop
   paCoDiagonalLorentzRootFirstDerivativeProved : Prop
+  paLorentzBoostCoordinateOrbitRootVariationProved : Prop
   paCoDiagonalInteractionDensityFrechetProved : Prop
   paDiagonalReparametrizationDensityPullbackNoetherProved : Prop
   paFourDimensionalDensityLieDerivativeNoetherProved : Prop
@@ -189,10 +194,12 @@ structure ProgramStatus where
   paFiniteFieldLocalFrameGaugeInvarianceProved : Prop
   paExplicitBulkBoundaryLocalCancellationProved : Prop
   pcExplicitCandidatePointwiseEulerHelmholtzProved : Prop
+  paIndependentMetricMatterJetVariationProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
   paCanonicalLorentzGramSaintVenantSymbolExactnessProved : Prop
+  paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved : Prop
   paNullExpansionCountertermVariationProved : Prop
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
@@ -200,6 +207,7 @@ structure ProgramStatus where
   paLLBraneCompositeMeasureVariationProved : Prop
   paLLBraneCompositeMeasureFrechetProved : Prop
   paReducedFLRWBracketFactorizationFromInputHamiltoniansProved : Prop
+  paFiniteUltralocalPrimaryBracketLiftProved : Prop
   paReducedFLRWLegendreBridgeProved : Prop
   paPTFlatVacuumFLRWConstraintNoGoProved : Prop
   paMatterCurvatureFLRWConstraintBranchProved : Prop
@@ -295,6 +303,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paPositiveDiagonalSylvesterInverseProved /\
   s.paCoDiagonalLorentzRootChartConstructed /\
   s.paCoDiagonalLorentzRootFirstDerivativeProved /\
+  s.paLorentzBoostCoordinateOrbitRootVariationProved /\
   s.paCoDiagonalInteractionDensityFrechetProved /\
   s.paDiagonalReparametrizationDensityPullbackNoetherProved /\
   s.paFourDimensionalDensityLieDerivativeNoetherProved /\
@@ -318,10 +327,12 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteFieldLocalFrameGaugeInvarianceProved /\
   s.paExplicitBulkBoundaryLocalCancellationProved /\
   s.pcExplicitCandidatePointwiseEulerHelmholtzProved /\
+  s.paIndependentMetricMatterJetVariationProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\
   s.paCanonicalLorentzGramSaintVenantSymbolExactnessProved /\
+  s.paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved /\
   s.paNullExpansionCountertermVariationProved /\
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\
@@ -329,6 +340,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paLLBraneCompositeMeasureVariationProved /\
   s.paLLBraneCompositeMeasureFrechetProved /\
   s.paReducedFLRWBracketFactorizationFromInputHamiltoniansProved /\
+  s.paFiniteUltralocalPrimaryBracketLiftProved /\
   s.paReducedFLRWLegendreBridgeProved /\
   s.paPTFlatVacuumFLRWConstraintNoGoProved /\
   s.paMatterCurvatureFLRWConstraintBranchProved /\
