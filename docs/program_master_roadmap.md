@@ -234,7 +234,8 @@ regular local operator
   -> metric-derived Euclidean Koszul connection
   -> projected-seed varying-normal atlas
   -> one-chart rank-two SpinC bundle/connection
-  -> valid-chart low-order residual/SpinC action groupoid.
+  -> valid-chart low-order residual/SpinC action groupoid
+  -> canonical groupoid arrows between actual overlapping chart extractions.
 ```
 
 Current theorem evidence:
@@ -257,6 +258,8 @@ Current theorem evidence:
 - **T** projected-seed varying-normal atlas and overlap coefficient laws;
 - **T** canonical one-chart rank-two SpinC Cech bundle and supplied-potential connection;
 - **T** valid-chart low-order residual/SpinC action-groupoid realization;
+- **T** canonical low-order action-groupoid arrow between two actual valid
+  projected-seed chart extractions on an overlap;
 - **T/N** local finite order need not give one global uniform order;
 - **T/N** smooth dependence is not automatically polynomial;
 - **N** equivariance plus finite-dimensionality does not by itself imply finite generation for nonreductive jet-group actions;
@@ -264,6 +267,8 @@ Current theorem evidence:
 
 Exact remaining locks:
 
+- **O** define the actual Janus category and source/target natural bundles, then
+  verify locality, regularity and the required holonomic realizations;
 - **O** construct the required higher-dimensional Clifford Spin covers;
 - **O** extend the projected-seed atlas and one-chart SpinC model to the actual
   nontrivial global Janus vector and principal bundles;
@@ -272,6 +277,8 @@ Exact remaining locks:
 - **O** construct the full differentiable structured jet groupoid and effective descent;
 - **O** prove the higher-order jet-isomorphism and integrability theorem;
 - **O** classify smooth equivariant maps across isotropy strata.
+- **O** classify the required elliptic symbols and specify any bounded
+  background region used for a uniform-order theorem.
 
 Canonical documents:
 
@@ -283,7 +290,9 @@ docs/program_pe_smooth_adapted_frames.md
 docs/program_pe_spinC_cocycle_lift.md
 ```
 
-Latest theorem-code validation: **green** at commit `1995bb68d5c06a1c627732f24ed27883c576ff36`, workflow run `29249977153`.
+Latest merged theorem-code head: `96e60eb4df1db049f8488858c5a6b1fdb717b224`
+(PR 10). Its theorem head passed focused Lean/Python validation locally; no
+independent post-merge workflow is claimed here.
 
 ## P-F — Compatibility pullback, Helmholtz and Noether
 
@@ -317,7 +326,7 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | Entry | Status |
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
-| `FundamentalGeometryPEJetUniversality` | focused CI green through the rank-two matrix Spin layer |
+| `FundamentalGeometryPEJetUniversality` | local validation green through the scoped PR 10 Koszul, projected-normal, one-chart SpinC and low-order groupoid gates |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
 | `FundamentalGeometryD`, `D7`, `D8`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
 | D9 and D11 | gate collections; no supported standalone head |

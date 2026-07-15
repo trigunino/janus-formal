@@ -19,6 +19,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusUniversalActionProperty
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusAnomalySelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHessianHelmholtzReconstruction
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPolynomialHelmholtzReconstruction
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBulkUniversalHelmholtzSynthesis
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
@@ -45,6 +46,7 @@ structure ProgramStatus where
   pbDiscreteMultiplicitySelectorDerived : Prop
   pcFormalSelfAdjointnessNecessaryProved : Prop
   pcQuadraticHelmholtzIffProved : Prop
+  pcQuadraticEulerCubicHelmholtzIffProved : Prop
   pcAffineReconstructionAmbiguityProved : Prop
   pcPTNormalizedUniqueReconstructionProved : Prop
   peZ4ChargeNeutralityDerived : Prop
@@ -89,6 +91,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pbDiscreteMultiplicitySelectorDerived /\
   s.pcFormalSelfAdjointnessNecessaryProved /\
   s.pcQuadraticHelmholtzIffProved /\
+  s.pcQuadraticEulerCubicHelmholtzIffProved /\
   s.pcAffineReconstructionAmbiguityProved /\
   s.pcPTNormalizedUniqueReconstructionProved
 

@@ -38,15 +38,25 @@ The merged PR 6 stack contains:
 - transition-jet bridges from frame derivatives to normal gauge extraction;
 - a direct construction of the normal-frame transition derivative.
 
+Program P-E was advanced again and merged into `main` through PR 10 on
+15 July 2026 at
+
+```text
+96e60eb4df1db049f8488858c5a6b1fdb717b224.
+```
+
 ## 2. Validation
 
 The current `main` head is
 
 ```text
-92ade09c4f9aaab064840f934a42a50fb59bd171.
+96e60eb4df1db049f8488858c5a6b1fdb717b224.
 ```
 
-The theorem commits immediately below the merge were validated on the PR branch by the focused Lean and Python workflows added by PR 6. The merge commit itself currently has no separately reported combined status, so this document does not claim an independent post-merge CI run for `92ade09`.
+The theorem commits below the PR 6 merge were validated by its focused Lean
+and Python workflows. The PR 10 theorem head was validated locally before
+merge; this document does not claim an independent post-merge CI run for
+`96e60eb4`.
 
 The previously recorded successful runs include:
 
@@ -81,16 +91,16 @@ JanusFormal.Branches.FundamentalGeometryPFCompatibilityHelmholtz
 
 A green Lean head means that every imported theorem and proof compiles. It does **not** turn uninstantiated status fields into geometric objects or prove the complete physical Janus theory.
 
-### PR 10 working-branch update (15 July 2026)
+### PR 10 merged update (15 July 2026)
 
-The current PR 10 branch has been validated locally with
+The PR 10 theorem head, now merged into `main`, was validated locally with
 
 ```text
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 ```
 
-The integrated head compiles. Remote PR CI is not claimed here. New proved,
-scoped constructions are:
+The integrated head compiles. Independent post-merge remote CI is not claimed
+here. New proved, scoped constructions are:
 
 - existence of the smooth finite-dimensional Euclidean Levi-Civita/Koszul
   coefficient from a smooth positive-definite metric;
@@ -103,6 +113,12 @@ scoped constructions are:
 
 These do not assert the full differentiable Janus jet groupoid or a nontrivial
 global Janus SpinC bundle.
+
+The current follow-on branch also proves that two actual valid projected-seed
+chart extractions at the same base point are related by the canonical residual
+normal-frame action, packages that relation as an action-groupoid arrow and
+proves its identity and Cech composition laws. This remains a low-order
+Euclidean overlap theorem, not full effective descent.
 
 ## 3. Stable architecture
 
@@ -271,9 +287,8 @@ The current `main` stack goes further: for a symmetric bilinear finite-dimension
 
 Still open:
 
-- identify this finite bilinear model with the actual geometric `II` family over the structured-jet base;
-- prove linearity/continuity in the normal parameter as a bundled map where required;
-- prove smooth dependence on background jets and residual-frame equivariance of the Riesz construction;
+- identify the proved projected-seed/fixed-model family with the actual global
+  Janus `II` bundle over the full structured-jet base;
 - insert the genuine ambient mixed curvature and normal-connection curvature;
 - prove the manifold-level Ricci equation.
 
