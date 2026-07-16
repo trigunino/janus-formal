@@ -53,17 +53,22 @@ whole independent configuration is fixed by the effective PT exchange.
 Concrete continuity predicates cover every independent, induced and LL
 coordinate; the same branch therefore inhabits a continuous PT-matched
 effective configuration with exact throat inclusion and root-square equation.
-This is only a topological field-space realization: it supplies no Sobolev or
-smooth spaces, boundary traces/conditions, field equation, stationarity,
-stability or global root map.
+This first realization is topological; the smooth coefficient-field upgrade
+is described next. It still supplies no Sobolev completion,
+boundary traces/conditions, field equation, stationarity, stability or global
+root map.
 
 The analytic D8 cover now provides the next layer: coefficient fields into any
 normed real fiber can be required to be genuinely smooth upstairs and exactly
 invariant under every deck iterate. They descend continuously and injectively
-to the same effective quotient. In particular, two metric-coefficient fields,
+to the same effective quotient. With the installed quotient atlas, that
+descent is now `C∞`; conversely every smooth quotient coefficient field pulls
+back smoothly, and the two constructions are an exact equivalence. In
+particular, two metric-coefficient fields,
 two scalar fields and an identity-root coefficient field have a nonempty
-constant smooth witness. This is not yet a Lorentz-constrained configuration
-or a Sobolev/traced field space directly on the `C∞` quotient.
+constant smooth witness directly on the quotient. This is not yet a
+Lorentz-constrained tensor-bundle configuration or a Sobolev/traced field
+space.
 
 The admissible Lorentz domain cannot be all metric pairs. The square-root and
 causal-compatibility analysis of

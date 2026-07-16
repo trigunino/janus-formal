@@ -67,6 +67,10 @@ def test_program_p_smooth_deck_invariant_fields_are_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_smooth_quotient_field_descent_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_effective_d8_smooth_quotient_manifold_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

@@ -571,6 +571,11 @@ covering-induced analytic atlases and `IsManifold` instances in dimensions
 four and three. Their cover projections are analytic local diffeomorphisms,
 and the injective quotient throat inclusion is `C∞`. Its differential
 immersion/embedding property and the global smooth normal bundle remain open.
+For every normed real coefficient fiber, smooth deck-invariant fields on the
+analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
+this quotient; the flat two-metric/two-scalar/root witness consequently lives
+on the actual smooth spacetime. Sobolev completions, tensor bundles, traces and
+boundary conditions remain open.
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
