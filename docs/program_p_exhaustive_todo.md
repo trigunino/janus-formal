@@ -384,6 +384,11 @@ par toute évolution admissible.
       l'intégrabilité de la densité sur toute mesure finie, construire l'action
       globale et dériver sa variation intégrée exacte. Le témoin métrique
       global provenant de la branche diagonale reste à construire.
+    - [x] Isoler l'obstruction déterminantielle à une frame globale
+      deck-compatible sur D8, puis la remplacer par les frames tangentes
+      locales canoniques, une partition de l'unité lisse subordonnée et une
+      régularisation locale non vide avec musical, sharp, tenseur et volume.
+      Le recollement en un unique tenseur lorentzien global reste ouvert.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
@@ -521,6 +526,13 @@ complexe BRST, aux anomalies et aux conditions au bord.
         la linéarisation exacte du pairing faible, prouver symétrie, covariance
         PT et positivité de sa partie cinétique ; dériver aussi le Hessien brut
         de la métrique auxiliaire sans sur-revendiquer la positivité totale.
+      - [x] Dans le secteur strictement positif `llMeasure > 0` et pour une
+        mesure finie positive sur les ouverts, construire le Hilbert d'énergie
+        dont le produit scalaire est exactement ce Hessien, son domaine lisse
+        dense, l'extension faible, le représentant de Riesz fort et
+        l'équivalence forte/faible avec noyau trivial. Aucune formule
+        différentielle de type Stokes ni équivalence Sobolev externe n'est
+        revendiquée.
 - [x] Prouver l'existence d'une branche throat non vide compatible avec les
   deux secteurs gravitationnels.
 - [ ] Dériver les conditions de jonction et l'équilibre des flux.
@@ -539,6 +551,12 @@ complexe BRST, aux anomalies et aux conditions au bord.
       - [x] Prouver sous mesure PT-invariante la covariance exacte des traces,
         flux, résidu, action, première variation et Hessien Robin avec échange
         `+/-` et `k_+/k_-`, puis entrelacer l'opérateur `L²` par l'isométrie PT.
+  - [x] Construire le vrai flux normal scalaire comme `dφ` évalué sur un
+    représentant du quotient tangent normal, avec splitting algébrique
+    fibre-par-fibre, signe tordu à un tour, appariement global avec une section
+    normale lisse, action et balance faible par stationnarité. Le pont vers la
+    loi Robin est explicite et conditionnel ; splitting lisse, normal unitaire,
+    Israel et jonctions nulles restent ouverts.
 - [ ] Étendre le Stokes fini à une formule de Stokes géométrique pour données
   variables et toutes les strates.
   - [x] Assembler en un résidu stratifié fini unique les faces non nulles
