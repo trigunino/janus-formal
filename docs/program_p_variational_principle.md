@@ -583,15 +583,19 @@ injective manifold differential everywhere and a rank-one tangent quotient.
 Its analytic rank-one normal `VectorBundle` is constructed with one-loop
 transition `-id` and pointwise linear equivalences to the differential normal
 quotients. Those choices now form a global base-preserving fiberwise-linear
-equivalence of dependent total spaces. The two quarter choices are genuine
+equivalence of dependent total spaces. Transporting the existing normal atlas
+through it installs the exact quotient-fiber topology, local trivializations,
+`VectorBundle` and analytic `ContMDiffVectorBundle` structures on the
+differential normal family; the total comparison is a base-preserving
+homeomorphism with the same sign cocycle. The two quarter choices are genuine
 global complex line bundles with analytic real underliers and transition
 squares equal to the normal sign. The same global winding cocycle now defines
 a topological principal normal `Pin⁻(1) ≃ Z4` bundle with equivariant
 transitions and free/transitive right action. Applying the two quarter
 characters to that cocycle constructs the associated root-phase bundle cores
 and recovers their square/PT laws for every winding. The throat inclusion is a global
-`IsSmoothEmbedding`; the independent differential-normal quotient atlas, a
-smooth comparison, ambient tangent Pin/SpinC bundles and the null/joint strata
+`IsSmoothEmbedding`; the total comparison still lacks its `Diffeomorph`
+wrapper, while ambient tangent Pin/SpinC bundles and the null/joint strata
 remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
@@ -642,6 +646,18 @@ global frame cannot be the right witness. Canonical local tangent frames, a
 smooth subordinate partition, a nonempty flat local regularization and local
 musical/sharp/tensor/positive-volume data are constructed; exact tensorial
 gluing is the remaining step.
+The product cover nevertheless has a concrete nonempty Lorentz cocycle:
+the tangent `S³` orthogonal plus the line direction carries a nondegenerate
+`(3,1)` musical, and the actual deck reflection is an exact isometry. The
+intrinsic dependent-tensor and quotient-descent bridges are now explicit
+types, not assumptions hidden in the action.
+For the same global holonomic scalar action, weak Euler `K` and symmetric
+Jacobi `J` are defined for all smooth fields under the common integrability
+contract and are exactly its first and second variations. The Lorentz time
+coefficient is proved negative. Consequently only the explicitly time-static,
+positive-mass sector is completed to a positive Hilbert energy space with a
+dense strong Riesz realization and trivial kernel; no positivity of the full
+Lorentzian evolution is claimed.
 The Robin chain now continues from the same action through its symmetric
 Hessian to a self-adjoint index-zero `L²` Fredholm realization when
 `k_+ + k_- != 0`; action, variation, Hessian and operator are PT-covariant
