@@ -213,6 +213,10 @@ def test_program_p_global_holonomic_scalar_static_fredholm_is_integrated() -> No
     assert_program_p_gate_integrity()
 
 
+def test_program_p_global_scalar_static_h1_graph_bridge_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_automatic_scalar_integrability_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
