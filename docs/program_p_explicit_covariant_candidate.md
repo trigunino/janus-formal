@@ -795,7 +795,10 @@ Implemented in the current finite, spectral or pointwise models:
   which value, genuine manifold differential, inverse metric and metric volume
   come from the same scalar/metric fields, together with exact pointwise and
   integrated scalar variation at fixed metric and measure under an explicit
-  integrability contract; tensorial covariance and Euler--flux form remain open;
+  integrability contract. That contract is automatic for every finite measure
+  on the affine-stable class with continuous fixed-frame covector components,
+  including arbitrary nonzero constant scalars; tensorial covariance and
+  Euler--flux form remain open;
 - an unconditional local four-dimensional relative-root branch around the
   independent diagonal Minkowski metric pair, obtained by composing the
   identity-root IFT branch with the actual map
@@ -1023,6 +1026,14 @@ Still required before Candidate A is a completed Janus action:
 
 Candidate A is rejected if any of items 1--7 fails.  No observed-radius input
 is used in its definition.
+
+The same global independent variation now has a typed D9 projection for the
+diagonal metric, tangential gauge, `U(1)` ghost and matter slots; its failure
+to cover general symmetric D9 metric perturbations is proved. Finite D10
+product modes are literal truncations with the same mapping-torus period,
+exact PT pairing and heat-regulator cancellation. The normal mode,
+diffeomorphism ghost, SpinC identification, general metric sector and
+action--Hessian--mode--boundary-domain agreement remain explicit inputs.
 
 ## Six-lock checkpoint
 
