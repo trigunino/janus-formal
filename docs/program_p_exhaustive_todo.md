@@ -85,6 +85,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       analytiques, puis prouver que les deux quotients sont des variétés
       topologiques `C⁰` et que la projection de covering est `C⁰`.
     - [ ] Promouvoir l'atlas quotient et la projection de `C⁰` à `C∞`.
+      - [x] Prouver la lissité des actions de deck sur les deux covers
+        analytiques, la lissité de l'inclusion du throat cover, la loi locale
+        de transition entre sections et sa compatibilité au groupoïde lisse.
+      - [ ] Installer effectivement les instances `ChartedSpace` et
+        `IsManifold` sur les deux quotients et prouver la projection `C∞`.
 - [ ] Construire l'immersion du throat et sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
     niveau du cover et l'inclusion injective induite de son mapping torus dans
@@ -462,6 +467,9 @@ champs et avec les mêmes conditions au bord.
     rang un.
   - [x] Construire aussi la fibre déterminante de l'opérateur infini du cercle
     sur norme de graphe, avec noyau/conoyau explicites et section non nulle.
+  - [x] Pour la transformée bornée du cercle, construire chaque vraie fibre
+    `Hom(det coker, det ker)`, un frame algébrique non nul et la transition
+    linéaire bijective de grande jauge entre les deux fibres d'extrémité.
   - [ ] Construire la ligne/gerbe globale et sa géométrie de
     Quillen/Bismut--Freed.
 - [ ] Calculer l'anomalie locale dans le régulateur commun.

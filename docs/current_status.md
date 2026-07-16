@@ -188,8 +188,12 @@ now complemented by the canonical bounded transform: it is self-adjoint,
 Fredholm of index zero and 1-Lipschitz in holonomy in operator norm. Its only
 fundamental endpoint crossings are identified exactly, related by the
 large-gauge mode shift, and have opposite PT orientations; both quarter
-holonomies are invertible. This is still a normalized circle family, not the
-global Janus family, eta invariant or Quillen metric/connection.
+holonomies are invertible. Each bounded Fredholm operator now also has its
+actual rank-one `Hom(det coker, det ker)` fiber with a nonzero Fourier frame,
+and the two endpoint fibers are related by an explicit bijective large-gauge
+transition. Their dependent union has no topology or bundle structure. This
+is still a normalized circle family, not the global Janus family, eta
+invariant or Quillen metric/connection.
 
 ## 4. Topology and Z4
 
@@ -210,8 +214,13 @@ spheres; their products with `ℝ` carry explicit analytic cover atlases. The
 effective spacetime and throat quotients are actual `C⁰` manifolds, their
 covering projection is a local homeomorphism and `C⁰`, and the throat cover
 inclusion is a topological embedding and `C⁰`. Promotion of the quotient atlas,
-projection and inclusion to `C∞` remains open, as does null/joint stratification. The
-expected fundamental group is `Z`, not `Z4`.
+projection and inclusion to `C∞` remains open, as does null/joint stratification.
+The analytic cover deck transformations and throat-cover inclusion are now
+genuinely smooth. Local inverse sections selecting the same quotient fiber
+differ locally by the unique smooth deck map, and the induced chart changes
+belong to the smooth groupoid. Installing the quotient `ChartedSpace` and
+`IsManifold` instances is still open. The expected fundamental group is `Z`,
+not `Z4`.
 
 The complement of the concrete equatorial `S2` in the unit `S3` is now proved
 to be the disjoint union of two nonempty open sign sides. Reflection and one

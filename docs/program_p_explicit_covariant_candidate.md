@@ -657,7 +657,10 @@ The same circle family now has its canonical bounded transform. It is an
 operator-norm 1-Lipschitz self-adjoint Fredholm family of index zero. The exact
 endpoint crossings are related by the large-gauge mode shift, PT reverses
 their orientation, and the two physical quarter holonomies are bijective.
-This does not yet construct a Janus family index or Quillen line bundle.
+Its genuine pointwise determinant fibers have rank one and nonzero Fourier
+frames, with a bijective large-gauge transition between endpoint fibers. No
+topology is yet installed on their dependent union, so this does not construct
+a Janus family index or Quillen line bundle.
 
 ## Acceptance ledger
 

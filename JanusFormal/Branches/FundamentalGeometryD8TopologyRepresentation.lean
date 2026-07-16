@@ -21,6 +21,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementSides
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementConnected
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothAtlasFrontier
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -63,6 +64,7 @@ structure ProgramStatus where
   effectiveMappingTorusTopologicalManifoldProved : Prop
   effectiveThroatTopologicalManifoldProved : Prop
   quotientProjectionLocalHomeomorphAndC0Proved : Prop
+  smoothDeckActionsAndAtlasTransitionsProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -140,6 +142,11 @@ def mappingTorusSmoothAtlasFrontierCoreClosed (s : ProgramStatus) : Prop :=
   s.effectiveThroatTopologicalManifoldProved /\
   s.quotientProjectionLocalHomeomorphAndC0Proved
 
+/-- Smooth deck maps, throat-cover inclusion and compatible local atlas
+transitions; quotient manifold instances are still a separate step. -/
+def mappingTorusSmoothDeckDescentFrontierClosed (s : ProgramStatus) : Prop :=
+  s.smoothDeckActionsAndAtlasTransitionsProved
+
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveTopologicalMappingTorusCoreClosed s /\
@@ -149,6 +156,7 @@ def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveThroatComplementSidesCoreClosed s /\
   effectiveThroatComplementConnectedCoreClosed s /\
   mappingTorusSmoothAtlasFrontierCoreClosed s /\
+  mappingTorusSmoothDeckDescentFrontierClosed s /\
   s.nonzeroTranslationDerived /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\

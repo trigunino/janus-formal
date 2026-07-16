@@ -36,6 +36,10 @@ SMOOTH_ATLAS_FRONTIER_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothAtlasFrontier.lean"
 )
+SMOOTH_DECK_DESCENT_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothQuotient.lean"
+)
 FACADE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
 )
@@ -171,6 +175,15 @@ SMOOTH_ATLAS_FRONTIER_STATUSES = (
     "quotientProjectionLocalHomeomorphAndC0Proved",
 )
 
+SMOOTH_DECK_DESCENT_DECLARATIONS = (
+    "theorem sphereReflection_contMDiff",
+    "theorem reflectedSphereCover_deck_contMDiff",
+    "theorem fixedThroatCover_deck_contMDiff",
+    "theorem fixedThroatCoverInclusion_contMDiff",
+    "theorem localInverseAt_eventuallyEq_vadd",
+    "theorem smoothHomeomorph_coordinateChange_mem_groupoid",
+)
+
 THROAT_COMPLEMENT_CONNECTED_STATUSES = (
     "positiveAndNegativeSphereSidesPathConnectedProved",
     "positiveCoverSidePathConnectedProved",
@@ -194,6 +207,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     smooth_atlas_frontier_gate = (
         repo_root / SMOOTH_ATLAS_FRONTIER_GATE
+    ).read_text(encoding="utf-8")
+    smooth_deck_descent_gate = (
+        repo_root / SMOOTH_DECK_DESCENT_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
 
@@ -321,6 +337,22 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     for status in SMOOTH_ATLAS_FRONTIER_STATUSES:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(f"D8 facade omits smooth-atlas status: {status}")
+
+    for declaration in SMOOTH_DECK_DESCENT_DECLARATIONS:
+        if declaration not in smooth_deck_descent_gate:
+            raise AssertionError(
+                f"missing D8 smooth-deck descent declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_deck_descent_gate):
+        raise AssertionError("proof placeholder found in D8 smooth-deck descent gate")
+    smooth_descent_import = "Gates.P0EFTJanusMappingTorusSmoothQuotient"
+    if facade.count(smooth_descent_import) != 1:
+        raise AssertionError("D8 facade omits the smooth-deck descent gate")
+    if facade.count("mappingTorusSmoothDeckDescentFrontierClosed s") != 1:
+        raise AssertionError("D8 smooth core omits smooth-deck descent milestone")
+    status = "smoothDeckActionsAndAtlasTransitionsProved"
+    if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+        raise AssertionError(f"D8 facade omits smooth-deck status: {status}")
 
 
 def run_audit() -> None:
