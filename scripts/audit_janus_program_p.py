@@ -1258,6 +1258,18 @@ PROGRAM_P_GATES = {
             "theorem positiveDiagonalizable_squareRoot_fderiv",
         ),
     ),
+    "P0EFTJanusPositiveDiagonalizableLocalRootBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveDiagonalizableSylvesterEquiv",
+            "def positiveDiagonalizableSylvesterEquivWitness",
+            "theorem positiveDiagonalizableSylvesterEquiv_symm_apply",
+            "def positiveDiagonalizableLocalRootBranch",
+            "theorem positiveDiagonalizableLocalRootBranch_at_target",
+            "theorem eventually_positiveDiagonalizableLocalRootBranch_square",
+            "theorem positiveDiagonalizableLocalRootBranch_hasStrictFDerivAt",
+        ),
+    ),
     "P0EFTJanusLorentzJordanRelativeRoot4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
