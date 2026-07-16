@@ -144,6 +144,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinProjection
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinOrientation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinAtlasObstruction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
@@ -375,6 +376,7 @@ structure ProgramStatus where
   paEffectiveD8AmbientTangentOrientationCocycleProved : Prop
   paEffectiveD8AmbientTangentQuadraticReductionFrontierProved : Prop
   paEffectiveD8AmbientSpinProjectionConstructed : Prop
+  paEffectiveD8AmbientSpinProjectionOrientationProved : Prop
   paEffectiveD8AmbientSpinAtlasCechObstructionProved : Prop
   paEffectiveD8NormalZ4RootBundleProved : Prop
   paEffectiveD8NormalZ4RootPTConjugationProved : Prop
@@ -643,6 +645,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8AmbientTangentOrientationCocycleProved /\
   s.paEffectiveD8AmbientTangentQuadraticReductionFrontierProved /\
   s.paEffectiveD8AmbientSpinProjectionConstructed /\
+  s.paEffectiveD8AmbientSpinProjectionOrientationProved /\
   s.paEffectiveD8AmbientSpinAtlasCechObstructionProved /\
   s.paEffectiveD8NormalZ4RootBundleProved /\
   s.paEffectiveD8NormalZ4RootPTConjugationProved /\

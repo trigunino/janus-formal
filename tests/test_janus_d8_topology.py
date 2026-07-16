@@ -82,6 +82,10 @@ def test_d8_ambient_spin_projection_is_integrated() -> None:
     assert_d8_topology_integrity()
 
 
+def test_d8_ambient_spin_projection_preserves_orientation() -> None:
+    assert_d8_topology_integrity()
+
+
 def test_d8_ambient_spin_atlas_obstruction_is_integrated() -> None:
     assert_d8_topology_integrity()
 

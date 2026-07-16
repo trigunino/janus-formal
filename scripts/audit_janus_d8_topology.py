@@ -88,6 +88,10 @@ AMBIENT_SPIN_PROJECTION_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusAmbientSpinProjection.lean"
 )
+AMBIENT_SPIN_ORIENTATION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientSpinOrientation.lean"
+)
 AMBIENT_SPIN_ATLAS_OBSTRUCTION_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusAmbientSpinAtlasObstruction.lean"
@@ -440,6 +444,10 @@ AMBIENT_SPIN_PROJECTION_DECLARATIONS = (
     "def AmbientSpinCechTransitionLift.toPinSpinCCechLiftContract",
 )
 
+AMBIENT_SPIN_ORIENTATION_DECLARATIONS = (
+    "theorem ambientSpinProjection_det",
+)
+
 AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientAtlasTransition_cocycle_apply",
     "theorem ambientAtlasTangentTransition_cocycle",
@@ -514,6 +522,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "ambientTangentOrientationCocycleProved",
     "ambientTangentQuadraticReductionFrontierProved",
     "ambientSpinProjectionConstructed",
+    "ambientSpinProjectionOrientationProved",
     "ambientSpinAtlasCechObstructionProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
@@ -597,6 +606,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     ambient_spin_projection_gate = (
         repo_root / AMBIENT_SPIN_PROJECTION_GATE
+    ).read_text(encoding="utf-8")
+    ambient_spin_orientation_gate = (
+        repo_root / AMBIENT_SPIN_ORIENTATION_GATE
     ).read_text(encoding="utf-8")
     ambient_spin_atlas_obstruction_gate = (
         repo_root / AMBIENT_SPIN_ATLAS_OBSTRUCTION_GATE
@@ -962,6 +974,21 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     if facade.count(ambient_spin_projection_import) != 1:
         raise AssertionError("D8 facade omits the ambient Spin-projection gate")
+
+    for declaration in AMBIENT_SPIN_ORIENTATION_DECLARATIONS:
+        if declaration not in ambient_spin_orientation_gate:
+            raise AssertionError(
+                f"missing D8 ambient Spin-orientation declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", ambient_spin_orientation_gate):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient Spin-orientation gate"
+        )
+    ambient_spin_orientation_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientSpinOrientation"
+    )
+    if facade.count(ambient_spin_orientation_import) != 1:
+        raise AssertionError("D8 facade omits the ambient Spin-orientation gate")
 
     for declaration in AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS:
         if declaration not in ambient_spin_atlas_obstruction_gate:

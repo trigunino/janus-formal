@@ -213,6 +213,10 @@ def test_program_p_intrinsic_cover_lorentz_tensor_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d8_ambient_spin_orientation_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_intrinsic_lorentz_metric_descent_frontier_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
