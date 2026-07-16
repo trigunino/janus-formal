@@ -259,6 +259,58 @@ def ptExchange
   minus_pos := fun point i =>
     metrics.plus_pos (reflectedSpherePT period hPeriod point) i
 
+theorem relativeRatioField_ptExchange_mul_ptPullback
+    (metrics : SmoothPositiveDiagonalMetricPair period hPeriod)
+    (point : EffectiveQuotient period hPeriod) (i : Fin 4) :
+    relativeRatioField period hPeriod
+          (ptExchange period hPeriod metrics) point i *
+        relativeRatioField period hPeriod metrics
+          (reflectedSpherePT period hPeriod point) i = 1 := by
+  simp only [relativeRatioField, ptExchange, ptPullback_apply]
+  field_simp [ne_of_gt (metrics.plus_pos _ i),
+    ne_of_gt (metrics.minus_pos _ i)]
+
+theorem principalRootSpectrumField_ptExchange_mul_ptPullback
+    (metrics : SmoothPositiveDiagonalMetricPair period hPeriod)
+    (point : EffectiveQuotient period hPeriod) (i : Fin 4) :
+    principalRootSpectrumField period hPeriod
+          (ptExchange period hPeriod metrics) point i *
+        principalRootSpectrumField period hPeriod metrics
+          (reflectedSpherePT period hPeriod point) i = 1 := by
+  change
+    Real.sqrt
+          (relativeRatioField period hPeriod
+            (ptExchange period hPeriod metrics) point i) *
+        Real.sqrt
+          (relativeRatioField period hPeriod metrics
+            (reflectedSpherePT period hPeriod point) i) = 1
+  rw [← Real.sqrt_mul
+    (le_of_lt (relativeRatioField_pos period hPeriod
+      (ptExchange period hPeriod metrics) point i))]
+  rw [relativeRatioField_ptExchange_mul_ptPullback]
+  exact Real.sqrt_one
+
+theorem principalRootField_ptExchange_mul_ptPullback
+    (metrics : SmoothPositiveDiagonalMetricPair period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    principalRootField period hPeriod
+          (ptExchange period hPeriod metrics) point *
+        principalRootField period hPeriod metrics
+          (reflectedSpherePT period hPeriod point) = 1 := by
+  change
+    Matrix.diagonal
+          (principalRootSpectrumField period hPeriod
+            (ptExchange period hPeriod metrics) point) *
+        Matrix.diagonal
+          (principalRootSpectrumField period hPeriod metrics
+            (reflectedSpherePT period hPeriod point)) = 1
+  rw [Matrix.diagonal_mul_diagonal]
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    simp [principalRootSpectrumField_ptExchange_mul_ptPullback]
+  · simp [hij]
+
 @[simp]
 theorem ptExchange_involutive
     (metrics : SmoothPositiveDiagonalMetricPair period hPeriod) :

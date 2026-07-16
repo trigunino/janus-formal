@@ -629,6 +629,9 @@ par toute évolution admissible.
   - [x] Prouver que l'induction des deux métriques diagonales et des deux
     traces matière commute exactement avec PT/échange. La racine relative,
     la covariance difféomorphe et les conservations restent séparées.
+  - [x] Prouver point par point que PT/échange inverse exactement le ratio
+    spectral positif et que le produit des deux racines principales diagonales
+    correspondantes est l'identité.
   - [x] Prouver que l'induction des deux métriques diagonales, de la racine
     principale et des deux traces matière commute exactement avec l'action
     difféomorphe diagonale restreinte déjà définie.
