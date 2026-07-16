@@ -81,8 +81,8 @@ local instance effectiveThroatBorelSpace :
 
 /-- An explicit finite smooth tangent generating family on the real quotient.
 Unlike a basis-valued global frame, such a family is compatible with a
-nontrivial tangent bundle.  Its construction is the remaining geometric input
-to identify the graph completion with an intrinsic first-order Sobolev space. -/
+nontrivial tangent bundle.  Ordinary `C∞` regularity is sufficient for the
+first-order graph construction and its continuity arguments. -/
 structure SmoothD8Frame where
   count : Nat
   vectorAt : ∀ point : EffectiveQuotient period hPeriod,
@@ -90,7 +90,7 @@ structure SmoothD8Frame where
   spansAt : ∀ point : EffectiveQuotient period hPeriod,
     Submodule.span Real (Set.range (vectorAt point)) = ⊤
   contMDiff_vector : ∀ index : Fin count,
-    ContMDiff coverModelWithCorners coverModelWithCorners.tangent ω
+    ContMDiff coverModelWithCorners coverModelWithCorners.tangent ∞
       (fun point =>
         (⟨point, vectorAt point index⟩ :
           TangentBundle coverModelWithCorners
@@ -125,7 +125,7 @@ theorem frameDerivative_eq_mfderiv
 theorem frameDerivative_contMDiff
     (frame : SmoothD8Frame period hPeriod)
     (field : SmoothQuotientField period hPeriod Fiber) :
-    ContMDiff coverModelWithCorners 𝓘(Real, Fin frame.count → Fiber) ω
+    ContMDiff coverModelWithCorners 𝓘(Real, Fin frame.count → Fiber) ∞
       (frameDerivative period hPeriod Fiber frame field) := by
   rw [contMDiff_pi_space]
   intro index
@@ -182,9 +182,9 @@ theorem smoothFirstJet_contMDiff
     (frame : SmoothD8Frame period hPeriod)
     (field : SmoothQuotientField period hPeriod Fiber) :
     ContMDiff coverModelWithCorners
-      𝓘(Real, Fiber × (Fin frame.count → Fiber)) ω
+      𝓘(Real, Fiber × (Fin frame.count → Fiber)) ∞
       (smoothFirstJet period hPeriod Fiber frame field) :=
-  field.contMDiff_toFun.prodMk_space
+  (field.contMDiff_toFun.of_le (by simp)).prodMk_space
     (frameDerivative_contMDiff period hPeriod Fiber frame field)
 
 theorem smoothFirstJet_memLp

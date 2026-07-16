@@ -213,21 +213,6 @@ private theorem generatorSection_spans
             (tangentPartition period hPeriod anchor point)⁻¹ hGenerator
       simpa [generatorSection, hAnchorNe] using hScaled
 
-/-- The regularity actually needed by first-order Sobolev completion: a
-finite family of `C∞` tangent sections spanning every fiber. -/
-structure CInfinityD8Frame where
-  count : Nat
-  vectorAt : ∀ point : EffectiveQuotient period hPeriod,
-    Fin count → TangentSpace coverModelWithCorners point
-  spansAt : ∀ point : EffectiveQuotient period hPeriod,
-    Submodule.span ℝ (Set.range (vectorAt point)) = ⊤
-  contMDiff_vector : ∀ index : Fin count,
-    ContMDiff coverModelWithCorners coverModelWithCorners.tangent ∞
-      (fun point =>
-        (⟨point, vectorAt point index⟩ :
-          TangentBundle coverModelWithCorners
-            (EffectiveQuotient period hPeriod)))
-
 private def generatorIndexEquivFin :
     GeneratorIndex period hPeriod ≃
       Fin (Fintype.card (GeneratorIndex period hPeriod)) :=
@@ -236,7 +221,7 @@ private def generatorIndexEquivFin :
 /-- An unconditional finite `C∞` spanning family on the true compact D8
 quotient.  It is obtained from finitely many tangent trivializations, not from
 a global frame. -/
-def finiteSmoothTangentFrame : CInfinityD8Frame period hPeriod where
+def finiteSmoothTangentFrame : SmoothD8Frame period hPeriod where
   count := Fintype.card (GeneratorIndex period hPeriod)
   vectorAt point index := generatorSection period hPeriod
     ((generatorIndexEquivFin period hPeriod).symm index) point
@@ -262,30 +247,14 @@ def finiteSmoothTangentFrame : CInfinityD8Frame period hPeriod where
 /-- In particular, the finite smooth spanning-family input is inhabited with
 no geometric hypothesis beyond the already proved compact analytic quotient. -/
 theorem finiteSmoothTangentFrame_nonempty :
-    Nonempty (CInfinityD8Frame period hPeriod) :=
+    Nonempty (SmoothD8Frame period hPeriod) :=
   ⟨finiteSmoothTangentFrame period hPeriod⟩
 
-/-- The old graph gate asks for analytic (`ω`) rather than ordinary smooth
-(`∞`) sections.  This explicit predicate isolates that strictly stronger
-upgrade on the already constructed family. -/
-def HasAnalyticUpgrade (frame : CInfinityD8Frame period hPeriod) : Prop :=
-  ∀ index : Fin frame.count,
-    ContMDiff coverModelWithCorners coverModelWithCorners.tangent ω
-      (fun point =>
-        (⟨point, frame.vectorAt point index⟩ :
-          TangentBundle coverModelWithCorners
-            (EffectiveQuotient period hPeriod)))
-
-/-- An analytic upgrade of a `C∞` family gives the exact `SmoothD8Frame`
-interface used by the preceding graph-completion gate. -/
-def CInfinityD8Frame.toSmoothD8Frame
-    (frame : CInfinityD8Frame period hPeriod)
-    (hAnalytic : HasAnalyticUpgrade period hPeriod frame) :
-    SmoothD8Frame period hPeriod where
-  count := frame.count
-  vectorAt := frame.vectorAt
-  spansAt := frame.spansAt
-  contMDiff_vector := hAnalytic
+/-- The frame input of the graph-H¹ construction is closed unconditionally
+on the actual effective D8 quotient. -/
+theorem smoothD8FrameInput_closed :
+    Nonempty (SmoothD8Frame period hPeriod) :=
+  finiteSmoothTangentFrame_nonempty period hPeriod
 
 section QuantitativeTrace
 
@@ -293,6 +262,27 @@ universe u
 
 variable (Fiber : Type u)
   [NormedAddCommGroup Fiber] [NormedSpace ℝ Fiber]
+
+/-- The graph-H¹ completion attached directly to the constructed finite
+smooth tangent family. -/
+abbrev FiniteFrameH1GraphSpace
+    (mu : Measure (EffectiveQuotient period hPeriod)) [IsFiniteMeasure mu] :=
+  H1GraphSpace period hPeriod Fiber
+    (finiteSmoothTangentFrame period hPeriod) mu
+
+/-- Canonical smooth inclusion into the now-unconditional graph-H¹ space. -/
+def smoothToFiniteFrameH1Graph
+    (mu : Measure (EffectiveQuotient period hPeriod)) [IsFiniteMeasure mu] :
+    SmoothQuotientField period hPeriod Fiber →ₗ[ℝ]
+      FiniteFrameH1GraphSpace period hPeriod Fiber mu :=
+  smoothToH1GraphLinearMap period hPeriod Fiber
+    (finiteSmoothTangentFrame period hPeriod) mu
+
+theorem smoothToFiniteFrameH1Graph_denseRange
+    (mu : Measure (EffectiveQuotient period hPeriod)) [IsFiniteMeasure mu] :
+    DenseRange (smoothToFiniteFrameH1Graph period hPeriod Fiber mu) :=
+  smoothToH1Graph_denseRange period hPeriod Fiber
+    (finiteSmoothTangentFrame period hPeriod) mu
 
 /-- The finite spacetime measure concentrated on the embedded effective
 throat and induced by a finite throat measure. -/
@@ -406,6 +396,38 @@ theorem throatSupportedH1Trace_norm_le
     h1Trace_norm_le period hPeriod Fiber frame
     (throatSupportedSpacetimeMeasure period hPeriod nu) nu
     (throatSupportedHasH1TraceBound period hPeriod Fiber frame nu) field
+
+/-- The fully connected trace on the graph-H¹ completion built from the
+unconditional finite tangent family. -/
+def finiteFrameThroatSupportedH1Trace
+    [CompleteSpace Fiber]
+    (nu : Measure (EffectiveThroat period hPeriod)) [IsFiniteMeasure nu] :
+    FiniteFrameH1GraphSpace period hPeriod Fiber
+        (throatSupportedSpacetimeMeasure period hPeriod nu) →L[ℝ]
+      Lp Fiber (2 : ENNReal) nu :=
+  throatSupportedH1Trace period hPeriod Fiber
+    (finiteSmoothTangentFrame period hPeriod) nu
+
+theorem finiteFrameThroatSupportedH1Trace_agrees_on_smooth
+    [CompleteSpace Fiber]
+    (nu : Measure (EffectiveThroat period hPeriod)) [IsFiniteMeasure nu]
+    (field : SmoothQuotientField period hPeriod Fiber) :
+    finiteFrameThroatSupportedH1Trace period hPeriod Fiber nu
+        (smoothToFiniteFrameH1Graph period hPeriod Fiber
+          (throatSupportedSpacetimeMeasure period hPeriod nu) field) =
+      smoothTraceL2LinearMap period hPeriod Fiber nu field :=
+  throatSupportedH1Trace_agrees_on_smooth period hPeriod Fiber
+    (finiteSmoothTangentFrame period hPeriod) nu field
+
+theorem finiteFrameThroatSupportedH1Trace_norm_le
+    [CompleteSpace Fiber]
+    (nu : Measure (EffectiveThroat period hPeriod)) [IsFiniteMeasure nu]
+    (field : FiniteFrameH1GraphSpace period hPeriod Fiber
+      (throatSupportedSpacetimeMeasure period hPeriod nu)) :
+    ‖finiteFrameThroatSupportedH1Trace period hPeriod Fiber nu field‖ ≤
+      ‖field‖ :=
+  throatSupportedH1Trace_norm_le period hPeriod Fiber
+    (finiteSmoothTangentFrame period hPeriod) nu field
 
 end QuantitativeTrace
 
