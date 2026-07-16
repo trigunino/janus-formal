@@ -199,9 +199,14 @@ large-gauge mode shift, and have opposite PT orientations; both quarter
 holonomies are invertible. Each bounded Fredholm operator now also has its
 actual rank-one `Hom(det coker, det ker)` fiber with a nonzero Fourier frame,
 and the two endpoint fibers are related by an explicit bijective large-gauge
-transition. Their dependent union has no topology or bundle structure. This
-is still a normalized circle family, not the global Janus family, eta
-invariant or Quillen metric/connection.
+transition. Their dependent union is now topologized as a genuine complex
+line bundle with an
+explicit global trivialization, large-gauge clutching and quotient descent.
+In its chosen Fourier trivialization it also carries a positive Hermitian
+metric, a compatible flat connection, isometric parallel transport and
+unit-norm closed holonomy.  This remains a normalized circle/Fourier model,
+not an identification with the analytic Quillen/Bismut--Freed package of the
+global Janus family, its families-index curvature or eta invariant.
 
 ## 4. Topology and Z4
 
