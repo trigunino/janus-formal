@@ -76,6 +76,10 @@ NORMAL_PIN_MINUS_PRINCIPAL_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle.lean"
 )
+NORMAL_PIN_MINUS_ASSOCIATED_ROOTS_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusNormalPinMinusAssociatedRoots.lean"
+)
 COMPACT_QUOTIENT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusCompactQuotient.lean"
@@ -360,6 +364,21 @@ NORMAL_PIN_MINUS_PRINCIPAL_DECLARATIONS = (
     "theorem reduce_coordChange_to_orientation",
 )
 
+NORMAL_PIN_MINUS_ASSOCIATED_ROOTS_DECLARATIONS = (
+    "def pinMinusRootCharacter",
+    "theorem pinMinusRootCharacter_square",
+    "theorem pinMinusRootCharacter_opposite",
+    "def associatedRootPhaseAction",
+    "theorem associatedRootPhaseAction_free",
+    "theorem associatedRootPhaseAction_transitive",
+    "def fixedThroatAssociatedRootPhaseBundleCore",
+    "def fixedThroatAssociatedRootPhaseFiber_isFiberBundle",
+    "theorem associated_coordChange_from_principal",
+    "theorem one_loop_associatedRootPhase_coordChange",
+    "theorem associatedRootPhase_generator_square",
+    "theorem associatedRootPhase_generator_fourth",
+)
+
 GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatNormalGlobalAlgebraicEquivProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
@@ -367,6 +386,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
     "fixedThroatNormalZ4RootPTConjugationProved",
     "fixedThroatNormalPinMinusPrincipalBundleConstructed",
+    "fixedThroatNormalPinMinusAssociatedRootsProved",
 )
 
 COMPACT_QUOTIENT_DECLARATIONS = (
@@ -434,6 +454,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     normal_pin_minus_principal_gate = (
         repo_root / NORMAL_PIN_MINUS_PRINCIPAL_GATE
+    ).read_text(encoding="utf-8")
+    normal_pin_minus_associated_roots_gate = (
+        repo_root / NORMAL_PIN_MINUS_ASSOCIATED_ROOTS_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
     compact_quotient_gate = (repo_root / COMPACT_QUOTIENT_GATE).read_text(
@@ -716,6 +739,20 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     if facade.count(normal_pin_minus_import) != 1:
         raise AssertionError("D8 facade omits the normal Pin-minus principal gate")
+    for declaration in NORMAL_PIN_MINUS_ASSOCIATED_ROOTS_DECLARATIONS:
+        if declaration not in normal_pin_minus_associated_roots_gate:
+            raise AssertionError(
+                f"missing D8 associated normal-root declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", normal_pin_minus_associated_roots_gate
+    ):
+        raise AssertionError("proof placeholder found in D8 associated roots gate")
+    associated_roots_import = (
+        "Gates.P0EFTJanusMappingTorusNormalPinMinusAssociatedRoots"
+    )
+    if facade.count(associated_roots_import) != 1:
+        raise AssertionError("D8 facade omits the associated normal-root gate")
     for status in GLOBAL_NORMAL_AND_Z4_STATUSES:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(

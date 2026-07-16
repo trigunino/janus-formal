@@ -156,6 +156,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   construire le relèvement `SpinC` compatible ; le gate normal ne l'affirme pas.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
+  - [x] Prouver au niveau du relèvement normal que les deux caractères quart
+    associés au fibré principal `Pin⁻(1)` construisent de vrais
+    `FiberBundleCore`, reproduisent les deux cocycles racines, se carrent en
+    demi-tour d'orientation pour tout enroulement et sont échangés par PT.
+    Les classes du fibré tangent ambiant et le twist monopolaire restent ouverts.
 - [ ] Fixer les domaines géométriques sur lesquels métriques, racines,
   opérateurs et conditions au bord sont simultanément définis.
 
