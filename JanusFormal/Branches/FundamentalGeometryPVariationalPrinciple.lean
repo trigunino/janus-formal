@@ -78,7 +78,12 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusContinuousFieldSpaces4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDeckInvariantFields4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothFieldDescent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothPTFieldAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalInteraction4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixDiagonalGaugeNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixInteractionFrechetNoether
@@ -153,6 +158,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEChargeSelection
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPETensorPairingFreedom
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMappingTorusStructuredJetGroupoid
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantTopologicalBundle
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleQuillenMetricFlatConnection
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPVariationalPrinciple
@@ -275,6 +283,14 @@ structure ProgramStatus where
   paMappingTorusSmoothDeckInvariantFields4DProved : Prop
   paMappingTorusSmoothQuotientFieldDescent4DProved : Prop
   paEffectiveD8SmoothQuotientManifoldProved : Prop
+  paEffectiveD8SmoothPTDiffeomorphismProved : Prop
+  paEffectiveD8ThroatEmbeddingDifferentialFrontierProved : Prop
+  paEffectiveD8SmoothPTFieldAction4DProved : Prop
+  paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved : Prop
+  paEffectiveD8SmoothPrincipalRootField4DProved : Prop
+  paEffectiveD8SmoothDiagonalCandidateADensity4DProved : Prop
+  paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved : Prop
+  paEffectiveD8IntegratedDiagonalCandidateAPTExchange4DProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
@@ -312,6 +328,8 @@ structure ProgramStatus where
   paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved : Prop
   paCircleSpectralFunctionalCalculusHeatEqualityProved : Prop
   paCircleHeatNuclearTraceClassProved : Prop
+  paCircleDeterminantTopologicalVectorBundleProved : Prop
+  paCircleFourierHermitianMetricFlatConnectionProved : Prop
   paProgramPD7CircleHeatRegulatorBridgeProved : Prop
   paProgramPD7UnconditionalSphereSmallTimeBridgeProved : Prop
   paCandidateSignedChargeNewtonianBridgeProved : Prop
@@ -327,6 +345,7 @@ structure ProgramStatus where
   peContinuousRotationForcesFrobeniusPairing : Prop
   peSpinorAndGaugePairingsClassified : Prop
   peMultiplicitySpacesComputed : Prop
+  peEffectiveD8StructuredJetGroupoidFrontierProved : Prop
   invariantLocalFunctionalBasisClassified : Prop
   fullEulerLagrangeOperatorDerived : Prop
   nonlinearHelmholtzConditionsProved : Prop
@@ -458,6 +477,15 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paMappingTorusSmoothDeckInvariantFields4DProved /\
   s.paMappingTorusSmoothQuotientFieldDescent4DProved /\
   s.paEffectiveD8SmoothQuotientManifoldProved /\
+  s.paEffectiveD8SmoothPTDiffeomorphismProved /\
+  s.paEffectiveD8ThroatEmbeddingDifferentialFrontierProved /\
+  s.paEffectiveD8SmoothPTFieldAction4DProved /\
+  s.paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved /\
+  s.paEffectiveD8SmoothPrincipalRootField4DProved /\
+  s.paEffectiveD8SmoothDiagonalCandidateADensity4DProved /\
+  s.paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved /\
+  s.paEffectiveD8IntegratedDiagonalCandidateAPTExchange4DProved /\
+  s.peEffectiveD8StructuredJetGroupoidFrontierProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\
@@ -495,6 +523,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved /\
   s.paCircleSpectralFunctionalCalculusHeatEqualityProved /\
   s.paCircleHeatNuclearTraceClassProved /\
+  s.paCircleDeterminantTopologicalVectorBundleProved /\
+  s.paCircleFourierHermitianMetricFlatConnectionProved /\
   s.paProgramPD7CircleHeatRegulatorBridgeProved /\
   s.paProgramPD7UnconditionalSphereSmallTimeBridgeProved /\
   s.paCandidateSignedChargeNewtonianBridgeProved /\

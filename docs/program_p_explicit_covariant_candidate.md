@@ -697,15 +697,25 @@ Mathlib `FiberBundle`/`VectorBundle` structures, globally trivialized over the
 fundamental interval; the transition is a homeomorphism and descends over
 `AddCircle 1`. A separate regularized determinant section has continuous frame
 coordinate, vanishes at the crossings and is nonzero in the interior, so it is
-not confused with the nonvanishing Fourier frame. This is the topological line
-for the normalized circle sector, not a global Janus family index or a Quillen
-metric/Bismut--Freed connection.
+not confused with the nonvanishing Fourier frame. In the chosen circle/Fourier
+trivialization the line now also has an explicit Hermitian metric, isometric
+clutching and compatible flat connection, with unit holonomy and the section's
+covariant derivative computed. This is not yet a global Janus family index or
+an identification with the Quillen/Bismut--Freed connection.
 
 ## Acceptance ledger
 
 Implemented in the current finite, spectral or pointwise models:
 
 - explicit formulas for both interaction densities;
+- actual analytic D8 spacetime/throat quotients with analytic PT
+  diffeomorphisms, and a closed smooth throat inclusion with injective
+  differential and rank-one pointwise normal quotient;
+- exact involutive PT pullback/exchange on smooth quotient coefficient fields;
+- two independent smooth positive diagonal Lorentz metric fields on that same
+  quotient, their exact unique positive root, and a smooth Candidate-A density
+  using those very objects, with manifold chain rule and invariant integrated
+  action for every supplied PT-invariant Borel measure;
 - exact spectral weight reciprocity for all four nonzero eigenvalues;
 - exact metric-volume ratio for supplied nondegenerate square-root data and
   its identification with the spectral ratio on a supplied diagonalization;
@@ -922,6 +932,10 @@ Implemented in the current finite, spectral or pointwise models:
   PT-related D7 root towers, compactness of every fixed sphere-level heat block,
   and an explicit common-counterterm renormalized determinant certificate for
   both physical `Z4` roots;
+- a genuine complex determinant `VectorBundle` over the holonomy circle, with
+  explicit Fourier-frame Hermitian metric, compatible flat connection,
+  isometric clutching, unit holonomy and regularized-section covariant
+  derivative; no Quillen/Bismut--Freed identification is claimed;
 - an infinite monopole heat trace, an order-four Euler--Maclaurin formula with
   uniform integral remainder control, and an unconditional small-time proof of
   the exact spectral/universal product coefficients `a0/a2/a4`.

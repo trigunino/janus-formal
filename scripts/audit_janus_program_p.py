@@ -1439,6 +1439,42 @@ PROGRAM_P_GATES = {
             "def flatSmoothQuotientConfiguration",
         ),
     ),
+    "P0EFTJanusMappingTorusSmoothPTFieldAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptPullback",
+            "theorem ptPullback_involutive",
+            "def sectorExchangeEquiv",
+            "theorem ptMatched_iff_fixed_exchange",
+            "theorem matchedPair_ptMatched",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothPositiveDiagonalMetricPair",
+            "def plusLorentzMetricField",
+            "def minusLorentzMetricField",
+            "def principalRootField",
+            "theorem principalRootField_square",
+            "theorem principalRootField_exists_unique",
+            "def ptExchangeEquiv",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothDiagonalInteraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientPlusMetric_scalePairField",
+            "theorem ambientRootMatrix_scalePairField",
+            "def candidateADensity",
+            "theorem candidateADensity_mdifferentiable",
+            "theorem candidateAOuter_fderiv",
+            "theorem candidateADensity_mfderiv",
+            "theorem candidateADensity_ptExchange",
+            "def candidateAAction",
+            "theorem candidateAAction_ptExchange",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1811,6 +1847,15 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     if primary_facade.count(d8_smooth_quotient_import) != 1:
         raise AssertionError("Program P facade omits the D8 smooth quotient manifold")
+    for gate_import in (
+        "Gates.P0EFTJanusMappingTorusSmoothPTInvolution",
+        "Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding",
+        "Gates.P0EFTJanusMappingTorusStructuredJetGroupoid",
+        "Gates.P0EFTJanusCircleDeterminantTopologicalBundle",
+        "Gates.P0EFTJanusCircleQuillenMetricFlatConnection",
+    ):
+        if primary_facade.count(gate_import) != 1:
+            raise AssertionError(f"Program P facade omits dependency: {gate_import}")
     for status in (
         "paPTFlatProportionalActualVariationalStabilityProved",
         "paReducedTwoMetricActualBoundaryVariationProved",
@@ -1899,6 +1944,15 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paMappingTorusSmoothDeckInvariantFields4DProved",
         "paMappingTorusSmoothQuotientFieldDescent4DProved",
         "paEffectiveD8SmoothQuotientManifoldProved",
+        "paEffectiveD8SmoothPTDiffeomorphismProved",
+        "paEffectiveD8ThroatEmbeddingDifferentialFrontierProved",
+        "paEffectiveD8SmoothPTFieldAction4DProved",
+        "paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved",
+        "paEffectiveD8SmoothPrincipalRootField4DProved",
+        "paEffectiveD8SmoothDiagonalCandidateADensity4DProved",
+        "paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved",
+        "paEffectiveD8IntegratedDiagonalCandidateAPTExchange4DProved",
+        "peEffectiveD8StructuredJetGroupoidFrontierProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",
@@ -1936,6 +1990,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved",
         "paCircleSpectralFunctionalCalculusHeatEqualityProved",
         "paCircleHeatNuclearTraceClassProved",
+        "paCircleDeterminantTopologicalVectorBundleProved",
+        "paCircleFourierHermitianMetricFlatConnectionProved",
         "paProgramPD7CircleHeatRegulatorBridgeProved",
         "paProgramPD7UnconditionalSphereSmallTimeBridgeProved",
         "paCandidateSignedChargeNewtonianBridgeProved",

@@ -90,6 +90,8 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         de transition entre sections et sa compatibilité au groupoïde lisse.
       - [x] Installer effectivement les instances `ChartedSpace` et
         `IsManifold` sur les deux quotients et prouver la projection `C∞`.
+      - [x] Promouvoir le renversement du temps en difféomorphisme analytique
+        involutif sur les quotients effectifs 4D et du throat 3D.
 - [ ] Construire l'immersion du throat et sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
     niveau du cover et l'inclusion injective induite de son mapping torus dans
@@ -109,10 +111,14 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     - [x] Prouver que l'inclusion du throat au niveau cover est un embedding
       topologique `C⁰` et que l'inclusion quotient est `C⁰`.
     - [x] Prouver que l'inclusion injective du throat quotient est `C∞` pour
-      les atlas quotient effectivement installés ; l'immersion différentielle
-      et la propriété d'embedding lisse restent ouvertes.
+      les atlas quotient effectivement installés.
+    - [x] Prouver que cette inclusion est un embedding topologique fermé et que
+      sa différentielle de variété est injective en tout point.
+    - [x] Construire le quotient tangent normal ponctuel et prouver qu'il est
+      de rang réel un en tout point.
     - [ ] Promouvoir cette inclusion en embedding lisse et construire les
-      strates non-nulles/nulles/joints.
+      strates non-nulles/nulles/joints ; il manque encore un complément lisse
+      global pour l'instance `IsSmoothEmbedding` et les vraies strates.
 - [ ] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -217,6 +223,15 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     différentiabilité en chaque point, l'invariance exacte par échange et
     l'invariance du domaine ; covariance et régularité spatiale restent
     ouvertes hors de ce secteur.
+  - [x] Sur le même quotient D8 lisse, construire deux champs indépendants de
+    métriques lorentziennes diagonales positives, leur ratio et leur racine
+    principale `C∞`, avec carré exact et unicité ponctuelle positive.
+  - [x] Identifier exactement la métrique et la racine consommées par Candidate
+    A à ces mêmes champs globaux, sans conversion ni nouvelle racine ad hoc.
+  - [x] Prouver la régularité spatiale `C∞` de cette densité Candidate A et sa
+    règle de chaîne exacte via la différentielle de variété.
+  - [x] Prouver sa covariance PT/échange exacte sur ce secteur diagonal, puis
+    l'invariance de son action intégrée pour toute mesure Borel PT-invariante.
 
 **Acceptation** : une densité Candidate A globale, réelle et différentiable,
 avec dérivées métriques complètes sur un domaine invariant non vide.
@@ -251,15 +266,27 @@ par toute évolution admissible.
     - [x] Promouvoir cette descente de `C⁰` à `C∞` sur le vrai quotient lisse,
       construire le pullback inverse et obtenir une équivalence exacte entre
       champs lisses quotient et champs lisses deck-invariants du cover.
+    - [x] Construire le pullback PT involutif sur les vrais champs de
+      coefficients `C∞` du quotient, puis l'équivalence d'échange des deux
+      secteurs et une famille non vide de paires PT-matched.
+    - [x] Instancier sur ce même espace deux champs métriques diagonaux
+      lorentziens indépendants et leur champ racine principal, tous `C∞`.
     - [ ] Construire les espaces Sobolev/lisses, leurs traces et les conditions
-      au bord directement sur le quotient `C∞`; le gate lisse actuel est
-      intrinsèque au cover et sa descente n'est encore que `C⁰`.
+      au bord directement sur le quotient `C∞`; les espaces de champs lisses
+      sont désormais intrinsèques au quotient, mais Sobolev, traces et bord
+      restent ouverts.
 - [ ] Distinguer les variables indépendantes des champs induits.
 - [ ] Formaliser la chaîne de variation des champs induits sans double
   comptage des équations.
 - [ ] Définir l'action des difféomorphismes diagonaux et son générateur
   infinitésimal sur tous les secteurs.
 - [ ] Définir exactement la symétrie PT/échange et ses conditions au bord.
+  - [x] Définir cette symétrie comme une équivalence involutive exacte sur les
+    paires de champs de coefficients lisses du quotient 4D.
+  - [x] Identifier les paires PT-matched aux points fixes de cette équivalence
+    et prouver leur non-vacuité.
+  - [ ] Étendre l'action aux métriques générales, matière, jauge, ghosts,
+    auxiliaires et conditions au bord retenues.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
 - [x] Construire sur la carte plate continue `R^4` le jet holonomique d'un
   champ scalaire différentiable, sa ligne affine dans l'espace des fonctions
@@ -409,6 +436,12 @@ Hessien physique réellement descendu.
 - [ ] Définir la catégorie Janus et les bundles source/cible naturels.
 - [ ] Vérifier localité, régularité et réalisations holonomiques requises.
 - [ ] Construire le groupoïde différentiable des jets structurés.
+  - [x] Construire la catégorie et le groupoïde d'action effectifs de deck D8,
+    avec égalité dans le quotient caractérisée par l'existence d'une flèche.
+  - [x] Construire les familles dépendantes source/cible, leur transport et le
+    foncteur de représentation fourni vers les jets structurés.
+  - [x] Prouver que chaque composante source/cible du groupoïde de deck est un
+    difféomorphisme local sur les covers analytiques 4D et du throat 3D.
 - [ ] Déterminer sa stratification d'isotropie.
 - [ ] Construire les revêtements Spin de dimension pertinente.
 - [ ] Dériver les données Cech/SpinC depuis l'atlas réel, et non depuis des
@@ -417,6 +450,14 @@ Hessien physique réellement descendu.
 - [ ] Prouver l'accord des classes caractéristiques Spin/déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets
   d'ordre supérieur.
+  - [x] Prouver existence et unicité de la descente `C∞` de toute application
+    lisse invariante sous le deck vers le vrai quotient D8.
+  - [x] Descendre les familles holonomiques structurées d'ordre bas fournies et
+    préserver explicitement leur condition d'holonomie.
+  - [x] Descendre leur réduction fournie `(II,F)` et prouver sa lissité sur le
+    quotient effectif.
+  - [ ] Étendre aux jets d'ordre supérieur arbitraire, à la représentation
+    SpinC physique et à l'intégrabilité/extension à travers les isotropies.
 - [ ] Calculer l'algèbre des scalaires invariants au jet requis.
 - [ ] Calculer les modules globaux de pairings équivariants sur cette algèbre.
 - [ ] Prouver l'extension à travers les strates d'isotropie singulières.
@@ -532,8 +573,15 @@ champs et avec les mêmes conditions au bord.
   - [ ] Construire la ligne/gerbe globale et sa géométrie de
     Quillen/Bismut--Freed.
     - [x] La composante topologique de ligne est construite et globalement
-      trivialisée pour le secteur cercle borné normalisé ; métrique, connexion,
-      courbure et holonomie Quillen/Bismut--Freed restent ouvertes.
+      trivialisée pour le secteur cercle borné normalisé.
+    - [x] Sur cette ligne cercle/Fourier choisie, construire une métrique
+      hermitienne explicite et un clutching isométrique.
+    - [x] Construire une connexion plate compatible et calculer exactement son
+      transport et son holonomie unitaire `λ / |λ|`.
+    - [x] Calculer la norme et la dérivée covariante de la section déterminante
+      régularisée dans cette trivialisation.
+    - [ ] Identifier cette géométrie choisie à la connexion de
+      Quillen/Bismut--Freed d'une famille Janus globale et à son indice local.
 - [ ] Calculer l'anomalie locale dans le régulateur commun.
 - [ ] Calculer l'holonomie eta et l'anomalie globale.
 - [ ] Comparer le représentant eta à la classe d'inflow.
