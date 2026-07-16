@@ -1971,6 +1971,19 @@ PROGRAM_P_GATES = {
             "def independentFieldsLinearizedBRSTState",
         ),
     ),
+    "P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ordinaryGhostSelfBracket",
+            "theorem ordinaryGhostSelfBracket_eq_zero",
+            "def ordinaryQuadraticGhostBRST",
+            "theorem ordinaryQuadraticGhostBRST_eq_zero",
+            "theorem no_nontrivial_ordinaryQuadraticGhostBRST",
+            "def ordinaryQuadraticGhostBRSTSection",
+            "theorem ordinaryQuadraticGhostBRSTSection_toFun",
+            "theorem ordinary_ghost_nonlinear_brst_noGo",
+        ),
+    ),
     "P0EFTJanusMappingTorusGlobalLLWorldvolume4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2491,6 +2504,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence",
         "Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle",
         "Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence",
+        "Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification",
         "Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle",
         "Gates.P0EFTJanusMappingTorusNormalRootPTConjugation",
         "Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle",
@@ -2601,6 +2615,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GlobalNormalAlgebraicComparisonProved",
         "paEffectiveD8DifferentialNormalTopologicalBundleProved",
         "paEffectiveD8DifferentialNormalSmoothBundleEquivalenceProved",
+        "paEffectiveD8DifferentialNormalZeroNonzeroStratificationProved",
         "paEffectiveD8NormalZ4RootBundleProved",
         "paEffectiveD8NormalZ4RootPTConjugationProved",
         "paEffectiveD8NormalPinMinusPrincipalBundleProved",
@@ -2645,6 +2660,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8DiagonalDiffeomorphismActionProved",
         "paEffectiveD8AbelianGaugeBRST4DProved",
         "paEffectiveD8LinearizedDiffeomorphismBRST4DProved",
+        "paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved",
         "paEffectiveD8GlobalLLWorldvolumeActionProved",
         "paEffectiveD8GlobalLLVariation4DProved",
         "paEffectiveD8GlobalLLPTCovariance4DProved",
