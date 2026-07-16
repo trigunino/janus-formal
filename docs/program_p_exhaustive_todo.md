@@ -1018,6 +1018,12 @@ champs et avec les mêmes conditions au bord.
   - [ ] Passer à l'opérateur Janus global non borné, avec domaine commun et
     dépendance lisse sur le vrai espace de paramètres.
 - [ ] Relier cette famille au Hessien naturel de l'action Programme P.
+  - [x] Sur la somme directe bosonique réduite bulk scalaire + jonction Robin
+    + LL PT-symétrique, assembler l'opérateur de Jacobi bloc-diagonal, prouver
+    que son pairing est exactement la somme des trois Hessians naturels,
+    établir symétrie, bijectivité, noyau nul, image totale fermée et indice
+    zéro. Les blocs métrique, jauge, ghosts et la famille paramétrique restent
+    ouverts.
 - [ ] Instancier le complexe D9/BRST avec les vrais champs, ghosts, symboles,
   domaines et cohomologie de modes zéro.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
