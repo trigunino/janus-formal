@@ -458,6 +458,23 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinProjection_cechDefect",
     "def ambientSpinCechKernelDefect",
     "theorem ambientSpinCechDefect_eq_one_iff",
+    "def ambientSpinOverlapLiftDifference",
+    "theorem ambientSpinOverlapLiftDifference_eq_one_iff",
+    "def AmbientSpinOverlapLift.kernelTranslate",
+    "theorem AmbientSpinOverlapLift.kernelTranslate_one",
+    "theorem AmbientSpinOverlapLift.kernelTranslate_mul",
+    "theorem ambientSpinOverlapLiftDifference_kernelTranslate",
+    "theorem AmbientSpinOverlapLift.kernelTranslate_injective",
+    "def ambientSpinKernelConjugate",
+    "def ambientSpinKernelConjugationEquiv",
+    "theorem ambientSpinKernelConjugationEquiv_apply",
+    "def ambientSpinKernelConjugationRepresentation",
+    "theorem ambientSpinKernelConjugationRepresentation_apply",
+    "theorem ambientSpinKernelConjugate_eq_iff_commute",
+    "theorem ambientSpinKernelConjugationEquiv_eq_one_iff",
+    "theorem ambientSpinOverlapLiftDifference_common_kernelTranslate",
+    "theorem ambientSpinOverlapLiftDifference_transitive",
+    "theorem ambientSpinCechDefect_comp_eq_one",
 )
 
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
