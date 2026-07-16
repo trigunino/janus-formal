@@ -1122,6 +1122,7 @@ PROGRAM_P_GATES = {
             "def circleHeatNuclearCertificate",
             "def circleHeatNuclearTrace",
             "theorem circleHeatNuclearTrace_eq_operatorEvenHeatTrace",
+            "theorem circleHeatNuclearTrace_pt_eq_positive",
             "theorem circleHeatNuclearNormSum_le_trace",
         ),
     ),

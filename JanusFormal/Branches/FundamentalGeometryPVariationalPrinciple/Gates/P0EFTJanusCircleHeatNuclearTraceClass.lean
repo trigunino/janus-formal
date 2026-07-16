@@ -171,6 +171,17 @@ theorem circleHeatNuclearTrace_eq_operatorEvenHeatTrace
   intro mode
   exact (circleSpectralHeatMode_diagonal time fold twist mode).symm
 
+/-- The explicit nuclear traces of the PT-related circle sectors agree. -/
+theorem circleHeatNuclearTrace_pt_eq_positive
+    (time : HeatTime) (twist : CircleTwist) :
+    circleHeatNuclearTrace time .pt twist =
+      circleHeatNuclearTrace time .positive twist := by
+  rw [circleHeatNuclearTrace_eq_operatorEvenHeatTrace,
+    circleHeatNuclearTrace_eq_operatorEvenHeatTrace,
+    circleOperatorEvenHeatTrace_eq_evenHeatTrace,
+    circleOperatorEvenHeatTrace_eq_evenHeatTrace,
+    evenHeatTrace_pt_eq_positive]
+
 /-- The sum of rank-one operator norms is bounded by the positive spectral
 trace, the concrete trace-class estimate. -/
 theorem circleHeatNuclearNormSum_le_trace

@@ -983,6 +983,8 @@ champs et avec les mêmes conditions au bord.
     expansion en opérateurs Fourier de rang un, prouver la sommabilité de leurs
     normes opérateur, l'égalité en norme de leur somme avec le semi-groupe et
     l'égalité de la trace nucléaire avec la trace spectrale déjà construite.
+    - [x] Identifier directement la trace nucléaire PT à la trace nucléaire
+      positive correspondante.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai
   espace de paramètres.
   - [x] Construire une famille holomorphe finite-mode symétrique, Fredholm au
