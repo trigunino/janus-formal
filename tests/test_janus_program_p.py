@@ -114,6 +114,10 @@ def test_program_p_d8_normal_pin_minus_principal_bundle_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_local_frames_geometric_flux_and_ll_h1_riesz_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_abelian_brst_and_ll_pt_covariance_are_integrated() -> None:
     assert_program_p_gate_integrity()
 
