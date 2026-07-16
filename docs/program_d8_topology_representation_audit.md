@@ -60,6 +60,16 @@ The translation removes the fixed-point isotropy of `rho`.  The quotient is a
 **smooth mapping-torus candidate**, not an orbifold whose equator is a singular
 fixed locus.
 
+The atlas frontier is now explicit. The algebraic unit `S3` and equatorial
+`S2` are homeomorphic to Mathlib's standard analytic spheres, so both products
+with `R` carry analytic manifold structures. The covering-induced quotient
+atlases make the effective spacetime and fixed throat actual topological
+manifolds (`C0`); the quotient projection is a local homeomorphism, open,
+continuous, surjective and `C0`, while the cover throat inclusion is a
+topological embedding and `C0`. The remaining promotion to `C∞` is exactly the
+smooth-quotient compatibility theorem not supplied by Mathlib's current
+quotient-manifold instance; no smooth quotient overclaim is made.
+
 The word `orbifold` may still be used informally in the Janus literature, but it
 must not be used as a mathematical claim of local finite isotropy for this
 specific quotient.
@@ -109,14 +119,17 @@ throat complement, so the two quotient images coincide; PT preserves this
 complement. Explicit normalized affine paths to the two poles prove that both
 sign sides are path connected. The positive cover side is path connected and
 its continuous quotient image is exactly the effective throat complement;
-therefore that complement is path connected and connected.
+therefore that complement is path connected and connected. The two sign sides
+are moreover identified exactly with the connected components of the positive
+and negative poles in the sphere complement.
 
 The fixed-throat normal local system now has an effective topological model:
 the quotient by even windings maps to the original throat as a covering. The
 half-period translation descends to a continuous, involutive, fixed-point-free
 deck map; each fiber is equivalent to `ZMod 2`. Pulling the associated normal
 line back to this cover yields an explicit homeomorphism with the product by
-`R`. No smooth atlas, differential normal bundle or `VectorBundle` is asserted.
+`R`. The covers now carry analytic atlases and their quotients topological
+atlases, but no differential normal bundle or smooth `VectorBundle` is asserted.
 
 Lean theorems:
 
@@ -137,6 +150,8 @@ quotient_images_of_sides_coincide
 reflectedSpherePT_mem_effective_complement_iff
 positiveSphereSide_isPathConnected
 negativeSphereSide_isPathConnected
+connectedComponentIn_throat_complement_positivePole
+connectedComponentIn_throat_complement_negativePole
 positiveCoverSide_isPathConnected
 effectiveThroat_complement_isPathConnected
 effectiveThroat_complement_isConnected
@@ -342,12 +357,12 @@ selected.
 
 ## 10. Terminal theorem queue
 
-1. Prove proper discontinuity and construct the quotient manifold.
+1. Promote the constructed topological quotient manifold atlas to `C∞`.
 2. Prove the mapping-torus fibration and `pi1(J)=Z` in Lean.
 3. Promote the constructed topological normal-line quotient and its trivial
    even-cover pullback to a smooth differential `VectorBundle`.
-4. Reuse the path-connected sides and connected quotient complement in the
-   smooth throat embedding and boundary analysis.
+4. Reuse the identified connected components and connected quotient complement
+   in the smooth throat embedding and boundary analysis.
 5. Classify flat `Z4` lifts of the orientation local system globally.
 6. Fix the Pin reflection convention and derive the physical PT square.
 7. Formalize the theorem that complex irreducible cyclic representations are

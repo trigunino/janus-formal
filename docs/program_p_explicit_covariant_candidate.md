@@ -282,9 +282,13 @@ zero-free symbol range is closed, and the zero mode is a bounded projection.
 Because the Lorentz--Gram symbol has order one, a further gate equips the
 source with its exact one-order graph-Sobolev weight. The normalized symbol is
 then a bounded contraction into the target weighted metric space, and an exact
-encoding theorem identifies it with the unnormalized physical symbol. This is
-a periodic coefficient-scale theorem, not yet a Sobolev-section theorem on the
-global mapping-torus bundles or their boundary conditions.
+encoding theorem identifies it with the unnormalized physical symbol. On the
+same completed spaces, the target identity pairing is a continuous positive
+self-adjoint Hessian and its genuine adjoint pullback `J†J` is symmetric,
+nonnegative and positive definite after the finite zero-mode kernel is removed.
+This is a periodic coefficient-scale theorem, not yet the Hessian of the
+nonlinear global action or a Sobolev-section theorem on the mapping-torus
+bundles and their boundary conditions.
 
 ## The two M30 density slots
 
@@ -358,6 +362,17 @@ potential. The resulting Frechet covector and its value on two independent
 symmetric metric variations are explicit, and the affine variation curve
 remains on the exact root-square branch eventually. This closes the local
 Minkowski chain, not the global two-sector functional variation.
+
+The local result is no longer restricted to the base point. On every pair in
+the explicit IFT target domain, the quantitative inverse-chart estimate keeps
+the Sylvester map within a strict Neumann neighborhood of twice the identity.
+This proves Sylvester invertibility and differentiability of the selected root
+throughout the domain, then differentiates the determinant measure, complete
+spectral potential and Candidate-A density there. Intersecting with the
+exchanged domain gives a nonempty open PT-paired chart on which both sector
+densities are differentiable and their sum is exactly invariant under metric
+exchange. The chart remains local to the identity root; it is not the global
+causal-compatible Lorentz domain.
 
 A separate two-dimensional null-coordinate family now supplies independently
 defined symmetric nondegenerate Lorentz metrics whose relative matrix is a
@@ -889,7 +904,7 @@ is used in its definition.
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
-| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, coordinate off-diagonal boost orbit still conjugate to its diagonal seed, an independent non-diagonalizable Lorentz Jordan family, a continuous three-parameter two-dimensional Cayley--Hamilton root chart with an explicit bijective Sylvester inverse, an unconditional local relative-root branch on an explicit open IFT target domain with full independent-pair derivative, continuity, exact square and uniqueness within the chart source around the Minkowski diagonal, complete local Minkowski Candidate-A variation composing determinant measure, root and spectral potential, conditional gluing and automatic inverse-Sylvester differentiation along any supplied continuous Sylvester-regular four-dimensional root lift, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | extension of the Minkowski-local branch, or construction of a compatible lift with proved Sylvester regularity, to a unique global causal-compatible four-dimensional Lorentz domain, plus full metric functional variation there |
+| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, coordinate off-diagonal boost orbit still conjugate to its diagonal seed, an independent non-diagonalizable Lorentz Jordan family, a continuous three-parameter two-dimensional Cayley--Hamilton root chart with an explicit bijective Sylvester inverse, an unconditional relative-root branch on an explicit open IFT target domain with continuity, exact square, chart-source uniqueness and pointwise Sylvester invertibility/differentiability everywhere, complete Candidate-A determinant/root/potential variation throughout that domain and on its PT-paired exchanged intersection, conditional gluing along any supplied continuous Sylvester-regular four-dimensional root lift, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | extension of the identity-root chart, or construction of a compatible lift with proved Sylvester regularity, to a unique global causal-compatible four-dimensional Lorentz domain, plus global functional variation there |
 | 2. Fields/induced/gauge | independent field choice, parametrized global configuration package instantiated on the same effective D8 quotient bases/PT actions/equivariant throat inclusion; concrete continuity predicates for every independent, induced and LL coordinate; a nonempty continuous PT-matched Minkowski/identity-root configuration on those same objects; simultaneous-frame invariance/counterexample, constructed matrix covector, invariant finite-site action, actual affine 1D and local affine `R^4` density pullbacks, independent scalar first-jet coordinate slots, a pointwise 4D scalar metric variation with one determinant measure/exact inverse and explicit symmetric stress tensor, its integrated one/two-sector lift on an arbitrary measured base under explicit contracts with exchange invariance, a continuous flat-chart holonomic scalar variation with `p = d phi`, its simultaneous metric/holonomic extension integrated under an explicit dominated contract with exact stress-plus-field split and conditional weak Euler pairing, a finite periodic holonomic scalar Euler model, and its positive one-dimensional metric version with induced `sqrt(g)` measure, inverse weight and action/variation/Euler/stationarity covariance under finite-site bijections | smooth manifold/tensor and Sobolev or smooth function spaces with boundary conditions, global root map, stationarity/stability, discharge of the integration contract and derivation of zero flux from boundary data, covariant matter PDE/stress conservation, arbitrary spacetime diagonal diffeomorphisms and covariant density law |
 | 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, actual threefold integration of constant EH/GHY densities, exact finite-box Stokes for variable fluxes and six faces with actual matched-action derivative, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure | arbitrary-coordinate global embedding and variable-field continuum flux, physical GHY/null/joint/corner completion, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, coefficientwise exactness for finite nonzero Fourier families, and unique normalized decomposition with a finite zero-mode cohomology residual | boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |

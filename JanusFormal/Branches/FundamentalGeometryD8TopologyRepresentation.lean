@@ -20,6 +20,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusOrientationDoubleCover
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementSides
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementConnected
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothAtlasFrontier
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -57,6 +58,11 @@ structure ProgramStatus where
   positiveCoverSidePathConnectedProved : Prop
   effectiveThroatComplementPathConnectedProved : Prop
   effectiveThroatComplementConnectedProved : Prop
+  algebraicSphereCoversAnalyticManifoldsProved : Prop
+  throatCoverTopologicalEmbeddingAndC0Proved : Prop
+  effectiveMappingTorusTopologicalManifoldProved : Prop
+  effectiveThroatTopologicalManifoldProved : Prop
+  quotientProjectionLocalHomeomorphAndC0Proved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -126,6 +132,14 @@ def effectiveThroatComplementConnectedCoreClosed (s : ProgramStatus) : Prop :=
   s.effectiveThroatComplementPathConnectedProved /\
   s.effectiveThroatComplementConnectedProved
 
+/-- Analytic cover atlases and the honest `C⁰` quotient-manifold frontier. -/
+def mappingTorusSmoothAtlasFrontierCoreClosed (s : ProgramStatus) : Prop :=
+  s.algebraicSphereCoversAnalyticManifoldsProved /\
+  s.throatCoverTopologicalEmbeddingAndC0Proved /\
+  s.effectiveMappingTorusTopologicalManifoldProved /\
+  s.effectiveThroatTopologicalManifoldProved /\
+  s.quotientProjectionLocalHomeomorphAndC0Proved
+
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveTopologicalMappingTorusCoreClosed s /\
@@ -134,6 +148,7 @@ def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveThroatOrientationDoubleCoverCoreClosed s /\
   effectiveThroatComplementSidesCoreClosed s /\
   effectiveThroatComplementConnectedCoreClosed s /\
+  mappingTorusSmoothAtlasFrontierCoreClosed s /\
   s.nonzeroTranslationDerived /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\

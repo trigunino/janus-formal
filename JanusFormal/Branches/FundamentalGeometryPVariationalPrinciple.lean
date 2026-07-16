@@ -91,6 +91,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiRelativeRootBranch4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiRelativeRootOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiInteractionDensityVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiInteractionDensityOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalInteractionDensityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDiagonalReparametrizationDensityNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFourDimensionalDensityLieDerivativeNoether
@@ -126,6 +127,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLatticeFourierSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusWeightedL2LatticeSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevLatticeLorentzGram
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevPullbackHessian
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
@@ -215,6 +217,7 @@ structure ProgramStatus where
   paUnconditionalMinkowskiDiagonalLocalRelativeRootBranch4DProved : Prop
   paExplicitMinkowskiRelativeRootOpenDomain4DProved : Prop
   paMinkowskiCandidateAInteractionDensityVariation4DProved : Prop
+  paMinkowskiCandidateAInteractionOpenDomain4DProved : Prop
   paCoDiagonalInteractionDensityFrechetProved : Prop
   paDiagonalReparametrizationDensityPullbackNoetherProved : Prop
   paFourDimensionalDensityLieDerivativeNoetherProved : Prop
@@ -265,6 +268,7 @@ structure ProgramStatus where
   paCountableLatticeFourierSaintVenantExactnessProved : Prop
   paWeightedL2LatticeSaintVenantExactnessProved : Prop
   paShiftedSobolevLatticeLorentzGramProved : Prop
+  paShiftedSobolevPullbackHessianProved : Prop
   paNullExpansionCountertermVariationProved : Prop
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
@@ -385,6 +389,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paUnconditionalMinkowskiDiagonalLocalRelativeRootBranch4DProved /\
   s.paExplicitMinkowskiRelativeRootOpenDomain4DProved /\
   s.paMinkowskiCandidateAInteractionDensityVariation4DProved /\
+  s.paMinkowskiCandidateAInteractionOpenDomain4DProved /\
   s.paCoDiagonalInteractionDensityFrechetProved /\
   s.paDiagonalReparametrizationDensityPullbackNoetherProved /\
   s.paFourDimensionalDensityLieDerivativeNoetherProved /\
@@ -435,6 +440,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCountableLatticeFourierSaintVenantExactnessProved /\
   s.paWeightedL2LatticeSaintVenantExactnessProved /\
   s.paShiftedSobolevLatticeLorentzGramProved /\
+  s.paShiftedSobolevPullbackHessianProved /\
   s.paNullExpansionCountertermVariationProved /\
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\

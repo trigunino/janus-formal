@@ -81,6 +81,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     du temps, prouver son involutivité et l'instancier sur le throat fixe.
   - [ ] Promouvoir cet objet en variété lisse (`IsManifold` et atlas lisse)
     et ajouter toutes les décorations physiques globales.
+    - [x] Donner aux covers concrets `S³ × ℝ` et `S² × ℝ` leurs atlas
+      analytiques, puis prouver que les deux quotients sont des variétés
+      topologiques `C⁰` et que la projection de covering est `C⁰`.
+    - [ ] Promouvoir l'atlas quotient et la projection de `C⁰` à `C∞`.
 - [ ] Construire l'immersion du throat et sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
     niveau du cover et l'inclusion injective induite de son mapping torus dans
@@ -97,6 +101,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     quotient est lui-même connexe par arcs, donc connexe.
   - [ ] Prouver l'immersion/embedding lisse et la stratification
     non-nulle/null/joint.
+    - [x] Prouver que l'inclusion du throat au niveau cover est un embedding
+      topologique `C⁰` et que l'inclusion quotient est `C⁰`.
+    - [ ] Promouvoir cette inclusion en embedding lisse et construire les
+      strates non-nulles/nulles/joints.
 - [ ] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -136,6 +144,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [ ] Étendre cette branche locale en une sélection principale, causale et
     globale sur le domaine admissible.
 - [ ] Prouver existence, unicité et régularité de la branche.
+  - [x] Sur le domaine ouvert IFT explicite, extraire la borne quantitative de
+    l'inverse locale, prouver l'inversibilité de Sylvester par série de Neumann
+    et obtenir la différentiabilité de la racine en chaque point du domaine.
 - [ ] Inclure les points diagonalisables et les blocs de Jordan admissibles.
 - [ ] Prouver l'inversibilité globale de l'opérateur de Sylvester pertinent.
 - [ ] Recoller les branches IFT locales sur tout le domaine admissible.
@@ -156,11 +167,15 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   `sum beta_n e_n(X)`.
   - [x] La dériver réellement après composition avec la branche de racine pour
     deux variations métriques indépendantes au point diagonal de Minkowski.
+  - [x] Étendre cette dérivée à chaque point du domaine ouvert IFT explicite.
 - [ ] Dériver la variation de `sqrt(|det g_plus|)` et la densité croisée
   complète dans les deux secteurs.
   - [x] Dériver la mesure plus, la racine et le potentiel dans une même chaîne
     de Fréchet, puis la variation directionnelle Candidate A complète au point
     diagonal de Minkowski.
+  - [x] Étendre la chaîne complète à tout le domaine ouvert, construire le
+    domaine PT où les deux ordres sont admissibles, dériver les deux secteurs
+    et prouver l'invariance de leur somme par échange.
   - [ ] Étendre cette chaîne au domaine lorentzien global et au second secteur.
 - [ ] Prouver covariance, réalité, échange PT et régularité spatiale de la
   densité obtenue.
@@ -309,7 +324,13 @@ non contrôlé et produit les conditions de jonction annoncées.
 - [ ] Prouver fermeture de l'image, propriétés de Fredholm ou identifier
   précisément leur échec.
 - [ ] Construire le pairing/Hessien cible `H`, continu et auto-adjoint.
+  - [x] Sur l'échelle de coefficients Sobolev décalée, prendre le Hessien cible
+    identité, continu, auto-adjoint et positif.
 - [ ] Instancier le pullback `Jᵀ H J` et la seconde variation complète.
+  - [x] Construire réellement `J† H J` comme opérateur continu, prouver la
+    formule de pairing, symétrie, positivité, noyau égal à celui de `J` et
+    positivité définie après retrait du zéro-mode.
+  - [ ] Identifier ce pullback au Hessien de la même action Janus globale.
 - [ ] Construire le quotient physique topologique/lisse par `ker J` ou
   `im R`, pas seulement le quotient algébrique.
 - [ ] Prouver continuité et non-dégénérescence de la forme descendue sur le
@@ -400,6 +421,9 @@ champs et avec les mêmes conditions au bord.
     perturbation scalaire bornée exacte, que la famille complexifiée est
     entière sur ce domaine commun et construire explicitement la résolvante
     compacte `(D-i)⁻¹`.
+  - [x] Munir ce domaine de sa norme de graphe complète, obtenir l'opérateur
+    borné Fredholm, identifier noyau et conoyau finis, prouver l'indice zéro et
+    construire la fibre déterminante de rang un avec une section non nulle.
   - [ ] Passer à l'opérateur Janus global non borné, avec domaine commun et
     dépendance lisse sur le vrai espace de paramètres.
 - [ ] Relier cette famille au Hessien naturel de l'action Programme P.
@@ -417,6 +441,8 @@ champs et avec les mêmes conditions au bord.
   - [x] Construire, au cutoff fini, la section induite sur la puissance
     extérieure maximale et prouver que sa fibre de ligne déterminante est de
     rang un.
+  - [x] Construire aussi la fibre déterminante de l'opérateur infini du cercle
+    sur norme de graphe, avec noyau/conoyau explicites et section non nulle.
   - [ ] Construire la ligne/gerbe globale et sa géométrie de
     Quillen/Bismut--Freed.
 - [ ] Calculer l'anomalie locale dans le régulateur commun.

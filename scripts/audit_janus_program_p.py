@@ -1090,6 +1090,22 @@ PROGRAM_P_GATES = {
             "theorem eventually_minkowskiMetricPairCurve_root_square",
         ),
     ),
+    "P0EFTJanusMinkowskiInteractionDensityOpenDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem identityRootSource_approximates",
+            "theorem sylvesterMap_isUnit_on_identityRootSource",
+            "theorem minkowskiRelativeRootChart_hasFDerivAt_on_openDomain",
+            "theorem minkowskiRelativeRootBranch_differentiableAt_on_openDomain",
+            "theorem minkowskiPlusVolume_hasFDerivAt_on_openDomain",
+            "theorem minkowskiRootPotential_hasFDerivAt_on_openDomain",
+            "theorem minkowskiCandidateAInteractionDensity_hasFDerivAt_on_openDomain",
+            "theorem ptPairedRootOpenDomain_isOpen",
+            "theorem exchangedCandidateAInteractionDensity_hasFDerivAt",
+            "theorem ptPairedCandidateAInteractionDensity_hasFDerivAt",
+            "theorem ptPairedCandidateAInteractionDensity_exchange",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1377,9 +1393,24 @@ PROGRAM_P_GATES = {
             "def symbolShiftedSourceWeight",
             "def shiftedSobolevLorentzGram",
             "theorem shiftedSobolevLorentzGram_opNorm_le",
+            "theorem shiftedSobolevLorentzGram_eq_zero_iff",
             "theorem normalizedLorentzGramFibers_encode_eq_weightedMetricCoordinates",
             "theorem shiftedSobolevLorentzGram_encode_eq",
             "theorem shifted_sobolev_lattice_lorentzGram_gate",
+        ),
+    ),
+    "P0EFTJanusShiftedSobolevPullbackHessian.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def targetIdentityHessian",
+            "theorem targetIdentityHessian_selfAdjoint_pairing",
+            "def shiftedPullbackHessian",
+            "theorem shiftedPullbackHessian_pairing",
+            "theorem shiftedPullbackHessian_symmetric",
+            "theorem shiftedPullbackHessian_nonnegative",
+            "theorem shiftedPullbackHessian_apply_eq_zero_iff_zeroModeSupport",
+            "theorem shiftedPullbackHessian_positiveDefinite_of_zeroModeFree",
+            "theorem shifted_pullback_hessian_gate",
         ),
     ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
@@ -1456,6 +1487,21 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
             "theorem circleShiftIResolvent_right_inverse",
             "theorem circleShiftIResolvent_left_inverse",
             "theorem circleShiftIResolvent_compact",
+        ),
+    ),
+    "P0EFTJanusCircleGraphFredholmIndex.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "def circleGraphDiracCLM",
+            "theorem circleGraphDirac_range_eq_zeroRestriction_ker",
+            "theorem circleGraphDirac_range_isClosed",
+            "theorem circleGraphDirac_fredholm_criterion",
+            "theorem circleGraphKernel_finrank_eq_zeroModes",
+            "theorem circleGraphCokernel_finrank_eq_zeroModes",
+            "theorem circleGraphFredholmIndex_zero",
+            "theorem circleGraphDeterminantLine_finrank_one",
+            "theorem circleGraphDeterminantSection_injective",
+            "theorem circleGraphDeterminantSection_ne_zero",
         ),
     ),
 }
@@ -1537,7 +1583,11 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         if gate_import not in facade:
             raise AssertionError(f"D10 facade omits {filename}")
 
-        status = "circleHolonomyCommonDomainCompactResolventProved"
+        status = (
+            "circleGraphFredholmIndexZeroDeterminantLineProved"
+            if filename == "P0EFTJanusCircleGraphFredholmIndex.lean"
+            else "circleHolonomyCommonDomainCompactResolventProved"
+        )
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:
             raise AssertionError(f"D10 facade omits status: {status}")
 
@@ -1585,6 +1635,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paUnconditionalMinkowskiDiagonalLocalRelativeRootBranch4DProved",
         "paExplicitMinkowskiRelativeRootOpenDomain4DProved",
         "paMinkowskiCandidateAInteractionDensityVariation4DProved",
+        "paMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
@@ -1635,6 +1686,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCountableLatticeFourierSaintVenantExactnessProved",
         "paWeightedL2LatticeSaintVenantExactnessProved",
         "paShiftedSobolevLatticeLorentzGramProved",
+        "paShiftedSobolevPullbackHessianProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",

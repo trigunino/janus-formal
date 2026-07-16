@@ -102,6 +102,54 @@ theorem normalizedLorentzGramFiber_norm_le
     _ = ‖potential‖ := by
       rw [← mul_assoc, inv_mul_cancel₀ hScale.ne', one_mul]
 
+theorem rawLorentzGramFiber_eq_zero_iff
+    (mode : LatticeMode) (hMode : mode ≠ 0)
+    (potential : PotentialFiber) :
+    rawLorentzGramFiber mode potential = 0 ↔ potential = 0 := by
+  constructor
+  · intro hRaw
+    have hSymbol :
+        lorentzGramSymbol (latticeFrequency mode)
+          (fun index => potential index) = 0 := by
+      funext row column
+      have hEntry := congrArg
+        (fun fiber : MetricFiber => fiber (row, column)) hRaw
+      simpa [rawLorentzGramFiber, lorentzGramSymbol] using hEntry
+    have hEqual :
+        lorentzGramSymbol (latticeFrequency mode)
+            (fun index => potential index) =
+          lorentzGramSymbol (latticeFrequency mode) 0 := by
+      calc
+        lorentzGramSymbol (latticeFrequency mode)
+            (fun index => potential index) = 0 := hSymbol
+        _ = lorentzGramSymbol (latticeFrequency mode) 0 := by
+          funext row column
+          simp [lorentzGramSymbol, strainSymbol, lorentzLower]
+    have hPotential := lorentzGramSymbol_injective
+      (latticeFrequency mode) (latticeFrequency_ne_zero hMode) hEqual
+    ext index
+    exact congrFun hPotential index
+  · rintro rfl
+    ext pair
+    simp [rawLorentzGramFiber, strainSymbol, lorentzLower]
+
+theorem normalizedLorentzGramFiber_eq_zero_iff
+    (mode : LatticeMode) (hMode : mode ≠ 0)
+    (potential : PotentialFiber) :
+    normalizedLorentzGramFiberCLM mode potential = 0 ↔ potential = 0 := by
+  rw [normalizedLorentzGramFiberCLM, smul_apply]
+  constructor
+  · intro hNormalized
+    apply (rawLorentzGramFiber_eq_zero_iff mode hMode potential).mp
+    exact (smul_eq_zero.mp hNormalized).resolve_left
+      (inv_ne_zero (symbolGraphScale_pos mode).ne')
+  · intro hPotential
+    have hRaw : rawLorentzGramFiber mode potential = 0 :=
+      (rawLorentzGramFiber_eq_zero_iff mode hMode potential).2 hPotential
+    change (symbolGraphScale mode)⁻¹ •
+      rawLorentzGramFiber mode potential = 0
+    rw [hRaw, smul_zero]
+
 /-- Target weight and its one-symbol-order source weight. -/
 def symbolShiftedSourceWeight
     (targetWeight : LatticeMode → Real) (mode : LatticeMode) : Real :=
@@ -181,6 +229,33 @@ theorem shiftedSobolevLorentzGram_opNorm_le
   unfold shiftedSobolevLorentzGram
   apply LinearMap.mkContinuous_norm_le
   norm_num
+
+/-- The only kernel of the shifted symbol is the finite-dimensional zero
+Fourier mode. -/
+theorem shiftedSobolevLorentzGram_eq_zero_iff
+    (targetWeight : LatticeMode → Real)
+    (potential : ShiftedPotentialHilbert targetWeight) :
+    shiftedSobolevLorentzGram targetWeight potential = 0 ↔
+      ∀ mode : LatticeMode, mode ≠ 0 → potential mode = 0 := by
+  constructor
+  · intro hSymbol mode hMode
+    have hFiber := congrArg
+      (fun tensor : SobolevMetricHilbert targetWeight => tensor mode) hSymbol
+    change normalizedLorentzGramFiberCLM mode (potential mode) = 0 at hFiber
+    exact (normalizedLorentzGramFiber_eq_zero_iff mode hMode
+      (potential mode)).mp hFiber
+  · intro hPotential
+    apply Subtype.ext
+    funext mode
+    change normalizedLorentzGramFiberCLM mode (potential mode) = 0
+    by_cases hMode : mode = 0
+    · subst mode
+      ext pair
+      simp [normalizedLorentzGramFiberCLM, rawLorentzGramFiberCLM,
+        rawLorentzGramFiberLinearMap, rawLorentzGramFiber, strainSymbol,
+        lorentzLower, latticeFrequency]
+    · rw [hPotential mode hMode]
+      simp
 
 /-- Exact coefficient bridge: the normalized shifted operator is the physical
 Lorentz--Gram symbol written in source and target weighted coordinates. -/

@@ -177,6 +177,16 @@ are proved. This remains a finite-mode milestone, not the global unbounded
 Janus Fredholm family, physical Hessian, eta holonomy or Quillen/Bismut--Freed
 package.
 
+On the normalized infinite circle, the common maximal domain is now independent
+of holonomy, holonomy changes are exact bounded scalar perturbations, the
+complexified family is entire on that common domain and `(D-i)⁻¹` is explicitly
+compact. Equipping the closed graph with its inherited complete norm turns the
+same operator into a bounded Fredholm map: its range is closed, kernel and
+cokernel are the same finite zero-mode space, the index is zero, and the
+top-exterior determinant fiber has rank one with a nonzero section. This is
+still a pointwise circle family, not the global Janus family, eta invariant or
+Quillen metric/connection.
+
 ## 4. Topology and Z4
 
 For
@@ -190,8 +200,13 @@ discontinuous topological action. Its effective orbit quotient, covering
 projection and charted-space structure are explicit; the equatorial `S2`
 induces a continuous injective map of quotients. Cover-coordinate time
 reversal descends to continuous involutions on the effective spacetime and
-fixed throat, and that same quotient inclusion is PT-equivariant. This is not yet an
-`IsManifold` or smooth-atlas theorem, nor a null/joint stratification. The
+fixed throat, and that same quotient inclusion is PT-equivariant. The algebraic
+`S³` and equatorial `S²` are now homeomorphic to Mathlib's standard analytic
+spheres; their products with `ℝ` carry explicit analytic cover atlases. The
+effective spacetime and throat quotients are actual `C⁰` manifolds, their
+covering projection is a local homeomorphism and `C⁰`, and the throat cover
+inclusion is a topological embedding and `C⁰`. Promotion of the quotient atlas,
+projection and inclusion to `C∞` remains open, as does null/joint stratification. The
 expected fundamental group is `Z`, not `Z4`.
 
 The complement of the concrete equatorial `S2` in the unit `S3` is now proved
@@ -199,8 +214,9 @@ to be the disjoint union of two nonempty open sign sides. Reflection and one
 deck iterate exchange them. In the effective mapping torus, the image of
 either side is exactly the full throat complement, the two images coincide,
 and PT preserves that complement. Explicit normalized affine paths prove both
-sign sides path connected. The positive cover side and its quotient image are
-path connected, so the effective throat complement is path connected and
+sign sides path connected and identify them exactly as the connected
+components of the two poles. The positive cover side and its quotient image
+are path connected, so the effective throat complement is path connected and
 connected.
 
 On the fixed throat, the even-winding quotient now gives an actual
@@ -321,6 +337,14 @@ The exhaustive remaining-work checklist is
   matrix spectral potential are composed by the Frechet product/chain rules,
   with the resulting covector expanded explicitly. This remains pointwise and
   local; it is not the global two-sector functional variation;
+- **T** throughout the entire explicit Minkowski IFT target domain, the
+  inverse-chart estimate gives a uniform local Sylvester perturbation bound;
+  a Neumann correction proves its invertibility at every selected root. The
+  root, determinant measure, full spectral potential and Candidate-A density
+  therefore have actual Frechet derivatives at every domain point. On the
+  open intersection stable under metric-pair exchange, both sector densities
+  are differentiable and their sum is exactly exchange invariant. This is the
+  complete local-chart two-sector variation, not a global causal root domain;
 - **T/C** one symmetric nondegenerate `4 x 4` metric now supplies both the
   exact inverse and `sqrt(|det g|)` in a scalar-density curve on an open
   fixed-sign component; its actual pointwise variation is the pairing with an
@@ -351,7 +375,10 @@ The exhaustive remaining-work checklist is
   zero-mode obstruction stays at the same weighted scale. A second completed
   coefficient model adds the exact graph-Sobolev weight of one symbol order:
   the normalized Lorentz--Gram map is a Hilbert-space contraction and equals
-  the physical symbol exactly after source/target weighted encoding.
+  the physical symbol exactly after source/target weighted encoding. The
+  canonical target identity Hessian is continuous, self-adjoint and positive;
+  its actual pullback `J†J` is symmetric and nonnegative, has precisely the
+  zero Fourier mode as kernel, and is positive definite after removing it.
   Identification with global Sobolev bundle sections, Fourier-series
   differentiation, global PDE and boundary exactness remain open;
 - **T/C/N** typed non-null, null and joint gravitational slots plus a generic

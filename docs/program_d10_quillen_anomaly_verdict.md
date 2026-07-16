@@ -236,6 +236,7 @@ Modules:
 P0EFTJanusAnomalyObjectDimensionParity.lean
 P0EFTJanusAnomalyTransgressionInflow.lean
 P0EFTJanusCircleHolonomyCommonDomainCompactResolvent.lean
+P0EFTJanusCircleGraphFredholmIndex.lean
 P0EFTJanusD2ModeFamilyInflowBridge.lean
 P0EFTJanusFiniteModeFredholmDeterminantLine.lean
 P0EFTJanusPartitionFunctionSectionNoGo.lean
@@ -250,6 +251,9 @@ The formal layer encodes
   fixed fold, exact bounded scalar holonomy perturbations, entire dependence
   on complexified holonomy, finite spectral windows and an explicitly
   constructed compact two-sided resolvent `(D-i)⁻¹`;
+- its complete graph-norm realization as a bounded Fredholm operator, with
+  closed range, finite kernel and cokernel of equal rank, index zero, rank-one
+  top-exterior determinant fiber and a nonzero induced section;
 - a concrete holomorphic symmetric finite-mode Dirac family, algebraic
   Fredholmness of index zero, its induced top-exterior determinant-line
   section, rank-one fiber, PT covariance and invertibility at both quarter
@@ -262,10 +266,11 @@ The formal layer encodes
 - the two PT-conjugate normal-root phases;
 - the exact closure matrix for a predictive Janus potential.
 
-The circle result supplies a genuine common unbounded domain and compact
-resolvent, while the finite-mode determinant line is an actual one-dimensional
-exterior-power construction. Neither is yet the global unbounded Janus
-operator family or its Quillen determinant line. They supply no Quillen metric,
+The circle result supplies a genuine common unbounded domain, compact
+resolvent, Fredholm graph realization and one-dimensional determinant fiber;
+the finite-mode determinant line is a separate holomorphic cutoff model.
+Neither is yet the global unbounded Janus operator family or a smooth Quillen
+line bundle over its full parameter space. They supply no Quillen metric,
 Bismut--Freed connection, eta holonomy, physical Hessian or complete
 field/ghost regulator.
 
