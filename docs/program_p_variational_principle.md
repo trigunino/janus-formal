@@ -622,9 +622,14 @@ on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
 continuity theorem. Its independent variation also projects to the D9 slots
 actually supplied by the diagonal package, while a literal finite D10
-product-mode truncation uses the same period and exact PT-regulator pairing;
-the missing normal/diffeomorphism-ghost/SpinC/general-metric and
-action--Hessian--domain identifications remain explicit. It also supplies an exact
+product-mode truncation uses the same period and exact PT-regulator pairing.
+A smooth section of the true D8 normal line fills the D9 normal slot locally,
+with one-loop sign equal to `Z4²`; no canonical global scalar normal coordinate
+is claimed. Diffeomorphism-ghost/SpinC/general-metric and
+action--Hessian--domain identifications remain explicit. The global LL action
+also has its exact finite-measure measure/flux derivative and algebraic
+zero-flux Euler branch; its auxiliary metric does not yet enter, so no
+differential LL PDE is claimed. It also supplies an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester
