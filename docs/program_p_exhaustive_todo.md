@@ -239,7 +239,8 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       `diag(-1,1,1,1)` pour chacune des deux métriques.
     - [x] Prouver la régularité de Sylvester sur toute cette strate : construire
       l'inverse bilatère fini de `H ↦ XH+HX`, identifier la tangente de racine
-      et prouver son unicité, y compris aux points non diagonalisables.
+      comme vraie dérivée de Fréchet et prouver son unicité, y compris aux
+      points non diagonalisables.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
