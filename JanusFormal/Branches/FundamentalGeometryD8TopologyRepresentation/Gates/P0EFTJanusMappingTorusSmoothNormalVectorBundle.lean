@@ -128,7 +128,7 @@ theorem localTransitionWinding_self
   rw [zero_vadd]
   exact localTransitionWinding_vadd period hPeriod anchor anchor base ⟨hBase, hBase⟩
 
-private theorem localTransitionWinding_add
+theorem localTransitionWinding_add
     (first second third : ThroatCover period hPeriod)
     (base : ThroatBase period hPeriod)
     (hBase : base ∈ normalBundleBaseSet period hPeriod first ∩
@@ -152,7 +152,7 @@ private theorem localTransitionWinding_add
   apply IsCancelVAdd.right_cancel _ _ firstLift
   rw [add_vadd, hFirstSecond, hSecondThird, hFirstThird]
 
-private theorem localTransitionWinding_eventuallyEq
+theorem localTransitionWinding_eventuallyEq
     (first second : ThroatCover period hPeriod)
     (base : ThroatBase period hPeriod)
     (hBase : base ∈ normalBundleBaseSet period hPeriod first ∩
