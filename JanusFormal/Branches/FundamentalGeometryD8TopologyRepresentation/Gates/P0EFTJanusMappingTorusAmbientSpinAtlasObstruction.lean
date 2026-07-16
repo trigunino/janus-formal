@@ -648,6 +648,42 @@ theorem ambientSpinCechDefect_canonicalThirdCorrection_eq_one
   rw [ambientSpinCechDefect_third_kernelTranslate]
   simp [ambientSpinCechKernelDefect]
 
+/-- A kernel translation of the chosen composite-overlap lift kills the Cech
+defect exactly when it is the canonical kernel-valued defect. -/
+theorem ambientSpinCechDefect_third_kernelTranslate_eq_one_iff
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird : AmbientSpinOverlapLift period hPeriod reduction first third
+      coordinate hFirstThird)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinCechDefect period hPeriod reduction first second third coordinate
+        hFirstSecond hSecondThird hFirstThird firstSecond secondThird
+        (firstThird.kernelTranslate period hPeriod reduction first third
+          coordinate hFirstThird kernel) = 1 ↔
+      kernel = ambientSpinCechKernelDefect period hPeriod reduction first second
+        third coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+        secondThird firstThird := by
+  rw [ambientSpinCechDefect_third_kernelTranslate]
+  constructor
+  · intro hDefect
+    apply Subtype.ext
+    exact (mul_inv_eq_one.mp hDefect).symm
+  · intro hKernel
+    subst kernel
+    simp [ambientSpinCechKernelDefect]
+
 /-- Translating the second-to-third lift multiplies the Cech defect on the
 left by the same kernel element. -/
 theorem ambientSpinCechDefect_secondThird_kernelTranslate
