@@ -585,9 +585,12 @@ transition `-id` and pointwise linear equivalences to the differential normal
 quotients. Those choices now form a global base-preserving fiberwise-linear
 equivalence of dependent total spaces. The two quarter choices are genuine
 global complex line bundles with analytic real underliers and transition
-squares equal to the normal sign. The throat inclusion is a global
+squares equal to the normal sign. The same global winding cocycle now defines
+a topological principal normal `Pin⁻(1) ≃ Z4` bundle with equivariant
+transitions and free/transitive right action. The throat inclusion is a global
 `IsSmoothEmbedding`; the independent differential-normal quotient atlas, a
-smooth comparison, Pin/SpinC bundles and the null/joint strata remain open.
+smooth comparison, ambient tangent Pin/SpinC bundles and the null/joint strata
+remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
@@ -640,8 +643,9 @@ under sector/coupling exchange for a PT-invariant measure.
 A smooth section of the true D8 normal line fills the D9 normal slot locally,
 with one-loop sign equal to the square of either constructed global `Z4` root
 line. Real-linear complex conjugation now exchanges the two root-line descent
-cocycles for every winding and is involutive; no ambient Pin/SpinC principal
-bundle or canonical global scalar normal coordinate is claimed.
+cocycles for every winding and is involutive. The rank-one normal principal
+`Pin⁻(1)` lift is constructed; no ambient tangent Pin/SpinC principal bundle
+or canonical global scalar normal coordinate is claimed.
 Nonlinear diffeomorphism-BRST/SpinC/general-metric integration and the full
 action--Hessian--domain identification remain explicit. The global LL action
 also has its exact finite-measure measure/flux derivative and algebraic

@@ -17,7 +17,7 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 
 | Program | Role | Strongest current result | Terminal blocker |
 | --- | --- | --- | --- |
-| **D0/D8** | global geometry and normal lift | analytic compact mapping-torus quotients, global smooth throat embedding, sign-clutched analytic normal line, global algebraic comparison with the differential normal family, and two global complex `Z4` root lines with smooth real underliers, exact square and PT-conjugation exchange | construct the differential-normal quotient atlas and smooth comparison, the non-null/null/joint strata and compatible Pin/SpinC principal bundles |
+| **D0/D8** | global geometry and normal lift | analytic compact mapping-torus quotients, global smooth throat embedding, sign-clutched analytic normal line, global algebraic comparison with the differential normal family, two global complex `Z4` root lines, and a genuine normal principal `Pin⁻(1) ≃ Z4` bundle | construct the differential-normal quotient atlas and smooth comparison, the non-null/null/joint strata and the ambient tangent Pin/SpinC principal bundles |
 | **D2** | focused twisted Dirac spectrum | green monopole eigenvalue/multiplicity law, `l2`, self-adjointness, compact resolvent and circle-reduced determinant | extend the circle model to the common-domain global Janus operator family |
 | **D7** | heat kernel/effective action | green convergent heat trace, order-four Euler--Maclaurin remainder control, unconditional spectral/universal `a0/a2/a4` small-time matching, convergent `Z4` determinant, normalized-circle heat generator with maximal domain exactly `Dom(D²)=Dom(D∘D)`, and positive-time summable rank-one nuclear expansion with the spectral trace | abstract functional calculus/general trace-class API, then connect the closed local spectrum to the full field/ghost regulator and global Fredholm family |
 | **D9/D11** | elliptic and natural-operator gates | green D9 symbol/BRST and D11 naturality/jet heads; typed P projection for diagonal metric, tangential gauge, U(1) ghost and matter; true smooth tangent diffeomorphism ghost with a linearized scalar BRST complex; local smooth D8-normal-section bridge with exact `-1 = Z4²` transition | nonlinear diffeomorphism-BRST/SpinC completion, canonical global normal description and concrete Janus Fredholm family |
@@ -68,7 +68,7 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 The exhaustive dependency-aware checklist is
 [`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
 
-1. Complete the smooth differential-normal/Pin/SpinC decoration of the constructed mapping torus and throat embedding.
+1. Complete the smooth differential-normal and ambient tangent Pin/SpinC decoration of the constructed mapping torus and throat embedding; the rank-one normal principal lift is already constructed.
 2. Specify the exact Janus field space and metric formulation without double counting.
 3. Build the concrete compatibility map `K`, its linearization `J` and the target pairing `H`.
 4. Construct the adapted SpinC/PT/Z4/BRST jet symmetry and natural bundles.
