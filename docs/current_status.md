@@ -248,11 +248,16 @@ Moreover, the pulled-back associated normal line has an explicit global
 topological product trivialization. The exact deck-sign cocycle now also
 constructs a genuine analytic real rank-one `VectorBundle` on the effective
 throat, with one circuit acting by `-id`. Each of its fibers is noncanonically
-linearly equivalent to the corresponding differential normal quotient. What
-remains open is a globally smooth family of those equivalences, together with
-the non-null/null/joint strata.
+linearly equivalent to the corresponding differential normal quotient. These
+equivalences are now chosen simultaneously and assembled into one
+base-preserving, fiberwise-linear equivalence of dependent total spaces, with
+the exact one-loop sign. A smooth atlas on the differential quotient family
+and smoothness of this global comparison remain open, together with the
+non-null/null/joint strata.
 
-Quarter phases arise conditionally by lifting the sign holonomy of a real normal line:
+The two quarter phases now define actual global complex line-bundle cores on
+the same throat. Their real underliers are analytic vector bundles, and their
+transition squares recover the real normal sign for every winding:
 
 ```text
 one real-normal loop       -1
@@ -261,7 +266,9 @@ two lifted loops           -1
 four lifted loops          +1
 ```
 
-Thus `Z4` is a lift/holonomy phenomenon. A square-root or `Z4` lift is additional global data, not a canonical functor of the underlying line bundle.
+Thus `Z4` remains a lift/holonomy phenomenon: the two root lines are explicit
+additional global choices, not a canonical functor of the real line. The
+ambient Pin/SpinC principal bundles remain open.
 
 ## 5. Program P
 
@@ -285,7 +292,7 @@ The exhaustive remaining-work checklist is
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`; identification with intrinsic Sobolev sections and the physical-volume trace theorem remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Tensorial gauge covariance, BRST and the curved Euler--flux PDE remain open. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`; identification with intrinsic Sobolev sections and the physical-volume trace theorem remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
   For every finite measure, the scalar integrability contract is now automatic
   on the affine-stable class with continuous fixed-frame covector components,
   including arbitrary nonzero constant scalars; general tensorial continuity
@@ -301,7 +308,9 @@ The exhaustive remaining-work checklist is
   action/Hessian/domain agreement remain an explicit contract.
   The global LL action now has an exact simultaneous measure/flux cubic
   expansion and integrated derivative for every finite measure. Its algebraic
-  Euler system is equivalent to the zero-flux branch. The auxiliary LL metric
+  Euler system is equivalent to the zero-flux branch. PT pullback is an exact
+  involution and preserves its density, action, variation, Euler coefficients
+  and stationarity for PT-invariant measures. The auxiliary LL metric
   has identically zero response in this selected action, so a genuine
   differential LL PDE still requires a richer action.
   More strongly, explicit quadratic and quartically deformed two-variable

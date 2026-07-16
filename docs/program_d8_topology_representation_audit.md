@@ -132,15 +132,20 @@ dimension one. The exact local covering sections and their unique integer
 transition cocycle now construct an actual real rank-one `VectorBundle` on the
 effective throat. Its sign transitions are locally constant, hence analytic;
 one deck circuit acts by `-id`. Every constructed fiber is noncanonically
-linearly equivalent to the corresponding differential normal quotient.
+linearly equivalent to the corresponding differential normal quotient. These
+choices are now assembled into a global base-preserving, fiberwise-linear
+equivalence of dependent total spaces, transporting the exact `-id` cocycle.
+Both quarter choices also define actual global complex line bundles; their
+real underliers are analytic and their transition squares recover the normal
+sign for every winding.
 The compact fundamental strips `S³ × [0,|T|]` and `S² × [0,|T|]`
 project continuously and surjectively, proving compactness of both actual
 effective quotients.
 
 The throat inclusion is now a global Mathlib `IsSmoothEmbedding`. The remaining
-normal frontier is explicit: the pointwise normal equivalences have not been
-assembled into a globally smooth equivalence with the differential normal
-quotient, and the nonnull/null/joint strata remain open.
+normal frontier is explicit: the differential normal family still lacks its
+independent quotient-bundle atlas, so the global algebraic comparison is not
+yet a smooth equivalence. The nonnull/null/joint strata remain open.
 
 Lean theorems:
 
@@ -387,8 +392,9 @@ selected.
 3. Assemble the analytic normal-line bundle and the differential normal
    quotient into a smooth global bundle equivalence.
 4. Construct the nonnull/null/joint strata for boundary analysis.
-5. Classify flat `Z4` lifts of the orientation local system globally.
-6. Fix the Pin reflection convention and derive the physical PT square.
+5. Relate the constructed global `Z4` root lines to compatible Pin/SpinC
+   principal bundles.
+6. Fix the remaining physical Pin/PT convention on those bundles.
 7. Formalize the theorem that complex irreducible cyclic representations are
    one-dimensional.
 8. Derive any rank-five flavor/internal bundle from independent geometry or

@@ -95,6 +95,14 @@ def test_program_p_effective_d8_throat_is_smooth_embedding() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d8_normal_comparison_and_z4_root_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_abelian_brst_and_ll_pt_covariance_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d10_finite_mode_determinant_line_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
