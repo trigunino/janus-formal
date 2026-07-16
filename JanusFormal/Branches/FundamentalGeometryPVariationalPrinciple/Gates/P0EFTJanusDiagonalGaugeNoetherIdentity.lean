@@ -8,6 +8,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusConvexHelmholtzReconstruction
+open P0EFTJanusNonlinearGaugeFlowNoether
 
 universe u v w
 
@@ -243,6 +244,54 @@ theorem formalAdjoint_constraint_closed_under_parameter_map
     (formalAdjointEulerConstraint euler generator q).comp parameterMap = 0 := by
   rw [hConstraint]
   rfl
+
+/-- A complete one-parameter gauge flow supplies a diagonal infinitesimal
+generator by scalar multiplication of its velocity field. -/
+def completeFlowDiagonalGaugeGenerator
+    (flow : CompleteGaugeFlow Configuration) :
+    DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := ℝ) :=
+  fun q => ContinuousLinearMap.smulRight
+    (ContinuousLinearMap.id ℝ ℝ) (flow.generator q)
+
+@[simp]
+theorem completeFlowDiagonalGaugeGenerator_apply
+    (flow : CompleteGaugeFlow Configuration)
+    (q : Configuration) (scalar : ℝ) :
+    completeFlowDiagonalGaugeGenerator flow q scalar =
+      scalar • flow.generator q :=
+  rfl
+
+/-- The diagonal Bianchi identity for the generator induced by a complete
+flow is exactly annihilation of that flow's velocity field. -/
+theorem eulerBianchiAnnihilation_completeFlow_iff
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration) :
+    EulerBianchiAnnihilation euler
+        (completeFlowDiagonalGaugeGenerator flow) ↔
+      EulerAnnihilatesGenerator flow euler := by
+  constructor
+  · intro h q
+    simpa using h q 1
+  · intro h q scalar
+    simp [completeFlowDiagonalGaugeGenerator, h q]
+
+/-- For an action with its actual Euler derivative, invariance under a
+complete gauge flow is equivalent to invariance along every frozen scalar
+multiple of the same infinitesimal generator. -/
+theorem flowGaugeInvariant_iff_infinitesimallyDiagonalGaugeInvariant
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration)
+    (action : Configuration → ℝ)
+    (hGradient : ∀ q, HasFDerivAt action (euler q) q) :
+    FlowGaugeInvariant flow action ↔
+      InfinitesimallyDiagonalGaugeInvariant action
+        (completeFlowDiagonalGaugeGenerator flow) := by
+  rw [flow_gauge_invariant_iff_euler_annihilates_generator
+      flow euler action hGradient,
+    infinitesimal_invariance_iff_euler_bianchi_annihilation
+      action euler (completeFlowDiagonalGaugeGenerator flow) hGradient,
+    eulerBianchiAnnihilation_completeFlow_iff]
 
 /-- A constant action and cancelling sector Euler contributions provide an
 exact counterexample to splitting a combined Noether identity. -/

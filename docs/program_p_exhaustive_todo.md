@@ -778,6 +778,10 @@ non contrôlé et produit les conditions de jonction annoncées.
     le générateur par toute reparamétrisation linéaire continue et prouver la
     naturalité exacte de la contrainte adjointe ainsi que la préservation de
     l'invariance infinitésimale. Le vrai `R/B` géométrique global reste ouvert.
+  - [x] Pour tout flot de jauge complet déjà fourni, construire son générateur
+    diagonal à paramètre réel et identifier exactement invariance par le flot,
+    annulation de sa vitesse et identité infinitésimale diagonale. La
+    construction du flot Janus géométrique global reste ouverte.
 - [ ] Prouver `J ∘ R = 0` et `B ∘ K = 0` globalement.
 - [ ] Promouvoir l'exactitude symbolique non nulle vers un complexe
   différentiel lorentzien global.
