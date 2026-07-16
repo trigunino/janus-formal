@@ -805,6 +805,9 @@ non contrôlé et produit les conditions de jonction annoncées.
     `R_φ(c) = L_c φ` pour chaque composante scalaire matière indépendante et
     l'opérateur de Noether `B_φ(E) = E ∘ R_φ`. Les secteurs métrique, jauge et
     LL du vrai `R/B` global restent ouverts.
+    - [x] Assembler ces huit composantes en un unique multiplet matière et
+      construire les opérateurs globaux de bloc `R_matter` et
+      `B_matter = R_matterᵀ E_matter`.
   - [x] Dans le modèle fonctionnel diagonal abstrait déjà formalisé, restreindre
     le générateur par toute reparamétrisation linéaire continue et prouver la
     naturalité exacte de la contrainte adjointe ainsi que la préservation de
