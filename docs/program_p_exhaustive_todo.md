@@ -188,6 +188,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           - [ ] Prouver la surjectivité sur `SO(4)` par décomposition paire en
             réflexions non isotropes, puis construire les lifts de l'atlas.
           - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
+            - [x] Sur chaque triple overlap fixé et pour trois lifts arbitraires,
+              annuler exactement le défaut par la correction noyau canonique
+              du troisième lift. La cohérence commune sur tout l'atlas reste
+              ouverte.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
