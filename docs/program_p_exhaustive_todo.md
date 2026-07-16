@@ -355,6 +355,11 @@ par toute évolution admissible.
     une courbe affine, prouver l'affinité exacte de sa différentielle, puis la
     dérivée pointwise et intégrée de l'action sous un contrat d'intégrabilité
     explicite. La forme Euler--flux covariante reste ouverte.
+  - [x] Décharger automatiquement ce contrat pour toute mesure Borel finie et
+    tout `FixedFrameRegularScalar`, classe stable par courbes affines où les
+    quatre composantes du covecteur holonomique sont continues ; construire en
+    particulier des secteurs constants arbitraires non nuls sans mesure nulle.
+    La continuité intrinsèque pour un repère tensoriel général reste ouverte.
 - [x] Construire sur la carte plate continue `R^4` le jet holonomique d'un
   champ scalaire différentiable, sa ligne affine dans l'espace des fonctions
   et sa variation pointwise puis intégrée sous un contrat explicite de
@@ -413,6 +418,16 @@ par toute évolution admissible.
   - [ ] Prouver la covariance difféomorphe et les identités de conservation.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
+  - [x] Projeter de façon typée la même variation indépendante globale vers
+    les slots D9 effectivement fournis (métrique diagonale induite, jauge
+    tangentielle, ghost `U(1)`, matière), et prouver que cette projection
+    métrique n'est pas surjective vers les tenseurs symétriques D9 généraux.
+  - [x] Construire les modes D10 tronqués comme de vraies troncatures des
+    `ProductDiracMode`, avec multiplicité sphérique, période `|period|`, action
+    PT exacte, spectre envoyé au régulateur et annulation chirale régulée finie.
+  - [ ] Fournir le mode normal, le ghost difféomorphe, l'identification SpinC,
+    les métriques hors diagonale, puis prouver l'accord entre action, Hessien,
+    développement modal et domaines au bord dans `RemainingFieldContentContract`.
 
 **Acceptation** : un espace de champs unique sert à l'action, au Hessien, au
 complexe BRST, aux anomalies et aux conditions au bord.

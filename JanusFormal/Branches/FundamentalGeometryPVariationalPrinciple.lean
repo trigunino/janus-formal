@@ -88,9 +88,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusInducedFieldVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9D10ExactFieldContentBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalar4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAutomaticScalarIntegrability4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
@@ -323,9 +325,11 @@ structure ProgramStatus where
   paEffectiveD8FiniteSmoothTangentGeneratorsAndTrace4DProved : Prop
   paEffectiveD8SmoothGlobalFieldConfigurationProved : Prop
   paEffectiveD8CompleteInducedFieldVariationChain4DProved : Prop
+  paD9D10ExactFieldContentBridge4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarDifferentialProved : Prop
   paEffectiveD8GlobalHolonomicScalarAction4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved : Prop
+  paEffectiveD8AutomaticScalarIntegrability4DProved : Prop
   paEffectiveD8DiagonalDiffeomorphismActionProved : Prop
   paEffectiveD8GlobalLLWorldvolumeActionProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
@@ -537,9 +541,11 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8FiniteSmoothTangentGeneratorsAndTrace4DProved /\
   s.paEffectiveD8SmoothGlobalFieldConfigurationProved /\
   s.paEffectiveD8CompleteInducedFieldVariationChain4DProved /\
+  s.paD9D10ExactFieldContentBridge4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarDifferentialProved /\
   s.paEffectiveD8GlobalHolonomicScalarAction4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved /\
+  s.paEffectiveD8AutomaticScalarIntegrability4DProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\
