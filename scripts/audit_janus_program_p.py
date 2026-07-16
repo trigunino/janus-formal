@@ -2160,6 +2160,18 @@ PROGRAM_P_GATES = {
             "theorem smooth_diffeomorphism_ghost_lie_bracket4D_closure",
         ),
     ),
+    "P0EFTJanusMappingTorusGradedDiffeomorphismGhostTensor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GradedDiffeomorphismGhostModule",
+            "def gradedGhostCoefficientDifferential",
+            "theorem gradedGhostCoefficientDifferential_tmul",
+            "theorem gradedGhostCoefficientDifferential_sq",
+            "def gradedQuadraticGhostBracketTerm",
+            "def analyticGradedQuadraticGhostBracketTerm",
+            "theorem graded_ghost_tensor4D_closure",
+        ),
+    ),
     "P0EFTJanusMappingTorusGlobalLLWorldvolume4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2857,6 +2869,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved",
         "paGradedGhostCoefficientWitness4DProved",
         "paEffectiveD8SmoothDiffeomorphismGhostLieBracket4DProved",
+        "paEffectiveD8GradedDiffeomorphismGhostTensor4DProved",
         "paEffectiveD8GlobalLLWorldvolumeActionProved",
         "paEffectiveD8GlobalLLVariation4DProved",
         "paEffectiveD8GlobalLLPTCovariance4DProved",
