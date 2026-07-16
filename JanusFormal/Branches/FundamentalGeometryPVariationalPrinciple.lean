@@ -129,6 +129,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusWeightedL2LatticeSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevLatticeLorentzGram
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevPullbackHessian
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevPhysicalQuotient
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
@@ -271,6 +272,7 @@ structure ProgramStatus where
   paWeightedL2LatticeSaintVenantExactnessProved : Prop
   paShiftedSobolevLatticeLorentzGramProved : Prop
   paShiftedSobolevPullbackHessianProved : Prop
+  paShiftedSobolevPhysicalQuotientProved : Prop
   paNullExpansionCountertermVariationProved : Prop
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
@@ -444,6 +446,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paWeightedL2LatticeSaintVenantExactnessProved /\
   s.paShiftedSobolevLatticeLorentzGramProved /\
   s.paShiftedSobolevPullbackHessianProved /\
+  s.paShiftedSobolevPhysicalQuotientProved /\
   s.paNullExpansionCountertermVariationProved /\
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\

@@ -69,7 +69,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
 - [x] Compiler les façades D7 et P.
 - [x] Exécuter l'audit Programme P et les contrôles de placeholders.
 - [x] Aligner roadmap, dashboard, registre et statut canonique.
-- [ ] Committer ce lot séparément des futurs travaux analytiques lourds.
+- [x] Committer ce lot séparément des futurs travaux analytiques lourds.
 
 ## 2. Dépendances géométriques globales D0/D8
 
@@ -338,8 +338,15 @@ non contrôlé et produit les conditions de jonction annoncées.
   - [ ] Identifier ce pullback au Hessien de la même action Janus globale.
 - [ ] Construire le quotient physique topologique/lisse par `ker J` ou
   `im R`, pas seulement le quotient algébrique.
+  - [x] Dans le modèle périodique de coefficients Sobolev décalés, construire
+    une projection bornée du mode zéro, la scission topologique et le quotient
+    normé par `ker J`, continûment linéairement équivalent aux représentants
+    sans mode zéro.
 - [ ] Prouver continuité et non-dégénérescence de la forme descendue sur le
   quotient physique pertinent.
+  - [x] Prouver la non-dégénérescence du pullback continu `J†J` sur ces
+    représentants canoniques; l'identification au quotient global Janus reste
+    ouverte.
 
 **Acceptation** : un complexe global avec bord, cohomologie contrôlée et
 Hessien physique réellement descendu.
@@ -429,6 +436,9 @@ champs et avec les mêmes conditions au bord.
   - [x] Munir ce domaine de sa norme de graphe complète, obtenir l'opérateur
     borné Fredholm, identifier noyau et conoyau finis, prouver l'indice zéro et
     construire la fibre déterminante de rang un avec une section non nulle.
+  - [x] Construire sur le cercle la transformée bornée canonique auto-adjointe,
+    prouver sa dépendance 1-Lipschitz en holonomie, son caractère Fredholm
+    d'indice zéro, ses crossings exacts et l'orientation opposée sous PT.
   - [ ] Passer à l'opérateur Janus global non borné, avec domaine commun et
     dépendance lisse sur le vrai espace de paramètres.
 - [ ] Relier cette famille au Hessien naturel de l'action Programme P.

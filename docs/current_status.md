@@ -184,8 +184,12 @@ compact. Equipping the closed graph with its inherited complete norm turns the
 same operator into a bounded Fredholm map: its range is closed, kernel and
 cokernel are the same finite zero-mode space, the index is zero, and the
 top-exterior determinant fiber has rank one with a nonzero section. This is
-still a pointwise circle family, not the global Janus family, eta invariant or
-Quillen metric/connection.
+now complemented by the canonical bounded transform: it is self-adjoint,
+Fredholm of index zero and 1-Lipschitz in holonomy in operator norm. Its only
+fundamental endpoint crossings are identified exactly, related by the
+large-gauge mode shift, and have opposite PT orientations; both quarter
+holonomies are invertible. This is still a normalized circle family, not the
+global Janus family, eta invariant or Quillen metric/connection.
 
 ## 4. Topology and Z4
 
@@ -384,7 +388,11 @@ The exhaustive remaining-work checklist is
   the physical symbol exactly after source/target weighted encoding. The
   canonical target identity Hessian is continuous, self-adjoint and positive;
   its actual pullback `J†J` is symmetric and nonnegative, has precisely the
-  zero Fourier mode as kernel, and is positive definite after removing it.
+  zero Fourier mode as kernel, and is positive definite after removing it. A
+  bounded idempotent zero-mode projection now splits the Hilbert space, and
+  the actual normed quotient by `ker J` is continuously linearly equivalent
+  to its closed zero-free representatives, where this Hessian is
+  nondegenerate.
   Identification with global Sobolev bundle sections, Fourier-series
   differentiation, global PDE and boundary exactness remain open;
 - **T/C/N** typed non-null, null and joint gravitational slots plus a generic

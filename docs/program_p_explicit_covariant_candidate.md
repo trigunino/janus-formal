@@ -294,6 +294,9 @@ encoding theorem identifies it with the unnormalized physical symbol. On the
 same completed spaces, the target identity pairing is a continuous positive
 self-adjoint Hessian and its genuine adjoint pullback `J†J` is symmetric,
 nonnegative and positive definite after the finite zero-mode kernel is removed.
+The zero mode is now the range of a bounded idempotent projection; its closed
+complement represents an actual normed quotient by `ker J`, via a continuous
+linear equivalence, and the pullback Hessian is nondegenerate there.
 This is a periodic coefficient-scale theorem, not yet the Hessian of the
 nonlinear global action or a Sobolev-section theorem on the mapping-torus
 bundles and their boundary conditions.
@@ -641,6 +644,12 @@ dense basis.  The maximal generator domain is not identified with the domain
 of `D^2`; neither the abstract functional-calculus exponential nor abstract
 trace class is proved, and the full Janus Dirac operator, anomalies,
 determinants and normalization remain open.
+
+The same circle family now has its canonical bounded transform. It is an
+operator-norm 1-Lipschitz self-adjoint Fredholm family of index zero. The exact
+endpoint crossings are related by the large-gauge mode shift, PT reverses
+their orientation, and the two physical quarter holonomies are bijective.
+This does not yet construct a Janus family index or Quillen line bundle.
 
 ## Acceptance ledger
 
