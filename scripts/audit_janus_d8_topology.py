@@ -479,6 +479,7 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinCechDefect_third_kernelTranslate",
     "theorem ambientSpinCechDefect_canonicalThirdCorrection_eq_one",
     "theorem ambientSpinCechDefect_third_kernelTranslate_eq_one_iff",
+    "theorem ambientSpinCechCanonicalThirdCorrection_eq_comp",
     "theorem ambientSpinCechDefect_secondThird_kernelTranslate",
     "theorem ambientSpinCechDefect_firstSecond_kernelTranslate",
 )
