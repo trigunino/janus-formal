@@ -671,9 +671,11 @@ diagonal traces.  A genuine bounded continuous diagonal heat operator is also
 contractive, equals the identity at zero and satisfies the semigroup law.
 Strong continuity is proved for every Hilbert-space state at every
 nonnegative time, and each orbit in the dense Fourier basis has the expected
-`-lambda_n^2` derivative.  The maximal generator domain is not identified with
-the domain of `D^2`; the operator is not yet proved equal to the abstract
-functional-calculus exponential, and no abstract trace-class or full Janus
+`-lambda_n^2` derivative. On the full Fourier Hilbert space, the maximal
+strong right-generator domain is now exactly the squared spectral domain,
+which is also the actual iterated domain of `D ∘ D`; the generator is `-D²`.
+The operator is not yet proved equal to the abstract functional-calculus
+exponential, and no abstract trace-class or full Janus
 anomaly/determinant theorem is proved. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
@@ -754,9 +756,10 @@ Likewise, the Jordan family and continuous two-dimensional Cayley--Hamilton
 chart, including its bijective Sylvester inverse and derivative identity, do
 not construct the unique global Lorentz root branch.  The
 self-adjoint circle Dirac operator, its basiswise `D^2` trace bridge and the
-strongly continuous contractive diagonal heat semigroup do not yet construct
-the full Janus Dirac operator, identify its maximal generator domain or the
-abstract functional-calculus exponential, prove trace class, or compute
+strongly continuous contractive diagonal heat semigroup, including its exact
+maximal `D²` generator domain, do not yet construct the full Janus Dirac
+operator, identify the abstract functional-calculus exponential, prove trace
+class, or compute
 anomalies, determinant or normalization.
 
 What is established is a theorem/no-go architecture explaining exactly which
