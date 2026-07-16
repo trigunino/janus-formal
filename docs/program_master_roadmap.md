@@ -405,7 +405,10 @@ New controlled subgates are now checked:
 - **T/C** on the selected global fixed-frame diagonal Lorentz domain, both
   metrics share a strict timelike direction, the nonnegative closure and
   spectral frontier are exact, and the positive root/Candidate-A chain is
-  smooth. Positive curves of the same smooth D8 metric fields give the exact
+  smooth. The Minkowski IFT branch agrees with it on an explicit open nonempty
+  overlap; one-sided diagonal boundary paths give root limits zero/infinity,
+  Sylvester degeneration on the zero face, and no positive branch switch.
+  Positive curves of the same smooth D8 metric fields give the exact
   pointwise density derivative and the integrated functional derivative under
   an explicit domination contract. The general Lorentz tensor domain remains
   open;

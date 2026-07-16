@@ -173,9 +173,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Remplacer le simple voisinage éventuel par un domaine ouvert explicite
     tiré de la cible/source de `localSquareChart`, avec continuité, carré exact
     sur tout le domaine et unicité parmi les racines restant dans la source IFT.
-  - [ ] Identifier formellement la branche IFT locale à la sélection principale
-    globale sur leur recouvrement ; la sélection diagonale globale est causale,
-    mais ce théorème de recollement précis reste à écrire.
+  - [x] Identifier formellement la branche IFT locale à la sélection principale
+    globale sur leur recouvrement explicite : ce recouvrement est ouvert, non
+    vide au point de Minkowski, inclus dans le domaine IFT, et les deux racines
+    y sont exactement égales. Ce résultat reste diagonal.
   - [x] Construire sans recollement la racine principale positive sur tout le
     sous-domaine diagonal global et prouver que son carré est exactement
     `g_plus⁻¹ g_minus`.
@@ -198,6 +199,12 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     sur le domaine physique, sans les conserver comme hypothèses.
 - [ ] Contrôler l'approche de la frontière spectrale et les changements de
   branche éventuels.
+  - [x] Sur le sous-domaine diagonal global, construire les chemins vers les
+    deux faces : numérateur vers zéro donne une extension continue de la
+    racine vers zéro et une dégénérescence explicite de Sylvester ; dénominateur
+    vers zéro avec numérateur positif fait diverger ratio et racine vers
+    `+∞`. L'unicité positive exclut tout changement de branche dans la
+    composante. Les cas `0/0` et les matrices générales restent ouverts.
 - [x] Dériver la variation de la racine sur ce domaine par rapport aux deux métriques indépendantes, inverse métrique comprise.
   - [x] Cette dérivée complète est prouvée au point diagonal de Minkowski pour
     la branche locale, y compris la dérivée de l'inverse dans
@@ -308,15 +315,27 @@ par toute évolution admissible.
         des champs lisses.
       - [x] Sous l'inégalité quantitative explicite `HasH1TraceBound`, étendre
         canoniquement la trace lisse au graphe `H¹`, avec accord sur les lisses,
-        borne de norme et unicité. La construction de la famille couvrante,
-        l'inégalité de trace et l'identification intrinsèque restent ouvertes.
+        borne de norme et unicité.
+      - [x] Construire sans hypothèse une famille tangentielle globale finie
+        `C∞`, couvrante et fibre-par-fibre génératrice, par trivialisation
+        locale finie et partition de l'unité sur le quotient compact, puis la
+        raccorder directement au graphe `H¹`.
+      - [x] Pour la mesure d'espace-temps poussée depuis une mesure finie du
+        throat, construire `HasH1TraceBound` avec constante exacte `1` et la
+        trace continue correspondante. L'identification à l'espace Sobolev
+        intrinsèque et le théorème de trace pour la mesure volumique physique
+        restent ouverts.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
 - [x] Formaliser la chaîne abstraite de variation des champs induits sans double comptage des équations.
   - [x] Prouver existence et unicité du paquet induit à partir du seul paquet
     indépendant, sans stocker une seconde copie variationnelle.
-  - [ ] Dériver encore la chaîne fonctionnelle complète de ce paquet.
+  - [x] Dériver la chaîne fonctionnelle complète du paquet diagonal global :
+    une courbe simultanée varie chaque champ indépendant, les deux métriques,
+    chaque entrée de la racine principale et les deux traces matière ont leurs
+    dérivées exactes, et jauge/ghosts/auxiliaires/LL ont une réponse induite
+    nulle lorsque les directions métrique et matière s'annulent.
 - [x] Définir l'action des difféomorphismes diagonaux et son générateur
   infinitésimal sur tous les secteurs.
 - [x] Définir exactement la symétrie PT/échange sur tous les champs de

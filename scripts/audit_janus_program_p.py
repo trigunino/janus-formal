@@ -1214,6 +1214,30 @@ PROGRAM_P_GATES = {
             "theorem globalDiagonalLorentzDomain_causallyCompatible",
         ),
     ),
+    "P0EFTJanusGlobalDiagonalRootFrontierControl4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def minusClosedDiagonalDomain",
+            "theorem principalRootSpectrum_eq_zero_iff_on_minusClosed",
+            "theorem principalRoot_continuousOn_minusClosed",
+            "theorem minusCoordinateApproach_root_tendsto_zero",
+            "theorem plusCoordinateApproach_root_tendsto_atTop",
+            "theorem no_sylvesterInverseWitness_on_zero_numerator_face",
+            "theorem no_positive_diagonal_branch_switch",
+            "theorem global_diagonal_root_frontier_control_closure",
+        ),
+    ),
+    "P0EFTJanusMinkowskiGlobalDiagonalRootGluing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def minkowskiGlobalDiagonalOverlap",
+            "theorem minkowskiGlobalDiagonalOverlap_isOpen",
+            "theorem minkowskiGlobalDiagonalOverlap_nonempty",
+            "theorem diagonalMetricPair_mem_minkowskiOpenDomain",
+            "theorem minkowskiIFT_eq_globalPrincipalRoot_on_overlap",
+            "theorem minkowski_global_diagonal_root_gluing_closure",
+        ),
+    ),
     "P0EFTJanusGlobalDiagonalInteractionDensity4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1556,6 +1580,21 @@ PROGRAM_P_GATES = {
             "theorem h1Trace_unique",
         ),
     ),
+    "P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem exists_finite_tangent_trivialization_cover",
+            "theorem exists_finite_tangent_partition",
+            "def finiteSmoothTangentFrame",
+            "theorem smoothD8FrameInput_closed",
+            "def smoothToFiniteFrameH1Graph",
+            "theorem smoothToFiniteFrameH1Graph_denseRange",
+            "def throatSupportedHasH1TraceBound",
+            "def finiteFrameThroatSupportedH1Trace",
+            "theorem finiteFrameThroatSupportedH1Trace_agrees_on_smooth",
+            "theorem finiteFrameThroatSupportedH1Trace_norm_le",
+        ),
+    ),
     "P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1567,6 +1606,21 @@ PROGRAM_P_GATES = {
             "theorem induced_root_square",
             "def zeroMatchedIndependentFields",
             "theorem zeroMatchedIndependentFields_ptMatched",
+        ),
+    ),
+    "P0EFTJanusMappingTorusInducedFieldVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure IndependentFieldVariation",
+            "def independentFieldCurve",
+            "theorem independentFieldCurve_zero",
+            "theorem coefficientPair_curve_hasDerivAt",
+            "theorem induced_plusMetricEntry_curve_hasDerivAt",
+            "theorem induced_minusMetricEntry_curve_hasDerivAt",
+            "theorem induced_principalRootEntryComposite_curve_hasDerivAt",
+            "theorem induced_plusMatterTraceEntry_curve_eq",
+            "theorem induced_minusMatterTraceEntry_curve_eq",
+            "theorem induced_cross_response_zero",
         ),
     ),
     "P0EFTJanusMappingTorusGlobalHolonomicScalar4D.lean": (
@@ -2063,6 +2117,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paGlobalDiagonalLorentzRoot4DProved",
         "paGlobalDiagonalLorentzCausalFrontier4DProved",
+        "paGlobalDiagonalRootFrontierControl4DProved",
+        "paMinkowskiGlobalDiagonalRootGluing4DProved",
         "paGlobalDiagonalTwoSectorInteractionDensity4DProved",
         "paEffectiveD8CandidateAFunctionalVariation4DUnderDominatedContractProved",
         "paCoDiagonalInteractionDensityFrechetProved",
@@ -2126,7 +2182,9 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8L2FunctionalCompletionProved",
         "paEffectiveD8PTL2IsometricEquivalenceProved",
         "paEffectiveD8H1GraphCompletionAndConditionalTrace4DProved",
+        "paEffectiveD8FiniteSmoothTangentGeneratorsAndTrace4DProved",
         "paEffectiveD8SmoothGlobalFieldConfigurationProved",
+        "paEffectiveD8CompleteInducedFieldVariationChain4DProved",
         "paEffectiveD8GlobalHolonomicScalarDifferentialProved",
         "paEffectiveD8GlobalHolonomicScalarAction4DProved",
         "paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved",

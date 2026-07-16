@@ -85,7 +85,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusL2PTFunctionalSpace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusH1GraphTrace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusInducedFieldVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalar4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D
@@ -118,6 +120,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzRoot4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzCausalFrontier4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalRootFrontierControl4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiGlobalDiagonalRootGluing4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalInteractionDensity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCandidateAFunctionalVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalInteractionDensityFrechet
@@ -254,6 +258,8 @@ structure ProgramStatus where
   paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved : Prop
   paGlobalDiagonalLorentzRoot4DProved : Prop
   paGlobalDiagonalLorentzCausalFrontier4DProved : Prop
+  paGlobalDiagonalRootFrontierControl4DProved : Prop
+  paMinkowskiGlobalDiagonalRootGluing4DProved : Prop
   paGlobalDiagonalTwoSectorInteractionDensity4DProved : Prop
   paEffectiveD8CandidateAFunctionalVariation4DUnderDominatedContractProved : Prop
   paCoDiagonalInteractionDensityFrechetProved : Prop
@@ -314,7 +320,9 @@ structure ProgramStatus where
   paEffectiveD8L2FunctionalCompletionProved : Prop
   paEffectiveD8PTL2IsometricEquivalenceProved : Prop
   paEffectiveD8H1GraphCompletionAndConditionalTrace4DProved : Prop
+  paEffectiveD8FiniteSmoothTangentGeneratorsAndTrace4DProved : Prop
   paEffectiveD8SmoothGlobalFieldConfigurationProved : Prop
+  paEffectiveD8CompleteInducedFieldVariationChain4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarDifferentialProved : Prop
   paEffectiveD8GlobalHolonomicScalarAction4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved : Prop
@@ -463,6 +471,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved /\
   s.paGlobalDiagonalLorentzRoot4DProved /\
   s.paGlobalDiagonalLorentzCausalFrontier4DProved /\
+  s.paGlobalDiagonalRootFrontierControl4DProved /\
+  s.paMinkowskiGlobalDiagonalRootGluing4DProved /\
   s.paGlobalDiagonalTwoSectorInteractionDensity4DProved /\
   s.paEffectiveD8CandidateAFunctionalVariation4DUnderDominatedContractProved /\
   s.paCoDiagonalInteractionDensityFrechetProved /\
@@ -524,7 +534,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8L2FunctionalCompletionProved /\
   s.paEffectiveD8PTL2IsometricEquivalenceProved /\
   s.paEffectiveD8H1GraphCompletionAndConditionalTrace4DProved /\
+  s.paEffectiveD8FiniteSmoothTangentGeneratorsAndTrace4DProved /\
   s.paEffectiveD8SmoothGlobalFieldConfigurationProved /\
+  s.paEffectiveD8CompleteInducedFieldVariationChain4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarDifferentialProved /\
   s.paEffectiveD8GlobalHolonomicScalarAction4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved /\
