@@ -768,6 +768,10 @@ non contrôlé et produit les conditions de jonction annoncées.
     action. La topologie du dual, le `K` géométrique complet et `R/B` restent
     ouverts.
 - [ ] Définir le générateur de jauge `R` et l'opérateur d'identités `B`.
+  - [x] Dans le modèle fonctionnel diagonal abstrait déjà formalisé, restreindre
+    le générateur par toute reparamétrisation linéaire continue et prouver la
+    naturalité exacte de la contrainte adjointe ainsi que la préservation de
+    l'invariance infinitésimale. Le vrai `R/B` géométrique global reste ouvert.
 - [ ] Prouver `J ∘ R = 0` et `B ∘ K = 0` globalement.
 - [ ] Promouvoir l'exactitude symbolique non nulle vers un complexe
   différentiel lorentzien global.

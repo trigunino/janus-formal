@@ -171,6 +171,65 @@ theorem infinitesimal_invariance_iff_formalAdjoint_bianchi_constraint
   · exact (euler_bianchi_annihilation_at_iff_formalAdjoint_constraint
       euler generator q).2 (h q)
 
+/-- Restrict a field-dependent gauge generator along a linear map of gauge
+parameters. -/
+def reparameterizedDiagonalGaugeGenerator
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter) :
+    DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := ReducedParameter) :=
+  fun q => (generator q).comp parameterMap
+
+/-- Pulling back the formal-adjoint Euler constraint agrees exactly with
+reparameterizing the gauge generator. -/
+theorem formalAdjointEulerConstraint_reparameterized
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (euler : EulerOneForm Configuration)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (q : Configuration) :
+    formalAdjointEulerConstraint euler
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) q =
+      (formalAdjointEulerConstraint euler generator q).comp parameterMap := by
+  rfl
+
+/-- Infinitesimal invariance is preserved when the allowed gauge parameters
+are restricted by a continuous linear map. -/
+theorem infinitesimal_invariance_reparameterized
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (action : Configuration → ℝ)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (hInvariant : InfinitesimallyDiagonalGaugeInvariant action generator) :
+    InfinitesimallyDiagonalGaugeInvariant action
+      (reparameterizedDiagonalGaugeGenerator generator parameterMap) := by
+  intro q parameter
+  simpa [reparameterizedDiagonalGaugeGenerator, gaugeLine] using
+    hInvariant q (parameterMap parameter)
+
+/-- A vanishing formal-adjoint constraint remains zero after an exact
+reparameterization of the gauge generator. -/
+theorem formalAdjoint_constraint_reparameterized_of_constraint
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (euler : EulerOneForm Configuration)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (q : Configuration)
+    (hConstraint : formalAdjointEulerConstraint euler generator q = 0) :
+    formalAdjointEulerConstraint euler
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) q = 0 := by
+  rw [formalAdjointEulerConstraint_reparameterized, hConstraint]
+  rfl
+
 /-- Constraint closure under a supplied reduction of gauge parameters. -/
 theorem formalAdjoint_constraint_closed_under_parameter_map
     {ReducedParameter : Type w}
