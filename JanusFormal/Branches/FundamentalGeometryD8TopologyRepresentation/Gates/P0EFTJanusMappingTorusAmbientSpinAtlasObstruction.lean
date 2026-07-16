@@ -684,6 +684,39 @@ theorem ambientSpinCechDefect_third_kernelTranslate_eq_one_iff
     subst kernel
     simp [ambientSpinCechKernelDefect]
 
+/-- Correcting the chosen composite-overlap lift by its canonical Cech defect
+recovers exactly the lift obtained by composing the other two overlaps. -/
+theorem ambientSpinCechCanonicalThirdCorrection_eq_comp
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird : AmbientSpinOverlapLift period hPeriod reduction first third
+      coordinate hFirstThird) :
+    firstThird.kernelTranslate period hPeriod reduction first third coordinate
+        hFirstThird
+        (ambientSpinCechKernelDefect period hPeriod reduction first second third
+          coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+          secondThird firstThird) =
+      firstSecond.comp period hPeriod reduction first second third coordinate
+        hFirstSecond hSecondThird hFirstThird secondThird := by
+  cases firstSecond
+  cases secondThird
+  cases firstThird
+  simp [ambientSpinCechKernelDefect, ambientSpinCechDefect,
+    AmbientSpinOverlapLift.kernelTranslate, AmbientSpinOverlapLift.comp,
+    mul_assoc]
+
 /-- Translating the second-to-third lift multiplies the Cech defect on the
 left by the same kernel element. -/
 theorem ambientSpinCechDefect_secondThird_kernelTranslate

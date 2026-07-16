@@ -194,6 +194,8 @@ correspondance algébrique des coefficients, puis asymptotique effective.
               ouverte.
               - [x] Prouver que cette correction canonique est l'unique
                 translation noyau du troisième lift annulant le défaut local.
+              - [x] Identifier structurellement le troisième lift ainsi corrigé
+                au lift composé des deux autres overlaps.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
