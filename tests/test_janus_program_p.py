@@ -23,6 +23,10 @@ def test_program_p_shifted_sobolev_pullback_hessian_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_shifted_sobolev_physical_quotient_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_minkowski_diagonal_local_relative_root_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
@@ -56,4 +60,8 @@ def test_program_p_d10_infinite_circle_common_domain_is_integrated() -> None:
 
 
 def test_program_p_d10_circle_graph_fredholm_index_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_d10_circle_bounded_transform_spectral_flow_is_integrated() -> None:
     assert_program_p_gate_integrity()

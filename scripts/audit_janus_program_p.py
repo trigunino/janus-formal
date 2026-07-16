@@ -1426,6 +1426,19 @@ PROGRAM_P_GATES = {
             "theorem shifted_pullback_hessian_gate",
         ),
     ),
+    "P0EFTJanusShiftedSobolevPhysicalQuotient.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def potentialZeroModeProjection",
+            "theorem potentialZeroModeProjection_opNorm_le",
+            "theorem zeroMode_range_isTopCompl_ker",
+            "theorem zeroModeProjection_range_eq_symbol_ker",
+            "abbrev PhysicalPotentialQuotient",
+            "def physicalQuotientEquivZeroFree",
+            "theorem pullbackHessian_nondegenerate_on_physical_representatives",
+            "theorem shifted_sobolev_physical_quotient_gate",
+        ),
+    ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1517,6 +1530,21 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
             "theorem circleGraphDeterminantSection_ne_zero",
         ),
     ),
+    "P0EFTJanusCircleBoundedTransformSpectralFlow.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "def circleBoundedTransform",
+            "theorem circleBoundedTransform_isSelfAdjoint",
+            "theorem circleBoundedTransform_lipschitz",
+            "theorem circleBoundedTransform_range_isClosed",
+            "theorem circleBoundedTransform_fredholm_criterion",
+            "theorem circleBoundedTransformFredholmIndex_zero",
+            "theorem circleBoundedTransform_bijective_of_interior",
+            "def unitPeriodicZeroModeEquiv",
+            "def circleFundamentalCrossing",
+            "theorem pt_reverses_fundamental_crossing",
+        ),
+    ),
 }
 
 
@@ -1599,6 +1627,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         status = (
             "circleGraphFredholmIndexZeroDeterminantLineProved"
             if filename == "P0EFTJanusCircleGraphFredholmIndex.lean"
+            else "circleBoundedTransformSpectralFlowProved"
+            if filename == "P0EFTJanusCircleBoundedTransformSpectralFlow.lean"
             else "circleHolonomyCommonDomainCompactResolventProved"
         )
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:
@@ -1701,6 +1731,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paWeightedL2LatticeSaintVenantExactnessProved",
         "paShiftedSobolevLatticeLorentzGramProved",
         "paShiftedSobolevPullbackHessianProved",
+        "paShiftedSobolevPhysicalQuotientProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
