@@ -134,6 +134,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -162,6 +163,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalizableRelativeRoot4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzJordanRelativeRoot4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzJordanAdmissibleSignature4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzJordanSylvesterRegular4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzCausalFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalRootFrontierControl4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiGlobalDiagonalRootGluing4D
@@ -303,6 +305,7 @@ structure ProgramStatus where
   paPositiveDiagonalizableRelativeRoot4DProved : Prop
   paLorentzJordanRelativeRoot4DProved : Prop
   paLorentzJordanAdmissibleSignature4DProved : Prop
+  paLorentzJordanSylvesterRegular4DProved : Prop
   paGlobalDiagonalLorentzCausalFrontier4DProved : Prop
   paGlobalDiagonalRootFrontierControl4DProved : Prop
   paMinkowskiGlobalDiagonalRootGluing4DProved : Prop
@@ -360,6 +363,7 @@ structure ProgramStatus where
   paEffectiveD8DifferentialNormalSmoothBundleEquivalenceProved : Prop
   paEffectiveD8DifferentialNormalZeroNonzeroStratificationProved : Prop
   paEffectiveD8AmbientTangentOrientationCocycleProved : Prop
+  paEffectiveD8AmbientTangentQuadraticReductionFrontierProved : Prop
   paEffectiveD8NormalZ4RootBundleProved : Prop
   paEffectiveD8NormalZ4RootPTConjugationProved : Prop
   paEffectiveD8NormalPinMinusPrincipalBundleProved : Prop
@@ -559,6 +563,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paPositiveDiagonalizableRelativeRoot4DProved /\
   s.paLorentzJordanRelativeRoot4DProved /\
   s.paLorentzJordanAdmissibleSignature4DProved /\
+  s.paLorentzJordanSylvesterRegular4DProved /\
   s.paGlobalDiagonalLorentzCausalFrontier4DProved /\
   s.paGlobalDiagonalRootFrontierControl4DProved /\
   s.paMinkowskiGlobalDiagonalRootGluing4DProved /\
@@ -616,6 +621,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8DifferentialNormalSmoothBundleEquivalenceProved /\
   s.paEffectiveD8DifferentialNormalZeroNonzeroStratificationProved /\
   s.paEffectiveD8AmbientTangentOrientationCocycleProved /\
+  s.paEffectiveD8AmbientTangentQuadraticReductionFrontierProved /\
   s.paEffectiveD8NormalZ4RootBundleProved /\
   s.paEffectiveD8NormalZ4RootPTConjugationProved /\
   s.paEffectiveD8NormalPinMinusPrincipalBundleProved /\
