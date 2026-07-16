@@ -349,7 +349,8 @@ par toute évolution admissible.
       - [x] Construire un modèle matriciel fidèle de deux coefficients impairs
         avec carrés nuls et anticommutation exacte, puis prouver que le
         coefficient de crochet propre gradué et son facteur BRST `-1/2` sont
-        non nuls. Le ghost tangent global, sa nilpotence complète et BV restent
+        non nuls, tout en ayant carré nul dans ce modèle impair. Le ghost
+        tangent global, sa nilpotence différentielle complète et BV restent
         ouverts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
