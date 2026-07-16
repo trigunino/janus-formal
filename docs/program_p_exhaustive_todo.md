@@ -137,6 +137,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [ ] Compatibilité causale requise.
   - [ ] Condition spectrale garantissant une racine réelle choisie.
   - [ ] Description des composantes connexes et de leur frontière.
+  - [x] Sur le sous-domaine global à repère fixé des deux métriques diagonales
+    lorentziennes `diag(-a₀,a₁,a₂,a₃)` et `diag(-b₀,b₁,b₂,b₃)`, imposer les
+    huit magnitudes strictement positives et prouver ouverture, convexité,
+    connexité, non-vacuité et inverses métriques exacts. Ce résultat ne couvre
+    pas les paires non simultanément diagonalisables.
 - [ ] Construire la racine principale réelle de `g_plus⁻¹ g_minus` sur ce
   domaine.
   - [x] Construire sans hypothèse une branche locale réelle autour de la paire
@@ -148,12 +153,20 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     sur tout le domaine et unicité parmi les racines restant dans la source IFT.
   - [ ] Étendre cette branche locale en une sélection principale, causale et
     globale sur le domaine admissible.
+  - [x] Construire sans recollement la racine principale positive sur tout le
+    sous-domaine diagonal global et prouver que son carré est exactement
+    `g_plus⁻¹ g_minus`.
 - [ ] Prouver existence, unicité et régularité de la branche.
   - [x] Sur le domaine ouvert IFT explicite, extraire la borne quantitative de
     l'inverse locale, prouver l'inversibilité de Sylvester par série de Neumann
     et obtenir la différentiabilité de la racine en chaque point du domaine.
+  - [x] Sur le sous-domaine diagonal global, prouver existence, unicité dans la
+    branche diagonale positive et régularité `C∞` de la racine.
 - [ ] Inclure les points diagonalisables et les blocs de Jordan admissibles.
 - [ ] Prouver l'inversibilité globale de l'opérateur de Sylvester pertinent.
+  - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
+    sous-domaine diagonal global, par division par les sommes de racines
+    propres strictement positives.
 - [ ] Recoller les branches IFT locales sur tout le domaine admissible.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
@@ -168,6 +181,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     la branche locale, y compris la dérivée de l'inverse dans
     `g_plus⁻¹ g_minus` et l'inverse de Sylvester égal à la demi-identité.
   - [ ] Étendre la formule à toute la branche physique globale.
+  - [x] Étendre la dérivée complète aux deux métriques sur tout le sous-domaine
+    diagonal global et l'identifier exactement à l'inverse de Sylvester
+    appliqué à la variation de `g_plus⁻¹ g_minus`.
 - [ ] Dériver la variation fonctionnelle complète du potentiel spectral
   `sum beta_n e_n(X)`.
   - [x] La dériver réellement après composition avec la branche de racine pour

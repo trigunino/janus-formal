@@ -574,7 +574,11 @@ a pointwise square-root-matrix potential, the actual metric-inverse and
 relative-product derivatives followed by an explicit Sylvester inverse on the
 open positive diagonal chart, a first-Frechet-differentiable co-diagonal
 positive-scale Lorentz root chart with actual metric/inverse/target/root
-derivatives and an internally proved Sylvester derivative, and an exact
+derivatives and an internally proved Sylvester derivative, together with a
+global open connected fixed-frame diagonal 4D Lorentz domain where the
+positive principal root exists uniquely, is `C∞`, has an everywhere
+invertible Sylvester map and carries the full two-metric derivative including
+the inverse-plus contribution, and an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester
@@ -690,7 +694,8 @@ covariant source/boundary problem:
    bijective Sylvester inverse and derivative identity,
    together with the full interaction-density Frechet derivative, to a smooth
    unique real Lorentzian square-root branch for independently supplied
-   four-dimensional metrics, and lift the selected densities and their finite
+   four-dimensional metrics beyond the now-closed simultaneously diagonal
+   global sector, and lift the selected densities and their finite
    weight law from pointwise matrices to metric functional derivatives on a
    manifold;
 2. lift the finite-site frame model, the finite scalar reindexing covariance and

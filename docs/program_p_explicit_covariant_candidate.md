@@ -345,7 +345,15 @@ independent-inverse shortcut: for an invertible `g_plus` it proves
 with `g_minus` before applying Sylvester. On the open positive diagonal
 spectrum chart, the Sylvester operator now has an explicit entrywise
 continuous-linear two-sided inverse, and the conditional square-root
-derivative specializes to it.  More generally in dimension four, a supplied
+derivative specializes to it. This has now been globalized on the complete
+fixed-frame diagonal Lorentz domain
+`diag(-a₀,a₁,a₂,a₃), diag(-b₀,b₁,b₂,b₃)` with all magnitudes positive: the
+domain is open, convex, connected and nonempty; the positive principal root
+exists uniquely in the diagonal branch, is `C∞`, its Sylvester map has an
+explicit inverse everywhere, and its full derivative contains both metric
+variations including the inverse-plus term. This remains restricted to the
+simultaneously diagonal fixed-frame sector, not the full causal-compatible
+matrix domain. More generally in dimension four, a supplied
 continuous square-root lift that remains pointwise Sylvester-regular agrees
 locally with the corresponding IFT branches and is therefore differentiable
 with the inverse-Sylvester derivative.  The continuous lift and regularity are
