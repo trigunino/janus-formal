@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. The differential normal now has the transported analytic bundle structure and a total-space homeomorphism; intrinsic Sobolev identification, the physical-volume trace, the total `Diffeomorph` wrapper and the non-null/null/joint stratification remain open.
+- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. The differential normal has the transported analytic bundle structure and an exact total-space `Diffeomorph`; intrinsic Sobolev identification, the physical-volume trace and the non-null/null/joint stratification remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -99,8 +99,8 @@ Current results:
   them, while the image of either side is exactly the full effective-throat
   complement and PT preserves that quotient complement;
 - **T/N** the throat inclusion is a global `IsSmoothEmbedding`; the analytic
-  differential-normal bundle is installed, while the total comparison still
-  lacks its `Diffeomorph` wrapper and the non-null/null/joint strata remain
+  differential-normal bundle and its exact fiber-linear total `Diffeomorph`
+  comparison are installed, while the non-null/null/joint strata remain
   unproved;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
@@ -119,9 +119,8 @@ Current results:
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** construct the differential-normal quotient atlas, prove the smooth
-  global normal-bundle identification and stratification, then construct the
-  compatible ambient tangent Pin/SpinC principal bundles.
+- **O** construct the differential-normal non-null/null/joint stratification,
+  then construct the compatible ambient tangent Pin/SpinC principal bundles.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
@@ -477,8 +476,9 @@ New controlled subgates are now checked:
   Jacobi `J` are defined on all smooth fields under one explicit integrability
   contract and equal its first/second variations. The negative Lorentz time
   coefficient is proved; only the time-static positive-mass sector yields a
-  positive Hilbert energy completion and exact strong Riesz realization with
-  trivial kernel. This is not positivity of the full Lorentzian dynamics;
+  positive Hilbert energy completion whose bounded Riesz extension is
+  self-adjoint, bijective and Fredholm of index zero. This is not positivity
+  of the full Lorentzian dynamics and no compact resolvent is asserted;
 - **T/C** a genuine tangent-section diffeomorphism ghost has exact pullback
   laws and scalar Lie derivative; its linearized BRST differential is
   nilpotent and connected to the independent matter field. Nonlinear graded
