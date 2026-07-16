@@ -601,8 +601,10 @@ an open nonzero complement, transported exactly by this diffeomorphism.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. Lorentzian null/non-null/joint strata still require a quadratic
-reduction; its comparison with the normal cocycle and ambient tangent
-Pin/SpinC bundles remain open.
+reduction. An explicit positive nondegenerate model form is now transported by
+each tangent transition with a genuine quadratic isometry; global orthonormal
+compatibility, comparison with the normal cocycle and ambient tangent Pin/SpinC
+bundles remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
@@ -611,7 +613,10 @@ involutive equivalences on these smooth coefficient fields. Smooth quotient and 
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
-finite tangent frame by holonomic directions is the remaining geometric input.
+finite tangent frame by holonomic directions is reduced further: uniform
+magnitude bounds and holonomic coercivity are automatic, and a purely
+geometric coefficient-control contract implies the ellipticity contract. Its
+instantiation by a continuous uniformly bounded change of frame remains open.
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
@@ -722,7 +727,10 @@ same null-coordinate construction is now embedded genuinely in dimension four
 with two positive spatial directions; its root squares to the relative product
 of two independently supplied symmetric metrics and the nonzero family is
 proved non-diagonalizable. This is one 4D Jordan stratum, not a classification
-or a globally glued branch. The
+or a globally glued branch. An explicit null frame certifies signature `(3,1)`
+for both metrics throughout the family, and a finite bilateral inverse proves
+Sylvester regularity and uniqueness of the root tangent even at non-diagonal
+points. The
 candidate further has a continuous three-parameter two-dimensional
 null-coordinate Cayley--Hamilton root chart for independently supplied Lorentz
 metrics, covering diagonalizable and Jordan points.  It proves neither
