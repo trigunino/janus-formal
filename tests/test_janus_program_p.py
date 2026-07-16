@@ -14,6 +14,10 @@ def test_program_p_gates_are_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_deck_isotropy_stratification_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_effective_d8_field_base_bridge_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

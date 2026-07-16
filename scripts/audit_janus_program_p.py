@@ -14,6 +14,18 @@ GATE_ROOT = Path(
 D10_GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/Gates"
 )
+STRUCTURED_JET_GROUPOID_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/"
+    "P0EFTJanusMappingTorusStructuredJetGroupoid.lean"
+)
+STRUCTURED_JET_GROUPOID_DECLARATIONS = (
+    "theorem janusDeck_endomorphism_eq_id",
+    "def janusDeckEndomorphismEquivPUnit",
+    "def janusDeckEndomorphismEquiv",
+    "theorem janusDeck_no_isotropy_type_jump",
+    "theorem janusDeck_isotropy_stratification_single_stratum",
+    "theorem StructuredJetDeckRepresentation.map_endomorphism_eq_id",
+)
 
 PROGRAM_P_GATES = {
     "P0EFTJanusCoupledSectorHelmholtzSelection.lean": (
@@ -2612,6 +2624,17 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
 def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     """Require key declarations, facade imports, and placeholder-free proofs."""
     facades: dict[str, str] = {}
+
+    structured_jet_groupoid = (
+        repo_root / STRUCTURED_JET_GROUPOID_GATE
+    ).read_text(encoding="utf-8")
+    for declaration in STRUCTURED_JET_GROUPOID_DECLARATIONS:
+        if declaration not in structured_jet_groupoid:
+            raise AssertionError(
+                f"missing Program P structured-jet declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", structured_jet_groupoid):
+        raise AssertionError("proof placeholder found in structured-jet groupoid gate")
 
     for filename, (facade_path, declarations) in PROGRAM_P_GATES.items():
         source = (repo_root / GATE_ROOT / filename).read_text(encoding="utf-8")
