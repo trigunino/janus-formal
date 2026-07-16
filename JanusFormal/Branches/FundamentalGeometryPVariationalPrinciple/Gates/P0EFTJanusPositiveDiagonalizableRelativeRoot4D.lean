@@ -295,6 +295,85 @@ theorem positiveSimilarityDiagonalRoot_permutation_conjugation
   · simp [positiveSimilarityDiagonalRoot, Matrix.mul_apply, Matrix.diagonal,
       hIndices, Equiv.symm_apply_eq]
 
+/-- Conjugating a diagonal spectrum by a permutation matrix reindexes it. -/
+theorem diagonalSpectrum_permutation_conjugation
+    (eigenvalue : Spectrum4) (permutation : Equiv.Perm (Fin 4)) :
+    permutation.permMatrix Real * Matrix.diagonal eigenvalue *
+        (permutation⁻¹).permMatrix Real =
+      Matrix.diagonal (eigenvalue ∘ permutation) := by
+  classical
+  ext first second
+  by_cases hIndices : first = second
+  · subst second
+    simp [Matrix.mul_apply, Matrix.diagonal, Equiv.symm_apply_eq]
+  · simp [Matrix.mul_apply, Matrix.diagonal, hIndices, Equiv.symm_apply_eq]
+
+/-- The explicit diagonalization obtained by consistently permuting the
+eigenbasis columns, inverse rows and spectrum. -/
+def permutePositiveDiagonalization
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (permutation : Equiv.Perm (Fin 4)) :
+    PositiveDiagonalizableRelativeMatrix where
+  target := data.target
+  eigenbasis := data.eigenbasis * (permutation⁻¹).permMatrix Real
+  eigenbasisInv := permutation.permMatrix Real * data.eigenbasisInv
+  eigenvalue := data.eigenvalue ∘ permutation
+  eigenvalue_pos index := data.eigenvalue_pos (permutation index)
+  inv_mul_basis := by
+    have hPermutationInverse :
+        permutation.permMatrix Real * (permutation⁻¹).permMatrix Real = 1 := by
+      rw [← Matrix.permMatrix_mul]
+      simp
+    calc
+      (permutation.permMatrix Real * data.eigenbasisInv) *
+          (data.eigenbasis * (permutation⁻¹).permMatrix Real) =
+        permutation.permMatrix Real *
+          (data.eigenbasisInv * data.eigenbasis) *
+            (permutation⁻¹).permMatrix Real := by noncomm_ring
+      _ = permutation.permMatrix Real * 1 *
+          (permutation⁻¹).permMatrix Real := by rw [data.inv_mul_basis]
+      _ = 1 := by simpa using hPermutationInverse
+  basis_mul_inv := by
+    have hPermutationInverse :
+        (permutation⁻¹).permMatrix Real * permutation.permMatrix Real = 1 := by
+      rw [← Matrix.permMatrix_mul]
+      simp
+    calc
+      (data.eigenbasis * (permutation⁻¹).permMatrix Real) *
+          (permutation.permMatrix Real * data.eigenbasisInv) =
+        data.eigenbasis *
+          ((permutation⁻¹).permMatrix Real * permutation.permMatrix Real) *
+            data.eigenbasisInv := by noncomm_ring
+      _ = data.eigenbasis * 1 * data.eigenbasisInv := by
+        rw [hPermutationInverse]
+      _ = 1 := by simpa using data.basis_mul_inv
+  target_eq := by
+    have hPermutationInverse :
+        (permutation⁻¹).permMatrix Real * permutation.permMatrix Real = 1 := by
+      rw [← Matrix.permMatrix_mul]
+      simp
+    rw [← diagonalSpectrum_permutation_conjugation]
+    calc
+      data.target = data.eigenbasis * Matrix.diagonal data.eigenvalue *
+          data.eigenbasisInv := data.target_eq
+      _ = (data.eigenbasis * (permutation⁻¹).permMatrix Real) *
+          (permutation.permMatrix Real * Matrix.diagonal data.eigenvalue *
+            (permutation⁻¹).permMatrix Real) *
+          (permutation.permMatrix Real * data.eigenbasisInv) := by
+        calc
+          data.eigenbasis * Matrix.diagonal data.eigenvalue *
+              data.eigenbasisInv =
+            data.eigenbasis * 1 * Matrix.diagonal data.eigenvalue * 1 *
+              data.eigenbasisInv := by simp
+          _ = data.eigenbasis *
+              ((permutation⁻¹).permMatrix Real *
+                permutation.permMatrix Real) *
+              Matrix.diagonal data.eigenvalue *
+              ((permutation⁻¹).permMatrix Real *
+                permutation.permMatrix Real) * data.eigenbasisInv := by
+            rw [hPermutationInverse]
+          _ = _ := by noncomm_ring
+
 /-- Consistently permuting the eigenbasis columns, inverse rows and positive
 spectrum leaves the selected similarity root unchanged. -/
 theorem positiveSimilarityRoot_invariant_under_spectrum_permutation
@@ -334,6 +413,33 @@ theorem positiveSimilarityRoot_invariant_under_spectrum_permutation
         (permutation.permMatrix Real * positiveSimilarityDiagonalRoot first *
           (permutation⁻¹).permMatrix Real) *
         (permutation.permMatrix Real * first.eigenbasisInv) := by noncomm_ring
+
+/-- The explicit permuted presentation computes the same selected root. -/
+theorem positiveSimilarityRoot_permutePositiveDiagonalization
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (permutation : Equiv.Perm (Fin 4)) :
+    positiveSimilarityRoot data =
+      positiveSimilarityRoot (permutePositiveDiagonalization data permutation) :=
+  positiveSimilarityRoot_invariant_under_spectrum_permutation
+    data (permutePositiveDiagonalization data permutation) permutation rfl rfl rfl
+
+/-- Two positive diagonalizations of the same target produce the same root
+when their spectra differ only by a permutation. -/
+theorem positiveSimilarityRoot_eq_of_same_target_and_permuted_spectrum
+    (first second : PositiveDiagonalizableRelativeMatrix)
+    (permutation : Equiv.Perm (Fin 4))
+    (hTarget : first.target = second.target)
+    (hSpectrum : second.eigenvalue = first.eigenvalue ∘ permutation) :
+    positiveSimilarityRoot first = positiveSimilarityRoot second := by
+  calc
+    positiveSimilarityRoot first =
+        positiveSimilarityRoot
+          (permutePositiveDiagonalization first permutation) :=
+      positiveSimilarityRoot_permutePositiveDiagonalization first permutation
+    _ = positiveSimilarityRoot second :=
+      positiveSimilarityRoot_eq_of_same_target_and_ordered_spectrum
+        (permutePositiveDiagonalization first permutation) second hTarget
+          hSpectrum.symm
 
 theorem positiveSimilarityRoot_square
     (data : PositiveDiagonalizableRelativeMatrix) :
