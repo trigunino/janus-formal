@@ -99,6 +99,7 @@ theorem flatPositiveMetricPair_pt_fixed :
 
 /-- All independent smooth coefficient fields used by the current global
 configuration frontier. -/
+@[ext]
 structure IndependentFields where
   metrics : SmoothPositiveDiagonalMetricPair period hPeriod
   matter : SmoothQuotientField period hPeriod MatterFiber ×
@@ -123,6 +124,71 @@ def PTMatchedIndependent (fields : IndependentFields period hPeriod) : Prop :=
   throatPTPullback period hPeriod LLMetricFiber fields.llAuxMetric = fields.llAuxMetric ∧
   throatPTPullback period hPeriod Real fields.llMeasure = fields.llMeasure ∧
   throatPTPullback period hPeriod LLFieldFiber fields.llField = fields.llField
+
+/-- PT/exchange acting simultaneously on every independent field currently
+present in the global configuration package. -/
+def independentExchange
+    (fields : IndependentFields period hPeriod) :
+    IndependentFields period hPeriod where
+  metrics := ptExchange period hPeriod fields.metrics
+  matter := sectorExchange period hPeriod MatterFiber fields.matter
+  gauge := sectorExchange period hPeriod GaugeFiber fields.gauge
+  ghosts := sectorExchange period hPeriod GhostFiber fields.ghosts
+  auxiliaries := sectorExchange period hPeriod AuxiliaryFiber fields.auxiliaries
+  llAuxMetric := throatPTPullback period hPeriod LLMetricFiber fields.llAuxMetric
+  llMeasure := throatPTPullback period hPeriod Real fields.llMeasure
+  llField := throatPTPullback period hPeriod LLFieldFiber fields.llField
+
+@[simp]
+theorem independentExchange_involutive
+    (fields : IndependentFields period hPeriod) :
+    independentExchange period hPeriod
+        (independentExchange period hPeriod fields) = fields := by
+  ext <;> simp [independentExchange, ptExchange_involutive,
+    sectorExchange_involutive, throatPTPullback_involutive]
+
+/-- The whole independent field package with its exact PT involution. -/
+def independentExchangeEquiv :
+    IndependentFields period hPeriod ≃ IndependentFields period hPeriod where
+  toFun := independentExchange period hPeriod
+  invFun := independentExchange period hPeriod
+  left_inv := independentExchange_involutive period hPeriod
+  right_inv := independentExchange_involutive period hPeriod
+
+/-- Componentwise PT matching is exactly the fixed-point locus of the
+simultaneous exchange on the independent field package. -/
+theorem ptMatchedIndependent_iff_fixed_exchange
+    (fields : IndependentFields period hPeriod) :
+    PTMatchedIndependent period hPeriod fields ↔
+      independentExchange period hPeriod fields = fields := by
+  constructor
+  · rintro ⟨hMetrics, hMatter, hGauge, hGhosts, hAuxiliaries,
+      hLLAuxMetric, hLLMeasure, hLLField⟩
+    apply IndependentFields.ext
+    · exact hMetrics
+    · exact (ptMatched_iff_fixed_exchange period hPeriod MatterFiber _).1 hMatter
+    · exact (ptMatched_iff_fixed_exchange period hPeriod GaugeFiber _).1 hGauge
+    · exact (ptMatched_iff_fixed_exchange period hPeriod GhostFiber _).1 hGhosts
+    · exact (ptMatched_iff_fixed_exchange period hPeriod AuxiliaryFiber _).1
+        hAuxiliaries
+    · exact hLLAuxMetric
+    · exact hLLMeasure
+    · exact hLLField
+  · intro hFixed
+    have hMetrics := congrArg IndependentFields.metrics hFixed
+    have hMatter := congrArg IndependentFields.matter hFixed
+    have hGauge := congrArg IndependentFields.gauge hFixed
+    have hGhosts := congrArg IndependentFields.ghosts hFixed
+    have hAuxiliaries := congrArg IndependentFields.auxiliaries hFixed
+    have hLLAuxMetric := congrArg IndependentFields.llAuxMetric hFixed
+    have hLLMeasure := congrArg IndependentFields.llMeasure hFixed
+    have hLLField := congrArg IndependentFields.llField hFixed
+    exact ⟨hMetrics,
+      (ptMatched_iff_fixed_exchange period hPeriod MatterFiber _).2 hMatter,
+      (ptMatched_iff_fixed_exchange period hPeriod GaugeFiber _).2 hGauge,
+      (ptMatched_iff_fixed_exchange period hPeriod GhostFiber _).2 hGhosts,
+      (ptMatched_iff_fixed_exchange period hPeriod AuxiliaryFiber _).2 hAuxiliaries,
+      hLLAuxMetric, hLLMeasure, hLLField⟩
 
 /-- Metrics, principal root and throat matter traces induced from the
 independent fields; none is varied as an extra independent variable. -/

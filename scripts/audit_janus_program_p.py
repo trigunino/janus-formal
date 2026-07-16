@@ -1795,6 +1795,10 @@ PROGRAM_P_GATES = {
         (
             "structure IndependentFields",
             "def PTMatchedIndependent",
+            "def independentExchange",
+            "theorem independentExchange_involutive",
+            "def independentExchangeEquiv",
+            "theorem ptMatchedIndependent_iff_fixed_exchange",
             "structure InducedFields",
             "def induce",
             "theorem existsUnique_induced",
