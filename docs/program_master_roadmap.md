@@ -124,11 +124,15 @@ Current results:
   cover model transports across every tangent transition with a genuine
   `QuadraticForm.IsometryEquiv`; global orthonormal compatibility remains a
   separate contract;
+- **T/C** the Clifford `spinGroup` now acts faithfully on ambient vectors and
+  gives a multiplicative quadratic-preserving projection `Spin(Q) →* GL(4)`;
+  the twisted Pin extension is isolated exactly, while atlas transition lifts
+  and their Čech cocycle remain open;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** instantiate global orthonormal compatibility, compare its orientation
-  with the normal cocycle, then construct compatible tangent Pin/SpinC bundles.
+- **O** construct atlas-specific Spin/Pin transition lifts and their Čech
+  cocycle, compare them with the normal lift, then extend to SpinC.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
