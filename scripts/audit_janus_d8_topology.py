@@ -40,6 +40,10 @@ SMOOTH_DECK_DESCENT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothQuotient.lean"
 )
+SMOOTH_QUOTIENT_MANIFOLD_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothQuotientManifold.lean"
+)
 FACADE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
 )
@@ -184,6 +188,26 @@ SMOOTH_DECK_DESCENT_DECLARATIONS = (
     "theorem smoothHomeomorph_coordinateChange_mem_groupoid",
 )
 
+SMOOTH_QUOTIENT_MANIFOLD_DECLARATIONS = (
+    "theorem mappingTorus_isManifold_of_smooth_deck",
+    "def mappingTorusLocalSectionPartialDiffeomorph",
+    "theorem mappingTorus_projection_isLocalDiffeomorph",
+    "def fixedThroatQuotientChartedSpace",
+    "def reflectedSphereQuotientChartedSpace",
+    "theorem fixedThroatQuotient_isManifold",
+    "theorem reflectedSphereQuotient_isManifold",
+    "theorem fixedThroat_projection_isLocalDiffeomorph",
+    "theorem reflectedSphere_projection_isLocalDiffeomorph",
+    "theorem fixedThroatQuotientInclusion_contMDiff",
+)
+
+SMOOTH_QUOTIENT_MANIFOLD_STATUSES = (
+    "effectiveMappingTorusSmoothQuotientManifoldProved",
+    "effectiveThroatSmoothQuotientManifoldProved",
+    "quotientProjectionLocalDiffeomorphProved",
+    "fixedThroatQuotientInclusionContMDiffProved",
+)
+
 THROAT_COMPLEMENT_CONNECTED_STATUSES = (
     "positiveAndNegativeSphereSidesPathConnectedProved",
     "positiveCoverSidePathConnectedProved",
@@ -210,6 +234,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     smooth_deck_descent_gate = (
         repo_root / SMOOTH_DECK_DESCENT_GATE
+    ).read_text(encoding="utf-8")
+    smooth_quotient_manifold_gate = (
+        repo_root / SMOOTH_QUOTIENT_MANIFOLD_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
 
@@ -345,7 +372,10 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
             )
     if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_deck_descent_gate):
         raise AssertionError("proof placeholder found in D8 smooth-deck descent gate")
-    smooth_descent_import = "Gates.P0EFTJanusMappingTorusSmoothQuotient"
+    smooth_descent_import = (
+        "import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation."
+        "Gates.P0EFTJanusMappingTorusSmoothQuotient\n"
+    )
     if facade.count(smooth_descent_import) != 1:
         raise AssertionError("D8 facade omits the smooth-deck descent gate")
     if facade.count("mappingTorusSmoothDeckDescentFrontierClosed s") != 1:
@@ -353,6 +383,27 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     status = "smoothDeckActionsAndAtlasTransitionsProved"
     if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
         raise AssertionError(f"D8 facade omits smooth-deck status: {status}")
+
+    for declaration in SMOOTH_QUOTIENT_MANIFOLD_DECLARATIONS:
+        if declaration not in smooth_quotient_manifold_gate:
+            raise AssertionError(
+                f"missing D8 smooth-quotient-manifold declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_quotient_manifold_gate):
+        raise AssertionError("proof placeholder found in D8 smooth quotient manifold")
+    smooth_quotient_import = (
+        "import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation."
+        "Gates.P0EFTJanusMappingTorusSmoothQuotientManifold\n"
+    )
+    if facade.count(smooth_quotient_import) != 1:
+        raise AssertionError("D8 facade omits the smooth quotient manifold gate")
+    if facade.count("mappingTorusSmoothQuotientManifoldCoreClosed s") != 1:
+        raise AssertionError("D8 smooth core omits smooth quotient manifold milestone")
+    for status in SMOOTH_QUOTIENT_MANIFOLD_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(
+                f"D8 facade omits smooth quotient manifold status: {status}"
+            )
 
 
 def run_audit() -> None:

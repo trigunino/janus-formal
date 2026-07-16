@@ -84,11 +84,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     - [x] Donner aux covers concrets `S³ × ℝ` et `S² × ℝ` leurs atlas
       analytiques, puis prouver que les deux quotients sont des variétés
       topologiques `C⁰` et que la projection de covering est `C⁰`.
-    - [ ] Promouvoir l'atlas quotient et la projection de `C⁰` à `C∞`.
+    - [x] Promouvoir l'atlas quotient et la projection de `C⁰` à `C∞`.
       - [x] Prouver la lissité des actions de deck sur les deux covers
         analytiques, la lissité de l'inclusion du throat cover, la loi locale
         de transition entre sections et sa compatibilité au groupoïde lisse.
-      - [ ] Installer effectivement les instances `ChartedSpace` et
+      - [x] Installer effectivement les instances `ChartedSpace` et
         `IsManifold` sur les deux quotients et prouver la projection `C∞`.
 - [ ] Construire l'immersion du throat et sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
@@ -108,6 +108,9 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     non-nulle/null/joint.
     - [x] Prouver que l'inclusion du throat au niveau cover est un embedding
       topologique `C⁰` et que l'inclusion quotient est `C⁰`.
+    - [x] Prouver que l'inclusion injective du throat quotient est `C∞` pour
+      les atlas quotient effectivement installés ; l'immersion différentielle
+      et la propriété d'embedding lisse restent ouvertes.
     - [ ] Promouvoir cette inclusion en embedding lisse et construire les
       strates non-nulles/nulles/joints.
 - [ ] Construire la ligne normale, son orientation locale et son recollement

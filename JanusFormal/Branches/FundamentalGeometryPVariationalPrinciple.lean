@@ -76,6 +76,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFlatFieldBranch4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusContinuousFieldSpaces4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDeckInvariantFields4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixDiagonalGaugeNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixInteractionFrechetNoether
@@ -266,6 +267,7 @@ structure ProgramStatus where
   paEffectiveD8FlatDiagonalFieldBranch4DProved : Prop
   paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved : Prop
   paMappingTorusSmoothDeckInvariantFields4DProved : Prop
+  paEffectiveD8SmoothQuotientManifoldProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
@@ -444,6 +446,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8FlatDiagonalFieldBranch4DProved /\
   s.paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved /\
   s.paMappingTorusSmoothDeckInvariantFields4DProved /\
+  s.paEffectiveD8SmoothQuotientManifoldProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\

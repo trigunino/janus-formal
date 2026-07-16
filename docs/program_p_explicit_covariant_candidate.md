@@ -40,8 +40,11 @@ The parametrized global-field gate is now based on the actual effective D8
 mapping-torus and fixed-throat quotients.  The two continuous PT maps are
 involutive, their common quotient throat inclusion is equivariant, and the
 independent-field exchange preserves that same inclusion.  This is a
-same-object topological base bridge; it does not construct `IsManifold`, a
-smooth atlas or curved tensor fields.
+same-object topological base bridge. The same two quotient objects now carry
+covering-induced analytic `ChartedSpace` and `IsManifold` structures; both
+cover projections are analytic local diffeomorphisms and the injective throat
+inclusion is `C∞`. A differential immersion/embedding theorem and curved
+tensor fields are still not constructed.
 
 On exactly those bases, a nonempty algebraic field branch now takes both
 metric matrices to Minkowski, both scalar matter fields to zero and the
