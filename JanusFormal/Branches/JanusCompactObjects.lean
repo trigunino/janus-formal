@@ -2,11 +2,13 @@ import JanusFormal.Branches.JanusCompactObjects.Gates.P0EFTJanusCO01PlugstarSour
 import JanusFormal.Branches.JanusCompactObjects.Gates.P0EFTJanusCOGRBaseline
 import JanusFormal.Branches.JanusCompactObjects.Gates.P0EFTJanusCOFutureBimetricInterface
 import JanusFormal.Branches.JanusCompactObjects.Gates.P0EFTJanusCORayTracingBinaryGR
+import JanusFormal.Branches.JanusCompactObjects.Gates.P0EFTJanusCOProgramPTechnicalBridge
 
 namespace JanusFormal
 namespace JanusCompactObjects
 
 structure ProgramStatus where
+  programPTechnicalBridge : Prop
   co01SourceFormulaCore : Prop
   co01PhysicalPlugstarClosure : Prop
   co02GRReference : Prop

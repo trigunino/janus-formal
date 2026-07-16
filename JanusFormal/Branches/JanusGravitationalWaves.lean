@@ -3,6 +3,7 @@ import JanusFormal.Branches.JanusGravitationalWaves.Gates.P0EFTJanusGWFLRWTensor
 import JanusFormal.Branches.JanusGravitationalWaves.Gates.P0EFTJanusGWStabilityCausalityGate
 import JanusFormal.Branches.JanusGravitationalWaves.Gates.P0EFTJanusGWOscillationGate
 import JanusFormal.Branches.JanusGravitationalWaves.Gates.P0EFTJanusGWSourceDetectorInterface
+import JanusFormal.Branches.JanusGravitationalWaves.Gates.P0EFTJanusGWProgramPTechnicalBridge
 
 namespace JanusFormal
 namespace JanusGravitationalWaves
@@ -10,6 +11,7 @@ namespace JanusGravitationalWaves
 /-- J-GW starts with a closed Minkowski TT gate. The FLRW action, matter
 projection, waveform and likelihood gates remain open. -/
 structure ProgramStatus where
+  programPTechnicalBridge : Prop
   gw01MinkowskiTensorGate : Prop
   gw01ConditionalFLRWTensorInterface : Prop
   gw01PhysicalFLRWTensorGate : Prop

@@ -3,11 +3,13 @@ import JanusFormal.Branches.JanusSigmaThermodynamics.Gates.P0EFTJanusTH02PTOnsag
 import JanusFormal.Branches.JanusSigmaThermodynamics.Gates.P0EFTJanusTH03EntropyPositivity
 import JanusFormal.Branches.JanusSigmaThermodynamics.Gates.P0EFTJanusTH04MovingInterfaceRelaxation
 import JanusFormal.Branches.JanusSigmaThermodynamics.Gates.P0EFTJanusTH05QuantumEntropyBridge
+import JanusFormal.Branches.JanusSigmaThermodynamics.Gates.P0EFTJanusTHProgramPTechnicalBridge
 
 namespace JanusFormal
 namespace JanusSigmaThermodynamics
 
 structure ProgramStatus where
+  programPTechnicalBridge : Prop
   th01ConditionalBalances : Prop
   th02ConditionalPTParities : Prop
   th03ConditionalEntropyPositivity : Prop
