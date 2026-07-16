@@ -68,6 +68,10 @@ SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
 )
+NORMAL_ROOT_PT_CONJUGATION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusNormalRootPTConjugation.lean"
+)
 COMPACT_QUOTIENT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusCompactQuotient.lean"
@@ -327,11 +331,22 @@ SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "theorem one_loop_root_transition_fourth",
 )
 
+NORMAL_ROOT_PT_CONJUGATION_DECLARATIONS = (
+    "theorem conj_normalRootMultiplier",
+    "theorem conj_quarterRootRepresentation",
+    "def rootPTConjugation",
+    "theorem rootPTConjugation_involutive",
+    "theorem rootPTConjugation_intertwines",
+    "theorem rootPTConjugation_coordChange",
+    "theorem rootPTConjugation_double",
+)
+
 GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatNormalGlobalAlgebraicEquivProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
+    "fixedThroatNormalZ4RootPTConjugationProved",
 )
 
 COMPACT_QUOTIENT_DECLARATIONS = (
@@ -393,6 +408,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
+    ).read_text(encoding="utf-8")
+    normal_root_pt_conjugation_gate = (
+        repo_root / NORMAL_ROOT_PT_CONJUGATION_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
     compact_quotient_gate = (repo_root / COMPACT_QUOTIENT_GATE).read_text(
@@ -651,6 +669,18 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     if facade.count(smooth_normal_z4_import) != 1:
         raise AssertionError("D8 facade omits the smooth normal-Z4 root gate")
+    for declaration in NORMAL_ROOT_PT_CONJUGATION_DECLARATIONS:
+        if declaration not in normal_root_pt_conjugation_gate:
+            raise AssertionError(
+                f"missing D8 normal-root PT declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", normal_root_pt_conjugation_gate):
+        raise AssertionError("proof placeholder found in D8 normal-root PT gate")
+    normal_root_pt_import = (
+        "Gates.P0EFTJanusMappingTorusNormalRootPTConjugation"
+    )
+    if facade.count(normal_root_pt_import) != 1:
+        raise AssertionError("D8 facade omits the normal-root PT gate")
     for status in GLOBAL_NORMAL_AND_Z4_STATUSES:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(

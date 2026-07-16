@@ -146,6 +146,9 @@ correspondance algébrique des coefficients, puis asymptotique effective.
 - [x] Construire les deux racines normales `Z4` comme vraies lignes complexes
   globales sur le throat, avec sous-jacent réel lisse et carré de chaque
   transition égal au cocycle normal pour tout enroulement.
+  - [x] Prouver que la conjugaison complexe, vue comme isométrie réelle
+    involutive, échange les deux racines et entrelace leurs transitions pour
+    tout enroulement. Le relèvement principal ambiant reste séparé.
 - [ ] Construire les relèvements principaux Pin/SpinC globaux compatibles avec
   ces lignes racines, et pas seulement des phases ou cocycles fournis.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités

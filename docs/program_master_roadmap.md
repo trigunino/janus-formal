@@ -105,7 +105,7 @@ Current results:
 - **T/C** the associated sign representation identifies the orientation cover with the even-winding kernel and proves pulled-back `w1 = 0`;
 - **T/C** the integer deck action on the normal-line cover satisfies the identity and composition laws;
 - **T/C** the two `Z4` lifts obey the cyclic cocycle law, are exchanged by PT, and reproduce the one-, two- and four-loop boundary-condition hierarchy;
-- **T/C** both lifts now define genuine global complex line bundles whose smooth real underliers have analytic transitions and whose squares recover the normal sign for every winding;
+- **T/C** both lifts now define genuine global complex line bundles whose smooth real underliers have analytic transitions, whose squares recover the normal sign for every winding, and whose full cocycles are exchanged by involutive real-linear complex conjugation;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;

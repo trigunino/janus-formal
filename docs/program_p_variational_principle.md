@@ -629,7 +629,9 @@ actually supplied by the diagonal package, while a literal finite D10
 product-mode truncation uses the same period and exact PT-regulator pairing.
 A smooth section of the true D8 normal line fills the D9 normal slot locally,
 with one-loop sign equal to the square of either constructed global `Z4` root
-line; no canonical global scalar normal coordinate is claimed.
+line. Real-linear complex conjugation now exchanges the two root-line descent
+cocycles for every winding and is involutive; no ambient Pin/SpinC principal
+bundle or canonical global scalar normal coordinate is claimed.
 Diffeomorphism-ghost/SpinC/general-metric and
 action--Hessian--domain identifications remain explicit. The global LL action
 also has its exact finite-measure measure/flux derivative and algebraic
