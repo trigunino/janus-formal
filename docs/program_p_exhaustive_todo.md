@@ -504,6 +504,17 @@ par toute évolution admissible.
           cover depuis `mfderiv` de l'immersion, prouver la naturalité exacte
           sous la dérivée deck et son invariance lorentzienne. La descente de
           cette section dépendante vers le quotient reste ouverte.
+          - [x] Étendre l'invariance au vrai `mfderiv` de tout enroulement,
+            construire l'équivalence tangentielle de la projection quotient,
+            isoler les données exactes de descente, prouver leur unicité et la
+            symétrie automatique du tenseur quotient.
+          - [ ] Construire `IntrinsicTensorQuotientDescent` par les inverses
+            locaux de `mappingTorusMk`; Mathlib n'offre pas de descente générique
+            pour une `ContMDiffSection` bilinéaire dépendante.
+          - [ ] Construire `IntrinsicCoverLorentzCertificate`, puis transporter
+            musical, non-dégénérescence et signature via
+            `quotientProjectionDerivativeEquiv` afin d'obtenir la vraie
+            `SmoothGeneralLorentzMetric` quotient.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
