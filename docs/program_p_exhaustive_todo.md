@@ -446,10 +446,15 @@ par toute évolution admissible.
           réduire leur instanciation à
           `FiniteSmoothTangentFrameRawPatchContinuity`, qui ferme ensuite
           automatiquement les coefficients locaux et l'ellipticité uniforme.
-        - [ ] Décharger cette dernière régularité : Mathlib contrôle
-          `tangentCoordChange` pour deux cartes fixes, pas la transition
-          `p ↦ tangentCoordChange anchor p p` vers `chartAt p` variable ; sinon
-          reformuler les composantes holonomes de façon locale intrinsèque.
+        - [x] Reformuler le côté graphe dans les trivialisations fixes : prouver
+          l'égalité pointwise exacte entre la norme du jet du vrai repère fini
+          et le jet des composantes localisées par la partition, sans hypothèse
+          de continuité des coordonnées brutes.
+        - [ ] Dominer uniformément cette densité localisée par la densité
+          jacobienne holonome actuelle, ou remplacer l'action par la densité
+          intrinsèque et prouver leur équivalence. Ce dernier verrou énergétique
+          est exactement la transition variable `fixed anchor → chartAt p`, que
+          Mathlib ne contrôle que lorsque les deux cartes sont fixes.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
