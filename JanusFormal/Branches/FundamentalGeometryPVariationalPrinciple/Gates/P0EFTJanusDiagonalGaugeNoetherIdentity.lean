@@ -293,6 +293,52 @@ theorem flowGaugeInvariant_iff_infinitesimallyDiagonalGaugeInvariant
       action euler (completeFlowDiagonalGaugeGenerator flow) hGradient,
     eulerBianchiAnnihilation_completeFlow_iff]
 
+/-- On a scalar flow parameter, the formal-adjoint constraint is scalar
+multiplication by the Euler pairing with the flow generator. -/
+@[simp]
+theorem formalAdjointEulerConstraint_completeFlow_apply
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration)
+    (q : Configuration) (scalar : ℝ) :
+    formalAdjointEulerConstraint euler
+        (completeFlowDiagonalGaugeGenerator flow) q scalar =
+      scalar * euler q (flow.generator q) := by
+  simp [formalAdjointEulerConstraint, completeFlowDiagonalGaugeGenerator]
+
+/-- Vanishing of the complete-flow formal-adjoint constraint is exactly the
+nonlinear Euler annihilation identity for the same supplied flow. -/
+theorem completeFlow_formalAdjoint_constraint_iff
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration) :
+    (∀ q, formalAdjointEulerConstraint euler
+        (completeFlowDiagonalGaugeGenerator flow) q = 0) ↔
+      EulerAnnihilatesGenerator flow euler := by
+  constructor
+  · intro hConstraint q
+    have hAtOne := congrArg
+      (fun constraint : ℝ →L[ℝ] ℝ => constraint 1) (hConstraint q)
+    simpa using hAtOne
+  · intro hAnnihilates q
+    apply ContinuousLinearMap.ext
+    intro scalar
+    simp [hAnnihilates q]
+
+/-- For an action with its actual Euler derivative, invariance under the
+complete flow is equivalent directly to the vanishing constraint `Rᵀ E = 0`
+for the scalar generator induced by that same flow. -/
+theorem flowGaugeInvariant_iff_completeFlow_formalAdjoint_constraint
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration)
+    (action : Configuration → ℝ)
+    (hGradient : ∀ q, HasFDerivAt action (euler q) q) :
+    FlowGaugeInvariant flow action ↔
+      ∀ q, formalAdjointEulerConstraint euler
+        (completeFlowDiagonalGaugeGenerator flow) q = 0 := by
+  rw [flowGaugeInvariant_iff_infinitesimallyDiagonalGaugeInvariant
+      flow euler action hGradient,
+    infinitesimal_invariance_iff_formalAdjoint_bianchi_constraint
+      action euler (completeFlowDiagonalGaugeGenerator flow) hGradient]
+
 /-- A constant action and cancelling sector Euler contributions provide an
 exact counterexample to splitting a combined Noether identity. -/
 def counterexampleAction : ℝ → ℝ := fun _ => 0
