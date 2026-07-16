@@ -452,6 +452,11 @@ par toute évolution admissible.
     Hilbert d'énergie, le Riesz fort, son domaine dense, son noyau nul et
     l'équivalence stationnaire/faible/forte. La dynamique lorentzienne complète
     n'est pas déclarée positive.
+    - [x] Prolonger ce Riesz au complété statique comme opérateur identité
+      borné auto-adjoint, prouver noyau nul, image totale fermée, critère
+      Fredholm et indice zéro, puis identifier son pairing au Jacobi/Hessien de
+      la même action. Ce gate exclut explicitement le secteur dynamique de sa
+      portée et n'affirme aucune résolvante compacte.
   - [x] Sur la carte plate à métrique fixe, décomposer pointwise la variation
     holonomique en opérateur d'Euler scalaire et divergence du flux de bord.
   - [x] Après hypothèses explicites d'intégrabilité et
