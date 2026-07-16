@@ -278,13 +278,13 @@ The exhaustive remaining-work checklist is
   cover every independent, induced and LL coordinate, and this same witness
   inhabits a continuous PT-matched effective configuration with the exact
   throat inclusion and root-square equation. This is topological only: it
-  supplies no smooth manifold, Sobolev spaces, boundary conditions, global
+  supplies by itself no smooth manifold, Sobolev spaces, boundary conditions, global
   root map, stationarity or stability.
   Independently, the new analytic cover atlas carries a genuine space of
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Sobolev trace theory, tensorial gauge covariance, BRST and curved PDEs remain open. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. From a supplied finite smooth spanning family, the completed first-jet graph `H¹` space has dense smooth fields and continuous forgetting to `L²`; a supplied quantitative trace bound yields the unique continuous throat trace extension. Constructing that family and proving the bound intrinsically remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Tensorial gauge covariance, BRST and the curved Euler--flux PDE remain open. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
   More strongly, explicit quadratic and quartically deformed two-variable
   extensions have the same proportional branch, the same genuine longitudinal
   derivatives and the same complete transverse two-jet, with Hessian
@@ -379,8 +379,16 @@ The exhaustive remaining-work checklist is
   differentiation contract, with exact exchange invariance and full PT
   invariance for a measure-preserving base involution. The same construction
   is instantiated on the effective D8 quotient for any supplied PT-invariant
-  Borel measure. The domination and invariant measure are hypotheses, and the
-  root domain remains local rather than globally causal;
+  Borel measure. The domination and invariant measure are hypotheses, and this
+  IFT chart remains local;
+- **T/C** a separate global fixed-frame diagonal Lorentz domain is open,
+  connected and causally compatible through one common strict timelike
+  direction; its nonnegative closure and spectral frontier are exact. The
+  positive root and full Candidate-A chain are smooth there. On the same
+  smooth D8 metric fields, positive exponential curves give the exact
+  pointwise density derivative at every parameter and the integrated
+  functional derivative under an explicit domination contract. General
+  non-co-diagonal Lorentz fields remain open;
 - **T/C** one symmetric nondegenerate `4 x 4` metric now supplies both the
   exact inverse and `sqrt(|det g|)` in a scalar-density curve on an open
   fixed-sign component; its actual pointwise variation is the pairing with an
@@ -400,6 +408,12 @@ The exhaustive remaining-work checklist is
   pairing. Automatic domination, derivation of flux cancellation from boundary
   conditions, curved covariance, covariant matter PDE and conservation remain
   open;
+- **T/C** on the compact smooth D8 quotient, the fixed-frame scalar action
+  ties value, genuine manifold differential, inverse metric and metric volume
+  to the same scalar/metric fields. Its affine scalar curve has an exact
+  pointwise and integrated first variation at fixed metric and measure under
+  an explicit integrability contract. A covariant Euler--flux identity is not
+  claimed;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
@@ -421,13 +435,13 @@ The exhaustive remaining-work checklist is
   nondegenerate.
   Identification with global Sobolev bundle sections, Fourier-series
   differentiation, global PDE and boundary exactness remain open;
-- **T/C/N** typed non-null, null and joint gravitational slots plus a generic
-  supplied-measure worldvolume placeholder are explicit; the actual LL action,
-  throat integration and bulk-flux cancellation are not proved;
+- **T/C/N** typed non-null, null and joint gravitational slots are explicit;
+  the compact-throat LL action and zero branch are actual integrals, while LL
+  PDEs, full stratification and physical bulk-flux cancellation remain open;
 - **T/N** additive translation of reduced scale variables is classified and
   fails for a concrete positive interaction; any relation to the covariant
   diagonal diffeomorphism still requires a separate bridge;
-- **O** smooth Lorentz square-root domain, metric Euler equations, physical
+- **O** general tensorial Lorentz square-root domain, metric Euler equations, physical
   GHY/null/joint variation, Bianchi/constraint algebra, exact stability,
   anomalies, normalization and finite counterterms.
 

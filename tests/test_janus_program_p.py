@@ -51,7 +51,15 @@ def test_program_p_global_diagonal_lorentz_root_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_global_diagonal_causal_frontier_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_diagonal_two_sector_density_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_effective_d8_candidate_a_functional_variation_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
@@ -118,7 +126,19 @@ def test_program_p_effective_d8_l2_trace_and_global_fields_are_integrated() -> N
     assert_program_p_gate_integrity()
 
 
+def test_program_p_effective_d8_h1_graph_trace_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_holonomic_scalar_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_holonomic_scalar_action_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_holonomic_scalar_variation_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 def test_program_p_diffeomorphism_ll_and_null_domain_are_integrated() -> None:

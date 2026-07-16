@@ -155,9 +155,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
 - [x] Définir le domaine admissible diagonal global des paires indépendantes
   `(g_plus, g_minus)` en dimension quatre.
   - [x] Non-dégénérescence et signature lorentzienne sur ce domaine diagonal.
-  - [ ] Compatibilité causale requise.
+  - [x] Compatibilité causale requise sur le domaine diagonal retenu : les deux
+    métriques partagent explicitement la même direction temporelle stricte.
   - [x] Condition spectrale positive garantissant la racine réelle choisie sur ce domaine.
-  - [ ] Description des composantes connexes et de leur frontière.
+  - [x] Description de la composante connexe positive retenue, de sa clôture
+    non négative et de sa frontière spectrale exacte, pour une ou deux métriques.
   - [x] Sur le sous-domaine global à repère fixé des deux métriques diagonales
     lorentziennes `diag(-a₀,a₁,a₂,a₃)` et `diag(-b₀,b₁,b₂,b₃)`, imposer les
     huit magnitudes strictement positives et prouver ouverture, convexité,
@@ -171,8 +173,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Remplacer le simple voisinage éventuel par un domaine ouvert explicite
     tiré de la cible/source de `localSquareChart`, avec continuité, carré exact
     sur tout le domaine et unicité parmi les racines restant dans la source IFT.
-  - [ ] Étendre cette branche locale en une sélection principale, causale et
-    globale sur le domaine admissible.
+  - [ ] Identifier formellement la branche IFT locale à la sélection principale
+    globale sur leur recouvrement ; la sélection diagonale globale est causale,
+    mais ce théorème de recollement précis reste à écrire.
   - [x] Construire sans recollement la racine principale positive sur tout le
     sous-domaine diagonal global et prouver que son carré est exactement
     `g_plus⁻¹ g_minus`.
@@ -226,6 +229,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Étendre la chaîne mesure/racine/potentiel aux deux ordres métriques sur
     tout le sous-domaine diagonal global, avec une dérivée de Fréchet portant
     sur les deux métriques indépendantes.
+  - [x] Sur les mêmes champs métriques lisses du quotient D8, construire leurs
+    courbes exponentielles positives, dériver exactement la densité Candidate A
+    à tout paramètre et dériver le fonctionnel intégré sous un contrat explicite
+    de domination uniforme.
 - [x] Prouver réalité, échange PT et régularité spatiale de la densité diagonale globale.
   - [x] Sur le sous-domaine diagonal global, prouver la réalité, la
     différentiabilité en chaque point, l'invariance exacte par échange et
@@ -293,8 +300,16 @@ par toute évolution admissible.
     - [x] Construire la trace lisse vers le throat réel, sa linéarité et son
       équivariance PT exacte.
     - [x] Construire un espace de Dirichlet exact, PT-stable et non vide.
-    - [ ] Construire les échelles Sobolev sur le quotient et le vrai théorème de
-      trace Sobolev ; aucune continuité Sobolev de la trace n'est encore affirmée.
+    - [ ] Construire les échelles Sobolev intrinsèques sur le quotient et le
+      vrai théorème de trace Sobolev inconditionnel.
+      - [x] À partir d'une famille tangentielle lisse finie couvrante fournie,
+        construire le graphe global du premier jet dans `L²`, sa fermeture
+        complète `H1GraphSpace`, l'inclusion continue vers `L²` et la densité
+        des champs lisses.
+      - [x] Sous l'inégalité quantitative explicite `HasH1TraceBound`, étendre
+        canoniquement la trace lisse au graphe `H¹`, avec accord sur les lisses,
+        borne de norme et unicité. La construction de la famille couvrante,
+        l'inégalité de trace et l'identification intrinsèque restent ouvertes.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
@@ -313,11 +328,19 @@ par toute évolution admissible.
   - [ ] Étendre l'action aux métriques générales, matière, jauge, ghosts,
     auxiliaires et conditions au bord retenues.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
+  - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
+    à repère diagonal fixé : valeur, différentielle de variété, contraction par
+    l'inverse de la même métrique et volume métrique proviennent des mêmes
+    objets ; la covariance tensorielle générale reste ouverte.
+  - [x] À métrique et mesure globales fixes, varier le même champ scalaire par
+    une courbe affine, prouver l'affinité exacte de sa différentielle, puis la
+    dérivée pointwise et intégrée de l'action sous un contrat d'intégrabilité
+    explicite. La forme Euler--flux covariante reste ouverte.
 - [x] Construire sur la carte plate continue `R^4` le jet holonomique d'un
   champ scalaire différentiable, sa ligne affine dans l'espace des fonctions
   et sa variation pointwise puis intégrée sous un contrat explicite de
   mesurabilité, domination intégrable et Lipschitz local.
-- [ ] Relier globalement valeur, gradient, mesure et inverse métrique à un même
+- [x] Relier globalement valeur, gradient, mesure et inverse métrique à un même
   champ et à une même métrique.
   - [x] Au niveau pointwise 4D, relier une valeur et un covecteur-gradient fixés
     à l'inverse exact et à `sqrt(|det g|)` issus d'une seule métrique symétrique
@@ -334,7 +357,10 @@ par toute évolution admissible.
       scalaire global `C∞` sur le quotient D8 et prouver son unicité.
     - [x] Prouver les règles de chaîne exactes de cette différentielle sous
       restriction au throat et pullback PT.
-    - [ ] Ajouter contraction métrique, complétion Sobolev et équation d'Euler
+    - [x] Sur le secteur diagonal global, contracter cette différentielle par
+      l'inverse exact de la même métrique, multiplier par son volume
+      `sqrt(|det g|)`, intégrer la densité et construire deux secteurs échangés.
+    - [ ] Achever la complétion Sobolev intrinsèque et l'équation d'Euler
       covariante avec les conditions au bord retenues.
 - [ ] Dériver les équations matière covariantes.
   - [x] Sur la carte plate à métrique fixe, décomposer pointwise la variation

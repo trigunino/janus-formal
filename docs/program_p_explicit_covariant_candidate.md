@@ -43,8 +43,11 @@ independent-field exchange preserves that same inclusion.  This is a
 same-object topological base bridge. The same two quotient objects now carry
 covering-induced analytic `ChartedSpace` and `IsManifold` structures; both
 cover projections are analytic local diffeomorphisms and the injective throat
-inclusion is `C∞`. A differential immersion/embedding theorem and curved
-tensor fields are still not constructed.
+inclusion is `C∞`, with injective differential and rank-one pointwise normal
+quotient. Its analytic rank-one normal `VectorBundle` has one-loop transition
+`-id` and pointwise linear identifications with those quotients.
+`IsSmoothEmbedding`, their global smooth identification and curved tensor
+fields are still not constructed.
 
 On exactly those bases, a nonempty algebraic field branch now takes both
 metric matrices to Minkowski, both scalar matter fields to zero and the
@@ -54,9 +57,8 @@ Concrete continuity predicates cover every independent, induced and LL
 coordinate; the same branch therefore inhabits a continuous PT-matched
 effective configuration with exact throat inclusion and root-square equation.
 This first realization is topological; the smooth coefficient-field upgrade
-is described next. It still supplies no Sobolev completion,
-boundary traces/conditions, field equation, stationarity, stability or global
-root map.
+is described next. By itself it supplies no field equation, stationarity,
+stability or global root map.
 
 The analytic D8 cover now provides the next layer: coefficient fields into any
 normed real fiber can be required to be genuinely smooth upstairs and exactly
@@ -66,17 +68,21 @@ descent is now `C∞`; conversely every smooth quotient coefficient field pulls
 back smoothly, and the two constructions are an exact equivalence. In
 particular, two metric-coefficient fields,
 two scalar fields and an identity-root coefficient field have a nonempty
-constant smooth witness directly on the quotient. This is not yet a
-Lorentz-constrained tensor-bundle configuration or a Sobolev/traced field
-space.
+constant smooth witness directly on the quotient. Smooth fields embed in the
+completed `L²` spaces and admit an exact smooth throat trace/Dirichlet sector.
+A complete first-jet graph `H¹` space and its trace extension are constructed
+from a supplied finite spanning frame and quantitative trace bound; proving
+those inputs intrinsically remains open. This is not yet a general
+Lorentz-constrained tensor-bundle configuration.
 
 The admissible Lorentz domain cannot be all metric pairs. The square-root and
 causal-compatibility analysis of
 [Hassan--Kocic](https://arxiv.org/abs/1706.07806) and the geometric-mean
 parametrization of [Kocic](https://arxiv.org/abs/1803.09752) provide the target
 local domain: compatible null-cone/time orientations with a covariantly
-selected real root and compatible `3+1` split. Those analytic and causal
-conditions are not yet encoded by the current finite matrix contracts.
+selected real root and compatible `3+1` split. Those conditions are now
+encoded on the selected positive diagonal subdomain, but not on the general
+Lorentz matrix domain.
 
 A concrete nonempty subchart is now encoded: both Lorentz metrics are
 co-diagonal with one negative and three positive entries built from positive
@@ -356,12 +362,14 @@ continuous-linear two-sided inverse, and the conditional square-root
 derivative specializes to it. This has now been globalized on the complete
 fixed-frame diagonal Lorentz domain
 `diag(-a₀,a₁,a₂,a₃), diag(-b₀,b₁,b₂,b₃)` with all magnitudes positive: the
-domain is open, convex, connected and nonempty; the positive principal root
+domain is open, convex, connected and nonempty; both metrics share an explicit
+strict timelike direction, and the nonnegative closure and exact spectral
+frontier are computed. The positive principal root
 exists uniquely in the diagonal branch, is `C∞`, its Sylvester map has an
 explicit inverse everywhere, and its full derivative contains both metric
 variations including the inverse-plus term. This remains restricted to the
-simultaneously diagonal fixed-frame sector, not the full causal-compatible
-matrix domain. More generally in dimension four, a supplied
+simultaneously diagonal fixed-frame sector, not the full general
+causal-compatible matrix domain. More generally in dimension four, a supplied
 continuous square-root lift that remains pointwise Sylvester-regular agrees
 locally with the corresponding IFT branches and is therefore differentiable
 with the inverse-Sylvester derivative.  The continuous lift and regularity are
@@ -387,8 +395,11 @@ through the genuine five-coefficient spectral potential and determinant
 measure in both metric orders. The resulting real two-sector density has a
 full Frechet derivative in both independent scale spectra, its domain is
 exchange invariant, and the density itself is exactly exchange invariant.
-This remains pointwise and fixed-frame diagonal, not a curved covariant field
-functional on the full Lorentz matrix domain.
+On the actual smooth D8 quotient, the same positive metric fields now follow
+global exponential curves staying in this domain; the Candidate-A density is
+differentiated pointwise at every parameter and its integral is differentiated
+under an explicit domination contract. This remains fixed-frame diagonal, not
+a tensorial covariant functional on the full Lorentz matrix domain.
 
 At the independent Minkowski pair, the full Candidate-A density is now also
 differentiated as one actual composite of the plus determinant measure, the
@@ -711,11 +722,18 @@ Implemented in the current finite, spectral or pointwise models:
 - actual analytic D8 spacetime/throat quotients with analytic PT
   diffeomorphisms, and a closed smooth throat inclusion with injective
   differential and rank-one pointwise normal quotient;
+- an analytic rank-one normal `VectorBundle`, exact one-loop transition `-id`
+  and pointwise linear equivalence with the differential normal quotient;
 - exact involutive PT pullback/exchange on smooth quotient coefficient fields;
+- a complete first-jet graph `H¹` realization with dense smooth fields and a
+  unique continuous throat trace under an explicit quantitative trace bound;
 - two independent smooth positive diagonal Lorentz metric fields on that same
   quotient, their exact unique positive root, and a smooth Candidate-A density
   using those very objects, with manifold chain rule and invariant integrated
-  action for every supplied PT-invariant Borel measure;
+  action for every supplied PT-invariant Borel measure, plus exact global-field
+  functional variation along positive curves under a domination contract;
+- exact causal compatibility and spectral frontier of the selected global
+  diagonal Lorentz domain;
 - exact spectral weight reciprocity for all four nonzero eigenvalues;
 - exact metric-volume ratio for supplied nondegenerate square-root data and
   its identification with the spectral ratio on a supplied diagonalization;
@@ -763,6 +781,11 @@ Implemented in the current finite, spectral or pointwise models:
   explicit integrability and zero-integrated-flux hypotheses. Curved-manifold
   covariance, derivation of flux cancellation from boundary data, a strong
   PDE, conservation and automatic domination are not claimed;
+- on the compact smooth D8 quotient, a fixed-frame diagonal scalar action in
+  which value, genuine manifold differential, inverse metric and metric volume
+  come from the same scalar/metric fields, together with exact pointwise and
+  integrated scalar variation at fixed metric and measure under an explicit
+  integrability contract; tensorial covariance and Euler--flux form remain open;
 - an unconditional local four-dimensional relative-root branch around the
   independent diagonal Minkowski metric pair, obtained by composing the
   identity-root IFT branch with the actual map
@@ -942,7 +965,8 @@ Implemented in the current finite, spectral or pointwise models:
 
 Still required before Candidate A is a completed Janus action:
 
-1. extend the co-diagonal root, its coordinate off-diagonal boost orbit, the
+1. extend the already global, causal and differentiable diagonal branch, the
+   co-diagonal root, its coordinate off-diagonal boost orbit, the
    independent non-diagonalizable Jordan witness and the continuous
    three-parameter two-dimensional Cayley--Hamilton chart with its explicit
    bijective Sylvester inverse and derivative identity,
@@ -950,11 +974,10 @@ Still required before Candidate A is a completed Janus action:
    unique real principal square-root branch on the full admissible
    four-dimensional Lorentz field domain, lift the finite density weight to the
    manifold transformation law and control branch changes;
-2. lift the finite positive-metric periodic model, where `sqrt(g)` and `g^-1`
-   are already tied to one metric and finite-site reindexing covariance is
-   proved, to four-dimensional holonomic matter fields;
-   then derive the covariant metric and spacetime matter Euler--Lagrange PDEs
-   and stress tensor from `S_A`;
+2. promote the fixed-frame diagonal four-dimensional holonomic action and its
+   fixed-metric scalar variation to a tensorial covariant matter action, then
+   derive the metric and spacetime Euler--Lagrange PDEs, boundary flux and
+   stress conservation from `S_A`;
 3. lift the Gaussian-normal Palatini calculation to arbitrary coordinates,
    lift the explicit local embedded Gaussian chart and its `h/B/K` data to a
    geometric boundary curve on the manifold, extend the constant-box
@@ -1000,3 +1023,11 @@ is used in its definition.
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, coefficientwise exactness for finite nonzero Fourier families, and unique normalized decomposition with a finite zero-mode cohomology residual | boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |
 | 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, pointwise 4D determinant/inverse-constrained scalar stress variation, integrated one/two-sector stress variation under an explicit dominated-differentiation contract and exchange invariance, continuous flat-chart holonomic scalar first variation and simultaneous metric/holonomic split integrated under an explicit contract, pointwise flat scalar Euler-plus-flux-divergence decomposition and integrated weak Euler identity under explicit integrability/zero-flux assumptions, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, discharge of domination and derivation of zero flux from physical boundary conditions, nonlinear Bianchi/stress conservation, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
 | 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain and which has a summable rank-one nuclear expansion at positive time, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching | physical quotient stability, PPN, covariant counterterms, abstract `D^2` functional calculus/general trace-class API, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |
+
+Current-scope refinement: lock 1 also closes causal compatibility, the exact
+spectral frontier and global-field functional variation on the selected
+diagonal D8 domain; lock 2 closes the fixed-frame global scalar action and the
+conditional graph-`H¹` trace construction; lock 5 closes its fixed-metric
+scalar first variation. References above to missing Sobolev/tensor fields or a
+global functional variation now mean the intrinsic general-tensor extension,
+not these proved diagonal/conditional sectors.
