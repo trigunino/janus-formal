@@ -43,6 +43,7 @@ import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleHolonomyCommonDomainCompactResolvent
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleGraphFredholmIndex
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleBoundedTransformSpectralFlow
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantLineFamily
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusD2ModeFamilyInflowBridge
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusFiniteModeFredholmDeterminantLine
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusPartitionFunctionSectionNoGo
@@ -85,6 +86,7 @@ structure ProgramStatus where
   circleHolonomyCommonDomainCompactResolventProved : Prop
   circleGraphFredholmIndexZeroDeterminantLineProved : Prop
   circleBoundedTransformSpectralFlowProved : Prop
+  circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved : Prop
 
 /-- Scoped finite-dimensional milestone; this is deliberately not the global
 unbounded Fredholm/Quillen-family status used by `relativeAnomalyGeometryClosed`. -/
@@ -103,6 +105,10 @@ def circleGraphFredholmDeterminantFiberClosed (s : ProgramStatus) : Prop :=
 /-- Scoped norm-continuous bounded-transform and exact crossing milestone. -/
 def circleBoundedTransformSpectralFlowClosed (s : ProgramStatus) : Prop :=
   s.circleBoundedTransformSpectralFlowProved
+
+/-- Scoped pointwise determinant fibers and large-gauge endpoint transition. -/
+def circleAlgebraicDeterminantLineFamilyClosed (s : ProgramStatus) : Prop :=
+  s.circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved
 
 /-- Canonical relative anomaly package. -/
 def relativeAnomalyGeometryClosed (s : ProgramStatus) : Prop :=

@@ -1561,6 +1561,21 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
             "theorem pt_reverses_fundamental_crossing",
         ),
     ),
+    "P0EFTJanusCircleDeterminantLineFamily.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "def circleBoundedKernelZeroModeEquiv",
+            "def circleBoundedCokernelZeroModeEquiv",
+            "abbrev CircleBoundedDeterminantLine",
+            "def circleDeterminantFourierFrame",
+            "theorem circleBoundedDeterminantLine_finrank_one",
+            "theorem circleDeterminantFourierFrame_ne_zero",
+            "def endpointKernelEquiv",
+            "def endpointCokernelEquiv",
+            "def circleLargeGaugeDeterminantTransition",
+            "theorem circleLargeGaugeDeterminantTransition_bijective",
+        ),
+    ),
 }
 
 
@@ -1645,6 +1660,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             if filename == "P0EFTJanusCircleGraphFredholmIndex.lean"
             else "circleBoundedTransformSpectralFlowProved"
             if filename == "P0EFTJanusCircleBoundedTransformSpectralFlow.lean"
+            else "circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved"
+            if filename == "P0EFTJanusCircleDeterminantLineFamily.lean"
             else "circleHolonomyCommonDomainCompactResolventProved"
         )
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:
