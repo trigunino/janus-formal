@@ -60,15 +60,12 @@ The translation removes the fixed-point isotropy of `rho`.  The quotient is a
 **smooth mapping-torus candidate**, not an orbifold whose equator is a singular
 fixed locus.
 
-The atlas frontier is now explicit. The algebraic unit `S3` and equatorial
-`S2` are homeomorphic to Mathlib's standard analytic spheres, so both products
-with `R` carry analytic manifold structures. The covering-induced quotient
-atlases make the effective spacetime and fixed throat actual topological
-manifolds (`C0`); the quotient projection is a local homeomorphism, open,
-continuous, surjective and `C0`, while the cover throat inclusion is a
-topological embedding and `C0`. The remaining promotion to `C∞` is exactly the
-smooth-quotient compatibility theorem not supplied by Mathlib's current
-quotient-manifold instance; no smooth quotient overclaim is made.
+The algebraic unit `S3` and equatorial `S2` are identified with Mathlib's
+analytic spheres. Their covering-induced quotient atlases are now actual
+analytic manifolds: the quotient projections are analytic local
+diffeomorphisms and the descended throat inclusion is `C∞`. Time reversal is
+an analytic involutive diffeomorphism on both quotients and still intertwines
+the throat inclusion.
 
 The word `orbifold` may still be used informally in the Janus literature, but it
 must not be used as a mathematical claim of local finite isotropy for this
@@ -128,8 +125,13 @@ the quotient by even windings maps to the original throat as a covering. The
 half-period translation descends to a continuous, involutive, fixed-point-free
 deck map; each fiber is equivalent to `ZMod 2`. Pulling the associated normal
 line back to this cover yields an explicit homeomorphism with the product by
-`R`. The covers now carry analytic atlases and their quotients topological
-atlases, but no differential normal bundle or smooth `VectorBundle` is asserted.
+`R`. The quotient throat inclusion is additionally a closed topological
+embedding, its manifold differential is injective at every point, and the
+quotient of the ambient tangent space by its derivative range has real
+dimension one. This is the checked smooth-embedding/codimension-one frontier.
+A globally chosen smooth normal complement, its identification with the orbit
+normal line, the nonnull/null/joint stratification and a smooth `VectorBundle`
+are not yet asserted.
 
 Lean theorems:
 
@@ -155,6 +157,13 @@ connectedComponentIn_throat_complement_negativePole
 positiveCoverSide_isPathConnected
 effectiveThroat_complement_isPathConnected
 effectiveThroat_complement_isConnected
+reflectedSpherePT_contMDiff
+fixedThroatPT_contMDiff
+reflectedSpherePTDiffeomorph
+fixedThroatPTDiffeomorph
+fixedThroatQuotientInclusion_isClosedEmbedding
+mfderiv_fixedThroatQuotientInclusion_injective
+mfderiv_fixedThroatQuotientInclusion_normal_finrank
 ```
 
 ## 3. What the two-to-one ratio means

@@ -23,6 +23,8 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothAtlasFrontier
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -70,6 +72,11 @@ structure ProgramStatus where
   effectiveThroatSmoothQuotientManifoldProved : Prop
   quotientProjectionLocalDiffeomorphProved : Prop
   fixedThroatQuotientInclusionContMDiffProved : Prop
+  mappingTorusTimeReversalContMDiffProved : Prop
+  mappingTorusTimeReversalDiffeomorphConstructed : Prop
+  fixedThroatQuotientInclusionIsClosedEmbeddingProved : Prop
+  fixedThroatQuotientDifferentialInjectiveProved : Prop
+  fixedThroatNormalQuotientFinrankOneProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -160,6 +167,20 @@ def mappingTorusSmoothQuotientManifoldCoreClosed (s : ProgramStatus) : Prop :=
   s.quotientProjectionLocalDiffeomorphProved /\
   s.fixedThroatQuotientInclusionContMDiffProved
 
+/-- Analytic PT diffeomorphisms on both effective quotient manifolds. -/
+def mappingTorusSmoothPTCoreClosed (s : ProgramStatus) : Prop :=
+  s.mappingTorusTimeReversalContMDiffProved /\
+  s.mappingTorusTimeReversalDiffeomorphConstructed
+
+/-- Checked smooth-embedding frontier: the inclusion is a closed topological
+embedding, its manifold differential is injective everywhere, and its normal
+quotient has real rank one.  A globally chosen smooth normal complement and
+null/joint stratification are not asserted here. -/
+def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
+  s.fixedThroatQuotientInclusionIsClosedEmbeddingProved /\
+  s.fixedThroatQuotientDifferentialInjectiveProved /\
+  s.fixedThroatNormalQuotientFinrankOneProved
+
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveTopologicalMappingTorusCoreClosed s /\
@@ -171,6 +192,8 @@ def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   mappingTorusSmoothAtlasFrontierCoreClosed s /\
   mappingTorusSmoothDeckDescentFrontierClosed s /\
   mappingTorusSmoothQuotientManifoldCoreClosed s /\
+  mappingTorusSmoothPTCoreClosed s /\
+  fixedThroatSmoothEmbeddingFrontierClosed s /\
   s.nonzeroTranslationDerived /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\
