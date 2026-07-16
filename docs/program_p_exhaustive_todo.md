@@ -538,6 +538,11 @@ complexe BRST, aux anomalies et aux conditions au bord.
         l'équivalence forte/faible avec noyau trivial. Aucune formule
         différentielle de type Stokes ni équivalence Sobolev externe n'est
         revendiquée.
+        - [x] Prolonger ce représentant au complété comme opérateur borné
+          identité du Hilbert d'énergie, puis prouver auto-adjonction, noyau
+          nul, image totale fermée, critère Fredholm, indice zéro et égalité
+          du pairing avec la linéarisation du Hessien de la même action. Ni
+          résolvante compacte ni identification D10 n'est affirmée.
 - [x] Prouver l'existence d'une branche throat non vide compatible avec les
   deux secteurs gravitationnels.
 - [ ] Dériver les conditions de jonction et l'équilibre des flux.

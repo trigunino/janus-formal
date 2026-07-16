@@ -2038,6 +2038,23 @@ PROGRAM_P_GATES = {
             "theorem weakLLJacobiH1Extension_vanishes_iff",
         ),
     ),
+    "P0EFTJanusMappingTorusPTSymmetricLLH1FredholmOperator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completedLLJacobiOperator",
+            "theorem completedLLJacobiOperator_extends_smooth",
+            "theorem completedLLJacobiOperator_isSelfAdjoint",
+            "theorem completedLLJacobiOperator_ker_eq_bot",
+            "theorem completedLLJacobiOperator_range_eq_top",
+            "theorem completedLLJacobiOperator_range_isClosed",
+            "theorem completedLLJacobiOperator_fredholm_criterion",
+            "def completedLLJacobiIndex",
+            "theorem completedLLJacobiIndex_zero",
+            "theorem completedLLJacobiOperator_smooth_pairing",
+            "theorem completedLLJacobiOperator_pairing_linearizes_action",
+            "theorem completed_ll_jacobi_fredholm_closure",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2573,6 +2590,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8PTSymmetricDifferentialLLHessian4DProved",
         "paEffectiveD8PTSymmetricLLWeakEulerJacobiOperator4DProved",
         "paEffectiveD8PTSymmetricLLH1RieszOperator4DProved",
+        "paEffectiveD8PTSymmetricLLH1FredholmOperator4DProved",
         "paLorentzianGramCompatibilityFrechetProved",
         "paCanonicalLorentzGramSaintVenantSymbolExactnessProved",
         "paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved",
