@@ -19,7 +19,10 @@ set_option autoImplicit false
 noncomputable section
 
 open Set Topology
+open scoped Manifold ContDiff
 open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusNormalBundleOrientationCover
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusNormalPinLiftBoundaryConditions
@@ -96,6 +99,17 @@ theorem quarterRootCLM_square_eq_normalSign
   simp only [quarterRootCLM_apply]
   rw [← mul_assoc, quarterRootRepresentation_square]
 
+/-- The same phase as a real-linear map on the underlying two-plane. -/
+def quarterRootRealCLM
+    (choice : NormalRootChoice) (winding : ℤ) : ℂ →L[ℝ] ℂ :=
+  ContinuousLinearMap.lsmul ℝ ℂ (quarterRootRepresentation choice winding)
+
+@[simp] theorem quarterRootRealCLM_apply
+    (choice : NormalRootChoice) (winding : ℤ) (root : ℂ) :
+    quarterRootRealCLM choice winding root =
+      quarterRootRepresentation choice winding * root := by
+  simp [quarterRootRealCLM]
+
 private theorem continuousOn_quarterRootTransition
     (choice : NormalRootChoice)
     (first second : ThroatCover period hPeriod) :
@@ -150,6 +164,129 @@ theorem fixedThroatNormalZ4RootFiber_isVectorBundle
     VectorBundle ℂ ℂ
       (FixedThroatNormalZ4RootFiber period hPeriod choice) :=
   inferInstance
+
+private theorem continuousOn_quarterRootRealTransition
+    (choice : NormalRootChoice)
+    (first second : ThroatCover period hPeriod) :
+    ContinuousOn
+      (fun base ↦ quarterRootRealCLM choice
+        (localTransitionWinding period hPeriod first second base))
+      (normalBundleBaseSet period hPeriod first ∩
+        normalBundleBaseSet period hPeriod second) := by
+  intro base hBase
+  let overlap := normalBundleBaseSet period hPeriod first ∩
+    normalBundleBaseSet period hPeriod second
+  have hWindingEq : Filter.EventuallyEq (nhdsWithin base overlap)
+      (localTransitionWinding period hPeriod first second)
+      (fun _ ↦ localTransitionWinding period hPeriod first second base) :=
+    (localTransitionWinding_eventuallyEq period hPeriod first second base hBase).filter_mono
+      inf_le_left
+  have hRootEq := hWindingEq.fun_comp (quarterRootRealCLM choice)
+  exact (continuousWithinAt_const : ContinuousWithinAt
+      (fun _ : ThroatBase period hPeriod ↦
+        quarterRootRealCLM choice
+          (localTransitionWinding period hPeriod first second base))
+      overlap base).congr_of_eventuallyEq_of_mem hRootEq hBase
+
+/-- Smooth real underlier of the complex root line.  Its transition maps are
+the same complex multiplications, now viewed as real-linear maps. -/
+def fixedThroatNormalZ4RootRealBundleCore
+    (choice : NormalRootChoice) :
+    VectorBundleCore ℝ (ThroatBase period hPeriod) ℂ
+      (ThroatCover period hPeriod) where
+  baseSet := normalBundleBaseSet period hPeriod
+  isOpen_baseSet := normalBundleBaseSet_isOpen period hPeriod
+  indexAt := normalBundleIndexAt period hPeriod
+  mem_baseSet_at := mem_normalBundleBaseSet_indexAt period hPeriod
+  coordChange first second base :=
+    quarterRootRealCLM choice
+      (localTransitionWinding period hPeriod first second base)
+  coordChange_self anchor base hBase root := by
+    simp [localTransitionWinding_self period hPeriod anchor base hBase]
+  continuousOn_coordChange :=
+    continuousOn_quarterRootRealTransition period hPeriod choice
+  coordChange_comp first second third base hBase root := by
+    simp only [quarterRootRealCLM_apply]
+    rw [← mul_assoc, ← quarterRootRepresentation_add,
+      localTransitionWinding_add period hPeriod first second third base hBase]
+
+abbrev FixedThroatNormalZ4RootRealFiber (choice : NormalRootChoice) :=
+  (fixedThroatNormalZ4RootRealBundleCore period hPeriod choice).Fiber
+
+theorem fixedThroatNormalZ4RootRealFiber_isVectorBundle
+    (choice : NormalRootChoice) :
+    VectorBundle ℝ ℂ
+      (FixedThroatNormalZ4RootRealFiber period hPeriod choice) :=
+  inferInstance
+
+private theorem contMDiffOn_quarterRootRealTransition
+    (choice : NormalRootChoice)
+    (first second : ThroatCover period hPeriod) :
+    letI : ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+      fixedThroatQuotientChartedSpace period hPeriod
+    ContMDiffOn throatCoverModelWithCorners
+      (modelWithCornersSelf ℝ (ℂ →L[ℝ] ℂ)) ω
+      (fun base ↦ quarterRootRealCLM choice
+        (localTransitionWinding period hPeriod first second base))
+      (normalBundleBaseSet period hPeriod first ∩
+        normalBundleBaseSet period hPeriod second) := by
+  letI : ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+    fixedThroatQuotientChartedSpace period hPeriod
+  intro base hBase
+  let overlap := normalBundleBaseSet period hPeriod first ∩
+    normalBundleBaseSet period hPeriod second
+  have hWindingEq : Filter.EventuallyEq (nhdsWithin base overlap)
+      (localTransitionWinding period hPeriod first second)
+      (fun _ ↦ localTransitionWinding period hPeriod first second base) :=
+    (localTransitionWinding_eventuallyEq period hPeriod first second base hBase).filter_mono
+      inf_le_left
+  have hRootEq := hWindingEq.fun_comp (quarterRootRealCLM choice)
+  exact (contMDiffWithinAt_const : ContMDiffWithinAt throatCoverModelWithCorners
+      (modelWithCornersSelf ℝ (ℂ →L[ℝ] ℂ)) ω
+      (fun _ : ThroatBase period hPeriod ↦
+        quarterRootRealCLM choice
+          (localTransitionWinding period hPeriod first second base))
+      overlap base).congr_of_eventuallyEq_of_mem hRootEq hBase
+
+theorem fixedThroatNormalZ4RootRealBundleCore_isContMDiff
+    (choice : NormalRootChoice) :
+    letI : ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+      fixedThroatQuotientChartedSpace period hPeriod
+    (fixedThroatNormalZ4RootRealBundleCore period hPeriod choice).IsContMDiff
+      throatCoverModelWithCorners ω := by
+  letI : ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+    fixedThroatQuotientChartedSpace period hPeriod
+  constructor
+  exact contMDiffOn_quarterRootRealTransition period hPeriod choice
+
+theorem fixedThroatNormalZ4RootRealFiber_isContMDiffVectorBundle
+    (choice : NormalRootChoice) :
+    letI : ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+      fixedThroatQuotientChartedSpace period hPeriod
+    letI : (fixedThroatNormalZ4RootRealBundleCore period hPeriod choice).IsContMDiff
+        throatCoverModelWithCorners ω :=
+      fixedThroatNormalZ4RootRealBundleCore_isContMDiff period hPeriod choice
+    ContMDiffVectorBundle ω ℂ
+      (FixedThroatNormalZ4RootRealFiber period hPeriod choice)
+      throatCoverModelWithCorners := by
+  letI : ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+    fixedThroatQuotientChartedSpace period hPeriod
+  letI : (fixedThroatNormalZ4RootRealBundleCore period hPeriod choice).IsContMDiff
+      throatCoverModelWithCorners ω :=
+    fixedThroatNormalZ4RootRealBundleCore_isContMDiff period hPeriod choice
+  infer_instance
+
+/-- The complex-line and smooth-real-underlier cores have identical transition
+functions pointwise. -/
+theorem complex_and_real_root_coordChange_agree
+    (choice : NormalRootChoice)
+    (first second : ThroatCover period hPeriod)
+    (base : ThroatBase period hPeriod) (root : ℂ) :
+    (fixedThroatNormalZ4RootBundleCore period hPeriod choice).coordChange
+        first second base root =
+      (fixedThroatNormalZ4RootRealBundleCore period hPeriod choice).coordChange
+        first second base root := by
+  rfl
 
 /-- One throat circuit acts by the selected quarter multiplier. -/
 theorem one_loop_root_coordChange
