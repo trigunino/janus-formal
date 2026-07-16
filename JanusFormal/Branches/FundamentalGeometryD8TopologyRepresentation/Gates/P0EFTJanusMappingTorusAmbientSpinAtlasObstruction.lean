@@ -359,11 +359,9 @@ def ambientSpinKernelConjugationRepresentation :
   toFun := ambientSpinKernelConjugationEquiv
   map_one' := by
     ext kernel
-    apply Subtype.ext
     simp [ambientSpinKernelConjugationEquiv, ambientSpinKernelConjugate]
   map_mul' firstSpin secondSpin := by
     ext kernel
-    apply Subtype.ext
     simp [ambientSpinKernelConjugationEquiv, ambientSpinKernelConjugate,
       mul_assoc]
 
@@ -374,6 +372,42 @@ theorem ambientSpinKernelConjugationRepresentation_apply
     ambientSpinKernelConjugationRepresentation spin kernel =
       ambientSpinKernelConjugate spin kernel :=
   rfl
+
+/-- Pointwise fixedness under conjugation is exactly commutation with the
+chosen ambient Spin element. -/
+theorem ambientSpinKernelConjugate_eq_iff_commute
+    (spin : AmbientCoordinateSpinGroup)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinKernelConjugate spin kernel = kernel ↔
+      Commute spin kernel.1 := by
+  constructor
+  · intro hFixed
+    have hValue := congrArg Subtype.val hFixed
+    apply mul_right_cancel (b := spin⁻¹)
+    simpa [ambientSpinKernelConjugate, mul_assoc] using hValue
+  · intro hCommute
+    apply Subtype.ext
+    change spin * kernel.1 * spin⁻¹ = kernel.1
+    rw [hCommute.eq]
+    simp [mul_assoc]
+
+/-- Exact centrality criterion: the conjugation automorphism associated with
+`spin` is trivial precisely when `spin` commutes with every kernel element. -/
+theorem ambientSpinKernelConjugationEquiv_eq_one_iff
+    (spin : AmbientCoordinateSpinGroup) :
+    ambientSpinKernelConjugationEquiv spin = 1 ↔
+      ∀ kernel : MonoidHom.ker ambientSpinProjection,
+        Commute spin kernel.1 := by
+  constructor
+  · intro hTrivial kernel
+    apply (ambientSpinKernelConjugate_eq_iff_commute spin kernel).1
+    change ambientSpinKernelConjugationEquiv spin kernel = kernel
+    rw [hTrivial]
+    rfl
+  · intro hCentral
+    ext kernel
+    simpa [ambientSpinKernelConjugationEquiv] using congrArg Subtype.val
+      ((ambientSpinKernelConjugate_eq_iff_commute spin kernel).2 (hCentral kernel))
 
 /-- A common change of local Spin lift conjugates, rather than changes
 arbitrarily, the kernel-valued difference of two lifts. -/

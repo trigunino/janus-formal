@@ -812,6 +812,10 @@ Hessien physique réellement descendu.
       noyau, avec inverse donné par la conjugaison Spin inverse.
     - [x] Assembler ces automorphismes en une représentation multiplicative du
       groupe Spin ambiant sur le noyau de sa projection.
+    - [x] Prouver le critère exact : l'automorphisme de conjugaison d'un
+      élément Spin est trivial si et seulement si cet élément commute avec
+      tout le noyau. La centralité dimensionnelle devient ainsi l'unique verrou
+      Clifford restant de cette étape.
 - [ ] Construire les bundles vectoriels et principaux Janus globaux.
 - [ ] Prouver l'accord des classes caractéristiques Spin/déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets
