@@ -72,6 +72,10 @@ DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_EQUIVALENCE_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence.lean"
 )
+DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -357,6 +361,21 @@ DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_EQUIVALENCE_DECLARATIONS = (
     "theorem differentialNormalTotalDiffeomorph_one_loop_coordChange_eq_neg_id",
 )
 
+DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_DECLARATIONS = (
+    "def fixedThroatNormalZeroStratum",
+    "def fixedThroatNormalNonzeroStratum",
+    "def differentialNormalZeroStratum",
+    "def differentialNormalNonzeroStratum",
+    "theorem differentialNormalStrata_disjoint",
+    "theorem differentialNormalStrata_cover",
+    "theorem differentialNormalZeroStratum_eq_range_zeroSection",
+    "theorem differentialNormalZeroSection_contMDiff",
+    "theorem differentialNormalZeroSection_isEmbedding",
+    "theorem differentialNormalNonzeroStratum_isOpen",
+    "theorem differentialNormalZeroStratum_isClosed",
+    "theorem differentialNormalZeroNonzeroStratification",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -415,6 +434,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatDifferentialNormalTopologicalBundleConstructed",
     "fixedThroatDifferentialNormalContMDiffVectorBundleProved",
     "fixedThroatDifferentialNormalSmoothBundleEquivalenceProved",
+    "fixedThroatDifferentialNormalZeroNonzeroStratificationProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -485,6 +505,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     differential_normal_smooth_bundle_equivalence_gate = (
         repo_root / DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_EQUIVALENCE_GATE
+    ).read_text(encoding="utf-8")
+    differential_normal_zero_nonzero_stratification_gate = (
+        repo_root / DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -774,6 +797,25 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     if facade.count(differential_normal_smooth_import) != 1:
         raise AssertionError(
             "D8 facade omits the differential-normal smooth equivalence gate"
+        )
+    for declaration in DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_DECLARATIONS:
+        if declaration not in differential_normal_zero_nonzero_stratification_gate:
+            raise AssertionError(
+                f"missing D8 differential-normal stratum declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b",
+        differential_normal_zero_nonzero_stratification_gate,
+    ):
+        raise AssertionError(
+            "proof placeholder found in D8 differential-normal stratification"
+        )
+    differential_normal_strata_import = (
+        "Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification"
+    )
+    if facade.count(differential_normal_strata_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the differential-normal stratification gate"
         )
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:

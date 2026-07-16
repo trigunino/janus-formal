@@ -109,6 +109,12 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     décomposition disjointe avant quotient et prouver que le complément après
     quotient est lui-même connexe par arcs, donc connexe.
   - [ ] Construire la stratification non-nulle/null/joint de l'embedding lisse.
+    - [x] Sur le bundle normal différentiel réel effectivement construit,
+      séparer les strates intrinsèques zéro/non-zéro : elles sont disjointes
+      et couvrantes, la section zéro est analytique et plongée, son image est
+      fermée, le complément est ouvert, et le `Diffeomorph` normal transporte
+      exactement les deux strates. La classification null/non-null requiert
+      encore une forme quadratique lorentzienne absente de cette fibre réelle.
     - [x] Prouver que l'inclusion du throat au niveau cover est un embedding
       topologique `C⁰` et que l'inclusion quotient est `C⁰`.
     - [x] Prouver que l'inclusion injective du throat quotient est `C∞` pour
@@ -311,6 +317,10 @@ par toute évolution admissible.
       nilpotent, avec un slot séparé dans les champs indépendants ;
     - [ ] construire le ghost difféomorphe, le BRST non abélien/BV et leur
       accord avec l'action, le Hessien et les conditions au bord ;
+      - [x] Prouver le no-go du ghost tangent réel ordinaire : son crochet de
+        Lie avec lui-même est identiquement nul, donc la formule non graduée
+        `s c = -1/2 [c,c]` ne produit aucun terme quadratique non trivial. Une
+        extension à coefficients impairs/gradués est une obligation réelle.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.

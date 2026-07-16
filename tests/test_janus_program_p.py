@@ -126,6 +126,10 @@ def test_program_p_global_abelian_brst_and_ll_pt_covariance_are_integrated() -> 
     assert_program_p_gate_integrity()
 
 
+def test_program_p_normal_strata_and_ordinary_ghost_brst_nogo_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_general_tensor_brst_differential_ll_and_junction_wave_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

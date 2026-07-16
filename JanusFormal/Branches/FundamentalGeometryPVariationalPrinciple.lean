@@ -110,6 +110,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAbelianGaugeBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLCovariance4D
@@ -128,6 +129,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -346,6 +348,7 @@ structure ProgramStatus where
   paEffectiveD8GlobalNormalAlgebraicComparisonProved : Prop
   paEffectiveD8DifferentialNormalTopologicalBundleProved : Prop
   paEffectiveD8DifferentialNormalSmoothBundleEquivalenceProved : Prop
+  paEffectiveD8DifferentialNormalZeroNonzeroStratificationProved : Prop
   paEffectiveD8NormalZ4RootBundleProved : Prop
   paEffectiveD8NormalZ4RootPTConjugationProved : Prop
   paEffectiveD8NormalPinMinusPrincipalBundleProved : Prop
@@ -387,6 +390,7 @@ structure ProgramStatus where
   paEffectiveD8DiagonalDiffeomorphismActionProved : Prop
   paEffectiveD8AbelianGaugeBRST4DProved : Prop
   paEffectiveD8LinearizedDiffeomorphismBRST4DProved : Prop
+  paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved : Prop
   paEffectiveD8GlobalLLWorldvolumeActionProved : Prop
   paEffectiveD8GlobalLLVariation4DProved : Prop
   paEffectiveD8GlobalLLPTCovariance4DProved : Prop
@@ -593,6 +597,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8GlobalNormalAlgebraicComparisonProved /\
   s.paEffectiveD8DifferentialNormalTopologicalBundleProved /\
   s.paEffectiveD8DifferentialNormalSmoothBundleEquivalenceProved /\
+  s.paEffectiveD8DifferentialNormalZeroNonzeroStratificationProved /\
   s.paEffectiveD8NormalZ4RootBundleProved /\
   s.paEffectiveD8NormalZ4RootPTConjugationProved /\
   s.paEffectiveD8NormalPinMinusPrincipalBundleProved /\
@@ -635,6 +640,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8DiagonalDiffeomorphismActionProved /\
   s.paEffectiveD8AbelianGaugeBRST4DProved /\
   s.paEffectiveD8LinearizedDiffeomorphismBRST4DProved /\
+  s.paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved /\
   s.paEffectiveD8GlobalLLWorldvolumeActionProved /\
   s.paEffectiveD8GlobalLLVariation4DProved /\
   s.paEffectiveD8GlobalLLPTCovariance4DProved /\

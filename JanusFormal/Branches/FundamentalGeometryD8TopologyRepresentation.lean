@@ -30,6 +30,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -99,6 +100,7 @@ structure ProgramStatus where
   fixedThroatDifferentialNormalTopologicalBundleConstructed : Prop
   fixedThroatDifferentialNormalContMDiffVectorBundleProved : Prop
   fixedThroatDifferentialNormalSmoothBundleEquivalenceProved : Prop
+  fixedThroatDifferentialNormalZeroNonzeroStratificationProved : Prop
   fixedThroatNormalZ4RootComplexLineConstructed : Prop
   fixedThroatNormalZ4RootSmoothRealUnderlierProved : Prop
   fixedThroatNormalZ4RootSquaresToNormalSignProved : Prop
@@ -213,8 +215,8 @@ def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
 
 /-- Actual analytic sign-clutched normal line bundle, transported analytic
 vector-bundle structure on the differential normal family, exact total-space
-diffeomorphism, and both global complex `Z4` root lines with their principal
-normal lift. -/
+diffeomorphism, intrinsic zero/nonzero strata, and both global complex `Z4`
+root lines with their principal normal lift. -/
 def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatNormalVectorBundleConstructed /\
   s.fixedThroatNormalVectorBundleContMDiffProved /\
@@ -224,6 +226,7 @@ def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatDifferentialNormalTopologicalBundleConstructed /\
   s.fixedThroatDifferentialNormalContMDiffVectorBundleProved /\
   s.fixedThroatDifferentialNormalSmoothBundleEquivalenceProved /\
+  s.fixedThroatDifferentialNormalZeroNonzeroStratificationProved /\
   s.fixedThroatNormalZ4RootComplexLineConstructed /\
   s.fixedThroatNormalZ4RootSmoothRealUnderlierProved /\
   s.fixedThroatNormalZ4RootSquaresToNormalSignProved /\
