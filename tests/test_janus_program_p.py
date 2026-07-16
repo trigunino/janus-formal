@@ -217,6 +217,10 @@ def test_program_p_smooth_diffeomorphism_ghost_lie_bracket_is_integrated() -> No
     assert_program_p_gate_integrity()
 
 
+def test_program_p_graded_diffeomorphism_ghost_tensor_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_effective_d8_h1_graph_trace_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
