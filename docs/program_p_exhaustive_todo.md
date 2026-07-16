@@ -143,6 +143,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         base-préservant et les trivializations, puis installer les instances
         `FiberBundle`, `VectorBundle` et `ContMDiffVectorBundle ω` avec le même
         cocycle de signe. Les strates restent ouvertes.
+        - [x] Promouvoir les équivalences linéaires fibre par fibre et leurs
+          inverses en sections analytiques des deux hom-bundles ; dans chaque
+          carte transportée, leurs matrices sont exactement l'identité. Le
+          bundle transporté est donc lissement isomorphe au vrai normal.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -185,6 +189,9 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           - [x] Prouver réellement que toute image de
             `ambientSpinProjection` a déterminant `+1`, par induction sur le
             groupe de Lipschitz et exclusion du grade impair Clifford.
+            - [x] En déduire que tout lift d'une transition réduite impose
+              effectivement `det = +1` et exclure tout lift Spin lorsque ce
+              déterminant vaut autre chose.
           - [ ] Prouver la surjectivité sur `SO(4)` par décomposition paire en
             réflexions non isotropes, puis construire les lifts de l'atlas.
           - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
@@ -202,8 +209,13 @@ correspondance algébrique des coefficients, puis asymptotique effective.
                   restent ouverts.
                 - [x] Relever au sous-groupe noyau les lois de cobord sous
                   translation des deux arêtes constituantes, avec la conjugaison
-                  exacte par le lift intermédiaire. Les quadruples overlaps
-                  restent ouverts.
+                  exacte par le lift intermédiaire.
+                  - [x] Prouver que le noyau commute avec toute l'algèbre de
+                    Clifford, donc est central et abélien ; construire le défaut
+                    d'un choix atlas-wide, son critère exact de complétion en
+                    cocycle et la loi de Čech sur les quadruples overlaps. Il
+                    reste à construire et régulariser ce choix puis à trivialiser
+                    globalement ses défauts.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
@@ -311,6 +323,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     - [x] Prouver l'égalité des germes de deux branches ayant la même racine,
       notamment pour deux présentations de même cible à spectres positifs
       égaux ou permutés. Le recollement global par chemins reste ouvert.
+      - [x] Déduire automatiquement la permutation de l'égalité des polynômes
+        caractéristiques, supprimer l'hypothèse de correspondance spectrale,
+        puis construire un sélecteur algébrique global indépendant de toute
+        présentation sur le locus diagonalisable positif. Sa continuité et sa
+        régularité restent séparées.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
@@ -435,10 +452,20 @@ par toute évolution admissible.
         différentielle BRST non linéaire restent ouverts.
         - [x] Coupler réellement ce crochet et l'algèbre impaire par produit
           tensoriel, étendre le différentiel de coefficient à tout cet espace
-          ghost gradué et prouver que son carré y est nul. L'action BRST sur les
-          champs et le terme de Chevalley--Eilenberg restent ouverts.
+          ghost gradué et prouver que son carré y est nul.
           - [x] Prouver que le terme quadratique tensoriel hérite exactement de
             l'identité de Jacobi du crochet lisse de ghosts.
+          - [x] Construire sur les vrais scalaires `C∞` l'action bilinéaire des
+            ghosts tangents, le différentiel de Chevalley--Eilenberg de degré
+            zéro, puis son tensorisé avec le témoin matriciel de coefficients
+            impairs, son action sur le terme quadratique et l'entrelacement des
+            différentiels nilpotents. Ce tensorisé n'est pas encore un module
+            `Z₂` avec règle de Koszul.
+          - [x] Pour l'algèbre de Lie tangentielle ordinaire, prouver
+            `[L_X,L_Y]=L_[X,Y]` intrinsèquement via Leibniz, Jacobi et la famille
+            tangentielle finie couvrante ; construire `d_CE¹` et fermer
+            `d_CE¹ ∘ d_CE⁰ = 0` sur les vrais scalaires `C∞`. Le BRST non
+            linéaire avec grading/Koszul et BV restent ouverts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -522,6 +549,12 @@ par toute évolution admissible.
           intrinsèque et prouver leur équivalence. Ce dernier verrou énergétique
           est exactement la transition variable `fixed anchor → chartAt p`, que
           Mathlib ne contrôle que lorsque les deux cartes sont fixes.
+          - [x] Réduire ce verrou à la continuité de chaque coefficient
+            holonomique scalaire du générateur partitionné uniquement sur son
+            propre support fermé ; cette hypothèse suffisante localisée produit par
+            compacité une borne globale explicite, le contrôle quadratique et
+            toute la domination d'énergie. Seule cette continuité localisée
+            reste à extraire de l'API `chartAt` variable.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
@@ -535,6 +568,9 @@ par toute évolution admissible.
     nulle lorsque les directions métrique et matière s'annulent.
 - [x] Définir l'action des difféomorphismes diagonaux et son générateur
   infinitésimal sur tous les secteurs.
+  - [x] Sur les vrais deux-tenseurs covariants du quotient, définir la courbe
+    de pullback et son générateur infinitésimal tensoriel comme dérivée de
+    Fréchet, avec sa formule d'évaluation sous le contrat différentiable exact.
 - [x] Définir exactement la symétrie PT/échange sur tous les champs de
   coefficients construits et une condition de Dirichlet lisse PT-compatible.
   - [x] Définir cette symétrie comme une équivalence involutive exacte sur les
@@ -578,6 +614,11 @@ par toute évolution admissible.
           - [ ] Construire `IntrinsicTensorQuotientDescent` par les inverses
             locaux de `mappingTorusMk`; Mathlib n'offre pas de descente générique
             pour une `ContMDiffSection` bilinéaire dépendante.
+            - [x] Construire dans chaque fibre quotient la valeur canonique via
+              l'inverse de la vraie dérivée de projection, prouver son pullback
+              exact et son indépendance sous tout changement de lift par deck.
+              Seul l'assemblage de ces valeurs en section `C∞` dépendante reste
+              à formaliser.
           - [ ] Construire `IntrinsicCoverLorentzCertificate`, puis transporter
             musical, non-dégénérescence et signature via
             `quotientProjectionDerivativeEquiv` afin d'obtenir la vraie
@@ -808,6 +849,14 @@ non contrôlé et produit les conditions de jonction annoncées.
     - [x] Assembler ces huit composantes en un unique multiplet matière et
       construire les opérateurs globaux de bloc `R_matter` et
       `B_matter = R_matterᵀ E_matter`.
+  - [x] Pour le secteur `U(1)^2` global lisse, construire le vrai générateur
+    linéaire `R_A(c) = dc`, sa version par paire, l'action affine correspondante
+    et l'opérateur de Noether `B_A(E) = E ∘ R_A`.
+    - [x] Assembler `R_matter ⊕ R_A` sur un même espace de paramètres et de
+      variations globales, construire `B(E) = E ∘ R` et caractériser exactement
+      son annulation par l'annihilation de l'image de `R`. Le pont identifiant
+      `E` à la dérivée d'une action invariante reste à établir avant d'appeler
+      cette condition une identité de Noether dynamique.
   - [x] Dans le modèle fonctionnel diagonal abstrait déjà formalisé, restreindre
     le générateur par toute reparamétrisation linéaire continue et prouver la
     naturalité exacte de la contrainte adjointe ainsi que la préservation de
@@ -1035,6 +1084,10 @@ champs et avec les mêmes conditions au bord.
       et indice zéro.
 - [ ] Instancier le complexe D9/BRST avec les vrais champs, ghosts, symboles,
   domaines et cohomologie de modes zéro.
+  - [x] Injecter le vrai ghost `U(1)` Programme P dans le champ ghost D9 avec
+    composante difféomorphe explicitement nulle, calculer son symbole principal
+    et prouver l'annulation de la composante `U(1)` dans son noyau à covecteur
+    non nul. Le ghost difféomorphe et la cohomologie de mode zéro restent ouverts.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.

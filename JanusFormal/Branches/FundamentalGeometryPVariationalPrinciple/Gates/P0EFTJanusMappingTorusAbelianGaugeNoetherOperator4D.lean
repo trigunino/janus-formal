@@ -62,12 +62,12 @@ theorem smoothAbelianGaugePotential_smul_apply
   rfl
 
 instance : Module Real (SmoothAbelianGaugePotential period hPeriod) where
-  one_smul := by intro potential; apply SmoothAbelianGaugePotential.ext; intros; exact congrArg (fun f => f _) (one_smul Real _)
-  mul_smul := by intro first second potential; apply SmoothAbelianGaugePotential.ext; intros; exact congrArg (fun f => f _) (mul_smul first second _)
-  smul_add := by intro scalar first second; apply SmoothAbelianGaugePotential.ext; intros; exact congrArg (fun f => f _) (smul_add scalar _ _)
-  smul_zero := by intro scalar; apply SmoothAbelianGaugePotential.ext; intros; exact congrArg (fun f => f _) (smul_zero scalar)
-  add_smul := by intro first second potential; apply SmoothAbelianGaugePotential.ext; intros; exact congrArg (fun f => f _) (add_smul first second _)
-  zero_smul := by intro potential; apply SmoothAbelianGaugePotential.ext; intros; exact congrArg (fun f => f _) (zero_smul Real _)
+  one_smul := by intro potential; apply SmoothAbelianGaugePotential.ext; intro c p v; exact congrArg (fun f : TangentSpace coverModelWithCorners p →L[Real] Real => f v) (one_smul Real (potential.toFun c p))
+  mul_smul := by intro a b potential; apply SmoothAbelianGaugePotential.ext; intro c p v; exact congrArg (fun f : TangentSpace coverModelWithCorners p →L[Real] Real => f v) (mul_smul a b (potential.toFun c p))
+  smul_add := by intro a first second; apply SmoothAbelianGaugePotential.ext; intro c p v; exact congrArg (fun f : TangentSpace coverModelWithCorners p →L[Real] Real => f v) (smul_add a (first.toFun c p) (second.toFun c p))
+  smul_zero := by intro a; apply SmoothAbelianGaugePotential.ext; intro _ p v; exact congrArg (fun f : TangentSpace coverModelWithCorners p →L[Real] Real => f v) (smul_zero a)
+  add_smul := by intro a b potential; apply SmoothAbelianGaugePotential.ext; intro c p v; exact congrArg (fun f : TangentSpace coverModelWithCorners p →L[Real] Real => f v) (add_smul a b (potential.toFun c p))
+  zero_smul := by intro potential; apply SmoothAbelianGaugePotential.ext; intro c p v; exact congrArg (fun f : TangentSpace coverModelWithCorners p →L[Real] Real => f v) (zero_smul Real (potential.toFun c p))
 
 theorem exactGaugePotential_smul
     (scalar : Real)
@@ -88,12 +88,19 @@ theorem exactGaugePotential_smul
   change mvfderiv coverModelWithCorners
       ((fun _ : EffectiveQuotient period hPeriod => scalar) *
         (ghostComponent period hPeriod ghost component).toFun) point tangent = _
+  have hConst : MDifferentiableAt coverModelWithCorners
+      (modelWithCornersSelf Real Real)
+      (fun _ : EffectiveQuotient period hPeriod => scalar) point :=
+    (contMDiff_const : ContMDiff coverModelWithCorners
+      (modelWithCornersSelf Real Real) ∞
+      (fun _ : EffectiveQuotient period hPeriod => scalar)).mdifferentiableAt (by simp)
   rw [mvfderiv_mul
-    (contMDiff_const.mdifferentiableAt (by simp))
+    hConst
     ((ghostComponent period hPeriod ghost component).contMDiff_toFun.mdifferentiableAt
       (by simp))]
   rw [mvfderiv_const scalar]
-  simp
+  change scalar * _ + _ * 0 = scalar * _
+  rw [mul_zero, add_zero]
   rfl
 
 /-- The infinitesimal abelian gauge generator `R_A(c) = dc`. -/

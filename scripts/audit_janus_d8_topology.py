@@ -72,6 +72,10 @@ DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_EQUIVALENCE_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence.lean"
 )
+DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_ISOMORPHISM_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusDifferentialNormalSmoothBundleIsomorphism.lean"
+)
 DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification.lean"
@@ -381,6 +385,13 @@ DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_EQUIVALENCE_DECLARATIONS = (
     "theorem differentialNormalTotalDiffeomorph_one_loop_coordChange_eq_neg_id",
 )
 
+DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_ISOMORPHISM_DECLARATIONS = (
+    "def differentialNormalForwardHomSection",
+    "theorem differentialNormalForwardHomSection_contMDiff",
+    "def differentialNormalBackwardHomSection",
+    "theorem differentialNormalBackwardHomSection_contMDiff",
+)
+
 DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_DECLARATIONS = (
     "def fixedThroatNormalZeroStratum",
     "def fixedThroatNormalNonzeroStratum",
@@ -453,6 +464,10 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientAtlasTangentTransition_cocycle",
     "theorem ambientOrthogonalTransition_cocycle",
     "structure AmbientSpinOverlapLift",
+    "theorem AmbientSpinOverlapLift.orthogonalTransition_det",
+    "theorem ambientSpinOverlapLift_not_nonempty_of_det_ne_one",
+    "structure AmbientSpinAtlasLiftChoice",
+    "def ambientSpinCechTransitionLiftToAtlasLiftChoice",
     "def AmbientSpinOverlapLift.comp",
     "def ambientSpinCechDefect",
     "theorem ambientSpinProjection_cechDefect",
@@ -473,7 +488,12 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinKernelConjugate_eq_iff_commute",
     "theorem ambientSpinKernelConjugationEquiv_eq_one_iff",
     "theorem ambientSpinKernelConjugationRepresentation_eq_one_iff",
+    "theorem ambientSpinKernel_commutes_clifford",
+    "theorem ambientSpinKernel_commutes",
+    "theorem ambientSpinProjection_ker_mul_comm",
+    "theorem ambientSpinKernelConjugationRepresentation_trivial",
     "theorem ambientSpinOverlapLiftDifference_common_kernelTranslate",
+    "theorem ambientSpinOverlapLiftDifference_common_kernelTranslate_invariant",
     "theorem ambientSpinOverlapLiftDifference_transitive",
     "theorem ambientSpinCechDefect_comp_eq_one",
     "theorem ambientSpinCechDefect_third_kernelTranslate",
@@ -485,6 +505,10 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinCechDefect_firstSecond_kernelTranslate",
     "theorem ambientSpinCechKernelDefect_secondThird_kernelTranslate",
     "theorem ambientSpinCechKernelDefect_firstSecond_kernelTranslate",
+    "def AmbientSpinAtlasLiftChoice.cechKernelDefect",
+    "def AmbientSpinAtlasLiftChoice.toCechTransitionLiftOfDefectTrivial",
+    "theorem AmbientSpinAtlasLiftChoice.cechKernelDefect_quadruple_conjugated",
+    "theorem AmbientSpinAtlasLiftChoice.cechKernelDefect_quadruple",
 )
 
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
@@ -546,6 +570,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatDifferentialNormalTopologicalBundleConstructed",
     "fixedThroatDifferentialNormalContMDiffVectorBundleProved",
     "fixedThroatDifferentialNormalSmoothBundleEquivalenceProved",
+    "fixedThroatDifferentialNormalSmoothBundleIsomorphismProved",
     "fixedThroatDifferentialNormalZeroNonzeroStratificationProved",
     "ambientTangentOrientationCocycleProved",
     "ambientTangentQuadraticReductionFrontierProved",
@@ -622,6 +647,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     differential_normal_smooth_bundle_equivalence_gate = (
         repo_root / DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_EQUIVALENCE_GATE
+    ).read_text(encoding="utf-8")
+    differential_normal_smooth_bundle_isomorphism_gate = (
+        repo_root / DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_ISOMORPHISM_GATE
     ).read_text(encoding="utf-8")
     differential_normal_zero_nonzero_stratification_gate = (
         repo_root / DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_GATE
@@ -929,6 +957,25 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     if facade.count(differential_normal_smooth_import) != 1:
         raise AssertionError(
             "D8 facade omits the differential-normal smooth equivalence gate"
+        )
+    for declaration in DIFFERENTIAL_NORMAL_SMOOTH_BUNDLE_ISOMORPHISM_DECLARATIONS:
+        if declaration not in differential_normal_smooth_bundle_isomorphism_gate:
+            raise AssertionError(
+                f"missing D8 differential-normal smooth isomorphism: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b",
+        differential_normal_smooth_bundle_isomorphism_gate,
+    ):
+        raise AssertionError(
+            "proof placeholder found in D8 differential-normal smooth isomorphism"
+        )
+    differential_normal_smooth_isomorphism_import = (
+        "Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleIsomorphism"
+    )
+    if facade.count(differential_normal_smooth_isomorphism_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the differential-normal smooth isomorphism gate"
         )
     for declaration in DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_DECLARATIONS:
         if declaration not in differential_normal_zero_nonzero_stratification_gate:
