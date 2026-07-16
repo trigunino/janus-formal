@@ -717,6 +717,39 @@ theorem ambientSpinCechCanonicalThirdCorrection_eq_comp
     AmbientSpinOverlapLift.kernelTranslate, AmbientSpinOverlapLift.comp,
     mul_assoc]
 
+/-- The canonical correction on the composite overlap is independent of the
+initial choice of lift on that overlap. -/
+theorem ambientSpinCechCanonicalThirdCorrection_independent
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird alternativeThird :
+      AmbientSpinOverlapLift period hPeriod reduction first third coordinate
+        hFirstThird) :
+    firstThird.kernelTranslate period hPeriod reduction first third coordinate
+        hFirstThird
+        (ambientSpinCechKernelDefect period hPeriod reduction first second third
+          coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+          secondThird firstThird) =
+      alternativeThird.kernelTranslate period hPeriod reduction first third
+        coordinate hFirstThird
+        (ambientSpinCechKernelDefect period hPeriod reduction first second third
+          coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+          secondThird alternativeThird) := by
+  rw [ambientSpinCechCanonicalThirdCorrection_eq_comp]
+  rw [ambientSpinCechCanonicalThirdCorrection_eq_comp]
+
 /-- Translating the second-to-third lift multiplies the Cech defect on the
 left by the same kernel element. -/
 theorem ambientSpinCechDefect_secondThird_kernelTranslate
