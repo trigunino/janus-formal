@@ -1031,9 +1031,17 @@ The same global independent variation now has a typed D9 projection for the
 diagonal metric, tangential gauge, `U(1)` ghost and matter slots; its failure
 to cover general symmetric D9 metric perturbations is proved. Finite D10
 product modes are literal truncations with the same mapping-torus period,
-exact PT pairing and heat-regulator cancellation. The normal mode,
-diffeomorphism ghost, SpinC identification, general metric sector and
+exact PT pairing and heat-regulator cancellation. A smooth section of the true
+D8 normal line supplies the D9 normal slot in a valid local chart, with
+one-loop transition `-1 = Z4²`; no canonical global scalar normal coordinate
+is inferred. The diffeomorphism ghost, SpinC identification, general metric sector and
 action--Hessian--mode--boundary-domain agreement remain explicit inputs.
+
+The existing global LL action now has an exact simultaneous measure/flux
+cubic expansion and integrated derivative for every finite measure. Its
+pointwise Euler system is equivalent to the zero-flux branch. Since the
+auxiliary LL metric has zero response in this selected action, a differential
+LL PDE still requires a richer action.
 
 ## Six-lock checkpoint
 

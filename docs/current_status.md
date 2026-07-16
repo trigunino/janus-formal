@@ -292,9 +292,17 @@ The exhaustive remaining-work checklist is
   The same independent variation now projects type-safely to the D9 slots it
   really supplies, and its diagonal metric image is proved non-surjective onto
   general symmetric D9 perturbations. Literal finite D10 product modes use the
-  same period, exact PT pairing and the existing heat regulator. Normal and
-  diffeomorphism-ghost modes, SpinC identification, general metrics and
+  same period, exact PT pairing and the existing heat regulator. A genuine
+  smooth section of the D8 normal line now fills the D9 normal slot in every
+  valid local bundle chart; one-loop transition is `-1` and equals the square
+  of either `Z4` multiplier. No canonical global scalar normal coordinate is
+  claimed. Diffeomorphism ghosts, SpinC identification, general metrics and
   action/Hessian/domain agreement remain an explicit contract.
+  The global LL action now has an exact simultaneous measure/flux cubic
+  expansion and integrated derivative for every finite measure. Its algebraic
+  Euler system is equivalent to the zero-flux branch. The auxiliary LL metric
+  has identically zero response in this selected action, so a genuine
+  differential LL PDE still requires a richer action.
   More strongly, explicit quadratic and quartically deformed two-variable
   extensions have the same proportional branch, the same genuine longitudinal
   derivatives and the same complete transverse two-jet, with Hessian

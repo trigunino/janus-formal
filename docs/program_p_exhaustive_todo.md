@@ -425,9 +425,13 @@ par toute évolution admissible.
   - [x] Construire les modes D10 tronqués comme de vraies troncatures des
     `ProductDiracMode`, avec multiplicité sphérique, période `|period|`, action
     PT exacte, spectre envoyé au régulateur et annulation chirale régulée finie.
-  - [ ] Fournir le mode normal, le ghost difféomorphe, l'identification SpinC,
-    les métriques hors diagonale, puis prouver l'accord entre action, Hessien,
-    développement modal et domaines au bord dans `RemainingFieldContentContract`.
+  - [x] Alimenter localement le mode normal D9 par une vraie section lisse du
+    fibré normal D8 ; prouver que la transition après un tour vaut `-1` et que
+    le carré de chaque multiplicateur `Z4` reproduit ce signe. Aucune
+    coordonnée scalaire globale canonique n'est revendiquée.
+  - [ ] Fournir le ghost difféomorphe, l'identification SpinC, les métriques
+    hors diagonale, puis prouver l'accord entre action, Hessien, développement
+    modal et domaines au bord dans les contrats résiduels.
 
 **Acceptation** : un espace de champs unique sert à l'action, au Hessien, au
 complexe BRST, aux anomalies et aux conditions au bord.
@@ -458,6 +462,13 @@ complexe BRST, aux anomalies et aux conditions au bord.
   champs de mesure et flux.
 - [x] Intégrer l'action LL sur le worldvolume.
 - [ ] Dériver ses PDE, contraintes et branche de noyau nul.
+  - [x] Pour l'action LL globale effectivement sélectionnée, varier
+    simultanément mesure et flux, prouver l'expansion cubique pointwise et
+    intégrée pour toute mesure finie, dériver les deux coefficients d'Euler et
+    montrer que leur annulation équivaut exactement au flux nul.
+  - [ ] Introduire la dépendance différentielle et la métrique auxiliaire dans
+    l'action LL physique, puis dériver la vraie PDE ; l'action actuelle a une
+    réponse identiquement nulle à la métrique auxiliaire.
 - [x] Prouver l'existence d'une branche throat non vide compatible avec les
   deux secteurs gravitationnels.
 - [ ] Dériver les conditions de jonction et l'équilibre des flux.

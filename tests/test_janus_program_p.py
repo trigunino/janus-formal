@@ -150,6 +150,10 @@ def test_program_p_d9_d10_exact_field_content_bridge_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d8_normal_bundle_d9_displacement_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_holonomic_scalar_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
@@ -167,4 +171,8 @@ def test_program_p_automatic_scalar_integrability_is_integrated() -> None:
 
 
 def test_program_p_diffeomorphism_ll_and_null_domain_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_ll_variation_is_integrated() -> None:
     assert_program_p_gate_integrity()
