@@ -54,6 +54,39 @@ theorem oddGenerators_anticommute :
     norm_num [oddGeneratorOne, oddGeneratorTwo, Matrix.mul_apply,
       Fin.sum_univ_succ]
 
+theorem oddGeneratorOne_ne_zero : oddGeneratorOne ≠ 0 := by
+  intro hZero
+  have hEntry := congrArg
+    (fun matrix : OddCoefficientMatrix => matrix 1 0) hZero
+  norm_num [oddGeneratorOne] at hEntry
+
+/-- Nontrivial square-zero differential on the odd coefficient space. -/
+def oddCoefficientDifferential :
+    OddCoefficientMatrix →ₗ[Real] OddCoefficientMatrix where
+  toFun := fun coefficient => oddGeneratorOne * coefficient
+  map_add' := by intro first second; simp [Matrix.mul_add]
+  map_smul' := by
+    intro scalar coefficient
+    simpa using (Matrix.mul_smul oddGeneratorOne scalar coefficient)
+
+theorem oddCoefficientDifferential_apply (coefficient : OddCoefficientMatrix) :
+    oddCoefficientDifferential coefficient = oddGeneratorOne * coefficient :=
+  rfl
+
+theorem oddCoefficientDifferential_sq (coefficient : OddCoefficientMatrix) :
+    oddCoefficientDifferential (oddCoefficientDifferential coefficient) = 0 := by
+  change oddGeneratorOne * (oddGeneratorOne * coefficient) = 0
+  rw [← Matrix.mul_assoc, oddGeneratorOne_square, Matrix.zero_mul]
+
+theorem oddCoefficientDifferential_ne_zero :
+    oddCoefficientDifferential ≠ 0 := by
+  intro hZero
+  have hApply := congrArg
+    (fun linear : OddCoefficientMatrix →ₗ[Real] OddCoefficientMatrix =>
+      linear (1 : OddCoefficientMatrix)) hZero
+  apply oddGeneratorOne_ne_zero
+  simpa [oddCoefficientDifferential] using hApply
+
 def oddVolumeCoefficient : OddCoefficientMatrix :=
   oddGeneratorOne * oddGeneratorTwo
 
@@ -119,10 +152,14 @@ theorem graded_ghost_coefficient_witness4D_closure :
         -(oddGeneratorTwo * oddGeneratorOne) ∧
       gradedQuadraticGhostBRSTCoefficient ≠ 0 ∧
       gradedQuadraticGhostBRSTCoefficient *
-        gradedQuadraticGhostBRSTCoefficient = 0 :=
+        gradedQuadraticGhostBRSTCoefficient = 0 ∧
+      oddCoefficientDifferential ≠ 0 ∧
+      ∀ coefficient,
+        oddCoefficientDifferential (oddCoefficientDifferential coefficient) = 0 :=
   ⟨oddGeneratorOne_square, oddGeneratorTwo_square,
     oddGenerators_anticommute, gradedQuadraticGhostBRSTCoefficient_ne_zero,
-    gradedQuadraticGhostBRSTCoefficient_square⟩
+    gradedQuadraticGhostBRSTCoefficient_square,
+    oddCoefficientDifferential_ne_zero, oddCoefficientDifferential_sq⟩
 
 end
 

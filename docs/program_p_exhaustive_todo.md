@@ -356,8 +356,9 @@ par toute évolution admissible.
         avec carrés nuls et anticommutation exacte, puis prouver que le
         coefficient de crochet propre gradué et son facteur BRST `-1/2` sont
         non nuls, tout en ayant carré nul dans ce modèle impair. Le ghost
-        tangent global, sa nilpotence différentielle complète et BV restent
-        ouverts.
+        modèle porte aussi un opérateur linéaire non nul de multiplication
+        impaire dont le carré est exactement zéro. Le couplage au ghost tangent
+        global, sa nilpotence différentielle complète et BV restent ouverts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
