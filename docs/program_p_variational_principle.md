@@ -587,7 +587,9 @@ equivalence of dependent total spaces. The two quarter choices are genuine
 global complex line bundles with analytic real underliers and transition
 squares equal to the normal sign. The same global winding cocycle now defines
 a topological principal normal `Pin⁻(1) ≃ Z4` bundle with equivariant
-transitions and free/transitive right action. The throat inclusion is a global
+transitions and free/transitive right action. Applying the two quarter
+characters to that cocycle constructs the associated root-phase bundle cores
+and recovers their square/PT laws for every winding. The throat inclusion is a global
 `IsSmoothEmbedding`; the independent differential-normal quotient atlas, a
 smooth comparison, ambient tangent Pin/SpinC bundles and the null/joint strata
 remain open.
@@ -635,11 +637,21 @@ pointwise frame independence and true D8-diffeomorphism naturality; smooth
 density packaging, finite-measure integrability, the global scalar action and
 its derivative are then closed on the explicit regular sharp/frame/volume
 field space. A global regular metric witness from the diagonal branch remains
-open.
+open. The deck-compatible anti-periodic determinant now isolates why its
+global frame cannot be the right witness. Canonical local tangent frames, a
+smooth subordinate partition, a nonempty flat local regularization and local
+musical/sharp/tensor/positive-volume data are constructed; exact tensorial
+gluing is the remaining step.
 The Robin chain now continues from the same action through its symmetric
 Hessian to a self-adjoint index-zero `L²` Fredholm realization when
 `k_+ + k_- != 0`; action, variation, Hessian and operator are PT-covariant
 under sector/coupling exchange for a PT-invariant measure.
+A separate geometric junction gate evaluates the genuine differential of the
+same bulk scalar on a representative of the differential normal quotient.
+The resulting covector has the required one-loop sign, pairs globally with a
+twisted normal section, and yields an action and weak balance by stationarity.
+The splitting is algebraic pointwise and the Robin identification remains an
+explicit constitutive condition, not a derived unit-normal law.
 A smooth section of the true D8 normal line fills the D9 normal slot locally,
 with one-loop sign equal to the square of either constructed global `Z4` root
 line. Real-linear complex conjugation now exchanges the two root-line descent
@@ -664,7 +676,11 @@ equal to the linearization of its weak pairing, with positive kinetic part;
 the raw auxiliary-metric Hessian is derived separately. Its weak Euler and
 Jacobi maps are actual linear operators on smooth tests, with exact affine
 linearization, Jacobi symmetry and same-action variation/Hessian identities;
-the algebraic dual has not yet been topologized. It also supplies an exact
+in the strictly positive LL-measure sector this Hessian defines a completed
+Hilbert energy space and its exact Riesz representative. The bounded
+completion is self-adjoint, has zero kernel, full closed range and index zero,
+and its smooth pairing is the same Euler linearization. No compact resolvent,
+external Sobolev equivalence or D10 identification is claimed. It also supplies an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester

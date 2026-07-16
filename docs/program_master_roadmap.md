@@ -107,6 +107,9 @@ Current results:
 - **T/C** the two `Z4` lifts obey the cyclic cocycle law, are exchanged by PT, and reproduce the one-, two- and four-loop boundary-condition hierarchy;
 - **T/C** both lifts now define genuine global complex line bundles whose smooth real underliers have analytic transitions, whose squares recover the normal sign for every winding, and whose full cocycles are exchanged by involutive real-linear complex conjugation;
 - **T/C** the same integer cocycle defines a genuine topological principal normal `Pin⁻(1) ≃ Z4` bundle: its right action is free and transitive, transitions are equivariant, one loop is the order-four generator and reduction modulo two recovers orientation parity;
+- **T/C** applying the two quarter characters to that principal cocycle gives
+  actual associated root-phase bundle cores; their characters square to the
+  orientation half-turn for every winding and PT exchanges them;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
@@ -421,6 +424,11 @@ New controlled subgates are now checked:
   volume data, the density is smooth and integrable for every finite measure,
   and its global action/first variation are exact. A global regular metric
   witness from the diagonal branch remains open;
+- **T/N** a deck-compatible anti-periodic determinant obstructs the global
+  frame requested by that old regularity class. Canonical local tangent
+  frames, a smooth subordinate partition, a nonempty flat local
+  regularization and local musical/sharp/tensor/volume data replace it; exact
+  gluing to one global Lorentz tensor remains open;
 - **T/C** on an open fixed-determinant-sign component of symmetric `4 x 4`
   metrics, the exact inverse and determinant measure of the same metric curve
   give the actual pointwise scalar-density variation and an explicit symmetric
@@ -469,6 +477,11 @@ New controlled subgates are now checked:
   space, with exact affine linearization and Jacobi symmetry. A topology on
   the algebraic dual, strong divergence form, intrinsic Lorentz contraction
   and a PT-equivariant generating frame remain open;
+- **T/C** in the strictly positive LL-measure sector, that same PT Hessian is
+  the inner product of a completed Hilbert energy space. Its Riesz realization
+  extends to a bounded self-adjoint operator with zero kernel, full closed
+  range and index zero; its smooth pairing is the linearized Euler operator of
+  the same action. No compact resolvent or D10 identification is claimed;
 - **T/C** an explicit quadratic Robin action of the two actual throat traces
   derives the integrated weak junction balance and vanishing squared residual.
   Its symmetric bilinear Hessian has exact sign/kernel classification and is
@@ -478,6 +491,11 @@ New controlled subgates are now checked:
   traces, fluxes, action, variations, Hessian and the `L²` operator intertwine
   exactly with sector/coupling exchange; geometric normal derivatives and
   Israel/null conditions remain open;
+- **T/C** the genuine bulk differential `dφ` now evaluates on a representative
+  of the differential normal quotient, transforms with the one-loop normal
+  sign, pairs globally with a twisted normal section, and yields an action and
+  weak stationary balance. Its splitting is algebraic pointwise; a smooth
+  unit normal, Israel jump and null rigging remain open;
 - **T/C** the completed first-jet graph `H¹` has dense smooth fields and a
   continuous `L²` projection; under `HasH1TraceBound`, smooth throat trace
   extends continuously and uniquely. The frame, bound and intrinsic weak
