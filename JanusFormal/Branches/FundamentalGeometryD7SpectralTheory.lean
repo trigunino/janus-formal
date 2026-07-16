@@ -20,6 +20,7 @@ import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanus
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatRemainderConvergence
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusQuarterDeterminantConvergence
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleSphereHeatTrace
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusEulerMaclaurinOrderFour
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleHeatAsymptoticMatch
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusProductThroatDiracHeatCoefficients
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusFiniteProductHeatTrace
@@ -85,6 +86,7 @@ structure ProgramStatus where
   actualGlobalDiracOperatorConstructed : Prop
   separatedInfiniteSpectrumProved : Prop
   heatTraceAsymptoticsProved : Prop
+  unconditionalMonopoleSphereSmallTimeAsymptoticsProved : Prop
   zetaAndEtaContinuationProved : Prop
   finiteCountertermsDerivedMicroscopically : Prop
   stableModulusDerivedSchemeIndependently : Prop
@@ -138,6 +140,7 @@ def analyticSpectralTheoryClosed (s : ProgramStatus) : Prop :=
   s.actualGlobalDiracOperatorConstructed /\
   s.separatedInfiniteSpectrumProved /\
   s.heatTraceAsymptoticsProved /\
+  s.unconditionalMonopoleSphereSmallTimeAsymptoticsProved /\
   s.zetaAndEtaContinuationProved /\
   s.finiteCountertermsDerivedMicroscopically /\
   s.stableModulusDerivedSchemeIndependently
@@ -169,7 +172,7 @@ theorem fitted_counterterm_without_microscopic_derivation_blocks_analytic_closur
     (hMissing : Not s.finiteCountertermsDerivedMicroscopically) :
     Not (analyticSpectralTheoryClosed s) := by
   intro hClosed
-  rcases hClosed with ⟨_, _, _, _, _, hCounterterm, _⟩
+  rcases hClosed with ⟨_, _, _, _, _, _, hCounterterm, _⟩
   exact hMissing hCounterterm
 
 /-- Missing bulk/boundary charge compatibility prevents the final synthesis. -/

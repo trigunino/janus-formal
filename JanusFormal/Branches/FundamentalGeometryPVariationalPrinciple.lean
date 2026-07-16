@@ -59,9 +59,20 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusSpectralInteractionHessianIndefinite
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitCandidatePointwiseEuler
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricCoupledScalarMatterJetVariation
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricInducedScalarStressVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedScalarStressVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHolonomicScalarFieldVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHolonomicMetricScalarVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedHolonomicMetricScalarVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFlatHolonomicScalarEuler4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedFlatScalarEuler4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFinitePeriodicHolonomicScalarVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteMetricHolonomicScalarVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteMetricHolonomicReindexingCovariance
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalFieldConfiguration4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalFieldBridge4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFlatFieldBranch4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusContinuousFieldSpaces4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixDiagonalGaugeNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixInteractionFrechetNoether
@@ -76,6 +87,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzPrincipalRootChart2D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzRootSylvesterChart2D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzLocalRootBranch4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzRootRegularTube4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiRelativeRootBranch4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiRelativeRootOpenDomain4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiInteractionDensityVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalInteractionDensityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDiagonalReparametrizationDensityNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFourDimensionalDensityLieDerivativeNoether
@@ -108,6 +123,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteFourierSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteFourierZeroModeCohomology
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCountableFourierSaintVenantExactness
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLatticeFourierSaintVenantExactness
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusWeightedL2LatticeSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
@@ -193,6 +210,10 @@ structure ProgramStatus where
   paLorentzPrincipalRootChart2DProved : Prop
   paLorentzRootSylvesterChart2DProved : Prop
   paConditionalRealMatrixLocalRootBranch4DProved : Prop
+  paConditionalContinuousSylvesterRegularRootTube4DProved : Prop
+  paUnconditionalMinkowskiDiagonalLocalRelativeRootBranch4DProved : Prop
+  paExplicitMinkowskiRelativeRootOpenDomain4DProved : Prop
+  paMinkowskiCandidateAInteractionDensityVariation4DProved : Prop
   paCoDiagonalInteractionDensityFrechetProved : Prop
   paDiagonalReparametrizationDensityPullbackNoetherProved : Prop
   paFourDimensionalDensityLieDerivativeNoetherProved : Prop
@@ -218,9 +239,20 @@ structure ProgramStatus where
   paFiniteBoxBulkBoundaryStokesProved : Prop
   pcExplicitCandidatePointwiseEulerHelmholtzProved : Prop
   paIndependentMetricMatterJetVariationProved : Prop
+  paMetricInducedScalarStressVariation4DProved : Prop
+  paIntegratedTwoSectorScalarStressVariation4DProved : Prop
+  paFlatChartHolonomicScalarFieldVariation4DProved : Prop
+  paFlatChartHolonomicMetricScalarVariation4DProved : Prop
+  paIntegratedHolonomicMetricScalarVariation4DUnderDominatedContractProved : Prop
+  paFlatHolonomicScalarEulerDivergenceDecomposition4DProved : Prop
+  paIntegratedFlatScalarWeakEuler4DUnderFluxConditionProved : Prop
   paFinitePeriodicHolonomicScalarEulerProved : Prop
   paFiniteMetricHolonomicScalarVariationProved : Prop
   paFiniteMetricHolonomicReindexingCovarianceProved : Prop
+  paParametrizedGlobalLorentzianFieldConfiguration4DConstructed : Prop
+  paEffectiveD8MappingTorusFieldBasePTClosure4DProved : Prop
+  paEffectiveD8FlatDiagonalFieldBranch4DProved : Prop
+  paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
@@ -229,6 +261,8 @@ structure ProgramStatus where
   paFiniteFourierSaintVenantExactnessProved : Prop
   paFiniteFourierZeroModeCohomologyProved : Prop
   paCountableAxialFourierSaintVenantExactnessProved : Prop
+  paCountableLatticeFourierSaintVenantExactnessProved : Prop
+  paWeightedL2LatticeSaintVenantExactnessProved : Prop
   paNullExpansionCountertermVariationProved : Prop
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
@@ -251,6 +285,7 @@ structure ProgramStatus where
   paCircleHeatSemigroupStrongContinuityProved : Prop
   paCircleHeatSemigroupCompactnessProved : Prop
   paProgramPD7CircleHeatRegulatorBridgeProved : Prop
+  paProgramPD7UnconditionalSphereSmallTimeBridgeProved : Prop
   paCandidateSignedChargeNewtonianBridgeProved : Prop
   pbCandidateSchemeFreedomNoGoProved : Prop
   peZ4ChargeNeutralityDerived : Prop
@@ -344,6 +379,10 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paLorentzPrincipalRootChart2DProved /\
   s.paLorentzRootSylvesterChart2DProved /\
   s.paConditionalRealMatrixLocalRootBranch4DProved /\
+  s.paConditionalContinuousSylvesterRegularRootTube4DProved /\
+  s.paUnconditionalMinkowskiDiagonalLocalRelativeRootBranch4DProved /\
+  s.paExplicitMinkowskiRelativeRootOpenDomain4DProved /\
+  s.paMinkowskiCandidateAInteractionDensityVariation4DProved /\
   s.paCoDiagonalInteractionDensityFrechetProved /\
   s.paDiagonalReparametrizationDensityPullbackNoetherProved /\
   s.paFourDimensionalDensityLieDerivativeNoetherProved /\
@@ -369,9 +408,20 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteBoxBulkBoundaryStokesProved /\
   s.pcExplicitCandidatePointwiseEulerHelmholtzProved /\
   s.paIndependentMetricMatterJetVariationProved /\
+  s.paMetricInducedScalarStressVariation4DProved /\
+  s.paIntegratedTwoSectorScalarStressVariation4DProved /\
+  s.paFlatChartHolonomicScalarFieldVariation4DProved /\
+  s.paFlatChartHolonomicMetricScalarVariation4DProved /\
+  s.paIntegratedHolonomicMetricScalarVariation4DUnderDominatedContractProved /\
+  s.paFlatHolonomicScalarEulerDivergenceDecomposition4DProved /\
+  s.paIntegratedFlatScalarWeakEuler4DUnderFluxConditionProved /\
   s.paFinitePeriodicHolonomicScalarEulerProved /\
   s.paFiniteMetricHolonomicScalarVariationProved /\
   s.paFiniteMetricHolonomicReindexingCovarianceProved /\
+  s.paParametrizedGlobalLorentzianFieldConfiguration4DConstructed /\
+  s.paEffectiveD8MappingTorusFieldBasePTClosure4DProved /\
+  s.paEffectiveD8FlatDiagonalFieldBranch4DProved /\
+  s.paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\
@@ -380,6 +430,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteFourierSaintVenantExactnessProved /\
   s.paFiniteFourierZeroModeCohomologyProved /\
   s.paCountableAxialFourierSaintVenantExactnessProved /\
+  s.paCountableLatticeFourierSaintVenantExactnessProved /\
+  s.paWeightedL2LatticeSaintVenantExactnessProved /\
   s.paNullExpansionCountertermVariationProved /\
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\
@@ -402,6 +454,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCircleHeatSemigroupStrongContinuityProved /\
   s.paCircleHeatSemigroupCompactnessProved /\
   s.paProgramPD7CircleHeatRegulatorBridgeProved /\
+  s.paProgramPD7UnconditionalSphereSmallTimeBridgeProved /\
   s.paCandidateSignedChargeNewtonianBridgeProved /\
   s.pbCandidateSchemeFreedomNoGoProved
 

@@ -11,6 +11,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates"
 )
+D10_GATE_ROOT = Path(
+    "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly/Gates"
+)
 
 PROGRAM_P_GATES = {
     "P0EFTJanusCoupledSectorHelmholtzSelection.lean": (
@@ -953,7 +956,10 @@ PROGRAM_P_GATES = {
             "theorem d7_circleEigenvalue_eq_scaled_programP",
             "theorem programP_heatWeight_eq_d7_circleHeatWeight",
             "theorem d7CircleHeatOperator_isCompact",
+            "theorem d7SeparatedLevelHeatOperator_isCompact",
             "theorem d7SeparatedLevelHeatOperator_on_basis",
+            "theorem circle_compactness_and_z4_determinant_close_physical_regulator",
+            "theorem circle_regulator_and_unconditional_sphere_small_time",
             "theorem circle_compactness_and_quadratic_remainder_close_d7_regulator",
         ),
     ),
@@ -1034,6 +1040,56 @@ PROGRAM_P_GATES = {
             "theorem lorentzLocalRootBranch4D_gate",
         ),
     ),
+    "P0EFTJanusLorentzRootRegularTube4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localTargetLift",
+            "theorem eventually_localTargetLift_square",
+            "theorem localTargetLift_hasFDerivAt",
+            "theorem continuousRootLift_eventuallyEq_localTargetLift",
+            "theorem continuousRootLift_hasFDerivAt",
+            "theorem continuousRootLift_derivative_sylvester",
+            "theorem relativeMetricRoot_hasFDerivAt_of_continuous",
+            "theorem lorentzRootRegularTube4D_gate",
+        ),
+    ),
+    "P0EFTJanusMinkowskiRelativeRootBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def minkowskiMetricPair",
+            "def minkowskiRelativeRootBranch",
+            "theorem minkowskiRelativeRootBranch_hasFDerivAt",
+            "theorem eventually_minkowskiRelativeRootBranch_square",
+            "theorem minkowskiRelativeRootBranch_fderiv_apply",
+            "theorem minkowski_relative_root_local_closure",
+        ),
+    ),
+    "P0EFTJanusMinkowskiRelativeRootOpenDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def identityRootTarget",
+            "def minkowskiRelativeRootOpenDomain",
+            "theorem minkowskiRelativeRootOpenDomain_isOpen",
+            "theorem minkowskiMetricPair_mem_openDomain",
+            "theorem minkowskiRelativeRootBranch_square_on_openDomain",
+            "theorem minkowskiRelativeRootBranch_continuousOn_openDomain",
+            "theorem root_unique_in_identityChart",
+            "theorem minkowski_relative_root_open_domain_closure",
+        ),
+    ),
+    "P0EFTJanusMinkowskiInteractionDensityVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SymmetricMetricPairVariation4",
+            "theorem minkowskiPlusVolume_hasFDerivAt",
+            "theorem minkowskiRoot_hasFDerivAt",
+            "theorem minkowskiRootPotential_hasFDerivAt",
+            "theorem minkowskiCandidateAInteractionDensity_hasFDerivAt",
+            "theorem minkowskiCandidateAInteractionDensityDerivative_apply_explicit",
+            "theorem minkowskiCandidateAInteractionDensity_curve_hasDerivAt",
+            "theorem eventually_minkowskiMetricPairCurve_root_square",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1046,6 +1102,101 @@ PROGRAM_P_GATES = {
             "theorem scalarMatterDensity_measureLine_hasDerivAt",
             "theorem twoSector_plusFieldLine_hasDerivAt",
             "theorem twoSector_mixed_field_increment_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMetricInducedScalarStressVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fixedDeterminantSignDomain",
+            "theorem fixedDeterminantSignDomain_isOpen",
+            "structure FixedSignMetric4",
+            "theorem eventually_metricCurve_mem_domain",
+            "theorem exactInverseMetricCurve_hasDerivAt",
+            "theorem metricMeasureCurve_hasDerivAt",
+            "theorem metricInducedScalarDensityCurve_hasDerivAt",
+            "def pointwiseScalarStressTensor",
+            "theorem pointwiseScalarStressTensor_symmetric",
+            "theorem metricInducedScalarDensityFirstVariation_eq_stress_pairing",
+            "theorem metricInducedScalarDensityCurve_stress_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIntegratedScalarStressVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ScalarMetricSector4",
+            "def integratedScalarAction",
+            "def integratedScalarStressVariation",
+            "def shiftedFixedSignMetric4",
+            "theorem shifted_metricInducedScalarDensityCurve",
+            "theorem metricInducedScalarDensityCurve_stress_hasDerivAt_at",
+            "def pointwiseScalarStressVariationAt",
+            "theorem integratedScalarAction_stress_hasDerivAt",
+            "theorem integratedScalarAction_stress_hasDerivAt_of_deriv_le",
+            "structure TwoScalarMetricSectors4",
+            "theorem exchangeTwoScalarMetricSectors4_involutive",
+            "theorem integratedTwoSectorScalarAction_exchange",
+            "theorem integratedTwoSectorScalarStressVariation_exchange",
+            "theorem integratedTwoSectorScalarAction_stress_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusHolonomicScalarFieldVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coordinateGradient",
+            "def holonomicScalarJet",
+            "def scalarFieldLine",
+            "theorem fderiv_scalarFieldLine",
+            "theorem holonomicScalarJet_scalarFieldLine",
+            "def holonomicScalarDensityCurve",
+            "theorem holonomicScalarDensityCurve_hasDerivAt",
+            "structure HolonomicScalarSector4",
+            "def integratedHolonomicScalarAction",
+            "def integratedHolonomicScalarFirstVariation",
+            "theorem integratedHolonomicScalarAction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusHolonomicMetricScalarVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicMetricScalarDensityCurve",
+            "def holonomicMetricScalarDensityFirstVariation",
+            "theorem holonomicMetricScalarDensityCurve_hasDerivAt",
+            "theorem holonomicMetricScalarDensityFirstVariation_split",
+        ),
+    ),
+    "P0EFTJanusIntegratedHolonomicMetricScalarVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure IntegratedHolonomicMetricScalarSector4",
+            "def integratedHolonomicMetricScalarAction",
+            "def integratedHolonomicMetricScalarFirstVariation",
+            "theorem pointwiseHolonomicMetricScalarDensity_hasDerivAt",
+            "theorem integratedHolonomicMetricScalarAction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusFlatHolonomicScalarEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def raisedCoordinateGradient",
+            "def coordinateDivergence",
+            "def scalarBoundaryFlux",
+            "def flatScalarEulerOperator",
+            "theorem coordinateDivergence_scalarBoundaryFlux",
+            "theorem holonomicScalarDensityFirstVariation_euler_decomposition",
+            "def ScalarFluxVanishes",
+        ),
+    ),
+    "P0EFTJanusIntegratedFlatScalarEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FlatScalarEulerSector4",
+            "def integratedFlatScalarFirstVariation",
+            "def integratedFlatScalarFlux",
+            "def integratedFlatScalarEulerPairing",
+            "def IntegratedScalarFluxVanishes",
+            "theorem pointwise_flatScalarEuler_decomposition",
+            "theorem integratedFlatScalarFirstVariation_eq_eulerPairing",
+            "theorem integratedHolonomicScalarAction_euler_hasDerivAt",
         ),
     ),
     "P0EFTJanusFinitePeriodicHolonomicScalarVariation.lean": (
@@ -1084,6 +1235,63 @@ PROGRAM_P_GATES = {
             "theorem strongEuler_transport",
             "theorem fixedMetric_stationary_transport_iff",
             "theorem finiteMetricHolonomicReindexingCovariance_gate",
+        ),
+    ),
+    "P0EFTJanusGlobalFieldConfiguration4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def IsLorentzianMatrix4",
+            "structure LorentzMetricPoint4",
+            "structure IndependentFields",
+            "theorem IndependentFields.replacePlusMetric_minusMetric",
+            "theorem IndependentFields.replaceMinusMetric_plusMetric",
+            "theorem independentPTExchange_involutive",
+            "structure InducedFields",
+            "structure FieldInduction",
+            "theorem induce_plusInverse_exact",
+            "structure FunctionalSpaces",
+            "structure BoundaryConditions",
+            "structure PTCompatibleContracts",
+            "def InductionPTCovariant",
+            "theorem realize_pt_covariant",
+            "structure GlobalConfiguration",
+            "theorem globalConfigurationPTExchange_involutive",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalFieldBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def effectiveSpacetimePT",
+            "def effectiveThroatPT",
+            "theorem effectiveThroatEmbedding_pt_equivariant",
+            "theorem effectiveThroatEmbedding_transform_fixed",
+            "def effectiveIndependentPTData",
+            "theorem independentPTExchange_preserves_effective_throat",
+            "theorem effective_mapping_torus_field_base_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusFlatFieldBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def minkowskiLorentzMetricPoint4",
+            "def flatDiagonalIndependentFields",
+            "def flatDiagonalInducedFields",
+            "theorem flatDiagonal_relativeRoot_square",
+            "theorem flatDiagonalIndependentFields_pt_fixed",
+            "theorem effective_flat_diagonal_branch_nonempty",
+        ),
+    ),
+    "P0EFTJanusMappingTorusContinuousFieldSpaces4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ContinuousLLPointField",
+            "def IndependentFieldsContinuous",
+            "def InducedFieldsContinuous",
+            "theorem flatDiagonalIndependentFields_continuous",
+            "theorem flatDiagonalInducedFields_continuous",
+            "structure ContinuousEffectiveConfiguration",
+            "def flatContinuousEffectiveConfiguration",
+            "theorem continuous_effective_configuration_nonempty",
         ),
     ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
@@ -1133,6 +1341,33 @@ PROGRAM_P_GATES = {
             "theorem countable_fourier_saintVenant_exactness_gate",
         ),
     ),
+    "P0EFTJanusLatticeFourierSaintVenantExactness.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem exists_dominant_lattice_pivot",
+            "theorem one_le_abs_latticePivot",
+            "theorem lattice_zeroMode_decomposition",
+            "theorem dominantPivot_inverse_sq_le",
+            "theorem latticeReconstructedPotential_sq_le_finiteSum",
+            "theorem latticeReconstructedPotential_squareSummable",
+            "theorem latticeReconstructedPotential_weightedSquareSummable",
+            "theorem lattice_fourier_saintVenant_exactness_gate",
+        ),
+    ),
+    "P0EFTJanusWeightedL2LatticeSaintVenantExactness.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def weightedReconstruction",
+            "theorem weightedReconstruction_opNorm_le",
+            "def weightedLorentzGramDomain",
+            "noncomputable def weightedLorentzGramLinearMap",
+            "def CompatibleZeroFreeMetricSubspace",
+            "theorem weightedLorentzGram_range_eq_compatibleZeroFree",
+            "theorem weightedLorentzGram_range_isClosed",
+            "theorem compatible_metric_hilbert_decomposition",
+            "theorem weighted_l2_lattice_saintVenant_exactness_gate",
+        ),
+    ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1167,6 +1402,50 @@ PROGRAM_P_GATES = {
     ),
 }
 
+PROGRAM_P_D10_BRIDGE_GATES = {
+    "P0EFTJanusProgramPD7Z4SpectralAnomalyBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "theorem program_p_d7_z4_cutoff_converges",
+            "theorem program_p_d7_pt_renormalized_logs_agree",
+            "theorem program_p_d7_mode_inflow_cancels",
+            "structure PhysicalZ4SpectralAnomalyCertificate",
+            "def physicalZ4SpectralAnomalyCertificate",
+        ),
+    ),
+}
+
+PROGRAM_P_D10_FINITE_MODE_GATES = {
+    "P0EFTJanusFiniteModeFredholmDeterminantLine.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "theorem cutoffDiracMatrix_holomorphic",
+            "theorem cutoffDirac_kernel_and_cokernel_finite",
+            "theorem cutoffFredholmIndex_zero",
+            "def cutoffDeterminantLineSection",
+            "theorem cutoffDeterminantLine_finrank_one",
+            "theorem cutoffDirac_pt_covariant",
+            "theorem quarter_holonomy_cutoffs_invertible",
+        ),
+    ),
+}
+
+PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
+    "P0EFTJanusCircleHolonomyCommonDomainCompactResolvent.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "theorem circleDiracDomain_eq_holonomy",
+            "theorem circleUnboundedDirac_holonomy_perturbation",
+            "theorem complexHolonomyCircleDirac_contDiff",
+            "theorem circleDirac_bounded_window_finite",
+            "theorem circleShiftIResolvent_mem_domain",
+            "theorem circleShiftIResolvent_right_inverse",
+            "theorem circleShiftIResolvent_left_inverse",
+            "theorem circleShiftIResolvent_compact",
+        ),
+    ),
+}
+
 
 def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     """Require key declarations, facade imports, and placeholder-free proofs."""
@@ -1187,6 +1466,66 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         gate_import = f"Gates.{filename.removesuffix('.lean')}"
         if gate_import not in facade:
             raise AssertionError(f"Program facade omits {filename}")
+
+    for filename, (facade_path, declarations) in PROGRAM_P_D10_BRIDGE_GATES.items():
+        source = (repo_root / D10_GATE_ROOT / filename).read_text(encoding="utf-8")
+        for declaration in declarations:
+            if declaration not in source:
+                raise AssertionError(f"missing Program P/D10 declaration: {declaration}")
+        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+            raise AssertionError(f"proof placeholder found in {filename}")
+
+        facade = facades.setdefault(
+            facade_path,
+            (repo_root / facade_path).read_text(encoding="utf-8"),
+        )
+        gate_import = f"Gates.{filename.removesuffix('.lean')}"
+        if gate_import not in facade:
+            raise AssertionError(f"D10 facade omits {filename}")
+
+        status = "physicalZ4SpectralDeterminantAndModeInflowBridgeProved"
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:
+            raise AssertionError(f"D10 facade omits status: {status}")
+
+    for filename, (facade_path, declarations) in PROGRAM_P_D10_FINITE_MODE_GATES.items():
+        source = (repo_root / D10_GATE_ROOT / filename).read_text(encoding="utf-8")
+        for declaration in declarations:
+            if declaration not in source:
+                raise AssertionError(f"missing finite-mode D10 declaration: {declaration}")
+        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+            raise AssertionError(f"proof placeholder found in {filename}")
+
+        facade = facades.setdefault(
+            facade_path,
+            (repo_root / facade_path).read_text(encoding="utf-8"),
+        )
+        gate_import = f"Gates.{filename.removesuffix('.lean')}"
+        if gate_import not in facade:
+            raise AssertionError(f"D10 facade omits {filename}")
+
+        status = "finiteModeHolomorphicFredholmDeterminantLineProved"
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:
+            raise AssertionError(f"D10 facade omits status: {status}")
+
+    for filename, (facade_path, declarations) in PROGRAM_P_D10_INFINITE_CIRCLE_GATES.items():
+        source = (repo_root / D10_GATE_ROOT / filename).read_text(encoding="utf-8")
+        for declaration in declarations:
+            if declaration not in source:
+                raise AssertionError(f"missing infinite-circle D10 declaration: {declaration}")
+        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+            raise AssertionError(f"proof placeholder found in {filename}")
+
+        facade = facades.setdefault(
+            facade_path,
+            (repo_root / facade_path).read_text(encoding="utf-8"),
+        )
+        gate_import = f"Gates.{filename.removesuffix('.lean')}"
+        if gate_import not in facade:
+            raise AssertionError(f"D10 facade omits {filename}")
+
+        status = "circleHolonomyCommonDomainCompactResolventProved"
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:
+            raise AssertionError(f"D10 facade omits status: {status}")
 
     primary_facade = facades[
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
@@ -1228,6 +1567,10 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paLorentzPrincipalRootChart2DProved",
         "paLorentzRootSylvesterChart2DProved",
         "paConditionalRealMatrixLocalRootBranch4DProved",
+        "paConditionalContinuousSylvesterRegularRootTube4DProved",
+        "paUnconditionalMinkowskiDiagonalLocalRelativeRootBranch4DProved",
+        "paExplicitMinkowskiRelativeRootOpenDomain4DProved",
+        "paMinkowskiCandidateAInteractionDensityVariation4DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
@@ -1253,9 +1596,20 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFiniteBoxBulkBoundaryStokesProved",
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paIndependentMetricMatterJetVariationProved",
+        "paMetricInducedScalarStressVariation4DProved",
+        "paIntegratedTwoSectorScalarStressVariation4DProved",
+        "paFlatChartHolonomicScalarFieldVariation4DProved",
+        "paFlatChartHolonomicMetricScalarVariation4DProved",
+        "paIntegratedHolonomicMetricScalarVariation4DUnderDominatedContractProved",
+        "paFlatHolonomicScalarEulerDivergenceDecomposition4DProved",
+        "paIntegratedFlatScalarWeakEuler4DUnderFluxConditionProved",
         "paFinitePeriodicHolonomicScalarEulerProved",
         "paFiniteMetricHolonomicScalarVariationProved",
         "paFiniteMetricHolonomicReindexingCovarianceProved",
+        "paParametrizedGlobalLorentzianFieldConfiguration4DConstructed",
+        "paEffectiveD8MappingTorusFieldBasePTClosure4DProved",
+        "paEffectiveD8FlatDiagonalFieldBranch4DProved",
+        "paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",
@@ -1264,6 +1618,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFiniteFourierSaintVenantExactnessProved",
         "paFiniteFourierZeroModeCohomologyProved",
         "paCountableAxialFourierSaintVenantExactnessProved",
+        "paCountableLatticeFourierSaintVenantExactnessProved",
+        "paWeightedL2LatticeSaintVenantExactnessProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
@@ -1286,6 +1642,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCircleHeatSemigroupStrongContinuityProved",
         "paCircleHeatSemigroupCompactnessProved",
         "paProgramPD7CircleHeatRegulatorBridgeProved",
+        "paProgramPD7UnconditionalSphereSmallTimeBridgeProved",
         "paCandidateSignedChargeNewtonianBridgeProved",
         "pbCandidateSchemeFreedomNoGoProved",
     ):

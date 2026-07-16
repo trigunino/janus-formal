@@ -14,6 +14,12 @@ The branch separates:
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusFreeActionAudit
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusQuotient
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusPTInvolution
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalLine
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusOrientationDoubleCover
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementSides
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementConnected
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -28,6 +34,29 @@ namespace JanusFundamentalGeometryD8TopologyRepresentation
 set_option autoImplicit false
 
 structure ProgramStatus where
+  effectiveTopologicalMappingTorusQuotientConstructed : Prop
+  mappingTorusCoveringAndChartedSpaceProved : Prop
+  fixedThroatQuotientInclusionInjectiveProved : Prop
+  mappingTorusTimeReversalContinuousProved : Prop
+  mappingTorusTimeReversalInvolutiveProved : Prop
+  fixedThroatQuotientInclusionPTEquivariantProved : Prop
+  associatedNormalLineOrbitQuotientConstructed : Prop
+  associatedNormalLineProjectionContinuousSurjectiveProved : Prop
+  associatedNormalLineZeroSectionConstructed : Prop
+  associatedNormalLineOneLoopFlipProved : Prop
+  associatedNormalLineTwoLoopRestorationProved : Prop
+  effectiveThroatOrientationDoubleCoveringMapProved : Prop
+  throatOrientationDoubleCoverFiberTwoProved : Prop
+  throatOrientationDeckInvolutionFreeProved : Prop
+  throatNormalPullbackTopologicallyTrivializedProved : Prop
+  equatorialSphereComplementTwoOpenSidesProved : Prop
+  reflectionAndDeckExchangeCoverSidesProved : Prop
+  effectiveThroatComplementOneSidedImageProved : Prop
+  effectiveThroatComplementPTInvariantProved : Prop
+  positiveAndNegativeSphereSidesPathConnectedProved : Prop
+  positiveCoverSidePathConnectedProved : Prop
+  effectiveThroatComplementPathConnectedProved : Prop
+  effectiveThroatComplementConnectedProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -56,8 +85,55 @@ structure ProgramStatus where
   euclideanLorentzianPinDictionaryDerived : Prop
   internalSymmetryGeometricallyDerived : Prop
 
+/-- Effective topological quotient, covering charts and the injected fixed throat. -/
+def effectiveTopologicalMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
+  s.effectiveTopologicalMappingTorusQuotientConstructed /\
+  s.mappingTorusCoveringAndChartedSpaceProved /\
+  s.fixedThroatQuotientInclusionInjectiveProved
+
+/-- Continuous involutive time reversal on the quotient and its fixed throat. -/
+def effectiveMappingTorusPTCoreClosed (s : ProgramStatus) : Prop :=
+  s.mappingTorusTimeReversalContinuousProved /\
+  s.mappingTorusTimeReversalInvolutiveProved /\
+  s.fixedThroatQuotientInclusionPTEquivariantProved
+
+/-- Associated orbit quotient, projection, zero section and parity monodromy. -/
+def associatedNormalLineQuotientCoreClosed (s : ProgramStatus) : Prop :=
+  s.associatedNormalLineOrbitQuotientConstructed /\
+  s.associatedNormalLineProjectionContinuousSurjectiveProved /\
+  s.associatedNormalLineZeroSectionConstructed /\
+  s.associatedNormalLineOneLoopFlipProved /\
+  s.associatedNormalLineTwoLoopRestorationProved
+
+/-- Effective two-sheeted orientation cover and trivial topological normal pullback. -/
+def effectiveThroatOrientationDoubleCoverCoreClosed (s : ProgramStatus) : Prop :=
+  s.effectiveThroatOrientationDoubleCoveringMapProved /\
+  s.throatOrientationDoubleCoverFiberTwoProved /\
+  s.throatOrientationDeckInvolutionFreeProved /\
+  s.throatNormalPullbackTopologicallyTrivializedProved
+
+/-- Exact topological side decomposition and its one-sided quotient image. -/
+def effectiveThroatComplementSidesCoreClosed (s : ProgramStatus) : Prop :=
+  s.equatorialSphereComplementTwoOpenSidesProved /\
+  s.reflectionAndDeckExchangeCoverSidesProved /\
+  s.effectiveThroatComplementOneSidedImageProved /\
+  s.effectiveThroatComplementPTInvariantProved
+
+/-- Path-connected sign sides and path-connected effective complement. -/
+def effectiveThroatComplementConnectedCoreClosed (s : ProgramStatus) : Prop :=
+  s.positiveAndNegativeSphereSidesPathConnectedProved /\
+  s.positiveCoverSidePathConnectedProved /\
+  s.effectiveThroatComplementPathConnectedProved /\
+  s.effectiveThroatComplementConnectedProved
+
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
+  effectiveTopologicalMappingTorusCoreClosed s /\
+  effectiveMappingTorusPTCoreClosed s /\
+  associatedNormalLineQuotientCoreClosed s /\
+  effectiveThroatOrientationDoubleCoverCoreClosed s /\
+  effectiveThroatComplementSidesCoreClosed s /\
+  effectiveThroatComplementConnectedCoreClosed s /\
   s.nonzeroTranslationDerived /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\

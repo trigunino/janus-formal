@@ -235,7 +235,9 @@ Modules:
 ```text
 P0EFTJanusAnomalyObjectDimensionParity.lean
 P0EFTJanusAnomalyTransgressionInflow.lean
+P0EFTJanusCircleHolonomyCommonDomainCompactResolvent.lean
 P0EFTJanusD2ModeFamilyInflowBridge.lean
+P0EFTJanusFiniteModeFredholmDeterminantLine.lean
 P0EFTJanusPartitionFunctionSectionNoGo.lean
 P0EFTJanusPTPairedAnomalyCancellation.lean
 P0EFTJanusQuillenFamilyCanonicity.lean
@@ -244,6 +246,14 @@ P0EFTJanusQuillenAnomalySynthesis.lean
 
 The formal layer encodes
 
+- one common maximal domain for the normalized infinite circle Dirac family at
+  fixed fold, exact bounded scalar holonomy perturbations, entire dependence
+  on complexified holonomy, finite spectral windows and an explicitly
+  constructed compact two-sided resolvent `(D-i)⁻¹`;
+- a concrete holomorphic symmetric finite-mode Dirac family, algebraic
+  Fredholmness of index zero, its induced top-exterior determinant-line
+  section, rank-one fiber, PT covariance and invertibility at both quarter
+  holonomies;
 - the determinant-line/index-gerbe parity distinction;
 - the extra structures required to reduce an odd family to line data;
 - the dependence of scalar actions on trivialization and finite counterterms;
@@ -251,6 +261,13 @@ The formal layer encodes
   distinct from constructing a partition-function trivialization;
 - the two PT-conjugate normal-root phases;
 - the exact closure matrix for a predictive Janus potential.
+
+The circle result supplies a genuine common unbounded domain and compact
+resolvent, while the finite-mode determinant line is an actual one-dimensional
+exterior-power construction. Neither is yet the global unbounded Janus
+operator family or its Quillen determinant line. They supply no Quillen metric,
+Bismut--Freed connection, eta holonomy, physical Hessian or complete
+field/ghost regulator.
 
 ## 10. Primary references
 

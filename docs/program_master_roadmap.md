@@ -62,9 +62,33 @@ Sigma ~ S2 x S1.
 
 Current results:
 
+- **T** the effective orbit quotient of `S3 x R` by the combined integer
+  monodromy/translation is constructed; the action is free and properly
+  discontinuous, and the quotient projection is a covering map;
+- **T/I** the quotient inherits a charted-space structure, without an
+  `IsManifold` or smooth-atlas theorem;
+- **T** the equatorial `S2` inclusion is continuous and injective on the cover,
+  equivariant, and induces a continuous injective map of effective quotients;
+- **T** cover-coordinate time reversal descends to a continuous involution on
+  the effective mapping torus and its fixed throat, and the quotient throat
+  inclusion is equivariant for those same two involutions;
+- **T** the associated normal line is an explicit topological orbit quotient
+  with continuous projection, zero section and sign monodromy;
+- **T** the even-winding quotient of the fixed throat is an actual two-sheeted
+  topological covering: its deck involution is free, every fiber has two
+  elements, and the pulled-back normal line is globally homeomorphic to the
+  product with `R`;
+- **T** the equatorial complement in the concrete unit `S3` is exactly two
+  nonempty disjoint open sign sides; reflection and one deck iterate exchange
+  them, while the image of either side is exactly the full effective-throat
+  complement and PT preserves that quotient complement;
+- **N** this does not yet identify a differential normal bundle, construct a
+  smooth `VectorBundle`, prove `IsManifold`, identify the open sides as maximal
+  connected components, or prove the quotient complement connected;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
-- **N** the candidate is a smooth mapping-torus model, not automatically a singular orbifold;
+- **N** the constructed object is a free topological mapping-torus quotient,
+  not automatically a singular orbifold; its smooth-manifold upgrade remains open;
 - **N** expected `pi_1` is `Z`, not `Z4`;
 - **T/C** the normal clutching sign is `-1`, its doubled pullback is trivial, and the two complex square roots are `+i` and `-i`;
 - **T/C** the associated sign representation identifies the orientation cover with the even-winding kernel and proves pulled-back `w1 = 0`;
@@ -73,7 +97,8 @@ Current results:
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** construct the actual global decorated mapping torus, throat embedding, ambient Pin structure and physical square-root bundle.
+- **O** construct the global smooth decorated mapping torus, smooth throat
+  embedding/stratification, ambient Pin structure and physical square-root bundle.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
@@ -122,10 +147,10 @@ Last focused CI: **green**.
 - **T/X** local/nonlocal winding separation and quarter-phase cancellation structure;
 - **N** pure and PT-paired quarter determinants do not stabilize the modulus;
 - **N** a finite local coefficient can fit a chosen target and therefore is not predictive unless derived;
-- **O** prove `EulerMaclaurinRemainderControlled`, the sole remaining
-  conditional analytic lemma for the small-time limit; the spectral/universal
-  `a0/a2/a4` correspondence itself is closed. Field/ghost weights and the final
-  vacuum remain downstream of P.
+- **T/C** the order-four Euler--Maclaurin remainder is controlled uniformly by
+  an integrable fifth derivative, so the spectral/universal `a0/a2/a4`
+  small-time correspondence is unconditional. Field/ghost weights and the
+  final vacuum remain downstream of P.
 
 ## D9 — Elliptic and BRST symbol gates
 
@@ -154,7 +179,17 @@ zero-mode cohomology and nonlinear BV closure remain explicit obligations.
 - **N** determinant-line data do not choose field content, domains, finite counterterms or the scalar effective action;
 - **T/C** additive transgression preserves stacking and opposite bulk inflow cancels the boundary anomaly class;
 - **T/C** the explicit D2 PT mode family has cancelling `Z4` anomaly phases and an opposite-inflow relative class;
-- **I/O** construct the actual family index object, local/global anomaly, partition section and common regulator.
+- **T/C** a symmetric finite Fourier family is holomorphic entrywise,
+  algebraically Fredholm of index zero, induces an actual rank-one
+  top-exterior determinant-line section, is PT covariant and is invertible at
+  both quarter holonomies;
+- **T/C** the explicit P--D7--D10 bridge combines compact fixed-level heat
+  blocks, the convergent physical-`Z4` spectral determinant, equality of the PT
+  renormalized logarithms and modewise opposite-inflow cancellation;
+- **I/O** the finite-mode line and spectral bridge are not the global unbounded
+  Janus Fredholm family, eta holonomy or Quillen partition section; construct
+  those objects with the common regulator, physical Hessian and complete
+  field/ghost content.
 
 ## D11 — Natural operators
 
@@ -236,6 +271,16 @@ Exhaustive closure checklist:
   `E_bulk + E_induced ∘ D(induced) = 0`; the exact action `x-y` on the
   diagonal proves that treating both slots independently can add two nonzero
   equations;
+- **T/C** the parametrized global-field package is instantiated on the actual
+  effective D8 spacetime/throat quotients; its base PT actions are involutive
+  and preserve the same equivariant throat inclusion. On those same bases an
+  explicit nonempty diagonal branch uses equal Minkowski matrices, zero matter
+  and the identity relative root, and is fixed by PT. Concrete continuity
+  predicates cover its independent, induced and LL coordinates, producing an
+  inhabited continuous PT-matched configuration with exact throat inclusion
+  and root-square equation. This topological closure supplies neither Sobolev
+  or smooth field spaces, boundary conditions, stationarity/stability, a
+  global root map nor a smooth-manifold/tensor-field realization;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
 - **O** derive one actual Janus parent bulk/junction action.
@@ -321,14 +366,57 @@ Exhaustive closure checklist:
 
 New controlled subgates are now checked:
 
-- **T/C** compatible symmetric coefficients in the countable axial Fourier
-  model decompose into an explicit Lorentz--Gram image plus their zero-mode
-  residual; zero-residual exactness and coordinatewise square-summability
-  preservation are proved, but not global PDE or boundary solvability;
+- **T/C** compatible symmetric coefficients on the countable `Z^4` Fourier
+  lattice decompose into an explicit Lorentz--Gram image plus their zero-mode
+  residual; a maximal integer-coordinate pivot gives a uniform inverse bound
+  on completed weighted `ell^2` Hilbert spaces. The reconstruction is bounded,
+  the order-one symbol is defined on its maximal domain, its compatible
+  zero-free image is closed, and the zero-mode obstruction remains in the same
+  weighted space. No identification with global Sobolev sections,
+  differentiated-series convergence, global PDE or boundary solvability is
+  proved;
 - **T/C** an invertible Sylvester derivative at a supplied real `4 x 4` root
   produces a genuine local differentiable matrix-root branch, with a concrete
   identity-base instance; no global/principal Lorentz-causal or smooth-field
   root selection is claimed;
+- **T** at the independent diagonal Minkowski pair, that identity-base branch
+  is now composed with the genuine relative-metric map
+  `(g_plus,g_minus) -> g_plus^-1 g_minus`. Its Frechet derivative includes the
+  inverse-metric contribution, and its square is the relative metric on an
+  actual neighbourhood. This does not select a global, principal or causal
+  branch;
+- **T/C** along a supplied continuous square-root lift, pointwise Sylvester
+  equivalences identify each lift germ with its local IFT branch and force the
+  inverse-Sylvester derivative; existence of that continuous lift and its
+  Sylvester regularity remain hypotheses, so no global admissible root domain
+  is claimed;
+- **T/C** on an open fixed-determinant-sign component of symmetric `4 x 4`
+  metrics, the exact inverse and determinant measure of the same metric curve
+  give the actual pointwise scalar-density variation and an explicit symmetric
+  stress tensor; over an arbitrary measured base, an explicit local
+  Lipschitz/dominated-differentiation contract lifts this identity to the
+  integrated action for one or two sectors. Rebasing also gives the pointwise
+  derivative at every admissible parameter and an alternative integral theorem
+  from a uniform derivative bound; sector exchange is invariant.
+  In that stress gate the scalar covector is still supplied independently;
+- **T/C** on the continuous flat chart `R^4`, the scalar covector is now the
+  actual Frechet derivative of the same differentiable scalar field. Its affine
+  function-space line varies `phi` and `d phi` together, with an exact
+  pointwise density derivative and an integrated derivative under an explicit
+  measurability, integrable-majorant and local-Lipschitz contract. On the same
+  flat chart, a simultaneous pointwise metric/field curve now ties the exact
+  determinant measure and inverse to the same metric and the value and
+  `p = d phi` to the same field; its derivative splits exactly into metric
+  stress and holonomic-field contributions. This simultaneous variation is
+  now integrated on the flat chart under an explicit measurable,
+  integrable-majorant and local-Lipschitz contract. At fixed metric its
+  holonomic part also decomposes pointwise into the flat scalar Euler operator
+  plus the divergence of an explicit boundary flux. Under explicit
+  integrability and `IntegratedScalarFluxVanishes`, integration gives the weak
+  Euler pairing and rewrites any already-justified action derivative with that
+  coefficient. Discharging the contract and deriving the vanishing integrated
+  flux from actual boundary conditions,
+  curved-manifold covariance, PDE and conservation remain open;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
   the full circle Fourier Hilbert space; this is not a trace-class theorem or

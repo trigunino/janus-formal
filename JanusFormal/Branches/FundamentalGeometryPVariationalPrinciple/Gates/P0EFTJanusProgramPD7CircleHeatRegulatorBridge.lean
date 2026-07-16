@@ -1,5 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatSemigroupCompactness
 import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusHeatRemainderConvergence
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusQuarterDeterminantConvergence
+import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusMonopoleHeatAsymptoticMatch
 
 /-!
 # Program P / D7 circle heat-regulator bridge
@@ -27,6 +29,8 @@ open P0EFTJanusGlobalSeparatedDiracModel
 open P0EFTJanusRenormalizedSpectralDeterminant
 open P0EFTJanusD2HeatCountertermBridge
 open P0EFTJanusHeatRemainderConvergence
+open P0EFTJanusQuarterDeterminantConvergence
+open P0EFTJanusMonopoleHeatAsymptoticMatch
 open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusCircleUnboundedDiracDomain
 open P0EFTJanusCircleDiracHeatFunctionalBridge
@@ -168,6 +172,32 @@ theorem d7SeparatedLevelHeatOperator_on_basis
     congr 1
     ring
   rw [hCoefficient]
+
+/-- For the two physical `Z4` roots, Program P's compact fixed-level heat
+blocks and D7's convergent quarter determinant give an unconditional spectral
+regulator certificate. -/
+theorem circle_compactness_and_z4_determinant_close_physical_regulator
+    (data : ProductThroatSpectralData) :
+    (∀ time : HeatTime, ∀ level : ℕ, ∀ choice : NormalRootChoice,
+      IsCompactOperator
+        (d7SeparatedLevelHeatOperator data time level choice)) ∧
+      Nonempty (Z4RenormalizedDeterminantCertificate data) := by
+  exact ⟨fun time level choice =>
+    d7SeparatedLevelHeatOperator_isCompact data time level choice,
+    ⟨z4RenormalizedDeterminant data⟩⟩
+
+/-- The physical compact regulator and determinant certificate are compatible
+with the now-unconditional sphere small-time coefficient theorem. -/
+theorem circle_regulator_and_unconditional_sphere_small_time
+    (data : ProductThroatSpectralData) :
+    (∀ time : HeatTime, ∀ level : ℕ, ∀ choice : NormalRootChoice,
+      IsCompactOperator
+        (d7SeparatedLevelHeatOperator data time level choice)) ∧
+      Nonempty (Z4RenormalizedDeterminantCertificate data) ∧
+      SmallTimeSphereHeatCoefficientsMatched data := by
+  rcases circle_compactness_and_z4_determinant_close_physical_regulator data with
+    ⟨hCompact, hDeterminant⟩
+  exact ⟨hCompact, hDeterminant, small_time_coefficients_match data⟩
 
 /-- Program-P supplies compact fixed-level heat blocks unconditionally.  If
 D7's explicit quadratic shell estimate is also proved, the same spectral data
