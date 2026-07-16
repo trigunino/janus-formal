@@ -1816,6 +1816,23 @@ PROGRAM_P_GATES = {
             "theorem strongStaticScalarJacobiRiesz_kernel",
         ),
     ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1Fredholm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completedStaticScalarJacobiOperator",
+            "theorem completedStaticScalarJacobiOperator_extends_smooth",
+            "theorem completedStaticScalarJacobiOperator_isSelfAdjoint",
+            "theorem completedStaticScalarJacobiOperator_ker_eq_bot",
+            "theorem completedStaticScalarJacobiOperator_range_eq_top",
+            "theorem completedStaticScalarJacobiOperator_range_isClosed",
+            "theorem completedStaticScalarJacobiOperator_fredholm_criterion",
+            "def completedStaticScalarJacobiIndex",
+            "theorem completedStaticScalarJacobiIndex_zero",
+            "theorem completedStaticScalarJacobiOperator_smooth_pairing",
+            "theorem completedStaticScalarJacobiOperator_pairing_linearizes_action",
+            "theorem completedStaticScalarJacobiOperator_dynamic_noGo",
+        ),
+    ),
     "P0EFTJanusMappingTorusAutomaticScalarIntegrability4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2618,6 +2635,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GlobalHolonomicScalarAction4DProved",
         "paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved",
         "paEffectiveD8GlobalHolonomicScalarWeakJacobiRiesz4DProved",
+        "paEffectiveD8GlobalHolonomicScalarStaticH1Fredholm4DProved",
         "paEffectiveD8AutomaticScalarIntegrability4DProved",
         "paEffectiveD8ScalarRobinJunctionBalance4DProved",
         "paEffectiveD8ScalarRobinJunctionHessian4DProved",

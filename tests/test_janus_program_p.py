@@ -205,6 +205,10 @@ def test_program_p_global_holonomic_scalar_variation_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_global_holonomic_scalar_static_fredholm_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_automatic_scalar_integrability_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
