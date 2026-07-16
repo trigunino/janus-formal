@@ -110,6 +110,10 @@ def test_program_p_d8_normal_z4_pt_conjugation_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d8_normal_pin_minus_principal_bundle_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_abelian_brst_and_ll_pt_covariance_are_integrated() -> None:
     assert_program_p_gate_integrity()
 

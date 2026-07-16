@@ -66,5 +66,9 @@ def test_d8_global_z4_root_bundles_are_exchanged_by_pt_conjugation() -> None:
     assert_d8_topology_integrity()
 
 
+def test_d8_normal_pin_minus_principal_bundle_is_integrated() -> None:
+    assert_d8_topology_integrity()
+
+
 def test_d8_effective_quotients_are_compact() -> None:
     assert_d8_topology_integrity()
