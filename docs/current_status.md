@@ -170,7 +170,11 @@ analytic hypothesis. For the normalized circle heat semigroup, the maximal
 strong right-generator domain on the full Fourier Hilbert space is now exactly
 the squared-eigenvalue weighted domain; this is also proved equal to the actual
 iterated domain of `D ∘ D`, and the generator is uniquely `-D²`. Abstract
-functional calculus, the full Fredholm/Quillen family and the
+functional calculus remains open. At every positive circle time, the heat
+operator now also has an operator-norm-convergent expansion into explicit
+rank-one Fourier maps with summable operator norms; its nuclear trace equals
+the existing spectral heat trace. A general Mathlib trace-class API and the
+full Fredholm/Quillen family and the
 field/ghost-weighted anomaly problem remain separate and open.
 
 D10 now also contains a concrete symmetric finite Fourier family: its matrix
