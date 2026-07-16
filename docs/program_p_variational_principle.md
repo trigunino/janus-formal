@@ -596,7 +596,10 @@ characters to that cocycle constructs the associated root-phase bundle cores
 and recovers their square/PT laws for every winding. The throat inclusion is a
 global `IsSmoothEmbedding`, and its normal comparison is an exact fiber-linear
 total `Diffeomorph` compatible with the trivializations and sign cocycle.
-Ambient tangent Pin/SpinC bundles and the null/joint strata remain open.
+The differential normal is split intrinsically into a closed zero stratum and
+an open nonzero complement, transported exactly by this diffeomorphism.
+Lorentzian null/non-null/joint strata still require a quadratic form absent
+from that real line; ambient tangent Pin/SpinC bundles remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
