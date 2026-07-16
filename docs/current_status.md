@@ -348,9 +348,12 @@ The exhaustive remaining-work checklist is
   and is realized on completed weighted `ell^2` Hilbert spaces: the
   reconstruction is bounded, the order-one Lorentz--Gram symbol has its
   explicit maximal domain, its compatible zero-free range is closed, and the
-  zero-mode obstruction stays at the same weighted scale. Identification with
-  global Sobolev sections, Fourier-series differentiation, global PDE and
-  boundary exactness remain open;
+  zero-mode obstruction stays at the same weighted scale. A second completed
+  coefficient model adds the exact graph-Sobolev weight of one symbol order:
+  the normalized Lorentz--Gram map is a Hilbert-space contraction and equals
+  the physical symbol exactly after source/target weighted encoding.
+  Identification with global Sobolev bundle sections, Fourier-series
+  differentiation, global PDE and boundary exactness remain open;
 - **T/C/N** typed non-null, null and joint gravitational slots plus a generic
   supplied-measure worldvolume placeholder are explicit; the actual LL action,
   throat integration and bulk-flux cancellation are not proved;

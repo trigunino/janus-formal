@@ -1368,6 +1368,20 @@ PROGRAM_P_GATES = {
             "theorem weighted_l2_lattice_saintVenant_exactness_gate",
         ),
     ),
+    "P0EFTJanusShiftedSobolevLatticeLorentzGram.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def rawLorentzGramFiberCLM",
+            "def symbolGraphScale",
+            "theorem normalizedLorentzGramFiber_norm_le",
+            "def symbolShiftedSourceWeight",
+            "def shiftedSobolevLorentzGram",
+            "theorem shiftedSobolevLorentzGram_opNorm_le",
+            "theorem normalizedLorentzGramFibers_encode_eq_weightedMetricCoordinates",
+            "theorem shiftedSobolevLorentzGram_encode_eq",
+            "theorem shifted_sobolev_lattice_lorentzGram_gate",
+        ),
+    ),
     "P0EFTJanusFiniteSpatialFunctionalPoisson.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1620,6 +1634,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCountableAxialFourierSaintVenantExactnessProved",
         "paCountableLatticeFourierSaintVenantExactnessProved",
         "paWeightedL2LatticeSaintVenantExactnessProved",
+        "paShiftedSobolevLatticeLorentzGramProved",
         "paNullExpansionCountertermVariationProved",
         "paNullExpansionCountertermNonDifferentiableProved",
         "paNullJointReparametrizationCancellationProved",
