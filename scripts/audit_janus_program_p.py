@@ -1289,6 +1289,24 @@ PROGRAM_P_GATES = {
             "theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_same_target_and_permuted_spectrum",
         ),
     ),
+    "P0EFTJanusPositiveDiagonalizableRootFrontierControl4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def replacePositiveSpectrumValue",
+            "def positiveDiagonalizableTargetPath",
+            "def positiveDiagonalizableRootPath",
+            "theorem positiveDiagonalizableTargetPath_continuous",
+            "theorem positiveDiagonalizableRootPath_continuous",
+            "theorem positiveDiagonalizableRootPath_tendsto_zero",
+            "theorem positiveDiagonalizableRootPath_square",
+            "theorem positiveDiagonalizableTargetPath_at_eigenvalue",
+            "theorem positiveDiagonalizableRootPath_at_eigenvalue",
+            "def positiveDiagonalizableBoundaryKernel",
+            "theorem positiveDiagonalizableBoundaryKernel_ne_zero",
+            "theorem positiveDiagonalizableBoundaryKernel_sylvester_eq_zero",
+            "theorem positiveDiagonalizableBoundarySylvester_not_injective",
+        ),
+    ),
     "P0EFTJanusLorentzJordanRelativeRoot4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
