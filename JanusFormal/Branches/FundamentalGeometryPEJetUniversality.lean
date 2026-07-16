@@ -105,6 +105,7 @@ import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanStructuredJetOverlapDescent
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGlobalSpinCCechDescent
 import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCechAbelianConnectionDescent
+import JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMappingTorusStructuredJetGroupoid
 
 namespace JanusFormal
 namespace JanusFundamentalGeometryPEJetUniversality
@@ -190,6 +191,25 @@ structure ProgramStatus where
   suppliedPointwiseSpinCCechPresentationPackaged : Prop
   conditionalSmoothAbelianCurvatureDescentProved : Prop
   conditionalSmoothAbelianCurvatureBianchiProved : Prop
+  effectiveD8DeckCategoryAndGroupoidConstructed : Prop
+  effectiveD8DependentSourceTargetFamiliesConstructed : Prop
+  effectiveD8StructuredJetFunctorConstructed : Prop
+  effectiveD8DeckGroupoidEtaleComponentwiseProved : Prop
+  effectiveD8SmoothInvariantDescentUniqueProved : Prop
+  effectiveD8LowOrderHolonomicJetDescentProved : Prop
+  effectiveD8LowOrderIIFReductionDescentProved : Prop
+
+/-- Global D8 deck/groupoid and low-order smooth-descent frontier.  This does
+not assert the missing physical SpinC representation, global vector/principal
+bundles, higher jets, isotropy stratification or cross-stratum extension. -/
+def effectiveD8StructuredJetFrontierClosed (s : ProgramStatus) : Prop :=
+  s.effectiveD8DeckCategoryAndGroupoidConstructed /\
+  s.effectiveD8DependentSourceTargetFamiliesConstructed /\
+  s.effectiveD8StructuredJetFunctorConstructed /\
+  s.effectiveD8DeckGroupoidEtaleComponentwiseProved /\
+  s.effectiveD8SmoothInvariantDescentUniqueProved /\
+  s.effectiveD8LowOrderHolonomicJetDescentProved /\
+  s.effectiveD8LowOrderIIFReductionDescentProved
 
 /-- Formal/logical theorem core through canonical pointwise frame transitions,
 smooth variable-overlap and Ricci covariance, frame and gauge jet extraction,
@@ -264,7 +284,8 @@ def theoremCoreClosed (s : ProgramStatus) : Prop :=
   s.euclideanLowOrderSmoothInvariantObservableDescentProved /\
   s.suppliedPointwiseSpinCCechPresentationPackaged /\
   s.conditionalSmoothAbelianCurvatureDescentProved /\
-  s.conditionalSmoothAbelianCurvatureBianchiProved
+  s.conditionalSmoothAbelianCurvatureBianchiProved /\
+  effectiveD8StructuredJetFrontierClosed s
 
 /-- Full Janus specialization. -/
 def fullJanusJetUniversalityClosed (s : ProgramStatus) : Prop :=

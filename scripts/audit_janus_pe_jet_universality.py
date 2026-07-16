@@ -36,6 +36,15 @@ PROGRAMME_PE_GATES = {
         "def CechAbelianConnectionDescentData.descendedClosedCurvatureDerivative",
         "theorem CechAbelianConnectionDescentData.descendedCurvature_fderiv_cyclic",
     ),
+    "P0EFTJanusMappingTorusStructuredJetGroupoid.lean": (
+        "instance janusDeckGroupoid",
+        "def StructuredJetDeckRepresentation.toFunctor",
+        "theorem deckTargetComponent_isLocalDiffeomorph",
+        "theorem SmoothDeckInvariantMap.existsUnique_descended_contMDiff",
+        "theorem reflectedSphere_existsUnique_smooth_descent",
+        "theorem SmoothDeckHolonomicStructuredJetFamily.descended_is_holonomic",
+        "theorem SmoothDeckHolonomicStructuredJetFamily.descendedReducedJet_contMDiff",
+    ),
 }
 
 
@@ -65,6 +74,21 @@ def assert_programme_pe_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     status = "conditionalSmoothAbelianCurvatureBianchiProved"
     if f"{status} : Prop" not in facade or f"s.{status}" not in facade:
         raise AssertionError("Programme P-E facade omits the Bianchi status")
+
+    mapping_torus_statuses = (
+        "effectiveD8DeckCategoryAndGroupoidConstructed",
+        "effectiveD8DependentSourceTargetFamiliesConstructed",
+        "effectiveD8StructuredJetFunctorConstructed",
+        "effectiveD8DeckGroupoidEtaleComponentwiseProved",
+        "effectiveD8SmoothInvariantDescentUniqueProved",
+        "effectiveD8LowOrderHolonomicJetDescentProved",
+        "effectiveD8LowOrderIIFReductionDescentProved",
+    )
+    for status in mapping_torus_statuses:
+        if f"{status} : Prop" not in facade or f"s.{status}" not in facade:
+            raise AssertionError(
+                f"Programme P-E facade omits D8 structured-jet status: {status}"
+            )
 
 
 def forward_difference(function: Callable[[float], float], x: float) -> float:
