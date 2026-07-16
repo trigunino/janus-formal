@@ -377,6 +377,14 @@ solution for independently supplied metrics.  A differentiable Lorentzian
 root selection and Sylvester inverse on the full causal-compatible matrix
 domain remain to be constructed.
 
+On the complete positive diagonal sector, the construction is also carried
+through the genuine five-coefficient spectral potential and determinant
+measure in both metric orders. The resulting real two-sector density has a
+full Frechet derivative in both independent scale spectra, its domain is
+exchange invariant, and the density itself is exactly exchange invariant.
+This remains pointwise and fixed-frame diagonal, not a curved covariant field
+functional on the full Lorentz matrix domain.
+
 At the independent Minkowski pair, the full Candidate-A density is now also
 differentiated as one actual composite of the plus determinant measure, the
 unconditional local relative-root branch and the complete matrix spectral

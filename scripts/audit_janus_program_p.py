@@ -1182,6 +1182,20 @@ PROGRAM_P_GATES = {
             "theorem principalRootVariation_eq_sylvester",
         ),
     ),
+    "P0EFTJanusGlobalDiagonalInteractionDensity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def scalePairExchange",
+            "theorem scalePairExchange_mem_domain_iff",
+            "def exchangedDiagonalInteractionDensity",
+            "theorem exchangedDiagonalInteractionDensity_hasFDerivAt",
+            "def globalDiagonalTwoSectorDensity",
+            "def globalDiagonalTwoSectorDensityDerivative",
+            "theorem globalDiagonalTwoSectorDensity_hasFDerivAt",
+            "theorem globalDiagonalTwoSectorDensity_exchange",
+            "theorem globalDiagonalTwoSectorDensity_differentiableAt",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1779,6 +1793,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paGlobalDiagonalLorentzRoot4DProved",
+        "paGlobalDiagonalTwoSectorInteractionDensity4DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
