@@ -132,6 +132,12 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     - [ ] Construire l'atlas du bundle normal quotient, promouvoir cette
       équivalence algébrique en équivalence lisse globale et construire les
       strates non-nulles/nulles/joints.
+      - [x] Transporter la topologie du vrai normal analytique sur le total
+        dépendant différentiel, construire l'homéomorphisme total
+        base-préservant et les trivializations, puis installer les instances
+        `FiberBundle`, `VectorBundle` et `ContMDiffVectorBundle ω` avec le même
+        cocycle de signe. Le wrapper total `Diffeomorph` et les strates restent
+        ouverts.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -394,6 +400,11 @@ par toute évolution admissible.
       locales canoniques, une partition de l'unité lisse subordonnée et une
       régularisation locale non vide avec musical, sharp, tenseur et volume.
       Le recollement en un unique tenseur lorentzien global reste ouvert.
+      - [x] Construire sur le cover le cocycle lorentzien produit non vide :
+        tangent de `S³` orthogonal, musical non dégénéré, frame d'inertie
+        `(3,1)` et isométrie exacte sous la réflexion génératrice. Les deux
+        ponts vers la section tensorielle intrinsèque puis sa descente lisse
+        quotient sont typés explicitement mais restent à décharger.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes

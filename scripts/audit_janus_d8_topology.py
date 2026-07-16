@@ -64,6 +64,10 @@ GLOBAL_NORMAL_EQUIVALENCE_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusGlobalNormalEquivalence.lean"
 )
+DIFFERENTIAL_NORMAL_TOPOLOGICAL_BUNDLE_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -326,6 +330,17 @@ GLOBAL_NORMAL_EQUIVALENCE_DECLARATIONS = (
     "theorem differentialNormalGlobalAlgebraicClosure",
 )
 
+DIFFERENTIAL_NORMAL_TOPOLOGICAL_BUNDLE_DECLARATIONS = (
+    "def differentialNormalFiberContinuousEquiv",
+    "def differentialNormalFiberHomeomorph",
+    "def differentialNormalTotalHomeomorph",
+    "def differentialNormalLocalTriv",
+    "theorem differentialNormalLocalTriv_coordChange_eq",
+    "theorem differentialNormalTotalSpaceMk_isInducing",
+    "theorem differentialNormalFiber_isVectorBundle",
+    "theorem differentialNormalFiber_isContMDiffVectorBundle",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -381,6 +396,8 @@ NORMAL_PIN_MINUS_ASSOCIATED_ROOTS_DECLARATIONS = (
 
 GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatNormalGlobalAlgebraicEquivProved",
+    "fixedThroatDifferentialNormalTopologicalBundleConstructed",
+    "fixedThroatDifferentialNormalContMDiffVectorBundleProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -445,6 +462,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     global_normal_equivalence_gate = (
         repo_root / GLOBAL_NORMAL_EQUIVALENCE_GATE
+    ).read_text(encoding="utf-8")
+    differential_normal_topological_bundle_gate = (
+        repo_root / DIFFERENTIAL_NORMAL_TOPOLOGICAL_BUNDLE_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -702,6 +722,20 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     global_normal_import = "Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence"
     if facade.count(global_normal_import) != 1:
         raise AssertionError("D8 facade omits the global normal comparison gate")
+    for declaration in DIFFERENTIAL_NORMAL_TOPOLOGICAL_BUNDLE_DECLARATIONS:
+        if declaration not in differential_normal_topological_bundle_gate:
+            raise AssertionError(
+                f"missing D8 differential-normal bundle declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", differential_normal_topological_bundle_gate
+    ):
+        raise AssertionError("proof placeholder found in D8 differential-normal bundle")
+    differential_normal_bundle_import = (
+        "Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle"
+    )
+    if facade.count(differential_normal_bundle_import) != 1:
+        raise AssertionError("D8 facade omits the differential-normal bundle gate")
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:
         if declaration not in smooth_normal_z4_root_gate:
