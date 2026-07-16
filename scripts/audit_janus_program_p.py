@@ -1965,6 +1965,15 @@ PROGRAM_P_GATES = {
             "def finiteSmoothTangentFrameUniformGraphEllipticity",
         ),
     ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1FiniteFramePatchClosure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FiniteSmoothTangentFrameRawPatchContinuity",
+            "theorem FiniteSmoothTangentFrameRawPatchContinuity.coefficient_continuousOn",
+            "def FiniteSmoothTangentFrameRawPatchContinuity.toLocalFiniteCoefficients",
+            "def FiniteSmoothTangentFrameRawPatchContinuity.toUniformGraphEllipticity",
+        ),
+    ),
     "P0EFTJanusMappingTorusAutomaticScalarIntegrability4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2835,6 +2844,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8StaticScalarUniformGraphEllipticityBridge4DProved",
         "paEffectiveD8StaticScalarHolonomicFrameControlBridge4DProved",
         "paEffectiveD8StaticScalarContinuousLocalFrameControlBridge4DProved",
+        "paEffectiveD8StaticScalarFiniteFramePatchClosure4DProved",
         "paEffectiveD8AutomaticScalarIntegrability4DProved",
         "paEffectiveD8ScalarRobinJunctionBalance4DProved",
         "paEffectiveD8ScalarRobinJunctionHessian4DProved",
