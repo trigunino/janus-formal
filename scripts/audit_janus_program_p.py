@@ -2246,6 +2246,17 @@ PROGRAM_P_GATES = {
             "def independentFieldsLinearizedBRSTState",
         ),
     ),
+    "P0EFTJanusMappingTorusScalarDiffeomorphismNoetherOperator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem scalarLieDerivative_smulGhost",
+            "def scalarDiffeomorphismGaugeGenerator",
+            "theorem scalarDiffeomorphismGaugeGenerator_apply",
+            "def independentMatterDiffeomorphismGaugeGenerator",
+            "def scalarDiffeomorphismNoetherOperator",
+            "theorem scalarDiffeomorphismNoetherOperator_apply",
+        ),
+    ),
     "P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

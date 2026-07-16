@@ -799,6 +799,10 @@ non contrôlé et produit les conditions de jonction annoncées.
     action. La topologie du dual, le `K` géométrique complet et `R/B` restent
     ouverts.
 - [ ] Définir le générateur de jauge `R` et l'opérateur d'identités `B`.
+  - [x] Sur le vrai quotient lisse D8, construire concrètement
+    `R_φ(c) = L_c φ` pour chaque composante scalaire matière indépendante et
+    l'opérateur de Noether `B_φ(E) = E ∘ R_φ`. Les secteurs métrique, jauge et
+    LL du vrai `R/B` global restent ouverts.
   - [x] Dans le modèle fonctionnel diagonal abstrait déjà formalisé, restreindre
     le générateur par toute reparamétrisation linéaire continue et prouver la
     naturalité exacte de la contrainte adjointe ainsi que la préservation de
