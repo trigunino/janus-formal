@@ -523,17 +523,29 @@ champs et avec les mêmes conditions au bord.
   - [x] Pour la transformée bornée du cercle, construire chaque vraie fibre
     `Hom(det coker, det ker)`, un frame algébrique non nul et la transition
     linéaire bijective de grande jauge entre les deux fibres d'extrémité.
+  - [x] Topologiser ces fibres réelles, installer un `FiberBundle` et un
+    `VectorBundle` complexes Mathlib, promouvoir la transition de grande jauge
+    en homéomorphisme et descendre le clutching sur `AddCircle 1`.
   - [ ] Construire la ligne/gerbe globale et sa géométrie de
     Quillen/Bismut--Freed.
+    - [x] La composante topologique de ligne est construite et globalement
+      trivialisée pour le secteur cercle borné normalisé ; métrique, connexion,
+      courbure et holonomie Quillen/Bismut--Freed restent ouvertes.
 - [ ] Calculer l'anomalie locale dans le régulateur commun.
 - [ ] Calculer l'holonomie eta et l'anomalie globale.
 - [ ] Comparer le représentant eta à la classe d'inflow.
 - [ ] Prouver l'annulation PT/inflow pour le contenu de champs complet.
 - [ ] Construire et trivialiser la section de partition lorsque permis.
+  - [x] Construire sur la famille cercle une section déterminante régularisée
+    distincte du frame Fourier, nulle aux crossings, non nulle à l'intérieur,
+    à coordonnée continue et compatible au clutching d'extrémité.
 - [ ] Distinguer explicitement le déterminant spectral positif D7 de la ligne
   déterminante Quillen.
   - [x] Séparer formellement la magnitude spectrale positive finite-mode de la
     section à valeurs dans la vraie ligne extérieure finite-mode.
+  - [x] Sur la famille cercle infinie bornée, distinguer le frame Fourier
+    partout non nul de la section déterminante régularisée qui s'annule aux
+    crossings spectraux.
   - [ ] Établir cette distinction pour la famille globale régularisée et sa
     ligne de Quillen.
 - [ ] Déterminer les contre-termes locaux covariants autorisés.

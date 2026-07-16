@@ -1665,6 +1665,24 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
             "theorem circleLargeGaugeDeterminantTransition_bijective",
         ),
     ),
+    "P0EFTJanusCircleDeterminantTopologicalBundle.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "def circleDeterminantFrameEquiv",
+            "def circleDeterminantFrameHomeomorph",
+            "def circleDeterminantVectorPrebundle",
+            "instance circleDeterminantFiberBundle",
+            "instance circleDeterminantVectorBundle",
+            "def circleLargeGaugeDeterminantTransitionHomeomorph",
+            "def circleRegularizedDeterminantSection",
+            "theorem circleRegularizedDeterminantSection_ne_zero_of_interior",
+            "theorem circleRegularizedDeterminantSection_not_frame",
+            "theorem circleRegularizedDeterminantCoordinate_continuous",
+            "def circleDeterminantGlobalTrivialization",
+            "def circleDeterminantQuotientTrivialization",
+            "theorem circleEndpointDescent_clutching",
+        ),
+    ),
 }
 
 
@@ -1751,6 +1769,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             if filename == "P0EFTJanusCircleBoundedTransformSpectralFlow.lean"
             else "circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved"
             if filename == "P0EFTJanusCircleDeterminantLineFamily.lean"
+            else "circleTopologicalDeterminantLineBundleProved"
+            if filename == "P0EFTJanusCircleDeterminantTopologicalBundle.lean"
             else "circleHolonomyCommonDomainCompactResolventProved"
         )
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:

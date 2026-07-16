@@ -699,7 +699,14 @@ function `x ↦ exp(-t x²)` is exactly the same heat operator. At every positiv
 time it is also an operator-norm-convergent sum
 of explicit rank-one Fourier maps with summable norms, and the resulting
 nuclear trace equals the spectral heat trace. No general Mathlib trace-class
-interface or full Janus anomaly/determinant theorem is proved. See
+interface or full Janus anomaly theorem is proved. For the normalized bounded
+circle family, the actual determinant fibers now form a genuine complex
+`FiberBundle`/`VectorBundle`, with a global interval trivialization, a
+homeomorphic large-gauge clutching and descent to `AddCircle 1`. Its continuous
+regularized determinant coordinate defines a section that vanishes exactly at
+the endpoint crossings and is distinct from the everywhere-nonzero Fourier
+frame. No Quillen metric, Bismut--Freed connection, curvature or global Janus
+family index is obtained. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the

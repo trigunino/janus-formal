@@ -686,9 +686,15 @@ operator-norm 1-Lipschitz self-adjoint Fredholm family of index zero. The exact
 endpoint crossings are related by the large-gauge mode shift, PT reverses
 their orientation, and the two physical quarter holonomies are bijective.
 Its genuine pointwise determinant fibers have rank one and nonzero Fourier
-frames, with a bijective large-gauge transition between endpoint fibers. No
-topology is yet installed on their dependent union, so this does not construct
-a Janus family index or Quillen line bundle.
+frames, with a bijective large-gauge transition between endpoint fibers. The
+dependent fibers now carry a topology transported by those frames and genuine
+Mathlib `FiberBundle`/`VectorBundle` structures, globally trivialized over the
+fundamental interval; the transition is a homeomorphism and descends over
+`AddCircle 1`. A separate regularized determinant section has continuous frame
+coordinate, vanishes at the crossings and is nonzero in the interior, so it is
+not confused with the nonvanishing Fourier frame. This is the topological line
+for the normalized circle sector, not a global Janus family index or a Quillen
+metric/Bismut--Freed connection.
 
 ## Acceptance ledger
 
