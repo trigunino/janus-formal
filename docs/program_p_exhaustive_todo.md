@@ -368,6 +368,10 @@ par toute évolution admissible.
         champs tangents globaux sous le crochet de Lie intrinsèque et prouver
         antisymétrie, bilinéarité et Jacobi. Le couplage gradué et la
         différentielle BRST non linéaire restent ouverts.
+        - [x] Coupler réellement ce crochet et l'algèbre impaire par produit
+          tensoriel, étendre le différentiel de coefficient à tout cet espace
+          ghost gradué et prouver que son carré y est nul. L'action BRST sur les
+          champs et le terme de Chevalley--Eilenberg restent ouverts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
