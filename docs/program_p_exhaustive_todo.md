@@ -149,8 +149,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   - [x] Prouver que la conjugaison complexe, vue comme isométrie réelle
     involutive, échange les deux racines et entrelace leurs transitions pour
     tout enroulement. Le relèvement principal ambiant reste séparé.
-- [ ] Construire les relèvements principaux Pin/SpinC globaux compatibles avec
-  ces lignes racines, et pas seulement des phases ou cocycles fournis.
+- [x] Construire le relèvement principal normal `Pin⁻(1) ≃ Z4` comme vrai
+  `FiberBundleCore` global : transitions données par le cocycle entier,
+  action droite libre/transitive, carré central et projection d'orientation.
+- [ ] Étendre ce relèvement normal au fibré de repères tangent ambiant et
+  construire le relèvement `SpinC` compatible ; le gate normal ne l'affirme pas.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
 - [ ] Fixer les domaines géométriques sur lesquels métriques, racines,
