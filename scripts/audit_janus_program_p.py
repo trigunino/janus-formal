@@ -2090,6 +2090,23 @@ PROGRAM_P_GATES = {
             "theorem ordinary_ghost_nonlinear_brst_noGo",
         ),
     ),
+    "P0EFTJanusGradedGhostCoefficientWitness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def oddGeneratorOne",
+            "def oddGeneratorTwo",
+            "theorem oddGeneratorOne_square",
+            "theorem oddGeneratorTwo_square",
+            "theorem oddGenerators_anticommute",
+            "def oddVolumeCoefficient",
+            "theorem oddVolumeCoefficient_ne_zero",
+            "def gradedCrossSelfBracketCoefficient",
+            "theorem gradedCrossSelfBracketCoefficient_ne_zero",
+            "def gradedQuadraticGhostBRSTCoefficient",
+            "theorem gradedQuadraticGhostBRSTCoefficient_ne_zero",
+            "theorem graded_ghost_coefficient_witness4D_closure",
+        ),
+    ),
     "P0EFTJanusMappingTorusGlobalLLWorldvolume4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2778,6 +2795,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8AbelianGaugeBRST4DProved",
         "paEffectiveD8LinearizedDiffeomorphismBRST4DProved",
         "paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved",
+        "paGradedGhostCoefficientWitness4DProved",
         "paEffectiveD8GlobalLLWorldvolumeActionProved",
         "paEffectiveD8GlobalLLVariation4DProved",
         "paEffectiveD8GlobalLLPTCovariance4DProved",
