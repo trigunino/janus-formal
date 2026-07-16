@@ -593,10 +593,10 @@ squares equal to the normal sign. The same global winding cocycle now defines
 a topological principal normal `Pin⁻(1) ≃ Z4` bundle with equivariant
 transitions and free/transitive right action. Applying the two quarter
 characters to that cocycle constructs the associated root-phase bundle cores
-and recovers their square/PT laws for every winding. The throat inclusion is a global
-`IsSmoothEmbedding`; the total comparison still lacks its `Diffeomorph`
-wrapper, while ambient tangent Pin/SpinC bundles and the null/joint strata
-remain open.
+and recovers their square/PT laws for every winding. The throat inclusion is a
+global `IsSmoothEmbedding`, and its normal comparison is an exact fiber-linear
+total `Diffeomorph` compatible with the trivializations and sign cocycle.
+Ambient tangent Pin/SpinC bundles and the null/joint strata remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
@@ -655,9 +655,11 @@ For the same global holonomic scalar action, weak Euler `K` and symmetric
 Jacobi `J` are defined for all smooth fields under the common integrability
 contract and are exactly its first and second variations. The Lorentz time
 coefficient is proved negative. Consequently only the explicitly time-static,
-positive-mass sector is completed to a positive Hilbert energy space with a
-dense strong Riesz realization and trivial kernel; no positivity of the full
-Lorentzian evolution is claimed.
+positive-mass sector is completed to a positive Hilbert energy space. Its
+dense Riesz realization extends as a bounded self-adjoint bijection with
+closed range and Fredholm index zero, and its pairing remains the Hessian of
+the same action. No positivity of the full Lorentzian evolution or compact
+resolvent is claimed.
 The Robin chain now continues from the same action through its symmetric
 Hessian to a self-adjoint index-zero `L²` Fredholm realization when
 `k_+ + k_- != 0`; action, variation, Hessian and operator are PT-covariant
