@@ -620,25 +620,47 @@ explicit open nonempty diagonal overlap. The density is smooth, obeys the exact 
 PT/exchange covariant; its integral is invariant under every supplied
 PT-invariant Borel measure. Positive exponential curves of those same metric
 fields give its pointwise derivative at every parameter and its integrated
-functional derivative under an explicit domination contract. This is a genuine curved-base diagonal field functional, not the general tensorial/covariant Lorentz sector. On that same quotient, one global independent-field package now contains the two positive diagonal metrics, two matter multiplets, gauge-coordinate pairs, ghosts, auxiliaries, and throat/LL coefficient fields. Metric matrices, the principal root, and matter traces are uniquely induced rather than independently varied. Their simultaneous componentwise variation chain is now exact, including zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` gauge coordinates are promoted to intrinsic smooth one-forms; `A ↦ A+dλ`, pullback naturality, BRST `s(A,c)=(dc,0)`, nilpotence and the bridge to both independent ghosts are exact. Diffeomorphism/nonabelian/BV BRST remains open. A finite global `C∞` tangent-generating family closes the frame input of the graph-`H¹` construction; for throat-supported spacetime measure its trace has exact norm bound `1`, while intrinsic Sobolev identification and the physical-volume trace remain open. A global smooth scalar also carries its genuine manifold differential `p = d phi`, with exact throat and PT chain rules. Its fixed-frame diagonal action contracts this differential with the inverse of the same metric, uses that metric's exact volume density, and has exact pointwise and integrated scalar variation at fixed metric/measure under an explicit integrability contract; the covariant Euler--flux equation remains open. Arbitrary smooth diagonal self-diffeomorphisms of the actual spacetime/throat pair now act contravariantly on every independent coefficient sector, preserve positivity, obey the exact identity/composition/inverse laws and commute with smooth throat restriction whenever they preserve the inclusion. A supplied smooth orbit has a genuine manifold tangent generator at time zero. The LL measure/flux coefficients define an actual integrable worldvolume action on the compact throat for every finite Borel measure, and the PT-matched zero configuration is a nonempty zero-action branch. The null counterterm is differentiated on the explicit open admissible domain `Theta ≠ 0`; zero remains excluded by the proved non-differentiability. The candidate
+functional derivative under an explicit domination contract. This is a genuine curved-base diagonal field functional, not yet a general tensorial action. Intrinsic smooth symmetric covariant two-tensors and their nondegenerate Lorentzian `(3,1)` fiber domains are now defined, and symmetry, nondegeneracy and signature are preserved by the fiber pullback. Refining such a metric by its exact musical equivalence now gives the same-tensor inverse contraction, Gram determinant volume, genuine `p=d phi` scalar density and exact pointwise quadratic variation; frame independence, smooth density and integration remain open. On that same quotient, one global independent-field package now contains the two positive diagonal metrics, two matter multiplets, gauge-coordinate pairs, ghosts, auxiliaries, and throat/LL coefficient fields. Metric matrices, the principal root, and matter traces are uniquely induced rather than independently varied. Their simultaneous componentwise variation chain is now exact, including zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` gauge coordinates are promoted to intrinsic smooth one-forms; `A ↦ A+dλ`, pullback naturality, BRST `s(A,c)=(dc,0)`, nilpotence and the bridge to both independent ghosts are exact. A separate genuine smooth tangent ghost now has exact pullback laws, scalar Lie derivative and a nilpotent linearized BRST complex connected to the independent matter field. Nonlinear graded diffeomorphism BRST, metric Lie derivatives and BV remain open. A finite global `C∞` tangent-generating family closes the frame input of the graph-`H¹` construction; for throat-supported spacetime measure its trace has exact norm bound `1`, while intrinsic Sobolev identification and the physical-volume trace remain open. A global smooth scalar also carries its genuine manifold differential `p = d phi`, with exact throat and PT chain rules. Its fixed-frame diagonal action contracts this differential with the inverse of the same metric, uses that metric's exact volume density, and has exact pointwise and integrated scalar variation at fixed metric/measure under an explicit integrability contract; the covariant Euler--flux equation remains open. A quadratic Robin action built from the actual throat restrictions now yields an exact integrated weak two-sector flux balance and vanishing squared residual at stationary points; geometric normal derivatives and Israel/null junction conditions remain open. Arbitrary smooth diagonal self-diffeomorphisms of the actual spacetime/throat pair now act contravariantly on every independent coefficient sector, preserve positivity, obey the exact identity/composition/inverse laws and commute with smooth throat restriction whenever they preserve the inclusion. A supplied smooth orbit has a genuine manifold tangent generator at time zero. The LL measure/flux coefficients define an actual integrable worldvolume action on the compact throat for every finite Borel measure, and the PT-matched zero configuration is a nonempty zero-action branch. The null counterterm is differentiated on the explicit open admissible domain `Theta ≠ 0`; zero remains excluded by the proved non-differentiability. The candidate
 now has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
 continuity theorem. Its independent variation also projects to the D9 slots
 actually supplied by the diagonal package, while a literal finite D10
 product-mode truncation uses the same period and exact PT-regulator pairing.
+For the general tensor density, the subsequent frame-covariance gate closes
+pointwise frame independence and true D8-diffeomorphism naturality; smooth
+density packaging, finite-measure integrability, the global scalar action and
+its derivative are then closed on the explicit regular sharp/frame/volume
+field space. A global regular metric witness from the diagonal branch remains
+open.
+The Robin chain now continues from the same action through its symmetric
+Hessian to a self-adjoint index-zero `L²` Fredholm realization when
+`k_+ + k_- != 0`; action, variation, Hessian and operator are PT-covariant
+under sector/coupling exchange for a PT-invariant measure.
 A smooth section of the true D8 normal line fills the D9 normal slot locally,
 with one-loop sign equal to the square of either constructed global `Z4` root
 line. Real-linear complex conjugation now exchanges the two root-line descent
 cocycles for every winding and is involutive; no ambient Pin/SpinC principal
 bundle or canonical global scalar normal coordinate is claimed.
-Diffeomorphism-ghost/SpinC/general-metric and
-action--Hessian--domain identifications remain explicit. The global LL action
+Nonlinear diffeomorphism-BRST/SpinC/general-metric integration and the full
+action--Hessian--domain identification remain explicit. The global LL action
 also has its exact finite-measure measure/flux derivative and algebraic
 zero-flux Euler branch. PT covariance is exact for fields, variations, action,
-Euler coefficients and stationarity under PT-invariant measures. Its auxiliary
-metric does not yet enter, so no
-differential LL PDE is claimed. It also supplies an exact
+Euler coefficients and stationarity under PT-invariant measures. A second LL
+functional on the same throat now contains true manifold derivatives through
+a finite smooth tangent-generating frame and a strictly positive nonconstant
+auxiliary-metric weight. Its integrated flux and auxiliary-metric derivatives
+and exact weak stationary equation are proved. A strong divergence equation,
+intrinsic Lorentzian contraction and boundary flux remain open. Averaging this
+same differential functional with its PT pullback gives exact PT invariance of
+the action, first variation, weak equation and stationary space for every
+measure; the chosen generating frame itself is not made PT-equivariant. It
+also has the exact symmetric PT-covariant flux Hessian of that same action,
+equal to the linearization of its weak pairing, with positive kinetic part;
+the raw auxiliary-metric Hessian is derived separately. Its weak Euler and
+Jacobi maps are actual linear operators on smooth tests, with exact affine
+linearization, Jacobi symmetry and same-action variation/Hessian identities;
+the algebraic dual has not yet been topologized. It also supplies an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester

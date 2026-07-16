@@ -1,6 +1,13 @@
 from __future__ import annotations
 
+from functools import lru_cache
+
 from scripts.audit_janus_program_p import assert_program_p_gate_integrity
+
+
+assert_program_p_gate_integrity = lru_cache(maxsize=1)(
+    assert_program_p_gate_integrity
+)
 
 
 def test_program_p_gates_are_integrated() -> None:
@@ -104,6 +111,10 @@ def test_program_p_d8_normal_z4_pt_conjugation_is_integrated() -> None:
 
 
 def test_program_p_global_abelian_brst_and_ll_pt_covariance_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_general_tensor_brst_differential_ll_and_junction_wave_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 

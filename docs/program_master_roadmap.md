@@ -411,8 +411,15 @@ New controlled subgates are now checked:
   Sylvester degeneration on the zero face, and no positive branch switch.
   Positive curves of the same smooth D8 metric fields give the exact
   pointwise density derivative and the integrated functional derivative under
-  an explicit domination contract. The general Lorentz tensor domain remains
-  open;
+  an explicit domination contract. Smooth symmetric covariant two-tensors and
+  their nondegenerate Lorentzian fiber domain are now intrinsic and preserved
+  by fiber pullback. With an exact musical equivalence, the same tensor now
+  supplies inverse contraction, Gram volume, `p=d phi`, and an exact pointwise
+  scalar variation. Frame-change invariance and the true D8-diffeomorphism
+  chain rule are exact. On the regular field space with smooth sharp/frame/
+  volume data, the density is smooth and integrable for every finite measure,
+  and its global action/first variation are exact. A global regular metric
+  witness from the diagonal branch remains open;
 - **T/C** on an open fixed-determinant-sign component of symmetric `4 x 4`
   metrics, the exact inverse and determinant measure of the same metric curve
   give the actual pointwise scalar-density variation and an explicit symmetric
@@ -446,6 +453,30 @@ New controlled subgates are now checked:
   affine scalar variation is exact pointwise and after integration at fixed
   metric/measure under an explicit integrability contract; Euler--flux form
   and tensorial covariance remain open;
+- **T/C** a genuine tangent-section diffeomorphism ghost has exact pullback
+  laws and scalar Lie derivative; its linearized BRST differential is
+  nilpotent and connected to the independent matter field. Nonlinear graded
+  ghost brackets, metric Lie derivatives and BV remain open;
+- **T/C** the actual compact throat carries a differential LL action built
+  from a finite smooth tangent-generating frame. Its auxiliary metric has a
+  strictly nontrivial positive response, and its integrated first variations
+  give an exact weak stationary equation. Its functional PT average has
+  invariant action, first variation, weak equation and stationary space for
+  every measure. Its same-action flux Hessian is symmetric, PT-covariant,
+  equals the linearized weak pairing and has positive kinetic part. The weak
+  Euler and Jacobi maps are now actual linear operators on the smooth test
+  space, with exact affine linearization and Jacobi symmetry. A topology on
+  the algebraic dual, strong divergence form, intrinsic Lorentz contraction
+  and a PT-equivariant generating frame remain open;
+- **T/C** an explicit quadratic Robin action of the two actual throat traces
+  derives the integrated weak junction balance and vanishing squared residual.
+  Its symmetric bilinear Hessian has exact sign/kernel classification and is
+  the derivative of the same weak-balance operator. On the true throat `L²`
+  it is the self-adjoint Fredholm operator `(k_+ + k_-) Id`, with closed range
+  and index zero when the coefficient is nonzero. Under a PT-invariant measure,
+  traces, fluxes, action, variations, Hessian and the `L²` operator intertwine
+  exactly with sector/coupling exchange; geometric normal derivatives and
+  Israel/null conditions remain open;
 - **T/C** the completed first-jet graph `H¹` has dense smooth fields and a
   continuous `L²` projection; under `HasH1TraceBound`, smooth throat trace
   extends continuously and uniquely. The frame, bound and intrinsic weak
