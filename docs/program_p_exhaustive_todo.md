@@ -306,13 +306,23 @@ complexe BRST, aux anomalies et aux conditions au bord.
 - [ ] Construire l'action EH des deux métriques sur la géométrie globale.
 - [ ] Dériver sa première variation en coordonnées arbitraires.
 - [ ] Construire et varier les termes GHY sur chaque face non nulle.
+  - [x] Pour toute famille finie pondérée de faces en jauge normale de Gauss,
+    construire les courbes GHY exact-inverse et sommer leurs vraies dérivées.
 - [ ] Prouver l'annulation intégrée du flux EH+GHY pour les conditions au bord
   retenues.
+  - [x] Prouver face par face puis après toute somme finie que la dérivée GHY
+    annule exactement le flux de Palatini--Einstein en jauge normale de Gauss.
 - [ ] Construire les termes de frontière nulle : inaffinité, expansion et
   contre-terme de reparamétrisation.
+  - [x] Intégrer réellement le shift de reparamétrisation le long de chaque
+    générateur nul orienté et l'identifier à sa transgression d'extrémités par
+    le théorème fondamental du calcul intégral.
 - [ ] Définir un domaine variationnel admissible près de `Theta = 0`, en tenant
   compte de la non-différentiabilité déjà prouvée.
 - [ ] Construire les termes de joints/corners et leurs orientations globales.
+  - [x] Sur une stratification finie, orienter les deux shifts de joint de
+    chaque générateur nul et prouver leur annulation exacte avec le terme de
+    face intégré.
 - [ ] Prouver la cancellation globale des transformations de
   reparamétrisation nulle.
 - [ ] Construire les champs LL globaux : métrique auxiliaire, mesure composite,
@@ -324,6 +334,8 @@ complexe BRST, aux anomalies et aux conditions au bord.
 - [ ] Dériver les conditions de jonction et l'équilibre des flux.
 - [ ] Étendre le Stokes fini à une formule de Stokes géométrique pour données
   variables et toutes les strates.
+  - [x] Assembler en un résidu stratifié fini unique les faces non nulles
+    EH/GHY et les faces nulles/joints, puis prouver que ce résidu est nul.
 - [ ] Classifier les termes de bord/null/joint admissibles à divergence près.
 
 **Acceptation** : la variation complète bulk+frontières+LL ne laisse aucun flux

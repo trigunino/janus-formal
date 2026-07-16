@@ -1040,6 +1040,21 @@ PROGRAM_P_GATES = {
             "theorem lorentzLocalRootBranch4D_gate",
         ),
     ),
+    "P0EFTJanusFiniteStratifiedBoundaryVariation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure NonNullFaceDatum",
+            "def nonNullGHYCurve",
+            "theorem nonNullGHYCurve_hasDerivative_neg_EHFlux",
+            "theorem totalNonNullVariationResidual_eq_zero",
+            "structure NullFaceDatum",
+            "def integratedNullFaceShift",
+            "theorem integratedNullFaceShift_eq_endpointTransgression",
+            "theorem totalNullJointResidual_eq_zero",
+            "def finiteStratifiedBoundaryResidual",
+            "theorem finiteStratifiedBoundaryResidual_eq_zero",
+        ),
+    ),
     "P0EFTJanusCircleHeatGeneratorDomain.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1787,6 +1802,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paFiniteFieldLocalFrameGaugeInvarianceProved",
         "paExplicitBulkBoundaryLocalCancellationProved",
         "paFiniteBoxBulkBoundaryStokesProved",
+        "paFiniteStratifiedBoundaryVariationCancellationProved",
         "pcExplicitCandidatePointwiseEulerHelmholtzProved",
         "paIndependentMetricMatterJetVariationProved",
         "paMetricInducedScalarStressVariation4DProved",
