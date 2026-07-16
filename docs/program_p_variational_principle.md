@@ -464,6 +464,14 @@ conditional/fixed-base theorems, not full
 effective descent or construction of the actual global Janus SpinC bundle and
 determinant connection.
 
+On the actual D8 covers, the deck action now forms a category/groupoid whose
+source and target components are local diffeomorphisms. Dependent
+source/target fibers, a supplied structured-jet representation functor and
+unique smooth descent of invariant maps are constructed. Supplied low-order
+holonomic families and their `(II,F)` reductions descend smoothly to the true
+quotient. This does not yet construct the physical SpinC representation,
+higher jets, isotropy strata or a Peetre--Slovák integrability theorem.
+
 ### Open Janus specialization
 
 - full adapted SpinC/PT/Z4/BRST jet symmetry group beyond the low-order
@@ -569,13 +577,17 @@ parent or microscopic law                        P-A
 The effective D8 spacetime and fixed-throat quotients now have actual
 covering-induced analytic atlases and `IsManifold` instances in dimensions
 four and three. Their cover projections are analytic local diffeomorphisms,
-and the injective quotient throat inclusion is `C∞`. Its differential
-immersion/embedding property and the global smooth normal bundle remain open.
+and time reversal is an analytic involutive diffeomorphism on both quotients.
+The quotient throat inclusion is a closed topological embedding, is `C∞`, has
+injective manifold differential everywhere and a rank-one tangent quotient.
+A global smooth complement/normal vector bundle and the null/joint strata
+remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
-on the actual smooth spacetime. Sobolev completions, tensor bundles, traces and
-boundary conditions remain open.
+on the actual smooth spacetime. PT pullback and two-sector exchange are exact
+involutive equivalences on these smooth coefficient fields. Sobolev
+completions, tensor bundles, traces and boundary conditions remain open.
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
@@ -593,8 +605,14 @@ the inverse-plus contribution. On that entire diagonal domain the genuine
 five-coefficient Candidate-A determinant/root/potential chain is now
 differentiated in both metric orders and its real two-sector sum is exactly
 exchange invariant. This is still a fixed-frame pointwise sector, not the full
-causal-compatible Lorentz matrix domain or a curved field functional. The
-candidate also supplies an exact
+causal-compatible Lorentz matrix domain. On the actual smooth D8 quotient, two
+independent positive diagonal Lorentz metric fields, their unique positive
+principal root and the Candidate-A density now use exactly the same global
+objects. The density is smooth, obeys the exact manifold chain rule and is
+PT/exchange covariant; its integral is invariant under every supplied
+PT-invariant Borel measure. This is a genuine curved-base diagonal field
+functional, not the general tensorial/covariant Lorentz sector. The candidate
+also supplies an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester
