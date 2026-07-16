@@ -1200,6 +1200,21 @@ PROGRAM_P_GATES = {
             "theorem principalRootVariation_eq_sylvester",
         ),
     ),
+    "P0EFTJanusPositiveDiagonalizableRelativeRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure PositiveDiagonalizableRelativeMatrix",
+            "def positiveSimilarityRootSpectrum",
+            "theorem positiveSimilarityRootSpectrum_pos",
+            "def positiveSimilarityDiagonalRoot",
+            "theorem positiveSimilarityDiagonalRoot_square",
+            "def positiveSimilarityRoot",
+            "theorem positiveSimilarityRoot_square",
+            "def identityPositiveDiagonalizableRelativeMatrix",
+            "theorem positiveDiagonalizableRelativeMatrix_nonempty",
+            "theorem positive_diagonalizable_relative_root_closure",
+        ),
+    ),
     "P0EFTJanusGlobalDiagonalLorentzCausalFrontier4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2580,6 +2595,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paGlobalDiagonalLorentzRoot4DProved",
+        "paPositiveDiagonalizableRelativeRoot4DProved",
         "paGlobalDiagonalLorentzCausalFrontier4DProved",
         "paGlobalDiagonalRootFrontierControl4DProved",
         "paMinkowskiGlobalDiagonalRootGluing4DProved",

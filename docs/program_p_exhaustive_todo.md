@@ -215,6 +215,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Sur le sous-domaine diagonal global, prouver existence, unicité dans la
     branche diagonale positive et régularité `C∞` de la racine.
 - [ ] Inclure les points diagonalisables et les blocs de Jordan admissibles.
+  - [x] En dimension quatre, couvrir tout point muni d'une diagonalisation
+    réelle explicite à spectre strictement positif : construire la racine par
+    similarité, prouver la positivité de ses quatre valeurs propres et son
+    carré exact. L'indépendance du choix de base, le recollement global et les
+    blocs de Jordan 4D généraux restent ouverts.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
