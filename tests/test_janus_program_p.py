@@ -51,6 +51,10 @@ def test_program_p_global_diagonal_lorentz_root_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_finite_stratified_boundary_variation_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_effective_d8_continuous_field_spaces_are_integrated() -> None:
     assert_program_p_gate_integrity()
 

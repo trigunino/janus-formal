@@ -121,6 +121,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLLBraneCompositeMeasureFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBulkBoundaryCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteBoxBulkBoundaryStokes
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteStratifiedBoundaryVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteGramInducedMetricFrechetBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityNaturality
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteJetCompatibilityPrincipalSymbol
@@ -250,6 +251,7 @@ structure ProgramStatus where
   paFiniteFieldLocalFrameGaugeInvarianceProved : Prop
   paExplicitBulkBoundaryLocalCancellationProved : Prop
   paFiniteBoxBulkBoundaryStokesProved : Prop
+  paFiniteStratifiedBoundaryVariationCancellationProved : Prop
   pcExplicitCandidatePointwiseEulerHelmholtzProved : Prop
   paIndependentMetricMatterJetVariationProved : Prop
   paMetricInducedScalarStressVariation4DProved : Prop
@@ -429,6 +431,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paFiniteFieldLocalFrameGaugeInvarianceProved /\
   s.paExplicitBulkBoundaryLocalCancellationProved /\
   s.paFiniteBoxBulkBoundaryStokesProved /\
+  s.paFiniteStratifiedBoundaryVariationCancellationProved /\
   s.pcExplicitCandidatePointwiseEulerHelmholtzProved /\
   s.paIndependentMetricMatterJetVariationProved /\
   s.paMetricInducedScalarStressVariation4DProved /\

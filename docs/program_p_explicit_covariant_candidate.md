@@ -782,6 +782,10 @@ Implemented in the current finite, spectral or pointwise models:
 - exact finite-box Stokes telescoping for arbitrary variable three-dimensional
   fluxes, all six oriented faces and the cancelling boundary counterterm,
   promoted to actual bulk, boundary and matched action derivatives;
+- arbitrary finite weighted Gaussian-normal non-null faces with exact-inverse
+  GHY action curves and summed EH/GHY cancellation, together with genuine
+  interval integrals of null-generator reparametrization shifts, oriented
+  endpoint-joint cancellation and a zero total finite-stratified residual;
 - actual nonzero-expansion null-counterterm derivative and its explicit
   singular approach to zero expansion, plus continuity but proved
   non-differentiability of its zero extension;

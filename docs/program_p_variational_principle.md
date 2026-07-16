@@ -622,8 +622,12 @@ first-variation densities on a compact tangent box, and an exact finite-box
 Stokes theorem for arbitrary variable three-dimensional fluxes, all six
 oriented faces and the cancelling counterterm.  Its bulk, boundary and matched
 ledgers are actual derivatives along affine flux curves, and the matched
-derivative vanishes.  The latter is not a continuum manifold, GHY, null,
-joint or corner theorem.  It also supplies a
+derivative vanishes. A further finite-stratified gate sums arbitrary weighted
+Gaussian-normal non-null faces with their exact-inverse GHY curves, genuinely
+integrates the reparametrization shift on oriented null generators, cancels
+the endpoint joints, and proves the total finite residual is zero. These are
+still quadrature/cellulation and one-dimensional-generator statements, not an
+arbitrary-coordinate continuum GHY/null/joint theorem. It also supplies a
 continuous but formally
 non-differentiable zero-expansion
 extension, null/joint endpoint transgression, pointwise LL auxiliary
