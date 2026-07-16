@@ -474,7 +474,12 @@ champs et avec les mêmes conditions au bord.
   domaine maximal du générateur fort à droite avec le domaine spectral de
   `D²`, prouver que ce dernier est exactement le domaine de composition
   `D ∘ D`, et identifier le générateur à `-D²`.
-- [ ] Prouver l'égalité avec le calcul fonctionnel abstrait `exp(-t D²)`.
+- [x] Prouver l'égalité avec le calcul fonctionnel abstrait `exp(-t D²)`.
+  Pour le Dirac diagonal du cercle, le calcul spectral pur-point contractif
+  est construit indépendamment du semigroupe, avec lois unité, produit et
+  adjoint, puis son exponentielle gaussienne est identifiée exactement au
+  semigroupe de chaleur. Cela ne fournit pas une API Borel générale pour tout
+  `LinearPMap` auto-adjoint.
 - [ ] Prouver les propriétés trace-class requises.
   - [x] Pour tout temps strictement positif du cercle normalisé, construire une
     expansion en opérateurs Fourier de rang un, prouver la sommabilité de leurs
