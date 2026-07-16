@@ -354,7 +354,13 @@ The exhaustive remaining-work checklist is
   therefore have actual Frechet derivatives at every domain point. On the
   open intersection stable under metric-pair exchange, both sector densities
   are differentiable and their sum is exactly exchange invariant. This is the
-  complete local-chart two-sector variation, not a global causal root domain;
+  complete local-chart two-sector variation. It is now integrated over an
+  arbitrary measured base under an explicit uniform-domain and dominated
+  differentiation contract, with exact exchange invariance and full PT
+  invariance for a measure-preserving base involution. The same construction
+  is instantiated on the effective D8 quotient for any supplied PT-invariant
+  Borel measure. The domination and invariant measure are hypotheses, and the
+  root domain remains local rather than globally causal;
 - **T/C** one symmetric nondegenerate `4 x 4` metric now supplies both the
   exact inverse and `sqrt(|det g|)` in a scalar-density curve on an open
   fixed-sign component; its actual pointwise variation is the pairing with an

@@ -176,6 +176,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Étendre la chaîne complète à tout le domaine ouvert, construire le
     domaine PT où les deux ordres sont admissibles, dériver les deux secteurs
     et prouver l'invariance de leur somme par échange.
+  - [x] Intégrer cette somme sur une base mesurée, différencier le vrai
+    fonctionnel sous un contrat explicite de domination uniforme, transporter
+    l'admissibilité et la variation sous échange/PT, et l'instancier sur la
+    même base effective D8 avec toute mesure Borel PT-invariante fournie.
   - [ ] Étendre cette chaîne au domaine lorentzien global et au second secteur.
 - [ ] Prouver covariance, réalité, échange PT et régularité spatiale de la
   densité obtenue.

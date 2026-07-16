@@ -385,6 +385,14 @@ densities are differentiable and their sum is exactly invariant under metric
 exchange. The chart remains local to the identity root; it is not the global
 causal-compatible Lorentz domain.
 
+That PT-paired density now defines an actual integral functional for fields
+valued in the same open chart. A uniform admissible-curve contract keeps every
+fiber inside the root domain, and an explicit measurable/integrable domination
+contract justifies differentiation under the integral. Fiber exchange and a
+measure-preserving PT involution preserve the functional, curve and first
+variation. This specializes to the effective D8 spacetime for any supplied
+PT-invariant Borel measure; neither such a measure nor domination is derived.
+
 A separate two-dimensional null-coordinate family now supplies independently
 defined symmetric nondegenerate Lorentz metrics whose relative matrix is a
 nontrivial Jordan block.  For nonzero parameter that target is not real
