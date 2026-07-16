@@ -1715,6 +1715,11 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     primary_facade = facades[
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
     ]
+    d8_smooth_quotient_import = (
+        "Gates.P0EFTJanusMappingTorusSmoothQuotientManifold"
+    )
+    if primary_facade.count(d8_smooth_quotient_import) != 1:
+        raise AssertionError("Program P facade omits the D8 smooth quotient manifold")
     for status in (
         "paPTFlatProportionalActualVariationalStabilityProved",
         "paReducedTwoMetricActualBoundaryVariationProved",
@@ -1799,6 +1804,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8FlatDiagonalFieldBranch4DProved",
         "paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved",
         "paMappingTorusSmoothDeckInvariantFields4DProved",
+        "paEffectiveD8SmoothQuotientManifoldProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paLorentzianGramCompatibilityFrechetProved",

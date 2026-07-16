@@ -22,6 +22,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementConnected
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothAtlasFrontier
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotient
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -65,6 +66,10 @@ structure ProgramStatus where
   effectiveThroatTopologicalManifoldProved : Prop
   quotientProjectionLocalHomeomorphAndC0Proved : Prop
   smoothDeckActionsAndAtlasTransitionsProved : Prop
+  effectiveMappingTorusSmoothQuotientManifoldProved : Prop
+  effectiveThroatSmoothQuotientManifoldProved : Prop
+  quotientProjectionLocalDiffeomorphProved : Prop
+  fixedThroatQuotientInclusionContMDiffProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -143,9 +148,17 @@ def mappingTorusSmoothAtlasFrontierCoreClosed (s : ProgramStatus) : Prop :=
   s.quotientProjectionLocalHomeomorphAndC0Proved
 
 /-- Smooth deck maps, throat-cover inclusion and compatible local atlas
-transitions; quotient manifold instances are still a separate step. -/
+transitions. -/
 def mappingTorusSmoothDeckDescentFrontierClosed (s : ProgramStatus) : Prop :=
   s.smoothDeckActionsAndAtlasTransitionsProved
+
+/-- Installed analytic quotient manifolds, local-diffeomorphism projections
+and smooth descended throat inclusion. -/
+def mappingTorusSmoothQuotientManifoldCoreClosed (s : ProgramStatus) : Prop :=
+  s.effectiveMappingTorusSmoothQuotientManifoldProved /\
+  s.effectiveThroatSmoothQuotientManifoldProved /\
+  s.quotientProjectionLocalDiffeomorphProved /\
+  s.fixedThroatQuotientInclusionContMDiffProved
 
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
@@ -157,6 +170,7 @@ def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveThroatComplementConnectedCoreClosed s /\
   mappingTorusSmoothAtlasFrontierCoreClosed s /\
   mappingTorusSmoothDeckDescentFrontierClosed s /\
+  mappingTorusSmoothQuotientManifoldCoreClosed s /\
   s.nonzeroTranslationDerived /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\

@@ -566,6 +566,12 @@ parent or microscopic law                        P-A
 
 ## 12. Precise current frontier
 
+The effective D8 spacetime and fixed-throat quotients now have actual
+covering-induced analytic atlases and `IsManifold` instances in dimensions
+four and three. Their cover projections are analytic local diffeomorphisms,
+and the injective quotient throat inclusion is `C∞`. Its differential
+immersion/embedding property and the global smooth normal bundle remain open.
+
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
 Candidate A now instantiates part of them.  It supplies reciprocal

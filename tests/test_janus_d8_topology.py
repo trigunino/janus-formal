@@ -33,3 +33,7 @@ def test_d8_cover_atlases_and_topological_quotient_manifolds_are_integrated() ->
 
 def test_d8_smooth_deck_descent_data_is_integrated_without_quotient_overclaim() -> None:
     assert_d8_topology_integrity()
+
+
+def test_d8_smooth_quotient_manifold_and_projection_are_integrated() -> None:
+    assert_d8_topology_integrity()
