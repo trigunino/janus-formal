@@ -1941,6 +1941,19 @@ PROGRAM_P_GATES = {
             "def StaticScalarHolonomicFrameControl.toUniformGraphEllipticity",
         ),
     ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1ContinuousFrameControl4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicVectorCoefficient",
+            "theorem holonomic_vector_decomposition",
+            "def smoothFrameHolonomicCoefficient",
+            "structure LocalFiniteHolonomicFrameCoefficients",
+            "theorem LocalFiniteHolonomicFrameCoefficients.exists_uniform_square_bound",
+            "def LocalFiniteHolonomicFrameCoefficients.toStaticScalarHolonomicFrameControl",
+            "def finiteSmoothTangentFrameHolonomicControl",
+            "def finiteSmoothTangentFrameUniformGraphEllipticity",
+        ),
+    ),
     "P0EFTJanusMappingTorusAutomaticScalarIntegrability4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2794,6 +2807,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GlobalHolonomicScalarStaticH1GraphBridge4DProved",
         "paEffectiveD8StaticScalarUniformGraphEllipticityBridge4DProved",
         "paEffectiveD8StaticScalarHolonomicFrameControlBridge4DProved",
+        "paEffectiveD8StaticScalarContinuousLocalFrameControlBridge4DProved",
         "paEffectiveD8AutomaticScalarIntegrability4DProved",
         "paEffectiveD8ScalarRobinJunctionBalance4DProved",
         "paEffectiveD8ScalarRobinJunctionHessian4DProved",

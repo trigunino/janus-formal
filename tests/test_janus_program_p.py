@@ -257,6 +257,10 @@ def test_program_p_static_scalar_holonomic_frame_control_is_integrated() -> None
     assert_program_p_gate_integrity()
 
 
+def test_program_p_static_scalar_continuous_local_frame_control_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_automatic_scalar_integrability_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
