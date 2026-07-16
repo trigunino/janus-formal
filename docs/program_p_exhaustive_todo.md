@@ -165,6 +165,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   action droite libre/transitive, carré central et projection d'orientation.
 - [ ] Étendre ce relèvement normal au fibré de repères tangent ambiant et
   construire le relèvement `SpinC` compatible ; le gate normal ne l'affirme pas.
+  - [x] Construire depuis les cartes réelles du quotient les transitions
+    tangentes ambiantes, leur différentielle inversible, le signe exact du
+    déterminant et le cocycle d'orientation `ZMod 2`. La réduction quadratique,
+    son identification au cocycle normal et le relèvement `Pin/SpinC` restent
+    explicitement séparés par des contrats minimaux.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
@@ -220,6 +225,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     similarité, prouver la positivité de ses quatre valeurs propres et son
     carré exact. L'indépendance du choix de base, le recollement global et les
     blocs de Jordan 4D généraux restent ouverts.
+  - [x] Construire une vraie strate de Jordan lorentzienne en dimension quatre,
+    issue de deux métriques symétriques indépendantes : la racine réelle
+    explicite se carre exactement au produit relatif et, pour paramètre non
+    nul, celui-ci n'est pas diagonalisable. La classification et le recollement
+    de tous les types de Jordan admissibles restent ouverts.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
@@ -380,6 +390,12 @@ par toute évolution admissible.
         comparaison des deux normes est satisfaite. L'égalité avec tout le
         graphe est exactement équivalente à une densité statique séparée ;
         aucune identification Sobolev n'est postulée.
+      - [x] Remplacer la borne brute énergie-vers-graphe par un contrat
+        d'ellipticité uniforme ponctuel : dériver les minorations positives
+        uniformes des coefficients, construire la racine de densité dans
+        `L²`, prouver l'égalité exacte de norme puis le pont continu vers le
+        graphe `H¹`. Seul le contrôle quantitatif des coefficients du repère
+        tangent fini par les directions holonomes reste à dériver.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.

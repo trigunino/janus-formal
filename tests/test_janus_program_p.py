@@ -62,6 +62,10 @@ def test_program_p_positive_diagonalizable_relative_root_is_integrated() -> None
     assert_program_p_gate_integrity()
 
 
+def test_program_p_lorentz_jordan_relative_root_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_diagonal_causal_frontier_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
@@ -107,6 +111,10 @@ def test_program_p_effective_d8_throat_is_smooth_embedding() -> None:
 
 
 def test_program_p_d8_normal_comparison_and_z4_root_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_d8_ambient_tangent_orientation_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
@@ -218,6 +226,10 @@ def test_program_p_global_holonomic_scalar_static_fredholm_is_integrated() -> No
 
 
 def test_program_p_global_scalar_static_h1_graph_bridge_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_static_scalar_uniform_ellipticity_bridge_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 

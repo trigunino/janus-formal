@@ -76,6 +76,10 @@ DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification.lean"
 )
+AMBIENT_TANGENT_ORIENTATION_COCYCLE_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientTangentOrientationCocycle.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -376,6 +380,22 @@ DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_DECLARATIONS = (
     "theorem differentialNormalZeroNonzeroStratification",
 )
 
+AMBIENT_TANGENT_ORIENTATION_COCYCLE_DECLARATIONS = (
+    "def ambientQuotientLocalChart",
+    "def ambientAtlasTransition",
+    "theorem ambientAtlasTransition_mem_contDiffGroupoid",
+    "def ambientAtlasPartialDiffeomorph",
+    "def ambientAtlasTangentTransition",
+    "def ambientAtlasDeterminant",
+    "theorem ambientAtlasDeterminant_ne_zero",
+    "def ambientAtlasOrientationParity",
+    "theorem ambientAtlasOrientationParity_eq_zero_iff",
+    "theorem ambientAtlasOrientationParity_eq_one_iff",
+    "structure AmbientTangentQuadraticAtlasContract",
+    "structure AmbientNormalOrientationComparisonAt",
+    "theorem normalPinMinus_reduction_eq_ambientParity",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -435,6 +455,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatDifferentialNormalContMDiffVectorBundleProved",
     "fixedThroatDifferentialNormalSmoothBundleEquivalenceProved",
     "fixedThroatDifferentialNormalZeroNonzeroStratificationProved",
+    "ambientTangentOrientationCocycleProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -508,6 +529,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     differential_normal_zero_nonzero_stratification_gate = (
         repo_root / DIFFERENTIAL_NORMAL_ZERO_NONZERO_STRATIFICATION_GATE
+    ).read_text(encoding="utf-8")
+    ambient_tangent_orientation_cocycle_gate = (
+        repo_root / AMBIENT_TANGENT_ORIENTATION_COCYCLE_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -816,6 +840,25 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     if facade.count(differential_normal_strata_import) != 1:
         raise AssertionError(
             "D8 facade omits the differential-normal stratification gate"
+        )
+
+    for declaration in AMBIENT_TANGENT_ORIENTATION_COCYCLE_DECLARATIONS:
+        if declaration not in ambient_tangent_orientation_cocycle_gate:
+            raise AssertionError(
+                f"missing D8 ambient-tangent orientation declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", ambient_tangent_orientation_cocycle_gate
+    ):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient-tangent orientation gate"
+        )
+    ambient_tangent_orientation_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle"
+    )
+    if facade.count(ambient_tangent_orientation_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the ambient-tangent orientation gate"
         )
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:
