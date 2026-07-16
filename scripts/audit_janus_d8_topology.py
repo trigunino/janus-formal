@@ -60,6 +60,14 @@ SMOOTH_NORMAL_VECTOR_BUNDLE_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalVectorBundle.lean"
 )
+GLOBAL_NORMAL_EQUIVALENCE_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusGlobalNormalEquivalence.lean"
+)
+SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
+)
 COMPACT_QUOTIENT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusCompactQuotient.lean"
@@ -295,6 +303,37 @@ SMOOTH_NORMAL_VECTOR_BUNDLE_STATUSES = (
     "fixedThroatNormalOneLoopMinusIdentityProved",
 )
 
+GLOBAL_NORMAL_EQUIVALENCE_DECLARATIONS = (
+    "abbrev DifferentialNormalFiber",
+    "theorem differentialNormalRange_isClosed",
+    "theorem differentialNormalFiber_finrank",
+    "noncomputable def differentialNormalFiberEquiv",
+    "theorem differentialNormalFiber_continuousEquiv",
+    "theorem differentialNormalFiberEquiv_oneLoop",
+    "noncomputable def differentialNormalTotalEquiv",
+    "theorem differentialNormalGlobalAlgebraicClosure",
+)
+
+SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
+    "def quarterRootRepresentation",
+    "theorem quarterRootRepresentation_add",
+    "theorem quarterRootRepresentation_square",
+    "def fixedThroatNormalZ4RootBundleCore",
+    "theorem fixedThroatNormalZ4RootFiber_isVectorBundle",
+    "def fixedThroatNormalZ4RootRealBundleCore",
+    "theorem fixedThroatNormalZ4RootRealFiber_isContMDiffVectorBundle",
+    "theorem complex_and_real_root_coordChange_agree",
+    "theorem one_loop_root_transition_square",
+    "theorem one_loop_root_transition_fourth",
+)
+
+GLOBAL_NORMAL_AND_Z4_STATUSES = (
+    "fixedThroatNormalGlobalAlgebraicEquivProved",
+    "fixedThroatNormalZ4RootComplexLineConstructed",
+    "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
+    "fixedThroatNormalZ4RootSquaresToNormalSignProved",
+)
+
 COMPACT_QUOTIENT_DECLARATIONS = (
     "def fundamentalStripProjection",
     "theorem fundamentalStripProjection_continuous",
@@ -348,6 +387,12 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     smooth_normal_vector_bundle_gate = (
         repo_root / SMOOTH_NORMAL_VECTOR_BUNDLE_GATE
+    ).read_text(encoding="utf-8")
+    global_normal_equivalence_gate = (
+        repo_root / GLOBAL_NORMAL_EQUIVALENCE_GATE
+    ).read_text(encoding="utf-8")
+    smooth_normal_z4_root_gate = (
+        repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
     compact_quotient_gate = (repo_root / COMPACT_QUOTIENT_GATE).read_text(
@@ -581,6 +626,35 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(
                 f"D8 facade omits smooth-normal-bundle status: {status}"
+            )
+
+    for declaration in GLOBAL_NORMAL_EQUIVALENCE_DECLARATIONS:
+        if declaration not in global_normal_equivalence_gate:
+            raise AssertionError(
+                f"missing D8 global-normal declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", global_normal_equivalence_gate):
+        raise AssertionError("proof placeholder found in D8 global normal comparison")
+    global_normal_import = "Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence"
+    if facade.count(global_normal_import) != 1:
+        raise AssertionError("D8 facade omits the global normal comparison gate")
+
+    for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:
+        if declaration not in smooth_normal_z4_root_gate:
+            raise AssertionError(
+                f"missing D8 smooth normal-Z4 declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_normal_z4_root_gate):
+        raise AssertionError("proof placeholder found in D8 smooth normal-Z4 gate")
+    smooth_normal_z4_import = (
+        "Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle"
+    )
+    if facade.count(smooth_normal_z4_import) != 1:
+        raise AssertionError("D8 facade omits the smooth normal-Z4 root gate")
+    for status in GLOBAL_NORMAL_AND_Z4_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(
+                f"D8 facade omits global-normal/Z4 status: {status}"
             )
 
 

@@ -95,14 +95,18 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAutomaticScalarIntegrability4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAbelianGaugeBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLCovariance4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixDiagonalGaugeNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixInteractionFrechetNoether
@@ -314,6 +318,8 @@ structure ProgramStatus where
   paEffectiveD8ThroatEmbeddingDifferentialFrontierProved : Prop
   paEffectiveD8ThroatIsSmoothEmbeddingProved : Prop
   paEffectiveD8SmoothNormalVectorBundleProved : Prop
+  paEffectiveD8GlobalNormalAlgebraicComparisonProved : Prop
+  paEffectiveD8NormalZ4RootBundleProved : Prop
   paEffectiveD8SmoothPTFieldAction4DProved : Prop
   paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved : Prop
   paEffectiveD8SmoothPrincipalRootField4DProved : Prop
@@ -336,8 +342,10 @@ structure ProgramStatus where
   paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved : Prop
   paEffectiveD8AutomaticScalarIntegrability4DProved : Prop
   paEffectiveD8DiagonalDiffeomorphismActionProved : Prop
+  paEffectiveD8AbelianGaugeBRST4DProved : Prop
   paEffectiveD8GlobalLLWorldvolumeActionProved : Prop
   paEffectiveD8GlobalLLVariation4DProved : Prop
+  paEffectiveD8GlobalLLPTCovariance4DProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
@@ -532,6 +540,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8ThroatEmbeddingDifferentialFrontierProved /\
   s.paEffectiveD8ThroatIsSmoothEmbeddingProved /\
   s.paEffectiveD8SmoothNormalVectorBundleProved /\
+  s.paEffectiveD8GlobalNormalAlgebraicComparisonProved /\
+  s.paEffectiveD8NormalZ4RootBundleProved /\
   s.paEffectiveD8SmoothPTFieldAction4DProved /\
   s.paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved /\
   s.paEffectiveD8SmoothPrincipalRootField4DProved /\
@@ -555,8 +565,10 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved /\
   s.paEffectiveD8AutomaticScalarIntegrability4DProved /\
   s.paEffectiveD8DiagonalDiffeomorphismActionProved /\
+  s.paEffectiveD8AbelianGaugeBRST4DProved /\
   s.paEffectiveD8GlobalLLWorldvolumeActionProved /\
   s.paEffectiveD8GlobalLLVariation4DProved /\
+  s.paEffectiveD8GlobalLLPTCovariance4DProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\

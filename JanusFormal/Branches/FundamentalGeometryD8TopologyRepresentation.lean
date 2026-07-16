@@ -27,6 +27,8 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
@@ -88,6 +90,10 @@ structure ProgramStatus where
   fixedThroatNormalVectorBundleContMDiffProved : Prop
   fixedThroatNormalFiberPointwiseDifferentialEquivProved : Prop
   fixedThroatNormalOneLoopMinusIdentityProved : Prop
+  fixedThroatNormalGlobalAlgebraicEquivProved : Prop
+  fixedThroatNormalZ4RootComplexLineConstructed : Prop
+  fixedThroatNormalZ4RootSmoothRealUnderlierProved : Prop
+  fixedThroatNormalZ4RootSquaresToNormalSignProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -194,15 +200,19 @@ def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatQuotientInclusionIsImmersionOfComplementProved /\
   s.fixedThroatQuotientInclusionIsSmoothEmbeddingProved
 
-/-- Actual analytic sign-clutched normal line bundle.  Its fibers are
-pointwise linearly equivalent to the differential normal quotients and one
-deck circuit acts by `-id`.  No globally smooth family of those pointwise
-equivalences is asserted. -/
+/-- Actual analytic sign-clutched normal line bundle, its global algebraic
+comparison with the differential normal family, and both global complex `Z4`
+root lines with smooth real underliers.  A smooth atlas on the differential
+quotient family, hence a smooth comparison with it, is not asserted. -/
 def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatNormalVectorBundleConstructed /\
   s.fixedThroatNormalVectorBundleContMDiffProved /\
   s.fixedThroatNormalFiberPointwiseDifferentialEquivProved /\
-  s.fixedThroatNormalOneLoopMinusIdentityProved
+  s.fixedThroatNormalOneLoopMinusIdentityProved /\
+  s.fixedThroatNormalGlobalAlgebraicEquivProved /\
+  s.fixedThroatNormalZ4RootComplexLineConstructed /\
+  s.fixedThroatNormalZ4RootSmoothRealUnderlierProved /\
+  s.fixedThroatNormalZ4RootSquaresToNormalSignProved
 
 /-- Compactness of both actual effective quotient manifolds. -/
 def effectiveQuotientCompactnessClosed (s : ProgramStatus) : Prop :=

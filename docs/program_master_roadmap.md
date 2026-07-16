@@ -55,9 +55,9 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. Intrinsic Sobolev identification, the physical-volume trace, the globally smooth differential-normal identification and the non-null/null/joint stratification remain open.
+- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. The normal fibers are assembled into a global algebraic total-space equivalence, but intrinsic Sobolev identification, the physical-volume trace, its smooth differential-normal promotion and the non-null/null/joint stratification remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
-- **T/C** the compact throat carries an actual finite-measure LL worldvolume action and a nonempty zero branch; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
+- **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
 
@@ -87,8 +87,8 @@ Current results:
   product with `R`;
 - **T** the exact local-section sign cocycle constructs a genuine analytic
   real rank-one `VectorBundle` on the effective throat; one circuit acts by
-  `-id`, and every fiber is noncanonically linearly equivalent to its
-  differential normal quotient;
+  `-id`; its fibers are assembled into a global base-preserving algebraic
+  equivalence with the dependent differential normal family;
 - **T** the equatorial complement in the concrete unit `S3` is exactly two
   nonempty disjoint open sign sides; reflection and one deck iterate exchange
   them, while the image of either side is exactly the full effective-throat
@@ -105,12 +105,13 @@ Current results:
 - **T/C** the associated sign representation identifies the orientation cover with the even-winding kernel and proves pulled-back `w1 = 0`;
 - **T/C** the integer deck action on the normal-line cover satisfies the identity and composition laws;
 - **T/C** the two `Z4` lifts obey the cyclic cocycle law, are exchanged by PT, and reproduce the one-, two- and four-loop boundary-condition hierarchy;
+- **T/C** both lifts now define genuine global complex line bundles whose smooth real underliers have analytic transitions and whose squares recover the normal sign for every winding;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** prove the smooth global normal-bundle identification and stratification,
-  then construct the ambient Pin structure
-  and physical square-root bundle.
+- **O** construct the differential-normal quotient atlas, prove the smooth
+  global normal-bundle identification and stratification, then construct the
+  compatible ambient Pin/SpinC principal bundles.
 
 ## D2 — Focused twisted Dirac spectral geometry
 

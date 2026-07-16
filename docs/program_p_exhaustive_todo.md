@@ -126,9 +126,12 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       normale locale de `S² ↪ S³`, son complément normal réel de dimension un,
       la descendre au cover puis au quotient, et empaqueter globalement
       `IsImmersion` et `IsSmoothEmbedding` avec l'embedding fermé déjà prouvé.
-    - [ ] Assembler les identifications normales ponctuelles en une
-      équivalence lisse globale et construire les strates
-      non-nulles/nulles/joints.
+    - [x] Choisir simultanément les équivalences normales ponctuelles et les
+      empaqueter en une équivalence globale des espaces totaux dépendants,
+      préservant la base, l'addition, l'action scalaire et la monodromie `-id`.
+    - [ ] Construire l'atlas du bundle normal quotient, promouvoir cette
+      équivalence algébrique en équivalence lisse globale et construire les
+      strates non-nulles/nulles/joints.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -140,8 +143,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     différentiel de l'`IsSmoothEmbedding` maintenant construit ; le
     `VectorBundle` analytique et les identifications ponctuelles sont fermés,
     mais leur assemblage lisse global reste ouvert.
-- [ ] Construire le relèvement Pin/SpinC et la racine normale `Z4` comme objets
-  globaux, pas seulement comme phases ou cocycles fournis.
+- [x] Construire les deux racines normales `Z4` comme vraies lignes complexes
+  globales sur le throat, avec sous-jacent réel lisse et carré de chaque
+  transition égal au cocycle normal pour tout enroulement.
+- [ ] Construire les relèvements principaux Pin/SpinC globaux compatibles avec
+  ces lignes racines, et pas seulement des phases ou cocycles fournis.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
 - [ ] Fixer les domaines géométriques sur lesquels métriques, racines,
@@ -275,8 +281,12 @@ par toute évolution admissible.
   - [x] deux métriques lorentziennes diagonales positives indépendantes sur le
     quotient lisse effectif ; le secteur tensoriel général reste ouvert ;
   - [x] deux multiplets matière lisses et leur identification PT exacte ;
-  - [x] champs de coordonnées de jauge, ghosts et auxiliaires lisses ; la
-    connexion de jauge tensorielle et le différentiel BRST restent ouverts ;
+  - [x] champs de coordonnées de jauge, ghosts et auxiliaires lisses ;
+    - [x] pour le secteur abélien `U(1)^2`, construire les vraies 1-formes de
+      connexion lisses, l'action `A ↦ A + dλ`, sa covariance difféomorphe, le
+      BRST `s(A,c) = (dc,0)`, sa nilpotence et le pont aux ghosts indépendants ;
+    - [ ] construire le ghost difféomorphe, le BRST non abélien/BV et leur
+      accord avec l'action, le Hessien et les conditions au bord ;
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -466,6 +476,9 @@ complexe BRST, aux anomalies et aux conditions au bord.
     simultanément mesure et flux, prouver l'expansion cubique pointwise et
     intégrée pour toute mesure finie, dériver les deux coefficients d'Euler et
     montrer que leur annulation équivaut exactement au flux nul.
+  - [x] Construire l'équivalence mesurable PT du throat et prouver la covariance
+    exacte des champs, tangentes, densité, action, première variation,
+    coefficients d'Euler et stationnarité LL pour toute mesure PT-invariante.
   - [ ] Introduire la dépendance différentielle et la métrique auxiliaire dans
     l'action LL physique, puis dériver la vraie PDE ; l'action actuelle a une
     réponse identiquement nulle à la métrique auxiliaire.
