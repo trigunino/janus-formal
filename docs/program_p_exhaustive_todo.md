@@ -283,11 +283,19 @@ par toute évolution admissible.
     et point fixe de l'échange PT.
   - [x] deux métriques lorentziennes diagonales positives indépendantes sur le
     quotient lisse effectif ; le secteur tensoriel général reste ouvert ;
+    - [x] Construire intrinsèquement les champs lisses de deux-tenseurs
+      covariants symétriques, leurs domaines fibre non dégénéré et lorentzien
+      `(3,1)`, puis prouver leur préservation par le pullback fibre. La lissité
+      globale de ce pullback et l'injection de la branche diagonale restent
+      ouvertes.
   - [x] deux multiplets matière lisses et leur identification PT exacte ;
   - [x] champs de coordonnées de jauge, ghosts et auxiliaires lisses ;
     - [x] pour le secteur abélien `U(1)^2`, construire les vraies 1-formes de
       connexion lisses, l'action `A ↦ A + dλ`, sa covariance difféomorphe, le
       BRST `s(A,c) = (dc,0)`, sa nilpotence et le pont aux ghosts indépendants ;
+    - [x] construire le vrai ghost difféomorphe tangent lisse, ses lois de
+      pullback, la dérivée de Lie scalaire et le complexe BRST linéarisé
+      nilpotent, avec un slot séparé dans les champs indépendants ;
     - [ ] construire le ghost difféomorphe, le BRST non abélien/BV et leur
       accord avec l'action, le Hessien et les conditions au bord ;
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
@@ -360,6 +368,19 @@ par toute évolution admissible.
   - [ ] Étendre l'action aux métriques générales, matière, jauge, ghosts,
     auxiliaires et conditions au bord retenues.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
+  - [x] Pour une métrique lorentzienne tensorielle générale munie de son
+    isomorphisme musical exact, construire pointwise l'inverse, le Gram,
+    `sqrt(|det|)`, `p = dφ`, la densité scalaire du même champ et son expansion
+    variationnelle quadratique exacte.
+    - [x] Prouver la naturalité exacte de la contraction, du Gram, du
+      déterminant-volume et de la densité sous changement de frame, puis la
+      spécialiser au vrai `mfderiv` d'un difféomorphisme D8 et à la règle de
+      chaîne de `dφ`.
+    - [x] Définir l'espace fonctionnel régulier où sharp, frame, volume et
+      différentielle scalaire varient lissement, prouver la lissité et
+      l'intégrabilité de la densité sur toute mesure finie, construire l'action
+      globale et dériver sa variation intégrée exacte. Le témoin métrique
+      global provenant de la branche diagonale reste à construire.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
@@ -483,11 +504,38 @@ complexe BRST, aux anomalies et aux conditions au bord.
     exacte des champs, tangentes, densité, action, première variation,
     coefficients d'Euler et stationnarité LL pour toute mesure PT-invariante.
   - [ ] Introduire la dépendance différentielle et la métrique auxiliaire dans
-    l'action LL physique, puis dériver la vraie PDE ; l'action actuelle a une
-    réponse identiquement nulle à la métrique auxiliaire.
+    l'action LL physique, puis dériver la vraie PDE forte.
+    - [x] Sur le vrai throat compact, construire sans hypothèse une famille
+      tangentielle lisse finie génératrice, l'énergie différentielle LL et une
+      dépendance non triviale à la métrique auxiliaire ; dériver les variations
+      intégrées et l'équation faible stationnaire exacte. L'opérateur fort,
+      la contraction lorentzienne intrinsèque et les flux restent ouverts.
+    - [x] Symétriser cette même action différentielle par moyenne PT et prouver
+      exactement l'invariance de l'action, de la variation, de l'équation
+      faible et de l'espace stationnaire, pour toute mesure. Cette moyenne ne
+      rend pas la frame elle-même intrinsèquement PT-équivariante.
+      - [x] Dériver le Hessien de flux de cette même action PT, l'identifier à
+        la linéarisation exacte du pairing faible, prouver symétrie, covariance
+        PT et positivité de sa partie cinétique ; dériver aussi le Hessien brut
+        de la métrique auxiliaire sans sur-revendiquer la positivité totale.
 - [x] Prouver l'existence d'une branche throat non vide compatible avec les
   deux secteurs gravitationnels.
 - [ ] Dériver les conditions de jonction et l'équilibre des flux.
+  - [x] Pour deux champs scalaires globaux restreints à la vraie gorge,
+    construire une action Robin quadratique, dériver sa première variation et
+    prouver que la stationnarité impose la balance faible intégrée des deux
+    flux ainsi que l'annulation intégrée du carré du résidu. Les conditions
+    d'Israel, les dérivées normales géométriques et le cas nul restent ouverts.
+    - [x] Dériver le Hessien bilinaire exact de cette même action, prouver sa
+      symétrie, son signe et son noyau selon `k_+ + k_-`, puis l'identifier au
+      linéarisé exact de l'opérateur de balance faible.
+      - [x] Réaliser ce Hessien sur le vrai `L²` du throat comme
+        `(k_+ + k_-) Id`, prouver auto-adjonction, noyau, image fermée, critère
+        Fredholm explicite et indice zéro lorsque la somme est non nulle, puis
+        identifier son pairing lisse au Hessien de la même action.
+      - [x] Prouver sous mesure PT-invariante la covariance exacte des traces,
+        flux, résidu, action, première variation et Hessien Robin avec échange
+        `+/-` et `k_+/k_-`, puis entrelacer l'opérateur `L²` par l'isométrie PT.
 - [ ] Étendre le Stokes fini à une formule de Stokes géométrique pour données
   variables et toutes les strates.
   - [x] Assembler en un résidu stratifié fini unique les faces non nulles
@@ -502,6 +550,12 @@ non contrôlé et produit les conditions de jonction annoncées.
 - [ ] Définir le vrai opérateur de compatibilité géométrique `K` sur les
   bundles Janus.
 - [ ] Calculer sa dérivée de Fréchet `J` sur les espaces fonctionnels choisis.
+  - [x] Dans le secteur LL différentiel PT construit, empaqueter le vrai
+    opérateur d'Euler faible comme fonctionnelle linéaire sur les tests et son
+    opérateur de Jacobi bilinéaire, prouver la linéarisation affine exacte,
+    la symétrie de `J` et leur identification à la variation/Hessien de la même
+    action. La topologie du dual, le `K` géométrique complet et `R/B` restent
+    ouverts.
 - [ ] Définir le générateur de jauge `R` et l'opérateur d'identités `B`.
 - [ ] Prouver `J ∘ R = 0` et `B ∘ K = 0` globalement.
 - [ ] Promouvoir l'exactitude symbolique non nulle vers un complexe

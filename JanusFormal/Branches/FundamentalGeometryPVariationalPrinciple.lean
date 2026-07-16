@@ -80,6 +80,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothFieldDescent4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothPTFieldAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzTensor4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarDensityFrameCovariance4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalInteraction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothThroatTrace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
@@ -94,11 +98,20 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAutomaticScalarIntegrability4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionBalance4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionHessian4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionL2Fredholm4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionPTCovariance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAbelianGaugeBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLCovariance4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDifferentialLLWeakEquation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricDifferentialLLWeakEquation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricDifferentialLLHessian4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricLLWeakEulerJacobiOperator4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
@@ -324,6 +337,10 @@ structure ProgramStatus where
   paEffectiveD8NormalZ4RootPTConjugationProved : Prop
   paEffectiveD8SmoothPTFieldAction4DProved : Prop
   paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved : Prop
+  paEffectiveD8GeneralLorentzTensorFrontierProved : Prop
+  paEffectiveD8GeneralHolonomicScalarDensity4DProved : Prop
+  paEffectiveD8GeneralScalarDensityFrameCovariance4DProved : Prop
+  paEffectiveD8GeneralScalarFunctionalAction4DProved : Prop
   paEffectiveD8SmoothPrincipalRootField4DProved : Prop
   paEffectiveD8SmoothDiagonalCandidateADensity4DProved : Prop
   paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved : Prop
@@ -343,11 +360,20 @@ structure ProgramStatus where
   paEffectiveD8GlobalHolonomicScalarAction4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved : Prop
   paEffectiveD8AutomaticScalarIntegrability4DProved : Prop
+  paEffectiveD8ScalarRobinJunctionBalance4DProved : Prop
+  paEffectiveD8ScalarRobinJunctionHessian4DProved : Prop
+  paEffectiveD8ScalarRobinJunctionL2Fredholm4DProved : Prop
+  paEffectiveD8ScalarRobinJunctionPTCovariance4DProved : Prop
   paEffectiveD8DiagonalDiffeomorphismActionProved : Prop
   paEffectiveD8AbelianGaugeBRST4DProved : Prop
+  paEffectiveD8LinearizedDiffeomorphismBRST4DProved : Prop
   paEffectiveD8GlobalLLWorldvolumeActionProved : Prop
   paEffectiveD8GlobalLLVariation4DProved : Prop
   paEffectiveD8GlobalLLPTCovariance4DProved : Prop
+  paEffectiveD8DifferentialLLWeakEquation4DProved : Prop
+  paEffectiveD8PTSymmetricDifferentialLLWeakEquation4DProved : Prop
+  paEffectiveD8PTSymmetricDifferentialLLHessian4DProved : Prop
+  paEffectiveD8PTSymmetricLLWeakEulerJacobiOperator4DProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
@@ -547,6 +573,10 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8NormalZ4RootPTConjugationProved /\
   s.paEffectiveD8SmoothPTFieldAction4DProved /\
   s.paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved /\
+  s.paEffectiveD8GeneralLorentzTensorFrontierProved /\
+  s.paEffectiveD8GeneralHolonomicScalarDensity4DProved /\
+  s.paEffectiveD8GeneralScalarDensityFrameCovariance4DProved /\
+  s.paEffectiveD8GeneralScalarFunctionalAction4DProved /\
   s.paEffectiveD8SmoothPrincipalRootField4DProved /\
   s.paEffectiveD8SmoothDiagonalCandidateADensity4DProved /\
   s.paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved /\
@@ -567,11 +597,20 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8GlobalHolonomicScalarAction4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved /\
   s.paEffectiveD8AutomaticScalarIntegrability4DProved /\
+  s.paEffectiveD8ScalarRobinJunctionBalance4DProved /\
+  s.paEffectiveD8ScalarRobinJunctionHessian4DProved /\
+  s.paEffectiveD8ScalarRobinJunctionL2Fredholm4DProved /\
+  s.paEffectiveD8ScalarRobinJunctionPTCovariance4DProved /\
   s.paEffectiveD8DiagonalDiffeomorphismActionProved /\
   s.paEffectiveD8AbelianGaugeBRST4DProved /\
+  s.paEffectiveD8LinearizedDiffeomorphismBRST4DProved /\
   s.paEffectiveD8GlobalLLWorldvolumeActionProved /\
   s.paEffectiveD8GlobalLLVariation4DProved /\
   s.paEffectiveD8GlobalLLPTCovariance4DProved /\
+  s.paEffectiveD8DifferentialLLWeakEquation4DProved /\
+  s.paEffectiveD8PTSymmetricDifferentialLLWeakEquation4DProved /\
+  s.paEffectiveD8PTSymmetricDifferentialLLHessian4DProved /\
+  s.paEffectiveD8PTSymmetricLLWeakEulerJacobiOperator4DProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\

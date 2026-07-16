@@ -1,6 +1,13 @@
 from __future__ import annotations
 
+from functools import lru_cache
+
 from scripts.audit_janus_d8_topology import assert_d8_topology_integrity
+
+
+assert_d8_topology_integrity = lru_cache(maxsize=1)(
+    assert_d8_topology_integrity
+)
 
 
 def test_d8_topology_gate_is_integrated_without_smooth_overclaim() -> None:
