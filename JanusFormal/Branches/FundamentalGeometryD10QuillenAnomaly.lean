@@ -44,6 +44,7 @@ import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleGraphFredholmIndex
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleBoundedTransformSpectralFlow
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantLineFamily
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusD2ModeFamilyInflowBridge
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusFiniteModeFredholmDeterminantLine
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusPartitionFunctionSectionNoGo
@@ -87,6 +88,7 @@ structure ProgramStatus where
   circleGraphFredholmIndexZeroDeterminantLineProved : Prop
   circleBoundedTransformSpectralFlowProved : Prop
   circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved : Prop
+  circleTopologicalDeterminantLineBundleProved : Prop
 
 /-- Scoped finite-dimensional milestone; this is deliberately not the global
 unbounded Fredholm/Quillen-family status used by `relativeAnomalyGeometryClosed`. -/
@@ -109,6 +111,11 @@ def circleBoundedTransformSpectralFlowClosed (s : ProgramStatus) : Prop :=
 /-- Scoped pointwise determinant fibers and large-gauge endpoint transition. -/
 def circleAlgebraicDeterminantLineFamilyClosed (s : ProgramStatus) : Prop :=
   s.circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved
+
+/-- Scoped genuine topological/vector determinant-line bundle on the
+normalized circle family; Quillen metric and connection remain separate. -/
+def circleTopologicalDeterminantLineBundleClosed (s : ProgramStatus) : Prop :=
+  s.circleTopologicalDeterminantLineBundleProved
 
 /-- Canonical relative anomaly package. -/
 def relativeAnomalyGeometryClosed (s : ProgramStatus) : Prop :=

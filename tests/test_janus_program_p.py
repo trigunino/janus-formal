@@ -101,3 +101,7 @@ def test_program_p_d10_circle_bounded_transform_spectral_flow_is_integrated() ->
 
 def test_program_p_d10_circle_determinant_line_family_is_integrated() -> None:
     assert_program_p_gate_integrity()
+
+
+def test_program_p_d10_circle_topological_determinant_bundle_is_integrated() -> None:
+    assert_program_p_gate_integrity()
