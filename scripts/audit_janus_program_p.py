@@ -2460,6 +2460,24 @@ PROGRAM_P_GATES = {
             "theorem completed_ll_jacobi_fredholm_closure",
         ),
     ),
+    "P0EFTJanusMappingTorusReducedBosonicNaturalFredholmHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ReducedBosonicJacobiSpace",
+            "def reducedBosonicJacobiOperator",
+            "theorem reducedBosonicJacobiOperator_apply",
+            "def reducedBosonicNaturalHessian",
+            "theorem reducedBosonicNaturalHessian_comm",
+            "theorem reducedBosonicNaturalHessian_smooth_eq",
+            "theorem reducedBosonicJacobiOperator_injective",
+            "theorem reducedBosonicJacobiOperator_surjective",
+            "theorem reducedBosonicJacobiOperator_ker_eq_bot",
+            "theorem reducedBosonicJacobiOperator_range_eq_top",
+            "theorem reducedBosonicJacobiOperator_range_isClosed",
+            "def reducedBosonicJacobiIndex",
+            "theorem reducedBosonicJacobiIndex_zero",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
