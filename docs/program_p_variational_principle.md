@@ -315,16 +315,25 @@ pullback and descent give an equivalence between functions on that quotient and
 configuration-space functions invariant under the flow. Real-valued functions
 specialize this equivalence to invariant actions, including the reconstructed
 radial action. No topology or smooth structure is constructed on this quotient.
-These results do not construct a Janus flow, gauge group or PDE identity with
-boundary terms.
+Separately, real translation of the actual D8 mapping-torus coordinate now
+gives a nontrivial complete analytic Janus flow with diffeomorphic time slices.
+The flow restricts analytically to the throat, preserves its inclusion, and
+pullback gives an exact complete action on all eight blocks of the current
+independent-field package, including group/inverse laws, PT conjugation and
+compatibility with all five induced fields. It is not yet the flow of an
+arbitrary ghost, a gauge group, or a PDE identity with boundary terms.
 
 **Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
 `P0EFTJanusLinearGaugeNoetherReconstruction.lean`,
 `P0EFTJanusNonlinearGaugeFlowNoether.lean`,
 `P0EFTJanusGaugeOrbitDescent.lean`,
-`P0EFTJanusGaugeOrbitInvariantEquiv.lean`
+`P0EFTJanusGaugeOrbitInvariantEquiv.lean`,
+`P0EFTJanusMappingTorusCompleteTimeFlow4D.lean`,
+`P0EFTJanusMappingTorusCompleteIndependentFieldTimeAction4D.lean`
 **Evidence:** **T/C** on open convex domains and, on the whole space, for
-additive linear or supplied complete nonlinear gauge-flow models.
+additive linear or supplied complete nonlinear gauge-flow models; **T/C** for
+the concrete nontrivial complete analytic D8 time flow and its complete action
+on the current independent-field package.
 
 For a supplied reduced two-metric chart, the explicit relative quadratic
 interaction now has its genuine Frechet derivative. Independent plus/minus

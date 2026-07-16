@@ -39,6 +39,8 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinAtlasObstruction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinSurjectivityFrontier
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinEvenReflectionLift
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinSO4Surjectivity4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinCechTrivialization4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -117,6 +119,8 @@ structure ProgramStatus where
   ambientSpinAtlasCechObstructionProved : Prop
   ambientSpinSurjectivityCechFrontierProved : Prop
   ambientSpinEvenReflectionLiftConstructed : Prop
+  ambientSpinSO4SurjectivityProved : Prop
+  ambientSpinCechTrivializationReduced : Prop
   fixedThroatNormalZ4RootComplexLineConstructed : Prop
   fixedThroatNormalZ4RootSmoothRealUnderlierProved : Prop
   fixedThroatNormalZ4RootSquaresToNormalSignProved : Prop
@@ -251,6 +255,8 @@ def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.ambientSpinAtlasCechObstructionProved /\
   s.ambientSpinSurjectivityCechFrontierProved /\
   s.ambientSpinEvenReflectionLiftConstructed /\
+  s.ambientSpinSO4SurjectivityProved /\
+  s.ambientSpinCechTrivializationReduced /\
   s.fixedThroatNormalZ4RootComplexLineConstructed /\
   s.fixedThroatNormalZ4RootSmoothRealUnderlierProved /\
   s.fixedThroatNormalZ4RootSquaresToNormalSignProved /\

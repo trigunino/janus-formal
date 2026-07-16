@@ -271,9 +271,13 @@ additional global choices, not a canonical functor of the real line. The
 ambient Clifford gate now constructs an actual Spin element for every pair of
 unit reflections, proves that its projection is their exact product, and
 extends this construction to every finite list of pairs. Full surjectivity is
-reduced to Cartan--Dieudonné with determinant parity, an absent Mathlib lemma;
-smooth atlas-wide lifts and the ambient Pin/SpinC principal bundles remain
-open.
+now unconditional: Mathlib's finite-dimensional reflection-generation theorem
+supplies Cartan--Dieudonné and determinant parity, yielding both
+`Spin(4) → SO(4)` surjectivity and a lifting function. Smooth coherent
+atlas-wide lifts and the ambient Pin/SpinC principal bundles remain open.
+For any oriented atlas, pointwise lifts are now automatic; their global Čech
+completion is equivalent exactly to trivializing one kernel-valued cocycle.
+Global orientation, that class, and continuity/smoothness remain.
 
 ## 5. Program P
 
@@ -297,12 +301,23 @@ The exhaustive remaining-work checklist is
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`; identification with intrinsic Sobolev sections and the physical-volume trace theorem remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. Intrinsic Sobolev identification and that analytic inequality remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
   cancellation of the scalar BRST square. Extension to every field/antifield
-  and BV remains open. An intrinsic positive fixed-patch energy replacement is
+  and BV remains open. The spatial `so(3)` rotations are now explicit on the
+  cover, tangent to `S³`, deck-equivariant, closed under their nonabelian Lie
+  table, and equipped with an injective smooth descent contract to quotient
+  ghosts. The three tangent `C∞` cover sections are now explicit, faithful and
+  nonzero; naturality of the bracket under quotient projection is the sole
+  remaining geometric bridge. Independently, real translation of the mapping-torus
+  coordinate now descends to a nontrivial complete analytic real action on the
+  actual D8 quotient; every time slice is an analytic diffeomorphism. Pullback
+  restricts analytically to the throat and gives an exact complete pullback
+  action on all eight blocks of the current `IndependentFields` package, with
+  zero/addition/inverse laws, PT conjugation and compatibility with all five
+  induced fields. Integration of an arbitrary ghost remains open. An intrinsic positive fixed-patch energy replacement is
   also uniformly equivalent to the implemented localized graph density and
   gives unconditional uniform graph ellipticity; equality with the historical
   variable-`chartAt` density remains open.
@@ -310,7 +325,23 @@ The exhaustive remaining-work checklist is
   certified everywhere Lorentzian without an external frame contract: the
   proof constructs the sphere-tangent/orthogonal equivalence, an orthonormal
   spatial frame and transports the exact `(3,1)` model through the quotient
-  projection derivative.
+  projection derivative. This tensor now instantiates an actual global
+  `SmoothGeneralLorentzMetric`, with global nondegeneracy and exact pointwise
+  scalar density, first variation and quadratic remainder. The false
+  global-frame requirement is now removed by separating the frame-free scalar
+  Lagrangian from its integration measure: every finite nonzero Borel measure
+  gives an integrable action, and a constant massive field proves it is
+  genuinely nonzero. The canonical Lorentz volume contract is now discharged
+  without Dirac masses: `Measure.toSphere` on `S³` times Lebesgue measure on a
+  fundamental time interval pushes forward to a finite nonzero quotient
+  measure. A finite compatible Lorentz-density atlas glues uniquely to exactly
+  that measure and instantiates a nonzero intrinsic action.
+  On the positive-diagonalizable root locus, all four root characteristic
+  coefficients are now unconditionally continuous. The key
+  `c₃ = -tr(√A)` result avoids a varying eigenbasis by normalizing the positive
+  spectrum into `[0,1]⁴`, descending the symmetric square-root sum through a
+  compact quotient, and denormalizing. Turning these coefficient results into
+  the final global matrix-selector continuity/regularity bridge remains.
   For every finite measure, the scalar integrability contract is now automatic
   on the affine-stable class with continuous fixed-frame covector components,
   including arbitrary nonzero constant scalars; general tensorial continuity
@@ -360,13 +391,14 @@ The exhaustive remaining-work checklist is
   `E_bulk + E_induced ∘ D(induced)`; an exact diagonal counterexample proves
   that imposing both slot equations separately can overconstrain the system.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. No Janus flow, gauge group or PDE identity is constructed; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The quotient geometry now supplies one concrete nontrivial complete analytic time flow, but not the arbitrary-ghost/full-field gauge group or PDE identity; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
   The set quotient by complete-flow orbits is constructed. For any target,
   functions on this quotient are equivalent to configuration-space functions
   invariant under the flow; the real-valued specialization gives the same
   equivalence for actions, including the radial action. No topology or smooth
-  structure is put on this quotient, and the supplied flow is not a concrete
-  Janus flow.
+  structure is put on this orbit quotient, and it is not yet instantiated by
+  the induced action of the concrete D8 time flow on the full configuration
+  space.
   In a supplied reduced two-metric chart, the relative quadratic action now has
   its actual Frechet derivative: independent variations recover both Euler
   components, diagonal/sign-linked variations recover their sum/difference,

@@ -108,6 +108,14 @@ AMBIENT_SPIN_EVEN_REFLECTION_LIFT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusAmbientSpinEvenReflectionLift.lean"
 )
+AMBIENT_SPIN_SO4_SURJECTIVITY_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientSpinSO4Surjectivity4D.lean"
+)
+AMBIENT_SPIN_CECH_TRIVIALIZATION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientSpinCechTrivialization4D.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -554,6 +562,25 @@ AMBIENT_SPIN_EVEN_REFLECTION_LIFT_DECLARATIONS = (
     "def ambientSpinSO4LiftingFunctionOfEvenReflectionFactorizations",
 )
 
+AMBIENT_SPIN_SO4_SURJECTIVITY_DECLARATIONS = (
+    "theorem ambientSO4HasEvenReflectionFactorizations",
+    "theorem ambientSpinSO4Surjective",
+    "def ambientSpinSO4LiftingFunction",
+)
+
+AMBIENT_SPIN_CECH_TRIVIALIZATION_DECLARATIONS = (
+    "def ambientSpinAtlasLiftChoice4D",
+    "structure AmbientSpinKernelOneCochain",
+    "def ambientSpinAtlasLiftChoiceKernelTranslateBy",
+    "def ambientSpinKernelOneCochainBetween",
+    "theorem ambientSpinKernelOneCochainBetween_translates",
+    "structure AmbientSpinCechKernelTrivialization",
+    "def AmbientSpinCechKernelTrivialization.toCechTransitionLift",
+    "def ambientSpinCechKernelTrivializationOfTransitionLift",
+    "theorem ambientSpinCechKernelTrivialization_nonempty_iff",
+    "theorem ambientSpinCechTransitionLift_nonempty_iff",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -622,6 +649,8 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "ambientSpinAtlasCechObstructionProved",
     "ambientSpinSurjectivityCechFrontierProved",
     "ambientSpinEvenReflectionLiftConstructed",
+    "ambientSpinSO4SurjectivityProved",
+    "ambientSpinCechTrivializationReduced",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -719,6 +748,12 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     ambient_spin_even_reflection_lift_gate = (
         repo_root / AMBIENT_SPIN_EVEN_REFLECTION_LIFT_GATE
+    ).read_text(encoding="utf-8")
+    ambient_spin_so4_surjectivity_gate = (
+        repo_root / AMBIENT_SPIN_SO4_SURJECTIVITY_GATE
+    ).read_text(encoding="utf-8")
+    ambient_spin_cech_trivialization_gate = (
+        repo_root / AMBIENT_SPIN_CECH_TRIVIALIZATION_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -1168,6 +1203,38 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     if facade.count(ambient_spin_even_reflection_lift_import) != 1:
         raise AssertionError(
             "D8 facade omits the ambient Spin even-reflection lift gate"
+        )
+    for declaration in AMBIENT_SPIN_SO4_SURJECTIVITY_DECLARATIONS:
+        if declaration not in ambient_spin_so4_surjectivity_gate:
+            raise AssertionError(
+                f"missing D8 ambient Spin SO(4)-surjectivity declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", ambient_spin_so4_surjectivity_gate):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient Spin SO(4)-surjectivity gate"
+        )
+    ambient_spin_so4_surjectivity_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientSpinSO4Surjectivity4D"
+    )
+    if facade.count(ambient_spin_so4_surjectivity_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the ambient Spin SO(4)-surjectivity gate"
+        )
+    for declaration in AMBIENT_SPIN_CECH_TRIVIALIZATION_DECLARATIONS:
+        if declaration not in ambient_spin_cech_trivialization_gate:
+            raise AssertionError(
+                f"missing D8 ambient Spin Čech-trivialization declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", ambient_spin_cech_trivialization_gate):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient Spin Čech-trivialization gate"
+        )
+    ambient_spin_cech_trivialization_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientSpinCechTrivialization4D"
+    )
+    if facade.count(ambient_spin_cech_trivialization_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the ambient Spin Čech-trivialization gate"
         )
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:
