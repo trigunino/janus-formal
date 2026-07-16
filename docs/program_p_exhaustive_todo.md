@@ -445,6 +445,14 @@ par toute évolution admissible.
     - [ ] Achever la complétion Sobolev intrinsèque et l'équation d'Euler
       covariante avec les conditions au bord retenues.
 - [ ] Dériver les équations matière covariantes.
+  - [x] Sur le vrai quotient D8 et la même action scalaire globale, construire
+    `K` faible et son Jacobi `J` symétrique pour tous les champs lisses sous le
+    contrat commun d'intégrabilité, puis les identifier exactement à la
+    première et seconde variation. Isoler le coefficient temporel lorentzien
+    strictement négatif ; sur le seul secteur statique positif, construire le
+    Hilbert d'énergie, le Riesz fort, son domaine dense, son noyau nul et
+    l'équivalence stationnaire/faible/forte. La dynamique lorentzienne complète
+    n'est pas déclarée positive.
   - [x] Sur la carte plate à métrique fixe, décomposer pointwise la variation
     holonomique en opérateur d'Euler scalaire et divergence du flux de bord.
   - [x] Après hypothèses explicites d'intégrabilité et
