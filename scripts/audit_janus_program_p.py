@@ -1680,6 +1680,18 @@ PROGRAM_P_GATES = {
             "theorem intrinsicCoverLorentzTensor_generator_isometry",
         ),
     ),
+    "P0EFTJanusMappingTorusIntrinsicLorentzMetricDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCoverLorentzTensor_deck_isometry",
+            "def quotientProjectionDerivativeEquiv",
+            "theorem quotientProjectionDerivativeEquiv_coe",
+            "structure IntrinsicTensorQuotientDescent",
+            "theorem IntrinsicTensorQuotientDescent.tensor_unique",
+            "def IntrinsicTensorQuotientDescent.toSymmetricTensor",
+            "structure IntrinsicCoverLorentzCertificate",
+        ),
+    ),
     "P0EFTJanusMappingTorusSmoothDiagonalInteraction4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2837,6 +2849,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved",
         "paEffectiveD8GeneralLorentzTensorFrontierProved",
         "paEffectiveD8IntrinsicCoverLorentzTensor4DProved",
+        "paEffectiveD8IntrinsicLorentzMetricDescentFrontier4DProved",
         "paEffectiveD8GeneralHolonomicScalarDensity4DProved",
         "paEffectiveD8GeneralScalarDensityFrameCovariance4DProved",
         "paEffectiveD8GeneralScalarFunctionalAction4DProved",
