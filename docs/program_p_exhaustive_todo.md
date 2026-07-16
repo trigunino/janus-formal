@@ -299,6 +299,11 @@ non contrôlé et produit les conditions de jonction annoncées.
   et obstruction du zéro-mode isolée à la même échelle.
 - [ ] Identifier ces espaces de coefficients pondérés aux espaces de Sobolev
   globaux requis sur les bundles Janus.
+  - [x] Construire sur `ℤ⁴` l'échelle de Sobolev de graphe décalée d'un ordre,
+    où le symbole Lorentz--Gram est un opérateur borné de norme au plus un, et
+    prouver son égalité exacte avec le symbole physique après encodage pondéré.
+  - [ ] Identifier cette échelle périodique aux sections Sobolev des vrais
+    bundles du mapping torus et à leurs cartes de recollement.
 - [ ] Contrôler convergence des séries, modes zéro et cohomologie globale.
 - [ ] Imposer et analyser les conditions au bord du mapping torus/throat.
 - [ ] Prouver fermeture de l'image, propriétés de Fredholm ou identifier

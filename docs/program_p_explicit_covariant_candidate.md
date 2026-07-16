@@ -276,6 +276,16 @@ residual projection is idempotent and gives the corresponding finite
 cohomology representative.  This is a finite coefficientwise decomposition,
 not an infinite-series convergence, boundary or global PDE theorem.
 
+On the full `Z^4` lattice, these coefficients now also live in completed
+weighted `ell^2` Hilbert spaces. The reconstruction is bounded, the compatible
+zero-free symbol range is closed, and the zero mode is a bounded projection.
+Because the Lorentz--Gram symbol has order one, a further gate equips the
+source with its exact one-order graph-Sobolev weight. The normalized symbol is
+then a bounded contraction into the target weighted metric space, and an exact
+encoding theorem identifies it with the unnormalized physical symbol. This is
+a periodic coefficient-scale theorem, not yet a Sobolev-section theorem on the
+global mapping-torus bundles or their boundary conditions.
+
 ## The two M30 density slots
 
 Let

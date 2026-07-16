@@ -125,6 +125,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCountableFourierSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLatticeFourierSaintVenantExactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusWeightedL2LatticeSaintVenantExactness
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevLatticeLorentzGram
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedTwoMetricActionDiagonalNoetherAudit
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCandidateMinisuperspaceLapseConstraint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusReducedFLRWSecondaryConstraint
@@ -263,6 +264,7 @@ structure ProgramStatus where
   paCountableAxialFourierSaintVenantExactnessProved : Prop
   paCountableLatticeFourierSaintVenantExactnessProved : Prop
   paWeightedL2LatticeSaintVenantExactnessProved : Prop
+  paShiftedSobolevLatticeLorentzGramProved : Prop
   paNullExpansionCountertermVariationProved : Prop
   paNullExpansionCountertermNonDifferentiableProved : Prop
   paNullJointReparametrizationCancellationProved : Prop
@@ -432,6 +434,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCountableAxialFourierSaintVenantExactnessProved /\
   s.paCountableLatticeFourierSaintVenantExactnessProved /\
   s.paWeightedL2LatticeSaintVenantExactnessProved /\
+  s.paShiftedSobolevLatticeLorentzGramProved /\
   s.paNullExpansionCountertermVariationProved /\
   s.paNullExpansionCountertermNonDifferentiableProved /\
   s.paNullJointReparametrizationCancellationProved /\

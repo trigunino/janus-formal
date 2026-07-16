@@ -15,6 +15,10 @@ def test_program_p_weighted_l2_lattice_exactness_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_shifted_sobolev_lattice_symbol_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_minkowski_diagonal_local_relative_root_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
