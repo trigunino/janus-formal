@@ -80,6 +80,10 @@ AMBIENT_TANGENT_ORIENTATION_COCYCLE_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusAmbientTangentOrientationCocycle.lean"
 )
+AMBIENT_TANGENT_QUADRATIC_REDUCTION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientTangentQuadraticReduction.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -396,6 +400,22 @@ AMBIENT_TANGENT_ORIENTATION_COCYCLE_DECLARATIONS = (
     "theorem normalPinMinus_reduction_eq_ambientParity",
 )
 
+AMBIENT_TANGENT_QUADRATIC_REDUCTION_DECLARATIONS = (
+    "def ambientCoverEuclideanBilinearForm",
+    "def ambientCoverEuclideanQuadraticForm",
+    "theorem ambientCoverEuclideanQuadraticForm_posDef",
+    "theorem ambientCoverEuclideanQuadraticForm_nondegenerate",
+    "def ambientAtlasTransportedQuadraticForm",
+    "theorem ambientAtlasTransportedQuadraticForm_posDef",
+    "theorem ambientAtlasTransportedQuadraticForm_nondegenerate",
+    "def ambientAtlasQuadraticIsometry",
+    "structure AmbientOrthonormalAtlasReduction",
+    "def AmbientOrthonormalAtlasReduction.toQuadraticAtlasContract",
+    "def AmbientOrthonormalAtlasReduction.orthogonalTransition",
+    "structure AmbientPinSpinCCechLiftContract",
+    "structure AmbientPinSpinCContinuousCechLiftContract",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -456,6 +476,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "fixedThroatDifferentialNormalSmoothBundleEquivalenceProved",
     "fixedThroatDifferentialNormalZeroNonzeroStratificationProved",
     "ambientTangentOrientationCocycleProved",
+    "ambientTangentQuadraticReductionFrontierProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -532,6 +553,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     ambient_tangent_orientation_cocycle_gate = (
         repo_root / AMBIENT_TANGENT_ORIENTATION_COCYCLE_GATE
+    ).read_text(encoding="utf-8")
+    ambient_tangent_quadratic_reduction_gate = (
+        repo_root / AMBIENT_TANGENT_QUADRATIC_REDUCTION_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -859,6 +883,25 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     if facade.count(ambient_tangent_orientation_import) != 1:
         raise AssertionError(
             "D8 facade omits the ambient-tangent orientation gate"
+        )
+
+    for declaration in AMBIENT_TANGENT_QUADRATIC_REDUCTION_DECLARATIONS:
+        if declaration not in ambient_tangent_quadratic_reduction_gate:
+            raise AssertionError(
+                f"missing D8 ambient quadratic-reduction declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", ambient_tangent_quadratic_reduction_gate
+    ):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient quadratic-reduction gate"
+        )
+    ambient_quadratic_reduction_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction"
+    )
+    if facade.count(ambient_quadratic_reduction_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the ambient quadratic-reduction gate"
         )
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:

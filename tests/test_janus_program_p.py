@@ -70,6 +70,10 @@ def test_program_p_lorentz_jordan_signature_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_lorentz_jordan_sylvester_regular_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_diagonal_causal_frontier_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
@@ -119,6 +123,10 @@ def test_program_p_d8_normal_comparison_and_z4_root_are_integrated() -> None:
 
 
 def test_program_p_d8_ambient_tangent_orientation_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_d8_ambient_tangent_quadratic_reduction_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 

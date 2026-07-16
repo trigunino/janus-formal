@@ -170,6 +170,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     déterminant et le cocycle d'orientation `ZMod 2`. La réduction quadratique,
     son identification au cocycle normal et le relèvement `Pin/SpinC` restent
     explicitement séparés par des contrats minimaux.
+    - [x] Construire une forme quadratique euclidienne réelle 4D positive et
+      non dégénérée sur le modèle, la transporter par chaque vraie transition
+      tangente et obtenir les isométries quadratiques exactes. La compatibilité
+      globale orthonormale et les lifts `Pin/SpinC` restent des contrats exposés.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
@@ -233,6 +237,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     - [x] Certifier réellement la signature `(3,1)` de toute cette famille par
       un repère nul inversible explicite et une congruence exacte avec
       `diag(-1,1,1,1)` pour chacune des deux métriques.
+    - [x] Prouver la régularité de Sylvester sur toute cette strate : construire
+      l'inverse bilatère fini de `H ↦ XH+HX`, identifier la tangente de racine
+      et prouver son unicité, y compris aux points non diagonalisables.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
