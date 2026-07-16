@@ -193,6 +193,43 @@ private def tangentModelBasis : Basis BasisIndex ℝ CoverCoordinates :=
 
 private abbrev GeneratorIndex := Anchor period hPeriod × BasisIndex
 
+/-- Basis index used by each fixed tangent trivialization in the finite
+generator construction. -/
+abbrev FiniteTangentGeneratorBasisIndex := BasisIndex
+
+/-- Public index of the partition-weighted fixed-local-frame generators. -/
+abbrev FiniteTangentGeneratorIndex :=
+  FiniteTangentGeneratorPatch period hPeriod ×
+    FiniteTangentGeneratorBasisIndex
+
+/-- Partition weight attached to one fixed tangent trivialization. -/
+def finiteTangentGeneratorWeight
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (point : EffectiveQuotient period hPeriod) : ℝ :=
+  tangentPartition period hPeriod patch point
+
+theorem finiteTangentGeneratorWeight_nonneg
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    0 ≤ finiteTangentGeneratorWeight period hPeriod patch point :=
+  (tangentPartition period hPeriod).nonneg patch point
+
+theorem finiteTangentGeneratorWeight_le_one
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    finiteTangentGeneratorWeight period hPeriod patch point ≤ 1 :=
+  (tangentPartition period hPeriod).le_one patch point
+
+/-- The unweighted vector of the fixed local frame attached to a finite
+patch.  It is used quantitatively only on the patch base set. -/
+def finiteTangentGeneratorLocalVector
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (basisIndex : FiniteTangentGeneratorBasisIndex)
+    (point : EffectiveQuotient period hPeriod) :
+    TangentFiber period hPeriod point :=
+  (tangentTrivialization period hPeriod patch.1).localFrame
+    tangentModelBasis basisIndex point
+
 /-- Partition-weighted local-frame vectors, now defined globally on the real
 quotient tangent bundle. -/
 private def generatorSection
@@ -256,10 +293,11 @@ private theorem generatorSection_spans
             (tangentPartition period hPeriod anchor point)⁻¹ hGenerator
       simpa [generatorSection, hAnchorNe] using hScaled
 
-private def generatorIndexEquivFin :
-    GeneratorIndex period hPeriod ≃
-      Fin (Fintype.card (GeneratorIndex period hPeriod)) :=
-  Fintype.equivFin (GeneratorIndex period hPeriod)
+/-- Enumeration used by `finiteSmoothTangentFrame`. -/
+def finiteTangentGeneratorIndexEquivFin :
+    FiniteTangentGeneratorIndex period hPeriod ≃
+      Fin (Fintype.card (FiniteTangentGeneratorIndex period hPeriod)) :=
+  Fintype.equivFin (FiniteTangentGeneratorIndex period hPeriod)
 
 /-- An unconditional finite `C∞` spanning family on the true compact D8
 quotient.  It is obtained from finitely many tangent trivializations, not from
@@ -267,25 +305,39 @@ a global frame. -/
 def finiteSmoothTangentFrame : SmoothD8Frame period hPeriod where
   count := Fintype.card (GeneratorIndex period hPeriod)
   vectorAt point index := generatorSection period hPeriod
-    ((generatorIndexEquivFin period hPeriod).symm index) point
+    ((finiteTangentGeneratorIndexEquivFin period hPeriod).symm index) point
   spansAt point := by
     have hRange :
         Set.range (fun index : Fin (Fintype.card (GeneratorIndex period hPeriod)) =>
           generatorSection period hPeriod
-            ((generatorIndexEquivFin period hPeriod).symm index) point) =
+            ((finiteTangentGeneratorIndexEquivFin period hPeriod).symm index) point) =
           Set.range (fun index : GeneratorIndex period hPeriod =>
             generatorSection period hPeriod index point) := by
       ext vector
       constructor
       · rintro ⟨index, rfl⟩
-        exact ⟨(generatorIndexEquivFin period hPeriod).symm index, rfl⟩
+        exact ⟨(finiteTangentGeneratorIndexEquivFin period hPeriod).symm index, rfl⟩
       · rintro ⟨index, rfl⟩
-        exact ⟨generatorIndexEquivFin period hPeriod index, by simp⟩
+        exact ⟨finiteTangentGeneratorIndexEquivFin period hPeriod index, by simp⟩
     rw [hRange]
     exact generatorSection_spans period hPeriod point
   contMDiff_vector index :=
     generatorSection_contMDiff period hPeriod
-      ((generatorIndexEquivFin period hPeriod).symm index)
+      ((finiteTangentGeneratorIndexEquivFin period hPeriod).symm index)
+
+/-- The implemented frame vector is exactly its partition weight times the
+corresponding fixed-local-frame vector. -/
+@[simp]
+theorem finiteSmoothTangentFrame_vectorAt_generator
+    (point : EffectiveQuotient period hPeriod)
+    (index : FiniteTangentGeneratorIndex period hPeriod) :
+    (finiteSmoothTangentFrame period hPeriod).vectorAt point
+        (finiteTangentGeneratorIndexEquivFin period hPeriod index) =
+      finiteTangentGeneratorWeight period hPeriod index.1 point •
+        finiteTangentGeneratorLocalVector period hPeriod index.1 index.2 point := by
+  simp [finiteSmoothTangentFrame, finiteTangentGeneratorIndexEquivFin,
+    generatorSection, finiteTangentGeneratorWeight,
+    finiteTangentGeneratorLocalVector]
 
 /-- In particular, the finite smooth spanning-family input is inhabited with
 no geometric hypothesis beyond the already proved compact analytic quotient. -/
