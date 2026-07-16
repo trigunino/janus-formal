@@ -106,6 +106,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1UniformEllipticity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1FrameControl4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1ContinuousFrameControl4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1FiniteFramePatchClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAutomaticScalarIntegrability4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionBalance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionHessian4D
@@ -409,6 +410,7 @@ structure ProgramStatus where
   paEffectiveD8StaticScalarUniformGraphEllipticityBridge4DProved : Prop
   paEffectiveD8StaticScalarHolonomicFrameControlBridge4DProved : Prop
   paEffectiveD8StaticScalarContinuousLocalFrameControlBridge4DProved : Prop
+  paEffectiveD8StaticScalarFiniteFramePatchClosure4DProved : Prop
   paEffectiveD8AutomaticScalarIntegrability4DProved : Prop
   paEffectiveD8ScalarRobinJunctionBalance4DProved : Prop
   paEffectiveD8ScalarRobinJunctionHessian4DProved : Prop
@@ -674,6 +676,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8StaticScalarUniformGraphEllipticityBridge4DProved /\
   s.paEffectiveD8StaticScalarHolonomicFrameControlBridge4DProved /\
   s.paEffectiveD8StaticScalarContinuousLocalFrameControlBridge4DProved /\
+  s.paEffectiveD8StaticScalarFiniteFramePatchClosure4DProved /\
   s.paEffectiveD8AutomaticScalarIntegrability4DProved /\
   s.paEffectiveD8ScalarRobinJunctionBalance4DProved /\
   s.paEffectiveD8ScalarRobinJunctionHessian4DProved /\
