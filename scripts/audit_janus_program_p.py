@@ -1428,6 +1428,17 @@ PROGRAM_P_GATES = {
             "theorem smooth_deck_invariant_field_gate",
         ),
     ),
+    "P0EFTJanusMappingTorusSmoothFieldDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothQuotientField",
+            "theorem contMDiff_descend",
+            "def descendSmooth",
+            "def liftSmooth",
+            "def smoothDeckInvariantEquivSmoothQuotient",
+            "def flatSmoothQuotientConfiguration",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1870,6 +1881,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8FlatDiagonalFieldBranch4DProved",
         "paEffectiveD8ContinuousFieldSpacesAndPTMatchedConfiguration4DProved",
         "paMappingTorusSmoothDeckInvariantFields4DProved",
+        "paMappingTorusSmoothQuotientFieldDescent4DProved",
         "paEffectiveD8SmoothQuotientManifoldProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",

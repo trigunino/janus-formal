@@ -248,6 +248,9 @@ par toute évolution admissible.
       réellement lisses et invariants sous tous les iterés de deck, prouver
       leur descente continue et injective au quotient, et exhiber une
       configuration lisse non vide à deux métriques/deux scalaires/racine.
+    - [x] Promouvoir cette descente de `C⁰` à `C∞` sur le vrai quotient lisse,
+      construire le pullback inverse et obtenir une équivalence exacte entre
+      champs lisses quotient et champs lisses deck-invariants du cover.
     - [ ] Construire les espaces Sobolev/lisses, leurs traces et les conditions
       au bord directement sur le quotient `C∞`; le gate lisse actuel est
       intrinsèque au cover et sa descente n'est encore que `C⁰`.
