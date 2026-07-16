@@ -100,6 +100,10 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusAmbientSpinAtlasObstruction.lean"
 )
+AMBIENT_SPIN_SURJECTIVITY_FRONTIER_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientSpinSurjectivityFrontier.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -511,6 +515,23 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem AmbientSpinAtlasLiftChoice.cechKernelDefect_quadruple",
 )
 
+AMBIENT_SPIN_SURJECTIVITY_FRONTIER_DECLARATIONS = (
+    "structure AmbientSpinSO4LiftingFunction",
+    "def AmbientSpinSO4Surjective",
+    "theorem AmbientSpinSO4LiftingFunction.surjective",
+    "def ambientSpinSO4LiftingFunctionOfSurjective",
+    "theorem ambientSpinSO4LiftingFunction_nonempty_iff_surjective",
+    "def AmbientSpinAtlasOriented",
+    "theorem ambientSpinOverlapLift_nonempty_iff_det_eq_one",
+    "def ambientSpinAtlasLiftChoiceOfOriented",
+    "theorem ambientSpinAtlasLiftChoice_nonempty_iff_oriented",
+    "structure AmbientSpinAlgebraicCechCompletion",
+    "def AmbientSpinAlgebraicCechCompletion.toCechTransitionLift",
+    "def ambientSpinAlgebraicCechCompletionOfTransitionLift",
+    "theorem ambientSpinAlgebraicCechCompletion_nonempty_iff",
+    "theorem AmbientSpinAlgebraicCechCompletion.oriented",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -577,6 +598,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "ambientSpinProjectionConstructed",
     "ambientSpinProjectionOrientationProved",
     "ambientSpinAtlasCechObstructionProved",
+    "ambientSpinSurjectivityCechFrontierProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -668,6 +690,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     ambient_spin_atlas_obstruction_gate = (
         repo_root / AMBIENT_SPIN_ATLAS_OBSTRUCTION_GATE
+    ).read_text(encoding="utf-8")
+    ambient_spin_surjectivity_frontier_gate = (
+        repo_root / AMBIENT_SPIN_SURJECTIVITY_FRONTIER_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -1081,6 +1106,25 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     if facade.count(ambient_spin_atlas_obstruction_import) != 1:
         raise AssertionError("D8 facade omits the ambient Spin-atlas gate")
+
+    for declaration in AMBIENT_SPIN_SURJECTIVITY_FRONTIER_DECLARATIONS:
+        if declaration not in ambient_spin_surjectivity_frontier_gate:
+            raise AssertionError(
+                f"missing D8 ambient Spin-surjectivity frontier declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", ambient_spin_surjectivity_frontier_gate
+    ):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient Spin-surjectivity frontier gate"
+        )
+    ambient_spin_surjectivity_frontier_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientSpinSurjectivityFrontier"
+    )
+    if facade.count(ambient_spin_surjectivity_frontier_import) != 1:
+        raise AssertionError(
+            "D8 facade omits the ambient Spin-surjectivity frontier gate"
+        )
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:
         if declaration not in smooth_normal_z4_root_gate:

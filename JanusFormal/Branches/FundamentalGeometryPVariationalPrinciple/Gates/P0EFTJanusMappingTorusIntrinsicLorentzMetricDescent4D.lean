@@ -18,6 +18,7 @@ set_option maxHeartbeats 400000
 noncomputable section
 
 open scoped Manifold ContDiff
+open Bundle
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotient
@@ -263,6 +264,318 @@ theorem intrinsicQuotientTensorValueAtLift_deck_compatible
   exact intrinsicCoverLorentzTensor_deck_isometry period hPeriod
     winding point first second
 
+private abbrev QuotientTensorFiber
+    (point : EffectiveQuotient period hPeriod) :=
+  QuotientTangent period hPeriod point →L[Real]
+    (QuotientTangent period hPeriod point →L[Real] Real)
+
+/-- The lift-defined values glue to an honest dependent tensor field on the
+quotient.  The heterogeneous quotient recursor records the changing tangent
+fiber, while deck compatibility proves independence of the representative. -/
+def intrinsicQuotientTensorField :
+    ∀ point : EffectiveQuotient period hPeriod,
+      QuotientTensorFiber period hPeriod point :=
+  fun quotientPoint =>
+    Quotient.hrecOn quotientPoint
+      (intrinsicQuotientTensorValueAtLift period hPeriod)
+      (fun firstPoint secondPoint hOrbit => by
+        have hProjection :
+            mappingTorusMk (sphereData period hPeriod) firstPoint =
+              mappingTorusMk (sphereData period hPeriod) secondPoint :=
+          Quotient.sound hOrbit
+        obtain ⟨winding, hWinding⟩ :=
+          (mappingTorusMk_eq_iff_exists_vadd
+            (sphereData period hPeriod) firstPoint secondPoint).1 hProjection
+        subst firstPoint
+        clear hOrbit
+        have hTangent :
+            QuotientTangent period hPeriod
+                (mappingTorusMk (sphereData period hPeriod)
+                  (winding +ᵥ secondPoint)) =
+              QuotientTangent period hPeriod
+                (mappingTorusMk (sphereData period hPeriod) secondPoint) :=
+          congrArg (QuotientTangent period hPeriod) hProjection
+        cases hTangent
+        apply heq_of_eq
+        apply ContinuousLinearMap.ext
+        intro firstVector
+        apply ContinuousLinearMap.ext
+        intro secondVector
+        let derivative := quotientProjectionDerivativeEquiv period hPeriod secondPoint
+        obtain ⟨firstPreimage, rfl⟩ := derivative.surjective firstVector
+        obtain ⟨secondPreimage, rfl⟩ := derivative.surjective secondVector
+        have hDerivative (vector : CoverTangent period hPeriod secondPoint) :
+            derivative vector =
+              mfderiv coverModelWithCorners coverModelWithCorners
+                (mappingTorusMk (sphereData period hPeriod)) secondPoint vector := by
+          exact DFunLike.congr_fun
+            (quotientProjectionDerivativeEquiv_coe period hPeriod secondPoint) vector
+        have hNatural (vector : CoverTangent period hPeriod secondPoint) :
+            mfderiv coverModelWithCorners coverModelWithCorners
+                (mappingTorusMk (sphereData period hPeriod))
+                (winding +ᵥ secondPoint)
+                (mfderiv coverModelWithCorners coverModelWithCorners
+                  (winding +ᵥ ·) secondPoint vector) =
+              mfderiv coverModelWithCorners coverModelWithCorners
+                (mappingTorusMk (sphereData period hPeriod)) secondPoint vector := by
+          have hProjectionAt : MDifferentiableAt coverModelWithCorners
+              coverModelWithCorners
+              (mappingTorusMk (sphereData period hPeriod))
+              (winding +ᵥ secondPoint) :=
+            (reflectedSphere_projection_isLocalDiffeomorph period hPeriod).contMDiff
+              |>.mdifferentiableAt (by simp)
+          have hDeckAt : MDifferentiableAt coverModelWithCorners
+              coverModelWithCorners (winding +ᵥ ·) secondPoint :=
+            (reflectedSphereCover_deck_contMDiff period hPeriod winding)
+              |>.mdifferentiableAt (by simp)
+          have hComposite := mfderiv_comp secondPoint hProjectionAt hDeckAt
+          have hMap :
+              (mappingTorusMk (sphereData period hPeriod)) ∘ (winding +ᵥ ·) =
+                mappingTorusMk (sphereData period hPeriod) := by
+            funext point
+            exact (mappingTorusMk_eq_iff_exists_vadd
+              (sphereData period hPeriod) _ _).2 ⟨winding, rfl⟩
+          calc
+            _ = mfderiv coverModelWithCorners coverModelWithCorners
+                  ((mappingTorusMk (sphereData period hPeriod)) ∘
+                    (winding +ᵥ ·)) secondPoint vector := by
+              rw [hComposite]
+              rfl
+            _ = _ := by rw [hMap]
+        have hCompatibility :=
+          intrinsicQuotientTensorValueAtLift_deck_compatible period hPeriod
+            winding secondPoint firstPreimage secondPreimage
+        rw [hNatural, hNatural] at hCompatibility
+        rw [hDerivative, hDerivative]
+        exact hCompatibility)
+
+@[simp]
+theorem intrinsicQuotientTensorField_mk
+    (point : EffectiveCover period hPeriod) :
+    intrinsicQuotientTensorField period hPeriod
+        (mappingTorusMk (sphereData period hPeriod) point) =
+      intrinsicQuotientTensorValueAtLift period hPeriod point :=
+  rfl
+
+/-- Pullback of the glued dependent field is exactly the intrinsic cover
+tensor. -/
+theorem intrinsicQuotientTensorField_pullback
+    (point : EffectiveCover period hPeriod)
+    (first second : CoverTangent period hPeriod point) :
+    intrinsicQuotientTensorField period hPeriod
+        (mappingTorusMk (sphereData period hPeriod) point)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point first)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point second) =
+      intrinsicCoverLorentzTensor period hPeriod point first second := by
+  rw [intrinsicQuotientTensorField_mk,
+    intrinsicQuotientTensorValueAtLift_pullback]
+
+private abbrev CoverTensorFiber
+    (point : EffectiveCover period hPeriod) :=
+  CoverTangent period hPeriod point →L[Real]
+    (CoverTangent period hPeriod point →L[Real] Real)
+
+private abbrev ModelCovector := CoverCoordinates →L[Real] Real
+
+private abbrev ModelTensor := CoverCoordinates →L[Real] ModelCovector
+
+/-- Pullback of a model tensor through a model linear map. -/
+private def pullbackModelTensor
+    (derivative : CoverCoordinates →L[Real] CoverCoordinates)
+    (tensor : ModelTensor) : ModelTensor :=
+  (derivative.precomp Real).comp (tensor.comp derivative)
+
+/-- Local expression of the quotient tensor obtained by pulling the cover
+tensor back through a local inverse of the quotient projection. -/
+private def localInversePullbackTensor
+    (localInverse : EffectiveQuotient period hPeriod →
+      EffectiveCover period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    QuotientTensorFiber period hPeriod point :=
+  let derivative := mfderiv coverModelWithCorners coverModelWithCorners
+    localInverse point
+  (derivative.precomp Real).comp
+    ((intrinsicCoverLorentzTensor period hPeriod (localInverse point)).comp
+      derivative)
+
+/-- Pulling a smooth cover tensor through a smooth local inverse gives a
+smooth quotient-tensor section at the base point. -/
+private theorem localInversePullbackTensor_contMDiffAt
+    (localInverse : EffectiveQuotient period hPeriod →
+      EffectiveCover period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (hLocalInverse : ContMDiffAt coverModelWithCorners
+      coverModelWithCorners ∞ localInverse point) :
+    ContMDiffAt coverModelWithCorners
+      (coverModelWithCorners.prod 𝓘(Real, ModelTensor)) ∞
+      (fun current => Bundle.TotalSpace.mk' ModelTensor current
+        (localInversePullbackTensor period hPeriod localInverse current)) point := by
+  rw [contMDiffAt_section]
+  have hCoverCoordinates :=
+    (intrinsicCoverLorentzTensor period hPeriod).contMDiff
+      (localInverse point)
+  rw [contMDiffAt_section] at hCoverCoordinates
+  have hCoverCoordinates := hCoverCoordinates.comp point hLocalInverse
+  have hDerivative : ContMDiffAt coverModelWithCorners
+      𝓘(Real, CoverCoordinates →L[Real] CoverCoordinates) ∞
+      (inTangentCoordinates coverModelWithCorners coverModelWithCorners
+        id localInverse
+        (mfderiv coverModelWithCorners coverModelWithCorners localInverse)
+        point) point :=
+    hLocalInverse.mfderiv_const (m := ∞) (n := ∞) (by simp)
+  have hPullback : ContMDiffAt coverModelWithCorners
+      𝓘(Real, ModelTensor) ∞
+      (fun current => pullbackModelTensor
+        (inTangentCoordinates coverModelWithCorners coverModelWithCorners
+          id localInverse
+          (mfderiv coverModelWithCorners coverModelWithCorners localInverse)
+          point current)
+        ((trivializationAt ModelTensor (CoverTensorFiber period hPeriod)
+          (localInverse point)
+          ⟨localInverse current,
+            intrinsicCoverLorentzTensor period hPeriod
+              (localInverse current)⟩).2)) point := by
+    exact (hDerivative.clm_precomp (F₃ := Real)).clm_comp
+      (hCoverCoordinates.clm_comp hDerivative)
+  apply hPullback.congr_of_eventuallyEq
+  have hQuotientBase :
+      (trivializationAt CoverCoordinates
+        (QuotientTangent period hPeriod) point).baseSet ∈ nhds point :=
+    (trivializationAt CoverCoordinates
+      (QuotientTangent period hPeriod) point).open_baseSet.mem_nhds
+        (FiberBundle.mem_baseSet_trivializationAt' point)
+  have hCoverBase : localInverse ⁻¹'
+      (trivializationAt CoverCoordinates
+        (CoverTangent period hPeriod) (localInverse point)).baseSet ∈ nhds point :=
+    hLocalInverse.continuousAt.preimage_mem_nhds
+      ((trivializationAt CoverCoordinates
+        (CoverTangent period hPeriod) (localInverse point)).open_baseSet.mem_nhds
+          (FiberBundle.mem_baseSet_trivializationAt' (localInverse point)))
+  filter_upwards [hQuotientBase, hCoverBase] with current hCurrent hLocalCurrent
+  have hCurrent' : current ∈ (chartAt CoverModel point).source := by
+    simpa only [QuotientTangent, TangentBundle.trivializationAt_baseSet] using
+      hCurrent
+  change localInverse current ∈
+    (trivializationAt CoverCoordinates
+      (CoverTangent period hPeriod) (localInverse point)).baseSet at hLocalCurrent
+  have hLocalCurrent' : localInverse current ∈
+      (chartAt CoverModel (localInverse point)).source := by
+    simpa only [CoverTangent, TangentBundle.trivializationAt_baseSet] using
+      hLocalCurrent
+  apply ContinuousLinearMap.ext
+  intro first
+  apply ContinuousLinearMap.ext
+  intro second
+  simp [localInversePullbackTensor, pullbackModelTensor,
+    inTangentCoordinates, hom_trivializationAt_apply,
+    ContinuousLinearMap.inCoordinates,
+    Trivialization.linearMapAt_apply, Trivialization.symmL_apply,
+    TangentBundle.trivializationAt_baseSet,
+    Bundle.Trivial.trivialization_baseSet, hom_trivializationAt_baseSet,
+    hCurrent', hLocalCurrent']
+
+/-- On the source of a quotient local inverse, its pullback expression is
+the lift-independent quotient field. -/
+private theorem localInversePullbackTensor_eq_intrinsicQuotientTensorField
+    (anchor : EffectiveCover period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (hPoint : point ∈
+      (reflectedSphere_projection_isLocalDiffeomorph period hPeriod anchor).localInverse.source) :
+    localInversePullbackTensor period hPeriod
+        (reflectedSphere_projection_isLocalDiffeomorph period hPeriod anchor).localInverse point =
+      intrinsicQuotientTensorField period hPeriod point := by
+  let hAt := reflectedSphere_projection_isLocalDiffeomorph
+    period hPeriod anchor
+  let localInverse := hAt.localInverse
+  let projection := mappingTorusMk (sphereData period hPeriod)
+  let fieldModel : EffectiveQuotient period hPeriod → ModelTensor :=
+    fun current => intrinsicQuotientTensorField period hPeriod current
+  have hRight : projection (localInverse point) = point :=
+    hAt.localInverse_right_inv hPoint
+  have hField :
+      fieldModel (projection (localInverse point)) = fieldModel point :=
+    congrArg fieldModel hRight
+  change localInversePullbackTensor period hPeriod localInverse point =
+    fieldModel point
+  rw [← hField]
+  change localInversePullbackTensor period hPeriod localInverse point =
+    intrinsicQuotientTensorField period hPeriod
+      (projection (localInverse point))
+  rw [intrinsicQuotientTensorField_mk]
+  have hLocalSmoothAt : ContMDiffAt coverModelWithCorners
+      coverModelWithCorners ∞ localInverse point :=
+    (hAt.localInverse.contMDiffOn_toFun.contMDiffAt
+      (hAt.localInverse.open_source.mem_nhds hPoint)).of_le (by simp)
+  have hLocalAt : MDifferentiableAt coverModelWithCorners
+      coverModelWithCorners localInverse point :=
+    hLocalSmoothAt.mdifferentiableAt (by simp)
+  have hProjectionAt : MDifferentiableAt coverModelWithCorners
+      coverModelWithCorners projection (localInverse point) :=
+    (reflectedSphere_projection_isLocalDiffeomorph period hPeriod).contMDiff
+      |>.mdifferentiableAt (by simp)
+  have hEventually : projection ∘ localInverse =ᶠ[nhds point] id :=
+    Filter.eventually_of_mem
+      (hAt.localInverse.open_source.mem_nhds hPoint)
+      hAt.localInverse_eqOn_right
+  have hInverse (vector : QuotientTangent period hPeriod point) :
+      mfderiv coverModelWithCorners coverModelWithCorners projection
+          (localInverse point)
+          (mfderiv coverModelWithCorners coverModelWithCorners
+            localInverse point vector) = vector := by
+    have hMaps :
+        (mfderiv coverModelWithCorners coverModelWithCorners projection
+          (localInverse point)).comp
+            (mfderiv coverModelWithCorners coverModelWithCorners
+              localInverse point) =
+          ContinuousLinearMap.id Real
+            (QuotientTangent period hPeriod point) := by
+      rw [← mfderiv_id, ← hEventually.mfderiv_eq]
+      exact (mfderiv_comp point hProjectionAt hLocalAt).symm
+    exact DFunLike.congr_fun hMaps vector
+  apply ContinuousLinearMap.ext
+  intro first
+  apply ContinuousLinearMap.ext
+  intro second
+  change intrinsicCoverLorentzTensor period hPeriod (localInverse point)
+      (mfderiv coverModelWithCorners coverModelWithCorners
+        localInverse point first)
+      (mfderiv coverModelWithCorners coverModelWithCorners
+        localInverse point second) = _
+  rw [← intrinsicQuotientTensorValueAtLift_pullback period hPeriod
+    (localInverse point)
+    (mfderiv coverModelWithCorners coverModelWithCorners
+      localInverse point first)
+    (mfderiv coverModelWithCorners coverModelWithCorners
+      localInverse point second), hInverse, hInverse]
+  rfl
+
+/-- The lift-independent quotient field is a genuine globally smooth
+covariant two-tensor section. -/
+def intrinsicQuotientTensorSection :
+    SmoothCovariantTwoTensor period hPeriod where
+  toFun := intrinsicQuotientTensorField period hPeriod
+  contMDiff_toFun := by
+    intro quotientPoint
+    obtain ⟨anchor, rfl⟩ :=
+      mappingTorusMk_surjective (sphereData period hPeriod) quotientPoint
+    let hAt := reflectedSphere_projection_isLocalDiffeomorph
+      period hPeriod anchor
+    have hLocalInverse : ContMDiffAt coverModelWithCorners
+        coverModelWithCorners ∞ hAt.localInverse
+        (mappingTorusMk (sphereData period hPeriod) anchor) :=
+      hAt.localInverse_contMDiffAt.of_le (by simp)
+    have hLocalSmooth :=
+      localInversePullbackTensor_contMDiffAt period hPeriod
+        hAt.localInverse
+        (mappingTorusMk (sphereData period hPeriod) anchor) hLocalInverse
+    apply hLocalSmooth.congr_of_eventuallyEq
+    filter_upwards [hAt.localInverse.open_source.mem_nhds
+      hAt.localInverse_mem_source] with point hPoint
+    rw [localInversePullbackTensor_eq_intrinsicQuotientTensorField
+      period hPeriod anchor point hPoint]
+
 /-- Exact remaining dependent-section descent datum.  Its pullback equation
 uses the true derivative of the quotient projection. -/
 structure IntrinsicTensorQuotientDescent where
@@ -275,6 +588,12 @@ structure IntrinsicTensorQuotientDescent where
         (mfderiv coverModelWithCorners coverModelWithCorners
           (mappingTorusMk (sphereData period hPeriod)) point second) =
       intrinsicCoverLorentzTensor period hPeriod point first second
+
+/-- The canonical smooth quotient descent of the intrinsic cover tensor. -/
+def intrinsicTensorQuotientDescent :
+    IntrinsicTensorQuotientDescent period hPeriod where
+  tensor := intrinsicQuotientTensorSection period hPeriod
+  pullback := intrinsicQuotientTensorField_pullback period hPeriod
 
 /-- A descended intrinsic tensor is unique because the quotient projection
 and each of its tangent derivatives are surjective. -/
@@ -330,6 +649,40 @@ structure IntrinsicCoverLorentzCertificate where
       (first second : CoverTangent period hPeriod point),
     intrinsicCoverLorentzTensor period hPeriod point first second =
       modelMinkowskiPair (frame point first) (frame point second)
+
+/-- Any pointwise Lorentz certificate on the cover transports through the
+quotient-projection derivative to the canonical descended tensor. -/
+theorem IntrinsicCoverLorentzCertificate.quotient_lorentzian
+    (certificate : IntrinsicCoverLorentzCertificate period hPeriod) :
+    IsEverywhereLorentzian period hPeriod
+      (intrinsicTensorQuotientDescent period hPeriod).toSymmetricTensor := by
+  intro quotientPoint
+  obtain ⟨point, rfl⟩ :=
+    mappingTorusMk_surjective (sphereData period hPeriod) quotientPoint
+  let derivative := quotientProjectionDerivativeEquiv period hPeriod point
+  refine ⟨derivative.symm.trans (certificate.frame point), ?_⟩
+  intro firstVector secondVector
+  obtain ⟨firstPreimage, rfl⟩ := derivative.surjective firstVector
+  obtain ⟨secondPreimage, rfl⟩ := derivative.surjective secondVector
+  have hDerivative (vector : CoverTangent period hPeriod point) :
+      derivative vector =
+        mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point vector := by
+    exact DFunLike.congr_fun
+      (quotientProjectionDerivativeEquiv_coe period hPeriod point) vector
+  change (intrinsicTensorQuotientDescent period hPeriod).tensor
+      (mappingTorusMk (sphereData period hPeriod) point)
+      (derivative firstPreimage) (derivative secondPreimage) = _
+  calc
+    _ = intrinsicCoverLorentzTensor period hPeriod point
+        firstPreimage secondPreimage := by
+      rw [hDerivative, hDerivative]
+      exact (intrinsicTensorQuotientDescent period hPeriod).pullback
+        point firstPreimage secondPreimage
+    _ = modelMinkowskiPair (certificate.frame point firstPreimage)
+        (certificate.frame point secondPreimage) :=
+      certificate.tensor_eq_model point firstPreimage secondPreimage
+    _ = _ := by simp [derivative]
 
 end
 

@@ -194,6 +194,12 @@ correspondance algébrique des coefficients, puis asymptotique effective.
               déterminant vaut autre chose.
           - [ ] Prouver la surjectivité sur `SO(4)` par décomposition paire en
             réflexions non isotropes, puis construire les lifts de l'atlas.
+            - [x] Isoler le datum exact de relèvement `SO(4) → Spin(4)` et
+              prouver son équivalence à la surjectivité ; sous ce datum,
+              caractériser point par point la liftabilité par `det = +1` et
+              l'existence d'un choix atlas-wide par l'orientation de toutes
+              les transitions. La construction Clifford de ce datum et sa
+              régularité restent ouvertes.
           - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
             - [x] Sur chaque triple overlap fixé et pour trois lifts arbitraires,
               annuler exactement le défaut par la correction noyau canonique
@@ -216,6 +222,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
                     cocycle et la loi de Čech sur les quadruples overlaps. Il
                     reste à construire et régulariser ce choix puis à trivialiser
                     globalement ses défauts.
+                  - [x] Empaqueter exactement normalisation et trivialité des
+                    défauts noyau en une complétion Čech algébrique, puis
+                    prouver son équivalence à un vrai lift de transitions et
+                    qu'elle force l'orientation. Aucune continuité/lissité des
+                    lifts choisis n'est déduite.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
@@ -328,6 +339,12 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
         puis construire un sélecteur algébrique global indépendant de toute
         présentation sur le locus diagonalisable positif. Sa continuité et sa
         régularité restent séparées.
+        - [x] Caractériser exactement la continuité du sélecteur global par
+          l'accord local avec les branches IFT, prouver l'indépendance de
+          présentation de l'inverse de Sylvester et obtenir la dérivée de
+          Fréchet restreinte dès que cette continuité est fournie. Le seul
+          input analytique restant est la stabilité spectrale locale qui
+          implique cet accord.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
@@ -439,13 +456,12 @@ par toute évolution admissible.
         Lie avec lui-même est identiquement nul, donc la formule non graduée
         `s c = -1/2 [c,c]` ne produit aucun terme quadratique non trivial. Une
         extension à coefficients impairs/gradués est une obligation réelle.
-      - [x] Construire un modèle matriciel fidèle de deux coefficients impairs
-        avec carrés nuls et anticommutation exacte, puis prouver que le
-        coefficient de crochet propre gradué et son facteur BRST `-1/2` sont
-        non nuls, tout en ayant carré nul dans ce modèle impair. Le ghost
-        modèle porte aussi un opérateur linéaire non nul de multiplication
-        impaire dont le carré est exactement zéro. Le couplage au ghost tangent
-        global, sa nilpotence différentielle complète et BV restent ouverts.
+      - [x] Construire un témoin matriciel des relations attendues de deux
+        coefficients formellement impairs (carrés nuls et anticommutation),
+        puis prouver que le coefficient de crochet et son facteur BRST `-1/2`
+        sont non nuls et de carré nul dans ce témoin. Ce modèle n'est pas une
+        algèbre `Z₂` formelle avec règle de Koszul ; ce grading, le couplage au
+        ghost tangent global, la nilpotence complète et BV restent ouverts.
       - [x] Descendre le ghost analytique au niveau `C∞`, fermer les vrais
         champs tangents globaux sous le crochet de Lie intrinsèque et prouver
         antisymétrie, bilinéarité et Jacobi. Le couplage gradué et la
@@ -457,8 +473,8 @@ par toute évolution admissible.
             l'identité de Jacobi du crochet lisse de ghosts.
           - [x] Construire sur les vrais scalaires `C∞` l'action bilinéaire des
             ghosts tangents, le différentiel de Chevalley--Eilenberg de degré
-            zéro, puis son tensorisé avec le témoin matriciel de coefficients
-            impairs, son action sur le terme quadratique et l'entrelacement des
+            zéro, puis son tensorisé avec le témoin matriciel de ces relations,
+            son action sur le terme quadratique et l'entrelacement des
             différentiels nilpotents. Ce tensorisé n'est pas encore un module
             `Z₂` avec règle de Koszul.
           - [x] Pour l'algèbre de Lie tangentielle ordinaire, prouver
@@ -466,6 +482,27 @@ par toute évolution admissible.
             tangentielle finie couvrante ; construire `d_CE¹` et fermer
             `d_CE¹ ∘ d_CE⁰ = 0` sur les vrais scalaires `C∞`. Le BRST non
             linéaire avec grading/Koszul et BV restent ouverts.
+            - [x] Instancier ces vrais ghosts et scalaires comme algèbre de Lie
+              et module de Lie Mathlib, identifier le `d_CE¹` construit au
+              différentiel alterné standard et fermer aussi
+              `d_CE² ∘ d_CE¹ = 0` pour toute 1-cochaîne. Ce complexe reste
+              ordinaire : il ne fournit ni grading de Koszul ni antifields BV.
+            - [x] Remplacer le témoin matriciel par une vraie algèbre extérieure
+              graduée par `ZMod 2`, prouver par l'API Clifford que les
+              générateurs sont impairs, non nuls, nilpotents et
+              anticommutatifs, puis tensoriser le vrai crochet tangent D8 avec
+              ses signes de Koszul. Le terme pur-ghost
+              `s c = -1/2[c,c]` est explicite et son obstruction cubique de
+              Jacobi est nulle. Le prolongement en dérivation sur tous les
+              champs et le complexe BV restent ouverts.
+              - [x] Sur la plus petite superalgèbre scalaire carrée-nulle
+                réellement engendrée, construire un différentiel `Z₂` impair
+                global avec involution de parité, règle de Leibniz de Koszul et
+                carré nul ; relier son générateur à l'algèbre extérieure, puis
+                fermer le carré BRST du scalaire à deux ghosts par l'identité
+                `[L_X,L_Y]=L_[X,Y]` et l'obstruction cubique pure-ghost. Le
+                prolongement aux trois générateurs requiert encore une
+                sous-algèbre de ghosts D8 fermée avec constantes de structure.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -555,6 +592,13 @@ par toute évolution admissible.
             compacité une borne globale explicite, le contrôle quadratique et
             toute la domination d'énergie. Seule cette continuité localisée
             reste à extraire de l'API `chartAt` variable.
+            - [x] Prouver sans hypothèse que les coordonnées dans chaque
+              trivialisation fixe sont `C∞`, que tous les changements entre
+              deux centres fixes sont continus, et identifier exactement le
+              coefficient brut à la diagonale variable
+              `p ↦ tangentCoordChange anchor p p`. La continuité de cette
+              diagonale à second centre variable est désormais l'unique input
+              de ce sous-verrou et implique directement la domination.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
@@ -605,24 +649,31 @@ par toute évolution admissible.
         quotient sont typés explicitement mais restent à décharger.
         - [x] Construire la vraie section tensorielle intrinsèque lisse sur le
           cover depuis `mfderiv` de l'immersion, prouver la naturalité exacte
-          sous la dérivée deck et son invariance lorentzienne. La descente de
-          cette section dépendante vers le quotient reste ouverte.
+          sous la dérivée deck et son invariance lorentzienne. Sa descente
+          tensorielle lisse quotient est maintenant fermée ; la certification
+          intrinsèque de signature lorentzienne reste séparée.
           - [x] Étendre l'invariance au vrai `mfderiv` de tout enroulement,
             construire l'équivalence tangentielle de la projection quotient,
             isoler les données exactes de descente, prouver leur unicité et la
             symétrie automatique du tenseur quotient.
-          - [ ] Construire `IntrinsicTensorQuotientDescent` par les inverses
-            locaux de `mappingTorusMk`; Mathlib n'offre pas de descente générique
-            pour une `ContMDiffSection` bilinéaire dépendante.
+          - [x] Construire `IntrinsicTensorQuotientDescent` par les inverses
+            locaux de `mappingTorusMk`, malgré l'absence de descente générique
+            Mathlib pour une `ContMDiffSection` bilinéaire dépendante.
             - [x] Construire dans chaque fibre quotient la valeur canonique via
               l'inverse de la vraie dérivée de projection, prouver son pullback
-              exact et son indépendance sous tout changement de lift par deck.
-              Seul l'assemblage de ces valeurs en section `C∞` dépendante reste
-              à formaliser.
+              exact et son indépendance sous tout changement de lift par deck ;
+              assembler ensuite ces valeurs par `Quotient.hrecOn`, prouver leur
+              expression lisse dans chaque inverse local et produire la vraie
+              section `C∞` globale, canonique et unique.
           - [ ] Construire `IntrinsicCoverLorentzCertificate`, puis transporter
             musical, non-dégénérescence et signature via
             `quotientProjectionDerivativeEquiv` afin d'obtenir la vraie
             `SmoothGeneralLorentzMetric` quotient.
+            - [x] Prouver déjà que tout certificat cover fourni se transporte
+              canoniquement par l'équivalence différentielle de projection en
+              une preuve `IsEverywhereLorentzian` du tenseur quotient descendu.
+              La construction intrinsèque du certificat cover reste l'unique
+              entrée de signature manquante.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
@@ -857,6 +908,22 @@ non contrôlé et produit les conditions de jonction annoncées.
       son annulation par l'annihilation de l'image de `R`. Le pont identifiant
       `E` à la dérivée d'une action invariante reste à établir avant d'appeler
       cette condition une identité de Noether dynamique.
+      - [x] Sur l'espace affine de variations matière + `U(1)^2` à background
+        fixé, identifier `E` à la vraie dérivée le long de chaque droite et
+        prouver que l'invariance finie par toutes les translations engendrées
+        équivaut à `B(dS)=0` en tout point. L'action Janus non linéaire sur le
+        paquet complet métrique/LL reste à construire.
+      - [x] Ajouter les deux variations métriques intrinsèques comme vraies
+        sections lisses symétriques issues d'un flot de pullback, puis les
+        combiner aux blocs matière et `U(1)^2` dans un unique générateur
+        linéaire et son opérateur `B`. L'intégration ghost → flot complet et la
+        dépendance linéaire du flot sont isolées dans un contrat explicite ;
+        elles ne sont pas encore construites sans hypothèse.
+        - [x] Identifier ensuite le covecteur combiné à la vraie dérivée
+          linewise d'une action affine à background fixé et prouver que
+          l'invariance finie par toutes les translations engendrées équivaut à
+          `B(dS)=0` en tout point. Le contrat d'intégration des ghosts et
+          l'action Janus non linéaire complète restent explicitement ouverts.
   - [x] Dans le modèle fonctionnel diagonal abstrait déjà formalisé, restreindre
     le générateur par toute reparamétrisation linéaire continue et prouver la
     naturalité exacte de la contrainte adjointe ainsi que la préservation de
