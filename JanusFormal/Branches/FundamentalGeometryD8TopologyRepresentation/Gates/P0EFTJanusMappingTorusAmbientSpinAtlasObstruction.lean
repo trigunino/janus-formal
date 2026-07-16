@@ -409,6 +409,26 @@ theorem ambientSpinKernelConjugationEquiv_eq_one_iff
     simpa [ambientSpinKernelConjugationEquiv] using congrArg Subtype.val
       ((ambientSpinKernelConjugate_eq_iff_commute spin kernel).2 (hCentral kernel))
 
+/-- The full conjugation representation is trivial exactly when every ambient
+Spin element commutes with every element of the projection kernel. -/
+theorem ambientSpinKernelConjugationRepresentation_eq_one_iff :
+    ambientSpinKernelConjugationRepresentation = 1 ↔
+      ∀ (spin : AmbientCoordinateSpinGroup)
+        (kernel : MonoidHom.ker ambientSpinProjection),
+        Commute spin kernel.1 := by
+  constructor
+  · intro hTrivial spin
+    apply (ambientSpinKernelConjugationEquiv_eq_one_iff spin).1
+    change ambientSpinKernelConjugationRepresentation spin = 1
+    rw [hTrivial]
+    rfl
+  · intro hCentral
+    ext spin kernel
+    simpa [ambientSpinKernelConjugationRepresentation,
+      ambientSpinKernelConjugationEquiv] using congrArg Subtype.val
+      ((ambientSpinKernelConjugate_eq_iff_commute spin kernel).2
+        (hCentral spin kernel))
+
 /-- A common change of local Spin lift conjugates, rather than changes
 arbitrarily, the kernel-valued difference of two lifts. -/
 theorem ambientSpinOverlapLiftDifference_common_kernelTranslate

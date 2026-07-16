@@ -816,6 +816,8 @@ Hessien physique réellement descendu.
       élément Spin est trivial si et seulement si cet élément commute avec
       tout le noyau. La centralité dimensionnelle devient ainsi l'unique verrou
       Clifford restant de cette étape.
+    - [x] Étendre ce critère à la représentation entière : elle est triviale
+      si et seulement si tout élément Spin commute avec tout élément du noyau.
 - [ ] Construire les bundles vectoriels et principaux Janus globaux.
 - [ ] Prouver l'accord des classes caractéristiques Spin/déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets

@@ -472,6 +472,7 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinKernelConjugationRepresentation_apply",
     "theorem ambientSpinKernelConjugate_eq_iff_commute",
     "theorem ambientSpinKernelConjugationEquiv_eq_one_iff",
+    "theorem ambientSpinKernelConjugationRepresentation_eq_one_iff",
     "theorem ambientSpinOverlapLiftDifference_common_kernelTranslate",
     "theorem ambientSpinOverlapLiftDifference_transitive",
     "theorem ambientSpinCechDefect_comp_eq_one",
