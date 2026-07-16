@@ -255,7 +255,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
         la racine par similarité reste inchangée.
       - [x] Comparer deux diagonalisation du même opérateur ayant le même
         spectre positif ordonné et prouver que leurs racines par similarité
-        coïncident exactement. Les permutations et le recollement restent ouverts.
+        coïncident exactement. Le recollement global reste ouvert.
+      - [x] Prouver la loi de conjugaison de la racine diagonale par toute
+        matrice de permutation et l'invariance de la racine par similarité sous
+        permutation cohérente de la base, de son inverse et du spectre.
   - [x] Construire une vraie strate de Jordan lorentzienne en dimension quatre,
     issue de deux métriques symétriques indépendantes : la racine réelle
     explicite se carre exactement au produit relatif et, pour paramètre non

@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzRoot4D
+import Mathlib.LinearAlgebra.Matrix.Permutation
 
 /-!
 # Positive-spectrum diagonalizable relative roots in dimension four
@@ -275,6 +276,64 @@ theorem positiveSimilarityRoot_eq_of_same_target_and_ordered_spectrum
     _ = second.eigenbasis * positiveSimilarityDiagonalRoot second *
           second.eigenbasisInv := by rw [hDiagonalRoot]
     _ = positiveSimilarityRoot second := rfl
+
+/-- Conjugating the selected positive diagonal root by a permutation matrix
+reindexes its positive spectrum by that permutation. -/
+theorem positiveSimilarityDiagonalRoot_permutation_conjugation
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (permutation : Equiv.Perm (Fin 4)) :
+    permutation.permMatrix Real * positiveSimilarityDiagonalRoot data *
+        (permutation⁻¹).permMatrix Real =
+      Matrix.diagonal
+        (fun index => positiveSimilarityRootSpectrum data (permutation index)) := by
+  classical
+  ext first second
+  by_cases hIndices : first = second
+  · subst second
+    simp [positiveSimilarityDiagonalRoot, Matrix.mul_apply, Matrix.diagonal,
+      Equiv.symm_apply_eq]
+  · simp [positiveSimilarityDiagonalRoot, Matrix.mul_apply, Matrix.diagonal,
+      hIndices, Equiv.symm_apply_eq]
+
+/-- Consistently permuting the eigenbasis columns, inverse rows and positive
+spectrum leaves the selected similarity root unchanged. -/
+theorem positiveSimilarityRoot_invariant_under_spectrum_permutation
+    (first second : PositiveDiagonalizableRelativeMatrix)
+    (permutation : Equiv.Perm (Fin 4))
+    (hBasis : second.eigenbasis =
+      first.eigenbasis * (permutation⁻¹).permMatrix Real)
+    (hInverse : second.eigenbasisInv =
+      permutation.permMatrix Real * first.eigenbasisInv)
+    (hSpectrum : second.eigenvalue = first.eigenvalue ∘ permutation) :
+    positiveSimilarityRoot first = positiveSimilarityRoot second := by
+  unfold positiveSimilarityRoot
+  rw [hBasis, hInverse]
+  have hRoot : positiveSimilarityDiagonalRoot second =
+      Matrix.diagonal
+        (fun index => positiveSimilarityRootSpectrum first (permutation index)) := by
+    unfold positiveSimilarityDiagonalRoot
+    congr 1
+    funext index
+    simp [positiveSimilarityRootSpectrum, hSpectrum]
+  rw [hRoot, ← positiveSimilarityDiagonalRoot_permutation_conjugation
+    first permutation]
+  have hPermutationInverse :
+      (permutation⁻¹).permMatrix Real * permutation.permMatrix Real = 1 := by
+    rw [← Matrix.permMatrix_mul]
+    simp
+  calc
+    first.eigenbasis * positiveSimilarityDiagonalRoot first * first.eigenbasisInv =
+        first.eigenbasis *
+          ((permutation⁻¹).permMatrix Real * permutation.permMatrix Real) *
+          positiveSimilarityDiagonalRoot first *
+          ((permutation⁻¹).permMatrix Real * permutation.permMatrix Real) *
+          first.eigenbasisInv := by
+            rw [hPermutationInverse]
+            simp
+    _ = first.eigenbasis * (permutation⁻¹).permMatrix Real *
+        (permutation.permMatrix Real * positiveSimilarityDiagonalRoot first *
+          (permutation⁻¹).permMatrix Real) *
+        (permutation.permMatrix Real * first.eigenbasisInv) := by noncomm_ring
 
 theorem positiveSimilarityRoot_square
     (data : PositiveDiagonalizableRelativeMatrix) :
