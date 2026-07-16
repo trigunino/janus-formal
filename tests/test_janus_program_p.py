@@ -43,6 +43,10 @@ def test_program_p_effective_d8_continuous_field_spaces_are_integrated() -> None
     assert_program_p_gate_integrity()
 
 
+def test_program_p_smooth_deck_invariant_fields_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d10_finite_mode_determinant_line_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

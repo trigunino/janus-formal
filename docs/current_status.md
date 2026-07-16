@@ -255,6 +255,12 @@ The exhaustive remaining-work checklist is
   throat inclusion and root-square equation. This is topological only: it
   supplies no smooth manifold, Sobolev spaces, boundary conditions, global
   root map, stationarity or stability.
+  Independently, the new analytic cover atlas carries a genuine space of
+  smooth finite-dimensional coefficient fields invariant under every deck
+  iterate. Their descent to the same effective quotient is continuous and
+  injective, and a constant two-metric/two-scalar/identity-root coefficient
+  configuration inhabits it. Smoothness is currently defined upstairs; no
+  quotient Sobolev completion, traces, Lorentz constraint or PDE is claimed.
   More strongly, explicit quadratic and quartically deformed two-variable
   extensions have the same proportional branch, the same genuine longitudinal
   derivatives and the same complete transverse two-jet, with Hessian
