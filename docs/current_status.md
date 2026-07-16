@@ -219,21 +219,16 @@ J(T,rho) = (S3 x R)/((x,u) ~ (rho(x),u+T)),  T != 0,
 the combined integer action is now constructed as a free, properly
 discontinuous topological action. Its effective orbit quotient, covering
 projection and charted-space structure are explicit; the equatorial `S2`
-induces a continuous injective map of quotients. Cover-coordinate time
-reversal descends to continuous involutions on the effective spacetime and
-fixed throat, and that same quotient inclusion is PT-equivariant. The algebraic
-`S³` and equatorial `S²` are now homeomorphic to Mathlib's standard analytic
-spheres; their products with `ℝ` carry explicit analytic cover atlases. The
-effective spacetime and throat quotients are actual `C⁰` manifolds, their
-covering projection is a local homeomorphism and `C⁰`, and the throat cover
-inclusion is a topological embedding and `C⁰`. Promotion of the quotient atlas,
-projection and inclusion to `C∞` remains open, as does null/joint stratification.
-The analytic cover deck transformations and throat-cover inclusion are now
-genuinely smooth. Local inverse sections selecting the same quotient fiber
-differ locally by the unique smooth deck map, and the induced chart changes
-belong to the smooth groupoid. Installing the quotient `ChartedSpace` and
-`IsManifold` instances is still open. The expected fundamental group is `Z`,
-not `Z4`.
+induces an analytic map of quotients. The algebraic `S³` and equatorial `S²`
+are identified with Mathlib's standard analytic spheres, and the effective
+spacetime and throat quotients now carry installed analytic `ChartedSpace` and
+`IsManifold` instances. Their covering projections are analytic local
+diffeomorphisms. The throat inclusion is analytic, a closed topological
+embedding, and has injective manifold differential with rank-one normal
+quotient. Time reversal is an analytic involutive diffeomorphism on both
+quotients and intertwines that same inclusion. Both effective quotients are
+compact. Mathlib's `IsSmoothEmbedding` instance and the null/joint
+stratification remain open. The expected fundamental group is `Z`, not `Z4`.
 
 The complement of the concrete equatorial `S2` in the unit `S3` is now proved
 to be the disjoint union of two nonempty open sign sides. Reflection and one
@@ -249,8 +244,12 @@ On the fixed throat, the even-winding quotient now gives an actual
 two-sheeted topological covering. Its half-period deck map is continuous,
 involutive and fixed-point free; every fiber is equivalent to `ZMod 2`.
 Moreover, the pulled-back associated normal line has an explicit global
-topological product trivialization. This does not yet produce a smooth
-`VectorBundle` or a differential normal bundle.
+topological product trivialization. The exact deck-sign cocycle now also
+constructs a genuine analytic real rank-one `VectorBundle` on the effective
+throat, with one circuit acting by `-id`. Each of its fibers is noncanonically
+linearly equivalent to the corresponding differential normal quotient. What
+remains open is a globally smooth family of those equivalences, together with
+the `IsSmoothEmbedding` witness and the non-null/null/joint strata.
 
 Quarter phases arise conditionally by lifting the sign holonomy of a real normal line:
 
