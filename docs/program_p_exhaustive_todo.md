@@ -708,6 +708,9 @@ complexe BRST, aux anomalies et aux conditions au bord.
     chaque générateur nul et prouver leur annulation exacte avec le terme de
     face intégré.
 - [x] Prouver la cancellation globale finie des transformations de reparamétrisation nulle.
+  - [x] Prouver que le renversement d'orientation échange les joints initial et
+    final avec signe opposé, inverse la transgression de face et rend le ledger
+    total impair, donc toujours nul, dans le modèle endpoint fini.
 - [x] Construire les champs LL globaux : métrique auxiliaire, mesure composite,
   champs de mesure et flux.
 - [x] Intégrer l'action LL sur le worldvolume.
