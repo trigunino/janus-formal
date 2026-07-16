@@ -30,6 +30,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleIsomorphism
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
@@ -105,6 +106,7 @@ structure ProgramStatus where
   fixedThroatDifferentialNormalTopologicalBundleConstructed : Prop
   fixedThroatDifferentialNormalContMDiffVectorBundleProved : Prop
   fixedThroatDifferentialNormalSmoothBundleEquivalenceProved : Prop
+  fixedThroatDifferentialNormalSmoothBundleIsomorphismProved : Prop
   fixedThroatDifferentialNormalZeroNonzeroStratificationProved : Prop
   ambientTangentOrientationCocycleProved : Prop
   ambientTangentQuadraticReductionFrontierProved : Prop
@@ -236,6 +238,7 @@ def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatDifferentialNormalTopologicalBundleConstructed /\
   s.fixedThroatDifferentialNormalContMDiffVectorBundleProved /\
   s.fixedThroatDifferentialNormalSmoothBundleEquivalenceProved /\
+  s.fixedThroatDifferentialNormalSmoothBundleIsomorphismProved /\
   s.fixedThroatDifferentialNormalZeroNonzeroStratificationProved /\
   s.ambientTangentOrientationCocycleProved /\
   s.ambientTangentQuadraticReductionFrontierProved /\

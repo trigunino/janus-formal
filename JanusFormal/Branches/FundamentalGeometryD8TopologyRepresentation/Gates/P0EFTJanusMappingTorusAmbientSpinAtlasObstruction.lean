@@ -1,4 +1,4 @@
-import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinProjection
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinOrientation
 
 /-!
 # Atlas-specific obstruction to an ambient Spin lift
@@ -23,6 +23,7 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 open P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
 open P0EFTJanusMappingTorusAmbientSpinProjection
+open P0EFTJanusMappingTorusAmbientSpinOrientation
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -201,6 +202,78 @@ structure AmbientSpinOverlapLift
     ambientSpinProjection lift =
       (reduction.orthogonalTransition period hPeriod first second
         coordinate hCoordinate).toLinearEquiv
+
+/-- Every actual transition admitting a Spin lift is necessarily orientation
+preserving.  This records the first obstruction before any Cech coherence is
+considered. -/
+theorem AmbientSpinOverlapLift.orthogonalTransition_det
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (overlapLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    LinearEquiv.det
+        (reduction.orthogonalTransition period hPeriod first second
+          coordinate hCoordinate).toLinearEquiv = (1 : Realˣ) := by
+  rw [← overlapLift.projects]
+  exact ambientSpinProjection_det overlapLift.lift
+
+/-- An orientation-reversing reduced transition has no pointwise lift through
+the genuine ambient Spin projection. -/
+theorem ambientSpinOverlapLift_not_nonempty_of_det_ne_one
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hDet : LinearEquiv.det
+        (reduction.orthogonalTransition period hPeriod first second
+          coordinate hCoordinate).toLinearEquiv ≠ (1 : Realˣ)) :
+    ¬ Nonempty (AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) := by
+  rintro ⟨overlapLift⟩
+  exact hDet (overlapLift.orthogonalTransition_det period hPeriod reduction
+    first second coordinate hCoordinate)
+
+/-- A simultaneous pointwise choice of Spin lift on every atlas overlap.
+This is strictly weaker than a Spin Cech lift: no normalization, continuity,
+or cocycle law is included. -/
+structure AmbientSpinAtlasLiftChoice
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod) where
+  transitionLift :
+    AmbientCover period hPeriod → AmbientCover period hPeriod →
+      CoverModel → AmbientCoordinateSpinGroup
+  projects :
+    ∀ first second coordinate
+      (hCoordinate :
+        coordinate ∈ (ambientAtlasTransition period hPeriod first second).source),
+      ambientSpinProjection (transitionLift first second coordinate) =
+        (reduction.orthogonalTransition period hPeriod first second
+          coordinate hCoordinate).toLinearEquiv
+
+/-- The pointwise overlap lift selected by an atlas-wide choice. -/
+def AmbientSpinAtlasLiftChoice.overlapLift
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (choice : AmbientSpinAtlasLiftChoice period hPeriod reduction)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source) :
+    AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate where
+  lift := choice.transitionLift first second coordinate
+  projects := choice.projects first second coordinate hCoordinate
+
+/-- Forgetting normalization and the cocycle of a full Cech transition lift
+leaves an atlas-wide pointwise lift choice. -/
+def ambientSpinCechTransitionLiftToAtlasLiftChoice
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (lift : AmbientSpinCechTransitionLift period hPeriod reduction) :
+    AmbientSpinAtlasLiftChoice period hPeriod reduction where
+  transitionLift := lift.transitionLift
+  projects := lift.projects_to_transition
 
 /-- Two Spin lifts of the same actual atlas transition differ by an element
 of the kernel of the Spin projection. -/
@@ -429,6 +502,85 @@ theorem ambientSpinKernelConjugationRepresentation_eq_one_iff :
       ((ambientSpinKernelConjugate_eq_iff_commute spin kernel).2
         (hCentral spin kernel))
 
+/-- An element in the projection kernel commutes with every element of the
+ambient Clifford algebra.  The kernel condition gives commutation with every
+Clifford generator, and the Clifford induction principle extends it to the
+whole algebra. -/
+theorem ambientSpinKernel_commutes_clifford
+    (kernel : MonoidHom.ker ambientSpinProjection)
+    (value : AmbientCliffordAlgebra) :
+    Commute (kernel.1 : AmbientCliffordAlgebra) value := by
+  induction value using CliffordAlgebra.induction with
+  | algebraMap scalar =>
+      exact (Algebra.commutes scalar
+        (kernel.1 : AmbientCliffordAlgebra)).symm
+  | ι vector =>
+      have hAction : ambientSpinVectorAction kernel.1 vector = vector := by
+        rw [← ambientSpinProjection_apply, kernel.property]
+        rfl
+      have hConjugation :
+          (kernel.1 : AmbientCliffordAlgebra) *
+              CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector *
+              (↑(kernel.1⁻¹) : AmbientCliffordAlgebra) =
+            CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector := by
+        have hSpec := (ambientSpinVectorAction_spec kernel.1 vector).symm
+        rw [hAction] at hSpec
+        exact hSpec
+      have hInvMul :
+          (↑(kernel.1⁻¹) : AmbientCliffordAlgebra) *
+              (kernel.1 : AmbientCliffordAlgebra) = 1 :=
+        spinGroup.coe_star_mul_self kernel.1
+      show (kernel.1 : AmbientCliffordAlgebra) *
+          CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector =
+        CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector *
+          (kernel.1 : AmbientCliffordAlgebra)
+      calc
+        (kernel.1 : AmbientCliffordAlgebra) *
+              CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector =
+            ((kernel.1 : AmbientCliffordAlgebra) *
+                CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector) *
+              ((↑(kernel.1⁻¹) : AmbientCliffordAlgebra) *
+                (kernel.1 : AmbientCliffordAlgebra)) := by rw [hInvMul, mul_one]
+        _ = ((kernel.1 : AmbientCliffordAlgebra) *
+              CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector *
+              (↑(kernel.1⁻¹) : AmbientCliffordAlgebra)) *
+            (kernel.1 : AmbientCliffordAlgebra) := by simp only [mul_assoc]
+        _ = CliffordAlgebra.ι ambientCoverEuclideanQuadraticForm vector *
+            (kernel.1 : AmbientCliffordAlgebra) := by rw [hConjugation]
+  | mul first second hFirst hSecond => exact hFirst.mul_right hSecond
+  | add first second hFirst hSecond => exact hFirst.add_right hSecond
+
+/-- The projection kernel is central in the ambient Spin group. -/
+theorem ambientSpinKernel_commutes
+    (spin : AmbientCoordinateSpinGroup)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    Commute spin kernel.1 := by
+  change spin * kernel.1 = kernel.1 * spin
+  apply Subtype.ext
+  exact (ambientSpinKernel_commutes_clifford kernel
+    (spin : AmbientCliffordAlgebra)).symm.eq
+
+/-- In particular, multiplication in the projection kernel is commutative. -/
+theorem ambientSpinProjection_ker_mul_comm
+    (first second : MonoidHom.ker ambientSpinProjection) :
+    first * second = second * first := by
+  apply Subtype.ext
+  exact (ambientSpinKernel_commutes first.1 second).eq
+
+/-- The adjoint action on the projection kernel is genuinely trivial. -/
+theorem ambientSpinKernelConjugationRepresentation_trivial :
+    ambientSpinKernelConjugationRepresentation = 1 :=
+  ambientSpinKernelConjugationRepresentation_eq_one_iff.2
+    ambientSpinKernel_commutes
+
+@[simp]
+theorem ambientSpinKernelConjugate_eq_self
+    (spin : AmbientCoordinateSpinGroup)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinKernelConjugate spin kernel = kernel :=
+  (ambientSpinKernelConjugate_eq_iff_commute spin kernel).2
+    (ambientSpinKernel_commutes spin kernel)
+
 /-- A common change of local Spin lift conjugates, rather than changes
 arbitrarily, the kernel-valued difference of two lifts. -/
 theorem ambientSpinOverlapLiftDifference_common_kernelTranslate
@@ -453,6 +605,28 @@ theorem ambientSpinOverlapLiftDifference_common_kernelTranslate
   simp [ambientSpinOverlapLiftDifference,
     AmbientSpinOverlapLift.kernelTranslate, ambientSpinKernelConjugate,
     mul_assoc]
+
+/-- Since the projection kernel is central, a common kernel translation
+actually leaves the difference of two overlap lifts unchanged. -/
+theorem ambientSpinOverlapLiftDifference_common_kernelTranslate_invariant
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (kernel : MonoidHom.ker ambientSpinProjection)
+    (firstLift secondLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    ambientSpinOverlapLiftDifference period hPeriod reduction first second
+        coordinate hCoordinate
+        (firstLift.kernelTranslate period hPeriod reduction first second
+          coordinate hCoordinate kernel)
+        (secondLift.kernelTranslate period hPeriod reduction first second
+          coordinate hCoordinate kernel) =
+      ambientSpinOverlapLiftDifference period hPeriod reduction first second
+        coordinate hCoordinate firstLift secondLift := by
+  rw [ambientSpinOverlapLiftDifference_common_kernelTranslate,
+    ambientSpinKernelConjugate_eq_self]
 
 /-- Conversely, the difference of two lifts translates the second lift back
 to the first one.  Thus the local lift ambiguity is a torsor under the kernel. -/
@@ -564,6 +738,28 @@ def ambientSpinCechKernelDefect
     ambientSpinProjection_cechDefect period hPeriod reduction first second third coordinate
       hFirstSecond hSecondThird hFirstThird firstSecond secondThird firstThird⟩
 
+/-- Kernel-valued Cech defect attached to an atlas-wide pointwise lift
+choice. -/
+def AmbientSpinAtlasLiftChoice.cechKernelDefect
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (choice : AmbientSpinAtlasLiftChoice period hPeriod reduction)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source) :
+    MonoidHom.ker ambientSpinProjection :=
+  ambientSpinCechKernelDefect period hPeriod reduction first second third coordinate
+    hFirstSecond hSecondThird hFirstThird
+    (choice.overlapLift period hPeriod reduction first second coordinate hFirstSecond)
+    (choice.overlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (choice.overlapLift period hPeriod reduction first third coordinate hFirstThird)
+
 /-- Exact closure criterion: the chosen lifts form a Spin cocycle if and only
 if their kernel-valued defect is trivial. -/
 theorem ambientSpinCechDefect_eq_one_iff
@@ -587,6 +783,70 @@ theorem ambientSpinCechDefect_eq_one_iff
         hFirstSecond hSecondThird hFirstThird firstSecond secondThird firstThird = 1 ↔
       secondThird.lift * firstSecond.lift = firstThird.lift := by
   exact mul_inv_eq_one
+
+/-- A genuine Cech transition lift has trivial kernel defect after forgetting
+down to its atlas-wide pointwise lift choice. -/
+theorem AmbientSpinCechTransitionLift.toAtlasLiftChoice_cechKernelDefect_eq_one
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (lift : AmbientSpinCechTransitionLift period hPeriod reduction)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source) :
+    (ambientSpinCechTransitionLiftToAtlasLiftChoice period hPeriod reduction lift).cechKernelDefect
+        period hPeriod reduction first second third coordinate
+        hFirstSecond hSecondThird hFirstThird = 1 := by
+  apply Subtype.ext
+  change lift.transitionLift second third
+        (ambientAtlasTransition period hPeriod first second coordinate) *
+        lift.transitionLift first second coordinate *
+        (lift.transitionLift first third coordinate)⁻¹ = 1
+  rw [lift.cocycle first second third coordinate
+    hFirstSecond hSecondThird hFirstThird]
+  simp
+
+/-- Exact atlas-wide completion step: a normalized pointwise lift choice with
+trivial kernel defect on every triple overlap produces the algebraic Spin
+Cech transition lift.  Existence, continuity, and triviality of the supplied
+defects remain separate obligations. -/
+def AmbientSpinAtlasLiftChoice.toCechTransitionLiftOfDefectTrivial
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (choice : AmbientSpinAtlasLiftChoice period hPeriod reduction)
+    (hNormalized :
+      ∀ anchor coordinate
+        (_hCoordinate :
+          coordinate ∈ (ambientAtlasTransition period hPeriod anchor anchor).source),
+        choice.transitionLift anchor anchor coordinate = 1)
+    (hDefectTrivial :
+      ∀ first second third coordinate
+        (hFirstSecond :
+          coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+        (hSecondThird :
+          ambientAtlasTransition period hPeriod first second coordinate ∈
+            (ambientAtlasTransition period hPeriod second third).source)
+        (hFirstThird :
+          coordinate ∈ (ambientAtlasTransition period hPeriod first third).source),
+        choice.cechKernelDefect period hPeriod reduction first second third
+          coordinate hFirstSecond hSecondThird hFirstThird = 1) :
+    AmbientSpinCechTransitionLift period hPeriod reduction where
+  transitionLift := choice.transitionLift
+  projects_to_transition := choice.projects
+  normalized := hNormalized
+  cocycle := by
+    intro first second third coordinate hFirstSecond hSecondThird hFirstThird
+    have hValue := congrArg Subtype.val
+      (hDefectTrivial first second third coordinate
+        hFirstSecond hSecondThird hFirstThird)
+    change choice.transitionLift second third
+          (ambientAtlasTransition period hPeriod first second coordinate) *
+          choice.transitionLift first second coordinate *
+          (choice.transitionLift first third coordinate)⁻¹ = 1 at hValue
+    exact mul_inv_eq_one.mp hValue
 
 /-- Changing the chosen lift on the composite overlap by a kernel translation
 changes the Cech defect by the inverse kernel element on the right.  This is
@@ -876,6 +1136,102 @@ theorem ambientSpinCechKernelDefect_firstSecond_kernelTranslate
   exact ambientSpinCechDefect_firstSecond_kernelTranslate period hPeriod
     reduction first second third coordinate hFirstSecond hSecondThird hFirstThird
     firstSecond secondThird firstThird kernel
+
+/-- Exact nonabelian quadruple-overlap identity for any atlas-wide pointwise
+choice of Spin lifts.  The conjugation is the usual transport of the first
+triple defect across the last edge. -/
+theorem AmbientSpinAtlasLiftChoice.cechKernelDefect_quadruple_conjugated
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (choice : AmbientSpinAtlasLiftChoice period hPeriod reduction)
+    (first second third fourth : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (hThirdFourth :
+      ambientAtlasTransition period hPeriod first third coordinate ∈
+        (ambientAtlasTransition period hPeriod third fourth).source)
+    (hSecondFourth :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second fourth).source)
+    (hFirstFourth :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first fourth).source) :
+    let hThirdFourthNested :
+        ambientAtlasTransition period hPeriod second third
+            (ambientAtlasTransition period hPeriod first second coordinate) ∈
+          (ambientAtlasTransition period hPeriod third fourth).source := by
+      rw [ambientAtlasTransition_cocycle_apply period hPeriod first second third
+        coordinate hFirstSecond hSecondThird]
+      exact hThirdFourth
+    ambientSpinKernelConjugate
+          (choice.transitionLift third fourth
+            (ambientAtlasTransition period hPeriod first third coordinate))
+          (choice.cechKernelDefect period hPeriod reduction first second third
+            coordinate hFirstSecond hSecondThird hFirstThird) *
+        choice.cechKernelDefect period hPeriod reduction first third fourth
+          coordinate hFirstThird hThirdFourth hFirstFourth =
+      choice.cechKernelDefect period hPeriod reduction second third fourth
+          (ambientAtlasTransition period hPeriod first second coordinate)
+          hSecondThird hThirdFourthNested hSecondFourth *
+        choice.cechKernelDefect period hPeriod reduction first second fourth
+          coordinate hFirstSecond hSecondFourth hFirstFourth := by
+  dsimp only
+  apply Subtype.ext
+  simp [AmbientSpinAtlasLiftChoice.cechKernelDefect,
+    ambientSpinCechKernelDefect, ambientSpinCechDefect,
+    ambientSpinKernelConjugate, AmbientSpinAtlasLiftChoice.overlapLift,
+    ambientAtlasTransition_cocycle_apply period hPeriod first second third
+      coordinate hFirstSecond hSecondThird, mul_assoc]
+
+/-- Because the genuine Spin projection kernel is central, the transported
+quadruple identity reduces to the ordinary abelian Cech two-cocycle law. -/
+theorem AmbientSpinAtlasLiftChoice.cechKernelDefect_quadruple
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (choice : AmbientSpinAtlasLiftChoice period hPeriod reduction)
+    (first second third fourth : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (hThirdFourth :
+      ambientAtlasTransition period hPeriod first third coordinate ∈
+        (ambientAtlasTransition period hPeriod third fourth).source)
+    (hSecondFourth :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second fourth).source)
+    (hFirstFourth :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first fourth).source) :
+    let hThirdFourthNested :
+        ambientAtlasTransition period hPeriod second third
+            (ambientAtlasTransition period hPeriod first second coordinate) ∈
+          (ambientAtlasTransition period hPeriod third fourth).source := by
+      rw [ambientAtlasTransition_cocycle_apply period hPeriod first second third
+        coordinate hFirstSecond hSecondThird]
+      exact hThirdFourth
+    choice.cechKernelDefect period hPeriod reduction first second third
+          coordinate hFirstSecond hSecondThird hFirstThird *
+        choice.cechKernelDefect period hPeriod reduction first third fourth
+          coordinate hFirstThird hThirdFourth hFirstFourth =
+      choice.cechKernelDefect period hPeriod reduction second third fourth
+          (ambientAtlasTransition period hPeriod first second coordinate)
+          hSecondThird hThirdFourthNested hSecondFourth *
+        choice.cechKernelDefect period hPeriod reduction first second fourth
+          coordinate hFirstSecond hSecondFourth hFirstFourth := by
+  dsimp only
+  have hQuadruple :=
+    choice.cechKernelDefect_quadruple_conjugated period hPeriod reduction
+      first second third fourth coordinate hFirstSecond hSecondThird hFirstThird
+      hThirdFourth hSecondFourth hFirstFourth
+  rw [ambientSpinKernelConjugate_eq_self] at hQuadruple
+  exact hQuadruple
 
 /-- On every actual triple overlap for which two Spin lifts are supplied, the
 third lift obtained by composition has exactly trivial Cech defect.  This is a

@@ -204,6 +204,65 @@ theorem quotientProjectionDerivativeEquiv_coe
     (reflectedSphere_projection_isLocalDiffeomorph period hPeriod)
       (by simp) point
 
+/-- The canonical quotient-fiber tensor associated with one chosen cover
+lift.  Both covariant arguments are transported by the inverse of the true
+quotient-projection derivative. -/
+def intrinsicQuotientTensorValueAtLift
+    (point : EffectiveCover period hPeriod) :
+    QuotientTangent period hPeriod
+        (mappingTorusMk (sphereData period hPeriod) point) →L[Real]
+      (QuotientTangent period hPeriod
+        (mappingTorusMk (sphereData period hPeriod) point) →L[Real] Real) :=
+  let derivative := quotientProjectionDerivativeEquiv period hPeriod point
+  derivative.arrowCongr
+    (derivative.arrowCongr (ContinuousLinearEquiv.refl Real Real))
+    (intrinsicCoverLorentzTensor period hPeriod point)
+
+/-- Pulling the quotient-fiber value back along the projection derivative
+recovers the intrinsic cover tensor exactly. -/
+theorem intrinsicQuotientTensorValueAtLift_pullback
+    (point : EffectiveCover period hPeriod)
+    (first second : CoverTangent period hPeriod point) :
+    intrinsicQuotientTensorValueAtLift period hPeriod point
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point first)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point second) =
+      intrinsicCoverLorentzTensor period hPeriod point first second := by
+  let derivative := quotientProjectionDerivativeEquiv period hPeriod point
+  have hDerivative (vector : CoverTangent period hPeriod point) :
+      derivative vector =
+        mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point vector := by
+    exact DFunLike.congr_fun
+      (quotientProjectionDerivativeEquiv_coe period hPeriod point) vector
+  rw [← hDerivative first, ← hDerivative second]
+  simp [intrinsicQuotientTensorValueAtLift, derivative]
+
+/-- The actual quotient-fiber values constructed from deck-related lifts
+agree on the corresponding projected tangent vectors. -/
+theorem intrinsicQuotientTensorValueAtLift_deck_compatible
+    (winding : Int) (point : EffectiveCover period hPeriod)
+    (first second : CoverTangent period hPeriod point) :
+    intrinsicQuotientTensorValueAtLift period hPeriod (winding +ᵥ point)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) (winding +ᵥ point)
+          (mfderiv coverModelWithCorners coverModelWithCorners
+            (winding +ᵥ ·) point first))
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) (winding +ᵥ point)
+          (mfderiv coverModelWithCorners coverModelWithCorners
+            (winding +ᵥ ·) point second)) =
+      intrinsicQuotientTensorValueAtLift period hPeriod point
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point first)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point second) := by
+  rw [intrinsicQuotientTensorValueAtLift_pullback,
+    intrinsicQuotientTensorValueAtLift_pullback]
+  exact intrinsicCoverLorentzTensor_deck_isometry period hPeriod
+    winding point first second
+
 /-- Exact remaining dependent-section descent datum.  Its pullback equation
 uses the true derivative of the quotient projection. -/
 structure IntrinsicTensorQuotientDescent where
