@@ -182,8 +182,12 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         - [x] Prouver le cocycle strict des vraies transitions tangentes et de
           leur réduction `O(4)`, composer tout lift Spin fourni, puis montrer
           que son défaut Čech appartient exactement au noyau de la projection.
-          Restent la surjectivité `Spin(4) → SO(4)`, le déterminant `+1`, le
-          choix des lifts et la trivialisation cohérente de ce défaut.
+          - [x] Prouver réellement que toute image de
+            `ambientSpinProjection` a déterminant `+1`, par induction sur le
+            groupe de Lipschitz et exclusion du grade impair Clifford.
+          - [ ] Prouver la surjectivité sur `SO(4)` par décomposition paire en
+            réflexions non isotropes, puis construire les lifts de l'atlas.
+          - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
