@@ -693,8 +693,10 @@ nonnegative time, and each orbit in the dense Fourier basis has the expected
 `-lambda_n^2` derivative. On the full Fourier Hilbert space, the maximal
 strong right-generator domain is now exactly the squared spectral domain,
 which is also the actual iterated domain of `D ∘ D`; the generator is `-D²`.
-The operator is not yet proved equal to the abstract functional-calculus
-exponential. At every positive time it is now an operator-norm-convergent sum
+An independent contractive pure-point functional calculus on the proved
+Fourier spectrum preserves unit, products and adjoints, and its scalar
+function `x ↦ exp(-t x²)` is exactly the same heat operator. At every positive
+time it is also an operator-norm-convergent sum
 of explicit rank-one Fourier maps with summable norms, and the resulting
 nuclear trace equals the spectral heat trace. No general Mathlib trace-class
 interface or full Janus anomaly/determinant theorem is proved. See
@@ -747,9 +749,9 @@ covariant source/boundary problem:
    secondary-constraint closure and
    stability on the physical reduced tangent/quotient;
 7. extend the self-adjoint unbounded circle Fourier operator to the full Janus
-   Dirac operator, identify the concrete diagonal heat-semigroup generator on
-   its maximal domain and the semigroup with the abstract functional calculus
-   of `D^2`, prove the required trace-class statements, compute variational
+   Dirac operator, lift the now-closed circle generator/pure-point functional
+   calculus comparison to that global operator, prove the required trace-class
+   statements, compute variational
    cohomology, determinant data and actual regulated local/global anomalies,
    and close constrained stability in one scheme;
 8. derive a microscopic normalization and finite-part law without
@@ -780,7 +782,9 @@ not construct the unique global Lorentz root branch.  The
 self-adjoint circle Dirac operator, its basiswise `D^2` trace bridge and the
 strongly continuous contractive diagonal heat semigroup, including its exact
 maximal `D²` generator domain, do not yet construct the full Janus Dirac
-operator or identify the abstract functional-calculus exponential. Its
+operator or a corresponding global functional calculus. On the circle, the
+independent pure-point calculus now identifies its Gaussian exponential
+exactly with the heat semigroup. Its
 positive-time nuclear rank-one expansion supplies the concrete trace-class
 property for the circle, but no global Janus trace-class family or anomaly is
 computed, and it does not determine the global determinant or normalization.

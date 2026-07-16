@@ -54,6 +54,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatSemigroupStrongContinuity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatSemigroupCompactness
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatGeneratorDomain
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleSpectralFunctionalCalculus
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceClass
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD7CircleHeatRegulatorBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensities
@@ -307,6 +308,7 @@ structure ProgramStatus where
   paCircleHeatSemigroupStrongContinuityProved : Prop
   paCircleHeatSemigroupCompactnessProved : Prop
   paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved : Prop
+  paCircleSpectralFunctionalCalculusHeatEqualityProved : Prop
   paCircleHeatNuclearTraceClassProved : Prop
   paProgramPD7CircleHeatRegulatorBridgeProved : Prop
   paProgramPD7UnconditionalSphereSmallTimeBridgeProved : Prop
@@ -488,6 +490,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCircleHeatSemigroupStrongContinuityProved /\
   s.paCircleHeatSemigroupCompactnessProved /\
   s.paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved /\
+  s.paCircleSpectralFunctionalCalculusHeatEqualityProved /\
   s.paCircleHeatNuclearTraceClassProved /\
   s.paProgramPD7CircleHeatRegulatorBridgeProved /\
   s.paProgramPD7UnconditionalSphereSmallTimeBridgeProved /\

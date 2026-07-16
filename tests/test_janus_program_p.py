@@ -79,6 +79,10 @@ def test_program_p_circle_heat_generator_domain_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_circle_spectral_functional_calculus_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_circle_heat_nuclear_trace_class_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

@@ -658,8 +658,9 @@ vectors prove unboundedness, and the adjoint-domain calculation proves
 self-adjointness.  Squaring this actual operator on each Fourier basis vector
 now recovers the spectral eigenvalue square, and the resulting finite and
 summable diagonal traces agree with the previous heat sums and PT
-cancellations.  This is a basiswise spectral bridge, not a global construction
-of `exp(-t D^2)` by functional calculus or a trace-class theorem.
+cancellations. This basiswise bridge is now complemented below by an
+independent pure-point functional calculus; it is still not a global Janus
+functional calculus or, by itself, a trace-class theorem.
 
 A genuine bounded continuous diagonal heat operator on `l2(Z, C)` is now also
 constructed for every nonnegative time.  It is contractive, equals the identity
@@ -670,8 +671,11 @@ Fourier-basis orbit gives the expected `-lambda_n^2` generator action on that
 dense basis. The strong right derivative on the full Hilbert space now exists
 exactly on the squared-eigenvalue weighted domain, that domain equals the
 actual iterated domain of `D ∘ D`, and the unique generator is `-D²`. Neither
-the abstract functional-calculus exponential nor a general Mathlib
-trace-class interface is available. However, at every positive time the same
+the general Mathlib unbounded Borel-calculus API nor a general trace-class
+interface is available. A contractive pure-point spectral calculus is instead
+constructed independently, with unit/product/adjoint laws, and its
+`x ↦ exp(-t x²)` operator equals this heat semigroup exactly. At every positive
+time the same
 operator is now the operator-norm sum of explicit rank-one Fourier maps with
 summable norms, and its nuclear trace equals the spectral trace. The full
 Janus Dirac operator, anomalies,
@@ -891,15 +895,18 @@ Implemented in the current finite, spectral or pointwise models:
 - a densely defined closed, unbounded and self-adjoint circle Fourier Dirac
   operator on its maximal weighted `l2` domain;
 - a basiswise bridge from its actual square `D^2` to the finite and summable
-  diagonal heat traces; no global functional-calculus construction is claimed;
+  diagonal heat traces;
+- an independent contractive pure-point functional calculus on the real circle
+  spectrum, preserving unit, products and adjoints, whose Gaussian exponential
+  is exactly the constructed heat semigroup;
 - a genuine bounded contractive diagonal circle heat operator, with identity,
   semigroup law, global strong continuity, the expected diagonal trace sums and
   the expected generator derivative on the dense Fourier basis, plus exact
   equality of its maximal strong generator domain with the iterated `D²`
   domain on the full Hilbert space, plus an operator-norm-convergent nuclear
   rank-one expansion at every positive time whose trace is the spectral heat
-  trace; equality with the abstract functional-calculus exponential and a
-  general trace-class API are open;
+  trace; the pure-point functional-calculus equality is closed, while a general
+  unbounded Borel-calculus/trace-class API remains open;
 - an exact bridge from the quarter-twisted Program-P circle operator to the two
   PT-related D7 root towers, compactness of every fixed sphere-level heat block,
   and an explicit common-counterterm renormalized determinant certificate for
@@ -950,9 +957,8 @@ Still required before Candidate A is a completed Janus action:
    stability on the physical reduced tangent/quotient and PPN parameters for
    the exact matter couplings;
 7. extend the self-adjoint unbounded circle Fourier operator to the full Janus Dirac
-   operator, identify the constructed contractive diagonal heat-semigroup
-   generator on its maximal domain and the semigroup with the abstract
-   functional calculus of `D^2`, prove the required trace-class statements,
+   operator, lift the constructed circle generator and pure-point functional
+   calculus comparison to it, prove the required trace-class statements,
    construct the smooth Fredholm/Quillen family, compute local/global anomalies
    and supply a microscopic normalization/finite-part law in the same scheme.
 

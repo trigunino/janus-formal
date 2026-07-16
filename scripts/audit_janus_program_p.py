@@ -1069,6 +1069,21 @@ PROGRAM_P_GATES = {
             "theorem circleHeatGenerator_eq_neg_diracSquared",
         ),
     ),
+    "P0EFTJanusCircleSpectralFunctionalCalculus.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CircleContractiveSpectralFunction",
+            "def circlePurePointFunctionalCalculus",
+            "theorem circlePurePointFunctionalCalculus_one",
+            "theorem circlePurePointFunctionalCalculus_mul",
+            "theorem circlePurePointFunctionalCalculus_star",
+            "def circleDiracFunctionalCalculus",
+            "theorem circleDiracFunctionalCalculus_on_basis",
+            "def circleExpNegSquareSpectralFunction",
+            "def circleDiracExpNegSquare",
+            "theorem circleDiracExpNegSquare_eq_circleHeatSemigroup",
+        ),
+    ),
     "P0EFTJanusCircleHeatNuclearTraceClass.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1871,6 +1886,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCircleHeatSemigroupStrongContinuityProved",
         "paCircleHeatSemigroupCompactnessProved",
         "paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved",
+        "paCircleSpectralFunctionalCalculusHeatEqualityProved",
         "paCircleHeatNuclearTraceClassProved",
         "paProgramPD7CircleHeatRegulatorBridgeProved",
         "paProgramPD7UnconditionalSphereSmallTimeBridgeProved",
