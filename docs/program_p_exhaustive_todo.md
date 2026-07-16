@@ -179,6 +179,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         quadratique et le morphisme `Spin(Q) →* GL(4)`. L'extension Pin est
         isolée par son action tordue exacte ; seuls les lifts de transitions et
         leur cocycle Čech atlas-spécifique restent à fournir.
+        - [x] Prouver le cocycle strict des vraies transitions tangentes et de
+          leur réduction `O(4)`, composer tout lift Spin fourni, puis montrer
+          que son défaut Čech appartient exactement au noyau de la projection.
+          Restent la surjectivité `Spin(4) → SO(4)`, le déterminant `+1`, le
+          choix des lifts et la trivialisation cohérente de ce défaut.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
@@ -359,6 +364,10 @@ par toute évolution admissible.
         modèle porte aussi un opérateur linéaire non nul de multiplication
         impaire dont le carré est exactement zéro. Le couplage au ghost tangent
         global, sa nilpotence différentielle complète et BV restent ouverts.
+      - [x] Descendre le ghost analytique au niveau `C∞`, fermer les vrais
+        champs tangents globaux sous le crochet de Lie intrinsèque et prouver
+        antisymétrie, bilinéarité et Jacobi. Le couplage gradué et la
+        différentielle BRST non linéaire restent ouverts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -474,6 +483,10 @@ par toute évolution admissible.
         `(3,1)` et isométrie exacte sous la réflexion génératrice. Les deux
         ponts vers la section tensorielle intrinsèque puis sa descente lisse
         quotient sont typés explicitement mais restent à décharger.
+        - [x] Construire la vraie section tensorielle intrinsèque lisse sur le
+          cover depuis `mfderiv` de l'immersion, prouver la naturalité exacte
+          sous la dérivée deck et son invariance lorentzienne. La descente de
+          cette section dépendante vers le quotient reste ouverte.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
