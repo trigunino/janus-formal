@@ -83,6 +83,16 @@ theorem pinMinusRootCharacter_opposite
       -pinMinusRootCharacter choice phase := by
   simp [pinMinusRootCharacter]
 
+/-- The two opposite root characters multiply to the trivial character for
+every winding, after viewing their additive phases multiplicatively. -/
+theorem pinMinusRootCharacter_mul_opposite
+    (choice : NormalRootChoice) (winding : NormalPinMinusOne) :
+    Multiplicative.ofAdd (pinMinusRootCharacter choice winding) *
+        Multiplicative.ofAdd
+          (pinMinusRootCharacter (oppositeRoot choice) winding) = 1 := by
+  rw [pinMinusRootCharacter_opposite]
+  simp
+
 /-- Action of the principal normal group on the associated root-phase fiber. -/
 def associatedRootPhaseAction
     (choice : NormalRootChoice)
