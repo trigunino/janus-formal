@@ -243,6 +243,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     similarité, prouver la positivité de ses quatre valeurs propres et son
     carré exact. L'indépendance du choix de base, le recollement global et les
     blocs de Jordan 4D généraux restent ouverts.
+    - [x] Prouver que la racine par similarité est inchangée sous toute
+      renormalisation inversible de la base propre qui commute avec la racine
+      diagonale positive. L'indépendance sous changements de base généraux et
+      le recollement restent ouverts.
   - [x] Construire une vraie strate de Jordan lorentzienne en dimension quatre,
     issue de deux métriques symétriques indépendantes : la racine réelle
     explicite se carre exactement au produit relatif et, pour paramètre non
