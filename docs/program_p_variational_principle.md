@@ -598,13 +598,20 @@ global `IsSmoothEmbedding`, and its normal comparison is an exact fiber-linear
 total `Diffeomorph` compatible with the trivializations and sign cocycle.
 The differential normal is split intrinsically into a closed zero stratum and
 an open nonzero complement, transported exactly by this diffeomorphism.
-Lorentzian null/non-null/joint strata still require a quadratic form absent
-from that real line; ambient tangent Pin/SpinC bundles remain open.
+The actual quotient charts also give the real ambient tangent transitions,
+their invertible differentials, nonzero determinants and exact orientation
+parity cocycle. Lorentzian null/non-null/joint strata still require a quadratic
+reduction; its comparison with the normal cocycle and ambient tangent
+Pin/SpinC bundles remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
 on the actual smooth spacetime. PT pullback and two-sector exchange are exact
 involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A finite global `C∞` tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting. For throat-supported spacetime measure, its continuous trace has norm bound one; intrinsic Sobolev identification and the physical-volume trace remain open.
+For the static scalar core, a pointwise uniform graph-ellipticity contract now
+implies the energy-to-`H¹` bound and continuous closure bridge, after exact
+construction of the Jacobi density root in `L²`. Quantitative control of the
+finite tangent frame by holonomic directions is the remaining geometric input.
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
@@ -711,6 +718,11 @@ candidate also supplies an independent two-dimensional Lorentz-metric family
 whose relative matrix is a non-diagonalizable Jordan block for nonzero
 parameter, with an explicit square root, actual derivatives and a Sylvester
 identity.  This is one family, not a global principal-root branch.  The
+same null-coordinate construction is now embedded genuinely in dimension four
+with two positive spatial directions; its root squares to the relative product
+of two independently supplied symmetric metrics and the nonzero family is
+proved non-diagonalizable. This is one 4D Jordan stratum, not a classification
+or a globally glued branch. The
 candidate further has a continuous three-parameter two-dimensional
 null-coordinate Cayley--Hamilton root chart for independently supplied Lorentz
 metrics, covering diagonalizable and Jordan points.  It proves neither
@@ -825,7 +837,8 @@ The remaining package must lift these finite/pointwise results and close the
 covariant source/boundary problem:
 
 1. extend the co-diagonal root, its coordinate off-diagonal boost orbit, the
-   independent non-diagonalizable Jordan witness and the continuous
+   independent non-diagonalizable Jordan witnesses, including the genuine 4D
+   stratum, and the continuous
    three-parameter two-dimensional Cayley--Hamilton chart with its explicit
    bijective Sylvester inverse and derivative identity,
    together with the full interaction-density Frechet derivative, to a smooth
