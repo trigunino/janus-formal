@@ -202,6 +202,221 @@ structure AmbientSpinOverlapLift
       (reduction.orthogonalTransition period hPeriod first second
         coordinate hCoordinate).toLinearEquiv
 
+/-- Two Spin lifts of the same actual atlas transition differ by an element
+of the kernel of the Spin projection. -/
+def ambientSpinOverlapLiftDifference
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (firstLift secondLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    MonoidHom.ker ambientSpinProjection :=
+  ⟨firstLift.lift * secondLift.lift⁻¹, by
+    change ambientSpinProjection (firstLift.lift * secondLift.lift⁻¹) = 1
+    rw [map_mul, map_inv, firstLift.projects, secondLift.projects]
+    exact mul_inv_cancel _⟩
+
+/-- The kernel-valued difference is trivial exactly when the two chosen Spin
+lifts are equal as group elements. -/
+theorem ambientSpinOverlapLiftDifference_eq_one_iff
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (firstLift secondLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    (ambientSpinOverlapLiftDifference period hPeriod reduction first second
+      coordinate hCoordinate firstLift secondLift : AmbientCoordinateSpinGroup) = 1 ↔
+      firstLift.lift = secondLift.lift := by
+  exact mul_inv_eq_one
+
+/-- The kernel of the Spin projection acts on the set of lifts of one fixed
+atlas transition by left multiplication. -/
+def AmbientSpinOverlapLift.kernelTranslate
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (kernel : MonoidHom.ker ambientSpinProjection)
+    (overlapLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate where
+  lift := kernel.1 * overlapLift.lift
+  projects := by
+    rw [map_mul, kernel.2, overlapLift.projects, one_mul]
+
+/-- The identity kernel element acts trivially on the underlying Spin lift. -/
+theorem AmbientSpinOverlapLift.kernelTranslate_one
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (overlapLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    (overlapLift.kernelTranslate period hPeriod reduction first second coordinate
+      hCoordinate 1).lift = overlapLift.lift := by
+  simp [AmbientSpinOverlapLift.kernelTranslate]
+
+/-- Successive kernel translations compose by multiplication. -/
+theorem AmbientSpinOverlapLift.kernelTranslate_mul
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (firstKernel secondKernel : MonoidHom.ker ambientSpinProjection)
+    (overlapLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    ((overlapLift.kernelTranslate period hPeriod reduction first second coordinate
+        hCoordinate secondKernel).kernelTranslate period hPeriod reduction
+          first second coordinate hCoordinate firstKernel).lift =
+      (overlapLift.kernelTranslate period hPeriod reduction first second coordinate
+        hCoordinate (firstKernel * secondKernel)).lift := by
+  simp [AmbientSpinOverlapLift.kernelTranslate, mul_assoc]
+
+/-- Translating a lift by a kernel element recovers exactly that element as
+the kernel-valued difference from the original lift. -/
+theorem ambientSpinOverlapLiftDifference_kernelTranslate
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (kernel : MonoidHom.ker ambientSpinProjection)
+    (overlapLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    ambientSpinOverlapLiftDifference period hPeriod reduction first second
+        coordinate hCoordinate
+        (overlapLift.kernelTranslate period hPeriod reduction first second
+          coordinate hCoordinate kernel) overlapLift = kernel := by
+  apply Subtype.ext
+  simp [ambientSpinOverlapLiftDifference,
+    AmbientSpinOverlapLift.kernelTranslate]
+
+/-- The kernel action is faithful at every chosen lift. -/
+theorem AmbientSpinOverlapLift.kernelTranslate_injective
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (overlapLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    Function.Injective (fun kernel : MonoidHom.ker ambientSpinProjection =>
+      (overlapLift.kernelTranslate period hPeriod reduction first second
+        coordinate hCoordinate kernel).lift) := by
+  intro firstKernel secondKernel hEqual
+  apply Subtype.ext
+  have h := congrArg (fun value => value * overlapLift.lift⁻¹) hEqual
+  simpa [AmbientSpinOverlapLift.kernelTranslate, mul_assoc] using h
+
+/-- Conjugation by any ambient Spin element preserves the projection kernel. -/
+def ambientSpinKernelConjugate
+    (spin : AmbientCoordinateSpinGroup)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    MonoidHom.ker ambientSpinProjection :=
+  ⟨spin * kernel.1 * spin⁻¹, by
+    change ambientSpinProjection (spin * kernel.1 * spin⁻¹) = 1
+    rw [map_mul, map_mul, map_inv, kernel.2]
+    simp⟩
+
+/-- Conjugation by a Spin element is a genuine automorphism of the projection
+kernel, with inverse given by conjugation by the inverse Spin element. -/
+def ambientSpinKernelConjugationEquiv
+    (spin : AmbientCoordinateSpinGroup) :
+    MonoidHom.ker ambientSpinProjection ≃* MonoidHom.ker ambientSpinProjection where
+  toFun := ambientSpinKernelConjugate spin
+  invFun := ambientSpinKernelConjugate spin⁻¹
+  left_inv kernel := by
+    apply Subtype.ext
+    simp [ambientSpinKernelConjugate, mul_assoc]
+  right_inv kernel := by
+    apply Subtype.ext
+    simp [ambientSpinKernelConjugate, mul_assoc]
+  map_mul' firstKernel secondKernel := by
+    apply Subtype.ext
+    simp [ambientSpinKernelConjugate, mul_assoc]
+
+@[simp]
+theorem ambientSpinKernelConjugationEquiv_apply
+    (spin : AmbientCoordinateSpinGroup)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinKernelConjugationEquiv spin kernel =
+      ambientSpinKernelConjugate spin kernel :=
+  rfl
+
+/-- The pointwise conjugation automorphisms assemble into the adjoint
+representation of the ambient Spin group on the projection kernel. -/
+def ambientSpinKernelConjugationRepresentation :
+    AmbientCoordinateSpinGroup →*
+      MulAut (MonoidHom.ker ambientSpinProjection) where
+  toFun := ambientSpinKernelConjugationEquiv
+  map_one' := by
+    ext kernel
+    apply Subtype.ext
+    simp [ambientSpinKernelConjugationEquiv, ambientSpinKernelConjugate]
+  map_mul' firstSpin secondSpin := by
+    ext kernel
+    apply Subtype.ext
+    simp [ambientSpinKernelConjugationEquiv, ambientSpinKernelConjugate,
+      mul_assoc]
+
+@[simp]
+theorem ambientSpinKernelConjugationRepresentation_apply
+    (spin : AmbientCoordinateSpinGroup)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinKernelConjugationRepresentation spin kernel =
+      ambientSpinKernelConjugate spin kernel :=
+  rfl
+
+/-- A common change of local Spin lift conjugates, rather than changes
+arbitrarily, the kernel-valued difference of two lifts. -/
+theorem ambientSpinOverlapLiftDifference_common_kernelTranslate
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (kernel : MonoidHom.ker ambientSpinProjection)
+    (firstLift secondLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    ambientSpinOverlapLiftDifference period hPeriod reduction first second
+        coordinate hCoordinate
+        (firstLift.kernelTranslate period hPeriod reduction first second
+          coordinate hCoordinate kernel)
+        (secondLift.kernelTranslate period hPeriod reduction first second
+          coordinate hCoordinate kernel) =
+      ambientSpinKernelConjugate kernel.1
+        (ambientSpinOverlapLiftDifference period hPeriod reduction first second
+          coordinate hCoordinate firstLift secondLift) := by
+  apply Subtype.ext
+  simp [ambientSpinOverlapLiftDifference,
+    AmbientSpinOverlapLift.kernelTranslate, ambientSpinKernelConjugate,
+    mul_assoc]
+
+/-- Conversely, the difference of two lifts translates the second lift back
+to the first one.  Thus the local lift ambiguity is a torsor under the kernel. -/
+theorem ambientSpinOverlapLiftDifference_transitive
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hCoordinate :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (firstLift secondLift : AmbientSpinOverlapLift period hPeriod reduction
+      first second coordinate hCoordinate) :
+    (secondLift.kernelTranslate period hPeriod reduction first second coordinate
+      hCoordinate (ambientSpinOverlapLiftDifference period hPeriod reduction
+        first second coordinate hCoordinate firstLift secondLift)).lift =
+      firstLift.lift := by
+  simp [ambientSpinOverlapLiftDifference,
+    AmbientSpinOverlapLift.kernelTranslate]
+
 /-- Liftable overlaps are closed under composition on triple intersections. -/
 def AmbientSpinOverlapLift.comp
     (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
@@ -318,6 +533,35 @@ theorem ambientSpinCechDefect_eq_one_iff
         hFirstSecond hSecondThird hFirstThird firstSecond secondThird firstThird = 1 ↔
       secondThird.lift * firstSecond.lift = firstThird.lift := by
   exact mul_inv_eq_one
+
+/-- On every actual triple overlap for which two Spin lifts are supplied, the
+third lift obtained by composition has exactly trivial Cech defect.  This is a
+local coherence theorem; it does not assert a global choice of overlap lifts. -/
+theorem ambientSpinCechDefect_comp_eq_one
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird) :
+    ambientSpinCechDefect period hPeriod reduction first second third coordinate
+        hFirstSecond hSecondThird hFirstThird firstSecond secondThird
+        (firstSecond.comp period hPeriod reduction first second third coordinate
+          hFirstSecond hSecondThird hFirstThird secondThird) = 1 := by
+  apply (ambientSpinCechDefect_eq_one_iff period hPeriod reduction
+    first second third coordinate hFirstSecond hSecondThird hFirstThird
+    firstSecond secondThird
+    (firstSecond.comp period hPeriod reduction first second third coordinate
+      hFirstSecond hSecondThird hFirstThird secondThird)).2
+  rfl
 
 end
 
