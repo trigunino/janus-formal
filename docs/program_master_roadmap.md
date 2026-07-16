@@ -126,8 +126,10 @@ Current results:
   separate contract;
 - **T/C** the Clifford `spinGroup` now acts faithfully on ambient vectors and
   gives a multiplicative quadratic-preserving projection `Spin(Q) →* GL(4)`;
-  the twisted Pin extension is isolated exactly, while atlas transition lifts
-  and their Čech cocycle remain open;
+  finite-dimensional reflection generation and determinant parity now prove
+  unconditional `Spin(4) → SO(4)` surjectivity and provide a lifting function.
+  The twisted Pin extension is isolated exactly, while coherent smooth atlas
+  transition lifts and their Čech cocycle remain open;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
@@ -367,6 +369,10 @@ Exhaustive closure checklist:
   configuration-space functions, with real-valued functions specializing to
   invariant actions, including the reconstructed radial action; no quotient
   topology or smooth structure is supplied;
+- **T/C** the actual D8 mapping torus now carries a nontrivial complete
+  analytic real time-translation action, with analytic diffeomorphism slices;
+  its induced action on the complete Janus configuration space and integration
+  of arbitrary tangent ghosts remain open;
 - **T/C** in a supplied reduced two-metric chart, the relative quadratic
   action has its genuine Frechet derivative; independent variations recover
   both Euler components, diagonal/sign-linked variations recover their
@@ -392,8 +398,12 @@ Exhaustive closure checklist:
   infinitesimal action invariance is equivalent to `E(q) ∘ K(q) = 0`; the
   identity is stable under parameter maps but need not split between sectors;
 - **N** a Hessian at one background does not determine a global nonlinear action;
-- **O** construct the Janus flow/gauge group and derive the complete Euler
-  source, PDE Noether identities, nonlinear Helmholtz conditions, variational
+- **T/C** the concrete D8 time flow restricts analytically to the throat and
+  acts on all eight blocks of the current independent-field package, with exact
+  group/inverse/PT laws and compatibility with all five induced fields;
+- **O** integrate
+  arbitrary ghosts into the gauge group, and derive the complete Euler source,
+  PDE Noether identities, nonlinear Helmholtz conditions, variational
   cohomology and boundary/null terms.
 
 ### Candidate A implementation checkpoint
@@ -451,6 +461,10 @@ New controlled subgates are now checked:
   nondegenerate `(3,1)` musical, and the true reflection generator is an exact
   isometry. The intrinsic dependent-tensor and smooth quotient-descent bridges
   are now typed but not yet discharged;
+- **T/C** the canonical quotient measure is now built unconditionally from
+  spherical measure times Lebesgue measure on a fundamental time domain. Its
+  finite Lorentz-density atlas glues uniquely back to that finite nonzero
+  measure and gives a nonzero frame-free intrinsic scalar action;
 - **T/C** on an open fixed-determinant-sign component of symmetric `4 x 4`
   metrics, the exact inverse and determinant measure of the same metric curve
   give the actual pointwise scalar-density variation and an explicit symmetric

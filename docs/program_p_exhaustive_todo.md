@@ -192,23 +192,24 @@ correspondance algébrique des coefficients, puis asymptotique effective.
             - [x] En déduire que tout lift d'une transition réduite impose
               effectivement `det = +1` et exclure tout lift Spin lorsque ce
               déterminant vaut autre chose.
-          - [ ] Prouver la surjectivité sur `SO(4)` par décomposition paire en
+          - [x] Prouver la surjectivité sur `SO(4)` par décomposition paire en
             réflexions non isotropes, puis construire les lifts de l'atlas.
             - [x] Isoler le datum exact de relèvement `SO(4) → Spin(4)` et
               prouver son équivalence à la surjectivité ; sous ce datum,
               caractériser point par point la liftabilité par `det = +1` et
               l'existence d'un choix atlas-wide par l'orientation de toutes
-              les transitions. La construction Clifford de ce datum et sa
-              régularité restent ouvertes.
+              les transitions. La régularité et la cohérence Čech des choix
+              atlas-wide restent ouvertes.
               - [x] Construire explicitement dans l'algèbre de Clifford le
                 relèvement Spin de toute paire de réflexions unitaires,
                 identifier sa projection au produit exact des réflexions,
                 puis étendre ce relèvement à toute liste finie de paires.
                 Toute factorisation paire fournit ainsi un vrai lift Spin.
-              - [ ] Prouver Cartan--Dieudonné en dimension quatre avec la
+              - [x] Prouver Cartan--Dieudonné en dimension quatre avec la
                 parité du déterminant, afin de fournir cette factorisation
-                paire pour tout élément de `SO(4)`. Cette API de génération
-                par réflexions n'est pas disponible dans Mathlib.
+                paire pour tout élément de `SO(4)`, puis construire sans
+                hypothèse la surjectivité `Spin(4) → SO(4)` et une fonction de
+                relèvement via `LinearIsometryEquiv.reflections_generate_dim`.
           - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
             - [x] Sur chaque triple overlap fixé et pour trois lifts arbitraires,
               annuler exactement le défaut par la correction noyau canonique
@@ -236,6 +237,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
                     prouver son équivalence à un vrai lift de transitions et
                     qu'elle force l'orientation. Aucune continuité/lissité des
                     lifts choisis n'est déduite.
+                  - [x] Utiliser la surjectivité `Spin(4) → SO(4)` pour choisir
+                    automatiquement tous les lifts pointwise d'un atlas
+                    orienté, construire leurs 1-cochaînes noyau et prouver le
+                    critère exact de trivialisation. Il reste l'orientation
+                    globale, cette classe Čech unique et la régularité.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
@@ -362,6 +368,18 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
             reste uniquement à prouver la continuité de ces coefficients
             symétriques du spectre racine non ordonné ; Mathlib ne fournit pas
             la continuité des racines d'un polynôme variable.
+            - [x] Réduire encore les quatre continuités scalaires à une seule :
+              dériver les quatre relations polynomiales exactes entre les
+              coefficients caractéristiques de la cible et ceux de sa racine,
+              prouver directement la continuité de `c₀`, puis celle de `c₁`
+              et `c₂` dès que `c₃` est continue. Le résidu est exactement
+              `c₃ = -tr(√A)`, sélectionné comme racine strictement négative
+              d'une équation scalaire explicite à coefficients continus.
+              - [x] Prouver sa continuité sans base propre continue : normaliser
+                le spectre positif dans le cube compact `[0,1]⁴`, descendre la
+                somme des racines carrées par le quotient des coefficients
+                symétriques, puis dénormaliser. Les quatre coefficients de la
+                racine sont donc continus sans hypothèse.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
@@ -536,6 +554,15 @@ par toute évolution admissible.
                     ghosts lisses globaux sur le quotient D8 et décharger les
                     obligations Koszul, puis étendre ce différentiel aux
                     métriques, jauges, auxiliaires, antifields et à BV.
+                    - [x] Construire les trois rotations spatiales `so(3)` sur
+                      le cover, prouver tangence à `S³`, équivariance deck,
+                      table de crochet et non-abélianité ; construire en plus
+                      la descente lisse injective de toute section cover
+                      équivariante et le pont vers les données Koszul fermées.
+                    - [x] Réaliser effectivement ces rotations comme trois
+                      sections tangentes `C∞`, prouver leur équivariance pour
+                      tout deck, fidélité et non-nullité. Le seul résidu est la
+                      naturalité du crochet sous la projection locale quotient.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -584,6 +611,11 @@ par toute évolution admissible.
         trace continue correspondante. L'identification à l'espace Sobolev
         intrinsèque et le théorème de trace pour la mesure volumique physique
         restent ouverts.
+      - [x] Instancier le graphe `H¹` avec les volumes canoniques physiques du
+        spacetime et du throat, prouver densité/complétude et ramener exactement
+        l'existence de la trace continue à l'unique inégalité lisse
+        codimension-un `CanonicalPhysicalH1TraceBound`. La preuve analytique
+        de cette inégalité reste ouverte.
       - [x] Plonger le vrai cœur scalaire statique dans le graphe `H¹`
         existant, prendre sa clôture complète et prouver que le pont continu
         depuis le Hilbert d'énergie existe si et seulement si la borne de
@@ -713,6 +745,29 @@ par toute évolution admissible.
               l'équivalence tangent-produit, de la dérivée de la sphère vers
               son orthogonal et d'une base orthonormale spatiale ; la signature
               `(3,1)` du tenseur quotient canonique est donc inconditionnelle.
+              - [x] Instancier ce tenseur quotient comme une vraie
+                `SmoothGeneralLorentzMetric`, prouver sa non-dégénérescence
+                globale et spécialiser la densité scalaire, sa première
+                variation et son reste quadratique pointwise.
+                - [x] Supprimer ensuite l'exigence erronée d'une frame globale
+                  en séparant le scalaire intrinsèque
+                  `g⁻¹(dφ,dφ)/2 - m²φ²/2` de sa mesure d'intégration. Pour toute
+                  mesure de Borel finie non nulle, prouver l'intégrabilité et
+                  construire une action intrinsèque effectivement non nulle.
+                  Une mesure de Dirac n'est utilisée que comme témoin formel
+                  dans ce gate intermédiaire.
+                  - [x] Isoler ce contrat comme un atlas fini de mesures
+                    coordonnées pondérées par `sqrt(|det g|)` et compatibles
+                    sur les recouvrements ; construire par cellules disjointes
+                    l'unique mesure globale, prouver ses restrictions locales,
+                    sa finitude et sa non-nullité, puis instancier l'action
+                    intrinsèque non nulle sans Dirac.
+                    - [x] Construire inconditionnellement la mesure canonique
+                      depuis `Measure.toSphere` sur `S³`, Lebesgue sur un
+                      domaine temporel fondamental et le pushforward au
+                      quotient ; produire l'atlas fini compatible, identifier
+                      la mesure recollée et obtenir une action intrinsèque
+                      constante non nulle.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
@@ -958,6 +1013,16 @@ non contrôlé et produit les conditions de jonction annoncées.
         linéaire et son opérateur `B`. L'intégration ghost → flot complet et la
         dépendance linéaire du flot sont isolées dans un contrat explicite ;
         elles ne sont pas encore construites sans hypothèse.
+        - [x] Construire néanmoins un premier flot Janus géométrique concret :
+          la translation réelle du temps sur le cover commute avec tout deck,
+          descend en une action réelle analytique complète sur le vrai quotient
+          D8, chaque tranche est un difféomorphisme analytique, et le demi-période
+          agit non trivialement. L'intégration d'un ghost arbitraire reste
+          ouverte.
+          - [x] Restreindre le même flot analytique au throat, prouver qu'il
+            préserve l'inclusion, puis le faire agir sur les huit blocs du
+            paquet `IndependentFields`. Fermer zéro/addition/inverse,
+            conjugaison PT et compatibilité avec les cinq champs induits.
         - [x] Identifier ensuite le covecteur combiné à la vraie dérivée
           linewise d'une action affine à background fixé et prouver que
           l'invariance finie par toutes les translations engendrées équivaut à

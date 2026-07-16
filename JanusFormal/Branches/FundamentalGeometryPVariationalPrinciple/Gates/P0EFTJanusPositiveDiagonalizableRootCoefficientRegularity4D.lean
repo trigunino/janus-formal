@@ -183,7 +183,7 @@ private theorem multiset_esymm_nonneg_of_nonneg
   apply hValues value
   exact Multiset.mem_of_le (Multiset.mem_powersetCard.mp hSubset).1 hValue
 
-private theorem positiveSimilarityRoot_coeff_three_neg
+theorem positiveSimilarityRoot_coeff_three_neg
     (data : PositiveDiagonalizableRelativeMatrix) :
     (positiveSimilarityRoot data).charpoly.coeff 3 < 0 := by
   let rootData := positiveSimilarityRootPresentation data
@@ -214,7 +214,7 @@ private theorem positiveSimilarityRoot_coeff_three_neg
     _ = -(Multiset.map rootData.eigenvalue Finset.univ.val).sum := hCoefficient
     _ < 0 := neg_neg_of_pos hSumPos
 
-private theorem positiveSimilarityRoot_coeff_one_nonpos
+theorem positiveSimilarityRoot_coeff_one_nonpos
     (data : PositiveDiagonalizableRelativeMatrix) :
     (positiveSimilarityRoot data).charpoly.coeff 1 ≤ 0 := by
   let rootData := positiveSimilarityRootPresentation data
