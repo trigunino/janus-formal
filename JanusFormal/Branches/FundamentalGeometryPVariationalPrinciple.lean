@@ -101,6 +101,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixSquareRootInteractionDensity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMatrixDiagonalGaugeNoether
@@ -311,6 +312,7 @@ structure ProgramStatus where
   paEffectiveD8SmoothQuotientManifoldProved : Prop
   paEffectiveD8SmoothPTDiffeomorphismProved : Prop
   paEffectiveD8ThroatEmbeddingDifferentialFrontierProved : Prop
+  paEffectiveD8ThroatIsSmoothEmbeddingProved : Prop
   paEffectiveD8SmoothNormalVectorBundleProved : Prop
   paEffectiveD8SmoothPTFieldAction4DProved : Prop
   paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved : Prop
@@ -528,6 +530,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8SmoothQuotientManifoldProved /\
   s.paEffectiveD8SmoothPTDiffeomorphismProved /\
   s.paEffectiveD8ThroatEmbeddingDifferentialFrontierProved /\
+  s.paEffectiveD8ThroatIsSmoothEmbeddingProved /\
   s.paEffectiveD8SmoothNormalVectorBundleProved /\
   s.paEffectiveD8SmoothPTFieldAction4DProved /\
   s.paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved /\

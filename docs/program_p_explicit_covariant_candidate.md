@@ -44,10 +44,10 @@ same-object topological base bridge. The same two quotient objects now carry
 covering-induced analytic `ChartedSpace` and `IsManifold` structures; both
 cover projections are analytic local diffeomorphisms and the injective throat
 inclusion is `C∞`, with injective differential and rank-one pointwise normal
-quotient. Its analytic rank-one normal `VectorBundle` has one-loop transition
-`-id` and pointwise linear identifications with those quotients.
-`IsSmoothEmbedding`, their global smooth identification and curved tensor
-fields are still not constructed.
+quotient. It is now a global `IsSmoothEmbedding`. Its analytic rank-one normal
+`VectorBundle` has one-loop transition `-id` and pointwise linear
+identifications with those quotients. Their global smooth identification and
+curved tensor fields are still not constructed.
 
 On exactly those bases, a nonempty algebraic field branch now takes both
 metric matrices to Minkowski, both scalar matter fields to zero and the

@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **T/C** a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting is constructed; an explicit trace inequality yields the unique continuous trace extension. Constructing the finite smooth spanning family, proving that inequality intrinsically, `IsSmoothEmbedding`, the globally smooth differential-normal identification and the non-null/null/joint stratification remain open.
+- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. Intrinsic Sobolev identification, the physical-volume trace, the globally smooth differential-normal identification and the non-null/null/joint stratification remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action and a nonempty zero branch; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -93,9 +93,9 @@ Current results:
   nonempty disjoint open sign sides; reflection and one deck iterate exchange
   them, while the image of either side is exactly the full effective-throat
   complement and PT preserves that quotient complement;
-- **N** the pointwise normal equivalences are not yet assembled into a
-  globally smooth bundle equivalence, and Mathlib's `IsSmoothEmbedding` plus
-  the non-null/null/joint strata remain unproved;
+- **T/N** the throat inclusion is a global `IsSmoothEmbedding`; the pointwise
+  normal equivalences are not yet assembled into a globally smooth bundle
+  equivalence, and the non-null/null/joint strata remain unproved;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -108,8 +108,8 @@ Current results:
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** prove the throat `IsSmoothEmbedding`, its smooth global normal-bundle
-  identification and stratification, then construct the ambient Pin structure
+- **O** prove the smooth global normal-bundle identification and stratification,
+  then construct the ambient Pin structure
   and physical square-root bundle.
 
 ## D2 — Focused twisted Dirac spectral geometry

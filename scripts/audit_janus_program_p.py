@@ -2132,6 +2132,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     for gate_import in (
         "Gates.P0EFTJanusMappingTorusSmoothPTInvolution",
         "Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding",
+        "Gates.P0EFTJanusMappingTorusIsSmoothEmbedding",
         "Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle",
         "Gates.P0EFTJanusMappingTorusStructuredJetGroupoid",
         "Gates.P0EFTJanusCircleDeterminantTopologicalBundle",
@@ -2234,6 +2235,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8SmoothQuotientManifoldProved",
         "paEffectiveD8SmoothPTDiffeomorphismProved",
         "paEffectiveD8ThroatEmbeddingDifferentialFrontierProved",
+        "paEffectiveD8ThroatIsSmoothEmbeddingProved",
         "paEffectiveD8SmoothNormalVectorBundleProved",
         "paEffectiveD8SmoothPTFieldAction4DProved",
         "paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved",

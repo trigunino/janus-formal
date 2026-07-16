@@ -137,10 +137,10 @@ The compact fundamental strips `S³ × [0,|T|]` and `S² × [0,|T|]`
 project continuously and surjectively, proving compactness of both actual
 effective quotients.
 
-The remaining smooth-embedding frontier is explicit: Mathlib's
-`IsSmoothEmbedding` instance is not proved, the pointwise normal equivalences
-have not been assembled into a globally smooth equivalence with the
-differential normal quotient, and the nonnull/null/joint strata remain open.
+The throat inclusion is now a global Mathlib `IsSmoothEmbedding`. The remaining
+normal frontier is explicit: the pointwise normal equivalences have not been
+assembled into a globally smooth equivalence with the differential normal
+quotient, and the nonnull/null/joint strata remain open.
 
 Lean theorems:
 
@@ -353,10 +353,9 @@ and document the Euclidean/Lorentzian dictionary rather than infer a `Pin+` or
 3. prove the `S3 -> J -> S1` fibration;
 4. calculate `pi1(J)=Z`;
 5. construct the one-sided `S2 x S1` throat and its Möbius normal line;
-6. promote the topological even-winding throat cover and trivial normal
-   pullback to smooth differential bundles;
-7. reuse the proved path-connected sides and connected quotient complement in
-   the smooth throat embedding.
+6. assemble the pointwise normal identifications into a smooth global bundle
+   equivalence;
+7. construct the nonnull/null/joint strata of the smooth throat embedding.
 
 This is the preferred continuation of the current geometry.
 
@@ -382,12 +381,12 @@ selected.
 
 ## 10. Terminal theorem queue
 
-1. Promote the constructed topological quotient manifold atlas to `C∞`.
+1. Refine the constructed analytic quotient atlas with the remaining global
+   fibration data.
 2. Prove the mapping-torus fibration and `pi1(J)=Z` in Lean.
-3. Promote the constructed topological normal-line quotient and its trivial
-   even-cover pullback to a smooth differential `VectorBundle`.
-4. Reuse the identified connected components and connected quotient complement
-   in the smooth throat embedding and boundary analysis.
+3. Assemble the analytic normal-line bundle and the differential normal
+   quotient into a smooth global bundle equivalence.
+4. Construct the nonnull/null/joint strata for boundary analysis.
 5. Classify flat `Z4` lifts of the orientation local system globally.
 6. Fix the Pin reflection convention and derive the physical PT square.
 7. Formalize the theorem that complex irreducible cyclic representations are

@@ -94,7 +94,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         involutif sur les quotients effectifs 4D et du throat 3D.
       - [x] Prouver la compacité des quotients effectifs 4D et 3D par projection
         continue surjective de leurs bandes fondamentales compactes.
-- [ ] Construire l'immersion du throat et sa stratification non-nulle/null/joint.
+- [ ] Compléter la géométrie du throat par sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
     niveau du cover et l'inclusion injective induite de son mapping torus dans
     le quotient effectif.
@@ -108,8 +108,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   - [x] Identifier les deux côtés par leur connexité par arcs dans la
     décomposition disjointe avant quotient et prouver que le complément après
     quotient est lui-même connexe par arcs, donc connexe.
-  - [ ] Prouver l'immersion/embedding lisse et la stratification
-    non-nulle/null/joint.
+  - [ ] Construire la stratification non-nulle/null/joint de l'embedding lisse.
     - [x] Prouver que l'inclusion du throat au niveau cover est un embedding
       topologique `C⁰` et que l'inclusion quotient est `C⁰`.
     - [x] Prouver que l'inclusion injective du throat quotient est `C∞` pour
@@ -123,9 +122,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       égale à `-id`.
     - [x] Identifier non canoniquement chaque fibre de ce bundle au quotient
       différentiel normal correspondant par une équivalence linéaire.
-    - [ ] Promouvoir l'inclusion en `IsSmoothEmbedding` en construisant les
-      témoins locaux d'immersion requis par Mathlib ; l'injectivité ponctuelle
-      de `mfderiv` ne suffit pas encore à produire cette instance.
+    - [x] Promouvoir l'inclusion en `IsSmoothEmbedding` : construire une forme
+      normale locale de `S² ↪ S³`, son complément normal réel de dimension un,
+      la descendre au cover puis au quotient, et empaqueter globalement
+      `IsImmersion` et `IsSmoothEmbedding` avec l'embedding fermé déjà prouvé.
     - [ ] Assembler les identifications normales ponctuelles en une
       équivalence lisse globale et construire les strates
       non-nulles/nulles/joints.
@@ -137,9 +137,9 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     projection couvrante à deux feuillets, l'involution de deck libre et la
     trivialisation topologique explicite du pullback de la ligne normale.
   - [ ] Identifier globalement et lissement ce bundle au bundle normal
-    différentiel d'un `IsSmoothEmbedding` effectivement construit ; le
-    `VectorBundle` analytique et les identifications ponctuelles sont fermés
-    dans le bloc précédent.
+    différentiel de l'`IsSmoothEmbedding` maintenant construit ; le
+    `VectorBundle` analytique et les identifications ponctuelles sont fermés,
+    mais leur assemblage lisse global reste ouvert.
 - [ ] Construire le relèvement Pin/SpinC et la racine normale `Z4` comme objets
   globaux, pas seulement comme phases ou cocycles fournis.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités

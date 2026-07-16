@@ -125,9 +125,9 @@ source geometric data
 
 Use the now-constructed smooth D8 mapping torus as the multi-chart example:
 
-1. promote the checked throat differential/embedding data to a globally
-   complemented smooth immersion and normal vector bundle;
-2. construct its normal transition maps and prove smoothness;
+1. assemble the checked pointwise normal equivalences of the global smooth
+   throat embedding into one smooth bundle equivalence;
+2. connect that differential normal bundle to the analytic sign-clutched line;
 3. construct the corresponding SpinC Cech data with smooth transitions;
 4. extract the low-order `(II,F)` jets in each chart;
 5. prove that the reduced jets and one chosen natural operator descend.
