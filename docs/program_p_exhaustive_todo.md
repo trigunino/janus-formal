@@ -192,6 +192,8 @@ correspondance algébrique des coefficients, puis asymptotique effective.
               annuler exactement le défaut par la correction noyau canonique
               du troisième lift. La cohérence commune sur tout l'atlas reste
               ouverte.
+              - [x] Prouver que cette correction canonique est l'unique
+                translation noyau du troisième lift annulant le défaut local.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
