@@ -26,7 +26,7 @@ The repository does **not** currently claim:
 
 ```text
 Program D — geometry, bundles and operators
-├── D0/D8  mapping torus, one-sided throat, normal line and quarter lift
+├── D0/D8  mapping torus, one-sided throat, analytic normal line bundle and quarter lift
 ├── D2     focused twisted-Dirac spectral geometry
 ├── D7     heat kernel, winding determinants and scale no-go results
 ├── D9     gauge-fixed elliptic-symbol / BRST gate collection
@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **O** Sobolev trace theory, the smooth normal bundle and the non-null/null/joint stratification remain open.
+- **O** Sobolev trace theory, `IsSmoothEmbedding`, the globally smooth identification with the differential normal quotient and the non-null/null/joint stratification remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action and a nonempty zero branch; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -71,8 +71,9 @@ Current results:
 - **T** the effective orbit quotient of `S3 x R` by the combined integer
   monodromy/translation is constructed; the action is free and properly
   discontinuous, and the quotient projection is a covering map;
-- **T/I** the quotient inherits a charted-space structure, without an
-  `IsManifold` or smooth-atlas theorem;
+- **T** the spacetime and throat quotients carry installed analytic
+  `ChartedSpace` and `IsManifold` instances, and their covering projections
+  are analytic local diffeomorphisms;
 - **T** the equatorial `S2` inclusion is continuous and injective on the cover,
   equivariant, and induces a continuous injective map of effective quotients;
 - **T** cover-coordinate time reversal descends to a continuous involution on
@@ -84,17 +85,21 @@ Current results:
   topological covering: its deck involution is free, every fiber has two
   elements, and the pulled-back normal line is globally homeomorphic to the
   product with `R`;
+- **T** the exact local-section sign cocycle constructs a genuine analytic
+  real rank-one `VectorBundle` on the effective throat; one circuit acts by
+  `-id`, and every fiber is noncanonically linearly equivalent to its
+  differential normal quotient;
 - **T** the equatorial complement in the concrete unit `S3` is exactly two
   nonempty disjoint open sign sides; reflection and one deck iterate exchange
   them, while the image of either side is exactly the full effective-throat
   complement and PT preserves that quotient complement;
-- **N** this does not yet identify a differential normal bundle, construct a
-  smooth `VectorBundle`, prove `IsManifold`, identify the open sides as maximal
-  connected components, or prove the quotient complement connected;
+- **N** the pointwise normal equivalences are not yet assembled into a
+  globally smooth bundle equivalence, and Mathlib's `IsSmoothEmbedding` plus
+  the non-null/null/joint strata remain unproved;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
-- **N** the constructed object is a free topological mapping-torus quotient,
-  not automatically a singular orbifold; its smooth-manifold upgrade remains open;
+- **N** the constructed object is a free analytic mapping-torus manifold, not
+  a singular orbifold;
 - **N** expected `pi_1` is `Z`, not `Z4`;
 - **T/C** the normal clutching sign is `-1`, its doubled pullback is trivial, and the two complex square roots are `+i` and `-i`;
 - **T/C** the associated sign representation identifies the orientation cover with the even-winding kernel and proves pulled-back `w1 = 0`;
@@ -103,8 +108,9 @@ Current results:
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** construct the global smooth decorated mapping torus, smooth throat
-  embedding/stratification, ambient Pin structure and physical square-root bundle.
+- **O** prove the throat `IsSmoothEmbedding`, its smooth global normal-bundle
+  identification and stratification, then construct the ambient Pin structure
+  and physical square-root bundle.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
