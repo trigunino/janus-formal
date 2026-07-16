@@ -1974,6 +1974,19 @@ PROGRAM_P_GATES = {
             "def FiniteSmoothTangentFrameRawPatchContinuity.toUniformGraphEllipticity",
         ),
     ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1FixedLocalEnergyReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFixedLocalCovectorComponent",
+            "def finiteLocalizedCovectorComponent",
+            "def finiteFixedLocalFirstJet",
+            "theorem finiteFrameDerivative_eq_localizedComponent",
+            "theorem smoothFirstJet_norm_eq_finiteFixedLocalFirstJet",
+            "def finiteFixedLocalJacobiDensity",
+            "structure StaticScalarFixedLocalEnergyDomination",
+            "def StaticScalarFixedLocalEnergyDomination.toUniformGraphEllipticity",
+        ),
+    ),
     "P0EFTJanusMappingTorusAutomaticScalarIntegrability4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2857,6 +2870,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8StaticScalarHolonomicFrameControlBridge4DProved",
         "paEffectiveD8StaticScalarContinuousLocalFrameControlBridge4DProved",
         "paEffectiveD8StaticScalarFiniteFramePatchClosure4DProved",
+        "paEffectiveD8StaticScalarFixedLocalEnergyReduction4DProved",
         "paEffectiveD8AutomaticScalarIntegrability4DProved",
         "paEffectiveD8ScalarRobinJunctionBalance4DProved",
         "paEffectiveD8ScalarRobinJunctionHessian4DProved",

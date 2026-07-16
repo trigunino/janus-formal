@@ -277,6 +277,10 @@ def test_program_p_static_scalar_finite_frame_patch_closure_is_integrated() -> N
     assert_program_p_gate_integrity()
 
 
+def test_program_p_static_scalar_fixed_local_energy_reduction_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_automatic_scalar_integrability_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
