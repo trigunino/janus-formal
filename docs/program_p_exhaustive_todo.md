@@ -253,6 +253,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       - [x] Autoriser tout changement inversible mélangeant arbitrairement les
         vecteurs à l'intérieur d'un même espace propre répété et prouver que
         la racine par similarité reste inchangée.
+      - [x] Comparer deux diagonalisation du même opérateur ayant le même
+        spectre positif ordonné et prouver que leurs racines par similarité
+        coïncident exactement. Les permutations et le recollement restent ouverts.
   - [x] Construire une vraie strate de Jordan lorentzienne en dimension quatre,
     issue de deux métriques symétriques indépendantes : la racine réelle
     explicite se carre exactement au produit relatif et, pour paramètre non
