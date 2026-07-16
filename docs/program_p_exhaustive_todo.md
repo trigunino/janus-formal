@@ -417,13 +417,18 @@ par toute évolution admissible.
         d'ellipticité uniforme ponctuel : dériver les minorations positives
         uniformes des coefficients, construire la racine de densité dans
         `L²`, prouver l'égalité exacte de norme puis le pont continu vers le
-        graphe `H¹`. Seul le contrôle quantitatif des coefficients du repère
-        tangent fini par les directions holonomes reste à dériver.
+        graphe `H¹`. Seule l'instanciation géométrique des coefficients locaux
+        du repère tangent fini dans les directions holonomes reste à dériver.
         - [x] Dériver automatiquement les bornes supérieures uniformes des
           magnitudes et la coercivité holonome, puis prouver qu'un contrat
           purement géométrique de contrôle du repère tangent implique le
           contrat d'ellipticité uniforme. L'instanciation du changement de
           repère continu uniformément borné reste ouverte.
+        - [x] Réduire ce dernier changement de repère à des coefficients
+          continus sur un recouvrement fermé fini : la compacité produit
+          automatiquement une borne carrée uniforme et ferme le pont jusqu'à
+          l'ellipticité. Seule la construction de ces données depuis les
+          trivialisations locales actuellement privées reste ouverte.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
