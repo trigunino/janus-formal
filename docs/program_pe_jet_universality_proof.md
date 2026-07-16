@@ -325,6 +325,16 @@ or torsion is modeled, and this is not the naive cyclic `∇F = 0` formula in a
 torsionful geometry. Neither theorem derives these inputs from actual Janus
 characteristic classes or determinant transitions.
 
+On the actual smooth D8 mapping torus, the integer deck action is now packaged
+as a Mathlib category and groupoid. Its component presentation has explicit
+source/target pullback families; every deck component is étale, and a supplied
+deck representation defines a functor to the structured-jet action groupoid.
+Smooth deck-invariant coefficient maps descend uniquely and smoothly through
+the real quotient projection. Supplied low-order holonomic jet families and
+their `(II,F)` reduction commute with this descent. This closes the D8 deck
+and low-order descent frontier, not the physical SpinC representation, global
+vector/principal bundles, higher jets or extension across isotropy strata.
+
 ## Janus specialization still open
 
 1. Define the actual category of decorated Janus SpinC immersions.
@@ -362,6 +372,9 @@ characteristic classes or determinant transitions.
 | low-order invariant-observable descent | unique chart-independent values; globally smooth under a smooth coefficient realization |
 | multi-chart SpinC Cech transition presentation | conditional pointwise theorem from supplied cocycles, lifts, phases and matching defects; continuity and total space open |
 | abelian connection overlap curvature descent | conditional global smooth curvature with actual cyclic Bianchi derivative from supplied local potentials and flat additive shifts |
+| effective D8 deck category/groupoid | proved, with componentwise étale source and target |
+| D8 smooth invariant-map descent | unique and smooth on the actual quotient |
+| D8 low-order holonomic `(II,F)` descent | proved for supplied deck-equivariant jet families |
 | actual structured SpinC jet groupoid | open |
 | effective Janus descent theorem | open |
 | full smooth equivariant-map classification | open |

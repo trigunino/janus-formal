@@ -40,7 +40,11 @@ These are data-bearing Lean constructions, not status flags:
   smooth positive-definite Euclidean metric;
 - Riesz shape operators and fixed-model smoothness/equivariance;
 - a one-chart trivial Cech presentation of the rank-two SpinC model;
-- a low-order Euclidean action-groupoid realization.
+- a low-order Euclidean action-groupoid realization;
+- the actual D8 deck category/groupoid and its componentwise étale smooth
+  presentation;
+- unique smooth descent of deck-invariant maps through the actual D8 quotient;
+- low-order holonomic `(II,F)` descent for supplied equivariant jet families.
 
 These results are real, but most are abstract, fixed-model, Euclidean, local,
 rank-two, or one-chart results.
@@ -80,10 +84,12 @@ fullJanusJetUniversalityClosed status
 
 ## Exact missing geometric bridge
 
-The full specialization still needs a data-bearing construction of:
+The D8 base manifold, quotient projection and deck groupoid now exist as
+data-bearing objects. The full specialization still needs a construction of:
 
-1. a concrete Janus base manifold and immersion;
-2. its tangent and normal bundles with smooth local trivializations;
+1. the physical decorated immersion on that base;
+2. its normal bundle with smooth local trivializations and identification with
+   the topological orbit normal line;
 3. the relevant higher-dimensional Spin/SpinC principal bundle;
 4. a smooth determinant-line connection;
 5. finite structured jets extracted from genuine manifold sections;
@@ -117,14 +123,14 @@ source geometric data
 
 ## Shortest constructive next milestone
 
-Build one nontrivial smooth multi-chart example, independent of full Janus:
+Use the now-constructed smooth D8 mapping torus as the multi-chart example:
 
-1. define a concrete immersed manifold with nontrivial chart overlaps;
-2. construct its tangent/normal transition maps and prove smoothness;
+1. promote the checked throat differential/embedding data to a globally
+   complemented smooth immersion and normal vector bundle;
+2. construct its normal transition maps and prove smoothness;
 3. construct the corresponding SpinC Cech data with smooth transitions;
 4. extract the low-order `(II,F)` jets in each chart;
 5. prove that the reduced jets and one chosen natural operator descend.
 
-This would upgrade P-E from a local Euclidean realization plus conditional
-descent to an actual global geometric existence theorem.  The Janus-specific
-manifold can then be the next instantiation.
+This would upgrade the existing global D8 deck descent from coefficient-level
+families to the physical SpinC structured-jet category.
