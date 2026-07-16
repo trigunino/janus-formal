@@ -429,7 +429,10 @@ champs et avec les mêmes conditions au bord.
 - [ ] Étendre l'opérateur de Dirac du cercle au vrai opérateur Janus global.
 - [ ] Fixer son domaine commun, ses conditions au bord et sa réalisation
   auto-adjointe.
-- [ ] Identifier le domaine du générateur du semi-groupe avec celui de `D²`.
+- [x] Identifier, pour l'opérateur diagonal du cercle sur tout `ℓ²(ℤ,ℂ)`, le
+  domaine maximal du générateur fort à droite avec le domaine spectral de
+  `D²`, prouver que ce dernier est exactement le domaine de composition
+  `D ∘ D`, et identifier le générateur à `-D²`.
 - [ ] Prouver l'égalité avec le calcul fonctionnel abstrait `exp(-t D²)`.
 - [ ] Prouver les propriétés trace-class requises.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai

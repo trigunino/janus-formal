@@ -59,6 +59,10 @@ def test_program_p_d10_finite_mode_determinant_line_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_circle_heat_generator_domain_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d10_infinite_circle_common_domain_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

@@ -166,8 +166,12 @@ Current D7 frontier: the infinite monopole heat trace and the two physical
 coefficients agree exactly with the universal `a0/a2/a4` formulas. The
 order-four Euler--Maclaurin identity, its uniform fifth-derivative remainder
 bound and the normalized small-time limit are now proved without an external
-analytic hypothesis. The full Fredholm/Quillen family and field/ghost-weighted
-anomaly problem remain separate and open.
+analytic hypothesis. For the normalized circle heat semigroup, the maximal
+strong right-generator domain on the full Fourier Hilbert space is now exactly
+the squared-eigenvalue weighted domain; this is also proved equal to the actual
+iterated domain of `D ∘ D`, and the generator is uniquely `-D²`. Abstract
+functional calculus, the full Fredholm/Quillen family and the
+field/ghost-weighted anomaly problem remain separate and open.
 
 D10 now also contains a concrete symmetric finite Fourier family: its matrix
 entries depend holomorphically on complex holonomy, every cutoff is
