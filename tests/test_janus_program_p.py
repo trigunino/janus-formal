@@ -66,6 +66,10 @@ def test_program_p_lorentz_jordan_relative_root_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_lorentz_jordan_signature_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_diagonal_causal_frontier_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
@@ -230,6 +234,10 @@ def test_program_p_global_scalar_static_h1_graph_bridge_is_integrated() -> None:
 
 
 def test_program_p_static_scalar_uniform_ellipticity_bridge_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_static_scalar_holonomic_frame_control_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 

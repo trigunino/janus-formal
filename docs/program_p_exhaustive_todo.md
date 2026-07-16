@@ -230,6 +230,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     explicite se carre exactement au produit relatif et, pour paramètre non
     nul, celui-ci n'est pas diagonalisable. La classification et le recollement
     de tous les types de Jordan admissibles restent ouverts.
+    - [x] Certifier réellement la signature `(3,1)` de toute cette famille par
+      un repère nul inversible explicite et une congruence exacte avec
+      `diag(-1,1,1,1)` pour chacune des deux métriques.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
@@ -396,6 +399,11 @@ par toute évolution admissible.
         `L²`, prouver l'égalité exacte de norme puis le pont continu vers le
         graphe `H¹`. Seul le contrôle quantitatif des coefficients du repère
         tangent fini par les directions holonomes reste à dériver.
+        - [x] Dériver automatiquement les bornes supérieures uniformes des
+          magnitudes et la coercivité holonome, puis prouver qu'un contrat
+          purement géométrique de contrôle du repère tangent implique le
+          contrat d'ellipticité uniforme. L'instanciation du changement de
+          repère continu uniformément borné reste ouverte.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.

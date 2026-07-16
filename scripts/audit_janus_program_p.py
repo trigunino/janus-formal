@@ -1229,6 +1229,21 @@ PROGRAM_P_GATES = {
             "theorem lorentz_jordan_relative_root4D_closure",
         ),
     ),
+    "P0EFTJanusLorentzJordanAdmissibleSignature4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def minkowskiMetric4",
+            "def nullLorentzFrame4",
+            "def nullLorentzFrameInverse4",
+            "theorem nullLorentzFrameInverse4_mul",
+            "theorem nullLorentzFrame4_mul_inverse",
+            "theorem nullLorentzFrame4_congruence",
+            "structure LorentzSignatureWitness4",
+            "def plusMetric4LorentzSignatureWitness",
+            "def minusMetric4LorentzSignatureWitness",
+            "theorem lorentz_jordan_admissible_signature4D_closure",
+        ),
+    ),
     "P0EFTJanusGlobalDiagonalLorentzCausalFrontier4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1896,6 +1911,18 @@ PROGRAM_P_GATES = {
             "theorem uniformGraphEllipticity_energyToH1GraphBound",
             "def staticScalarEnergyToH1GraphClosureOfUniformEllipticity",
             "theorem staticScalarEnergyToH1GraphClosureOfUniformEllipticity_agrees_on_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1FrameControl4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem exists_uniform_magnitude_upper",
+            "def staticScalarHolonomicJetSquare",
+            "theorem exists_uniform_static_holonomic_coercivity",
+            "structure StaticScalarHolonomicFrameControl",
+            "theorem frameDerivative_eq_holonomicCoefficientSum",
+            "theorem smoothFirstJet_sq_le_holonomicJetSquare",
+            "def StaticScalarHolonomicFrameControl.toUniformGraphEllipticity",
         ),
     ),
     "P0EFTJanusMappingTorusAutomaticScalarIntegrability4D.lean": (
@@ -2628,6 +2655,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paGlobalDiagonalLorentzRoot4DProved",
         "paPositiveDiagonalizableRelativeRoot4DProved",
         "paLorentzJordanRelativeRoot4DProved",
+        "paLorentzJordanAdmissibleSignature4DProved",
         "paGlobalDiagonalLorentzCausalFrontier4DProved",
         "paGlobalDiagonalRootFrontierControl4DProved",
         "paMinkowskiGlobalDiagonalRootGluing4DProved",
@@ -2722,6 +2750,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GlobalHolonomicScalarStaticH1Fredholm4DProved",
         "paEffectiveD8GlobalHolonomicScalarStaticH1GraphBridge4DProved",
         "paEffectiveD8StaticScalarUniformGraphEllipticityBridge4DProved",
+        "paEffectiveD8StaticScalarHolonomicFrameControlBridge4DProved",
         "paEffectiveD8AutomaticScalarIntegrability4DProved",
         "paEffectiveD8ScalarRobinJunctionBalance4DProved",
         "paEffectiveD8ScalarRobinJunctionHessian4DProved",
