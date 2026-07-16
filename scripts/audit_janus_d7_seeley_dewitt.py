@@ -2,9 +2,20 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from dataclasses import asdict, dataclass
+from pathlib import Path
 
 import sympy as sp
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+D7_GATE_ROOT = Path(
+    "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory/Gates"
+)
+D7_FACADE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD7SpectralTheory.lean"
+)
 
 
 @dataclass(frozen=True)
@@ -30,13 +41,129 @@ class D7SeeleyDeWittAudit:
     symbolic_a2_residual: str
     symbolic_a4_residual: str
     universal_to_dirac_a4_residual: str
+    recent_wave0_gates_integrated: bool
+    infinite_sphere_heat_trace_formally_constructed: bool
+    quarter_determinant_convergence_formally_closed: bool
+    algebraic_coefficient_correspondence_formally_closed: bool
+    euler_maclaurin_remainder_estimate_formally_proved: bool
+    unconditional_small_time_limit_formally_closed: bool
+    small_time_limit_proof_basis: str
     heat_trace_samples: tuple[HeatTraceSample, ...]
     maximum_small_time_residual: float
     smallest_time_extracted_a4_error: float
+    numerical_small_time_evidence_pass: bool
     local_coefficients_linear_in_circle_modulus: bool
     common_scale_orbit_residual: float
     all_checks_pass: bool
     conclusion: str
+
+
+def audit_d7_wave0_formalization(
+    repo_root: Path = REPO_ROOT,
+) -> dict[str, bool]:
+    facade = (repo_root / D7_FACADE).read_text(encoding="utf-8")
+    sphere = (
+        repo_root / D7_GATE_ROOT / "P0EFTJanusMonopoleSphereHeatTrace.lean"
+    ).read_text(encoding="utf-8")
+    asymptotic = (
+        repo_root / D7_GATE_ROOT / "P0EFTJanusMonopoleHeatAsymptoticMatch.lean"
+    ).read_text(encoding="utf-8")
+    euler_maclaurin = (
+        repo_root / D7_GATE_ROOT / "P0EFTJanusEulerMaclaurinOrderFour.lean"
+    ).read_text(encoding="utf-8")
+    quarter = (
+        repo_root / D7_GATE_ROOT / "P0EFTJanusQuarterDeterminantConvergence.lean"
+    ).read_text(encoding="utf-8")
+
+    gate_names = (
+        "P0EFTJanusMonopoleSphereHeatTrace",
+        "P0EFTJanusEulerMaclaurinOrderFour",
+        "P0EFTJanusMonopoleHeatAsymptoticMatch",
+        "P0EFTJanusQuarterDeterminantConvergence",
+    )
+    recent_gates_integrated = all(
+        (
+            "import JanusFormal.Branches.FundamentalGeometryD7SpectralTheory."
+            f"Gates.{gate_name}"
+        )
+        in facade
+        for gate_name in gate_names
+    )
+
+    local_start = facade.index("def localSpectralFoundationClosed")
+    analytic_start = facade.index("def analyticSpectralTheoryClosed")
+    full_start = facade.index("def fullD7Closure")
+    local_closure = facade[local_start:analytic_start]
+    analytic_closure = facade[analytic_start:full_start]
+
+    sphere_constructed = all(
+        declaration in sphere
+        for declaration in (
+            "def sphereHeatTrace",
+            "theorem sphere_heat_trace_summable",
+            "theorem sphere_heat_trace_has_sum",
+        )
+    ) and "s.infiniteMonopoleSphereHeatTraceConstructed" in local_closure
+
+    quarter_closed = all(
+        declaration in quarter
+        for declaration in (
+            "theorem quarter_remainder_summable",
+            "theorem quarter_cutoff_remainder_converges",
+            "noncomputable def z4RenormalizedDeterminant",
+        )
+    ) and all(
+        status in local_closure
+        for status in (
+            "s.z4QuarterRemainderSummableProved",
+            "s.z4RenormalizedDeterminantConstructed",
+        )
+    )
+
+    algebraic_correspondence_closed = (
+        "theorem spectral_product_coefficients_match_universal" in asymptotic
+        and "s.spectralHeatCoefficientAlgebraMatched" in local_closure
+    )
+    euler_maclaurin_remainder_proved = all(
+        declaration in euler_maclaurin
+        for declaration in (
+            "theorem euler_maclaurin_cell",
+            "theorem euler_maclaurin_finite_remainder_bound",
+            "theorem euler_maclaurin_tsum_error_bound",
+        )
+    ) and all(
+        declaration in asymptotic
+        for declaration in (
+            "def EulerMaclaurinRemainderControlled",
+            "theorem dimensionless_trace_euler_maclaurin_bound",
+            "theorem euler_maclaurin_remainder_controlled",
+        )
+    )
+    unconditional_small_time_closed = re.search(
+        r"\btheorem\s+small_time_coefficients_match\s*(?:\(|\n)",
+        asymptotic,
+    ) is not None and all(
+        status in analytic_closure
+        for status in (
+            "s.heatTraceAsymptoticsProved",
+            "s.unconditionalMonopoleSphereSmallTimeAsymptoticsProved",
+        )
+    )
+
+    return {
+        "recent_wave0_gates_integrated": recent_gates_integrated,
+        "infinite_sphere_heat_trace_formally_constructed": sphere_constructed,
+        "quarter_determinant_convergence_formally_closed": quarter_closed,
+        "algebraic_coefficient_correspondence_formally_closed": (
+            algebraic_correspondence_closed
+        ),
+        "euler_maclaurin_remainder_estimate_formally_proved": (
+            euler_maclaurin_remainder_proved
+        ),
+        "unconditional_small_time_limit_formally_closed": (
+            unconditional_small_time_closed
+        ),
+    }
 
 
 def sphere_monopole_dirac_squared_heat_trace(
@@ -118,6 +245,7 @@ def reduced_dirac_coefficients(
 
 
 def build_audit() -> D7SeeleyDeWittAudit:
+    wave0 = audit_d7_wave0_formalization()
     L, T, pi_c, n = sp.symbols("L T pi_c n", nonzero=True, real=True)
 
     volume = 4 * pi_c * L**3 * T
@@ -194,14 +322,22 @@ def build_audit() -> D7SeeleyDeWittAudit:
 
     max_residual = max(sample.absolute_residual for sample in samples[-3:])
     extracted_error = abs(samples[-1].extracted_a4 - a4)
+    numerical_small_time_evidence_pass = (
+        max_residual < 1.0e-7 and extracted_error < 1.0e-3
+    )
 
     checks = [
         sp.simplify(a0_symbolic - expected_a0) == 0,
         sp.simplify(a2_symbolic - expected_a2) == 0,
         sp.simplify(a4_symbolic - expected_a4) == 0,
         sp.simplify(universal_a4 - a4_symbolic) == 0,
-        max_residual < 1.0e-7,
-        extracted_error < 1.0e-3,
+        wave0["recent_wave0_gates_integrated"],
+        wave0["infinite_sphere_heat_trace_formally_constructed"],
+        wave0["quarter_determinant_convergence_formally_closed"],
+        wave0["algebraic_coefficient_correspondence_formally_closed"],
+        wave0["euler_maclaurin_remainder_estimate_formally_proved"],
+        wave0["unconditional_small_time_limit_formally_closed"],
+        numerical_small_time_evidence_pass,
         scale_orbit_residual < 1.0e-10,
     ]
 
@@ -220,17 +356,37 @@ def build_audit() -> D7SeeleyDeWittAudit:
         universal_to_dirac_a4_residual=str(
             sp.simplify(universal_a4 - a4_symbolic)
         ),
+        recent_wave0_gates_integrated=wave0["recent_wave0_gates_integrated"],
+        infinite_sphere_heat_trace_formally_constructed=wave0[
+            "infinite_sphere_heat_trace_formally_constructed"
+        ],
+        quarter_determinant_convergence_formally_closed=wave0[
+            "quarter_determinant_convergence_formally_closed"
+        ],
+        algebraic_coefficient_correspondence_formally_closed=wave0[
+            "algebraic_coefficient_correspondence_formally_closed"
+        ],
+        euler_maclaurin_remainder_estimate_formally_proved=wave0[
+            "euler_maclaurin_remainder_estimate_formally_proved"
+        ],
+        unconditional_small_time_limit_formally_closed=wave0[
+            "unconditional_small_time_limit_formally_closed"
+        ],
+        small_time_limit_proof_basis="proved order-four Euler-Maclaurin remainder bound",
         heat_trace_samples=tuple(samples),
         maximum_small_time_residual=max_residual,
         smallest_time_extracted_a4_error=extracted_error,
+        numerical_small_time_evidence_pass=numerical_small_time_evidence_pass,
         local_coefficients_linear_in_circle_modulus=True,
         common_scale_orbit_residual=scale_orbit_residual,
         all_checks_pass=all(checks),
         conclusion=(
             "The universal closed-manifold a0/a2/a4 formulas reduce exactly to "
-            "the Program-D rank-two Dirac/monopole coefficients. The separated "
-            "primitive-monopole spectrum numerically reproduces those coefficients "
-            "in the small-time heat trace. All local terms remain linear in the "
+            "the Program-D rank-two Dirac/monopole coefficients; this algebraic "
+            "correspondence is formally closed. The separated primitive-monopole "
+            "spectrum gives the same numerical small-time coefficients, and the "
+            "order-four Euler-Maclaurin remainder bound now proves the formal "
+            "small-time limit unconditionally. All local terms remain linear in the "
             "circle modulus, and the local action is invariant under a common "
             "metric/cutoff rescaling. Therefore local Seeley-DeWitt data fix UV "
             "counterterms and relative normalizations, not a finite circle or "

@@ -163,11 +163,19 @@ E      observational falsification after theoretical closure
 
 Current D7 frontier: the infinite monopole heat trace and the two physical
 `Z4` renormalized determinants are constructed, and the spectral product
-coefficients agree exactly with the universal `a0/a2/a4` formulas. The only
-remaining conditional step in that coefficient chain is the uniform
-Euler--Maclaurin remainder estimate isolated by
-`EulerMaclaurinRemainderControlled`; this is distinct from the still-open full
-Fredholm/Quillen family and field/ghost-weighted anomaly problem.
+coefficients agree exactly with the universal `a0/a2/a4` formulas. The
+order-four Euler--Maclaurin identity, its uniform fifth-derivative remainder
+bound and the normalized small-time limit are now proved without an external
+analytic hypothesis. The full Fredholm/Quillen family and field/ghost-weighted
+anomaly problem remain separate and open.
+
+D10 now also contains a concrete symmetric finite Fourier family: its matrix
+entries depend holomorphically on complex holonomy, every cutoff is
+algebraically Fredholm of index zero, and the induced top-exterior determinant
+line has rank one. PT covariance and invertibility at both quarter holonomies
+are proved. This remains a finite-mode milestone, not the global unbounded
+Janus Fredholm family, physical Hessian, eta holonomy or Quillen/Bismut--Freed
+package.
 
 ## 4. Topology and Z4
 
@@ -177,7 +185,30 @@ For
 J(T,rho) = (S3 x R)/((x,u) ~ (rho(x),u+T)),  T != 0,
 ```
 
-the translated action is treated as a free smooth mapping-torus action. The expected fundamental group is `Z`, not `Z4`.
+the combined integer action is now constructed as a free, properly
+discontinuous topological action. Its effective orbit quotient, covering
+projection and charted-space structure are explicit; the equatorial `S2`
+induces a continuous injective map of quotients. Cover-coordinate time
+reversal descends to continuous involutions on the effective spacetime and
+fixed throat, and that same quotient inclusion is PT-equivariant. This is not yet an
+`IsManifold` or smooth-atlas theorem, nor a null/joint stratification. The
+expected fundamental group is `Z`, not `Z4`.
+
+The complement of the concrete equatorial `S2` in the unit `S3` is now proved
+to be the disjoint union of two nonempty open sign sides. Reflection and one
+deck iterate exchange them. In the effective mapping torus, the image of
+either side is exactly the full throat complement, the two images coincide,
+and PT preserves that complement. Explicit normalized affine paths prove both
+sign sides path connected. The positive cover side and its quotient image are
+path connected, so the effective throat complement is path connected and
+connected.
+
+On the fixed throat, the even-winding quotient now gives an actual
+two-sheeted topological covering. Its half-period deck map is continuous,
+involutive and fixed-point free; every fiber is equivalent to `ZMod 2`.
+Moreover, the pulled-back associated normal line has an explicit global
+topological product trivialization. This does not yet produce a smooth
+`VectorBundle` or a differential normal bundle.
 
 Quarter phases arise conditionally by lifting the sign holonomy of a real normal line:
 
@@ -199,6 +230,15 @@ The exhaustive remaining-work checklist is
 
 - **P0:** a metric does not select a potential; a symplectic form does not select a Hamiltonian.
 - **P-A:** the two-sector parent-bulk result now extends to an arbitrary finite boundary rank: the bulk Euler expression is the actual derivative, the reduced action has the Schur gradient and constant Hessian as its Fréchet derivatives, and exact square completion classifies the fixed-boundary stationary bulk mode as the unique global minimum/maximum according to the sign of the bulk coefficient; the Schur kernel is reciprocal/self-adjoint, while changing the parent can still change surviving mixing. In the concrete one-dimensional positive PT-flat proportional bimetric branch, the reduced interaction has its actual derivative, `c = 1` is stationary, its actual Hessian is twelve times the Fierz--Pauli mass combination, and for `beta1 > 0`, `beta2 >= 0` it is positive and `c = 1` is the unique global minimizer on `c > 0`; this is not the full Janus metric field theory.
+  The parametrized global-field package now uses those same effective D8
+  spacetime/throat bases, involutive PT actions and equivariant throat map.
+  A nonempty PT-fixed diagonal witness on them has equal Minkowski metrics,
+  zero matter and identity relative root. Explicit continuity predicates now
+  cover every independent, induced and LL coordinate, and this same witness
+  inhabits a continuous PT-matched effective configuration with the exact
+  throat inclusion and root-square equation. This is topological only: it
+  supplies no smooth manifold, Sobolev spaces, boundary conditions, global
+  root map, stationarity or stability.
   More strongly, explicit quadratic and quartically deformed two-variable
   extensions have the same proportional branch, the same genuine longitudinal
   derivatives and the same complete transverse two-jet, with Hessian
@@ -267,9 +307,50 @@ The exhaustive remaining-work checklist is
   second derivative and symmetric Helmholtz Jacobian;
 - **T/C** a pointwise `4 x 4` square-root matrix realizes the same Newton
   invariants, specializes to the spectral formula and is similarity invariant;
+- **T** around the independent diagonal Minkowski metric pair, the concrete
+  identity-root IFT branch is composed with the actual map
+  `(g_plus,g_minus) -> g_plus^-1 g_minus`. Its full pair derivative is proved,
+  including metric inversion, and its square equals that relative metric
+  on an explicit open domain obtained from the IFT chart target. The selected
+  root is continuous throughout that domain and unique among roots remaining
+  in the chart source. This is local only: no global, principal or
+  Lorentz-causal branch selection is claimed;
+- **T** at the Minkowski diagonal, one genuine two-metric affine curve now
+  differentiates the complete Candidate-A interaction density: the plus
+  determinant measure, the unconditional relative-root branch and the full
+  matrix spectral potential are composed by the Frechet product/chain rules,
+  with the resulting covector expanded explicitly. This remains pointwise and
+  local; it is not the global two-sector functional variation;
+- **T/C** one symmetric nondegenerate `4 x 4` metric now supplies both the
+  exact inverse and `sqrt(|det g|)` in a scalar-density curve on an open
+  fixed-sign component; its actual pointwise variation is the pairing with an
+  explicit symmetric stress tensor, and an explicit dominated-differentiation
+  contract lifts this stress variation to one or two integrated sectors. A
+  separate continuous flat-chart gate makes the scalar covector the actual
+  Frechet derivative of the same differentiable field and proves the
+  pointwise and integrated holonomic scalar variation. A further flat-chart
+  gate varies metric and holonomic field simultaneously pointwise, using the
+  same objects for measure, inverse, value and `p = d phi`, and proves the
+  exact stress/field split. That simultaneous variation now has a genuine
+  integrated derivative under an explicit dominated local-Lipschitz contract.
+  At fixed metric the holonomic density variation decomposes pointwise into
+  the flat scalar Euler operator plus an explicit flux divergence. Under
+  integrability and the named zero-integrated-flux condition, the first
+  variation and any already-justified action derivative equal the weak Euler
+  pairing. Automatic domination, derivation of flux cancellation from boundary
+  conditions, curved covariance, covariant matter PDE and conservation remain
+  open;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
+- **T/C** the Saint--Venant symbol complex now reconstructs compatible
+  coefficients on the countable `Z^4` Fourier lattice, isolates the zero mode
+  and is realized on completed weighted `ell^2` Hilbert spaces: the
+  reconstruction is bounded, the order-one Lorentz--Gram symbol has its
+  explicit maximal domain, its compatible zero-free range is closed, and the
+  zero-mode obstruction stays at the same weighted scale. Identification with
+  global Sobolev sections, Fourier-series differentiation, global PDE and
+  boundary exactness remain open;
 - **T/C/N** typed non-null, null and joint gravitational slots plus a generic
   supplied-measure worldvolume placeholder are explicit; the actual LL action,
   throat integration and bulk-flux cancellation are not proved;

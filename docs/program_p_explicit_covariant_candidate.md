@@ -36,6 +36,24 @@ The metrics are independent variables.  No induced metric is varied again as
 an independent field.  The interaction breaks the product of the two metric
 diffeomorphism groups to their diagonal subgroup.
 
+The parametrized global-field gate is now based on the actual effective D8
+mapping-torus and fixed-throat quotients.  The two continuous PT maps are
+involutive, their common quotient throat inclusion is equivariant, and the
+independent-field exchange preserves that same inclusion.  This is a
+same-object topological base bridge; it does not construct `IsManifold`, a
+smooth atlas or curved tensor fields.
+
+On exactly those bases, a nonempty algebraic field branch now takes both
+metric matrices to Minkowski, both scalar matter fields to zero and the
+relative root to the identity.  Its inverse/volume slots are exact and the
+whole independent configuration is fixed by the effective PT exchange.
+Concrete continuity predicates cover every independent, induced and LL
+coordinate; the same branch therefore inhabits a continuous PT-matched
+effective configuration with exact throat inclusion and root-square equation.
+This is only a topological field-space realization: it supplies no Sobolev or
+smooth spaces, boundary traces/conditions, field equation, stationarity,
+stability or global root map.
+
 The admissible Lorentz domain cannot be all metric pairs. The square-root and
 causal-compatibility analysis of
 [Hassan--Kocic](https://arxiv.org/abs/1706.07806) and the geometric-mean
@@ -302,7 +320,19 @@ independent-inverse shortcut: for an invertible `g_plus` it proves
 with `g_minus` before applying Sylvester. On the open positive diagonal
 spectrum chart, the Sylvester operator now has an explicit entrywise
 continuous-linear two-sided inverse, and the conditional square-root
-derivative specializes to it.  A separate two-dimensional boost orbit gives
+derivative specializes to it.  More generally in dimension four, a supplied
+continuous square-root lift that remains pointwise Sylvester-regular agrees
+locally with the corresponding IFT branches and is therefore differentiable
+with the inverse-Sylvester derivative.  The continuous lift and regularity are
+still hypotheses: this neither constructs the lift nor proves that an
+admissible evolution avoids the Sylvester boundary.  A separate
+unconditional construction around the independent Minkowski pair now gives
+an explicit open inverse-function-chart domain for the actual relative metric
+map.  Its selected root is continuous, squares exactly to the relative metric
+at every point of that domain and is unique among roots that remain in the IFT
+source.  This remains a local chart, not the global causal-compatible
+principal-root domain.  A separate
+two-dimensional boost orbit gives
 coordinate off-diagonal entries, actual derivatives of `X(s)` and `X(s)^2`,
 and their differentiated Sylvester identity.  The orbit remains Lorentz-
 conjugate to the diagonal seed and the metric pair is reconstructed from the
@@ -310,6 +340,14 @@ chosen root; it is therefore not a genuinely non-co-diagonalizable branch or a
 solution for independently supplied metrics.  A differentiable Lorentzian
 root selection and Sylvester inverse on the full causal-compatible matrix
 domain remain to be constructed.
+
+At the independent Minkowski pair, the full Candidate-A density is now also
+differentiated as one actual composite of the plus determinant measure, the
+unconditional local relative-root branch and the complete matrix spectral
+potential. The resulting Frechet covector and its value on two independent
+symmetric metric variations are explicit, and the affine variation curve
+remains on the exact root-square branch eventually. This closes the local
+Minkowski chain, not the global two-sector functional variation.
 
 A separate two-dimensional null-coordinate family now supplies independently
 defined symmetric nondegenerate Lorentz metrics whose relative matrix is a
@@ -379,6 +417,40 @@ independent matter blocks.  The scalar value/gradient and measure/inverse
 metric are independent jet coordinates here: neither `delta p = d(delta phi)`
 nor `delta sqrt(|g|)` is imposed, and no spacetime integral, covariant matter
 PDE or stress tensor is derived.
+
+The four-dimensional pointwise scalar gate now removes the metric shortcut:
+on the open component `orientation * det(g) > 0`, one symmetric nondegenerate
+metric supplies both the exact inverse of `g + t delta-g` and
+`sqrt(|det(g + t delta-g)|)`.  Their actual derivatives give the constrained
+scalar-density variation and the explicit symmetric stress tensor, with
+`delta rho = -sqrt(|det g|)/2 <T,delta g>`.  The scalar value and covector
+gradient are fixed pointwise; this is not yet `p = d phi`, a spacetime action,
+a functional Euler variation, a covariant PDE or stress conservation.
+
+A separate continuous flat-chart gate now removes the independent-gradient
+shortcut for scalar-field variations. On `R^4`, the coordinate covector is the
+actual Frechet derivative of the same differentiable field; an affine line in
+the function space therefore varies `phi` and `d phi` together. The exact
+pointwise density derivative lifts to an integral over an arbitrary measure
+under explicit measurability, integrable-majorant and local-Lipschitz
+hypotheses. The metric is fixed along this scalar variation, so this gate alone
+does not provide simultaneous metric/holonomic variation, a curved-manifold
+construction, integration by parts, a covariant PDE, a boundary theorem or
+conservation.
+
+A companion flat-chart gate closes the simultaneous variation. One parameter
+varies the exact metric-induced determinant measure and inverse together with
+the genuine scalar field and its `p = d phi` jet. Its derivative splits
+exactly into the fixed-field metric-stress contribution and the fixed-metric
+holonomic-field contribution, and its integral has that derivative under an
+explicit dominated local-Lipschitz contract. At fixed metric, the holonomic
+variation also decomposes pointwise into the flat scalar Euler operator plus
+the divergence of an explicit boundary flux. The integrated flux is still a
+named boundary condition. Under explicit integrability and that zero-flux
+condition, the integrated first variation equals the weak Euler pairing, and
+any already-justified action derivative acquires the same coefficient. The
+flux is not automatically zero; curved covariance, a strong PDE and
+conservation are not proved.
 
 A finite periodic scalar model now closes the first of those two shortcuts in
 a genuine holonomic setting: the gradient is induced from the field, its
@@ -570,6 +642,36 @@ Implemented in the current finite, spectral or pointwise models:
 - actual derivatives of metric inversion and `g_plus_inverse * g_minus`, plus
   an explicit two-sided Sylvester inverse on the open positive diagonal chart
   and a conditional derivative of a supplied differentiable square root;
+- actual pointwise 4D scalar-density variation with determinant measure and
+  exact inverse supplied by the same symmetric metric, together with its
+  explicit symmetric stress tensor and stress-pairing identity, lifted to an
+  arbitrary measured base and two sectors under explicit measurability,
+  integrable-majorant and local-Lipschitz hypotheses, or an explicit uniform
+  bound on the rebased derivative at every admissible parameter; the integrated
+  action and stress variation are sector-exchange invariant. In that stress
+  gate the gradient remains a fixed coordinate covector;
+- on the continuous flat chart `R^4`, an actual differentiable scalar field
+  supplies both its value and `p = d phi`; its affine function-space variation
+  has exact pointwise and integrated derivatives under an explicit dominated
+  local-Lipschitz contract. A simultaneous metric/field curve also
+  uses the same metric for measure/inverse and the same field for `p = d phi`,
+  with an exact stress-plus-field split and an integrated derivative under the
+  same kind of explicit contract. Its fixed-metric holonomic contribution is
+  pointwise Euler plus flux divergence and becomes the weak Euler pairing after
+  explicit integrability and zero-integrated-flux hypotheses. Curved-manifold
+  covariance, derivation of flux cancellation from boundary data, a strong
+  PDE, conservation and automatic domination are not claimed;
+- an unconditional local four-dimensional relative-root branch around the
+  independent diagonal Minkowski metric pair, obtained by composing the
+  identity-root IFT branch with the actual map
+  `(g_plus,g_minus) -> g_plus^-1 g_minus`; its full pair derivative includes
+  metric inversion and the half-Sylvester inverse, and its square is the
+  relative metric throughout a neighbourhood. No global, principal or
+  Lorentz-causal selection follows from this local result;
+- conditional gluing of the local four-dimensional IFT roots along a supplied
+  continuous square-root lift with pointwise Sylvester equivalences, which
+  removes a separate differentiability assumption but not the lift or
+  regularity hypotheses;
 - explicit co-diagonal Lorentz metric pairs with shared signature, positive
   root, determinant, diagonal-root uniqueness and Sylvester witness, together
   with actual metric/inverse/target/root Frechet derivatives on the open
@@ -676,6 +778,17 @@ Implemented in the current finite, spectral or pointwise models:
 - actual pointwise first-jet scalar density variation in independent measure,
   inverse-metric, scalar and gradient coordinate slots, with two matter blocks
   of zero mixed response;
+- an actual continuous flat-chart scalar-field variation on `R^4`, where the
+  same differentiable field supplies its value and coordinate covector
+  `p = d phi`, with exact pointwise and integrated derivatives under an
+  explicit dominated local-Lipschitz contract;
+- an actual simultaneous flat-chart metric/holonomic-field
+  variation, tying measure/inverse and value/`p = d phi` to the same objects
+  and splitting exactly into stress and field contributions, with an
+  integrated derivative under an explicit dominated contract and a pointwise
+  flat Euler-plus-boundary-divergence decomposition; under explicit
+  integrability and zero-flux assumptions its integrated variation is the weak
+  Euler pairing;
 - an actual finite periodic holonomic scalar variation, discrete summation by
   parts, strong nearest-neighbour Euler equation, stationarity equivalence and
   zero mixed response between two sectors;
@@ -707,11 +820,9 @@ Implemented in the current finite, spectral or pointwise models:
   PT-related D7 root towers, compactness of every fixed sphere-level heat block,
   and an explicit common-counterterm renormalized determinant certificate for
   both physical `Z4` roots;
-- an infinite monopole heat trace and exact algebraic agreement of the spectral
-  and universal product coefficients `a0/a2/a4`; only the uniform
-  Euler--Maclaurin remainder estimate isolated by
-  `EulerMaclaurinRemainderControlled` remains conditional in the small-time
-  limit.
+- an infinite monopole heat trace, an order-four Euler--Maclaurin formula with
+  uniform integral remainder control, and an unconditional small-time proof of
+  the exact spectral/universal product coefficients `a0/a2/a4`.
 
 Still required before Candidate A is a completed Janus action:
 
@@ -754,8 +865,7 @@ Still required before Candidate A is a completed Janus action:
    constraint closure; then derive constrained
    stability on the physical reduced tangent/quotient and PPN parameters for
    the exact matter couplings;
-7. prove the isolated uniform Euler--Maclaurin remainder estimate, extend the
-   self-adjoint unbounded circle Fourier operator to the full Janus Dirac
+7. extend the self-adjoint unbounded circle Fourier operator to the full Janus Dirac
    operator, identify the constructed contractive diagonal heat-semigroup
    generator on its maximal domain and the semigroup with the abstract
    functional calculus of `D^2`, prove the required trace-class statements,
@@ -769,9 +879,9 @@ is used in its definition.
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
-| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, coordinate off-diagonal boost orbit still conjugate to its diagonal seed, an independent non-diagonalizable Lorentz Jordan family, a continuous three-parameter two-dimensional Cayley--Hamilton root chart with an explicit bijective Sylvester inverse, unique variation solution and derivative identity, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | unique global smooth root/Sylvester inverse on the causal-compatible four-dimensional Lorentz domain and full metric functional variation for independently supplied metrics |
-| 2. Fields/induced/gauge | independent field choice, simultaneous-frame invariance/counterexample, constructed matrix covector, invariant finite-site action, actual affine 1D and local affine `R^4` density pullbacks, independent scalar first-jet coordinate slots, a finite periodic holonomic scalar Euler model, and its positive one-dimensional metric version with induced `sqrt(g)` measure, inverse weight and action/variation/Euler/stationarity covariance under finite-site bijections | manifold field space, four-dimensional continuum holonomic matter variation and stress tensor, arbitrary spacetime diagonal diffeomorphisms and covariant density law |
+| 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, coordinate off-diagonal boost orbit still conjugate to its diagonal seed, an independent non-diagonalizable Lorentz Jordan family, a continuous three-parameter two-dimensional Cayley--Hamilton root chart with an explicit bijective Sylvester inverse, an unconditional local relative-root branch on an explicit open IFT target domain with full independent-pair derivative, continuity, exact square and uniqueness within the chart source around the Minkowski diagonal, complete local Minkowski Candidate-A variation composing determinant measure, root and spectral potential, conditional gluing and automatic inverse-Sylvester differentiation along any supplied continuous Sylvester-regular four-dimensional root lift, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | extension of the Minkowski-local branch, or construction of a compatible lift with proved Sylvester regularity, to a unique global causal-compatible four-dimensional Lorentz domain, plus full metric functional variation there |
+| 2. Fields/induced/gauge | independent field choice, parametrized global configuration package instantiated on the same effective D8 quotient bases/PT actions/equivariant throat inclusion; concrete continuity predicates for every independent, induced and LL coordinate; a nonempty continuous PT-matched Minkowski/identity-root configuration on those same objects; simultaneous-frame invariance/counterexample, constructed matrix covector, invariant finite-site action, actual affine 1D and local affine `R^4` density pullbacks, independent scalar first-jet coordinate slots, a pointwise 4D scalar metric variation with one determinant measure/exact inverse and explicit symmetric stress tensor, its integrated one/two-sector lift on an arbitrary measured base under explicit contracts with exchange invariance, a continuous flat-chart holonomic scalar variation with `p = d phi`, its simultaneous metric/holonomic extension integrated under an explicit dominated contract with exact stress-plus-field split and conditional weak Euler pairing, a finite periodic holonomic scalar Euler model, and its positive one-dimensional metric version with induced `sqrt(g)` measure, inverse weight and action/variation/Euler/stationarity covariance under finite-site bijections | smooth manifold/tensor and Sobolev or smooth function spaces with boundary conditions, global root map, stationarity/stability, discharge of the integration contract and derivation of zero flux from boundary data, covariant matter PDE/stress conservation, arbitrary spacetime diagonal diffeomorphisms and covariant density law |
 | 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, actual threefold integration of constant EH/GHY densities, exact finite-box Stokes for variable fluxes and six faces with actual matched-action derivative, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure | arbitrary-coordinate global embedding and variable-field continuum flux, physical GHY/null/joint/corner completion, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, coefficientwise exactness for finite nonzero Fourier families, and unique normalized decomposition with a finite zero-mode cohomology residual | boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |
-| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, stress tensor and Bianchi identity, four-dimensional continuum matter variations, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
-| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup, compact D7 level blocks, convergent physical `Z4` determinants and exact spectral/universal `a0/a2/a4` algebra | uniform Euler--Maclaurin remainder, physical quotient stability, PPN, covariant counterterms, maximal generator-domain identification, abstract `D^2` functional calculus and trace class, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |
+| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, pointwise 4D determinant/inverse-constrained scalar stress variation, integrated one/two-sector stress variation under an explicit dominated-differentiation contract and exchange invariance, continuous flat-chart holonomic scalar first variation and simultaneous metric/holonomic split integrated under an explicit contract, pointwise flat scalar Euler-plus-flux-divergence decomposition and integrated weak Euler identity under explicit integrability/zero-flux assumptions, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, discharge of domination and derivation of zero flux from physical boundary conditions, nonlinear Bianchi/stress conservation, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
+| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching | physical quotient stability, PPN, covariant counterterms, maximal generator-domain identification, abstract `D^2` functional calculus and trace class, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |

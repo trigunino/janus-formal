@@ -101,6 +101,47 @@ The two Janus worlds are globally separated only in the orientation double
 cover.  In the quotient, the complement of the one-sided throat is expected to
 be connected.
 
+The actual set-level frontier is stronger than that heuristic alone. The
+equatorial complement in the concrete `S3` is exactly the disjoint union of
+two nonempty open sign sides. Reflection and one deck iterate exchange those
+sides. After quotienting, the image of either side is the entire effective
+throat complement, so the two quotient images coincide; PT preserves this
+complement. Explicit normalized affine paths to the two poles prove that both
+sign sides are path connected. The positive cover side is path connected and
+its continuous quotient image is exactly the effective throat complement;
+therefore that complement is path connected and connected.
+
+The fixed-throat normal local system now has an effective topological model:
+the quotient by even windings maps to the original throat as a covering. The
+half-period translation descends to a continuous, involutive, fixed-point-free
+deck map; each fiber is equivalent to `ZMod 2`. Pulling the associated normal
+line back to this cover yields an explicit homeomorphism with the product by
+`R`. No smooth atlas, differential normal bundle or `VectorBundle` is asserted.
+
+Lean theorems:
+
+```text
+orientationDoubleToThroat_isCoveringMap
+orientationDouble_fiber_equiv_two
+orientationDeck_involutive
+orientationDeck_ne_self
+orientationNormalTrivialization
+orientationDouble_normal_pullback_closure
+sphere_complement_eq_two_sides
+sphereReflection_image_positive
+one_vadd_mem_negative_iff
+mappingTorusMk_preimage_effectiveThroat
+image_positiveCoverSide_eq_effective_complement
+image_negativeCoverSide_eq_effective_complement
+quotient_images_of_sides_coincide
+reflectedSpherePT_mem_effective_complement_iff
+positiveSphereSide_isPathConnected
+negativeSphereSide_isPathConnected
+positiveCoverSide_isPathConnected
+effectiveThroat_complement_isPathConnected
+effectiveThroat_complement_isConnected
+```
+
 ## 3. What the two-to-one ratio means
 
 Under a deck-invariant metric, the two sides upstairs have equal volume:
@@ -272,7 +313,10 @@ and document the Euclidean/Lorentzian dictionary rather than infer a `Pin+` or
 3. prove the `S3 -> J -> S1` fibration;
 4. calculate `pi1(J)=Z`;
 5. construct the one-sided `S2 x S1` throat and its Möbius normal line;
-6. derive the orientation double cover and component exchange.
+6. promote the topological even-winding throat cover and trivial normal
+   pullback to smooth differential bundles;
+7. reuse the proved path-connected sides and connected quotient complement in
+   the smooth throat embedding.
 
 This is the preferred continuation of the current geometry.
 
@@ -300,10 +344,10 @@ selected.
 
 1. Prove proper discontinuity and construct the quotient manifold.
 2. Prove the mapping-torus fibration and `pi1(J)=Z` in Lean.
-3. Prove the normal line of the throat is the nontrivial real line bundle along
-   `S1`.
-4. Prove the orientation cover complement has two components exchanged by the
-   deck involution, while the quotient complement is connected.
+3. Promote the constructed topological normal-line quotient and its trivial
+   even-cover pullback to a smooth differential `VectorBundle`.
+4. Reuse the path-connected sides and connected quotient complement in the
+   smooth throat embedding and boundary analysis.
 5. Classify flat `Z4` lifts of the orientation local system globally.
 6. Fix the Pin reflection convention and derive the physical PT square.
 7. Formalize the theorem that complex irreducible cyclic representations are
