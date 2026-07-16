@@ -44,6 +44,14 @@ SMOOTH_QUOTIENT_MANIFOLD_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothQuotientManifold.lean"
 )
+SMOOTH_PT_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothPTInvolution.lean"
+)
+SMOOTH_THROAT_EMBEDDING_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothThroatEmbedding.lean"
+)
 FACADE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
 )
@@ -208,6 +216,35 @@ SMOOTH_QUOTIENT_MANIFOLD_STATUSES = (
     "fixedThroatQuotientInclusionContMDiffProved",
 )
 
+SMOOTH_PT_DECLARATIONS = (
+    "theorem mappingTorusTimeReversal_contMDiff",
+    "theorem reflectedSphereCover_timeReverse_contMDiff",
+    "theorem fixedThroatCover_timeReverse_contMDiff",
+    "theorem reflectedSpherePT_contMDiff",
+    "theorem fixedThroatPT_contMDiff",
+    "def reflectedSpherePTDiffeomorph",
+    "def fixedThroatPTDiffeomorph",
+)
+
+SMOOTH_PT_STATUSES = (
+    "mappingTorusTimeReversalContMDiffProved",
+    "mappingTorusTimeReversalDiffeomorphConstructed",
+)
+
+SMOOTH_THROAT_EMBEDDING_DECLARATIONS = (
+    "theorem fixedThroatQuotientInclusion_isClosedEmbedding",
+    "theorem fixedThroatQuotientInclusion_isEmbedding",
+    "theorem mfderiv_fixedThroatQuotientInclusion_injective",
+    "theorem mfderiv_fixedThroatQuotientInclusion_normal_finrank",
+    "theorem fixedThroatQuotientInclusion_smoothEmbeddingData",
+)
+
+SMOOTH_THROAT_EMBEDDING_STATUSES = (
+    "fixedThroatQuotientInclusionIsClosedEmbeddingProved",
+    "fixedThroatQuotientDifferentialInjectiveProved",
+    "fixedThroatNormalQuotientFinrankOneProved",
+)
+
 THROAT_COMPLEMENT_CONNECTED_STATUSES = (
     "positiveAndNegativeSphereSidesPathConnectedProved",
     "positiveCoverSidePathConnectedProved",
@@ -237,6 +274,10 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     smooth_quotient_manifold_gate = (
         repo_root / SMOOTH_QUOTIENT_MANIFOLD_GATE
+    ).read_text(encoding="utf-8")
+    smooth_pt_gate = (repo_root / SMOOTH_PT_GATE).read_text(encoding="utf-8")
+    smooth_throat_embedding_gate = (
+        repo_root / SMOOTH_THROAT_EMBEDDING_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
 
@@ -404,6 +445,36 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
             raise AssertionError(
                 f"D8 facade omits smooth quotient manifold status: {status}"
             )
+
+    for declaration in SMOOTH_PT_DECLARATIONS:
+        if declaration not in smooth_pt_gate:
+            raise AssertionError(f"missing D8 smooth-PT declaration: {declaration}")
+    if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_pt_gate):
+        raise AssertionError("proof placeholder found in D8 smooth-PT gate")
+    smooth_pt_import = "Gates.P0EFTJanusMappingTorusSmoothPTInvolution"
+    if facade.count(smooth_pt_import) != 1:
+        raise AssertionError("D8 facade omits the smooth-PT gate")
+    if facade.count("mappingTorusSmoothPTCoreClosed s") != 1:
+        raise AssertionError("D8 smooth core omits smooth-PT milestone")
+    for status in SMOOTH_PT_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(f"D8 facade omits smooth-PT status: {status}")
+
+    for declaration in SMOOTH_THROAT_EMBEDDING_DECLARATIONS:
+        if declaration not in smooth_throat_embedding_gate:
+            raise AssertionError(
+                f"missing D8 smooth-throat declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_throat_embedding_gate):
+        raise AssertionError("proof placeholder found in D8 smooth-throat gate")
+    smooth_throat_import = "Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding"
+    if facade.count(smooth_throat_import) != 1:
+        raise AssertionError("D8 facade omits the smooth-throat gate")
+    if facade.count("fixedThroatSmoothEmbeddingFrontierClosed s") != 1:
+        raise AssertionError("D8 smooth core omits smooth-throat milestone")
+    for status in SMOOTH_THROAT_EMBEDDING_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(f"D8 facade omits smooth-throat status: {status}")
 
 
 def run_audit() -> None:
