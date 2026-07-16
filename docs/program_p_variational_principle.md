@@ -603,8 +603,10 @@ their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. Lorentzian null/non-null/joint strata still require a quadratic
 reduction. An explicit positive nondegenerate model form is now transported by
 each tangent transition with a genuine quadratic isometry; global orthonormal
-compatibility, comparison with the normal cocycle and ambient tangent Pin/SpinC
-bundles remain open.
+compatibility remains a contract. The Clifford `spinGroup` now supplies a true
+quadratic-preserving vector action and morphism `Spin(Q) →* GL(4)`, with the
+twisted Pin extension isolated exactly. Atlas-specific transition lifts,
+their Čech cocycle, comparison with the normal lift and SpinC remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
