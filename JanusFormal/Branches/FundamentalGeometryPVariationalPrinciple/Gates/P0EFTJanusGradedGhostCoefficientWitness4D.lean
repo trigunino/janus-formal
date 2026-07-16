@@ -66,6 +66,13 @@ theorem oddVolumeCoefficient_ne_zero : oddVolumeCoefficient ≠ 0 := by
   change (1 : Real) = 0 at hEntry
   norm_num at hEntry
 
+theorem oddVolumeCoefficient_square :
+    oddVolumeCoefficient * oddVolumeCoefficient = 0 := by
+  ext first second
+  fin_cases first <;> fin_cases second <;>
+    norm_num [oddVolumeCoefficient, oddGeneratorOne, oddGeneratorTwo,
+      Matrix.mul_apply, Fin.sum_univ_succ]
+
 /-- Coefficient multiplying `[X,Y]` in the graded expansion of
 `[θ₁X + θ₂Y, θ₁X + θ₂Y]`. -/
 def gradedCrossSelfBracketCoefficient : OddCoefficientMatrix :=
@@ -99,14 +106,23 @@ theorem gradedQuadraticGhostBRSTCoefficient_ne_zero :
   rw [gradedQuadraticGhostBRSTCoefficient_eq]
   exact neg_ne_zero.mpr oddVolumeCoefficient_ne_zero
 
+theorem gradedQuadraticGhostBRSTCoefficient_square :
+    gradedQuadraticGhostBRSTCoefficient *
+        gradedQuadraticGhostBRSTCoefficient = 0 := by
+  rw [gradedQuadraticGhostBRSTCoefficient_eq]
+  simpa using oddVolumeCoefficient_square
+
 theorem graded_ghost_coefficient_witness4D_closure :
     oddGeneratorOne * oddGeneratorOne = 0 ∧
       oddGeneratorTwo * oddGeneratorTwo = 0 ∧
       oddGeneratorOne * oddGeneratorTwo =
         -(oddGeneratorTwo * oddGeneratorOne) ∧
-      gradedQuadraticGhostBRSTCoefficient ≠ 0 :=
+      gradedQuadraticGhostBRSTCoefficient ≠ 0 ∧
+      gradedQuadraticGhostBRSTCoefficient *
+        gradedQuadraticGhostBRSTCoefficient = 0 :=
   ⟨oddGeneratorOne_square, oddGeneratorTwo_square,
-    oddGenerators_anticommute, gradedQuadraticGhostBRSTCoefficient_ne_zero⟩
+    oddGenerators_anticommute, gradedQuadraticGhostBRSTCoefficient_ne_zero,
+    gradedQuadraticGhostBRSTCoefficient_square⟩
 
 end
 
