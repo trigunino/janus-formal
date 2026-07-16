@@ -438,6 +438,14 @@ par toute évolution admissible.
           automatiquement une borne carrée uniforme et ferme le pont jusqu'à
           l'ellipticité. Seule la construction de ces données depuis les
           trivialisations locales actuellement privées reste ouverte.
+        - [x] Exposer les supports fermés finis de la partition tangentielle et
+          réduire leur instanciation à
+          `FiniteSmoothTangentFrameRawPatchContinuity`, qui ferme ensuite
+          automatiquement les coefficients locaux et l'ellipticité uniforme.
+        - [ ] Décharger cette dernière régularité : Mathlib contrôle
+          `tangentCoordChange` pour deux cartes fixes, pas la transition
+          `p ↦ tangentCoordChange anchor p p` vers `chartAt p` variable ; sinon
+          reformuler les composantes holonomes de façon locale intrinsèque.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
