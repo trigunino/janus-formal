@@ -32,6 +32,10 @@ THROAT_COMPLEMENT_CONNECTED_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusThroatComplementConnected.lean"
 )
+SMOOTH_ATLAS_FRONTIER_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothAtlasFrontier.lean"
+)
 FACADE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
 )
@@ -135,9 +139,36 @@ THROAT_COMPLEMENT_STATUSES = (
 THROAT_COMPLEMENT_CONNECTED_DECLARATIONS = (
     "theorem positiveSphereSide_isPathConnected",
     "theorem negativeSphereSide_isPathConnected",
+    "theorem connectedComponentIn_throat_complement_positivePole",
+    "theorem connectedComponentIn_throat_complement_negativePole",
     "theorem positiveCoverSide_isPathConnected",
     "theorem effectiveThroat_complement_isPathConnected",
     "theorem effectiveThroat_complement_isConnected",
+)
+
+SMOOTH_ATLAS_FRONTIER_DECLARATIONS = (
+    "def unitThreeSphereHomeomorph",
+    "instance unitThreeSphereIsManifold",
+    "def equatorialTwoSphereHomeomorph",
+    "instance equatorialTwoSphereIsManifold",
+    "theorem unitThreeSphere_prod_real_isManifold",
+    "theorem fixedThroatCover_isManifold",
+    "theorem fixedThroatCoverInclusion_isEmbedding",
+    "theorem fixedThroatCoverInclusion_contMDiff_zero",
+    "theorem fixedThroat_quotient_isTopologicalManifold",
+    "theorem fixedThroatQuotientInclusion_contMDiff_zero",
+    "theorem reflectedSphere_quotient_isTopologicalManifold",
+    "theorem reflectedSphere_projection_isLocalHomeomorph",
+    "theorem reflectedSphere_projection_contMDiff_zero",
+    "theorem reflectedSphere_projection_topological_atlas_closure",
+)
+
+SMOOTH_ATLAS_FRONTIER_STATUSES = (
+    "algebraicSphereCoversAnalyticManifoldsProved",
+    "throatCoverTopologicalEmbeddingAndC0Proved",
+    "effectiveMappingTorusTopologicalManifoldProved",
+    "effectiveThroatTopologicalManifoldProved",
+    "quotientProjectionLocalHomeomorphAndC0Proved",
 )
 
 THROAT_COMPLEMENT_CONNECTED_STATUSES = (
@@ -160,6 +191,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     throat_complement_connected_gate = (
         repo_root / THROAT_COMPLEMENT_CONNECTED_GATE
+    ).read_text(encoding="utf-8")
+    smooth_atlas_frontier_gate = (
+        repo_root / SMOOTH_ATLAS_FRONTIER_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
 
@@ -271,6 +305,22 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
             raise AssertionError(
                 f"D8 facade omits connected-complement status: {status}"
             )
+
+    for declaration in SMOOTH_ATLAS_FRONTIER_DECLARATIONS:
+        if declaration not in smooth_atlas_frontier_gate:
+            raise AssertionError(
+                f"missing D8 smooth-atlas-frontier declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", smooth_atlas_frontier_gate):
+        raise AssertionError("proof placeholder found in D8 smooth-atlas frontier")
+    smooth_frontier_import = "Gates.P0EFTJanusMappingTorusSmoothAtlasFrontier"
+    if facade.count(smooth_frontier_import) != 1:
+        raise AssertionError("D8 facade omits the smooth-atlas frontier gate")
+    if facade.count("mappingTorusSmoothAtlasFrontierCoreClosed s") != 1:
+        raise AssertionError("D8 smooth core omits smooth-atlas frontier milestone")
+    for status in SMOOTH_ATLAS_FRONTIER_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(f"D8 facade omits smooth-atlas status: {status}")
 
 
 def run_audit() -> None:

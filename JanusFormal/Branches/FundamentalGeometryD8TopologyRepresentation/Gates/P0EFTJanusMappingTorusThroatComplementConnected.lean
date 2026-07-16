@@ -157,6 +157,63 @@ theorem negativeSphereSide_isPathConnected : IsPathConnected negativeSphereSide 
   have hImage := positiveSphereSide_isPathConnected.image sphereReflection.continuous
   rwa [sphereReflection_image_positive] at hImage
 
+theorem positiveSphereSide_subset_throat_complement :
+    positiveSphereSide ⊆ sphereThroatᶜ := by
+  rw [sphere_complement_eq_two_sides]
+  exact subset_union_left
+
+theorem negativeSphereSide_subset_throat_complement :
+    negativeSphereSide ⊆ sphereThroatᶜ := by
+  rw [sphere_complement_eq_two_sides]
+  exact subset_union_right
+
+/-- The positive sign side is exactly one connected component of the sphere
+complement, not merely a connected open subset. -/
+theorem connectedComponentIn_throat_complement_positivePole :
+    connectedComponentIn sphereThroatᶜ positivePole = positiveSphereSide := by
+  apply Subset.antisymm
+  · have hCover : connectedComponentIn sphereThroatᶜ positivePole ⊆
+        positiveSphereSide ∪ negativeSphereSide := by
+      rw [← sphere_complement_eq_two_sides]
+      exact connectedComponentIn_subset _ _
+    rcases IsPreconnected.subset_or_subset positiveSphereSide_isOpen
+        negativeSphereSide_isOpen positive_negative_disjoint hCover
+        isPreconnected_connectedComponentIn with hPositive | hNegative
+    · exact hPositive
+    · exfalso
+      have hPole : positivePole ∈ connectedComponentIn sphereThroatᶜ positivePole :=
+        mem_connectedComponentIn (positiveSphereSide_subset_throat_complement
+          (by simp [positivePole, positiveSphereSide]))
+      have := hNegative hPole
+      norm_num [positivePole, negativeSphereSide] at this
+  · exact positiveSphereSide_isPathConnected.isConnected.isPreconnected
+      |>.subset_connectedComponentIn
+        (by simp [positivePole, positiveSphereSide])
+        positiveSphereSide_subset_throat_complement
+
+/-- The negative sign side is the other connected component. -/
+theorem connectedComponentIn_throat_complement_negativePole :
+    connectedComponentIn sphereThroatᶜ negativePole = negativeSphereSide := by
+  apply Subset.antisymm
+  · have hCover : connectedComponentIn sphereThroatᶜ negativePole ⊆
+        positiveSphereSide ∪ negativeSphereSide := by
+      rw [← sphere_complement_eq_two_sides]
+      exact connectedComponentIn_subset _ _
+    rcases IsPreconnected.subset_or_subset positiveSphereSide_isOpen
+        negativeSphereSide_isOpen positive_negative_disjoint hCover
+        isPreconnected_connectedComponentIn with hPositive | hNegative
+    · exfalso
+      have hPole : negativePole ∈ connectedComponentIn sphereThroatᶜ negativePole :=
+        mem_connectedComponentIn (negativeSphereSide_subset_throat_complement
+          (by simp [negativePole, negativeSphereSide]))
+      have := hPositive hPole
+      norm_num [negativePole, positiveSphereSide] at this
+    · exact hNegative
+  · exact negativeSphereSide_isPathConnected.isConnected.isPreconnected
+      |>.subset_connectedComponentIn
+        (by simp [negativePole, negativeSphereSide])
+        negativeSphereSide_subset_throat_complement
+
 section MappingTorus
 
 variable (period : ℝ) (hPeriod : period ≠ 0)

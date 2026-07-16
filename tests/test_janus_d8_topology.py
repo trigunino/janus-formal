@@ -25,3 +25,7 @@ def test_d8_throat_complement_sides_are_integrated_without_component_overclaim()
 
 def test_d8_throat_complement_is_path_connected() -> None:
     assert_d8_topology_integrity()
+
+
+def test_d8_cover_atlases_and_topological_quotient_manifolds_are_integrated() -> None:
+    assert_d8_topology_integrity()

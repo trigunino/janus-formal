@@ -24,10 +24,13 @@ The answer is deliberately split:
    holonomies, differs by exact bounded scalar perturbations, is entire on that
    domain and has an explicitly constructed compact resolvent, without yet
    being the global Janus family;
-7. the physical Z4 bridge already combines compact fixed-level heat blocks,
+7. on its complete graph-norm domain that circle operator is genuinely
+   Fredholm of index zero, with finite kernel/cokernel and an actual rank-one
+   determinant fiber carrying a nonzero section;
+8. the physical Z4 bridge already combines compact fixed-level heat blocks,
    the convergent D7 spectral determinant and modewise opposite-inflow
    cancellation, but does not construct a Fredholm family or Quillen object;
-8. the anomaly object records curvature and holonomy but does not create the
+9. the anomaly object records curvature and holonomy but does not create the
    operator family, choose the normal-root phase, fix field multiplicities,
    finite counterterms, reference scale or absolute normalization.
 -/
@@ -35,6 +38,7 @@ The answer is deliberately split:
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusAnomalyObjectDimensionParity
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusAnomalyTransgressionInflow
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleHolonomyCommonDomainCompactResolvent
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleGraphFredholmIndex
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusD2ModeFamilyInflowBridge
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusFiniteModeFredholmDeterminantLine
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusPartitionFunctionSectionNoGo
@@ -75,6 +79,7 @@ structure ProgramStatus where
   absoluteScaleDerivedNoFit : Prop
   finiteModeHolomorphicFredholmDeterminantLineProved : Prop
   circleHolonomyCommonDomainCompactResolventProved : Prop
+  circleGraphFredholmIndexZeroDeterminantLineProved : Prop
 
 /-- Scoped finite-dimensional milestone; this is deliberately not the global
 unbounded Fredholm/Quillen-family status used by `relativeAnomalyGeometryClosed`. -/
@@ -85,6 +90,10 @@ def finiteModeFredholmDeterminantLineClosed (s : ProgramStatus) : Prop :=
 Janus Fredholm/Quillen-family status used by `relativeAnomalyGeometryClosed`. -/
 def circleHolonomyCommonDomainCompactResolventClosed (s : ProgramStatus) : Prop :=
   s.circleHolonomyCommonDomainCompactResolventProved
+
+/-- Scoped infinite-circle Fredholm and determinant-fiber milestone. -/
+def circleGraphFredholmDeterminantFiberClosed (s : ProgramStatus) : Prop :=
+  s.circleGraphFredholmIndexZeroDeterminantLineProved
 
 /-- Canonical relative anomaly package. -/
 def relativeAnomalyGeometryClosed (s : ProgramStatus) : Prop :=
