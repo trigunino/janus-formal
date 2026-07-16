@@ -347,6 +347,9 @@ par toute évolution admissible.
     contrats PT, des espaces fonctionnels et des conditions au bord.
   - [x] Instancier ses bases abstraites par les quotients D8 effectifs, leurs
     involutions PT et la même inclusion de throat équivariante.
+    - [x] Étendre PT/échange à tout le paquet des champs indépendants
+      actuellement construit, prouver l'involutivité et identifier exactement
+      `PTMatchedIndependent` à son lieu de points fixes.
   - [x] Construire sur ces mêmes bases une branche algébrique non vide : deux
     métriques de Minkowski égales, matières nulles, racine relative identité
     et point fixe de l'échange PT.
