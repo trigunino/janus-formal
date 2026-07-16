@@ -16,9 +16,25 @@ set_option autoImplicit false
 
 noncomputable section
 
+open scoped Matrix.Norms.Frobenius
 open P0EFTJanusLorentzJordanRelativeRoot4D
 
 abbrev Matrix4 := P0EFTJanusLorentzJordanRelativeRoot4D.Matrix4
+
+local instance matrix4NormedAddCommGroup : NormedAddCommGroup Matrix4 :=
+  Matrix.frobeniusNormedAddCommGroup
+
+local instance matrix4AddCommGroup : AddCommGroup Matrix4 :=
+  matrix4NormedAddCommGroup.toAddCommGroup
+
+local instance matrix4TopologicalSpace : TopologicalSpace Matrix4 :=
+  matrix4NormedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+
+local instance matrix4NormedSpace : NormedSpace Real Matrix4 :=
+  Matrix.frobeniusNormedSpace
+
+local instance matrix4Module : Module Real Matrix4 :=
+  matrix4NormedSpace.toModule
 
 def jordanSylvester4 (parameter : Real) (variation : Matrix4) : Matrix4 :=
   jordanRoot4 parameter * variation + variation * jordanRoot4 parameter
@@ -60,6 +76,32 @@ theorem jordanSylvester4_bijective (parameter : Real) :
 def jordanRootTangent4 : Matrix4 :=
   (1 / 2 : Real) • jordanNilpotent4
 
+def jordanRootDerivative4 : Real →L[Real] Matrix4 :=
+  ContinuousLinearMap.smulRight (ContinuousLinearMap.id Real Real)
+    jordanRootTangent4
+
+@[simp]
+theorem jordanRootDerivative4_apply (increment : Real) :
+    jordanRootDerivative4 increment = increment • jordanRootTangent4 :=
+  rfl
+
+theorem jordanRoot4_eq_affineDerivative (parameter : Real) :
+    jordanRoot4 parameter = 1 + jordanRootDerivative4 parameter := by
+  ext first second
+  fin_cases first <;> fin_cases second <;>
+    simp [jordanRoot4, jordanRootDerivative4, jordanRootTangent4,
+      jordanNilpotent4]
+  all_goals ring
+
+theorem jordanRoot4_hasFDerivAt (parameter : Real) :
+    HasFDerivAt jordanRoot4 jordanRootDerivative4 parameter := by
+  have hLinear : HasFDerivAt
+      (fun value : Real => jordanRootDerivative4 value)
+      jordanRootDerivative4 parameter :=
+    jordanRootDerivative4.hasFDerivAt
+  have hAffine := hLinear.const_add (1 : Matrix4)
+  simpa only [← jordanRoot4_eq_affineDerivative] using hAffine
+
 theorem jordanRoot4_increment (parameter increment : Real) :
     jordanRoot4 (parameter + increment) - jordanRoot4 parameter =
       increment • jordanRootTangent4 := by
@@ -91,11 +133,13 @@ theorem jordanRootTangent4_unique (parameter : Real) (variation : Matrix4)
 
 theorem lorentz_jordan_sylvester_regular4D_closure (parameter : Real) :
     Function.Bijective (jordanSylvester4 parameter) ∧
+      HasFDerivAt jordanRoot4 jordanRootDerivative4 parameter ∧
       jordanSylvester4 parameter jordanRootTangent4 = jordanNilpotent4 ∧
       ∀ variation,
         jordanSylvester4 parameter variation = jordanNilpotent4 →
           variation = jordanRootTangent4 :=
   ⟨jordanSylvester4_bijective parameter,
+    jordanRoot4_hasFDerivAt parameter,
     jordanSylvester4_rootTangent parameter,
     jordanRootTangent4_unique parameter⟩
 

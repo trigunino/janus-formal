@@ -1253,6 +1253,8 @@ PROGRAM_P_GATES = {
             "theorem jordanSylvesterInverse4_apply",
             "theorem jordanSylvester4_bijective",
             "def jordanRootTangent4",
+            "def jordanRootDerivative4",
+            "theorem jordanRoot4_hasFDerivAt",
             "theorem jordanSylvester4_rootTangent",
             "theorem jordanRootTangent4_unique",
             "theorem lorentz_jordan_sylvester_regular4D_closure",
