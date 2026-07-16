@@ -128,10 +128,19 @@ line back to this cover yields an explicit homeomorphism with the product by
 `R`. The quotient throat inclusion is additionally a closed topological
 embedding, its manifold differential is injective at every point, and the
 quotient of the ambient tangent space by its derivative range has real
-dimension one. The compact fundamental strips `S³ × [0,|T|]` and `S² × [0,|T|]` project continuously and surjectively, proving compactness of both actual effective quotients. This is the checked smooth-embedding/codimension-one frontier.
-A globally chosen smooth normal complement, its identification with the orbit
-normal line, the nonnull/null/joint stratification and a smooth `VectorBundle`
-are not yet asserted.
+dimension one. The exact local covering sections and their unique integer
+transition cocycle now construct an actual real rank-one `VectorBundle` on the
+effective throat. Its sign transitions are locally constant, hence analytic;
+one deck circuit acts by `-id`. Every constructed fiber is noncanonically
+linearly equivalent to the corresponding differential normal quotient.
+The compact fundamental strips `S³ × [0,|T|]` and `S² × [0,|T|]`
+project continuously and surjectively, proving compactness of both actual
+effective quotients.
+
+The remaining smooth-embedding frontier is explicit: Mathlib's
+`IsSmoothEmbedding` instance is not proved, the pointwise normal equivalences
+have not been assembled into a globally smooth equivalence with the
+differential normal quotient, and the nonnull/null/joint strata remain open.
 
 Lean theorems:
 
@@ -164,6 +173,13 @@ fixedThroatPTDiffeomorph
 fixedThroatQuotientInclusion_isClosedEmbedding
 mfderiv_fixedThroatQuotientInclusion_injective
 mfderiv_fixedThroatQuotientInclusion_normal_finrank
+fixedThroatNormalVectorBundleCore
+fixedThroatNormalFiber_isVectorBundle
+fixedThroatNormalVectorBundleCore_isContMDiff
+fixedThroatNormalFiber_isContMDiffVectorBundle
+fixedThroatNormalFiber_equiv_differentialNormal
+localTransitionWinding_one_loop
+one_loop_coordChange_eq_neg_id
 ```
 
 ## 3. What the two-to-one ratio means

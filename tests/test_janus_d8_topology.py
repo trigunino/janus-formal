@@ -46,5 +46,10 @@ def test_d8_pt_is_an_analytic_diffeomorphism() -> None:
 def test_d8_throat_has_checked_embedding_and_codimension_one_data() -> None:
     assert_d8_topology_integrity()
 
+
+def test_d8_throat_has_an_analytic_normal_vector_bundle_without_smooth_embedding_overclaim() -> None:
+    assert_d8_topology_integrity()
+
+
 def test_d8_effective_quotients_are_compact() -> None:
     assert_d8_topology_integrity()
