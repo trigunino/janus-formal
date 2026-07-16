@@ -30,10 +30,17 @@ The answer is deliberately split:
 8. its canonical bounded transform is an operator-norm-continuous Fredholm
    family with exact endpoint crossings, large-gauge relabeling and opposite
    PT crossing orientations;
-9. the physical Z4 bridge already combines compact fixed-level heat blocks,
+9. the resulting dependent determinant fibers form a genuine topological
+   complex line bundle, with an exact endpoint clutching map and quotient
+   descent;
+10. in the chosen circle/Fourier trivialization that bundle carries an
+   explicit positive Hermitian metric, a compatible flat connection and
+   unit-norm closed holonomy; this is a model construction, not an analytic
+   Quillen/Bismut--Freed identification for the global Janus family;
+11. the physical Z4 bridge already combines compact fixed-level heat blocks,
    the convergent D7 spectral determinant and modewise opposite-inflow
    cancellation, but does not construct a Fredholm family or Quillen object;
-9. the anomaly object records curvature and holonomy but does not create the
+12. the anomaly object records curvature and holonomy but does not create the
    operator family, choose the normal-root phase, fix field multiplicities,
    finite counterterms, reference scale or absolute normalization.
 -/
@@ -45,6 +52,7 @@ import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleBoundedTransformSpectralFlow
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantLineFamily
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantTopologicalBundle
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleQuillenMetricFlatConnection
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusD2ModeFamilyInflowBridge
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusFiniteModeFredholmDeterminantLine
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusPartitionFunctionSectionNoGo
@@ -89,6 +97,7 @@ structure ProgramStatus where
   circleBoundedTransformSpectralFlowProved : Prop
   circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved : Prop
   circleTopologicalDeterminantLineBundleProved : Prop
+  circleFourierQuillenModelMetricFlatConnectionHolonomyProved : Prop
 
 /-- Scoped finite-dimensional milestone; this is deliberately not the global
 unbounded Fredholm/Quillen-family status used by `relativeAnomalyGeometryClosed`. -/
@@ -113,9 +122,15 @@ def circleAlgebraicDeterminantLineFamilyClosed (s : ProgramStatus) : Prop :=
   s.circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved
 
 /-- Scoped genuine topological/vector determinant-line bundle on the
-normalized circle family; Quillen metric and connection remain separate. -/
+normalized circle family; its geometric model is tracked separately. -/
 def circleTopologicalDeterminantLineBundleClosed (s : ProgramStatus) : Prop :=
   s.circleTopologicalDeterminantLineBundleProved
+
+/-- Scoped metric-compatible flat geometry in the chosen circle/Fourier
+trivialization.  This does not assert the analytic Quillen/Bismut--Freed
+package required by `relativeAnomalyGeometryClosed`. -/
+def circleFourierQuillenModelGeometryClosed (s : ProgramStatus) : Prop :=
+  s.circleFourierQuillenModelMetricFlatConnectionHolonomyProved
 
 /-- Canonical relative anomaly package. -/
 def relativeAnomalyGeometryClosed (s : ProgramStatus) : Prop :=

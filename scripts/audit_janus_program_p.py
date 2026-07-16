@@ -1694,6 +1694,20 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
             "theorem circleEndpointDescent_clutching",
         ),
     ),
+    "P0EFTJanusCircleQuillenMetricFlatConnection.lean": (
+        "JanusFormal/Branches/FundamentalGeometryD10QuillenAnomaly.lean",
+        (
+            "def circleQuillenHermitianMetric",
+            "theorem circleQuillenNormSq_eq_zero_iff",
+            "theorem circleLargeGaugeDeterminantTransition_isometry",
+            "theorem circleQuillenConnection_metric_compatible",
+            "theorem circleQuillenConnection_is_flat",
+            "theorem circleQuillenParallelTransport_isometry",
+            "theorem circleQuillenClosedHolonomy_norm_one",
+            "theorem circleQuillen_transport_then_clutching",
+            "theorem circleRegularizedDeterminantCoordinate_hasDerivAt",
+        ),
+    ),
 }
 
 
@@ -1782,6 +1796,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             if filename == "P0EFTJanusCircleDeterminantLineFamily.lean"
             else "circleTopologicalDeterminantLineBundleProved"
             if filename == "P0EFTJanusCircleDeterminantTopologicalBundle.lean"
+            else "circleFourierQuillenModelMetricFlatConnectionHolonomyProved"
+            if filename == "P0EFTJanusCircleQuillenMetricFlatConnection.lean"
             else "circleHolonomyCommonDomainCompactResolventProved"
         )
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") < 1:

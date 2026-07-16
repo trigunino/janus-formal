@@ -237,6 +237,10 @@ P0EFTJanusAnomalyObjectDimensionParity.lean
 P0EFTJanusAnomalyTransgressionInflow.lean
 P0EFTJanusCircleHolonomyCommonDomainCompactResolvent.lean
 P0EFTJanusCircleGraphFredholmIndex.lean
+P0EFTJanusCircleBoundedTransformSpectralFlow.lean
+P0EFTJanusCircleDeterminantLineFamily.lean
+P0EFTJanusCircleDeterminantTopologicalBundle.lean
+P0EFTJanusCircleQuillenMetricFlatConnection.lean
 P0EFTJanusD2ModeFamilyInflowBridge.lean
 P0EFTJanusFiniteModeFredholmDeterminantLine.lean
 P0EFTJanusPartitionFunctionSectionNoGo.lean
@@ -254,6 +258,12 @@ The formal layer encodes
 - its complete graph-norm realization as a bounded Fredholm operator, with
   closed range, finite kernel and cokernel of equal rank, index zero, rank-one
   top-exterior determinant fiber and a nonzero induced section;
+- the dependent determinant fibers as a genuine topological complex line
+  bundle, including global trivialization, exact large-gauge endpoint
+  clutching and quotient descent;
+- in the chosen circle/Fourier trivialization, an explicit positive Hermitian
+  metric, clutching isometry, compatible flat connection, isometric parallel
+  transport and unit-norm closed holonomy;
 - a concrete holomorphic symmetric finite-mode Dirac family, algebraic
   Fredholmness of index zero, its induced top-exterior determinant-line
   section, rank-one fiber, PT covariance and invertibility at both quarter
@@ -267,12 +277,14 @@ The formal layer encodes
 - the exact closure matrix for a predictive Janus potential.
 
 The circle result supplies a genuine common unbounded domain, compact
-resolvent, Fredholm graph realization and one-dimensional determinant fiber;
-the finite-mode determinant line is a separate holomorphic cutoff model.
-Neither is yet the global unbounded Janus operator family or a smooth Quillen
-line bundle over its full parameter space. They supply no Quillen metric,
-Bismut--Freed connection, eta holonomy, physical Hessian or complete
-field/ghost regulator.
+resolvent, Fredholm graph realization, one-dimensional determinant fibers and
+a topological complex line bundle.  That bundle now carries an explicit
+clutching-compatible Hermitian metric and flat connection in the chosen
+Fourier model.  This construction is not identified with the analytic Quillen
+metric or Bismut--Freed connection of a global unbounded Janus family, and it
+does not prove the families-index curvature formula or eta holonomy.  The
+finite-mode determinant line remains a separate holomorphic cutoff model; the
+physical Hessian and complete field/ghost regulator are still open.
 
 ## 10. Primary references
 
