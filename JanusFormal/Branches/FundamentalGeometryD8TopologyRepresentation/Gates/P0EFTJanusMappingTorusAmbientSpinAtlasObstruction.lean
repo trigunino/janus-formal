@@ -588,6 +588,37 @@ theorem ambientSpinCechDefect_eq_one_iff
       secondThird.lift * firstSecond.lift = firstThird.lift := by
   exact mul_inv_eq_one
 
+/-- Changing the chosen lift on the composite overlap by a kernel translation
+changes the Cech defect by the inverse kernel element on the right.  This is
+the exact local coboundary law for the third edge of a triple overlap. -/
+theorem ambientSpinCechDefect_third_kernelTranslate
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird : AmbientSpinOverlapLift period hPeriod reduction first third
+      coordinate hFirstThird)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinCechDefect period hPeriod reduction first second third coordinate
+        hFirstSecond hSecondThird hFirstThird firstSecond secondThird
+        (firstThird.kernelTranslate period hPeriod reduction first third
+          coordinate hFirstThird kernel) =
+      ambientSpinCechDefect period hPeriod reduction first second third coordinate
+          hFirstSecond hSecondThird hFirstThird firstSecond secondThird firstThird *
+        kernel.1⁻¹ := by
+  simp [ambientSpinCechDefect, AmbientSpinOverlapLift.kernelTranslate,
+    mul_assoc]
+
 /-- On every actual triple overlap for which two Spin lifts are supplied, the
 third lift obtained by composition has exactly trivial Cech defect.  This is a
 local coherence theorem; it does not assert a global choice of overlap lifts. -/

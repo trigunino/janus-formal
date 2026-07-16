@@ -818,6 +818,9 @@ Hessien physique réellement descendu.
       Clifford restant de cette étape.
     - [x] Étendre ce critère à la représentation entière : elle est triviale
       si et seulement si tout élément Spin commute avec tout élément du noyau.
+    - [x] Dériver la loi de cobord locale exacte : translater le lift de
+      l'arête composée par un élément du noyau multiplie le défaut de Cech à
+      droite par l'inverse de cet élément.
 - [ ] Construire les bundles vectoriels et principaux Janus globaux.
 - [ ] Prouver l'accord des classes caractéristiques Spin/déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets

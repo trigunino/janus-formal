@@ -476,6 +476,7 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinOverlapLiftDifference_common_kernelTranslate",
     "theorem ambientSpinOverlapLiftDifference_transitive",
     "theorem ambientSpinCechDefect_comp_eq_one",
+    "theorem ambientSpinCechDefect_third_kernelTranslate",
 )
 
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
