@@ -71,6 +71,32 @@ def positiveSimilarityRoot
     (data : PositiveDiagonalizableRelativeMatrix) : Matrix4 :=
   data.eigenbasis * positiveSimilarityDiagonalRoot data * data.eigenbasisInv
 
+/-- The selected similarity root is unchanged by an invertible rescaling of
+the supplied eigenbasis that commutes with the positive diagonal root.  This
+removes the diagonal commutant part of the eigenbasis ambiguity; arbitrary
+changes inside repeated eigenspaces and global gluing remain separate. -/
+theorem positiveSimilarityRoot_invariant_under_commuting_rescaling
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (scale scaleInv : Matrix4)
+    (hInv : scale * scaleInv = 1)
+    (hCommute : scale * positiveSimilarityDiagonalRoot data =
+      positiveSimilarityDiagonalRoot data * scale) :
+    (data.eigenbasis * scale) * positiveSimilarityDiagonalRoot data *
+        (scaleInv * data.eigenbasisInv) =
+      positiveSimilarityRoot data := by
+  unfold positiveSimilarityRoot
+  calc
+    (data.eigenbasis * scale) * positiveSimilarityDiagonalRoot data *
+          (scaleInv * data.eigenbasisInv) =
+        data.eigenbasis * (scale * positiveSimilarityDiagonalRoot data) *
+          scaleInv * data.eigenbasisInv := by noncomm_ring
+    _ = data.eigenbasis * (positiveSimilarityDiagonalRoot data * scale) *
+          scaleInv * data.eigenbasisInv := by rw [hCommute]
+    _ = data.eigenbasis * positiveSimilarityDiagonalRoot data *
+          (scale * scaleInv) * data.eigenbasisInv := by noncomm_ring
+    _ = data.eigenbasis * positiveSimilarityDiagonalRoot data *
+          data.eigenbasisInv := by rw [hInv]; simp
+
 theorem positiveSimilarityRoot_square
     (data : PositiveDiagonalizableRelativeMatrix) :
     positiveSimilarityRoot data * positiveSimilarityRoot data = data.target := by
