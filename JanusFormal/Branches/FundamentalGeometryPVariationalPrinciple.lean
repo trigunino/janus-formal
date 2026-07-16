@@ -81,6 +81,14 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothPTFieldAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalInteraction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothThroatTrace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusL2PTFunctionalSpace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalar4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
@@ -291,6 +299,15 @@ structure ProgramStatus where
   paEffectiveD8SmoothDiagonalCandidateADensity4DProved : Prop
   paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved : Prop
   paEffectiveD8IntegratedDiagonalCandidateAPTExchange4DProved : Prop
+  paEffectiveD8CompactQuotientsProved : Prop
+  paEffectiveD8SmoothFieldLinearSpacesProved : Prop
+  paEffectiveD8SmoothThroatTraceAndDirichletProved : Prop
+  paEffectiveD8L2FunctionalCompletionProved : Prop
+  paEffectiveD8PTL2IsometricEquivalenceProved : Prop
+  paEffectiveD8SmoothGlobalFieldConfigurationProved : Prop
+  paEffectiveD8GlobalHolonomicScalarDifferentialProved : Prop
+  paEffectiveD8DiagonalDiffeomorphismActionProved : Prop
+  paEffectiveD8GlobalLLWorldvolumeActionProved : Prop
   paFiniteJetCompatibilityNaturalityProved : Prop
   paFiniteJetCompatibilityPrincipalSymbolKernelProved : Prop
   paLorentzianGramCompatibilityFrechetProved : Prop
@@ -486,6 +503,13 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved /\
   s.paEffectiveD8IntegratedDiagonalCandidateAPTExchange4DProved /\
   s.peEffectiveD8StructuredJetGroupoidFrontierProved /\
+  s.paEffectiveD8CompactQuotientsProved /\
+  s.paEffectiveD8SmoothFieldLinearSpacesProved /\
+  s.paEffectiveD8SmoothThroatTraceAndDirichletProved /\
+  s.paEffectiveD8L2FunctionalCompletionProved /\
+  s.paEffectiveD8PTL2IsometricEquivalenceProved /\
+  s.paEffectiveD8SmoothGlobalFieldConfigurationProved /\
+  s.paEffectiveD8GlobalHolonomicScalarDifferentialProved /\
   s.paFiniteJetCompatibilityNaturalityProved /\
   s.paFiniteJetCompatibilityPrincipalSymbolKernelProved /\
   s.paLorentzianGramCompatibilityFrechetProved /\

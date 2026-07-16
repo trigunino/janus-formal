@@ -52,6 +52,11 @@ SMOOTH_THROAT_EMBEDDING_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothThroatEmbedding.lean"
 )
+COMPACT_QUOTIENT_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusCompactQuotient.lean"
+)
+
 FACADE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation.lean"
 )
@@ -244,6 +249,19 @@ SMOOTH_THROAT_EMBEDDING_STATUSES = (
     "fixedThroatQuotientDifferentialInjectiveProved",
     "fixedThroatNormalQuotientFinrankOneProved",
 )
+COMPACT_QUOTIENT_DECLARATIONS = (
+    "def fundamentalStripProjection",
+    "theorem fundamentalStripProjection_continuous",
+    "theorem fundamentalStripProjection_surjective",
+    "def mappingTorusCompactSpace",
+    "def reflectedSphereQuotientCompactSpace",
+    "def fixedThroatQuotientCompactSpace",
+)
+
+COMPACT_QUOTIENT_STATUSES = (
+    "effectiveMappingTorusCompactProved",
+    "effectiveThroatCompactProved",
+)
 
 THROAT_COMPLEMENT_CONNECTED_STATUSES = (
     "positiveAndNegativeSphereSidesPathConnectedProved",
@@ -280,6 +298,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
         repo_root / SMOOTH_THROAT_EMBEDDING_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
+    compact_quotient_gate = (repo_root / COMPACT_QUOTIENT_GATE).read_text(
+        encoding="utf-8"
+    )
 
     for declaration in DECLARATIONS:
         if declaration not in gate:
@@ -476,6 +497,24 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(f"D8 facade omits smooth-throat status: {status}")
 
+
+    for declaration in COMPACT_QUOTIENT_DECLARATIONS:
+        if declaration not in compact_quotient_gate:
+            raise AssertionError(
+                f"missing D8 compact-quotient declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", compact_quotient_gate):
+        raise AssertionError("proof placeholder found in D8 compact quotient gate")
+    compact_import = "Gates.P0EFTJanusMappingTorusCompactQuotient"
+    if facade.count(compact_import) != 1:
+        raise AssertionError("D8 facade omits the compact quotient gate")
+    if facade.count("effectiveQuotientCompactnessClosed s") != 1:
+        raise AssertionError("D8 smooth core omits compactness milestone")
+    for status in COMPACT_QUOTIENT_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(
+                f"D8 facade omits compact-quotient status: {status}"
+            )
 
 def run_audit() -> None:
     assert_d8_topology_integrity()

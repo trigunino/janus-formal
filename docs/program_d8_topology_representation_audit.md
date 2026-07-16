@@ -128,7 +128,7 @@ line back to this cover yields an explicit homeomorphism with the product by
 `R`. The quotient throat inclusion is additionally a closed topological
 embedding, its manifold differential is injective at every point, and the
 quotient of the ambient tangent space by its derivative range has real
-dimension one. This is the checked smooth-embedding/codimension-one frontier.
+dimension one. The compact fundamental strips `S³ × [0,|T|]` and `S² × [0,|T|]` project continuously and surjectively, proving compactness of both actual effective quotients. This is the checked smooth-embedding/codimension-one frontier.
 A globally chosen smooth normal complement, its identification with the orbit
 normal line, the nonnull/null/joint stratification and a smooth `VectorBundle`
 are not yet asserted.

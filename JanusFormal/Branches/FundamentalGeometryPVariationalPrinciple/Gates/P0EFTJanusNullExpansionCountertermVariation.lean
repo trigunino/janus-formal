@@ -198,6 +198,30 @@ theorem derivativeCoefficient_unbounded_below_along_zeroExpansionApproach
   have hParameter : 2 - bound ≤ parameter := le_max_right _ _
   linarith
 
+/-- Maximal open domain on which the null counterterm has the proved classical variation. -/
+def admissibleNonzeroExpansionDomain : Set Real := Set.Iio 0 ∪ Set.Ioi 0
+
+theorem admissibleNonzeroExpansionDomain_isOpen : IsOpen admissibleNonzeroExpansionDomain := isOpen_Iio.union isOpen_Ioi
+
+theorem mem_admissibleNonzeroExpansionDomain_iff (expansion : Real) : expansion ∈ admissibleNonzeroExpansionDomain ↔ expansion ≠ 0 := by
+  constructor
+  · intro h hZero
+    subst expansion
+    rcases h with h | h <;> simp at h
+  · intro h
+    rcases lt_or_gt_of_ne h with hNeg | hPos
+    · exact Or.inl hNeg
+    · exact Or.inr hPos
+
+/-- Every admissible expansion has the exact derivative, while zero is deliberately excluded. -/
+theorem expansionCountertermFactor_hasDerivAt_on_admissibleDomain
+    (lengthScale expansion : Real) (hLength : 0 < lengthScale)
+    (hExpansion : expansion ∈ admissibleNonzeroExpansionDomain) :
+    HasDerivAt (expansionCountertermFactor lengthScale)
+      (expansionCountertermDerivativeCoefficient lengthScale expansion) expansion :=
+  expansionCountertermFactor_hasDerivAt lengthScale expansion hLength
+    ((mem_admissibleNonzeroExpansionDomain_iff expansion).1 hExpansion)
+
 end
 
 end P0EFTJanusNullExpansionCountertermVariation
