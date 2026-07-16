@@ -1305,6 +1305,11 @@ PROGRAM_P_GATES = {
             "theorem positiveDiagonalizableBoundaryKernel_ne_zero",
             "theorem positiveDiagonalizableBoundaryKernel_sylvester_eq_zero",
             "theorem positiveDiagonalizableBoundarySylvester_not_injective",
+            "def positiveDiagonalizableConjugatedEigenCoordinate",
+            "def positiveDiagonalizableDivergentRootPath",
+            "theorem positiveDiagonalizableConjugatedEigenCoordinate_rootPath",
+            "theorem positiveDiagonalizableDivergentRootPath_square",
+            "theorem positiveDiagonalizableDivergentEigenCoordinate_tendsto_atTop",
         ),
     ),
     "P0EFTJanusLorentzJordanRelativeRoot4D.lean": (

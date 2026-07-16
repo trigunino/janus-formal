@@ -321,8 +321,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Pour toute présentation réelle diagonalisable à spectre strictement
     positif, construire un chemin continu remplaçant une valeur propre par
     zéro, prouver le carré exact jusqu'au bord et exhiber un noyau non nul de
-    Sylvester au point limite. La divergence, les collisions Jordan et `0/0`
-    restent ouverts.
+    Sylvester au point limite. Les collisions Jordan et `0/0` restent ouverts.
+    - [x] Sur le même locus, construire le chemin spectral `t⁻¹`, prouver son
+      carré exact et montrer que sa coordonnée propre conjuguée vaut
+      `√(t⁻¹)` et tend vers `+∞` lorsque `t → 0⁺`.
   - [x] Sur le sous-domaine diagonal global, construire les chemins vers les
     deux faces : numérateur vers zéro donne une extension continue de la
     racine vers zéro et une dégénérescence explicite de Sylvester ; dénominateur

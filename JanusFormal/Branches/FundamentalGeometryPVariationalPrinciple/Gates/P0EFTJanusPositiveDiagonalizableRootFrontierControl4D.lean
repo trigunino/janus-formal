@@ -75,6 +75,66 @@ theorem positiveDiagonalizableRootPath_tendsto_zero
   (positiveDiagonalizableRootPath_continuous data index).continuousAt.tendsto.mono_left
     inf_le_left
 
+/-- Spectral coordinate obtained by returning a matrix to the supplied
+eigenbasis and reading its selected diagonal entry. -/
+def positiveDiagonalizableConjugatedEigenCoordinate
+    (data : PositiveDiagonalizableRelativeMatrix) (index : Fin 4)
+    (matrix : Matrix4) : Real :=
+  (data.eigenbasisInv * matrix * data.eigenbasis) index index
+
+/-- Interior path on which one target eigenvalue is `parameter⁻¹`. -/
+def positiveDiagonalizableDivergentRootPath
+    (data : PositiveDiagonalizableRelativeMatrix) (index : Fin 4)
+    (parameter : Real) : Matrix4 :=
+  positiveDiagonalizableRootPath data index parameter⁻¹
+
+/-- In the supplied eigenbasis, the selected coordinate of the transported
+root is exactly the square root of the varied eigenvalue. -/
+theorem positiveDiagonalizableConjugatedEigenCoordinate_rootPath
+    (data : PositiveDiagonalizableRelativeMatrix) (index : Fin 4)
+    (value : Real) :
+    positiveDiagonalizableConjugatedEigenCoordinate data index
+        (positiveDiagonalizableRootPath data index value) =
+      Real.sqrt value := by
+  let diagonalRoot : Matrix4 :=
+    Matrix.diagonal
+      (fun coordinate =>
+        Real.sqrt (replacePositiveSpectrumValue data index value coordinate))
+  have hConjugate :
+      data.eigenbasisInv *
+            (data.eigenbasis * diagonalRoot * data.eigenbasisInv) *
+          data.eigenbasis =
+        diagonalRoot := by
+    calc
+      data.eigenbasisInv *
+            (data.eigenbasis * diagonalRoot * data.eigenbasisInv) *
+          data.eigenbasis =
+        (data.eigenbasisInv * data.eigenbasis) * diagonalRoot *
+          (data.eigenbasisInv * data.eigenbasis) := by noncomm_ring
+      _ = diagonalRoot := by rw [data.inv_mul_basis]; simp
+  change
+    (data.eigenbasisInv *
+          (data.eigenbasis * diagonalRoot * data.eigenbasisInv) *
+        data.eigenbasis) index index = Real.sqrt value
+  rw [hConjugate]
+  simp [diagonalRoot, replacePositiveSpectrumValue]
+
+/-- The selected spectral coordinate diverges along the reciprocal-eigenvalue
+path as the positive parameter approaches zero. -/
+theorem positiveDiagonalizableDivergentEigenCoordinate_tendsto_atTop
+    (data : PositiveDiagonalizableRelativeMatrix) (index : Fin 4) :
+    Tendsto
+      (fun parameter =>
+        positiveDiagonalizableConjugatedEigenCoordinate data index
+          (positiveDiagonalizableDivergentRootPath data index parameter))
+      (nhdsWithin 0 (Set.Ioi 0)) atTop := by
+  have hDivergence :
+      Tendsto (fun parameter : Real => Real.sqrt parameter⁻¹)
+        (nhdsWithin 0 (Set.Ioi 0)) atTop :=
+    Real.tendsto_sqrt_atTop.comp tendsto_inv_nhdsGT_zero
+  simpa [positiveDiagonalizableDivergentRootPath,
+    positiveDiagonalizableConjugatedEigenCoordinate_rootPath] using hDivergence
+
 theorem positiveDiagonalizableRootPath_square
     (data : PositiveDiagonalizableRelativeMatrix)
     (index : Fin 4) {value : Real} (hValue : 0 ≤ value) :
@@ -142,6 +202,17 @@ theorem positiveDiagonalizableRootPath_square
         data.eigenbasisInv := by
           rw [data.inv_mul_basis]
           simp only [Matrix.mul_one, Matrix.mul_assoc]
+
+/-- The reciprocal-eigenvalue path remains an exact square-root path for every
+positive parameter. -/
+theorem positiveDiagonalizableDivergentRootPath_square
+    (data : PositiveDiagonalizableRelativeMatrix) (index : Fin 4)
+    {parameter : Real} (hParameter : 0 < parameter) :
+    positiveDiagonalizableDivergentRootPath data index parameter *
+        positiveDiagonalizableDivergentRootPath data index parameter =
+      positiveDiagonalizableTargetPath data index parameter⁻¹ := by
+  exact positiveDiagonalizableRootPath_square data index
+    (le_of_lt (inv_pos.mpr hParameter))
 
 /-- At its original positive eigenvalue, the target path returns the supplied
 target matrix. -/
