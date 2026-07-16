@@ -81,6 +81,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothPTFieldAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzTensor4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCoverLorentzTensor4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarDensityFrameCovariance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
@@ -116,6 +117,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGradedGhostCoefficientWitness4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiffeomorphismGhostLieBracket4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLCovariance4D
@@ -138,6 +140,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinProjection
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinAtlasObstruction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -368,6 +371,7 @@ structure ProgramStatus where
   paEffectiveD8AmbientTangentOrientationCocycleProved : Prop
   paEffectiveD8AmbientTangentQuadraticReductionFrontierProved : Prop
   paEffectiveD8AmbientSpinProjectionConstructed : Prop
+  paEffectiveD8AmbientSpinAtlasCechObstructionProved : Prop
   paEffectiveD8NormalZ4RootBundleProved : Prop
   paEffectiveD8NormalZ4RootPTConjugationProved : Prop
   paEffectiveD8NormalPinMinusPrincipalBundleProved : Prop
@@ -375,6 +379,7 @@ structure ProgramStatus where
   paEffectiveD8SmoothPTFieldAction4DProved : Prop
   paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved : Prop
   paEffectiveD8GeneralLorentzTensorFrontierProved : Prop
+  paEffectiveD8IntrinsicCoverLorentzTensor4DProved : Prop
   paEffectiveD8GeneralHolonomicScalarDensity4DProved : Prop
   paEffectiveD8GeneralScalarDensityFrameCovariance4DProved : Prop
   paEffectiveD8GeneralScalarFunctionalAction4DProved : Prop
@@ -415,6 +420,7 @@ structure ProgramStatus where
   paEffectiveD8LinearizedDiffeomorphismBRST4DProved : Prop
   paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved : Prop
   paGradedGhostCoefficientWitness4DProved : Prop
+  paEffectiveD8SmoothDiffeomorphismGhostLieBracket4DProved : Prop
   paEffectiveD8GlobalLLWorldvolumeActionProved : Prop
   paEffectiveD8GlobalLLVariation4DProved : Prop
   paEffectiveD8GlobalLLPTCovariance4DProved : Prop
@@ -629,6 +635,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8AmbientTangentOrientationCocycleProved /\
   s.paEffectiveD8AmbientTangentQuadraticReductionFrontierProved /\
   s.paEffectiveD8AmbientSpinProjectionConstructed /\
+  s.paEffectiveD8AmbientSpinAtlasCechObstructionProved /\
   s.paEffectiveD8NormalZ4RootBundleProved /\
   s.paEffectiveD8NormalZ4RootPTConjugationProved /\
   s.paEffectiveD8NormalPinMinusPrincipalBundleProved /\
@@ -636,6 +643,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8SmoothPTFieldAction4DProved /\
   s.paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved /\
   s.paEffectiveD8GeneralLorentzTensorFrontierProved /\
+  s.paEffectiveD8IntrinsicCoverLorentzTensor4DProved /\
   s.paEffectiveD8GeneralHolonomicScalarDensity4DProved /\
   s.paEffectiveD8GeneralScalarDensityFrameCovariance4DProved /\
   s.paEffectiveD8GeneralScalarFunctionalAction4DProved /\
@@ -677,6 +685,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8LinearizedDiffeomorphismBRST4DProved /\
   s.paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved /\
   s.paGradedGhostCoefficientWitness4DProved /\
+  s.paEffectiveD8SmoothDiffeomorphismGhostLieBracket4DProved /\
   s.paEffectiveD8GlobalLLWorldvolumeActionProved /\
   s.paEffectiveD8GlobalLLVariation4DProved /\
   s.paEffectiveD8GlobalLLPTCovariance4DProved /\

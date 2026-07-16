@@ -88,6 +88,10 @@ AMBIENT_SPIN_PROJECTION_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusAmbientSpinProjection.lean"
 )
+AMBIENT_SPIN_ATLAS_OBSTRUCTION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusAmbientSpinAtlasObstruction.lean"
+)
 SMOOTH_NORMAL_Z4_ROOT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalZ4RootBundle.lean"
@@ -436,6 +440,18 @@ AMBIENT_SPIN_PROJECTION_DECLARATIONS = (
     "def AmbientSpinCechTransitionLift.toPinSpinCCechLiftContract",
 )
 
+AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
+    "theorem ambientAtlasTransition_cocycle_apply",
+    "theorem ambientAtlasTangentTransition_cocycle",
+    "theorem ambientOrthogonalTransition_cocycle",
+    "structure AmbientSpinOverlapLift",
+    "def AmbientSpinOverlapLift.comp",
+    "def ambientSpinCechDefect",
+    "theorem ambientSpinProjection_cechDefect",
+    "def ambientSpinCechKernelDefect",
+    "theorem ambientSpinCechDefect_eq_one_iff",
+)
+
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (
     "def quarterRootRepresentation",
     "theorem quarterRootRepresentation_add",
@@ -498,6 +514,7 @@ GLOBAL_NORMAL_AND_Z4_STATUSES = (
     "ambientTangentOrientationCocycleProved",
     "ambientTangentQuadraticReductionFrontierProved",
     "ambientSpinProjectionConstructed",
+    "ambientSpinAtlasCechObstructionProved",
     "fixedThroatNormalZ4RootComplexLineConstructed",
     "fixedThroatNormalZ4RootSmoothRealUnderlierProved",
     "fixedThroatNormalZ4RootSquaresToNormalSignProved",
@@ -580,6 +597,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     ).read_text(encoding="utf-8")
     ambient_spin_projection_gate = (
         repo_root / AMBIENT_SPIN_PROJECTION_GATE
+    ).read_text(encoding="utf-8")
+    ambient_spin_atlas_obstruction_gate = (
+        repo_root / AMBIENT_SPIN_ATLAS_OBSTRUCTION_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_z4_root_gate = (
         repo_root / SMOOTH_NORMAL_Z4_ROOT_GATE
@@ -942,6 +962,23 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     )
     if facade.count(ambient_spin_projection_import) != 1:
         raise AssertionError("D8 facade omits the ambient Spin-projection gate")
+
+    for declaration in AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS:
+        if declaration not in ambient_spin_atlas_obstruction_gate:
+            raise AssertionError(
+                f"missing D8 ambient Spin-atlas declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", ambient_spin_atlas_obstruction_gate
+    ):
+        raise AssertionError(
+            "proof placeholder found in D8 ambient Spin-atlas gate"
+        )
+    ambient_spin_atlas_obstruction_import = (
+        "Gates.P0EFTJanusMappingTorusAmbientSpinAtlasObstruction"
+    )
+    if facade.count(ambient_spin_atlas_obstruction_import) != 1:
+        raise AssertionError("D8 facade omits the ambient Spin-atlas gate")
 
     for declaration in SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS:
         if declaration not in smooth_normal_z4_root_gate:
