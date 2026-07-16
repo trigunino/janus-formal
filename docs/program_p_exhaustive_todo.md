@@ -616,6 +616,9 @@ par toute évolution admissible.
 - [ ] Prouver leurs lois de covariance et d'échange.
   - [x] Prouver l'invariance par échange des deux secteurs pour l'action
     intégrée et sa variation de stress.
+  - [x] Prouver que l'induction des deux métriques diagonales et des deux
+    traces matière commute exactement avec PT/échange. La racine relative,
+    la covariance difféomorphe et les conservations restent séparées.
   - [ ] Prouver la covariance difféomorphe et les identités de conservation.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.

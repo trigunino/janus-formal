@@ -207,6 +207,52 @@ def induce (fields : IndependentFields period hPeriod) :
   plusMatterTrace := throatTrace period hPeriod MatterFiber fields.matter.1
   minusMatterTrace := throatTrace period hPeriod MatterFiber fields.matter.2
 
+/-- Inducing the plus diagonal metric after PT/exchange gives the PT pullback
+of the original minus metric. -/
+theorem induce_exchange_plusMetric
+    (fields : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (independentExchange period hPeriod fields)).plusMetric =
+      ptPullback period hPeriod Matrix4
+        (induce period hPeriod fields).minusMetric := by
+  apply SmoothQuotientField.ext period hPeriod Matrix4
+  intro point
+  rfl
+
+/-- The corresponding minus metric is the PT pullback of the original plus
+metric. -/
+theorem induce_exchange_minusMetric
+    (fields : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (independentExchange period hPeriod fields)).minusMetric =
+      ptPullback period hPeriod Matrix4
+        (induce period hPeriod fields).plusMetric := by
+  apply SmoothQuotientField.ext period hPeriod Matrix4
+  intro point
+  rfl
+
+/-- Smooth throat restriction of the exchanged plus matter sector is the
+intrinsic throat PT pullback of the original minus trace. -/
+theorem induce_exchange_plusMatterTrace
+    (fields : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (independentExchange period hPeriod fields)).plusMatterTrace =
+      throatPTPullback period hPeriod MatterFiber
+        (induce period hPeriod fields).minusMatterTrace := by
+  simpa [induce, independentExchange] using
+    (throatTrace_pt_equivariant period hPeriod MatterFiber fields.matter.2)
+
+/-- The exchanged minus matter trace is the intrinsic throat PT pullback of
+the original plus trace. -/
+theorem induce_exchange_minusMatterTrace
+    (fields : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (independentExchange period hPeriod fields)).minusMatterTrace =
+      throatPTPullback period hPeriod MatterFiber
+        (induce period hPeriod fields).plusMatterTrace := by
+  simpa [induce, independentExchange] using
+    (throatTrace_pt_equivariant period hPeriod MatterFiber fields.matter.1)
+
 /-- The induced package is uniquely fixed by the independent package. -/
 theorem existsUnique_induced (fields : IndependentFields period hPeriod) :
     ∃! induced : InducedFields period hPeriod,
