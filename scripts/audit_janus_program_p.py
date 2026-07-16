@@ -593,6 +593,9 @@ PROGRAM_P_GATES = {
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "theorem expansionCountertermFactor_hasDerivAt",
+            "def admissibleNonzeroExpansionDomain",
+            "theorem admissibleNonzeroExpansionDomain_isOpen",
+            "theorem expansionCountertermFactor_hasDerivAt_on_admissibleDomain",
             "theorem varying_expansionLogFactor_eq",
             "theorem declaredNullCountertermExpansionFamily_hasDerivAt",
             "theorem zeroExpansionApproach_tendsto_zero",
@@ -1475,6 +1478,83 @@ PROGRAM_P_GATES = {
             "theorem candidateAAction_ptExchange",
         ),
     ),
+    "P0EFTJanusMappingTorusSmoothThroatTrace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothThroatField",
+            "def throatTrace",
+            "theorem throatPTPullback_involutive",
+            "theorem throatTrace_pt_equivariant",
+            "def SatisfiesDirichlet",
+            "theorem inducedDirichletPair_satisfies",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothFieldLinearSpace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatTraceLinearMap",
+            "def ptPullbackLinearMap",
+            "def throatPTPullbackLinearMap",
+            "theorem throatTraceLinearMap_pt_intertwines",
+        ),
+    ),
+    "P0EFTJanusMappingTorusL2PTFunctionalSpace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothQuotientField_memLp",
+            "def quotientL2CompleteSpace",
+            "def quotientL2InnerProductSpace",
+            "def smoothFieldToL2",
+            "theorem smoothFieldToL2_injective",
+            "def ptL2Equiv",
+            "theorem ptL2Pullback_smoothFieldToL2",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure IndependentFields",
+            "def PTMatchedIndependent",
+            "structure InducedFields",
+            "def induce",
+            "theorem existsUnique_induced",
+            "theorem induced_root_square",
+            "def zeroMatchedIndependentFields",
+            "theorem zeroMatchedIndependentFields_ptMatched",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalar4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def scalarDifferential",
+            "structure GlobalHolonomicScalar",
+            "theorem existsUnique_holonomicCovector",
+            "theorem throatTrace_mfderiv",
+            "theorem ptPullback_mfderiv",
+        ),
+    ),
+    "P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pullbackSmoothField",
+            "theorem pullbackSmoothField_trans",
+            "theorem pullbackSmoothField_symm",
+            "structure DiagonalDiffeomorphism",
+            "def pullbackIndependentFields",
+            "theorem throatTrace_pullback",
+            "def infinitesimalGenerator",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalLLWorldvolume4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def llFlux",
+            "def llWorldvolumeDensity",
+            "def globalLLAction",
+            "theorem llWorldvolumeDensity_integrable",
+            "theorem globalLLAction_zeroMatched",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1854,6 +1934,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "Gates.P0EFTJanusCircleDeterminantTopologicalBundle",
         "Gates.P0EFTJanusCircleQuillenMetricFlatConnection",
     ):
+        "Gates.P0EFTJanusMappingTorusCompactQuotient",
         if primary_facade.count(gate_import) != 1:
             raise AssertionError(f"Program P facade omits dependency: {gate_import}")
     for status in (
@@ -1955,6 +2036,13 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "peEffectiveD8StructuredJetGroupoidFrontierProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
+        "paEffectiveD8CompactQuotientsProved",
+        "paEffectiveD8SmoothFieldLinearSpacesProved",
+        "paEffectiveD8SmoothThroatTraceAndDirichletProved",
+        "paEffectiveD8L2FunctionalCompletionProved",
+        "paEffectiveD8PTL2IsometricEquivalenceProved",
+        "paEffectiveD8SmoothGlobalFieldConfigurationProved",
+        "paEffectiveD8GlobalHolonomicScalarDifferentialProved",
         "paLorentzianGramCompatibilityFrechetProved",
         "paCanonicalLorentzGramSaintVenantSymbolExactnessProved",
         "paArbitraryFrequencyLorentzGramSaintVenantSymbolExactnessProved",

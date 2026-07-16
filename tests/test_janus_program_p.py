@@ -113,3 +113,13 @@ def test_program_p_d10_circle_topological_determinant_bundle_is_integrated() -> 
 
 def test_program_p_d10_circle_fourier_quillen_model_is_integrated() -> None:
     assert_program_p_gate_integrity()
+
+def test_program_p_effective_d8_l2_trace_and_global_fields_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_holonomic_scalar_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+def test_program_p_diffeomorphism_ll_and_null_domain_are_integrated() -> None:
+    assert_program_p_gate_integrity()

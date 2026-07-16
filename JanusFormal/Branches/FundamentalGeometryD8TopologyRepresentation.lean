@@ -25,6 +25,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -74,6 +75,8 @@ structure ProgramStatus where
   fixedThroatQuotientInclusionContMDiffProved : Prop
   mappingTorusTimeReversalContMDiffProved : Prop
   mappingTorusTimeReversalDiffeomorphConstructed : Prop
+  effectiveMappingTorusCompactProved : Prop
+  effectiveThroatCompactProved : Prop
   fixedThroatQuotientInclusionIsClosedEmbeddingProved : Prop
   fixedThroatQuotientDifferentialInjectiveProved : Prop
   fixedThroatNormalQuotientFinrankOneProved : Prop
@@ -181,6 +184,11 @@ def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatQuotientDifferentialInjectiveProved /\
   s.fixedThroatNormalQuotientFinrankOneProved
 
+/-- Compactness of both actual effective quotient manifolds. -/
+def effectiveQuotientCompactnessClosed (s : ProgramStatus) : Prop :=
+  s.effectiveMappingTorusCompactProved /\
+  s.effectiveThroatCompactProved
+
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   effectiveTopologicalMappingTorusCoreClosed s /\
@@ -195,6 +203,7 @@ def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   mappingTorusSmoothPTCoreClosed s /\
   fixedThroatSmoothEmbeddingFrontierClosed s /\
   s.nonzeroTranslationDerived /\
+  effectiveQuotientCompactnessClosed s /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\
   s.smoothMappingTorusConstructed /\

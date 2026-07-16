@@ -53,6 +53,12 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 ## D0/D8 — Global geometry and normal lift
 
+- **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
+- **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
+- **O** Sobolev trace theory, the smooth normal bundle and the non-null/null/joint stratification remain open.
+- **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
+- **T/C** the compact throat carries an actual finite-measure LL worldvolume action and a nonempty zero branch; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
+
 Candidate:
 
 ```text

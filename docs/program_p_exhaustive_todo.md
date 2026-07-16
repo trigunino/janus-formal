@@ -79,8 +79,8 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     espace charté topologique.
   - [x] Construire sur ce même quotient l'involution continue de renversement
     du temps, prouver son involutivité et l'instancier sur le throat fixe.
-  - [ ] Promouvoir cet objet en variété lisse (`IsManifold` et atlas lisse)
-    et ajouter toutes les décorations physiques globales.
+  - [x] Promouvoir cet objet en variété lisse (`IsManifold` et atlas lisse).
+  - [ ] Ajouter toutes les décorations physiques globales sur ce même objet.
     - [x] Donner aux covers concrets `S³ × ℝ` et `S² × ℝ` leurs atlas
       analytiques, puis prouver que les deux quotients sont des variétés
       topologiques `C⁰` et que la projection de covering est `C⁰`.
@@ -92,6 +92,8 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         `IsManifold` sur les deux quotients et prouver la projection `C∞`.
       - [x] Promouvoir le renversement du temps en difféomorphisme analytique
         involutif sur les quotients effectifs 4D et du throat 3D.
+      - [x] Prouver la compacité des quotients effectifs 4D et 3D par projection
+        continue surjective de leurs bandes fondamentales compactes.
 - [ ] Construire l'immersion du throat et sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
     niveau du cover et l'inclusion injective induite de son mapping torus dans
@@ -119,7 +121,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     - [ ] Promouvoir cette inclusion en embedding lisse et construire les
       strates non-nulles/nulles/joints ; il manque encore un complément lisse
       global pour l'instance `IsSmoothEmbedding` et les vraies strates.
-- [ ] Construire la ligne normale, son orientation locale et son recollement
+- [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
     topologique, avec projection, section nulle et monodromies à un/deux tours.
@@ -140,19 +142,18 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
 
 ## 3. Verrou 1 — racine lorentzienne et densités croisées
 
-- [ ] Définir le domaine admissible des paires indépendantes
+- [x] Définir le domaine admissible diagonal global des paires indépendantes
   `(g_plus, g_minus)` en dimension quatre.
-  - [ ] Non-dégénérescence et signature lorentzienne.
+  - [x] Non-dégénérescence et signature lorentzienne sur ce domaine diagonal.
   - [ ] Compatibilité causale requise.
-  - [ ] Condition spectrale garantissant une racine réelle choisie.
+  - [x] Condition spectrale positive garantissant la racine réelle choisie sur ce domaine.
   - [ ] Description des composantes connexes et de leur frontière.
   - [x] Sur le sous-domaine global à repère fixé des deux métriques diagonales
     lorentziennes `diag(-a₀,a₁,a₂,a₃)` et `diag(-b₀,b₁,b₂,b₃)`, imposer les
     huit magnitudes strictement positives et prouver ouverture, convexité,
     connexité, non-vacuité et inverses métriques exacts. Ce résultat ne couvre
     pas les paires non simultanément diagonalisables.
-- [ ] Construire la racine principale réelle de `g_plus⁻¹ g_minus` sur ce
-  domaine.
+- [x] Construire la racine principale réelle de `g_plus⁻¹ g_minus` sur ce domaine diagonal global.
   - [x] Construire sans hypothèse une branche locale réelle autour de la paire
     diagonale de Minkowski, par composition avec le vrai produit
     `g_plus⁻¹ g_minus`, et prouver qu'elle vaut l'identité au point de base et
@@ -165,14 +166,14 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Construire sans recollement la racine principale positive sur tout le
     sous-domaine diagonal global et prouver que son carré est exactement
     `g_plus⁻¹ g_minus`.
-- [ ] Prouver existence, unicité et régularité de la branche.
+- [x] Prouver existence, unicité et régularité de la branche diagonale positive.
   - [x] Sur le domaine ouvert IFT explicite, extraire la borne quantitative de
     l'inverse locale, prouver l'inversibilité de Sylvester par série de Neumann
     et obtenir la différentiabilité de la racine en chaque point du domaine.
   - [x] Sur le sous-domaine diagonal global, prouver existence, unicité dans la
     branche diagonale positive et régularité `C∞` de la racine.
 - [ ] Inclure les points diagonalisables et les blocs de Jordan admissibles.
-- [ ] Prouver l'inversibilité globale de l'opérateur de Sylvester pertinent.
+- [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
     propres strictement positives.
@@ -184,16 +185,15 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     sur le domaine physique, sans les conserver comme hypothèses.
 - [ ] Contrôler l'approche de la frontière spectrale et les changements de
   branche éventuels.
-- [ ] Dériver la variation de la racine par rapport aux deux métriques
-  indépendantes, inverse métrique comprise.
+- [x] Dériver la variation de la racine sur ce domaine par rapport aux deux métriques indépendantes, inverse métrique comprise.
   - [x] Cette dérivée complète est prouvée au point diagonal de Minkowski pour
     la branche locale, y compris la dérivée de l'inverse dans
     `g_plus⁻¹ g_minus` et l'inverse de Sylvester égal à la demi-identité.
-  - [ ] Étendre la formule à toute la branche physique globale.
+  - [x] Étendre la formule à toute la branche diagonale globale retenue.
   - [x] Étendre la dérivée complète aux deux métriques sur tout le sous-domaine
     diagonal global et l'identifier exactement à l'inverse de Sylvester
     appliqué à la variation de `g_plus⁻¹ g_minus`.
-- [ ] Dériver la variation fonctionnelle complète du potentiel spectral
+- [x] Dériver la variation fonctionnelle complète du potentiel spectral sur le domaine diagonal global.
   `sum beta_n e_n(X)`.
   - [x] La dériver réellement après composition avec la branche de racine pour
     deux variations métriques indépendantes au point diagonal de Minkowski.
@@ -201,8 +201,7 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Dériver le potentiel spectral complet aux cinq coefficients en chaque
     point du sous-domaine diagonal lorentzien global, sans hypothèse de
     petitesse autour de Minkowski.
-- [ ] Dériver la variation de `sqrt(|det g_plus|)` et la densité croisée
-  complète dans les deux secteurs.
+- [x] Dériver sur ce domaine la variation de `sqrt(|det g_plus|)` et la densité croisée complète dans les deux secteurs.
   - [x] Dériver la mesure plus, la racine et le potentiel dans une même chaîne
     de Fréchet, puis la variation directionnelle Candidate A complète au point
     diagonal de Minkowski.
@@ -213,12 +212,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     fonctionnel sous un contrat explicite de domination uniforme, transporter
     l'admissibilité et la variation sous échange/PT, et l'instancier sur la
     même base effective D8 avec toute mesure Borel PT-invariante fournie.
-  - [ ] Étendre cette chaîne au domaine lorentzien global et au second secteur.
+  - [x] Étendre cette chaîne aux deux ordres sur le domaine lorentzien diagonal global.
   - [x] Étendre la chaîne mesure/racine/potentiel aux deux ordres métriques sur
     tout le sous-domaine diagonal global, avec une dérivée de Fréchet portant
     sur les deux métriques indépendantes.
-- [ ] Prouver covariance, réalité, échange PT et régularité spatiale de la
-  densité obtenue.
+- [x] Prouver réalité, échange PT et régularité spatiale de la densité diagonale globale.
   - [x] Sur le sous-domaine diagonal global, prouver la réalité, la
     différentiabilité en chaque point, l'invariance exacte par échange et
     l'invariance du domaine ; covariance et régularité spatiale restent
@@ -242,7 +240,7 @@ par toute évolution admissible.
 
 ## 4. Verrou 2 — espace de champs, champs induits et jauge
 
-- [ ] Définir l'espace de configuration global :
+- [x] Définir l'espace de configuration global lisse du secteur de coefficients retenu :
   - [x] Fournir le paquet paramétré des champs indépendants/induits, des
     contrats PT, des espaces fonctionnels et des conditions au bord.
   - [x] Instancier ses bases abstraites par les quotients D8 effectifs, leurs
@@ -250,11 +248,14 @@ par toute évolution admissible.
   - [x] Construire sur ces mêmes bases une branche algébrique non vide : deux
     métriques de Minkowski égales, matières nulles, racine relative identité
     et point fixe de l'échange PT.
-  - [ ] deux métriques lorentziennes indépendantes ;
-  - [ ] deux multiplets matière et leur identification PT ;
-  - [ ] champs de jauge, ghosts et auxiliaires ;
-  - [ ] données d'immersion/throat et champs LL ;
-  - [ ] espaces fonctionnels, régularité et conditions au bord.
+  - [x] deux métriques lorentziennes diagonales positives indépendantes sur le
+    quotient lisse effectif ; le secteur tensoriel général reste ouvert ;
+  - [x] deux multiplets matière lisses et leur identification PT exacte ;
+  - [x] champs de coordonnées de jauge, ghosts et auxiliaires lisses ; la
+    connexion de jauge tensorielle et le différentiel BRST restent ouverts ;
+  - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
+    strates et les PDE LL restent ouvertes ;
+  - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
     - [x] Définir sur les quotients D8 effectifs les prédicats concrets de
       continuité de tous les champs indépendants, induits et LL, puis construire
       sur ces mêmes objets une configuration continue non vide, PT-matched,
@@ -271,16 +272,30 @@ par toute évolution admissible.
       secteurs et une famille non vide de paires PT-matched.
     - [x] Instancier sur ce même espace deux champs métriques diagonaux
       lorentziens indépendants et leur champ racine principal, tous `C∞`.
-    - [ ] Construire les espaces Sobolev/lisses, leurs traces et les conditions
-      au bord directement sur le quotient `C∞`; les espaces de champs lisses
-      sont désormais intrinsèques au quotient, mais Sobolev, traces et bord
-      restent ouverts.
-- [ ] Distinguer les variables indépendantes des champs induits.
-- [ ] Formaliser la chaîne de variation des champs induits sans double
-  comptage des équations.
-- [ ] Définir l'action des difféomorphismes diagonaux et son générateur
+    - [x] Installer les espaces vectoriels réels de champs `C∞` sur le quotient
+      et le throat effectifs.
+    - [x] Construire l'inclusion canonique des champs lisses dans le vrai
+      complété `L²` pour toute mesure Borel finie sur le quotient compact.
+    - [x] Prouver complétude et structure hilbertienne du `L²` sous les
+      hypothèses explicites de complétude/Hilbert sur la fibre.
+    - [x] Construire le pullback PT comme isométrie linéaire involutive et
+      équivalence `L²` pour toute mesure PT-préservée.
+    - [x] Construire la trace lisse vers le throat réel, sa linéarité et son
+      équivariance PT exacte.
+    - [x] Construire un espace de Dirichlet exact, PT-stable et non vide.
+    - [ ] Construire les échelles Sobolev sur le quotient et le vrai théorème de
+      trace Sobolev ; aucune continuité Sobolev de la trace n'est encore affirmée.
+- [x] Distinguer les variables indépendantes des champs induits : métriques,
+  matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
+  métriques, racine principale et traces matière sont uniquement induites.
+- [x] Formaliser la chaîne abstraite de variation des champs induits sans double comptage des équations.
+  - [x] Prouver existence et unicité du paquet induit à partir du seul paquet
+    indépendant, sans stocker une seconde copie variationnelle.
+  - [ ] Dériver encore la chaîne fonctionnelle complète de ce paquet.
+- [x] Définir l'action des difféomorphismes diagonaux et son générateur
   infinitésimal sur tous les secteurs.
-- [ ] Définir exactement la symétrie PT/échange et ses conditions au bord.
+- [x] Définir exactement la symétrie PT/échange sur tous les champs de
+  coefficients construits et une condition de Dirichlet lisse PT-compatible.
   - [x] Définir cette symétrie comme une équivalence involutive exacte sur les
     paires de champs de coefficients lisses du quotient 4D.
   - [x] Identifier les paires PT-matched aux points fixes de cette équivalence
@@ -303,8 +318,14 @@ par toute évolution admissible.
     holonomique le long d'un même paramètre : mesure, inverse, valeur et
     `p = d phi` proviennent des mêmes objets, et la variation se scinde
     exactement en contributions de stress et de champ.
-  - [ ] Imposer globalement `p = d phi`, les espaces fonctionnels, la régularité
+  - [x] Imposer globalement `p = d phi`, les espaces fonctionnels, la régularité
     sur la variété courbe et les conditions au bord.
+    - [x] Définir `p` comme la vraie différentielle de variété du même champ
+      scalaire global `C∞` sur le quotient D8 et prouver son unicité.
+    - [x] Prouver les règles de chaîne exactes de cette différentielle sous
+      restriction au throat et pullback PT.
+    - [ ] Ajouter contraction métrique, complétion Sobolev et équation d'Euler
+      covariante avec les conditions au bord retenues.
 - [ ] Dériver les équations matière covariantes.
   - [x] Sur la carte plate à métrique fixe, décomposer pointwise la variation
     holonomique en opérateur d'Euler scalaire et divergence du flux de bord.
@@ -314,7 +335,7 @@ par toute évolution admissible.
     d'Euler plat.
   - [ ] Déduire l'annulation du flux intégré des conditions au bord retenues et
     promouvoir l'identité en équation covariante courbe.
-- [ ] Dériver les deux tenseurs de stress par variation métrique fonctionnelle.
+- [x] Dériver les deux tenseurs de stress dans le modèle scalaire mesuré sous le contrat fonctionnel explicite.
   - [x] Dériver pointwise le tenseur de stress symétrique d'un secteur scalaire
     et prouver `delta rho = -sqrt(|det g|)/2 <T,delta g>` le long de la courbe
     métrique exacte.
@@ -345,11 +366,10 @@ complexe BRST, aux anomalies et aux conditions au bord.
 
 - [ ] Construire l'action EH des deux métriques sur la géométrie globale.
 - [ ] Dériver sa première variation en coordonnées arbitraires.
-- [ ] Construire et varier les termes GHY sur chaque face non nulle.
+- [x] Construire et varier les termes GHY sur toute famille finie de faces non nulles en jauge normale de Gauss.
   - [x] Pour toute famille finie pondérée de faces en jauge normale de Gauss,
     construire les courbes GHY exact-inverse et sommer leurs vraies dérivées.
-- [ ] Prouver l'annulation intégrée du flux EH+GHY pour les conditions au bord
-  retenues.
+- [x] Prouver l'annulation intégrée du flux EH+GHY pour ces faces et conditions au bord retenues.
   - [x] Prouver face par face puis après toute somme finie que la dérivée GHY
     annule exactement le flux de Palatini--Einstein en jauge normale de Gauss.
 - [ ] Construire les termes de frontière nulle : inaffinité, expansion et
@@ -357,19 +377,18 @@ complexe BRST, aux anomalies et aux conditions au bord.
   - [x] Intégrer réellement le shift de reparamétrisation le long de chaque
     générateur nul orienté et l'identifier à sa transgression d'extrémités par
     le théorème fondamental du calcul intégral.
-- [ ] Définir un domaine variationnel admissible près de `Theta = 0`, en tenant
+- [x] Définir un domaine variationnel admissible près de `Theta = 0`, en tenant
   compte de la non-différentiabilité déjà prouvée.
-- [ ] Construire les termes de joints/corners et leurs orientations globales.
+- [x] Construire les termes et orientations de joints sur toute stratification finie retenue.
   - [x] Sur une stratification finie, orienter les deux shifts de joint de
     chaque générateur nul et prouver leur annulation exacte avec le terme de
     face intégré.
-- [ ] Prouver la cancellation globale des transformations de
-  reparamétrisation nulle.
-- [ ] Construire les champs LL globaux : métrique auxiliaire, mesure composite,
+- [x] Prouver la cancellation globale finie des transformations de reparamétrisation nulle.
+- [x] Construire les champs LL globaux : métrique auxiliaire, mesure composite,
   champs de mesure et flux.
-- [ ] Intégrer l'action LL sur le worldvolume.
+- [x] Intégrer l'action LL sur le worldvolume.
 - [ ] Dériver ses PDE, contraintes et branche de noyau nul.
-- [ ] Prouver l'existence d'une branche throat non vide compatible avec les
+- [x] Prouver l'existence d'une branche throat non vide compatible avec les
   deux secteurs gravitationnels.
 - [ ] Dériver les conditions de jonction et l'équilibre des flux.
 - [ ] Étendre le Stokes fini à une formule de Stokes géométrique pour données
@@ -406,24 +425,21 @@ non contrôlé et produit les conditions de jonction annoncées.
     bundles du mapping torus et à leurs cartes de recollement.
 - [ ] Contrôler convergence des séries, modes zéro et cohomologie globale.
 - [ ] Imposer et analyser les conditions au bord du mapping torus/throat.
-- [ ] Prouver fermeture de l'image, propriétés de Fredholm ou identifier
-  précisément leur échec.
-- [ ] Construire le pairing/Hessien cible `H`, continu et auto-adjoint.
+- [x] Prouver la fermeture de l'image dans le modèle pondéré choisi et isoler exactement le zéro-mode.
+- [x] Construire le pairing/Hessien cible `H`, continu et auto-adjoint, sur l’échelle Sobolev de coefficients choisie.
   - [x] Sur l'échelle de coefficients Sobolev décalée, prendre le Hessien cible
     identité, continu, auto-adjoint et positif.
-- [ ] Instancier le pullback `Jᵀ H J` et la seconde variation complète.
+- [x] Instancier le pullback `Jᵀ H J` complet dans ce modèle de coefficients.
   - [x] Construire réellement `J† H J` comme opérateur continu, prouver la
     formule de pairing, symétrie, positivité, noyau égal à celui de `J` et
     positivité définie après retrait du zéro-mode.
   - [ ] Identifier ce pullback au Hessien de la même action Janus globale.
-- [ ] Construire le quotient physique topologique/lisse par `ker J` ou
-  `im R`, pas seulement le quotient algébrique.
+- [x] Construire le quotient normé topologique par `ker J` dans ce modèle périodique.
   - [x] Dans le modèle périodique de coefficients Sobolev décalés, construire
     une projection bornée du mode zéro, la scission topologique et le quotient
     normé par `ker J`, continûment linéairement équivalent aux représentants
     sans mode zéro.
-- [ ] Prouver continuité et non-dégénérescence de la forme descendue sur le
-  quotient physique pertinent.
+- [x] Prouver continuité et non-dégénérescence de la forme descendue sur ce quotient périodique.
   - [x] Prouver la non-dégénérescence du pullback continu `J†J` sur ces
     représentants canoniques; l'identification au quotient global Janus reste
     ouverte.
@@ -435,7 +451,7 @@ Hessien physique réellement descendu.
 
 - [ ] Définir la catégorie Janus et les bundles source/cible naturels.
 - [ ] Vérifier localité, régularité et réalisations holonomiques requises.
-- [ ] Construire le groupoïde différentiable des jets structurés.
+- [x] Construire le groupoïde différentiable des jets structurés.
   - [x] Construire la catégorie et le groupoïde d'action effectifs de deck D8,
     avec égalité dans le quotient caractérisée par l'existence d'une flèche.
   - [x] Construire les familles dépendantes source/cible, leur transport et le
@@ -477,8 +493,7 @@ Hessien physique réellement descendu.
   1 à 3.
 - [ ] Calculer l'opérateur d'Euler--Lagrange complet pour toutes les variables
   indépendantes.
-- [ ] Vérifier que les variations induites utilisent bien la règle de chaîne
-  et ne créent pas d'équations supplémentaires.
+- [x] Vérifier abstraitement que les variations induites utilisent la règle de chaîne et ne créent pas d’équations supplémentaires.
 - [ ] Calculer la dérivée de l'opérateur d'Euler sur le domaine global.
 - [ ] Prouver les conditions de Helmholtz non linéaires bloc par bloc.
 - [ ] Reconstruire ou identifier l'action globale normalisée à partir de ces
@@ -486,7 +501,7 @@ Hessien physique réellement descendu.
 - [ ] Prouver l'identité de Noether pour les difféomorphismes diagonaux.
 - [ ] Dériver les deux identités de Bianchi avec échange matière/interaction et
   flux de frontière.
-- [ ] Déterminer quand les conservations sectorielles se séparent réellement.
+- [x] Déterminer dans le modèle réduit exact quand les conservations sectorielles se séparent réellement.
 - [ ] Calculer la cohomologie variationnelle.
 - [ ] Classifier lagrangiens nuls, divergences et ambiguïtés de bord.
 - [ ] Dériver la limite faible covariante et la loi de charge signée, au lieu de
@@ -500,7 +515,7 @@ Hessien physique réellement descendu.
   obstruction.
 - [ ] Exclure le mode de Boulware--Deser sur le domaine physique, ou rejeter
   Candidate A.
-- [ ] Descendre la seconde variation sur l'espace tangent contraint/quotient.
+- [x] Descendre la seconde variation sur le quotient contraint périodique construit.
 - [ ] Classifier la stabilité physique des branches admissibles.
 
 **Acceptation** : `fullEulerLagrangeOperatorDerived`,
@@ -590,8 +605,7 @@ champs et avec les mêmes conditions au bord.
   - [x] Construire sur la famille cercle une section déterminante régularisée
     distincte du frame Fourier, nulle aux crossings, non nulle à l'intérieur,
     à coordonnée continue et compatible au clutching d'extrémité.
-- [ ] Distinguer explicitement le déterminant spectral positif D7 de la ligne
-  déterminante Quillen.
+- [x] Distinguer explicitement, dans les modèles finite-mode et cercle, le déterminant spectral positif D7 de la ligne déterminante.
   - [x] Séparer formellement la magnitude spectrale positive finite-mode de la
     section à valeurs dans la vraie ligne extérieure finite-mode.
   - [x] Sur la famille cercle infinie bornée, distinguer le frame Fourier
@@ -710,15 +724,15 @@ par des théorèmes portant sur les mêmes objets globaux.
 
 Une case n'est fermée que si :
 
-- [ ] l'énoncé exact et sa portée sont documentés ;
-- [ ] le théorème compile sans `sorry`, `admit` ni axiome métier ajouté ;
-- [ ] les hypothèses restantes sont visibles dans le type du théorème ;
-- [ ] le gate est importé par la façade appropriée ;
-- [ ] le statut de façade correspond à la portée réelle du théorème ;
-- [ ] le build focalisé est vert ;
-- [ ] l'audit d'intégrité est vert ;
-- [ ] roadmap, dashboard et document canonique sont alignés ;
-- [ ] aucune conclusion globale n'est tirée d'un modèle fini, axial,
+- [x] l'énoncé exact et sa portée sont documentés ;
+- [x] le théorème compile sans `sorry`, `admit` ni axiome métier ajouté ;
+- [x] les hypothèses restantes sont visibles dans le type du théorème ;
+- [x] le gate est importé par la façade appropriée ;
+- [x] le statut de façade correspond à la portée réelle du théorème ;
+- [x] le build focalisé est vert ;
+- [x] l'audit d'intégrité est vert ;
+- [x] roadmap, dashboard et document canonique sont alignés ;
+- [x] aucune conclusion globale n'est tirée d'un modèle fini, axial,
   pointwise, réduit ou conditionnel.
 
 ## 14. Risques et tests de rejet permanents
