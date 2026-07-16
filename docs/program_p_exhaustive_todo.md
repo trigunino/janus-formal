@@ -435,6 +435,10 @@ champs et avec les mêmes conditions au bord.
   `D ∘ D`, et identifier le générateur à `-D²`.
 - [ ] Prouver l'égalité avec le calcul fonctionnel abstrait `exp(-t D²)`.
 - [ ] Prouver les propriétés trace-class requises.
+  - [x] Pour tout temps strictement positif du cercle normalisé, construire une
+    expansion en opérateurs Fourier de rang un, prouver la sommabilité de leurs
+    normes opérateur, l'égalité en norme de leur somme avec le semi-groupe et
+    l'égalité de la trace nucléaire avec la trace spectrale déjà construite.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai
   espace de paramètres.
   - [x] Construire une famille holomorphe finite-mode symétrique, Fredholm au

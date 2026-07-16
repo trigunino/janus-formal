@@ -675,8 +675,10 @@ nonnegative time, and each orbit in the dense Fourier basis has the expected
 strong right-generator domain is now exactly the squared spectral domain,
 which is also the actual iterated domain of `D ∘ D`; the generator is `-D²`.
 The operator is not yet proved equal to the abstract functional-calculus
-exponential, and no abstract trace-class or full Janus
-anomaly/determinant theorem is proved. See
+exponential. At every positive time it is now an operator-norm-convergent sum
+of explicit rank-one Fourier maps with summable norms, and the resulting
+nuclear trace equals the spectral heat trace. No general Mathlib trace-class
+interface or full Janus anomaly/determinant theorem is proved. See
 `docs/program_p_explicit_covariant_candidate.md`.
 
 The remaining package must lift these finite/pointwise results and close the
@@ -758,9 +760,10 @@ not construct the unique global Lorentz root branch.  The
 self-adjoint circle Dirac operator, its basiswise `D^2` trace bridge and the
 strongly continuous contractive diagonal heat semigroup, including its exact
 maximal `D²` generator domain, do not yet construct the full Janus Dirac
-operator, identify the abstract functional-calculus exponential, prove trace
-class, or compute
-anomalies, determinant or normalization.
+operator or identify the abstract functional-calculus exponential. Its
+positive-time nuclear rank-one expansion supplies the concrete trace-class
+property for the circle, but no global Janus trace-class family or anomaly is
+computed, and it does not determine the global determinant or normalization.
 
 What is established is a theorem/no-go architecture explaining exactly which
 inputs are needed and which proposed shortcuts fail. The decisive missing

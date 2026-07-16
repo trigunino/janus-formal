@@ -651,8 +651,11 @@ Fourier-basis orbit gives the expected `-lambda_n^2` generator action on that
 dense basis. The strong right derivative on the full Hilbert space now exists
 exactly on the squared-eigenvalue weighted domain, that domain equals the
 actual iterated domain of `D ∘ D`, and the unique generator is `-D²`. Neither
-the abstract functional-calculus exponential nor abstract trace class is
-proved, and the full Janus Dirac operator, anomalies,
+the abstract functional-calculus exponential nor a general Mathlib
+trace-class interface is available. However, at every positive time the same
+operator is now the operator-norm sum of explicit rank-one Fourier maps with
+summable norms, and its nuclear trace equals the spectral trace. The full
+Janus Dirac operator, anomalies,
 determinants and normalization remain open.
 
 The same circle family now has its canonical bounded transform. It is an
@@ -870,8 +873,10 @@ Implemented in the current finite, spectral or pointwise models:
   semigroup law, global strong continuity, the expected diagonal trace sums and
   the expected generator derivative on the dense Fourier basis, plus exact
   equality of its maximal strong generator domain with the iterated `D²`
-  domain on the full Hilbert space; equality with the abstract
-  functional-calculus exponential and abstract trace class are open;
+  domain on the full Hilbert space, plus an operator-norm-convergent nuclear
+  rank-one expansion at every positive time whose trace is the spectral heat
+  trace; equality with the abstract functional-calculus exponential and a
+  general trace-class API are open;
 - an exact bridge from the quarter-twisted Program-P circle operator to the two
   PT-related D7 root towers, compactness of every fixed sphere-level heat block,
   and an explicit common-counterterm renormalized determinant certificate for
@@ -940,4 +945,4 @@ is used in its definition.
 | 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve with `K=tr(h⁻¹B)` and no supplied `delta K`, derived Gaussian-normal EH cancellation, explicit local embedded hypersurface/unit normal/Levi-Civita `B` and `K`, actual threefold integration of constant EH/GHY densities, exact finite-box Stokes for variable fluxes and six faces with actual matched-action derivative, null zero-extension audit, null/joint transgression, pointwise LL action and affine composite measure | arbitrary-coordinate global embedding and variable-field continuum flux, physical GHY/null/joint/corner completion, admissible zero-expansion domain, global LL fields/PDEs/throat and full stratum integration |
 | 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, coefficientwise exactness for finite nonzero Fourier families, and unique normalized decomposition with a finite zero-mode cohomology residual | boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |
 | 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, pointwise 4D determinant/inverse-constrained scalar stress variation, integrated one/two-sector stress variation under an explicit dominated-differentiation contract and exchange invariance, continuous flat-chart holonomic scalar first variation and simultaneous metric/holonomic split integrated under an explicit contract, pointwise flat scalar Euler-plus-flux-divergence decomposition and integrated weak Euler identity under explicit integrability/zero-flux assumptions, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, discharge of domination and derivation of zero flux from physical boundary conditions, nonlinear Bianchi/stress conservation, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
-| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching | physical quotient stability, PPN, covariant counterterms, abstract `D^2` functional calculus and trace class, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |
+| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain and which has a summable rank-one nuclear expansion at positive time, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching | physical quotient stability, PPN, covariant counterterms, abstract `D^2` functional calculus/general trace-class API, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |
