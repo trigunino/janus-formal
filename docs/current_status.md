@@ -268,7 +268,12 @@ four lifted loops          +1
 
 Thus `Z4` remains a lift/holonomy phenomenon: the two root lines are explicit
 additional global choices, not a canonical functor of the real line. The
-ambient Pin/SpinC principal bundles remain open.
+ambient Clifford gate now constructs an actual Spin element for every pair of
+unit reflections, proves that its projection is their exact product, and
+extends this construction to every finite list of pairs. Full surjectivity is
+reduced to Cartan--Dieudonné with determinant parity, an absent Mathlib lemma;
+smooth atlas-wide lifts and the ambient Pin/SpinC principal bundles remain
+open.
 
 ## 5. Program P
 
@@ -293,6 +298,19 @@ The exhaustive remaining-work checklist is
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
   configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`; identification with intrinsic Sobolev sections and the physical-volume trace theorem remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  More precisely, the nonlinear ghost frontier now includes the intrinsic
+  smooth tangent Lie bracket, a genuine three-generator exterior coefficient
+  algebra, vanishing of the total cubic pure-ghost obstruction and exact
+  cancellation of the scalar BRST square. Extension to every field/antifield
+  and BV remains open. An intrinsic positive fixed-patch energy replacement is
+  also uniformly equivalent to the implemented localized graph density and
+  gives unconditional uniform graph ellipticity; equality with the historical
+  variable-`chartAt` density remains open.
+  The canonical intrinsic tensor descended from the immersed cover is now
+  certified everywhere Lorentzian without an external frame contract: the
+  proof constructs the sphere-tangent/orthogonal equivalence, an orthonormal
+  spatial frame and transports the exact `(3,1)` model through the quotient
+  projection derivative.
   For every finite measure, the scalar integrability contract is now automatic
   on the affine-stable class with continuous fixed-frame covector components,
   including arbitrary nonzero constant scalars; general tensorial continuity

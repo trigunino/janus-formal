@@ -200,6 +200,15 @@ correspondance algébrique des coefficients, puis asymptotique effective.
               l'existence d'un choix atlas-wide par l'orientation de toutes
               les transitions. La construction Clifford de ce datum et sa
               régularité restent ouvertes.
+              - [x] Construire explicitement dans l'algèbre de Clifford le
+                relèvement Spin de toute paire de réflexions unitaires,
+                identifier sa projection au produit exact des réflexions,
+                puis étendre ce relèvement à toute liste finie de paires.
+                Toute factorisation paire fournit ainsi un vrai lift Spin.
+              - [ ] Prouver Cartan--Dieudonné en dimension quatre avec la
+                parité du déterminant, afin de fournir cette factorisation
+                paire pour tout élément de `SO(4)`. Cette API de génération
+                par réflexions n'est pas disponible dans Mathlib.
           - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
             - [x] Sur chaque triple overlap fixé et pour trois lifts arbitraires,
               annuler exactement le défaut par la correction noyau canonique
@@ -345,6 +354,14 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
           Fréchet restreinte dès que cette continuité est fournie. Le seul
           input analytique restant est la stabilité spectrale locale qui
           implique cet accord.
+          - [x] Réduire cette continuité matricielle à quatre fonctions
+            scalaires : reconstruire exactement la racine globale comme
+            fonction rationnelle de la cible et des quatre coefficients non
+            dominants de son polynôme caractéristique, puis prouver que le
+            dénominateur est partout inversible grâce au spectre positif. Il
+            reste uniquement à prouver la continuité de ces coefficients
+            symétriques du spectre racine non ordonné ; Mathlib ne fournit pas
+            la continuité des racines d'un polynôme variable.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
@@ -500,9 +517,25 @@ par toute évolution admissible.
                 global avec involution de parité, règle de Leibniz de Koszul et
                 carré nul ; relier son générateur à l'algèbre extérieure, puis
                 fermer le carré BRST du scalaire à deux ghosts par l'identité
-                `[L_X,L_Y]=L_[X,Y]` et l'obstruction cubique pure-ghost. Le
-                prolongement aux trois générateurs requiert encore une
-                sous-algèbre de ghosts D8 fermée avec constantes de structure.
+                `[L_X,L_Y]=L_[X,Y]` et l'obstruction cubique pure-ghost.
+                - [x] Étendre ce calcul aux trois générateurs extérieurs et à
+                  trois ghosts D8 lisses arbitraires : calculer les trois
+                  crochets pairs, prouver l'annulation de l'obstruction
+                  cubique totale et fermer exactement le carré BRST sur les
+                  scalaires. Le prolongement en une dérivation globale sur
+                  tous les champs, ainsi que BV, restent ouverts.
+                  - [x] Pour toute triple de ghosts D8 fermée munie de ses
+                    constantes de structure et de son différentiel CE,
+                    construire sur
+                    `ExteriorAlgebra ℝ (Fin 3 → ℝ) ⊗ C∞(D8)` la vraie
+                    parité, le candidat BRST non nul, sa règle de Koszul et le
+                    théorème ramenant la nilpotence globale aux deux facteurs
+                    générateurs ; produire alors le vrai différentiel gradué
+                    carré-nul sous ces données exactes.
+                  - [ ] Construire une triple non abélienne fermée explicite de
+                    ghosts lisses globaux sur le quotient D8 et décharger les
+                    obligations Koszul, puis étendre ce différentiel aux
+                    métriques, jauges, auxiliaires, antifields et à BV.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -581,10 +614,13 @@ par toute évolution admissible.
           l'égalité pointwise exacte entre la norme du jet du vrai repère fini
           et le jet des composantes localisées par la partition, sans hypothèse
           de continuité des coordonnées brutes.
-        - [ ] Dominer uniformément cette densité localisée par la densité
-          jacobienne holonome actuelle, ou remplacer l'action par la densité
-          intrinsèque et prouver leur équivalence. Ce dernier verrou énergétique
-          est exactement la transition variable `fixed anchor → chartAt p`, que
+        - [x] Construire une densité intrinsèque positive de remplacement,
+          uniformément équivalente à la densité fixe-localisée sur le quotient
+          compact, puis en déduire sans hypothèse la domination d'énergie et
+          l'ellipticité uniforme du graphe pour le repère lisse fini.
+        - [ ] Identifier en plus cette densité de remplacement à la densité
+          jacobienne holonome historique fondée sur `chartAt p`. Ce verrou est
+          exactement la transition variable `fixed anchor → chartAt p`, que
           Mathlib ne contrôle que lorsque les deux cartes sont fixes.
           - [x] Réduire ce verrou à la continuité de chaque coefficient
             holonomique scalaire du générateur partitionné uniquement sur son
@@ -641,7 +677,8 @@ par toute évolution admissible.
       deck-compatible sur D8, puis la remplacer par les frames tangentes
       locales canoniques, une partition de l'unité lisse subordonnée et une
       régularisation locale non vide avec musical, sharp, tenseur et volume.
-      Le recollement en un unique tenseur lorentzien global reste ouvert.
+      Le recollement en un unique tenseur lorentzien global est fermé
+      intrinsèquement ci-dessous.
       - [x] Construire sur le cover le cocycle lorentzien produit non vide :
         tangent de `S³` orthogonal, musical non dégénéré, frame d'inertie
         `(3,1)` et isométrie exacte sous la réflexion génératrice. Les deux
@@ -665,15 +702,17 @@ par toute évolution admissible.
               assembler ensuite ces valeurs par `Quotient.hrecOn`, prouver leur
               expression lisse dans chaque inverse local et produire la vraie
               section `C∞` globale, canonique et unique.
-          - [ ] Construire `IntrinsicCoverLorentzCertificate`, puis transporter
+          - [x] Construire `IntrinsicCoverLorentzCertificate`, puis transporter
             musical, non-dégénérescence et signature via
             `quotientProjectionDerivativeEquiv` afin d'obtenir la vraie
             `SmoothGeneralLorentzMetric` quotient.
             - [x] Prouver déjà que tout certificat cover fourni se transporte
               canoniquement par l'équivalence différentielle de projection en
               une preuve `IsEverywhereLorentzian` du tenseur quotient descendu.
-              La construction intrinsèque du certificat cover reste l'unique
-              entrée de signature manquante.
+              Le certificat cover est maintenant construit à partir de
+              l'équivalence tangent-produit, de la dérivée de la sphère vers
+              son orthogonal et d'une base orthonormale spatiale ; la signature
+              `(3,1)` du tenseur quotient canonique est donc inconditionnelle.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
