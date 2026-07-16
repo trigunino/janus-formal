@@ -43,6 +43,10 @@ def test_program_p_minkowski_candidate_a_open_domain_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_integrated_minkowski_candidate_a_open_domain_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_effective_d8_continuous_field_spaces_are_integrated() -> None:
     assert_program_p_gate_integrity()
 

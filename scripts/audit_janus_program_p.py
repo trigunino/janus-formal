@@ -1106,6 +1106,22 @@ PROGRAM_P_GATES = {
             "theorem ptPairedCandidateAInteractionDensity_exchange",
         ),
     ),
+    "P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure OpenDomainMetricFieldVariation",
+            "def integratedCandidateAFunctional",
+            "def pointwiseCandidateAFirstVariation",
+            "structure DominatedInteractionIntegralContract",
+            "theorem integratedCandidateAActionCurve_integrable_and_hasDerivAt",
+            "theorem integratedCandidateAActionCurve_exchange",
+            "structure MeasuredPTBase",
+            "theorem integratedCandidateAFunctional_measuredPTExchange",
+            "theorem integratedCandidateAActionCurve_measuredPT_hasDerivAt",
+            "def effectiveD8SpacetimePTHomeomorph",
+            "def effectiveD8MeasuredPTBase",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1679,6 +1695,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paExplicitMinkowskiRelativeRootOpenDomain4DProved",
         "paMinkowskiCandidateAInteractionDensityVariation4DProved",
         "paMinkowskiCandidateAInteractionOpenDomain4DProved",
+        "paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
