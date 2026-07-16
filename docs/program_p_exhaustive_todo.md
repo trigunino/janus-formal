@@ -787,6 +787,9 @@ non contrôlé et produit les conditions de jonction annoncées.
     diagonal à paramètre réel et identifier exactement invariance par le flot,
     annulation de sa vitesse et identité infinitésimale diagonale. La
     construction du flot Janus géométrique global reste ouverte.
+    - [x] Calculer explicitement sa contrainte adjointe `RᵀE`, puis prouver
+      directement que son annulation équivaut à l'annulation du générateur et
+      à l'invariance de l'action sous le flot fourni.
 - [ ] Prouver `J ∘ R = 0` et `B ∘ K = 0` globalement.
 - [ ] Promouvoir l'exactitude symbolique non nulle vers un complexe
   différentiel lorentzien global.
