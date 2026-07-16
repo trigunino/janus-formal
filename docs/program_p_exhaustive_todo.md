@@ -346,6 +346,11 @@ par toute évolution admissible.
         Lie avec lui-même est identiquement nul, donc la formule non graduée
         `s c = -1/2 [c,c]` ne produit aucun terme quadratique non trivial. Une
         extension à coefficients impairs/gradués est une obligation réelle.
+      - [x] Construire un modèle matriciel fidèle de deux coefficients impairs
+        avec carrés nuls et anticommutation exacte, puis prouver que le
+        coefficient de crochet propre gradué et son facteur BRST `-1/2` sont
+        non nuls. Le ghost tangent global, sa nilpotence complète et BV restent
+        ouverts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
