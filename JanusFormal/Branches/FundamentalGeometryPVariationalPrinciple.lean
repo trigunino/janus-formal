@@ -98,6 +98,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiInteractionDensityOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzRoot4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalInteractionDensity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCoDiagonalInteractionDensityFrechet
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDiagonalReparametrizationDensityNoether
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFourDimensionalDensityLieDerivativeNoether
@@ -228,6 +229,7 @@ structure ProgramStatus where
   paMinkowskiCandidateAInteractionOpenDomain4DProved : Prop
   paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved : Prop
   paGlobalDiagonalLorentzRoot4DProved : Prop
+  paGlobalDiagonalTwoSectorInteractionDensity4DProved : Prop
   paCoDiagonalInteractionDensityFrechetProved : Prop
   paDiagonalReparametrizationDensityPullbackNoetherProved : Prop
   paFourDimensionalDensityLieDerivativeNoetherProved : Prop
@@ -408,6 +410,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paMinkowskiCandidateAInteractionOpenDomain4DProved /\
   s.paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved /\
   s.paGlobalDiagonalLorentzRoot4DProved /\
+  s.paGlobalDiagonalTwoSectorInteractionDensity4DProved /\
   s.paCoDiagonalInteractionDensityFrechetProved /\
   s.paDiagonalReparametrizationDensityPullbackNoetherProved /\
   s.paFourDimensionalDensityLieDerivativeNoetherProved /\

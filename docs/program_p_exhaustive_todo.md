@@ -192,6 +192,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] La dériver réellement après composition avec la branche de racine pour
     deux variations métriques indépendantes au point diagonal de Minkowski.
   - [x] Étendre cette dérivée à chaque point du domaine ouvert IFT explicite.
+  - [x] Dériver le potentiel spectral complet aux cinq coefficients en chaque
+    point du sous-domaine diagonal lorentzien global, sans hypothèse de
+    petitesse autour de Minkowski.
 - [ ] Dériver la variation de `sqrt(|det g_plus|)` et la densité croisée
   complète dans les deux secteurs.
   - [x] Dériver la mesure plus, la racine et le potentiel dans une même chaîne
@@ -205,8 +208,15 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     l'admissibilité et la variation sous échange/PT, et l'instancier sur la
     même base effective D8 avec toute mesure Borel PT-invariante fournie.
   - [ ] Étendre cette chaîne au domaine lorentzien global et au second secteur.
+  - [x] Étendre la chaîne mesure/racine/potentiel aux deux ordres métriques sur
+    tout le sous-domaine diagonal global, avec une dérivée de Fréchet portant
+    sur les deux métriques indépendantes.
 - [ ] Prouver covariance, réalité, échange PT et régularité spatiale de la
   densité obtenue.
+  - [x] Sur le sous-domaine diagonal global, prouver la réalité, la
+    différentiabilité en chaque point, l'invariance exacte par échange et
+    l'invariance du domaine ; covariance et régularité spatiale restent
+    ouvertes hors de ce secteur.
 
 **Acceptation** : une densité Candidate A globale, réelle et différentiable,
 avec dérivées métriques complètes sur un domaine invariant non vide.

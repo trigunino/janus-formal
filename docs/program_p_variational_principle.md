@@ -584,7 +584,12 @@ derivatives and an internally proved Sylvester derivative, together with a
 global open connected fixed-frame diagonal 4D Lorentz domain where the
 positive principal root exists uniquely, is `C∞`, has an everywhere
 invertible Sylvester map and carries the full two-metric derivative including
-the inverse-plus contribution, and an exact
+the inverse-plus contribution. On that entire diagonal domain the genuine
+five-coefficient Candidate-A determinant/root/potential chain is now
+differentiated in both metric orders and its real two-sector sum is exactly
+exchange invariant. This is still a fixed-frame pointwise sector, not the full
+causal-compatible Lorentz matrix domain or a curved field functional. The
+candidate also supplies an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
 also gives coordinate off-diagonal root/target derivatives and a Sylvester
