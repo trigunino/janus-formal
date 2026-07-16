@@ -1151,6 +1151,22 @@ PROGRAM_P_GATES = {
             "def effectiveD8MeasuredPTBase",
         ),
     ),
+    "P0EFTJanusGlobalDiagonalLorentzRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalDiagonalLorentzDomain",
+            "theorem globalDiagonalLorentzDomain_isOpen",
+            "theorem globalDiagonalLorentzDomain_isConnected",
+            "theorem lorentzMetricInverse_mul",
+            "theorem principalRoot_square",
+            "theorem principalRoot_exists_unique",
+            "def principalRootSylvesterInverseWitness",
+            "theorem principalRoot_contDiffOn",
+            "theorem metricProduct_hasFDerivAt",
+            "theorem principalRoot_hasFDerivAt",
+            "theorem principalRootVariation_eq_sylvester",
+        ),
+    ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1742,6 +1758,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paMinkowskiCandidateAInteractionDensityVariation4DProved",
         "paMinkowskiCandidateAInteractionOpenDomain4DProved",
         "paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved",
+        "paGlobalDiagonalLorentzRoot4DProved",
         "paCoDiagonalInteractionDensityFrechetProved",
         "paDiagonalReparametrizationDensityPullbackNoetherProved",
         "paFourDimensionalDensityLieDerivativeNoetherProved",
