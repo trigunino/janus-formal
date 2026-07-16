@@ -85,6 +85,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarDensityFrameCovariance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLocalFrameNoGo4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDeckInvariantLorentzCocycle4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalInteraction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothThroatTrace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
@@ -123,6 +124,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -339,6 +341,7 @@ structure ProgramStatus where
   paEffectiveD8ThroatIsSmoothEmbeddingProved : Prop
   paEffectiveD8SmoothNormalVectorBundleProved : Prop
   paEffectiveD8GlobalNormalAlgebraicComparisonProved : Prop
+  paEffectiveD8DifferentialNormalTopologicalBundleProved : Prop
   paEffectiveD8NormalZ4RootBundleProved : Prop
   paEffectiveD8NormalZ4RootPTConjugationProved : Prop
   paEffectiveD8NormalPinMinusPrincipalBundleProved : Prop
@@ -350,6 +353,7 @@ structure ProgramStatus where
   paEffectiveD8GeneralScalarDensityFrameCovariance4DProved : Prop
   paEffectiveD8GeneralScalarFunctionalAction4DProved : Prop
   paEffectiveD8LocalFrameRegularization4DProved : Prop
+  paEffectiveD8DeckInvariantLorentzCocycle4DProved : Prop
   paEffectiveD8SmoothPrincipalRootField4DProved : Prop
   paEffectiveD8SmoothDiagonalCandidateADensity4DProved : Prop
   paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved : Prop
@@ -581,6 +585,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8ThroatIsSmoothEmbeddingProved /\
   s.paEffectiveD8SmoothNormalVectorBundleProved /\
   s.paEffectiveD8GlobalNormalAlgebraicComparisonProved /\
+  s.paEffectiveD8DifferentialNormalTopologicalBundleProved /\
   s.paEffectiveD8NormalZ4RootBundleProved /\
   s.paEffectiveD8NormalZ4RootPTConjugationProved /\
   s.paEffectiveD8NormalPinMinusPrincipalBundleProved /\
@@ -592,6 +597,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8GeneralScalarDensityFrameCovariance4DProved /\
   s.paEffectiveD8GeneralScalarFunctionalAction4DProved /\
   s.paEffectiveD8LocalFrameRegularization4DProved /\
+  s.paEffectiveD8DeckInvariantLorentzCocycle4DProved /\
   s.paEffectiveD8SmoothPrincipalRootField4DProved /\
   s.paEffectiveD8SmoothDiagonalCandidateADensity4DProved /\
   s.paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved /\

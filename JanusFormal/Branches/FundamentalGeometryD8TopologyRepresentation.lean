@@ -28,6 +28,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -94,6 +95,8 @@ structure ProgramStatus where
   fixedThroatNormalFiberPointwiseDifferentialEquivProved : Prop
   fixedThroatNormalOneLoopMinusIdentityProved : Prop
   fixedThroatNormalGlobalAlgebraicEquivProved : Prop
+  fixedThroatDifferentialNormalTopologicalBundleConstructed : Prop
+  fixedThroatDifferentialNormalContMDiffVectorBundleProved : Prop
   fixedThroatNormalZ4RootComplexLineConstructed : Prop
   fixedThroatNormalZ4RootSmoothRealUnderlierProved : Prop
   fixedThroatNormalZ4RootSquaresToNormalSignProved : Prop
@@ -206,16 +209,18 @@ def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatQuotientInclusionIsImmersionOfComplementProved /\
   s.fixedThroatQuotientInclusionIsSmoothEmbeddingProved
 
-/-- Actual analytic sign-clutched normal line bundle, its global algebraic
-comparison with the differential normal family, and both global complex `Z4`
-root lines with smooth real underliers.  A smooth atlas on the differential
-quotient family, hence a smooth comparison with it, is not asserted. -/
+/-- Actual analytic sign-clutched normal line bundle, transported analytic
+vector-bundle structure on the differential normal family, total-space
+homeomorphism, and both global complex `Z4` root lines with their principal
+normal lift.  A total-space `Diffeomorph` comparison is not asserted. -/
 def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatNormalVectorBundleConstructed /\
   s.fixedThroatNormalVectorBundleContMDiffProved /\
   s.fixedThroatNormalFiberPointwiseDifferentialEquivProved /\
   s.fixedThroatNormalOneLoopMinusIdentityProved /\
   s.fixedThroatNormalGlobalAlgebraicEquivProved /\
+  s.fixedThroatDifferentialNormalTopologicalBundleConstructed /\
+  s.fixedThroatDifferentialNormalContMDiffVectorBundleProved /\
   s.fixedThroatNormalZ4RootComplexLineConstructed /\
   s.fixedThroatNormalZ4RootSmoothRealUnderlierProved /\
   s.fixedThroatNormalZ4RootSquaresToNormalSignProved /\
