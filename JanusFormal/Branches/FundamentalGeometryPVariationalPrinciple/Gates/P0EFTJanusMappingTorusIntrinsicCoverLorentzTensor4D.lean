@@ -475,6 +475,20 @@ theorem intrinsicCoverLorentzTensor_generator_isometry
     (coverAmbientDerivative period hPeriod point first)
     (coverAmbientDerivative period hPeriod point second))
 
+/-- The ambient pullback tensor is symmetric on every intrinsic cover
+tangent fiber. -/
+theorem intrinsicCoverLorentzTensor_symmetric
+    (point : EffectiveCover period hPeriod)
+    (first second : CoverIntrinsicTangent period hPeriod point) :
+    intrinsicCoverLorentzTensor period hPeriod point first second =
+      intrinsicCoverLorentzTensor period hPeriod point second first := by
+  change pullbackAmbientMinkowski
+      (coverAmbientDerivative period hPeriod point) first second =
+    pullbackAmbientMinkowski
+      (coverAmbientDerivative period hPeriod point) second first
+  rw [pullbackAmbientMinkowski_apply, pullbackAmbientMinkowski_apply,
+    real_inner_comm, mul_comm]
+
 end
 
 end P0EFTJanusMappingTorusIntrinsicCoverLorentzTensor4D
