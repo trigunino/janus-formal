@@ -795,6 +795,8 @@ non contrôlé et produit les conditions de jonction annoncées.
     le générateur par toute reparamétrisation linéaire continue et prouver la
     naturalité exacte de la contrainte adjointe ainsi que la préservation de
     l'invariance infinitésimale. Le vrai `R/B` géométrique global reste ouvert.
+    - [x] Prouver que ces deux propriétés deviennent des équivalences exactes
+      lorsque la reparamétrisation est surjective.
   - [x] Pour tout flot de jauge complet déjà fourni, construire son générateur
     diagonal à paramètre réel et identifier exactement invariance par le flot,
     annulation de sa vitesse et identité infinitésimale diagonale. La

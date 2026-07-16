@@ -247,6 +247,8 @@ PROGRAM_P_GATES = {
             "theorem formalAdjointEulerConstraint_reparameterized",
             "theorem infinitesimal_invariance_reparameterized",
             "theorem formalAdjoint_constraint_reparameterized_of_constraint",
+            "theorem formalAdjoint_constraint_reparameterized_iff_of_surjective",
+            "theorem infinitesimal_invariance_reparameterized_iff_of_surjective",
             "theorem formalAdjoint_constraint_closed_under_parameter_map",
             "def completeFlowDiagonalGaugeGenerator",
             "theorem completeFlowDiagonalGaugeGenerator_apply",
