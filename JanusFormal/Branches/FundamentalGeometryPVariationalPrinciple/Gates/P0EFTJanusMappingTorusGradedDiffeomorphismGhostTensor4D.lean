@@ -97,6 +97,17 @@ theorem gradedQuadraticGhostBracketTerm_self
     gradedQuadraticGhostBracketTerm period hPeriod ghost ghost = 0 := by
   simp [gradedQuadraticGhostBracketTerm]
 
+theorem gradedQuadraticGhostBracketTerm_jacobi
+    (first second third : CInfinityDiffeomorphismGhost period hPeriod) :
+    gradedQuadraticGhostBracketTerm period hPeriod first
+        (smoothGhostLieBracket period hPeriod second third) =
+      gradedQuadraticGhostBracketTerm period hPeriod
+          (smoothGhostLieBracket period hPeriod first second) third +
+        gradedQuadraticGhostBracketTerm period hPeriod second
+          (smoothGhostLieBracket period hPeriod first third) := by
+  simp only [gradedQuadraticGhostBracketTerm, ← TensorProduct.tmul_add]
+  rw [smoothGhostLieBracket_jacobi]
+
 theorem graded_ghost_tensor4D_closure :
     (∀ term : GradedDiffeomorphismGhostModule period hPeriod,
       gradedGhostCoefficientDifferential period hPeriod

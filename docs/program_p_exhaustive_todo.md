@@ -426,6 +426,8 @@ par toute évolution admissible.
           tensoriel, étendre le différentiel de coefficient à tout cet espace
           ghost gradué et prouver que son carré y est nul. L'action BRST sur les
           champs et le terme de Chevalley--Eilenberg restent ouverts.
+          - [x] Prouver que le terme quadratique tensoriel hérite exactement de
+            l'identité de Jacobi du crochet lisse de ghosts.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.

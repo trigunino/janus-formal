@@ -2277,6 +2277,7 @@ PROGRAM_P_GATES = {
             "theorem gradedGhostCoefficientDifferential_sq",
             "def gradedQuadraticGhostBracketTerm",
             "theorem gradedQuadraticGhostBracketTerm_self",
+            "theorem gradedQuadraticGhostBracketTerm_jacobi",
             "def analyticGradedQuadraticGhostBracketTerm",
             "theorem graded_ghost_tensor4D_closure",
         ),
