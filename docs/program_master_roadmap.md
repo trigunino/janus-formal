@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. The differential normal has the transported analytic bundle structure, an exact total-space `Diffeomorph`, and complementary closed-zero/open-nonzero strata; intrinsic Sobolev identification, the physical-volume trace and Lorentzian null/non-null/joint strata remain open.
+- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; the static energy-to-graph comparison follows from a pointwise uniform ellipticity contract with exact density-root norm identity. The differential normal has an exact total-space `Diffeomorph` and closed-zero/open-nonzero strata; quantitative holonomic frame control, intrinsic physical-volume Sobolev identification and Lorentzian null/joint strata remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -117,12 +117,14 @@ Current results:
 - **T/C** applying the two quarter characters to that principal cocycle gives
   actual associated root-phase bundle cores; their characters square to the
   orientation half-turn for every winding and PT exchanges them;
+- **T/C** the actual quotient charts give real ambient tangent transitions,
+  invertible differentials, nonzero determinants and the exact `ZMod 2`
+  orientation parity cocycle;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** supply the Lorentzian quadratic data needed for differential-normal
-  null/non-null/joint strata, then construct the compatible ambient tangent
-  Pin/SpinC principal bundles.
+- **O** derive the ambient quadratic/orthonormal reduction and its comparison
+  with the normal cocycle, then construct compatible tangent Pin/SpinC bundles.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
@@ -519,7 +521,9 @@ New controlled subgates are now checked:
   unit normal, Israel jump and null rigging remain open;
 - **T/C** the completed first-jet graph `H¹` has dense smooth fields and a
   continuous `L²` projection; under `HasH1TraceBound`, smooth throat trace
-  extends continuously and uniquely. The frame, bound and intrinsic weak
+  extends continuously and uniquely. In the static scalar sector a pointwise
+  uniform graph-ellipticity contract derives the energy-to-graph bound and
+  continuous bridge; quantitative finite-frame coefficients and intrinsic weak
   derivative identification remain inputs;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
