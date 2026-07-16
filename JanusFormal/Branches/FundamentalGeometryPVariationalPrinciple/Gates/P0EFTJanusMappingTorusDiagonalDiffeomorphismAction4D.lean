@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
+import Mathlib.Analysis.Matrix.Normed
 
 /-! Diagonal diffeomorphism action on the actual global D8 field package. -/
 
@@ -7,6 +8,7 @@ namespace P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
 set_option autoImplicit false
 noncomputable section
 open scoped Manifold ContDiff
+open scoped Matrix.Norms.Frobenius
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -74,6 +76,48 @@ theorem throatTrace_pullback (d : DiagonalDiffeomorphism period hPeriod) (f : Sm
     congrArg f.toFun (d.preservesThroat x).symm
 
 theorem inducedPlusMatterTrace_pullback (d : DiagonalDiffeomorphism period hPeriod) (f : IndependentFields period hPeriod) : (induce period hPeriod (pullbackIndependentFields period hPeriod d f)).plusMatterTrace = pullbackSmoothThroatField period hPeriod _ d.throat (induce period hPeriod f).plusMatterTrace := throatTrace_pullback period hPeriod _ d f.matter.1
+
+theorem inducedPlusMetric_pullback
+    (d : DiagonalDiffeomorphism period hPeriod)
+    (f : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (pullbackIndependentFields period hPeriod d f)).plusMetric =
+      pullbackSmoothField period hPeriod _ d.spacetime
+        (induce period hPeriod f).plusMetric := by
+  apply SmoothQuotientField.ext period hPeriod _
+  intro x
+  rfl
+
+theorem inducedMinusMetric_pullback
+    (d : DiagonalDiffeomorphism period hPeriod)
+    (f : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (pullbackIndependentFields period hPeriod d f)).minusMetric =
+      pullbackSmoothField period hPeriod _ d.spacetime
+        (induce period hPeriod f).minusMetric := by
+  apply SmoothQuotientField.ext period hPeriod _
+  intro x
+  rfl
+
+theorem inducedPrincipalRoot_pullback
+    (d : DiagonalDiffeomorphism period hPeriod)
+    (f : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (pullbackIndependentFields period hPeriod d f)).principalRoot =
+      pullbackSmoothField period hPeriod _ d.spacetime
+        (induce period hPeriod f).principalRoot := by
+  apply SmoothQuotientField.ext period hPeriod _
+  intro x
+  rfl
+
+theorem inducedMinusMatterTrace_pullback
+    (d : DiagonalDiffeomorphism period hPeriod)
+    (f : IndependentFields period hPeriod) :
+    (induce period hPeriod
+        (pullbackIndependentFields period hPeriod d f)).minusMatterTrace =
+      pullbackSmoothThroatField period hPeriod _ d.throat
+        (induce period hPeriod f).minusMatterTrace :=
+  throatTrace_pullback period hPeriod _ d f.matter.2
 
 structure SmoothSpacetimeOrbit (point : EffectiveQuotient period hPeriod) where
   orbit : Real → EffectiveQuotient period hPeriod

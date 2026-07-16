@@ -626,6 +626,9 @@ par toute évolution admissible.
   - [x] Prouver que l'induction des deux métriques diagonales et des deux
     traces matière commute exactement avec PT/échange. La racine relative,
     la covariance difféomorphe et les conservations restent séparées.
+  - [x] Prouver que l'induction des deux métriques diagonales, de la racine
+    principale et des deux traces matière commute exactement avec l'action
+    difféomorphe diagonale restreinte déjà définie.
   - [ ] Prouver la covariance difféomorphe et les identités de conservation.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
