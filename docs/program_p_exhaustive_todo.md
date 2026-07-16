@@ -292,6 +292,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       le témoin bilatère consommé par la théorie de Fréchet et obtenir la
       formule exacte de dérivée pour toute sélection locale différentiable.
 - [ ] Recoller les branches IFT locales sur tout le domaine admissible.
+  - [x] À chaque présentation réelle diagonalisable explicite à spectre
+    strictement positif, construire la vraie branche IFT locale, prouver son
+    carré exact au voisinage et identifier sa dérivée stricte à l'inverse de
+    Sylvester transporté. Le recollement entre ces voisinages reste ouvert.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
