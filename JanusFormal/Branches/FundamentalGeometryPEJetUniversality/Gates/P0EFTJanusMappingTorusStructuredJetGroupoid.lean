@@ -123,6 +123,24 @@ def janusDeckEndomorphismEquivPUnit
   left_inv arrow := (janusDeck_endomorphism_eq_id data base arrow).symm
   right_inv point := by cases point; rfl
 
+/-- Stabilizers at any two objects of the effective deck presentation are
+canonically equivalent through their common singleton model. -/
+def janusDeckEndomorphismEquiv
+    (data : MappingTorusData X)
+    (first second : JanusDeckObject data) :
+    (first ⟶ first) ≃ (second ⟶ second) where
+  toFun _ := 𝟙 second
+  invFun _ := 𝟙 first
+  left_inv arrow := Subsingleton.elim _ arrow
+  right_inv arrow := Subsingleton.elim _ arrow
+
+/-- There is no isotropy-type jump anywhere in the D8 deck groupoid. -/
+theorem janusDeck_no_isotropy_type_jump
+    (data : MappingTorusData X)
+    (first second : JanusDeckObject data) :
+    Nonempty ((first ⟶ first) ≃ (second ⟶ second)) :=
+  ⟨janusDeckEndomorphismEquiv data first second⟩
+
 /-- Hence the effective D8 deck presentation has one isotropy stratum: the
 trivial orbit type at every object.  This statement concerns deck isotropy;
 residual frame or SpinC isotropy on structured-jet fibers is separate. -/
@@ -279,6 +297,21 @@ theorem StructuredJetDeckRepresentation.toFunctor_map_element
     ((representation.toFunctor data).map arrow).element =
       representation.symmetryHom arrow.element :=
   rfl
+
+/-- A structured-jet representation of the effective deck groupoid cannot
+create isotropy: every represented deck endomorphism is still the identity
+arrow.  Possible residual frame or SpinC stabilizers must therefore come from
+additional internal symmetries, not from the D8 deck action. -/
+theorem StructuredJetDeckRepresentation.map_endomorphism_eq_id
+    (data : MappingTorusData X)
+    (representation : StructuredJetDeckRepresentation
+      (Symmetry := Symmetry) (Jet := Jet) data)
+    (base : JanusDeckObject data)
+    (arrow : base ⟶ base) :
+    (representation.toFunctor data).map arrow =
+      𝟙 ((representation.toFunctor data).obj base) := by
+  rw [janusDeck_endomorphism_eq_id data base arrow]
+  exact (representation.toFunctor data).map_id base
 
 end StructuredJetFunctor
 

@@ -784,9 +784,34 @@ Hessien physique réellement descendu.
     singleton et conclure qu'il existe une unique strate d'isotropie de deck,
     partout triviale. L'isotropie résiduelle des fibres de jets SpinC reste
     ouverte et ne doit pas être confondue avec l'isotropie du quotient D8.
+  - [x] Prouver que toute représentation fonctorielle du deck sur les jets
+    structurés envoie encore chaque endomorphisme sur l'identité : aucune
+    isotropie de jet ne peut être créée par l'action de deck elle-même.
+  - [x] Construire explicitement l'équivalence entre les stabilisateurs de
+    deck en deux points arbitraires et exclure ainsi tout saut de type
+    d'isotropie sur le quotient effectif D8.
 - [ ] Construire les revêtements Spin de dimension pertinente.
 - [ ] Dériver les données Cech/SpinC depuis l'atlas réel, et non depuis des
   transitions fournies.
+  - [x] Sur les triples intersections du vrai atlas D8, prouver que deux
+    relèvements Spin fournis composent en un troisième relèvement dont le
+    défaut de Cech est exactement trivial. L'existence et le choix global lisse
+    des relèvements restent ouverts.
+  - [x] Pour deux relèvements Spin d'une même transition réelle de l'atlas,
+    construire leur différence dans le noyau de la projection Spin et prouver
+    qu'elle est triviale exactement lorsque les deux relèvements coïncident.
+  - [x] Construire l'action du noyau de la projection Spin sur les relèvements
+    d'une transition fixée et prouver sa liberté/transitivité explicite :
+    l'ambiguïté locale des relèvements forme un torsor sous ce noyau.
+    - [x] Vérifier explicitement les lois d'identité et de composition de
+      l'action ainsi que son injectivité en chaque relèvement choisi.
+    - [x] Prouver que le noyau est stable par conjugaison Spin et que la
+      différence de deux relèvements se transforme par conjugaison sous une
+      translation commune, donnant la covariance exacte du torsor local.
+    - [x] Empaqueter cette conjugaison comme un automorphisme multiplicatif du
+      noyau, avec inverse donné par la conjugaison Spin inverse.
+    - [x] Assembler ces automorphismes en une représentation multiplicative du
+      groupe Spin ambiant sur le noyau de sa projection.
 - [ ] Construire les bundles vectoriels et principaux Janus globaux.
 - [ ] Prouver l'accord des classes caractéristiques Spin/déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets
