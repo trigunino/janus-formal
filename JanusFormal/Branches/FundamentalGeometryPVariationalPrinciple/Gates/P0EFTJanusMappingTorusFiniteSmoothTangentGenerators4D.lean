@@ -143,6 +143,49 @@ private theorem tangentPartition_subordinate :
       (tangentCover period hPeriod) :=
   (exists_finite_tangent_partition period hPeriod).choose_spec
 
+/-- Public finite patch index extracted from the tangent trivialization cover.
+The underlying choice remains encapsulated. -/
+abbrev FiniteTangentGeneratorPatch := Anchor period hPeriod
+
+/-- Open tangent-trivialization patch attached to one finite anchor. -/
+def finiteTangentGeneratorOpenPatch
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    Set (EffectiveQuotient period hPeriod) :=
+  tangentCover period hPeriod patch
+
+theorem finiteTangentGeneratorOpenPatch_isOpen
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    IsOpen (finiteTangentGeneratorOpenPatch period hPeriod patch) :=
+  tangentCover_isOpen period hPeriod patch
+
+/-- Closed support of the subordinate partition weight.  These are the
+compact pieces on which quantitative transition estimates may be taken. -/
+def finiteTangentGeneratorClosedPatch
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    Set (EffectiveQuotient period hPeriod) :=
+  tsupport (tangentPartition period hPeriod patch)
+
+theorem finiteTangentGeneratorClosedPatch_isClosed
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    IsClosed (finiteTangentGeneratorClosedPatch period hPeriod patch) :=
+  isClosed_closure
+
+theorem finiteTangentGeneratorClosedPatch_subset_openPatch
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    finiteTangentGeneratorClosedPatch period hPeriod patch ⊆
+      finiteTangentGeneratorOpenPatch period hPeriod patch :=
+  tangentPartition_subordinate period hPeriod patch
+
+/-- The closed partition supports still cover the whole quotient. -/
+theorem finiteTangentGeneratorClosedPatch_covers
+    (point : EffectiveQuotient period hPeriod) :
+    ∃ patch : FiniteTangentGeneratorPatch period hPeriod,
+      point ∈ finiteTangentGeneratorClosedPatch period hPeriod patch := by
+  obtain ⟨patch, hPatch⟩ :=
+    (tangentPartition period hPeriod).exists_pos_of_mem (Set.mem_univ point)
+  refine ⟨patch, subset_closure ?_⟩
+  exact ne_of_gt hPatch
+
 private abbrev BasisIndex := Fin (Module.finrank ℝ CoverCoordinates)
 
 private def tangentModelBasis : Basis BasisIndex ℝ CoverCoordinates :=
