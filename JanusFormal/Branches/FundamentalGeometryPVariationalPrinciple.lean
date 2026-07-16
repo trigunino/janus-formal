@@ -99,6 +99,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalar4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarWeakJacobiRiesz4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAutomaticScalarIntegrability4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionBalance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarRobinJunctionHessian4D
@@ -372,6 +373,7 @@ structure ProgramStatus where
   paEffectiveD8GlobalHolonomicScalarDifferentialProved : Prop
   paEffectiveD8GlobalHolonomicScalarAction4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved : Prop
+  paEffectiveD8GlobalHolonomicScalarWeakJacobiRiesz4DProved : Prop
   paEffectiveD8AutomaticScalarIntegrability4DProved : Prop
   paEffectiveD8ScalarRobinJunctionBalance4DProved : Prop
   paEffectiveD8ScalarRobinJunctionHessian4DProved : Prop
@@ -617,6 +619,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8GlobalHolonomicScalarDifferentialProved /\
   s.paEffectiveD8GlobalHolonomicScalarAction4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved /\
+  s.paEffectiveD8GlobalHolonomicScalarWeakJacobiRiesz4DProved /\
   s.paEffectiveD8AutomaticScalarIntegrability4DProved /\
   s.paEffectiveD8ScalarRobinJunctionBalance4DProved /\
   s.paEffectiveD8ScalarRobinJunctionHessian4DProved /\
