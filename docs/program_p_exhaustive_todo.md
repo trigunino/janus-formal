@@ -298,6 +298,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     strictement positif, construire la vraie branche IFT locale, prouver son
     carré exact au voisinage et identifier sa dérivée stricte à l'inverse de
     Sylvester transporté. Le recollement entre ces voisinages reste ouvert.
+    - [x] Prouver l'égalité des germes de deux branches ayant la même racine,
+      notamment pour deux présentations de même cible à spectres positifs
+      égaux ou permutés. Le recollement global par chemins reste ouvert.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.

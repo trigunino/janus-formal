@@ -21,8 +21,24 @@ open P0EFTJanusMatrixSquareRootFrechetSylvester
 open P0EFTJanusPositiveDiagonalizableRelativeRoot4D
 open P0EFTJanusPositiveDiagonalizableSylvesterInverse4D
 open P0EFTJanusLorentzLocalRootBranch4D
+open Filter
 
 abbrev Matrix4 := P0EFTJanusPositiveDiagonalizableRelativeRoot4D.Matrix4
+
+local instance matrix4NormedAddCommGroup : NormedAddCommGroup Matrix4 :=
+  Matrix.frobeniusNormedAddCommGroup
+
+local instance matrix4AddCommGroup : AddCommGroup Matrix4 :=
+  matrix4NormedAddCommGroup.toAddCommGroup
+
+local instance matrix4TopologicalSpace : TopologicalSpace Matrix4 :=
+  matrix4NormedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+
+local instance matrix4NormedSpace : NormedSpace Real Matrix4 :=
+  Matrix.frobeniusNormedSpace
+
+local instance matrix4Module : Module Real Matrix4 :=
+  matrix4NormedSpace.toModule
 
 /-- The Sylvester operator at the selected root as a continuous linear
 equivalence. -/
@@ -101,6 +117,83 @@ theorem positiveDiagonalizableLocalRootBranch_hasStrictFDerivAt
   exact localRootBranch_hasStrictFDerivAt
     (positiveSimilarityRoot data)
     (positiveDiagonalizableSylvesterEquivWitness data)
+
+/-- Local IFT branches based at the same selected root have equal germs.  This
+is local inverse uniqueness, not a global gluing statement. -/
+theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_root_eq
+    (first second : PositiveDiagonalizableRelativeMatrix)
+    (hRoot : positiveSimilarityRoot first = positiveSimilarityRoot second) :
+    ∀ᶠ target in 𝓝 first.target,
+      positiveDiagonalizableLocalRootBranch first target =
+        positiveDiagonalizableLocalRootBranch second target := by
+  have hTarget : first.target = second.target := by
+    calc
+      first.target = positiveSimilarityRoot first *
+          positiveSimilarityRoot first :=
+        (positiveSimilarityRoot_square first).symm
+      _ = positiveSimilarityRoot second *
+          positiveSimilarityRoot second := by rw [hRoot]
+      _ = second.target := positiveSimilarityRoot_square second
+  have hLeftFirst :
+      ∀ᶠ point in 𝓝 (positiveSimilarityRoot first),
+        positiveDiagonalizableLocalRootBranch first (matrixSquare point) =
+          point := by
+    simpa [positiveDiagonalizableLocalRootBranch] using
+      eventually_localRootBranch_matrixSquare
+        (positiveSimilarityRoot first)
+        (positiveDiagonalizableSylvesterEquivWitness first)
+  have hContinuousSecond :
+      ContinuousAt (positiveDiagonalizableLocalRootBranch second)
+        second.target :=
+    (positiveDiagonalizableLocalRootBranch_hasStrictFDerivAt second).continuousAt
+  have hTendstoSecond :
+      Tendsto (positiveDiagonalizableLocalRootBranch second)
+        (𝓝 first.target) (𝓝 (positiveSimilarityRoot first)) := by
+    rw [hTarget, hRoot,
+      ← positiveDiagonalizableLocalRootBranch_at_target second]
+    exact hContinuousSecond
+  have hLeftAfterSecond := hTendstoSecond.eventually hLeftFirst
+  have hRightSecond :
+      ∀ᶠ target in 𝓝 first.target,
+        matrixSquare (positiveDiagonalizableLocalRootBranch second target) =
+          target := by
+    simpa only [hTarget] using
+      eventually_positiveDiagonalizableLocalRootBranch_square second
+  filter_upwards [hLeftAfterSecond, hRightSecond] with target hLeft hRight
+  calc
+    positiveDiagonalizableLocalRootBranch first target =
+        positiveDiagonalizableLocalRootBranch first
+          (matrixSquare
+            (positiveDiagonalizableLocalRootBranch second target)) :=
+      (congrArg (positiveDiagonalizableLocalRootBranch first) hRight).symm
+    _ = positiveDiagonalizableLocalRootBranch second target := hLeft
+
+/-- Equal targets and equal ordered positive spectra determine the same local
+root germ. -/
+theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_same_target_and_ordered_spectrum
+    (first second : PositiveDiagonalizableRelativeMatrix)
+    (hTarget : first.target = second.target)
+    (hSpectrum : first.eigenvalue = second.eigenvalue) :
+    ∀ᶠ target in 𝓝 first.target,
+      positiveDiagonalizableLocalRootBranch first target =
+        positiveDiagonalizableLocalRootBranch second target :=
+  eventually_positiveDiagonalizableLocalRootBranch_eq_of_root_eq first second
+    (positiveSimilarityRoot_eq_of_same_target_and_ordered_spectrum
+      first second hTarget hSpectrum)
+
+/-- Equal targets whose supplied positive spectra differ by a permutation
+determine the same local root germ. -/
+theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_same_target_and_permuted_spectrum
+    (first second : PositiveDiagonalizableRelativeMatrix)
+    (permutation : Equiv.Perm (Fin 4))
+    (hTarget : first.target = second.target)
+    (hSpectrum : second.eigenvalue = first.eigenvalue ∘ permutation) :
+    ∀ᶠ target in 𝓝 first.target,
+      positiveDiagonalizableLocalRootBranch first target =
+        positiveDiagonalizableLocalRootBranch second target :=
+  eventually_positiveDiagonalizableLocalRootBranch_eq_of_root_eq first second
+    (positiveSimilarityRoot_eq_of_same_target_and_permuted_spectrum
+      first second permutation hTarget hSpectrum)
 
 end
 

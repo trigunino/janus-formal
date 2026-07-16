@@ -1272,6 +1272,9 @@ PROGRAM_P_GATES = {
             "theorem positiveDiagonalizableLocalRootBranch_at_target",
             "theorem eventually_positiveDiagonalizableLocalRootBranch_square",
             "theorem positiveDiagonalizableLocalRootBranch_hasStrictFDerivAt",
+            "theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_root_eq",
+            "theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_same_target_and_ordered_spectrum",
+            "theorem eventually_positiveDiagonalizableLocalRootBranch_eq_of_same_target_and_permuted_spectrum",
         ),
     ),
     "P0EFTJanusLorentzJordanRelativeRoot4D.lean": (
