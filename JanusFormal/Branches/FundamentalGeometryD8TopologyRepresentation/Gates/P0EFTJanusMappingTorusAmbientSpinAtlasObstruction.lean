@@ -619,6 +619,35 @@ theorem ambientSpinCechDefect_third_kernelTranslate
   simp [ambientSpinCechDefect, AmbientSpinOverlapLift.kernelTranslate,
     mul_assoc]
 
+/-- Translating the chosen composite-overlap lift by its own kernel-valued
+Cech defect canonically kills that defect on the fixed triple overlap. -/
+theorem ambientSpinCechDefect_canonicalThirdCorrection_eq_one
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird : AmbientSpinOverlapLift period hPeriod reduction first third
+      coordinate hFirstThird) :
+    ambientSpinCechDefect period hPeriod reduction first second third coordinate
+        hFirstSecond hSecondThird hFirstThird firstSecond secondThird
+        (firstThird.kernelTranslate period hPeriod reduction first third
+          coordinate hFirstThird
+          (ambientSpinCechKernelDefect period hPeriod reduction first second third
+            coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+            secondThird firstThird)) = 1 := by
+  rw [ambientSpinCechDefect_third_kernelTranslate]
+  simp [ambientSpinCechKernelDefect]
+
 /-- Translating the second-to-third lift multiplies the Cech defect on the
 left by the same kernel element. -/
 theorem ambientSpinCechDefect_secondThird_kernelTranslate
