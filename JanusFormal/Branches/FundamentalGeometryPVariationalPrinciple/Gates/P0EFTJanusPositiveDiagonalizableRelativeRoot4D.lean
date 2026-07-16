@@ -64,6 +64,55 @@ theorem positiveSimilarityDiagonalRoot_square
       Real.mul_self_sqrt (le_of_lt (data.eigenvalue_pos first))]
   · simp [positiveSimilarityDiagonalRoot, hIndices]
 
+/-- Commuting with the positive diagonal target already forces commutation
+with its selected positive square root.  Entrywise, off-eigenspace matrix
+coefficients vanish, while equal eigenspaces have equal positive roots. -/
+theorem commute_diagonal_eigenvalue_implies_commute_positive_root
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (scale : Matrix4)
+    (hCommute : scale * Matrix.diagonal data.eigenvalue =
+      Matrix.diagonal data.eigenvalue * scale) :
+    scale * positiveSimilarityDiagonalRoot data =
+      positiveSimilarityDiagonalRoot data * scale := by
+  ext first second
+  have hEntry := congrArg (fun matrix => matrix first second) hCommute
+  simp [Matrix.mul_apply, Matrix.diagonal,
+    positiveSimilarityDiagonalRoot, positiveSimilarityRootSpectrum] at hEntry ⊢
+  by_cases hEigenvalue : data.eigenvalue first = data.eigenvalue second
+  · rw [hEigenvalue]
+    ring
+  · have hScale : scale first second = 0 := by
+      have hProduct : scale first second *
+          (data.eigenvalue second - data.eigenvalue first) = 0 := by
+        nlinarith [hEntry]
+      exact (mul_eq_zero.mp hProduct).resolve_right
+        (sub_ne_zero.mpr (Ne.symm hEigenvalue))
+    rw [hScale]
+    simp
+
+/-- Any linear change supported inside equal-eigenvalue blocks commutes with
+the selected positive diagonal root.  Thus arbitrary mixing inside repeated
+eigenspaces is allowed, not only diagonal rescaling. -/
+theorem positiveSimilarityDiagonalRoot_commutes_of_preserves_eigenspaces
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (change : Matrix4)
+    (hPreserves : ∀ first second,
+      change first second ≠ 0 →
+        data.eigenvalue first = data.eigenvalue second) :
+    change * positiveSimilarityDiagonalRoot data =
+      positiveSimilarityDiagonalRoot data * change := by
+  ext first second
+  unfold positiveSimilarityDiagonalRoot
+  rw [Matrix.mul_diagonal, Matrix.diagonal_mul]
+  by_cases hEntry : change first second = 0
+  · simp [hEntry]
+  · have hRoot : positiveSimilarityRootSpectrum data first =
+        positiveSimilarityRootSpectrum data second := by
+      simp only [positiveSimilarityRootSpectrum]
+      rw [hPreserves first second hEntry]
+    rw [hRoot]
+    ring
+
 /-- Selected real root obtained by conjugating the positive diagonal root.
 It is called a similarity root rather than a principal root because basis
 independence has not yet been proved. -/
@@ -96,6 +145,37 @@ theorem positiveSimilarityRoot_invariant_under_commuting_rescaling
           (scale * scaleInv) * data.eigenbasisInv := by noncomm_ring
     _ = data.eigenbasis * positiveSimilarityDiagonalRoot data *
           data.eigenbasisInv := by rw [hInv]; simp
+
+/-- It is enough to check commutation with the supplied diagonal eigenvalue
+matrix: positivity then transfers commutation to the selected diagonal root. -/
+theorem positiveSimilarityRoot_invariant_under_eigenvalue_commuting_rescaling
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (scale scaleInv : Matrix4)
+    (hInv : scale * scaleInv = 1)
+    (hCommute : scale * Matrix.diagonal data.eigenvalue =
+      Matrix.diagonal data.eigenvalue * scale) :
+    (data.eigenbasis * scale) * positiveSimilarityDiagonalRoot data *
+        (scaleInv * data.eigenbasisInv) =
+      positiveSimilarityRoot data :=
+  positiveSimilarityRoot_invariant_under_commuting_rescaling data scale scaleInv
+    hInv (commute_diagonal_eigenvalue_implies_commute_positive_root
+      data scale hCommute)
+
+/-- Consequently, every invertible change of basis acting only inside repeated
+eigenspaces leaves the selected similarity root unchanged. -/
+theorem positiveSimilarityRoot_invariant_under_eigenspace_change
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (change changeInv : Matrix4)
+    (hInv : change * changeInv = 1)
+    (hPreserves : ∀ first second,
+      change first second ≠ 0 →
+        data.eigenvalue first = data.eigenvalue second) :
+    (data.eigenbasis * change) * positiveSimilarityDiagonalRoot data *
+        (changeInv * data.eigenbasisInv) =
+      positiveSimilarityRoot data :=
+  positiveSimilarityRoot_invariant_under_commuting_rescaling data change changeInv
+    hInv (positiveSimilarityDiagonalRoot_commutes_of_preserves_eigenspaces
+      data change hPreserves)
 
 theorem positiveSimilarityRoot_square
     (data : PositiveDiagonalizableRelativeMatrix) :

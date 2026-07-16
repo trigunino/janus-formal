@@ -247,6 +247,12 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       renormalisation inversible de la base propre qui commute avec la racine
       diagonale positive. L'indépendance sous changements de base généraux et
       le recollement restent ouverts.
+      - [x] Montrer qu'il suffit que la renormalisation commute avec la matrice
+        diagonale des valeurs propres : la positivité force alors la commutation
+        avec sa racine positive et donne la même racine par similarité.
+      - [x] Autoriser tout changement inversible mélangeant arbitrairement les
+        vecteurs à l'intérieur d'un même espace propre répété et prouver que
+        la racine par similarité reste inchangée.
   - [x] Construire une vraie strate de Jordan lorentzienne en dimension quatre,
     issue de deux métriques symétriques indépendantes : la racine réelle
     explicite se carre exactement au produit relatif et, pour paramètre non
