@@ -286,6 +286,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Transporter explicitement cet inverse diagonal par similarité à toute
     présentation diagonalisable réelle à spectre strictement positif, et
     prouver les identités bilatères ainsi que la bijectivité de Sylvester.
+    - [x] Promouvoir cet inverse en application linéaire continue, construire
+      le témoin bilatère consommé par la théorie de Fréchet et obtenir la
+      formule exacte de dérivée pour toute sélection locale différentiable.
 - [ ] Recoller les branches IFT locales sur tout le domaine admissible.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement

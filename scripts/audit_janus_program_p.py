@@ -1244,9 +1244,14 @@ PROGRAM_P_GATES = {
         (
             "def positiveRootSpectrum",
             "def positiveDiagonalizableSylvesterInverse",
+            "def positiveDiagonalizableSylvesterInverseLinearMap",
+            "def positiveDiagonalizableSylvesterInverseCLM",
+            "theorem positiveDiagonalizableSylvesterInverseCLM_apply",
             "theorem positiveDiagonalizableSylvesterInverse_left",
             "theorem positiveDiagonalizableSylvesterInverse_right",
             "theorem positiveDiagonalizable_sylvester_bijective",
+            "def positiveDiagonalizableSylvesterInverseWitness",
+            "theorem positiveDiagonalizable_squareRoot_fderiv",
         ),
     ),
     "P0EFTJanusLorentzJordanRelativeRoot4D.lean": (

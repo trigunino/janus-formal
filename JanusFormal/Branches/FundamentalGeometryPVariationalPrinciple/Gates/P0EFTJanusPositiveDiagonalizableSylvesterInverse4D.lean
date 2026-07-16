@@ -39,6 +39,32 @@ def positiveDiagonalizableSylvesterInverse
       (data.eigenbasisInv * target * data.eigenbasis) *
     data.eigenbasisInv
 
+/-- Linearity of the transported inverse. -/
+def positiveDiagonalizableSylvesterInverseLinearMap
+    (data : PositiveDiagonalizableRelativeMatrix) : Matrix4 →ₗ[Real] Matrix4 where
+  toFun := positiveDiagonalizableSylvesterInverse data
+  map_add' first second := by
+    unfold positiveDiagonalizableSylvesterInverse
+    rw [mul_add, add_mul, map_add]
+    noncomm_ring
+  map_smul' scalar target := by
+    unfold positiveDiagonalizableSylvesterInverse
+    rw [Matrix.mul_smul, Matrix.smul_mul, map_smul]
+    simp
+
+/-- The transported inverse is continuous in finite dimension. -/
+def positiveDiagonalizableSylvesterInverseCLM
+    (data : PositiveDiagonalizableRelativeMatrix) : Matrix4 →L[Real] Matrix4 :=
+  LinearMap.toContinuousLinearMap
+    (positiveDiagonalizableSylvesterInverseLinearMap data)
+
+@[simp]
+theorem positiveDiagonalizableSylvesterInverseCLM_apply
+    (data : PositiveDiagonalizableRelativeMatrix) (target : Matrix4) :
+    positiveDiagonalizableSylvesterInverseCLM data target =
+      positiveDiagonalizableSylvesterInverse data target :=
+  rfl
+
 theorem positiveDiagonalizableSylvesterInverse_left
     (data : PositiveDiagonalizableRelativeMatrix) (variation : Matrix4) :
     positiveDiagonalizableSylvesterInverse data
@@ -156,6 +182,53 @@ theorem positiveDiagonalizable_sylvester_bijective
     ⟨positiveDiagonalizableSylvesterInverse data,
       positiveDiagonalizableSylvesterInverse_left data,
       positiveDiagonalizableSylvesterInverse_right data⟩
+
+/-- Explicit two-sided continuous inverse consumed by the general square-root
+Fréchet derivative theory. -/
+def positiveDiagonalizableSylvesterInverseWitness
+    (data : PositiveDiagonalizableRelativeMatrix) :
+    SylvesterInverseWitness (positiveSimilarityRoot data) where
+  inverse := positiveDiagonalizableSylvesterInverseCLM data
+  leftInverse := positiveDiagonalizableSylvesterInverse_left data
+  rightInverse := positiveDiagonalizableSylvesterInverse_right data
+
+/-- At a positive diagonalizable presentation, every differentiable
+square-root selection has the explicit inverse-Sylvester derivative. -/
+theorem positiveDiagonalizable_squareRoot_fderiv
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
+    {root target : E → Matrix4}
+    {targetDerivative : E →L[Real] Matrix4}
+    {point : E}
+    (data : PositiveDiagonalizableRelativeMatrix)
+    (hValue : root point = positiveSimilarityRoot data)
+    (hRoot : DifferentiableAt Real root point)
+    (hTarget : HasFDerivAt target targetDerivative point)
+    (hSquare : ∀ x, squareMap (root x) = target x) :
+    fderiv Real root point =
+      (positiveDiagonalizableSylvesterInverseCLM data).comp targetDerivative := by
+  have hActual := hRoot.hasFDerivAt
+  have hEquation :=
+    squareRoot_derivative_equation hActual hTarget hSquare
+  have hLeft (variation : Matrix4) :
+      positiveDiagonalizableSylvesterInverseCLM data
+          (sylvesterOperator (root point) variation) = variation := by
+    rw [hValue, positiveDiagonalizableSylvesterInverseCLM_apply]
+    exact positiveDiagonalizableSylvesterInverse_left data variation
+  apply ContinuousLinearMap.ext
+  intro direction
+  calc
+    fderiv Real root point direction =
+        positiveDiagonalizableSylvesterInverseCLM data
+          (sylvesterOperator (root point)
+            (fderiv Real root point direction)) :=
+      (hLeft (fderiv Real root point direction)).symm
+    _ = positiveDiagonalizableSylvesterInverseCLM data
+        (((sylvesterOperator (root point)).comp
+          (fderiv Real root point)) direction) := rfl
+    _ = positiveDiagonalizableSylvesterInverseCLM data
+        (targetDerivative direction) := by rw [hEquation]
+    _ = ((positiveDiagonalizableSylvesterInverseCLM data).comp
+        targetDerivative) direction := rfl
 
 end
 
