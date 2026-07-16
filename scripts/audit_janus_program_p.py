@@ -1239,6 +1239,16 @@ PROGRAM_P_GATES = {
             "theorem positive_diagonalizable_relative_root_closure",
         ),
     ),
+    "P0EFTJanusPositiveDiagonalizableSylvesterInverse4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveRootSpectrum",
+            "def positiveDiagonalizableSylvesterInverse",
+            "theorem positiveDiagonalizableSylvesterInverse_left",
+            "theorem positiveDiagonalizableSylvesterInverse_right",
+            "theorem positiveDiagonalizable_sylvester_bijective",
+        ),
+    ),
     "P0EFTJanusLorentzJordanRelativeRoot4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

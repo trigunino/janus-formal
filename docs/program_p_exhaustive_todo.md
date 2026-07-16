@@ -279,6 +279,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
     propres strictement positives.
+  - [x] Transporter explicitement cet inverse diagonal par similarité à toute
+    présentation diagonalisable réelle à spectre strictement positif, et
+    prouver les identités bilatères ainsi que la bijectivité de Sylvester.
 - [ ] Recoller les branches IFT locales sur tout le domaine admissible.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
