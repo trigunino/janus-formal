@@ -156,6 +156,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiInteractionDensityOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzRoot4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalizableRelativeRoot4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalLorentzCausalFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalRootFrontierControl4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMinkowskiGlobalDiagonalRootGluing4D
@@ -294,6 +295,7 @@ structure ProgramStatus where
   paMinkowskiCandidateAInteractionOpenDomain4DProved : Prop
   paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved : Prop
   paGlobalDiagonalLorentzRoot4DProved : Prop
+  paPositiveDiagonalizableRelativeRoot4DProved : Prop
   paGlobalDiagonalLorentzCausalFrontier4DProved : Prop
   paGlobalDiagonalRootFrontierControl4DProved : Prop
   paMinkowskiGlobalDiagonalRootGluing4DProved : Prop
@@ -544,6 +546,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paMinkowskiCandidateAInteractionOpenDomain4DProved /\
   s.paIntegratedMinkowskiCandidateAInteractionOpenDomain4DProved /\
   s.paGlobalDiagonalLorentzRoot4DProved /\
+  s.paPositiveDiagonalizableRelativeRoot4DProved /\
   s.paGlobalDiagonalLorentzCausalFrontier4DProved /\
   s.paGlobalDiagonalRootFrontierControl4DProved /\
   s.paMinkowskiGlobalDiagonalRootGluing4DProved /\

@@ -58,6 +58,10 @@ def test_program_p_global_diagonal_lorentz_root_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_positive_diagonalizable_relative_root_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_global_diagonal_causal_frontier_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
