@@ -207,6 +207,8 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     `FiberBundleCore`, reproduisent les deux cocycles racines, se carrent en
     demi-tour d'orientation pour tout enroulement et sont échangés par PT.
     Les classes du fibré tangent ambiant et le twist monopolaire restent ouverts.
+    - [x] Prouver en outre que le produit des deux caractères normaux opposés
+      vaut exactement `1` pour tout enroulement.
 - [ ] Fixer les domaines géométriques sur lesquels métriques, racines,
   opérateurs et conditions au bord sont simultanément définis.
 

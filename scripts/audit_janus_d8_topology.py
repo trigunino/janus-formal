@@ -527,6 +527,7 @@ NORMAL_PIN_MINUS_ASSOCIATED_ROOTS_DECLARATIONS = (
     "def pinMinusRootCharacter",
     "theorem pinMinusRootCharacter_square",
     "theorem pinMinusRootCharacter_opposite",
+    "theorem pinMinusRootCharacter_mul_opposite",
     "def associatedRootPhaseAction",
     "theorem associatedRootPhaseAction_free",
     "theorem associatedRootPhaseAction_transitive",
