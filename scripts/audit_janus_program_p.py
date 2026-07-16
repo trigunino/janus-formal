@@ -2260,6 +2260,13 @@ PROGRAM_P_GATES = {
             "def independentMatterDiffeomorphismGaugeGenerator",
             "def scalarDiffeomorphismNoetherOperator",
             "theorem scalarDiffeomorphismNoetherOperator_apply",
+            "abbrev MatterComponentIndex",
+            "abbrev MatterComponentFamily",
+            "def independentMatterComponentFamily",
+            "def matterMultipletDiffeomorphismGaugeGenerator",
+            "theorem matterMultipletDiffeomorphismGaugeGenerator_apply_component",
+            "def matterMultipletDiffeomorphismNoetherOperator",
+            "theorem matterMultipletDiffeomorphismNoetherOperator_apply",
         ),
     ),
     "P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D.lean": (

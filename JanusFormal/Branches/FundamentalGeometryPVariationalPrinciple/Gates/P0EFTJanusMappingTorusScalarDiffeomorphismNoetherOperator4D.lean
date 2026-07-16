@@ -98,6 +98,72 @@ theorem scalarDiffeomorphismNoetherOperator_apply
       euler (scalarLieDerivative period hPeriod ghost background) :=
   rfl
 
+/-- The eight scalar matter coordinates: two sectors with four components
+each. -/
+abbrev MatterComponentIndex := Fin 2 × Fin 4
+
+/-- A simultaneous family of all eight smooth scalar matter components. -/
+abbrev MatterComponentFamily :=
+  MatterComponentIndex → SmoothQuotientField period hPeriod Real
+
+/-- Extract all eight scalar components from the two independent matter
+multiplets without duplicating their field data. -/
+def independentMatterComponentFamily
+    (fields : IndependentFields period hPeriod) :
+    MatterComponentFamily period hPeriod :=
+  fun index =>
+    independentMatterScalar period hPeriod fields index.1 index.2
+
+/-- The single concrete diffeomorphism generator acting simultaneously on
+the complete eight-component matter multiplet. -/
+def matterMultipletDiffeomorphismGaugeGenerator
+    (fields : IndependentFields period hPeriod) :
+    SmoothDiffeomorphismGhost period hPeriod →ₗ[Real]
+      MatterComponentFamily period hPeriod where
+  toFun ghost index :=
+    scalarDiffeomorphismGaugeGenerator period hPeriod
+      (independentMatterComponentFamily period hPeriod fields index) ghost
+  map_add' first second := by
+    funext index
+    exact (scalarDiffeomorphismGaugeGenerator period hPeriod
+      (independentMatterComponentFamily period hPeriod fields index)).map_add
+        first second
+  map_smul' scalarCoefficient ghost := by
+    funext index
+    exact (scalarDiffeomorphismGaugeGenerator period hPeriod
+      (independentMatterComponentFamily period hPeriod fields index)).map_smul
+        scalarCoefficient ghost
+
+@[simp]
+theorem matterMultipletDiffeomorphismGaugeGenerator_apply_component
+    (fields : IndependentFields period hPeriod)
+    (ghost : SmoothDiffeomorphismGhost period hPeriod)
+    (index : MatterComponentIndex) :
+    matterMultipletDiffeomorphismGaugeGenerator period hPeriod fields ghost index =
+      scalarLieDerivative period hPeriod ghost
+        (independentMatterScalar period hPeriod fields index.1 index.2) :=
+  rfl
+
+/-- The exact Noether operator for one Euler covector on the complete matter
+multiplet, `B_matter(E) = R_matterᵀ E`. -/
+def matterMultipletDiffeomorphismNoetherOperator
+    (fields : IndependentFields period hPeriod)
+    (euler : MatterComponentFamily period hPeriod →ₗ[Real] Real) :
+    SmoothDiffeomorphismGhost period hPeriod →ₗ[Real] Real :=
+  euler.comp
+    (matterMultipletDiffeomorphismGaugeGenerator period hPeriod fields)
+
+@[simp]
+theorem matterMultipletDiffeomorphismNoetherOperator_apply
+    (fields : IndependentFields period hPeriod)
+    (euler : MatterComponentFamily period hPeriod →ₗ[Real] Real)
+    (ghost : SmoothDiffeomorphismGhost period hPeriod) :
+    matterMultipletDiffeomorphismNoetherOperator period hPeriod fields euler ghost =
+      euler (fun index =>
+        scalarLieDerivative period hPeriod ghost
+          (independentMatterScalar period hPeriod fields index.1 index.2)) :=
+  rfl
+
 end
 
 end P0EFTJanusMappingTorusScalarDiffeomorphismNoetherOperator4D
