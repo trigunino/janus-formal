@@ -118,9 +118,17 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       sa différentielle de variété est injective en tout point.
     - [x] Construire le quotient tangent normal ponctuel et prouver qu'il est
       de rang réel un en tout point.
-    - [ ] Promouvoir cette inclusion en embedding lisse et construire les
-      strates non-nulles/nulles/joints ; il manque encore un complément lisse
-      global pour l'instance `IsSmoothEmbedding` et les vraies strates.
+    - [x] Construire sur le throat effectif un vrai `VectorBundle` normal de
+      rang un, analytique, à cocycle de signe exact et transition d'un tour
+      égale à `-id`.
+    - [x] Identifier non canoniquement chaque fibre de ce bundle au quotient
+      différentiel normal correspondant par une équivalence linéaire.
+    - [ ] Promouvoir l'inclusion en `IsSmoothEmbedding` en construisant les
+      témoins locaux d'immersion requis par Mathlib ; l'injectivité ponctuelle
+      de `mfderiv` ne suffit pas encore à produire cette instance.
+    - [ ] Assembler les identifications normales ponctuelles en une
+      équivalence lisse globale et construire les strates
+      non-nulles/nulles/joints.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -128,8 +136,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   - [x] Construire sur le throat le quotient par les enroulements pairs, sa
     projection couvrante à deux feuillets, l'involution de deck libre et la
     trivialisation topologique explicite du pullback de la ligne normale.
-  - [ ] Identifier ces quotients aux objets normaux différentiels d'un
-    embedding lisse et les promouvoir en `VectorBundle` lisses.
+  - [ ] Identifier globalement et lissement ce bundle au bundle normal
+    différentiel d'un `IsSmoothEmbedding` effectivement construit ; le
+    `VectorBundle` analytique et les identifications ponctuelles sont fermés
+    dans le bloc précédent.
 - [ ] Construire le relèvement Pin/SpinC et la racine normale `Z4` comme objets
   globaux, pas seulement comme phases ou cocycles fournis.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités

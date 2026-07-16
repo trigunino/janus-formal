@@ -25,6 +25,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
@@ -80,6 +81,10 @@ structure ProgramStatus where
   fixedThroatQuotientInclusionIsClosedEmbeddingProved : Prop
   fixedThroatQuotientDifferentialInjectiveProved : Prop
   fixedThroatNormalQuotientFinrankOneProved : Prop
+  fixedThroatNormalVectorBundleConstructed : Prop
+  fixedThroatNormalVectorBundleContMDiffProved : Prop
+  fixedThroatNormalFiberPointwiseDifferentialEquivProved : Prop
+  fixedThroatNormalOneLoopMinusIdentityProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -177,12 +182,22 @@ def mappingTorusSmoothPTCoreClosed (s : ProgramStatus) : Prop :=
 
 /-- Checked smooth-embedding frontier: the inclusion is a closed topological
 embedding, its manifold differential is injective everywhere, and its normal
-quotient has real rank one.  A globally chosen smooth normal complement and
+quotient has real rank one.  Mathlib's `IsSmoothEmbedding` instance and the
 null/joint stratification are not asserted here. -/
 def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatQuotientInclusionIsClosedEmbeddingProved /\
   s.fixedThroatQuotientDifferentialInjectiveProved /\
   s.fixedThroatNormalQuotientFinrankOneProved
+
+/-- Actual analytic sign-clutched normal line bundle.  Its fibers are
+pointwise linearly equivalent to the differential normal quotients and one
+deck circuit acts by `-id`.  No globally smooth family of those pointwise
+equivalences is asserted. -/
+def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
+  s.fixedThroatNormalVectorBundleConstructed /\
+  s.fixedThroatNormalVectorBundleContMDiffProved /\
+  s.fixedThroatNormalFiberPointwiseDifferentialEquivProved /\
+  s.fixedThroatNormalOneLoopMinusIdentityProved
 
 /-- Compactness of both actual effective quotient manifolds. -/
 def effectiveQuotientCompactnessClosed (s : ProgramStatus) : Prop :=
@@ -202,6 +217,7 @@ def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
   mappingTorusSmoothQuotientManifoldCoreClosed s /\
   mappingTorusSmoothPTCoreClosed s /\
   fixedThroatSmoothEmbeddingFrontierClosed s /\
+  fixedThroatSmoothNormalBundleClosed s /\
   s.nonzeroTranslationDerived /\
   effectiveQuotientCompactnessClosed s /\
   s.integerActionFreeProved /\

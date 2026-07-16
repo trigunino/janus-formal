@@ -52,6 +52,10 @@ SMOOTH_THROAT_EMBEDDING_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothThroatEmbedding.lean"
 )
+SMOOTH_NORMAL_VECTOR_BUNDLE_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusSmoothNormalVectorBundle.lean"
+)
 COMPACT_QUOTIENT_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusCompactQuotient.lean"
@@ -249,6 +253,29 @@ SMOOTH_THROAT_EMBEDDING_STATUSES = (
     "fixedThroatQuotientDifferentialInjectiveProved",
     "fixedThroatNormalQuotientFinrankOneProved",
 )
+
+SMOOTH_NORMAL_VECTOR_BUNDLE_DECLARATIONS = (
+    "def normalBundleBaseSet",
+    "def normalBundleIndexAt",
+    "def localTransitionWinding",
+    "theorem localTransitionWinding_vadd",
+    "def normalSignCLM",
+    "def fixedThroatNormalVectorBundleCore",
+    "theorem fixedThroatNormalFiber_isVectorBundle",
+    "theorem fixedThroatNormalVectorBundleCore_isContMDiff",
+    "theorem fixedThroatNormalFiber_isContMDiffVectorBundle",
+    "theorem fixedThroatNormalFiber_equiv_differentialNormal",
+    "theorem localTransitionWinding_one_loop",
+    "theorem one_loop_coordChange_eq_neg_id",
+)
+
+SMOOTH_NORMAL_VECTOR_BUNDLE_STATUSES = (
+    "fixedThroatNormalVectorBundleConstructed",
+    "fixedThroatNormalVectorBundleContMDiffProved",
+    "fixedThroatNormalFiberPointwiseDifferentialEquivProved",
+    "fixedThroatNormalOneLoopMinusIdentityProved",
+)
+
 COMPACT_QUOTIENT_DECLARATIONS = (
     "def fundamentalStripProjection",
     "theorem fundamentalStripProjection_continuous",
@@ -296,6 +323,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     smooth_pt_gate = (repo_root / SMOOTH_PT_GATE).read_text(encoding="utf-8")
     smooth_throat_embedding_gate = (
         repo_root / SMOOTH_THROAT_EMBEDDING_GATE
+    ).read_text(encoding="utf-8")
+    smooth_normal_vector_bundle_gate = (
+        repo_root / SMOOTH_NORMAL_VECTOR_BUNDLE_GATE
     ).read_text(encoding="utf-8")
     facade = (repo_root / FACADE).read_text(encoding="utf-8")
     compact_quotient_gate = (repo_root / COMPACT_QUOTIENT_GATE).read_text(
@@ -496,6 +526,26 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     for status in SMOOTH_THROAT_EMBEDDING_STATUSES:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(f"D8 facade omits smooth-throat status: {status}")
+
+    for declaration in SMOOTH_NORMAL_VECTOR_BUNDLE_DECLARATIONS:
+        if declaration not in smooth_normal_vector_bundle_gate:
+            raise AssertionError(
+                f"missing D8 smooth-normal-bundle declaration: {declaration}"
+            )
+    if re.search(
+        r"\b(?:sorry|admit|axiom)\b", smooth_normal_vector_bundle_gate
+    ):
+        raise AssertionError("proof placeholder found in D8 smooth normal bundle")
+    smooth_normal_import = "Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle"
+    if facade.count(smooth_normal_import) != 1:
+        raise AssertionError("D8 facade omits the smooth normal vector-bundle gate")
+    if facade.count("fixedThroatSmoothNormalBundleClosed s") != 1:
+        raise AssertionError("D8 smooth core omits smooth normal bundle milestone")
+    for status in SMOOTH_NORMAL_VECTOR_BUNDLE_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(
+                f"D8 facade omits smooth-normal-bundle status: {status}"
+            )
 
 
     for declaration in COMPACT_QUOTIENT_DECLARATIONS:
