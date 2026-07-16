@@ -231,6 +231,53 @@ theorem formalAdjoint_constraint_reparameterized_of_constraint
   rw [formalAdjointEulerConstraint_reparameterized, hConstraint]
   rfl
 
+/-- A surjective linear reparameterization detects the full formal-adjoint
+constraint, rather than only preserving its vanishing. -/
+theorem formalAdjoint_constraint_reparameterized_iff_of_surjective
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (euler : EulerOneForm Configuration)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (hSurjective : Function.Surjective parameterMap)
+    (q : Configuration) :
+    formalAdjointEulerConstraint euler
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) q = 0 ↔
+      formalAdjointEulerConstraint euler generator q = 0 := by
+  constructor
+  · intro hReduced
+    apply ContinuousLinearMap.ext
+    intro parameter
+    obtain ⟨reducedParameter, hParameter⟩ := hSurjective parameter
+    have hApply := congrArg
+      (fun constraint : ReducedParameter →L[ℝ] ℝ =>
+        constraint reducedParameter) hReduced
+    simpa [formalAdjointEulerConstraint_reparameterized, hParameter] using hApply
+  · exact formalAdjoint_constraint_reparameterized_of_constraint
+      euler generator parameterMap q
+
+/-- Infinitesimal invariance under a surjective reparameterization is
+equivalent to invariance under the original gauge parameters. -/
+theorem infinitesimal_invariance_reparameterized_iff_of_surjective
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (action : Configuration → ℝ)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (hSurjective : Function.Surjective parameterMap) :
+    InfinitesimallyDiagonalGaugeInvariant action
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) ↔
+      InfinitesimallyDiagonalGaugeInvariant action generator := by
+  constructor
+  · intro hReduced q parameter
+    obtain ⟨reducedParameter, hParameter⟩ := hSurjective parameter
+    simpa [reparameterizedDiagonalGaugeGenerator, gaugeLine, hParameter] using
+      hReduced q reducedParameter
+  · exact infinitesimal_invariance_reparameterized
+      action generator parameterMap
+
 /-- Constraint closure under a supplied reduction of gauge parameters. -/
 theorem formalAdjoint_constraint_closed_under_parameter_map
     {ReducedParameter : Type w}
