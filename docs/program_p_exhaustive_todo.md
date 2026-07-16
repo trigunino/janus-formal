@@ -200,6 +200,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
                   du lift initial choisi sur l'arête composée. Les changements
                   des deux arêtes constituantes et les quadruples overlaps
                   restent ouverts.
+                - [x] Relever au sous-groupe noyau les lois de cobord sous
+                  translation des deux arêtes constituantes, avec la conjugaison
+                  exacte par le lift intermédiaire. Les quadruples overlaps
+                  restent ouverts.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart

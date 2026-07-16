@@ -483,6 +483,8 @@ AMBIENT_SPIN_ATLAS_OBSTRUCTION_DECLARATIONS = (
     "theorem ambientSpinCechCanonicalThirdCorrection_independent",
     "theorem ambientSpinCechDefect_secondThird_kernelTranslate",
     "theorem ambientSpinCechDefect_firstSecond_kernelTranslate",
+    "theorem ambientSpinCechKernelDefect_secondThird_kernelTranslate",
+    "theorem ambientSpinCechKernelDefect_firstSecond_kernelTranslate",
 )
 
 SMOOTH_NORMAL_Z4_ROOT_DECLARATIONS = (

@@ -811,6 +811,72 @@ theorem ambientSpinCechDefect_firstSecond_kernelTranslate
   simp [ambientSpinCechDefect, AmbientSpinOverlapLift.kernelTranslate,
     ambientSpinKernelConjugate, mul_assoc]
 
+/-- Kernel-valued coboundary law for a translation of the second-to-third
+lift. -/
+theorem ambientSpinCechKernelDefect_secondThird_kernelTranslate
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird : AmbientSpinOverlapLift period hPeriod reduction first third
+      coordinate hFirstThird)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinCechKernelDefect period hPeriod reduction first second third
+        coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+        (secondThird.kernelTranslate period hPeriod reduction second third
+          (ambientAtlasTransition period hPeriod first second coordinate)
+          hSecondThird kernel) firstThird =
+      kernel * ambientSpinCechKernelDefect period hPeriod reduction first second
+        third coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+        secondThird firstThird := by
+  apply Subtype.ext
+  exact ambientSpinCechDefect_secondThird_kernelTranslate period hPeriod
+    reduction first second third coordinate hFirstSecond hSecondThird hFirstThird
+    firstSecond secondThird firstThird kernel
+
+/-- Kernel-valued coboundary law for a translation of the first-to-second
+lift; the translating kernel is transported by the intervening lift. -/
+theorem ambientSpinCechKernelDefect_firstSecond_kernelTranslate
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (first second third : AmbientCover period hPeriod)
+    (coordinate : CoverModel)
+    (hFirstSecond :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondThird :
+      ambientAtlasTransition period hPeriod first second coordinate ∈
+        (ambientAtlasTransition period hPeriod second third).source)
+    (hFirstThird :
+      coordinate ∈ (ambientAtlasTransition period hPeriod first third).source)
+    (firstSecond : AmbientSpinOverlapLift period hPeriod reduction first second
+      coordinate hFirstSecond)
+    (secondThird : AmbientSpinOverlapLift period hPeriod reduction second third
+      (ambientAtlasTransition period hPeriod first second coordinate) hSecondThird)
+    (firstThird : AmbientSpinOverlapLift period hPeriod reduction first third
+      coordinate hFirstThird)
+    (kernel : MonoidHom.ker ambientSpinProjection) :
+    ambientSpinCechKernelDefect period hPeriod reduction first second third
+        coordinate hFirstSecond hSecondThird hFirstThird
+        (firstSecond.kernelTranslate period hPeriod reduction first second
+          coordinate hFirstSecond kernel) secondThird firstThird =
+      ambientSpinKernelConjugate secondThird.lift kernel *
+        ambientSpinCechKernelDefect period hPeriod reduction first second third
+          coordinate hFirstSecond hSecondThird hFirstThird firstSecond
+          secondThird firstThird := by
+  apply Subtype.ext
+  exact ambientSpinCechDefect_firstSecond_kernelTranslate period hPeriod
+    reduction first second third coordinate hFirstSecond hSecondThird hFirstThird
+    firstSecond secondThird firstThird kernel
+
 /-- On every actual triple overlap for which two Spin lifts are supplied, the
 third lift obtained by composition has exactly trivial Cech defect.  This is a
 local coherence theorem; it does not assert a global choice of overlap lifts. -/
