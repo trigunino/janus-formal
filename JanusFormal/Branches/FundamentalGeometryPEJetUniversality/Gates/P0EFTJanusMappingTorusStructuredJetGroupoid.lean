@@ -105,6 +105,34 @@ instance janusDeckHomSubsingleton
       first.element.toAdd second.element.toAdd source
       (first.maps_source.trans second.maps_source.symm)
 
+/-- Every isotropy arrow of the effective D8 deck groupoid is the identity. -/
+theorem janusDeck_endomorphism_eq_id
+    (data : MappingTorusData X)
+    (base : JanusDeckObject data)
+    (arrow : base ⟶ base) :
+    arrow = 𝟙 base :=
+  Subsingleton.elim _ _
+
+/-- Each deck isotropy group is a singleton, uniformly over the cover. -/
+def janusDeckEndomorphismEquivPUnit
+    (data : MappingTorusData X)
+    (base : JanusDeckObject data) :
+    (base ⟶ base) ≃ PUnit where
+  toFun _ := PUnit.unit
+  invFun _ := 𝟙 base
+  left_inv arrow := (janusDeck_endomorphism_eq_id data base arrow).symm
+  right_inv point := by cases point; rfl
+
+/-- Hence the effective D8 deck presentation has one isotropy stratum: the
+trivial orbit type at every object.  This statement concerns deck isotropy;
+residual frame or SpinC isotropy on structured-jet fibers is separate. -/
+theorem janusDeck_isotropy_stratification_single_stratum
+    (data : MappingTorusData X) :
+    ∀ base : JanusDeckObject data,
+      Nonempty ((base ⟶ base) ≃ PUnit) := by
+  intro base
+  exact ⟨janusDeckEndomorphismEquivPUnit data base⟩
+
 end DeckCategory
 
 section NaturalSourceTargetFamilies

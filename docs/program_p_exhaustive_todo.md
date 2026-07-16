@@ -747,6 +747,11 @@ Hessien physique réellement descendu.
   - [x] Prouver que chaque composante source/cible du groupoïde de deck est un
     difféomorphisme local sur les covers analytiques 4D et du throat 3D.
 - [ ] Déterminer sa stratification d'isotropie.
+  - [x] Pour le vrai groupoïde effectif de deck D8, prouver que tout
+    endomorphisme est l'identité, identifier chaque stabilisateur à un
+    singleton et conclure qu'il existe une unique strate d'isotropie de deck,
+    partout triviale. L'isotropie résiduelle des fibres de jets SpinC reste
+    ouverte et ne doit pas être confondue avec l'isotropie du quotient D8.
 - [ ] Construire les revêtements Spin de dimension pertinente.
 - [ ] Dériver les données Cech/SpinC depuis l'atlas réel, et non depuis des
   transitions fournies.
