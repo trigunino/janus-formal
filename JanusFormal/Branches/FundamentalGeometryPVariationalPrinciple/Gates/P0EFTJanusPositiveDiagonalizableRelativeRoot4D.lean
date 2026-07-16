@@ -177,6 +177,105 @@ theorem positiveSimilarityRoot_invariant_under_eigenspace_change
     hInv (positiveSimilarityDiagonalRoot_commutes_of_preserves_eigenspaces
       data change hPreserves)
 
+/-- Two supplied diagonalizations of the same target with the same ordered
+positive spectrum produce exactly the same similarity root.  This proves
+eigenbasis independence on each fixed ordered-spectrum presentation; spectrum
+reordering and global gluing remain separate. -/
+theorem positiveSimilarityRoot_eq_of_same_target_and_ordered_spectrum
+    (first second : PositiveDiagonalizableRelativeMatrix)
+    (hTarget : first.target = second.target)
+    (hSpectrum : first.eigenvalue = second.eigenvalue) :
+    positiveSimilarityRoot first = positiveSimilarityRoot second := by
+  let change : Matrix4 := first.eigenbasisInv * second.eigenbasis
+  let changeInv : Matrix4 := second.eigenbasisInv * first.eigenbasis
+  have hChangeInv : change * changeInv = 1 := by
+    dsimp [change, changeInv]
+    calc
+      (first.eigenbasisInv * second.eigenbasis) *
+          (second.eigenbasisInv * first.eigenbasis) =
+        first.eigenbasisInv *
+          (second.eigenbasis * second.eigenbasisInv) * first.eigenbasis := by
+            noncomm_ring
+      _ = first.eigenbasisInv * 1 * first.eigenbasis := by
+        rw [second.basis_mul_inv]
+      _ = 1 := by simpa using first.inv_mul_basis
+  have hRepresentations :
+      first.eigenbasis * Matrix.diagonal first.eigenvalue * first.eigenbasisInv =
+        second.eigenbasis * Matrix.diagonal second.eigenvalue *
+          second.eigenbasisInv := by
+    calc
+      first.eigenbasis * Matrix.diagonal first.eigenvalue * first.eigenbasisInv =
+          first.target := first.target_eq.symm
+      _ = second.target := hTarget
+      _ = second.eigenbasis * Matrix.diagonal second.eigenvalue *
+          second.eigenbasisInv := second.target_eq
+  have hChangeCommutes :
+      change * Matrix.diagonal first.eigenvalue =
+        Matrix.diagonal first.eigenvalue * change := by
+    dsimp [change]
+    have hDiagonal : Matrix.diagonal first.eigenvalue =
+        Matrix.diagonal second.eigenvalue := by rw [hSpectrum]
+    calc
+      (first.eigenbasisInv * second.eigenbasis) *
+          Matrix.diagonal first.eigenvalue =
+        first.eigenbasisInv *
+          (second.eigenbasis * Matrix.diagonal second.eigenvalue) := by
+            rw [hDiagonal]
+            noncomm_ring
+      _ = first.eigenbasisInv *
+          (second.eigenbasis * Matrix.diagonal second.eigenvalue *
+            second.eigenbasisInv) * second.eigenbasis := by
+        calc
+          first.eigenbasisInv *
+              (second.eigenbasis * Matrix.diagonal second.eigenvalue) =
+            first.eigenbasisInv *
+              (second.eigenbasis * Matrix.diagonal second.eigenvalue) * 1 := by
+                simp
+          _ = first.eigenbasisInv *
+              (second.eigenbasis * Matrix.diagonal second.eigenvalue) *
+                (second.eigenbasisInv * second.eigenbasis) := by
+                  rw [second.inv_mul_basis]
+          _ = _ := by noncomm_ring
+      _ = first.eigenbasisInv *
+          (first.eigenbasis * Matrix.diagonal first.eigenvalue *
+            first.eigenbasisInv) * second.eigenbasis := by rw [hRepresentations]
+      _ = Matrix.diagonal first.eigenvalue *
+          (first.eigenbasisInv * second.eigenbasis) := by
+        calc
+          first.eigenbasisInv *
+              (first.eigenbasis * Matrix.diagonal first.eigenvalue *
+                first.eigenbasisInv) * second.eigenbasis =
+            (first.eigenbasisInv * first.eigenbasis) *
+              Matrix.diagonal first.eigenvalue *
+                (first.eigenbasisInv * second.eigenbasis) := by noncomm_ring
+          _ = _ := by rw [first.inv_mul_basis]; simp
+  have hInvariant :=
+    positiveSimilarityRoot_invariant_under_eigenvalue_commuting_rescaling
+      first change changeInv hChangeInv hChangeCommutes
+  have hDiagonalRoot : positiveSimilarityDiagonalRoot first =
+      positiveSimilarityDiagonalRoot second := by
+    simp [positiveSimilarityDiagonalRoot, positiveSimilarityRootSpectrum,
+      hSpectrum]
+  calc
+    positiveSimilarityRoot first =
+        (first.eigenbasis * change) * positiveSimilarityDiagonalRoot first *
+          (changeInv * first.eigenbasisInv) := hInvariant.symm
+    _ = second.eigenbasis * positiveSimilarityDiagonalRoot first *
+          second.eigenbasisInv := by
+      dsimp [change, changeInv]
+      calc
+        (first.eigenbasis * (first.eigenbasisInv * second.eigenbasis)) *
+            positiveSimilarityDiagonalRoot first *
+              ((second.eigenbasisInv * first.eigenbasis) *
+                first.eigenbasisInv) =
+          (first.eigenbasis * first.eigenbasisInv) * second.eigenbasis *
+            positiveSimilarityDiagonalRoot first * second.eigenbasisInv *
+              (first.eigenbasis * first.eigenbasisInv) := by noncomm_ring
+        _ = _ := by rw [first.basis_mul_inv]; simp
+    _ = second.eigenbasis * positiveSimilarityDiagonalRoot second *
+          second.eigenbasisInv := by rw [hDiagonalRoot]
+    _ = positiveSimilarityRoot second := rfl
+
 theorem positiveSimilarityRoot_square
     (data : PositiveDiagonalizableRelativeMatrix) :
     positiveSimilarityRoot data * positiveSimilarityRoot data = data.target := by

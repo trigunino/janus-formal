@@ -1226,6 +1226,7 @@ PROGRAM_P_GATES = {
             "theorem positiveSimilarityRoot_invariant_under_commuting_rescaling",
             "theorem positiveSimilarityRoot_invariant_under_eigenvalue_commuting_rescaling",
             "theorem positiveSimilarityRoot_invariant_under_eigenspace_change",
+            "theorem positiveSimilarityRoot_eq_of_same_target_and_ordered_spectrum",
             "theorem positiveSimilarityRoot_square",
             "def identityPositiveDiagonalizableRelativeMatrix",
             "theorem positiveDiagonalizableRelativeMatrix_nonempty",
