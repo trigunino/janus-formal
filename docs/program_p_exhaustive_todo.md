@@ -206,8 +206,13 @@ par toute évolution admissible.
       continuité de tous les champs indépendants, induits et LL, puis construire
       sur ces mêmes objets une configuration continue non vide, PT-matched,
       avec inclusion du throat et équation de carré exactes.
+    - [x] Construire sur le cover analytique D8 des champs de coefficients
+      réellement lisses et invariants sous tous les iterés de deck, prouver
+      leur descente continue et injective au quotient, et exhiber une
+      configuration lisse non vide à deux métriques/deux scalaires/racine.
     - [ ] Construire les espaces Sobolev/lisses, leurs traces et les conditions
-      au bord sur une variété lisse ; le gate continu actuel est topologique.
+      au bord directement sur le quotient `C∞`; le gate lisse actuel est
+      intrinsèque au cover et sa descente n'est encore que `C⁰`.
 - [ ] Distinguer les variables indépendantes des champs induits.
 - [ ] Formaliser la chaîne de variation des champs induits sans double
   comptage des équations.

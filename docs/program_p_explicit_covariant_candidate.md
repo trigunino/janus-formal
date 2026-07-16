@@ -54,6 +54,14 @@ This is only a topological field-space realization: it supplies no Sobolev or
 smooth spaces, boundary traces/conditions, field equation, stationarity,
 stability or global root map.
 
+The analytic D8 cover now provides the next layer: coefficient fields into any
+normed real fiber can be required to be genuinely smooth upstairs and exactly
+invariant under every deck iterate. They descend continuously and injectively
+to the same effective quotient. In particular, two metric-coefficient fields,
+two scalar fields and an identity-root coefficient field have a nonempty
+constant smooth witness. This is not yet a Lorentz-constrained configuration
+or a Sobolev/traced field space directly on the `C∞` quotient.
+
 The admissible Lorentz domain cannot be all metric pairs. The square-root and
 causal-compatibility analysis of
 [Hassan--Kocic](https://arxiv.org/abs/1706.07806) and the geometric-mean
