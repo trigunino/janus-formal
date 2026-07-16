@@ -70,6 +70,10 @@ def test_d8_differential_normal_zero_nonzero_strata_are_integrated() -> None:
     assert_d8_topology_integrity()
 
 
+def test_d8_ambient_tangent_orientation_cocycle_is_integrated() -> None:
+    assert_d8_topology_integrity()
+
+
 def test_d8_global_z4_root_bundles_are_exchanged_by_pt_conjugation() -> None:
     assert_d8_topology_integrity()
 
