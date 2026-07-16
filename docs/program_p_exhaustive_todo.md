@@ -136,8 +136,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         dépendant différentiel, construire l'homéomorphisme total
         base-préservant et les trivializations, puis installer les instances
         `FiberBundle`, `VectorBundle` et `ContMDiffVectorBundle ω` avec le même
-        cocycle de signe. Le wrapper total `Diffeomorph` et les strates restent
-        ouverts.
+        cocycle de signe. Les strates restent ouvertes.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -145,10 +144,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   - [x] Construire sur le throat le quotient par les enroulements pairs, sa
     projection couvrante à deux feuillets, l'involution de deck libre et la
     trivialisation topologique explicite du pullback de la ligne normale.
-  - [ ] Identifier globalement et lissement ce bundle au bundle normal
-    différentiel de l'`IsSmoothEmbedding` maintenant construit ; le
-    `VectorBundle` analytique et les identifications ponctuelles sont fermés,
-    mais leur assemblage lisse global reste ouvert.
+  - [x] Identifier globalement et lissement ce bundle au bundle normal
+    différentiel de l'`IsSmoothEmbedding` par un `Diffeomorph` total
+    base-préservant, fibre-linéaire, compatible aux trivializations et au
+    cocycle de monodromie `-id`.
 - [x] Construire les deux racines normales `Z4` comme vraies lignes complexes
   globales sur le throat, avec sous-jacent réel lisse et carré de chaque
   transition égal au cocycle normal pour tout enroulement.

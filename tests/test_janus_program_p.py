@@ -106,6 +106,10 @@ def test_program_p_d8_normal_comparison_and_z4_root_are_integrated() -> None:
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d8_differential_normal_smooth_equivalence_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d8_normal_z4_pt_conjugation_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

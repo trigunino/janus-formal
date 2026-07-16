@@ -62,6 +62,10 @@ def test_d8_normal_family_and_global_z4_root_bundles_are_integrated() -> None:
     assert_d8_topology_integrity()
 
 
+def test_d8_differential_normal_smooth_equivalence_is_integrated() -> None:
+    assert_d8_topology_integrity()
+
+
 def test_d8_global_z4_root_bundles_are_exchanged_by_pt_conjugation() -> None:
     assert_d8_topology_integrity()
 
