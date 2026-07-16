@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. The normal fibers are assembled into a global algebraic total-space equivalence, but intrinsic Sobolev identification, the physical-volume trace, its smooth differential-normal promotion and the non-null/null/joint stratification remain open.
+- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting; the throat-supported trace has norm bound one. The differential normal now has the transported analytic bundle structure and a total-space homeomorphism; intrinsic Sobolev identification, the physical-volume trace, the total `Diffeomorph` wrapper and the non-null/null/joint stratification remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -89,13 +89,19 @@ Current results:
   real rank-one `VectorBundle` on the effective throat; one circuit acts by
   `-id`; its fibers are assembled into a global base-preserving algebraic
   equivalence with the dependent differential normal family;
+- **T** transporting through that equivalence installs on the differential
+  normal total space the exact quotient-fiber topology, local trivializations,
+  `FiberBundle`, `VectorBundle` and analytic `ContMDiffVectorBundle` structures;
+  the total comparison is a base-preserving homeomorphism with the same sign
+  transition cocycle;
 - **T** the equatorial complement in the concrete unit `S3` is exactly two
   nonempty disjoint open sign sides; reflection and one deck iterate exchange
   them, while the image of either side is exactly the full effective-throat
   complement and PT preserves that quotient complement;
-- **T/N** the throat inclusion is a global `IsSmoothEmbedding`; the pointwise
-  normal equivalences are not yet assembled into a globally smooth bundle
-  equivalence, and the non-null/null/joint strata remain unproved;
+- **T/N** the throat inclusion is a global `IsSmoothEmbedding`; the analytic
+  differential-normal bundle is installed, while the total comparison still
+  lacks its `Diffeomorph` wrapper and the non-null/null/joint strata remain
+  unproved;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -429,6 +435,11 @@ New controlled subgates are now checked:
   frames, a smooth subordinate partition, a nonempty flat local
   regularization and local musical/sharp/tensor/volume data replace it; exact
   gluing to one global Lorentz tensor remains open;
+- **T/C** independently, the product cover carries a concrete nonempty
+  Lorentz cocycle: tangent `S³` orthogonals plus the line direction give a
+  nondegenerate `(3,1)` musical, and the true reflection generator is an exact
+  isometry. The intrinsic dependent-tensor and smooth quotient-descent bridges
+  are now typed but not yet discharged;
 - **T/C** on an open fixed-determinant-sign component of symmetric `4 x 4`
   metrics, the exact inverse and determinant measure of the same metric curve
   give the actual pointwise scalar-density variation and an explicit symmetric
@@ -462,6 +473,12 @@ New controlled subgates are now checked:
   affine scalar variation is exact pointwise and after integration at fixed
   metric/measure under an explicit integrability contract; Euler--flux form
   and tensorial covariance remain open;
+- **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
+  Jacobi `J` are defined on all smooth fields under one explicit integrability
+  contract and equal its first/second variations. The negative Lorentz time
+  coefficient is proved; only the time-static positive-mass sector yields a
+  positive Hilbert energy completion and exact strong Riesz realization with
+  trivial kernel. This is not positivity of the full Lorentzian dynamics;
 - **T/C** a genuine tangent-section diffeomorphism ghost has exact pullback
   laws and scalar Lie derivative; its linearized BRST differential is
   nilpotent and connected to the independent matter field. Nonlinear graded
