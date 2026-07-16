@@ -369,6 +369,12 @@ par toute évolution admissible.
         trace continue correspondante. L'identification à l'espace Sobolev
         intrinsèque et le théorème de trace pour la mesure volumique physique
         restent ouverts.
+      - [x] Plonger le vrai cœur scalaire statique dans le graphe `H¹`
+        existant, prendre sa clôture complète et prouver que le pont continu
+        depuis le Hilbert d'énergie existe si et seulement si la borne de
+        comparaison des deux normes est satisfaite. L'égalité avec tout le
+        graphe est exactement équivalente à une densité statique séparée ;
+        aucune identification Sobolev n'est postulée.
 - [x] Distinguer les variables indépendantes des champs induits : métriques,
   matières, jauge, ghosts, auxiliaires et LL sont indépendants ; matrices
   métriques, racine principale et traces matière sont uniquement induites.
