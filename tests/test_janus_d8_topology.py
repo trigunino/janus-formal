@@ -78,6 +78,10 @@ def test_d8_ambient_tangent_quadratic_reduction_is_integrated() -> None:
     assert_d8_topology_integrity()
 
 
+def test_d8_ambient_spin_projection_is_integrated() -> None:
+    assert_d8_topology_integrity()
+
+
 def test_d8_global_z4_root_bundles_are_exchanged_by_pt_conjugation() -> None:
     assert_d8_topology_integrity()
 

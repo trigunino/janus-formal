@@ -130,6 +130,10 @@ def test_program_p_d8_ambient_tangent_quadratic_reduction_is_integrated() -> Non
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d8_ambient_spin_projection_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d8_differential_normal_smooth_equivalence_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

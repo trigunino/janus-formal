@@ -174,6 +174,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       non dégénérée sur le modèle, la transporter par chaque vraie transition
       tangente et obtenir les isométries quadratiques exactes. La compatibilité
       globale orthonormale et les lifts `Pin/SpinC` restent des contrats exposés.
+      - [x] Construire depuis l'algèbre de Clifford la vraie action du groupe
+        Spin sur les vecteurs, son équivalence linéaire, la préservation
+        quadratique et le morphisme `Spin(Q) →* GL(4)`. L'extension Pin est
+        isolée par son action tordue exacte ; seuls les lifts de transitions et
+        leur cocycle Čech atlas-spécifique restent à fournir.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
   entre racine déterminante, Spin et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart

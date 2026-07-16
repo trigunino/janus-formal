@@ -33,6 +33,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinProjection
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
@@ -105,6 +106,7 @@ structure ProgramStatus where
   fixedThroatDifferentialNormalZeroNonzeroStratificationProved : Prop
   ambientTangentOrientationCocycleProved : Prop
   ambientTangentQuadraticReductionFrontierProved : Prop
+  ambientSpinProjectionConstructed : Prop
   fixedThroatNormalZ4RootComplexLineConstructed : Prop
   fixedThroatNormalZ4RootSmoothRealUnderlierProved : Prop
   fixedThroatNormalZ4RootSquaresToNormalSignProved : Prop
@@ -233,6 +235,7 @@ def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatDifferentialNormalZeroNonzeroStratificationProved /\
   s.ambientTangentOrientationCocycleProved /\
   s.ambientTangentQuadraticReductionFrontierProved /\
+  s.ambientSpinProjectionConstructed /\
   s.fixedThroatNormalZ4RootComplexLineConstructed /\
   s.fixedThroatNormalZ4RootSmoothRealUnderlierProved /\
   s.fixedThroatNormalZ4RootSquaresToNormalSignProved /\
