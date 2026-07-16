@@ -82,6 +82,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzTensor4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCoverLorentzTensor4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicLorentzMetricDescent4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarDensityFrameCovariance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
@@ -383,6 +384,7 @@ structure ProgramStatus where
   paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved : Prop
   paEffectiveD8GeneralLorentzTensorFrontierProved : Prop
   paEffectiveD8IntrinsicCoverLorentzTensor4DProved : Prop
+  paEffectiveD8IntrinsicLorentzMetricDescentFrontier4DProved : Prop
   paEffectiveD8GeneralHolonomicScalarDensity4DProved : Prop
   paEffectiveD8GeneralScalarDensityFrameCovariance4DProved : Prop
   paEffectiveD8GeneralScalarFunctionalAction4DProved : Prop
@@ -650,6 +652,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8SmoothDiagonalLorentzMetricPair4DProved /\
   s.paEffectiveD8GeneralLorentzTensorFrontierProved /\
   s.paEffectiveD8IntrinsicCoverLorentzTensor4DProved /\
+  s.paEffectiveD8IntrinsicLorentzMetricDescentFrontier4DProved /\
   s.paEffectiveD8GeneralHolonomicScalarDensity4DProved /\
   s.paEffectiveD8GeneralScalarDensityFrameCovariance4DProved /\
   s.paEffectiveD8GeneralScalarFunctionalAction4DProved /\
