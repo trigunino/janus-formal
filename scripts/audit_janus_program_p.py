@@ -2490,6 +2490,25 @@ PROGRAM_P_GATES = {
             "theorem reducedBosonicJacobiIndex_zero",
         ),
     ),
+    "P0EFTJanusMappingTorusReducedBosonicHilbertFredholmHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ReducedBosonicHilbertSpace",
+            "def reducedBosonicHilbertUnpack",
+            "theorem reducedBosonicHilbertUnpack_apply",
+            "def reducedBosonicHilbertJacobiOperator",
+            "theorem reducedBosonicHilbertUnpack_operator",
+            "theorem reducedBosonicHilbertJacobiOperator_pairing",
+            "theorem reducedBosonicHilbertJacobiOperator_isSelfAdjoint",
+            "theorem reducedBosonicHilbertJacobiOperator_injective",
+            "theorem reducedBosonicHilbertJacobiOperator_surjective",
+            "theorem reducedBosonicHilbertJacobiOperator_ker_eq_bot",
+            "theorem reducedBosonicHilbertJacobiOperator_range_eq_top",
+            "theorem reducedBosonicHilbertJacobiOperator_range_isClosed",
+            "def reducedBosonicHilbertJacobiIndex",
+            "theorem reducedBosonicHilbertJacobiIndex_zero",
+        ),
+    ),
     "P0EFTJanusArbitraryFrequencySaintVenantExactness.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

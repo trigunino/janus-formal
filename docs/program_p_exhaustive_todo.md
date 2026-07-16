@@ -1029,6 +1029,10 @@ champs et avec les mêmes conditions au bord.
     établir symétrie, bijectivité, noyau nul, image totale fermée et indice
     zéro. Les blocs métrique, jauge, ghosts et la famille paramétrique restent
     ouverts.
+    - [x] Munir cette somme réduite de la vraie structure hilbertienne ℓ² via
+      `WithLp`, transporter l'opérateur bloc et prouver son auto-adjonction
+      effective, tout en conservant pairing Hessien, bijectivité, image fermée
+      et indice zéro.
 - [ ] Instancier le complexe D9/BRST avec les vrais champs, ghosts, symboles,
   domaines et cohomologie de modes zéro.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
