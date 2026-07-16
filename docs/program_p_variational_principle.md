@@ -580,13 +580,15 @@ four and three. Their cover projections are analytic local diffeomorphisms,
 and time reversal is an analytic involutive diffeomorphism on both quotients.
 The quotient throat inclusion is a closed topological embedding, is `C∞`, has
 injective manifold differential everywhere and a rank-one tangent quotient.
-A global smooth complement/normal vector bundle and the null/joint strata
-remain open.
+Its analytic rank-one normal `VectorBundle` is constructed with one-loop
+transition `-id` and pointwise linear equivalences to the differential normal
+quotients. `IsSmoothEmbedding`, a global smooth differential-normal
+identification and the null/joint strata remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
 on the actual smooth spacetime. PT pullback and two-sector exchange are exact
-involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. Sobolev scales and a Sobolev trace theorem remain open.
+involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting is constructed from a supplied finite smooth spanning family; an explicit trace bound gives its unique continuous trace extension. Constructing that family and proving the bound intrinsically remain open.
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;
@@ -603,13 +605,17 @@ invertible Sylvester map and carries the full two-metric derivative including
 the inverse-plus contribution. On that entire diagonal domain the genuine
 five-coefficient Candidate-A determinant/root/potential chain is now
 differentiated in both metric orders and its real two-sector sum is exactly
-exchange invariant. This is still a fixed-frame pointwise sector, not the full
-causal-compatible Lorentz matrix domain. On the actual smooth D8 quotient, two
+exchange invariant. The chosen domain is causally compatible through a common
+strict timelike direction; its nonnegative closure and exact spectral frontier
+are computed. This is still a fixed-frame diagonal sector, not the full
+general Lorentz matrix domain. On the actual smooth D8 quotient, two
 independent positive diagonal Lorentz metric fields, their unique positive
 principal root and the Candidate-A density now use exactly the same global
 objects. The density is smooth, obeys the exact manifold chain rule and is
 PT/exchange covariant; its integral is invariant under every supplied
-PT-invariant Borel measure. This is a genuine curved-base diagonal field functional, not the general tensorial/covariant Lorentz sector. On that same quotient, one global independent-field package now contains the two positive diagonal metrics, two matter multiplets, gauge-coordinate pairs, ghosts, auxiliaries, and throat/LL coefficient fields. Metric matrices, the principal root, and matter traces are uniquely induced rather than independently varied. A global smooth scalar also carries its genuine manifold differential `p = d phi`, with exact throat and PT chain rules; metric contraction and curved Euler equations remain open. Arbitrary smooth diagonal self-diffeomorphisms of the actual spacetime/throat pair now act contravariantly on every independent coefficient sector, preserve positivity, obey the exact identity/composition/inverse laws and commute with smooth throat restriction whenever they preserve the inclusion. A supplied smooth orbit has a genuine manifold tangent generator at time zero. The LL measure/flux coefficients define an actual integrable worldvolume action on the compact throat for every finite Borel measure, and the PT-matched zero configuration is a nonempty zero-action branch. The null counterterm is differentiated on the explicit open admissible domain `Theta ≠ 0`; zero remains excluded by the proved non-differentiability. The candidate
+PT-invariant Borel measure. Positive exponential curves of those same metric
+fields give its pointwise derivative at every parameter and its integrated
+functional derivative under an explicit domination contract. This is a genuine curved-base diagonal field functional, not the general tensorial/covariant Lorentz sector. On that same quotient, one global independent-field package now contains the two positive diagonal metrics, two matter multiplets, gauge-coordinate pairs, ghosts, auxiliaries, and throat/LL coefficient fields. Metric matrices, the principal root, and matter traces are uniquely induced rather than independently varied. A global smooth scalar also carries its genuine manifold differential `p = d phi`, with exact throat and PT chain rules. Its fixed-frame diagonal action contracts this differential with the inverse of the same metric, uses that metric's exact volume density, and has exact pointwise and integrated scalar variation at fixed metric/measure under an explicit integrability contract; the covariant Euler--flux equation remains open. Arbitrary smooth diagonal self-diffeomorphisms of the actual spacetime/throat pair now act contravariantly on every independent coefficient sector, preserve positivity, obey the exact identity/composition/inverse laws and commute with smooth throat restriction whenever they preserve the inclusion. A supplied smooth orbit has a genuine manifold tangent generator at time zero. The LL measure/flux coefficients define an actual integrable worldvolume action on the compact throat for every finite Borel measure, and the PT-matched zero configuration is a nonempty zero-action branch. The null counterterm is differentiated on the explicit open admissible domain `Theta ≠ 0`; zero remains excluded by the proved non-differentiability. The candidate
 also supplies an exact
 Frechet derivative of the full co-diagonal Candidate-A density through the
 spectral covector and Sylvester inverse.  A two-dimensional Lorentz-boost orbit
@@ -795,8 +801,8 @@ diagonal gauge balance. Candidate A supplies explicit cross densities and an
 exact spectral Euler model plus a separate independent-coordinate metric-
 coupled scalar first-jet variation, a finite periodic holonomic scalar Euler
 model, its positive one-dimensional metric/measure refinement, and nonlinear
-canonical second-jet Jacobi. They cannot yet be applied covariantly until the
-smooth four-dimensional Lorentz field domain, metric/matter PDE
+canonical second-jet Jacobi. They cannot yet be applied in the general
+tensorial sector until the full Lorentz field domain, metric/matter PDE
 variations, global spacetime gauge generator and physical geometric boundary
 functional are constructed.
 

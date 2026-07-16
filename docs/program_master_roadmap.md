@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **O** Sobolev trace theory, `IsSmoothEmbedding`, the globally smooth identification with the differential normal quotient and the non-null/null/joint stratification remain open.
+- **T/C** a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting is constructed; an explicit trace inequality yields the unique continuous trace extension. Constructing the finite smooth spanning family, proving that inequality intrinsically, `IsSmoothEmbedding`, the globally smooth differential-normal identification and the non-null/null/joint stratification remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action and a nonempty zero branch; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -290,7 +290,7 @@ Exhaustive closure checklist:
   and the identity relative root, and is fixed by PT. Concrete continuity
   predicates cover its independent, induced and LL coordinates, producing an
   inhabited continuous PT-matched configuration with exact throat inclusion
-  and root-square equation. This topological closure supplies neither Sobolev
+  and root-square equation. This topological closure alone supplies neither Sobolev
   or smooth field spaces, boundary conditions, stationarity/stability, a
   global root map nor a smooth-manifold/tensor-field realization;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
@@ -402,6 +402,13 @@ New controlled subgates are now checked:
   inverse-Sylvester derivative; existence of that continuous lift and its
   Sylvester regularity remain hypotheses, so no global admissible root domain
   is claimed;
+- **T/C** on the selected global fixed-frame diagonal Lorentz domain, both
+  metrics share a strict timelike direction, the nonnegative closure and
+  spectral frontier are exact, and the positive root/Candidate-A chain is
+  smooth. Positive curves of the same smooth D8 metric fields give the exact
+  pointwise density derivative and the integrated functional derivative under
+  an explicit domination contract. The general Lorentz tensor domain remains
+  open;
 - **T/C** on an open fixed-determinant-sign component of symmetric `4 x 4`
   metrics, the exact inverse and determinant measure of the same metric curve
   give the actual pointwise scalar-density variation and an explicit symmetric
@@ -429,6 +436,16 @@ New controlled subgates are now checked:
   coefficient. Discharging the contract and deriving the vanishing integrated
   flux from actual boundary conditions,
   curved-manifold covariance, PDE and conservation remain open;
+- **T/C** on the compact smooth D8 quotient, the fixed-frame scalar action
+  uses the same scalar for value and genuine manifold differential and the
+  same positive diagonal metric for inverse contraction and volume. Its
+  affine scalar variation is exact pointwise and after integration at fixed
+  metric/measure under an explicit integrability contract; Euler--flux form
+  and tensorial covariance remain open;
+- **T/C** the completed first-jet graph `H¹` has dense smooth fields and a
+  continuous `L²` projection; under `HasH1TraceBound`, smooth throat trace
+  extends continuously and uniquely. The frame, bound and intrinsic weak
+  derivative identification remain inputs;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
   the full circle Fourier Hilbert space; this is not a trace-class theorem or
@@ -444,9 +461,9 @@ The active branch now contains explicit reciprocal cross densities, their
 actual spectral Frechet/Hessian/Helmholtz data, a pointwise square-root matrix
 potential, a typed gravitational-stratum ledger with a generic worldvolume
 placeholder, a finite Gram-tensor compatibility map with genuine `K/J`, and an
-exact reduced Noether-proxy classification. These close finite or pointwise
-subgates only. Smooth Lorentz
-metric variation, integrated boundary flux cancellation, covariant
+exact reduced Noether-proxy classification. These now also close global
+fixed-frame diagonal-field subgates. General Lorentz tensor metric variation,
+integrated boundary flux cancellation, covariant
 Bianchi/constraints, full stability, anomalies, normalization and finite
 counterterms remain open. The scoped ledger is
 `docs/program_p_explicit_covariant_candidate.md`.
