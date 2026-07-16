@@ -582,13 +582,13 @@ The quotient throat inclusion is a closed topological embedding, is `C∞`, has
 injective manifold differential everywhere and a rank-one tangent quotient.
 Its analytic rank-one normal `VectorBundle` is constructed with one-loop
 transition `-id` and pointwise linear equivalences to the differential normal
-quotients. `IsSmoothEmbedding`, a global smooth differential-normal
-identification and the null/joint strata remain open.
+quotients. The throat inclusion is now a global `IsSmoothEmbedding`; a global
+smooth differential-normal identification and the null/joint strata remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
 on the actual smooth spacetime. PT pullback and two-sector exchange are exact
-involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting is constructed from a supplied finite smooth spanning family; an explicit trace bound gives its unique continuous trace extension. Constructing that family and proving the bound intrinsically remain open.
+involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A finite global `C∞` tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting. For throat-supported spacetime measure, its continuous trace has norm bound one; intrinsic Sobolev identification and the physical-volume trace remain open.
 
 The reduced candidate, trace/lift, counterterm, induced-field,
 nonlinear-cross and infinitesimal-Noether acceptance gates are now explicit;

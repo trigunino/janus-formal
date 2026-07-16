@@ -227,8 +227,9 @@ diffeomorphisms. The throat inclusion is analytic, a closed topological
 embedding, and has injective manifold differential with rank-one normal
 quotient. Time reversal is an analytic involutive diffeomorphism on both
 quotients and intertwines that same inclusion. Both effective quotients are
-compact. Mathlib's `IsSmoothEmbedding` instance and the null/joint
-stratification remain open. The expected fundamental group is `Z`, not `Z4`.
+compact. A global `IsSmoothEmbedding` instance is now constructed from an
+explicit local normal complement and the closed embedding. The null/joint
+stratification remains open. The expected fundamental group is `Z`, not `Z4`.
 
 The complement of the concrete equatorial `S2` in the unit `S3` is now proved
 to be the disjoint union of two nonempty open sign sides. Reflection and one
@@ -249,7 +250,7 @@ constructs a genuine analytic real rank-one `VectorBundle` on the effective
 throat, with one circuit acting by `-id`. Each of its fibers is noncanonically
 linearly equivalent to the corresponding differential normal quotient. What
 remains open is a globally smooth family of those equivalences, together with
-the `IsSmoothEmbedding` witness and the non-null/null/joint strata.
+the non-null/null/joint strata.
 
 Quarter phases arise conditionally by lifting the sign holonomy of a real normal line:
 

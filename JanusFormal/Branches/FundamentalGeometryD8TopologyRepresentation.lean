@@ -25,6 +25,7 @@ import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
@@ -81,6 +82,8 @@ structure ProgramStatus where
   fixedThroatQuotientInclusionIsClosedEmbeddingProved : Prop
   fixedThroatQuotientDifferentialInjectiveProved : Prop
   fixedThroatNormalQuotientFinrankOneProved : Prop
+  fixedThroatQuotientInclusionIsImmersionOfComplementProved : Prop
+  fixedThroatQuotientInclusionIsSmoothEmbeddingProved : Prop
   fixedThroatNormalVectorBundleConstructed : Prop
   fixedThroatNormalVectorBundleContMDiffProved : Prop
   fixedThroatNormalFiberPointwiseDifferentialEquivProved : Prop
@@ -180,14 +183,16 @@ def mappingTorusSmoothPTCoreClosed (s : ProgramStatus) : Prop :=
   s.mappingTorusTimeReversalContMDiffProved /\
   s.mappingTorusTimeReversalDiffeomorphConstructed
 
-/-- Checked smooth-embedding frontier: the inclusion is a closed topological
-embedding, its manifold differential is injective everywhere, and its normal
-quotient has real rank one.  Mathlib's `IsSmoothEmbedding` instance and the
-null/joint stratification are not asserted here. -/
+/-- Checked smooth embedding: the inclusion is a closed topological embedding,
+has a fixed one-dimensional immersion complement, is a manifold immersion and
+satisfies Mathlib's global `IsSmoothEmbedding`.  Null/joint stratification is
+not asserted here. -/
 def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
   s.fixedThroatQuotientInclusionIsClosedEmbeddingProved /\
   s.fixedThroatQuotientDifferentialInjectiveProved /\
-  s.fixedThroatNormalQuotientFinrankOneProved
+  s.fixedThroatNormalQuotientFinrankOneProved /\
+  s.fixedThroatQuotientInclusionIsImmersionOfComplementProved /\
+  s.fixedThroatQuotientInclusionIsSmoothEmbeddingProved
 
 /-- Actual analytic sign-clutched normal line bundle.  Its fibers are
 pointwise linearly equivalent to the differential normal quotients and one

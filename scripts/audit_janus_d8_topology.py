@@ -52,6 +52,10 @@ SMOOTH_THROAT_EMBEDDING_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothThroatEmbedding.lean"
 )
+IS_SMOOTH_EMBEDDING_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
+    "Gates/P0EFTJanusMappingTorusIsSmoothEmbedding.lean"
+)
 SMOOTH_NORMAL_VECTOR_BUNDLE_GATE = Path(
     "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/"
     "Gates/P0EFTJanusMappingTorusSmoothNormalVectorBundle.lean"
@@ -254,6 +258,21 @@ SMOOTH_THROAT_EMBEDDING_STATUSES = (
     "fixedThroatNormalQuotientFinrankOneProved",
 )
 
+IS_SMOOTH_EMBEDDING_DECLARATIONS = (
+    "theorem standardEquatorInclusion_isImmersionOfComplement",
+    "theorem equatorialSphereInclusion_isImmersionOfComplement",
+    "theorem fixedThroatCoverInclusion_isImmersionOfComplement",
+    "theorem fixedThroatQuotientInclusion_isImmersionOfComplement",
+    "theorem fixedThroatQuotientInclusion_isImmersion",
+    "theorem fixedThroatQuotientInclusion_isSmoothEmbedding",
+    "theorem fixedThroatQuotientInclusion_fullSmoothEmbeddingClosure",
+)
+
+IS_SMOOTH_EMBEDDING_STATUSES = (
+    "fixedThroatQuotientInclusionIsImmersionOfComplementProved",
+    "fixedThroatQuotientInclusionIsSmoothEmbeddingProved",
+)
+
 SMOOTH_NORMAL_VECTOR_BUNDLE_DECLARATIONS = (
     "def normalBundleBaseSet",
     "def normalBundleIndexAt",
@@ -323,6 +342,9 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     smooth_pt_gate = (repo_root / SMOOTH_PT_GATE).read_text(encoding="utf-8")
     smooth_throat_embedding_gate = (
         repo_root / SMOOTH_THROAT_EMBEDDING_GATE
+    ).read_text(encoding="utf-8")
+    is_smooth_embedding_gate = (
+        repo_root / IS_SMOOTH_EMBEDDING_GATE
     ).read_text(encoding="utf-8")
     smooth_normal_vector_bundle_gate = (
         repo_root / SMOOTH_NORMAL_VECTOR_BUNDLE_GATE
@@ -526,6 +548,20 @@ def assert_d8_topology_integrity(repo_root: Path = REPO_ROOT) -> None:
     for status in SMOOTH_THROAT_EMBEDDING_STATUSES:
         if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
             raise AssertionError(f"D8 facade omits smooth-throat status: {status}")
+
+    for declaration in IS_SMOOTH_EMBEDDING_DECLARATIONS:
+        if declaration not in is_smooth_embedding_gate:
+            raise AssertionError(
+                f"missing D8 IsSmoothEmbedding declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", is_smooth_embedding_gate):
+        raise AssertionError("proof placeholder found in D8 IsSmoothEmbedding gate")
+    is_smooth_embedding_import = "Gates.P0EFTJanusMappingTorusIsSmoothEmbedding"
+    if facade.count(is_smooth_embedding_import) != 1:
+        raise AssertionError("D8 facade omits the IsSmoothEmbedding gate")
+    for status in IS_SMOOTH_EMBEDDING_STATUSES:
+        if facade.count(f"{status} : Prop") != 1 or facade.count(f"s.{status}") != 1:
+            raise AssertionError(f"D8 facade omits IsSmoothEmbedding status: {status}")
 
     for declaration in SMOOTH_NORMAL_VECTOR_BUNDLE_DECLARATIONS:
         if declaration not in smooth_normal_vector_bundle_gate:
