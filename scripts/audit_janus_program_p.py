@@ -3728,6 +3728,8 @@ PROGRAM_P_GATES = {
             "theorem d9PairedGhostPrincipalSymbol_ker",
             "theorem d9PairedGhostPrincipalSymbol_surjective",
             "theorem d9PairedGhostPrincipalSymbol_range",
+            "theorem d9PairedGhostPrincipalSymbol_ker_classification",
+            "theorem d9PairedGhostPrincipalSymbol_range_classification",
             "theorem d9PairedGhostPrincipalSymbol_bijective",
             "def d9PairedGhostPrincipalSymbolInverse",
             "theorem d9PairedGhostPrincipalSymbolInverse_left",
