@@ -319,3 +319,7 @@ def test_program_p_circle_heat_nuclear_trace_continuity_is_integrated() -> None:
 
 def test_program_p_circle_heat_nuclear_trace_derivative_is_integrated() -> None:
     assert_program_p_gate_integrity()
+
+
+def test_program_p_circle_determinant_section_crossings_are_integrated() -> None:
+    assert_program_p_gate_integrity()
