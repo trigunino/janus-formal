@@ -84,6 +84,27 @@ theorem d9PairedGhostPrincipalSymbol_ker
   LinearMap.ker_eq_bot.mpr
     (d9PairedGhostPrincipalSymbol_injective covector hCovector)
 
+theorem d9PairedGhostPrincipalSymbol_surjective
+    (covector : TangentVector3) (hCovector : covector ≠ zeroTangent) :
+    Function.Surjective (d9PairedGhostPrincipalSymbol covector) := by
+  intro coordinate
+  have hNorm : normSquared covector ≠ 0 :=
+    ne_of_gt (norm_squared_positive_of_nonzero covector hCovector)
+  refine ⟨(normSquared covector)⁻¹ • coordinate, ?_⟩
+  simp [d9PairedGhostPrincipalSymbol, hNorm]
+
+theorem d9PairedGhostPrincipalSymbol_range
+    (covector : TangentVector3) (hCovector : covector ≠ zeroTangent) :
+    LinearMap.range (d9PairedGhostPrincipalSymbol covector) = ⊤ :=
+  LinearMap.range_eq_top.mpr
+    (d9PairedGhostPrincipalSymbol_surjective covector hCovector)
+
+theorem d9PairedGhostPrincipalSymbol_bijective
+    (covector : TangentVector3) (hCovector : covector ≠ zeroTangent) :
+    Function.Bijective (d9PairedGhostPrincipalSymbol covector) :=
+  ⟨d9PairedGhostPrincipalSymbol_injective covector hCovector,
+    d9PairedGhostPrincipalSymbol_surjective covector hCovector⟩
+
 theorem d9PairedGhostPrincipalSymbol_eq_zero_iff
     (covector : TangentVector3) (hCovector : covector ≠ zeroTangent)
     (coordinate : D9PairedGhostCoordinateSpace) :
