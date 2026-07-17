@@ -83,10 +83,12 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   identify the general scalar first variation with the weak covariant Euler
   pairing plus flux, prove stationarity equivalence at zero flux, and specialize
   to the intrinsic D8 metric. The corresponding intrinsic contravariant scalar
-  stress is pointwise natural under every smooth D8 diffeomorphism. Geometrically
-  discharging Stokes/IPP and the
-  physical flux, then deriving a local Noether current with enough test ghosts,
-  remains open;
+  stress is pointwise natural under every smooth D8 diffeomorphism. The
+  canonical latitude collar now has an exact scalar Green--Wronskian current,
+  with Euler-residual derivative and pointwise/measured conservation for
+  equal-mass solutions. Geometrically discharging global Stokes/IPP and the
+  physical flux, then promoting this collar current to a covariant local
+  Noether current with enough test ghosts, remains open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -139,7 +141,12 @@ Current results:
   open because the transported normal equivalence currently comes from
   `Classical.choice` without a regularity theorem. The explicit latitude
   tangent has nevertheless been constructed on the true cover and its raw
-  ambient derivative is exactly `(e₀, 0)`;
+  ambient derivative is exactly `(e₀, 0)`. The intrinsic ambient derivative is
+  now publicly factored through product coordinates, and the product derivative
+  is the equivalence induced by the global product diffeomorphism. The exact
+  product and ambient images are computed, and both the ambient image and
+  canonical tangent are nonzero. Intrinsic Lorentz orthogonality and causal
+  null/non-null classification remain open;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -282,7 +289,9 @@ The consolidated head formalizes:
 - relative bridges to Quillen;
 - a concrete one-object cyclic immersion groupoid with integer morphisms and functorial `Z4` jet monodromy.
 - the fixed-background D8 category with all smooth self-diffeomorphisms as
-  morphisms and its contravariant smooth-field section functor.
+  morphisms, its contravariant smooth-field section functor and the actual
+  contravariant general-Lorentz-metric pullback functor, with exact
+  identity/composition laws.
 
 The moduli category of all Janus backgrounds, global structured jet groupoid,
 regularity hypotheses, descent theorem and invariant-theory classification
@@ -531,8 +540,17 @@ New controlled subgates are now checked:
   and a collapsing `E₀₁` Sylvester mode. This obstruction is invariant under
   every fixed real similarity. The two-parameter collision
   `J₂(t) ⊕ J₂(s)` has two independent degenerating Sylvester modes and no
-  finite extension at the double-zero corner; moving similarities, changes
-  of Jordan type and arbitrary matrix `0/0` paths remain open. For
+  finite extension at the double-zero corner. The explicit moving polynomial
+  shear `P(t)=I+tE₂₀` also has an exact inverse, transported root and mode,
+  nonconstant target, divergent coefficient and no finite continuation. The
+  singular diagonal scaling `P(t)=diag(t,1,1,1)` regularizes that canonical
+  divergence to a finite nonzero nilpotent root limit, while its inverse blows
+  up and its Sylvester mode degenerates. The explicit type-changing path
+  `I+tE₀₁ → I` has an exact smooth affine root and constant Sylvester
+  eigenvalue `2`; the contrasting path `t(I+E₀₁) → 0` has root and Sylvester
+  eigenvalue both tending to zero. Arbitrary singular frames, the general
+  Jordan-type classification/branch atlas and arbitrary matrix `0/0` paths
+  remain open. For
   nonpositive spectra, determinant/simple
   negative-eigenvalue obstructions, positive-determinant counterexample,
   paired-negative constructions and the exact Jordan parity/zero-block
@@ -613,9 +631,13 @@ New controlled subgates are now checked:
   invariant under diffeomorphism plus sector exchange. The concrete normal
   throat flux vanishes pointwise and integrally for homogeneous Dirichlet
   variations. Genuine interval-integral IPP closes the canonical latitude
-  collar and identifies its normal `mvfderiv` boundary term. Global geometric
-  Stokes/IPP discharge, identification with the abstract bulk boundary
-  functional, and a global canonical metric normal remain open;
+  collar and identifies its normal `mvfderiv` boundary term. The associated
+  scalar Green--Wronskian current has the exact antisymmetric Euler-residual
+  derivative, is pointwise and measured constant for equal-mass Euler
+  solutions, has the expected antisymmetric endpoint jump and vanishes for
+  homogeneous Dirichlet Euler pairs. Global geometric Stokes/IPP discharge,
+  identification with the abstract bulk boundary functional, a covariant
+  local Noether current and a global canonical metric normal remain open;
 - **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
   Jacobi `J` are defined on all smooth fields under one explicit integrability
   contract and equal its first/second variations. The negative Lorentz time

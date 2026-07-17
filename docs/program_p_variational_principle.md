@@ -493,8 +493,11 @@ higher jets, isotropy strata or a Peetre--Slovák integrability theorem.
 Independently, the fixed quotient itself now forms a one-object symmetry
 category with every smooth D8 self-diffeomorphism as an arrow. Smooth fields
 with any normed real coefficient fiber define a contravariant section functor
-with exact identity and composition laws. This is not the moduli category of
-all Janus backgrounds.
+with exact identity and composition laws. General smooth Lorentz metrics now
+form a second contravariant section functor, using the actual tensor pullback,
+with exact metric and tensor identity/composition laws. Both constructions are
+restricted to the fixed D8 background; this is not the moduli category of all
+Janus backgrounds.
 
 ### Open Janus specialization
 
@@ -630,9 +633,15 @@ preservation of quotient classes, metric orthogonality and continuity of the
 squared length. The global lift and Lorentzian stratification then follow;
 this local regularity lemma remains open because the current normal
 equivalence is selected by `Classical.choice`. The actual latitude tangent on
-the throat cover is now explicit and its raw ambient derivative is `(e₀, 0)`;
-the bridge to the exported intrinsic ambient derivative remains obstructed by
-private model instances.
+the throat cover is now explicit and its raw ambient derivative is `(e₀, 0)`.
+The sphere ambient map and its smoothness are public, and the intrinsic ambient
+derivative is exactly factored through the public product-coordinate
+derivative, including pointwise evaluation. The product derivative is now the
+continuous-linear equivalence induced by the global product diffeomorphism;
+the canonical latitude normal has exact ambient image `(e₀, 0)`, and both that
+image and the tangent vector are nonzero. This is algebraic nonvanishing, not a
+Lorentzian causal classification: intrinsic metric orthogonality and
+null/non-null classification remain open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -736,9 +745,14 @@ The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form a
 vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
 canonical latitude collar, genuine interval-integral IPP identifies the
 normal `mvfderiv` term and removes the boundary for endpoint-Dirichlet tests.
-A global geometric Stokes theorem identifying the abstract bulk boundary
-functional with this collar flux, a global canonical metric normal, and a
-local Noether current with enough test ghosts remain open.
+The associated scalar Green--Wronskian current is antisymmetric, its derivative
+is exactly the antisymmetric pairing of the two equal-mass Euler residuals,
+and it is pointwise and measured constant for two Euler solutions. Its endpoint
+jump is the antisymmetrized concrete IPP boundary functional, while homogeneous
+Dirichlet Euler pairs make it vanish. This remains a one-dimensional collar
+construction: a global geometric Stokes theorem identifying the abstract bulk
+boundary functional with this collar flux, a global canonical metric normal,
+and a covariant local Noether current with enough test ghosts remain open.
 The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
@@ -942,8 +956,17 @@ Hermite root whose `1/(2√t)` coefficient and Frobenius norm diverge, with no
 finite continuation, while its `E₀₁` Sylvester eigenvalue `2√t` collapses.
 The same obstruction is proved for every fixed real similarity class. The
 double collision `J₂(t) ⊕ J₂(s)` has two independent collapsing Sylvester
-modes and no finite extension at the two-parameter zero corner. Moving
-similarities, changes of Jordan type and arbitrary matrix `0/0` paths remain.
+modes and no finite extension at the two-parameter zero corner. A genuinely
+moving polynomial shear `P(t)=I+tE₂₀` now has an exact inverse, transported
+root and mode, nonconstant target, divergent root coefficient and no finite
+continuation. The singular diagonal scaling `P(t)=diag(t,1,1,1)` instead
+regularizes the canonical divergence to a finite nonzero nilpotent root limit;
+its inverse blows up and the Sylvester mode still degenerates. Two explicit
+Jordan-type-change paths are now closed as well: `I+tE₀₁ → I` has the exact
+smooth affine root `I+(t/2)E₀₁` while its Sylvester eigenvalue stays `2`, whereas
+`t(I+E₀₁) → 0` has a root and Sylvester eigenvalue both tending to zero.
+Arbitrary singular frames, a general Jordan-type classification/branch atlas
+and arbitrary matrix `0/0` paths remain.
 For
 nonpositive spectra, determinant negativity and a simple negative
 diagonal eigenvalue are exact obstructions, while determinant positivity is
