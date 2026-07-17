@@ -57,7 +57,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
 - **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; uniform coefficient/mass bounds and holonomic coercivity are automatic, and a geometric frame-control contract implies the static energy-to-graph bridge. The differential normal has an exact total-space `Diffeomorph` and strata; joint `C∞` latitude regularity makes compact finite-frame normal reconstruction unconditional, while an exact spherical-radial/planar-polar calculation closes coarea and the canonical physical trace. Intrinsic Sobolev identification and Lorentzian null/joint strata remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
-- **T/C** PT/exchange acts simultaneously on every current independent sector and its componentwise smooth throat boundary values, with exact trace equivariance and preservation of the full Dirichlet condition; general tensor metrics and BV remain open;
+- **T/C** PT/exchange acts simultaneously on a unified independent packet with two arbitrary smooth general Lorentz metrics and every current non-metric sector; all retained non-metric throat boundary values have exact trace equivariance and preserved Dirichlet data. General-metric throat restriction and the antifield/full-BV boundary packet remain open;
 - **T/C** on arbitrary covariant two-tensor fields, analytic PT pullback is an
   exact involution preserving symmetry, nondegeneracy and Lorentz inertia;
   nested Hom coordinates discharge the local contract and give an
@@ -148,13 +148,16 @@ Current results:
   lemma; the global lift and stratification follow from it. This lemma remains
   open because the transported normal equivalence currently comes from
   `Classical.choice` without a regularity theorem. The explicit latitude
-  tangent has nevertheless been constructed on the true cover and its raw
+  tangent has been constructed on the true cover and its raw
   ambient derivative is exactly `(e₀, 0)`. The intrinsic ambient derivative is
   now publicly factored through product coordinates, and the product derivative
   is the equivalence induced by the global product diffeomorphism. The exact
   product and ambient images are computed, and both the ambient image and
-  canonical tangent are nonzero. Intrinsic Lorentz orthogonality and causal
-  null/non-null classification remain open;
+  canonical tangent are nonzero. For the actual intrinsic cover Lorentz
+  tensor, the canonical tangent has exact square `1`, is orthogonal to every
+  fixed-throat differential tangent, and is therefore spacelike and non-null.
+  Its regular projection/descent to the quotient and the local projection
+  lemma remain open;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -559,7 +562,8 @@ New controlled subgates are now checked:
   up and its Sylvester mode degenerates. The explicit type-changing path
   `I+tE₀₁ → I` has an exact smooth affine root and constant Sylvester
   eigenvalue `2`; the contrasting path `t(I+E₀₁) → 0` has root and Sylvester
-  eigenvalue both tending to zero. Arbitrary singular frames, the general
+  eigenvalue both tending to zero. These retained explicit witnesses are now
+  assembled in one proof-carrying frontier certificate. Arbitrary singular frames, the general
   Jordan-type classification/branch atlas and arbitrary matrix `0/0` paths
   remain open. For
   nonpositive spectra, determinant/simple
@@ -639,7 +643,9 @@ New controlled subgates are now checked:
   weak covariant Euler decomposition, stationarity equivalence under zero flux
   and the intrinsic D8 specialization; its contravariant stress is pointwise
   diffeomorphism-covariant and its arbitrary measured cotangent pairing is
-  invariant under diffeomorphism plus sector exchange. The concrete normal
+  invariant under diffeomorphism plus sector exchange. One unconditional
+  certificate packages the pointwise, measured, two-sector and integrated-
+  variation laws without asserting local stress conservation. The concrete normal
   throat flux vanishes pointwise and integrally for homogeneous Dirichlet
   variations. Genuine interval-integral IPP closes the canonical latitude
   collar and identifies its normal `mvfderiv` boundary term. The associated
