@@ -549,8 +549,8 @@ New controlled subgates are now checked:
   obstruction. It extends with square zero to the current linear matter,
   gauge-coordinate, internal-ghost and auxiliary sectors. On the throat the
   rotations descend with exact `so(3)` bracket and explicit scalar/Koszul and
-  LL maps; only their named square-zero contract remains before unconditional
-  completion, while metrics, antifields and BV remain;
+  LL maps; the throat differential is odd, Leibniz and square-zero, so its LL
+  completion is unconditional, while metrics, antifields and BV remain;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations
@@ -592,8 +592,9 @@ New controlled subgates are now checked:
   pushforward and exact `L²` trace identity are closed. The normal derivative
   is reconstructed exactly by the finite frame with a pointwise coefficient
   bound. Compact uniform coefficient/integrability control follows from the
-  remaining tangent-lift continuity predicate. Physical coarea is reduced to
-  the single explicit `Measure.toSphere` collar-pushforward domination;
+  remaining tangent-lift continuity predicate. Physical coarea is reduced through the exact
+  quotient factorization to one pre-quotient `Measure.toSphere`
+  latitude/time domination;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
   the full circle Fourier Hilbert space; this is not a trace-class theorem or

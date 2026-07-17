@@ -387,6 +387,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       non semi-simple et transport par similarité. Le passage d'un charpoly
       brut à cette présentation purement non réelle est isolé dans l'unique
       pont `PureNonrealJordanPresentationBridge4` absent de Mathlib.
+    - [x] Unifier les régimes positif, réel non positif et purement non réel
+      dans un certificat spectral direct, avec sélecteur de racine, transport
+      par similarité, carré exact, classification de frontière et critère brut
+      conditionnel exactement aux trois ponts de présentation ci-dessus.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
@@ -644,14 +648,14 @@ par toute évolution admissible.
                         `IndependentFields`.
                       - [x] Encoder les trois blocs LL/throat et ramener leur
                         carré nul à `LLThroatBRSTCompletion`.
-                      - [ ] Décharger la nilpotence explicite sur le throat,
-                        puis traiter métriques positives, antifields et BV.
+                      - [x] Décharger la nilpotence explicite sur le throat ;
+                        traiter ensuite métriques positives, antifields et BV.
                         - [x] Prouver que les trois flows de rotation préservent
                           l'équateur, commutent au deck, descendent au vrai
                           quotient throat et gardent la table `so(3)` ; construire
                           leur action scalaire, le différentiel corrigé et
                           l'instanciation conditionnelle des trois blocs LL.
-                        - [ ] Prouver l'unique contrat restant
+                        - [x] Prouver l'unique contrat restant
                           `ThroatCorrectedKoszulNilpotence.square_zero` pour ce
                           différentiel explicite afin de rendre
                           `LLThroatBRSTCompletion` inconditionnel.
@@ -733,6 +737,12 @@ par toute évolution admissible.
               la domination du pushforward du collier par
               `cos(1)⁻² • intrinsicCanonicalLorentzVolumeMeasure`. Mathlib ne
               fournit pas la désintégration en latitudes de `Measure.toSphere`.
+              - [x] Factoriser exactement le collier par le quotient, identifier
+                le volume intrinsèque comme pushforward du domaine fondamental
+                et réduire ce contrat à
+                `CanonicalLatitudeFundamentalMeasureDomination` avant quotient.
+              - [ ] Prouver cette domination fondamentale pour la carte
+                latitude explicite vers `S³ × I_t`.
           - [ ] Instancier `CanonicalNormalFrameReconstructionBound` par une
             borne compacte uniforme des coefficients normaux et leur
             intégrabilité ; sa recombinaison avec la coaire est déjà fermée.
