@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**497 fermées sur 622 ; 125 ouvertes**.
+**498 fermées sur 623 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1981,6 +1981,11 @@ champs et avec les mêmes conditions au bord.
     son image est nulle et son quotient cohomologique est linéairement
     équivalent à cet espace de coordonnées. Les domaines et la cohomologie
     du vrai opérateur différentiel global restent ouverts.
+    - [x] Remplacer la coordonnée `U(1)` isolée par le vrai doublet issu des
+      secteurs Programme P `.plus/.minus`, conserver les trois coordonnées
+      difféomorphes construites, puis calculer exactement le complexe nul à
+      cinq coordonnées, son noyau total, son image nulle et son quotient. Les
+      domaines et la cohomologie du vrai opérateur global restent ouverts.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
