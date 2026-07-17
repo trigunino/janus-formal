@@ -31,6 +31,8 @@ variable (period : Real) (hPeriod : period ≠ 0)
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
 private abbrev StandardSphere := Metric.sphere (0 : EuclideanR4) 1
+private abbrev StandardEquatorialSphere :=
+  Metric.sphere (0 : EuclideanR3) 1
 
 local instance : ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotientChartedSpace period hPeriod
@@ -53,6 +55,31 @@ def canonicalLatitudeTargetProductMeasure (period : Real) :
     Measure (StandardSphere × Real) :=
   ((volume : Measure EuclideanR4).toSphere).prod
     (volume.restrict (canonicalLatitudeTimeInterval period))
+
+/-- Positive latitude before adjoining the independent mapping-torus time
+coordinate. -/
+def canonicalPositiveLatitudeMap
+    (parameter : StandardEquatorialSphere × Real) : StandardSphere :=
+  unitThreeSphereHomeomorph
+    (equatorialLatitudeUncurried
+      (equatorialTwoSphereHomeomorph.symm parameter.1, parameter.2))
+
+theorem canonicalPositiveLatitudeMap_continuous :
+    Continuous canonicalPositiveLatitudeMap := by
+  exact unitThreeSphereHomeomorph.continuous.comp
+    (equatorialLatitude_joint_continuous.comp
+      (equatorialTwoSphereHomeomorph.symm.continuous.comp continuous_fst
+        |>.prodMk continuous_snd))
+
+/-- The pure round-sphere latitude statement.  This is the unique residual
+Mathlib-level input: it contains neither the mapping-torus time coordinate nor
+the quotient geometry. -/
+def CanonicalPositiveLatitudeMeasureDomination : Prop :=
+  Measure.map canonicalPositiveLatitudeMap
+      (((volume : Measure EuclideanR3).toSphere).prod
+        canonicalLatitudeUnitNormalMeasure) ≤
+    canonicalLatitudeCoareaMeasureConstant •
+      (volume : Measure EuclideanR4).toSphere
 
 /-- Latitude map with the time coordinate retained, but before passing to the
 mapping-torus quotient. -/
@@ -82,6 +109,112 @@ theorem canonicalLatitudeFundamentalMap_continuous :
     equatorialLatitude_joint_continuous.comp hLatitudeInput
   exact (unitThreeSphereHomeomorph.continuous.comp hLatitude).prodMk
     (continuous_snd.comp continuous_fst)
+
+/-- Reorder `((sphere, time), normal)` as `((sphere, normal), time)`. -/
+def canonicalLatitudeParameterReassociate
+    (parameter : CanonicalLatitudeCollarParameter) :
+    (StandardEquatorialSphere × Real) × Real :=
+  ((parameter.1.1, parameter.2), parameter.1.2)
+
+theorem canonicalLatitudeParameterReassociate_measurable :
+    Measurable canonicalLatitudeParameterReassociate := by
+  unfold canonicalLatitudeParameterReassociate
+  exact ((measurable_fst.comp measurable_fst).prodMk measurable_snd).prodMk
+    (measurable_snd.comp measurable_fst)
+
+private theorem measurePreserving_canonicalLatitudeParameterReassociate
+    (period : Real) :
+    MeasurePreserving canonicalLatitudeParameterReassociate
+      (canonicalLatitudeCollarMeasure period)
+      ((((volume : Measure EuclideanR3).toSphere).prod
+          canonicalLatitudeUnitNormalMeasure).prod
+        (volume.restrict (canonicalLatitudeTimeInterval period))) := by
+  let sphereMeasure : Measure StandardEquatorialSphere :=
+    (volume : Measure EuclideanR3).toSphere
+  let timeMeasure : Measure Real :=
+    volume.restrict (canonicalLatitudeTimeInterval period)
+  let normalMeasure : Measure Real := canonicalLatitudeUnitNormalMeasure
+  have hAssoc : MeasurePreserving
+      (MeasurableEquiv.prodAssoc :
+        (StandardEquatorialSphere × Real) × Real ≃ᵐ
+          StandardEquatorialSphere × (Real × Real))
+      ((sphereMeasure.prod timeMeasure).prod normalMeasure)
+      (sphereMeasure.prod (timeMeasure.prod normalMeasure)) :=
+    measurePreserving_prodAssoc sphereMeasure timeMeasure normalMeasure
+  have hSwap : MeasurePreserving
+      (Prod.map id Prod.swap)
+      (sphereMeasure.prod (timeMeasure.prod normalMeasure))
+      (sphereMeasure.prod (normalMeasure.prod timeMeasure)) :=
+    by
+      simpa only [Measure.map_id] using
+        (measurable_id.measurePreserving sphereMeasure).prod
+          (Measure.measurePreserving_swap
+            (μ := timeMeasure) (ν := normalMeasure))
+  have hUnassoc : MeasurePreserving
+      (MeasurableEquiv.prodAssoc.symm :
+        StandardEquatorialSphere × (Real × Real) ≃ᵐ
+          (StandardEquatorialSphere × Real) × Real)
+      (sphereMeasure.prod (normalMeasure.prod timeMeasure))
+      ((sphereMeasure.prod normalMeasure).prod timeMeasure) :=
+    (measurePreserving_prodAssoc sphereMeasure normalMeasure timeMeasure).symm
+      MeasurableEquiv.prodAssoc
+  change MeasurePreserving
+    (fun parameter : (StandardEquatorialSphere × Real) × Real =>
+      ((parameter.1.1, parameter.2), parameter.1.2))
+    (canonicalLatitudeCollarMeasure period)
+    ((((volume : Measure EuclideanR3).toSphere).prod
+      canonicalLatitudeUnitNormalMeasure).prod
+      (volume.restrict (canonicalLatitudeTimeInterval period)))
+  simpa [canonicalLatitudeCollarMeasure, canonicalLatitudeBaseMeasure,
+    sphereMeasure, timeMeasure, normalMeasure,
+    canonicalLatitudeParameterReassociate, Function.comp_def,
+    MeasurableEquiv.prodAssoc] using hUnassoc.comp (hSwap.comp hAssoc)
+
+private theorem Measure.prod_mono_left
+    {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
+    {μ ν : Measure α} (τ : Measure β) [SFinite τ]
+    (hμν : μ ≤ ν) : μ.prod τ ≤ ν.prod τ := by
+  rw [Measure.le_iff]
+  intro set hSet
+  rw [Measure.prod_apply hSet, Measure.prod_apply hSet]
+  exact lintegral_mono' hμν le_rfl
+
+/-- Mapping the full collar is exactly the product of the pure latitude
+pushforward and the unchanged time measure. -/
+theorem canonicalLatitudeFundamentalMap_map_eq_prod (period : Real) :
+    Measure.map canonicalLatitudeFundamentalMap
+        (canonicalLatitudeCollarMeasure period) =
+      (Measure.map canonicalPositiveLatitudeMap
+          (((volume : Measure EuclideanR3).toSphere).prod
+            canonicalLatitudeUnitNormalMeasure)).prod
+        (volume.restrict (canonicalLatitudeTimeInterval period)) := by
+  let sourceMeasure : Measure (StandardEquatorialSphere × Real) :=
+    ((volume : Measure EuclideanR3).toSphere).prod
+      canonicalLatitudeUnitNormalMeasure
+  let timeMeasure : Measure Real :=
+    volume.restrict (canonicalLatitudeTimeInterval period)
+  have hReassociate :=
+    measurePreserving_canonicalLatitudeParameterReassociate period
+  calc
+    Measure.map canonicalLatitudeFundamentalMap
+        (canonicalLatitudeCollarMeasure period) =
+        Measure.map (Prod.map canonicalPositiveLatitudeMap id)
+          (Measure.map canonicalLatitudeParameterReassociate
+            (canonicalLatitudeCollarMeasure period)) := by
+      rw [Measure.map_map
+        (canonicalPositiveLatitudeMap_continuous.measurable.prodMap measurable_id)
+        canonicalLatitudeParameterReassociate_measurable]
+      apply Measure.map_congr
+      exact Filter.Eventually.of_forall fun parameter => rfl
+    _ = Measure.map (Prod.map canonicalPositiveLatitudeMap id)
+          (sourceMeasure.prod timeMeasure) := by
+      rw [hReassociate.map_eq]
+    _ = (Measure.map canonicalPositiveLatitudeMap sourceMeasure).prod
+          timeMeasure := by
+      rw [← Measure.map_prod_map sourceMeasure timeMeasure
+        canonicalPositiveLatitudeMap_continuous.measurable measurable_id,
+        Measure.map_id]
+    _ = _ := rfl
 
 /-- Public version of the fundamental-domain projection used in the canonical
 Lorentz measure. -/
@@ -116,6 +249,32 @@ def CanonicalLatitudeFundamentalMeasureDomination : Prop :=
       (canonicalLatitudeCollarMeasure period) ≤
     canonicalLatitudeCoareaMeasureConstant •
       canonicalLatitudeTargetProductMeasure period
+
+/-- Tensoring the pure latitude inequality with the unchanged finite time
+measure proves the full fundamental-domain statement. -/
+theorem canonicalLatitudeFundamentalMeasureDomination_of_positiveLatitude
+    (hLatitude : CanonicalPositiveLatitudeMeasureDomination) :
+    CanonicalLatitudeFundamentalMeasureDomination period := by
+  unfold CanonicalLatitudeFundamentalMeasureDomination
+  rw [canonicalLatitudeFundamentalMap_map_eq_prod]
+  calc
+    (Measure.map canonicalPositiveLatitudeMap
+        (((volume : Measure EuclideanR3).toSphere).prod
+          canonicalLatitudeUnitNormalMeasure)).prod
+        (volume.restrict (canonicalLatitudeTimeInterval period)) ≤
+        (canonicalLatitudeCoareaMeasureConstant •
+          (volume : Measure EuclideanR4).toSphere).prod
+          (volume.restrict (canonicalLatitudeTimeInterval period)) :=
+      Measure.prod_mono_left _ hLatitude
+    _ = canonicalLatitudeCoareaMeasureConstant •
+        canonicalLatitudeTargetProductMeasure period := by
+      change (((canonicalLatitudeCoareaMeasureConstant : NNReal) : ENNReal) •
+          (volume : Measure EuclideanR4).toSphere).prod
+          (volume.restrict (canonicalLatitudeTimeInterval period)) =
+        ((canonicalLatitudeCoareaMeasureConstant : NNReal) : ENNReal) •
+          canonicalLatitudeTargetProductMeasure period
+      rw [Measure.prod_smul_left]
+      rfl
 
 /-- The canonical quotient measure is exactly the pushforward of the public
 round-sphere/time product presentation above. -/
@@ -157,6 +316,16 @@ theorem canonicalLatitudeMeasureToSphereCoareaDomination_of_fundamental
             (canonicalLatitudeTargetProductMeasure period) := by
       rw [Measure.map_smul]
 
+/-- The isolated pure sphere statement already closes the quotient coarea
+gate. -/
+theorem canonicalLatitudeMeasureToSphereCoareaDomination_of_positiveLatitude
+    (hLatitude : CanonicalPositiveLatitudeMeasureDomination) :
+    CanonicalLatitudeMeasureToSphereCoareaDomination period hPeriod :=
+  canonicalLatitudeMeasureToSphereCoareaDomination_of_fundamental
+    period hPeriod
+    (canonicalLatitudeFundamentalMeasureDomination_of_positiveLatitude
+      period hLatitude)
+
 /-- Consequently the original coarea package and physical trace follow from
 the single pre-quotient sphere/time statement. -/
 def canonicalLatitudeCoareaBoundOfFundamentalDomination
@@ -166,6 +335,15 @@ def canonicalLatitudeCoareaBoundOfFundamentalDomination
   canonicalLatitudeCoareaBoundOfMeasureToSphereDomination period hPeriod
     (canonicalLatitudeMeasureToSphereCoareaDomination_of_fundamental
       period hPeriod hFundamental)
+
+/-- Complete physical coarea package from the pure round-sphere latitude
+inequality. -/
+def canonicalLatitudeCoareaBoundOfPositiveLatitudeDomination
+    (hLatitude : CanonicalPositiveLatitudeMeasureDomination) :
+    CanonicalLatitudeCoareaBound period hPeriod :=
+  canonicalLatitudeCoareaBoundOfFundamentalDomination period hPeriod
+    (canonicalLatitudeFundamentalMeasureDomination_of_positiveLatitude
+      period hLatitude)
 
 end
 

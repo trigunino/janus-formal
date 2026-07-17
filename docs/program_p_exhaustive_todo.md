@@ -373,6 +373,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
         Jordan--Chevalley disponible et réduire toute la fermeture brute à
         l'unique pont `PositiveRealJordanBasisBridge4`. Mathlib ne fournit pas
         actuellement la construction de la base de chaînes de Jordan.
+      - [x] Pour le besoin plus faible d'existence d'une racine, fermer sans
+        présentation tout le locus brut positif semi-défini par `CFC.sqrt`,
+        carré exact, et réduire le résidu à spectre réel positif mais non PSD.
     - [x] Pour les spectres réels non positifs, prouver l'obstruction
       déterminant négatif et le no-go plus fort d'une valeur propre négative
       simple, exhiber un contre-exemple de déterminant positif sans racine,
@@ -387,10 +390,17 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       non semi-simple et transport par similarité. Le passage d'un charpoly
       brut à cette présentation purement non réelle est isolé dans l'unique
       pont `PureNonrealJordanPresentationBridge4` absent de Mathlib.
+      - [x] Éviter néanmoins toute présentation sur le locus brut vérifiant
+        `(A-aI)²=-b²I`, `b≠0`, par une racine affine polynomiale exacte ; y
+        inclure le bloc complexe répété `2+2` et isoler le seul complément.
     - [x] Unifier les régimes positif, réel non positif et purement non réel
       dans un certificat spectral direct, avec sélecteur de racine, transport
       par similarité, carré exact, classification de frontière et critère brut
       conditionnel exactement aux trois ponts de présentation ci-dessus.
+      - [x] Remplacer, lorsque seule l'existence de racine est consommée, les
+        deux ponts de présentation par `ReducedRawRootResiduals4`; réduire le
+        critère Jordan à sa nécessité brute et à la suffisance hors des loci
+        PSD/quadratique déjà fermés, avec sélecteur et carré exact.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
@@ -648,8 +658,7 @@ par toute évolution admissible.
                         `IndependentFields`.
                       - [x] Encoder les trois blocs LL/throat et ramener leur
                         carré nul à `LLThroatBRSTCompletion`.
-                      - [x] Décharger la nilpotence explicite sur le throat ;
-                        traiter ensuite métriques positives, antifields et BV.
+                      - [x] Décharger la nilpotence explicite sur le throat.
                         - [x] Prouver que les trois flows de rotation préservent
                           l'équateur, commutent au deck, descendent au vrai
                           quotient throat et gardent la table `so(3)` ; construire
@@ -659,6 +668,16 @@ par toute évolution admissible.
                           `ThroatCorrectedKoszulNilpotence.square_zero` pour ce
                           différentiel explicite afin de rendre
                           `LLThroatBRSTCompletion` inconditionnel.
+                      - [x] Restreindre les huit magnitudes métriques diagonales
+                        positives au throat, passer aux coordonnées logarithmes,
+                        construire l'action `L_X log m`, sa courbe exponentielle
+                        globalement positive et le BRST métrique impair,
+                        Leibniz et carré nul, puis le combiner aux trois blocs LL.
+                      - [x] Construire un premier doublet fini champ/antifield à
+                        parité décalée, son BRST impair carré nul et son pairing
+                        canonique bilinéaire.
+                      - [ ] Étendre cette fermeture au cône métrique spacetime
+                        général et au complexe BV complet avec équation maîtresse.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -741,8 +760,13 @@ par toute évolution admissible.
                 le volume intrinsèque comme pushforward du domaine fondamental
                 et réduire ce contrat à
                 `CanonicalLatitudeFundamentalMeasureDomination` avant quotient.
-              - [ ] Prouver cette domination fondamentale pour la carte
-                latitude explicite vers `S³ × I_t`.
+              - [x] Réassocier exactement les trois facteurs, conserver la
+                mesure temporelle par produit et déduire
+                `CanonicalLatitudeFundamentalMeasureDomination` d'une unique
+                inégalité de latitude sphérique pure.
+              - [ ] Prouver `CanonicalPositiveLatitudeMeasureDomination` pour
+                la seule carte `S² × Ioc(0,1) → S³`; temps et quotient sont
+                désormais entièrement éliminés du verrou.
           - [ ] Instancier `CanonicalNormalFrameReconstructionBound` par une
             borne compacte uniforme des coefficients normaux et leur
             intégrabilité ; sa recombinaison avec la coaire est déjà fermée.
@@ -832,6 +856,17 @@ par toute évolution admissible.
       composante, prouver l'équivariance exacte de la trace et la préservation
       de la condition de Dirichlet complète. Les métriques tensoricielles
       générales et les antifields/BV restent séparés.
+    - [x] Sur les champs bruts de deux-tenseurs covariants généraux, construire
+      le pullback par la vraie involution PT analytique, prouver l'involution
+      différentielle exacte, l'échange des deux secteurs et la préservation de
+      la symétrie, de la non-dégénérescence et de la signature `(3,1)`.
+      - [x] Bundler ce pullback en section `C∞` sous l'unique contrat local
+        `AnalyticPTTensorPullbackLocalSmoothness`, puis prouver involution et
+        préservation du sous-domaine lorentzien lisse.
+      - [ ] Décharger ce contrat local dans les trivialisations du bundle
+        `Hom(TM, Hom(TM, ℝ))`; Mathlib ne fournit que le pullback lisse des
+        champs de vecteurs, pas celui de cette section dépendante imbriquée.
+        Le musical et BV restent ensuite séparés.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
   - [x] Pour une métrique lorentzienne tensorielle générale munie de son
     isomorphisme musical exact, construire pointwise l'inverse, le Gram,
