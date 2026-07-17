@@ -1134,6 +1134,17 @@ PROGRAM_P_GATES = {
             "theorem circleHeatNuclearNormSum_le_trace",
         ),
     ),
+    "P0EFTJanusCircleHeatNuclearTraceContinuity.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem circleHeatWeightReal_le_of_le",
+            "theorem circleHeatWeightReal_uniform_summable",
+            "theorem circleHeatRankOne_uniform_opNorm_le",
+            "def circleHeatNuclearTraceReal",
+            "theorem circleHeatNuclearTraceReal_continuousOn_Ici",
+            "theorem circleHeatNuclearTraceReal_pt_eq_positive",
+        ),
+    ),
     "P0EFTJanusLorentzRootRegularTube4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5849,6 +5860,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paCircleHeatGeneratorDomainEqualsDiracSquaredDomainProved",
         "paCircleSpectralFunctionalCalculusHeatEqualityProved",
         "paCircleHeatNuclearTraceClassProved",
+        "paCircleHeatNuclearTraceContinuityProved",
         "paCircleDeterminantTopologicalVectorBundleProved",
         "paCircleFourierHermitianMetricFlatConnectionProved",
         "paProgramPD7CircleHeatRegulatorBridgeProved",
