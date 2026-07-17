@@ -57,7 +57,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
 - **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; uniform coefficient/mass bounds and holonomic coercivity are automatic, and a geometric frame-control contract implies the static energy-to-graph bridge. The differential normal has an exact total-space `Diffeomorph` and strata; joint `C∞` latitude regularity makes compact finite-frame normal reconstruction unconditional, while an exact spherical-radial/planar-polar calculation closes coarea and the canonical physical trace. Intrinsic Sobolev identification and Lorentzian null/joint strata remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
-- **T/C** PT/exchange acts simultaneously on a unified independent packet with two arbitrary smooth general Lorentz metrics and every current non-metric sector; all retained non-metric throat boundary values have exact trace equivariance and preserved Dirichlet data. Both metrics restrict to smooth symmetric throat tensors, with nondegeneracy iff there is no tangential radical, and the boundary packet contains both traces. Their restriction is pointwise PT-natural and obeys exact two-sector exchange; pointwise nondegeneracy and the no-radical condition are preserved and reflected. A functional pointwise matching relation on smooth metric references is realized by actual traces and transports the full metric/non-metric Dirichlet equality. A smooth arbitrary-tensor throat pullback, classification of general metric restrictions and the antifield/full-BV boundary packet remain open;
+- **T/C** PT/exchange acts simultaneously on a unified independent packet with two arbitrary smooth general Lorentz metrics and every current non-metric sector; all retained non-metric throat boundary values have exact trace equivariance and preserved Dirichlet data. Both metrics restrict to smooth symmetric throat tensors, with nondegeneracy iff there is no tangential radical. Restriction is pointwise PT-natural, nondegeneracy/no-radical is preserved and reflected, and a functional metric-reference relation transports full Dirichlet equality. The retained intrinsic metric/musical, equal-sector pair and nondegenerate throat trace are genuine PT fixed points by cover isometry and descent uniqueness. Arbitrary-tensor throat pullback, classification of general restrictions and full-BV boundary data remain open;
 - **T/C** on arbitrary covariant two-tensor fields, analytic PT pullback is an
   exact involution preserving symmetry, nondegeneracy and Lorentz inertia;
   nested Hom coordinates discharge the local contract and give an
@@ -97,8 +97,10 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   on the normal-projected collar jet; this component has zero derivative and
   is locally constant under the collar Euler equation. This is a local collar
   stress-energy identity only. Geometrically
-  discharging global Stokes/IPP and the physical flux, proving four-dimensional
-  covariant stress divergence, then extending the collar current to a
+  discharging global Stokes/IPP and the physical flux, lifting the proved
+  pointwise Levi-Civita connection jet to smooth fields and a genuine global
+  connection to obtain a four-dimensional covariant
+  stress divergence, then extending the collar current to a
   covariant four-dimensional Noether current with enough test ghosts, remains open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -165,7 +167,12 @@ Current results:
   induced orthogonal splitting proves that the retained intrinsic metric has
   no tangential radical and a nondegenerate smooth throat restriction. One
   deck turn has the exact normal sign law and preserves the local quadratic
-  model and orthogonal-lift square. Continuous global gluing remains open;
+  model and orthogonal-lift square. The quotient latitude curve law extends to
+  every integer winding with even/odd normal-sign parity, together with its
+  dependent tangent `HEq` and scalar quadratic-model invariance. The named
+  cover normal is `HEq` to its raw derivative after zero-latitude transport.
+  The quotient-
+  derivative bridge and continuous global gluing remain open;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -320,6 +327,7 @@ remain open.
 
 Exhaustive closure checklist:
 [`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
+Mechanical count: **483 closed / 608 total; 125 open**.
 
 ## P0 — Moduli-geometry no-go
 
@@ -653,7 +661,16 @@ New controlled subgates are now checked:
   diffeomorphism-covariant and its arbitrary measured cotangent pairing is
   invariant under diffeomorphism plus sector exchange. One unconditional
   certificate packages the pointwise, measured, two-sector and integrated-
-  variation laws without asserting local stress conservation. The concrete normal
+  variation laws. Separately, the normal-frame covariant scalar second jet
+  satisfies `div T = (□φ - V'(φ)) sharp(dφ)` and is conserved under Euler for
+  both retained potential conventions. A pointwise metric-compatible,
+  torsion-free connection-jet interface transports this identity to arbitrary
+  coordinates with exact `∂T + ΓT + ΓT` cancellation. That interface is now
+  realized algebraically from every symmetric nondegenerate metric and
+  metric-symmetric first jet by the local Levi-Civita formula, including
+  `∂g⁻¹ = -g⁻¹(∂g)g⁻¹`, torsion freedom and covariant/contravariant metric
+  compatibility. Smooth geometric connections and fields and global
+  `div_g T = 0` remain open. The concrete normal
   throat flux vanishes pointwise and integrally for homogeneous Dirichlet
   variations. Genuine interval-integral IPP closes the canonical latitude
   collar and identifies its normal `mvfderiv` boundary term. The intrinsic
@@ -676,7 +693,7 @@ New controlled subgates are now checked:
   on the normal-projected collar jet, and `T_nn` is locally constant under the
   collar Euler equation. This remains only a local collar stress-energy result.
   Global geometric Stokes/IPP discharge, identification with the abstract bulk
-  boundary functional, four-dimensional covariant stress divergence,
+  boundary functional, globalization of the jet identity to smooth covariant stress divergence,
   extension to a covariant four-dimensional Noether current and a global
   canonical metric normal remain open;
 - **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
@@ -723,9 +740,10 @@ New controlled subgates are now checked:
   General symmetric tensor variations now have a separate safe first BV level:
   smooth field/antifield pairs, an odd square-zero doublet, background-raised
   pointwise pairing and graded-skew Darboux antibracket attached to the general-
-  Lorentz packet. Lorentzian preservation of affine variations, a functional
-  CME, derivative-dependent terms and arbitrary nonlocal/completed BV
-  functionals remain open;
+  Lorentz packet. Its involutive analytic PT/sector exchange commutes with BRST
+  and preserves the pairing and odd bracket pointwise. Lorentzian preservation
+  of affine variations, a functional CME, BV throat traces, derivative-
+  dependent terms and arbitrary nonlocal/completed BV functionals remain open;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations

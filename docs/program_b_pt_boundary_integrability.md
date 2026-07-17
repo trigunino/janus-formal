@@ -24,3 +24,18 @@ La fonctionnelle et son obstruction sont fermées algébriquement. P/E reste
 nécessaire pour décider si la géométrie physique satisfait l'égalité des aires
 pondérées et pour choisir globalement les normales nulles; l'intégrabilité
 globale n'est donc pas encore affirmée.
+
+## Mise à jour depuis le Programme P
+
+Pour le throat canonique effectivement construit par P, le normal de latitude
+descendu est orthogonal au throat et son carré métrique vaut exactement `+1`.
+Il est donc spacelike, non nul. Le problème de redéfinition multiplicative des
+normales nulles ne concerne pas cette jonction canonique : B doit y employer la
+fonctionnelle de joint non-null. Le cas nul reste pertinent seulement pour une
+autre strate ou une autre géométrie de jonction.
+
+Attention : cela ne signifie pas que les deux termes GHY s'annulent entre
+feuillets. Si PT renverse simultanément l'orientation et `K_ab`, leur produit
+est pair et les densités GHY s'ajoutent. La cancellation démontrée par P est
+`delta(EH_±)+delta(GHY_±)=0` dans chaque secteur; voir
+`program_b_nonnull_ghy_pt_bridge.md`.

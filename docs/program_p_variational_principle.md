@@ -701,9 +701,9 @@ restriction now commutes pointwise with intrinsic PT tensor pullback, and the
 two traces obey the exact PT/exchange law. Because the throat PT derivative is
 a linear equivalence, the pointwise pullback preserves and reflects
 nondegeneracy and `HasNoTangentialRadical` is invariant under PT and
-PT/exchange. A smooth pullback section for an arbitrary throat tensor,
-classification of general metric restrictions, and antifields/full BV
-boundary data remain open. A pointwise PT/exchange matching relation on two
+PT/exchange. A smooth intrinsic PT-pullback section for an arbitrary throat
+tensor and classification of general metric restrictions remain open. A
+pointwise PT/exchange matching relation on two
 smooth metric boundary references avoids assuming that missing pullback; it
 is functional, preserves nondegeneracy, is satisfied by actual ambient metric
 traces, and transports the full metric/non-metric Dirichlet equality.
@@ -880,8 +880,13 @@ nontrivial odd square-zero doublet, with background-raised trace pairing and a
 graded-skew pointwise Darboux antibracket attached to the independent packet.
 Analytic PT pullback with sector exchange is now an involution on this level,
 commutes with its BRST differential and makes both the raised pairing and odd
-bracket pointwise covariant. No Lorentzian preservation of affine variations,
-functional CME or BV throat-trace theorem is claimed.
+  bracket pointwise covariant. The actual throat inclusion now restricts every
+  variation/antifield tensor smoothly. The induced boundary BRST remains
+  square-zero and commutes with trace; PT/exchange matching is functional and
+  transports the full metric-BV Dirichlet packet. The packet-level pointwise
+  odd bracket keeps its PT/exchange covariance. No inverse throat metric,
+  boundary functional antibracket/CME, Lorentzian preservation of affine
+  variations or derivative/nonlocal completion is claimed.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial

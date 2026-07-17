@@ -201,6 +201,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostFinitePositiveMetricBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricBVFirstLevel4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricBVPTCovariance4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricBVThroatBoundary4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothSpacetimeBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothSpacetimeBVPTCovariance4D
@@ -709,6 +710,7 @@ structure ProgramStatus where
   paEffectiveD8NonabelianFinitePositiveMetricBVMaster4DProved : Prop
   paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved : Prop
   paEffectiveD8GeneralLorentzMetricBVPTCovariance4DProved : Prop
+  paEffectiveD8GeneralLorentzMetricBVThroatBoundary4DProved : Prop
   paEffectiveD8NonabelianSmoothThroatBVMaster4DProved : Prop
   paEffectiveD8NonabelianSmoothSpacetimeBVMaster4DProved : Prop
   paEffectiveD8NonabelianSmoothSpacetimeBVPTCovariance4DProved : Prop
@@ -1119,6 +1121,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8NonabelianFinitePositiveMetricBVMaster4DProved /\
   s.paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved /\
   s.paEffectiveD8GeneralLorentzMetricBVPTCovariance4DProved /\
+  s.paEffectiveD8GeneralLorentzMetricBVThroatBoundary4DProved /\
   s.paEffectiveD8NonabelianSmoothThroatBVMaster4DProved /\
   s.paEffectiveD8NonabelianSmoothSpacetimeBVMaster4DProved /\
   s.paEffectiveD8NonabelianSmoothSpacetimeBVPTCovariance4DProved /\
