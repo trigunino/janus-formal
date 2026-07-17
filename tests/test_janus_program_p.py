@@ -265,6 +265,10 @@ def test_program_p_d9_paired_ghost_nonzero_symbol_kernel_is_integrated() -> None
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d9_paired_ghost_symbol_cohomology_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d8_normal_bundle_d9_displacement_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

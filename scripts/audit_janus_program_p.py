@@ -3743,6 +3743,17 @@ PROGRAM_P_GATES = {
             "theorem d9PairedProgramGhostPrincipalSymbol_u1_projections",
         ),
     ),
+    "P0EFTJanusD9PairedGhostSymbolCohomology4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9PairedGhostSymbolCohomology",
+            "def d9PairedGhostSymbolCohomologyProjection",
+            "theorem d9PairedGhostSymbolCohomologyProjection_eq_zero",
+            "theorem d9PairedGhostSymbolCohomology_eq_zero",
+            "theorem d9PairedGhostSymbolCohomology_subsingleton",
+            "theorem d9_paired_ghost_nonzero_symbol_cohomology4D",
+        ),
+    ),
     "P0EFTJanusD8NormalBundleD9DisplacementBridge4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5986,6 +5997,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paD9GhostZeroModeCohomology4DProved",
         "paD9PairedU1GhostZeroModeCohomology4DProved",
         "paD9PairedGhostNonzeroSymbolKernel4DProved",
+        "paD9PairedGhostSymbolCohomology4DProved",
         "paD8NormalBundleD9DisplacementBridge4DProved",
         "paEffectiveD8GlobalHolonomicScalarDifferentialProved",
         "paEffectiveD8GlobalHolonomicScalarAction4DProved",

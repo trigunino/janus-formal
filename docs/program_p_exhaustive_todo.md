@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**500 fermées sur 625 ; 125 ouvertes**.
+**501 fermées sur 626 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1997,6 +1997,9 @@ champs et avec les mêmes conditions au bord.
           différentiel global. Son inverse linéaire est construit explicitement
           et ses deux identités de composition sont prouvées ; noyau et image
           sont également classifiés dans les cas covecteur nul et non nul.
+          - [x] Construire le conoyau du symbole apparié et prouver qu'au
+            covecteur non nul toute classe y est nulle. Il s'agit uniquement
+            de la cohomologie du symbole ponctuel, pas du complexe BRST global.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.

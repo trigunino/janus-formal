@@ -150,6 +150,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9GhostZeroModeCohomology4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9PairedU1GhostZeroModeCohomology4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9PairedGhostNonzeroSymbolKernel4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9PairedGhostSymbolCohomology4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD8NormalBundleD9DisplacementBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalar4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalHolonomicScalarAction4D
@@ -681,6 +682,7 @@ structure ProgramStatus where
   paD9GhostZeroModeCohomology4DProved : Prop
   paD9PairedU1GhostZeroModeCohomology4DProved : Prop
   paD9PairedGhostNonzeroSymbolKernel4DProved : Prop
+  paD9PairedGhostSymbolCohomology4DProved : Prop
   paD8NormalBundleD9DisplacementBridge4DProved : Prop
   paEffectiveD8GlobalHolonomicScalarDifferentialProved : Prop
   paEffectiveD8GlobalHolonomicScalarAction4DProved : Prop
@@ -1106,6 +1108,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paD9GhostZeroModeCohomology4DProved /\
   s.paD9PairedU1GhostZeroModeCohomology4DProved /\
   s.paD9PairedGhostNonzeroSymbolKernel4DProved /\
+  s.paD9PairedGhostSymbolCohomology4DProved /\
   s.paD8NormalBundleD9DisplacementBridge4DProved /\
   s.paEffectiveD8GlobalHolonomicScalarDifferentialProved /\
   s.paEffectiveD8GlobalHolonomicScalarAction4DProved /\
