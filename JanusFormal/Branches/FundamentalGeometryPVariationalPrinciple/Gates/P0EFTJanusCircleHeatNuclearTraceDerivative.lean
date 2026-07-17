@@ -27,6 +27,11 @@ def circleHeatWeightRealDerivative
   -circleOperatorSquaredEigenvalue fold twist mode *
     circleHeatWeightReal time fold twist mode
 
+/-- The convergent spectral expression for the time derivative of the trace. -/
+def circleHeatNuclearTraceRealDerivative
+    (time : Real) (fold : Fold) (twist : CircleTwist) : Real :=
+  ∑' mode : Int, circleHeatWeightRealDerivative time fold twist mode
+
 theorem circleHeatWeightReal_hasDerivAt
     (time : Real) (fold : Fold) (twist : CircleTwist) (mode : Int) :
     HasDerivAt (fun s : Real => circleHeatWeightReal s fold twist mode)
@@ -42,6 +47,13 @@ theorem circleHeatWeightReal_hasDerivAt
     filter_upwards [] with s
     rfl
   simpa [spectrum, mul_comm] using hComp.congr_of_eventuallyEq hFunctions
+
+theorem circleHeatWeightRealDerivative_continuous
+    (fold : Fold) (twist : CircleTwist) (mode : Int) :
+    Continuous (fun time : Real =>
+      circleHeatWeightRealDerivative time fold twist mode) := by
+  unfold circleHeatWeightRealDerivative
+  exact continuous_const.mul (circleHeatWeightReal_continuous fold twist mode)
 
 /-- Exponential absorption of one nonnegative spectral factor. -/
 theorem spectralFactor_mul_exp_bound
@@ -102,14 +114,28 @@ theorem circleHeatWeightRealDerivative_norm_le
   unfold circleHeatWeightReal
   exact spectralFactor_mul_exp_bound epsilon.2
 
+/-- The spectral derivative series is continuous uniformly away from time
+zero. -/
+theorem circleHeatNuclearTraceRealDerivative_continuousOn_Ici
+    (epsilon : HeatTime) (fold : Fold) (twist : CircleTwist) :
+    ContinuousOn (fun time : Real =>
+      circleHeatNuclearTraceRealDerivative time fold twist) (Ici epsilon.1) := by
+  unfold circleHeatNuclearTraceRealDerivative
+  apply continuousOn_tsum
+  · intro mode
+    exact (circleHeatWeightRealDerivative_continuous fold twist mode).continuousOn
+  · exact circleHeatWeightRealDerivative_uniform_summable epsilon fold twist
+  · intro mode time hTime
+    exact circleHeatWeightRealDerivative_norm_le epsilon hTime fold twist mode
+
 /-- For every positive time, the derivative of the explicit nuclear trace is
 the convergent sum of the modewise spectral derivatives. -/
 theorem circleHeatNuclearTraceReal_hasDerivAt
     (time : HeatTime) (fold : Fold) (twist : CircleTwist) :
     HasDerivAt (fun s : Real => circleHeatNuclearTraceReal s fold twist)
-      (∑' mode : Int, circleHeatWeightRealDerivative time.1 fold twist mode)
+      (circleHeatNuclearTraceRealDerivative time.1 fold twist)
       time.1 := by
-  unfold circleHeatNuclearTraceReal
+  unfold circleHeatNuclearTraceReal circleHeatNuclearTraceRealDerivative
   let epsilon : HeatTime := ⟨time.1 / 2, half_pos time.2⟩
   apply hasDerivAt_tsum_of_isPreconnected
     (g := fun mode s => circleHeatWeightReal s fold twist mode)
@@ -130,11 +156,31 @@ theorem circleHeatNuclearTraceReal_hasDerivAt
       circleOperatorHeatWeight_summable time fold twist
   · exact mem_Ioi.mpr (half_lt_self time.2)
 
+theorem circleHeatNuclearTraceReal_deriv_eq
+    (time : HeatTime) (fold : Fold) (twist : CircleTwist) :
+    deriv (fun s : Real => circleHeatNuclearTraceReal s fold twist) time.1 =
+      circleHeatNuclearTraceRealDerivative time.1 fold twist :=
+  (circleHeatNuclearTraceReal_hasDerivAt time fold twist).deriv
+
+/-- On every positive closed half-line, the actual derivative of the nuclear
+trace is continuous. -/
+theorem circleHeatNuclearTraceReal_deriv_continuousOn_Ici
+    (epsilon : HeatTime) (fold : Fold) (twist : CircleTwist) :
+    ContinuousOn (fun time : Real =>
+      deriv (fun s : Real => circleHeatNuclearTraceReal s fold twist) time)
+      (Ici epsilon.1) := by
+  apply (circleHeatNuclearTraceRealDerivative_continuousOn_Ici
+    epsilon fold twist).congr
+  intro time hTime
+  exact circleHeatNuclearTraceReal_deriv_eq
+    ⟨time, epsilon.2.trans_le hTime⟩ fold twist
+
 /-- PT preserves the differentiated nuclear trace. -/
 theorem circleHeatNuclearTraceRealDerivative_pt_eq_positive
     (time : Real) (twist : CircleTwist) :
-    (∑' mode : Int, circleHeatWeightRealDerivative time .pt twist mode) =
-      ∑' mode : Int, circleHeatWeightRealDerivative time .positive twist mode := by
+    circleHeatNuclearTraceRealDerivative time .pt twist =
+      circleHeatNuclearTraceRealDerivative time .positive twist := by
+  unfold circleHeatNuclearTraceRealDerivative
   apply tsum_congr
   intro mode
   unfold circleHeatWeightRealDerivative
