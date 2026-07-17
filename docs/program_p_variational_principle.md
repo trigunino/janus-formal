@@ -630,9 +630,11 @@ spacelike/timelike/null/non-null partition and closed joint frontier, with
 fiber-scaling invariance. For the restricted spacetime metric, the construction
 is reduced to one local projection lemma in the transported normal charts:
 preservation of quotient classes, metric orthogonality and continuity of the
-squared length. The global lift and Lorentzian stratification then follow;
-this local regularity lemma remains open because the current normal
-equivalence is selected by `Classical.choice`. The actual latitude tangent on
+squared length. This lemma is now explicit on every canonical chart chosen by
+a cover lift: the pushed latitude normal gives a nonzero quotient class and
+scalar fiber coordinates, while its orthogonal representative has exact
+scalar-square metric value and a continuous local quadratic model. Change-of-
+lift/deck compatibility and global gluing remain open. The actual latitude tangent on
 the throat cover is now explicit and its raw ambient derivative is `(e₀, 0)`.
 The sphere ambient map and its smoothness are public, and the intrinsic ambient
 derivative is exactly factored through the public product-coordinate
@@ -641,8 +643,12 @@ continuous-linear equivalence induced by the global product diffeomorphism;
 the canonical latitude normal has exact ambient image `(e₀, 0)`, and both that
 image and the tangent vector are nonzero. For the actual intrinsic cover
 Lorentz tensor, its square is exactly `1` and it is orthogonal to every tangent
-in the fixed-throat differential, hence spacelike and non-null. Regular global
-quotient projection/descent and the local projection lemma remain open.
+in the fixed-throat differential, hence spacelike and non-null. Its quotient
+pushforward realizes the canonical local lift above. The resulting local
+orthogonal decomposition proves `HasNoTangentialRadical` for the retained
+intrinsic Lorentz metric, hence a genuinely nondegenerate smooth throat trace
+packaged on the nondegenerate metric domain. Deck compatibility and global
+projection/descent of the normal lift remain open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -681,8 +687,17 @@ The independent-field PT/exchange theorem now uses a unified packet whose two
 metric slots are arbitrary `SmoothGeneralLorentzMetric` fields and whose
 matter, gauge, ghost, auxiliary and LL/throat slots are unchanged. It is an
 exact involution; all retained non-metric smooth throat data intertwine the
-trace and preserve Dirichlet conditions. No arbitrary general-metric throat
-restriction is asserted, and antifields/full BV boundary data remain open.
+trace and preserve Dirichlet conditions. Each metric now restricts through
+the actual throat inclusion to a smooth symmetric covariant two-tensor, and
+the boundary packet contains both traces. The trace is nondegenerate exactly
+when the ambient metric has no tangential radical along the throat. Metric
+restriction now commutes pointwise with intrinsic PT tensor pullback, and the
+two traces obey the exact PT/exchange law. Because the throat PT derivative is
+a linear equivalence, the pointwise pullback preserves and reflects
+nondegeneracy and `HasNoTangentialRadical` is invariant under PT and
+PT/exchange. A smooth pullback section for an arbitrary throat tensor,
+classification of general metric restrictions, and antifields/full BV
+boundary data remain open.
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
@@ -752,6 +767,13 @@ The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form a
 vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
 canonical latitude collar, genuine interval-integral IPP identifies the
 normal `mvfderiv` term and removes the boundary for endpoint-Dirichlet tests.
+The intrinsic metric-gradient pairing with the explicit collar normal is now
+proved equal to that derivative, so the oriented two-endpoint flux defines an
+exact collar divergence/boundary interface. Its weak Euler plus boundary
+decomposition, measured flux and Dirichlet stationarity are concrete. A
+predicate and adapter record when a supplied global interface specializes to
+this collar result; they do not prove global Stokes or construct a global
+one-sided normal.
 The associated scalar Green--Wronskian current is antisymmetric, its derivative
 is exactly the antisymmetric pairing of the two equal-mass Euler residuals,
 and it is pointwise and measured constant for two Euler solutions. Its endpoint
@@ -765,7 +787,11 @@ equation also has
 the exact energy `(φ')² + m²φ²`, whose derivative is `2φ'` times the Euler
 residual. It is therefore fiberwise and measured constant on Euler solutions,
 has zero endpoint jump, and is nonnegative for `m² ≥ 0`. This is a local
-one-dimensional stress-energy witness, not a four-dimensional covariant stress
+one-dimensional stress-energy witness. More precisely, the metric dual of the
+intrinsic unit normal identifies this energy exactly with twice the
+normal-normal component of the general scalar stress on the normal-projected
+collar jet; that component has zero derivative and is locally constant under
+the collar Euler equation. This is not a four-dimensional covariant stress
 divergence theorem. A global geometric Stokes theorem identifying the abstract
 bulk boundary functional with this collar flux, a global canonical metric
 normal, and extension to a covariant four-dimensional Noether current with
