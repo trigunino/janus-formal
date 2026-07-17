@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**483 fermées sur 608 ; 125 ouvertes**.
+**484 fermées sur 609 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1884,7 +1884,12 @@ champs et avec les mêmes conditions au bord.
   - [x] Injecter le vrai ghost `U(1)` Programme P dans le champ ghost D9 avec
     composante difféomorphe explicitement nulle, calculer son symbole principal
     et prouver l'annulation de la composante `U(1)` dans son noyau à covecteur
-    non nul. Le ghost difféomorphe et la cohomologie de mode zéro restent ouverts.
+    non nul.
+  - [x] Injecter fidèlement le vrai ghost tangent lisse du throat D8 dans la
+    composante difféomorphe D9, transporter explicitement son crochet de Lie,
+    calculer son symbole principal et caractériser exactement son noyau
+    ponctuel à covecteur non nul. Les domaines et la cohomologie de mode zéro
+    restent ouverts ; le complexe D9/BRST global n'est donc pas fermé.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
