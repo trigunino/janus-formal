@@ -639,9 +639,10 @@ derivative is exactly factored through the public product-coordinate
 derivative, including pointwise evaluation. The product derivative is now the
 continuous-linear equivalence induced by the global product diffeomorphism;
 the canonical latitude normal has exact ambient image `(e₀, 0)`, and both that
-image and the tangent vector are nonzero. This is algebraic nonvanishing, not a
-Lorentzian causal classification: intrinsic metric orthogonality and
-null/non-null classification remain open.
+image and the tangent vector are nonzero. For the actual intrinsic cover
+Lorentz tensor, its square is exactly `1` and it is orthogonal to every tangent
+in the fixed-throat differential, hence spacelike and non-null. Regular global
+quotient projection/descent and the local projection lemma remain open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -676,9 +677,12 @@ has a closed Hilbert Dirichlet kernel, a contractive orthogonal projection and
 an exact orthogonal splitting, and this kernel is continuously linearly
 equivalent to the original graph-Dirichlet kernel. No intrinsic Sobolev
 identification is inferred.
-On the complete current independent-field package, PT/exchange also acts on
-all componentwise smooth throat boundary data, intertwines the trace exactly
-and preserves the full Dirichlet condition.
+The independent-field PT/exchange theorem now uses a unified packet whose two
+metric slots are arbitrary `SmoothGeneralLorentzMetric` fields and whose
+matter, gauge, ghost, auxiliary and LL/throat slots are unchanged. It is an
+exact involution; all retained non-metric smooth throat data intertwine the
+trace and preserve Dirichlet conditions. No arbitrary general-metric throat
+restriction is asserted, and antifields/full BV boundary data remain open.
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
@@ -741,6 +745,9 @@ stress is additionally pointwise covariant under every smooth D8
 diffeomorphism after coherent transport of the metric, `dφ` and cotangent
 tests. Its measured pairing with arbitrary cotangent test fields transports
 integrability iff and is invariant under diffeomorphism plus sector exchange.
+These pointwise, measured, two-sector and integrated-variation laws are now
+packaged by one unconditional scalar-stress covariance/exchange certificate;
+it deliberately makes no local stress-conservation claim.
 The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form and
 vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
 canonical latitude collar, genuine interval-integral IPP identifies the
@@ -980,6 +987,9 @@ its inverse blows up and the Sylvester mode still degenerates. Two explicit
 Jordan-type-change paths are now closed as well: `I+tE₀₁ → I` has the exact
 smooth affine root `I+(t/2)E₀₁` while its Sylvester eigenvalue stays `2`, whereas
 `t(I+E₀₁) → 0` has a root and Sylvester eigenvalue both tending to zero.
+The diagonal, canonical, fixed-similarity, moving-shear, double-collision,
+singular-frame and type-change witnesses are assembled in one proof-carrying
+retained frontier certificate.
 Arbitrary singular frames, a general Jordan-type classification/branch atlas
 and arbitrary matrix `0/0` paths remain.
 For

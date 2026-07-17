@@ -170,8 +170,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           différentielle équivalente des coordonnées produit, calculer son
           image ambiante exacte `(e₀, 0)` et prouver que cette image et le
           vecteur tangent canonique sont non nuls.
-        - [ ] Prouver séparément l'orthogonalité pour la métrique Lorentz
-          intrinsèque et la classification causale null/non-null de ce vecteur.
+        - [x] Pour la vraie métrique Lorentz intrinsèque du cover, prouver que
+          ce vecteur est orthogonal à toute la différentielle du throat, que
+          son carré vaut exactement `1`, et donc qu'il est spacelike et
+          non-null. La projection régulière vers le quotient reste séparée.
         - [ ] Prouver ce lemme local de projection intrinsèque malgré
           l'équivalence actuelle issue de `Classical.choice`, ou remplacer
           cette équivalence par une construction géométrique régulière.
@@ -566,8 +568,12 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     canonique y donne un carré exact, coïncide avec chaque branche IFT locale
     et est unique sur ce locus. Ceci ne construit aucun relèvement sur les
     strates de Jordan, les spectres non positifs ou le domaine physique général.
-- [ ] Contrôler l'approche de la frontière spectrale et les changements de
-  branche éventuels.
+- [x] Contrôler, dans un certificat unique, la suite explicite retenue de
+  témoins de frontière spectrale et de changements de branche : faces
+  diagonales zéro/infini, collisions Jordan canonique, à similarité fixe,
+  cisaillement mobile et double, régularisation par cadre singulier et deux
+  changements de type. Ce certificat ne prétend pas classifier les chemins
+  arbitraires.
   - [x] Pour toute présentation réelle diagonalisable à spectre strictement
     positif, construire un chemin continu remplaçant une valeur propre par
     zéro, prouver le carré exact jusqu'au bord et exhiber un noyau non nul de
@@ -612,6 +618,9 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     vers zéro avec numérateur positif fait diverger ratio et racine vers
     `+∞`. L'unicité positive exclut tout changement de branche dans la
     composante. Les cas `0/0` et les matrices générales restent ouverts.
+- [ ] Étendre la suite explicite retenue à tous les chemins matriciels `0/0`,
+  aux similarités mobiles ou cadres singuliers arbitraires, puis classifier
+  les changements généraux de type Jordan et construire l'atlas de branches.
 - [x] Dériver la variation de la racine sur ce domaine par rapport aux deux métriques indépendantes, inverse métrique comprise.
   - [x] Cette dérivée complète est prouvée au point diagonal de Minkowski pour
     la branche locale, y compris la dérivée de l'inverse dans
@@ -1078,6 +1087,12 @@ par toute évolution admissible.
       composante, prouver l'équivariance exacte de la trace et la préservation
       de la condition de Dirichlet complète. Les métriques tensoricielles
       générales et les antifields/BV restent séparés.
+    - [x] Remplacer les deux métriques diagonales de ce paquet par deux
+      `SmoothGeneralLorentzMetric`, étendre simultanément PT/échange à tous les
+      secteurs indépendants non métriques et prouver involutivité, équivariance
+      de leurs traces au throat et stabilité de leurs conditions de Dirichlet.
+      La restriction/trace au bord d'une métrique générale et le paquet de bord
+      antifields/BV complet restent explicitement ouverts.
     - [x] Sur les champs bruts de deux-tenseurs covariants généraux, construire
       le pullback par la vraie involution PT analytique, prouver l'involution
       différentielle exacte, l'échange des deux secteurs et la préservation de
@@ -1328,7 +1343,9 @@ par toute évolution admissible.
     et Lipschitz local.
   - [ ] Décharger ce contrat à partir des espaces fonctionnels et dériver les
     PDE covariantes sur la variété courbe.
-- [ ] Prouver leurs lois de covariance et d'échange.
+- [x] Prouver leurs lois de covariance et d'échange, regroupées dans un
+  certificat inconditionnel unique couvrant covariance pointwise, pairing
+  mesuré, difféomorphisme plus échange et variation intégrée.
   - [x] Prouver l'invariance par échange des deux secteurs pour l'action
     intégrée et sa variation de stress.
   - [x] Prouver que l'induction des deux métriques diagonales et des deux
@@ -1347,7 +1364,8 @@ par toute évolution admissible.
     Borel arbitraire, transporter l'intégrabilité iff et prouver l'invariance
     exacte sous difféomorphisme simultané et échange des deux secteurs.
   - [ ] Déduire les identités locales de conservation à partir des équations
-    covariantes et de l'identité de Noether locale.
+    covariantes et de l'identité de Noether locale ; le certificat de
+    covariance/échange ne les affirme pas.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers

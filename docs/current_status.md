@@ -273,9 +273,11 @@ public product-coordinate derivative. That derivative is now identified with
 the continuous-linear equivalence induced by the global product
 diffeomorphism. The canonical latitude normal has exact product image and
 ambient image `(e₀, 0)`; the ambient image and the tangent vector are both
-nonzero. This proves algebraic nonvanishing only. Intrinsic Lorentz
-orthogonality, causal null/non-null classification and the local projection
-lemma remain open.
+nonzero. For the actual intrinsic cover Lorentz tensor, its square is exactly
+`1` and it is orthogonal to every tangent in the differential of the fixed-
+throat inclusion; it is therefore spacelike and non-null. This closes the
+cover-level causal calculation only. Regular projection/descent to the global
+quotient normal and the local projection lemma remain open.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -394,6 +396,11 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   PT/exchange additionally acts on the complete current independent-field
   package and all its componentwise smooth throat boundary data, with exact
   trace equivariance and preservation of the full Dirichlet condition.
+  The same result now holds after replacing the diagonal metric pair by two
+  arbitrary smooth general Lorentz metrics: the unified packet has an exact
+  involutive PT/exchange, and every retained non-metric boundary sector has
+  equivariant trace and stable Dirichlet data. A general metric throat trace
+  and the antifield/full-BV boundary packet are not included and remain open.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
@@ -591,6 +598,9 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   mode degenerates. Two explicit Jordan-type-change paths are also exact:
   `I+tE₀₁ → I` has a smooth affine root and constant Sylvester eigenvalue `2`,
   while `t(I+E₀₁) → 0` has both root and Sylvester eigenvalue tending to zero.
+  These diagonal, canonical, fixed-similarity, moving-shear, double-collision,
+  singular-frame and type-change witnesses are now packaged in one
+  proof-carrying retained frontier certificate.
   Arbitrary singular frames, a general Jordan-type classification/branch atlas
   and arbitrary matrix paths remain open.
   Outside the positive locus, determinant negativity and every simple
@@ -757,6 +767,9 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   cotangent test arguments. Pairing it with two dependent cotangent tests and
   integrating against an arbitrary Borel measure preserves integrability iff
   and is invariant under simultaneous diffeomorphism and sector exchange.
+  One unconditional certificate now packages this pointwise covariance,
+  measured covariance, two-sector exchange and integrated stress-variation
+  exchange. It does not assert a local conservation identity.
   At fixed metric the holonomic density variation decomposes pointwise into
   the flat scalar Euler operator plus an explicit flux divergence. Under
   integrability and the named zero-integrated-flux condition, the first

@@ -2148,6 +2148,21 @@ PROGRAM_P_GATES = {
             "theorem global_diagonal_root_frontier_control_closure",
         ),
     ),
+    "P0EFTJanusPositiveRootFrontierSuite4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def DiagonalZeroInfinityControl",
+            "def CanonicalJordanNoExtension",
+            "def FixedJordanNoExtension",
+            "def MovingShearJordanNoExtension",
+            "def DoubleJordanNoExtension",
+            "def SingularMovingFiniteExtensionWithInverseBlowup",
+            "def RegularJordanTypeChange",
+            "def ZeroTypeChangeSylvesterDegeneration",
+            "structure PositiveRootFrontierSuite",
+            "def positiveRootFrontierCertificate",
+        ),
+    ),
     "P0EFTJanusMinkowskiGlobalDiagonalRootGluing4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2797,6 +2812,14 @@ PROGRAM_P_GATES = {
             "theorem measuredGeneralLorentzScalarPairStress_diffeomorphism_exchange",
         ),
     ),
+    "P0EFTJanusScalarStressCovarianceExchangeCertificate4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ScalarStressCovarianceExchangeCertificate4D",
+            "def scalarStressCovarianceExchangeCertificate",
+            "theorem scalarStressCovarianceExchange_unconditional",
+        ),
+    ),
     "P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3377,6 +3400,23 @@ PROGRAM_P_GATES = {
             "theorem independent_pt_boundary_action4D_closed",
         ),
     ),
+    "P0EFTJanusMappingTorusGeneralLorentzIndependentFieldPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GeneralLorentzIndependentFields",
+            "def generalLorentzIndependentExchange",
+            "theorem generalLorentzIndependentExchange_involutive",
+            "def generalLorentzIndependentExchangeEquiv",
+            "structure GeneralLorentzIndependentBoundaryData",
+            "def generalLorentzIndependentBoundaryTrace",
+            "def generalLorentzIndependentBoundaryExchange",
+            "theorem generalLorentzIndependentBoundaryExchange_involutive",
+            "theorem generalLorentzIndependentBoundaryTrace_exchange",
+            "def SatisfiesGeneralLorentzIndependentBoundary",
+            "theorem satisfiesGeneralLorentzIndependentBoundary_exchange",
+            "theorem general_lorentz_independent_field_packet4D_closed",
+        ),
+    ),
     "P0EFTJanusMappingTorusInducedFieldVariation4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3814,6 +3854,24 @@ PROGRAM_P_GATES = {
             "theorem coverAmbientDerivative_latitudeNormal",
             "theorem coverAmbientDerivative_latitudeNormal_ne_zero",
             "theorem coverLatitudeNormalVector_ne_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIntrinsicCanonicalLatitudeNormalLorentz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientLatitudeCoordinate",
+            "theorem ambientLatitudeCoordinate_apply",
+            "theorem sphereAmbientMap_equatorialSphereInclusion_latitudeCoordinate",
+            "def sphereLatitudeCoordinate",
+            "theorem sphereLatitudeCoordinate_contMDiff",
+            "theorem sphereLatitudeCoordinate_equatorialSphereInclusion",
+            "theorem sphereAmbientDerivative_equatorialTangent_latitudeCoordinate_zero",
+            "theorem coverProductDerivative_fixedThroatCoverInclusion",
+            "theorem coverAmbientDerivative_fixedThroat_latitudeCoordinate_zero",
+            "theorem intrinsicCoverLorentzTensor_latitudeNormal_square",
+            "theorem intrinsicCoverLorentzTensor_latitudeNormal_orthogonal",
+            "theorem intrinsicCoverLorentzTensor_latitudeNormal_spacelike",
+            "theorem intrinsicCoverLorentzTensor_latitudeNormal_nonnull",
         ),
     ),
     "P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D.lean": (
@@ -5240,6 +5298,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paPositiveJordanTypeChangeFrontier4DProved",
         "paGlobalDiagonalLorentzCausalFrontier4DProved",
         "paGlobalDiagonalRootFrontierControl4DProved",
+        "paPositiveRootFrontierSuite4DProved",
         "paMinkowskiGlobalDiagonalRootGluing4DProved",
         "paGlobalDiagonalTwoSectorInteractionDensity4DProved",
         "paEffectiveD8CandidateAFunctionalVariation4DUnderDominatedContractProved",
@@ -5298,6 +5357,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8NormalCausalStratificationReduction4DProved",
         "paEffectiveD8IntrinsicDifferentialNormalCausalStratification4DProved",
         "paEffectiveD8IntrinsicCanonicalLatitudeNormalImage4DProved",
+        "paEffectiveD8IntrinsicCanonicalLatitudeNormalLorentz4DProved",
         "paEffectiveD8AmbientTangentOrientationCocycleProved",
         "paEffectiveD8AmbientTangentQuadraticReductionFrontierProved",
         "paEffectiveD8AmbientSpinProjectionConstructed",
@@ -5329,6 +5389,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GeneralLorentzMetricDiffeomorphismScalarAction4DProved",
         "paEffectiveD8GeneralLorentzMetricDiffeomorphismNoether4DProved",
         "paEffectiveD8GeneralLorentzMetricDiffeomorphismPullback4DProved",
+        "paEffectiveD8ScalarStressCovarianceExchangeCertificate4DProved",
         "paEffectiveD8FixedGeneralLorentzMetricFunctor4DProved",
         "paEffectiveD8IntrinsicCoverLorentzTensor4DProved",
         "paEffectiveD8IntrinsicLorentzMetricDescentFrontier4DProved",
@@ -5371,6 +5432,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8FiniteSmoothTangentGeneratorsAndTrace4DProved",
         "paEffectiveD8SmoothGlobalFieldConfigurationProved",
         "paEffectiveD8IndependentPTBoundaryAction4DProved",
+        "paEffectiveD8GeneralLorentzIndependentFieldPacket4DProved",
         "paEffectiveD8CompleteInducedFieldVariationChain4DProved",
         "paD9D10ExactFieldContentBridge4DProved",
         "paD9U1GhostPrincipalSymbolBridge4DProved",
