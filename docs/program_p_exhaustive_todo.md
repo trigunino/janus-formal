@@ -376,6 +376,56 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       - [x] Pour le besoin plus faible d'existence d'une racine, fermer sans
         présentation tout le locus brut positif semi-défini par `CFC.sqrt`,
         carré exact, et réduire le résidu à spectre réel positif mais non PSD.
+      - [x] Fermer en plus un vrai locus brut positif non PSD sans présentation :
+        pour `(A-λI)(A-μI)=0`, `λ,μ>0`, construire la racine affine exacte
+        `(A+√λ√μ I)/(√λ+√μ)`. Le cas `λ=μ` couvre un bloc Jordan répété de
+        taille deux ; `canonicalJordan211Target λ λ λ` certifie explicitement
+        que ce gain est non hermitien et non PSD.
+      - [x] Fermer tout le locus brut à valeur propre positive unique
+        `(A-λI)^4=0` par le polynôme de Taylor cubique exact de `sqrt`. Le bloc
+        Jordan strict de taille quatre est dans ce locus et est prouvé non
+        hermitien, non PSD et hors de toute relation quadratique.
+      - [x] Fermer le vrai locus multivaleur
+        `(A-λI)²(A-μI)²=0`, `λ,μ>0`, `λ≠μ`, par l'interpolant d'Hermite
+        cubique explicite qui matche valeurs et dérivées de `sqrt`. Prouver
+        `natDegree q ≤ 3`, la divisibilité de `q²-X` par les deux facteurs
+        carrés puis par le minpoly, et `q(A)²=A`. Le témoin Jordan canonique
+        `2+2` est non hermitien, non PSD et hors des loci quadratique et
+        mono-valeur quartique.
+      - [x] Fermer le locus `3+1` distinct positif
+        `(A-λI)³(A-μI)=0` par le cubique qui matche le jet d'ordre deux de
+        `sqrt` en `λ` et sa valeur en `μ`. Prouver les trois jets nuls du résidu,
+        la divisibilité cubique puis linéaire, le passage au minpoly et
+        `q(A)²=A`. Le témoin Jordan canonique `3+1` est non hermitien, non PSD
+        et hors des loci quadratique, mono-valeur quartique et double-double.
+        Le résidu exact est maintenant
+        `PositiveOutsideKnownLociAndTripleSingleRootResidual4`.
+      - [ ] Construire uniformément, au-delà des cas double-double et `3+1`
+        fermés,
+        l'interpolant d'Hermite cubique pour tout minpoly scindé positif :
+        `natDegree q ≤ 3` et
+        `minpoly A ∣ q²-X`. Le contrat
+        `PositiveOutsideKnownLociCubicMinpolyResidual4`, son évaluation
+        matricielle et l'implication vers la fermeture brute sont déjà prouvés ;
+        seule l'existence uniforme de `q` reste à formaliser.
+      - [x] Fermer le sous-secteur hermitien à spectre strictement positif par
+        le théorème spectral de Mathlib : construire la présentation diagonale
+        depuis `eigenvectorUnitary`, prouver sa cible exacte, en déduire
+        `HasPositiveRealJordanPresentation` et une racine Sylvester-régulière.
+        Cela couvre notamment toute matrice `PosDef` et réduit exactement le
+        pont universel restant au secteur brut non hermitien ; ce dernier reste
+        ouvert en général.
+      - [x] Réduire ce dernier secteur à l'unique contrat plus élémentaire
+        `PositiveRealNonHermitianJordanChainBasisResidual4` : une matrice réelle
+        inversible de vecteurs de chaînes, son équation d'entrelacement et une
+        des cinq partitions de `Fin 4`. À partir de ce contrat, dériver
+        l'inverse, `HasPositiveRealJordanPresentation`, la racine exacte et la
+        bijectivité de Sylvester sans autre hypothèse.
+      - [ ] Construire cette base réelle de chaînes `Fin 4` pour toute matrice
+        non hermitienne dont le charpoly est scindé à racines strictement
+        positives. Mathlib expose les espaces propres généralisés mais ne
+        choisit pas encore leurs chaînes ; c'est le seul résidu de présentation
+        du secteur brut positif.
     - [x] Pour les spectres réels non positifs, prouver l'obstruction
       déterminant négatif et le no-go plus fort d'une valeur propre négative
       simple, exhiber un contre-exemple de déterminant positif sans racine,
@@ -676,8 +726,44 @@ par toute évolution admissible.
                       - [x] Construire un premier doublet fini champ/antifield à
                         parité décalée, son BRST impair carré nul et son pairing
                         canonique bilinéaire.
+                      - [x] Fermer un vrai modèle maître BV fini de dimension
+                        `32` : complexe CE métrique non nul, anticrochet impair
+                        canonique en coordonnées de Darboux, action maîtresse
+                        non triviale, équation maîtresse classique `(S,S)=0`,
+                        génération du BRST carré nul et plongement exact dans
+                        le doublet throat champ/antifield.
+                        - [x] Promouvoir ce modèle fibre par fibre aux champs
+                          `C∞` du vrai throat : BRST lisse carré nul, densité
+                          maîtresse lisse, CME et génération hamiltonienne
+                          pointwise, action intégrée canonique et témoin non nul.
+                          - [x] Dériver exactement la première variation de
+                            l'action intégrée sur les lignes affines, l'identifier
+                            aux gradients/BRST, construire l'anticrochet impair
+                            des fonctionnelles ultralocales analytiques et
+                            prouver la CME intégrée.
+                          - [x] Fermer le dernier contrat de mesure : prouver
+                            que le PT du throat préserve la mesure canonique
+                            depuis sa présentation `S² × Ioc`, puis rendre
+                            inconditionnelles la covariance PT de l'action
+                            maîtresse intégrée, de sa première variation, de la
+                            valeur fonctionnelle représentée, de l'anticrochet
+                            et de la CME intégrée.
+                        - [x] Promouvoir séparément la même fibre BV finie de
+                          dimension `32` aux champs `C∞` du vrai quotient
+                          spacetime D8, avec BRST lisse carré nul, compatibilité
+                          de restriction au throat, action canonique non nulle
+                          et CME pointwise/intégrée. Cette étape reste
+                          ultralocale à fibre constante et ne construit pas le
+                          BV des métriques tensoriales générales.
+                          - [x] Prouver que la réflexion ronde `S³` et
+                            `t ↦ period-t` préservent la mesure spacetime
+                            canonique poussée au quotient, puis rendre
+                            inconditionnelles l'involution PT, sa commutation
+                            au BRST, la covariance de l'action maîtresse et la
+                            CME intégrée de ce modèle ultralocal.
                       - [ ] Étendre cette fermeture au cône métrique spacetime
-                        général et au complexe BV complet avec équation maîtresse.
+                        général et aux fonctionnelles non locales/complétées
+                        avec équation maîtresse fonctionnelle.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -724,13 +810,13 @@ par toute évolution admissible.
       - [x] Pour la mesure d'espace-temps poussée depuis une mesure finie du
         throat, construire `HasH1TraceBound` avec constante exacte `1` et la
         trace continue correspondante. L'identification à l'espace Sobolev
-        intrinsèque et le théorème de trace pour la mesure volumique physique
-        restent ouverts.
+        intrinsèque reste ouverte ; la trace du graphe `H¹` pour les volumes
+        canoniques physiques est maintenant fermée ci-dessous.
       - [x] Instancier le graphe `H¹` avec les volumes canoniques physiques du
         spacetime et du throat, prouver densité/complétude et ramener exactement
         l'existence de la trace continue à l'unique inégalité lisse
-        codimension-un `CanonicalPhysicalH1TraceBound`. La preuve analytique
-        de cette inégalité reste ouverte.
+        codimension-un `CanonicalPhysicalH1TraceBound`, puis prouver cette
+        inégalité et construire la trace canonique inconditionnelle.
         - [x] Prouver l'inégalité de trace ponctuelle FTC exacte en dimension
           normale un, puis sa version intégrée fibre-par-fibre par Fubini.
           - [x] Construire la latitude équatoriale tordue, son signe sous la
@@ -743,7 +829,7 @@ par toute évolution admissible.
             fini, prouver somme des poids égale à un, poids maximal au moins
             `1/card`, puis la borne ponctuelle par la norme du frame et la norme
             `L1` des coefficients normaux locaux.
-          - [ ] Instancier `CanonicalLatitudeCoareaBound` par la formule de
+          - [x] Instancier `CanonicalLatitudeCoareaBound` par la formule de
             coaire physique pour `Measure.toSphere`.
             - [x] Construire la mesure produit du collier, prouver la
               continuité jointe de la latitude, l'intégrabilité
@@ -751,11 +837,11 @@ par toute évolution admissible.
               l'identité avec la norme du premier jet et la borne de densité
               `≤ 3 × jet`; en déduire `CanonicalLatitudeCoareaBound` depuis
               une unique domination de mesures explicite.
-            - [ ] Prouver
+            - [x] Prouver
               `CanonicalLatitudeMeasureToSphereCoareaDomination`, c'est-à-dire
               la domination du pushforward du collier par
-              `cos(1)⁻² • intrinsicCanonicalLorentzVolumeMeasure`. Mathlib ne
-              fournit pas la désintégration en latitudes de `Measure.toSphere`.
+              `cos(1)⁻² • intrinsicCanonicalLorentzVolumeMeasure`, via une
+              désintégration radiale/sphérique puis polaire explicite.
               - [x] Factoriser exactement le collier par le quotient, identifier
                 le volume intrinsèque comme pushforward du domaine fondamental
                 et réduire ce contrat à
@@ -764,17 +850,46 @@ par toute évolution admissible.
                 mesure temporelle par produit et déduire
                 `CanonicalLatitudeFundamentalMeasureDomination` d'une unique
                 inégalité de latitude sphérique pure.
-              - [ ] Prouver `CanonicalPositiveLatitudeMeasureDomination` pour
-                la seule carte `S² × Ioc(0,1) → S³`; temps et quotient sont
-                désormais entièrement éliminés du verrou.
-          - [ ] Instancier `CanonicalNormalFrameReconstructionBound` par une
+              - [x] Réduire `CanonicalPositiveLatitudeMeasureDomination` à
+                la formule de pushforward pondérée exacte, en prouvant la
+                minoration uniforme du jacobien `cos(normal)²` sur `Ioc(0,1)`.
+                - [x] Réduire `CanonicalPositiveLatitudeWeightedMapFormula`
+                  à `CanonicalPositiveLatitudeEuclideanConeJacobianFormula`,
+                  une identité de volume du cône euclidien 4D sans mesure
+                  sphérique cible ; `Measure.toSphere_apply'` ferme ensuite
+                  formellement toute la chaîne.
+                  - [x] Caractériser exactement l'image comme la bande
+                    `x₀ ∈ Ioc(0,sin 1)`, construire l'inverse `arcsin`/queue,
+                    l'homéomorphisme et l'équivalence mesurable du collier.
+                  - [x] Fermer directement le cône par le split orthonormal
+                    `ℝ⁴ ≃ ℝ³ × ℝ`, la désintégration `S² × r²dr`, les
+                    coordonnées polaires planes, l'identification exacte de
+                    l'image et `∫₀¹ r³ dr = 1/4`. Le certificat de chart
+                    générique reste une API alternative, pas une obligation.
+          - [x] Instancier `CanonicalNormalFrameReconstructionBound` par une
             borne compacte uniforme des coefficients normaux et leur
             intégrabilité ; sa recombinaison avec la coaire est déjà fermée.
             - [x] Sous `CanonicalLatitudeNormalLiftContinuous`, prouver par
               compacité la borne uniforme des coefficients, l'intégrabilité,
               la domination énergétique et construire tout le package B.
-            - [ ] Prouver la continuité jointe du relevé tangent canonique
-              `canonicalLatitudeNormalLift` pour rendre B inconditionnel.
+            - [x] Identifier `canonicalLatitudeNormalLift` au `tangentMap` du
+              collier sur la section verticale lisse et réduire sa continuité
+              au caractère `C¹` joint de la latitude sphérique élémentaire.
+              - [x] Prouver `EquatorialLatitudeJointContMDiffOne` en fait en
+                classe `C∞`, puis construire B inconditionnellement.
+          - [x] Combiner la reconstruction normale inconditionnelle et la
+            coaire pondérée en la borne et l'opérateur de trace canoniques,
+            prouver l'accord sur les champs lisses et l'existence, désormais
+            sans argument conditionnel grâce à la formule radiale--polaire.
+          - [x] Définir l'espace de Dirichlet physique homogène comme le noyau
+            de cette trace, puis prouver fermeture, complétude, non-vacuité,
+            caractérisation exacte et accord avec les champs lisses de trace
+            canonique `L²` nulle.
+          - [x] Construire une renormation hilbertienne canonique du graphe
+            de premier jet par produits finis `ℓ²`/`WithLp 2`, fermer l'image
+            des jets lisses et prouver une équivalence linéaire continue avec
+            la graph-norme existante, compatible avec l'inclusion lisse. Cela
+            ne constitue pas encore une identification Sobolev intrinsèque.
       - [x] Plonger le vrai cœur scalaire statique dans le graphe `H¹`
         existant, prendre sa clôture complète et prouver que le pont continu
         depuis le Hilbert d'énergie existe si et seulement si la borne de
@@ -863,10 +978,17 @@ par toute évolution admissible.
       - [x] Bundler ce pullback en section `C∞` sous l'unique contrat local
         `AnalyticPTTensorPullbackLocalSmoothness`, puis prouver involution et
         préservation du sous-domaine lorentzien lisse.
-      - [ ] Décharger ce contrat local dans les trivialisations du bundle
-        `Hom(TM, Hom(TM, ℝ))`; Mathlib ne fournit que le pullback lisse des
-        champs de vecteurs, pas celui de cette section dépendante imbriquée.
-        Le musical et BV restent ensuite séparés.
+      - [x] Décharger inconditionnellement ce contrat local dans les
+        trivialisations du bundle `Hom(TM, Hom(TM, ℝ))` : les coordonnées
+        de `mfderiv PT` sont lisses et le pullback est la double précomposition
+        exacte dans le bundle Hom imbriqué. Le musical tensoriel lisse et BV
+        restent séparés.
+        - [x] Transporter aussi l'équivalence musicale attachée au même
+          tenseur, construire le pullback PT involutif de la vraie
+          `SmoothGeneralLorentzMetric`, l'échange des deux secteurs et prouver
+          la covariance pointwise de la densité scalaire holonomique avec
+          champ et frame transportés. L'invariance de l'action intégrée
+          spacetime reste séparée.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
   - [x] Pour une métrique lorentzienne tensorielle générale munie de son
     isomorphisme musical exact, construire pointwise l'inverse, le Gram,

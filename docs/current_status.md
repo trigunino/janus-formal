@@ -301,22 +301,36 @@ The exhaustive remaining-work checklist is
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Under the sole joint-continuity predicate `CanonicalLatitudeNormalLiftContinuous`, compactness gives uniform coefficients, integrability and the complete normal-frame reconstruction package. Thus only this tangent-lift continuity and the independent physical coarea bound remain before the trace follows. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. Raw general covariant tensors now have exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Under the single local contract `AnalyticPTTensorPullbackLocalSmoothness`, this bundles into an involutive smooth pullback preserving the smooth Lorentz domain; discharging that nested Hom-bundle contract, the full metric action, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
-  The remaining physical coarea input is now exactly the single domination
-`CanonicalPositiveLatitudeMeasureDomination`, the pure round-sphere inequality
-for `S² × Ioc(0,1) → S³`. Product reassociation, the unchanged time factor,
-exact quotient factorization, intrinsic-volume pushforward identity, joint
-collar continuity, frame-energy integrability, Fubini/map reduction,
-graph-norm identity and density domination are unconditional downstream of it.
+configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Joint `C∞` latitude regularity proves `CanonicalLatitudeNormalLiftContinuous`, and the radial--polar Euclidean calculation now proves the coarea inequality. The canonical physical trace bound, continuous operator, smooth agreement and existence theorem are therefore unconditional. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General covariant tensors now have an exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Tangent and nested Hom-bundle coordinates discharge `AnalyticPTTensorPullbackLocalSmoothness` unconditionally, yielding an involutive smooth pullback on the smooth Lorentz domain. The attached musical equivalence now pulls back with the same tensor, giving an involutive PT action and sector exchange on `SmoothGeneralLorentzMetric`; the holonomic scalar density is pointwise PT-covariant with coherently transported field and frame. Integrated spacetime PT invariance, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  The normal-lift continuity cited above is now unconditional: the elementary
+latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
+map on a smooth vertical section, and the compact frame reconstruction package
+is constructed. The positive collar is now homeomorphic and measurably
+equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
+  `arcsin`/normalized-tail inverse. The weighted sphere formula is reduced by
+  `Measure.toSphere_apply'` to the ordinary four-dimensional cone identity
+  `CanonicalPositiveLatitudeEuclideanConeJacobianFormula`. That identity is now
+  proved directly: an exact orthonormal split, spherical radial disintegration,
+  planar polar coordinates and `∫₀¹ r³ dr = 1/4` close the source measure and
+  Jacobian. Coarea and the complete canonical physical trace follow with no
+  residual certificate or analytic assumption.
+  The homogeneous physical Dirichlet graph-`H¹` space is now the kernel of
+  that trace. It is closed, complete and nonempty, with exact membership and
+  smooth zero-`L²`-trace characterizations. A nested finite `ℓ²`/`WithLp 2`
+  renorming now closes the smooth-jet image in a genuine Hilbert space and is
+  continuously linearly equivalent to the original graph norm, with exact
+  agreement on smooth fields. This does not identify an intrinsic Sobolev
+  space.
   PT/exchange additionally acts on the complete current independent-field
   package and all its componentwise smooth throat boundary data, with exact
   trace equivariance and preservation of the full Dirichlet condition.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
-  cancellation of the scalar BRST square. Extension to every field/antifield
-  and BV remains open. The spatial `so(3)` rotations are now explicit on the
-  cover, tangent to `S³`, deck-equivariant, closed under their nonabelian Lie
+  cancellation of the scalar BRST square. Extension to general spacetime
+  fields and a functional/global BV complex remains open. The spatial `so(3)`
+  rotations are now explicit on the cover, tangent to `S³`, deck-equivariant,
+  closed under their nonabelian Lie
   table, and equipped with an injective smooth descent contract to quotient
   ghosts. The three tangent `C∞` cover sections are now explicit, faithful and
   nonzero. Bracket naturality under quotient projection is now proved through
@@ -338,10 +352,31 @@ graph-norm identity and density domination are unconditional downstream of it.
   so `LLThroatBRSTCompletion` is now unconditional. The eight positive
   diagonal throat-metric magnitudes now have logarithmic ghost action,
   globally positive exponential curves and an odd Leibniz square-zero BRST,
-  combined unconditionally with LL. A first finite field/antifield doublet and
-  canonical pairing are explicit; spacetime-general metrics and the full BV
-  master equation remain. Independently, real translation of the mapping-torus
-  coordinate now descends to a nontrivial complete analytic real action on the
+  combined unconditionally with LL. The finite field/antifield seed is now a
+  genuine `32`-dimensional BV master model: its canonical odd Darboux
+  antibracket is explicit, the nonzero action `S(q,p)=p(dq)` is even, satisfies
+  `(S,S)=0`, generates the square-zero odd BRST vector field and embeds exactly
+  into the throat doublet. Fibrewise promotion to smooth fields on the actual
+  throat gives a smooth square-zero BRST and master density, pointwise CME and
+  Hamiltonian generation, plus a canonical integrated action with an explicit
+  nonzero constant witness. Its exact affine first variation, gradient/BRST
+  identity, odd antibracket on represented analytic ultralocal functionals and
+  integrated CME are also proved. The canonical throat volume is now proved
+  PT-invariant directly from its round-`S²` times fundamental-interval
+  pushforward; consequently the integrated master action, first variation,
+  represented functional value, odd antibracket and CME are PT-covariant
+  without a measure hypothesis. This closure is only for the represented
+  ultralocal BV sector on the actual throat. The same constant finite
+  `32`-dimensional phase fibre is now also promoted to `C∞` fields on the true
+  spacetime D8 quotient: its BRST is smooth and square-zero, restriction
+  recovers the throat construction, and the canonical spacetime volume gives
+  a finite nonzero master action with pointwise and integrated CME. The round
+  `S³` reflection and signed-period reversal are now proved to preserve that
+  canonical quotient volume; PT is therefore an involution commuting with
+  BRST, and the integrated master action and CME are unconditionally
+  PT-covariant. This only removes the base-space restriction; it is not a BV theory of general tensor
+  metrics and supplies no nonlocal/completed functional bracket. Independently, real translation of the
+  mapping-torus coordinate now descends to a nontrivial complete analytic real action on the
   actual D8 quotient; every time slice is an analytic diffeomorphism and the
   full action map `ℝ × D8 → D8` is jointly analytic. Pullback
   restricts analytically to the throat and gives an exact complete pullback
@@ -402,11 +437,42 @@ graph-norm identity and density domination are unconditional downstream of it.
   now reduced exactly: split positive charpoly implies the corresponding
   minpoly facts and Mathlib supplies Jordan--Chevalley, but no Jordan-basis or
   rational-canonical-form constructor. One named external bridge,
-  `PositiveRealJordanBasisBridge4`, is the sole missing input; it implies the
-  already closed square-root and Sylvester conclusions for every raw matrix.
+  `PositiveRealJordanBasisBridge4`, captures the remaining general input. On
+  the Hermitian sector it is now discharged constructively: Mathlib's spectral
+  theorem supplies `eigenvectorUnitary`, whose positive eigenvalues give the
+  exact diagonal member of `PositiveRealJordanPresentation4`; this includes
+  every `PosDef` matrix and yields the already closed square-root and Sylvester
+  conclusions. On the non-Hermitian complement, the sole presentation-level
+  input is now the strictly lower-level
+  `PositiveRealNonHermitianJordanChainBasisResidual4`: choose one invertible
+  real matrix of chain vectors, its intertwining equation and one of the five
+  partitions of `Fin 4`. The matrix inverse, unified presentation, exact root
+  and Sylvester bijectivity are all derived downstream. Constructing that chain
+  basis remains the only positive raw presentation residue.
   At root-existence level the whole positive-semidefinite raw locus is now
-  unconditional through Mathlib `CFC.sqrt`; the positive residual is therefore
-  exactly the split-positive non-PSD locus.
+  unconditional through Mathlib `CFC.sqrt`. A genuinely non-PSD locus is now
+  closed as well: every raw relation `(A-λI)(A-μI)=0`, `λ,μ>0`, has the exact
+  affine root `(A+√λ√μ I)/(√λ+√μ)`, including the repeated size-two Jordan
+  case `λ=μ`. The explicit `canonicalJordan211Target λ λ λ` witness is proved
+  non-Hermitian and non-PSD. This is now extended to every positive
+  single-eigenvalue relation `(A-λI)^4=0`: the third-order Taylor polynomial of
+  `sqrt` gives an exact raw root. The strict size-four Jordan block is proved
+  non-Hermitian, non-PSD and outside every quadratic annihilator. A genuinely
+  multivalue raw locus is now closed too: for distinct positive `λ,μ`, every
+  relation `(A-λI)²(A-μI)²=0` has an explicit cubic Hermite root matching
+  both values and derivatives of `sqrt`. Its residual polynomial is proved
+  divisible by both squared factors, hence by `minpoly A`. The canonical
+  Jordan `2+2` witness is non-Hermitian, non-PSD and outside both the quadratic
+  and single-eigenvalue quartic loci. The distinct positive `3+1` relation
+  `(A-λI)³(A-μI)=0` is now closed as well: its cubic matches the value, first
+  derivative and second derivative of `sqrt` at `λ`, and the value at `μ`.
+  Three vanishing residual jets give the cubic factor, coprimality gives the
+  remaining linear factor, and minpoly evaluation proves the exact square.
+  The canonical Jordan `3+1` witness is non-Hermitian, non-PSD and outside the
+  quadratic, single-eigenvalue quartic and double-double loci. The exact
+  remaining obligation is `PositiveOutsideKnownLociAndTripleSingleRootResidual4`.
+  Constructing a cubic `q` uniformly from an arbitrary split-positive minpoly
+  remains open beyond the closed double-double and `3+1` cases.
   Outside the positive locus, determinant negativity and every simple
   negative diagonal eigenvalue are now exact no-go criteria; determinant
   positivity is proved insufficient by an explicit `4×4` witness. Paired
