@@ -1995,7 +1995,8 @@ champs et avec les mêmes conditions au bord.
           image est totale et donc qu'il est bijectif. Cette exactitude reste
           celle du modèle algébrique ponctuel, sans assertion sur l'opérateur
           différentiel global. Son inverse linéaire est construit explicitement
-          et ses deux identités de composition sont prouvées.
+          et ses deux identités de composition sont prouvées ; noyau et image
+          sont également classifiés dans les cas covecteur nul et non nul.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
