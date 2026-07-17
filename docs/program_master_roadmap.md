@@ -64,8 +64,10 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   unconditional smooth dependent tensor section. The tied musical
   equivalence now pulls back with the same tensor, yielding an involutive PT
   action/exchange on general smooth Lorentz metrics and pointwise covariance
-  of the holonomic scalar density. Integrated spacetime invariance and BV
-  remain open;
+  of the holonomic scalar density. Integration against the canonical quotient
+  Lorentz measure has exact integrability transport and unconditional PT
+  invariance. A tangent family is still supplied explicitly and this reference
+  measure is not identified with every general metric's volume;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -486,17 +488,22 @@ New controlled subgates are now checked:
   `(A-λI)³(A-μI)=0`, `λ≠μ`, is now closed by a cubic matching the order-two
   jet at `λ` and the value at `μ`; cubic-times-linear divisibility, minpoly
   congruence and the exact matrix square are proved. Its canonical Jordan
-  witness lies outside every earlier positive locus. The exact complement is
-  now `PositiveOutsideKnownLociAndTripleSingleRootResidual4`; uniform Hermite
-  interpolation for an arbitrary split-positive minpoly remains open. For nonpositive spectra, determinant/simple
+  witness lies outside every earlier positive locus. Hermite interpolation
+  also closes `2+1+1`, and a four-node Lagrange cubic closes
+  `1+1+1+1`. Splitting and degree four extract the positive charpoly roots;
+  Cayley--Hamilton plus their exhaustive equality partition selects one of
+  these five annihilator profiles. Raw root existence is therefore
+  unconditional on `PositiveRealSplitCharpoly4`; a Jordan-chain presentation
+  and global Sylvester regularity remain separate. For nonpositive spectra, determinant/simple
   negative-eigenvalue obstructions, positive-determinant counterexample,
   paired-negative constructions and the exact Jordan parity/zero-block
   criterion are closed. Pure complex-conjugate `2×2`, `2+2` and non-semisimple
   Jordan-chain roots are also explicit with their cut/zero behavior; only the
   raw relations `(A-aI)²=-b²I` have an explicit affine root, including the
-  repeated complex pair. The three presentation/classification bridges are now
-  reduced at root level to outside-`3+1` and exact Jordan
-  necessity/sufficiency residuals; the complete physical domain remains open;
+  repeated complex pair. The remaining presentation/classification bridges
+  concern positive Jordan-chain/Sylvester data and the exact nonpositive or
+  complex Jordan necessity/sufficiency residuals; the complete physical domain
+  remains open;
 - **T/C** on the selected global fixed-frame diagonal Lorentz domain, both
   metrics share a strict timelike direction, the nonnegative closure and
   spectral frontier are exact, and the positive root/Candidate-A chain is
@@ -596,7 +603,9 @@ New controlled subgates are now checked:
   nonzero canonical-volume action and pointwise/integrated CME on the actual
   spacetime quotient. Its canonical volume is unconditionally PT-preserved,
   so the spacetime master action and integrated CME are also PT-covariant.
-  General spacetime tensor metrics and nonlocal/completed
+  Its affine first variation, exact integrated directional derivative and odd
+  bracket/CME on represented analytic ultralocal spacetime functionals are
+  closed. General spacetime tensor metrics and arbitrary nonlocal/completed
   BV functionals remain;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
