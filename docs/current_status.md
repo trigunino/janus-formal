@@ -301,7 +301,7 @@ The exhaustive remaining-work checklist is
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. Intrinsic Sobolev identification and that analytic inequality remain open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Under the sole joint-continuity predicate `CanonicalLatitudeNormalLiftContinuous`, compactness gives uniform coefficients, integrability and the complete normal-frame reconstruction package. Thus only this tangent-lift continuity and the independent physical coarea bound remain before the trace follows. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
@@ -310,14 +310,32 @@ The exhaustive remaining-work checklist is
   cover, tangent to `S³`, deck-equivariant, closed under their nonabelian Lie
   table, and equipped with an injective smooth descent contract to quotient
   ghosts. The three tangent `C∞` cover sections are now explicit, faithful and
-  nonzero; naturality of the bracket under quotient projection is the sole
-  remaining geometric bridge. Independently, real translation of the mapping-torus
+  nonzero. Bracket naturality under quotient projection is now proved through
+  a local radial diffeomorphism, yielding an unconditional faithful, nonzero
+  and nonabelian closed quotient `so(3)` ghost triple. Its coefficient CE
+  differential is now explicit on the exterior algebra and satisfies the odd
+  parity, Koszul Leibniz, square-zero, generator and nonlinear-ghost rules, so
+  the closed three-generator data are unconditional. A sign-consistent total
+  map `D⊗id + action` is now globally odd, Koszul-Leibniz and square-zero and
+  gives an unconditional `Z2` differential. The legacy minus sign is retained
+  with the exact obstruction that its scalar square equals twice the iterated
+  ghost action. The corrected differential now extends componentwise to the
+  current linear matter, gauge-coordinate, internal-ghost and auxiliary
+  sectors, with square zero on each sector, their product and the projection
+  from `IndependentFields`. The three LL/throat blocks have a precise
+  `LLThroatBRSTCompletion`; their infinitesimal rotation action, positive
+  metrics, antifields and BV remain. Independently, real translation of the mapping-torus
   coordinate now descends to a nontrivial complete analytic real action on the
-  actual D8 quotient; every time slice is an analytic diffeomorphism. Pullback
+  actual D8 quotient; every time slice is an analytic diffeomorphism and the
+  full action map `ℝ × D8 → D8` is jointly analytic. Pullback
   restricts analytically to the throat and gives an exact complete pullback
   action on all eight blocks of the current `IndependentFields` package, with
   zero/addition/inverse laws, PT conjugation and compatibility with all five
-  induced fields. Integration of an arbitrary ghost remains open. An intrinsic positive fixed-patch energy replacement is
+  induced fields. An explicit descended periodic cosine field is sent to a
+  distinct field by the half-period pullback. Embedding it in the first matter
+  component produces a complete `IndependentFields` configuration moved by
+  the same half-period, so the actual full-package representation is genuinely
+  nontrivial. Integration of an arbitrary ghost remains open. An intrinsic positive fixed-patch energy replacement is
   also uniformly equivalent to the implemented localized graph density and
   gives unconditional uniform graph ellipticity; equality with the historical
   variable-`chartAt` density remains open.
@@ -340,8 +358,36 @@ The exhaustive remaining-work checklist is
   coefficients are now unconditionally continuous. The key
   `c₃ = -tr(√A)` result avoids a varying eigenbasis by normalizing the positive
   spectrum into `[0,1]⁴`, descending the symmetric square-root sum through a
-  compact quotient, and denormalizing. Turning these coefficient results into
-  the final global matrix-selector continuity/regularity bridge remains.
+  compact quotient, and denormalizing. The rational reconstruction formula
+  then proves global continuity of the matrix selector, local IFT stability
+  and the exact inverse-Sylvester derivative on the whole positive-
+  diagonalizable locus. The similarity-invariant index-two unipotent locus
+  `(A-I)²=0` now has its canonical polynomial root, exact square, continuous
+  stratum restriction and bijective Sylvester operator; it glues to the
+  positive selector on the exact intersection `{I}`. This is now extended to
+  the full locus `(A-I)³=0` by `I+N/2-N²/8`, with a strict index-three witness,
+  similarity, a polynomial bilateral Sylvester inverse, continuous stratum
+  restrictions and exact extension of the previous gluing. The final possible
+  unipotent index in dimension four is now also closed by
+  `I+N/2-N²/8+N³/16`, including a strict size-four witness and a polynomial
+  bilateral Sylvester inverse. Thus every unipotent `4×4` Jordan stratum is
+  covered. Rescaling now covers every single positive eigenvalue `λ>0` with
+  `(A-λI)⁴=0`, including joint continuity, similarity, a bijective explicit
+  Sylvester inverse and exact agreement with the unipotent selector at `λ=1`.
+  The positive two-eigenvalue `2+2` primary stratum is also closed blockwise,
+  with exact square, rebase by similarity, continuity and a finite-series
+  Sylvester inverse. The positive `3+1` and `2+1+1` strata now have the same
+  guarantees. Thus every real strictly-positive Jordan partition of four is
+  covered when an explicit presentation is supplied. A single inductive
+  presentation type now unifies all five partitions, with a selector, exact
+  square, bijective Sylvester, per-stratum continuity and combinatorial
+  exhaustivity. Only the raw-matrix positive Jordan presentation theorem and
+  nonpositive/complex admissible spectra remain. The raw positive theorem is
+  now reduced exactly: split positive charpoly implies the corresponding
+  minpoly facts and Mathlib supplies Jordan--Chevalley, but no Jordan-basis or
+  rational-canonical-form constructor. One named external bridge,
+  `PositiveRealJordanBasisBridge4`, is the sole missing input; it implies the
+  already closed square-root and Sylvester conclusions for every raw matrix.
   For every finite measure, the scalar integrability contract is now automatic
   on the affine-stable class with continuous fixed-frame covector components,
   including arbitrary nonzero constant scalars; general tensorial continuity
@@ -395,10 +441,11 @@ The exhaustive remaining-work checklist is
   The set quotient by complete-flow orbits is constructed. For any target,
   functions on this quotient are equivalent to configuration-space functions
   invariant under the flow; the real-valued specialization gives the same
-  equivalence for actions, including the radial action. No topology or smooth
-  structure is put on this orbit quotient, and it is not yet instantiated by
-  the induced action of the concrete D8 time flow on the full configuration
-  space.
+  equivalence for actions, including the radial action. The concrete D8 time
+  pullback now separately instantiates this construction on the complete
+  current `IndependentFields` package, with an exact orbit setoid and the same
+  invariant-function equivalence. No topology or smooth structure is put on
+  either orbit quotient.
   In a supplied reduced two-metric chart, the relative quadratic action now has
   its actual Frechet derivative: independent variations recover both Euler
   components, diagonal/sign-linked variations recover their sum/difference,
