@@ -105,6 +105,38 @@ theorem d9PairedGhostPrincipalSymbol_bijective
   ⟨d9PairedGhostPrincipalSymbol_injective covector hCovector,
     d9PairedGhostPrincipalSymbol_surjective covector hCovector⟩
 
+/-- Explicit inverse of the paired symbol at a nonzero covector. -/
+def d9PairedGhostPrincipalSymbolInverse (covector : TangentVector3) :
+    D9PairedGhostCoordinateSpace →ₗ[Real] D9PairedGhostCoordinateSpace :=
+  (normSquared covector)⁻¹ • LinearMap.id
+
+theorem d9PairedGhostPrincipalSymbolInverse_left
+    (covector : TangentVector3) (hCovector : covector ≠ zeroTangent)
+    (coordinate : D9PairedGhostCoordinateSpace) :
+    d9PairedGhostPrincipalSymbolInverse covector
+        (d9PairedGhostPrincipalSymbol covector coordinate) = coordinate := by
+  have hNorm : normSquared covector ≠ 0 :=
+    ne_of_gt (norm_squared_positive_of_nonzero covector hCovector)
+  simp [d9PairedGhostPrincipalSymbolInverse, d9PairedGhostPrincipalSymbol, hNorm]
+
+theorem d9PairedGhostPrincipalSymbolInverse_right
+    (covector : TangentVector3) (hCovector : covector ≠ zeroTangent)
+    (coordinate : D9PairedGhostCoordinateSpace) :
+    d9PairedGhostPrincipalSymbol covector
+        (d9PairedGhostPrincipalSymbolInverse covector coordinate) = coordinate := by
+  have hNorm : normSquared covector ≠ 0 :=
+    ne_of_gt (norm_squared_positive_of_nonzero covector hCovector)
+  simp [d9PairedGhostPrincipalSymbolInverse, d9PairedGhostPrincipalSymbol, hNorm]
+
+/-- The paired nonzero symbol as an effective linear equivalence. -/
+def d9PairedGhostPrincipalSymbolEquiv
+    (covector : TangentVector3) (hCovector : covector ≠ zeroTangent) :
+    D9PairedGhostCoordinateSpace ≃ₗ[Real] D9PairedGhostCoordinateSpace where
+  toLinearMap := d9PairedGhostPrincipalSymbol covector
+  invFun := d9PairedGhostPrincipalSymbolInverse covector
+  left_inv := d9PairedGhostPrincipalSymbolInverse_left covector hCovector
+  right_inv := d9PairedGhostPrincipalSymbolInverse_right covector hCovector
+
 theorem d9PairedGhostPrincipalSymbol_eq_zero_iff
     (covector : TangentVector3) (hCovector : covector ≠ zeroTangent)
     (coordinate : D9PairedGhostCoordinateSpace) :
