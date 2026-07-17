@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**485 fermées sur 610 ; 125 ouvertes**.
+**486 fermées sur 611 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1850,6 +1850,11 @@ champs et avec les mêmes conditions au bord.
     l'égalité de la trace nucléaire avec la trace spectrale déjà construite.
     - [x] Identifier directement la trace nucléaire PT à la trace nucléaire
       positive correspondante.
+    - [x] Sur chaque demi-droite `t ≥ ε > 0`, dominer uniformément les
+      coefficients et les normes des termes de rang un par la série sommable
+      au temps `ε`, puis prouver la continuité de la trace nucléaire réelle et
+      sa covariance PT. La dérivabilité en temps et le passage au vrai
+      opérateur Janus global restent ouverts.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai
   espace de paramètres.
   - [x] Construire une famille holomorphe finite-mode symétrique, Fredholm au
