@@ -400,14 +400,21 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
         et hors des loci quadratique, mono-valeur quartique et double-double.
         Le résidu exact est maintenant
         `PositiveOutsideKnownLociAndTripleSingleRootResidual4`.
-      - [ ] Construire uniformément, au-delà des cas double-double et `3+1`
-        fermés,
-        l'interpolant d'Hermite cubique pour tout minpoly scindé positif :
-        `natDegree q ≤ 3` et
-        `minpoly A ∣ q²-X`. Le contrat
-        `PositiveOutsideKnownLociCubicMinpolyResidual4`, son évaluation
-        matricielle et l'implication vers la fermeture brute sont déjà prouvés ;
-        seule l'existence uniforme de `q` reste à formaliser.
+      - [x] Construire uniformément l'interpolant cubique pour tout profil de
+        multiplicité d'un minpoly scindé positif : `natDegree q ≤ 3` et
+        `minpoly A ∣ q²-X`.
+        - [x] Fermer le profil `2+1+1` par l'interpolant d'Hermite qui matche
+          valeur et dérivée au nœud double et les valeurs aux deux nœuds
+          simples, puis réduire le résidu exact au profil quatre-simples.
+        - [x] Fermer le profil `1+1+1+1` par l'interpolant de Lagrange cubique,
+          prouver les quatre évaluations, la divisibilité du résidu et
+          `q(A)²=A` sans base propre choisie.
+        - [x] Extraire les quatre racines positives avec multiplicité depuis le
+          charpoly scindé, utiliser Cayley--Hamilton et classifier
+          exhaustivement leurs égalités pour obtenir l'un des cinq
+          annihilateurs déjà fermés. L'existence brute d'une racine réelle est
+          ainsi inconditionnelle sur `PositiveRealSplitCharpoly4`; seule la
+          présentation de Jordan/Sylvester globale reste séparée.
       - [x] Fermer le sous-secteur hermitien à spectre strictement positif par
         le théorème spectral de Mathlib : construire la présentation diagonale
         depuis `eigenvectorUnitary`, prouver sa cible exacte, en déduire
@@ -755,6 +762,11 @@ par toute évolution admissible.
                           et CME pointwise/intégrée. Cette étape reste
                           ultralocale à fibre constante et ne construit pas le
                           BV des métriques tensoriales générales.
+                          - [x] Dériver sur le spacetime la première variation
+                            pointwise et intégrée, l'expansion quadratique et la
+                            vraie dérivée directionnelle ; transporter aussi
+                            l'anticrochet des fonctionnelles analytiques
+                            ultralocales et prouver leur CME intégrée.
                           - [x] Prouver que la réflexion ronde `S³` et
                             `t ↦ period-t` préservent la mesure spacetime
                             canonique poussée au quotient, puis rendre
@@ -987,8 +999,12 @@ par toute évolution admissible.
           tenseur, construire le pullback PT involutif de la vraie
           `SmoothGeneralLorentzMetric`, l'échange des deux secteurs et prouver
           la covariance pointwise de la densité scalaire holonomique avec
-          champ et frame transportés. L'invariance de l'action intégrée
-          spacetime reste séparée.
+          champ et famille tangentielle transportés.
+          - [x] Intégrer cette densité contre la mesure lorentzienne canonique
+            du quotient, prouver le transport exact de l'intégrabilité et
+            l'invariance PT de l'action générale. La famille tangentielle reste
+            un input explicite et cette mesure de référence n'est pas déclarée
+            volume canonique de toute métrique générale.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
   - [x] Pour une métrique lorentzienne tensorielle générale munie de son
     isomorphisme musical exact, construire pointwise l'inverse, le Gram,
