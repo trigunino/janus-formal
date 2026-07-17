@@ -3603,6 +3603,19 @@ PROGRAM_P_GATES = {
             "theorem d9U1Ghost_eq_zero_of_principalSymbol_eq_zero",
         ),
     ),
+    "P0EFTJanusD9DiffeomorphismGhostPrincipalSymbolBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatTangentToD9",
+            "theorem throatTangentToD9_zero",
+            "theorem throatTangentToD9_injective",
+            "def d9DiffeomorphismGhostField",
+            "theorem d9DiffeomorphismGhostField_injective",
+            "theorem d9DiffeomorphismGhostField_lieBracket",
+            "theorem ghostPrincipalSymbol_d9Diffeomorphism_diffeomorphismGhost",
+            "theorem ghostPrincipalSymbol_d9Diffeomorphism_eq_zero_iff",
+        ),
+    ),
     "P0EFTJanusD8NormalBundleD9DisplacementBridge4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5712,6 +5725,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8CompleteInducedFieldVariationChain4DProved",
         "paD9D10ExactFieldContentBridge4DProved",
         "paD9U1GhostPrincipalSymbolBridge4DProved",
+        "paD9DiffeomorphismGhostPrincipalSymbolBridge4DProved",
         "paD8NormalBundleD9DisplacementBridge4DProved",
         "paEffectiveD8GlobalHolonomicScalarDifferentialProved",
         "paEffectiveD8GlobalHolonomicScalarAction4DProved",
