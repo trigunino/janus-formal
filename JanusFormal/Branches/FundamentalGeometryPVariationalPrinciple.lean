@@ -90,6 +90,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicD8ScalarDirichletFlux4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeScalarIPP4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeScalarGreenCurrent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeScalarEnergyCurrent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeScalarNormalCurrent4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricDiffeomorphismScalarAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricDiffeomorphismNoether4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricDiffeomorphismPullback4D
@@ -263,6 +265,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveRootScalarSpectralReduction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveRootTraceContinuity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalizableGlobalRootContinuity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalizableGlobalIFTAtlasLift4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPositiveDiagonalizableRootFrontierControl4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzJordanRelativeRoot4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusLorentzJordanAdmissibleSignature4D
@@ -443,6 +446,7 @@ structure ProgramStatus where
   paPositiveRootScalarSpectralReduction4DProved : Prop
   paPositiveRootTraceContinuity4DProved : Prop
   paPositiveDiagonalizableGlobalRootContinuity4DProved : Prop
+  paPositiveDiagonalizableGlobalIFTAtlasLift4DProved : Prop
   paLorentzJordanRelativeRoot4DProved : Prop
   paLorentzJordanAdmissibleSignature4DProved : Prop
   paLorentzJordanSylvesterRegular4DProved : Prop
@@ -564,6 +568,8 @@ structure ProgramStatus where
   paEffectiveD8IntrinsicD8ScalarDirichletFlux4DProved : Prop
   paEffectiveD8CanonicalLatitudeScalarIPP4DProved : Prop
   paEffectiveD8CanonicalLatitudeScalarGreenCurrent4DProved : Prop
+  paEffectiveD8CanonicalLatitudeScalarEnergyCurrent4DProved : Prop
+  paEffectiveD8CanonicalLatitudeScalarNormalCurrent4DProved : Prop
   paEffectiveD8GeneralLorentzMetricDiffeomorphismScalarAction4DProved : Prop
   paEffectiveD8GeneralLorentzMetricDiffeomorphismNoether4DProved : Prop
   paEffectiveD8GeneralLorentzMetricDiffeomorphismPullback4DProved : Prop
@@ -828,6 +834,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paPositiveRootScalarSpectralReduction4DProved /\
   s.paPositiveRootTraceContinuity4DProved /\
   s.paPositiveDiagonalizableGlobalRootContinuity4DProved /\
+  s.paPositiveDiagonalizableGlobalIFTAtlasLift4DProved /\
   s.paLorentzJordanRelativeRoot4DProved /\
   s.paLorentzJordanAdmissibleSignature4DProved /\
   s.paLorentzJordanSylvesterRegular4DProved /\
@@ -949,6 +956,8 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8IntrinsicD8ScalarDirichletFlux4DProved /\
   s.paEffectiveD8CanonicalLatitudeScalarIPP4DProved /\
   s.paEffectiveD8CanonicalLatitudeScalarGreenCurrent4DProved /\
+  s.paEffectiveD8CanonicalLatitudeScalarEnergyCurrent4DProved /\
+  s.paEffectiveD8CanonicalLatitudeScalarNormalCurrent4DProved /\
   s.paEffectiveD8GeneralLorentzMetricDiffeomorphismScalarAction4DProved /\
   s.paEffectiveD8GeneralLorentzMetricDiffeomorphismNoether4DProved /\
   s.paEffectiveD8GeneralLorentzMetricDiffeomorphismPullback4DProved /\
