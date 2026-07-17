@@ -57,6 +57,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleSpectralFunctionalCalculus
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceClass
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceContinuity
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceDerivative
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD7CircleHeatRegulatorBridge
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensities
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitReciprocalCrossDensityFrechet
@@ -772,6 +773,7 @@ structure ProgramStatus where
   paCircleSpectralFunctionalCalculusHeatEqualityProved : Prop
   paCircleHeatNuclearTraceClassProved : Prop
   paCircleHeatNuclearTraceContinuityProved : Prop
+  paCircleHeatNuclearTraceDerivativeProved : Prop
   paCircleDeterminantTopologicalVectorBundleProved : Prop
   paCircleFourierHermitianMetricFlatConnectionProved : Prop
   paProgramPD7CircleHeatRegulatorBridgeProved : Prop
@@ -1186,6 +1188,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paCircleSpectralFunctionalCalculusHeatEqualityProved /\
   s.paCircleHeatNuclearTraceClassProved /\
   s.paCircleHeatNuclearTraceContinuityProved /\
+  s.paCircleHeatNuclearTraceDerivativeProved /\
   s.paCircleDeterminantTopologicalVectorBundleProved /\
   s.paCircleFourierHermitianMetricFlatConnectionProved /\
   s.paProgramPD7CircleHeatRegulatorBridgeProved /\

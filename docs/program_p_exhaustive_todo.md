@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**486 fermées sur 611 ; 125 ouvertes**.
+**487 fermées sur 612 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1853,8 +1853,12 @@ champs et avec les mêmes conditions au bord.
     - [x] Sur chaque demi-droite `t ≥ ε > 0`, dominer uniformément les
       coefficients et les normes des termes de rang un par la série sommable
       au temps `ε`, puis prouver la continuité de la trace nucléaire réelle et
-      sa covariance PT. La dérivabilité en temps et le passage au vrai
-      opérateur Janus global restent ouverts.
+      sa covariance PT.
+      - [x] Absorber uniformément le facteur spectral de la dérivée par une
+        gaussienne au demi-temps, prouver la sommabilité uniforme des
+        dérivées, dériver la trace terme à terme pour tout temps positif et
+        conserver la covariance PT. Le passage au vrai opérateur Janus global
+        reste ouvert.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai
   espace de paramètres.
   - [x] Construire une famille holomorphe finite-mode symétrique, Fredholm au
