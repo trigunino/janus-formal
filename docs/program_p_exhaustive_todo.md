@@ -1934,8 +1934,10 @@ champs et avec les mêmes conditions au bord.
         gaussienne au demi-temps, prouver la sommabilité uniforme des
         dérivées, dériver la trace terme à terme pour tout temps positif,
         identifier la vraie `deriv`, prouver sa continuité sur chaque
-        demi-droite positive et conserver la covariance PT. Le passage au vrai
-        opérateur Janus global reste ouvert.
+        demi-droite positive et conserver la covariance PT. La série dérivée
+        est absolument sommable à tout temps positif et la dérivée spectrale,
+        donc la vraie dérivée, est non positive. Le passage au vrai opérateur
+        Janus global reste ouvert.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai
   espace de paramètres.
   - [x] Construire une famille holomorphe finite-mode symétrique, Fredholm au
