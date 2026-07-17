@@ -162,6 +162,32 @@ theorem circleHeatNuclearTraceReal_deriv_eq
       circleHeatNuclearTraceRealDerivative time.1 fold twist :=
   (circleHeatNuclearTraceReal_hasDerivAt time fold twist).deriv
 
+theorem circleHeatWeightRealDerivative_summable
+    (time : HeatTime) (fold : Fold) (twist : CircleTwist) :
+    Summable (fun mode : Int =>
+      circleHeatWeightRealDerivative time.1 fold twist mode) := by
+  apply Summable.of_norm_bounded
+    (circleHeatWeightRealDerivative_uniform_summable time fold twist)
+  intro mode
+  exact circleHeatWeightRealDerivative_norm_le time le_rfl fold twist mode
+
+theorem circleHeatNuclearTraceRealDerivative_nonpositive
+    (time : HeatTime) (fold : Fold) (twist : CircleTwist) :
+    circleHeatNuclearTraceRealDerivative time.1 fold twist ≤ 0 := by
+  unfold circleHeatNuclearTraceRealDerivative
+  apply tsum_nonpos
+  intro mode
+  exact mul_nonpos_of_nonpos_of_nonneg
+    (neg_nonpos.mpr
+      (circleOperatorSquaredEigenvalue_nonnegative fold twist mode))
+    (by unfold circleHeatWeightReal; exact (Real.exp_pos _).le)
+
+theorem circleHeatNuclearTraceReal_deriv_nonpositive
+    (time : HeatTime) (fold : Fold) (twist : CircleTwist) :
+    deriv (fun s : Real => circleHeatNuclearTraceReal s fold twist) time.1 ≤ 0 := by
+  rw [circleHeatNuclearTraceReal_deriv_eq time fold twist]
+  exact circleHeatNuclearTraceRealDerivative_nonpositive time fold twist
+
 /-- On every positive closed half-line, the actual derivative of the nuclear
 trace is continuous. -/
 theorem circleHeatNuclearTraceReal_deriv_continuousOn_Ici
