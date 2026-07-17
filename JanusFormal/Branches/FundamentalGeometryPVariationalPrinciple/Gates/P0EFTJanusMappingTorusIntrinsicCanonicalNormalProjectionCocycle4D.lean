@@ -4,8 +4,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Canonical intrinsic normal cocycle
 
 This gate identifies the pushed canonical cover normal with the tangent of
-the quotient latitude curve and transports the all-winding sign law to that
-canonical normal.
+the quotient latitude curve.  The scalar-action cocycle and global gluing are
+kept as separate residuals.
 -/
 
 namespace JanusFormal
@@ -87,6 +87,14 @@ private theorem eqMpr_heq {α β : Sort _} (h : α = β) (x : β) :
   cases h
   rfl
 
+private theorem dependentApply_heq
+    {α : Sort _} {β γ : α → Sort _}
+    (f : (point : α) → β point → γ point)
+    {source target : α} (h : source = target) (x : β source) :
+    HEq (f target (Eq.mp (congrArg β h) x)) (f source x) := by
+  cases h
+  rfl
+
 /-- The canonical pushed cover normal is exactly the derivative of the
 quotient latitude curve, modulo the named base-point transports. -/
 theorem canonicalQuotientLatitudeNormal_heq_quotientLatitudeNormalVectorAtCover
@@ -125,8 +133,14 @@ theorem canonicalQuotientLatitudeNormal_heq_quotientLatitudeNormalVectorAtCover
         (normalLatitudeCover period hPeriod anchor 0)
         (mfderiv (modelWithCornersSelf Real Real) coverModelWithCorners
           (normalLatitudeCover period hPeriod anchor) 0 1)) := by
-    rw [normalLatitudeCover_zero period hPeriod anchor]
-    exact HEq.rfl
+    unfold coverLatitudeNormalVector
+    exact dependentApply_heq
+      (fun point vector =>
+        mfderiv coverModelWithCorners coverModelWithCorners
+          (mappingTorusMk (sphereData period hPeriod)) point vector)
+      (normalLatitudeCover_zero period hPeriod anchor)
+      (mfderiv (modelWithCornersSelf Real Real) coverModelWithCorners
+        (normalLatitudeCover period hPeriod anchor) 0 1)
   unfold quotientLatitudeNormalVectorAtCover quotientNormalLatitude
   exact hCanonical.trans (hProjection.trans hComp.symm.heq)
 

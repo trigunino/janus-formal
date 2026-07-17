@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**487 fermées sur 612 ; 125 ouvertes**.
+**496 fermées sur 621 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -195,8 +195,15 @@ correspondance algébrique des coefficients, puis asymptotique effective.
               recollement vectoriel global n'est pas revendiqué.
             - [x] Éliminer le cast caché au niveau cover en prouvant par `HEq`
               que le normal de latitude nommé est exactement sa dérivée brute
-              transportée le long de l'égalité à latitude zéro. Le bridge vers
-              la dérivée quotient et le recollement global restent ouverts.
+              transportée le long de l'égalité à latitude zéro.
+            - [x] Combiner ce transport avec la règle de chaîne de la
+              projection quotient pour identifier par `HEq` le normal
+              quotient canonique et le tangent de la courbe de latitude.
+            - [x] Transporter explicitement le tangent quotient vers la fibre
+              canonique à latitude zéro, prouver que ce transport commute au
+              `SMul ℝ`, puis établir le cocycle de signe du normal quotient
+              canonique pour tout `winding : ℤ`. Le cocycle de la classe/lift
+              et le recollement continu global restent ouverts.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -892,10 +899,10 @@ par toute évolution admissible.
                         ghosts et antifields couplés, BRST corrigé carré nul,
                         odd bracket, action non nulle, CME pointwise/intégrée et
                         covariance PT exacte.
-                      - [ ] Étendre cette fermeture aux tenseurs lorentziens
-                        généraux non diagonaux, aux termes dérivatifs et aux
-                        fonctionnelles non locales/complétées avec équation
-                        maîtresse fonctionnelle.
+                      - [ ] Étendre la fermeture tensorielle générale désormais
+                        ultralocale aux termes dérivatifs et aux fonctionnelles
+                        non locales/complétées avec équation maîtresse
+                        fonctionnelle.
                         - [x] Installer le premier niveau tensoriel général :
                           variations symétriques lisses et antifields, doublet
                           BRST impair carré nul, pairing pointwise relevé par
@@ -905,8 +912,58 @@ par toute évolution admissible.
                           CME fonctionnelle n'est revendiquée.
                           - [x] Munir ce premier niveau d'un PT/échange
                             involutif commutant au BRST et prouver la covariance
-                            pointwise du pairing relevé et de l'odd bracket. Ni
-                            CME fonctionnelle ni trace BV au bord n'est incluse.
+                            pointwise du pairing relevé et de l'odd bracket.
+                            - [x] Construire le master bulk tensoriel général
+                              ultralocal `1/2 ⟨h⁺,h⁺⟩` avec les vraies métriques
+                              de fond : opérations affines et bilinéarité,
+                              expansion exacte et vrai `HasDerivAt`, génération
+                              de `(h⁺,0)`, témoin intrinsèque d'action `4 ≠ 0`,
+                              covariance PT/échange et CME pointwise.
+                            - [x] Intégrer ce master et son odd bracket représenté
+                              contre `intrinsicCanonicalLorentzVolumeMeasure` :
+                              obligations `L¹` et contrat de continuité
+                              explicites, expansion affine et gradient intégrés,
+                              covariance PT/échange par préservation de mesure et
+                              CME intégrée. Les termes dérivatifs/non locaux et la
+                              CME fonctionnelle générale restent ouverts.
+                            - [x] Restreindre réellement variations et
+                              antifields par l'inclusion du throat en tenseurs
+                              symétriques lisses ; prouver le BRST de bord carré
+                              nul, sa commutation à la trace, le matching
+                              PT/échange fonctionnel, le transport de la
+                              condition de Dirichlet du paquet complet et la
+                              covariance de l'odd bracket pointwise au niveau
+                              du paquet.
+                              - [x] Sur la trace non dégénérée de la métrique
+                                intrinsèque PT-fixe, instancier le vrai inverse
+                                musical pointwise, relever variations et
+                                antifields, définir le pairing et l'odd bracket
+                                intrinsèques, prouver leur compatibilité avec
+                                les traces bulk et leur covariance PT/échange,
+                                puis construire l'action ultralocale
+                                `S∂ = 1/2 ⟨h⁺,h⁺⟩`. Prouver la bilinéarité du
+                                pairing, son expansion quadratique exacte sur
+                                toute ligne affine et le vrai `HasDerivAt`
+                                égal au pairing avec `antifieldGradient` ;
+                                exhiber le témoin métrique intrinsèque avec
+                                action `3 ≠ 0`, puis fermer la génération du
+                                doublet `(h⁺,0)` et la CME pointwise.
+                                L'antibracket fonctionnel, les termes dérivatifs
+                                et la CME fonctionnelle restent ouverts.
+                                - [x] Isoler l'obligation exacte `L¹` des
+                                  densités et un contrat global de continuité
+                                  suffisant, puis intégrer contre la mesure
+                                  canonique l'action et l'odd bracket
+                                  représenté. Sous les trois hypothèses `L¹`
+                                  base/base, base/variation et
+                                  variation/variation, fermer l'expansion
+                                  quadratique intégrée et le vrai `HasDerivAt`
+                                  égal au pairing avec `antifieldGradient` ;
+                                  prouver aussi la covariance PT/échange et la
+                                  CME intégrée représentée. Le contrat de
+                                  continuité/champ inverse lisse n'est pas
+                                  déchargé et aucune CME fonctionnelle générale
+                                  ou dérivative n'est revendiquée.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -1124,8 +1181,11 @@ par toute évolution admissible.
       de leurs traces au throat et stabilité de leurs conditions de Dirichlet.
       La restriction/trace au bord des métriques générales est maintenant
       incluse dans le paquet et sa naturalité tensorielle PT/échange est
-      fermée ci-dessous ; le paquet de bord antifields/BV complet reste
-      explicitement ouvert.
+      fermée ci-dessous ; le paquet de bord variations/antifields est fermé
+      dans le bloc BV. L'inverse, le pairing/bracket et la CME ultralocale sont
+      maintenant fermés pour la trace non dégénérée de la métrique intrinsèque
+      retenue ; l'inversion des restrictions générales, l'antibracket
+      fonctionnel et les termes dérivatifs restent explicitement ouverts.
     - [x] Restreindre tout `SmoothGeneralLorentzMetric` par le `mfderiv` de la
       vraie inclusion du throat en un deux-tenseur covariant symétrique `C∞`,
       étendre le paquet de bord par les deux traces métriques, et prouver que
@@ -1463,6 +1523,22 @@ par toute évolution admissible.
           `∂g⁻¹ = -g⁻¹(∂g)g⁻¹`; instancier le jet de connexion et en déduire la
           conservation locale ponctuelle sous Euler. Aucun champ, connexion
           lisse ou théorème de divergence global n'est affirmé.
+          - [x] Pour une `SmoothGeneralLorentzMetric` et un patch holonome lisse
+            fourni, construire la matrice métrique locale, prouver sa lissité
+            et sa non-dégénérescence, puis construire son inverse, `dMetric` et
+            les coefficients de Christoffel lisses. Instancier en chaque point
+            le jet de Levi-Civita et déduire la conservation locale sous Euler.
+            La construction générique du patch, les compatibilités d'overlap,
+            le recollement et la connexion globale restent ouverts.
+            - [x] Tirer tout vrai `SmoothScalarField` quotient sur ce patch,
+              prouver sa régularité `C∞` ainsi que celle du gradient et du
+              Hessien brut, fermer la symétrie de Schwarz et obtenir un vrai
+              `CoordinateScalarJet2`. Construire le jet covariant, le résiduel
+              d'Euler, le gradient relevé et la divergence de stress locale
+              canoniquement réalisée, tous `C∞`, puis prouver l'identité exacte
+              `div T = EulerResidual · raisedGradient` et la conservation sous
+              Euler. Les compatibilités d'overlap, le recollement et le théorème
+              global `div_g T = 0` restent ouverts.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers
@@ -1901,10 +1977,10 @@ champs et avec les mêmes conditions au bord.
     ponctuel à covecteur non nul. Les domaines et la cohomologie de mode zéro
     restent ouverts ; le complexe D9/BRST global n'est donc pas fermé.
   - [x] Calculer le sous-complexe du symbole ghost D9 au covecteur nul : son
-    différentiel est nul, son noyau est tout l'espace des quatre coordonnées
-    ghosts, son image est nulle et son quotient cohomologique est linéairement
-    équivalent à cet espace. Les domaines et la cohomologie du vrai opérateur
-    différentiel global restent ouverts.
+    différentiel est nul, son noyau contient les quatre coordonnées ghosts,
+    son image est nulle et son quotient cohomologique est linéairement
+    équivalent à cet espace de coordonnées. Les domaines et la cohomologie
+    du vrai opérateur différentiel global restent ouverts.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
