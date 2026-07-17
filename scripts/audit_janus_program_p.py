@@ -26,6 +26,20 @@ STRUCTURED_JET_GROUPOID_DECLARATIONS = (
     "theorem janusDeck_isotropy_stratification_single_stratum",
     "theorem StructuredJetDeckRepresentation.map_endomorphism_eq_id",
 )
+AMBIENT_POINTWISE_ORTHONORMAL_REDUCTION_GATE = Path(
+    "JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/Gates/"
+    "P0EFTJanusMappingTorusAmbientPointwiseOrthonormalReduction4D.lean"
+)
+AMBIENT_POINTWISE_ORTHONORMAL_REDUCTION_DECLARATIONS = (
+    "def ambientPointwiseAtlasFrame",
+    "def ambientPointwiseAtlasForm",
+    "def ambientPointwiseOrthonormalAtlasReduction",
+    "theorem ambientOrthonormalAtlasReduction_nonempty",
+    "structure AmbientContinuousOrthonormalAtlasReduction",
+    "structure AmbientContMDiffOrthonormalAtlasReduction",
+    "def continuousReduction_implies_pointwise",
+    "def contMDiffReduction_implies_pointwise",
+)
 
 PROGRAM_P_GATES = {
     "P0EFTJanusCoupledSectorHelmholtzSelection.lean": (
@@ -2211,6 +2225,44 @@ PROGRAM_P_GATES = {
             "theorem global_diagonal_root_frontier_control_closure",
         ),
     ),
+    "P0EFTJanusGlobalDiagonalZeroOverZeroPathDependence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equalRateZeroOverZeroPath",
+            "def quadraticNumeratorZeroOverZeroPath",
+            "theorem zeroOverZero_paths_same_boundary",
+            "theorem equalRateZeroOverZeroPath_mem_globalDomain",
+            "theorem quadraticNumeratorZeroOverZeroPath_mem_globalDomain",
+            "theorem equalRateZeroOverZeroPath_continuous",
+            "theorem quadraticNumeratorZeroOverZeroPath_continuous",
+            "theorem equalRateZeroOverZeroPath_tendsto_boundary",
+            "theorem quadraticNumeratorZeroOverZeroPath_tendsto_boundary",
+            "theorem equalRateZeroOverZeroPath_root_eq_one",
+            "theorem quadraticNumeratorZeroOverZeroPath_root_eq_sqrt",
+            "theorem equalRateZeroOverZeroPath_root_tendsto_one",
+            "theorem quadraticNumeratorZeroOverZeroPath_root_tendsto_zero",
+            "theorem no_continuous_principalRootSpectrum_extension_at_zeroOverZero",
+        ),
+    ),
+    "P0EFTJanusGlobalDiagonalPowerLawZeroOverZeroClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def powerLawZeroOverZeroPath",
+            "theorem powerLawZeroOverZeroPath_mem_globalDomain",
+            "theorem powerLawZeroOverZeroPath_zero",
+            "theorem powerLawZeroOverZeroPath_boundary_coordinates",
+            "theorem powerLawZeroOverZeroPath_continuous",
+            "theorem powerLawZeroOverZeroPath_tendsto_common_boundary",
+            "theorem powerLawZeroOverZeroPath_root_eq",
+            "theorem powerLawZeroOverZeroPath_root_eq_sqrt_pow_sub",
+            "theorem powerLawZeroOverZeroPath_root_eq_sqrt_inv_pow_sub",
+            "theorem positivePower_tendsto_zero",
+            "theorem positivePower_tendsto_zeroWithin",
+            "theorem powerLawZeroOverZeroPath_equal_exponents_tendsto_one",
+            "theorem powerLawZeroOverZeroPath_numerator_faster_tendsto_zero",
+            "theorem powerLawZeroOverZeroPath_denominator_faster_tendsto_atTop",
+        ),
+    ),
     "P0EFTJanusPositiveRootFrontierSuite4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2402,6 +2454,71 @@ PROGRAM_P_GATES = {
             "theorem localSmoothScalarEulerResidual_eq_of_overlap",
             "theorem localSmoothScalarRaisedGradient_eq_of_overlap",
             "theorem localSmoothScalarStressDivergence_eq_of_overlap",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalHolonomicAtlasTransitionJets4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalQuotientLocalSectionTransition",
+            "theorem canonicalQuotientLocalSectionTransition_contMDiffOn",
+            "structure RebasedHolonomicTransitionJetAgreement",
+            "theorem localSmoothScalarStressDivergence_eq_of_rebasedTransition",
+            "structure CanonicalRebasedHolonomicAtlasTransitionJetContract",
+            "theorem CanonicalRebasedHolonomicAtlasTransitionJetContract.toStressCompatibility",
+            "structure CanonicalHolonomicAtlasStressConservationBridge",
+            "theorem CanonicalHolonomicAtlasStressConservationBridge.stressCompatible",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalHolonomicAtlasCoverReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalHolonomicAtlasCover",
+            "def CanonicalHolonomicAtlasCoverRealizable",
+            "def CanonicalHolonomicChartThroughEveryPoint",
+            "theorem canonicalHolonomicAtlasCoverRealizable_iff_chartThroughEveryPoint",
+            "theorem holonomicAtlasLocalScalarStressConserved_of_euler",
+            "theorem quotientPointwiseLocalScalarStressConserved_of_atlas",
+            "theorem canonicalHolonomicAtlasCover_scalarStressConservation_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalHolonomicChartBallRealization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure TotalR4BallParametrization",
+            "def TotalR4BallParametrizationsExist",
+            "def smoothHolonomicFrameChart4OfLocalDiffeomorph",
+            "theorem canonicalHolonomicChartThroughEveryPoint_of_totalR4BallParametrizations",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalTotalR4BallParametrization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def totalR4BallParametrization",
+            "theorem totalR4BallParametrizationsExist",
+            "theorem canonicalHolonomicChartThroughEveryPoint",
+            "theorem canonicalHolonomicAtlasCoverRealizable",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalTotalHolonomicAtlasScalarStressClosure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalTotalHolonomicChartThroughEveryPoint",
+            "def canonicalTotalHolonomicAtlasCover",
+            "theorem canonicalTotalHolonomicAtlasCover_covers",
+            "theorem canonicalHolonomicAtlasCoverRealizable_unconditional",
+            "theorem canonicalTotalHolonomicAtlas_scalarStressConservation_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalScalarStressConservation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalSmoothScalarEulerResidual",
+            "def globalSmoothScalarStressDivergence",
+            "theorem globalSmoothScalarStressDivergence_apply",
+            "def CanonicalAtlasLocalScalarEulerEquations",
+            "def GlobalSmoothScalarStressConserved",
+            "theorem globalSmoothScalarStressDivergence_eq_zero_of_localEuler",
+            "theorem global_scalar_stress_conservation4D_closure",
         ),
     ),
     "P0EFTJanusIntegratedScalarStressVariation4D.lean": (
@@ -2841,6 +2958,20 @@ PROGRAM_P_GATES = {
             "theorem canonicalIntrinsicD8HolonomicScalarAction_line_hasDerivAt_zero_of_homogeneousDirichlet",
         ),
     ),
+    "P0EFTJanusMappingTorusIntrinsicD8ScalarNormalStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalIntrinsicD8TangentNormalBoundaryFlux",
+            "def IntrinsicD8ScalarNormalStokesFormula",
+            "theorem boundaryFlux_eq_tangentNormalFlux_of_stokes",
+            "structure IntrinsicD8ScalarNormalStokesContract",
+            "def IntrinsicD8ScalarNormalStokesContract.toDivergenceBoundaryInterface",
+            "theorem IntrinsicD8ScalarNormalStokesContract.boundaryFlux_eq_concrete",
+            "theorem IntrinsicD8ScalarNormalStokesContract.boundaryFlux_eq_zero_of_dirichlet",
+            "theorem canonicalIntrinsicD8ScalarFirstVariation_eq_eulerPairing_of_dirichlet",
+            "theorem canonicalIntrinsicD8ScalarFirstVariation_eq_zero_iff_weakEuler_of_dirichlet",
+        ),
+    ),
     "P0EFTJanusMappingTorusCanonicalLatitudeScalarIPP4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3089,6 +3220,60 @@ PROGRAM_P_GATES = {
             "theorem localDiagonalVolumeCoefficient_pos",
         ),
     ),
+    "P0EFTJanusMappingTorusAmbientSpinCNonorientabilityNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev AmbientTangentDeterminantOrientationDescent",
+            "theorem ambientTangentDeterminantOrientationDescent_isEmpty",
+            "structure AmbientOrientationReversingOverlapWitness",
+            "theorem AmbientOrientationReversingOverlapWitness.noOverlapLift",
+            "structure AmbientContinuousOrientedSpinCechRealization",
+            "theorem ambientContinuousOrientedSpinCechRealization_isEmpty",
+            "structure AmbientContinuousSpinCCechRealization",
+            "theorem ambientContinuousSpinCCechRealization_isEmpty",
+            "def AmbientAlgebraicSpinCechRemainsConditional",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusProjection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientPinMinusProjection",
+            "def ambientPinMinusReferenceGenerator",
+            "def ambientPinMinusCentralSign",
+            "theorem ambientPinMinusCentralSign_ne_one",
+            "theorem ambientPinMinusReferenceGenerator_square",
+            "theorem ambientPinMinusCentralSign_square",
+            "theorem ambientPinMinusReferenceGenerator_fourth",
+            "def ambientPinMinusReferenceZ4Character",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusCechExtension4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AmbientNormalCompatibleContinuousPinMinusCechChoice",
+            "def AmbientNormalCompatibleContinuousPinMinusCechChoiceExists",
+            "theorem AmbientNormalCompatibleContinuousPinMinusCechChoice.transition_implements_twisted_action",
+            "theorem AmbientNormalCompatibleContinuousPinMinusCechChoice.intertwines_normal_coordChange",
+            "theorem AmbientNormalCompatibleContinuousPinMinusCechChoice.projectedParity_eq_normalReduction",
+            "theorem AmbientNormalCompatibleContinuousPinMinusCechChoice.oneLoop_transitionLift_eq_referenceGenerator",
+            "theorem AmbientNormalCompatibleContinuousPinMinusCechChoice.normalGenerator_not_spinProjection",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusReferenceWindingFrontier4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AmbientReferenceWindingCechData",
+            "structure AmbientReferenceWindingNormalComparisonOnOverlap",
+            "def AmbientReferenceWindingOrthogonalReductionLaw",
+            "theorem ambientReferenceCharacterOrientationLaw",
+            "structure AmbientReferenceWindingPinMinusCechChoiceOnOverlap",
+            "theorem AmbientReferenceWindingPinMinusCechChoiceOnOverlap.projects_to_transition",
+            "theorem AmbientReferenceWindingPinMinusCechChoiceOnOverlap.cocycle",
+            "theorem AmbientReferenceWindingPinMinusCechChoiceOnOverlap.restricts_to_normal",
+            "theorem AmbientReferenceWindingPinMinusCechChoiceOnOverlap.projectedParity_eq_normalReduction",
+            "theorem ambientNormalCompatibleContinuousPinMinusCechChoiceExists_of_referenceWinding_reduction",
+        ),
+    ),
     "P0EFTJanusMappingTorusDeckInvariantLorentzCocycle4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3294,6 +3479,12 @@ PROGRAM_P_GATES = {
             "def CanonicalPhysicalH1TraceExists",
             "theorem canonicalPhysicalH1TraceExists_iff",
             "theorem canonical_volume_h1_trace4D_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalThroatVolumeOpenPos4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCanonicalThroatVolumeMeasure_isOpenPosMeasure",
         ),
     ),
     "P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D.lean": (
@@ -3817,6 +4008,95 @@ PROGRAM_P_GATES = {
             "structure RemainingD9FieldContract",
         ),
     ),
+    "P0EFTJanusD9GeometricGhostFieldCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure D9ResidualAfterNormalAndGhost",
+            "def d9ResidualFromGeometricGhost",
+            "theorem d9ResidualFromGeometricGhost_diffeomorphismGhost",
+            "def d9LocalFieldFromNormalAndGeometricGhost",
+            "theorem d9LocalFieldFromNormalAndGeometricGhost_normalMode",
+            "theorem d9LocalFieldFromNormalAndGeometricGhost_diffeomorphismGhost",
+        ),
+    ),
+    "P0EFTJanusD9MatterSquaredSpinorCoordinateCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9SquaredSpinorCoordinateFiber",
+            "def matterFiberEquivSquaredSpinorCoordinates",
+            "theorem matterFiberEquivSquaredSpinorCoordinates_apply",
+            "def d9SquaredSpinorCoordinateResidual",
+            "def d9LocalFieldWithSquaredSpinorCoordinates",
+            "theorem d9LocalFieldWithSquaredSpinorCoordinates_spinor",
+        ),
+    ),
+    "P0EFTJanusD9FullSymmetricMetricLocalCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure D9FullSymmetricMetricVariation",
+            "def d9FullMetricProjection",
+            "def d9FullMetricLift",
+            "theorem d9FullMetricProjection_lift",
+            "theorem d9FullMetricProjection_surjective",
+            "structure D9CompleteLocalVariation",
+            "def d9LocalFieldWithFullSymmetricMetric",
+            "theorem d9LocalFieldWithFullSymmetricMetric_metricPerturbation",
+            "theorem d9LocalFieldWithFullSymmetricMetric_metric_surjective",
+        ),
+    ),
+    "P0EFTJanusD9GlobalTensorHolonomicMetricBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9TensorChartCoefficient",
+            "theorem d9TensorChartCoefficient_contDiff",
+            "def d9TensorChartMetricVariation",
+            "theorem d9TensorChartMetricVariation_xx_contDiff",
+            "theorem d9TensorChartMetricVariation_yy_contDiff",
+            "theorem d9TensorChartMetricVariation_zz_contDiff",
+            "theorem d9TensorChartMetricVariation_xy_contDiff",
+            "theorem d9TensorChartMetricVariation_xz_contDiff",
+            "theorem d9TensorChartMetricVariation_yz_contDiff",
+            "def d9CompleteLocalVariationFromTensorChart",
+            "theorem d9LocalField_tensorChartMetricPerturbation",
+        ),
+    ),
+    "P0EFTJanusD9CanonicalGlobalTensorHolonomicMetricCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure D9ThroatHolonomicChartWitness",
+            "theorem d9ThroatHolonomicChartWitness_nonempty",
+            "def selectedD9ThroatHolonomicChart",
+            "def d9CompleteLocalVariationFromGlobalTensorAtThroatPoint",
+            "def d9LocalFieldFromGlobalTensorAtThroatPoint",
+            "theorem d9LocalField_globalTensorAtThroatPoint_metricPerturbation",
+        ),
+    ),
+    "P0EFTJanusProgramPCommonGeometricDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPCommonGeometricDomain4D",
+            "def ProgramPCommonGeometricDomain4D.ofOperatorData",
+            "def ProgramPCommonGeometricDomain4D.d9Field",
+            "def ProgramPCommonGeometricDomain4D.d9PrincipalSymbol",
+            "theorem ProgramPCommonGeometricDomain4D.principalRoot_square",
+            "theorem ProgramPCommonGeometricDomain4D.satisfies_boundary",
+            "theorem programPCommonGeometricDomain4D_nonempty",
+        ),
+    ),
+    "P0EFTJanusMappingTorusDeckTrivialIsotropyExtension4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def DeckRegularObject",
+            "def DeckSingularObject",
+            "theorem deckSingularObject_not_nonempty",
+            "def DeckSection.restrict",
+            "def DeckRegularSection.extend",
+            "theorem DeckSection.extend_restrict",
+            "theorem DeckRegularSection.restrict_extend",
+            "theorem DeckRegularSection.extend_unique",
+            "theorem reflectedSphereDeckSingularObject_not_nonempty",
+        ),
+    ),
     "P0EFTJanusMappingTorusGlobalHolonomicScalar4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -4027,6 +4307,19 @@ PROGRAM_P_GATES = {
             "structure StaticScalarIntrinsicUniformGraphEllipticity",
             "def intrinsicFixedPatchUniformGraphEllipticity",
             "theorem intrinsic_fixed_patch_energy_replacement4D_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusFixedAtlasHolonomicDensityEquivalence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fixedAtlasTransitionCoefficient",
+            "theorem fixedAtlasTransitionCoefficient_continuousOn_closedOverlap",
+            "def fixedAtlasHolonomicJetToGraph",
+            "theorem finiteFixedLocalJacobiDensity_le_fixedAtlasHolonomicDensity",
+            "theorem fixedAtlasHolonomicDensity_le_finiteFixedLocalJacobiDensity",
+            "structure FixedAtlasHistoricalHolonomicDomination",
+            "def FiniteVariablePreferredTransitionContinuity.toFixedAtlasHistoricalDomination",
+            "theorem fixed_atlas_holonomic_density_equivalence4D_closure",
         ),
     ),
     "P0EFTJanusMappingTorusAutomaticScalarIntegrability4D.lean": (
@@ -4517,6 +4810,25 @@ PROGRAM_P_GATES = {
             "theorem timeTranslationMetricMatterGaugeLinearizedVariation_pureTime",
             "theorem timeTranslationMetricMatterGaugeNoetherOperator_eq_zero_of_invariant",
             "theorem timeTranslationNoether_identity",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalTimeTranslationMetricMatterGaugeNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientProjectionDerivative_timeTranslation_natural",
+            "def intrinsicTimeTranslationPulledTensorDescent",
+            "theorem intrinsicSmoothTensor_timeTranslation_fixed",
+            "theorem intrinsicSmoothGeneralLorentzMetric_timeTranslation_fixed",
+            "theorem intrinsicSmoothTensor_timeTranslation_generator_zero",
+            "def intrinsicTimeTranslationMetricPairContract",
+            "theorem intrinsicTimeTranslationMetricPairContract_plusVariation",
+            "theorem intrinsicTimeTranslationMetricPairContract_minusVariation",
+            "def intrinsicTimeTranslationMetricMatterGaugeLinearizedVariation",
+            "theorem intrinsicTimeTranslationMetricMatterGaugeLinearizedVariation_metric",
+            "def intrinsicTimeTranslationMetricMatterGaugeNoetherOperator",
+            "theorem intrinsicTimeTranslationMetricMatterGaugeNoetherOperator_apply",
+            "def IntrinsicPureTimeTranslationLineInvariantAtZero",
+            "theorem intrinsicTimeTranslationNoether_identity",
         ),
     ),
     "P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D.lean": (
@@ -5389,6 +5701,53 @@ PROGRAM_P_GATES = {
             "theorem actual_throat_pt_symmetric_differential_ll_closure",
         ),
     ),
+    "P0EFTJanusMappingTorusPTSymmetricDifferentialLLStrongEquation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure LLStrongAnalyticRegularityContract",
+            "def throatFrameDivergence",
+            "def ptSymmetricStrongDifferentialLLEulerField",
+            "def CanonicalThroatVolumeHasFullSupport",
+            "theorem canonicalThroatVolume_hasFullSupport",
+            "structure PTSymmetricLLIntegrationByPartsContract",
+            "def SatisfiesPTSymmetricLLNaturalBoundaryCondition",
+            "theorem canonicalThroat_ptSymmetricDifferentialLLStationary_iff_strong",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalThroatGeometricStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalThroatFiniteBoundaryLedger",
+            "def canonicalThroatFiniteBoundaryLedgerResidual",
+            "theorem canonicalThroatFiniteBoundaryLedgerResidual_eq_zero",
+            "structure CanonicalThroatGeometricStokesContract",
+            "def CanonicalThroatGeometricStokesContract.toStrongLLIntegrationByParts",
+            "theorem CanonicalThroatGeometricStokesContract.geometricBoundaryFlux_eq_zero",
+            "theorem canonicalThroat_geometricStokes_weak_iff_strong",
+            "theorem canonicalThroat_geometricStokes_stationary_iff_strong",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalThroatGlobalZeroBoundaryIPP4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def CanonicalThroatScalarWeightedLLFrameFluxGlobalIPP",
+            "def CanonicalThroatScalarWeightedLLFrameFluxGlobalIPP.toGeometricStokesContract",
+            "theorem canonicalThroatGeometricStokesContract_toGlobalZeroBoundaryIPP",
+            "theorem canonicalThroat_geometricStokesContract_nonempty_iff_globalIPP",
+            "theorem canonicalThroat_globalIPP_weak_iff_strong",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalThroatFormalAdjointCorrection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalThroatPTSymmetricLLFormalAdjointDefect",
+            "structure CanonicalThroatPTSymmetricLLFormalAdjointCorrection",
+            "def canonicalThroatCorrectedPTSymmetricStrongLLEulerField",
+            "theorem globalPTSymmetricDifferentialLLFluxFirstVariation_eq_correctedStrong",
+            "theorem canonicalThroat_weak_iff_correctedStrong",
+            "theorem formalAdjointCorrection_eq_zero_iff_globalIPP",
+        ),
+    ),
     "P0EFTJanusMappingTorusPTSymmetricDifferentialLLHessian4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5791,6 +6150,19 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     if re.search(r"\b(?:sorry|admit|axiom)\b", structured_jet_groupoid):
         raise AssertionError("proof placeholder found in structured-jet groupoid gate")
 
+    ambient_pointwise_reduction = (
+        repo_root / AMBIENT_POINTWISE_ORTHONORMAL_REDUCTION_GATE
+    ).read_text(encoding="utf-8")
+    for declaration in AMBIENT_POINTWISE_ORTHONORMAL_REDUCTION_DECLARATIONS:
+        if declaration not in ambient_pointwise_reduction:
+            raise AssertionError(
+                f"missing ambient pointwise reduction declaration: {declaration}"
+            )
+    if re.search(r"\b(?:sorry|admit|axiom)\b", ambient_pointwise_reduction):
+        raise AssertionError(
+            "proof placeholder found in ambient pointwise orthonormal reduction gate"
+        )
+
     for filename, (facade_path, declarations) in PROGRAM_P_GATES.items():
         source = (repo_root / GATE_ROOT / filename).read_text(encoding="utf-8")
         for declaration in declarations:
@@ -5904,6 +6276,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "Gates.P0EFTJanusMappingTorusAmbientSpinProjection",
         "Gates.P0EFTJanusMappingTorusAmbientSpinOrientation",
         "Gates.P0EFTJanusMappingTorusAmbientSpinAtlasObstruction",
+        "Gates.P0EFTJanusMappingTorusAmbientPointwiseOrthonormalReduction4D",
         "Gates.P0EFTJanusMappingTorusAmbientSpinEvenReflectionLift",
         "Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle",
         "Gates.P0EFTJanusMappingTorusNormalRootPTConjugation",
@@ -5999,6 +6372,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paPositiveJordanTypeChangeFrontier4DProved",
         "paGlobalDiagonalLorentzCausalFrontier4DProved",
         "paGlobalDiagonalRootFrontierControl4DProved",
+        "paGlobalDiagonalZeroOverZeroPathDependence4DProved",
+        "paGlobalDiagonalPowerLawZeroOverZeroClassification4DProved",
         "paPositiveRootFrontierSuite4DProved",
         "paMinkowskiGlobalDiagonalRootGluing4DProved",
         "paGlobalDiagonalTwoSectorInteractionDensity4DProved",
@@ -6036,6 +6411,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paGeneralLorentzMetricLocalLeviCivitaPatch4DProved",
         "paGeneralLorentzMetricLocalScalarJet4DProved",
         "paGeneralLorentzMetricLocalLeviCivitaOverlap4DProved",
+        "paEffectiveD8CanonicalHolonomicAtlasTransitionJets4DConditionalProved",
+        "paEffectiveD8CanonicalHolonomicAtlasCoverReduction4DConditionalProved",
+        "paEffectiveD8CanonicalHolonomicChartBallRealization4DProved",
+        "paEffectiveD8CanonicalTotalR4BallParametrization4DProved",
+        "paEffectiveD8CanonicalTotalHolonomicAtlasScalarStressClosure4DProved",
+        "paEffectiveD8GlobalScalarStressConservation4DConditionalProved",
         "paIntegratedTwoSectorScalarStressVariation4DProved",
         "paFlatChartHolonomicScalarFieldVariation4DProved",
         "paFlatChartHolonomicMetricScalarVariation4DProved",
@@ -6079,15 +6460,20 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8IntrinsicLorentzMetricPTFixed4DProved",
         "paEffectiveD8AmbientTangentOrientationCocycleProved",
         "paEffectiveD8AmbientTangentQuadraticReductionFrontierProved",
+        "paEffectiveD8AmbientPointwiseOrthonormalAtlasReduction4DProved",
         "paEffectiveD8AmbientSpinProjectionConstructed",
         "paEffectiveD8AmbientSpinProjectionOrientationProved",
         "paEffectiveD8AmbientSpinAtlasCechObstructionProved",
         "paEffectiveD8AmbientSpinSurjectivityCechFrontierProved",
         "paEffectiveD8AmbientSpinEvenReflectionLiftConstructed",
+        "paEffectiveD8AmbientSpinCNonorientabilityNoGo4DProved",
         "paEffectiveD8NormalZ4RootBundleProved",
         "paEffectiveD8NormalZ4RootPTConjugationProved",
         "paEffectiveD8NormalPinMinusPrincipalBundleProved",
         "paEffectiveD8NormalPinMinusAssociatedRootsProved",
+        "paEffectiveD8AmbientPinMinusProjection4DProved",
+        "paEffectiveD8AmbientPinMinusCechExtension4DConditionalProved",
+        "paEffectiveD8AmbientPinMinusReferenceWindingFrontier4DConditionalProved",
         "paEffectiveD8SmoothPTFieldAction4DProved",
         "paEffectiveD8CompleteNontrivialAnalyticTimeFlow4DProved",
         "paEffectiveD8JointAnalyticTimeAction4DProved",
@@ -6102,6 +6488,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GeneralLorentzMetricPTIntegratedScalarAction4DProved",
         "paEffectiveD8GeneralLorentzMetricPTIntegratedScalarVariation4DProved",
         "paEffectiveD8GeneralLorentzMetricWeakScalarEuler4DProved",
+        "paEffectiveD8IntrinsicD8ScalarNormalStokes4DConditionalProved",
         "paEffectiveD8CanonicalLatitudeScalarGreenCurrent4DProved",
         "paEffectiveD8CanonicalLatitudeScalarEnergyCurrent4DProved",
         "paEffectiveD8CanonicalLatitudeScalarNormalCurrent4DProved",
@@ -6130,6 +6517,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8SmoothDiagonalCandidateAChainRule4DProved",
         "paEffectiveD8IntegratedDiagonalCandidateAPTExchange4DProved",
         "peEffectiveD8StructuredJetGroupoidFrontierProved",
+        "peEffectiveD8DeckTrivialIsotropyExtension4DProved",
         "paFiniteJetCompatibilityNaturalityProved",
         "paFiniteJetCompatibilityPrincipalSymbolKernelProved",
         "paEffectiveD8CompactQuotientsProved",
@@ -6167,6 +6555,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paD9PairedGhostNonzeroSymbolKernel4DProved",
         "paD9PairedGhostSymbolCohomology4DProved",
         "paD8NormalBundleD9DisplacementBridge4DProved",
+        "paD9GeometricGhostFieldCompletion4DProved",
+        "paD9MatterSquaredSpinorCoordinateCompletion4DProved",
+        "paD9FullSymmetricMetricLocalCompletion4DProved",
+        "paD9GlobalTensorHolonomicMetricBridge4DProved",
+        "paD9CanonicalGlobalTensorHolonomicMetricCompletion4DProved",
+        "paProgramPCommonGeometricDomain4DProved",
         "paEffectiveD8GlobalHolonomicScalarDifferentialProved",
         "paEffectiveD8GlobalHolonomicScalarAction4DProved",
         "paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved",
@@ -6181,6 +6575,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8StaticScalarLocalizedTransitionBound4DProved",
         "paEffectiveD8StaticScalarIntrinsicPatchCoordinatesFrontier4DProved",
         "paEffectiveD8StaticScalarIntrinsicEnergyReplacement4DProved",
+        "paEffectiveD8FixedAtlasHolonomicDensityEquivalence4DProved",
         "paEffectiveD8AutomaticScalarIntegrability4DProved",
         "paEffectiveD8ScalarRobinJunctionBalance4DProved",
         "paEffectiveD8ScalarRobinJunctionHessian4DProved",
@@ -6196,6 +6591,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8MetricMatterGaugeNoetherFrontier4DProved",
         "paEffectiveD8MetricMatterGaugeActionNoetherBridge4DProved",
         "paEffectiveD8TimeTranslationMetricMatterGaugeNoether4DProved",
+        "paEffectiveD8CanonicalTimeTranslationMetricMatterGaugeNoether4DProved",
         "paEffectiveD8LinearizedDiffeomorphismBRST4DProved",
         "paEffectiveD8OrdinaryGhostNonlinearBRSTNoGo4DProved",
         "paGradedGhostCoefficientWitness4DProved",
@@ -6235,12 +6631,17 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8NonabelianSmoothPositiveDiagonalSpacetimeBV4DProved",
         "paEffectiveD8NonabelianSmoothThroatBVFunctionalVariation4DProved",
         "paEffectiveD8NonabelianSmoothThroatBVPTCovariance4DProved",
+        "paEffectiveD8CanonicalThroatVolumeOpenPos4DProved",
         "paEffectiveD8CanonicalThroatPTMeasureInvariance4DProved",
         "paEffectiveD8GlobalLLWorldvolumeActionProved",
         "paEffectiveD8GlobalLLVariation4DProved",
         "paEffectiveD8GlobalLLPTCovariance4DProved",
         "paEffectiveD8DifferentialLLWeakEquation4DProved",
         "paEffectiveD8PTSymmetricDifferentialLLWeakEquation4DProved",
+        "paEffectiveD8PTSymmetricDifferentialLLStrongEquation4DConditionalProved",
+        "paEffectiveD8CanonicalThroatGeometricStokes4DConditionalProved",
+        "paEffectiveD8CanonicalThroatGlobalZeroBoundaryIPP4DConditionalProved",
+        "paEffectiveD8CanonicalThroatFormalAdjointCorrection4DConditionalProved",
         "paEffectiveD8PTSymmetricDifferentialLLHessian4DProved",
         "paEffectiveD8PTSymmetricLLWeakEulerJacobiOperator4DProved",
         "paEffectiveD8PTSymmetricLLH1RieszOperator4DProved",

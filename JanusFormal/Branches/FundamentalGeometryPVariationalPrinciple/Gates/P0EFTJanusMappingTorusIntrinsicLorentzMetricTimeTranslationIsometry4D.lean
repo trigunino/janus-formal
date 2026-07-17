@@ -81,6 +81,15 @@ private theorem mfderiv_productTimeTranslation
   intro vector
   rfl
 
+@[simp]
+private theorem mfderiv_productTimeTranslation_apply
+    (shift : Real) (point : UnitThreeSphere × Real)
+    (vector : TangentSpace coverModelWithCorners point) :
+    mfderiv coverModelWithCorners coverModelWithCorners
+        (productTimeTranslation shift) point vector = vector := by
+  rw [mfderiv_productTimeTranslation]
+  rfl
+
 /-- Product-coordinate naturality of the cover derivative under real time
 translation.  This uses only the public product model. -/
 theorem coverProductDerivative_timeTranslation_natural
@@ -124,8 +133,7 @@ theorem coverProductDerivative_timeTranslation_natural
       (productTimeTranslation shift)
       (coverHomeomorphProd (reflectedSphereData period hPeriod) point)
       (coverProductDerivative period hPeriod point vector) at hNatural
-  rw [mfderiv_productTimeTranslation] at hNatural
-  rw [ContinuousLinearMap.id_apply] at hNatural
+  rw [mfderiv_productTimeTranslation_apply] at hNatural
   exact hNatural
 
 /-- Every real cover-time translation is an exact isometry of the intrinsic
@@ -148,6 +156,7 @@ theorem intrinsicCoverLorentzTensor_timeTranslation_isometry
   simp only [coverTimeTranslation_fiber]
   rw [coverProductDerivative_timeTranslation_natural,
     coverProductDerivative_timeTranslation_natural]
+  rfl
 
 end
 

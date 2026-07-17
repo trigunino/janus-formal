@@ -490,7 +490,10 @@ unique smooth descent of invariant maps are constructed. Supplied low-order
 holonomic families and their `(II,F)` reductions descend smoothly to the true
 quotient. The effective deck groupoid has exactly one isotropy stratum with
 trivial stabilizers, and every supplied structured-jet representation sends
-its endomorphisms to identities. This does not yet construct the physical
+its endomorphisms to identities. Its regular-object stratum is all objects,
+its singular stratum is empty, and dependent sections restrict/extend through
+this stratification by mutually inverse maps with unique extension. This does
+not yet construct the physical
 SpinC representation or classify its fiber isotropy, higher jets or a
 Peetre--Slovák integrability theorem.
 Independently, the fixed quotient itself now forms a one-object symmetry
@@ -674,11 +677,21 @@ packaging remain open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
-each tangent transition with a genuine quadratic isometry; global orthonormal
-compatibility remains a contract. The Clifford `spinGroup` now supplies a true
+each tangent transition with a genuine quadratic isometry. Choosing one actual
+reference lift at every quotient point and transporting through the true
+tangent cocycle now constructs an atlas-wide pointwise orthonormal reduction.
+Its continuous and `C∞` refinements remain separate contracts. The Clifford
+`spinGroup` now supplies a true
 quadratic-preserving vector action and morphism `Spin(Q) →* GL(4)`, with the
 twisted Pin extension isolated exactly. Atlas-specific transition lifts,
-their Čech cocycle, comparison with the normal lift and SpinC remain open.
+their Čech cocycle, comparison with the normal lift and SpinC remain open. The
+reference `Pin⁻` generator now projects to the explicit last-coordinate
+reflection, with determinant `-1`, and its full `ZMod 4` orientation character
+is proved. The corrected overlap-level frontier reduces the ambient lift to
+the actual Čech winding, its normal comparison and one exact `O(4)` reduction
+law; the winding and comparison are not yet constructed.
+The new pointwise reduction supplies the algebraic reduction input, but not the
+regularity or Čech winding/normal comparison required by that law.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
@@ -825,7 +838,11 @@ at every patch coordinate. For supplied overlap representatives, equality of
 the metric first jet and scalar second jet now implies equality of the local
 Christoffels, covariant jet, Euler residual, raised gradient and divergence.
 Generic patch construction, the real chart-transition theorem producing those
-jet equalities, gluing the local data and global `div_g T = 0` remain open.
+jet equalities and pointwise gluing are now closed: componentwise total-ball
+maps construct a genuine holonomic patch through every quotient point, hence a
+field-independent covering atlas. Scalar Euler equations therefore imply
+chartwise and quotient-pointwise zero local stress divergence. This does not
+construct a second abstract global covariant-derivative field.
 The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form and
 vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
 canonical latitude collar, genuine interval-integral IPP identifies the
@@ -967,6 +984,11 @@ identification with the historical raw holonomic density remains open. Its
 independent variation also projects to the D9 slots
 actually supplied by the diagonal package, while a literal finite D10
 product-mode truncation uses the same period and exact PT-regulator pairing.
+A nonempty scoped common-domain package now makes the same independent
+configuration feed the induced metrics/root, `LLH1`, its exact boundary trace
+and typed D7/D9/D10 accessors. Agreement with the action tangent, Hessian,
+full D10 diagonalization, regulator and Fredholm/boundary domains remains one
+explicit residual contract.
 For the general tensor density, the subsequent frame-covariance gate closes
 pointwise frame independence and true D8-diffeomorphism naturality; smooth
 density packaging, finite-measure integrability, the global scalar action and
@@ -1006,17 +1028,37 @@ with one-loop sign equal to the square of either constructed global `Z4` root
 line. Real-linear complex conjugation now exchanges the two root-line descent
 cocycles for every winding and is involutive. The rank-one normal principal
 `Pin⁻(1)` lift is constructed; no ambient tangent Pin/SpinC principal bundle
-or canonical global scalar normal coordinate is claimed.
-Nonlinear diffeomorphism-BRST/SpinC/general-metric integration and the full
-action--Hessian--domain identification remain explicit. The global LL action
+or canonical global scalar normal coordinate is claimed. The genuine smooth
+tangent diffeomorphism ghost now fills the same local D9 package. A canonical
+real rank-four coordinate equivalence fills its matter slot in the D11
+squared-spinor coordinate specialization, closing that residual record only
+at coefficient level, not as a geometric SpinC bundle. Independently, six
+local symmetric metric coefficients project surjectively onto the full D9
+metric slot at fixed non-metric data; these pointwise coefficients are not a
+tangent to the global Program-P action. For a supplied smooth symmetric global
+tensor, the total atlas now selects a compatible holonomic chart automatically
+at every true throat point; its six `ContDiff` chart coefficients reproduce the
+D9 metric slot exactly. This bridge still does not produce a global Program-P
+action tangent. Nonlinear diffeomorphism-BRST, global
+SpinC/general-metric integration and the full action--Hessian--domain
+identification remain explicit. The global LL action
 also has its exact finite-measure measure/flux derivative and algebraic
 zero-flux Euler branch. PT covariance is exact for fields, variations, action,
 Euler coefficients and stationarity under PT-invariant measures. A second LL
 functional on the same throat now contains true manifold derivatives through
 a finite smooth tangent-generating frame and a strictly positive nonconstant
 auxiliary-metric weight. Its integrated flux and auxiliary-metric derivatives
-and exact weak stationary equation are proved. A strong divergence equation,
-intrinsic Lorentzian contraction and boundary flux remain open. Averaging this
+and exact weak stationary equation are proved. The canonical throat volume is
+now unconditionally positive on every nonempty open set, hence has full
+support. A frame-divergence strong Euler field and the weak/strong and
+stationary/strong equivalences are proved under the explicit analytic
+realization, global integration-by-parts and zero-boundary-flux contracts.
+This does not prove global Stokes, an intrinsic Lorentzian contraction or the
+complete covariant LL parent action. The raw operator's exact formal-adjoint
+defect is now represented by an explicit correction interface: under a smooth
+representative, weak solutions are exactly solutions of the corrected strong
+equation, and the correction is zero exactly under the old global IPP. Its
+existence and vanishing remain analytic obligations. Averaging this
 same differential functional with its PT pullback gives exact PT invariance of
 the action, first variation, weak equation and stationary space for every
 measure; the chosen generating frame itself is not made PT-equivariant. It
@@ -1126,6 +1168,16 @@ smooth affine root `I+(t/2)E₀₁` while its Sylvester eigenvalue stays `2`, wh
 The diagonal, canonical, fixed-similarity, moving-shear, double-collision,
 singular-frame and type-change witnesses are assembled in one proof-carrying
 retained frontier certificate.
+At one diagonal `0/0` boundary point, an equal-rate path and a
+quadratic-numerator path reach the same limit while the selected root
+coordinate tends respectively to `1` and `0`. Hence no continuous
+single-valued extension can agree with the positive branch on the interior.
+This is a two-path obstruction only, not a classification of general matrix
+paths or Jordan strata.
+The full positive monomial family `(t^m,t^n)`, `m,n>0`, is classified as well:
+the root tends to `1` for equal exponents, to `0` when the numerator vanishes
+faster, and to `+∞` when the denominator vanishes faster. Arbitrary nonlinear,
+matrix-valued and Jordan-degenerate paths are not covered.
 Arbitrary singular frames, a general Jordan-type classification/branch atlas
 and arbitrary matrix `0/0` paths remain.
 For
