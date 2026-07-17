@@ -160,6 +160,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           unique lemme local de projection dans les cartes normales : classe
           quotient préservée, orthogonalité métrique et continuité locale du
           carré. Le recollement global et la stratification en découlent.
+        - [x] Construire le vecteur tangent de latitude sur le vrai cover du
+          throat et calculer sa dérivée ambiante explicite : la direction
+          normale standard est exactement `(e₀, 0)`. Le raccord à la dérivée
+          ambiante intrinsèque exportée reste séparé par ses instances privées.
         - [ ] Prouver ce lemme local de projection intrinsèque malgré
           l'équivalence actuelle issue de `Classical.choice`, ou remplacer
           cette équivalence par une construction géométrique régulière.
@@ -563,6 +567,14 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     et de la norme, l'absence de limite ou prolongement matriciel fini, puis
     l'effondrement du mode de Sylvester `E₀₁` avec valeur propre `2√t → 0`.
     Ceci ne classe pas les collisions Jordan générales ni les `0/0` arbitraires.
+    - [x] Transporter toute cette obstruction par une similarité réelle fixe
+      arbitraire : carré, mode non nul, naturalité de Sylvester, absence de
+      limite finie et de prolongement continu sont invariants par conjugaison.
+    - [x] Fermer la collision simultanée à deux paramètres
+      `J₂(t) ⊕ J₂(s) → J₂(0) ⊕ J₂(0)` : les deux coefficients nilpotents
+      divergent indépendamment et deux modes de Sylvester linéairement
+      indépendants dégénèrent. Similarités mobiles et changements de type
+      Jordan restent ouverts.
   - [x] Sur le sous-domaine diagonal global, construire les chemins vers les
     deux faces : numérateur vers zéro donne une extension continue de la
     racine vers zéro et une dégénérescence explicite de Sylvester ; dénominateur
@@ -1097,6 +1109,11 @@ par toute évolution admissible.
           annulation pointwise et intégrée pour toute variation Dirichlet
           homogène; raccorder cette annulation au gate Euler faible dès que le
           boundary functional fourni est réalisé par ce flux.
+        - [x] Sur le collier latitude canonique, appliquer la vraie IPP
+          `intervalIntegral` fibre par fibre puis contre la mesure canonique,
+          identifier le terme intérieur à `mvfderiv` sur le normal et obtenir
+          l'IPP faible sans bord pour les variations Dirichlet aux extrémités.
+          Le Stokes global sur tout le bulk reste séparé.
     - [x] Définir l'espace fonctionnel régulier où sharp, frame, volume et
       différentielle scalaire varient lissement, prouver la lissité et
       l'intégrabilité de la densité sur toute mesure finie, construire l'action
@@ -1266,6 +1283,9 @@ par toute évolution admissible.
   - [x] Prouver pointwise la covariance difféomorphe du tenseur de stress
     scalaire contravariant intrinsèque sous transport simultané de la métrique,
     de `dφ` et des covecteurs tests.
+  - [x] Intégrer ce tenseur contre deux champs cotangents tests et une mesure
+    Borel arbitraire, transporter l'intégrabilité iff et prouver l'invariance
+    exacte sous difféomorphisme simultané et échange des deux secteurs.
   - [ ] Déduire les identités locales de conservation à partir des équations
     covariantes et de l'identité de Noether locale.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
@@ -1507,6 +1527,11 @@ Hessien physique réellement descendu.
 ## 7. P-D/P-E — classification naturelle globale
 
 - [ ] Définir la catégorie Janus et les bundles source/cible naturels.
+  - [x] Construire la catégorie de symétrie du background D8 fixé, à un objet
+    et avec tous les auto-difféomorphismes lisses comme morphismes; construire
+    pour toute fibre normée le foncteur contravariant exact des champs lisses
+    et prouver ses lois d'identité/composition. La catégorie de modules de tous
+    les backgrounds Janus et ses bundles SpinC restent ouvertes.
 - [ ] Vérifier localité, régularité et réalisations holonomiques requises.
 - [x] Construire le groupoïde différentiable des jets structurés.
   - [x] Construire la catégorie et le groupoïde d'action effectifs de deck D8,

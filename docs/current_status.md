@@ -265,7 +265,10 @@ reduced to one local chart lemma: a metric-orthogonal projection must preserve
 the quotient class and have continuous squared length. Local-to-global gluing,
 the lift and the complete stratification then follow. This local projection
 lemma remains open because the current normal equivalence uses
-`Classical.choice` without a regularity theorem.
+`Classical.choice` without a regularity theorem. The explicit latitude curve
+now supplies an actual cover tangent normal whose ambient coordinate
+derivative is `(e₀, 0)`; identifying it with the intrinsic exported ambient
+derivative still crosses private model instances.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -550,7 +553,11 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   Frobenius norm diverge as `t→0⁺`. The target has a finite limit, but the
   selected root has no finite matrix limit or continuous extension, and the
   Sylvester mode `E₀₁` collapses with eigenvalue `2√t→0`. This closes only
-  that canonical witness, not general Jordan collisions or arbitrary `0/0`.
+  that canonical witness. The obstruction is now transported through every
+  fixed real similarity, and the simultaneous two-parameter collision
+  `J₂(t) ⊕ J₂(s)` has two linearly independent Sylvester modes collapsing at
+  the `0/0` corner while both nilpotent root coefficients diverge. Moving
+  similarities, Jordan-type changes and arbitrary matrix paths remain open.
   Outside the positive locus, determinant negativity and every simple
   negative diagonal eigenvalue are now exact no-go criteria; determinant
   positivity is proved insufficient by an explicit `4×4` witness. Paired
@@ -712,7 +719,9 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   For a general Lorentz musical metric, the intrinsic contravariant scalar
   stress is now defined fiberwise and proved pointwise covariant under every
   smooth D8 diffeomorphism, with simultaneous transport of `d phi` and both
-  cotangent test arguments.
+  cotangent test arguments. Pairing it with two dependent cotangent tests and
+  integrating against an arbitrary Borel measure preserves integrability iff
+  and is invariant under simultaneous diffeomorphism and sector exchange.
   At fixed metric the holonomic density variation decomposes pointwise into
   the flat scalar Euler operator plus an explicit flux divergence. Under
   integrability and the named zero-integrated-flux condition, the first
@@ -729,9 +738,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   Euler pairing plus flux, with stationarity equivalence at zero flux and an
   intrinsic D8 specialization. The concrete throat flux
   `trace(ψ) · dφ(n)` equals `trace(ψ) · g(sharp(dφ), n)` and vanishes pointwise
-  and integrally for homogeneous Dirichlet variations. A geometric Stokes/IPP
-  theorem identifying the abstract boundary functional with this flux, and a
-  canonical metric normal, remain open;
+  and integrally for homogeneous Dirichlet variations. On the canonical
+  latitude collar, genuine interval-integral IPP identifies the inner term
+  with `mvfderiv` on the canonical normal and proves the measured weak IPP
+  without boundary for endpoint-Dirichlet variations. A global manifold
+  Stokes theorem identifying the abstract bulk interface with this collar
+  flux, and a global canonical metric normal, remain open;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
@@ -787,12 +799,16 @@ The current `main` stack proves, in the declared models:
 - local finite-jet factorization under the stated Peetre--Slovak hypotheses;
 - naturality/equivariance and evaluator uniqueness;
 - holonomic composition;
+- the fixed-background D8 symmetry category with all smooth
+  self-diffeomorphisms as arrows, plus the contravariant smooth-field functor;
 - action-groupoid, orbit and stabilizer laws;
 - reconstruction of equivariant sections on one transitive orbit from isotropy-fixed values;
 - a concrete valid-chart low-order residual/SpinC action-groupoid realization;
 - the need for separate compatibility across isotropy strata.
 
-The operator category is not an ordinary category of fixed linear representations with plain fiber maps.
+The operator category is not an ordinary category of fixed linear
+representations with plain fiber maps. The fixed-background category is not
+the moduli category of all Janus geometries or a smooth/derived stack.
 
 #### 5.2 Low-order quotient
 
