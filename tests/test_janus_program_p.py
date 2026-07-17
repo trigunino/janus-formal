@@ -253,6 +253,10 @@ def test_program_p_d9_diffeomorphism_ghost_symbol_bridge_is_integrated() -> None
     assert_program_p_gate_integrity()
 
 
+def test_program_p_d9_ghost_zero_mode_cohomology_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_d8_normal_bundle_d9_displacement_is_integrated() -> None:
     assert_program_p_gate_integrity()
 

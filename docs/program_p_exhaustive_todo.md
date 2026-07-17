@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**484 fermées sur 609 ; 125 ouvertes**.
+**485 fermées sur 610 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1890,6 +1890,11 @@ champs et avec les mêmes conditions au bord.
     calculer son symbole principal et caractériser exactement son noyau
     ponctuel à covecteur non nul. Les domaines et la cohomologie de mode zéro
     restent ouverts ; le complexe D9/BRST global n'est donc pas fermé.
+  - [x] Calculer le sous-complexe du symbole ghost D9 au covecteur nul : son
+    différentiel est nul, son noyau est tout l'espace des quatre coordonnées
+    ghosts, son image est nulle et son quotient cohomologique est linéairement
+    équivalent à cet espace. Les domaines et la cohomologie du vrai opérateur
+    différentiel global restent ouverts.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
