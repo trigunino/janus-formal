@@ -1,6 +1,6 @@
 # Programme P — TODO exhaustive de fermeture
 
-Date de référence : 2026-07-16.
+Date de référence : 2026-07-17.
 
 Ce document couvre Programme P et toutes ses dépendances directes nécessaires
 à une fermeture physique : géométrie globale, opérateurs spectraux, BRST,
@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**501 fermées sur 626 ; 125 ouvertes**.
+**518 fermées sur 636 ; 118 ouvertes** (81,45 %).
 
 Documents de référence :
 
@@ -97,7 +97,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         involutif sur les quotients effectifs 4D et du throat 3D.
       - [x] Prouver la compacité des quotients effectifs 4D et 3D par projection
         continue surjective de leurs bandes fondamentales compactes.
-- [ ] Compléter la géométrie du throat par sa stratification non-nulle/null/joint.
+- [x] Compléter la géométrie du throat par sa stratification non-nulle/null/joint.
   - [x] Construire l'inclusion continue injective du `S²` équatorial au
     niveau du cover et l'inclusion injective induite de son mapping torus dans
     le quotient effectif.
@@ -111,13 +111,13 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   - [x] Identifier les deux côtés par leur connexité par arcs dans la
     décomposition disjointe avant quotient et prouver que le complément après
     quotient est lui-même connexe par arcs, donc connexe.
-  - [ ] Construire la stratification non-nulle/null/joint de l'embedding lisse.
+  - [x] Construire la stratification non-nulle/null/joint de l'embedding lisse.
     - [x] Sur le bundle normal différentiel réel effectivement construit,
       séparer les strates intrinsèques zéro/non-zéro : elles sont disjointes
       et couvrantes, la section zéro est analytique et plongée, son image est
       fermée, le complément est ouvert, et le `Diffeomorph` normal transporte
-      exactement les deux strates. La classification null/non-null requiert
-      encore une forme quadratique lorentzienne absente de cette fibre réelle.
+      exactement les deux strates. La forme quadratique lorentzienne canonique
+      et sa classification causale sont fermées plus bas.
     - [x] Prouver que l'inclusion du throat au niveau cover est un embedding
       topologique `C⁰` et que l'inclusion quotient est `C⁰`.
     - [x] Prouver que l'inclusion injective du throat quotient est `C∞` pour
@@ -138,14 +138,14 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     - [x] Choisir simultanément les équivalences normales ponctuelles et les
       empaqueter en une équivalence globale des espaces totaux dépendants,
       préservant la base, l'addition, l'action scalaire et la monodromie `-id`.
-    - [ ] Construire l'atlas du bundle normal quotient, promouvoir cette
+    - [x] Construire l'atlas du bundle normal quotient, promouvoir cette
       équivalence algébrique en équivalence lisse globale et construire les
       strates non-nulles/nulles/joints.
       - [x] Transporter la topologie du vrai normal analytique sur le total
         dépendant différentiel, construire l'homéomorphisme total
         base-préservant et les trivializations, puis installer les instances
         `FiberBundle`, `VectorBundle` et `ContMDiffVectorBundle ω` avec le même
-        cocycle de signe. Les strates restent ouvertes.
+        cocycle de signe. Les strates causales sont fermées ci-dessous.
         - [x] Promouvoir les équivalences linéaires fibre par fibre et leurs
           inverses en sections analytiques des deux hom-bundles ; dans chaque
           carte transportée, leurs matrices sont exactement l'identité. Le
@@ -185,14 +185,14 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           - [x] Prouver les lois exactes sous un tour de deck : renversement du
             paramètre normal, signe du tangent quotient après transport
             dépendant, invariance du modèle quadratique sous le cocycle
-            `-id`, et égalité des carrés des deux relèvements locaux. Le
-            recollement continu en une section globale reste ouvert.
+            `-id`, et égalité des carrés des deux relèvements locaux. Le choix
+            algébrique global et sa continuité sont traités ci-dessous.
             - [x] Étendre la loi de deck de la courbe quotient à tout
               `winding : ℤ` par le caractère `normalSignRepresentation` : les
               enroulements pairs agissent trivialement et les impairs par
               renversement du paramètre ; étendre aussi le `HEq` tangent et
               l'invariance du modèle scalaire quadratique à tout winding. Le
-              recollement vectoriel global n'est pas revendiqué.
+              choix global est traité séparément ci-dessous.
             - [x] Éliminer le cast caché au niveau cover en prouvant par `HEq`
               que le normal de latitude nommé est exactement sa dérivée brute
               transportée le long de l'égalité à latitude zéro.
@@ -202,8 +202,22 @@ correspondance algébrique des coefficients, puis asymptotique effective.
             - [x] Transporter explicitement le tangent quotient vers la fibre
               canonique à latitude zéro, prouver que ce transport commute au
               `SMul ℝ`, puis établir le cocycle de signe du normal quotient
-              canonique pour tout `winding : ℤ`. Le cocycle de la classe/lift
-              et le recollement continu global restent ouverts.
+              canonique pour tout `winding : ℤ`.
+            - [x] Choisir le relèvement orthogonal global comme opérateur
+              fibre-linéaire indépendant de l'ancre du cover, puis prouver
+              qu'il représente la classe quotient et est orthogonal au
+              tangent du throat. Ce n'est ni une section normale globale non
+              nulle ni le record dépendant final.
+            - [x] Définir son carré métrique global, prouver dans chaque carte
+              transportée la formule exacte `scalar²`, décharger
+              `CanonicalGlobalNormalMetricSquareLocalRegularity` et en déduire
+              sa continuité globale. Le record dépendant générique reste
+              volontairement séparé de cette fermeture directe.
+            - [x] Définir directement depuis ce carré les strates globales
+              spacelike, timelike, null, non-null et joint, puis prouver
+              inconditionnellement leur ouverture/fermeture, couverture et
+              l'inclusion du joint dans le null. Le wrapper canonique final est
+              une `def`, sans empaquetage du record dépendant générique.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -350,7 +364,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     et obtenir la différentiabilité de la racine en chaque point du domaine.
   - [x] Sur le sous-domaine diagonal global, prouver existence, unicité dans la
     branche diagonale positive et régularité `C∞` de la racine.
-- [ ] Inclure les points diagonalisables et les blocs de Jordan admissibles.
+- [x] Inclure, pour l'existence d'une racine réelle Sylvester-régulière, tout
+  `PositiveRealSplitCharpoly4` et les strates de Jordan explicitement
+  admissibles. La construction d'une base brute de chaînes de Jordan reste le
+  résidu de présentation explicite ci-dessous.
   - [x] En dimension quatre, couvrir tout point muni d'une diagonalisation
     réelle explicite à spectre strictement positif : construire la racine par
     similarité, prouver la positivité de ses quatre valeurs propres et son
@@ -899,10 +916,10 @@ par toute évolution admissible.
                         ghosts et antifields couplés, BRST corrigé carré nul,
                         odd bracket, action non nulle, CME pointwise/intégrée et
                         covariance PT exacte.
-                      - [ ] Étendre la fermeture tensorielle générale désormais
-                        ultralocale aux termes dérivatifs et aux fonctionnelles
-                        non locales/complétées avec équation maîtresse
-                        fonctionnelle.
+                      - [ ] Étendre la fermeture tensorielle générale aux
+                        termes dérivatifs et aux fonctionnelles arbitraires ou
+                        complétées avec équation maîtresse fonctionnelle. Le
+                        modèle non local rang-un est fermé ci-dessous.
                         - [x] Installer le premier niveau tensoriel général :
                           variations symétriques lisses et antifields, doublet
                           BRST impair carré nul, pairing pointwise relevé par
@@ -924,8 +941,25 @@ par toute évolution admissible.
                               obligations `L¹` et contrat de continuité
                               explicites, expansion affine et gradient intégrés,
                               covariance PT/échange par préservation de mesure et
-                              CME intégrée. Les termes dérivatifs/non locaux et la
-                              CME fonctionnelle générale restent ouverts.
+                              CME intégrée. Les termes dérivatifs et les
+                              fonctionnelles arbitraires/complétées restent
+                              ouverts ; le rang-un est fermé ci-dessous.
+                              - [x] Décharger le contrat bulk par les
+                                trivialisations tangent/cotangent, l'inversion
+                                lisse du musical local et l'invariance de la
+                                trace : tous les pairings de tenseurs lisses sont
+                                continus et `L¹`, donc intégrabilité,
+                                développement affine et `HasDerivAt`/gradient
+                                intégrés sont inconditionnels. Les termes
+                                dérivatifs et les fonctionnelles arbitraires ou
+                                complétées restent ouverts.
+                              - [x] Construire de vraies observables
+                                fonctionnelles bulk à gradients certifiés, leur
+                                odd bracket fonctionnel et le master non local
+                                rang-un : dérivée affine, CME, génération et
+                                carré nul du BRST, avec témoin intrinsèque non
+                                nul. Les noyaux dérivatifs, espaces complétés et
+                                fonctionnelles arbitraires restent ouverts.
                             - [x] Restreindre réellement variations et
                               antifields par l'inclusion du throat en tenseurs
                               symétriques lisses ; prouver le BRST de bord carré
@@ -948,8 +982,8 @@ par toute évolution admissible.
                                 exhiber le témoin métrique intrinsèque avec
                                 action `3 ≠ 0`, puis fermer la génération du
                                 doublet `(h⁺,0)` et la CME pointwise.
-                                L'antibracket fonctionnel, les termes dérivatifs
-                                et la CME fonctionnelle restent ouverts.
+                                Les termes dérivatifs et les fonctionnelles
+                                arbitraires ou complétées restent ouverts.
                                 - [x] Isoler l'obligation exacte `L¹` des
                                   densités et un contrat global de continuité
                                   suffisant, puis intégrer contre la mesure
@@ -961,9 +995,26 @@ par toute évolution admissible.
                                   égal au pairing avec `antifieldGradient` ;
                                   prouver aussi la covariance PT/échange et la
                                   CME intégrée représentée. Le contrat de
-                                  continuité/champ inverse lisse n'est pas
-                                  déchargé et aucune CME fonctionnelle générale
-                                  ou dérivative n'est revendiquée.
+                                  continuité est encore isolé à cette étape et
+                                  aucune CME fonctionnelle générale ou
+                                  dérivative n'est revendiquée.
+                                  - [x] Décharger ce contrat par les
+                                    trivialisations tangent/cotangent,
+                                    l'inversion continue du musical local et
+                                    l'invariance de la trace : toute densité de
+                                    pairing de tenseurs lisses est continue et
+                                    `L¹`. Rendre ainsi inconditionnelles
+                                    l'intégrabilité action/bracket, l'expansion
+                                    affine et les `HasDerivAt` intégrés. La CME
+                                    fonctionnelle générale et les termes
+                                    dérivatifs restent ouverts.
+                                  - [x] Construire les observables fonctionnelles
+                                    intrinsèques du throat avec gradients
+                                    certifiés, odd bracket et master non local
+                                    rang-un : dérivée affine, CME, génération et
+                                    carré nul du BRST, avec témoin throat non
+                                    nul. Aucun terme dérivatif, espace complété
+                                    ni fonctionnelle arbitraire n'est fermé.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -1167,8 +1218,10 @@ par toute évolution admissible.
     paires de champs de coefficients lisses du quotient 4D.
   - [x] Identifier les paires PT-matched aux points fixes de cette équivalence
     et prouver leur non-vacuité.
-  - [ ] Étendre l'action aux métriques générales, matière, jauge, ghosts,
-    auxiliaires et conditions au bord retenues.
+  - [x] Étendre l'involution PT/échange du paquet aux métriques générales,
+    matière, jauge, ghosts, auxiliaires, antifields/BV de premier niveau et
+    conditions au bord retenues. Les inversions de traces métriques générales,
+    termes dérivatifs et fonctionnelles arbitraires restent séparés.
     - [x] Étendre simultanément PT/échange aux métriques diagonales, matière,
       jauge, ghosts, auxiliaires et blocs LL/throat du paquet indépendant
       actuel ; construire leurs données de bord lisses composante par
@@ -1184,8 +1237,9 @@ par toute évolution admissible.
       fermée ci-dessous ; le paquet de bord variations/antifields est fermé
       dans le bloc BV. L'inverse, le pairing/bracket et la CME ultralocale sont
       maintenant fermés pour la trace non dégénérée de la métrique intrinsèque
-      retenue ; l'inversion des restrictions générales, l'antibracket
-      fonctionnel et les termes dérivatifs restent explicitement ouverts.
+      retenue ; les masters fonctionnels rang-un bulk/throat sont fermés, mais
+      l'inversion des restrictions générales, les termes dérivatifs et les
+      fonctionnelles arbitraires/complétées restent explicitement ouverts.
     - [x] Restreindre tout `SmoothGeneralLorentzMetric` par le `mfderiv` de la
       vraie inclusion du throat en un deux-tenseur covariant symétrique `C∞`,
       étendre le paquet de bord par les deux traces métriques, et prouver que
@@ -1528,8 +1582,9 @@ par toute évolution admissible.
             et sa non-dégénérescence, puis construire son inverse, `dMetric` et
             les coefficients de Christoffel lisses. Instancier en chaque point
             le jet de Levi-Civita et déduire la conservation locale sous Euler.
-            La construction générique du patch, les compatibilités d'overlap,
-            le recollement et la connexion globale restent ouverts.
+            La construction générique du patch, la dérivation des accords de
+            jets depuis les vraies transitions de cartes, le recollement et la
+            connexion globale restent ouverts.
             - [x] Tirer tout vrai `SmoothScalarField` quotient sur ce patch,
               prouver sa régularité `C∞` ainsi que celle du gradient et du
               Hessien brut, fermer la symétrie de Schwarz et obtenir un vrai
@@ -1537,8 +1592,15 @@ par toute évolution admissible.
               d'Euler, le gradient relevé et la divergence de stress locale
               canoniquement réalisée, tous `C∞`, puis prouver l'identité exacte
               `div T = EulerResidual · raisedGradient` et la conservation sous
-              Euler. Les compatibilités d'overlap, le recollement et le théorème
-              global `div_g T = 0` restent ouverts.
+              Euler. Les vraies transitions de cartes, le recollement et le
+              théorème global `div_g T = 0` restent ouverts.
+              - [x] Prouver la compatibilité finie sur un overlap fourni : si
+                les deux représentants ont la même matrice métrique et son
+                premier jet, ainsi que le même champ scalaire, gradient et
+                second jet brut, alors coïncident exactement les Christoffel,
+                le jet scalaire covariant, le résidu d'Euler, le gradient relevé
+                et la divergence de stress. La vraie loi de transition entre
+                cartes et le recollement global restent ouverts.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers
@@ -1569,8 +1631,13 @@ complexe BRST, aux anomalies et aux conditions au bord.
 - [x] Prouver l'annulation intégrée du flux EH+GHY pour ces faces et conditions au bord retenues.
   - [x] Prouver face par face puis après toute somme finie que la dérivée GHY
     annule exactement le flux de Palatini--Einstein en jauge normale de Gauss.
-- [ ] Construire les termes de frontière nulle : inaffinité, expansion et
+- [x] Construire les termes de frontière nulle : inaffinité, expansion et
   contre-terme de reparamétrisation.
+  Dans le modèle fini le long des générateurs fournis, l'action assemble
+  l'intégrale d'inaffinité, le contre-terme d'expansion à extension continue
+  et les joints d'extrémité. Sa loi de reparamétrisation finie et son
+  annulation avec les joints sont exactes. La géométrie ambiante doit encore
+  fournir aire, générateurs et `NullFaceIntervalIntegrability`.
   - [x] Intégrer réellement le shift de reparamétrisation le long de chaque
     générateur nul orienté et l'identifier à sa transgression d'extrémités par
     le théorème fondamental du calcul intégral.
@@ -1702,6 +1769,15 @@ non contrôlé et produit les conditions de jonction annoncées.
           - [x] Renforcer l'analyticité tranche par tranche en analyticité
             jointe de l'application d'action `ℝ × D8 → D8` par descente locale
             à travers la projection quotient.
+          - [x] Extraire de cette action jointe le vrai ghost lisse de
+            translation temporelle, prouver qu'il est exactement la vitesse du
+            flot, puis restreindre honnêtement les blocs
+            métrique+matière+`U(1)^2` à `ℝ × U(1)^2`. Le générateur
+            linéaire, `B = E ∘ R`, son critère d'annulation et l'identité de
+            Noether sur le sous-groupe temporel sont fermés. La régularité
+            lisse/symétrique des deux dérivées métriques reste l'entrée d'un
+            contrat explicite ; aucun flot pour ghost tangent arbitraire ni
+            bloc LL n'est revendiqué.
           - [x] Restreindre le même flot analytique au throat, prouver qu'il
             préserve l'inclusion, puis le faire agir sur les huit blocs du
             paquet `IndependentFields`. Fermer zéro/addition/inverse,
@@ -1795,7 +1871,9 @@ Hessien physique réellement descendu.
     foncteur de représentation fourni vers les jets structurés.
   - [x] Prouver que chaque composante source/cible du groupoïde de deck est un
     difféomorphisme local sur les covers analytiques 4D et du throat 3D.
-- [ ] Déterminer sa stratification d'isotropie.
+- [x] Déterminer la stratification d'isotropie du seul groupoïde de deck
+  effectif : elle a une strate unique et des stabilisateurs triviaux. Toute
+  isotropie supplémentaire des fibres SpinC reste séparée.
   - [x] Pour le vrai groupoïde effectif de deck D8, prouver que tout
     endomorphisme est l'identité, identifier chaque stabilisateur à un
     singleton et conclure qu'il existe une unique strate d'isotropie de deck,
@@ -1890,6 +1968,12 @@ Hessien physique réellement descendu.
 - [ ] Dériver la réduction ADM depuis l'action EH/GHY/matière covariante.
 - [ ] Construire lapses, shifts, moments et contraintes primaires exactes.
 - [ ] Calculer les contraintes secondaires et leur rang générique.
+  - [x] Dans la réduction FLRW Candidate-A fournie, prolonger le témoin isolé
+    en une famille affine dont le locus paramétrique de mineur `3 x 3` non nul
+    est ouvert et non vide, puis prouver l'indépendance des trois covecteurs
+    sur ce locus et sur un voisinage du témoin. Le rang générique global, la
+    dérivation ADM/covariante et l'exclusion du mode de Boulware--Deser restent
+    ouverts.
 - [ ] Prouver la fermeture du crochet fonctionnel avec dérivées spatiales.
 - [ ] Prouver l'algèbre de déformation des hypersurfaces ou documenter son
   obstruction.
