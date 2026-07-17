@@ -262,10 +262,12 @@ full causal stratification from the single exact contract
 `ContinuousOrthogonalDifferentialNormalLift`; the metric value is independent
 of the ambient representative by orthogonality. Its construction is now
 reduced to one local chart lemma: a metric-orthogonal projection must preserve
-the quotient class and have continuous squared length. Local-to-global gluing,
-the lift and the complete stratification then follow. This local projection
-lemma remains open because the current normal equivalence uses
-`Classical.choice` without a regularity theorem. The explicit latitude curve
+the quotient class and have continuous squared length. This canonical local
+lemma is now explicit at every chosen cover lift: the pushed latitude normal
+has nonzero quotient class, gives scalar coordinates on the differential
+normal fiber, and its orthogonal representative has exact square equal to the
+scalar square, with continuous local quadratic model. Compatibility under a
+change of lift/deck and local-to-global gluing remain open. The explicit latitude curve
 now supplies an actual cover tangent normal whose ambient coordinate
 derivative is `(e₀, 0)`. The sphere ambient map and its smoothness are now
 public, and the intrinsic ambient derivative factors exactly through the
@@ -275,9 +277,13 @@ diffeomorphism. The canonical latitude normal has exact product image and
 ambient image `(e₀, 0)`; the ambient image and the tangent vector are both
 nonzero. For the actual intrinsic cover Lorentz tensor, its square is exactly
 `1` and it is orthogonal to every tangent in the differential of the fixed-
-throat inclusion; it is therefore spacelike and non-null. This closes the
-cover-level causal calculation only. Regular projection/descent to the global
-quotient normal and the local projection lemma remain open.
+throat inclusion; it is therefore spacelike and non-null. Its pushforward now
+also supplies the explicit canonical local quotient-normal lift described
+above. That local orthogonal splitting proves that the retained intrinsic
+Lorentz metric has no tangential radical anywhere on the effective throat;
+its smooth symmetric throat trace is therefore genuinely nondegenerate and
+is packaged on the nondegenerate throat-metric domain. Deck compatibility and
+global descent/gluing of the normal lift remain open.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -353,6 +359,15 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   covariant Euler pairing plus flux; zero flux makes stationarity equivalent
   to the weak equation, a pointwise Euler solution implies it, and the action
   derivative vanishes. This is specialized to the intrinsic D8 metric.
+  The canonical latitude collar now supplies its own exact intrinsic D8
+  divergence/boundary interface. Pairing `sharp(dφ)` with the explicit collar
+  normal is the genuine manifold directional derivative, and the oriented
+  endpoint flux is exactly the proved interval-IPP boundary functional,
+  fiberwise and after base integration. Euler fields with endpoint-Dirichlet
+  test variations therefore have zero collar first variation. An exact
+  specialization predicate and adapter connect this result to a supplied
+  global interface, but no global Stokes theorem or global one-sided metric
+  normal is inferred.
   On the canonical latitude collar, the antisymmetric scalar
   Green--Wronskian current is now explicit. Its derivative is exactly the
   antisymmetric pairing of the equal-mass Euler residuals; it is pointwise and
@@ -367,7 +382,11 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   energy `(φ')² + m²φ²`: its derivative is exactly twice `φ'` times the Euler
   residual, so Euler solutions conserve it fiberwise and after base
   integration, with zero endpoint jump; it is nonnegative when `m² ≥ 0`.
-  This is only a local collar stress-energy witness. Geometrically discharging
+  The intrinsic unit-normal covector identifies this energy exactly with twice
+  the normal-normal component of the general scalar stress on the
+  normal-projected collar jet; this component has zero derivative and is
+  locally constant under the collar Euler equation. This is only a local
+  collar stress-energy identity. Geometrically discharging
   the global Stokes/IPP interface, proving a four-dimensional covariant stress
   divergence, and extending this collar current to a covariant four-dimensional
   Noether current with enough test ghosts remain open.
@@ -399,8 +418,17 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   The same result now holds after replacing the diagonal metric pair by two
   arbitrary smooth general Lorentz metrics: the unified packet has an exact
   involutive PT/exchange, and every retained non-metric boundary sector has
-  equivariant trace and stable Dirichlet data. A general metric throat trace
-  and the antifield/full-BV boundary packet are not included and remain open.
+  equivariant trace and stable Dirichlet data. Each general metric now also
+  restricts to a genuine smooth symmetric throat tensor, and the complete
+  boundary packet carries both metric traces. Their nondegeneracy is exactly
+  equivalent to absence of a tangential radical. Restriction now commutes
+  pointwise with intrinsic PT tensor pullback, including the exact two-sector
+  exchange law. The throat PT derivative is a linear equivalence, so this
+  pointwise pullback preserves and reflects nondegeneracy; consequently the
+  no-tangential-radical condition is invariant under PT and PT/exchange. A
+  smooth pullback construction for an arbitrary throat tensor, classification
+  of general metric restrictions, and the antifield/full-BV boundary packet
+  remain open.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
@@ -799,8 +827,10 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   pairing. Its scalar energy
   `(φ')² + m²φ²` has derivative `2φ'` times the Euler residual, is fiberwise
   and measured constant on Euler solutions, has zero endpoint jump, and is
-  nonnegative for `m² ≥ 0`. This is a local one-dimensional stress-energy
-  witness only. A global manifold Stokes theorem identifying the abstract
+  nonnegative for `m² ≥ 0`. It is exactly twice the general scalar stress
+  component `T_nn` evaluated on the normal-projected collar jet, and `T_nn` is
+  locally constant under the collar Euler equation. This remains only a local
+  collar stress-energy result. A global manifold Stokes theorem identifying the abstract
   bulk interface with this collar flux, a four-dimensional covariant stress
   divergence, extension to a covariant four-dimensional Noether current and a
   global canonical metric normal remain open;

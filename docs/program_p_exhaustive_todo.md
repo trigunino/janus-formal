@@ -174,9 +174,13 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           ce vecteur est orthogonal à toute la différentielle du throat, que
           son carré vaut exactement `1`, et donc qu'il est spacelike et
           non-null. La projection régulière vers le quotient reste séparée.
-        - [ ] Prouver ce lemme local de projection intrinsèque malgré
-          l'équivalence actuelle issue de `Classical.choice`, ou remplacer
-          cette équivalence par une construction géométrique régulière.
+        - [x] Construire explicitement ce lemme sur chaque carte normale
+          canonique : la classe du normal quotient est non nulle, sa
+          coordonnée scalaire est bijective, le relèvement représente la
+          classe, est métriquement orthogonal et son carré vaut exactement le
+          carré scalaire, dont le modèle local est continu. La compatibilité
+          sous changement de lift/deck et le recollement global restent
+          ouverts.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -1091,8 +1095,29 @@ par toute évolution admissible.
       `SmoothGeneralLorentzMetric`, étendre simultanément PT/échange à tous les
       secteurs indépendants non métriques et prouver involutivité, équivariance
       de leurs traces au throat et stabilité de leurs conditions de Dirichlet.
-      La restriction/trace au bord d'une métrique générale et le paquet de bord
-      antifields/BV complet restent explicitement ouverts.
+      La restriction/trace au bord des métriques générales est maintenant
+      incluse dans le paquet et sa naturalité tensorielle PT/échange est
+      fermée ci-dessous ; le paquet de bord antifields/BV complet reste
+      explicitement ouvert.
+    - [x] Restreindre tout `SmoothGeneralLorentzMetric` par le `mfderiv` de la
+      vraie inclusion du throat en un deux-tenseur covariant symétrique `C∞`,
+      étendre le paquet de bord par les deux traces métriques, et prouver que
+      leur non-dégénérescence équivaut exactement à l'absence de radical
+      tangentiel.
+      - [x] Prouver pointwise la naturalité PT de la restriction métrique via
+        la différentielle équivariante de l'inclusion, puis la loi exacte
+        PT/échange des deux traces. La stabilité d'éventuelles conditions
+        métriques supplémentaires au bord reste ouverte.
+        - [x] Prouver que la différentielle PT est une équivalence linéaire,
+          que le pullback tensoriel pointwise préserve et reflète la
+          non-dégénérescence, puis que `HasNoTangentialRadical` est invariant
+          sous PT et sous PT/échange. Le pullback lisse d'un tenseur de throat
+          arbitraire reste séparé.
+      - [x] Pour la métrique Lorentz intrinsèque retenue, utiliser le normal
+        quotient local explicite pour scinder tout tangent ambiant et prouver
+        `HasNoTangentialRadical`, la non-dégénérescence de sa trace au throat
+        et son empaquetage en `SmoothNondegenerateThroatMetric`. La
+        classification de toutes les métriques générales reste ouverte.
     - [x] Sur les champs bruts de deux-tenseurs covariants généraux, construire
       le pullback par la vraie involution PT analytique, prouver l'involution
       différentielle exacte, l'échange des deux secteurs et la préservation de
@@ -1160,6 +1185,13 @@ par toute évolution admissible.
           identifier le terme intérieur à `mvfderiv` sur le normal et obtenir
           l'IPP faible sans bord pour les variations Dirichlet aux extrémités.
           Le Stokes global sur tout le bulk reste séparé.
+          - [x] Identifier le pairing métrique `g(sharp(dφ), n)` à cette
+            dérivée normale, construire le flux orienté aux deux extrémités et
+            l'interface divergence/bord exacte du collier, puis prouver la
+            stationnarité fibre par fibre et mesurée sous Euler--Dirichlet.
+            L'adaptateur vers une interface globale reste conditionné à sa
+            spécialisation ; le Stokes global et un normal métrique global du
+            throat one-sided ne sont pas affirmés.
         - [x] Construire sur ce collier le courant scalaire antisymétrique de
           Green--Wronskian et prouver que sa dérivée est exactement le pairing
           antisymétrique des deux résidus d'Euler de même masse.
@@ -1186,6 +1218,11 @@ par toute évolution admissible.
           Ce résultat est uniquement un témoin local unidimensionnel de
           conservation stress-énergie, pas la divergence covariante du tenseur
           de stress en dimension quatre.
+          - [x] Identifier exactement cette énergie à deux fois la composante
+            normale-normale du tenseur de stress scalaire général sur le jet
+            projeté du collier, puis prouver que cette composante a dérivée
+            nulle et reste constante sous l'équation d'Euler du collier.
+            Cette conservation est strictement locale au collier.
         - [ ] Étendre le courant tangent canonique du collier en courant de
           Noether local covariant en dimension quatre sur le bulk, avec assez
           de ghosts tests, puis établir le Stokes global correspondant.
@@ -1365,7 +1402,9 @@ par toute évolution admissible.
     exacte sous difféomorphisme simultané et échange des deux secteurs.
   - [ ] Déduire les identités locales de conservation à partir des équations
     covariantes et de l'identité de Noether locale ; le certificat de
-    covariance/échange ne les affirme pas.
+    covariance/échange ne les affirme pas. L'identité locale du collier
+    `E = 2 T_nn` et la constance de `T_nn` n'établissent pas cette divergence
+    covariante en dimension quatre.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers
