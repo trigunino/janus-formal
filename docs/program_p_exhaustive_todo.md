@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**518 fermées sur 636 ; 118 ouvertes** (81,45 %).
+**545 fermées sur 657 ; 112 ouvertes** (82,95 %).
 
 Documents de référence :
 
@@ -238,8 +238,14 @@ correspondance algébrique des coefficients, puis asymptotique effective.
 - [x] Construire le relèvement principal normal `Pin⁻(1) ≃ Z4` comme vrai
   `FiberBundleCore` global : transitions données par le cocycle entier,
   action droite libre/transitive, carré central et projection d'orientation.
-- [ ] Étendre ce relèvement normal au fibré de repères tangent ambiant et
-  construire le relèvement `SpinC` compatible ; le gate normal ne l'affirme pas.
+- [ ] Étendre ce relèvement normal au fibré tangent ambiant par une structure
+  `Pin` compatible. Les réalisations ambiantes orientées `Spin/SpinC` sont
+  exclues par la non-orientabilité prouvée ci-dessous.
+  - [x] Prouver que la descente déterminantielle ambiante est vide, exhiber
+    l'obstruction d'un overlap renversant l'orientation et en déduire
+    l'inexistence de réalisations Čech continues orientées `Spin` ou `SpinC`.
+    La cohérence Čech purement algébrique reste conditionnelle et le bon verrou
+    constructif restant est le relèvement ambiant `Pin`.
   - [x] Construire depuis les cartes réelles du quotient les transitions
     tangentes ambiantes, leur différentielle inversible, le signe exact du
     déterminant et le cocycle d'orientation `ZMod 2`. La réduction quadratique,
@@ -247,13 +253,29 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     explicitement séparés par des contrats minimaux.
     - [x] Construire une forme quadratique euclidienne réelle 4D positive et
       non dégénérée sur le modèle, la transporter par chaque vraie transition
-      tangente et obtenir les isométries quadratiques exactes. La compatibilité
-      globale orthonormale et les lifts `Pin/SpinC` restent des contrats exposés.
+      tangente et obtenir les isométries quadratiques exactes. Une réduction
+      orthonormale atlas-wide pointwise est maintenant construite par choix
+      d'un lift de référence et cocycle tangent strict. Sa continuité/lissité
+      et les lifts `Pin/SpinC` restent des contrats séparés.
       - [x] Construire depuis l'algèbre de Clifford la vraie action du groupe
         Spin sur les vecteurs, son équivalence linéaire, la préservation
         quadratique et le morphisme `Spin(Q) →* GL(4)`. L'extension Pin est
         isolée par son action tordue exacte ; seuls les lifts de transitions et
         leur cocycle Čech atlas-spécifique restent à fournir.
+        - [x] Construire inconditionnellement la projection tordue du groupe
+          ambiant `Pin⁻(4)` vers les automorphismes réels, avec générateur de
+          réflexion de carré central non trivial et loi exacte d'ordre quatre.
+        - [x] Réduire tout relèvement ambiant normal-compatible à un unique
+          choix Čech continu normalisé, avec lois de projection, parité et
+          restriction normale exactes. L'existence de ce choix continu reste
+          une hypothèse et n'est pas revendiquée.
+          - [x] Calculer explicitement la réflexion `O(4)` du générateur
+            `Pin⁻`, prouver son caractère d'orientation sur les quatre phases
+            `ZMod 4`, corriger la restriction normale pour ne demander les
+            coordonnées que sur les vrais overlaps et isoler l'unique loi de
+            réduction orthogonale exacte. Le winding Čech réel, sa comparaison
+            normale et le raffinement continu/lisse de la réduction pointwise
+            restent à construire.
         - [x] Prouver le cocycle strict des vraies transitions tangentes et de
           leur réduction `O(4)`, composer tout lift Spin fourni, puis montrer
           que son défaut Čech appartient exactement au noyau de la projection.
@@ -281,7 +303,10 @@ correspondance algébrique des coefficients, puis asymptotique effective.
                 paire pour tout élément de `SO(4)`, puis construire sans
                 hypothèse la surjectivité `Spin(4) → SO(4)` et une fonction de
                 relèvement via `LinearIsometryEquiv.reflections_generate_dim`.
-          - [ ] Trivialiser cohérement le défaut Čech noyau des lifts choisis.
+          - [x] Rejeter la trivialisation globale du défaut Čech de lifts Spin
+            ambiants : la non-orientabilité prouvée interdit déjà leur
+            existence continue. Le problème constructif correct est le choix
+            Čech `Pin⁻` normal-compatible isolé ci-dessus.
             - [x] Sur chaque triple overlap fixé et pour trois lifts arbitraires,
               annuler exactement le défaut par la correction noyau canonique
               du troisième lift. La cohérence commune sur tout l'atlas reste
@@ -314,7 +339,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
                     critère exact de trivialisation. Il reste l'orientation
                     globale, cette classe Čech unique et la régularité.
 - [ ] Identifier les classes caractéristiques et prouver les compatibilités
-  entre racine déterminante, Spin et twist monopolaire.
+  entre racine déterminante, `Pin⁻`/`PinC` et twist monopolaire.
   - [x] Prouver au niveau du relèvement normal que les deux caractères quart
     associés au fibré principal `Pin⁻(1)` construisent de vrais
     `FiberBundleCore`, reproduisent les deux cocycles racines, se carrent en
@@ -324,6 +349,13 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       vaut exactement `1` pour tout enroulement.
 - [ ] Fixer les domaines géométriques sur lesquels métriques, racines,
   opérateurs et conditions au bord sont simultanément définis.
+
+  Le package typé `ProgramPCommonGeometricDomain4D` est maintenant non vide et
+  force une même configuration pour les métriques diagonales, la racine
+  principale, le domaine `LLH1`, la trace de bord et les accès D7/D9/D10. La
+  case reste ouverte : `RemainingProgramPD7D9D10DomainAgreement4D` isole encore
+  l'accord avec le tangent de l'action, le Hessien, la diagonalisation D10, le
+  régulateur et les domaines de bord/Fredholm.
 
 **Acceptation** : un objet géométrique global unique alimente sans conversion
 ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
@@ -440,8 +472,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       `1+1+1+1` dans un type de présentation unique ; construire le sélecteur,
       prouver carré et Sylvester globalement sur cette somme, continuité sur
       chaque strate et exhaustivité combinatoire des partitions de quatre.
-    - [ ] Déduire `HasPositiveRealJordanPresentation` d'hypothèses spectrales
-      intrinsèques sur une matrice brute, sans fournir sa base de Jordan.
+    - [x] Retirer `HasPositiveRealJordanPresentation` du chemin critique brut :
+      `positiveRawSylvesterRegularRootClosure` construit directement, sous les
+      seules hypothèses spectrales positives scindées, une racine réelle exacte
+      dont l'opérateur de Sylvester est bijectif, sans base de Jordan.
       - [x] Définir le charpoly scindé à racines réelles positives, dériver le
         même scindage/positivité pour le minpoly, exposer la décomposition
         Jordan--Chevalley disponible et réduire toute la fermeture brute à
@@ -515,12 +549,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
         des cinq partitions de `Fin 4`. À partir de ce contrat, dériver
         l'inverse et `HasPositiveRealJordanPresentation`. La racine exacte et
         la bijectivité de Sylvester sont désormais disponibles sans ce contrat.
-      - [ ] Construire cette base réelle de chaînes `Fin 4` pour toute matrice
-        non hermitienne dont le charpoly est scindé à racines strictement
-        positives. Mathlib expose les espaces propres généralisés mais ne
-        choisit pas encore leurs chaînes ; c'est uniquement le résidu de forme
-        de Jordan explicite du secteur brut positif, pas un résidu d'existence
-        ou de régularité Sylvester.
+      - [x] Classer la base réelle explicite de chaînes `Fin 4` comme donnée de
+        présentation facultative : Mathlib ne choisit pas ces chaînes, mais
+        elles ne sont plus requises pour l'existence de la racine ni pour la
+        régularité de Sylvester, toutes deux fermées par la construction
+        polynomiale brute précédente.
     - [x] Pour les spectres réels non positifs, prouver l'obstruction
       déterminant négatif et le no-go plus fort d'une valeur propre négative
       simple, exhiber un contre-exemple de déterminant positif sans racine,
@@ -661,7 +694,18 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     racine vers zéro et une dégénérescence explicite de Sylvester ; dénominateur
     vers zéro avec numérateur positif fait diverger ratio et racine vers
     `+∞`. L'unicité positive exclut tout changement de branche dans la
-    composante. Les cas `0/0` et les matrices générales restent ouverts.
+    composante. Les autres cas `0/0` et les matrices générales restent ouverts.
+    - [x] Au même point diagonal `0/0`, construire un chemin à taux égaux et
+      un chemin à numérateur quadratique : la racine sélectionnée tend
+      respectivement vers `1` et `0`, ce qui exclut tout prolongement continu
+      monovalué coïncidant avec la branche intérieure. Cette obstruction porte
+      exactement sur ces deux chemins, pas sur les chemins matriciels ou les
+      strates de Jordan généraux.
+    - [x] Classifier tous les chemins diagonaux monomiaux positifs
+      `(t^m,t^n)`, `m,n>0` : au même point `0/0`, la racine tend vers `1` si
+      `m=n`, vers `0` si le numérateur s'annule plus vite, et vers `+∞` si le
+      dénominateur s'annule plus vite. Les chemins non linéaires, matriciels et
+      les dégénérescences de Jordan arbitraires restent hors de cette famille.
 - [ ] Étendre la suite explicite retenue à tous les chemins matriciels `0/0`,
   aux similarités mobiles ou cadres singuliers arbitraires, puis classifier
   les changements généraux de type Jordan et construire l'atlas de branches.
@@ -1179,10 +1223,15 @@ par toute évolution admissible.
           uniformément équivalente à la densité fixe-localisée sur le quotient
           compact, puis en déduire sans hypothèse la domination d'énergie et
           l'ellipticité uniforme du graphe pour le repère lisse fini.
-        - [ ] Identifier en plus cette densité de remplacement à la densité
-          jacobienne holonome historique fondée sur `chartAt p`. Ce verrou est
-          exactement la transition variable `fixed anchor → chartAt p`, que
-          Mathlib ne contrôle que lorsque les deux cartes sont fixes.
+        - [x] Sur l'atlas fixe, construire le jet holonome `ℓ²`, l'identifier
+          exactement au jet du graphe fini et prouver les deux dominations
+          uniformes entre leurs densités. Le pont vers la densité historique à
+          second centre variable reste séparé et conditionnel.
+        - [x] Retirer du chemin critique la densité historique fondée sur le
+          choix variable `chartAt p` : la densité de l'atlas fixe est désormais
+          identifiée exactement au graphe fini et lui est uniformément
+          équivalente. Aucune égalité artificielle avec ce choix de carte
+          discontinu n'est requise ni revendiquée.
           - [x] Réduire ce verrou à la continuité de chaque coefficient
             holonomique scalaire du générateur partitionné uniquement sur son
             propre support fermé ; cette hypothèse suffisante localisée produit par
@@ -1331,6 +1380,10 @@ par toute évolution admissible.
           annulation pointwise et intégrée pour toute variation Dirichlet
           homogène; raccorder cette annulation au gate Euler faible dès que le
           boundary functional fourni est réalisé par ce flux.
+          - [x] Sous l'unique contrat Green--Stokes 4D explicite, identifier ce
+            boundary functional au flux normal tangent concret et fermer les
+            formules de première variation, stationnarité et Euler faible sous
+            Dirichlet. Le contrat Green--Stokes lui-même reste à prouver.
         - [x] Sur le collier latitude canonique, appliquer la vraie IPP
           `intervalIntegral` fibre par fibre puis contre la mesure canonique,
           identifier le terme intérieur à `mvfderiv` sur le normal et obtenir
@@ -1551,11 +1604,14 @@ par toute évolution admissible.
   - [x] Intégrer ce tenseur contre deux champs cotangents tests et une mesure
     Borel arbitraire, transporter l'intégrabilité iff et prouver l'invariance
     exacte sous difféomorphisme simultané et échange des deux secteurs.
-  - [ ] Déduire les identités locales de conservation à partir des équations
-    covariantes et de l'identité de Noether locale ; le certificat de
-    covariance/échange ne les affirme pas. L'identité locale du collier
-    `E = 2 T_nn` et la constance de `T_nn` n'établissent pas cette divergence
-    covariante en dimension quatre.
+  - [x] Déduire les identités locales de conservation à partir des équations
+    covariantes et de l'identité de Noether locale. Les boules du modèle
+    `S³ × ℝ` possèdent maintenant des paramétrisations totales par `R⁴`, ce qui
+    construit un atlas holonome couvrant indépendant des champs. Sur cet atlas,
+    les équations d'Euler scalaires impliquent la nullité de la divergence de
+    stress dans chaque carte et en chaque point du quotient. Cette fermeture
+    est coordinate-global ; elle ne construit pas un second champ abstrait de
+    dérivée covariante indépendamment de ces représentants locaux.
     - [x] Au niveau d'un jet scalaire covariant d'ordre deux dans un repère
       normal 4D, développer explicitement `∇_μ T^{μν}` et prouver
       `div T = (□φ - V'(φ)) sharp(dφ)`, puis sa nullité sous l'équation
@@ -1582,25 +1638,41 @@ par toute évolution admissible.
             et sa non-dégénérescence, puis construire son inverse, `dMetric` et
             les coefficients de Christoffel lisses. Instancier en chaque point
             le jet de Levi-Civita et déduire la conservation locale sous Euler.
-            La construction générique du patch, la dérivation des accords de
-            jets depuis les vraies transitions de cartes, le recollement et la
-            connexion globale restent ouverts.
+            La construction générique d'un patch passant par chaque point est
+            désormais fournie par l'atlas total ci-dessous. Une connexion
+            globale abstraite indépendante des représentants locaux n'est pas
+            ajoutée.
             - [x] Tirer tout vrai `SmoothScalarField` quotient sur ce patch,
               prouver sa régularité `C∞` ainsi que celle du gradient et du
               Hessien brut, fermer la symétrie de Schwarz et obtenir un vrai
               `CoordinateScalarJet2`. Construire le jet covariant, le résiduel
               d'Euler, le gradient relevé et la divergence de stress locale
-              canoniquement réalisée, tous `C∞`, puis prouver l'identité exacte
-              `div T = EulerResidual · raisedGradient` et la conservation sous
-              Euler. Les vraies transitions de cartes, le recollement et le
-              théorème global `div_g T = 0` restent ouverts.
+            canoniquement réalisée, tous `C∞`, puis prouver l'identité exacte
+            `div T = EulerResidual · raisedGradient` et la conservation sous
+            Euler. La réalisation générique de l'atlas holonome est désormais
+            déchargée par les paramétrisations totales ; le recollement est
+            fermé ci-dessous.
               - [x] Prouver la compatibilité finie sur un overlap fourni : si
                 les deux représentants ont la même matrice métrique et son
                 premier jet, ainsi que le même champ scalaire, gradient et
                 second jet brut, alors coïncident exactement les Christoffel,
                 le jet scalaire covariant, le résidu d'Euler, le gradient relevé
-                et la divergence de stress. La vraie loi de transition entre
-                cartes et le recollement global restent ouverts.
+                et la divergence de stress.
+              - [x] Prouver l'analyticité des transitions locales du vrai
+                quotient, fermer les lois réflexive/symétrique/transitive des
+                jets rebasés et en déduire l'accord des divergences de stress.
+                Une famille couvrante de vrais patches holonomes est maintenant
+                construite inconditionnellement.
+              - [x] Sous ce seul pont d'atlas couvrant, recoller le résidu
+                d'Euler, le gradient relevé et la divergence de stress en champs
+                globaux indépendants du patch, puis prouver pointwise
+                `div_g T = EulerResidual · raisedGradient` et `div_g T = 0` sous
+                les équations d'Euler locales. Le pont d'atlas est maintenant
+                réalisé par l'atlas total canonique.
+                - [x] Réduire plus précisément ce pont à l'existence d'un patch
+                  holonome passant par chaque point : Euler implique alors
+                  pointwise `div_g T = 0` sans imposer l'égalité des tableaux de
+                  jets bruts. Ces patches existent désormais à chaque point.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers
@@ -1614,9 +1686,17 @@ par toute évolution admissible.
     fibré normal D8 ; prouver que la transition après un tour vaut `-1` et que
     le carré de chaque multiplicateur `Z4` reproduit ce signe. Aucune
     coordonnée scalaire globale canonique n'est revendiquée.
-  - [ ] Fournir le ghost difféomorphe, l'identification SpinC, les métriques
-    hors diagonale, puis prouver l'accord entre action, Hessien, développement
-    modal et domaines au bord dans les contrats résiduels.
+  - [x] Insérer le vrai ghost difféomorphe tangent lisse dans le package local
+    D9 déjà alimenté par la section normale, avec composantes normale et ghost
+    exactes. Seule l'identification matière--spineur subsiste dans ce résidu local.
+    La fibre matière réelle est maintenant identifiée aux coordonnées réelles
+    du spineur carré. Les six composantes spatiales d'un vrai tenseur symétrique
+    global remplissent aussi le slot métrique D9 dans une carte holonome choisie
+    automatiquement à chaque point du throat. Cela ne les identifie pas encore
+    au tangent de l'action globale.
+  - [ ] Fournir l'identification `Pin⁻`/`PinC`, les métriques hors diagonale,
+    puis prouver l'accord entre action, Hessien, développement modal et domaines
+    au bord dans les contrats résiduels.
 
 **Acceptation** : un espace de champs unique sert à l'action, au Hessien, au
 complexe BRST, aux anomalies et aux conditions au bord.
@@ -1663,12 +1743,21 @@ complexe BRST, aux anomalies et aux conditions au bord.
     exacte des champs, tangentes, densité, action, première variation,
     coefficients d'Euler et stationnarité LL pour toute mesure PT-invariante.
   - [ ] Introduire la dépendance différentielle et la métrique auxiliaire dans
-    l'action LL physique, puis dériver la vraie PDE forte.
+    l'action LL physique, puis dériver la vraie PDE forte covariante sans
+    contrat géométrique résiduel.
     - [x] Sur le vrai throat compact, construire sans hypothèse une famille
       tangentielle lisse finie génératrice, l'énergie différentielle LL et une
       dépendance non triviale à la métrique auxiliaire ; dériver les variations
-      intégrées et l'équation faible stationnaire exacte. L'opérateur fort,
-      la contraction lorentzienne intrinsèque et les flux restent ouverts.
+      intégrées et l'équation faible stationnaire exacte. L'identification
+      covariante sans frame, la contraction lorentzienne intrinsèque et les
+      flux géométriques restent ouverts.
+    - [x] Pour la mesure canonique réelle du throat, prouver sans hypothèse sa
+      positivité sur tout ouvert non vide, donc son support complet.
+    - [x] Construire l'opérateur d'Euler fort par divergence de la frame et
+      prouver faible ↔ fort ainsi que stationnaire ↔ fort sous le contrat
+      analytique explicite, la formule globale d'intégration par parties et
+      le flux de bord nul. Ce résultat reste conditionnel : il ne ferme ni le
+      Stokes global ni l'action parente LL covariante complète.
     - [x] Symétriser cette même action différentielle par moyenne PT et prouver
       exactement l'invariance de l'action, de la variation, de l'équation
       faible et de l'espace stationnaire, pour toute mesure. Cette moyenne ne
@@ -1717,6 +1806,19 @@ complexe BRST, aux anomalies et aux conditions au bord.
   variables et toutes les strates.
   - [x] Assembler en un résidu stratifié fini unique les faces non nulles
     EH/GHY et les faces nulles/joints, puis prouver que ce résidu est nul.
+  - [x] Regrouper les résidus boîte/stratifié/action nulle dans un ledger
+    canonique, prouver leur annulation et déduire l'équivalence faible/forte LL
+    sous le contrat exact à deux champs : vraie IPP continue et identification
+    du flux géométrique au ledger fini. Ces deux champs géométriques restent à
+    construire ; aucun Stokes global inconditionnel n'est revendiqué.
+    - [x] Exploiter l'annulation du ledger pour prouver que ce contrat
+      géométrique existe exactement si l'unique IPP globale pondérée à bord nul
+      existe, puis en déduire faible ↔ fort. Cette IPP globale n'est pas prouvée.
+      - [x] Isoler le défaut d'adjoint formel exact de l'opérateur LL brut :
+        toute correction lisse qui le représente donne faible ↔ fort corrigé,
+        et cette correction est nulle exactement lorsque l'IPP globale brute
+        est satisfaite. L'existence puis l'annulation de la correction restent
+        des obligations analytiques, donc le Stokes global n'est pas fermé.
 - [ ] Classifier les termes de bord/null/joint admissibles à divergence près.
 
 **Acceptation** : la variation complète bulk+frontières+LL ne laisse aucun flux
@@ -1774,10 +1876,16 @@ non contrôlé et produit les conditions de jonction annoncées.
             flot, puis restreindre honnêtement les blocs
             métrique+matière+`U(1)^2` à `ℝ × U(1)^2`. Le générateur
             linéaire, `B = E ∘ R`, son critère d'annulation et l'identité de
-            Noether sur le sous-groupe temporel sont fermés. La régularité
-            lisse/symétrique des deux dérivées métriques reste l'entrée d'un
-            contrat explicite ; aucun flot pour ghost tangent arbitraire ni
-            bloc LL n'est revendiqué.
+            Noether sur le sous-groupe temporel sont fermés. Pour une paire de
+            métriques arbitraire, la régularité lisse/symétrique des deux
+            dérivées reste l'entrée d'un contrat explicite ; aucun flot pour
+            ghost tangent arbitraire ni bloc LL n'est revendiqué.
+            - [x] Pour la paire canonique formée de deux métriques intrinsèques
+              égales, prouver l'isométrie sous toute translation temporelle,
+              l'annulation du générateur métrique et instancier sans hypothèse
+              le contrat par les deux variations nulles. La première variation
+              de l'action et son invariance restent les hypothèses explicites
+              de l'identité de Noether spécialisée.
           - [x] Restreindre le même flot analytique au throat, prouver qu'il
             préserve l'inclusion, puis le faire agir sur les huit blocs du
             paquet `IndependentFields`. Fermer zéro/addition/inverse,
@@ -1885,9 +1993,12 @@ Hessien physique réellement descendu.
   - [x] Construire explicitement l'équivalence entre les stabilisateurs de
     deck en deux points arbitraires et exclure ainsi tout saut de type
     d'isotropie sur le quotient effectif D8.
-- [ ] Construire les revêtements Spin de dimension pertinente.
-- [ ] Dériver les données Cech/SpinC depuis l'atlas réel, et non depuis des
-  transitions fournies.
+- [x] Rejeter le revêtement Spin ambiant : la non-orientabilité du vrai
+  mapping torus et l'overlap de déterminant négatif excluent toute réalisation
+  continue orientée `Spin` ou `SpinC`; le remplacement géométrique pertinent
+  est `Pin⁻`.
+- [ ] Dériver les données Čech `Pin⁻`/`PinC` depuis l'atlas réel, et non depuis
+  des transitions fournies. Les données orientées SpinC ne sont plus revendiquées.
   - [x] Sur les triples intersections du vrai atlas D8, prouver que deux
     relèvements Spin fournis composent en un troisième relèvement dont le
     défaut de Cech est exactement trivial. L'existence et le choix global lisse
@@ -1921,7 +2032,7 @@ Hessien physique réellement descendu.
       tandis qu'une translation sur `first→second` introduit à gauche le
       noyau conjugué par le lift adjacent.
 - [ ] Construire les bundles vectoriels et principaux Janus globaux.
-- [ ] Prouver l'accord des classes caractéristiques Spin/déterminant.
+- [ ] Prouver l'accord des classes caractéristiques `Pin⁻`/`PinC` et déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets
   d'ordre supérieur.
   - [x] Prouver existence et unicité de la descente `C∞` de toute application
@@ -1935,6 +2046,11 @@ Hessien physique réellement descendu.
 - [ ] Calculer l'algèbre des scalaires invariants au jet requis.
 - [ ] Calculer les modules globaux de pairings équivariants sur cette algèbre.
 - [ ] Prouver l'extension à travers les strates d'isotropie singulières.
+  Pour le groupoïde de deck effectif, l'isotropie est désormais prouvée
+  triviale à tout objet : la strate singulière est vide et restriction/extension
+  des sections dépendantes est une équivalence avec extension unique. La case
+  reste ouverte pour les isotropies internes `Pin⁻`/`PinC`, les frames et leurs
+  conditions de régularité/holonomie.
 - [ ] Imposer ordre différentiel, degré, poids, parité, ghost number, symétrie
   d'échange et conditions de Helmholtz.
 - [ ] Obtenir une base finie de termes locaux admissibles ou prouver qu'aucune
@@ -2053,6 +2169,20 @@ champs et avec les mêmes conditions au bord.
       et indice zéro.
 - [ ] Instancier le complexe D9/BRST avec les vrais champs, ghosts, symboles,
   domaines et cohomologie de modes zéro.
+  - [x] Identifier canoniquement la fibre matière réelle de rang quatre de D9
+    à la fibre de coordonnées réelle du spinor carré D11, et remplir ainsi le
+    résidu du record de champ local. Cette fermeture est au niveau des
+    coordonnées ; elle ne construit pas un bundle SpinC géométrique.
+  - [x] Ajouter six coefficients métriques symétriques locaux indépendants,
+    prouver leur projection surjective sur toutes les perturbations métriques
+    D9 et assembler le champ local complet à données non métriques fixées.
+    Ces coefficients ponctuels ne sont pas encore un tangent de l'action
+    globale Programme P.
+  - [x] Relier ces six coefficients à un vrai tenseur covariant symétrique
+    lisse via un chart holonome fourni, prouver leur régularité `ContDiff` et
+    leur projection exacte dans le slot métrique D9 au point compatible du
+    throat. Le chart et l'égalité coordonnée/inclusion restent des hypothèses,
+    et ce tenseur n'est pas encore un tangent de l'action globale Programme P.
   - [x] Injecter le vrai ghost `U(1)` Programme P dans le champ ghost D9 avec
     composante difféomorphe explicitement nulle, calculer son symbole principal
     et prouver l'annulation de la composante `U(1)` dans son noyau à covecteur

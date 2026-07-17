@@ -305,6 +305,13 @@ cocycle for every integer winding. This supplies the anchor-independent global
 algebraic lift and the preferred equivalence used by the closed local-regularity
 proof. Only the optional generic dependent continuous-lift record is separate.
 
+The ambient quotient atlas now also has an unconditional pointwise
+orthonormal reduction. At each base point a genuine reference lift is chosen,
+the Euclidean quadratic form is transported by the actual tangent transition,
+and the strict tangent cocycle proves overlap compatibility. This is an
+atlas-wide pointwise object only: separate continuous and `C∞` refinement
+records remain uninhabited.
+
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
 transition squares recover the real normal sign for every winding:
@@ -323,11 +330,19 @@ unit reflections, proves that its projection is their exact product, and
 extends this construction to every finite list of pairs. Full surjectivity is
 now unconditional: Mathlib's finite-dimensional reflection-generation theorem
 supplies Cartan--Dieudonné and determinant parity, yielding both
-`Spin(4) → SO(4)` surjectivity and a lifting function. Smooth coherent
-atlas-wide lifts and the ambient Pin/SpinC principal bundles remain open.
-For any oriented atlas, pointwise lifts are now automatic; their global Čech
-completion is equivalent exactly to trivializing one kernel-valued cocycle.
-Global orientation, that class, and continuity/smoothness remain.
+`Spin(4) → SO(4)` surjectivity and a lifting function. The ambient determinant
+descent is now proved empty: the mapping torus is nonorientable, so no honest
+continuous oriented Spin or SpinC Čech realization exists. Purely algebraic
+Spin Čech data remain conditional. The full twisted `Pin⁻(4)` projection,
+central order-four reflection generator and normal character are now
+unconditional; the ambient extension is reduced exactly to one continuous
+normalized normal-compatible Čech choice, whose existence remains open. The
+reference generator is now identified with the explicit `O(4)` flip and its
+orientation character is proved on all four `ZMod 4` phases. A corrected
+overlap-only normal interface isolates the remaining construction into the
+actual Čech winding, its normal comparison and the continuous/smooth refinement
+needed by the exact orthogonal-reduction law. The pointwise reduction alone
+does not supply those regularity statements.
 
 ## 5. Program P
 
@@ -352,6 +367,11 @@ The exhaustive remaining-work checklist is
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
 configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Joint `C∞` latitude regularity proves `CanonicalLatitudeNormalLiftContinuous`, and the radial--polar Euclidean calculation now proves the coarea inequality. The canonical physical trace bound, continuous operator, smooth agreement and existence theorem are therefore unconditional. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General covariant tensors now have an exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Tangent and nested Hom-bundle coordinates discharge `AnalyticPTTensorPullbackLocalSmoothness` unconditionally, yielding an involutive smooth pullback on the smooth Lorentz domain. The attached musical equivalence now pulls back with the same tensor, giving an involutive PT action and sector exchange on `SmoothGeneralLorentzMetric`; the holonomic scalar density is pointwise PT-covariant with coherently transported field and frame. Integrated spacetime PT invariance, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  A nonempty scoped common-domain package now forces one configuration to feed
+  the induced diagonal metrics/root, `LLH1`, the smooth boundary trace and typed
+  D7/D9/D10 accessors. It does not yet identify the action tangent, Hessian,
+  D10 diagonalization, regulator or Fredholm/boundary domains; these residuals
+  remain one explicit contract.
   The integrated-invariance limitation in the preceding snapshot is now
   superseded: for `SmoothGeneralLorentzMetric`, coherent PT transport of the
   scalar and tangent family gives exact density covariance, iff transport of
@@ -378,8 +398,12 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   `U(1)^2` pair gives a combined metric--matter--gauge `R`, its
   `B = E ∘ R`, the exact vanishing criterion and the infinitesimal Noether
   identity for the true time subgroup. This is not an arbitrary-ghost result:
-  smooth symmetric global realization of the two metric derivatives remains
-  an explicit `TimeTranslationMetricPairContract`, and no LL block is included.
+  for arbitrary metric pairs, smooth symmetric global realization of the two
+  metric derivatives remains an explicit `TimeTranslationMetricPairContract`.
+  For the equal canonical intrinsic pair, finite time-translation isometry
+  makes both metric generators zero and discharges that contract
+  unconditionally. The specialized Noether identity still assumes the stated
+  first variation and action invariance; no LL block is included.
   For the scalar-field variation, the genuine metric gradient is now
   `sharp(dφ)` and symmetry reduces the kinetic coefficient to
   `dψ(sharp(dφ))`. Under the explicit divergence/boundary-flux interface and
@@ -413,9 +437,18 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   coordinate under Euler. For two supplied overlap representatives, equality
   of the metric first jet and scalar second jet now forces exact equality of
   Christoffel coefficients, covariant scalar jet, Euler residual, raised
-  gradient and stress divergence. Proving that the real quotient chart
-  transitions supply those jet equalities, then gluing the local data and
-  deriving global `div_g T = 0`, remains open.
+  gradient and stress divergence. The true quotient transitions are now proved
+  analytic, and rebased metric/scalar jet agreements obey exact
+  reflexive/symmetric/transitive laws and force equality of every local output.
+  Under the now-realized covering holonomic atlas these data glue globally,
+  with `div_g T = EulerResidual · raisedGradient` and hence `div_g T = 0` under
+  the local Euler equations. For the pointwise conservation conclusion, raw
+  jet-array agreement is no longer needed: the bridge reduces to existence of
+  one holonomic chart through each point. Componentwise total-ball
+  diffeomorphisms now provide such a chart at every point and form an actual
+  field-independent covering atlas. Consequently scalar Euler equations imply
+  chartwise and quotient-pointwise vanishing of the local stress divergence.
+  This does not introduce a separate abstract global covariant-derivative field.
   The canonical latitude collar now supplies its own exact intrinsic D8
   divergence/boundary interface. Pairing `sharp(dφ)` with the explicit collar
   normal is the genuine manifold directional derivative, and the oriented
@@ -423,8 +456,10 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   fiberwise and after base integration. Euler fields with endpoint-Dirichlet
   test variations therefore have zero collar first variation. An exact
   specialization predicate and adapter connect this result to a supplied
-  global interface, but no global Stokes theorem or global one-sided metric
-  normal is inferred.
+  global interface. Under one explicit four-dimensional Green--Stokes
+  contract, the global boundary functional is now exactly the concrete tangent
+  normal flux and homogeneous Dirichlet data close the weak-Euler and
+  stationarity corollaries. The Green--Stokes contract itself remains open.
   On the canonical latitude collar, the antisymmetric scalar
   Green--Wronskian current is now explicit. Its derivative is exactly the
   antisymmetric pairing of the equal-mass Euler residuals; it is pointwise and
@@ -443,10 +478,14 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   the normal-normal component of the general scalar stress on the
   normal-projected collar jet; this component has zero derivative and is
   locally constant under the collar Euler equation. This is only a local
-  collar stress-energy identity. Geometrically discharging
-  the global Stokes/IPP interface, globalizing the normal-frame jet identity
-  to a smooth covariant stress divergence, and extending this collar current to a covariant four-dimensional
-  Noether current with enough test ghosts remain open.
+  collar stress-energy identity. The finite box, stratified and null-action
+  boundary residuals now assemble into a canonical zero ledger. Under the two
+  explicit remaining geometric fields—continuous IPP and identification of its
+  boundary flux with that ledger—the LL weak/strong and stationary/strong
+  equivalences follow. Since the ledger is zero, existence of that contract is
+  now equivalent exactly to the single global weighted zero-boundary IPP.
+  Proving this IPP and extending the collar current to a covariant
+  four-dimensional Noether current remain open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
 map on a smooth vertical section, and the compact frame reconstruction package
@@ -615,10 +654,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   distinct field by the half-period pullback. Embedding it in the first matter
   component produces a complete `IndependentFields` configuration moved by
   the same half-period, so the actual full-package representation is genuinely
-  nontrivial. Integration of an arbitrary ghost remains open. An intrinsic positive fixed-patch energy replacement is
-  also uniformly equivalent to the implemented localized graph density and
-  gives unconditional uniform graph ellipticity; equality with the historical
-  variable-`chartAt` density remains open.
+  nontrivial. Integration of an arbitrary ghost remains open. An intrinsic
+  positive fixed-patch energy replacement is also uniformly equivalent to the
+  implemented localized graph density and gives unconditional uniform graph
+  ellipticity. A fixed-atlas holonomic `ℓ²` jet is now exactly linearly
+  equivalent to the finite graph jet, with both density dominations proved.
+  Equality with the historical variable-`chartAt` density remains open.
   The canonical intrinsic tensor descended from the immersed cover is now
   certified everywhere Lorentzian without an external frame contract: the
   proof constructs the sphere-tangent/orthogonal equivalence, an orthonormal
@@ -745,6 +786,16 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   These diagonal, canonical, fixed-similarity, moving-shear, double-collision,
   singular-frame and type-change witnesses are now packaged in one
   proof-carrying retained frontier certificate.
+  At one diagonal `0/0` boundary point, the equal-rate and
+  quadratic-numerator paths now reach the same boundary while the selected
+  root coordinate tends respectively to `1` and `0`. This rules out a
+  continuous single-valued extension agreeing with the positive interior
+  branch. It is exactly a two-path obstruction, not a classification of
+  arbitrary matrix paths or Jordan strata.
+  The whole positive monomial family `(t^m,t^n)`, `m,n>0`, is now classified:
+  the selected root tends to `1` for equal exponents, to `0` when the numerator
+  vanishes faster, and to `+∞` when the denominator vanishes faster. This does
+  not cover arbitrary nonlinear, matrix-valued or Jordan-degenerate paths.
   Arbitrary singular frames, a general Jordan-type classification/branch atlas
   and arbitrary matrix paths remain open.
   Outside the positive locus, determinant negativity and every simple
@@ -769,13 +820,27 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   remains open.
   The same independent variation now projects type-safely to the D9 slots it
   really supplies, and its diagonal metric image is proved non-surjective onto
-  general symmetric D9 perturbations. Literal finite D10 product modes use the
-  same period, exact PT pairing and the existing heat regulator. A genuine
+  general symmetric D9 perturbations. Independently, six local symmetric
+  metric coefficients now project surjectively onto the full D9 metric slot at
+  fixed non-metric data; they are pointwise local data, not a tangent to the
+  global Program-P action. Given a supplied smooth symmetric global tensor, a
+  supplied holonomic chart and coordinate/throat compatibility, the six chart
+  coefficients are now `ContDiff` and fill that D9 metric slot exactly. The
+  total atlas now selects such a compatible chart automatically at every true
+  throat point, removing that caller-supplied certificate. The bridge still
+  does not prove that the tensor is a global Program-P action tangent. Literal
+  finite D10 product modes use the same
+  period, exact PT pairing and the existing heat regulator. A genuine
   smooth section of the D8 normal line now fills the D9 normal slot in every
   valid local bundle chart; one-loop transition is `-1` and equals the square
   of either `Z4` multiplier. No canonical global scalar normal coordinate is
-  claimed. Diffeomorphism ghosts, SpinC identification, general metrics and
-  action/Hessian/domain agreement remain an explicit contract.
+  claimed. The genuine smooth tangent diffeomorphism ghost now fills its D9
+  component in the same local package. A canonical real rank-four coordinate
+  equivalence now fills its matter slot in the D11 squared-spinor coordinate
+  specialization, closing that residual record at coefficient level. It does
+  not identify a geometric SpinC bundle. Global SpinC realization, a global
+  action tangent producing the full symmetric metric slot, and
+  action/Hessian/domain agreement remain explicit contracts.
   The global LL action now has an exact simultaneous measure/flux cubic
   expansion and integrated derivative for every finite measure. Its algebraic
   Euler system is equivalent to the zero-flux branch. PT pullback is an exact
@@ -783,6 +848,19 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   and stationarity for PT-invariant measures. The auxiliary LL metric
   has identically zero response in this selected action, so a genuine
   differential LL PDE still requires a richer action.
+  For the differential PT-symmetric LL functional, the canonical throat
+  volume is now unconditionally positive on nonempty opens and therefore has
+  full support. A pointwise frame-divergence Euler field, weak/strong
+  equivalence and stationary/strong equivalence are proved conditionally on
+  the analytic realization. The finite boundary ledgers are now exactly zero;
+  a geometric Stokes contract reduces the remaining IPP input to the genuine
+  continuous formula and its flux identification with that ledger. Global
+  Stokes without those two fields and the complete covariant LL parent remain
+  open. Independently, the exact formal-adjoint defect of the raw strong LL
+  operator is isolated: any smooth representing correction gives an exact
+  weak/corrected-strong equivalence, and the correction vanishes exactly when
+  the raw global zero-boundary IPP holds. Existence and vanishing of that
+  correction are not proved.
   More strongly, explicit quadratic and quartically deformed two-variable
   extensions have the same proportional branch, the same genuine longitudinal
   derivatives and the same complete transverse two-jet, with Hessian
@@ -928,9 +1006,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   supplies Hessian symmetry, and the exact identity
   `div T = EulerResidual · raisedGradient` gives local Euler conservation.
   Equality of the metric first and scalar second jets on supplied overlap
-  representatives now gives equality of all these local outputs. Constructing
-  the patches generically, proving those jet agreements from the real chart
-  transitions, gluing the local data and then global `div_g T = 0` remain open.
+  representatives now gives equality of all these local outputs. The analytic
+  quotient transitions and their rebased jet-agreement algebra are closed.
+  Under a single explicit covering-atlas bridge, the local data glue and satisfy
+  global `div_g T = EulerResidual · raisedGradient`, hence global conservation
+  under Euler. Constructing that bridge from actual holonomic patches remains
+  open.
   At fixed metric the holonomic density variation decomposes pointwise into
   the flat scalar Euler operator plus an explicit flux divergence. Under
   integrability and the named zero-integrated-flux condition, the first
@@ -963,10 +1044,11 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   nonnegative for `m² ≥ 0`. It is exactly twice the general scalar stress
   component `T_nn` evaluated on the normal-projected collar jet, and `T_nn` is
   locally constant under the collar Euler equation. This remains only a local
-  collar stress-energy result. A global manifold Stokes theorem identifying the abstract
-  bulk interface with this collar flux, a four-dimensional covariant stress
-  divergence, extension to a covariant four-dimensional Noether current and a
-  global canonical metric normal remain open;
+  collar stress-energy result. The finite stratified boundary ledger is exactly
+  zero and yields the LL weak/strong equivalence under the explicit continuous
+  IPP plus flux-realization contract. A global manifold Stokes theorem without
+  that contract, extension to a covariant four-dimensional Noether current and
+  a global canonical metric normal remain open;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
@@ -1042,8 +1124,9 @@ The current `main` stack proves, in the declared models:
   self-diffeomorphisms as arrows, plus the contravariant smooth-field functor
   and the actual contravariant general-Lorentz-metric pullback functor, both
   with exact identity/composition laws;
-- action-groupoid, orbit and stabilizer laws, with one unique trivial isotropy
-  stratum for the effective deck groupoid and every represented endomorphism;
+- action-groupoid, orbit and stabilizer laws, with the regular isotropy stratum
+  equal to every effective deck object, the singular stratum empty, and exact
+  mutually inverse restriction/unique-extension maps for dependent sections;
 - reconstruction of equivariant sections on one transitive orbit from isotropy-fixed values;
 - a concrete valid-chart low-order residual/SpinC action-groupoid realization;
 - the need for separate compatibility across isotropy strata.
