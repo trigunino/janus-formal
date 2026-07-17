@@ -307,7 +307,11 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   scalar and tangent family gives exact density covariance, iff transport of
   integrability and invariance of the action against the canonical quotient
   Lorentz measure. The tangent family remains supplied, and this reference
-  measure is not claimed to be every general metric's own volume.
+  measure is not claimed to be every general metric's own volume. At fixed
+  metric, the affine scalar line now has an exact pointwise/integrated
+  quadratic expansion and action `HasDerivAt` under the explicit integrability
+  contract for its three coefficients. Its first variation is PT-covariant
+  pointwise and after integration, with exact iff integrability transport.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
 map on a smooth vertical section, and the compact frame reconstruction package
@@ -325,8 +329,11 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   smooth zero-`L²`-trace characterizations. A nested finite `ℓ²`/`WithLp 2`
   renorming now closes the smooth-jet image in a genuine Hilbert space and is
   continuously linearly equivalent to the original graph norm, with exact
-  agreement on smooth fields. This does not identify an intrinsic Sobolev
-  space.
+  agreement on smooth fields. The transported physical trace has a closed
+  Hilbert Dirichlet kernel, a contractive orthogonal projection and an exact
+  orthogonal decomposition; that kernel is continuously linearly equivalent
+  to the original graph-Dirichlet space. This does not identify an intrinsic
+  Sobolev space.
   PT/exchange additionally acts on the complete current independent-field
   package and all its componentwise smooth throat boundary data, with exact
   trace equivariance and preservation of the full Dirichlet condition.
@@ -382,8 +389,10 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   BRST, and the integrated master action and CME are unconditionally
   PT-covariant. The exact affine first variation, integrated directional
   derivative and odd antibracket/CME on represented analytic ultralocal
-  spacetime functionals are now proved as well. This only removes the
-  base-space restriction; it is not a BV theory of general tensor metrics and
+  spacetime functionals are now proved as well. Their exact fibre PT laws and
+  integrated first-variation, represented-value, odd-antibracket and CME
+  covariance are unconditional. This only removes the base-space restriction;
+  it is not a BV theory of general tensor metrics and
   supplies no bracket on arbitrary nonlocal/completed functionals. Independently, real translation of the
   mapping-torus coordinate now descends to a nontrivial complete analytic real action on the
   actual D8 quotient; every time slice is an analytic diffeomorphism and the
@@ -485,8 +494,13 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   the degree-four charpoly extracts four positive roots with multiplicity;
   Cayley--Hamilton and an exhaustive equality partition select one of the five
   closed annihilators. Hence raw real-root existence is unconditional for
-  `PositiveRealSplitCharpoly4`. A real Jordan-chain presentation and the
-  corresponding global Sylvester-regular branch remain separate.
+  `PositiveRealSplitCharpoly4`. Sylvester regularity is now unconditional too:
+  the four polynomial profiles use the basis-free fact that `R=p(A)`,
+  `R²=A` and `RX+XR=0` force `X` to commute with both `A` and `R`; positivity
+  makes `R` invertible, so the Sylvester kernel is zero and finite dimension
+  gives bijectivity. The single-eigenvalue quartic profile reuses its explicit
+  finite Sylvester inverse. A real Jordan-chain presentation remains separate
+  only when an explicit Jordan form is itself required.
   Outside the positive locus, determinant negativity and every simple
   negative diagonal eigenvalue are now exact no-go criteria; determinant
   positivity is proved insufficient by an explicit `4×4` witness. Paired

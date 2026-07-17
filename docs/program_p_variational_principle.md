@@ -647,7 +647,10 @@ physical trace and agrees with zero canonical `L²` trace on smooth fields.
 A canonical nested `ℓ²`/`WithLp 2` renorming now closes the same smooth jets in
 a genuine Hilbert space. Its lifted fiberwise norm equivalence maps that
 closure exactly onto the original graph completion and gives a continuous
-linear equivalence agreeing on smooth fields. No intrinsic Sobolev
+linear equivalence agreeing on smooth fields. The transported physical trace
+has a closed Hilbert Dirichlet kernel, a contractive orthogonal projection and
+an exact orthogonal splitting, and this kernel is continuously linearly
+equivalent to the original graph-Dirichlet kernel. No intrinsic Sobolev
 identification is inferred.
 On the complete current independent-field package, PT/exchange also acts on
 all componentwise smooth throat boundary data, intertwines the trace exactly
@@ -692,7 +695,11 @@ PT transport of a `SmoothGeneralLorentzMetric`, scalar and tangent family
 gives exact density covariance, iff integrability transport and invariance of
 the action against the canonical quotient Lorentz measure. The tangent family
 is still supplied explicitly and this measure is not identified with every
-general metric's own volume. The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
+general metric's own volume. At fixed metric, the affine scalar line has an
+exact pointwise/integrated quadratic expansion and action derivative under the
+explicit three-coefficient integrability contract; its first variation is
+PT-covariant pointwise and after integration, with iff integrability transport.
+The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
 Jacobi obstruction and its induced scalar BRST square both vanish. Three
@@ -734,8 +741,10 @@ reflection together with `t ↦ period-t` preserves the canonical quotient
 measure, making the spacetime PT involution, BRST compatibility, integrated
 master action and CME covariance unconditional. Its exact affine first
 variation, integrated directional derivative and odd antibracket/CME on
-represented analytic ultralocal spacetime functionals are closed too. This is
-still an ultralocal constant-fibre model, not a BV construction for general
+represented analytic ultralocal spacetime functionals are closed too. Their
+exact fibre PT laws and integrated first-variation, represented-value,
+odd-bracket and CME covariance are now unconditional as well. This is still an
+ultralocal constant-fibre model, not a BV construction for general
 spacetime tensor metrics; arbitrary nonlocal/completed BV functionals remain
 open.
 It also has an automatic scalar integrability contract for every finite measure

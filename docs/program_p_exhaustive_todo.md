@@ -413,26 +413,34 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
           charpoly scindé, utiliser Cayley--Hamilton et classifier
           exhaustivement leurs égalités pour obtenir l'un des cinq
           annihilateurs déjà fermés. L'existence brute d'une racine réelle est
-          ainsi inconditionnelle sur `PositiveRealSplitCharpoly4`; seule la
-          présentation de Jordan/Sylvester globale reste séparée.
+          ainsi inconditionnelle sur `PositiveRealSplitCharpoly4`.
+        - [x] Renforcer cette fermeture brute en un sélecteur de racine
+          Sylvester-régulière sans base de Jordan. Pour les quatre profils
+          polynomiaux, `R=p(A)`, `R²=A` et `RX+XR=0` impliquent que `X` commute
+          avec `A`, donc avec `R`; l'inversibilité issue du spectre strictement
+          positif donne `X=0`, puis la dimension finie donne la bijectivité.
+          Le profil mono-valeur quartique réutilise son inverse Sylvester
+          explicite. Ainsi `HasSylvesterRegularRealSquareRoot` est clos sur
+          tout `PositiveRealSplitCharpoly4`, sans résiduel de Jordan.
       - [x] Fermer le sous-secteur hermitien à spectre strictement positif par
         le théorème spectral de Mathlib : construire la présentation diagonale
         depuis `eigenvectorUnitary`, prouver sa cible exacte, en déduire
         `HasPositiveRealJordanPresentation` et une racine Sylvester-régulière.
         Cela couvre notamment toute matrice `PosDef` et réduit exactement le
-        pont universel restant au secteur brut non hermitien ; ce dernier reste
-        ouvert en général.
+        pont de présentation restant au secteur brut non hermitien ; seule
+        cette forme explicite reste ouverte en général.
       - [x] Réduire ce dernier secteur à l'unique contrat plus élémentaire
         `PositiveRealNonHermitianJordanChainBasisResidual4` : une matrice réelle
         inversible de vecteurs de chaînes, son équation d'entrelacement et une
         des cinq partitions de `Fin 4`. À partir de ce contrat, dériver
-        l'inverse, `HasPositiveRealJordanPresentation`, la racine exacte et la
-        bijectivité de Sylvester sans autre hypothèse.
+        l'inverse et `HasPositiveRealJordanPresentation`. La racine exacte et
+        la bijectivité de Sylvester sont désormais disponibles sans ce contrat.
       - [ ] Construire cette base réelle de chaînes `Fin 4` pour toute matrice
         non hermitienne dont le charpoly est scindé à racines strictement
         positives. Mathlib expose les espaces propres généralisés mais ne
-        choisit pas encore leurs chaînes ; c'est le seul résidu de présentation
-        du secteur brut positif.
+        choisit pas encore leurs chaînes ; c'est uniquement le résidu de forme
+        de Jordan explicite du secteur brut positif, pas un résidu d'existence
+        ou de régularité Sylvester.
     - [x] Pour les spectres réels non positifs, prouver l'obstruction
       déterminant négatif et le no-go plus fort d'une valeur propre négative
       simple, exhiber un contre-exemple de déterminant positif sans racine,
@@ -773,6 +781,10 @@ par toute évolution admissible.
                             inconditionnelles l'involution PT, sa commutation
                             au BRST, la covariance de l'action maîtresse et la
                             CME intégrée de ce modèle ultralocal.
+                            - [x] Fermer les lois PT fibre exactes de la première
+                              variation, de la valeur ultralocale représentée et
+                              de l'odd antibracket, puis leur covariance intégrée
+                              et celle de la CME avec la même mesure canonique.
                       - [ ] Étendre cette fermeture au cône métrique spacetime
                         général et aux fonctionnelles non locales/complétées
                         avec équation maîtresse fonctionnelle.
@@ -902,6 +914,10 @@ par toute évolution admissible.
             des jets lisses et prouver une équivalence linéaire continue avec
             la graph-norme existante, compatible avec l'inclusion lisse. Cela
             ne constitue pas encore une identification Sobolev intrinsèque.
+            - [x] Transporter la trace physique dans cette renormation,
+              prouver que son noyau de Dirichlet est un Hilbert fermé, construire
+              sa projection orthogonale contractante et la décomposition
+              orthogonale, puis l'identifier exactement au noyau graph-normé.
       - [x] Plonger le vrai cœur scalaire statique dans le graphe `H¹`
         existant, prendre sa clôture complète et prouver que le pont continu
         depuis le Hilbert d'énergie existe si et seulement si la borne de
@@ -1005,7 +1021,13 @@ par toute évolution admissible.
             l'invariance PT de l'action générale. La famille tangentielle reste
             un input explicite et cette mesure de référence n'est pas déclarée
             volume canonique de toute métrique générale.
-- [ ] Construire l'action matière holonomique covariante en dimension quatre.
+            - [x] À métrique générale et famille tangentielle fixes, dériver
+              l'expansion quadratique pointwise et intégrée de la ligne
+              scalaire affine sous le contrat minimal d'intégrabilité des
+              trois coefficients, identifier la première variation à la vraie
+              dérivée de l'action et prouver sa covariance PT pointwise,
+              intégrée et au niveau de l'intégrabilité.
+- [x] Construire l'action matière holonomique covariante en dimension quatre.
   - [x] Pour une métrique lorentzienne tensorielle générale munie de son
     isomorphisme musical exact, construire pointwise l'inverse, le Gram,
     `sqrt(|det|)`, `p = dφ`, la densité scalaire du même champ et son expansion
