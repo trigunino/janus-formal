@@ -147,6 +147,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           inverses en sections analytiques des deux hom-bundles ; dans chaque
           carte transportée, leurs matrices sont exactement l'identité. Le
           bundle transporté est donc lissement isomorphe au vrai normal.
+        - [x] Pour toute forme quadratique continue intrinsèque sur ce bundle,
+          construire les strates spacelike, timelike, null, non-null et joint,
+          prouver ouverture/fermeture, disjonction, couverture, stabilité par
+          changement d'échelle et inclusion du joint dans le null. Il reste à
+          instancier cette forme par la restriction de la métrique spacetime.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -422,6 +427,12 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
           Le profil mono-valeur quartique réutilise son inverse Sylvester
           explicite. Ainsi `HasSylvesterRegularRealSquareRoot` est clos sur
           tout `PositiveRealSplitCharpoly4`, sans résiduel de Jordan.
+        - [x] Construire l'atlas IFT local associé à ce sélecteur régulier :
+          ouverts source/cible à chaque centre, valeur centrale, carré exact
+          et continuité sur l'ouvert cible, dérivée inverse-Sylvester au centre.
+          Construire aussi l'ouvert de recouvrement où les deux branches
+          restent dans leurs voisinages d'unicité croisés et y prouver leur
+          égalité exacte. Aucun sélecteur global continu n'est déduit.
       - [x] Fermer le sous-secteur hermitien à spectre strictement positif par
         le théorème spectral de Mathlib : construire la présentation diagonale
         depuis `eigenvectorUnitary`, prouver sa cible exacte, en déduire
@@ -522,8 +533,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
-  - [ ] Construire ce relèvement continu et prouver sa régularité Sylvester
-    sur le domaine physique, sans les conserver comme hypothèses.
+  - [ ] Recoller l'atlas IFT désormais inconditionnel en un relèvement
+    continu global sur le domaine physique. La régularité Sylvester ponctuelle
+    et le recollement dans les voisinages d'unicité sont clos ; restent le
+    choix global sans saut de branche et le recollement hors de ces voisinages.
 - [ ] Contrôler l'approche de la frontière spectrale et les changements de
   branche éventuels.
   - [x] Pour toute présentation réelle diagonalisable à spectre strictement
@@ -785,9 +798,15 @@ par toute évolution admissible.
                               variation, de la valeur ultralocale représentée et
                               de l'odd antibracket, puis leur covariance intégrée
                               et celle de la CME avec la même mesure canonique.
-                      - [ ] Étendre cette fermeture au cône métrique spacetime
-                        général et aux fonctionnelles non locales/complétées
-                        avec équation maîtresse fonctionnelle.
+                      - [x] Étendre cette fermeture au vrai cône spacetime
+                        diagonal strictement positif : huit logarithmes lisses,
+                        ghosts et antifields couplés, BRST corrigé carré nul,
+                        odd bracket, action non nulle, CME pointwise/intégrée et
+                        covariance PT exacte.
+                      - [ ] Étendre cette fermeture aux tenseurs lorentziens
+                        généraux non diagonaux, aux termes dérivatifs et aux
+                        fonctionnelles non locales/complétées avec équation
+                        maîtresse fonctionnelle.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -1036,6 +1055,19 @@ par toute évolution admissible.
       déterminant-volume et de la densité sous changement de frame, puis la
       spécialiser au vrai `mfderiv` d'un difféomorphisme D8 et à la règle de
       chaîne de `dφ`.
+      - [x] Sous le contrat exact fournissant le pullback lisse de la métrique
+        générale, transporter simultanément tenseur/musical, scalaire, famille
+        tangentielle et mesure poussée par l'inverse ; prouver la covariance
+        pointwise, le transport iff de l'intégrabilité, l'invariance intégrée
+        et le corollaire direct PT/difféomorphisme plus échange des secteurs.
+      - [x] Sur une orbite lisse fournie avec certificats de pullback métrique
+        à tout paramètre, prouver la constance et la dérivée nulle de l'action,
+        puis identifier cette dérivée au pairing de l'opérateur de Noether
+        scalaire sous le contrat exact et non vacu de première variation.
+      - [ ] Construire ce pullback métrique lisse sans contrat pour tout
+        difféomorphisme D8, puis promouvoir l'identité intégrée en courant ou
+        divergence locale par une IPP contrôlée, le flux de bord et une famille
+        suffisante de ghosts tests.
     - [x] Définir l'espace fonctionnel régulier où sharp, frame, volume et
       différentielle scalaire varient lissement, prouver la lissité et
       l'intégrabilité de la densité sur toute mesure finie, construire l'action

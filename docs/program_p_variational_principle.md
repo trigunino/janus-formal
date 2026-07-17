@@ -616,11 +616,14 @@ and recovers their square/PT laws for every winding. The throat inclusion is a
 global `IsSmoothEmbedding`, and its normal comparison is an exact fiber-linear
 total `Diffeomorph` compatible with the trivializations and sign cocycle.
 The differential normal is split intrinsically into a closed zero stratum and
-an open nonzero complement, transported exactly by this diffeomorphism.
+an open nonzero complement, transported exactly by this diffeomorphism. Any
+continuous intrinsic quadratic form on this normal line now gives the exact
+spacelike/timelike/null/non-null partition and closed joint frontier, with
+fiber-scaling invariance. Only its construction from the restricted spacetime
+metric remains to instantiate the Lorentzian stratification.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
-parity cocycle. Lorentzian null/non-null/joint strata still require a quadratic
-reduction. An explicit positive nondegenerate model form is now transported by
+parity cocycle. An explicit positive nondegenerate model form is now transported by
 each tangent transition with a genuine quadratic isometry; global orthonormal
 compatibility remains a contract. The Clifford `spinGroup` now supplies a true
 quadratic-preserving vector action and morphism `Spin(Q) →* GL(4)`, with the
@@ -699,6 +702,16 @@ general metric's own volume. At fixed metric, the affine scalar line has an
 exact pointwise/integrated quadratic expansion and action derivative under the
 explicit three-coefficient integrability contract; its first variation is
 PT-covariant pointwise and after integration, with iff integrability transport.
+For an arbitrary smooth D8 self-diffeomorphism, simultaneous transport of the
+metric, scalar, tangent family and inverse-pushforward measure gives exact
+pointwise covariance, iff integrability, integrated action invariance and the
+direct two-sector exchange corollary under the supplied smooth metric-pullback
+certificate. On a supplied smooth orbit with certificates at every parameter,
+the action orbit is exactly constant and has zero derivative; the explicit
+non-vacuous first-variation contract identifies this derivative with the scalar
+diffeomorphism Noether pairing. The unconditional pullback construction and a
+local current/divergence theorem still require IPP, boundary-flux control and
+enough test ghosts.
 The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
@@ -743,10 +756,13 @@ master action and CME covariance unconditional. Its exact affine first
 variation, integrated directional derivative and odd antibracket/CME on
 represented analytic ultralocal spacetime functionals are closed too. Their
 exact fibre PT laws and integrated first-variation, represented-value,
-odd-bracket and CME covariance are now unconditional as well. This is still an
-ultralocal constant-fibre model, not a BV construction for general
-spacetime tensor metrics; arbitrary nonlocal/completed BV functionals remain
-open.
+odd-bracket and CME covariance are now unconditional as well. The same phase
+is now coupled faithfully to the actual smooth strictly-positive diagonal
+metric cone through its eight global logarithms, with metric ghosts,
+antifields, corrected square-zero BRST, nonzero action, pointwise/integrated
+CME and exact PT covariance. General non-diagonal Lorentz tensor metrics,
+derivative-dependent terms and arbitrary nonlocal/completed BV functionals
+remain open.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
