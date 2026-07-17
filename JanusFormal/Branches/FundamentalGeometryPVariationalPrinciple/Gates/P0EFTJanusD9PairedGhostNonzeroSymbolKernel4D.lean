@@ -99,6 +99,34 @@ theorem d9PairedGhostPrincipalSymbol_range
   LinearMap.range_eq_top.mpr
     (d9PairedGhostPrincipalSymbol_surjective covector hCovector)
 
+theorem d9PairedGhostPrincipalSymbol_ker_classification
+    (covector : TangentVector3) :
+    (covector = zeroTangent →
+      LinearMap.ker (d9PairedGhostPrincipalSymbol covector) = ⊤) ∧
+    (covector ≠ zeroTangent →
+      LinearMap.ker (d9PairedGhostPrincipalSymbol covector) = ⊥) := by
+  constructor
+  · intro hCovector
+    subst covector
+    ext coordinate
+    simp [d9PairedGhostPrincipalSymbol, zeroTangent, normSquared, tangentDot]
+  · intro hCovector
+    exact d9PairedGhostPrincipalSymbol_ker covector hCovector
+
+theorem d9PairedGhostPrincipalSymbol_range_classification
+    (covector : TangentVector3) :
+    (covector = zeroTangent →
+      LinearMap.range (d9PairedGhostPrincipalSymbol covector) = ⊥) ∧
+    (covector ≠ zeroTangent →
+      LinearMap.range (d9PairedGhostPrincipalSymbol covector) = ⊤) := by
+  constructor
+  · intro hCovector
+    subst covector
+    ext coordinate
+    simp [d9PairedGhostPrincipalSymbol, zeroTangent, normSquared, tangentDot]
+  · intro hCovector
+    exact d9PairedGhostPrincipalSymbol_range covector hCovector
+
 theorem d9PairedGhostPrincipalSymbol_bijective
     (covector : TangentVector3) (hCovector : covector ≠ zeroTangent) :
     Function.Bijective (d9PairedGhostPrincipalSymbol covector) :=
