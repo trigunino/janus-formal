@@ -66,8 +66,12 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   action/exchange on general smooth Lorentz metrics and pointwise covariance
   of the holonomic scalar density. Integration against the canonical quotient
   Lorentz measure has exact integrability transport and unconditional PT
-  invariance. A tangent family is still supplied explicitly and this reference
-  measure is not identified with every general metric's volume;
+  invariance. At fixed metric, the affine scalar line has exact pointwise and
+  integrated quadratic expansion and action derivative under the explicit
+  three-coefficient integrability contract; its first variation is PT-covariant
+  pointwise and after integration, with iff integrability transport. A tangent
+  family is still supplied explicitly and this reference measure is not
+  identified with every general metric's volume;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -605,8 +609,9 @@ New controlled subgates are now checked:
   so the spacetime master action and integrated CME are also PT-covariant.
   Its affine first variation, exact integrated directional derivative and odd
   bracket/CME on represented analytic ultralocal spacetime functionals are
-  closed. General spacetime tensor metrics and arbitrary nonlocal/completed
-  BV functionals remain;
+  closed; their exact fibre PT laws and integrated first-variation, value,
+  bracket and CME covariance are unconditional. General spacetime tensor
+  metrics and arbitrary nonlocal/completed BV functionals remain;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations
@@ -656,7 +661,10 @@ New controlled subgates are now checked:
   homogeneous Dirichlet kernel is closed, complete and nonempty, with exact
   smooth zero-trace agreement. A nested finite `ℓ²` renorming closes the same
   jets in a genuine Hilbert space continuously linearly equivalent to the
-  original graph norm; intrinsic Sobolev identification remains separate;
+  original graph norm. Its transported Dirichlet kernel has a contractive
+  orthogonal projection, an exact orthogonal decomposition and an exact
+  continuous linear equivalence with the graph-Dirichlet kernel; intrinsic
+  Sobolev identification remains separate;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
   the full circle Fourier Hilbert space; this is not a trace-class theorem or
