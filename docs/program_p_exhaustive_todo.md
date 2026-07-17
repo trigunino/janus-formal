@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**498 fermées sur 623 ; 125 ouvertes**.
+**499 fermées sur 624 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1986,6 +1986,11 @@ champs et avec les mêmes conditions au bord.
       difféomorphes construites, puis calculer exactement le complexe nul à
       cinq coordonnées, son noyau total, son image nulle et son quotient. Les
       domaines et la cohomologie du vrai opérateur global restent ouverts.
+      - [x] Au covecteur non nul, construire le symbole apparié sur ces cinq
+        coordonnées et prouver que son noyau est nul. Pour les vrais bridges,
+        caractériser son annulation par l'annulation simultanée des deux
+        ghosts `U(1)` et du ghost tangent au point inspecté. Les domaines du
+        vrai opérateur global restent ouverts.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
