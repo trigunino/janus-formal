@@ -631,6 +631,13 @@ analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
 on the actual smooth spacetime. PT pullback and two-sector exchange are exact
 involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A finite global `C∞` tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting. For throat-supported spacetime measure, its continuous trace has norm bound one. For the canonical physical volumes, the exact FTC/Fubini estimate, twisted analytic latitude collar, throat pushforward and `L²` trace identity are proved. The normal derivative is exactly reconstructed by the finite global frame with an explicit pointwise coefficient bound. Under `CanonicalLatitudeNormalLiftContinuous`, compactness supplies the uniform coefficient and integrability package. The remaining inputs are therefore exactly that tangent-lift continuity and the independent physical coarea bound. Intrinsic Sobolev identification and the resulting physical-volume trace remain open.
+The physical coarea chain is now reduced to the single explicit measure
+domination `CanonicalLatitudeMeasureToSphereCoareaDomination`; joint collar
+continuity, frame-energy integrability, Fubini/map, graph-norm identity and the
+downstream coarea constructor are proved.
+On the complete current independent-field package, PT/exchange also acts on
+all componentwise smooth throat boundary data, intertwines the trace exactly
+and preserves the full Dirichlet condition.
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
@@ -680,8 +687,11 @@ legacy minus convention has an exact nonzero-form obstruction formula rather
 than being silently reused. The corrected map is now extended to the current
 linear matter, gauge-coordinate, internal-ghost and auxiliary sectors with
 componentwise and product square-zero proofs and a bridge from
-`IndependentFields`. LL/throat is reduced to a precise completion contract;
-positive metrics, the infinitesimal throat action, antifields and BV remain.
+`IndependentFields`. The three rotations preserve the equatorial throat,
+commute with deck, descend to the quotient and keep their `so(3)` bracket;
+their scalar/Koszul action and the LL maps are explicit. The completion is now
+conditional only on `ThroatCorrectedKoszulNilpotence.square_zero`; positive
+metrics, antifields and BV remain.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
@@ -790,12 +800,21 @@ similarity, continuity and finite-series Sylvester inverse. Positive `3+1` and
 partition of dimension four is therefore covered from supplied presentation
 data. One inductive sum now unifies all five partitions and proves exact square,
 Sylvester bijectivity, continuity per stratum and combinatorial exhaustivity.
-Deriving such a presentation for an arbitrary admissible matrix and treating
-nonpositive/complex spectra remain. For raw matrices, split positive charpoly
+Deriving such presentations from raw spectral data and selecting the final
+physical admissible domain remain. For raw matrices, split positive charpoly
 now implies the needed minpoly facts and Jordan--Chevalley is exposed; Mathlib
 has no Jordan-basis constructor. The entire residual is one named bridge
 `PositiveRealJordanBasisBridge4`, after which square and Sylvester are already
-closed. The
+closed. For nonpositive spectra, determinant negativity and a simple negative
+diagonal eigenvalue are exact obstructions, while determinant positivity is
+explicitly shown insufficient. Paired negative scalar and identical Jordan
+blocks have constructive real roots. The complete negative-block parity and
+zero-block criterion is stated, with its raw-matrix equivalence reduced to one
+missing Jordan-classification bridge. Pure conjugate-complex pairs have an
+exact real principal branch off the cut, an explicit cut closure, continuity,
+zero singularity, `2+2` sums and a non-semisimple complex Jordan-chain root.
+Only the raw charpoly-to-presentation bridge remains for that pure-nonreal
+sector. The
 candidate further has a continuous three-parameter two-dimensional
 null-coordinate Cayley--Hamilton root chart for independently supplied Lorentz
 metrics, covering diagonalizable and Jordan points.  It proves neither

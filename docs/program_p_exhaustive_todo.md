@@ -373,6 +373,20 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
         Jordan--Chevalley disponible et réduire toute la fermeture brute à
         l'unique pont `PositiveRealJordanBasisBridge4`. Mathlib ne fournit pas
         actuellement la construction de la base de chaînes de Jordan.
+    - [x] Pour les spectres réels non positifs, prouver l'obstruction
+      déterminant négatif et le no-go plus fort d'une valeur propre négative
+      simple, exhiber un contre-exemple de déterminant positif sans racine,
+      construire les racines réelles des blocs négatifs appariés diagonaux et
+      Jordan `2+2`, puis formuler le critère exact de parité des blocs négatifs
+      et d'admissibilité des blocs nuls. Son équivalence pour une matrice brute
+      est réduite à l'unique pont de classification Jordan absent de Mathlib.
+    - [x] Pour les paires propres complexes conjuguées, construire la
+      représentation réelle `2×2`, la racine principale hors coupure et sa
+      fermeture explicite sur l'axe négatif, prouver carré et continuité hors
+      coupure, singularité/Sylvester à zéro, sommes `2+2`, bloc Jordan complexe
+      non semi-simple et transport par similarité. Le passage d'un charpoly
+      brut à cette présentation purement non réelle est isolé dans l'unique
+      pont `PureNonrealJordanPresentationBridge4` absent de Mathlib.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
@@ -630,9 +644,17 @@ par toute évolution admissible.
                         `IndependentFields`.
                       - [x] Encoder les trois blocs LL/throat et ramener leur
                         carré nul à `LLThroatBRSTCompletion`.
-                      - [ ] Construire l'action infinitésimale des rotations sur
-                        le throat pour instancier cette complétion, puis traiter
-                        métriques positives, antifields et BV.
+                      - [ ] Décharger la nilpotence explicite sur le throat,
+                        puis traiter métriques positives, antifields et BV.
+                        - [x] Prouver que les trois flows de rotation préservent
+                          l'équateur, commutent au deck, descendent au vrai
+                          quotient throat et gardent la table `so(3)` ; construire
+                          leur action scalaire, le différentiel corrigé et
+                          l'instanciation conditionnelle des trois blocs LL.
+                        - [ ] Prouver l'unique contrat restant
+                          `ThroatCorrectedKoszulNilpotence.square_zero` pour ce
+                          différentiel explicite afin de rendre
+                          `LLThroatBRSTCompletion` inconditionnel.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -700,6 +722,17 @@ par toute évolution admissible.
             `L1` des coefficients normaux locaux.
           - [ ] Instancier `CanonicalLatitudeCoareaBound` par la formule de
             coaire physique pour `Measure.toSphere`.
+            - [x] Construire la mesure produit du collier, prouver la
+              continuité jointe de la latitude, l'intégrabilité
+              inconditionnelle de l'énergie de frame, la réduction Fubini/map,
+              l'identité avec la norme du premier jet et la borne de densité
+              `≤ 3 × jet`; en déduire `CanonicalLatitudeCoareaBound` depuis
+              une unique domination de mesures explicite.
+            - [ ] Prouver
+              `CanonicalLatitudeMeasureToSphereCoareaDomination`, c'est-à-dire
+              la domination du pushforward du collier par
+              `cos(1)⁻² • intrinsicCanonicalLorentzVolumeMeasure`. Mathlib ne
+              fournit pas la désintégration en latitudes de `Measure.toSphere`.
           - [ ] Instancier `CanonicalNormalFrameReconstructionBound` par une
             borne compacte uniforme des coefficients normaux et leur
             intégrabilité ; sa recombinaison avec la coaire est déjà fermée.
@@ -783,6 +816,12 @@ par toute évolution admissible.
     et prouver leur non-vacuité.
   - [ ] Étendre l'action aux métriques générales, matière, jauge, ghosts,
     auxiliaires et conditions au bord retenues.
+    - [x] Étendre simultanément PT/échange aux métriques diagonales, matière,
+      jauge, ghosts, auxiliaires et blocs LL/throat du paquet indépendant
+      actuel ; construire leurs données de bord lisses composante par
+      composante, prouver l'équivariance exacte de la trace et la préservation
+      de la condition de Dirichlet complète. Les métriques tensoricielles
+      générales et les antifields/BV restent séparés.
 - [ ] Construire l'action matière holonomique covariante en dimension quatre.
   - [x] Pour une métrique lorentzienne tensorielle générale munie de son
     isomorphisme musical exact, construire pointwise l'inverse, le Gram,
