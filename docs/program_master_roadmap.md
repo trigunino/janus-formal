@@ -71,7 +71,15 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   three-coefficient integrability contract; its first variation is PT-covariant
   pointwise and after integration, with iff integrability transport. A tangent
   family is still supplied explicitly and this reference measure is not
-  identified with every general metric's volume;
+  identified with every general metric's volume. For arbitrary smooth D8
+  self-diffeomorphisms, simultaneous metric/scalar/tangent-family and
+  inverse-pushforward measure transport gives finite action covariance, iff
+  integrability and sector exchange under the exact smooth metric-pullback
+  certificate. On a supplied smooth orbit with certificates at every time,
+  the action has zero derivative, identified under the exact non-vacuous
+  first-variation contract with the scalar diffeomorphism Noether pairing.
+  Constructing the pullback unconditionally and deriving a local
+  current/divergence via IPP, boundary flux and enough test ghosts remain open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -116,8 +124,10 @@ Current results:
 - **T/N** the throat inclusion is a global `IsSmoothEmbedding`; the analytic
   differential-normal bundle and its exact fiber-linear total `Diffeomorph`
   comparison are installed. Its zero section is an analytic embedding with
-  closed image and open nonzero complement; Lorentzian null/non-null/joint
-  strata still require quadratic data absent from the real normal line;
+  closed image and open nonzero complement. Any supplied continuous intrinsic
+  normal quadratic form now produces the complete open/closed causal and joint
+  stratification with scaling laws; deriving that form from the restricted
+  spacetime metric remains open;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -610,8 +620,11 @@ New controlled subgates are now checked:
   Its affine first variation, exact integrated directional derivative and odd
   bracket/CME on represented analytic ultralocal spacetime functionals are
   closed; their exact fibre PT laws and integrated first-variation, value,
-  bracket and CME covariance are unconditional. General spacetime tensor
-  metrics and arbitrary nonlocal/completed BV functionals remain;
+  bracket and CME covariance are unconditional. This phase is now coupled to
+  the actual smooth positive diagonal/log metric cone, including ghosts,
+  antifields, corrected BRST, nonzero action, pointwise/integrated CME and PT.
+  General non-diagonal tensor metrics, derivative-dependent terms and arbitrary
+  nonlocal/completed BV functionals remain;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations

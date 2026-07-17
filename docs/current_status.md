@@ -251,9 +251,12 @@ throat, with one circuit acting by `-id`. Each of its fibers is noncanonically
 linearly equivalent to the corresponding differential normal quotient. These
 equivalences are now chosen simultaneously and assembled into one
 base-preserving, fiberwise-linear equivalence of dependent total spaces, with
-the exact one-loop sign. A smooth atlas on the differential quotient family
-and smoothness of this global comparison remain open, together with the
-non-null/null/joint strata.
+the exact one-loop sign. The transported differential quotient family now has
+its smooth vector-bundle atlas and an exact smooth total-space comparison.
+Any continuous intrinsic quadratic form on it canonically yields open
+spacelike/timelike/non-null strata, a closed null stratum and a closed joint
+frontier contained in the null locus, with exact scaling laws. Instantiating
+that form from the restricted spacetime metric remains open.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -312,6 +315,17 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   quadratic expansion and action `HasDerivAt` under the explicit integrability
   contract for its three coefficients. Its first variation is PT-covariant
   pointwise and after integration, with exact iff integrability transport.
+  For an arbitrary smooth D8 self-diffeomorphism, the same density and measured
+  action are covariant under simultaneous metric, scalar, tangent-family and
+  inverse-pushforward measure transport, including iff integrability and the
+  direct two-sector exchange corollary, under the exact supplied smooth metric
+  pullback certificate. On a supplied smooth orbit with such certificates at
+  every parameter, finite invariance makes the action orbit constant with zero
+  derivative; under the explicit non-vacuous first-variation contract this is
+  exactly the scalar diffeomorphism Noether pairing, hence it vanishes.
+  Constructing the pullback certificate unconditionally, and deriving a local
+  current/divergence through IPP, boundary flux and enough test ghosts, remain
+  open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
 map on a smooth vertical section, and the compact frame reconstruction package
@@ -391,9 +405,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   derivative and odd antibracket/CME on represented analytic ultralocal
   spacetime functionals are now proved as well. Their exact fibre PT laws and
   integrated first-variation, represented-value, odd-antibracket and CME
-  covariance are unconditional. This only removes the base-space restriction;
-  it is not a BV theory of general tensor metrics and
-  supplies no bracket on arbitrary nonlocal/completed functionals. Independently, real translation of the
+  covariance are unconditional. The model is now coupled to the actual smooth
+  strictly-positive diagonal metric cone by its eight logarithms, with metric
+  ghosts, antifields, corrected square-zero BRST, nonzero integrated action,
+  pointwise/integrated CME and exact PT covariance. It still does not cover
+  general non-diagonal tensor metrics, derivative-dependent interactions or
+  arbitrary nonlocal/completed functionals. Independently, real translation of the
   mapping-torus coordinate now descends to a nontrivial complete analytic real action on the
   actual D8 quotient; every time slice is an analytic diffeomorphism and the
   full action map `ℝ × D8 → D8` is jointly analytic. Pullback
@@ -501,6 +518,14 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   gives bijectivity. The single-eigenvalue quartic profile reuses its explicit
   finite Sylvester inverse. A real Jordan-chain presentation remains separate
   only when an explicit Jordan form is itself required.
+  This regular selector now supplies a genuine pointwise IFT atlas: every
+  positive split raw matrix lies in an explicit open target chart whose local
+  root is continuous, squares exactly throughout the chart and has the inverse
+  Sylvester derivative at its centre. Pairwise overlaps on which both roots
+  remain in the crossed IFT uniqueness sources are open, and the two branches
+  agree there exactly. This does not prove continuity of the classical centre
+  selector, a global no-branch-jump choice, or gluing beyond those uniqueness
+  neighbourhoods.
   Outside the positive locus, determinant negativity and every simple
   negative diagonal eigenvalue are now exact no-go criteria; determinant
   positivity is proved insufficient by an explicit `4×4` witness. Paired
