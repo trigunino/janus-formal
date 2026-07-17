@@ -52,10 +52,10 @@ private abbrev ambientModelWithCorners :
     ModelWithCorners Real AmbientCoordinates AmbientModel :=
   𝓘(Real, AmbientCoordinates)
 
-private def sphereAmbientMap (point : UnitThreeSphere) : EuclideanR4 :=
+def sphereAmbientMap (point : UnitThreeSphere) : EuclideanR4 :=
   (unitThreeSphereHomeomorph point).1
 
-private theorem sphereAmbientMap_contMDiff :
+theorem sphereAmbientMap_contMDiff :
     ContMDiff (𝓡 3) 𝓘(Real, EuclideanR4) ∞ sphereAmbientMap := by
   exact contMDiff_coe_sphere.comp
     (chartedSpacePullback_toFun_contMDiff (𝓡 3) ∞
@@ -98,6 +98,80 @@ def coverAmbientDerivative
     CoverAmbientHomFiber period hPeriod point :=
   mfderiv coverModelWithCorners ambientModelWithCorners
     (coverAmbientMap period hPeriod) point
+
+/-- Product-coordinate derivative of the cover chart.  This public map keeps
+downstream calculations away from the private ambient model instances. -/
+def coverProductDerivative
+    (point : EffectiveCover period hPeriod) :
+    CoverIntrinsicTangent period hPeriod point →L[Real] CoverCoordinates :=
+  mfderiv coverModelWithCorners coverModelWithCorners
+    (coverHomeomorphProd (sphereData period hPeriod)) point
+
+private def productAmbientMap (point : UnitThreeSphere × Real) :
+    AmbientCoordinates :=
+  (sphereAmbientMap point.1, point.2)
+
+set_option backward.defeqAttrib.useBackward true in
+set_option backward.isDefEq.respectTransparency false in
+/-- Factorization of the true ambient derivative through the public product
+coordinates of the mapping-torus cover. -/
+theorem coverAmbientDerivative_factor
+    (point : EffectiveCover period hPeriod) :
+    coverAmbientDerivative period hPeriod point =
+      ((mfderiv (𝓡 3) 𝓘(Real, EuclideanR4) sphereAmbientMap point.fiber).prodMap
+        (ContinuousLinearMap.id Real Real)).comp
+        (coverProductDerivative period hPeriod point) := by
+  have hSphere : MDifferentiableAt (𝓡 3) 𝓘(Real, EuclideanR4)
+      sphereAmbientMap point.fiber :=
+    sphereAmbientMap_contMDiff.mdifferentiableAt (by simp)
+  have hTime : MDifferentiableAt 𝓘(Real, Real) 𝓘(Real, Real)
+      (id : Real → Real) point.time :=
+    mdifferentiableAt_id
+  have hProduct : MDifferentiableAt coverModelWithCorners
+      ambientModelWithCorners productAmbientMap (point.fiber, point.time) := by
+    change MDifferentiableAt coverModelWithCorners
+      𝓘(Real, EuclideanR4 × Real) (Prod.map sphereAmbientMap id)
+      (point.fiber, point.time)
+    rw [modelWithCornersSelf_prod, ← chartedSpaceSelf_prod]
+    exact hSphere.prodMap hTime
+  have hCover : MDifferentiableAt coverModelWithCorners
+      coverModelWithCorners
+      (coverHomeomorphProd (sphereData period hPeriod)) point :=
+    (chartedSpacePullback_toFun_contMDiff coverModelWithCorners ∞
+      (coverHomeomorphProd (sphereData period hPeriod))).mdifferentiableAt
+        (by simp)
+  have hMap : coverAmbientMap period hPeriod =
+      productAmbientMap ∘
+        coverHomeomorphProd (sphereData period hPeriod) := by
+    rfl
+  have hProductDerivative :
+      mfderiv coverModelWithCorners 𝓘(Real, EuclideanR4 × Real)
+          (Prod.map sphereAmbientMap id) (point.fiber, point.time) =
+        (mfderiv (𝓡 3) 𝓘(Real, EuclideanR4) sphereAmbientMap
+          point.fiber).prodMap (ContinuousLinearMap.id Real Real) := by
+    rw [modelWithCornersSelf_prod, ← chartedSpaceSelf_prod]
+    rw [mfderiv_prodMap hSphere hTime, mfderiv_id]
+    rfl
+  rw [show coverAmbientDerivative period hPeriod point =
+      mfderiv coverModelWithCorners ambientModelWithCorners
+        (coverAmbientMap period hPeriod) point by rfl, hMap,
+    mfderiv_comp point hProduct hCover,
+    show productAmbientMap = Prod.map sphereAmbientMap id by rfl]
+  change (mfderiv coverModelWithCorners 𝓘(Real, EuclideanR4 × Real)
+      (Prod.map sphereAmbientMap id) (point.fiber, point.time)).comp
+      (coverProductDerivative period hPeriod point) = _
+  rw [hProductDerivative]
+
+/-- Pointwise form of `coverAmbientDerivative_factor`. -/
+theorem coverAmbientDerivative_apply_product
+    (point : EffectiveCover period hPeriod)
+    (vector : CoverIntrinsicTangent period hPeriod point) :
+    coverAmbientDerivative period hPeriod point vector =
+      (mfderiv (𝓡 3) 𝓘(Real, EuclideanR4) sphereAmbientMap point.fiber
+          (coverProductDerivative period hPeriod point vector).1,
+        (coverProductDerivative period hPeriod point vector).2) := by
+  rw [coverAmbientDerivative_factor]
+  rfl
 
 /-- The derivative of the immersion varies smoothly as a tangent-bundle hom. -/
 def coverAmbientDerivativeSection :

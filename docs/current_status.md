@@ -267,8 +267,15 @@ the lift and the complete stratification then follow. This local projection
 lemma remains open because the current normal equivalence uses
 `Classical.choice` without a regularity theorem. The explicit latitude curve
 now supplies an actual cover tangent normal whose ambient coordinate
-derivative is `(e₀, 0)`; identifying it with the intrinsic exported ambient
-derivative still crosses private model instances.
+derivative is `(e₀, 0)`. The sphere ambient map and its smoothness are now
+public, and the intrinsic ambient derivative factors exactly through the
+public product-coordinate derivative. That derivative is now identified with
+the continuous-linear equivalence induced by the global product
+diffeomorphism. The canonical latitude normal has exact product image and
+ambient image `(e₀, 0)`; the ambient image and the tangent vector are both
+nonzero. This proves algebraic nonvanishing only. Intrinsic Lorentz
+orthogonality, causal null/non-null classification and the local projection
+lemma remain open.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -344,9 +351,14 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   covariant Euler pairing plus flux; zero flux makes stationarity equivalent
   to the weak equation, a pointwise Euler solution implies it, and the action
   derivative vanishes. This is specialized to the intrinsic D8 metric.
-  Geometrically discharging the Stokes/IPP interface and physical boundary
-  flux, then obtaining a local Noether current with enough test ghosts, remains
-  open.
+  On the canonical latitude collar, the antisymmetric scalar
+  Green--Wronskian current is now explicit. Its derivative is exactly the
+  antisymmetric pairing of the equal-mass Euler residuals; it is pointwise and
+  measured constant for two Euler solutions, its endpoint jump is the
+  antisymmetrized IPP boundary functional, and homogeneous Dirichlet Euler
+  solutions make it vanish. Geometrically discharging the global Stokes/IPP
+  interface and promoting this one-dimensional collar current to a covariant
+  local Noether current with enough test ghosts remain open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
 map on a smooth vertical section, and the compact frame reconstruction package
@@ -556,8 +568,17 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   that canonical witness. The obstruction is now transported through every
   fixed real similarity, and the simultaneous two-parameter collision
   `J₂(t) ⊕ J₂(s)` has two linearly independent Sylvester modes collapsing at
-  the `0/0` corner while both nilpotent root coefficients diverge. Moving
-  similarities, Jordan-type changes and arbitrary matrix paths remain open.
+  the `0/0` corner while both nilpotent root coefficients diverge. One genuinely
+  moving polynomial shear `P(t)=I+tE₂₀` is now exact too: its inverse,
+  transported square and mode, nonconstant target, divergent root coefficient
+  and absence of finite continuation are all proved. The singular diagonal
+  scaling `P(t)=diag(t,1,1,1)` instead regularizes the canonical divergence to
+  a finite nonzero nilpotent root limit; its inverse blows up and the Sylvester
+  mode degenerates. Two explicit Jordan-type-change paths are also exact:
+  `I+tE₀₁ → I` has a smooth affine root and constant Sylvester eigenvalue `2`,
+  while `t(I+E₀₁) → 0` has both root and Sylvester eigenvalue tending to zero.
+  Arbitrary singular frames, a general Jordan-type classification/branch atlas
+  and arbitrary matrix paths remain open.
   Outside the positive locus, determinant negativity and every simple
   negative diagonal eigenvalue are now exact no-go criteria; determinant
   positivity is proved insufficient by an explicit `4×4` witness. Paired
@@ -741,9 +762,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   and integrally for homogeneous Dirichlet variations. On the canonical
   latitude collar, genuine interval-integral IPP identifies the inner term
   with `mvfderiv` on the canonical normal and proves the measured weak IPP
-  without boundary for endpoint-Dirichlet variations. A global manifold
-  Stokes theorem identifying the abstract bulk interface with this collar
-  flux, and a global canonical metric normal, remain open;
+  without boundary for endpoint-Dirichlet variations. Its explicit
+  Green--Wronskian current has exact Euler-residual derivative, pointwise and
+  measured constancy for equal-mass solutions, the expected antisymmetric
+  endpoint jump, and zero Dirichlet current. A global manifold Stokes theorem
+  identifying the abstract bulk interface with this collar flux, a covariant
+  local Noether current and a global canonical metric normal remain open;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
@@ -800,7 +824,9 @@ The current `main` stack proves, in the declared models:
 - naturality/equivariance and evaluator uniqueness;
 - holonomic composition;
 - the fixed-background D8 symmetry category with all smooth
-  self-diffeomorphisms as arrows, plus the contravariant smooth-field functor;
+  self-diffeomorphisms as arrows, plus the contravariant smooth-field functor
+  and the actual contravariant general-Lorentz-metric pullback functor, both
+  with exact identity/composition laws;
 - action-groupoid, orbit and stabilizer laws;
 - reconstruction of equivariant sections on one transitive orbit from isotropy-fixed values;
 - a concrete valid-chart low-order residual/SpinC action-groupoid realization;

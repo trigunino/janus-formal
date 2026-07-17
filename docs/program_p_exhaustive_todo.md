@@ -162,8 +162,16 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           carré. Le recollement global et la stratification en découlent.
         - [x] Construire le vecteur tangent de latitude sur le vrai cover du
           throat et calculer sa dérivée ambiante explicite : la direction
-          normale standard est exactement `(e₀, 0)`. Le raccord à la dérivée
-          ambiante intrinsèque exportée reste séparé par ses instances privées.
+          normale standard brute est exactement `(e₀, 0)`.
+        - [x] Rendre publiques l'application ambiante de la sphère et sa
+          régularité, puis factoriser exactement la dérivée ambiante intrinsèque
+          par la dérivée des coordonnées produit, avec une formule pointwise.
+        - [x] Identifier explicitement l'image du tangent de latitude par la
+          différentielle équivalente des coordonnées produit, calculer son
+          image ambiante exacte `(e₀, 0)` et prouver que cette image et le
+          vecteur tangent canonique sont non nuls.
+        - [ ] Prouver séparément l'orthogonalité pour la métrique Lorentz
+          intrinsèque et la classification causale null/non-null de ce vecteur.
         - [ ] Prouver ce lemme local de projection intrinsèque malgré
           l'équivalence actuelle issue de `Classical.choice`, ou remplacer
           cette équivalence par une construction géométrique régulière.
@@ -575,6 +583,23 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       divergent indépendamment et deux modes de Sylvester linéairement
       indépendants dégénèrent. Similarités mobiles et changements de type
       Jordan restent ouverts.
+    - [x] Fermer une première similarité mobile non constante explicite : le
+      cisaillement polynomial `P(t)=I+tE₂₀` a un inverse exact, transporte
+      le carré et le mode de Sylvester, conserve la divergence du coefficient
+      `1/(2√t)` et exclut toute limite ou extension finie. Les similarités
+      singulières ou non bornées, les cadres mobiles généraux et les changements
+      de type Jordan restent ouverts.
+    - [x] Fermer une première régularisation par cadre singulier explicite :
+      `P(t)=diag(t,1,1,1)` transforme la divergence canonique en une limite de
+      racine nilpotente finie non nulle. Son inverse diverge et son mode de
+      Sylvester dégénère. Les cadres singuliers arbitraires et changements de
+      type Jordan restent ouverts.
+    - [x] Fermer deux témoins explicites de changement de type Jordan :
+      `I+tE₀₁ → I` passe d'un bloc non semi-simple à l'identité avec racine
+      affine lisse `I+(t/2)E₀₁` et valeur propre de Sylvester constante `2` ;
+      en contraste, `t(I+E₀₁) → 0` a une racine exacte tendant vers zéro et
+      une valeur propre de Sylvester tendant vers zéro. Ceci ne constitue ni
+      une classification générale ni un atlas de branches.
   - [x] Sur le sous-domaine diagonal global, construire les chemins vers les
     deux faces : numérateur vers zéro donne une extension continue de la
     racine vers zéro et une dégénérescence explicite de Sylvester ; dénominateur
@@ -1114,6 +1139,17 @@ par toute évolution admissible.
           identifier le terme intérieur à `mvfderiv` sur le normal et obtenir
           l'IPP faible sans bord pour les variations Dirichlet aux extrémités.
           Le Stokes global sur tout le bulk reste séparé.
+        - [x] Construire sur ce collier le courant scalaire antisymétrique de
+          Green--Wronskian et prouver que sa dérivée est exactement le pairing
+          antisymétrique des deux résidus d'Euler de même masse.
+          - [x] En déduire sa constance pointwise puis mesurée pour deux
+            solutions d'Euler de même masse.
+          - [x] Identifier son saut entre les extrémités à
+            l'antisymétrisation du boundary functional concret de l'IPP.
+          - [x] Prouver son annulation pointwise puis mesurée pour deux
+            solutions d'Euler homogènes de Dirichlet.
+        - [ ] Promouvoir ce courant unidimensionnel du collier en courant de
+          Noether local covariant sur le bulk, avec assez de ghosts tests.
     - [x] Définir l'espace fonctionnel régulier où sharp, frame, volume et
       différentielle scalaire varient lissement, prouver la lissité et
       l'intégrabilité de la densité sur toute mesure finie, construire l'action
@@ -1532,6 +1568,10 @@ Hessien physique réellement descendu.
     pour toute fibre normée le foncteur contravariant exact des champs lisses
     et prouver ses lois d'identité/composition. La catégorie de modules de tous
     les backgrounds Janus et ses bundles SpinC restent ouvertes.
+  - [x] Spécialiser ce cadre aux métriques Lorentz générales lisses : prouver
+    les lois d'identité/composition du pullback tensoriel et métrique, puis
+    construire leur foncteur contravariant sur la seule catégorie D8 fixée.
+    La catégorie globale des géométries Janus reste ouverte.
 - [ ] Vérifier localité, régularité et réalisations holonomiques requises.
 - [x] Construire le groupoïde différentiable des jets structurés.
   - [x] Construire la catégorie et le groupoïde d'action effectifs de deck D8,
