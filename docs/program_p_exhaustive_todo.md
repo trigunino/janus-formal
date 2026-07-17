@@ -331,6 +331,48 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       l'inverse bilatère fini de `H ↦ XH+HX`, identifier la tangente de racine
       comme vraie dérivée de Fréchet et prouver son unicité, y compris aux
       points non diagonalisables.
+    - [x] Étendre cette racine à tout le locus invariant par similarité
+      `(A-I)²=0`, prouver carré, continuité par strate et Sylvester bijectif,
+      puis la recoller au sélecteur positif diagonalisable sur leur intersection
+      exacte `{I}`. Les blocs d'indice supérieur et spectres non unipotents
+      restent hors de cette union.
+    - [x] Étendre encore au locus entier `(A-I)³=0` avec la racine
+      `I+N/2-N²/8`, un témoin strict `N³=0, N²≠0`, un inverse de Sylvester
+      polynomial, et un sélecteur continu par strate qui étend exactement le
+      recollement d'indice deux. Seuls l'indice quatre et les spectres Jordan
+      non unipotents restent hors de l'union actuelle.
+    - [x] Fermer l'ultime locus unipotent possible en dimension quatre,
+      `(A-I)⁴=0`, par `I+N/2-N²/8+N³/16` : carré, similarité, témoin strict,
+      inverse de Sylvester polynomial, continuité, classification et extension
+      exacte du recollement d'indice trois. Toutes les strates unipotentes
+      `4×4` sont ainsi couvertes ; les spectres non unipotents restent ouverts.
+    - [x] Rescaler cette fermeture à toute valeur propre réelle `λ>0` : pour
+      `(A-λI)⁴=0`, construire la racine binomiale normalisée, prouver carré,
+      similarité, continuité jointe en `(λ,A)`, Sylvester bijectif et accord
+      exact à `λ=1`. Les spectres à plusieurs valeurs propres ou non positifs
+      restent ouverts.
+    - [x] Fermer la strate multi-valeurs propres de partition `2+2` : deux
+      blocs Jordan à valeurs strictement positives arbitraires, racines
+      binomiales bloc par bloc, transport/rebase par similarité, continuité et
+      inverse de Sylvester par série finie. Les partitions positives `3+1` et
+      `2+1+1`, ainsi que les spectres non positifs/complexes, restent ouvertes.
+    - [x] Fermer les deux partitions positives restantes `3+1` et `2+1+1` :
+      racines bloc par bloc, carré, rebase/similarité, continuité de strate et
+      inverses de Sylvester par séries de Neumann finies. Toutes les partitions
+      Jordan réelles strictement positives de dimension quatre sont couvertes
+      par une présentation explicite ; l'existence d'une telle présentation
+      pour toute matrice admissible reste à relier à l'API spectrale générale.
+    - [x] Regrouper les cinq partitions `4`, `3+1`, `2+2`, `2+1+1` et
+      `1+1+1+1` dans un type de présentation unique ; construire le sélecteur,
+      prouver carré et Sylvester globalement sur cette somme, continuité sur
+      chaque strate et exhaustivité combinatoire des partitions de quatre.
+    - [ ] Déduire `HasPositiveRealJordanPresentation` d'hypothèses spectrales
+      intrinsèques sur une matrice brute, sans fournir sa base de Jordan.
+      - [x] Définir le charpoly scindé à racines réelles positives, dériver le
+        même scindage/positivité pour le minpoly, exposer la décomposition
+        Jordan--Chevalley disponible et réduire toute la fermeture brute à
+        l'unique pont `PositiveRealJordanBasisBridge4`. Mathlib ne fournit pas
+        actuellement la construction de la base de chaînes de Jordan.
 - [x] Prouver l'inversibilité de Sylvester sur tout le domaine diagonal retenu.
   - [x] Construire un inverse continu bilatère de Sylvester en chaque point du
     sous-domaine diagonal global, par division par les sommes de racines
@@ -380,6 +422,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
                 somme des racines carrées par le quotient des coefficients
                 symétriques, puis dénormaliser. Les quatre coefficients de la
                 racine sont donc continus sans hypothèse.
+                - [x] Réinjecter ces coefficients dans la formule rationnelle
+                  globale, prouver la continuité du sélecteur matriciel sur tout
+                  le locus positif diagonalisable, sa stabilité IFT locale et
+                  sa dérivée inverse-Sylvester exacte.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
@@ -561,8 +607,32 @@ par toute évolution admissible.
                       équivariante et le pont vers les données Koszul fermées.
                     - [x] Réaliser effectivement ces rotations comme trois
                       sections tangentes `C∞`, prouver leur équivariance pour
-                      tout deck, fidélité et non-nullité. Le seul résidu est la
-                      naturalité du crochet sous la projection locale quotient.
+                      tout deck, fidélité et non-nullité.
+                    - [x] Prouver la naturalité du crochet sous la projection
+                      quotient par un difféomorphisme radial local, puis
+                      instancier sans hypothèse le triple quotient `so(3)`
+                      fermé, fidèle, non nul et non abélien.
+                    - [x] Construire pour ce triple le différentiel CE sur
+                      l'algèbre extérieure : règles explicites des générateurs,
+                      parité impaire, Leibniz de Koszul, carré nul et règle
+                      ghost non linéaire ; instancier sans hypothèse
+                      `ClosedThreeGeneratorGhostKoszulData`.
+                    - [x] Corriger la convention de signe du différentiel total
+                      par `D⊗id + action`, prouver parité, Leibniz et carré nul
+                      global, l'instancier sans hypothèse et isoler exactement
+                      le no-go de l'ancien signe sur les scalaires.
+                    - [ ] Étendre ce différentiel corrigé aux métriques, jauges,
+                      auxiliaires, antifields et à BV.
+                      - [x] L'étendre composante par composante aux secteurs
+                        linéaires actuels matière, coordonnées de jauge, ghosts
+                        internes et auxiliaires ; prouver le carré nul par
+                        secteur, sur leur produit et sur le pont issu de
+                        `IndependentFields`.
+                      - [x] Encoder les trois blocs LL/throat et ramener leur
+                        carré nul à `LLThroatBRSTCompletion`.
+                      - [ ] Construire l'action infinitésimale des rotations sur
+                        le throat pour instancier cette complétion, puis traiter
+                        métriques positives, antifields et BV.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -616,6 +686,28 @@ par toute évolution admissible.
         l'existence de la trace continue à l'unique inégalité lisse
         codimension-un `CanonicalPhysicalH1TraceBound`. La preuve analytique
         de cette inégalité reste ouverte.
+        - [x] Prouver l'inégalité de trace ponctuelle FTC exacte en dimension
+          normale un, puis sa version intégrée fibre-par-fibre par Fubini.
+          - [x] Construire la latitude équatoriale tordue, son signe sous la
+            réflexion/deck, le collier quotient analytique et ses slices
+            normales à dérivée continue.
+          - [x] Identifier le volume canonique du throat au pushforward exact
+            de `S² × I_t`, prouver l'intégrabilité du carré de trace et son
+            identité de norme `L²` avec l'intégrale latitude.
+          - [x] Reconstruire exactement la dérivée normale par le repère global
+            fini, prouver somme des poids égale à un, poids maximal au moins
+            `1/card`, puis la borne ponctuelle par la norme du frame et la norme
+            `L1` des coefficients normaux locaux.
+          - [ ] Instancier `CanonicalLatitudeCoareaBound` par la formule de
+            coaire physique pour `Measure.toSphere`.
+          - [ ] Instancier `CanonicalNormalFrameReconstructionBound` par une
+            borne compacte uniforme des coefficients normaux et leur
+            intégrabilité ; sa recombinaison avec la coaire est déjà fermée.
+            - [x] Sous `CanonicalLatitudeNormalLiftContinuous`, prouver par
+              compacité la borne uniforme des coefficients, l'intégrabilité,
+              la domination énergétique et construire tout le package B.
+            - [ ] Prouver la continuité jointe du relevé tangent canonique
+              `canonicalLatitudeNormalLift` pour rendre B inconditionnel.
       - [x] Plonger le vrai cœur scalaire statique dans le graphe `H¹`
         existant, prendre sa clôture complète et prouver que le pont continu
         depuis le Hilbert d'énergie existe si et seulement si la borne de
@@ -1019,10 +1111,23 @@ non contrôlé et produit les conditions de jonction annoncées.
           D8, chaque tranche est un difféomorphisme analytique, et le demi-période
           agit non trivialement. L'intégration d'un ghost arbitraire reste
           ouverte.
+          - [x] Renforcer l'analyticité tranche par tranche en analyticité
+            jointe de l'application d'action `ℝ × D8 → D8` par descente locale
+            à travers la projection quotient.
           - [x] Restreindre le même flot analytique au throat, prouver qu'il
             préserve l'inclusion, puis le faire agir sur les huit blocs du
             paquet `IndependentFields`. Fermer zéro/addition/inverse,
             conjugaison PT et compatibilité avec les cinq champs induits.
+          - [x] Descendre un champ cosinus périodique explicite et prouver que
+            la translation de demi-période l'envoie sur un champ distinct :
+            la représentation de pullback sur les champs est non triviale.
+            - [x] Injecter ce mode dans la première composante matière et
+              exhiber une configuration `IndependentFields` complète déplacée
+              par la demi-période.
+          - [x] Construire le setoid et le quotient du paquet complet
+            `IndependentFields` par cette action temporelle concrète, puis
+            identifier exactement les fonctions sur les orbites aux fonctions
+            invariantes. Aucune topologie d'orbites n'est revendiquée.
         - [x] Identifier ensuite le covecteur combiné à la vraie dérivée
           linewise d'une action affine à background fixé et prouver que
           l'invariance finie par toutes les translations engendrées équivaut à

@@ -787,12 +787,12 @@ def coverSpatialRotationSection (axis : Fin 3) :
       (fun point =>
         coverSpatialRotationValue_bundle period hPeriod axis point)
 
-private def coverSpatialRotationCurve
+def coverSpatialRotationCurve
     (axis : Fin 3) (point : EffectiveCover period hPeriod) (time : Real) :
     EffectiveCover period hPeriod :=
   coverSpatialRotationFlow period hPeriod axis (time, point)
 
-private theorem coverSpatialRotationCurve_contMDiff
+theorem coverSpatialRotationCurve_contMDiff
     (axis : Fin 3) (point : EffectiveCover period hPeriod) :
     ContMDiff 𝓘(Real, Real) coverModelWithCorners ∞
       (coverSpatialRotationCurve period hPeriod axis point) :=
@@ -830,7 +830,7 @@ private theorem rawCoverSpatialRotationBundle_eq_curve
     rawCoverSpatialRotationBundle period hPeriod axis point at hComp
   exact hComp.symm
 
-private theorem coverSpatialRotationValue_eq_curve_mfderiv
+theorem coverSpatialRotationValue_eq_curve_mfderiv
     (axis : Fin 3) (point : EffectiveCover period hPeriod) :
     coverSpatialRotationValue period hPeriod axis point =
       mfderiv 𝓘(Real, Real) coverModelWithCorners

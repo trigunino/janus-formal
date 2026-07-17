@@ -55,7 +55,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 
 - **T/C** compact fundamental strips project continuously and surjectively onto the actual smooth spacetime and throat mapping-torus quotients, so both are compact;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
-- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; uniform coefficient/mass bounds and holonomic coercivity are automatic, and a geometric frame-control contract implies the static energy-to-graph bridge. The differential normal has an exact total-space `Diffeomorph` and strata; instantiating uniformly bounded true-frame coefficients, physical-volume Sobolev identification and Lorentzian null/joint strata remain open.
+- **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; uniform coefficient/mass bounds and holonomic coercivity are automatic, and a geometric frame-control contract implies the static energy-to-graph bridge. The differential normal has an exact total-space `Diffeomorph` and strata; exact finite-frame normal reconstruction is proved, and compact uniform coefficient/integrability control follows from the remaining tangent-lift continuity predicate. Physical coarea, intrinsic Sobolev identification and Lorentzian null/joint strata remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
@@ -371,8 +371,9 @@ Exhaustive closure checklist:
   topology or smooth structure is supplied;
 - **T/C** the actual D8 mapping torus now carries a nontrivial complete
   analytic real time-translation action, with analytic diffeomorphism slices;
-  its induced action on the complete Janus configuration space and integration
-  of arbitrary tangent ghosts remain open;
+  its induced action and set-theoretic orbit quotient on the complete current
+  Janus field package are exact; integration of arbitrary tangent ghosts
+  remains open;
 - **T/C** in a supplied reduced two-metric chart, the relative quadratic
   action has its genuine Frechet derivative; independent variations recover
   both Euler components, diagonal/sign-linked variations recover their
@@ -398,9 +399,14 @@ Exhaustive closure checklist:
   infinitesimal action invariance is equivalent to `E(q) ∘ K(q) = 0`; the
   identity is stable under parameter maps but need not split between sectors;
 - **N** a Hessian at one background does not determine a global nonlinear action;
-- **T/C** the concrete D8 time flow restricts analytically to the throat and
+- **T/C** the concrete D8 time flow has a jointly analytic action map,
+  restricts analytically to the throat and
   acts on all eight blocks of the current independent-field package, with exact
-  group/inverse/PT laws and compatibility with all five induced fields;
+  group/inverse/PT laws and compatibility with all five induced fields; an
+  explicit periodic matter mode gives a complete field configuration with a
+  distinct half-period pullback, so the full-package representation is
+  nontrivial. Its set-theoretic orbit quotient on the
+  complete package has the exact invariant-function equivalence;
 - **O** integrate
   arbitrary ghosts into the gauge group, and derive the complete Euler source,
   PDE Noether identities, nonlinear Helmholtz conditions, variational
@@ -434,6 +440,23 @@ New controlled subgates are now checked:
   inverse-Sylvester derivative; existence of that continuous lift and its
   Sylvester regularity remain hypotheses, so no global admissible root domain
   is claimed;
+- **T/C** on the full positive-diagonalizable locus, a presentation-independent
+  global selector is continuous, locally IFT-stable and has the exact
+  inverse-Sylvester derivative. It glues at `{I}` to the polynomial root on the
+  entire similarity-invariant unipotent locus `(A-I)⁴=0`, using the finite
+  binomial root and a bijective polynomial Sylvester inverse; this exhausts
+  every unipotent Jordan size in dimension four and exactly extends all lower
+  strata. Rescaling covers every single positive eigenvalue `λ>0`, jointly
+  continuously with exact Sylvester and agreement at `λ=1`; the positive
+  two-eigenvalue `2+2` stratum is also closed blockwise with a finite-series
+  Sylvester inverse, and the positive `3+1`/`2+1+1` strata now have the same
+  closure. All strictly-positive real Jordan partitions of four are covered
+  from supplied presentation data and unified by one exhaustive inductive
+  selector with exact square/Sylvester and per-stratum continuity; raw-matrix
+  presentation existence is reduced to the single missing Mathlib-level
+  Jordan-basis bridge after proving split positive charpoly/minpoly facts and
+  exposing Jordan--Chevalley. Nonpositive spectra and the complete physical
+  admissible domain remain open;
 - **T/C** on the selected global fixed-frame diagonal Lorentz domain, both
   metrics share a strict timelike direction, the nonnegative closure and
   spectral frontier are exact, and the positive root/Candidate-A chain is
@@ -511,6 +534,15 @@ New controlled subgates are now checked:
   self-bracket is proved zero, so a nontrivial nonlinear quadratic BRST term
   genuinely requires odd/graded coefficients; metric Lie derivatives and BV
   remain open;
+- **T/C** three explicit deck-equivariant spatial rotations descend through
+  the quotient with their `so(3)` bracket table, yielding a faithful nonzero
+  nonabelian closed ghost triple. Its explicit exterior CE differential is odd,
+  Koszul-Leibniz and square-zero, making the closed triple data unconditional;
+  the corrected total `D⊗id + action` is an unconditional global square-zero
+  `Z2` differential, while the legacy sign has an exact scalar-square
+  obstruction. It extends with square zero to the current linear matter,
+  gauge-coordinate, internal-ghost and auxiliary sectors; LL/throat is reduced
+  to an infinitesimal-action completion, while metrics, antifields and BV remain;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations
@@ -547,7 +579,12 @@ New controlled subgates are now checked:
   uniform graph-ellipticity contract derives the energy-to-graph bound and
   continuous bridge; uniform magnitudes and holonomic coercivity are automatic,
   while the true-frame coefficient transition and intrinsic weak derivative
-  identification remain inputs;
+  identification remain inputs. For canonical physical volumes, the normal
+  FTC/Fubini estimate, twisted analytic latitude collar, throat-measure
+  pushforward and exact `L²` trace identity are closed. The normal derivative
+  is reconstructed exactly by the finite frame with a pointwise coefficient
+  bound. Compact uniform coefficient/integrability control follows from the
+  remaining tangent-lift continuity predicate; physical coarea remains;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
   the full circle Fourier Hilbert space; this is not a trace-class theorem or

@@ -220,6 +220,54 @@ theorem finiteTangentGeneratorWeight_le_one
     finiteTangentGeneratorWeight period hPeriod patch point ≤ 1 :=
   (tangentPartition period hPeriod).le_one patch point
 
+theorem finiteTangentGeneratorWeight_continuous
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    Continuous (finiteTangentGeneratorWeight period hPeriod patch) :=
+  (tangentPartition period hPeriod patch).contMDiff.continuous
+
+theorem finiteTangentGeneratorWeight_sum_eq_one
+    (point : EffectiveQuotient period hPeriod) :
+    ∑ patch : FiniteTangentGeneratorPatch period hPeriod,
+      finiteTangentGeneratorWeight period hPeriod patch point = 1 := by
+  rw [← finsum_eq_sum_of_fintype]
+  exact (tangentPartition period hPeriod).sum_eq_one (Set.mem_univ point)
+
+/-- At every point, one partition weight has the uniform finite-family lower
+bound `1 / card`. -/
+theorem exists_finiteTangentGeneratorWeight_ge_inv_card
+    (point : EffectiveQuotient period hPeriod) :
+    ∃ patch : FiniteTangentGeneratorPatch period hPeriod,
+      1 / (Fintype.card
+          (FiniteTangentGeneratorPatch period hPeriod) : Real) ≤
+        finiteTangentGeneratorWeight period hPeriod patch point := by
+  obtain ⟨patch0, _hPatch0⟩ :=
+    finiteTangentGeneratorClosedPatch_covers period hPeriod point
+  have hCard : 0 < Fintype.card
+      (FiniteTangentGeneratorPatch period hPeriod) :=
+    Fintype.card_pos_iff.mpr ⟨patch0⟩
+  by_contra h
+  push Not at h
+  have hStrict :
+      (∑ patch : FiniteTangentGeneratorPatch period hPeriod,
+        finiteTangentGeneratorWeight period hPeriod patch point) <
+      ∑ _patch : FiniteTangentGeneratorPatch period hPeriod,
+        1 / (Fintype.card
+          (FiniteTangentGeneratorPatch period hPeriod) : Real) := by
+    exact Finset.sum_lt_sum (fun patch _ => (h patch).le)
+      ⟨patch0, Finset.mem_univ _, h patch0⟩
+  rw [finiteTangentGeneratorWeight_sum_eq_one] at hStrict
+  have hCardReal : (Fintype.card
+      (FiniteTangentGeneratorPatch period hPeriod) : Real) ≠ 0 := by
+    exact_mod_cast hCard.ne'
+  have hOne : (Fintype.card
+        (FiniteTangentGeneratorPatch period hPeriod) : Real) *
+      (Fintype.card
+      (FiniteTangentGeneratorPatch period hPeriod) : Real)⁻¹ = 1 :=
+    mul_inv_cancel₀ hCardReal
+  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, one_div] at hStrict
+  rw [hOne] at hStrict
+  exact (lt_irrefl 1 hStrict)
+
 /-- The unweighted vector of the fixed local frame attached to a finite
 patch.  It is used quantitatively only on the patch base set. -/
 def finiteTangentGeneratorLocalVector
@@ -229,6 +277,76 @@ def finiteTangentGeneratorLocalVector
     TangentFiber period hPeriod point :=
   (tangentTrivialization period hPeriod patch.1).localFrame
     tangentModelBasis basisIndex point
+
+/-- Coordinate of a tangent vector in the fixed local frame of one finite
+generator patch. -/
+def finiteTangentGeneratorLocalCoefficient
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (basisIndex : FiniteTangentGeneratorBasisIndex)
+    (point : EffectiveQuotient period hPeriod)
+    (vector : TangentFiber period hPeriod point) : Real :=
+  (tangentTrivialization period hPeriod patch.1).localFrame_coeff
+    coverModelWithCorners tangentModelBasis basisIndex point vector
+
+/-- On its open patch, the public local vectors reconstruct every tangent
+vector with the public local coefficients. -/
+theorem finiteTangentGeneratorLocalVector_reconstructs
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (hPoint : point ∈ finiteTangentGeneratorOpenPatch period hPeriod patch)
+    (vector : TangentFiber period hPeriod point) :
+    vector = ∑ basisIndex : FiniteTangentGeneratorBasisIndex,
+      finiteTangentGeneratorLocalCoefficient period hPeriod patch basisIndex
+          point vector •
+        finiteTangentGeneratorLocalVector period hPeriod patch basisIndex point := by
+  let localSection : ∀ point : EffectiveQuotient period hPeriod,
+      TangentFiber period hPeriod point := fun _ => vector
+  have hReconstruct :=
+    (tangentTrivialization period hPeriod patch.1).eq_sum_localFrame_coeff_smul
+      (I := coverModelWithCorners) (b := tangentModelBasis)
+      (s := localSection) hPoint
+  simpa [localSection, finiteTangentGeneratorLocalCoefficient,
+    finiteTangentGeneratorLocalVector] using hReconstruct
+
+/-- A continuous tangent-bundle lift has continuous coefficients in every
+fixed local frame as long as its base stays inside the patch. -/
+theorem finiteTangentGeneratorLocalCoefficient_comp_continuousOn
+    {X : Type*} [TopologicalSpace X]
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (basisIndex : FiniteTangentGeneratorBasisIndex)
+    (lift : X → TangentBundle coverModelWithCorners
+      (EffectiveQuotient period hPeriod))
+    (compactSet : Set X)
+    (hLift : ContinuousOn lift compactSet)
+    (hPatch : ∀ parameter ∈ compactSet,
+      (lift parameter).1 ∈
+        finiteTangentGeneratorOpenPatch period hPeriod patch) :
+    ContinuousOn
+      (fun parameter =>
+        finiteTangentGeneratorLocalCoefficient period hPeriod patch basisIndex
+          (lift parameter).1 (lift parameter).2)
+      compactSet := by
+  let trivialization := tangentTrivialization period hPeriod patch.1
+  have hTrivialized : ContinuousOn
+      (fun parameter => trivialization (lift parameter)) compactSet := by
+    exact trivialization.continuousOn_toFun.comp hLift fun parameter hParameter =>
+      trivialization.mem_source.mpr (hPatch parameter hParameter)
+  let component : CoverCoordinates →ₗ[Real] Real :=
+    { toFun := fun coordinates => tangentModelBasis.repr coordinates basisIndex
+      map_add' := fun first second => by simp
+      map_smul' := fun scalar coordinates => by simp }
+  have hComponent : Continuous component :=
+    component.continuous_of_finiteDimensional
+  apply ContinuousOn.congr
+    (hComponent.continuousOn.comp hTrivialized.snd fun _ _ => Set.mem_univ _)
+  intro parameter hParameter
+  let localSection : ∀ point : EffectiveQuotient period hPeriod,
+      TangentFiber period hPeriod point := fun _ => (lift parameter).2
+  have hCoefficient := trivialization.localFrame_coeff_eq_coeff
+    (I := coverModelWithCorners) (b := tangentModelBasis)
+    (s := localSection) (i := basisIndex) (hPatch parameter hParameter)
+  simpa [finiteTangentGeneratorLocalCoefficient, trivialization,
+    component, localSection] using hCoefficient
 
 /-- Partition-weighted local-frame vectors, now defined globally on the real
 quotient tangent bundle. -/

@@ -316,11 +316,17 @@ configuration-space functions invariant under the flow. Real-valued functions
 specialize this equivalence to invariant actions, including the reconstructed
 radial action. No topology or smooth structure is constructed on this quotient.
 Separately, real translation of the actual D8 mapping-torus coordinate now
-gives a nontrivial complete analytic Janus flow with diffeomorphic time slices.
+gives a nontrivial complete analytic Janus flow with diffeomorphic time slices
+and a jointly analytic action map `ℝ × D8 → D8`.
 The flow restricts analytically to the throat, preserves its inclusion, and
 pullback gives an exact complete action on all eight blocks of the current
 independent-field package, including group/inverse laws, PT conjugation and
-compatibility with all five induced fields. It is not yet the flow of an
+compatibility with all five induced fields. A descended periodic cosine field
+has a distinct half-period pullback; embedded in the matter sector it gives a
+complete `IndependentFields` configuration with a distinct half-period image.
+The corresponding orbit setoid and quotient are now instantiated
+on that complete field package, and quotient functions are exactly invariant
+field functions; no topology is placed on the orbit space. It is not yet the flow of an
 arbitrary ghost, a gauge group, or a PDE identity with boundary terms.
 
 **Lean:** `P0EFTJanusConvexHelmholtzReconstruction.lean`,
@@ -329,11 +335,15 @@ arbitrary ghost, a gauge group, or a PDE identity with boundary terms.
 `P0EFTJanusGaugeOrbitDescent.lean`,
 `P0EFTJanusGaugeOrbitInvariantEquiv.lean`,
 `P0EFTJanusMappingTorusCompleteTimeFlow4D.lean`,
-`P0EFTJanusMappingTorusCompleteIndependentFieldTimeAction4D.lean`
+`P0EFTJanusMappingTorusJointAnalyticTimeAction4D.lean`,
+`P0EFTJanusMappingTorusCompleteIndependentFieldTimeAction4D.lean`,
+`P0EFTJanusMappingTorusNontrivialFieldTimeAction4D.lean`,
+`P0EFTJanusMappingTorusIndependentFieldOrbitQuotient4D.lean`
 **Evidence:** **T/C** on open convex domains and, on the whole space, for
 additive linear or supplied complete nonlinear gauge-flow models; **T/C** for
 the concrete nontrivial complete analytic D8 time flow and its complete action
-on the current independent-field package.
+on the current independent-field package, including a nontrivial full-package
+field orbit.
 
 For a supplied reduced two-metric chart, the explicit relative quadratic
 interaction now has its genuine Frechet derivative. Independent plus/minus
@@ -620,7 +630,7 @@ For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
 on the actual smooth spacetime. PT pullback and two-sector exchange are exact
-involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A finite global `C∞` tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting. For throat-supported spacetime measure, its continuous trace has norm bound one; intrinsic Sobolev identification and the physical-volume trace remain open.
+involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A finite global `C∞` tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting. For throat-supported spacetime measure, its continuous trace has norm bound one. For the canonical physical volumes, the exact FTC/Fubini estimate, twisted analytic latitude collar, throat pushforward and `L²` trace identity are proved. The normal derivative is exactly reconstructed by the finite global frame with an explicit pointwise coefficient bound. Under `CanonicalLatitudeNormalLiftContinuous`, compactness supplies the uniform coefficient and integrability package. The remaining inputs are therefore exactly that tangent-lift continuity and the independent physical coarea bound. Intrinsic Sobolev identification and the resulting physical-volume trace remain open.
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
@@ -659,9 +669,19 @@ functional derivative under an explicit domination contract. This is a genuine c
 now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
-Jacobi obstruction and its induced scalar BRST square both vanish. Extending
-this differential to every field and antifield, and constructing BV, remain
-open.
+Jacobi obstruction and its induced scalar BRST square both vanish. Three
+explicit deck-equivariant spatial rotations now descend with their bracket
+table intact, giving an unconditional faithful nonabelian quotient `so(3)`
+ghost triple. Its exterior-algebra CE differential is now explicit, odd,
+Koszul-Leibniz and square-zero and supplies unconditional closed triple data.
+The corrected total convention `D⊗id + action` is globally odd,
+Koszul-Leibniz and square-zero and is instantiated without hypotheses. The
+legacy minus convention has an exact nonzero-form obstruction formula rather
+than being silently reused. The corrected map is now extended to the current
+linear matter, gauge-coordinate, internal-ghost and auxiliary sectors with
+componentwise and product square-zero proofs and a bridge from
+`IndependentFields`. LL/throat is reduced to a precise completion contract;
+positive metrics, the infinitesimal throat action, antifields and BV remain.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
@@ -751,7 +771,31 @@ proved non-diagonalizable. This is one 4D Jordan stratum, not a classification
 or a globally glued branch. An explicit null frame certifies signature `(3,1)`
 for both metrics throughout the family, and a finite bilateral inverse proves
 Sylvester regularity and uniqueness of the root tangent even at non-diagonal
-points. The
+points. Algebraically, the whole similarity-invariant locus `(A-I)²=0` now has
+the canonical root `I+(A-I)/2`, an exact bilateral Sylvester inverse and
+continuous stratum restriction. It glues to the global positive-diagonalizable
+selector on their exact intersection `{I}`; higher-index and non-unipotent
+Jordan strata remain open. The same construction now extends to all
+`(A-I)³=0` targets using `I+N/2-N²/8`, with a strict index-three witness,
+bijective polynomial Sylvester inverse and exact extension of the index-two
+selector. The final locus `(A-I)⁴=0` is now closed by the cubic truncation,
+including a strict size-four witness, continuous restriction and polynomial
+Sylvester inverse. This exhausts all unipotent `4×4` Jordan sizes; only
+non-unipotent Jordan spectra remain. A rescaled gate now covers an arbitrary
+single positive eigenvalue `λ>0`, with joint continuity, similar matrices,
+exact square, bijective Sylvester and agreement at `λ=1`. Multiple-eigenvalue
+spectra now include a closed positive `2+2` stratum with blockwise root,
+similarity, continuity and finite-series Sylvester inverse. Positive `3+1` and
+`2+1+1` are now closed identically. Every strictly-positive real Jordan
+partition of dimension four is therefore covered from supplied presentation
+data. One inductive sum now unifies all five partitions and proves exact square,
+Sylvester bijectivity, continuity per stratum and combinatorial exhaustivity.
+Deriving such a presentation for an arbitrary admissible matrix and treating
+nonpositive/complex spectra remain. For raw matrices, split positive charpoly
+now implies the needed minpoly facts and Jordan--Chevalley is exposed; Mathlib
+has no Jordan-basis constructor. The entire residual is one named bridge
+`PositiveRealJordanBasisBridge4`, after which square and Sylvester are already
+closed. The
 candidate further has a continuous three-parameter two-dimensional
 null-coordinate Cayley--Hamilton root chart for independently supplied Lorentz
 metrics, covering diagonalizable and Jordan points.  It proves neither
