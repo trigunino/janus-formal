@@ -229,7 +229,8 @@ quotient. Time reversal is an analytic involutive diffeomorphism on both
 quotients and intertwines that same inclusion. Both effective quotients are
 compact. A global `IsSmoothEmbedding` instance is now constructed from an
 explicit local normal complement and the closed embedding. The null/joint
-stratification remains open. The expected fundamental group is `Z`, not `Z4`.
+stratification is closed from the orthogonal-lift contract; constructing that
+lift remains open. The expected fundamental group is `Z`, not `Z4`.
 
 The complement of the concrete equatorial `S2` in the unit `S3` is now proved
 to be the disjoint union of two nonempty open sign sides. Reflection and one
@@ -255,8 +256,16 @@ the exact one-loop sign. The transported differential quotient family now has
 its smooth vector-bundle atlas and an exact smooth total-space comparison.
 Any continuous intrinsic quadratic form on it canonically yields open
 spacelike/timelike/non-null strata, a closed null stratum and a closed joint
-frontier contained in the null locus, with exact scaling laws. Instantiating
-that form from the restricted spacetime metric remains open.
+frontier contained in the null locus, with exact scaling laws. The actual
+intrinsic quotient Lorentz metric now instantiates that form and closes the
+full causal stratification from the single exact contract
+`ContinuousOrthogonalDifferentialNormalLift`; the metric value is independent
+of the ambient representative by orthogonality. Its construction is now
+reduced to one local chart lemma: a metric-orthogonal projection must preserve
+the quotient class and have continuous squared length. Local-to-global gluing,
+the lift and the complete stratification then follow. This local projection
+lemma remains open because the current normal equivalence uses
+`Classical.choice` without a regularity theorem.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -318,13 +327,22 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   For an arbitrary smooth D8 self-diffeomorphism, the same density and measured
   action are covariant under simultaneous metric, scalar, tangent-family and
   inverse-pushforward measure transport, including iff integrability and the
-  direct two-sector exchange corollary, under the exact supplied smooth metric
-  pullback certificate. On a supplied smooth orbit with such certificates at
+  direct two-sector exchange corollary. Tangent/Hom-bundle coordinates now
+  construct the smooth tensor pullback for every such diffeomorphism; the true
+  derivative transports its musical equivalence and Lorentz signature, so the
+  metric pullback certificate is unconditional. On a supplied smooth orbit with such certificates at
   every parameter, finite invariance makes the action orbit constant with zero
   derivative; under the explicit non-vacuous first-variation contract this is
   exactly the scalar diffeomorphism Noether pairing, hence it vanishes.
-  Constructing the pullback certificate unconditionally, and deriving a local
-  current/divergence through IPP, boundary flux and enough test ghosts, remain
+  For the scalar-field variation, the genuine metric gradient is now
+  `sharp(dφ)` and symmetry reduces the kinetic coefficient to
+  `dψ(sharp(dφ))`. Under the explicit divergence/boundary-flux interface and
+  its three integrability clauses, the first variation is exactly the weak
+  covariant Euler pairing plus flux; zero flux makes stationarity equivalent
+  to the weak equation, a pointwise Euler solution implies it, and the action
+  derivative vanishes. This is specialized to the intrinsic D8 metric.
+  Geometrically discharging the Stokes/IPP interface and physical boundary
+  flux, then obtaining a local Noether current with enough test ghosts, remains
   open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
@@ -526,6 +544,13 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   agree there exactly. This does not prove continuity of the classical centre
   selector, a global no-branch-jump choice, or gluing beyond those uniqueness
   neighbourhoods.
+  One positive-to-zero Jordan frontier witness is now exact:
+  `J₂(t) ⊕ 1 ⊕ 1` has the Hermite root with nilpotent coefficient
+  `1/(2√t)` for `t>0`; its square is exact while that coefficient and the
+  Frobenius norm diverge as `t→0⁺`. The target has a finite limit, but the
+  selected root has no finite matrix limit or continuous extension, and the
+  Sylvester mode `E₀₁` collapses with eigenvalue `2√t→0`. This closes only
+  that canonical witness, not general Jordan collisions or arbitrary `0/0`.
   Outside the positive locus, determinant negativity and every simple
   negative diagonal eigenvalue are now exact no-go criteria; determinant
   positivity is proved insufficient by an explicit `4×4` witness. Paired
@@ -684,6 +709,10 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   same objects for measure, inverse, value and `p = d phi`, and proves the
   exact stress/field split. That simultaneous variation now has a genuine
   integrated derivative under an explicit dominated local-Lipschitz contract.
+  For a general Lorentz musical metric, the intrinsic contravariant scalar
+  stress is now defined fiberwise and proved pointwise covariant under every
+  smooth D8 diffeomorphism, with simultaneous transport of `d phi` and both
+  cotangent test arguments.
   At fixed metric the holonomic density variation decomposes pointwise into
   the flat scalar Euler operator plus an explicit flux divergence. Under
   integrability and the named zero-integrated-flux condition, the first
@@ -695,8 +724,14 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   ties value, genuine manifold differential, inverse metric and metric volume
   to the same scalar/metric fields. Its affine scalar curve has an exact
   pointwise and integrated first variation at fixed metric and measure under
-  an explicit integrability contract. A covariant Euler--flux identity is not
-  claimed;
+  an explicit integrability contract. Under the exact intrinsic
+  divergence/boundary-flux interface, this variation equals the weak covariant
+  Euler pairing plus flux, with stationarity equivalence at zero flux and an
+  intrinsic D8 specialization. The concrete throat flux
+  `trace(ψ) · dφ(n)` equals `trace(ψ) · g(sharp(dφ), n)` and vanishes pointwise
+  and integrally for homogeneous Dirichlet variations. A geometric Stokes/IPP
+  theorem identifying the abstract boundary functional with this flux, and a
+  canonical metric normal, remain open;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
