@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**496 fermées sur 621 ; 125 ouvertes**.
+**497 fermées sur 622 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -2021,6 +2021,11 @@ champs et avec les mêmes conditions au bord.
   - [x] Construire sur la famille cercle une section déterminante régularisée
     distincte du frame Fourier, nulle aux crossings, non nulle à l'intérieur,
     à coordonnée continue et compatible au clutching d'extrémité.
+    - [x] Identifier exactement son ensemble de zéros aux deux représentants
+      d'extrémité, prouver que les deux crossings sont simples avec dérivées
+      `±2π`, et montrer que leur multiplicité simple est préservée par le
+      clutching et le transport parallèle plat choisis. Aucune identification
+      à la connexion globale de Quillen/Bismut--Freed n'est revendiquée.
 - [x] Distinguer explicitement, dans les modèles finite-mode et cercle, le déterminant spectral positif D7 de la ligne déterminante.
   - [x] Séparer formellement la magnitude spectrale positive finite-mode de la
     section à valeurs dans la vraie ligne extérieure finite-mode.

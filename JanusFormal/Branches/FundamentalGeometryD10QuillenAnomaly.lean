@@ -53,6 +53,7 @@ import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanu
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantLineFamily
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantTopologicalBundle
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleQuillenMetricFlatConnection
+import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusCircleDeterminantSectionCrossings
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusD2ModeFamilyInflowBridge
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusFiniteModeFredholmDeterminantLine
 import JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusPartitionFunctionSectionNoGo
@@ -98,6 +99,7 @@ structure ProgramStatus where
   circleAlgebraicDeterminantLineFamilyAndEndpointTransitionProved : Prop
   circleTopologicalDeterminantLineBundleProved : Prop
   circleFourierQuillenModelMetricFlatConnectionHolonomyProved : Prop
+  circleDeterminantSectionExactCrossingsProved : Prop
 
 /-- Scoped finite-dimensional milestone; this is deliberately not the global
 unbounded Fredholm/Quillen-family status used by `relativeAnomalyGeometryClosed`. -/
@@ -131,6 +133,11 @@ trivialization.  This does not assert the analytic Quillen/Bismut--Freed
 package required by `relativeAnomalyGeometryClosed`. -/
 def circleFourierQuillenModelGeometryClosed (s : ProgramStatus) : Prop :=
   s.circleFourierQuillenModelMetricFlatConnectionHolonomyProved
+
+/-- Scoped exact zero-set and simple-crossing milestone for the regularized
+circle determinant section. -/
+def circleDeterminantSectionExactCrossingsClosed (s : ProgramStatus) : Prop :=
+  s.circleDeterminantSectionExactCrossingsProved
 
 /-- Canonical relative anomaly package. -/
 def relativeAnomalyGeometryClosed (s : ProgramStatus) : Prop :=
