@@ -135,6 +135,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricThroatPTNaturality4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricThroatPTRadical4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricDirichletPT4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusInducedFieldVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9D10ExactFieldContentBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusD9U1GhostPrincipalSymbolBridge4D
@@ -195,6 +196,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostThroatBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostPositiveMetricThroatBV4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostFinitePositiveMetricBVMaster4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricBVFirstLevel4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothSpacetimeBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothSpacetimeBVPTCovariance4D
@@ -233,6 +235,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalLatitudeNormalImage4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalLatitudeNormalLorentz4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionLocal4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionDeck4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
@@ -554,6 +557,7 @@ structure ProgramStatus where
   paEffectiveD8IntrinsicCanonicalLatitudeNormalImage4DProved : Prop
   paEffectiveD8IntrinsicCanonicalLatitudeNormalLorentz4DProved : Prop
   paEffectiveD8IntrinsicCanonicalNormalProjectionLocal4DProved : Prop
+  paEffectiveD8IntrinsicCanonicalNormalProjectionDeck4DProved : Prop
   paEffectiveD8IntrinsicMetricThroatNondegenerate4DProved : Prop
   paEffectiveD8AmbientTangentOrientationCocycleProved : Prop
   paEffectiveD8AmbientTangentQuadraticReductionFrontierProved : Prop
@@ -637,6 +641,7 @@ structure ProgramStatus where
   paEffectiveD8GeneralLorentzMetricThroatTrace4DProved : Prop
   paEffectiveD8GeneralLorentzMetricThroatPTNaturality4DProved : Prop
   paEffectiveD8GeneralLorentzMetricThroatPTRadical4DProved : Prop
+  paEffectiveD8GeneralLorentzMetricDirichletPT4DProved : Prop
   paEffectiveD8CompleteInducedFieldVariationChain4DProved : Prop
   paD9D10ExactFieldContentBridge4DProved : Prop
   paD9U1GhostPrincipalSymbolBridge4DProved : Prop
@@ -689,6 +694,7 @@ structure ProgramStatus where
   paEffectiveD8NonabelianThroatBRST4DProved : Prop
   paEffectiveD8NonabelianPositiveMetricThroatBV4DProved : Prop
   paEffectiveD8NonabelianFinitePositiveMetricBVMaster4DProved : Prop
+  paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved : Prop
   paEffectiveD8NonabelianSmoothThroatBVMaster4DProved : Prop
   paEffectiveD8NonabelianSmoothSpacetimeBVMaster4DProved : Prop
   paEffectiveD8NonabelianSmoothSpacetimeBVPTCovariance4DProved : Prop
@@ -953,6 +959,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8IntrinsicCanonicalLatitudeNormalImage4DProved /\
   s.paEffectiveD8IntrinsicCanonicalLatitudeNormalLorentz4DProved /\
   s.paEffectiveD8IntrinsicCanonicalNormalProjectionLocal4DProved /\
+  s.paEffectiveD8IntrinsicCanonicalNormalProjectionDeck4DProved /\
   s.paEffectiveD8IntrinsicMetricThroatNondegenerate4DProved /\
   s.paEffectiveD8AmbientTangentOrientationCocycleProved /\
   s.paEffectiveD8AmbientTangentQuadraticReductionFrontierProved /\
@@ -1037,6 +1044,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8GeneralLorentzMetricThroatTrace4DProved /\
   s.paEffectiveD8GeneralLorentzMetricThroatPTNaturality4DProved /\
   s.paEffectiveD8GeneralLorentzMetricThroatPTRadical4DProved /\
+  s.paEffectiveD8GeneralLorentzMetricDirichletPT4DProved /\
   s.paEffectiveD8CompleteInducedFieldVariationChain4DProved /\
   s.paD9D10ExactFieldContentBridge4DProved /\
   s.paD9U1GhostPrincipalSymbolBridge4DProved /\
@@ -1089,6 +1097,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8NonabelianThroatBRST4DProved /\
   s.paEffectiveD8NonabelianPositiveMetricThroatBV4DProved /\
   s.paEffectiveD8NonabelianFinitePositiveMetricBVMaster4DProved /\
+  s.paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved /\
   s.paEffectiveD8NonabelianSmoothThroatBVMaster4DProved /\
   s.paEffectiveD8NonabelianSmoothSpacetimeBVMaster4DProved /\
   s.paEffectiveD8NonabelianSmoothSpacetimeBVPTCovariance4DProved /\

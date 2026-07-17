@@ -178,9 +178,12 @@ correspondance algébrique des coefficients, puis asymptotique effective.
           canonique : la classe du normal quotient est non nulle, sa
           coordonnée scalaire est bijective, le relèvement représente la
           classe, est métriquement orthogonal et son carré vaut exactement le
-          carré scalaire, dont le modèle local est continu. La compatibilité
-          sous changement de lift/deck et le recollement global restent
-          ouverts.
+          carré scalaire, dont le modèle local est continu.
+          - [x] Prouver les lois exactes sous un tour de deck : renversement du
+            paramètre normal, signe du tangent quotient après transport
+            dépendant, invariance du modèle quadratique sous le cocycle
+            `-id`, et égalité des carrés des deux relèvements locaux. Le
+            recollement continu en une section globale reste ouvert.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -880,6 +883,13 @@ par toute évolution admissible.
                         généraux non diagonaux, aux termes dérivatifs et aux
                         fonctionnelles non locales/complétées avec équation
                         maîtresse fonctionnelle.
+                        - [x] Installer le premier niveau tensoriel général :
+                          variations symétriques lisses et antifields, doublet
+                          BRST impair carré nul, pairing pointwise relevé par
+                          la métrique de fond et odd antibracket gradué, puis
+                          l'attacher au paquet indépendant. Les variations
+                          affines ne sont pas prouvées lorentziennes et aucune
+                          CME fonctionnelle n'est revendiquée.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -1106,8 +1116,12 @@ par toute évolution admissible.
       tangentiel.
       - [x] Prouver pointwise la naturalité PT de la restriction métrique via
         la différentielle équivariante de l'inclusion, puis la loi exacte
-        PT/échange des deux traces. La stabilité d'éventuelles conditions
-        métriques supplémentaires au bord reste ouverte.
+        PT/échange des deux traces.
+        - [x] Définir une relation fonctionnelle de références métriques au
+          bord par leurs valeurs PT/échange pointwise, prouver unicité du
+          résultat lisse, préservation de la non-dégénérescence et transport
+          exact de la condition de Dirichlet du paquet complet. Le pullback
+          lisse arbitraire de tenseurs du throat n'est pas construit.
         - [x] Prouver que la différentielle PT est une équivalence linéaire,
           que le pullback tensoriel pointwise préserve et reflète la
           non-dégénérescence, puis que `HasNoTangentialRadical` est invariant

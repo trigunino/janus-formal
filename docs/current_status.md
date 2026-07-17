@@ -282,8 +282,11 @@ also supplies the explicit canonical local quotient-normal lift described
 above. That local orthogonal splitting proves that the retained intrinsic
 Lorentz metric has no tangential radical anywhere on the effective throat;
 its smooth symmetric throat trace is therefore genuinely nondegenerate and
-is packaged on the nondegenerate throat-metric domain. Deck compatibility and
-global descent/gluing of the normal lift remain open.
+is packaged on the nondegenerate throat-metric domain. One deck turn now
+reverses the quotient latitude parameter and its tangent normal by the exact
+dependent sign law; the sign-clutched coordinate change preserves both the
+local scalar-square model and the square of the orthogonal lift. Continuous
+gluing into one global normal-lift section remains open.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -428,7 +431,11 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   no-tangential-radical condition is invariant under PT and PT/exchange. A
   smooth pullback construction for an arbitrary throat tensor, classification
   of general metric restrictions, and the antifield/full-BV boundary packet
-  remain open.
+  remain open. Without postulating that missing pullback, smooth metric
+  boundary references now carry a pointwise PT/exchange matching relation
+  that is functional, preserves nondegeneracy and is realized by the actual
+  ambient metric traces. Matched references transport the complete metric and
+  non-metric Dirichlet equality exactly.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
@@ -486,9 +493,14 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   covariance are unconditional. The model is now coupled to the actual smooth
   strictly-positive diagonal metric cone by its eight logarithms, with metric
   ghosts, antifields, corrected square-zero BRST, nonzero integrated action,
-  pointwise/integrated CME and exact PT covariance. It still does not cover
-  general non-diagonal tensor metrics, derivative-dependent interactions or
-  arbitrary nonlocal/completed functionals. Independently, real translation of the
+  pointwise/integrated CME and exact PT covariance. A separate first-level
+  general-tensor BV layer now contains two smooth symmetric metric variations
+  and their antifields, a nontrivial odd square-zero doublet, the background-
+  raised trace pairing and a graded-skew pointwise Darboux antibracket, attached
+  to the general-Lorentz independent packet. It does not prove that affine
+  variations stay Lorentzian and supplies no functional CME,
+  derivative-dependent interaction or nonlocal/completed functional.
+  Independently, real translation of the
   mapping-torus coordinate now descends to a nontrivial complete analytic real action on the
   actual D8 quotient; every time slice is an analytic diffeomorphism and the
   full action map `ℝ × D8 → D8` is jointly analytic. Pullback

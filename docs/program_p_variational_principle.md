@@ -647,8 +647,11 @@ in the fixed-throat differential, hence spacelike and non-null. Its quotient
 pushforward realizes the canonical local lift above. The resulting local
 orthogonal decomposition proves `HasNoTangentialRadical` for the retained
 intrinsic Lorentz metric, hence a genuinely nondegenerate smooth throat trace
-packaged on the nondegenerate metric domain. Deck compatibility and global
-projection/descent of the normal lift remain open.
+packaged on the nondegenerate metric domain. Under one deck turn the quotient
+latitude curve reverses its parameter, the tangent normal obeys the exact
+dependent sign law, and the `-id` clutching preserves both the scalar-square
+model and the metric square of the local orthogonal lift. Continuous global
+gluing of those local lifts remains open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -697,7 +700,10 @@ a linear equivalence, the pointwise pullback preserves and reflects
 nondegeneracy and `HasNoTangentialRadical` is invariant under PT and
 PT/exchange. A smooth pullback section for an arbitrary throat tensor,
 classification of general metric restrictions, and antifields/full BV
-boundary data remain open.
+boundary data remain open. A pointwise PT/exchange matching relation on two
+smooth metric boundary references avoids assuming that missing pullback; it
+is functional, preserves nondegeneracy, is satisfied by actual ambient metric
+traces, and transports the full metric/non-metric Dirichlet equality.
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
@@ -846,7 +852,11 @@ metric cone through its eight global logarithms, with metric ghosts,
 antifields, corrected square-zero BRST, nonzero action, pointwise/integrated
 CME and exact PT covariance. General non-diagonal Lorentz tensor metrics,
 derivative-dependent terms and arbitrary nonlocal/completed BV functionals
-remain open.
+remain open. The safe first tensorial level is nevertheless explicit: two
+smooth symmetric general-metric variations and their antifields form a
+nontrivial odd square-zero doublet, with background-raised trace pairing and a
+graded-skew pointwise Darboux antibracket attached to the independent packet.
+No Lorentzian preservation of affine variations or functional CME is claimed.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial

@@ -57,7 +57,7 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 - **T/C** smooth coefficient fields on the quotient and throat form real vector spaces, admit smooth PT-equivariant throat restriction, and embed into completed `L²` spaces for finite Borel measures; PT is an involutive `L²` isometry for PT-preserving measures;
 - **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; uniform coefficient/mass bounds and holonomic coercivity are automatic, and a geometric frame-control contract implies the static energy-to-graph bridge. The differential normal has an exact total-space `Diffeomorph` and strata; joint `C∞` latitude regularity makes compact finite-frame normal reconstruction unconditional, while an exact spherical-radial/planar-polar calculation closes coarea and the canonical physical trace. Intrinsic Sobolev identification and Lorentzian null/joint strata remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
-- **T/C** PT/exchange acts simultaneously on a unified independent packet with two arbitrary smooth general Lorentz metrics and every current non-metric sector; all retained non-metric throat boundary values have exact trace equivariance and preserved Dirichlet data. Both metrics restrict to smooth symmetric throat tensors, with nondegeneracy iff there is no tangential radical, and the boundary packet contains both traces. Their restriction is pointwise PT-natural and obeys exact two-sector exchange; pointwise nondegeneracy and the no-radical condition are preserved and reflected by PT/exchange. A smooth pullback section for arbitrary throat tensors, classification of general metric restrictions and the antifield/full-BV boundary packet remain open;
+- **T/C** PT/exchange acts simultaneously on a unified independent packet with two arbitrary smooth general Lorentz metrics and every current non-metric sector; all retained non-metric throat boundary values have exact trace equivariance and preserved Dirichlet data. Both metrics restrict to smooth symmetric throat tensors, with nondegeneracy iff there is no tangential radical, and the boundary packet contains both traces. Their restriction is pointwise PT-natural and obeys exact two-sector exchange; pointwise nondegeneracy and the no-radical condition are preserved and reflected. A functional pointwise matching relation on smooth metric references is realized by actual traces and transports the full metric/non-metric Dirichlet equality. A smooth arbitrary-tensor throat pullback, classification of general metric restrictions and the antifield/full-BV boundary packet remain open;
 - **T/C** on arbitrary covariant two-tensor fields, analytic PT pullback is an
   exact involution preserving symmetry, nondegeneracy and Lorentz inertia;
   nested Hom coordinates discharge the local contract and give an
@@ -163,8 +163,9 @@ Current results:
   fixed-throat differential tangent, and is therefore spacelike and non-null.
   Its pushforward realizes that canonical local quotient-normal lift. The
   induced orthogonal splitting proves that the retained intrinsic metric has
-  no tangential radical and a nondegenerate smooth throat restriction. Deck
-  compatibility and global projection/descent of the normal lift remain open;
+  no tangential radical and a nondegenerate smooth throat restriction. One
+  deck turn has the exact normal sign law and preserves the local quadratic
+  model and orthogonal-lift square. Continuous global gluing remains open;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -719,8 +720,12 @@ New controlled subgates are now checked:
   bracket and CME covariance are unconditional. This phase is now coupled to
   the actual smooth positive diagonal/log metric cone, including ghosts,
   antifields, corrected BRST, nonzero action, pointwise/integrated CME and PT.
-  General non-diagonal tensor metrics, derivative-dependent terms and arbitrary
-  nonlocal/completed BV functionals remain;
+  General symmetric tensor variations now have a separate safe first BV level:
+  smooth field/antifield pairs, an odd square-zero doublet, background-raised
+  pointwise pairing and graded-skew Darboux antibracket attached to the general-
+  Lorentz packet. Lorentzian preservation of affine variations, a functional
+  CME, derivative-dependent terms and arbitrary nonlocal/completed BV
+  functionals remain open;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations
