@@ -1994,7 +1994,8 @@ champs et avec les mêmes conditions au bord.
         - [x] Prouver en outre que ce symbole non nul est surjectif, que son
           image est totale et donc qu'il est bijectif. Cette exactitude reste
           celle du modèle algébrique ponctuel, sans assertion sur l'opérateur
-          différentiel global.
+          différentiel global. Son inverse linéaire est construit explicitement
+          et ses deux identités de composition sont prouvées.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
