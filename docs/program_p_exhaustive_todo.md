@@ -150,8 +150,19 @@ correspondance algébrique des coefficients, puis asymptotique effective.
         - [x] Pour toute forme quadratique continue intrinsèque sur ce bundle,
           construire les strates spacelike, timelike, null, non-null et joint,
           prouver ouverture/fermeture, disjonction, couverture, stabilité par
-          changement d'échelle et inclusion du joint dans le null. Il reste à
-          instancier cette forme par la restriction de la métrique spacetime.
+          changement d'échelle et inclusion du joint dans le null.
+        - [x] Depuis l'unique contrat
+          `ContinuousOrthogonalDifferentialNormalLift`, instancier cette forme
+          par la vraie métrique Lorentz intrinsèque, prouver la loi quadratique,
+          l'indépendance du représentant ambiant et fermer toute la
+          stratification causale.
+        - [x] Réduire la construction du relèvement orthogonal continu à un
+          unique lemme local de projection dans les cartes normales : classe
+          quotient préservée, orthogonalité métrique et continuité locale du
+          carré. Le recollement global et la stratification en découlent.
+        - [ ] Prouver ce lemme local de projection intrinsèque malgré
+          l'équivalence actuelle issue de `Classical.choice`, ou remplacer
+          cette équivalence par une construction géométrique régulière.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -542,10 +553,16 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Pour toute présentation réelle diagonalisable à spectre strictement
     positif, construire un chemin continu remplaçant une valeur propre par
     zéro, prouver le carré exact jusqu'au bord et exhiber un noyau non nul de
-    Sylvester au point limite. Les collisions Jordan et `0/0` restent ouverts.
+    Sylvester au point limite.
     - [x] Sur le même locus, construire le chemin spectral `t⁻¹`, prouver son
       carré exact et montrer que sa coordonnée propre conjuguée vaut
       `√(t⁻¹)` et tend vers `+∞` lorsque `t → 0⁺`.
+  - [x] Fermer le témoin canonique de collision Jordan
+    `J₂(t) ⊕ 1 ⊕ 1`, `t → 0⁺` : construire la racine Hermite exacte avec
+    coefficient nilpotent `1/(2√t)`, prouver la divergence de ce coefficient
+    et de la norme, l'absence de limite ou prolongement matriciel fini, puis
+    l'effondrement du mode de Sylvester `E₀₁` avec valeur propre `2√t → 0`.
+    Ceci ne classe pas les collisions Jordan générales ni les `0/0` arbitraires.
   - [x] Sur le sous-domaine diagonal global, construire les chemins vers les
     deux faces : numérateur vers zéro donne une extension continue de la
     racine vers zéro et une dégénérescence explicite de Sylvester ; dénominateur
@@ -1064,10 +1081,22 @@ par toute évolution admissible.
         à tout paramètre, prouver la constance et la dérivée nulle de l'action,
         puis identifier cette dérivée au pairing de l'opérateur de Noether
         scalaire sous le contrat exact et non vacu de première variation.
-      - [ ] Construire ce pullback métrique lisse sans contrat pour tout
-        difféomorphisme D8, puis promouvoir l'identité intégrée en courant ou
-        divergence locale par une IPP contrôlée, le flux de bord et une famille
-        suffisante de ghosts tests.
+      - [x] Construire sans contrat le pullback tensoriel lisse pour tout
+        difféomorphisme D8, transporter l'isomorphisme musical et la signature
+        lorentzienne, puis fournir automatiquement le certificat métrique exact.
+      - [x] Définir `sharp(dφ)`, une interface intrinsèque divergence/flux avec
+        identité d'IPP exacte, puis prouver sous son contrat que la première
+        variation générale vaut le pairing Euler faible plus le flux, que flux
+        nul équivaut à la stationnarité faible, et spécialiser le tout à la
+        métrique intrinsèque D8.
+      - [ ] Décharger géométriquement cette interface par une vraie formule de
+        Stokes/IPP et le flux normal retenu, puis promouvoir l'identité de
+        Noether intégrée en courant local avec assez de ghosts tests.
+        - [x] Construire le flux normal concret sur le throat,
+          `trace(ψ) · dφ(n) = trace(ψ) · g(sharp(dφ), n)`, puis prouver son
+          annulation pointwise et intégrée pour toute variation Dirichlet
+          homogène; raccorder cette annulation au gate Euler faible dès que le
+          boundary functional fourni est réalisé par ce flux.
     - [x] Définir l'espace fonctionnel régulier où sharp, frame, volume et
       différentielle scalaire varient lissement, prouver la lissité et
       l'intégrabilité de la densité sur toute mesure finie, construire l'action
@@ -1143,7 +1172,8 @@ par toute évolution admissible.
   - [x] À métrique et mesure globales fixes, varier le même champ scalaire par
     une courbe affine, prouver l'affinité exacte de sa différentielle, puis la
     dérivée pointwise et intégrée de l'action sous un contrat d'intégrabilité
-    explicite. La forme Euler--flux covariante reste ouverte.
+    explicite. Le pont Euler--flux covariant faible est désormais fermé sous
+    l'interface IPP/flux exacte ; sa décharge géométrique reste ouverte.
   - [x] Décharger automatiquement ce contrat pour toute mesure Borel finie et
     tout `FixedFrameRegularScalar`, classe stable par courbes affines où les
     quatre composantes du covecteur holonomique sont continues ; construire en
@@ -1195,8 +1225,15 @@ par toute évolution admissible.
     `IntegratedScalarFluxVanishes`, identifier la variation intégrée et la
     dérivée déjà justifiée de l'action au pairing faible avec l'opérateur
     d'Euler plat.
-  - [ ] Déduire l'annulation du flux intégré des conditions au bord retenues et
-    promouvoir l'identité en équation covariante courbe.
+  - [x] Promouvoir le pont à une métrique lorentzienne générale via le vrai
+    `sharp(dφ)` et une interface intrinsèque divergence/flux : obtenir
+    variation = pairing Euler covariant faible + flux, l'équivalence
+    stationnaire sous flux nul et la spécialisation D8.
+  - [x] Déduire l'annulation du flux normal concret des conditions homogènes
+    de Dirichlet, pointwise puis contre la mesure canonique du throat.
+  - [ ] Identifier le boundary functional abstrait à ce flux concret et
+    décharger l'interface par une formule géométrique de Stokes/IPP avec un
+    normal métrique canonique.
 - [x] Dériver les deux tenseurs de stress dans le modèle scalaire mesuré sous le contrat fonctionnel explicite.
   - [x] Dériver pointwise le tenseur de stress symétrique d'un secteur scalaire
     et prouver `delta rho = -sqrt(|det g|)/2 <T,delta g>` le long de la courbe
@@ -1226,7 +1263,11 @@ par toute évolution admissible.
   - [x] Prouver que l'induction des deux métriques diagonales, de la racine
     principale et des deux traces matière commute exactement avec l'action
     difféomorphe diagonale restreinte déjà définie.
-  - [ ] Prouver la covariance difféomorphe et les identités de conservation.
+  - [x] Prouver pointwise la covariance difféomorphe du tenseur de stress
+    scalaire contravariant intrinsèque sous transport simultané de la métrique,
+    de `dφ` et des covecteurs tests.
+  - [ ] Déduire les identités locales de conservation à partir des équations
+    covariantes et de l'identité de Noether locale.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers

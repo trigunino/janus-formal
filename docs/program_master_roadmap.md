@@ -74,12 +74,19 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   identified with every general metric's volume. For arbitrary smooth D8
   self-diffeomorphisms, simultaneous metric/scalar/tangent-family and
   inverse-pushforward measure transport gives finite action covariance, iff
-  integrability and sector exchange under the exact smooth metric-pullback
-  certificate. On a supplied smooth orbit with certificates at every time,
+  integrability and sector exchange. The smooth tensor pullback, transported
+  musical equivalence and Lorentz inertia now construct that metric certificate
+  unconditionally for every smooth D8 self-diffeomorphism. On a supplied smooth orbit,
   the action has zero derivative, identified under the exact non-vacuous
   first-variation contract with the scalar diffeomorphism Noether pairing.
-  Constructing the pullback unconditionally and deriving a local
-  current/divergence via IPP, boundary flux and enough test ghosts remain open;
+  The true `sharp(dφ)` and an exact divergence/boundary-flux interface also
+  identify the general scalar first variation with the weak covariant Euler
+  pairing plus flux, prove stationarity equivalence at zero flux, and specialize
+  to the intrinsic D8 metric. The corresponding intrinsic contravariant scalar
+  stress is pointwise natural under every smooth D8 diffeomorphism. Geometrically
+  discharging Stokes/IPP and the
+  physical flux, then deriving a local Noether current with enough test ghosts,
+  remains open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -126,8 +133,11 @@ Current results:
   comparison are installed. Its zero section is an analytic embedding with
   closed image and open nonzero complement. Any supplied continuous intrinsic
   normal quadratic form now produces the complete open/closed causal and joint
-  stratification with scaling laws; deriving that form from the restricted
-  spacetime metric remains open;
+  stratification with scaling laws. For the restricted spacetime metric, the
+  remaining construction is reduced to one local normal-chart projection
+  lemma; the global lift and stratification follow from it. This lemma remains
+  open because the transported normal equivalence currently comes from
+  `Classical.choice` without a regularity theorem;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -508,7 +518,12 @@ New controlled subgates are now checked:
   Cayley--Hamilton plus their exhaustive equality partition selects one of
   these five annihilator profiles. Raw root existence is therefore
   unconditional on `PositiveRealSplitCharpoly4`; a Jordan-chain presentation
-  and global Sylvester regularity remain separate. For nonpositive spectra, determinant/simple
+  remains separate only for an explicit normal form, while basis-free
+  polynomial-centralizer reasoning closes global Sylvester regularity. The
+  canonical frontier witness `J₂(t) ⊕ 1 ⊕ 1`, `t → 0⁺`, has an exact Hermite
+  root with divergent `1/(2√t)` coefficient and norm, no finite continuation,
+  and a collapsing `E₀₁` Sylvester mode; general Jordan collisions and
+  arbitrary `0/0` remain open. For nonpositive spectra, determinant/simple
   negative-eigenvalue obstructions, positive-determinant counterexample,
   paired-negative constructions and the exact Jordan parity/zero-block
   criterion are closed. Pure complex-conjugate `2×2`, `2+2` and non-semisimple
@@ -580,8 +595,14 @@ New controlled subgates are now checked:
   uses the same scalar for value and genuine manifold differential and the
   same positive diagonal metric for inverse contraction and volume. Its
   affine scalar variation is exact pointwise and after integration at fixed
-  metric/measure under an explicit integrability contract; Euler--flux form
-  and tensorial covariance remain open;
+  metric/measure under an explicit integrability contract. For a general
+  Lorentz metric, an exact divergence/boundary-flux interface now yields the
+  weak covariant Euler decomposition, stationarity equivalence under zero flux
+  and the intrinsic D8 specialization; its contravariant stress is pointwise
+  diffeomorphism-covariant. The concrete normal throat flux vanishes pointwise
+  and integrally for homogeneous Dirichlet variations. Geometric Stokes/IPP
+  discharge, identification with the abstract boundary functional, and a
+  canonical metric normal remain open;
 - **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
   Jacobi `J` are defined on all smooth fields under one explicit integrability
   contract and equal its first/second variations. The negative Lorentz time

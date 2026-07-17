@@ -619,8 +619,12 @@ The differential normal is split intrinsically into a closed zero stratum and
 an open nonzero complement, transported exactly by this diffeomorphism. Any
 continuous intrinsic quadratic form on this normal line now gives the exact
 spacelike/timelike/null/non-null partition and closed joint frontier, with
-fiber-scaling invariance. Only its construction from the restricted spacetime
-metric remains to instantiate the Lorentzian stratification.
+fiber-scaling invariance. For the restricted spacetime metric, the construction
+is reduced to one local projection lemma in the transported normal charts:
+preservation of quotient classes, metric orthogonality and continuity of the
+squared length. The global lift and Lorentzian stratification then follow;
+this local regularity lemma remains open because the current normal
+equivalence is selected by `Classical.choice`.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -705,13 +709,24 @@ PT-covariant pointwise and after integration, with iff integrability transport.
 For an arbitrary smooth D8 self-diffeomorphism, simultaneous transport of the
 metric, scalar, tangent family and inverse-pushforward measure gives exact
 pointwise covariance, iff integrability, integrated action invariance and the
-direct two-sector exchange corollary under the supplied smooth metric-pullback
-certificate. On a supplied smooth orbit with certificates at every parameter,
+direct two-sector exchange corollary. Tangent/Hom-bundle coordinates construct
+the smooth tensor pullback for every such diffeomorphism, while the genuine
+derivative transports the musical equivalence and Lorentz inertia; hence the
+metric-pullback certificate is unconditional. On a supplied smooth orbit,
 the action orbit is exactly constant and has zero derivative; the explicit
 non-vacuous first-variation contract identifies this derivative with the scalar
-diffeomorphism Noether pairing. The unconditional pullback construction and a
-local current/divergence theorem still require IPP, boundary-flux control and
-enough test ghosts.
+diffeomorphism Noether pairing. Separately, the actual metric gradient
+`sharp(dφ)` and an exact divergence/boundary-flux interface now turn the
+general first variation into the weak covariant Euler pairing plus flux.
+Zero flux gives the stationarity equivalence, and the construction is
+specialized to the intrinsic D8 metric. The intrinsic contravariant scalar
+stress is additionally pointwise covariant under every smooth D8
+diffeomorphism after coherent transport of the metric, `dφ` and cotangent
+tests. The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient
+form and vanishes pointwise and integrally for homogeneous Dirichlet
+variations. A geometric Stokes/IPP theorem identifying the abstract boundary
+functional with this flux, a canonical metric normal, and a local Noether
+current with enough test ghosts remain open.
 The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
@@ -907,8 +922,14 @@ annihilator/minpoly divisibility and exact square. From an arbitrary
 roots with multiplicity, Cayley--Hamilton supplies their annihilator, and an
 exhaustive equality partition reduces to one of the five constructive
 profiles. Raw square-root existence is therefore unconditional on the full
-split-positive locus. The non-Hermitian Jordan-chain presentation and global
-Sylvester regularity remain open. For
+split-positive locus. The non-Hermitian Jordan-chain presentation remains
+separate only when an explicit normal form is required; a basis-free
+polynomial-centralizer argument makes Sylvester regularity unconditional.
+At the zero frontier, the canonical family `J₂(t) ⊕ 1 ⊕ 1` has an exact
+Hermite root whose `1/(2√t)` coefficient and Frobenius norm diverge, with no
+finite continuation, while its `E₀₁` Sylvester eigenvalue `2√t` collapses.
+This is one witness, not a classification of all Jordan collisions or `0/0`.
+For
 nonpositive spectra, determinant negativity and a simple negative
 diagonal eigenvalue are exact obstructions, while determinant positivity is
 explicitly shown insufficient. Paired negative scalar and identical Jordan
