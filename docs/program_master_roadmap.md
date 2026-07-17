@@ -86,9 +86,17 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   stress is pointwise natural under every smooth D8 diffeomorphism. The
   canonical latitude collar now has an exact scalar Green--Wronskian current,
   with Euler-residual derivative and pointwise/measured conservation for
-  equal-mass solutions. Geometrically discharging global Stokes/IPP and the
-  physical flux, then promoting this collar current to a covariant local
-  Noether current with enough test ghosts, remains open;
+  equal-mass solutions. It is realized as a genuine quotient-tangent current
+  along the collar, carried by the intrinsic unit-spacelike normal; its metric
+  normal flux is exactly the Wronskian, remains locally conserved and at the
+  throat equals the concrete normal-`mvfderiv` pairing. Its energy
+  `(φ')² + m²φ²` has derivative exactly
+  `2φ'` times the Euler residual, hence fiberwise/measured conservation and
+  zero endpoint jump for Euler solutions, plus nonnegativity when `m² ≥ 0`.
+  This is a local one-dimensional stress-energy witness only. Geometrically
+  discharging global Stokes/IPP and the physical flux, proving four-dimensional
+  covariant stress divergence, then extending the collar current to a
+  covariant four-dimensional Noether current with enough test ghosts, remains open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -492,7 +500,10 @@ New controlled subgates are now checked:
   is claimed;
 - **T/C** on the full positive-diagonalizable locus, a presentation-independent
   global selector is continuous, locally IFT-stable and has the exact
-  inverse-Sylvester derivative. It glues at `{I}` to the polynomial root on the
+  inverse-Sylvester derivative. It now supplies the unique continuous exact-
+  square global lift of every local IFT chart on exactly that locus; no atlas
+  lift on Jordan strata, nonpositive spectra or the general physical domain is
+  claimed. It glues at `{I}` to the polynomial root on the
   entire similarity-invariant unipotent locus `(A-I)⁴=0`, using the finite
   binomial root and a bijective polynomial Sylvester inverse; this exhausts
   every unipotent Jordan size in dimension four and exactly extends all lower
@@ -635,9 +646,18 @@ New controlled subgates are now checked:
   scalar Green--Wronskian current has the exact antisymmetric Euler-residual
   derivative, is pointwise and measured constant for equal-mass Euler
   solutions, has the expected antisymmetric endpoint jump and vanishes for
-  homogeneous Dirichlet Euler pairs. Global geometric Stokes/IPP discharge,
-  identification with the abstract bulk boundary functional, a covariant
-  local Noether current and a global canonical metric normal remain open;
+  homogeneous Dirichlet Euler pairs. It is now a genuine tangent current along
+  the quotient collar, carried by its intrinsic unit-spacelike normal; its
+  metric normal flux is exactly the Wronskian, is locally conserved and at the
+  throat equals the concrete normal-`mvfderiv` pairing. The collar energy
+  `(φ')² + m²φ²` has
+  derivative `2φ'` times the Euler residual, is fiberwise and measured
+  constant on Euler solutions, has zero endpoint jump and is nonnegative for
+  `m² ≥ 0`. This remains only a local one-dimensional stress-energy witness.
+  Global geometric Stokes/IPP discharge, identification with the abstract bulk
+  boundary functional, four-dimensional covariant stress divergence,
+  extension to a covariant four-dimensional Noether current and a global
+  canonical metric normal remain open;
 - **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
   Jacobi `J` are defined on all smooth fields under one explicit integrability
   contract and equal its first/second variations. The negative Lorentz time

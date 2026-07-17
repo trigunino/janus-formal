@@ -510,14 +510,19 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     - [x] Promouvoir cet inverse en application linéaire continue, construire
       le témoin bilatère consommé par la théorie de Fréchet et obtenir la
       formule exacte de dérivée pour toute sélection locale différentiable.
-- [ ] Recoller les branches IFT locales sur tout le domaine admissible.
+- [x] Recoller les branches IFT locales sur tout le locus réel
+  diagonalisable à spectre strictement positif (domaine admissible de ce
+  sous-problème, sans extension aux strates de Jordan ni au domaine physique
+  général).
   - [x] À chaque présentation réelle diagonalisable explicite à spectre
     strictement positif, construire la vraie branche IFT locale, prouver son
     carré exact au voisinage et identifier sa dérivée stricte à l'inverse de
-    Sylvester transporté. Le recollement entre ces voisinages reste ouvert.
+    Sylvester transporté. Leur recollement sur le locus positif diagonalisable
+    est clos ci-dessous.
     - [x] Prouver l'égalité des germes de deux branches ayant la même racine,
       notamment pour deux présentations de même cible à spectres positifs
-      égaux ou permutés. Le recollement global par chemins reste ouvert.
+      égaux ou permutés. Le recollement global sur le locus positif
+      diagonalisable est clos ci-dessous.
       - [x] Déduire automatiquement la permutation de l'égalité des polynômes
         caractéristiques, supprimer l'hypothèse de correspondance spectrale,
         puis construire un sélecteur algébrique global indépendant de toute
@@ -556,10 +561,11 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
   - [x] Le recollement local et la dérivabilité inverse-Sylvester sont prouvés
     le long de tout relèvement continu fourni qui reste ponctuellement
     Sylvester-régulier.
-  - [ ] Recoller l'atlas IFT désormais inconditionnel en un relèvement
-    continu global sur le domaine physique. La régularité Sylvester ponctuelle
-    et le recollement dans les voisinages d'unicité sont clos ; restent le
-    choix global sans saut de branche et le recollement hors de ces voisinages.
+  - [x] Recoller l'atlas IFT en un relèvement continu global unique sur le
+    locus réel diagonalisable à spectre strictement positif : le sélecteur
+    canonique y donne un carré exact, coïncide avec chaque branche IFT locale
+    et est unique sur ce locus. Ceci ne construit aucun relèvement sur les
+    strates de Jordan, les spectres non positifs ou le domaine physique général.
 - [ ] Contrôler l'approche de la frontière spectrale et les changements de
   branche éventuels.
   - [x] Pour toute présentation réelle diagonalisable à spectre strictement
@@ -1148,8 +1154,26 @@ par toute évolution admissible.
             l'antisymétrisation du boundary functional concret de l'IPP.
           - [x] Prouver son annulation pointwise puis mesurée pour deux
             solutions d'Euler homogènes de Dirichlet.
-        - [ ] Promouvoir ce courant unidimensionnel du collier en courant de
-          Noether local covariant sur le bulk, avec assez de ghosts tests.
+          - [x] Promouvoir ce Wronskien en véritable courant tangent du
+            quotient le long du collier latitude canonique, porté par son
+            normal intrinsèque unitaire spacelike ; prouver que son flux
+            métrique est exactement le courant de Green, qu'il est localement
+            conservé pour deux solutions d'Euler et qu'au throat il s'identifie
+            au pairing concret des `mvfderiv` normaux. Ceci ne construit pas un
+            courant covariant en dimension quatre.
+        - [x] Construire sur ce collier l'énergie scalaire autonome
+          `(φ')² + m²φ²` et prouver que sa dérivée est exactement
+          `2φ'` fois le résidu d'Euler.
+          - [x] En déduire sa conservation fibre par fibre puis après
+            intégration sur la base pour toute solution d'Euler, ainsi que son
+            saut nul entre les extrémités.
+          - [x] Prouver sa positivité lorsque `m² ≥ 0`.
+          Ce résultat est uniquement un témoin local unidimensionnel de
+          conservation stress-énergie, pas la divergence covariante du tenseur
+          de stress en dimension quatre.
+        - [ ] Étendre le courant tangent canonique du collier en courant de
+          Noether local covariant en dimension quatre sur le bulk, avec assez
+          de ghosts tests, puis établir le Stokes global correspondant.
     - [x] Définir l'espace fonctionnel régulier où sharp, frame, volume et
       différentielle scalaire varient lissement, prouver la lissité et
       l'intégrabilité de la densité sur toute mesure finie, construire l'action

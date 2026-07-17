@@ -749,10 +749,20 @@ The associated scalar Green--Wronskian current is antisymmetric, its derivative
 is exactly the antisymmetric pairing of the two equal-mass Euler residuals,
 and it is pointwise and measured constant for two Euler solutions. Its endpoint
 jump is the antisymmetrized concrete IPP boundary functional, while homogeneous
-Dirichlet Euler pairs make it vanish. This remains a one-dimensional collar
-construction: a global geometric Stokes theorem identifying the abstract bulk
-boundary functional with this collar flux, a global canonical metric normal,
-and a covariant local Noether current with enough test ghosts remain open.
+Dirichlet Euler pairs make it vanish. The Wronskian is now realized as a
+genuine tangent current along the quotient collar, carried by the intrinsic
+unit-spacelike canonical normal. Its metric normal flux is exactly the Green
+current, is locally conserved for equal-mass Euler pairs, and at the throat is
+the concrete pairing of their normal `mvfderiv`s. The autonomous collar
+equation also has
+the exact energy `(φ')² + m²φ²`, whose derivative is `2φ'` times the Euler
+residual. It is therefore fiberwise and measured constant on Euler solutions,
+has zero endpoint jump, and is nonnegative for `m² ≥ 0`. This is a local
+one-dimensional stress-energy witness, not a four-dimensional covariant stress
+divergence theorem. A global geometric Stokes theorem identifying the abstract
+bulk boundary functional with this collar flux, a global canonical metric
+normal, and extension to a covariant four-dimensional Noether current with
+enough test ghosts remain open.
 The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
@@ -893,7 +903,12 @@ proved non-diagonalizable. This is one 4D Jordan stratum, not a classification
 or a globally glued branch. An explicit null frame certifies signature `(3,1)`
 for both metrics throughout the family, and a finite bilateral inverse proves
 Sylvester regularity and uniqueness of the root tangent even at non-diagonal
-points. Algebraically, the whole similarity-invariant locus `(A-I)²=0` now has
+points. On the full real-diagonalizable strictly-positive locus, the continuous
+presentation-independent selector now packages the local IFT atlas into a
+unique continuous exact-square global lift agreeing with every presented local
+branch. This statement does not cover Jordan strata, nonpositive spectra or
+the general physical admissible domain. Algebraically, the whole
+similarity-invariant locus `(A-I)²=0` now has
 the canonical root `I+(A-I)/2`, an exact bilateral Sylvester inverse and
 continuous stratum restriction. It glues to the global positive-diagonalizable
 selector on their exact intersection `{I}`; higher-index and non-unipotent

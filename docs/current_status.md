@@ -356,9 +356,19 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   antisymmetric pairing of the equal-mass Euler residuals; it is pointwise and
   measured constant for two Euler solutions, its endpoint jump is the
   antisymmetrized IPP boundary functional, and homogeneous Dirichlet Euler
-  solutions make it vanish. Geometrically discharging the global Stokes/IPP
-  interface and promoting this one-dimensional collar current to a covariant
-  local Noether current with enough test ghosts remain open.
+  solutions make it vanish. This Wronskian is now realized as a genuine
+  quotient-tangent current along the canonical collar: its intrinsic normal
+  is unit spacelike, its metric normal flux is exactly the Green current, the
+  flux is locally conserved for equal-mass Euler pairs, and its throat value
+  is the concrete pairing of the two normal `mvfderiv`s. The same
+  one-dimensional equation also has the
+  energy `(φ')² + m²φ²`: its derivative is exactly twice `φ'` times the Euler
+  residual, so Euler solutions conserve it fiberwise and after base
+  integration, with zero endpoint jump; it is nonnegative when `m² ≥ 0`.
+  This is only a local collar stress-energy witness. Geometrically discharging
+  the global Stokes/IPP interface, proving a four-dimensional covariant stress
+  divergence, and extending this collar current to a covariant four-dimensional
+  Noether current with enough test ghosts remain open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
 map on a smooth vertical section, and the compact frame reconstruction package
@@ -480,7 +490,11 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   compact quotient, and denormalizing. The rational reconstruction formula
   then proves global continuity of the matrix selector, local IFT stability
   and the exact inverse-Sylvester derivative on the whole positive-
-  diagonalizable locus. The similarity-invariant index-two unipotent locus
+  diagonalizable locus. These results are now packaged as the unique global
+  lift of the complete local IFT atlas on exactly that locus: it is continuous,
+  squares to the target and agrees with every presented local branch. This
+  does not extend the lift to Jordan strata, nonpositive spectra or the full
+  physical admissible domain. The similarity-invariant index-two unipotent locus
   `(A-I)²=0` now has its canonical polynomial root, exact square, continuous
   stratum restriction and bijective Sylvester operator; it glues to the
   positive selector on the exact intersection `{I}`. This is now extended to
@@ -765,9 +779,18 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   without boundary for endpoint-Dirichlet variations. Its explicit
   Green--Wronskian current has exact Euler-residual derivative, pointwise and
   measured constancy for equal-mass solutions, the expected antisymmetric
-  endpoint jump, and zero Dirichlet current. A global manifold Stokes theorem
-  identifying the abstract bulk interface with this collar flux, a covariant
-  local Noether current and a global canonical metric normal remain open;
+  endpoint jump, and zero Dirichlet current. It is now a genuine tangent
+  current along the quotient collar, carried by the intrinsic unit-spacelike
+  canonical normal; its metric normal flux is exactly the Wronskian, is locally
+  conserved on Euler pairs and at the throat is the concrete normal-`mvfderiv`
+  pairing. Its scalar energy
+  `(φ')² + m²φ²` has derivative `2φ'` times the Euler residual, is fiberwise
+  and measured constant on Euler solutions, has zero endpoint jump, and is
+  nonnegative for `m² ≥ 0`. This is a local one-dimensional stress-energy
+  witness only. A global manifold Stokes theorem identifying the abstract
+  bulk interface with this collar flux, a four-dimensional covariant stress
+  divergence, extension to a covariant four-dimensional Noether current and a
+  global canonical metric normal remain open;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
