@@ -363,6 +363,23 @@ theorem equatorialLatitude_contMDiff (point : EquatorialTwoSphere) :
     unitThreeSphereHomeomorph
   exact (hInv.comp hStandard).congr fun normal => by simp
 
+def equatorialLatitudeUncurried
+    (parameter : EquatorialTwoSphere × Real) : UnitThreeSphere :=
+  equatorialLatitude parameter.1 parameter.2
+
+/-- Joint continuity of the explicit latitude collar.  This elementary part
+does not require the still-isolated continuity of its tangent lift. -/
+theorem equatorialLatitude_joint_continuous :
+    Continuous equatorialLatitudeUncurried := by
+  apply Continuous.subtype_mk
+  apply continuous_pi
+  intro index
+  refine Fin.cases ?_ (fun tail => ?_) index
+  · exact Real.continuous_sin.comp continuous_snd
+  · exact (Real.continuous_cos.comp continuous_snd).mul
+      ((continuous_apply tail.succ).comp
+        (continuous_subtype_val.comp continuous_fst))
+
 /-- The cover-level collar curve is analytic for every chosen fundamental
 representative. -/
 theorem normalLatitudeCover_contMDiff
@@ -444,6 +461,23 @@ def canonicalLatitudeBaseMeasure (period : Real) :
   ((volume : Measure EuclideanR3).toSphere).prod
     (volume.restrict (canonicalLatitudeTimeInterval period))
 
+/-- One positive unit normal interval, with ordinary Lebesgue measure. -/
+def canonicalLatitudeUnitNormalMeasure : Measure Real :=
+  volume.restrict (Set.Ioc 0 1)
+
+instance canonicalLatitudeUnitNormalMeasure_isFinite :
+    IsFiniteMeasure canonicalLatitudeUnitNormalMeasure := by
+  unfold canonicalLatitudeUnitNormalMeasure
+  infer_instance
+
+/-- Parameters and product measure of the positive canonical latitude collar. -/
+abbrev CanonicalLatitudeCollarParameter := CanonicalLatitudeBase × Real
+
+def canonicalLatitudeCollarMeasure (period : Real) :
+    Measure CanonicalLatitudeCollarParameter :=
+  (canonicalLatitudeBaseMeasure period).prod
+    canonicalLatitudeUnitNormalMeasure
+
 theorem canonicalLatitudeBaseMeasure_isFinite (period : Real) :
     IsFiniteMeasure (canonicalLatitudeBaseMeasure period) := by
   unfold canonicalLatitudeBaseMeasure canonicalLatitudeTimeInterval
@@ -455,6 +489,54 @@ def canonicalLatitudeAnchor
     (base : CanonicalLatitudeBase) : EffectiveThroatCover period hPeriod :=
   (coverHomeomorphProd (throatData period hPeriod)).symm
     (equatorialTwoSphereHomeomorph.symm base.1, base.2)
+
+/-- The whole positive latitude collar as a single map to the quotient. -/
+def canonicalLatitudeCollarMap
+    (period : Real) (hPeriod : period ≠ 0)
+    (parameter : CanonicalLatitudeCollarParameter) :
+    EffectiveQuotient period hPeriod :=
+  quotientNormalLatitude period hPeriod
+    (canonicalLatitudeAnchor period hPeriod parameter.1) parameter.2
+
+theorem canonicalLatitudeCollarMap_continuous
+    (period : Real) (hPeriod : period ≠ 0) :
+    Continuous (canonicalLatitudeCollarMap period hPeriod) := by
+  have hEquator : Continuous
+      (fun parameter : CanonicalLatitudeCollarParameter =>
+        equatorialTwoSphereHomeomorph.symm parameter.1.1) :=
+    equatorialTwoSphereHomeomorph.symm.continuous.comp
+      (continuous_fst.comp continuous_fst)
+  have hLatitudeInput : Continuous
+      (fun parameter : CanonicalLatitudeCollarParameter =>
+        (equatorialTwoSphereHomeomorph.symm parameter.1.1,
+          parameter.2)) :=
+    hEquator.prodMk continuous_snd
+  have hLatitude : Continuous
+      (equatorialLatitudeUncurried ∘
+        fun parameter : CanonicalLatitudeCollarParameter =>
+          (equatorialTwoSphereHomeomorph.symm parameter.1.1,
+            parameter.2)) :=
+    equatorialLatitude_joint_continuous.comp hLatitudeInput
+  have hCover : Continuous
+      (fun parameter : CanonicalLatitudeCollarParameter =>
+        (coverHomeomorphProd (sphereData period hPeriod)).symm
+          (equatorialLatitudeUncurried
+              (equatorialTwoSphereHomeomorph.symm parameter.1.1,
+                parameter.2),
+            parameter.1.2)) :=
+    (coverHomeomorphProd (sphereData period hPeriod)).symm.continuous.comp
+      (hLatitude.prodMk (continuous_snd.comp continuous_fst))
+  have hQuotient :=
+    (mappingTorusMk_isCoveringMap
+      (sphereData period hPeriod)).isLocalHomeomorph.continuous.comp hCover
+  change Continuous
+    (fun parameter : CanonicalLatitudeCollarParameter =>
+      mappingTorusMk (sphereData period hPeriod)
+        ⟨equatorialLatitude
+            (equatorialTwoSphereHomeomorph.symm parameter.1.1)
+            parameter.2,
+          parameter.1.2⟩)
+  exact hQuotient
 
 /-- Fundamental-domain map to the actual physical throat. -/
 def canonicalLatitudeThroatMap
@@ -549,6 +631,82 @@ def unitLatitudeFrameH1Energy
   ∫ normal in (0 : Real)..1,
     2 * canonicalLatitudeValue period hPeriod field base normal ^ 2 +
       ‖canonicalLatitudeFrameDerivative period hPeriod field base normal‖ ^ 2
+
+/-- The field value is jointly continuous on the whole canonical collar. -/
+theorem canonicalLatitudeValue_uncurry_continuous
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    Continuous (fun parameter : CanonicalLatitudeCollarParameter =>
+      canonicalLatitudeValue period hPeriod field
+        parameter.1 parameter.2) := by
+  change Continuous
+    (field.toFun ∘ canonicalLatitudeCollarMap period hPeriod)
+  exact field.contMDiff_toFun.continuous.comp
+    (canonicalLatitudeCollarMap_continuous period hPeriod)
+
+/-- The implemented finite-frame derivative is jointly continuous on the
+whole canonical collar, independently of normal-vector reconstruction. -/
+theorem canonicalLatitudeFrameDerivative_uncurry_continuous
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    Continuous (fun parameter : CanonicalLatitudeCollarParameter =>
+      canonicalLatitudeFrameDerivative period hPeriod field
+        parameter.1 parameter.2) := by
+  change Continuous
+    (frameDerivative period hPeriod Real
+      (finiteSmoothTangentFrame period hPeriod) field ∘
+        canonicalLatitudeCollarMap period hPeriod)
+  exact (frameDerivative_contMDiff period hPeriod Real
+    (finiteSmoothTangentFrame period hPeriod) field).continuous.comp
+      (canonicalLatitudeCollarMap_continuous period hPeriod)
+
+theorem unitLatitudeFrameH1Energy_continuous
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    Continuous (unitLatitudeFrameH1Energy period hPeriod field) := by
+  unfold unitLatitudeFrameH1Energy
+  apply intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
+  exact ((canonicalLatitudeValue_uncurry_continuous
+      period hPeriod field).pow 2).const_mul 2 |>.add
+    ((canonicalLatitudeFrameDerivative_uncurry_continuous
+      period hPeriod field).norm.pow 2)
+
+/-- The nonnegative first-jet density whose pullback is exactly the latitude
+frame integrand. -/
+def canonicalPhysicalFrameH1Density
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real)
+    (point : EffectiveQuotient period hPeriod) : Real :=
+  2 * field point ^ 2 +
+    ‖frameDerivative period hPeriod Real
+      (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2
+
+theorem canonicalPhysicalFrameH1Density_continuous
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    Continuous (canonicalPhysicalFrameH1Density period hPeriod field) := by
+  exact (field.contMDiff_toFun.continuous.pow 2).const_mul 2 |>.add
+    ((frameDerivative_contMDiff period hPeriod Real
+      (finiteSmoothTangentFrame period hPeriod) field).continuous.norm.pow 2)
+
+theorem canonicalPhysicalFrameH1Density_nonnegative
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real)
+    (point : EffectiveQuotient period hPeriod) :
+    0 ≤ canonicalPhysicalFrameH1Density period hPeriod field point := by
+  unfold canonicalPhysicalFrameH1Density
+  positivity
+
+@[simp]
+theorem canonicalPhysicalFrameH1Density_collar
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real)
+    (base : CanonicalLatitudeBase) (normal : Real) :
+    canonicalPhysicalFrameH1Density period hPeriod field
+        (canonicalLatitudeCollarMap period hPeriod (base, normal)) =
+      2 * canonicalLatitudeValue period hPeriod field base normal ^ 2 +
+        ‖canonicalLatitudeFrameDerivative period hPeriod field base normal‖ ^ 2 := by
+  rfl
 
 /-- Coordinates of the latitude-normal vector in one finite local frame. -/
 def canonicalLatitudeLocalNormalCoefficient
@@ -1026,6 +1184,16 @@ theorem continuous_integrable_canonicalLatitudeBaseMeasure
   simpa [canonicalLatitudeBaseMeasure, productMeasure, sphereMeasure,
     support] using hIntegrableOn
 
+/-- The frame collar energy is integrable without any normal-lift hypothesis.
+Only its comparison with the ambient sphere measure is a coarea question. -/
+theorem unitLatitudeFrameH1Energy_integrable
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    Integrable (unitLatitudeFrameH1Energy period hPeriod field)
+      (canonicalLatitudeBaseMeasure period) :=
+  continuous_integrable_canonicalLatitudeBaseMeasure period _
+    (unitLatitudeFrameH1Energy_continuous period hPeriod field)
+
 theorem exists_uniform_unitNormalH1Energy_le_unitLatitudeFrameH1Energy
     (period : Real) (hPeriod : period ≠ 0)
     (regularity : CanonicalLatitudeNormalLiftContinuous period hPeriod) :
@@ -1251,6 +1419,244 @@ theorem smoothCanonicalPhysicalTrace_norm_sq_eq_latitudeIntegral
           canonicalLatitudeValue period hPeriod field base 0 ^ 2
         rw [canonicalLatitudeValue_zero]
 
+/-! ## The remaining `Measure.toSphere` coarea bridge -/
+
+/-- The sharp uniform density bound on the unit positive collar: its latitude
+Jacobian on `S³` is `cos normal ^ 2`, hence the reciprocal-square bound at
+`normal = 1`. -/
+def canonicalLatitudeCoareaMeasureConstant : NNReal :=
+  ⟨(Real.cos 1)⁻¹ ^ 2, sq_nonneg _⟩
+
+/-- The single external measure statement still absent from Mathlib.  It is
+exactly the latitude disintegration of `Measure.toSphere` (tensored with one
+fundamental time interval and pushed to the quotient); all measurability,
+Fubini and graph-norm consequences are proved below. -/
+def CanonicalLatitudeMeasureToSphereCoareaDomination
+    (period : Real) (hPeriod : period ≠ 0) : Prop :=
+  Measure.map (canonicalLatitudeCollarMap period hPeriod)
+      (canonicalLatitudeCollarMeasure period) ≤
+    canonicalLatitudeCoareaMeasureConstant •
+      intrinsicCanonicalLorentzVolumeMeasure period hPeriod
+
+/-- The isolated measure domination implies the generic nonnegative collar
+integral estimate. -/
+theorem canonicalLatitudeCollar_integral_le_of_measureToSphereCoarea
+    (period : Real) (hPeriod : period ≠ 0)
+    (coarea : CanonicalLatitudeMeasureToSphereCoareaDomination
+      period hPeriod)
+    (function : EffectiveQuotient period hPeriod → Real)
+    (hFunction : Continuous function)
+    (hNonnegative : ∀ point, 0 ≤ function point) :
+    (∫ base : CanonicalLatitudeBase,
+        (∫ normal in (0 : Real)..1,
+          function (canonicalLatitudeCollarMap period hPeriod
+            (base, normal)))
+      ∂(canonicalLatitudeBaseMeasure period)) ≤
+      (canonicalLatitudeCoareaMeasureConstant : Real) *
+        ∫ point, function point
+          ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod) := by
+  letI : IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+    canonicalLatitudeBaseMeasure_isFinite period
+  let ambientMeasure :=
+    intrinsicCanonicalLorentzVolumeMeasure period hPeriod
+  have hFunctionIntegrable : Integrable function ambientMeasure :=
+    hFunction.integrable_of_hasCompactSupport
+      (HasCompactSupport.of_compactSpace function)
+  have hScaledIntegrable : Integrable function
+      (canonicalLatitudeCoareaMeasureConstant • ambientMeasure) :=
+    hFunctionIntegrable.smul_measure_nnreal
+  have hMappedIntegrable : Integrable function
+      (Measure.map (canonicalLatitudeCollarMap period hPeriod)
+        (canonicalLatitudeCollarMeasure period)) :=
+    hScaledIntegrable.mono_measure coarea
+  have hPullbackIntegrable : Integrable
+      (fun parameter : CanonicalLatitudeCollarParameter =>
+        function (canonicalLatitudeCollarMap period hPeriod parameter))
+      (canonicalLatitudeCollarMeasure period) := by
+    simpa [Function.comp_def] using
+      hMappedIntegrable.comp_measurable
+        (canonicalLatitudeCollarMap_continuous period hPeriod).measurable
+  have hInterval :
+      (∫ base : CanonicalLatitudeBase,
+          (∫ normal in (0 : Real)..1,
+            function (canonicalLatitudeCollarMap period hPeriod
+              (base, normal)))
+        ∂(canonicalLatitudeBaseMeasure period)) =
+        ∫ base : CanonicalLatitudeBase,
+          ∫ normal,
+            function (canonicalLatitudeCollarMap period hPeriod
+              (base, normal)) ∂canonicalLatitudeUnitNormalMeasure
+          ∂(canonicalLatitudeBaseMeasure period) := by
+    apply integral_congr_ae
+    exact Filter.Eventually.of_forall fun base => by
+      change (∫ normal in (0 : Real)..1,
+          function (canonicalLatitudeCollarMap period hPeriod
+            (base, normal))) =
+        ∫ normal,
+          function (canonicalLatitudeCollarMap period hPeriod
+            (base, normal)) ∂canonicalLatitudeUnitNormalMeasure
+      rw [intervalIntegral.integral_of_le (by norm_num : (0 : Real) ≤ 1)]
+      rfl
+  calc
+    (∫ base : CanonicalLatitudeBase,
+        (∫ normal in (0 : Real)..1,
+          function (canonicalLatitudeCollarMap period hPeriod
+            (base, normal)))
+      ∂(canonicalLatitudeBaseMeasure period)) =
+        ∫ parameter : CanonicalLatitudeCollarParameter,
+          function (canonicalLatitudeCollarMap period hPeriod parameter)
+          ∂(canonicalLatitudeCollarMeasure period) := by
+      rw [hInterval]
+      exact integral_integral hPullbackIntegrable
+    _ = ∫ point, function point
+          ∂(Measure.map (canonicalLatitudeCollarMap period hPeriod)
+            (canonicalLatitudeCollarMeasure period)) := by
+      symm
+      exact integral_map
+        (canonicalLatitudeCollarMap_continuous
+          period hPeriod).measurable.aemeasurable
+        hFunction.aestronglyMeasurable
+    _ ≤ ∫ point, function point
+          ∂(canonicalLatitudeCoareaMeasureConstant • ambientMeasure) :=
+      integral_mono_measure coarea
+        (Filter.Eventually.of_forall hNonnegative) hScaledIntegrable
+    _ = (canonicalLatitudeCoareaMeasureConstant : Real) *
+          ∫ point, function point ∂ambientMeasure := by
+      rw [integral_smul_nnreal_measure]
+      rfl
+
+/-- The graph norm of a smooth field is exactly the `L²` norm of its
+implemented first jet. -/
+theorem smoothToCanonicalPhysicalScalarH1_norm_sq_eq_integral_smoothFirstJet
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 =
+      ∫ point : EffectiveQuotient period hPeriod,
+        ‖smoothFirstJet period hPeriod Real
+          (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2
+        ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod) := by
+  letI : IsFiniteMeasure
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+    intrinsicCanonicalLorentzVolumeMeasure_isFinite period hPeriod
+  let jet := smoothFirstJet period hPeriod Real
+    (finiteSmoothTangentFrame period hPeriod) field
+  let jetL2 := smoothFirstJetToL2 period hPeriod Real
+    (finiteSmoothTangentFrame period hPeriod)
+    (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field
+  have hMemLp : MemLp jet (2 : ENNReal)
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) := by
+    simpa [jet] using smoothFirstJet_memLp period hPeriod Real
+      (finiteSmoothTangentFrame period hPeriod)
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field
+  let energy := ∫ point,
+    ‖jet point‖ ^ 2
+      ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+  have hEnergyNonnegative : 0 ≤ energy := by
+    unfold energy
+    exact integral_nonneg fun _ => sq_nonneg _
+  have hELp := hMemLp.eLpNorm_eq_integral_rpow_norm
+    (by norm_num : (2 : ENNReal) ≠ 0)
+    (by simp : (2 : ENNReal) ≠ (∞ : ENNReal))
+  have hJetL2Norm : ‖jetL2‖ = Real.sqrt energy := by
+    calc
+      ‖jetL2‖ = (eLpNorm jet (2 : ENNReal)
+          (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)).toReal := by
+        simp [jetL2, jet, smoothFirstJetToL2, Lp.norm_toLp]
+      _ = (ENNReal.ofReal
+          ((∫ point : EffectiveQuotient period hPeriod,
+              ‖jet point‖ ^ (2 : ENNReal).toReal
+              ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod)) ^
+            (2 : ENNReal).toReal⁻¹)).toReal := congrArg ENNReal.toReal hELp
+      _ = Real.sqrt energy := by
+        simp only [ENNReal.toReal_ofNat]
+        rw [ENNReal.toReal_ofReal']
+        rw [max_eq_left (by positivity)]
+        simp [energy, Real.sqrt_eq_rpow, one_div]
+  calc
+    ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 =
+        ‖jetL2‖ ^ 2 := by rfl
+    _ = energy := by rw [hJetL2Norm, Real.sq_sqrt hEnergyNonnegative]
+    _ = ∫ point : EffectiveQuotient period hPeriod,
+          ‖smoothFirstJet period hPeriod Real
+            (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2
+          ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod) := by
+      rfl
+
+theorem canonicalPhysicalFrameH1Density_le_three_firstJet
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real)
+    (point : EffectiveQuotient period hPeriod) :
+    canonicalPhysicalFrameH1Density period hPeriod field point ≤
+      3 * ‖smoothFirstJet period hPeriod Real
+        (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2 := by
+  let jet := smoothFirstJet period hPeriod Real
+    (finiteSmoothTangentFrame period hPeriod) field point
+  have hValue : ‖field point‖ ≤ ‖jet‖ := by
+    simpa [jet, smoothFirstJet] using norm_fst_le jet
+  have hDerivative :
+      ‖frameDerivative period hPeriod Real
+        (finiteSmoothTangentFrame period hPeriod) field point‖ ≤ ‖jet‖ := by
+    simpa [jet, smoothFirstJet] using norm_snd_le jet
+  have hValueSq : field point ^ 2 ≤ ‖jet‖ ^ 2 := by
+    simpa [Real.norm_eq_abs, sq_abs] using
+      (sq_le_sq₀ (norm_nonneg (field point)) (norm_nonneg jet)).2 hValue
+  have hDerivativeSq :
+      ‖frameDerivative period hPeriod Real
+        (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2 ≤
+        ‖jet‖ ^ 2 :=
+    (sq_le_sq₀ (norm_nonneg _) (norm_nonneg jet)).2 hDerivative
+  change 2 * field point ^ 2 +
+      ‖frameDerivative period hPeriod Real
+        (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2 ≤
+    3 * ‖jet‖ ^ 2
+  linarith
+
+theorem integral_canonicalPhysicalFrameH1Density_le_graphNorm
+    (period : Real) (hPeriod : period ≠ 0)
+    (field : SmoothQuotientField period hPeriod Real) :
+    (∫ point : EffectiveQuotient period hPeriod,
+        canonicalPhysicalFrameH1Density period hPeriod field point
+      ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod)) ≤
+      3 * ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 := by
+  have hDensityIntegrable : Integrable
+      (canonicalPhysicalFrameH1Density period hPeriod field)
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+    (canonicalPhysicalFrameH1Density_continuous period hPeriod field)
+      |>.integrable_of_hasCompactSupport
+        (HasCompactSupport.of_compactSpace _)
+  have hJetContinuous : Continuous
+      (fun point : EffectiveQuotient period hPeriod =>
+        3 * ‖smoothFirstJet period hPeriod Real
+          (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2) :=
+    ((smoothFirstJet_contMDiff period hPeriod Real
+      (finiteSmoothTangentFrame period hPeriod) field).continuous.norm.pow 2)
+        |>.const_mul 3
+  have hJetIntegrable : Integrable
+      (fun point : EffectiveQuotient period hPeriod =>
+        3 * ‖smoothFirstJet period hPeriod Real
+          (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2)
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+    hJetContinuous.integrable_of_hasCompactSupport
+      (HasCompactSupport.of_compactSpace _)
+  calc
+    (∫ point : EffectiveQuotient period hPeriod,
+        canonicalPhysicalFrameH1Density period hPeriod field point
+      ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod)) ≤
+        ∫ point : EffectiveQuotient period hPeriod,
+          3 * ‖smoothFirstJet period hPeriod Real
+            (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2
+          ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+      integral_mono hDensityIntegrable hJetIntegrable fun point =>
+        canonicalPhysicalFrameH1Density_le_three_firstJet
+          period hPeriod field point
+    _ = 3 * ∫ point : EffectiveQuotient period hPeriod,
+          ‖smoothFirstJet period hPeriod Real
+            (finiteSmoothTangentFrame period hPeriod) field point‖ ^ 2
+          ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod) := by
+      rw [integral_const_mul]
+    _ = 3 * ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 := by
+      rw [smoothToCanonicalPhysicalScalarH1_norm_sq_eq_integral_smoothFirstJet]
+
 /-- Pure coarea/measure comparison.  It contains no normal reconstruction:
 the integrand is exactly the already installed finite-frame first jet. -/
 structure CanonicalLatitudeCoareaBound
@@ -1266,6 +1672,53 @@ structure CanonicalLatitudeCoareaBound
       ∂(canonicalLatitudeBaseMeasure period)) ≤
       constant ^ 2 *
         ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2
+
+/-- The single `Measure.toSphere` domination statement closes all of entry A,
+including integrability, Fubini and comparison with the implemented graph
+norm. -/
+def canonicalLatitudeCoareaBoundOfMeasureToSphereDomination
+    (period : Real) (hPeriod : period ≠ 0)
+    (coarea : CanonicalLatitudeMeasureToSphereCoareaDomination
+      period hPeriod) :
+    CanonicalLatitudeCoareaBound period hPeriod where
+  constant := Real.sqrt
+    (3 * (canonicalLatitudeCoareaMeasureConstant : Real))
+  nonnegative := Real.sqrt_nonneg _
+  frameEnergyIntegrable field :=
+    unitLatitudeFrameH1Energy_integrable period hPeriod field
+  frameCollarEnergy_le_graph field := by
+    have hCoarea :=
+      canonicalLatitudeCollar_integral_le_of_measureToSphereCoarea
+        period hPeriod coarea
+        (canonicalPhysicalFrameH1Density period hPeriod field)
+        (canonicalPhysicalFrameH1Density_continuous
+          period hPeriod field)
+        (canonicalPhysicalFrameH1Density_nonnegative
+          period hPeriod field)
+    have hDensity :=
+      integral_canonicalPhysicalFrameH1Density_le_graphNorm
+        period hPeriod field
+    calc
+      (∫ base : CanonicalLatitudeBase,
+          unitLatitudeFrameH1Energy period hPeriod field base
+        ∂(canonicalLatitudeBaseMeasure period)) ≤
+          (canonicalLatitudeCoareaMeasureConstant : Real) *
+            ∫ point : EffectiveQuotient period hPeriod,
+              canonicalPhysicalFrameH1Density period hPeriod field point
+            ∂(intrinsicCanonicalLorentzVolumeMeasure period hPeriod) := by
+        simpa [unitLatitudeFrameH1Energy] using hCoarea
+      _ ≤ (canonicalLatitudeCoareaMeasureConstant : Real) *
+          (3 * ‖smoothToCanonicalPhysicalScalarH1
+            period hPeriod field‖ ^ 2) :=
+        mul_le_mul_of_nonneg_left hDensity
+          canonicalLatitudeCoareaMeasureConstant.coe_nonneg
+      _ = (Real.sqrt
+            (3 * (canonicalLatitudeCoareaMeasureConstant : Real))) ^ 2 *
+          ‖smoothToCanonicalPhysicalScalarH1
+            period hPeriod field‖ ^ 2 := by
+        rw [Real.sq_sqrt]
+        · ring
+        · positivity
 
 /-- Quantitative reconstruction of the latitude-normal derivative from the
 global finite tangent family.  This package is independent of coarea. -/
