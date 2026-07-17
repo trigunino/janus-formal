@@ -285,8 +285,16 @@ its smooth symmetric throat trace is therefore genuinely nondegenerate and
 is packaged on the nondegenerate throat-metric domain. One deck turn now
 reverses the quotient latitude parameter and its tangent normal by the exact
 dependent sign law; the sign-clutched coordinate change preserves both the
-local scalar-square model and the square of the orthogonal lift. Continuous
-gluing into one global normal-lift section remains open.
+local scalar-square model and the square of the orthogonal lift. The curve law
+itself now extends to every integer winding through
+`normalSignRepresentation`: even windings act trivially and odd windings flip
+the latitude parameter. The dependent tangent `HEq` and scalar quadratic-model
+invariance extend to every winding as well; the vector lift itself is not yet
+globally glued. Continuous gluing into one global normal-lift section remains
+open. At cover level, the
+named latitude normal is now `HEq` to its raw curve derivative after exposing
+the zero-latitude transport; the corresponding quotient-derivative bridge is
+not yet proved.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -362,6 +370,22 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   covariant Euler pairing plus flux; zero flux makes stationarity equivalent
   to the weak equation, a pointwise Euler solution implies it, and the action
   derivative vanishes. This is specialized to the intrinsic D8 metric.
+  Separately, a covariant scalar second jet in a four-dimensional normal frame
+  now satisfies the exact algebraic identity
+  `∇_μ T^{μν} = (□φ - V'(φ)) sharp(dφ)^ν`, hence zero divergence at that jet
+  under its Euler residual. Both the intrinsic-fiber convention
+  `V' = -m²φ` and the matrix-stress convention `V' = m²φ + source` are matched
+  to their existing stress tensors. The calculation is now transported to
+  arbitrary local coordinates under a pointwise metric-compatible,
+  torsion-free connection-jet interface. Its covariant Hessian is symmetric;
+  an explicit realization of `∇T = ∂T + ΓT + ΓT` cancels the Christoffel
+  corrections and yields the same Euler identity and conservation. That
+  interface is now discharged pointwise from every symmetric nondegenerate
+  metric and metric-symmetric first jet by the local Levi-Civita formula,
+  including the exact derivative `∂g⁻¹ = -g⁻¹(∂g)g⁻¹`, torsion freedom and both
+  covariant- and inverse-metric compatibility equations. No smooth connection
+  or field realization, global connection, or theorem `div_g T = 0` is
+  constructed.
   The canonical latitude collar now supplies its own exact intrinsic D8
   divergence/boundary interface. Pairing `sharp(dφ)` with the explicit collar
   normal is the genuine manifold directional derivative, and the oriented
@@ -390,8 +414,8 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   normal-projected collar jet; this component has zero derivative and is
   locally constant under the collar Euler equation. This is only a local
   collar stress-energy identity. Geometrically discharging
-  the global Stokes/IPP interface, proving a four-dimensional covariant stress
-  divergence, and extending this collar current to a covariant four-dimensional
+  the global Stokes/IPP interface, globalizing the normal-frame jet identity
+  to a smooth covariant stress divergence, and extending this collar current to a covariant four-dimensional
   Noether current with enough test ghosts remain open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
@@ -429,13 +453,19 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   exchange law. The throat PT derivative is a linear equivalence, so this
   pointwise pullback preserves and reflects nondegeneracy; consequently the
   no-tangential-radical condition is invariant under PT and PT/exchange. A
-  smooth pullback construction for an arbitrary throat tensor, classification
-  of general metric restrictions, and the antifield/full-BV boundary packet
-  remain open. Without postulating that missing pullback, smooth metric
+  smooth intrinsic PT-pullback construction for an arbitrary throat tensor and
+  classification of general metric restrictions remain open. Without
+  postulating that missing pullback, smooth metric
   boundary references now carry a pointwise PT/exchange matching relation
   that is functional, preserves nondegeneracy and is realized by the actual
   ambient metric traces. Matched references transport the complete metric and
   non-metric Dirichlet equality exactly.
+  For the retained intrinsic metric the stronger fixed-point result is now
+  unconditional: the public time-reversal naturality of the cover immersion
+  derivative proves cover isometry, projection naturality and equality of the
+  PT-pulled quotient descent by uniqueness. The full metric with its musical,
+  the equal two-sector pair and its smooth nondegenerate throat trace are PT
+  fixed.
   More precisely, the nonlinear ghost frontier now includes the intrinsic
   smooth tangent Lie bracket, a genuine three-generator exterior coefficient
   algebra, vanishing of the total cubic pure-ghost obstruction and exact
@@ -497,9 +527,17 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   general-tensor BV layer now contains two smooth symmetric metric variations
   and their antifields, a nontrivial odd square-zero doublet, the background-
   raised trace pairing and a graded-skew pointwise Darboux antibracket, attached
-  to the general-Lorentz independent packet. It does not prove that affine
-  variations stay Lorentzian and supplies no functional CME,
-  derivative-dependent interaction or nonlocal/completed functional.
+  to the general-Lorentz independent packet. Its analytic PT pullback with
+  sector exchange is an involution commuting with BRST; the raised pairing and
+  odd bracket are exactly PT/exchange covariant pointwise. Both variations and
+  antifields now have a genuine smooth trace through the actual throat
+  inclusion. The boundary doublet squares to zero, restriction commutes with
+  BRST, and the traces obey exact PT/exchange matching; the metric-extended
+  boundary packet therefore transports its complete Dirichlet condition.
+  Packet-level pointwise odd-bracket covariance is retained under the same
+  exchange. No inverse throat metric, boundary functional antibracket/CME,
+  Lorentzian preservation of affine variations, or derivative-dependent/
+  nonlocal completed functional is supplied.
   Independently, real translation of the
   mapping-torus coordinate now descends to a nontrivial complete analytic real action on the
   actual D8 quotient; every time slice is an analytic diffeomorphism and the
@@ -809,7 +847,15 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   and is invariant under simultaneous diffeomorphism and sector exchange.
   One unconditional certificate now packages this pointwise covariance,
   measured covariance, two-sector exchange and integrated stress-variation
-  exchange. It does not assert a local conservation identity.
+  exchange. A separate normal-frame second-jet calculation proves the local
+  identity `div T = (□φ - V'(φ)) sharp(dφ)` and Euler conservation for both
+  retained potential conventions. A metric-compatible torsion-free coordinate
+  connection-jet interface transports it to arbitrary coordinates and realizes
+  the full Christoffel-corrected derivative. The interface is now realized
+  algebraically by the local Levi-Civita coefficients and exact differentiated
+  inverse for any symmetric nondegenerate metric first jet. Smooth geometric
+  connections and fields, their global realization, and global `div_g T = 0`
+  remain open.
   At fixed metric the holonomic density variation decomposes pointwise into
   the flat scalar Euler operator plus an explicit flux divergence. Under
   integrability and the named zero-integrated-flux condition, the first

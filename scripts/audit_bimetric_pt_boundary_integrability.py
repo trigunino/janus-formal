@@ -23,6 +23,8 @@ def build_payload() -> dict:
             "functional": "I_joint=2 epsilon integral_C (K_plus sqrt(sigma_plus) eta_plus + K_minus sqrt(sigma_minus) eta_minus)",
             "pt_cancellation": "weighted densities obey K_minus sqrt(sigma_minus) eta_minus=-K_plus sqrt(sigma_plus) eta_plus",
             "null_rescaling": "opposite normal rescalings cancel iff K_plus sqrt(sigma_plus)=K_minus sqrt(sigma_minus)",
+            "program_p_canonical_throat": "canonical quotient latitude normal has metric square +1, hence is spacelike rather than null",
+            "consequence_for_B": "null-normal rescaling obstruction does not apply to the canonical P throat; use the non-null joint functional there",
         },
         "closure": {
             "paired_flux_cancellation": True,
@@ -30,6 +32,8 @@ def build_payload() -> dict:
             "null_normal_normalization_fixed": False,
             "corner_joint_functional_derived": True,
             "conditional_corner_cancellation_proved": True,
+            "canonical_p_throat_causal_type_decided": True,
+            "canonical_p_throat_requires_null_normal_fixing": False,
             "global_charge_integrability": False,
         },
     }
