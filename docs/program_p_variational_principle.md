@@ -490,6 +490,11 @@ unique smooth descent of invariant maps are constructed. Supplied low-order
 holonomic families and their `(II,F)` reductions descend smoothly to the true
 quotient. This does not yet construct the physical SpinC representation,
 higher jets, isotropy strata or a Peetre--Slovák integrability theorem.
+Independently, the fixed quotient itself now forms a one-object symmetry
+category with every smooth D8 self-diffeomorphism as an arrow. Smooth fields
+with any normed real coefficient fiber define a contravariant section functor
+with exact identity and composition laws. This is not the moduli category of
+all Janus backgrounds.
 
 ### Open Janus specialization
 
@@ -624,7 +629,10 @@ is reduced to one local projection lemma in the transported normal charts:
 preservation of quotient classes, metric orthogonality and continuity of the
 squared length. The global lift and Lorentzian stratification then follow;
 this local regularity lemma remains open because the current normal
-equivalence is selected by `Classical.choice`.
+equivalence is selected by `Classical.choice`. The actual latitude tangent on
+the throat cover is now explicit and its raw ambient derivative is `(e₀, 0)`;
+the bridge to the exported intrinsic ambient derivative remains obstructed by
+private model instances.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -722,11 +730,15 @@ Zero flux gives the stationarity equivalence, and the construction is
 specialized to the intrinsic D8 metric. The intrinsic contravariant scalar
 stress is additionally pointwise covariant under every smooth D8
 diffeomorphism after coherent transport of the metric, `dφ` and cotangent
-tests. The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient
-form and vanishes pointwise and integrally for homogeneous Dirichlet
-variations. A geometric Stokes/IPP theorem identifying the abstract boundary
-functional with this flux, a canonical metric normal, and a local Noether
-current with enough test ghosts remain open.
+tests. Its measured pairing with arbitrary cotangent test fields transports
+integrability iff and is invariant under diffeomorphism plus sector exchange.
+The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form and
+vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
+canonical latitude collar, genuine interval-integral IPP identifies the
+normal `mvfderiv` term and removes the boundary for endpoint-Dirichlet tests.
+A global geometric Stokes theorem identifying the abstract bulk boundary
+functional with this collar flux, a global canonical metric normal, and a
+local Noether current with enough test ghosts remain open.
 The candidate now has a genuine `ZMod 2` exterior coefficient algebra on three odd
 generators coupled to the global smooth tangent Lie bracket. The full
 three-component ghost has the exact quadratic BRST term; its total cubic
@@ -928,7 +940,10 @@ polynomial-centralizer argument makes Sylvester regularity unconditional.
 At the zero frontier, the canonical family `J₂(t) ⊕ 1 ⊕ 1` has an exact
 Hermite root whose `1/(2√t)` coefficient and Frobenius norm diverge, with no
 finite continuation, while its `E₀₁` Sylvester eigenvalue `2√t` collapses.
-This is one witness, not a classification of all Jordan collisions or `0/0`.
+The same obstruction is proved for every fixed real similarity class. The
+double collision `J₂(t) ⊕ J₂(s)` has two independent collapsing Sylvester
+modes and no finite extension at the two-parameter zero corner. Moving
+similarities, changes of Jordan type and arbitrary matrix `0/0` paths remain.
 For
 nonpositive spectra, determinant negativity and a simple negative
 diagonal eigenvalue are exact obstructions, while determinant positivity is

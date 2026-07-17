@@ -137,7 +137,9 @@ Current results:
   remaining construction is reduced to one local normal-chart projection
   lemma; the global lift and stratification follow from it. This lemma remains
   open because the transported normal equivalence currently comes from
-  `Classical.choice` without a regularity theorem;
+  `Classical.choice` without a regularity theorem. The explicit latitude
+  tangent has nevertheless been constructed on the true cover and its raw
+  ambient derivative is exactly `(e₀, 0)`;
 - **T/C** the twisted generator squares to translation by `2T`;
 - **T/N** nonzero translation is incompatible with a local fixed point of the same generator;
 - **N** the constructed object is a free analytic mapping-torus manifold, not
@@ -279,8 +281,12 @@ The consolidated head formalizes:
 - lower-order nonuniqueness;
 - relative bridges to Quillen;
 - a concrete one-object cyclic immersion groupoid with integer morphisms and functorial `Z4` jet monodromy.
+- the fixed-background D8 category with all smooth self-diffeomorphisms as
+  morphisms and its contravariant smooth-field section functor.
 
-The concrete Janus category, global structured jet groupoid, regularity hypotheses, descent theorem and invariant-theory classification remain open.
+The moduli category of all Janus backgrounds, global structured jet groupoid,
+regularity hypotheses, descent theorem and invariant-theory classification
+remain open.
 
 # Program P
 
@@ -522,8 +528,12 @@ New controlled subgates are now checked:
   polynomial-centralizer reasoning closes global Sylvester regularity. The
   canonical frontier witness `J₂(t) ⊕ 1 ⊕ 1`, `t → 0⁺`, has an exact Hermite
   root with divergent `1/(2√t)` coefficient and norm, no finite continuation,
-  and a collapsing `E₀₁` Sylvester mode; general Jordan collisions and
-  arbitrary `0/0` remain open. For nonpositive spectra, determinant/simple
+  and a collapsing `E₀₁` Sylvester mode. This obstruction is invariant under
+  every fixed real similarity. The two-parameter collision
+  `J₂(t) ⊕ J₂(s)` has two independent degenerating Sylvester modes and no
+  finite extension at the double-zero corner; moving similarities, changes
+  of Jordan type and arbitrary matrix `0/0` paths remain open. For
+  nonpositive spectra, determinant/simple
   negative-eigenvalue obstructions, positive-determinant counterexample,
   paired-negative constructions and the exact Jordan parity/zero-block
   criterion are closed. Pure complex-conjugate `2×2`, `2+2` and non-semisimple
@@ -599,10 +609,13 @@ New controlled subgates are now checked:
   Lorentz metric, an exact divergence/boundary-flux interface now yields the
   weak covariant Euler decomposition, stationarity equivalence under zero flux
   and the intrinsic D8 specialization; its contravariant stress is pointwise
-  diffeomorphism-covariant. The concrete normal throat flux vanishes pointwise
-  and integrally for homogeneous Dirichlet variations. Geometric Stokes/IPP
-  discharge, identification with the abstract boundary functional, and a
-  canonical metric normal remain open;
+  diffeomorphism-covariant and its arbitrary measured cotangent pairing is
+  invariant under diffeomorphism plus sector exchange. The concrete normal
+  throat flux vanishes pointwise and integrally for homogeneous Dirichlet
+  variations. Genuine interval-integral IPP closes the canonical latitude
+  collar and identifies its normal `mvfderiv` boundary term. Global geometric
+  Stokes/IPP discharge, identification with the abstract bulk boundary
+  functional, and a global canonical metric normal remain open;
 - **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
   Jacobi `J` are defined on all smooth fields under one explicit integrability
   contract and equal its first/second variations. The negative Lorentz time

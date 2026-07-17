@@ -1991,6 +1991,43 @@ PROGRAM_P_GATES = {
             "theorem jordanCollisionSylvesterEigenvalue_tendsto_zero",
         ),
     ),
+    "P0EFTJanusPositiveJordanCollisionSimilarityFrontier4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FixedSimilarity4",
+            "def FixedSimilarity4.conjugate",
+            "theorem FixedSimilarity4.conjugate_mul",
+            "def similarJordanCollisionTarget",
+            "def similarJordanCollisionRoot",
+            "def similarJordanCollisionMode",
+            "theorem similarJordanCollisionRoot_square",
+            "theorem similarJordanCollisionTarget_tendsto_zeroFrontier",
+            "theorem similarJordanCollisionMode_ne_zero",
+            "theorem sylvesterOperator_conjugate",
+            "theorem similarJordanCollisionSylvester_mode",
+            "theorem similarJordanCollisionRoot_no_finite_limit",
+            "theorem similarJordanCollisionRoot_no_continuous_extension",
+        ),
+    ),
+    "P0EFTJanusPositiveJordanDoubleCollisionZeroFrontier4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positivePairZeroFilter",
+            "def doubleJordanCollisionTarget",
+            "def doubleJordanCollisionRoot",
+            "theorem doubleJordanCollisionRoot_square",
+            "theorem doubleJordanCollisionRoot_firstCoefficient_tendsto_atTop",
+            "theorem doubleJordanCollisionRoot_secondCoefficient_tendsto_atTop",
+            "theorem doubleJordanCollisionTarget_tendsto_zeroCorner",
+            "def doubleJordanCollisionFirstMode",
+            "def doubleJordanCollisionSecondMode",
+            "theorem doubleJordanCollisionModes_linearIndependent",
+            "theorem doubleJordanCollisionSylvester_firstMode",
+            "theorem doubleJordanCollisionSylvester_secondMode",
+            "theorem doubleJordanCollisionRoot_no_finite_limit",
+            "theorem doubleJordanCollisionRoot_no_continuous_extension",
+        ),
+    ),
     "P0EFTJanusGlobalDiagonalLorentzCausalFrontier4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2523,6 +2560,25 @@ PROGRAM_P_GATES = {
             "theorem canonicalIntrinsicD8HolonomicScalarAction_line_hasDerivAt_zero_of_homogeneousDirichlet",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeScalarIPP4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeSecondDerivative",
+            "theorem canonicalLatitudeDerivative_contDiff",
+            "def canonicalLatitudeScalarKineticFiber",
+            "def canonicalLatitudeScalarEulerFiber",
+            "def canonicalLatitudeScalarBoundaryFiber",
+            "theorem canonicalLatitudeScalarKineticFiber_eq_euler_add_boundary",
+            "def canonicalLatitudeMeasuredScalarKinetic",
+            "theorem canonicalLatitudeMeasuredScalarKinetic_eq_euler_add_boundary",
+            "def canonicalLatitudeScalarInnerBoundaryFiber",
+            "theorem canonicalLatitudeScalarInnerBoundaryFiber_eq_mvfderiv",
+            "theorem canonicalLatitudeScalarInnerBoundaryFiber_eq_zero_of_homogeneousDirichlet",
+            "theorem canonicalLatitudeMeasuredScalarInnerBoundary_eq_zero_of_homogeneousDirichlet",
+            "theorem canonicalLatitudeScalarKineticFiber_eq_euler_of_endpointDirichlet",
+            "theorem canonicalLatitudeMeasuredScalarKinetic_eq_euler_of_endpointDirichlet",
+        ),
+    ),
     "P0EFTJanusMappingTorusGeneralLorentzMetricDiffeomorphismScalarAction4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2579,6 +2635,20 @@ PROGRAM_P_GATES = {
             "def fiberContravariantScalarStress",
             "theorem fiberContravariantScalarStress_pullback",
             "theorem holonomicScalarStress_diffeomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIntegratedScalarStressCovariance4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CotangentTestField",
+            "def diffeomorphismCotangentTestPullback",
+            "def generalLorentzScalarStressPairingDensity",
+            "theorem generalLorentzScalarStressPairingDensity_diffeomorphism",
+            "def measuredGeneralLorentzScalarStressPairing",
+            "theorem generalLorentzScalarStressPairingDensity_integrable_iff",
+            "theorem measuredGeneralLorentzScalarStressPairing_diffeomorphism",
+            "def measuredGeneralLorentzScalarPairStress",
+            "theorem measuredGeneralLorentzScalarPairStress_diffeomorphism_exchange",
         ),
     ),
     "P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D.lean": (
@@ -3570,6 +3640,17 @@ PROGRAM_P_GATES = {
             "theorem intrinsicDifferentialNormalCausalStratification_of_localProjection",
         ),
     ),
+    "P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionAlgebraic4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coverLatitudeNormalVector",
+            "def rawLatitudeDerivative",
+            "def latitudeAmbientDerivative",
+            "theorem rawLatitude_hasFDerivAt",
+            "theorem latitudeAmbient_hasFDerivAt",
+            "theorem latitudeAmbientDerivative_one",
+        ),
+    ),
     "P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3585,6 +3666,17 @@ PROGRAM_P_GATES = {
             "theorem inducedPrincipalRoot_pullback",
             "theorem inducedMinusMatterTrace_pullback",
             "def infinitesimalGenerator",
+        ),
+    ),
+    "P0EFTJanusFixedD8DiffeomorphismCategory4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fixedD8DiffeomorphismCategoryData",
+            "def fixedD8ImmersionGeometry",
+            "def fixedD8DiffeomorphismCategory",
+            "def fixedD8SmoothFieldSectionFunctor",
+            "def fixedD8SmoothScalarSectionFunctor",
+            "def fixedD8SmoothScalarIdentityNaturalOperator",
         ),
     ),
     "P0EFTJanusMappingTorusAbelianGaugeBRST4D.lean": (
