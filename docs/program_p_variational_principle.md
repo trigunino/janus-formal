@@ -488,8 +488,11 @@ source and target components are local diffeomorphisms. Dependent
 source/target fibers, a supplied structured-jet representation functor and
 unique smooth descent of invariant maps are constructed. Supplied low-order
 holonomic families and their `(II,F)` reductions descend smoothly to the true
-quotient. This does not yet construct the physical SpinC representation,
-higher jets, isotropy strata or a Peetre--Slovák integrability theorem.
+quotient. The effective deck groupoid has exactly one isotropy stratum with
+trivial stabilizers, and every supplied structured-jet representation sends
+its endomorphisms to identities. This does not yet construct the physical
+SpinC representation or classify its fiber isotropy, higher jets or a
+Peetre--Slovák integrability theorem.
 Independently, the fixed quotient itself now forms a one-object symmetry
 category with every smooth D8 self-diffeomorphism as an arrow. Smooth fields
 with any normed real coefficient fiber define a contravariant section functor
@@ -634,8 +637,14 @@ squared length. This lemma is now explicit on every canonical chart chosen by
 a cover lift: the pushed latitude normal gives a nonzero quotient class and
 scalar fiber coordinates, while its orthogonal representative has exact
 scalar-square metric value and a continuous local quadratic model. Change-of-
-lift/deck compatibility is now exact at tangent level for every winding; its
-quotient-class/lift descent and global gluing remain open. The actual latitude tangent on
+lift/deck compatibility is now exact at tangent level for every winding and
+supplies a chosen anchor-independent global fiber-linear orthogonal lift that
+represents the quotient class. Its metric square is globally continuous under
+`CanonicalGlobalNormalMetricSquareLocalRegularity`; that local contract and a
+dependent continuous lift record remain open. Under the same contract, the
+square directly defines the global spacelike, timelike, null, non-null and
+joint strata and proves their open/closed laws, total cover and joint-in-null
+inclusion without constructing that record. The actual latitude tangent on
 the throat cover is now explicit and its raw ambient derivative is `(e₀, 0)`.
 The sphere ambient map and its smoothness are public, and the intrinsic ambient
 derivative is exactly factored through the public product-coordinate
@@ -659,8 +668,9 @@ this identity to an `HEq` between the pushed canonical quotient normal and the
 quotient-latitude tangent. An explicit zero-latitude base transport turns this
 bridge into equality in one tangent fiber and is proved to commute with scalar
 multiplication. The pushed canonical normal therefore satisfies the exact
-normal-sign cocycle for every integer winding. Its quotient-class/lift form and
-continuous global gluing remain open.
+normal-sign cocycle for every integer winding and induces the global algebraic
+lift above. The unconditional local regularity proof and dependent continuous
+packaging remain open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -771,8 +781,16 @@ derivative transports the musical equivalence and Lorentz inertia; hence the
 metric-pullback certificate is unconditional. On a supplied smooth orbit,
 the action orbit is exactly constant and has zero derivative; the explicit
 non-vacuous first-variation contract identifies this derivative with the scalar
-diffeomorphism Noether pairing. Separately, the actual metric gradient
-`sharp(dφ)` and an exact divergence/boundary-flux interface now turn the
+diffeomorphism Noether pairing.
+The jointly analytic D8 time action additionally yields its genuine smooth
+tangent ghost and the proof that it is the velocity of the complete flow.
+Restricting to this real direction and the existing `U(1)^2` parameters gives
+the combined metric--matter--gauge `R/B` block and its infinitesimal Noether
+identity. The metric-derivative smoothness/symmetry input remains an explicit
+specialized contract; this does not integrate arbitrary tangent ghosts and
+does not add LL.
+Separately, the actual metric gradient `sharp(dφ)` and an exact
+divergence/boundary-flux interface now turn the
 general first variation into the weak covariant Euler pairing plus flux.
 Zero flux gives the stationarity equivalence, and the construction is
 specialized to the intrinsic D8 metric. The intrinsic contravariant scalar
@@ -803,9 +821,11 @@ Its gradient and raw Hessian are `C∞`, define a coordinate scalar jet and obey
 Schwarz symmetry. The resulting covariant jet, Euler residual, raised gradient
 and canonically realized local stress divergence are also `C∞`, with exact
 identity `div T = EulerResidual · raisedGradient`; Euler conservation follows
-at every patch coordinate. Generic patch construction, overlap compatibility,
-gluing the local connection/scalar-jet data, and global `div_g T = 0` remain
-open.
+at every patch coordinate. For supplied overlap representatives, equality of
+the metric first jet and scalar second jet now implies equality of the local
+Christoffels, covariant jet, Euler residual, raised gradient and divergence.
+Generic patch construction, the real chart-transition theorem producing those
+jet equalities, gluing the local data and global `div_g T = 0` remain open.
 The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form and
 vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
 canonical latitude collar, genuine interval-integral IPP identifies the
@@ -887,9 +907,9 @@ odd-bracket and CME covariance are now unconditional as well. The same phase
 is now coupled faithfully to the actual smooth strictly-positive diagonal
 metric cone through its eight global logarithms, with metric ghosts,
 antifields, corrected square-zero BRST, nonzero action, pointwise/integrated
-CME and exact PT covariance. Derivative-dependent terms and arbitrary
-nonlocal/completed BV functionals for general non-diagonal Lorentz tensors
-remain open. The safe first tensorial level is nevertheless explicit: two
+CME and exact PT covariance. Derivative-dependent terms, completed spaces and
+arbitrary BV functionals for general non-diagonal Lorentz tensors remain open;
+a rank-one nonlocal model is closed below. The safe first tensorial level is nevertheless explicit: two
 smooth symmetric general-metric variations and their antifields form a
 nontrivial odd square-zero doublet, with background-raised trace pairing and a
 graded-skew pointwise Darboux antibracket attached to the independent packet.
@@ -899,12 +919,17 @@ bracket pointwise covariant. On the bulk itself, the genuine background metrics
 now define the general-tensor ultralocal Hamiltonian `1/2 ⟨h⁺,h⁺⟩`. Its affine
 polarization is exact, its actual `HasDerivAt` is the declared antifield-gradient
 pairing, it generates `(h⁺,0)`, has an intrinsic action-`4` nonzero witness, is
-PT/exchange covariant and satisfies the pointwise CME. Exact `L¹` pairing
-obligations and a sufficient continuity contract then integrate this action and
-the represented bracket against the intrinsic canonical Lorentz volume; the
-integrated affine derivative/gradient, PT covariance and represented CME are
-closed under those hypotheses. The continuity contract, derivative terms and
-nonlocal/general functional CME remain open. The actual throat inclusion now restricts every
+PT/exchange covariant and satisfies the pointwise CME. Local tangent/cotangent
+trivializations, smooth inversion of the finite-dimensional musical matrix and
+trace invariance prove every smooth bulk pairing density continuous and `L¹`.
+Thus action/bracket integrability and the integrated affine
+`HasDerivAt`/gradient are unconditional; PT covariance and the represented CME
+remain exact. Certified bulk functional observables now have actual gradients
+and a functional odd bracket. Their rank-one nonlocal master
+`1/2 (∫⟨K,h⁺⟩)²` has an exact affine derivative, functional CME, generated
+square-zero BRST and an intrinsic nonzero witness. Derivative-dependent
+kernels, completed spaces and arbitrary functionals remain open.
+The actual throat inclusion now restricts every
   variation/antifield tensor smoothly. The induced boundary BRST remains
   square-zero and commutes with trace; PT/exchange matching is functional and
   transports the full metric-BV Dirichlet packet. The packet-level pointwise
@@ -919,16 +944,19 @@ nonlocal/general functional CME remain open. The actual throat inclusion now res
   declared `antifieldGradient`. The intrinsic metric in both sectors supplies
   an explicit action-`3` nonzero witness. The action generates `(h⁺,0)`, is
   PT/exchange covariant and satisfies the pointwise CME. The inverse-pairing
-  density has an exact `L¹` obligation and a sufficient global continuity
-  contract. Under the three base/base, base/variation and variation/variation
-  `L¹` hypotheses, the canonical-volume action and represented odd bracket are
-  integrated, their PT/exchange covariance is exact, the quadratic line formula
-  gives a true `HasDerivAt` equal to the integrated `antifieldGradient` pairing,
-  and the represented integrated CME holds. The continuity/smooth inverse-field
-  contract is not discharged. No general functional boundary antibracket/CME,
-  derivative-dependent CME, arbitrary general-throat inverse/classification,
-  Lorentzian preservation of affine variations or nonlocal completion is
-  claimed.
+  density is now proved globally continuous by local tangent/cotangent
+  trivializations, continuous inversion of the finite-dimensional musical map
+  and trace invariance. The continuity contract and every required `L¹`
+  obligation are therefore discharged: the canonical-volume action and
+  represented odd bracket are unconditionally integrable, their PT/exchange
+  covariance is exact, the quadratic line formula gives a true unconditional
+  `HasDerivAt` equal to the integrated `antifieldGradient` pairing, and the
+  represented integrated CME holds. The analogous certified throat functional
+  observables and odd bracket give a rank-one nonlocal master with exact
+  derivative, functional CME, generated square-zero BRST and a nonzero
+  intrinsic throat witness. Derivative-dependent kernels, completed spaces,
+  arbitrary functionals, arbitrary general-throat inverse/classification and
+  Lorentzian preservation of affine variations remain open.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
@@ -1145,7 +1173,15 @@ ledgers are actual derivatives along affine flux curves, and the matched
 derivative vanishes. A further finite-stratified gate sums arbitrary weighted
 Gaussian-normal non-null faces with their exact-inverse GHY curves, genuinely
 integrates the reparametrization shift on oriented null generators, cancels
-the endpoint joints, and proves the total finite residual is zero. These are
+the endpoint joints, and proves the total finite residual is zero.  The finite
+null-face action is now assembled explicitly from the integrated inaffinity,
+the continuously extended expansion counterterm and the endpoint joints.
+Under `k -> exp(sigma) k` and the inverse parameter-measure weight, its two
+face densities acquire exactly the proved local transgression; the full
+action is invariant face by face and after every finite sum.  Its value and
+finite scaling law remain valid at `Theta = 0`, while classical expansion
+variation is correctly restricted to `Theta != 0`.  The ambient geometry must
+still supply the area, generators and `NullFaceIntervalIntegrability`. These are
 still quadrature/cellulation and one-dimensional-generator statements, not an
 arbitrary-coordinate continuum GHY/null/joint theorem. It also supplies a
 continuous but formally
@@ -1187,7 +1223,11 @@ preservation, followed by exact canonical Jacobi for arbitrary symmetric
 nonlinear second jets and actual quadratic-bracket derivatives (neither is an
 actual Candidate-A or continuum ADM closure), a PT-flat vacuum rank no-go and
 a positive-dust constrained witness with independent rank and fixed lapse
-ratio, a
+ratio.  That witness now lies in an explicit affine family whose nonvanishing
+`3 x 3` constraint-minor parameter locus is open and nonempty; independence of
+the three constraint covectors holds throughout that locus and eventually
+around the witness.  This is not a generic phase-space rank theorem, an
+ADM/covariant derivation or a Boulware--Deser exclusion.  A
 one-dimensional constrained-tangent audit separating its negative ambient
 Hessian from zero variation along an exact nonlinear constraint curve, a
 relative-source rejection precursor, a reduced PT-signed source bridge with
