@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusDeckInvariantLorentzCocycle4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
 import Mathlib.Analysis.Normed.Operator.NormedSpace
 
 /-!
@@ -24,6 +25,8 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotient
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusDeckInvariantLorentzCocycle4D
+open P0EFTJanusMappingTorusPTInvolution
+open P0EFTJanusMappingTorusSmoothPTInvolution
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -172,6 +175,86 @@ theorem coverAmbientDerivative_apply_product
         (coverProductDerivative period hPeriod point vector).2) := by
   rw [coverAmbientDerivative_factor]
   rfl
+
+private def ambientTimeReverseLinear :
+    AmbientCoordinates →L[Real] AmbientCoordinates :=
+  (ContinuousLinearEquiv.prodCongr
+    (ContinuousLinearEquiv.refl Real EuclideanR4)
+    (ContinuousLinearEquiv.neg Real)).toContinuousLinearMap
+
+@[simp]
+private theorem ambientTimeReverseLinear_apply
+    (point : AmbientCoordinates) :
+    ambientTimeReverseLinear point = (point.1, -point.2) := by
+  rfl
+
+private def ambientTimeReverseMap
+    (point : AmbientCoordinates) : AmbientCoordinates :=
+  ambientTimeReverseLinear point
+
+private theorem ambientTimeReverseMap_mfderiv
+    (point : AmbientCoordinates) :
+    mfderiv ambientModelWithCorners ambientModelWithCorners
+        ambientTimeReverseMap point = ambientTimeReverseLinear := by
+  rw [mfderiv_eq_fderiv]
+  exact ambientTimeReverseLinear.hasFDerivAt.fderiv
+
+/-- The true ambient immersion derivative is natural under cover time
+reversal: its spatial component is fixed and its time component changes
+sign.  This theorem lives here because the ambient model is intentionally
+private to this gate. -/
+theorem coverAmbientDerivative_timeReverse_components
+    (point : EffectiveCover period hPeriod)
+    (vector : CoverIntrinsicTangent period hPeriod point) :
+    (coverAmbientDerivative period hPeriod
+        (timeReverseCover (sphereData period hPeriod) point)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (timeReverseCover (sphereData period hPeriod)) point vector)).1 =
+        (coverAmbientDerivative period hPeriod point vector).1 ∧
+      (coverAmbientDerivative period hPeriod
+        (timeReverseCover (sphereData period hPeriod) point)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          (timeReverseCover (sphereData period hPeriod)) point vector)).2 =
+        -(coverAmbientDerivative period hPeriod point vector).2 := by
+  have hCover := coverAmbientMap_contMDiff period hPeriod
+  have hReverse := reflectedSphereCover_timeReverse_contMDiff period hPeriod
+  have hAmbient : ContMDiff ambientModelWithCorners ambientModelWithCorners ∞
+      ambientTimeReverseMap :=
+    ambientTimeReverseLinear.contDiff.contMDiff
+  have hMaps :
+      coverAmbientMap period hPeriod ∘
+          timeReverseCover (sphereData period hPeriod) =
+        ambientTimeReverseMap ∘ coverAmbientMap period hPeriod := by
+    funext current
+    apply Prod.ext <;> rfl
+  have hLeftMap := mfderiv_comp point
+    (hCover.mdifferentiable (by simp)
+      (timeReverseCover (sphereData period hPeriod) point))
+    (hReverse.mdifferentiable (by simp) point)
+  have hLeft := DFunLike.congr_fun hLeftMap vector
+  have hRightMap := mfderiv_comp point
+    (hAmbient.mdifferentiable (by simp)
+      (coverAmbientMap period hPeriod point))
+    (hCover.mdifferentiable (by simp) point)
+  have hRight := DFunLike.congr_fun hRightMap vector
+  have hDerivativeMapsMap :=
+    mfderiv_congr (I := coverModelWithCorners)
+      (I' := ambientModelWithCorners) (x := point) hMaps
+  have hDerivativeMaps := DFunLike.congr_fun hDerivativeMapsMap vector
+  have hNatural := hLeft.symm.trans (hDerivativeMaps.trans hRight)
+  rw [ambientTimeReverseMap_mfderiv] at hNatural
+  change coverAmbientDerivative period hPeriod
+      (timeReverseCover (sphereData period hPeriod) point)
+      (mfderiv coverModelWithCorners coverModelWithCorners
+        (timeReverseCover (sphereData period hPeriod)) point vector) =
+    ambientTimeReverseLinear
+      (coverAmbientDerivative period hPeriod point vector) at hNatural
+  rw [ambientTimeReverseLinear_apply] at hNatural
+  constructor
+  · simpa only using
+      congrArg (fun current : AmbientCoordinates => current.1) hNatural
+  · simpa only using
+      congrArg (fun current : AmbientCoordinates => current.2) hNatural
 
 /-- The derivative of the immersion varies smoothly as a tangent-bundle hom. -/
 def coverAmbientDerivativeSection :

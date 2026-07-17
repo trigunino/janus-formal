@@ -63,6 +63,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitCandidatePointwiseEuler
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricCoupledScalarMatterJetVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricInducedScalarStressVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusScalarStressCovariantJetConservation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusScalarStressCoordinateConnectionJet4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusScalarStressLeviCivitaConnectionJet4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedScalarStressVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHolonomicScalarFieldVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHolonomicMetricScalarVariation4D
@@ -197,6 +200,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostPositiveMetricThroatBV4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostFinitePositiveMetricBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricBVFirstLevel4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzMetricBVPTCovariance4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothSpacetimeBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothSpacetimeBVPTCovariance4D
@@ -236,7 +240,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalLatitudeNormalLorentz4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionLocal4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionDeck4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionTransportBridge4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionWinding4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicLorentzMetricPTFixed4D
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinProjection
@@ -525,6 +532,9 @@ structure ProgramStatus where
   pcExplicitCandidatePointwiseEulerHelmholtzProved : Prop
   paIndependentMetricMatterJetVariationProved : Prop
   paMetricInducedScalarStressVariation4DProved : Prop
+  paScalarStressCovariantJetConservation4DProved : Prop
+  paScalarStressCoordinateConnectionJet4DProved : Prop
+  paScalarStressLeviCivitaConnectionJet4DProved : Prop
   paIntegratedTwoSectorScalarStressVariation4DProved : Prop
   paFlatChartHolonomicScalarFieldVariation4DProved : Prop
   paFlatChartHolonomicMetricScalarVariation4DProved : Prop
@@ -558,7 +568,10 @@ structure ProgramStatus where
   paEffectiveD8IntrinsicCanonicalLatitudeNormalLorentz4DProved : Prop
   paEffectiveD8IntrinsicCanonicalNormalProjectionLocal4DProved : Prop
   paEffectiveD8IntrinsicCanonicalNormalProjectionDeck4DProved : Prop
+  paEffectiveD8IntrinsicCanonicalNormalProjectionTransportBridge4DProved : Prop
+  paEffectiveD8IntrinsicCanonicalNormalProjectionWinding4DProved : Prop
   paEffectiveD8IntrinsicMetricThroatNondegenerate4DProved : Prop
+  paEffectiveD8IntrinsicLorentzMetricPTFixed4DProved : Prop
   paEffectiveD8AmbientTangentOrientationCocycleProved : Prop
   paEffectiveD8AmbientTangentQuadraticReductionFrontierProved : Prop
   paEffectiveD8AmbientSpinProjectionConstructed : Prop
@@ -695,6 +708,7 @@ structure ProgramStatus where
   paEffectiveD8NonabelianPositiveMetricThroatBV4DProved : Prop
   paEffectiveD8NonabelianFinitePositiveMetricBVMaster4DProved : Prop
   paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved : Prop
+  paEffectiveD8GeneralLorentzMetricBVPTCovariance4DProved : Prop
   paEffectiveD8NonabelianSmoothThroatBVMaster4DProved : Prop
   paEffectiveD8NonabelianSmoothSpacetimeBVMaster4DProved : Prop
   paEffectiveD8NonabelianSmoothSpacetimeBVPTCovariance4DProved : Prop
@@ -927,6 +941,9 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.pcExplicitCandidatePointwiseEulerHelmholtzProved /\
   s.paIndependentMetricMatterJetVariationProved /\
   s.paMetricInducedScalarStressVariation4DProved /\
+  s.paScalarStressCovariantJetConservation4DProved /\
+  s.paScalarStressCoordinateConnectionJet4DProved /\
+  s.paScalarStressLeviCivitaConnectionJet4DProved /\
   s.paIntegratedTwoSectorScalarStressVariation4DProved /\
   s.paFlatChartHolonomicScalarFieldVariation4DProved /\
   s.paFlatChartHolonomicMetricScalarVariation4DProved /\
@@ -960,7 +977,10 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8IntrinsicCanonicalLatitudeNormalLorentz4DProved /\
   s.paEffectiveD8IntrinsicCanonicalNormalProjectionLocal4DProved /\
   s.paEffectiveD8IntrinsicCanonicalNormalProjectionDeck4DProved /\
+  s.paEffectiveD8IntrinsicCanonicalNormalProjectionTransportBridge4DProved /\
+  s.paEffectiveD8IntrinsicCanonicalNormalProjectionWinding4DProved /\
   s.paEffectiveD8IntrinsicMetricThroatNondegenerate4DProved /\
+  s.paEffectiveD8IntrinsicLorentzMetricPTFixed4DProved /\
   s.paEffectiveD8AmbientTangentOrientationCocycleProved /\
   s.paEffectiveD8AmbientTangentQuadraticReductionFrontierProved /\
   s.paEffectiveD8AmbientSpinProjectionConstructed /\
@@ -1098,6 +1118,7 @@ def programPFoundationClosed (s : ProgramStatus) : Prop :=
   s.paEffectiveD8NonabelianPositiveMetricThroatBV4DProved /\
   s.paEffectiveD8NonabelianFinitePositiveMetricBVMaster4DProved /\
   s.paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved /\
+  s.paEffectiveD8GeneralLorentzMetricBVPTCovariance4DProved /\
   s.paEffectiveD8NonabelianSmoothThroatBVMaster4DProved /\
   s.paEffectiveD8NonabelianSmoothSpacetimeBVMaster4DProved /\
   s.paEffectiveD8NonabelianSmoothSpacetimeBVPTCovariance4DProved /\

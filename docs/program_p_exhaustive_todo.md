@@ -15,6 +15,9 @@ Légende :
 - **acceptation** : résultat minimal permettant de fermer le bloc ;
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
+Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
+**483 fermées sur 608 ; 125 ouvertes**.
+
 Documents de référence :
 
 - `docs/program_master_roadmap.md` ;
@@ -184,6 +187,16 @@ correspondance algébrique des coefficients, puis asymptotique effective.
             dépendant, invariance du modèle quadratique sous le cocycle
             `-id`, et égalité des carrés des deux relèvements locaux. Le
             recollement continu en une section globale reste ouvert.
+            - [x] Étendre la loi de deck de la courbe quotient à tout
+              `winding : ℤ` par le caractère `normalSignRepresentation` : les
+              enroulements pairs agissent trivialement et les impairs par
+              renversement du paramètre ; étendre aussi le `HEq` tangent et
+              l'invariance du modèle scalaire quadratique à tout winding. Le
+              recollement vectoriel global n'est pas revendiqué.
+            - [x] Éliminer le cast caché au niveau cover en prouvant par `HEq`
+              que le normal de latitude nommé est exactement sa dérivée brute
+              transportée le long de l'égalité à latitude zéro. Le bridge vers
+              la dérivée quotient et le recollement global restent ouverts.
 - [x] Construire la ligne normale, son orientation locale et son recollement
   global sur le domaine non orientable pertinent.
   - [x] Construire la ligne normale associée comme quotient d'orbites
@@ -890,6 +903,10 @@ par toute évolution admissible.
                           l'attacher au paquet indépendant. Les variations
                           affines ne sont pas prouvées lorentziennes et aucune
                           CME fonctionnelle n'est revendiquée.
+                          - [x] Munir ce premier niveau d'un PT/échange
+                            involutif commutant au BRST et prouver la covariance
+                            pointwise du pairing relevé et de l'odd bracket. Ni
+                            CME fonctionnelle ni trace BV au bord n'est incluse.
   - [x] inclusion effective du throat et champs de coefficients LL lisses ; les
     strates et les PDE LL restent ouvertes ;
   - [x] espaces fonctionnels lisses/L², régularité et condition de Dirichlet ; Sobolev reste séparé.
@@ -1132,6 +1149,12 @@ par toute évolution admissible.
         `HasNoTangentialRadical`, la non-dégénérescence de sa trace au throat
         et son empaquetage en `SmoothNondegenerateThroatMetric`. La
         classification de toutes les métriques générales reste ouverte.
+        - [x] Prouver la naturalité publique de la dérivée ambiante sous
+          renversement du temps, l'isométrie exacte du tenseur cover et la
+          naturalité des différentielles de projection ; par unicité de la
+          descente, conclure que la métrique intrinsèque et la paire de deux
+          secteurs sont des points fixes PT, et que sa trace throat reste fixe
+          et non dégénérée.
     - [x] Sur les champs bruts de deux-tenseurs covariants généraux, construire
       le pullback par la vraie involution PT analytique, prouver l'involution
       différentielle exacte, l'échange des deux secteurs et la préservation de
@@ -1419,6 +1442,27 @@ par toute évolution admissible.
     covariance/échange ne les affirme pas. L'identité locale du collier
     `E = 2 T_nn` et la constance de `T_nn` n'établissent pas cette divergence
     covariante en dimension quatre.
+    - [x] Au niveau d'un jet scalaire covariant d'ordre deux dans un repère
+      normal 4D, développer explicitement `∇_μ T^{μν}` et prouver
+      `div T = (□φ - V'(φ)) sharp(dφ)`, puis sa nullité sous l'équation
+      d'Euler. Raccorder exactement les conventions de potentiel du stress
+      fibre et du stress matriciel existants. La connexion lisse, le champ de
+      jets global et le théorème global `div_g T = 0` restent ouverts.
+      - [x] Transporter cette identité en coordonnées locales arbitraires sous
+        une interface de jet de connexion métrique-compatible et sans torsion :
+        construire le Hessien covariant symétrique, réaliser
+        `∇T = ∂T + ΓT + ΓT`, annuler exactement les corrections de Christoffel
+        et déduire conservation sous Euler. La décharge algébrique ponctuelle
+        de cette interface est fermée ci-dessous ; sa réalisation par une
+        connexion et des champs lisses globaux, puis `div_g T = 0`, reste
+        ouverte.
+        - [x] À partir d'une métrique symétrique non dégénérée et d'un premier
+          jet métrique symétrique dans ses indices métriques, construire les
+          coefficients locaux de Levi-Civita, prouver l'absence de torsion,
+          les compatibilités covariante et contravariante, et la formule exacte
+          `∂g⁻¹ = -g⁻¹(∂g)g⁻¹`; instancier le jet de connexion et en déduire la
+          conservation locale ponctuelle sous Euler. Aucun champ, connexion
+          lisse ou théorème de divergence global n'est affirmé.
 - [ ] Définir le contenu de champs exact qui sera utilisé par D9/D10 et par le
   régulateur quantique.
   - [x] Projeter de façon typée la même variation indépendante globale vers

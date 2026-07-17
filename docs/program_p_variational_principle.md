@@ -651,7 +651,10 @@ packaged on the nondegenerate metric domain. Under one deck turn the quotient
 latitude curve reverses its parameter, the tangent normal obeys the exact
 dependent sign law, and the `-id` clutching preserves both the scalar-square
 model and the metric square of the local orthogonal lift. Continuous global
-gluing of those local lifts remains open.
+gluing of those local lifts remains open. The named cover latitude normal is
+now explicitly `HEq` to the raw derivative of its curve after transport along
+the zero-latitude equality. Transport of this identity to the quotient
+derivative remains open.
 The actual quotient charts also give the real ambient tangent transitions,
 their invertible differentials, nonzero determinants and exact orientation
 parity cocycle. An explicit positive nondegenerate model form is now transported by
@@ -704,6 +707,11 @@ boundary data remain open. A pointwise PT/exchange matching relation on two
 smooth metric boundary references avoids assuming that missing pullback; it
 is functional, preserves nondegeneracy, is satisfied by actual ambient metric
 traces, and transports the full metric/non-metric Dirichlet equality.
+For the retained intrinsic metric, time-reversal naturality of the cover
+immersion derivative is now public and proves exact cover isometry. Naturality
+of quotient projection derivatives and uniqueness of tensor descent then make
+the complete metric/musical and the equal two-sector pair genuine PT fixed
+points; the intrinsic throat trace is fixed and remains nondegenerate.
 For the static scalar core, a pointwise uniform graph-ellipticity contract now
 implies the energy-to-`H¹` bound and continuous closure bridge, after exact
 construction of the Jacobi density root in `L²`. Quantitative control of the
@@ -768,7 +776,21 @@ tests. Its measured pairing with arbitrary cotangent test fields transports
 integrability iff and is invariant under diffeomorphism plus sector exchange.
 These pointwise, measured, two-sector and integrated-variation laws are now
 packaged by one unconditional scalar-stress covariance/exchange certificate;
-it deliberately makes no local stress-conservation claim.
+that covariance certificate alone makes no conservation claim. A separate
+covariant scalar second-jet calculation in a four-dimensional normal frame
+now proves the exact local identity
+`∇_μ T^{μν} = (□φ - V'(φ)) sharp(dφ)^ν` and its vanishing under the Euler
+residual. It recovers both existing potential conventions: `V' = -m²φ` for
+the intrinsic-fiber stress and `V' = m²φ + source` for the matrix stress. A
+pointwise metric-compatible torsion-free connection jet now transports this
+identity to arbitrary coordinates: the covariant Hessian is symmetric and an
+explicit `∂T + ΓT + ΓT` realization cancels to the normal representative,
+again giving Euler conservation. The connection-jet interface is now
+discharged pointwise from a symmetric nondegenerate metric and a
+metric-symmetric first jet: the local Levi-Civita formula is torsion-free,
+obeys covariant and inverse-metric compatibility, and uses the exact identity
+`∂g⁻¹ = -g⁻¹(∂g)g⁻¹`. Genuine smooth/global connections and fields, and the
+global theorem `div_g T = 0`, remain open.
 The concrete throat flux `trace(ψ) · dφ(n)` equals its metric-gradient form and
 vanishes pointwise and integrally for homogeneous Dirichlet variations. On the
 canonical latitude collar, genuine interval-integral IPP identifies the
@@ -798,7 +820,7 @@ intrinsic unit normal identifies this energy exactly with twice the
 normal-normal component of the general scalar stress on the normal-projected
 collar jet; that component has zero derivative and is locally constant under
 the collar Euler equation. This is not a four-dimensional covariant stress
-divergence theorem. A global geometric Stokes theorem identifying the abstract
+divergence theorem for smooth fields. A global geometric Stokes theorem identifying the abstract
 bulk boundary functional with this collar flux, a global canonical metric
 normal, and extension to a covariant four-dimensional Noether current with
 enough test ghosts remain open.
@@ -856,7 +878,10 @@ remain open. The safe first tensorial level is nevertheless explicit: two
 smooth symmetric general-metric variations and their antifields form a
 nontrivial odd square-zero doublet, with background-raised trace pairing and a
 graded-skew pointwise Darboux antibracket attached to the independent packet.
-No Lorentzian preservation of affine variations or functional CME is claimed.
+Analytic PT pullback with sector exchange is now an involution on this level,
+commutes with its BRST differential and makes both the raised pairing and odd
+bracket pointwise covariant. No Lorentzian preservation of affine variations,
+functional CME or BV throat-trace theorem is claimed.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
