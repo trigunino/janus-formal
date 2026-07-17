@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**499 fermées sur 624 ; 125 ouvertes**.
+**500 fermées sur 625 ; 125 ouvertes**.
 
 Documents de référence :
 
@@ -1991,6 +1991,10 @@ champs et avec les mêmes conditions au bord.
         caractériser son annulation par l'annulation simultanée des deux
         ghosts `U(1)` et du ghost tangent au point inspecté. Les domaines du
         vrai opérateur global restent ouverts.
+        - [x] Prouver en outre que ce symbole non nul est surjectif, que son
+          image est totale et donc qu'il est bijectif. Cette exactitude reste
+          celle du modèle algébrique ponctuel, sans assertion sur l'opérateur
+          différentiel global.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
