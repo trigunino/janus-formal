@@ -1475,6 +1475,256 @@ theorem throatScalarLieDerivative_one
   rw [mvfderiv_const]
   rfl
 
+/-- Pointwise multiplication of a throat scalar and tangent ghost. -/
+def throatScalarSmulGhost
+    (scalar : ThroatScalar period hPeriod)
+    (ghost : CInfinityThroatGhost period hPeriod) :
+    CInfinityThroatGhost period hPeriod where
+  toFun := fun point => scalar point • ghost point
+  contMDiff_toFun := scalar.contMDiff.smul_section ghost.contMDiff
+
+theorem throatScalarSmulGhost_addGhost
+    (scalar : ThroatScalar period hPeriod)
+    (first second : CInfinityThroatGhost period hPeriod) :
+    throatScalarSmulGhost period hPeriod scalar (first + second) =
+      throatScalarSmulGhost period hPeriod scalar first +
+        throatScalarSmulGhost period hPeriod scalar second := by
+  apply ContMDiffSection.ext
+  intro point
+  exact smul_add _ _ _
+
+theorem throatGhostLieBracket_add_left
+    (first second third : CInfinityThroatGhost period hPeriod) :
+    throatGhostLieBracket period hPeriod (first + second) third =
+      throatGhostLieBracket period hPeriod first third +
+        throatGhostLieBracket period hPeriod second third := by
+  apply ContMDiffSection.ext
+  intro point
+  exact VectorField.mlieBracket_add_left
+    (first.contMDiff.mdifferentiableAt (by simp))
+    (second.contMDiff.mdifferentiableAt (by simp))
+
+theorem throatGhostLieBracket_add_right
+    (first second third : CInfinityThroatGhost period hPeriod) :
+    throatGhostLieBracket period hPeriod first (second + third) =
+      throatGhostLieBracket period hPeriod first second +
+        throatGhostLieBracket period hPeriod first third := by
+  apply ContMDiffSection.ext
+  intro point
+  exact VectorField.mlieBracket_add_right
+    (second.contMDiff.mdifferentiableAt (by simp))
+    (third.contMDiff.mdifferentiableAt (by simp))
+
+theorem throatGhostLieBracket_jacobi
+    (first second third : CInfinityThroatGhost period hPeriod) :
+    throatGhostLieBracket period hPeriod first
+        (throatGhostLieBracket period hPeriod second third) =
+      throatGhostLieBracket period hPeriod
+          (throatGhostLieBracket period hPeriod first second) third +
+        throatGhostLieBracket period hPeriod second
+          (throatGhostLieBracket period hPeriod first third) := by
+  apply ContMDiffSection.ext
+  intro point
+  have hSmooth : minSmoothness Real 2 ≤ (∞ : ℕ∞ω) := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    change ((2 : ℕ∞) : ℕ∞ω) ≤ ((⊤ : ℕ∞) : ℕ∞ω)
+    exact WithTop.coe_le_coe.mpr le_top
+  exact VectorField.leibniz_identity_mlieBracket_apply
+    ((first.contMDiff.of_le hSmooth) point)
+    ((second.contMDiff.of_le hSmooth) point)
+    ((third.contMDiff.of_le hSmooth) point)
+
+theorem throatGhostLieBracket_scalarSmul_right
+    (first second : CInfinityThroatGhost period hPeriod)
+    (scalar : ThroatScalar period hPeriod) :
+    throatGhostLieBracket period hPeriod first
+        (throatScalarSmulGhost period hPeriod scalar second) =
+      throatScalarSmulGhost period hPeriod
+          (throatScalarLieDerivative period hPeriod first scalar) second +
+        throatScalarSmulGhost period hPeriod scalar
+          (throatGhostLieBracket period hPeriod first second) := by
+  apply ContMDiffSection.ext
+  intro point
+  exact VectorField.mlieBracket_smul_right
+    (scalar.contMDiff.mdifferentiableAt (by simp))
+    (second.contMDiff.mdifferentiableAt (by simp))
+
+private def finiteGeneratorCInfinityThroatGhost
+    (index : Fin
+      (finiteSmoothThroatGeneratingFrame period hPeriod).count) :
+    CInfinityThroatGhost period hPeriod where
+  toFun := fun point =>
+    (finiteSmoothThroatGeneratingFrame period hPeriod).vectorAt point index
+  contMDiff_toFun :=
+    (finiteSmoothThroatGeneratingFrame period hPeriod).contMDiff_vector index
+
+private theorem exists_finiteGeneratorCInfinityThroatGhost_ne_zero_at
+    (point : EffectiveThroat period hPeriod) :
+    ∃ index : Fin
+        (finiteSmoothThroatGeneratingFrame period hPeriod).count,
+      finiteGeneratorCInfinityThroatGhost period hPeriod index point ≠ 0 := by
+  by_contra hExists
+  have hAllZero : ∀ index : Fin
+      (finiteSmoothThroatGeneratingFrame period hPeriod).count,
+      (finiteSmoothThroatGeneratingFrame period hPeriod).vectorAt point index = 0 := by
+    intro index
+    by_contra hNonzero
+    exact hExists ⟨index, hNonzero⟩
+  have hSpanLe : Submodule.span Real
+      (Set.range
+        ((finiteSmoothThroatGeneratingFrame period hPeriod).vectorAt point)) ≤
+      ⊥ := by
+    apply Submodule.span_le.mpr
+    rintro vector ⟨index, rfl⟩
+    rw [hAllZero index]
+    exact Submodule.zero_mem ⊥
+  have hTopLe : (⊤ : Submodule Real
+      (TangentSpace throatCoverModelWithCorners point)) ≤ ⊥ := by
+    rw [← (finiteSmoothThroatGeneratingFrame period hPeriod).spansAt point]
+    exact hSpanLe
+  let vertical : TangentSpace throatCoverModelWithCorners point := (0, 1)
+  have hVerticalNe : vertical ≠ 0 := by
+    intro hZero
+    have hSecond := congrArg
+      (fun vector : TangentSpace throatCoverModelWithCorners point =>
+        vector.2) hZero
+    change (1 : Real) = 0 at hSecond
+    norm_num at hSecond
+  have hVerticalZero : vertical = 0 := by
+    have hVerticalMem : vertical ∈ (⊥ : Submodule Real
+        (TangentSpace throatCoverModelWithCorners point)) :=
+      hTopLe Submodule.mem_top
+    simpa using hVerticalMem
+  exact hVerticalNe hVerticalZero
+
+/-- Directional differentiation represents the intrinsic throat Lie bracket. -/
+theorem throatScalarLieDerivative_bracket
+    (first second : CInfinityThroatGhost period hPeriod)
+    (scalar : ThroatScalar period hPeriod) :
+    throatScalarLieDerivative period hPeriod
+        (throatGhostLieBracket period hPeriod first second) scalar =
+      throatScalarLieDerivative period hPeriod first
+          (throatScalarLieDerivative period hPeriod second scalar) -
+        throatScalarLieDerivative period hPeriod second
+          (throatScalarLieDerivative period hPeriod first scalar) := by
+  apply ContMDiffMap.ext
+  intro point
+  obtain ⟨index, hIndex⟩ :=
+    exists_finiteGeneratorCInfinityThroatGhost_ne_zero_at
+      period hPeriod point
+  let third := finiteGeneratorCInfinityThroatGhost period hPeriod index
+  have hJacobi := throatGhostLieBracket_jacobi period hPeriod first second
+    (throatScalarSmulGhost period hPeriod scalar third)
+  rw [throatGhostLieBracket_scalarSmul_right
+        period hPeriod second third scalar,
+    throatGhostLieBracket_add_right period hPeriod,
+    throatGhostLieBracket_scalarSmul_right period hPeriod first third
+      (throatScalarLieDerivative period hPeriod second scalar),
+    throatGhostLieBracket_scalarSmul_right period hPeriod first
+      (throatGhostLieBracket period hPeriod second third) scalar,
+    throatGhostLieBracket_scalarSmul_right period hPeriod
+      (throatGhostLieBracket period hPeriod first second) third scalar,
+    throatGhostLieBracket_scalarSmul_right period hPeriod first third scalar,
+    throatGhostLieBracket_add_right period hPeriod,
+    throatGhostLieBracket_scalarSmul_right period hPeriod second third
+      (throatScalarLieDerivative period hPeriod first scalar),
+    throatGhostLieBracket_scalarSmul_right period hPeriod second
+      (throatGhostLieBracket period hPeriod first third) scalar,
+    throatGhostLieBracket_jacobi period hPeriod first second third,
+    throatScalarSmulGhost_addGhost] at hJacobi
+  have hGhost :
+      throatScalarSmulGhost period hPeriod
+          (throatScalarLieDerivative period hPeriod first
+            (throatScalarLieDerivative period hPeriod second scalar)) third =
+        throatScalarSmulGhost period hPeriod
+            (throatScalarLieDerivative period hPeriod
+              (throatGhostLieBracket period hPeriod first second) scalar) third +
+          throatScalarSmulGhost period hPeriod
+            (throatScalarLieDerivative period hPeriod second
+              (throatScalarLieDerivative period hPeriod first scalar)) third := by
+    let leading := throatScalarSmulGhost period hPeriod
+      (throatScalarLieDerivative period hPeriod first
+        (throatScalarLieDerivative period hPeriod second scalar)) third
+    let sharedFirst := throatScalarSmulGhost period hPeriod
+      (throatScalarLieDerivative period hPeriod second scalar)
+      (throatGhostLieBracket period hPeriod first third)
+    let sharedSecond := throatScalarSmulGhost period hPeriod
+      (throatScalarLieDerivative period hPeriod first scalar)
+      (throatGhostLieBracket period hPeriod second third)
+    let sharedThird := throatScalarSmulGhost period hPeriod scalar
+      (throatGhostLieBracket period hPeriod
+        (throatGhostLieBracket period hPeriod first second) third)
+    let sharedFourth := throatScalarSmulGhost period hPeriod scalar
+      (throatGhostLieBracket period hPeriod second
+        (throatGhostLieBracket period hPeriod first third))
+    let remainder := throatScalarSmulGhost period hPeriod
+        (throatScalarLieDerivative period hPeriod
+          (throatGhostLieBracket period hPeriod first second) scalar) third +
+      throatScalarSmulGhost period hPeriod
+        (throatScalarLieDerivative period hPeriod second
+          (throatScalarLieDerivative period hPeriod first scalar)) third
+    let common := sharedFirst + sharedSecond + sharedThird + sharedFourth
+    have hCancelled := congrArg
+      (fun ghost : CInfinityThroatGhost period hPeriod => ghost - common)
+      hJacobi
+    have hLeading : leading = remainder := by
+      calc
+        leading = _ := by
+          dsimp [leading, sharedFirst, sharedSecond, sharedThird, sharedFourth,
+            common]
+          abel
+        _ = _ := hCancelled
+        _ = remainder := by
+          dsimp [remainder, sharedFirst, sharedSecond, sharedThird,
+            sharedFourth, common]
+          abel
+    simpa [leading, remainder] using hLeading
+  have hPoint := congrArg
+    (fun ghost : CInfinityThroatGhost period hPeriod => ghost point) hGhost
+  have hPoint' :
+      throatScalarLieDerivative period hPeriod first
+            (throatScalarLieDerivative period hPeriod second scalar) point •
+          third point =
+        (throatScalarLieDerivative period hPeriod
+              (throatGhostLieBracket period hPeriod first second) scalar point +
+          throatScalarLieDerivative period hPeriod second
+            (throatScalarLieDerivative period hPeriod first scalar) point) •
+          third point := by
+    simpa [throatScalarSmulGhost, add_smul] using hPoint
+  have hScalar := smul_left_injective Real hIndex hPoint'
+  change throatScalarLieDerivative period hPeriod
+      (throatGhostLieBracket period hPeriod first second) scalar point =
+    throatScalarLieDerivative period hPeriod first
+        (throatScalarLieDerivative period hPeriod second scalar) point -
+      throatScalarLieDerivative period hPeriod second
+        (throatScalarLieDerivative period hPeriod first scalar) point
+  linarith
+
+theorem throatScalarLieDerivative_mul
+    (ghost : CInfinityThroatGhost period hPeriod)
+    (first second : ThroatScalar period hPeriod) :
+    throatScalarLieDerivative period hPeriod ghost (first * second) =
+      throatScalarLieDerivative period hPeriod ghost first * second +
+        first * throatScalarLieDerivative period hPeriod ghost second := by
+  apply ContMDiffMap.ext
+  intro point
+  change mvfderiv throatCoverModelWithCorners
+      ((first : EffectiveThroat period hPeriod → Real) *
+        (second : EffectiveThroat period hPeriod → Real))
+      point (ghost point) = _
+  rw [mvfderiv_mul
+    (first.contMDiff.mdifferentiableAt (by simp))
+    (second.contMDiff.mdifferentiableAt (by simp))]
+  change first point *
+        mvfderiv throatCoverModelWithCorners second point (ghost point) +
+      second point *
+        mvfderiv throatCoverModelWithCorners first point (ghost point) =
+    mvfderiv throatCoverModelWithCorners first point (ghost point) *
+        second point +
+      first point *
+        mvfderiv throatCoverModelWithCorners second point (ghost point)
+  ring
+
 /-- The throat scalar action, linear in both the ghost and scalar slots. -/
 def throatScalarGhostAction :
     CInfinityThroatGhost period hPeriod →ₗ[Real]
@@ -1556,6 +1806,180 @@ theorem throatCorrectedCombinedLinear_tmul
     throatExteriorGhostScalarAction_tmul]
   abel
 
+/-- Coefficient parity extended trivially over throat scalars. -/
+def throatExteriorScalarParity :
+    ThroatTotal period hPeriod →ₐ[Real] ThroatTotal period hPeriod :=
+  Algebra.TensorProduct.map ghostCoefficientParity
+    (AlgHom.id Real (ThroatScalar period hPeriod))
+
+@[simp]
+theorem throatExteriorScalarParity_tmul
+    (coefficient : Coefficient) (scalar : ThroatScalar period hPeriod) :
+    throatExteriorScalarParity period hPeriod
+        (coefficient ⊗ₜ[Real] scalar) =
+      ghostCoefficientParity coefficient ⊗ₜ[Real] scalar := by
+  simp [throatExteriorScalarParity]
+
+theorem throatExteriorScalarParity_involutive
+    (element : ThroatTotal period hPeriod) :
+    throatExteriorScalarParity period hPeriod
+        (throatExteriorScalarParity period hPeriod element) = element := by
+  induction element using TensorProduct.induction_on with
+  | zero => simp
+  | tmul coefficient scalar =>
+      rw [throatExteriorScalarParity_tmul,
+        throatExteriorScalarParity_tmul]
+      exact congrArg (fun value => value ⊗ₜ[Real] scalar)
+        (CliffordAlgebra.involute_involutive coefficient)
+  | add first second firstHypothesis secondHypothesis =>
+      simp [map_add, firstHypothesis, secondHypothesis]
+
+private theorem throatExterior_ι_supercommute
+    (vector : OddGeneratorSpace) (coefficient : Coefficient) :
+    ExteriorAlgebra.ι Real vector * coefficient =
+      CliffordAlgebra.involute coefficient *
+        ExteriorAlgebra.ι Real vector := by
+  induction coefficient using CliffordAlgebra.left_induction with
+  | algebraMap scalar =>
+      simp [Algebra.commutes]
+  | add first second firstHypothesis secondHypothesis =>
+      simp only [mul_add, map_add, firstHypothesis, secondHypothesis,
+        add_mul]
+  | ι_mul coefficient secondVector hypothesis =>
+      have hAnti :
+          ExteriorAlgebra.ι Real vector *
+              ExteriorAlgebra.ι Real secondVector =
+            -(ExteriorAlgebra.ι Real secondVector *
+              ExteriorAlgebra.ι Real vector) :=
+        eq_neg_of_add_eq_zero_left
+          (ExteriorAlgebra.ι_add_mul_swap
+            (R := Real) vector secondVector)
+      calc
+        ExteriorAlgebra.ι Real vector *
+            (ExteriorAlgebra.ι Real secondVector * coefficient) =
+          (ExteriorAlgebra.ι Real vector *
+              ExteriorAlgebra.ι Real secondVector) * coefficient := by
+            rw [mul_assoc]
+        _ = (-(ExteriorAlgebra.ι Real secondVector *
+              ExteriorAlgebra.ι Real vector)) * coefficient := by
+            rw [hAnti]
+        _ = -(ExteriorAlgebra.ι Real secondVector *
+              (ExteriorAlgebra.ι Real vector * coefficient)) := by
+            simp only [neg_mul, mul_assoc]
+        _ = -(ExteriorAlgebra.ι Real secondVector *
+              (CliffordAlgebra.involute coefficient *
+                ExteriorAlgebra.ι Real vector)) := by
+            rw [hypothesis]
+        _ = CliffordAlgebra.involute
+              (ExteriorAlgebra.ι Real secondVector * coefficient) *
+                ExteriorAlgebra.ι Real vector := by
+            rw [map_mul, CliffordAlgebra.involute_ι]
+            simp only [neg_mul, mul_assoc]
+
+@[simp]
+private theorem throatGhostCoefficientParity_oddGenerator
+    (index : Fin 3) :
+    ghostCoefficientParity (oddGenerator index) = -oddGenerator index := by
+  simp [ghostCoefficientParity, oddGenerator]
+
+private theorem throatOddGenerator_supercommute
+    (index : Fin 3) (coefficient : Coefficient) :
+    oddGenerator index * coefficient =
+      ghostCoefficientParity coefficient * oddGenerator index :=
+  throatExterior_ι_supercommute (oddBasisVector index) coefficient
+
+private theorem throatCorrectedCombinedLinear_parity_tmul
+    (coefficient : Coefficient) (scalar : ThroatScalar period hPeriod) :
+    throatExteriorScalarParity period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod
+          (coefficient ⊗ₜ[Real] scalar)) =
+      -throatCorrectedCombinedLinear period hPeriod
+        (ghostCoefficientParity coefficient ⊗ₜ[Real] scalar) := by
+  rw [throatCorrectedCombinedLinear_tmul,
+    map_add, map_add, map_add,
+    throatExteriorScalarParity_tmul,
+    throatExteriorScalarParity_tmul,
+    throatExteriorScalarParity_tmul,
+    throatExteriorScalarParity_tmul,
+    spatialRotationKoszulDifferential_parity_odd,
+    throatCorrectedCombinedLinear_tmul]
+  simp only [map_mul, throatGhostCoefficientParity_oddGenerator,
+    neg_mul, TensorProduct.neg_tmul, neg_add_rev]
+  abel
+
+theorem throatCorrectedCombinedLinear_parity_odd
+    (element : ThroatTotal period hPeriod) :
+    throatExteriorScalarParity period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod element) =
+      -throatCorrectedCombinedLinear period hPeriod
+        (throatExteriorScalarParity period hPeriod element) := by
+  induction element using TensorProduct.induction_on with
+  | zero => simp
+  | tmul coefficient scalar =>
+      rw [throatExteriorScalarParity_tmul]
+      exact throatCorrectedCombinedLinear_parity_tmul
+        period hPeriod coefficient scalar
+  | add first second firstHypothesis secondHypothesis =>
+      simp only [map_add, firstHypothesis, secondHypothesis, neg_add]
+
+private theorem throatCorrectedCombinedLinear_leibniz_tmul
+    (firstCoefficient secondCoefficient : Coefficient)
+    (firstScalar secondScalar : ThroatScalar period hPeriod) :
+    throatCorrectedCombinedLinear period hPeriod
+        ((firstCoefficient ⊗ₜ[Real] firstScalar) *
+          (secondCoefficient ⊗ₜ[Real] secondScalar)) =
+      throatCorrectedCombinedLinear period hPeriod
+          (firstCoefficient ⊗ₜ[Real] firstScalar) *
+            (secondCoefficient ⊗ₜ[Real] secondScalar) +
+        throatExteriorScalarParity period hPeriod
+            (firstCoefficient ⊗ₜ[Real] firstScalar) *
+          throatCorrectedCombinedLinear period hPeriod
+            (secondCoefficient ⊗ₜ[Real] secondScalar) := by
+  rw [Algebra.TensorProduct.tmul_mul_tmul,
+    throatCorrectedCombinedLinear_tmul,
+    spatialRotationKoszulDifferential_leibniz,
+    throatScalarLieDerivative_mul,
+    throatScalarLieDerivative_mul,
+    throatScalarLieDerivative_mul,
+    throatCorrectedCombinedLinear_tmul,
+    throatCorrectedCombinedLinear_tmul,
+    throatExteriorScalarParity_tmul]
+  simp only [TensorProduct.add_tmul, TensorProduct.tmul_add,
+    add_mul, mul_add, Algebra.TensorProduct.tmul_mul_tmul]
+  rw [← mul_assoc (ghostCoefficientParity firstCoefficient)
+      (oddGenerator 0) secondCoefficient,
+    ← mul_assoc (ghostCoefficientParity firstCoefficient)
+      (oddGenerator 1) secondCoefficient,
+    ← mul_assoc (ghostCoefficientParity firstCoefficient)
+      (oddGenerator 2) secondCoefficient,
+    ← throatOddGenerator_supercommute 0 firstCoefficient,
+    ← throatOddGenerator_supercommute 1 firstCoefficient,
+    ← throatOddGenerator_supercommute 2 firstCoefficient]
+  simp only [mul_assoc]
+  module
+
+theorem throatCorrectedCombinedLinear_leibniz
+    (first second : ThroatTotal period hPeriod) :
+    throatCorrectedCombinedLinear period hPeriod (first * second) =
+      throatCorrectedCombinedLinear period hPeriod first * second +
+        throatExteriorScalarParity period hPeriod first *
+          throatCorrectedCombinedLinear period hPeriod second := by
+  induction first using TensorProduct.induction_on with
+  | zero => simp
+  | tmul firstCoefficient firstScalar =>
+      induction second using TensorProduct.induction_on with
+      | zero => simp
+      | tmul secondCoefficient secondScalar =>
+          exact throatCorrectedCombinedLinear_leibniz_tmul
+            period hPeriod firstCoefficient secondCoefficient
+            firstScalar secondScalar
+      | add second third secondHypothesis thirdHypothesis =>
+          simp only [mul_add, map_add, secondHypothesis, thirdHypothesis]
+          module
+  | add first third firstHypothesis thirdHypothesis =>
+      simp only [add_mul, map_add, firstHypothesis, thirdHypothesis]
+      module
+
 theorem throatCorrectedCombinedLinear_coefficient_rule
     (coefficient : Coefficient) :
     throatCorrectedCombinedLinear period hPeriod
@@ -1569,6 +1993,321 @@ theorem throatCorrectedCombinedLinear_coefficient_rule
     closedThreeGeneratorGhostKoszulData,
     unconditionalSpatialRotationKoszulCoefficientData,
     spatialRotationKoszulCoefficientData]
+
+private def throatOddPureScalarAction (index : Fin 3) :
+    ThroatTotal period hPeriod →ₗ[Real] ThroatTotal period hPeriod :=
+  throatExteriorGhostScalarAction period hPeriod
+    (oddGenerator index ⊗ₜ[Real]
+      throatSpatialRotationGhost period hPeriod index)
+
+@[simp]
+private theorem throatOddPureScalarAction_self
+    (index : Fin 3) (scalar : ThroatScalar period hPeriod) :
+    throatOddPureScalarAction period hPeriod index
+        (throatOddPureScalarAction period hPeriod index
+          ((1 : Coefficient) ⊗ₜ[Real] scalar)) = 0 := by
+  simp [throatOddPureScalarAction,
+    throatExteriorGhostScalarAction_tmul, oddGenerator_sq]
+
+private theorem throatOddPureScalarAction_cross
+    (firstIndex secondIndex : Fin 3)
+    (scalar : ThroatScalar period hPeriod) :
+    throatOddPureScalarAction period hPeriod firstIndex
+          (throatOddPureScalarAction period hPeriod secondIndex
+            ((1 : Coefficient) ⊗ₜ[Real] scalar)) +
+        throatOddPureScalarAction period hPeriod secondIndex
+          (throatOddPureScalarAction period hPeriod firstIndex
+            ((1 : Coefficient) ⊗ₜ[Real] scalar)) =
+      (oddGenerator firstIndex * oddGenerator secondIndex) ⊗ₜ[Real]
+        throatScalarLieDerivative period hPeriod
+          (throatGhostLieBracket period hPeriod
+            (throatSpatialRotationGhost period hPeriod firstIndex)
+            (throatSpatialRotationGhost period hPeriod secondIndex)) scalar := by
+  simp only [throatOddPureScalarAction,
+    throatExteriorGhostScalarAction_tmul, mul_one]
+  rw [oddGenerator_anticommute secondIndex firstIndex,
+    TensorProduct.neg_tmul, ← sub_eq_add_neg,
+    ← TensorProduct.tmul_sub,
+    ← throatScalarLieDerivative_bracket]
+
+private theorem throatUniversalRotationGhost_action_eq :
+    throatExteriorGhostScalarAction period hPeriod
+        (throatUniversalRotationGhost period hPeriod) =
+      throatOddPureScalarAction period hPeriod 0 +
+        throatOddPureScalarAction period hPeriod 1 +
+        throatOddPureScalarAction period hPeriod 2 := by
+  simp [throatUniversalRotationGhost, throatOddPureScalarAction]
+
+private def throatPairwiseBracketTerm :
+    ThroatExteriorGhost period hPeriod :=
+  (oddGenerator 0 * oddGenerator 1) ⊗ₜ[Real]
+      throatGhostLieBracket period hPeriod
+        (throatSpatialRotationGhost period hPeriod 0)
+        (throatSpatialRotationGhost period hPeriod 1) +
+    (oddGenerator 0 * oddGenerator 2) ⊗ₜ[Real]
+      throatGhostLieBracket period hPeriod
+        (throatSpatialRotationGhost period hPeriod 0)
+        (throatSpatialRotationGhost period hPeriod 2) +
+    (oddGenerator 1 * oddGenerator 2) ⊗ₜ[Real]
+      throatGhostLieBracket period hPeriod
+        (throatSpatialRotationGhost period hPeriod 1)
+        (throatSpatialRotationGhost period hPeriod 2)
+
+private theorem throatUniversalRotationGhost_action_sq
+    (scalar : ThroatScalar period hPeriod) :
+    throatExteriorGhostScalarAction period hPeriod
+        (throatUniversalRotationGhost period hPeriod)
+        (throatExteriorGhostScalarAction period hPeriod
+          (throatUniversalRotationGhost period hPeriod)
+          ((1 : Coefficient) ⊗ₜ[Real] scalar)) =
+      throatExteriorGhostScalarAction period hPeriod
+        (throatPairwiseBracketTerm period hPeriod)
+        ((1 : Coefficient) ⊗ₜ[Real] scalar) := by
+  let embedded := (1 : Coefficient) ⊗ₜ[Real] scalar
+  let action0 := throatOddPureScalarAction period hPeriod 0
+  let action1 := throatOddPureScalarAction period hPeriod 1
+  let action2 := throatOddPureScalarAction period hPeriod 2
+  rw [throatUniversalRotationGhost_action_eq]
+  change (action0 + action1 + action2)
+      ((action0 + action1 + action2) embedded) = _
+  calc
+    (action0 + action1 + action2)
+        ((action0 + action1 + action2) embedded) =
+      action0 (action0 embedded) +
+        (action0 (action1 embedded) + action1 (action0 embedded)) +
+        (action0 (action2 embedded) + action2 (action0 embedded)) +
+        action1 (action1 embedded) +
+        (action1 (action2 embedded) + action2 (action1 embedded)) +
+        action2 (action2 embedded) := by
+          simp only [LinearMap.add_apply, map_add]
+          module
+    _ = _ := by
+      dsimp only [action0, action1, action2, embedded]
+      rw [throatOddPureScalarAction_self,
+        throatOddPureScalarAction_cross,
+        throatOddPureScalarAction_cross,
+        throatOddPureScalarAction_self,
+        throatOddPureScalarAction_cross,
+        throatOddPureScalarAction_self]
+      simp [throatPairwiseBracketTerm,
+        throatExteriorGhostScalarAction_tmul]
+
+@[simp]
+private theorem throatKoszulDifferential_generator_zero :
+    spatialRotationKoszulDifferential (oddGenerator 0) =
+      oddGenerator 1 * oddGenerator 2 := by
+  change spatialRotationKoszulDifferential
+      (ExteriorAlgebra.ι Real (oddBasisVector 0)) = _
+  rw [spatialRotationKoszulDifferential_ι]
+  simp [spatialRotationGeneratorDifferential, oddBasisVector]
+
+@[simp]
+private theorem throatKoszulDifferential_generator_one :
+    spatialRotationKoszulDifferential (oddGenerator 1) =
+      -(oddGenerator 0 * oddGenerator 2) := by
+  change spatialRotationKoszulDifferential
+      (ExteriorAlgebra.ι Real (oddBasisVector 1)) = _
+  rw [spatialRotationKoszulDifferential_ι]
+  simp [spatialRotationGeneratorDifferential, oddBasisVector]
+
+@[simp]
+private theorem throatKoszulDifferential_generator_two :
+    spatialRotationKoszulDifferential (oddGenerator 2) =
+      oddGenerator 0 * oddGenerator 1 := by
+  change spatialRotationKoszulDifferential
+      (ExteriorAlgebra.ι Real (oddBasisVector 2)) = _
+  rw [spatialRotationKoszulDifferential_ι]
+  simp [spatialRotationGeneratorDifferential, oddBasisVector]
+
+private theorem throatRotationGhost_bracket_zero_one :
+    throatGhostLieBracket period hPeriod
+        (throatSpatialRotationGhost period hPeriod 0)
+        (throatSpatialRotationGhost period hPeriod 1) =
+      -throatSpatialRotationGhost period hPeriod 2 := by
+  rw [throatSpatialRotationGhost_bracket]
+  simp [spatialRotationStructureConstant, Fin.sum_univ_succ]
+
+private theorem throatRotationGhost_bracket_zero_two :
+    throatGhostLieBracket period hPeriod
+        (throatSpatialRotationGhost period hPeriod 0)
+        (throatSpatialRotationGhost period hPeriod 2) =
+      throatSpatialRotationGhost period hPeriod 1 := by
+  rw [throatSpatialRotationGhost_bracket]
+  simp [spatialRotationStructureConstant, Fin.sum_univ_succ]
+
+private theorem throatRotationGhost_bracket_one_two :
+    throatGhostLieBracket period hPeriod
+        (throatSpatialRotationGhost period hPeriod 1)
+        (throatSpatialRotationGhost period hPeriod 2) =
+      -throatSpatialRotationGhost period hPeriod 0 := by
+  rw [throatSpatialRotationGhost_bracket]
+  simp [spatialRotationStructureConstant, Fin.sum_univ_succ]
+
+private theorem throatKoszulDifferential_universalRotationGhost :
+    TensorProduct.map spatialRotationKoszulDifferential
+        (LinearMap.id : CInfinityThroatGhost period hPeriod →ₗ[Real]
+          CInfinityThroatGhost period hPeriod)
+        (throatUniversalRotationGhost period hPeriod) =
+      -throatPairwiseBracketTerm period hPeriod := by
+  simp only [throatUniversalRotationGhost, map_add,
+    TensorProduct.map_tmul, LinearMap.id_apply,
+    throatKoszulDifferential_generator_zero,
+    throatKoszulDifferential_generator_one,
+    throatKoszulDifferential_generator_two]
+  unfold throatPairwiseBracketTerm
+  rw [throatRotationGhost_bracket_zero_one period hPeriod,
+    throatRotationGhost_bracket_zero_two period hPeriod,
+    throatRotationGhost_bracket_one_two period hPeriod]
+  simp only [throatPairwiseBracketTerm,
+    TensorProduct.tmul_neg, TensorProduct.neg_tmul, neg_add_rev]
+  abel
+
+private theorem throatTensorDifferential_action_embed
+    (ghost : ThroatExteriorGhost period hPeriod)
+    (scalar : ThroatScalar period hPeriod) :
+    TensorProduct.map spatialRotationKoszulDifferential
+        (LinearMap.id : ThroatScalar period hPeriod →ₗ[Real]
+          ThroatScalar period hPeriod)
+        (throatExteriorGhostScalarAction period hPeriod ghost
+          ((1 : Coefficient) ⊗ₜ[Real] scalar)) =
+      throatExteriorGhostScalarAction period hPeriod
+        (TensorProduct.map spatialRotationKoszulDifferential
+          (LinearMap.id : CInfinityThroatGhost period hPeriod →ₗ[Real]
+            CInfinityThroatGhost period hPeriod) ghost)
+        ((1 : Coefficient) ⊗ₜ[Real] scalar) := by
+  induction ghost using TensorProduct.induction_on with
+  | zero => simp
+  | tmul coefficient vector =>
+      simp [throatExteriorGhostScalarAction_tmul]
+  | add first second firstHypothesis secondHypothesis =>
+      simp only [map_add, LinearMap.add_apply, firstHypothesis,
+        secondHypothesis]
+
+private theorem throatCorrectedCombinedLinear_square_on_coefficients
+    (coefficient : Coefficient) :
+    throatCorrectedCombinedLinear period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod
+          (coefficient ⊗ₜ[Real] (1 : ThroatScalar period hPeriod))) = 0 := by
+  simp [throatCorrectedCombinedLinear_tmul,
+    throatScalarLieDerivative_one,
+    spatialRotationKoszulDifferential_square_zero]
+
+private theorem throatCorrectedCombinedLinear_on_scalar
+    (scalar : ThroatScalar period hPeriod) :
+    throatCorrectedCombinedLinear period hPeriod
+        ((1 : Coefficient) ⊗ₜ[Real] scalar) =
+      throatExteriorGhostScalarAction period hPeriod
+        (throatUniversalRotationGhost period hPeriod)
+        ((1 : Coefficient) ⊗ₜ[Real] scalar) := by
+  simp [throatCorrectedCombinedLinear,
+    spatialRotationKoszulDifferential_one]
+
+private theorem throatCorrectedCombinedLinear_square_on_scalars
+    (scalar : ThroatScalar period hPeriod) :
+    throatCorrectedCombinedLinear period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod
+          ((1 : Coefficient) ⊗ₜ[Real] scalar)) = 0 := by
+  rw [throatCorrectedCombinedLinear_on_scalar]
+  change (TensorProduct.map spatialRotationKoszulDifferential
+        (LinearMap.id : ThroatScalar period hPeriod →ₗ[Real]
+          ThroatScalar period hPeriod) +
+      throatExteriorGhostScalarAction period hPeriod
+        (throatUniversalRotationGhost period hPeriod))
+      (throatExteriorGhostScalarAction period hPeriod
+        (throatUniversalRotationGhost period hPeriod)
+        ((1 : Coefficient) ⊗ₜ[Real] scalar)) = 0
+  rw [LinearMap.add_apply,
+    throatTensorDifferential_action_embed,
+    throatKoszulDifferential_universalRotationGhost,
+    map_neg, throatUniversalRotationGhost_action_sq]
+  simp
+
+private theorem throatCorrectedCombinedLinear_square_mul
+    (first second : ThroatTotal period hPeriod) :
+    throatCorrectedCombinedLinear period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod (first * second)) =
+      throatCorrectedCombinedLinear period hPeriod
+          (throatCorrectedCombinedLinear period hPeriod first) * second +
+        first * throatCorrectedCombinedLinear period hPeriod
+          (throatCorrectedCombinedLinear period hPeriod second) := by
+  have hCross :
+      throatExteriorScalarParity period hPeriod
+            (throatCorrectedCombinedLinear period hPeriod first) *
+          throatCorrectedCombinedLinear period hPeriod second +
+        throatCorrectedCombinedLinear period hPeriod
+              (throatExteriorScalarParity period hPeriod first) *
+          throatCorrectedCombinedLinear period hPeriod second = 0 := by
+    rw [throatCorrectedCombinedLinear_parity_odd, ← add_mul]
+    simp
+  calc
+    throatCorrectedCombinedLinear period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod (first * second)) =
+        throatCorrectedCombinedLinear period hPeriod
+          (throatCorrectedCombinedLinear period hPeriod first * second +
+            throatExteriorScalarParity period hPeriod first *
+              throatCorrectedCombinedLinear period hPeriod second) := by
+          rw [throatCorrectedCombinedLinear_leibniz]
+    _ = throatCorrectedCombinedLinear period hPeriod
+          (throatCorrectedCombinedLinear period hPeriod first * second) +
+        throatCorrectedCombinedLinear period hPeriod
+          (throatExteriorScalarParity period hPeriod first *
+            throatCorrectedCombinedLinear period hPeriod second) := by
+          rw [map_add]
+    _ =
+        (throatCorrectedCombinedLinear period hPeriod
+              (throatCorrectedCombinedLinear period hPeriod first) * second +
+          throatExteriorScalarParity period hPeriod
+              (throatCorrectedCombinedLinear period hPeriod first) *
+            throatCorrectedCombinedLinear period hPeriod second) +
+        (throatCorrectedCombinedLinear period hPeriod
+              (throatExteriorScalarParity period hPeriod first) *
+            throatCorrectedCombinedLinear period hPeriod second +
+          throatExteriorScalarParity period hPeriod
+              (throatExteriorScalarParity period hPeriod first) *
+            throatCorrectedCombinedLinear period hPeriod
+              (throatCorrectedCombinedLinear period hPeriod second)) := by
+          rw [throatCorrectedCombinedLinear_leibniz,
+            throatCorrectedCombinedLinear_leibniz]
+    _ = throatCorrectedCombinedLinear period hPeriod
+          (throatCorrectedCombinedLinear period hPeriod first) * second +
+        first * throatCorrectedCombinedLinear period hPeriod
+          (throatCorrectedCombinedLinear period hPeriod second) := by
+          rw [throatExteriorScalarParity_involutive]
+          calc
+            _ = throatCorrectedCombinedLinear period hPeriod
+                    (throatCorrectedCombinedLinear period hPeriod first) *
+                  second +
+                ((throatExteriorScalarParity period hPeriod
+                        (throatCorrectedCombinedLinear period hPeriod first) *
+                      throatCorrectedCombinedLinear period hPeriod second +
+                    throatCorrectedCombinedLinear period hPeriod
+                        (throatExteriorScalarParity period hPeriod first) *
+                      throatCorrectedCombinedLinear period hPeriod second) +
+                  first * throatCorrectedCombinedLinear period hPeriod
+                    (throatCorrectedCombinedLinear period hPeriod second)) := by
+                abel
+            _ = _ := by rw [hCross, zero_add]
+
+/-- Nilpotence of the explicit corrected throat differential on the entire
+exterior-scalar tensor algebra. -/
+theorem throatCorrectedCombinedLinear_square_zero
+    (element : ThroatTotal period hPeriod) :
+    throatCorrectedCombinedLinear period hPeriod
+        (throatCorrectedCombinedLinear period hPeriod element) = 0 := by
+  induction element using TensorProduct.induction_on with
+  | zero => simp
+  | tmul coefficient scalar =>
+      have hFactorization :
+          coefficient ⊗ₜ[Real] scalar =
+            (coefficient ⊗ₜ[Real] (1 : ThroatScalar period hPeriod)) *
+              ((1 : Coefficient) ⊗ₜ[Real] scalar) := by
+        rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
+      rw [hFactorization, throatCorrectedCombinedLinear_square_mul,
+        throatCorrectedCombinedLinear_square_on_coefficients,
+        throatCorrectedCombinedLinear_square_on_scalars,
+        zero_mul, mul_zero, add_zero]
+  | add first second firstHypothesis secondHypothesis =>
+      rw [map_add, map_add, firstHypothesis, secondHypothesis, add_zero]
 
 /-- Single exact residual contract: nilpotence of the now explicit corrected
 Koszul map.  Geometry, bracket closure, and the LL action are unconditional. -/
@@ -1603,6 +2342,56 @@ theorem correctedLLThroatRotationBRST_square_zero
         (correctedLLThroatRotationBRST period hPeriod nilpotence fields) = 0 :=
   correctedLLThroatLinearBRST_square_zero period hPeriod
     (llThroatRotationBRSTCompletion period hPeriod nilpotence) fields
+
+/-- The last contract is discharged by the explicit tensor-product proof. -/
+def unconditionalThroatCorrectedKoszulNilpotence :
+    ThroatCorrectedKoszulNilpotence period hPeriod where
+  square_zero := throatCorrectedCombinedLinear_square_zero period hPeriod
+
+/-- Unconditional fixed-throat completion of the existing LL BRST API. -/
+def unconditionalLLThroatRotationBRSTCompletion :
+    LLThroatBRSTCompletion period hPeriod :=
+  llThroatRotationBRSTCompletion period hPeriod
+    (unconditionalThroatCorrectedKoszulNilpotence period hPeriod)
+
+/-- Unconditional BRST action on all three LL blocks. -/
+def unconditionalCorrectedLLThroatRotationBRST :
+    LLThroatLinearBRST period hPeriod →ₗ[Real]
+      LLThroatLinearBRST period hPeriod :=
+  correctedLLThroatRotationBRST period hPeriod
+    (unconditionalThroatCorrectedKoszulNilpotence period hPeriod)
+
+theorem unconditionalCorrectedLLThroatRotationBRST_square_zero_metric
+    (fields : LLThroatLinearBRST period hPeriod) :
+    (unconditionalCorrectedLLThroatRotationBRST period hPeriod
+      (unconditionalCorrectedLLThroatRotationBRST
+        period hPeriod fields)).1 = 0 :=
+  correctedLLThroatLinearBRST_square_zero_metric period hPeriod
+    (unconditionalLLThroatRotationBRSTCompletion period hPeriod) fields
+
+theorem unconditionalCorrectedLLThroatRotationBRST_square_zero_measure
+    (fields : LLThroatLinearBRST period hPeriod) :
+    (unconditionalCorrectedLLThroatRotationBRST period hPeriod
+      (unconditionalCorrectedLLThroatRotationBRST
+        period hPeriod fields)).2.1 = 0 :=
+  correctedLLThroatLinearBRST_square_zero_measure period hPeriod
+    (unconditionalLLThroatRotationBRSTCompletion period hPeriod) fields
+
+theorem unconditionalCorrectedLLThroatRotationBRST_square_zero_field
+    (fields : LLThroatLinearBRST period hPeriod) :
+    (unconditionalCorrectedLLThroatRotationBRST period hPeriod
+      (unconditionalCorrectedLLThroatRotationBRST
+        period hPeriod fields)).2.2 = 0 :=
+  correctedLLThroatLinearBRST_square_zero_field period hPeriod
+    (unconditionalLLThroatRotationBRSTCompletion period hPeriod) fields
+
+theorem unconditionalCorrectedLLThroatRotationBRST_square_zero
+    (fields : LLThroatLinearBRST period hPeriod) :
+    unconditionalCorrectedLLThroatRotationBRST period hPeriod
+        (unconditionalCorrectedLLThroatRotationBRST
+          period hPeriod fields) = 0 :=
+  correctedLLThroatLinearBRST_square_zero period hPeriod
+    (unconditionalLLThroatRotationBRSTCompletion period hPeriod) fields
 
 end
 

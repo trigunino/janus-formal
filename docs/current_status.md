@@ -303,9 +303,11 @@ The exhaustive remaining-work checklist is
   injective, and a constant two-metric/two-scalar/identity-root coefficient
   configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Under the sole joint-continuity predicate `CanonicalLatitudeNormalLiftContinuous`, compactness gives uniform coefficients, integrability and the complete normal-frame reconstruction package. Thus only this tangent-lift continuity and the independent physical coarea bound remain before the trace follows. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General tensorial metrics, diffeomorphism/nonabelian/BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
   The remaining physical coarea input is now exactly the single domination
-  `CanonicalLatitudeMeasureToSphereCoareaDomination`; joint collar continuity,
-  frame-energy integrability, Fubini/map reduction, graph-norm identity and
-  density domination are already unconditional downstream of it.
+`CanonicalLatitudeFundamentalMeasureDomination`, a pre-quotient domination for
+the explicit sphere-latitude/time map. The exact quotient factorization,
+intrinsic-volume pushforward identity, joint collar continuity, frame-energy
+integrability, Fubini/map reduction, graph-norm identity and density domination
+are already unconditional downstream of it.
   PT/exchange additionally acts on the complete current independent-field
   package and all its componentwise smooth throat boundary data, with exact
   trace equivariance and preservation of the full Dirichlet condition.
@@ -332,9 +334,9 @@ The exhaustive remaining-work checklist is
   from `IndependentFields`. The three spatial rotations now preserve the
   equatorial throat, commute with deck, descend smoothly and retain the exact
   `so(3)` bracket. Their scalar/Koszul action and the three LL block maps are
-  explicit; `LLThroatBRSTCompletion` is conditional only on
-  `ThroatCorrectedKoszulNilpotence.square_zero`. Positive metrics, antifields
-  and BV remain. Independently, real translation of the mapping-torus
+  explicit. The throat Koszul differential is odd, Leibniz and square-zero,
+  so `LLThroatBRSTCompletion` is now unconditional. Positive metrics,
+  antifields and BV remain. Independently, real translation of the mapping-torus
   coordinate now descends to a nontrivial complete analytic real action on the
   actual D8 quotient; every time slice is an analytic diffeomorphism and the
   full action map `ℝ × D8 → D8` is jointly analytic. Pullback

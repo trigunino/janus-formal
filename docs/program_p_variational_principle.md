@@ -631,10 +631,12 @@ analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
 on the actual smooth spacetime. PT pullback and two-sector exchange are exact
 involutive equivalences on these smooth coefficient fields. Smooth quotient and throat fields now carry genuine real vector-space structures. The actual compact quotient sends every smooth coefficient field canonically into the completed `L²` space for any finite Borel measure; completeness and the Hilbert structure follow under the explicit complete/Hilbert fiber hypotheses. For a PT-preserving measure, PT pullback is an involutive linear isometry and hence an exact `L²` equivalence. Smooth restriction to the actual throat is defined, linear, PT-equivariant, and yields a nonempty exact PT-compatible Dirichlet subspace. A finite global `C∞` tangent-generating family feeds a complete first-jet graph `H¹` space with dense smooth fields and continuous `L²` forgetting. For throat-supported spacetime measure, its continuous trace has norm bound one. For the canonical physical volumes, the exact FTC/Fubini estimate, twisted analytic latitude collar, throat pushforward and `L²` trace identity are proved. The normal derivative is exactly reconstructed by the finite global frame with an explicit pointwise coefficient bound. Under `CanonicalLatitudeNormalLiftContinuous`, compactness supplies the uniform coefficient and integrability package. The remaining inputs are therefore exactly that tangent-lift continuity and the independent physical coarea bound. Intrinsic Sobolev identification and the resulting physical-volume trace remain open.
-The physical coarea chain is now reduced to the single explicit measure
-domination `CanonicalLatitudeMeasureToSphereCoareaDomination`; joint collar
-continuity, frame-energy integrability, Fubini/map, graph-norm identity and the
-downstream coarea constructor are proved.
+The physical coarea chain is now reduced to the single pre-quotient measure
+domination `CanonicalLatitudeFundamentalMeasureDomination` for the explicit
+sphere-latitude/time map. Its exact factorization through the quotient,
+intrinsic-volume pushforward identity, joint collar continuity, frame-energy
+integrability, Fubini/map, graph-norm identity and downstream coarea constructor
+are proved.
 On the complete current independent-field package, PT/exchange also acts on
 all componentwise smooth throat boundary data, intertwines the trace exactly
 and preserves the full Dirichlet condition.
@@ -689,9 +691,9 @@ linear matter, gauge-coordinate, internal-ghost and auxiliary sectors with
 componentwise and product square-zero proofs and a bridge from
 `IndependentFields`. The three rotations preserve the equatorial throat,
 commute with deck, descend to the quotient and keep their `so(3)` bracket;
-their scalar/Koszul action and the LL maps are explicit. The completion is now
-conditional only on `ThroatCorrectedKoszulNilpotence.square_zero`; positive
-metrics, antifields and BV remain.
+their scalar/Koszul action and the LL maps are explicit. The throat differential
+is odd, Koszul-Leibniz and square-zero, making the LL completion unconditional;
+positive metrics, antifields and BV remain.
 It also has an automatic scalar integrability contract for every finite measure
 on the affine-stable class with continuous fixed-frame covector components,
 including arbitrary nonzero constant scalars; this is not a tensorial
