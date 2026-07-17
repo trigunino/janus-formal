@@ -58,6 +58,11 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
 - **T/C** a finite global smooth tangent-generating family feeds a complete first-jet graph `H¹`; uniform coefficient/mass bounds and holonomic coercivity are automatic, and a geometric frame-control contract implies the static energy-to-graph bridge. The differential normal has an exact total-space `Diffeomorph` and strata; exact finite-frame normal reconstruction is proved, and compact uniform coefficient/integrability control follows from the remaining tangent-lift continuity predicate. Physical coarea, intrinsic Sobolev identification and Lorentzian null/joint strata remain open.
 - **T/C** arbitrary smooth inclusion-preserving diagonal diffeomorphisms act on all global coefficient sectors with exact pullback laws and natural throat trace; smooth orbits have a manifold tangent generator;
 - **T/C** PT/exchange acts simultaneously on every current independent sector and its componentwise smooth throat boundary values, with exact trace equivariance and preservation of the full Dirichlet condition; general tensor metrics and BV remain open;
+- **T/C** on arbitrary covariant two-tensor fields, analytic PT pullback is an
+  exact involution preserving symmetry, nondegeneracy and Lorentz inertia;
+  it bundles as a smooth dependent tensor section under one local smoothness
+  contract and preserves the smooth Lorentz domain. Discharging that nested
+  Hom-bundle contract and BV remain open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -456,13 +461,16 @@ New controlled subgates are now checked:
   selector with exact square/Sylvester and per-stratum continuity; raw-matrix
   presentation existence is reduced to the single missing Mathlib-level
   Jordan-basis bridge after proving split positive charpoly/minpoly facts and
-  exposing Jordan--Chevalley. For nonpositive spectra, determinant/simple
+  exposing Jordan--Chevalley; root existence is already unconditional on the
+  full PSD raw locus via `CFC.sqrt`. For nonpositive spectra, determinant/simple
   negative-eigenvalue obstructions, positive-determinant counterexample,
   paired-negative constructions and the exact Jordan parity/zero-block
   criterion are closed. Pure complex-conjugate `2×2`, `2+2` and non-semisimple
   Jordan-chain roots are also explicit with their cut/zero behavior; only the
-  raw real and complex Jordan-classification bridges and the complete physical
-  admissible domain remain open;
+  raw relations `(A-aI)²=-b²I` have an explicit affine root, including the
+  repeated complex pair. The three presentation/classification bridges are now
+  reduced at root level to non-PSD, outside-quadratic and exact Jordan
+  necessity/sufficiency residuals; the complete physical domain remains open;
 - **T/C** on the selected global fixed-frame diagonal Lorentz domain, both
   metrics share a strict timelike direction, the nonnegative closure and
   spectral frontier are exact, and the positive root/Candidate-A chain is
@@ -550,7 +558,10 @@ New controlled subgates are now checked:
   gauge-coordinate, internal-ghost and auxiliary sectors. On the throat the
   rotations descend with exact `so(3)` bracket and explicit scalar/Koszul and
   LL maps; the throat differential is odd, Leibniz and square-zero, so its LL
-  completion is unconditional, while metrics, antifields and BV remain;
+  completion is unconditional. Positive diagonal throat metrics have an exact
+  log-coordinate action, positive integral curves and square-zero BRST; one
+  finite field/antifield doublet is also closed. General spacetime metrics and
+  the full BV master equation remain;
 - **T/C** the actual compact throat carries a differential LL action built
   from a finite smooth tangent-generating frame. Its auxiliary metric has a
   strictly nontrivial positive response, and its integrated first variations
@@ -593,8 +604,8 @@ New controlled subgates are now checked:
   is reconstructed exactly by the finite frame with a pointwise coefficient
   bound. Compact uniform coefficient/integrability control follows from the
   remaining tangent-lift continuity predicate. Physical coarea is reduced through the exact
-  quotient factorization to one pre-quotient `Measure.toSphere`
-  latitude/time domination;
+  quotient and time-factor reductions to one pure `Measure.toSphere`
+  domination for `S² × Ioc(0,1) → S³`;
 - **T/C** at positive time, the diagonal circle heat semigroup is the
   operator-norm limit of compact finite Fourier truncations and is compact on
   the full circle Fourier Hilbert space; this is not a trace-class theorem or
