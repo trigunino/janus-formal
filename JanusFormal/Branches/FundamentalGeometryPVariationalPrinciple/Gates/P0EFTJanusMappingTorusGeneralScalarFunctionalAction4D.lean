@@ -263,7 +263,7 @@ theorem holonomicScalarDensity_contMDiff
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (massSquared : Real)
     (data : RegularScalarVariation period hPeriod metric) :
-    ContMDiff coverModelWithCorners 𝓘(Real, Real) ω
+    ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
       (fun point => holonomicScalarDensity period hPeriod metric.metric
         massSquared data.field.field point
         (fun index => metric.frame index point)) := by
@@ -279,7 +279,7 @@ theorem holonomicScalarFirstVariation_contMDiff
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (massSquared : Real)
     (data : RegularScalarVariation period hPeriod metric) :
-    ContMDiff coverModelWithCorners 𝓘(Real, Real) ω
+    ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
       (fun point => holonomicScalarDensityFirstVariation period hPeriod
         metric.metric massSquared data.field.field data.variation.field point
         (fun index => metric.frame index point)) := by
@@ -296,7 +296,7 @@ theorem holonomicScalarQuadraticRemainder_contMDiff
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (massSquared : Real)
     (data : RegularScalarVariation period hPeriod metric) :
-    ContMDiff coverModelWithCorners 𝓘(Real, Real) ω
+    ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
       (fun point => holonomicScalarDensityQuadraticRemainder period hPeriod
         metric.metric massSquared data.variation.field point
         (fun index => metric.frame index point)) := by

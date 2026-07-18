@@ -56,7 +56,7 @@ variable (Fiber : Type u)
 structure SmoothThroatField where
   toFun : EffectiveThroat period hPeriod -> Fiber
   contMDiff_toFun :
-    ContMDiff throatCoverModelWithCorners 𝓘(Real, Fiber) ω toFun
+    ContMDiff throatCoverModelWithCorners 𝓘(Real, Fiber) ∞ toFun
 
 instance : CoeFun (SmoothThroatField period hPeriod Fiber)
     (fun _ => EffectiveThroat period hPeriod -> Fiber) :=
@@ -80,7 +80,7 @@ def throatTrace
     SmoothThroatField period hPeriod Fiber where
   toFun := field.toFun ∘ fixedThroatQuotientInclusion period hPeriod
   contMDiff_toFun := field.contMDiff_toFun.comp
-    (fixedThroatQuotientInclusion_contMDiff period hPeriod)
+    ((fixedThroatQuotientInclusion_contMDiff period hPeriod).of_le (by simp))
 
 @[simp]
 theorem throatTrace_apply
@@ -96,7 +96,7 @@ def throatPTPullback
     SmoothThroatField period hPeriod Fiber where
   toFun := field.toFun ∘ fixedThroatPT period hPeriod
   contMDiff_toFun := field.contMDiff_toFun.comp
-    (fixedThroatPT_contMDiff period hPeriod)
+    ((fixedThroatPT_contMDiff period hPeriod).of_le (by simp))
 
 @[simp]
 theorem throatPTPullback_apply

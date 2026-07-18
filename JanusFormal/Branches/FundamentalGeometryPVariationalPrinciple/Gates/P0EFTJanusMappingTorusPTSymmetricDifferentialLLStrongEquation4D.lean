@@ -152,14 +152,14 @@ def smoothLLAuxiliaryKineticWeight
   contMDiff_toFun := by
     have hPair :
         ContMDiff throatCoverModelWithCorners
-          𝓘(Real, LLMetricFiber × LLMetricFiber) ω
+          𝓘(Real, LLMetricFiber × LLMetricFiber) ∞
           (fun point =>
             (fields.llAuxMetric point, fields.llAuxMetric point)) := by
       rw [contMDiff_prod_module_iff]
       exact ⟨fields.llAuxMetric.contMDiff_toFun,
         fields.llAuxMetric.contMDiff_toFun⟩
     have hInner :
-        ContDiff Real ω
+        ContDiff Real ∞
           (fun pair : LLMetricFiber × LLMetricFiber =>
             inner Real pair.1 pair.2) :=
       contDiff_inner

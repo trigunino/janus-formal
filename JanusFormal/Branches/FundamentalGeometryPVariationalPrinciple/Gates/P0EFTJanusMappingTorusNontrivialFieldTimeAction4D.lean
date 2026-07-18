@@ -56,9 +56,9 @@ def periodicCosineCoverField :
   toFun := fun point => Real.cos ((2 * Real.pi / period) * point.time)
   contMDiff_toFun := by
     let productEquiv := coverHomeomorphProd (sphereData period hPeriod)
-    have hTo := chartedSpacePullback_toFun_contMDiff coverModelWithCorners ω
+    have hTo := chartedSpacePullback_toFun_contMDiff coverModelWithCorners ∞
       productEquiv
-    have hTime : ContMDiff coverModelWithCorners 𝓘(Real, Real) ω
+    have hTime : ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
         (fun point : EffectiveCover period hPeriod => point.time) :=
       contMDiff_snd.comp hTo
     exact Real.contDiff_cos.contMDiff.comp (contMDiff_const.mul hTime)

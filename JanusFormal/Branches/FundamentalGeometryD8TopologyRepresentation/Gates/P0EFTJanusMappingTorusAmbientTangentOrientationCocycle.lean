@@ -71,6 +71,26 @@ def ambientQuotientLocalChart (anchor : AmbientCover period hPeriod) :
     (mappingTorusMk_isCoveringMap (AmbientData period hPeriod)).isLocalHomeomorph
   (projection.localInverseAt anchor).trans (chartAt CoverModel anchor)
 
+/-- The quotient point represented by a cover anchor belongs to the actual
+local-section chart indexed by that anchor. -/
+theorem ambientQuotientLocalChart_mk_mem_source
+    (anchor : AmbientCover period hPeriod) :
+    mappingTorusMk (AmbientData period hPeriod) anchor ∈
+      (ambientQuotientLocalChart period hPeriod anchor).source := by
+  let projection :=
+    (mappingTorusMk_isCoveringMap
+      (AmbientData period hPeriod)).isLocalHomeomorph
+  change mappingTorusMk (AmbientData period hPeriod) anchor ∈
+    ((projection.localInverseAt anchor).trans
+      (chartAt CoverModel anchor)).source
+  rw [OpenPartialHomeomorph.trans_source]
+  refine ⟨projection.apply_self_mem_localInverseAt_source, ?_⟩
+  change projection.localInverseAt anchor
+      (mappingTorusMk (AmbientData period hPeriod) anchor) ∈
+    (chartAt CoverModel anchor).source
+  rw [projection.localInverseAt_apply_self]
+  exact mem_chart_source CoverModel anchor
+
 /-- Actual coordinate change between two local-section charts of the ambient
 four-manifold. -/
 def ambientAtlasTransition

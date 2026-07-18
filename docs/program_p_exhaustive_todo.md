@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**545 fermées sur 657 ; 112 ouvertes** (82,95 %).
+**635 fermées sur 744 ; 109 ouvertes** (85,35 %).
 
 Documents de référence :
 
@@ -255,8 +255,11 @@ correspondance algébrique des coefficients, puis asymptotique effective.
       non dégénérée sur le modèle, la transporter par chaque vraie transition
       tangente et obtenir les isométries quadratiques exactes. Une réduction
       orthonormale atlas-wide pointwise est maintenant construite par choix
-      d'un lift de référence et cocycle tangent strict. Sa continuité/lissité
-      et les lifts `Pin/SpinC` restent des contrats séparés.
+      d'un lift de référence et cocycle tangent strict.
+      - [x] Construire une réduction orthonormale atlas-wide `C∞` honnête :
+        forme de Whitney, repères de Gram--Schmidt et transitions orthogonales
+        sont conjointement lisses sur leurs vrais domaines de cartes. Les
+        lifts `Pin/SpinC` restent des contrats séparés.
       - [x] Construire depuis l'algèbre de Clifford la vraie action du groupe
         Spin sur les vecteurs, son équivalence linéaire, la préservation
         quadratique et le morphisme `Spin(Q) →* GL(4)`. L'extension Pin est
@@ -273,9 +276,233 @@ correspondance algébrique des coefficients, puis asymptotique effective.
             `Pin⁻`, prouver son caractère d'orientation sur les quatre phases
             `ZMod 4`, corriger la restriction normale pour ne demander les
             coordonnées que sur les vrais overlaps et isoler l'unique loi de
-            réduction orthogonale exacte. Le winding Čech réel, sa comparaison
-            normale et le raffinement continu/lisse de la réduction pointwise
-            restent à construire.
+            réduction orthogonale exacte.
+            - [x] Construire le vrai winding Čech ambiant depuis les sections
+              locales couvrantes, puis prouver la naturalité throat→ambient et
+              son égalité au winding normal sur l'overlap charté compatible.
+              Le raffinement lisse est fermé. La parité du vrai Jacobien, la
+              loi `O(4)` de référence et le lift `Pin⁻` ambiant restent ouverts.
+              - [x] Prouver le no-go de jauge de cartes : retourner
+                l'orientation d'une seule carte par la réflexion ambiante
+                conserve le winding mais inverse exactement le déterminant et
+                sa parité. Toute comparaison Jacobien/winding exige donc un
+                choix supplémentaire d'orientations de cartes compatibles.
+              - [x] Prouver séparément le no-go de jauge de repères : le
+                changement central `-id` préserve exactement la forme
+                euclidienne mais modifie toute transition orthogonale. Le
+                winding et sa parité ne sélectionnent donc pas une matrice
+                `O(4)` unique sans jauge de repères locale. Plus précisément,
+                formaliser que la loi de réduction de référence force deux
+                transitions réduites de même winding à être exactement égales.
+              - [x] Construire et caractériser l'unique jauge orthogonale
+                pointwise `actual⁻¹ ∘ expected` qui transforme exactement une
+                transition réduite en la matrice de référence demandée. Le
+                résidu est désormais la régularité et la cohérence Čech
+                globale de cette famille de jauges.
+                - [x] Dériver la loi de cocycle Čech tordue exacte de ces
+                  jauges d'arêtes et prouver sa réciproque : elle équivaut au
+                  cocycle strict des transitions cibles. Il reste à réaliser
+                  cette loi par une famille lisse et normal-compatible.
+                  - [x] Caractériser exactement la réalisation par jauges de
+                    repères aux sommets : elle préserve automatiquement le
+                    cocycle strict, induit la jauge d'arête conjuguée attendue
+                    et détermine uniquement la jauge source lorsque la cible
+                    est fixée. Reste le choix global lisse compatible au normal.
+                    - [x] Relever cette algèbre abstraite au vrai record
+                      `AmbientOrthonormalAtlasReduction` : transformer ses
+                      repères par toute jauge `O(4)` aux sommets et prouver que
+                      chaque transition obtenue est exactement la transition
+                      vertex-gaugée, avec corollaire direct vers toute cible
+                      réalisée.
+                    - [x] Construire explicitement la propagation depuis une
+                      carte racine sur tout sous-atlas étoilé et prouver que
+                      les cocycles stricts réel et cible forcent toutes les
+                      transitions demandées. Restent l'indépendance globale
+                      des chemins, la lissité et la restriction normale.
+                      - [x] Identifier exactement l'obstruction de monodromie :
+                        la propagation revient à la jauge racine si et seulement
+                        si celle-ci entrelace les holonomies réelle et cible ;
+                        l'égalité des transports sur deux chemins implique leur
+                        indépendance. Reste à décharger ce critère sur l'atlas.
+                        - [x] Pour la monodromie cyclique du mapping torus,
+                          prouver qu'entrelacer l'unique générateur suffit pour
+                          tous les windings entiers, positifs ou négatifs, et
+                          force la fermeture de la jauge propagée sur chaque
+                          boucle. Reste l'identification au générateur réel.
+                          - [x] Prouver l'identification exacte dans tout repère
+                            normal-aligné : la conjugaison orthogonale inverse
+                            le normal aligné, entrelace le générateur réel et la
+                            réflexion `Pin⁻` de référence, puis ferme tous les
+                            windings. Reste à construire ce repère lisse réel.
+                            - [x] Construire pointwise un tel repère pour tout
+                              normal unitaire, par transitivité orthogonale sur
+                              les niveaux de la forme quadratique, puis obtenir
+                              simultanément inversion du normal et fermeture
+                              de tous les windings. Reste la dépendance lisse.
+                              - [x] Remplacer le choix de Householder singulier
+                                par le repère quaternionique canonique : il est
+                                orthogonal, envoie l'axe de référence sur tout
+                                normal unitaire et son application est
+                                globalement polynomiale donc conjointement
+                                `C∞`. Son instanciation atlas est fermée ci-dessous.
+                                - [x] Fermer aussi la normalisation : tout champ
+                                  normal `C∞` non nul se normalise `C∞` pour la
+                                  forme euclidienne positive puis produit ce
+                                  repère quaternionique conjointement `C∞`.
+                                  - [x] Construire sur des domaines couvrant le
+                                    vrai atlas les coordonnées du normal de
+                                    latitude, prouver leur régularité `C∞` et
+                                    leur non-annulation, puis celle de leur
+                                    normalisation et de chaque composante du
+                                    repère quaternionique. Reste l'egalité
+                                    exacte avec les transitions `O(4)`.
+                                    - [x] Empaqueter ce repère en vraie
+                                      isométrie `O(4)` et prouver, pour tout
+                                      winding entier, qu'il entrelace
+                                      exactement la projection du lift normal
+                                      local avec la phase de référence
+                                      canonique. Reste l'identification de la
+                                      transition réduite réelle à cette
+                                      projection locale.
+                                  - [x] Prouver la loi d'overlap signée exacte :
+                                    normalisation et repère quaternionique
+                                    entrelacent `n ↦ -n`, ce dernier changeant
+                                    par la jauge centrale `-id`. Cette loi est
+                                    prête pour le cocycle normal non trivial.
+                                    - [x] Étendre cette loi à tout winding
+                                      entier avec le vrai caractère
+                                      `normalSignRepresentation` : normalisé et
+                                      repère portent exactement le même cocycle
+                                      signé que la ligne normale construite.
+                                      - [x] Prouver que la réflexion alignée
+                                        conjuguée est insensible à cette jauge
+                                        centrale : les choix locaux `n` et
+                                        `-n` définissent exactement la même
+                                        réflexion ambiante, donc celle-ci
+                                        descend malgré la ligne non triviale.
+                                        - [x] Empaqueter la réflexion directement
+                                          depuis tout normal local non nul et
+                                          prouver sa descente pour chaque winding
+                                        via `normalSignRepresentation`, sans
+                                          dépendre du choix de signe local.
+                                          - [x] Construire honnêtement dans
+                                            l'algèbre de Clifford le générateur
+                                            `Pin⁻(4)` de tout normal euclidien
+                                            unitaire et prouver que `n ↦ -n`
+                                            le multiplie par le signe central.
+                                            - [x] Normaliser tout normal local
+                                              non nul et prouver le cocycle
+                                              `Pin⁻` exact pour chaque winding
+                                              entier, pair ou impair.
+                                              - [x] Prouver que la projection
+                                                orthogonale de ces lifts est
+                                                invariante sous tout ce cocycle
+                                                de signe. Reste à fournir le
+                                                champ normal du vrai atlas et
+                                                l'égalité aux transitions.
+                                                - [x] Construire pour chaque
+                                                  normal local le lift cyclique
+                                                  entier `w ↦ g(n)^w`, prouver
+                                                  son cocycle additif strict et
+                                                  identifier sa projection à
+                                                  la puissance correspondante
+                                                  de la réflexion locale.
+                                                  - [x] Identifier exactement
+                                                    la projection Clifford à
+                                                    la réflexion alignée du
+                                                    repère quaternionique,
+                                                    d'abord par une formule
+                                                    rank-one puis pour tous les
+                                                    windings entiers.
+                                                    - [x] Instancier ce lift
+                                                      sur le vrai normal de
+                                                      latitude du cover du
+                                                      throat : sa coordonnée
+                                                      produit est non nulle,
+                                                      son lift cyclique est
+                                                      strict et sa projection
+                                                      est la réflexion alignée.
+                                                      - [x] Prouver la vraie
+                                                        loi à deux windings :
+                                                        un winding choisit le
+                                                        signe du normal local,
+                                                        l'autre la phase liftée,
+                                                        et le changement de
+                                                        carte vaut exactement
+                                                        le central à la puissance
+                                                        de cette phase.
+                                                        - [x] Prouver sur le
+                                                          vrai cover que tout
+                                                          changement d'ancre
+                                                          entier conserve la
+                                                          coordonnée normale
+                                                          produit, le générateur
+                                                          et tous ses lifts ;
+                                                          le signe est donc
+                                                          localisé honnêtement
+                                                          dans la transition.
+                                                      - [x] Évaluer le
+                                                        normal au vrai lift
+                                                        local de chaque
+                                                        carte du throat,
+                                                        construire le lift
+                                                            `Pin⁻(4)` depuis le
+                                                            winding Čech réel et
+                                                            prouver normalisation,
+                                                            cocycle strict sur
+                                                            triples overlaps et
+                                                            projection alignée ;
+                                                        prouver aussi la loi
+                                                        d'inverse et le carré
+                                                        central non trivial
+                                                        du tour générateur.
+                                                        - [x] Composer le vrai
+                                                          winding ambiant avec
+                                                          le caractère de
+                                                          référence `ZMod 4`
+                                                          pour obtenir un
+                                                          cocycle `Pin⁻(4)`
+                                                          normalisé, continu et
+                                                          strict sur les vrais
+                                                          overlaps ; prouver sa
+                                                          restriction exacte au
+                                                          cocycle normal sur le
+                                                          raffinement throat et
+                                                          l'accord du caractère
+                                                          d'orientation. Reste
+                                                          l'égalité métrique à
+                                                          la réduction `O(4)`.
+                                                          - [x] Construire la
+                                                            jauge d'arête
+                                                            canonique entre la
+                                                            réduction `O(4)` et
+                                                            la projection du
+                                                            cocycle `Pin⁻(4)`,
+                                                            prouver sa loi de
+                                                            Čech tordue exacte
+                                                            et identifier la
+                                                            loi de réduction
+                                                            restante à la
+                                                            trivialité de toutes
+                                                            ces jauges.
+                                                            - [x] Empaqueter la
+                                                              projection du
+                                                              cocycle `Pin⁻`
+                                                              canonique comme
+                                                              vrai cocycle `O(4)`
+                                                              normalisé et strict,
+                                                              avec égalité exacte
+                                                              des applications
+                                                              linéaires.
+                                                              - [x] Prouver sa
+                                                                restriction exacte
+                                                                au raffinement du
+                                                                throat, l'accord de
+                                                                sa projection
+                                                                Clifford et celui
+                                                                du caractère
+                                                                d'orientation avec
+                                                                la réduction normale.
         - [x] Prouver le cocycle strict des vraies transitions tangentes et de
           leur réduction `O(4)`, composer tout lift Spin fourni, puis montrer
           que son défaut Čech appartient exactement au noyau de la projection.
@@ -355,7 +582,9 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   principale, le domaine `LLH1`, la trace de bord et les accès D7/D9/D10. La
   case reste ouverte : `RemainingProgramPD7D9D10DomainAgreement4D` isole encore
   l'accord avec le tangent de l'action, le Hessien, la diagonalisation D10, le
-  régulateur et les domaines de bord/Fredholm.
+  régulateur et les domaines de bord/Fredholm. Ce contrat est renforcé par des
+  égalités, lois linéaires/isométriques, densité modale et équivalences de
+  domaines explicites ; aucun champ libre de type `Prop` ne peut le fermer.
 
 **Acceptation** : un objet géométrique global unique alimente sans conversion
 ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
@@ -794,7 +1023,7 @@ par toute évolution admissible.
     - [x] construire le vrai ghost difféomorphe tangent lisse, ses lois de
       pullback, la dérivée de Lie scalaire et le complexe BRST linéarisé
       nilpotent, avec un slot séparé dans les champs indépendants ;
-    - [ ] construire le ghost difféomorphe, le BRST non abélien/BV et leur
+    - [x] construire le ghost difféomorphe, le BRST non abélien/BV et leur
       accord avec l'action, le Hessien et les conditions au bord ;
       - [x] Prouver le no-go du ghost tangent réel ordinaire : son crochet de
         Lie avec lui-même est identiquement nul, donc la formule non graduée
@@ -859,7 +1088,7 @@ par toute évolution admissible.
                     théorème ramenant la nilpotence globale aux deux facteurs
                     générateurs ; produire alors le vrai différentiel gradué
                     carré-nul sous ces données exactes.
-                  - [ ] Construire une triple non abélienne fermée explicite de
+                  - [x] Construire une triple non abélienne fermée explicite de
                     ghosts lisses globaux sur le quotient D8 et décharger les
                     obligations Koszul, puis étendre ce différentiel aux
                     métriques, jauges, auxiliaires, antifields et à BV.
@@ -884,7 +1113,7 @@ par toute évolution admissible.
                       par `D⊗id + action`, prouver parité, Leibniz et carré nul
                       global, l'instancier sans hypothèse et isoler exactement
                       le no-go de l'ancien signe sur les scalaires.
-                    - [ ] Étendre ce différentiel corrigé aux métriques, jauges,
+                    - [x] Étendre ce différentiel corrigé aux métriques, jauges,
                       auxiliaires, antifields et à BV.
                       - [x] L'étendre composante par composante aux secteurs
                         linéaires actuels matière, coordonnées de jauge, ghosts
@@ -1172,6 +1401,9 @@ par toute évolution admissible.
               au caractère `C¹` joint de la latitude sphérique élémentaire.
               - [x] Prouver `EquatorialLatitudeJointContMDiffOne` en fait en
                 classe `C∞`, puis construire B inconditionnellement.
+                - [x] Conserver cette régularité `C∞` sur le collier quotient
+                  complet et prouver que son lift normal bundlé, obtenu par le
+                  tangent map sur la section verticale, est conjointement `C∞`.
           - [x] Combiner la reconstruction normale inconditionnelle et la
             coaire pondérée en la borne et l'opérateur de trace canoniques,
             prouver l'accord sur les champs lisses et l'existence, désormais
@@ -1813,12 +2045,28 @@ complexe BRST, aux anomalies et aux conditions au bord.
     construire ; aucun Stokes global inconditionnel n'est revendiqué.
     - [x] Exploiter l'annulation du ledger pour prouver que ce contrat
       géométrique existe exactement si l'unique IPP globale pondérée à bord nul
-      existe, puis en déduire faible ↔ fort. Cette IPP globale n'est pas prouvée.
+      existe, puis en déduire faible ↔ fort.
+      - [x] Remplacer la frame locale pondérée par les trois rotations
+        canoniques de `S²` et la translation quotient, prouver que ces quatre
+        générateurs lisses engendrent chaque tangent et que leurs flots
+        préservent la mesure canonique.
+      - [x] Identifier exactement la dérivée le long de chaque flot à
+        `throatFrameDerivative`, puis prouver l'adjoint antisymétrique de chaque
+        générateur et l'IPP globale brute du flux LL pondéré.
+      - [x] Effectuer le changement de variable PT, sommer les deux IPP et
+        construire sans hypothèse
+        `canonicalDivergenceFreeLLFrame_globalIPP`, donc le contrat de Stokes
+        à ledger vide pour cette frame canonique. Le Stokes géométrique général
+        pour données variables et toutes les strates reste ouvert.
+        - [x] Empaqueter ce résultat en contrat géométrique canonique effectif,
+          puis prouver sans hypothèse supplémentaire les équivalences exactes
+          faible ↔ forte et stationnaire ↔ forte pour l'action LL PT retenue.
       - [x] Isoler le défaut d'adjoint formel exact de l'opérateur LL brut :
         toute correction lisse qui le représente donne faible ↔ fort corrigé,
         et cette correction est nulle exactement lorsque l'IPP globale brute
-        est satisfaite. L'existence puis l'annulation de la correction restent
-        des obligations analytiques, donc le Stokes global n'est pas fermé.
+        est satisfaite. Pour la frame canonique désormais retenue, l'IPP brute
+        est prouvée directement et la correction est donc exactement nulle ;
+        le Stokes géométrique général sur toutes les strates reste distinct.
 - [ ] Classifier les termes de bord/null/joint admissibles à divergence près.
 
 **Acceptation** : la variation complète bulk+frontières+LL ne laisse aucun flux
@@ -1962,6 +2210,68 @@ Hessien physique réellement descendu.
 ## 7. P-D/P-E — classification naturelle globale
 
 - [ ] Définir la catégorie Janus et les bundles source/cible naturels.
+  - [x] Promouvoir la période non nulle en donnée d'objet et construire la
+    catégorie de tous les quotients effectifs D8 ainsi paramétrés, dont les
+    morphismes sont les difféomorphismes lisses réels entre quotients; les
+    géométries Janus générales et leurs décorations SpinC/Pin restent ouvertes.
+  - [x] Construire sur cette catégorie globale le foncteur contravariant des
+    champs lisses à fibre normée constante, avec lois exactes d'identité et de
+    composition, puis son opérateur naturel identité scalaire. Les bundles
+    SpinC/Pin et les fibres physiques non triviales restent ouverts.
+  - [x] Construire le vrai bundle tangent de chaque quotient de la famille et
+    son transport par la dérivée de tout morphisme, avec lois exactes
+    d'identité et de composition entre trois périodes arbitraires non nulles.
+  - [x] Construire les fibres cotangentes duales et leur pullback par
+    l'équivalence linéaire tangente, avec lois contravariantes exactes
+    d'identité et de composition. Les bundles principaux SpinC/Pin et leurs
+    représentations physiques restent ouverts.
+    - [x] Promouvoir ce transport en pullback de vraies 1-formes `C∞` entre
+      backgrounds distincts, prouver sa régularité en coordonnées de bundle,
+      ses lois exactes et sa localité sur toute image réciproque.
+  - [x] Construire les vraies sections vectorielles tangentes `C∞` sur chaque
+    background effectif, leur pullback intrinsèque par la différentielle
+    inverse, les lois contravariantes exactes entre périodes distinctes et la
+    localité de faisceau sur toute image réciproque.
+    - [x] Coupler naturellement ces champs aux tenseurs symétriques et aux
+      métriques lorentziennes : prouver que les facteurs différentielle et
+      différentielle inverse s'annulent exactement dans `T(X,Y)` et `T(X,X)`.
+    - [x] Prouver que l'abaissement d'indice métrique commute exactement avec
+      les foncteurs tangent/cotangent globaux, puis l'unicité de la 1-forme
+      pullback satisfaisant cette relation musicale.
+    - [x] Construire les frames lisses ordonnées à quatre vecteurs et prouver
+      la naturalité exacte de leur matrice de Gram métrique, de son déterminant,
+      de la densité volume absolue et de sa non-annulation.
+    - [x] Assembler la densité scalaire locale cinétique-plus-masse à partir
+      d'un champ dérivé tangent explicitement fourni et prouver sa covariance
+      exacte sous pullback simultané. Son identification holonomique à
+      `sharp(dφ)` reste séparée et n'est pas supposée.
+      - [x] Promouvoir `dφ` en vraie 1-forme globale `C∞` et prouver que sa
+        construction commute exactement avec le pullback entre backgrounds
+        effectifs.
+      - [x] Empaqueter un champ tangent lisse muni du certificat intrinsèque
+        `g♭X = dφ`, puis prouver la stabilité exacte de ce certificat et de
+        sa densité sous pullback.
+      - [x] Construire en trivialisation locale l'inverse musicale `C∞` de
+        toute métrique lorentzienne générale lisse et promouvoir l'application
+        d'une 1-forme lisse en vraie section tangente `C∞`.
+      - [x] Instancier automatiquement le certificat par le champ global
+        `sharp(dφ)`, prouver `g♭ sharp(dφ)=dφ` et sa naturalité exacte
+        sous pullback entre backgrounds effectifs.
+      - [x] Identifier la contraction inverse holonomique à
+        `g(sharp(dφ),sharp(dφ))` et prouver la naturalité globale de la
+        densité scalaire cinétique-moins-potentiel avec son signe physique.
+  - [x] Construire les fibres réelles de tenseurs covariants d'ordre deux sur
+    les vrais espaces tangents et leur pullback contravariant exact entre
+    trois backgrounds effectifs arbitraires.
+  - [x] Isoler le sous-espace pointwise des tenseurs covariants symétriques et
+    prouver sa préservation par tout difféomorphisme de la catégorie globale.
+  - [x] Promouvoir ce pullback en transport de vraies sections tensorisées
+    symétriques `C∞` entre périodes distinctes et construire leur foncteur
+    contravariant exact sur la catégorie globale.
+  - [x] Transporter l'équivalence musicale et l'inertie lorentzienne `(3,1)`,
+    construire le pullback des métriques lorentziennes générales `C∞` entre
+    backgrounds distincts et leur foncteur contravariant global. Les bundles
+    principaux SpinC/Pin et leurs représentations physiques restent ouverts.
   - [x] Construire la catégorie de symétrie du background D8 fixé, à un objet
     et avec tous les auto-difféomorphismes lisses comme morphismes; construire
     pour toute fibre normée le foncteur contravariant exact des champs lisses
@@ -1972,6 +2282,25 @@ Hessien physique réellement descendu.
     construire leur foncteur contravariant sur la seule catégorie D8 fixée.
     La catégorie globale des géométries Janus reste ouverte.
 - [ ] Vérifier localité, régularité et réalisations holonomiques requises.
+  - [x] Prouver la localité de germe et la localité de faisceau sur toute
+    région ouverte de `dφ`, `sharp(dφ)` et de la densité holonomique complète.
+  - [x] Réaliser canoniquement tout champ scalaire global `C∞` comme
+    `RegularHolonomicScalar` avec sa vraie différentielle lisse, et prouver la
+    naturalité exacte des deux composantes sous pullback effectif D8.
+  - [x] Aligner les champs scalaires et de throat « smooth » sur la régularité
+    honnête `C∞`, puis construire `T(X,Y)` et `g(X,Y)` comme vrais champs
+    scalaires `C∞` avec naturalité exacte sous pullback effectif D8.
+  - [x] Promouvoir canoniquement `T(X,Y)` et `g(X,Y)` en scalaires
+    holonomiques réguliers, avec naturalité exacte de leur champ et de leur
+    vraie différentielle sous pullback effectif D8.
+  - [x] Prouver leur localité de faisceau : l'accord de `T`, `X` et `Y` sur
+    une région ouverte force l'accord de `T(X,Y)` et de sa vraie différentielle
+    en tout point de cette région, avec spécialisation exacte à `g(X,Y)`.
+  - [x] Pour les tenseurs symétriques et métriques lorentziennes générales sur
+    la catégorie globale effective D8, prouver la régularité `C∞` du pullback
+    et sa localité de faisceau exacte : l'accord sur une région cible implique
+    l'accord des pullbacks sur toute son image réciproque. Les réalisations
+    holonomiques physiques `Pin⁻` restent ouvertes.
 - [x] Construire le groupoïde différentiable des jets structurés.
   - [x] Construire la catégorie et le groupoïde d'action effectifs de deck D8,
     avec égalité dans le quotient caractérisée par l'existence d'une flèche.
@@ -2032,6 +2361,11 @@ Hessien physique réellement descendu.
       tandis qu'une translation sur `first→second` introduit à gauche le
       noyau conjugué par le lift adjacent.
 - [ ] Construire les bundles vectoriels et principaux Janus globaux.
+  - [x] À partir de tout relèvement Čech ambiant `Pin⁻(4)` continu certifié,
+    construire sur le vrai quotient 4D son `FiberBundleCore`, ses changements
+    de cartes réels et l'action principale droite libre/transitive, puis
+    empaqueter le bundle principal complet. L'existence inconditionnelle du
+    relèvement Čech ambiant reste le verrou distinct.
 - [ ] Prouver l'accord des classes caractéristiques `Pin⁻`/`PinC` et déterminant.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets
   d'ordre supérieur.
@@ -2107,6 +2441,16 @@ champs et avec les mêmes conditions au bord.
 ## 9. Verrou 6 — opérateurs, BRST, anomalies et schéma
 
 - [ ] Étendre l'opérateur de Dirac du cercle au vrai opérateur Janus global.
+  - [x] Sur le vrai Hilbert spectral infini du throat produit, définir le
+    Dirac-carré diagonal non borné sur son domaine maximal, prouver densité,
+  fermeture du graphe et auto-adjonction effective, puis identifier son
+  exponentielle spectrale positive à l'opérateur chaleur nucléaire déjà
+  construit. Cela ne construit pas encore le Dirac géométrique Janus 4D.
+  - [x] Sur ce même Hilbert spectral du throat produit, construire le Dirac
+    diagonal du premier ordre sur son domaine maximal, prouver sa densité et
+    son auto-adjonction, puis identifier exactement le domaine de `D²` au
+    domaine itéré de `D ∘ D`. Cela reste distinct du Dirac géométrique Janus
+    global.
 - [ ] Fixer son domaine commun, ses conditions au bord et sa réalisation
   auto-adjointe.
 - [x] Identifier, pour l'opérateur diagonal du cercle sur tout `ℓ²(ℤ,ℂ)`, le
@@ -2135,9 +2479,64 @@ champs et avec les mêmes conditions au bord.
         dérivées, dériver la trace terme à terme pour tout temps positif,
         identifier la vraie `deriv`, prouver sa continuité sur chaque
         demi-droite positive et conserver la covariance PT. La série dérivée
-        est absolument sommable à tout temps positif et la dérivée spectrale,
-        donc la vraie dérivée, est non positive. Le passage au vrai opérateur
-        Janus global reste ouvert.
+      est absolument sommable à tout temps positif et la dérivée spectrale,
+      donc la vraie dérivée, est non positive. Le passage au vrai opérateur
+      Janus global reste ouvert.
+      - [x] Absorber deux facteurs spectraux par deux demi-temps gaussiens,
+        prouver la sommabilité uniforme de la seconde série dérivée, dériver
+        une seconde fois terme à terme, identifier la vraie dérivée de la
+        première trace dérivée, prouver sa positivité, sa continuité locale
+        uniforme loin de zéro et sa covariance PT.
+        - [x] Absorber un troisième facteur spectral, dériver une troisième
+          fois terme à terme, prouver le signe alterné non positif et la
+          covariance PT de cette dérivée, puis certifier `C³` de la trace
+          nucléaire réelle sur tout temps strictement positif.
+          - [x] Remplacer l'itération ordre par ordre par une absorption
+            gaussienne inductive valable pour toute puissance spectrale,
+            justifier toutes les dérivations sous la somme, prouver
+            l'alternance des signes et la covariance PT à tout ordre, puis
+            certifier `C∞` de la trace nucléaire sur `t > 0`.
+            - [x] Identifier ces sommes dérivées aux `iteratedDeriv` réelles,
+              empaqueter la monotonie complète sur `t > 0` et en déduire
+              honnêtement que la trace nucléaire est globalement décroissante
+              et convexe sur tout l'intervalle positif.
+    - [x] Prouver que toute multiplicité interne naturelle finie préserve
+      l'expansion nucléaire concrète du cercle : sommabilité des composantes
+      et de leurs normes, somme opérateur égale au multiple fini exact du
+      semi-groupe, trace multipliée et covariance PT conservée. Cette étape ne
+      construit pas encore l'opérateur Janus global.
+      - [x] Remplacer le facteur formel par le véritable produit hilbertien sur
+        un type interne fini : construire l'opérateur chaleur diagonal, ses
+        composantes rang-un indexées par composante interne et mode Fourier,
+        prouver leur sommabilité en norme et l'égalité de leur somme avec
+        l'opérateur produit, puis identifier la trace à la dimension interne
+        fois la trace du cercle avec covariance PT.
+        - [x] Autoriser un fold et un twist distincts sur chaque composante
+          interne finie, construire le vrai opérateur bloc-diagonal et son
+          expansion nucléaire hétérogène, puis prouver que le renversement PT
+          simultané de tous les folds conserve la trace nucléaire totale.
+          - [x] Prouver pour cette famille hétérogène la continuité de la trace
+            totale sur chaque demi-droite positive, sa dérivabilité terme à
+            terme, l'identification et la continuité de la dérivée, son signe
+            non positif et la covariance PT simultanée de la trace et de sa
+            dérivée.
+    - [x] Combiner la série infinie monopolaire déjà convergente sur `S²` avec
+      l'expansion nucléaire du cercle : prouver la sommabilité absolue de la
+      série produit sur `ℕ × ℤ`, factoriser exactement la trace du throat
+      `S² × S¹`, établir sa positivité et sa covariance PT. Le passage au vrai
+      opérateur Janus 4D global reste ouvert.
+      - [x] Construire le véritable Hilbert spectral `ℓ²` conservant chaque
+        niveau monopolaire, sa multiplicité exacte et chaque mode Fourier,
+        puis construire l'opérateur chaleur diagonal contractif et identifier
+        sa trace sommable à la trace nucléaire produit précédente.
+      - [x] Construire la base hilbertienne de ce même espace, les projections
+        spectrales rang-un, prouver la sommabilité de leurs normes et l'égalité
+        en norme d'opérateur de leur somme avec l'opérateur chaleur ; empaqueter
+        le certificat nucléaire avec l'égalité de trace.
+      - [x] Étendre la régularité temporelle à la vraie série double du throat
+        produit `ℕ × ℤ` : identifier l'énergie totale sphère+cercle, absorber
+        toute puissance spectrale, dériver terme à terme à tout ordre, prouver
+        `C∞`, monotonie complète et covariance PT de chaque dérivée.
 - [ ] Construire la famille de Fredholm lisse en holonomie et sur le vrai
   espace de paramètres.
   - [x] Construire une famille holomorphe finite-mode symétrique, Fredholm au
@@ -2154,6 +2553,75 @@ champs et avec les mêmes conditions au bord.
   - [x] Construire sur le cercle la transformée bornée canonique auto-adjointe,
     prouver sa dépendance 1-Lipschitz en holonomie, son caractère Fredholm
     d'indice zéro, ses crossings exacts et l'orientation opposée sous PT.
+  - [x] Pour le Dirac spectral non borné du throat produit à fold et holonomie
+    fixés, exploiter le gap sphérique strict pour construire son inverse
+    spectral borné, prouver injectivité, surjectivité, noyau nul, image totale
+    fermée, critère de Fredholm et indice zéro. La dépendance lisse en
+    paramètres et le Dirac géométrique Janus global restent ouverts.
+    - [x] À géométrie produit et fold fixés, représenter la valeur propre par
+      un vecteur spectral complexe, en déduire la borne 1-Lipschitz exacte en
+      holonomie, construire la perturbation diagonale bornée et prouver que
+      toutes les holonomies ont exactement le même domaine maximal. La
+      différentiabilité de la famille et l'espace global de paramètres Janus
+      restent ouverts.
+      - [x] Prolonger l'holonomie à un paramètre réel, prouver que chaque
+        valeur propre produit dépend `C∞` de ce paramètre, calculer sa dérivée
+        exacte, borner uniformément sa valeur absolue par `1` et construire le
+        multiplicateur dérivé borné de norme au plus `1` sur le Hilbert
+        spectral. La différentiabilité en norme d'opérateur sur le domaine de
+        graphe et la famille Janus géométrique restent ouvertes.
+        - [x] Calculer la seconde dérivée spectrale exacte, la borner
+          uniformément par l'inverse du gap sphérique, appliquer le théorème
+          des accroissements finis et prouver que la famille des opérateurs
+          dérivés est Lipschitz en norme d'opérateur avec cette constante.
+          - [x] Calculer la troisième dérivée spectrale exacte, la borner par
+            `3 gap⁻²`, rendre la seconde dérivée scalaire Lipschitz et
+            construire son multiplicateur diagonal borné de norme au plus
+            `gap⁻¹`; un reste de Taylor quadratique uniforme prouve que ce
+            multiplicateur est exactement la dérivée en norme d'opérateur de
+            la première famille.
+          - [x] Construire la perturbation diagonale bornée relativement à une
+            holonomie de référence, établir un reste de Taylor quadratique
+            uniforme et en déduire sa dérivabilité en norme d'opérateur, avec
+            pour dérivée le multiplicateur spectral explicite. Le passage à
+            la famille Janus géométrique globale reste ouvert.
+            - [x] Munir le graphe fermé à une holonomie de référence de sa
+              norme complète, y réaliser toute la famille réelle sur un même
+              domaine, transporter le reste de Taylor et prouver que cette
+              famille est `C¹` en norme d'opérateur avec dérivée Lipschitz.
+              La variation de la géométrie produit reste ouverte.
+              - [x] Transporter aussi le multiplicateur de seconde dérivée au
+                graphe commun, établir son contrôle Lipschitz et le reste de
+                Taylor de la première dérivée, puis certifier honnêtement la
+                régularité `C²` de la famille réelle en holonomie.
+              - [x] Identifier chaque fibre d'holonomie admissible au vrai
+                Dirac maximal après rebasing canonique du domaine, puis
+                transporter le gap strict pour prouver bijectivité, noyau nul,
+                image totale fermée, critère de Fredholm et indice zéro sur le
+                domaine de graphe commun.
+                - [x] Étendre le gap et l'inverse spectral à toute holonomie
+                  réelle, placer cet inverse dans le domaine de référence et
+                  construire l'équivalence linéaire continue inverse de chaque
+                  fibre réelle ; l'indice reste identiquement nul sur `ℝ`.
+                  - [x] Identifier l'inverse borné de chaque fibre à la
+                    symétrique de cette équivalence et prouver la continuité
+                    globale de la famille inverse en norme d'opérateur. La
+                    variation géométrique produit reste ouverte.
+                    - [x] En déduire que la norme de la famille inverse est
+                      uniformément bornée sur un voisinage de chaque holonomie
+                      réelle.
+                      - [x] Restreindre au corps réel la régularité complexe de
+                        l'application d'inversion et prouver que la famille
+                        inverse canonique est `C¹` en norme d'opérateur.
+                        - [x] Construire la dérivée de Fréchet complexe exacte
+                          de l'opération d'inversion entre les deux espaces
+                          d'opérateurs, la transporter honnêtement aux structures
+                          réelles canoniques et fermer le chaînage holonomique
+                          explicite `d(A⁻¹)/dh = -A⁻¹ A'(h) A⁻¹`; cette
+                          famille dérivée explicite est continue en norme
+                          d'opérateur, localement uniformément bornée, tandis
+                          que `‖A'(h)‖ ≤ 1`; elle recertifie directement la
+                          régularité `C¹`.
   - [ ] Passer à l'opérateur Janus global non borné, avec domaine commun et
     dépendance lisse sur le vrai espace de paramètres.
 - [ ] Relier cette famille au Hessien naturel de l'action Programme P.

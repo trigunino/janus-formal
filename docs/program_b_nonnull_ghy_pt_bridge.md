@@ -31,3 +31,46 @@ Le throat serait totalement géodésique et sa densité GHY de fond serait nulle
 P prouve déjà le point fixe métrique et le renversement du normal, mais pas
 encore leur prolongement à la connexion/courbure extrinsèque; cette dernière
 flèche ne doit donc pas être supposée.
+
+## Mise à jour : atlas normal lisse de P
+
+P construit maintenant des représentants locaux lisses et non nuls du normal
+canonique, avec recollement par le cocycle réel `s_ij=±1`. Il n'est donc plus
+nécessaire de choisir un normal global, choix interdit par la ligne normale
+non orientable. Sur un chevauchement,
+\[
+n_j=s_{ij}n_i,\qquad K_j=s_{ij}K_i,\qquad
+\epsilon_j=s_{ij}\epsilon_i.
+\]
+Par conséquent `epsilon_j K_j=epsilon_i K_i`; la densité GHY est un scalaire
+global dès que la covariance de la connexion établit la loi de recollement de
+`K`. Le problème restant n'est plus la régularité du normal, mais uniquement
+la construction de cette connexion/courbure extrinsèque sur l'atlas canonique.
+
+## Loi extrinsèque locale désormais fermée
+
+Dans chaque carte normale de Gauss fournie par P, la connexion de Levi-Civita
+donne exactement
+\[
+B_{ab}={\sigma\over2}\partial_nh_{ab},\qquad K=h^{ab}B_{ab}.
+\]
+Lean prouve maintenant que `sigma -> -sigma` entraîne `B -> -B` et `K -> -K`.
+Avec le cocycle local constant du normal, la loi de recollement requise est
+donc établie dès que les cartes canoniques de latitude sont identifiées aux
+cartes de Gauss.
+
+Le verrou est réduit à une égalité géométrique précise : construire le collar
+de Gauss de la métrique canonique et montrer que son normal coïncide avec le
+normal de latitude. Aucune liberté de signe supplémentaire ne subsiste.
+
+## Calcul du fond équatorial
+
+Dans les coordonnées de latitude du fond intrinsèque utilisé par P, la partie
+tangentielle sphérique du produit s'écrit
+\[
+h(n)=\cos^2(n)h_{S^2}-dt^2.
+\]
+Ainsi `partial_n h(0)=0`. La formule gaussienne donne `B_ab=0`, `K=0` et une
+densité GHY de fond nulle. Le calcul est exact et testé. Il reste à identifier
+formellement dans Lean ce collar avec la métrique descendue du quotient; avant
+ce bridge, ce résultat n'est pas revendiqué comme théorème global du throat.

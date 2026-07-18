@@ -48,7 +48,7 @@ variable (Fiber : Type u)
 invariance rather than a supplied quotient representative. -/
 structure SmoothDeckInvariantField where
   toFun : EffectiveCover period hPeriod → Fiber
-  contMDiff_toFun : ContMDiff coverModelWithCorners (𝓘(ℝ, Fiber)) ω toFun
+  contMDiff_toFun : ContMDiff coverModelWithCorners (𝓘(ℝ, Fiber)) ∞ toFun
   deck_invariant : ∀ (winding : ℤ) (point : EffectiveCover period hPeriod),
     toFun (winding +ᵥ point) = toFun point
 

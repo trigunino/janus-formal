@@ -332,6 +332,137 @@ theorem canonicalLatitudeCollar_contMDiffOne :
   canonicalLatitudeCollarContMDiffOne_of_equatorial period hPeriod
     equatorialLatitudeJointContMDiffOne
 
+/-- The full mapping-torus latitude collar retains the joint analytic
+regularity of the elementary latitude formula. -/
+theorem canonicalLatitudeCollar_contMDiff :
+    ContMDiff canonicalLatitudeParameterModelWithCorners
+      coverModelWithCorners ∞ (canonicalLatitudeCollarMap period hPeriod) := by
+  have hEquator : ContMDiff canonicalLatitudeParameterModelWithCorners
+      (𝓡 2) ∞
+      (fun parameter : CanonicalLatitudeParameter =>
+        equatorialTwoSphereHomeomorph.symm parameter.1.1) :=
+    (chartedSpacePullback_invFun_contMDiff (𝓡 2) ∞
+      equatorialTwoSphereHomeomorph).comp (contMDiff_fst.comp contMDiff_fst)
+  have hLatitudeInput : ContMDiff canonicalLatitudeParameterModelWithCorners
+      canonicalLatitudeBaseModelWithCorners ∞
+      (fun parameter : CanonicalLatitudeParameter =>
+        (equatorialTwoSphereHomeomorph.symm parameter.1.1, parameter.2)) :=
+    hEquator.prodMk contMDiff_snd
+  have hLatitude : ContMDiff canonicalLatitudeParameterModelWithCorners
+      (𝓡 3) ∞
+      (fun parameter : CanonicalLatitudeParameter =>
+        equatorialLatitudeUncurried
+          (equatorialTwoSphereHomeomorph.symm parameter.1.1, parameter.2)) :=
+    equatorialLatitude_joint_contMDiff.comp hLatitudeInput
+  have hProduct : ContMDiff canonicalLatitudeParameterModelWithCorners
+      coverModelWithCorners ∞
+      (fun parameter : CanonicalLatitudeParameter =>
+        (equatorialLatitudeUncurried
+            (equatorialTwoSphereHomeomorph.symm parameter.1.1, parameter.2),
+          parameter.1.2)) :=
+    hLatitude.prodMk (contMDiff_snd.comp contMDiff_fst)
+  have hCover : ContMDiff canonicalLatitudeParameterModelWithCorners
+      coverModelWithCorners ∞
+      (fun parameter : CanonicalLatitudeParameter =>
+        (coverHomeomorphProd (sphereData period hPeriod)).symm
+          (equatorialLatitudeUncurried
+              (equatorialTwoSphereHomeomorph.symm parameter.1.1, parameter.2),
+            parameter.1.2)) :=
+    (chartedSpacePullback_invFun_contMDiff coverModelWithCorners ∞
+      (coverHomeomorphProd (sphereData period hPeriod))).comp hProduct
+  have hProjection : ContMDiff canonicalLatitudeParameterModelWithCorners
+      coverModelWithCorners ∞
+      (fun parameter : CanonicalLatitudeParameter =>
+        mappingTorusMk (sphereData period hPeriod)
+          ((coverHomeomorphProd (sphereData period hPeriod)).symm
+            (equatorialLatitudeUncurried
+                (equatorialTwoSphereHomeomorph.symm parameter.1.1,
+                  parameter.2),
+              parameter.1.2))) :=
+    ((reflectedSphere_projection_isLocalDiffeomorph period hPeriod).contMDiff
+      |>.of_le (by simp)).comp hCover
+  change ContMDiff canonicalLatitudeParameterModelWithCorners
+    coverModelWithCorners ∞
+    (fun parameter : CanonicalLatitudeParameter =>
+      mappingTorusMk (sphereData period hPeriod)
+        ⟨equatorialLatitude
+            (equatorialTwoSphereHomeomorph.symm parameter.1.1)
+            parameter.2,
+          parameter.1.2⟩)
+  exact hProjection
+
+/-- The canonical bundled normal lift is jointly `C∞`, not merely
+continuous, because it is the tangent map of the analytic collar evaluated
+on the smooth vertical unit section. -/
+theorem canonicalLatitudeNormalLift_contMDiff :
+    ContMDiff canonicalLatitudeParameterModelWithCorners
+      coverModelWithCorners.tangent ∞
+      (canonicalLatitudeNormalLift period hPeriod) := by
+  have hTangentMap : ContMDiff
+      canonicalLatitudeParameterModelWithCorners.tangent
+      coverModelWithCorners.tangent ∞
+      (tangentMap canonicalLatitudeParameterModelWithCorners
+        coverModelWithCorners (canonicalLatitudeCollarMap period hPeriod)) :=
+    (canonicalLatitudeCollar_contMDiff period hPeriod).contMDiff_tangentMap
+      (by simp)
+  exact (hTangentMap.comp canonicalLatitudeVerticalTangentLift_contMDiff).congr
+    (fun parameter =>
+      canonicalLatitudeNormalLift_eq_tangentMap_vertical period hPeriod
+        (canonicalLatitudeCollar_contMDiffOne period hPeriod) parameter)
+
+private abbrev QuotientTangentFiber
+    (point : EffectiveQuotient period hPeriod) :=
+  TangentSpace coverModelWithCorners point
+
+private abbrev canonicalLatitudeTangentTrivialization
+    (anchor : EffectiveQuotient period hPeriod) :=
+  trivializationAt CoverCoordinates (QuotientTangentFiber period hPeriod) anchor
+
+/-- Parameters for which the canonical normal lies in a fixed genuine tangent
+trivialization of the quotient atlas. -/
+def canonicalLatitudeNormalCoordinateDomain
+    (anchor : EffectiveQuotient period hPeriod) :
+    Set CanonicalLatitudeParameter :=
+  {parameter |
+    (canonicalLatitudeNormalLift period hPeriod parameter).1 ∈
+      (canonicalLatitudeTangentTrivialization period hPeriod anchor).baseSet}
+
+/-- Fiber coordinates of the canonical normal in a fixed genuine tangent
+trivialization. -/
+def canonicalLatitudeNormalCoordinate
+    (anchor : EffectiveQuotient period hPeriod)
+    (parameter : CanonicalLatitudeParameter) : CoverCoordinates :=
+  ((canonicalLatitudeTangentTrivialization period hPeriod anchor)
+    (canonicalLatitudeNormalLift period hPeriod parameter)).2
+
+/-- Every parameter is covered by one of these genuine coordinate domains. -/
+theorem exists_canonicalLatitudeNormalCoordinateDomain
+    (parameter : CanonicalLatitudeParameter) :
+    ∃ anchor : EffectiveQuotient period hPeriod,
+      parameter ∈
+        canonicalLatitudeNormalCoordinateDomain period hPeriod anchor := by
+  refine ⟨(canonicalLatitudeNormalLift period hPeriod parameter).1, ?_⟩
+  exact FiberBundle.mem_baseSet_trivializationAt'
+    (F := CoverCoordinates) (E := QuotientTangentFiber period hPeriod) _
+
+/-- The canonical normal coordinates are honestly `C∞` on every genuine
+tangent chart domain. -/
+theorem canonicalLatitudeNormalCoordinate_contMDiffOn
+    (anchor : EffectiveQuotient period hPeriod) :
+    ContMDiffOn canonicalLatitudeParameterModelWithCorners
+      𝓘(Real, CoverCoordinates) ∞
+      (canonicalLatitudeNormalCoordinate period hPeriod anchor)
+      (canonicalLatitudeNormalCoordinateDomain period hPeriod anchor) := by
+  let trivialization :=
+    canonicalLatitudeTangentTrivialization period hPeriod anchor
+  have hMaps : Set.MapsTo (canonicalLatitudeNormalLift period hPeriod)
+      (canonicalLatitudeNormalCoordinateDomain period hPeriod anchor)
+      trivialization.source := by
+    intro parameter hParameter
+    exact trivialization.mem_source.mpr hParameter
+  exact ((trivialization.contMDiffOn_iff hMaps).mp
+    (canonicalLatitudeNormalLift_contMDiff period hPeriod).contMDiffOn).2
+
 /-- The canonical bundled normal lift is continuous unconditionally. -/
 theorem canonicalLatitudeNormalLift_continuous :
     CanonicalLatitudeNormalLiftContinuous period hPeriod :=

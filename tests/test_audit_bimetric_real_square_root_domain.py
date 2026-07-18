@@ -12,6 +12,8 @@ def test_pointwise_domain_and_global_limit_are_distinguished():
     closure = payload["closure"]
     assert closure["pointwise_spectral_domain_classified"]
     assert closure["positive_proportional_branch_in_domain"]
+    assert closure["global_positive_diagonal_sector_root_proved_by_program_p"]
+    assert not closure["global_general_lorentz_root_proved"]
     assert not closure["global_spacetime_avoidance_proved"]
     assert "Jordan" in payload["general_real_root_criterion"]
 

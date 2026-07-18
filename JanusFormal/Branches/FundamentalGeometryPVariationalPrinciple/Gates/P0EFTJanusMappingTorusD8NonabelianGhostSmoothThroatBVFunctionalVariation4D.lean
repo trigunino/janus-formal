@@ -107,19 +107,19 @@ private theorem contMDiff_fintype_sum
     {Index : Type*} [Fintype Index]
     (summand : Index → EffectiveThroat period hPeriod → Real)
     (hSummand : ∀ index, ContMDiff throatCoverModelWithCorners
-      𝓘(Real, Real) ω (summand index)) :
-    ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ω
+      𝓘(Real, Real) ∞ (summand index)) :
+    ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞
       (fun point => ∑ index, summand index point) := by
   classical
   suffices hFinite : ∀ indices : Finset Index,
-      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ω
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞
         (fun point => ∑ index ∈ indices, summand index point) by
     simpa using hFinite Finset.univ
   intro indices
   induction indices using Finset.induction_on with
   | empty => simpa using
       (contMDiff_const : ContMDiff throatCoverModelWithCorners
-        𝓘(Real, Real) ω (fun _ : EffectiveThroat period hPeriod => (0 : Real)))
+        𝓘(Real, Real) ∞ (fun _ : EffectiveThroat period hPeriod => (0 : Real)))
   | @insert index indices hIndex hInduction =>
       apply ((hSummand index).add hInduction).congr
       intro point
@@ -384,7 +384,8 @@ theorem canonicalUltralocalBVFunctionalDensity_integrable
   letI : IsFiniteMeasure
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
     intrinsicCanonicalThroatVolumeMeasure_isFinite period hPeriod
-  exact (functional.value_contDiff.contMDiff.comp field.contMDiff_toFun).continuous
+  exact ((functional.value_contDiff.contMDiff.of_le (by simp)).comp
+      field.contMDiff_toFun).continuous
     |>.integrable_of_hasCompactSupport
       (HasCompactSupport.of_compactSpace
         (fun point => functional.observable.value (field point)))
@@ -420,8 +421,8 @@ theorem canonicalUltralocalBVOddAntibracket_integrable
   letI : IsFiniteMeasure
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
     intrinsicCanonicalThroatVolumeMeasure_isFinite period hPeriod
-  exact (smoothUltralocalBVOddBracket_contDiff first second |>.contMDiff.comp
-      field.contMDiff_toFun).continuous
+  exact ((smoothUltralocalBVOddBracket_contDiff first second).contMDiff.of_le
+      (by simp) |>.comp field.contMDiff_toFun).continuous
     |>.integrable_of_hasCompactSupport
       (HasCompactSupport.of_compactSpace
         (fun point => finiteBVOddAntibracket first.observable

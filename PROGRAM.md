@@ -35,6 +35,8 @@ A theorem about an abstract closure structure is not evidence that its physical 
 
 | Program | Purpose | Current role | Canonical entry |
 | --- | --- | --- | --- |
+| **MF** | weak mathematical foundations and audited emergence | relational pilot; all reconstruction arrows open | `formal/axioms/program_m_foundations.md` |
+| **M** | candidate specification, equivalence, consistency and predictivity | meta-selection protocol upstream of P | `docs/program_m_meta_theory_selection.md` |
 | **D0/D8** | mapping torus, throat, normal line, Pin/SpinC and `Z4` lift | global topology and bundle seed | `FundamentalGeometryD`, `FundamentalGeometryD8TopologyRepresentation` |
 | **D2** | monopole-twisted Dirac spectrum, eta and geometric ratios | strongest focused spectral head | `FundamentalGeometryDiracSpectral` |
 | **D7** | heat kernel, winding determinants and scale no-go results | local/nonlocal spectral layer | `FundamentalGeometryD7SpectralTheory` |
@@ -53,6 +55,10 @@ A theorem about an abstract closure structure is not evidence that its physical 
 ## Corrected dependency graph
 
 ```text
+MF weak primitives and audited reconstruction
+  -> M candidate specification and hard selection gates
+  -> surviving Janus candidate
+  ->
 D0/D8 global decorated geometry
   -> D2/D7 spectral constraints
   -> D9/D11 natural bundles, symbols and local operators
@@ -145,19 +151,20 @@ actual Janus category and field space
 1. `README.md`
 2. `PROGRAM.md`
 3. `docs/current_status.md`
-4. `docs/program_master_roadmap.md`
-5. `docs/program_p_variational_principle.md`
-6. `docs/program_pe_jet_universality_proof.md`
-7. `docs/program_pe_categorical_jet_equivalence.md`
-8. `docs/program_pe_structured_jet_reduction.md`
-9. `docs/program_pe_low_order_structured_background.md`
-10. `docs/program_pe_second_fundamental_form_jet.md`
-11. `docs/program_pe_smooth_adapted_frames.md`
-12. `docs/program_pe_spinC_cocycle_lift.md`
-13. `docs/program_pe_invariant_pairings.md`
-14. `docs/program_pd_global_pairing_modules.md`
-15. `docs/janus_branch_registry.md`
-16. `docs/six_new_research_programs.md`
+4. `docs/program_m_meta_theory_selection.md`
+5. `docs/program_master_roadmap.md`
+6. `docs/program_p_variational_principle.md`
+7. `docs/program_pe_jet_universality_proof.md`
+8. `docs/program_pe_categorical_jet_equivalence.md`
+9. `docs/program_pe_structured_jet_reduction.md`
+10. `docs/program_pe_low_order_structured_background.md`
+11. `docs/program_pe_second_fundamental_form_jet.md`
+12. `docs/program_pe_smooth_adapted_frames.md`
+13. `docs/program_pe_spinC_cocycle_lift.md`
+14. `docs/program_pe_invariant_pairings.md`
+15. `docs/program_pd_global_pairing_modules.md`
+16. `docs/janus_branch_registry.md`
+17. `docs/six_new_research_programs.md`
 
 ## Repository rule
 
