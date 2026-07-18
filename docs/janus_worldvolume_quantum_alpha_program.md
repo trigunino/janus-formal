@@ -167,11 +167,19 @@ local measure fields, full gauge/reducibility tower, gauge fermion, FP/BV
 operator, vertices and zero-mode prescription; it cannot be recovered from
 `F^2`, `M` and `a0` alone.
 
+Programme P now supplies a reusable classical LL bridge: the global compact-
+throat action and variation, an energy-Hilbert self-adjoint Fredholm operator
+with trivial kernel and index zero, and a square-zero smooth ultralocal BV
+model. `P0EFTJanusProgramPQuantumLLBridge.lean` imports these facts into A.
+They do not yet identify the physical Sobolev fluctuation operator, compact
+resolvent, primed determinant, gauge fermion or derivative-dependent BV
+completion; consequently `beta_LL` and `gamma_LL` remain undetermined.
+
 The manifest audit now reflects this distinction: the repository candidate is
 ready for the non-LL conditional calculation, but not for the total RG
 calculation. Its total `perturbative_rg_ready` flag remains false until the LL
-measure fields, reducibility tower, gauge fermion, FP/BV operator and zero-mode
-prescription are fixed.
+physical completion, gauge fermion, determinant prescription and cross-scheme
+matching are fixed.
 
 `P0EFTJanusQuadraticBosonicNoGhost.lean` isolates the reduced scalar and
 transverse-gauge residues. Positive residues and nonnegative scalar mass imply

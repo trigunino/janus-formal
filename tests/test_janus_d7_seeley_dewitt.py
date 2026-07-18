@@ -14,12 +14,27 @@ def test_universal_and_product_throat_coefficients_agree() -> None:
     assert audit.symbolic_a2_residual == "0"
     assert audit.symbolic_a4_residual == "0"
     assert audit.universal_to_dirac_a4_residual == "0"
+    assert audit.algebraic_coefficient_correspondence_formally_closed
     assert audit.local_coefficients_linear_in_circle_modulus
 
 
-def test_small_time_spectrum_recovers_a0_a2_a4() -> None:
+def test_wave0_formalization_closes_small_time_limit_unconditionally() -> None:
     audit = build_audit()
 
+    assert audit.recent_wave0_gates_integrated
+    assert audit.infinite_sphere_heat_trace_formally_constructed
+    assert audit.quarter_determinant_convergence_formally_closed
+    assert audit.euler_maclaurin_remainder_estimate_formally_proved
+    assert audit.unconditional_small_time_limit_formally_closed
+    assert audit.small_time_limit_proof_basis == (
+        "proved order-four Euler-Maclaurin remainder bound"
+    )
+
+
+def test_small_time_spectrum_gives_numerical_a0_a2_a4_evidence() -> None:
+    audit = build_audit()
+
+    assert audit.numerical_small_time_evidence_pass
     assert audit.maximum_small_time_residual < 1.0e-7
     assert audit.smallest_time_extracted_a4_error < 1.0e-3
     assert len(audit.heat_trace_samples) == 5

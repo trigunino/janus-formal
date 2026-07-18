@@ -98,6 +98,35 @@ structure OrientedNullInterval where
   initialParameter : ℝ
   finalParameter : ℝ
 
+/-- Reverse the orientation of a null-generator interval by exchanging its
+two endpoint parameters. -/
+def reverseOrientedNullInterval
+    (interval : OrientedNullInterval) : OrientedNullInterval where
+  initialParameter := interval.finalParameter
+  finalParameter := interval.initialParameter
+
+@[simp]
+theorem reverseOrientedNullInterval_initialParameter
+    (interval : OrientedNullInterval) :
+    (reverseOrientedNullInterval interval).initialParameter =
+      interval.finalParameter := by
+  rfl
+
+@[simp]
+theorem reverseOrientedNullInterval_finalParameter
+    (interval : OrientedNullInterval) :
+    (reverseOrientedNullInterval interval).finalParameter =
+      interval.initialParameter := by
+  rfl
+
+@[simp]
+theorem reverseOrientedNullInterval_reverse
+    (interval : OrientedNullInterval) :
+    reverseOrientedNullInterval (reverseOrientedNullInterval interval) =
+      interval := by
+  cases interval
+  rfl
+
 /-- Endpoint primitive of the local transgression. -/
 def endpointPrimitive
     (data : NullGeneratorReparametrizationData) (parameter : ℝ) : ℝ :=
@@ -140,6 +169,47 @@ theorem exactEndpointLedger_totalShift_zero
     (interval : OrientedNullInterval) :
     (exactEndpointLedger data interval).totalShift = 0 := by
   simp [NullJointEndpointLedger.totalShift, exactEndpointLedger]
+
+/-- Reversing the interval reverses the sign of the oriented face
+transgression. -/
+theorem exactEndpointLedger_reverse_faceTransgression
+    (data : NullGeneratorReparametrizationData)
+    (interval : OrientedNullInterval) :
+    (exactEndpointLedger data
+        (reverseOrientedNullInterval interval)).faceTransgression =
+      -(exactEndpointLedger data interval).faceTransgression := by
+  simp [exactEndpointLedger]
+
+/-- Under orientation reversal, the new initial joint is the negative of the
+old final joint. -/
+theorem exactEndpointLedger_reverse_initialJointShift
+    (data : NullGeneratorReparametrizationData)
+    (interval : OrientedNullInterval) :
+    (exactEndpointLedger data
+        (reverseOrientedNullInterval interval)).initialJointShift =
+      -(exactEndpointLedger data interval).finalJointShift := by
+  simp [exactEndpointLedger]
+
+/-- Under orientation reversal, the new final joint is the negative of the old
+initial joint. -/
+theorem exactEndpointLedger_reverse_finalJointShift
+    (data : NullGeneratorReparametrizationData)
+    (interval : OrientedNullInterval) :
+    (exactEndpointLedger data
+        (reverseOrientedNullInterval interval)).finalJointShift =
+      -(exactEndpointLedger data interval).initialJointShift := by
+  simp [exactEndpointLedger]
+
+/-- The full endpoint ledger is odd under reversal of interval orientation. -/
+theorem exactEndpointLedger_reverse_totalShift
+    (data : NullGeneratorReparametrizationData)
+    (interval : OrientedNullInterval) :
+    (exactEndpointLedger data
+        (reverseOrientedNullInterval interval)).totalShift =
+      -(exactEndpointLedger data interval).totalShift := by
+  rw [exactEndpointLedger_totalShift_zero,
+    exactEndpointLedger_totalShift_zero]
+  simp
 
 end
 

@@ -14,6 +14,39 @@ The branch separates:
 -/
 
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusFreeActionAudit
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusQuotient
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusPTInvolution
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalLine
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusOrientationDoubleCover
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementSides
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusThroatComplementConnected
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothAtlasFrontier
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotient
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothPTInvolution
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothThroatEmbedding
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusIsSmoothEmbedding
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalVectorBundle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusGlobalNormalEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalTopologicalBundle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleEquivalence
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalSmoothBundleIsomorphism
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusDifferentialNormalZeroNonzeroStratification
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentOrientationCocycle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientTangentQuadraticReduction
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinProjection
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinOrientation
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinAtlasObstruction
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSmoothOrthonormalReduction4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinSurjectivityFrontier
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinEvenReflectionLift
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinSO4Surjectivity4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusAmbientSpinCechTrivialization4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothNormalZ4RootBundle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalRootPTConjugation
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusNormalPinMinusAssociatedRoots
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusCyclicHolonomyRepresentationAudit
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMirrorOrbifoldAlternative
 import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusPinReflectionSquareConventionAudit
@@ -28,6 +61,73 @@ namespace JanusFundamentalGeometryD8TopologyRepresentation
 set_option autoImplicit false
 
 structure ProgramStatus where
+  effectiveTopologicalMappingTorusQuotientConstructed : Prop
+  mappingTorusCoveringAndChartedSpaceProved : Prop
+  fixedThroatQuotientInclusionInjectiveProved : Prop
+  mappingTorusTimeReversalContinuousProved : Prop
+  mappingTorusTimeReversalInvolutiveProved : Prop
+  fixedThroatQuotientInclusionPTEquivariantProved : Prop
+  associatedNormalLineOrbitQuotientConstructed : Prop
+  associatedNormalLineProjectionContinuousSurjectiveProved : Prop
+  associatedNormalLineZeroSectionConstructed : Prop
+  associatedNormalLineOneLoopFlipProved : Prop
+  associatedNormalLineTwoLoopRestorationProved : Prop
+  effectiveThroatOrientationDoubleCoveringMapProved : Prop
+  throatOrientationDoubleCoverFiberTwoProved : Prop
+  throatOrientationDeckInvolutionFreeProved : Prop
+  throatNormalPullbackTopologicallyTrivializedProved : Prop
+  equatorialSphereComplementTwoOpenSidesProved : Prop
+  reflectionAndDeckExchangeCoverSidesProved : Prop
+  effectiveThroatComplementOneSidedImageProved : Prop
+  effectiveThroatComplementPTInvariantProved : Prop
+  positiveAndNegativeSphereSidesPathConnectedProved : Prop
+  positiveCoverSidePathConnectedProved : Prop
+  effectiveThroatComplementPathConnectedProved : Prop
+  effectiveThroatComplementConnectedProved : Prop
+  algebraicSphereCoversAnalyticManifoldsProved : Prop
+  throatCoverTopologicalEmbeddingAndC0Proved : Prop
+  effectiveMappingTorusTopologicalManifoldProved : Prop
+  effectiveThroatTopologicalManifoldProved : Prop
+  quotientProjectionLocalHomeomorphAndC0Proved : Prop
+  smoothDeckActionsAndAtlasTransitionsProved : Prop
+  effectiveMappingTorusSmoothQuotientManifoldProved : Prop
+  effectiveThroatSmoothQuotientManifoldProved : Prop
+  quotientProjectionLocalDiffeomorphProved : Prop
+  fixedThroatQuotientInclusionContMDiffProved : Prop
+  mappingTorusTimeReversalContMDiffProved : Prop
+  mappingTorusTimeReversalDiffeomorphConstructed : Prop
+  effectiveMappingTorusCompactProved : Prop
+  effectiveThroatCompactProved : Prop
+  fixedThroatQuotientInclusionIsClosedEmbeddingProved : Prop
+  fixedThroatQuotientDifferentialInjectiveProved : Prop
+  fixedThroatNormalQuotientFinrankOneProved : Prop
+  fixedThroatQuotientInclusionIsImmersionOfComplementProved : Prop
+  fixedThroatQuotientInclusionIsSmoothEmbeddingProved : Prop
+  fixedThroatNormalVectorBundleConstructed : Prop
+  fixedThroatNormalVectorBundleContMDiffProved : Prop
+  fixedThroatNormalFiberPointwiseDifferentialEquivProved : Prop
+  fixedThroatNormalOneLoopMinusIdentityProved : Prop
+  fixedThroatNormalGlobalAlgebraicEquivProved : Prop
+  fixedThroatDifferentialNormalTopologicalBundleConstructed : Prop
+  fixedThroatDifferentialNormalContMDiffVectorBundleProved : Prop
+  fixedThroatDifferentialNormalSmoothBundleEquivalenceProved : Prop
+  fixedThroatDifferentialNormalSmoothBundleIsomorphismProved : Prop
+  fixedThroatDifferentialNormalZeroNonzeroStratificationProved : Prop
+  ambientTangentOrientationCocycleProved : Prop
+  ambientTangentQuadraticReductionFrontierProved : Prop
+  ambientSpinProjectionConstructed : Prop
+  ambientSpinProjectionOrientationProved : Prop
+  ambientSpinAtlasCechObstructionProved : Prop
+  ambientSpinSurjectivityCechFrontierProved : Prop
+  ambientSpinEvenReflectionLiftConstructed : Prop
+  ambientSpinSO4SurjectivityProved : Prop
+  ambientSpinCechTrivializationReduced : Prop
+  fixedThroatNormalZ4RootComplexLineConstructed : Prop
+  fixedThroatNormalZ4RootSmoothRealUnderlierProved : Prop
+  fixedThroatNormalZ4RootSquaresToNormalSignProved : Prop
+  fixedThroatNormalZ4RootPTConjugationProved : Prop
+  fixedThroatNormalPinMinusPrincipalBundleConstructed : Prop
+  fixedThroatNormalPinMinusAssociatedRootsProved : Prop
   nonzeroTranslationDerived : Prop
   integerActionFreeProved : Prop
   properDiscontinuityProved : Prop
@@ -56,9 +156,136 @@ structure ProgramStatus where
   euclideanLorentzianPinDictionaryDerived : Prop
   internalSymmetryGeometricallyDerived : Prop
 
+/-- Effective topological quotient, covering charts and the injected fixed throat. -/
+def effectiveTopologicalMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
+  s.effectiveTopologicalMappingTorusQuotientConstructed /\
+  s.mappingTorusCoveringAndChartedSpaceProved /\
+  s.fixedThroatQuotientInclusionInjectiveProved
+
+/-- Continuous involutive time reversal on the quotient and its fixed throat. -/
+def effectiveMappingTorusPTCoreClosed (s : ProgramStatus) : Prop :=
+  s.mappingTorusTimeReversalContinuousProved /\
+  s.mappingTorusTimeReversalInvolutiveProved /\
+  s.fixedThroatQuotientInclusionPTEquivariantProved
+
+/-- Associated orbit quotient, projection, zero section and parity monodromy. -/
+def associatedNormalLineQuotientCoreClosed (s : ProgramStatus) : Prop :=
+  s.associatedNormalLineOrbitQuotientConstructed /\
+  s.associatedNormalLineProjectionContinuousSurjectiveProved /\
+  s.associatedNormalLineZeroSectionConstructed /\
+  s.associatedNormalLineOneLoopFlipProved /\
+  s.associatedNormalLineTwoLoopRestorationProved
+
+/-- Effective two-sheeted orientation cover and trivial topological normal pullback. -/
+def effectiveThroatOrientationDoubleCoverCoreClosed (s : ProgramStatus) : Prop :=
+  s.effectiveThroatOrientationDoubleCoveringMapProved /\
+  s.throatOrientationDoubleCoverFiberTwoProved /\
+  s.throatOrientationDeckInvolutionFreeProved /\
+  s.throatNormalPullbackTopologicallyTrivializedProved
+
+/-- Exact topological side decomposition and its one-sided quotient image. -/
+def effectiveThroatComplementSidesCoreClosed (s : ProgramStatus) : Prop :=
+  s.equatorialSphereComplementTwoOpenSidesProved /\
+  s.reflectionAndDeckExchangeCoverSidesProved /\
+  s.effectiveThroatComplementOneSidedImageProved /\
+  s.effectiveThroatComplementPTInvariantProved
+
+/-- Path-connected sign sides and path-connected effective complement. -/
+def effectiveThroatComplementConnectedCoreClosed (s : ProgramStatus) : Prop :=
+  s.positiveAndNegativeSphereSidesPathConnectedProved /\
+  s.positiveCoverSidePathConnectedProved /\
+  s.effectiveThroatComplementPathConnectedProved /\
+  s.effectiveThroatComplementConnectedProved
+
+/-- Analytic cover atlases and the honest `C⁰` quotient-manifold frontier. -/
+def mappingTorusSmoothAtlasFrontierCoreClosed (s : ProgramStatus) : Prop :=
+  s.algebraicSphereCoversAnalyticManifoldsProved /\
+  s.throatCoverTopologicalEmbeddingAndC0Proved /\
+  s.effectiveMappingTorusTopologicalManifoldProved /\
+  s.effectiveThroatTopologicalManifoldProved /\
+  s.quotientProjectionLocalHomeomorphAndC0Proved
+
+/-- Smooth deck maps, throat-cover inclusion and compatible local atlas
+transitions. -/
+def mappingTorusSmoothDeckDescentFrontierClosed (s : ProgramStatus) : Prop :=
+  s.smoothDeckActionsAndAtlasTransitionsProved
+
+/-- Installed analytic quotient manifolds, local-diffeomorphism projections
+and smooth descended throat inclusion. -/
+def mappingTorusSmoothQuotientManifoldCoreClosed (s : ProgramStatus) : Prop :=
+  s.effectiveMappingTorusSmoothQuotientManifoldProved /\
+  s.effectiveThroatSmoothQuotientManifoldProved /\
+  s.quotientProjectionLocalDiffeomorphProved /\
+  s.fixedThroatQuotientInclusionContMDiffProved
+
+/-- Analytic PT diffeomorphisms on both effective quotient manifolds. -/
+def mappingTorusSmoothPTCoreClosed (s : ProgramStatus) : Prop :=
+  s.mappingTorusTimeReversalContMDiffProved /\
+  s.mappingTorusTimeReversalDiffeomorphConstructed
+
+/-- Checked smooth embedding: the inclusion is a closed topological embedding,
+has a fixed one-dimensional immersion complement, is a manifold immersion and
+satisfies Mathlib's global `IsSmoothEmbedding`.  Null/joint stratification is
+not asserted here. -/
+def fixedThroatSmoothEmbeddingFrontierClosed (s : ProgramStatus) : Prop :=
+  s.fixedThroatQuotientInclusionIsClosedEmbeddingProved /\
+  s.fixedThroatQuotientDifferentialInjectiveProved /\
+  s.fixedThroatNormalQuotientFinrankOneProved /\
+  s.fixedThroatQuotientInclusionIsImmersionOfComplementProved /\
+  s.fixedThroatQuotientInclusionIsSmoothEmbeddingProved
+
+/-- Actual analytic sign-clutched normal line bundle, transported analytic
+vector-bundle structure on the differential normal family, exact total-space
+diffeomorphism, intrinsic zero/nonzero strata, and both global complex `Z4`
+root lines with their principal normal lift. -/
+def fixedThroatSmoothNormalBundleClosed (s : ProgramStatus) : Prop :=
+  s.fixedThroatNormalVectorBundleConstructed /\
+  s.fixedThroatNormalVectorBundleContMDiffProved /\
+  s.fixedThroatNormalFiberPointwiseDifferentialEquivProved /\
+  s.fixedThroatNormalOneLoopMinusIdentityProved /\
+  s.fixedThroatNormalGlobalAlgebraicEquivProved /\
+  s.fixedThroatDifferentialNormalTopologicalBundleConstructed /\
+  s.fixedThroatDifferentialNormalContMDiffVectorBundleProved /\
+  s.fixedThroatDifferentialNormalSmoothBundleEquivalenceProved /\
+  s.fixedThroatDifferentialNormalSmoothBundleIsomorphismProved /\
+  s.fixedThroatDifferentialNormalZeroNonzeroStratificationProved /\
+  s.ambientTangentOrientationCocycleProved /\
+  s.ambientTangentQuadraticReductionFrontierProved /\
+  s.ambientSpinProjectionConstructed /\
+  s.ambientSpinProjectionOrientationProved /\
+  s.ambientSpinAtlasCechObstructionProved /\
+  s.ambientSpinSurjectivityCechFrontierProved /\
+  s.ambientSpinEvenReflectionLiftConstructed /\
+  s.ambientSpinSO4SurjectivityProved /\
+  s.ambientSpinCechTrivializationReduced /\
+  s.fixedThroatNormalZ4RootComplexLineConstructed /\
+  s.fixedThroatNormalZ4RootSmoothRealUnderlierProved /\
+  s.fixedThroatNormalZ4RootSquaresToNormalSignProved /\
+  s.fixedThroatNormalZ4RootPTConjugationProved /\
+  s.fixedThroatNormalPinMinusPrincipalBundleConstructed /\
+  s.fixedThroatNormalPinMinusAssociatedRootsProved
+
+/-- Compactness of both actual effective quotient manifolds. -/
+def effectiveQuotientCompactnessClosed (s : ProgramStatus) : Prop :=
+  s.effectiveMappingTorusCompactProved /\
+  s.effectiveThroatCompactProved
+
 /-- Smooth topology and one-sided-throat milestone. -/
 def smoothMappingTorusCoreClosed (s : ProgramStatus) : Prop :=
+  effectiveTopologicalMappingTorusCoreClosed s /\
+  effectiveMappingTorusPTCoreClosed s /\
+  associatedNormalLineQuotientCoreClosed s /\
+  effectiveThroatOrientationDoubleCoverCoreClosed s /\
+  effectiveThroatComplementSidesCoreClosed s /\
+  effectiveThroatComplementConnectedCoreClosed s /\
+  mappingTorusSmoothAtlasFrontierCoreClosed s /\
+  mappingTorusSmoothDeckDescentFrontierClosed s /\
+  mappingTorusSmoothQuotientManifoldCoreClosed s /\
+  mappingTorusSmoothPTCoreClosed s /\
+  fixedThroatSmoothEmbeddingFrontierClosed s /\
+  fixedThroatSmoothNormalBundleClosed s /\
   s.nonzeroTranslationDerived /\
+  effectiveQuotientCompactnessClosed s /\
   s.integerActionFreeProved /\
   s.properDiscontinuityProved /\
   s.smoothMappingTorusConstructed /\

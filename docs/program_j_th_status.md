@@ -2,6 +2,13 @@
 
 ## Statut
 
+## Raccordement technique a P
+
+- `TH-BP01` ferme : base effective D8 mesuree et interaction Candidate A integree.
+- `TH-BP02` ferme : invariance PT de la premiere variation integree.
+- `TH-BP03` ferme (passe 2) : chaine de variation des champs induits et reponse croisee nulle des secteurs non metrique/matiere.
+- Reprise P : identifier cette variation a des courants physiques, puis deriver energie, entropie et loi d'etat. `TH-P01` et les entrees microscopiques restent ouverts.
+
 `TH01-TH03` sont fermés comme noyau **conditionnel T/X**. Ils classifient les
 lois admissibles; ils ne dérivent pas encore les courants ni les coefficients
 microscopiques de Janus.

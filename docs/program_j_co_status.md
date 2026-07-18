@@ -19,6 +19,13 @@ Holes: Gravastars and Plugstars*, DOI `10.4236/jmp.2025.1610072`, pages
 
 ## Verdict scientifique
 
+## Raccordement technique à P
+
+- `CO-BP01` fermé : plongement effectif de la gorge D8 disponible.
+- `CO-BP02` fermé : équivariance PT de la géométrie effective de gorge.
+- `CO-BP03` fermé (passe 2) : famille finie de générateurs tangents lisses sur le quotient D8 compact et trace de gorge graph-H1 disponible.
+- Reprise P : solution compacte bimétrique, tenseur matière et métrique extérieure physique. `CO-P07/CO-P08/CO-P09` restent ouverts.
+
 **T/X** : le noyau algébrique constant-density et le ratio cité sont
 reproductibles.
 
