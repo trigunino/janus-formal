@@ -47,6 +47,46 @@ def positive_hamiltonian(
     return free + coupling * (op["x_plus"] @ op["x_minus"])
 
 
+def normal_mode_frequencies(omega: float = 1.0, coupling: float = 0.2) -> tuple[float, float]:
+    """Exact symmetric/antisymmetric frequencies of the continuum model."""
+    if omega <= 0 or abs(coupling) >= omega**2:
+        raise ValueError("unstable continuum quadratic form")
+    return (float(np.sqrt(omega**2 + coupling)), float(np.sqrt(omega**2 - coupling)))
+
+
+def exact_ground_energy(omega: float = 1.0, coupling: float = 0.2) -> float:
+    return 0.5 * sum(normal_mode_frequencies(omega, coupling))
+
+
+def pt_odd_source_operator(cutoff: int, omega: float = 1.0) -> np.ndarray:
+    """Signed gravitational coordinate Q = x_plus - x_minus."""
+    op = operators(cutoff, omega)
+    return op["x_plus"] - op["x_minus"]
+
+
+def sourced_positive_hamiltonian(
+    cutoff: int,
+    omega: float = 1.0,
+    coupling: float = 0.2,
+    field: float = 0.0,
+) -> np.ndarray:
+    """Stable model in an external PT-odd field, H(field) = H0 - field*Q."""
+    return positive_hamiltonian(cutoff, omega, coupling) - field * pt_odd_source_operator(
+        cutoff, omega
+    )
+
+
+def ground_state(hamiltonian: np.ndarray) -> tuple[float, np.ndarray]:
+    values, vectors = np.linalg.eigh(hamiltonian)
+    return float(values[0]), vectors[:, 0]
+
+
+def exact_signed_susceptibility(omega: float = 1.0, coupling: float = 0.2) -> float:
+    """d<Q>/d(field) for the PT-odd normal mode."""
+    normal_mode_frequencies(omega, coupling)
+    return 2.0 / (omega**2 - coupling)
+
+
 def ghost_hamiltonian(cutoff: int, omega: float = 1.0) -> np.ndarray:
     """Opposite energy signs, retained only as the instability control."""
     op = operators(cutoff, omega)
@@ -68,7 +108,7 @@ def swap_operator(cutoff: int) -> np.ndarray:
 
 
 def ground_energy(hamiltonian: np.ndarray) -> float:
-    return float(np.linalg.eigvalsh(hamiltonian)[0])
+    return ground_state(hamiltonian)[0]
 
 
 def stability_scan(cutoffs: tuple[int, ...] = (4, 6, 8, 10)) -> dict[str, list[float]]:

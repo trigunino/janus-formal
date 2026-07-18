@@ -10,17 +10,20 @@ Read these files in order:
 
 1. [`PROGRAM.md`](PROGRAM.md) — stable program map;
 2. [`docs/current_status.md`](docs/current_status.md) — current integration, CI and scientific status;
-3. [`docs/program_master_roadmap.md`](docs/program_master_roadmap.md) — detailed dependency graph;
-4. [`docs/program_p_variational_principle.md`](docs/program_p_variational_principle.md) — Program P in detail;
-5. [`docs/program_pe_categorical_jet_equivalence.md`](docs/program_pe_categorical_jet_equivalence.md) — corrected categorical jet theorem and Janus groupoid obligations;
-6. [`docs/program_pe_structured_jet_reduction.md`](docs/program_pe_structured_jet_reduction.md) — action-groupoid core, low-order jet normal forms and isotropy locks;
-7. [`docs/program_pe_low_order_structured_background.md`](docs/program_pe_low_order_structured_background.md) — concrete chain-rule, curvature and combined `(B,F)` quotient theorems;
-8. [`docs/program_pe_second_fundamental_form_jet.md`](docs/program_pe_second_fundamental_form_jet.md) — pointwise identification `B = II`, coordinate invariance and residual `O(T) × O(N)` equivariance;
-9. [`docs/program_pe_smooth_adapted_frames.md`](docs/program_pe_smooth_adapted_frames.md) — smooth tangent/normal projectors and local adapted orthonormal frames;
-10. [`docs/program_pe_spinC_cocycle_lift.md`](docs/program_pe_spinC_cocycle_lift.md) — moving-frame law, oriented overlaps, central lift defects, SpinC cancellation and the rank-two `Spin(2) -> SO(2)` model;
-11. [`docs/program_pd_global_pairing_modules.md`](docs/program_pd_global_pairing_modules.md) — correction from pointwise multiplicity to global coupling modules;
-12. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
-13. [`docs/six_new_research_programs.md`](docs/six_new_research_programs.md) — six exploratory physics programs.
+3. [`docs/program_m_meta_theory_selection.md`](docs/program_m_meta_theory_selection.md) — Program M theory-selection protocol;
+4. [`docs/program_m_plain_language.md`](docs/program_m_plain_language.md) — Program M for non-specialists;
+5. [`formal/axioms/program_m_foundations.md`](formal/axioms/program_m_foundations.md) — minimal relational pilot and anti-smuggling rules;
+6. [`docs/program_master_roadmap.md`](docs/program_master_roadmap.md) — detailed dependency graph;
+7. [`docs/program_p_variational_principle.md`](docs/program_p_variational_principle.md) — Program P in detail;
+8. [`docs/program_pe_categorical_jet_equivalence.md`](docs/program_pe_categorical_jet_equivalence.md) — corrected categorical jet theorem and Janus groupoid obligations;
+9. [`docs/program_pe_structured_jet_reduction.md`](docs/program_pe_structured_jet_reduction.md) — action-groupoid core, low-order jet normal forms and isotropy locks;
+10. [`docs/program_pe_low_order_structured_background.md`](docs/program_pe_low_order_structured_background.md) — concrete chain-rule, curvature and combined `(B,F)` quotient theorems;
+11. [`docs/program_pe_second_fundamental_form_jet.md`](docs/program_pe_second_fundamental_form_jet.md) — pointwise identification `B = II`, coordinate invariance and residual `O(T) × O(N)` equivariance;
+12. [`docs/program_pe_smooth_adapted_frames.md`](docs/program_pe_smooth_adapted_frames.md) — smooth tangent/normal projectors and local adapted orthonormal frames;
+13. [`docs/program_pe_spinC_cocycle_lift.md`](docs/program_pe_spinC_cocycle_lift.md) — moving-frame law, oriented overlaps, central lift defects, SpinC cancellation and the rank-two `Spin(2) -> SO(2)` model;
+14. [`docs/program_pd_global_pairing_modules.md`](docs/program_pd_global_pairing_modules.md) — correction from pointwise multiplicity to global coupling modules;
+15. [`docs/janus_branch_registry.md`](docs/janus_branch_registry.md) — operational Lean heads and parked branches.
+16. [`docs/six_new_research_programs.md`](docs/six_new_research_programs.md) — six exploratory physics programs.
 
 ## Repository layout
 
@@ -56,6 +59,7 @@ lake build JanusFormal
 It imports the shared core only. Build focused programs explicitly, for example:
 
 ```bash
+lake build JanusFormal.Branches.ProgramMFoundations
 lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
 lake build JanusFormal.Branches.FundamentalGeometryPEInvariantPairings

@@ -17,6 +17,7 @@ def build_payload() -> dict:
             "plus": "nabla_g T_plus=0",
             "minus": "nabla_f T_minus=0",
             "direct_cross_transport_required": False,
+            "program_p_scalar_bridge": "nabla_mu T^{mu nu}=(box(phi)-V'(phi))*sharp(d phi)^nu on a covariant 4D second jet",
         },
         "reason": "diagonal diffeomorphism invariance supplies one interaction Noether identity; separate matter diffeomorphism invariance supplies conservation in each native metric",
         "forbidden_extensions": [
@@ -27,6 +28,8 @@ def build_payload() -> dict:
         "closure": {
             "inhomogeneous_covariant_identity": True,
             "native_matter_conservation": True,
+            "local_scalar_stress_transport_mechanized_in_program_p": True,
+            "arbitrary_smooth_global_matter_transport": False,
             "componentwise_tensor_expansion_mechanized": False,
             "janus_signed_cross_source_from_candidate_A": False,
         },

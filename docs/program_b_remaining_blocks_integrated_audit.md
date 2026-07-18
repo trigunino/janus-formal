@@ -12,14 +12,21 @@
 
 1. Une trajectoire cosmologique `r(t),H(t)` est nécessaire pour décider si la
    borne de Higuchi est satisfaite durant toute l'histoire.
-2. La matrice de source croisée signée de Janus ne découle pas de la matière
-   minimalement séparée; tout nouveau couplage doit repasser l'audit BD.
-3. La fonctionnelle de corner et son résidu nul sont dérivés. P/E doit décider
-   si `K_plus sqrt(sigma_plus)=K_minus sqrt(sigma_minus)` sur la jonction et
-   fixer globalement les normales.
+   Le témoin poussière réduit de P fixe désormais un point instantané avec
+   `|H_±|=1/6`; il est sain si `m²>1/36`. Le facteur exact entre l'échelle
+   d'interaction de P et ce `m²`, puis l'histoire temporelle, restent à dériver.
+2. P fournit maintenant `div T=E_phi sharp(d phi)` pour un second jet scalaire
+   covariant 4D. La matrice de source croisée signée ne découle toutefois pas
+   encore de cette matière minimale; tout couplage croisé doit repasser ADM/BD.
+3. Le normal du throat canonique de P a un carré `+1` : cette jonction est
+   spacelike et n'a pas l'ambiguïté de normalisation des joints nuls. Il reste
+   à dériver sa fonctionnelle non-null globale et ses données induites.
 4. La racine est préservée dans le tube quantitatif
    `||A(0)-c²I||_infinity + integral ||A_dot||_infinity dt < c²`. P/E doit
    fournir cette borne le long de la solution choisie.
+   Le sous-secteur global diagonal positif construit par P échappe désormais
+   à ce verrou : sa racine principale lisse est définie partout. Le verrou ne
+   subsiste que pour les paires Lorentziennes générales.
 5. La canonisation simultanée des deux cadres est faite. Sur la branche PT,
    avec `s=beta1+beta2` et `q²=K_plus/K_minus`, elle donne
    `C2=s²(1+q²)/2`, `C3=s²` et

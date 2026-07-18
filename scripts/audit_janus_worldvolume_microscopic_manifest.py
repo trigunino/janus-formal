@@ -23,6 +23,7 @@ class ManifestAudit:
     cross_scheme_matching_complete: bool
     cross_scheme_covariance_derived: bool
     conditional_non_ll_results_recorded: bool
+    program_p_ll_bridge_available: bool
     perturbative_rg_ready: bool
     missing_rg_choices: tuple[str, ...]
     verdict: str
@@ -124,7 +125,19 @@ def audit_manifest(payload: dict[str, Any]) -> ManifestAudit:
         "fp_bv_operator",
         "zero_mode_prescription",
     )
-    ll_fixed = all(ll_completion.get(key) not in (None, "not_yet_fixed") for key in ll_keys)
+    program_p_ll_bridge = (
+        ll_completion.get("local_measure_fields")
+        == "program_p_global_independent_ll_fields_importable"
+        and ll_completion.get("reducibility_tower")
+        == "program_p_finite_ce_ll_completion_only"
+        and ll_completion.get("fp_bv_operator")
+        == "program_p_smooth_ultralocal_bv_master_only"
+        and ll_completion.get("zero_mode_prescription")
+        == "program_p_energy_hilbert_kernel_zero_physical_sobolev_open"
+    )
+    ll_fixed = all(
+        ll_completion.get(key) == "physical_completion_fixed" for key in ll_keys
+    )
     if not ll_fixed:
         missing = (*missing, "ll_quantum_completion")
     ready = non_ll_ready and ll_fixed
@@ -141,6 +154,7 @@ def audit_manifest(payload: dict[str, Any]) -> ManifestAudit:
         cross_scheme_matching_complete=cross_scheme_complete,
         cross_scheme_covariance_derived=cross_scheme_covariance,
         conditional_non_ll_results_recorded=non_ll_results_recorded,
+        program_p_ll_bridge_available=program_p_ll_bridge,
         perturbative_rg_ready=ready,
         missing_rg_choices=missing,
         verdict=(

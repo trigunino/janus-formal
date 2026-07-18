@@ -32,3 +32,17 @@ La racine principale réelle reste donc analytique dans ce tube. Pour une
 prouve sa préservation jusqu'à `T`. C'est une preuve conditionnelle complète :
 P/E doit encore fournir une borne sur l'intégrale de vitesse pour une solution
 physique donnée. L'égalité n'est pas certifiée, car la marge doit être stricte.
+
+## Sous-secteur global désormais fermé par P
+
+P construit sur le quotient effectif deux champs métriques simultanément
+diagonaux, à échelles lisses strictement positives, ainsi que leur racine
+principale lisse. Dans ce secteur,
+\[
+\sigma(g_+^{-1}g_-)\subset(0,\infty)
+\]
+en tout point : aucune trajectoire ne peut atteindre l'axe réel négatif tant
+que la positivité des échelles est conservée par définition du domaine.
+Le problème global de racine est donc fermé pour ce sous-secteur diagonal.
+Il reste ouvert pour une paire Lorentzienne générale non simultanément
+diagonalisable.

@@ -8,6 +8,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusConvexHelmholtzReconstruction
+open P0EFTJanusNonlinearGaugeFlowNoether
 
 universe u v w
 
@@ -171,6 +172,112 @@ theorem infinitesimal_invariance_iff_formalAdjoint_bianchi_constraint
   · exact (euler_bianchi_annihilation_at_iff_formalAdjoint_constraint
       euler generator q).2 (h q)
 
+/-- Restrict a field-dependent gauge generator along a linear map of gauge
+parameters. -/
+def reparameterizedDiagonalGaugeGenerator
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter) :
+    DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := ReducedParameter) :=
+  fun q => (generator q).comp parameterMap
+
+/-- Pulling back the formal-adjoint Euler constraint agrees exactly with
+reparameterizing the gauge generator. -/
+theorem formalAdjointEulerConstraint_reparameterized
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (euler : EulerOneForm Configuration)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (q : Configuration) :
+    formalAdjointEulerConstraint euler
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) q =
+      (formalAdjointEulerConstraint euler generator q).comp parameterMap := by
+  rfl
+
+/-- Infinitesimal invariance is preserved when the allowed gauge parameters
+are restricted by a continuous linear map. -/
+theorem infinitesimal_invariance_reparameterized
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (action : Configuration → ℝ)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (hInvariant : InfinitesimallyDiagonalGaugeInvariant action generator) :
+    InfinitesimallyDiagonalGaugeInvariant action
+      (reparameterizedDiagonalGaugeGenerator generator parameterMap) := by
+  intro q parameter
+  simpa [reparameterizedDiagonalGaugeGenerator, gaugeLine] using
+    hInvariant q (parameterMap parameter)
+
+/-- A vanishing formal-adjoint constraint remains zero after an exact
+reparameterization of the gauge generator. -/
+theorem formalAdjoint_constraint_reparameterized_of_constraint
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (euler : EulerOneForm Configuration)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (q : Configuration)
+    (hConstraint : formalAdjointEulerConstraint euler generator q = 0) :
+    formalAdjointEulerConstraint euler
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) q = 0 := by
+  rw [formalAdjointEulerConstraint_reparameterized, hConstraint]
+  rfl
+
+/-- A surjective linear reparameterization detects the full formal-adjoint
+constraint, rather than only preserving its vanishing. -/
+theorem formalAdjoint_constraint_reparameterized_iff_of_surjective
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (euler : EulerOneForm Configuration)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (hSurjective : Function.Surjective parameterMap)
+    (q : Configuration) :
+    formalAdjointEulerConstraint euler
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) q = 0 ↔
+      formalAdjointEulerConstraint euler generator q = 0 := by
+  constructor
+  · intro hReduced
+    apply ContinuousLinearMap.ext
+    intro parameter
+    obtain ⟨reducedParameter, hParameter⟩ := hSurjective parameter
+    have hApply := congrArg
+      (fun constraint : ReducedParameter →L[ℝ] ℝ =>
+        constraint reducedParameter) hReduced
+    simpa [formalAdjointEulerConstraint_reparameterized, hParameter] using hApply
+  · exact formalAdjoint_constraint_reparameterized_of_constraint
+      euler generator parameterMap q
+
+/-- Infinitesimal invariance under a surjective reparameterization is
+equivalent to invariance under the original gauge parameters. -/
+theorem infinitesimal_invariance_reparameterized_iff_of_surjective
+    {ReducedParameter : Type w}
+    [NormedAddCommGroup ReducedParameter] [NormedSpace ℝ ReducedParameter]
+    (action : Configuration → ℝ)
+    (generator : DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := GaugeParameter))
+    (parameterMap : ReducedParameter →L[ℝ] GaugeParameter)
+    (hSurjective : Function.Surjective parameterMap) :
+    InfinitesimallyDiagonalGaugeInvariant action
+        (reparameterizedDiagonalGaugeGenerator generator parameterMap) ↔
+      InfinitesimallyDiagonalGaugeInvariant action generator := by
+  constructor
+  · intro hReduced q parameter
+    obtain ⟨reducedParameter, hParameter⟩ := hSurjective parameter
+    simpa [reparameterizedDiagonalGaugeGenerator, gaugeLine, hParameter] using
+      hReduced q reducedParameter
+  · exact infinitesimal_invariance_reparameterized
+      action generator parameterMap
+
 /-- Constraint closure under a supplied reduction of gauge parameters. -/
 theorem formalAdjoint_constraint_closed_under_parameter_map
     {ReducedParameter : Type w}
@@ -184,6 +291,100 @@ theorem formalAdjoint_constraint_closed_under_parameter_map
     (formalAdjointEulerConstraint euler generator q).comp parameterMap = 0 := by
   rw [hConstraint]
   rfl
+
+/-- A complete one-parameter gauge flow supplies a diagonal infinitesimal
+generator by scalar multiplication of its velocity field. -/
+def completeFlowDiagonalGaugeGenerator
+    (flow : CompleteGaugeFlow Configuration) :
+    DiagonalGaugeGenerator
+      (Configuration := Configuration) (GaugeParameter := ℝ) :=
+  fun q => ContinuousLinearMap.smulRight
+    (ContinuousLinearMap.id ℝ ℝ) (flow.generator q)
+
+@[simp]
+theorem completeFlowDiagonalGaugeGenerator_apply
+    (flow : CompleteGaugeFlow Configuration)
+    (q : Configuration) (scalar : ℝ) :
+    completeFlowDiagonalGaugeGenerator flow q scalar =
+      scalar • flow.generator q :=
+  rfl
+
+/-- The diagonal Bianchi identity for the generator induced by a complete
+flow is exactly annihilation of that flow's velocity field. -/
+theorem eulerBianchiAnnihilation_completeFlow_iff
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration) :
+    EulerBianchiAnnihilation euler
+        (completeFlowDiagonalGaugeGenerator flow) ↔
+      EulerAnnihilatesGenerator flow euler := by
+  constructor
+  · intro h q
+    simpa using h q 1
+  · intro h q scalar
+    simp [completeFlowDiagonalGaugeGenerator, h q]
+
+/-- For an action with its actual Euler derivative, invariance under a
+complete gauge flow is equivalent to invariance along every frozen scalar
+multiple of the same infinitesimal generator. -/
+theorem flowGaugeInvariant_iff_infinitesimallyDiagonalGaugeInvariant
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration)
+    (action : Configuration → ℝ)
+    (hGradient : ∀ q, HasFDerivAt action (euler q) q) :
+    FlowGaugeInvariant flow action ↔
+      InfinitesimallyDiagonalGaugeInvariant action
+        (completeFlowDiagonalGaugeGenerator flow) := by
+  rw [flow_gauge_invariant_iff_euler_annihilates_generator
+      flow euler action hGradient,
+    infinitesimal_invariance_iff_euler_bianchi_annihilation
+      action euler (completeFlowDiagonalGaugeGenerator flow) hGradient,
+    eulerBianchiAnnihilation_completeFlow_iff]
+
+/-- On a scalar flow parameter, the formal-adjoint constraint is scalar
+multiplication by the Euler pairing with the flow generator. -/
+@[simp]
+theorem formalAdjointEulerConstraint_completeFlow_apply
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration)
+    (q : Configuration) (scalar : ℝ) :
+    formalAdjointEulerConstraint euler
+        (completeFlowDiagonalGaugeGenerator flow) q scalar =
+      scalar * euler q (flow.generator q) := by
+  simp [formalAdjointEulerConstraint, completeFlowDiagonalGaugeGenerator]
+
+/-- Vanishing of the complete-flow formal-adjoint constraint is exactly the
+nonlinear Euler annihilation identity for the same supplied flow. -/
+theorem completeFlow_formalAdjoint_constraint_iff
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration) :
+    (∀ q, formalAdjointEulerConstraint euler
+        (completeFlowDiagonalGaugeGenerator flow) q = 0) ↔
+      EulerAnnihilatesGenerator flow euler := by
+  constructor
+  · intro hConstraint q
+    have hAtOne := congrArg
+      (fun constraint : ℝ →L[ℝ] ℝ => constraint 1) (hConstraint q)
+    simpa using hAtOne
+  · intro hAnnihilates q
+    apply ContinuousLinearMap.ext
+    intro scalar
+    simp [hAnnihilates q]
+
+/-- For an action with its actual Euler derivative, invariance under the
+complete flow is equivalent directly to the vanishing constraint `Rᵀ E = 0`
+for the scalar generator induced by that same flow. -/
+theorem flowGaugeInvariant_iff_completeFlow_formalAdjoint_constraint
+    (flow : CompleteGaugeFlow Configuration)
+    (euler : EulerOneForm Configuration)
+    (action : Configuration → ℝ)
+    (hGradient : ∀ q, HasFDerivAt action (euler q) q) :
+    FlowGaugeInvariant flow action ↔
+      ∀ q, formalAdjointEulerConstraint euler
+        (completeFlowDiagonalGaugeGenerator flow) q = 0 := by
+  rw [flowGaugeInvariant_iff_infinitesimallyDiagonalGaugeInvariant
+      flow euler action hGradient,
+    infinitesimal_invariance_iff_formalAdjoint_bianchi_constraint
+      action euler (completeFlowDiagonalGaugeGenerator flow) hGradient]
 
 /-- A constant action and cancelling sector Euler contributions provide an
 exact counterexample to splitting a combined Noether identity. -/

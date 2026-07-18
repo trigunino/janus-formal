@@ -12,6 +12,8 @@ def test_paired_flux_gives_local_integrability_only():
     assert not closure["global_charge_integrability"]
     assert closure["corner_joint_functional_derived"]
     assert closure["conditional_corner_cancellation_proved"]
+    assert closure["canonical_p_throat_causal_type_decided"]
+    assert not closure["canonical_p_throat_requires_null_normal_fixing"]
 
 
 def test_weighted_pt_corner_pair_cancels():

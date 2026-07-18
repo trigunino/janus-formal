@@ -2,6 +2,12 @@
 
 ## Statut
 
+## Raccordement technique a P
+
+- `PT-BP01` ferme : interaction Candidate A locale/integree et invariance PT sur la base D8 mesuree.
+- `PT-BP02` ferme (passe 2) : derivee effective de l'action globale Candidate A sous contrat explicite de domination.
+- Reprise P : extraire un parametre d'ordre scalaire et son potentiel effectif renormalise. Ce pont ne ferme pas `PT-P01/PT-P03` et ne fournit pas encore de temperature critique.
+
 `PT01-PT03` ferment un noyau de Landau **conditionnel T/X**. Ils établissent ce
 que la symétrie PT permet et, surtout, ce qu'elle ne sélectionne pas.
 
