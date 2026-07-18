@@ -50,7 +50,7 @@ def ptPullback
     SmoothQuotientField period hPeriod Fiber where
   toFun := field ∘ reflectedSpherePT period hPeriod
   contMDiff_toFun := field.contMDiff_toFun.comp
-    (reflectedSpherePT_contMDiff period hPeriod)
+    ((reflectedSpherePT_contMDiff period hPeriod).of_le (by simp))
 
 @[simp]
 theorem ptPullback_apply

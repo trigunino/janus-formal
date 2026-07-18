@@ -114,7 +114,7 @@ def positiveSpacetimeMetricLogField
     rw [contMDiff_pi_space]
     intro coordinate point
     have hSmooth :
-        ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ω
+        ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
           (positiveSpacetimeMetricMagnitude period hPeriod metrics coordinate)
           point :=
       (positiveSpacetimeMetricMagnitude period hPeriod metrics coordinate)
@@ -445,7 +445,7 @@ def smoothPositiveMetricGhostPT
     intro coordinate
     exact ((contMDiff_pi_space.mp ghost.contMDiff_toFun)
       (positiveMetricCoordinatePTEquiv coordinate)).comp
-        (reflectedSpherePT_contMDiff period hPeriod)
+        ((reflectedSpherePT_contMDiff period hPeriod).of_le (by simp))
 
 private def finiteMetricCEPTExchangeContinuous :
     FiniteMetricCEField →L[Real] FiniteMetricCEField :=
@@ -459,7 +459,7 @@ def smoothPositiveMetricAntifieldPT
   contMDiff_toFun :=
     finiteMetricCEPTExchangeContinuous.contDiff.contMDiff.comp
       (antifield.contMDiff_toFun.comp
-        (reflectedSpherePT_contMDiff period hPeriod))
+        ((reflectedSpherePT_contMDiff period hPeriod).of_le (by simp)))
 
 theorem positiveSpacetimeMetricLogField_ptExchange_apply
     (metrics : SmoothPositiveDiagonalMetricPair period hPeriod)

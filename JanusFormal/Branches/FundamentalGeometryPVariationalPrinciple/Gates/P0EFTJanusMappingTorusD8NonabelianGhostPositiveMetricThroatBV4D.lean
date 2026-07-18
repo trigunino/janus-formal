@@ -93,7 +93,8 @@ private def smoothCoefficientThroatCoordinate
   ⟨fun point =>
       field (fixedThroatQuotientInclusion period hPeriod point) i,
     (((contMDiff_pi_space.mp field.contMDiff_toFun) i).comp
-      (fixedThroatQuotientInclusion_contMDiff period hPeriod)).of_le (by simp)⟩
+      ((fixedThroatQuotientInclusion_contMDiff period hPeriod).of_le
+        (by simp))).of_le (by simp)⟩
 
 /-- Canonical restriction of the existing global positive metric pair to the
 fixed throat. -/

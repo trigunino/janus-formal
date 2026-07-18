@@ -113,7 +113,7 @@ def smoothThroatBVMasterDensity
     SmoothThroatField period hPeriod Real where
   toFun point := finiteMetricBVMasterAction (field point)
   contMDiff_toFun :=
-    finiteMetricBVMasterAction_contDiff.contMDiff.comp
+    (finiteMetricBVMasterAction_contDiff.contMDiff.of_le (by simp)).comp
       field.contMDiff_toFun
 
 @[simp]

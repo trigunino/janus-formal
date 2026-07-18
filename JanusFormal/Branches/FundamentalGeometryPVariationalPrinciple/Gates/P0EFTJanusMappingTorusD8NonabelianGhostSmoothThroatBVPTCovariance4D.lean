@@ -221,7 +221,7 @@ def smoothFiniteMetricBVPT
   contMDiff_toFun :=
     finiteMetricBVPTExchangeContinuous.contDiff.contMDiff.comp
       (field.contMDiff_toFun.comp
-        (fixedThroatPT_contMDiff period hPeriod))
+        ((fixedThroatPT_contMDiff period hPeriod).of_le (by simp)))
 
 @[simp]
 theorem smoothFiniteMetricBVPT_apply

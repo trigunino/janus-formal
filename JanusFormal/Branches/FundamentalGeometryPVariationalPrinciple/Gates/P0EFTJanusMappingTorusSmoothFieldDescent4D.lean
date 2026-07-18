@@ -58,7 +58,7 @@ variable (Fiber : Type u)
 structure SmoothQuotientField where
   toFun : EffectiveQuotient period hPeriod → Fiber
   contMDiff_toFun :
-    ContMDiff coverModelWithCorners 𝓘(ℝ, Fiber) ω toFun
+    ContMDiff coverModelWithCorners 𝓘(ℝ, Fiber) ∞ toFun
 
 instance : CoeFun (SmoothQuotientField period hPeriod Fiber)
     (fun _ => EffectiveQuotient period hPeriod → Fiber) :=
@@ -80,7 +80,7 @@ theorem SmoothQuotientField.ext
 the quotient projection. -/
 theorem contMDiff_descend
     (field : SmoothDeckInvariantField period hPeriod Fiber) :
-    ContMDiff coverModelWithCorners 𝓘(ℝ, Fiber) ω
+    ContMDiff coverModelWithCorners 𝓘(ℝ, Fiber) ∞
       (descend period hPeriod Fiber field) := by
   intro quotientPoint
   obtain ⟨coverPoint, rfl⟩ :=
@@ -91,11 +91,11 @@ theorem contMDiff_descend
     reflectedSphere_projection_isLocalDiffeomorph period hPeriod
   have hAt := hProjection coverPoint
   have hLocal :
-      ContMDiffAt coverModelWithCorners 𝓘(ℝ, Fiber) ω
+      ContMDiffAt coverModelWithCorners 𝓘(ℝ, Fiber) ∞
         (field.toFun ∘ hAt.localInverse)
         (mappingTorusMk (sphereData period hPeriod) coverPoint) :=
     field.contMDiff_toFun.contMDiffAt.comp _
-      hAt.localInverse_contMDiffAt
+      (hAt.localInverse_contMDiffAt.of_le (by simp))
   apply hLocal.congr_of_eventuallyEq
   filter_upwards [hAt.localInverse_eventuallyEq_right] with point hPoint
   change descend period hPeriod Fiber field point =
@@ -126,9 +126,10 @@ def liftSmooth
   toFun := field ∘ mappingTorusMk (sphereData period hPeriod)
   contMDiff_toFun := by
     have hProjection :
-        ContMDiff coverModelWithCorners coverModelWithCorners ω
+        ContMDiff coverModelWithCorners coverModelWithCorners ∞
           (mappingTorusMk (sphereData period hPeriod)) :=
-      (reflectedSphere_projection_isLocalDiffeomorph period hPeriod).contMDiff
+      (reflectedSphere_projection_isLocalDiffeomorph period hPeriod).contMDiff.of_le
+        (by simp)
     exact field.contMDiff_toFun.comp hProjection
   deck_invariant := by
     intro winding point

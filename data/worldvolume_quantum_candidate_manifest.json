@@ -60,10 +60,10 @@
     "non_ll_callan_symanzik_quadratic_coefficient": "445/(32*pi^2)"
   },
   "ll_quantum_completion": {
-    "local_measure_fields": "not_yet_fixed",
-    "reducibility_tower": "not_yet_fixed",
+    "local_measure_fields": "program_p_global_independent_ll_fields_importable",
+    "reducibility_tower": "program_p_finite_ce_ll_completion_only",
     "gauge_fermion": "not_yet_fixed",
-    "fp_bv_operator": "not_yet_fixed",
-    "zero_mode_prescription": "not_yet_fixed"
+    "fp_bv_operator": "program_p_smooth_ultralocal_bv_master_only",
+    "zero_mode_prescription": "program_p_energy_hilbert_kernel_zero_physical_sobolev_open"
   }
 }

@@ -164,19 +164,19 @@ def scalarLieDerivative
     mvfderiv coverModelWithCorners scalar.toFun point (ghost point)
   contMDiff_toFun := by
     have hEvaluation : ContMDiff coverModelWithCorners.tangent
-        (modelWithCornersSelf Real Real) ω
+        (modelWithCornersSelf Real Real) ∞
         (fun vector : TangentBundle coverModelWithCorners
             (EffectiveQuotient period hPeriod) =>
           mvfderiv coverModelWithCorners scalar.toFun vector.1 vector.2) := by
       have hDerivative :=
         (contMDiff_snd_tangentBundle_modelSpace Real
-          (modelWithCornersSelf Real Real) (n := ω)).comp
+          (modelWithCornersSelf Real Real) (n := ∞)).comp
           (scalar.contMDiff_toFun.contMDiff_tangentMap
-            (m := ω) (by simp))
+            (m := ∞) (by simp))
       convert hDerivative using 1
       funext vector
       rfl
-    exact hEvaluation.comp ghost.contMDiff
+    exact hEvaluation.comp (ghost.contMDiff.of_le (by simp))
 
 @[simp]
 theorem scalarLieDerivative_apply

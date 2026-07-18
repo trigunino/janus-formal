@@ -9,8 +9,9 @@ that topological input from the one genuinely metric-dependent statement:
 the chosen orthonormal reduction must turn every reduced `O(4)` transition
 into the reference reflection raised to the actual overlap winding.
 
-No such canonical orthonormal reduction is currently constructed.  The exact
-missing equality is isolated as
+An honest smooth Whitney/Gram--Schmidt orthonormal reduction is now
+constructed, but it does not by itself fix the independent orientation gauge
+of each coordinate chart.  The exact missing equality is isolated as
 `AmbientReferenceWindingOrthogonalReductionLaw`; all consequences for the
 existing ambient Cech-choice interface are proved from it.
 -/
@@ -179,6 +180,58 @@ def AmbientReferenceWindingOrthogonalReductionLaw
           (winding.transitionWinding first second coordinate : ZMod 4)) =
       (reduction.orthogonalTransition period hPeriod first second
         coordinate hCoordinate).toLinearEquiv
+
+/-- A pure reference-winding reduction is rigid on every winding fibre:
+equal deck indices force exactly equal reduced orthogonal transitions. -/
+theorem AmbientReferenceWindingOrthogonalReductionLaw.transition_eq_of_winding_eq
+    [TopologicalSpace AmbientCoordinatePinMinusGroup]
+    [IsTopologicalGroup AmbientCoordinatePinMinusGroup]
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (winding : AmbientReferenceWindingCechData period hPeriod)
+    (law : AmbientReferenceWindingOrthogonalReductionLaw
+      period hPeriod reduction winding)
+    (first second : AmbientCover period hPeriod)
+    (firstCoordinate secondCoordinate : CoverModel)
+    (hFirstCoordinate : firstCoordinate ∈
+      (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondCoordinate : secondCoordinate ∈
+      (ambientAtlasTransition period hPeriod first second).source)
+    (hWinding : winding.transitionWinding first second firstCoordinate =
+      winding.transitionWinding first second secondCoordinate) :
+    (reduction.orthogonalTransition period hPeriod first second
+        firstCoordinate hFirstCoordinate).toLinearEquiv =
+      (reduction.orthogonalTransition period hPeriod first second
+        secondCoordinate hSecondCoordinate).toLinearEquiv := by
+  rw [← law first second firstCoordinate hFirstCoordinate,
+    ← law first second secondCoordinate hSecondCoordinate, hWinding]
+
+/-- Consequently, two distinct reduced transitions must carry distinct deck
+winding values if a pure reference-winding reduction law is claimed. -/
+theorem AmbientReferenceWindingOrthogonalReductionLaw.winding_ne_of_transition_ne
+    [TopologicalSpace AmbientCoordinatePinMinusGroup]
+    [IsTopologicalGroup AmbientCoordinatePinMinusGroup]
+    (reduction : AmbientOrthonormalAtlasReduction period hPeriod)
+    (winding : AmbientReferenceWindingCechData period hPeriod)
+    (law : AmbientReferenceWindingOrthogonalReductionLaw
+      period hPeriod reduction winding)
+    (first second : AmbientCover period hPeriod)
+    (firstCoordinate secondCoordinate : CoverModel)
+    (hFirstCoordinate : firstCoordinate ∈
+      (ambientAtlasTransition period hPeriod first second).source)
+    (hSecondCoordinate : secondCoordinate ∈
+      (ambientAtlasTransition period hPeriod first second).source)
+    (hTransition :
+      (reduction.orthogonalTransition period hPeriod first second
+          firstCoordinate hFirstCoordinate).toLinearEquiv ≠
+        (reduction.orthogonalTransition period hPeriod first second
+          secondCoordinate hSecondCoordinate).toLinearEquiv) :
+    winding.transitionWinding first second firstCoordinate ≠
+      winding.transitionWinding first second secondCoordinate := by
+  intro hWinding
+  exact hTransition
+    (law.transition_eq_of_winding_eq period hPeriod reduction winding
+      first second firstCoordinate secondCoordinate hFirstCoordinate
+      hSecondCoordinate hWinding)
 
 /-- Purely algebraic orientation character law, independent of the atlas and
 its orthonormal reduction. -/

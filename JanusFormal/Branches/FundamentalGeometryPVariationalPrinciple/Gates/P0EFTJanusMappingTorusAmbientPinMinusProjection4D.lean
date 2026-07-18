@@ -243,6 +243,142 @@ theorem ambientPinMinusReferenceReflection_det :
     ambientPinMinusReferenceVector]
   ring
 
+/-- Every positive-Euclidean unit normal gives a genuine odd Pin-minus
+generator in the negative Clifford convention. -/
+theorem ambientPinMinusUnitNormalGenerator_mem
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1) :
+    CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal ∈
+      pinGroup ambientCoverPinMinusQuadraticForm := by
+  have hNegative : ambientCoverPinMinusQuadraticForm normal = -1 := by
+    simp [ambientCoverPinMinusQuadraticForm, hNormal]
+  rw [pinGroup.mem_iff]
+  constructor
+  · have hQuadraticUnit : IsUnit
+        (ambientCoverPinMinusQuadraticForm normal) := by
+      rw [hNegative]
+      exact isUnit_neg_one
+    obtain ⟨unit, hUnitCoe⟩ :=
+      CliffordAlgebra.isUnit_ι_of_isUnit
+        (Q := ambientCoverPinMinusQuadraticForm) hQuadraticUnit
+    apply Submonoid.mem_map.mpr
+    refine ⟨unit, ?_, ?_⟩
+    · apply Subgroup.subset_closure
+      change (unit : AmbientPinMinusCliffordAlgebra) ∈
+        Set.range (CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm)
+      exact ⟨normal, hUnitCoe.symm⟩
+    · simpa only [Units.coeHom_apply, hUnitCoe]
+  · apply Unitary.mem_iff.mpr
+    constructor
+    · calc
+        star (CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal) *
+            CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal =
+            -(CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal *
+              CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal) := by
+              rw [CliffordAlgebra.star_ι, neg_mul]
+        _ = 1 := by
+          rw [CliffordAlgebra.ι_sq_scalar, hNegative]
+          simp
+    · calc
+        CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal *
+            star (CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal) =
+            -(CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal *
+              CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal) := by
+              rw [CliffordAlgebra.star_ι, mul_neg]
+        _ = 1 := by
+          rw [CliffordAlgebra.ι_sq_scalar, hNegative]
+          simp
+
+/-- Canonical Pin-minus lift attached to a unit local normal. -/
+def ambientPinMinusUnitNormalGenerator
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1) :
+    AmbientCoordinatePinMinusGroup :=
+  ⟨CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal,
+    ambientPinMinusUnitNormalGenerator_mem normal hNormal⟩
+
+@[simp] theorem ambientPinMinusUnitNormalGenerator_coe
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1) :
+    (ambientPinMinusUnitNormalGenerator normal hNormal :
+      AmbientPinMinusCliffordAlgebra) =
+      CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal :=
+  rfl
+
+/-- Exact rank-one reflection formula for the Pin-minus lift of an arbitrary
+positive-Euclidean unit normal. -/
+theorem ambientPinMinusProjection_unitNormalGenerator_apply
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (tangent : CoverCoordinates) :
+    ambientPinMinusProjection
+        (ambientPinMinusUnitNormalGenerator normal hNormal) tangent =
+      tangent + QuadraticMap.polar ambientCoverPinMinusQuadraticForm
+        normal tangent • normal := by
+  apply ambientPinMinusCliffordIota_injective
+  rw [ambientPinMinusProjection_apply, ambientPinMinusVectorAction_spec]
+  let generator := ambientPinMinusUnitNormalGenerator normal hNormal
+  let unit := pinGroup.toUnits generator
+  letI := unit.invertible
+  letI : Invertible
+      (CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal) := by
+    change Invertible (unit : AmbientPinMinusCliffordAlgebra)
+    infer_instance
+  letI : Invertible (ambientCoverPinMinusQuadraticForm normal) :=
+    invertibleOfInvertibleι ambientCoverPinMinusQuadraticForm normal
+  change involute
+          (CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal) *
+        CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm tangent *
+        (↑(unit⁻¹) : AmbientPinMinusCliffordAlgebra) =
+      CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm
+        (tangent + QuadraticMap.polar ambientCoverPinMinusQuadraticForm
+          normal tangent • normal)
+  have hUnit : CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal =
+      (unit : AmbientPinMinusCliffordAlgebra) := rfl
+  simp_rw [← invOf_units unit, ← hUnit, CliffordAlgebra.involute_ι,
+    neg_mul, CliffordAlgebra.ι_mul_ι_mul_invOf_ι, ← map_neg]
+  congr 1
+  have hNegative : ambientCoverPinMinusQuadraticForm normal = -1 := by
+    simp [ambientCoverPinMinusQuadraticForm, hNormal]
+  have hInverse : ⅟(ambientCoverPinMinusQuadraticForm normal) =
+      (-1 : Real) := by
+    rw [invOf_eq_inv, hNegative]
+    norm_num
+  rw [hInverse]
+  module
+
+/-- Integer cyclic lift generated by a chosen unit local normal. -/
+def ambientPinMinusUnitNormalWindingLift
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (winding : Int) : AmbientCoordinatePinMinusGroup :=
+  ambientPinMinusUnitNormalGenerator normal hNormal ^ winding
+
+@[simp] theorem ambientPinMinusUnitNormalWindingLift_zero
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1) :
+    ambientPinMinusUnitNormalWindingLift normal hNormal 0 = 1 := by
+  simp [ambientPinMinusUnitNormalWindingLift]
+
+theorem ambientPinMinusUnitNormalWindingLift_add
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (first second : Int) :
+    ambientPinMinusUnitNormalWindingLift normal hNormal (first + second) =
+      ambientPinMinusUnitNormalWindingLift normal hNormal first *
+        ambientPinMinusUnitNormalWindingLift normal hNormal second := by
+  simp [ambientPinMinusUnitNormalWindingLift, zpow_add]
+
+theorem ambientPinMinusProjection_unitNormalWindingLift
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (winding : Int) :
+    ambientPinMinusProjection
+        (ambientPinMinusUnitNormalWindingLift normal hNormal winding) =
+      ambientPinMinusProjection
+          (ambientPinMinusUnitNormalGenerator normal hNormal) ^ winding := by
+  exact map_zpow ambientPinMinusProjection _ winding
+
 private theorem ambientPinMinusReferenceGenerator_mem :
     CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm
         ambientPinMinusReferenceVector ∈
@@ -365,6 +501,22 @@ def ambientPinMinusCentralSign : AmbientCoordinatePinMinusGroup :=
     ambientPinMinusReferenceVector_negative_unit]
   simp
 
+/-- Every unit-normal generator squares to the same nontrivial central sign. -/
+theorem ambientPinMinusUnitNormalGenerator_square
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1) :
+    ambientPinMinusUnitNormalGenerator normal hNormal *
+        ambientPinMinusUnitNormalGenerator normal hNormal =
+      ambientPinMinusCentralSign := by
+  apply Subtype.ext
+  change CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal *
+      CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm normal =
+    (ambientPinMinusCentralSign : AmbientPinMinusCliffordAlgebra)
+  have hNegative : ambientCoverPinMinusQuadraticForm normal = -1 := by
+    simp [ambientCoverPinMinusQuadraticForm, hNormal]
+  rw [CliffordAlgebra.ι_sq_scalar, hNegative,
+    ambientPinMinusCentralSign_coe, map_neg, map_one]
+
 theorem ambientPinMinusCentralSign_ne_one :
     ambientPinMinusCentralSign ≠ 1 := by
   intro hSign
@@ -443,6 +595,21 @@ def ambientPinMinusReferenceZ4Character :
     AddChar (ZMod 4) AmbientCoordinatePinMinusGroup :=
   AddChar.toAddMonoidHomEquiv.symm ambientPinMinusReferenceZ4AddHom
 
+/-- Evaluating the reference character on an integer residue is exactly the
+corresponding integer power of the reference Pin-minus generator. -/
+theorem ambientPinMinusReferenceZ4Character_intCast (winding : Int) :
+    ambientPinMinusReferenceZ4Character (winding : ZMod 4) =
+      ambientPinMinusReferenceGenerator ^ winding := by
+  change (ambientPinMinusReferenceZ4AddHom (winding : ZMod 4)).toMul = _
+  have hLift :
+      ambientPinMinusReferenceZ4AddHom (winding : ZMod 4) =
+        ambientPinMinusReferenceGeneratorIntHom winding := by
+    exact ZMod.lift_coe 4
+      ⟨ambientPinMinusReferenceGeneratorIntHom,
+        ambientPinMinusReferenceGeneratorIntHom_four⟩ winding
+  rw [hLift]
+  simp [ambientPinMinusReferenceGeneratorIntHom]
+
 @[simp] theorem ambientPinMinusReferenceZ4Character_one :
     ambientPinMinusReferenceZ4Character 1 =
       ambientPinMinusReferenceGenerator := by
@@ -505,6 +672,56 @@ theorem ambientPinMinusReferenceZ4Character_two_ne_one :
     (eq_inv_of_mul_eq_one_left ambientPinMinusCentralSign_square).symm
   rw [hInv]
   simp
+
+/-- Reversing a unit normal changes its Pin-minus generator by the nontrivial
+central sign. -/
+theorem ambientPinMinusUnitNormalGenerator_neg
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (hNegNormal : ambientCoverEuclideanQuadraticForm (-normal) = 1) :
+    ambientPinMinusUnitNormalGenerator (-normal) hNegNormal =
+      ambientPinMinusCentralSign *
+        ambientPinMinusUnitNormalGenerator normal hNormal := by
+  apply Subtype.ext
+  rw [ambientPinMinusUnitNormalGenerator_coe]
+  change CliffordAlgebra.ι ambientCoverPinMinusQuadraticForm (-normal) =
+    (ambientPinMinusCentralSign : AmbientPinMinusCliffordAlgebra) *
+      (ambientPinMinusUnitNormalGenerator normal hNormal :
+        AmbientPinMinusCliffordAlgebra)
+  rw [ambientPinMinusCentralSign_coe,
+    ambientPinMinusUnitNormalGenerator_coe, map_neg]
+  simp
+
+/-- The projected reflection is independent of the sign chosen for its unit
+normal. -/
+theorem ambientPinMinusProjection_unitNormalGenerator_neg
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (hNegNormal : ambientCoverEuclideanQuadraticForm (-normal) = 1) :
+    ambientPinMinusProjection
+        (ambientPinMinusUnitNormalGenerator (-normal) hNegNormal) =
+      ambientPinMinusProjection
+        (ambientPinMinusUnitNormalGenerator normal hNormal) := by
+  rw [ambientPinMinusUnitNormalGenerator_neg normal hNormal hNegNormal,
+    map_mul, ambientPinMinusProjection_centralSign, one_mul]
+
+/-- Exact central gauge law for every integer power of a unit-normal lift. -/
+theorem ambientPinMinusUnitNormalWindingLift_neg
+    (normal : CoverCoordinates)
+    (hNormal : ambientCoverEuclideanQuadraticForm normal = 1)
+    (hNegNormal : ambientCoverEuclideanQuadraticForm (-normal) = 1)
+    (winding : Int) :
+    ambientPinMinusUnitNormalWindingLift (-normal) hNegNormal winding =
+      ambientPinMinusCentralSign ^ winding *
+        ambientPinMinusUnitNormalWindingLift normal hNormal winding := by
+  rw [ambientPinMinusUnitNormalWindingLift,
+    ambientPinMinusUnitNormalGenerator_neg normal hNormal hNegNormal,
+    ambientPinMinusUnitNormalWindingLift]
+  have hCommute : Commute ambientPinMinusCentralSign
+      (ambientPinMinusUnitNormalGenerator normal hNormal) :=
+    ambientPinMinusCentralSign_central
+      (ambientPinMinusUnitNormalGenerator normal hNormal)
+  exact hCommute.mul_zpow winding
 
 @[simp] theorem ambientPinMinusProjection_referenceZ4Character_zero :
     ambientPinMinusProjection (ambientPinMinusReferenceZ4Character 0) = 1 := by

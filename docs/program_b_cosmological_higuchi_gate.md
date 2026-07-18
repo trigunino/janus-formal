@@ -18,3 +18,8 @@ dépôt était donc une spécialisation, pas la borne FLRW bimétrique général
 Le critère instantané et les surfaces dangereuses sont désormais explicites.
 Décider la stabilité d'une histoire cosmologique requiert encore les fonctions
 `r(t)` et `H(t)` dérivées du fond matière, qui ne sont pas fixées sans P/E.
+
+P fournit maintenant un témoin poussière réduit avec `|H_±|=1/6`. Sur sa
+branche symétrique, B obtient la condition instantanée `m²>1/36`; voir
+`program_b_p_dust_higuchi_bridge.md`. La trajectoire complète et la
+normalisation `interactionScale -> m²` restent ouvertes.

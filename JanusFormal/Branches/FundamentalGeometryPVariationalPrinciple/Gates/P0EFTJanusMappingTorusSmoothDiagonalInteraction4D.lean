@@ -59,7 +59,7 @@ def scalePairField
 
 theorem scalePairField_contMDiff
     (metrics : SmoothPositiveDiagonalMetricPair period hPeriod) :
-    ContMDiff coverModelWithCorners 𝓘(ℝ, ScalePair) ω
+    ContMDiff coverModelWithCorners 𝓘(ℝ, ScalePair) ∞
       (scalePairField period hPeriod metrics) := by
   exact (plusScaleField period hPeriod metrics).contMDiff_toFun.prodMk_space
     (minusScaleField period hPeriod metrics).contMDiff_toFun

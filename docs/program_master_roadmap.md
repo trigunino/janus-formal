@@ -25,6 +25,10 @@ The repository does **not** currently claim:
 ## Complete dependency graph
 
 ```text
+Program MF — weak primitives and audited emergence
+          ↓
+Program M — candidate-theory specification and meta-selection
+          ↓
 Program D — geometry, bundles and operators
 ├── D0/D8  mapping torus, one-sided throat, analytic normal line bundle and quarter lift
 ├── D2     focused twisted-Dirac spectral geometry
@@ -46,6 +50,10 @@ Programs A/B/C — quantum scale, nonlinear junction, charge compatibility
           ↓
 Program E — observational falsification
 ```
+
+Program M is an upstream comparison protocol, not a claim that abstract
+criteria uniquely select Janus. See
+[`program_m_meta_theory_selection.md`](program_m_meta_theory_selection.md).
 
 The ordering is logical, not chronological. P-B and P-C are independent filters; P-A may supply the Euler family used by P-C; P-E supplies the local operator/jet category and its structured symmetry data; P-D classifies pointwise pairing shapes together with their invariant coefficient module; P-F explains one route by which compatibility geometry can inherit a variational pairing.
 

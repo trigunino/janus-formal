@@ -497,13 +497,24 @@ not yet construct the physical
 SpinC representation or classify its fiber isotropy, higher jets or a
 Peetre--Slovák integrability theorem.
 Independently, the fixed quotient itself now forms a one-object symmetry
-category with every smooth D8 self-diffeomorphism as an arrow. Smooth fields
-with any normed real coefficient fiber define a contravariant section functor
-with exact identity and composition laws. General smooth Lorentz metrics now
-form a second contravariant section functor, using the actual tensor pullback,
-with exact metric and tensor identity/composition laws. Both constructions are
-restricted to the fixed D8 background; this is not the moduli category of all
-Janus backgrounds.
+category with every smooth D8 self-diffeomorphism as an arrow. The period is
+also promoted to object data in a larger category of all nonzero-period
+effective D8 quotients, with genuine smooth cross-background diffeomorphisms
+and an exact contravariant constant-fiber smooth-field functor. Its actual
+tangent bundles are transported by manifold derivatives and its cotangent
+fibers by exact contravariant dual pullback. Covariant rank-two tensor fibers
+inherit the exact composition law, their symmetric subspaces are preserved and
+their smooth sections form a global contravariant functor. Musical
+equivalences and Lorentz inertia `(3,1)` are transported as well, giving a
+global functor of smooth general Lorentz metrics. This effective family is not
+yet the decorated moduli category of all Janus backgrounds or its principal
+SpinC/Pin bundles.
+
+At the ambient `Pin⁻(4)` level, every certified continuous Čech lift of the
+actual reduced atlas now produces a genuine principal fiber-bundle core on the
+real quotient, with exact cocycle and free/transitive right action. The
+remaining issue is existence of that ambient lift, not principal-bundle
+assembly once it is supplied.
 
 ### Open Janus specialization
 
@@ -680,7 +691,9 @@ parity cocycle. An explicit positive nondegenerate model form is now transported
 each tangent transition with a genuine quadratic isometry. Choosing one actual
 reference lift at every quotient point and transporting through the true
 tangent cocycle now constructs an atlas-wide pointwise orthonormal reduction.
-Its continuous and `C∞` refinements remain separate contracts. The Clifford
+An independent Whitney pullback construction now inhabits its `C∞` refinement:
+the metric application, Gram--Schmidt frame application and orthogonal overlap
+application are jointly smooth on the genuine chart domains. The Clifford
 `spinGroup` now supplies a true
 quadratic-preserving vector action and morphism `Spin(Q) →* GL(4)`, with the
 twisted Pin extension isolated exactly. Atlas-specific transition lifts,
@@ -689,9 +702,85 @@ reference `Pin⁻` generator now projects to the explicit last-coordinate
 reflection, with determinant `-1`, and its full `ZMod 4` orientation character
 is proved. The corrected overlap-level frontier reduces the ambient lift to
 the actual Čech winding, its normal comparison and one exact `O(4)` reduction
-law; the winding and comparison are not yet constructed.
-The new pointwise reduction supplies the algebraic reduction input, but not the
-regularity or Čech winding/normal comparison required by that law.
+law. The canonical winding is now constructed from the genuine ambient local
+sections. The fixed-throat inclusion is natural on an explicit open chart
+refinement, and on the resulting compatible overlap the ambient winding is
+exactly `localTransitionWinding`. This does not identify the sign of the true
+ambient Jacobian, whose chart orientations remain visible. The smooth
+orthonormal refinement is closed; determinant-parity comparison, the exact
+`O(4)` reduction law and ambient `Pin⁻` lift remain open. The determinant
+comparison now has an exact no-go without additional chart data: composing
+one chart with the reference reflection preserves the winding while toggling
+the Jacobian parity. Hence a compatible orientation gauge is a genuine input,
+not a consequence of the deck cocycle. Likewise, the central frame change
+`-id` preserves the orthonormal metric but changes the exact `O(4)` transition,
+so a frame gauge must also be fixed before imposing the reference matrix law.
+Pointwise this gauge exists uniquely as `actual⁻¹ ∘ expected`; the remaining
+algebraic compatibility is exactly its proved conjugation-twisted Čech law,
+with a proved converse. A smooth atlas-wide, normal-compatible realization
+remains open.
+The corresponding vertex-frame formula is also closed: it preserves the
+strict Čech law, gives the exact conjugated edge gauge, and uniquely propagates
+a source gauge from a fixed target gauge. Constructing one globally smooth
+propagation with the prescribed normal restriction remains open.
+An explicit root-chart propagation realizes the complete target cocycle on
+every star subatlas. Global path independence, smoothness and the normal
+boundary prescription remain open.
+Loop closure is characterized exactly by conjugacy of actual and target
+holonomies through the root gauge; this genuine-atlas criterion is not yet
+discharged.
+Because the mapping-torus holonomy is cyclic, intertwining its generator is
+proved sufficient for every integer winding. What remains is the genuine
+atlas-level identification of that actual generator.
+For any orthogonal frame aligning the geometric normal with the reference
+axis, this generator identification and all-winding closure are now exact.
+Constructing such an aligned frame smoothly on the genuine atlas remains open.
+Pointwise, such a frame now exists for every unit normal by an explicit
+Hilbert-reflection construction transported back to the ambient quadratic
+coordinates. Its smooth atlas-wide selection remains open.
+Moreover, quaternionic left multiplication upgrades this to a canonical
+jointly `C∞` frame formula for every smooth unit-normal field, without a pole
+singularity. Instantiation with the genuine normalized atlas normal and its
+overlap laws remains open.
+Normalization is also closed: every smooth nonzero normal field normalizes
+smoothly and feeds the jointly smooth quaternionic frame. The residual task is
+to identify and regularize the genuine atlas-coordinate normal field.
+Its signed overlap behavior is already exact: reversing the local normal
+reverses the normalized normal and multiplies the quaternionic frame by the
+central `-id` gauge, consistently with the nontrivial normal line.
+The statement holds for all integer windings via the genuine normal sign
+representation, not only for one loop.
+The conjugated aligned reflection is invariant under that central frame sign,
+so it descends across the one-sided normal cocycle even though the frame does
+not.
+This sign-independent reflection is packaged for every nonzero local normal
+and descends for the complete integer winding character.
+At the Clifford level, every unit normal now defines a genuine ambient
+`Pin⁻(4)` generator. Normal reversal multiplies it by the nontrivial central
+sign, while its orthogonal projection is unchanged; after normalization this
+gives the exact lift and projection laws for every integer winding. The open
+step is its instantiation on the genuine atlas normal and comparison with the
+actual reduced transitions.
+For each such local normal, the full integer lift `w ↦ g(n)^w` satisfies the
+strict cyclic cocycle and projects to the matching power of the local
+reflection.
+That projected reflection is proved exactly equal to the quaternionic aligned
+reflection, including all integer powers, via the explicit Clifford rank-one
+formula.
+The actual canonical latitude normal on the throat cover now supplies a
+nonzero product-coordinate representative, so this cyclic ambient `Pin⁻`
+lift and its aligned projection are instantiated on the genuine cover
+geometry. Atlas-overlap descent remains the next step.
+For independent overlap and phase windings, the lift transforms by exactly the
+corresponding power of the central Pin sign; this is the required local gauge
+law before inserting the actual atlas transition functions.
+Changing the genuine throat-cover anchor by any integer winding preserves the raw product
+normal and every local cyclic lift; the normal reversal is therefore not
+hidden in the representative and must occur in the quotient transition.
+On the actual throat chart domains, evaluating at the local covering sections
+and using `localTransitionWinding` gives normalized ambient `Pin⁻(4)` lifts
+with a strict triple-overlap Cech cocycle and the exact aligned projection.
+The full ambient-atlas transition comparison and continuity remain open.
 For every normed real coefficient fiber, smooth deck-invariant fields on the
 analytic cover now descend `C∞` and are exactly equivalent to smooth fields on
 this quotient; the flat two-metric/two-scalar/root witness consequently lives
@@ -988,7 +1077,9 @@ A nonempty scoped common-domain package now makes the same independent
 configuration feed the induced metrics/root, `LLH1`, its exact boundary trace
 and typed D7/D9/D10 accessors. Agreement with the action tangent, Hessian,
 full D10 diagonalization, regulator and Fredholm/boundary domains remains one
-explicit residual contract.
+explicit residual contract. It now requires concrete linear/isometric modal
+coordinates, density, action derivatives, Hessian spectral pairing and exact
+domain equalities, with no unconstrained readiness propositions.
 For the general tensor density, the subsequent frame-covariance gate closes
 pointwise frame independence and true D8-diffeomorphism naturality; smooth
 density packaging, finite-measure integrability, the global scalar action and
@@ -1053,12 +1144,18 @@ now unconditionally positive on every nonempty open set, hence has full
 support. A frame-divergence strong Euler field and the weak/strong and
 stationary/strong equivalences are proved under the explicit analytic
 realization, global integration-by-parts and zero-boundary-flux contracts.
-This does not prove global Stokes, an intrinsic Lorentzian contraction or the
-complete covariant LL parent action. The raw operator's exact formal-adjoint
+The three canonical sphere rotations together with quotient-time translation
+now give a smooth spanning frame whose flows preserve the canonical measure.
+Their field derivatives integrate by parts unconditionally; after the exact PT
+change of variables this proves the weighted global IPP and realizes the empty
+boundary ledger for that canonical frame. This does not yet prove geometric
+Stokes for arbitrary variable stratified data, an intrinsic Lorentzian
+contraction or the complete covariant LL parent action. The raw operator's exact formal-adjoint
 defect is now represented by an explicit correction interface: under a smooth
 representative, weak solutions are exactly solutions of the corrected strong
-equation, and the correction is zero exactly under the old global IPP. Its
-existence and vanishing remain analytic obligations. Averaging this
+equation, and the correction is zero exactly under global IPP. For the retained
+canonical frame that IPP is proved, so its correction is exactly zero; the
+interface remains conditional only for other frames. Averaging this
 same differential functional with its PT pullback gives exact PT invariance of
 the action, first variation, weak equation and stationary space for every
 measure; the chosen generating frame itself is not made PT-equivariant. It

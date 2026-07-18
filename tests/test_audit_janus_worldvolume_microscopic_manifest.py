@@ -23,6 +23,7 @@ def test_repository_manifest_is_consistent_but_total_rg_waits_on_ll() -> None:
     assert audit.physical_matching_scheme_fixed
     assert audit.cross_scheme_covariance_derived
     assert audit.conditional_non_ll_results_recorded
+    assert audit.program_p_ll_bridge_available
     assert not audit.cross_scheme_matching_complete
     assert not audit.perturbative_rg_ready
     assert audit.missing_rg_choices == (

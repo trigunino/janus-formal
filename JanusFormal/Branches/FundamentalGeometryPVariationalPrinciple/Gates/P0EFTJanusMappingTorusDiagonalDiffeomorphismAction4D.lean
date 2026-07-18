@@ -34,7 +34,7 @@ abbrev ThroatDiffeomorphism := EffectiveThroat period hPeriod ≃ₘ^ω⟮throat
 
 def pullbackSmoothField (d : SpacetimeDiffeomorphism period hPeriod) (f : SmoothQuotientField period hPeriod Fiber) : SmoothQuotientField period hPeriod Fiber where
   toFun := f.toFun ∘ d
-  contMDiff_toFun := f.contMDiff_toFun.comp d.contMDiff
+  contMDiff_toFun := f.contMDiff_toFun.comp (d.contMDiff.of_le (by simp))
 
 @[simp] theorem pullbackSmoothField_apply (d : SpacetimeDiffeomorphism period hPeriod) (f : SmoothQuotientField period hPeriod Fiber) (x : EffectiveQuotient period hPeriod) : pullbackSmoothField period hPeriod Fiber d f x = f (d x) := by simp [pullbackSmoothField]
 
@@ -46,7 +46,7 @@ theorem pullbackSmoothField_symm (d : SpacetimeDiffeomorphism period hPeriod) (f
 
 def pullbackSmoothThroatField (d : ThroatDiffeomorphism period hPeriod) (f : SmoothThroatField period hPeriod Fiber) : SmoothThroatField period hPeriod Fiber where
   toFun := f.toFun ∘ d
-  contMDiff_toFun := f.contMDiff_toFun.comp d.contMDiff
+  contMDiff_toFun := f.contMDiff_toFun.comp (d.contMDiff.of_le (by simp))
 
 structure DiagonalDiffeomorphism where
   spacetime : SpacetimeDiffeomorphism period hPeriod

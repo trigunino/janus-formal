@@ -81,7 +81,7 @@ local instance normalCoreIsContMDiff :
 
 /-- Smooth tests in the genuine sign-clutched D8 normal line. -/
 abbrev SmoothNormalTest :=
-  ContMDiffSection throatCoverModelWithCorners Real ω
+  ContMDiffSection throatCoverModelWithCorners Real ∞
     (FixedThroatNormalFiber period hPeriod)
 
 private abbrev AmbientTangent

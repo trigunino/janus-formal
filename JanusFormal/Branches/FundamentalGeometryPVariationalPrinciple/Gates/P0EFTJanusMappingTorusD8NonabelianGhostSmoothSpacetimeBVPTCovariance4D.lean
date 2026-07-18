@@ -267,7 +267,7 @@ def smoothSpacetimeBVPT
   contMDiff_toFun :=
     finiteMetricBVPTExchangeContinuous.contDiff.contMDiff.comp
       (field.contMDiff_toFun.comp
-        (reflectedSpherePT_contMDiff period hPeriod))
+        ((reflectedSpherePT_contMDiff period hPeriod).of_le (by simp)))
 
 @[simp] theorem smoothSpacetimeBVPT_apply
     (field : SmoothFiniteMetricBVSpacetimeField period hPeriod)

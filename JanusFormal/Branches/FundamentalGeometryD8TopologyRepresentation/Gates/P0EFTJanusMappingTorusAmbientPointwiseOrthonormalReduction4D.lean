@@ -365,17 +365,17 @@ structure AmbientContMDiffOrthonormalAtlasReduction where
   toPointwise : AmbientOrthonormalAtlasReduction period hPeriod
   form_contMDiffOn : ∀ anchor,
     ContMDiffOn (coverModelWithCorners.prod coverModelWithCorners)
-      𝓘(Real, Real) ω
+      𝓘(Real, Real) ∞
       (reductionFormApplication period hPeriod toPointwise anchor)
       (chartTangentDomain period hPeriod anchor)
   frame_contMDiffOn : ∀ anchor,
     ContMDiffOn (coverModelWithCorners.prod coverModelWithCorners)
-      coverModelWithCorners ω
+      coverModelWithCorners ∞
       (reductionFrameApplication period hPeriod toPointwise anchor)
       (chartTangentDomain period hPeriod anchor)
   transition_contMDiffOn : ∀ first second,
     ContMDiffOn (coverModelWithCorners.prod coverModelWithCorners)
-      coverModelWithCorners ω
+      coverModelWithCorners ∞
       (reductionOrthogonalTransitionApplication period hPeriod toPointwise
         first second)
       (transitionTangentDomain period hPeriod first second)

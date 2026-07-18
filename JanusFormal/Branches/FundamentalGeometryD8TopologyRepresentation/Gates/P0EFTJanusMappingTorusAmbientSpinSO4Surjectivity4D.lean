@@ -101,6 +101,45 @@ private theorem ambientHilbertLinearIsometryEquiv_conjugates_to_target
   simp [ambientHilbertConjugation,
     ambientHilbertLinearIsometryEquiv]
 
+/-- Transport a Hilbert-space orthogonal map back to the project's ambient
+quadratic coordinates. -/
+private def ambientQuadraticIsometryOfHilbert
+    (isometry : AmbientHilbert ≃ₗᵢ[Real] AmbientHilbert) :
+    ambientCoverEuclideanQuadraticForm.IsometryEquiv
+      ambientCoverEuclideanQuadraticForm where
+  __ := ambientHilbertConjugation isometry.toLinearEquiv
+  map_app' vector := by
+    let pulledBack : AmbientHilbert := WithLp.toLp 2 vector
+    change ambientCoverEuclideanQuadraticForm
+        (WithLp.ofLp (isometry pulledBack)) =
+      ambientCoverEuclideanQuadraticForm (WithLp.ofLp pulledBack)
+    rw [ambientQuadraticForm_ofLp_eq_norm_sq,
+      ambientQuadraticForm_ofLp_eq_norm_sq, isometry.norm_map]
+
+/-- The ambient orthogonal group acts transitively on every nonempty level set
+of the positive Euclidean quadratic form. -/
+theorem exists_ambientOrthogonalIsometry_map_of_quadratic_eq
+    (first second : CoverCoordinates)
+    (hQuadratic : ambientCoverEuclideanQuadraticForm first =
+      ambientCoverEuclideanQuadraticForm second) :
+    ∃ isometry : ambientCoverEuclideanQuadraticForm.IsometryEquiv
+        ambientCoverEuclideanQuadraticForm,
+      isometry first = second := by
+  let firstHilbert : AmbientHilbert := WithLp.toLp 2 first
+  let secondHilbert : AmbientHilbert := WithLp.toLp 2 second
+  have hNorm : ‖firstHilbert‖ = ‖secondHilbert‖ := by
+    rw [← sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)]
+    rw [← ambientQuadraticForm_ofLp_eq_norm_sq,
+      ← ambientQuadraticForm_ofLp_eq_norm_sq]
+    exact hQuadratic
+  let aligningIsometry : AmbientHilbert ≃ₗᵢ[Real] AmbientHilbert :=
+    (Real ∙ (firstHilbert - secondHilbert)).orthogonal.reflection
+  refine ⟨ambientQuadraticIsometryOfHilbert aligningIsometry, ?_⟩
+  change WithLp.ofLp (aligningIsometry firstHilbert) = second
+  have hAlign : aligningIsometry firstHilbert = secondHilbert := by
+    exact Submodule.reflection_sub hNorm
+  rw [hAlign]
+
 private structure AmbientUnitVector where
   hilbertVector : AmbientHilbert
   norm_sq : ‖hilbertVector‖ ^ 2 = 1

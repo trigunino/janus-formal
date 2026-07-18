@@ -78,6 +78,7 @@ JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormal
 Supported focused Lean heads include:
 
 ```text
+JanusFormal.Branches.ProgramMFoundations
 JanusFormal.Branches.FundamentalGeometryD
 JanusFormal.Branches.FundamentalGeometryDiracSpectral
 JanusFormal.Branches.FundamentalGeometryD7SpectralTheory
@@ -143,6 +144,9 @@ Janus SpinC bundle or connection.
 ## 3. Stable architecture
 
 ```text
+MF     relational foundational pilot; every emergence theorem remains open
+M      candidate-theory specification, equivalence, consistency and predictivity gates
+
 D0/D8  mapping-torus and one-sided-throat topology
 D2/D7  twisted Dirac, eta, heat-kernel and determinant constraints
 D9     gauge-fixed elliptic-symbol and BRST/ghost gates
@@ -309,8 +313,10 @@ The ambient quotient atlas now also has an unconditional pointwise
 orthonormal reduction. At each base point a genuine reference lift is chosen,
 the Euclidean quadratic form is transported by the actual tangent transition,
 and the strict tangent cocycle proves overlap compatibility. This is an
-atlas-wide pointwise object only: separate continuous and `C∞` refinement
-records remain uninhabited.
+atlas-wide pointwise object. A global Whitney embedding now supplies a positive
+pullback metric; its Gram--Schmidt frames, inverse frames and genuine
+orthogonal overlap maps are jointly `C∞` on their true chart domains. This
+inhabits the smooth orthonormal-reduction contract.
 
 The two quarter phases now define actual global complex line-bundle cores on
 the same throat. Their real underliers are analytic vector bundles, and their
@@ -339,12 +345,102 @@ unconditional; the ambient extension is reduced exactly to one continuous
 normalized normal-compatible Čech choice, whose existence remains open. The
 reference generator is now identified with the explicit `O(4)` flip and its
 orientation character is proved on all four `ZMod 4` phases. A corrected
-overlap-only normal interface isolates the remaining construction into the
-actual Čech winding, its normal comparison and the continuous/smooth refinement
-needed by the exact orthogonal-reduction law. The pointwise reduction alone
-does not supply those regularity statements.
+overlap-only normal interface now has the canonical ambient Čech winding built
+from the genuine covering local sections, with normalization, cocycle and local
+constancy. On an honest open chart refinement, the throat local section is
+natural under the fixed-throat inclusion, the induced coordinate lies in the
+real ambient transition source, and the ambient winding equals the throat
+`localTransitionWinding`. This closes the winding and local-section naturality
+only. The smooth orthonormal refinement is now closed independently by the
+Whitney/Gram--Schmidt construction. The Jacobian-parity comparison, exact
+`O(4)` reduction law and ambient `Pin⁻` lift remain open. A new exact chart
+gauge no-go shows why the winding cannot determine the raw Jacobian sign by
+itself: reversing one chart leaves the winding fixed and flips the determinant
+and its `ZMod 2` parity. Independently, the central orthonormal-frame gauge
+`-id` preserves the Euclidean form while changing every reduced transition.
+Compatible chart orientations and a local frame gauge are both required. At
+the pointwise level the latter is now solved exactly and uniquely by
+`actual⁻¹ ∘ expected`. Its exact conjugation-twisted Čech law and converse are
+proved algebraically; only a smooth, normal-compatible realization remains.
+For genuine chart-frame gauges, the induced vertex-gauge formula is now exact,
+preserves the strict cocycle automatically, and has unique local propagation
+from a fixed target gauge. Global smooth propagation and normal compatibility
+remain the geometric obstruction.
+On every common-root (star) subatlas, an explicit propagated vertex gauge now
+realizes all target transitions. The unclosed part is global path independence
+across the atlas, together with smoothness and the prescribed normal values.
+The global path-independence obstruction is now exact: a loop closes precisely
+when the root gauge intertwines the actual and target holonomies. This criterion
+still has to be discharged for the genuine mapping-torus atlas.
+For its cyclic fundamental holonomy, one generator equality is now proved to
+propagate to every integer winding and to close every propagated loop. The
+remaining atlas statement is the geometric identification of the actual
+orthogonal generator with the chosen reference generator up to root gauge.
+That last equality is now proved for every orthogonal frame aligning the true
+normal axis with the reference axis, including all integer windings. The
+remaining geometric construction is a smooth aligned frame on the genuine
+atlas with the required throat restriction.
+Pointwise existence is now unconditional: the ambient orthogonal group is
+proved transitive on every quadratic level set, hence every unit normal admits
+an aligning frame and the complete all-winding gauge. Only smooth choice and
+atlas/throat compatibility remain.
+The choice itself is no longer a smoothness obstruction: quaternionic left
+multiplication gives a canonical orthogonal frame for every unit normal, sends
+the reference axis to that normal, and is jointly polynomial (`C∞`) in normal
+and tangent. It remains to feed it the genuine normalized atlas normal and
+prove the required overlap/throat identities.
+The preceding construction now accepts any smooth nonvanishing normal field:
+Euclidean normalization is proved unit and `C∞`, and its quaternionic frame
+application is jointly `C∞`. Supplying the genuine atlas-coordinate normal
+with its deck/overlap laws is the remaining input.
+The unavoidable one-sided sign change is handled exactly: normalization is
+odd and the quaternionic frame changes by the central `-id` gauge under
+`n ↦ -n`. Thus no forbidden global normal trivialization is assumed.
+This is proved for every integer winding with the actual
+`normalSignRepresentation`; the normalized quaternionic frames therefore carry
+the same signed cocycle as the constructed normal line.
+Although the frames themselves differ by `-id`, their conjugated aligned
+reflection is proved identical. Hence the reflection datum descends across the
+nontrivial normal sign cocycle without choosing a forbidden global normal.
+The normalized aligned reflection is now packaged directly from any nonzero
+local normal and proved invariant under the full integer normal-sign cocycle.
+The corresponding Clifford construction is also explicit: every unit normal
+defines a genuine `Pin⁻(4)` generator, normal reversal multiplies it by the
+nontrivial central sign, and after normalization both the lift cocycle and its
+projected all-winding descent are proved. The genuine atlas normal field and
+its equality with the actual reduced transitions remain open.
+The generated integer family `w ↦ g(n)^w` now obeys the strict additive
+cocycle law, and its projection is exactly the corresponding integer power of
+the local orthogonal reflection.
+The Clifford projection is also proved equal, not merely analogous, to the
+independently constructed quaternionic aligned reflection; the equality holds
+for every integer power.
+This construction is now instantiated on the actual canonical latitude normal
+of the throat cover, whose product-coordinate representative is proved
+nonzero. Its cyclic lift and projected aligned reflection are therefore
+unconditional on every genuine cover chart.
+The complete two-winding gauge law is exact: the overlap winding controls the
+local normal sign, the lifted winding controls the cyclic phase, and an odd
+overlap contributes precisely the matching power of the central Pin sign.
+On the genuine throat cover, every integer change of anchor preserves the raw
+product normal, its generator, and every cyclic lift. Thus the unavoidable
+minus sign is correctly assigned to the quotient-chart transition itself.
+Evaluating this normal on the genuine local covering sections now produces an
+actual throat-atlas algebraic `Pin⁻(4)` transition lift. It is normalized,
+satisfies the strict triple-overlap Cech cocycle from the real local winding,
+and projects to the corresponding power of the aligned reflection. Continuity
+and equality with the full ambient reduced transition remain open. Reverse
+overlaps are exact inverses, and the genuine one-loop lift squares to the
+nontrivial central sign.
 
 ## 5. Program P
+
+The explicit nonabelian `so(3)` ghost triple and the corrected Koszul
+differential are now closed for the entire currently implemented field/BV
+package: linear matter/gauge/auxiliary sectors, positive diagonal metrics,
+bulk and throat antifields, master actions, PT covariance, and boundary trace.
+Derivative kernels, completed spaces, and arbitrary functionals remain a
+strictly stronger open refinement.
 
 The exhaustive remaining-work checklist is
 [`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
@@ -371,7 +467,9 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   the induced diagonal metrics/root, `LLH1`, the smooth boundary trace and typed
   D7/D9/D10 accessors. It does not yet identify the action tangent, Hessian,
   D10 diagonalization, regulator or Fredholm/boundary domains; these residuals
-  remain one explicit contract.
+  remain one explicit contract. That contract now carries concrete extension,
+  linearity, isometry, modal-density, derivative, spectral-pairing and domain
+  equalities rather than unconstrained `Prop` readiness flags.
   The integrated-invariance limitation in the preceding snapshot is now
   superseded: for `SmoothGeneralLorentzMetric`, coherent PT transport of the
   scalar and tangent family gives exact density covariance, iff transport of
@@ -480,12 +578,10 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   locally constant under the collar Euler equation. This is only a local
   collar stress-energy identity. The finite box, stratified and null-action
   boundary residuals now assemble into a canonical zero ledger. Under the two
-  explicit remaining geometric fields—continuous IPP and identification of its
-  boundary flux with that ledger—the LL weak/strong and stationary/strong
-  equivalences follow. Since the ledger is zero, existence of that contract is
-  now equivalent exactly to the single global weighted zero-boundary IPP.
-  Proving this IPP and extending the collar current to a covariant
-  four-dimensional Noether current remain open.
+  canonical divergence-free spanning frame, the continuous IPP is now proved
+  directly and its zero boundary flux realizes that ledger; LL weak/strong and
+  stationary/strong equivalences follow for this frame. Extending the collar
+  current to a covariant four-dimensional Noether current remains open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
 map on a smooth vertical section, and the compact frame reconstruction package
@@ -853,14 +949,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   full support. A pointwise frame-divergence Euler field, weak/strong
   equivalence and stationary/strong equivalence are proved conditionally on
   the analytic realization. The finite boundary ledgers are now exactly zero;
-  a geometric Stokes contract reduces the remaining IPP input to the genuine
-  continuous formula and its flux identification with that ledger. Global
-  Stokes without those two fields and the complete covariant LL parent remain
-  open. Independently, the exact formal-adjoint defect of the raw strong LL
-  operator is isolated: any smooth representing correction gives an exact
-  weak/corrected-strong equivalence, and the correction vanishes exactly when
-  the raw global zero-boundary IPP holds. Existence and vanishing of that
-  correction are not proved.
+  the four canonical measure-preserving generators prove the genuine raw and
+  PT-averaged global IPP and realize the empty ledger unconditionally. General
+  stratified Stokes and the complete covariant LL parent remain open. The
+  exact formal-adjoint defect interface remains available for other frames;
+  for the retained canonical frame the proved raw IPP makes its correction
+  exactly zero.
   More strongly, explicit quadratic and quartically deformed two-variable
   extensions have the same proportional branch, the same genuine longitudinal
   derivatives and the same complete transverse two-jet, with Hessian
@@ -1124,6 +1218,19 @@ The current `main` stack proves, in the declared models:
   self-diffeomorphisms as arrows, plus the contravariant smooth-field functor
   and the actual contravariant general-Lorentz-metric pullback functor, both
   with exact identity/composition laws;
+- the category of all effective D8 quotients with arbitrary nonzero period as
+  objects and genuine smooth cross-background diffeomorphisms as arrows,
+  together with its exact contravariant constant-fiber smooth-field functor,
+  actual tangent bundles transported functorially by manifold derivatives and
+  dual cotangent pullbacks satisfying identity/composition exactly; the same
+  construction gives natural covariant rank-two tensor fibers and preserves
+  their symmetric subspaces, promotes to genuine smooth symmetric-tensor
+  sections, transports musical equivalences and Lorentz inertia, and yields a
+  global contravariant functor of smooth general Lorentz metrics;
+- any certified continuous ambient `Pin⁻(4)` Čech lift now canonically produces
+  a genuine fiber-bundle core on the real 4D quotient, with free/transitive
+  right action and exact equivariant chart changes; unconditional existence of
+  that ambient lift remains separate;
 - action-groupoid, orbit and stabilizer laws, with the regular isotropy stratum
   equal to every effective deck object, the singular stratum empty, and exact
   mutually inverse restriction/unique-extension maps for dependent sections;
@@ -1132,9 +1239,10 @@ The current `main` stack proves, in the declared models:
 - the need for separate compatibility across isotropy strata.
 
 The operator category is not an ordinary category of fixed linear
-representations with plain fiber maps. The fixed-background category is not
-the moduli category of all Janus geometries or a smooth/derived stack, and the
-trivial deck isotropy does not classify additional SpinC-fiber isotropy.
+representations with plain fiber maps. The nonzero-period effective family is
+not yet the decorated moduli category of all Janus geometries or a
+smooth/derived stack, and the trivial deck isotropy does not classify
+additional SpinC-fiber isotropy.
 
 #### 5.2 Low-order quotient
 
