@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**1038 fermées sur 1146 ; 108 ouvertes** (90,58 %).
+**1047 fermées sur 1154 ; 107 ouvertes** (90,73 %).
 
 Documents de référence :
 
@@ -240,7 +240,7 @@ correspondance algébrique des coefficients, puis asymptotique effective.
 - [x] Construire le relèvement principal normal `Pin⁻(1) ≃ Z4` comme vrai
   `FiberBundleCore` global : transitions données par le cocycle entier,
   action droite libre/transitive, carré central et projection d'orientation.
-- [ ] Étendre ce relèvement normal au fibré tangent ambiant par une structure
+- [x] Étendre ce relèvement normal au fibré tangent ambiant par une structure
   `Pin` compatible. Les réalisations ambiantes orientées `Spin/SpinC` sont
   exclues par la non-orientabilité prouvée ci-dessous. Une équivalence radiale
   du vrai espace tangent du cover vers `ℝ⁴` est maintenant construite depuis
@@ -250,12 +250,14 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   localement égaux au translate par le winding réel figé ; après différentiation
   et transport dépendant des fibres, le vrai Jacobien d'atlas est exactement la
   puissance de réflexion correspondante dans les frames radiales. La dépendance
-  lisse atlas-wide, la réduction orthogonale Čech et son lift `Pin⁻` restent à construire.
+  lisse atlas-wide et la réduction orthogonale Čech sont construites ; leur lift
+  principal `Pin⁻` reste à construire.
   - [x] Conjuguer tout enroulement de deck par le split radial/référence fixe et
     identifier le vrai `mfderiv` de transition d'atlas à la phase canonique
-    `O(4)` du même winding dans les frames radiales de coordonnées. Ces frames
-    sont pointwise : leur dépendance lisse et leur identification à la réduction
-    orthonormale de Whitney restent ouvertes.
+    `O(4)` du même winding dans les frames radiales de coordonnées.
+  - [x] Prouver la dépendance `C∞` jointe des frames radiales et de leur famille
+    inverse, puis les empaqueter en réduction orthonormale lisse dont les
+    transitions sont exactement la phase canonique du vrai winding.
   - [x] Prouver que la descente déterminantielle ambiante est vide, exhiber
     l'obstruction d'un overlap renversant l'orientation et en déduire
     l'inexistence de réalisations Čech continues orientées `Spin` ou `SpinC`.
@@ -978,6 +980,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
 - [ ] Étendre la suite explicite retenue à tous les chemins matriciels `0/0`,
   aux similarités mobiles ou cadres singuliers arbitraires, puis classifier
   les changements généraux de type Jordan et construire l'atlas de branches.
+  - [x] Pour toute similarité mobile régulière dont le changement de base et
+    l'inverse convergent, transporter les limites matricielles et prouver que
+    la trichotomie monomiale `0/0` reste exactement inchangée après extraction
+    dans le repère mobile. Les cadres singuliers arbitraires restent ouverts.
 - [x] Dériver la variation de la racine sur ce domaine par rapport aux deux métriques indépendantes, inverse métrique comprise.
   - [x] Cette dérivée complète est prouvée au point diagonal de Minkowski pour
     la branche locale, y compris la dérivée de l'inverse dans
@@ -1013,6 +1019,12 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
     courbes exponentielles positives, dériver exactement la densité Candidate A
     à tout paramètre et dériver le fonctionnel intégré sous un contrat explicite
     de domination uniforme.
+    - [x] Construire le vrai Hessien de cette même densité globale à huit
+      composantes, dériver la première variation intégrée dans une seconde
+      direction sous domination explicite et prouver sa symétrie sous C².
+      - [x] Sommer ce Hessien aux vrais Hessians matière, Robin et LL sur le
+        paquet sectoriel commun, puis identifier la dérivée de l'Euler de la
+        même action à cette somme symétrique.
 - [x] Prouver réalité, échange PT et régularité spatiale de la densité diagonale globale.
   - [x] Sur le sous-domaine diagonal global, prouver la réalité, la
     différentiabilité en chaque point, l'invariance exacte par échange et
@@ -2237,6 +2249,11 @@ complexe BRST, aux anomalies et aux conditions au bord.
       intégrées et l'équation faible stationnaire exacte. L'identification
       covariante sans frame, la contraction lorentzienne intrinsèque et les
       flux géométriques restent ouverts.
+      Preuve d'appui intrinsèque :
+      `P0EFTJanusMappingTorusIntrinsicLLKineticAction4D` remplace le poids
+      scalaire auxiliaire par l'inverse musical de la vraie métrique du throat,
+      dérive la première variation et le Hessien symétrique, puis prouve la
+      covariance PT canonique intégrée. La PDE forte et les flux restent ouverts.
     - [x] Pour la mesure canonique réelle du throat, prouver sans hypothèse sa
       positivité sur tout ouvert non vide, donc son support complet.
     - [x] Construire l'opérateur d'Euler fort par divergence de la frame et
@@ -2720,11 +2737,11 @@ Hessien physique réellement descendu.
   mapping torus et l'overlap de déterminant négatif excluent toute réalisation
   continue orientée `Spin` ou `SpinC`; le remplacement géométrique pertinent
   est `Pin⁻`.
-- [ ] Dériver les données Čech `Pin⁻`/`PinC` depuis l'atlas réel, et non depuis
+- [x] Dériver les données Čech `Pin⁻` depuis l'atlas réel, et non depuis
   des transitions fournies. L'égalité locale des vrais lifts avec le translate
   par le winding réel et sa dérivation tangentielle dans les frames radiales
-  sont établies ; la réduction orthogonale Čech reste ouverte. Les données
-  orientées SpinC ne sont plus revendiquées.
+  sont établies ; la réduction orthogonale Čech et le vrai bundle principal
+  `Pin⁻(4)` sont construits. Les données orientées SpinC ne sont plus revendiquées.
   - [x] Sur les triples intersections du vrai atlas D8, prouver que deux
     relèvements Spin fournis composent en un troisième relèvement dont le
     défaut de Cech est exactement trivial. L'existence et le choix global lisse
@@ -4365,6 +4382,10 @@ champs et avec les mêmes conditions au bord.
     spectral borné, prouver injectivité, surjectivité, noyau nul, image totale
     fermée, critère de Fredholm et indice zéro. La dépendance lisse en
     paramètres et le Dirac géométrique Janus global restent ouverts.
+    Preuve de portée : `P0EFTJanusProductThroatDiracSignScope4D` montre que la
+    racine positive signée garde strictement le signe du fold pour tous les
+    modes ; elle n'a donc aucun crossing de signe interne à fold fixé. Elle ne
+    réalise pas, à elle seule, le vrai Dirac géométrique signé.
     - [x] À géométrie produit et fold fixés, représenter la valeur propre par
       un vecteur spectral complexe, en déduire la borne 1-Lipschitz exacte en
       holonomie, construire la perturbation diagonale bornée et prouver que
@@ -4577,6 +4598,11 @@ champs et avec les mêmes conditions au bord.
       ghosts constants, et identifier linéairement ce noyau restreint à
       `ℝ² × ℝ²`. Ce
       résultat n'est ni le noyau du BRST complet, ni sa cohomologie Sobolev.
+      Preuve d'appui :
+      `P0EFTJanusCommonPairedD9LinearBRSTKernel4D` classe maintenant le noyau
+      du bloc linéaire entier : les deux ghosts abéliens sont constants,
+      tandis que les potentiels d'entrée et le ghost difféomorphe restent
+      libres. Cela ne constitue toujours pas une cohomologie BRST complète.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
   - [x] Au seul cutoff temporel fini, réaliser chaque mode non nul comme un
     vrai ghost lisse `U(1)^2` dans le même wrapper matière + Robin + LL,
@@ -4596,6 +4622,12 @@ champs et avec les mêmes conditions au bord.
       puis prouver additivité des multiplicités, invariance PT et non-annulation
       sur le disque déjà contrôlé. Cette convention finite-mode n'introduit ni
       demi-puissance gaussienne, ni limite, ni ligne de Quillen globale.
+      Preuve d'appui spectrale :
+      `P0EFTJanusFiniteModeSpectralStatisticalDeterminant4D` remplace le facteur
+      de cutoff abstrait par le produit effectif des `shift + eigenvalueSq`,
+      conserve les poids statistiques et prouve la multiplicativité des listes.
+      Le témoin à un mode change effectivement avec la valeur propre ; aucune
+      limite infinite-mode ni ligne de Quillen n'est obtenue.
     - [x] Pour une liste finie de secteurs partageant un même type de modes,
       prouver l'additivité exacte de la trace thermique commune sous
       concaténation et l'annulation de la somme des traces chirales PT signées,
@@ -4630,6 +4662,9 @@ champs et avec les mêmes conditions au bord.
   - [x] Topologiser ces fibres réelles, installer un `FiberBundle` et un
     `VectorBundle` complexes Mathlib, promouvoir la transition de grande jauge
     en homéomorphisme et descendre le clutching sur `AddCircle 1`.
+    - [x] Construire le vrai quotient d'orbites de `ℝ × ℂ`, puis donner
+      l'isomorphisme topologique au fibré descendu, compatible à la projection
+      et complexe-linéaire sur chaque fibre.
   - [ ] Construire la ligne/gerbe globale et sa géométrie de
     Quillen/Bismut--Freed.
     - [x] La composante topologique de ligne est construite et globalement
@@ -4654,6 +4689,11 @@ champs et avec les mêmes conditions au bord.
       famille bornée du cercle : le saut eta vaut `-2` fois l'incrément spectral
       affine exact de chaque mode, et les deux folds primitifs PT s'annulent.
       Cette identification reste propre au cercle normalisé.
+    - [x] Construire l'eta thermique sectoriel du cercle à temps strictement
+      positif comme la série effective `Σₙ λₙ exp(-t λₙ²)`, prouver sa
+      sommabilité absolue, son oddité PT et le relabeling de grande jauge entre
+      les deux extrémités. Aucun invariant APS, passage `t → 0`, eta global ou
+      inflow géométrique n'en découle.
 - [ ] Prouver l'annulation PT/inflow pour le contenu de champs complet.
 - [ ] Construire et trivialiser la section de partition lorsque permis.
   - [x] Construire sur la famille cercle une section déterminante régularisée
