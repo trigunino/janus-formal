@@ -53,7 +53,7 @@ local instance effectiveQuotientChartedSpace :
   reflectedSphereQuotientChartedSpace period hPeriod
 
 local instance effectiveQuotientIsManifold :
-    IsManifold coverModelWithCorners ∞ (EffectiveQuotient period hPeriod) :=
+    IsManifold coverModelWithCorners ω (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotient_isManifold period hPeriod
 
 /-- Velocity of the positive metric magnitudes selected by one matter sector. -/
@@ -209,7 +209,7 @@ def independentMatterKineticVelocity
     (variation : IndependentFieldVariation period hPeriod)
     (component : MatterComponentIndex)
     (point : EffectiveQuotient period hPeriod) : Real :=
-  (1 / 2 : Real) * ∑ index : Fin 4,
+  (1 / 2 : Real) * ∑ index : Fin 4, (
     (-(signature index *
           independentMatterMagnitudeVelocityAt period hPeriod fields variation
             component.1 point index) /
@@ -224,7 +224,7 @@ def independentMatterKineticVelocity
           point index *
           holonomicCovectorComponent period hPeriod
             (matterVariationComponentFamily period hPeriod variation.matter component)
-            point index)
+            point index))
 
 /-- The exact pointwise first variation of one sector-selected global scalar
 density along a simultaneous independent-field direction. -/
@@ -331,7 +331,7 @@ private theorem independentMatterKinetic_curve_hasDerivAt
             (independentMatterComponentFamily period hPeriod
               (independentFieldCurve period hPeriod fields variation parameter)
               component) point index ^ 2)
-      (∑ index : Fin 4,
+      (∑ index : Fin 4, (
         (-(signature index *
               independentMatterMagnitudeVelocityAt period hPeriod fields variation
                 component.1 point index) /
@@ -348,7 +348,7 @@ private theorem independentMatterKinetic_curve_hasDerivAt
               point index *
               holonomicCovectorComponent period hPeriod
                 (matterVariationComponentFamily period hPeriod variation.matter
-                  component) point index)) 0 := by
+                  component) point index))) 0 := by
     apply HasDerivAt.fun_sum
     intro index _
     have hMagnitude := (hasDerivAt_pi.mp
@@ -364,8 +364,8 @@ private theorem independentMatterKinetic_curve_hasDerivAt
     have hCovector := independentMatterCovector_curve_hasDerivAt period hPeriod
       fields variation component point index
     have hTerm := hCoefficient.mul (hCovector.pow 2)
-    convert hTerm using 1 <;>
-      simp [independentFieldCurve_zero] <;> ring
+    refine hTerm.congr_deriv ?_
+    simp [independentFieldCurve_zero]
   simpa [diagonalHolonomicKineticDensity,
     independentMatterKineticVelocity] using hSum.const_mul (1 / 2 : Real)
 
@@ -416,13 +416,35 @@ theorem programPMetricMatterDensityCurve_hasDerivAt
           (independentFieldCurve period hPeriod fields variation parameter)
           component point) ^ 2)
       (massSquared * field point * fieldVariation point) 0 := by
-    convert hPotential using 1 <;>
-      simp [field, fieldVariation, independentFieldCurve_zero] <;> ring
+    refine hPotential.congr_deriv ?_
+    simp [field, fieldVariation, independentFieldCurve_zero]
+    ring
   have hDensity := hVolume.mul (hKinetic.add hPotentialCorrect)
-  simpa [programPMetricMatterDensityCurve,
-    independentMetricMatterFirstVariationDensity, globalHolonomicScalarDensity,
-    variation, magnitude, field, fieldVariation, independentFieldCurve_zero] using
-    hDensity
+  have hCurve :
+      programPMetricMatterDensityCurve period hPeriod massSquared fields direction
+          component point =
+        (fun parameter =>
+          diagonalMetricVolumeDensity period hPeriod
+              (independentMatterMagnitude period hPeriod
+                (independentFieldCurve period hPeriod fields variation parameter)
+                component.1) point *
+            (diagonalHolonomicKineticDensity period hPeriod
+                (independentMatterMagnitude period hPeriod
+                  (independentFieldCurve period hPeriod fields variation parameter)
+                  component.1)
+                (independentMatterComponentFamily period hPeriod
+                  (independentFieldCurve period hPeriod fields variation parameter)
+                  component) point +
+              massSquared / 2 *
+                (independentMatterComponentFamily period hPeriod
+                  (independentFieldCurve period hPeriod fields variation parameter)
+                  component point) ^ 2)) := by
+    funext parameter
+    rfl
+  rw [hCurve]
+  refine hDensity.congr_deriv ?_
+  simp [independentMetricMatterFirstVariationDensity, variation, magnitude,
+    field, fieldVariation, independentFieldCurve_zero]
 
 end
 

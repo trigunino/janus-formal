@@ -28,6 +28,7 @@ This is the operational scorecard. The authoritative prose status is [`current_s
 | **P-D** | invariant pairings | green low-rank pairing, spinor, fusion and `Z4` neutrality head; the category of all nonzero-period effective D8 quotients has exact smooth-field, tangent/cotangent, smooth symmetric-tensor and general-Lorentz-metric functors | extend this effective family to decorated Janus/SpinC moduli, multiplicity spaces and normalizations |
 | **P-E** | finite jets/equivariance | green corrected jet-universality head, tangent/cotangent and smooth Lorentz-tensor naturality on the nonzero-period effective D8 family, plus the effective deck structured-jet groupoid | extend beyond deck isotropy to physical SpinC jet fibers, principal natural bundles and elliptic classification |
 | **P-F** | compatibility pullback | green `J^T H J` Helmholtz/Noether schema | actual compatibility complex and target pairing |
+| **M** | pre-geometric foundations and P adapter | relational groupoid, free preorder/distance, measured and involutive optional extensions, equivariant gluing, compiled signed adapter to `JanusCharge` | wait for stable P geometry, then compare the same adapter on non-throat and throat targets |
 | **A/B/C** | scale, junction and charge compatibility | deep-alpha workflow green; advanced conditional chains | selected action, stable vacuum and common unit |
 | **E** | observations | diagnostics only | native predictions from a closed theory |
 

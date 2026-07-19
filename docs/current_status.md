@@ -58,6 +58,18 @@ and Python workflows. The PR 10 theorem head was validated locally before
 merge; this document does not claim an independent post-merge CI run for
 `96e60eb4`.
 
+## Program M foundation checkpoint — 19 July 2026
+
+Program M's foundational layer is consolidated and paused pending a stable
+geometric integration target from Program P. Its coefficient language is now
+explicitly signed-capable: unsigned/nonnegative assignments are restrictions,
+while a nontrivial involution and odd charge law remain optional added
+structure. The compiled `MF-PBRIDGE-002` adapter maps every nonzero odd real
+charge to P's binary `JanusCharge` plus a separate positive magnitude, without
+supplying a metric, throat, physical mass interpretation or action. The next
+test is a comparison of the same adapter on non-throat and throat geometries.
+See [`program_m_status.md`](program_m_status.md).
+
 The previously recorded successful runs include:
 
 ```text

@@ -4,6 +4,15 @@ Ce fichier est le point d'entrée stable de Program M. Il sépare ce qui est
 acquis, réfuté et encore ouvert. Le registre détaillé reste
 [`program_m_provenance_register.md`](program_m_provenance_register.md).
 
+**Statut opérationnel au 19 juillet 2026 : fondations consolidées ; prochaine
+intégration géométrique en attente de Program P.** Voir
+[`program_m_status.md`](program_m_status.md).
+
+Le langage de coefficients est désormais explicitement capable de valeurs
+signées. Le cas non signé est une restriction de ce langage, pas une base
+concurrente. L'involution non triviale et la loi impaire restent toutefois des
+structures optionnelles supplémentaires.
+
 ## État au checkpoint MF-ARC-001
 
 ### Acquis
@@ -149,6 +158,11 @@ et seulement si elle préserve les identifications de l'interface. Lean prouve
 l'involution globale ; l'audit accepte les interfaces appariées et rejette une
 identification isolée dont la partenaire n'est pas recollée.
 
+MF-PBRIDGE-002 construit enfin l'adaptateur signé vers P. Toute charge réelle
+impaire non nulle est factorisée en label `JanusCharge` et magnitude positive ;
+l'involution devient exactement `ptCharge`. La géométrie, la gorge,
+l'interprétation en masse, la dynamique et l'action restent hors adaptateur.
+
 ## Dernière séquence archivée
 
 | ID | Question | Conclusion | Note |
@@ -181,6 +195,7 @@ identification isolée dont la partenaire n'est pas recollée.
 | MF-INV-001 | Une involution non triviale est-elle sélectionnée par la relation ? | non en général ; existence sans canonicité | [note](program_m_canonical_involution.md) |
 | MF-INV-002 | L'involution intrinsèque unique survit-elle à la composition ? | non ; l'involution équipée compose correctement | [note](program_m_involution_composition.md) |
 | MF-INV-003 | Quand l'involution survit-elle au collage ? | exactement pour une interface équivariante | [note](program_m_equivariant_gluing.md) |
+| MF-PBRIDGE-002 | Que fournit concrètement l'extension signée à P ? | secteurs et source signée conditionnels, sans géométrie ni action | [note](program_m_signed_program_p_adapter.md) |
 
 ## Règle d'archivage désormais obligatoire
 

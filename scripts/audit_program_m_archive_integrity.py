@@ -35,6 +35,7 @@ RECORDS = {
     "MF-INV-001": ("docs/program_m_canonical_involution.md", "scripts/audit_program_m_canonical_involution.py", "outputs/program_m/mf_inv_001_canonical_involution.json", "tests/test_program_m_canonical_involution.py"),
     "MF-INV-002": ("docs/program_m_involution_composition.md", "scripts/audit_program_m_involution_composition.py", "outputs/program_m/mf_inv_002_involution_composition.json", "tests/test_program_m_involution_composition.py"),
     "MF-INV-003": ("docs/program_m_equivariant_gluing.md", "scripts/audit_program_m_equivariant_gluing.py", "outputs/program_m/mf_inv_003_equivariant_gluing.json", "tests/test_program_m_equivariant_gluing.py"),
+    "MF-PBRIDGE-002": ("docs/program_m_signed_program_p_adapter.md", "scripts/audit_program_m_signed_program_p_adapter.py", "outputs/program_m/mf_pbridge_002_signed_program_p_adapter.json", "tests/test_program_m_signed_program_p_adapter.py"),
     "MF-DIM-001B": ("docs/program_m_multirank_dimension.md", "scripts/audit_program_m_multirank_dimension.py", "outputs/program_m/mf_dim_001_multirank_dimension.json", "tests/test_program_m_multirank_dimension.py"),
     "MF-DIM-002": ("docs/program_m_high_rank_dimension.md", "scripts/audit_program_m_high_rank_dimension.py", "outputs/program_m/mf_dim_002_high_rank_dimension.json", "tests/test_program_m_high_rank_dimension.py"),
     "MF-DIM-003": ("docs/program_m_no_finite_dimension_cutoff.md", "scripts/audit_program_m_no_finite_dimension_cutoff.py", "outputs/program_m/mf_dim_003_no_finite_dimension_cutoff.json", "tests/test_program_m_no_finite_dimension_cutoff.py"),
@@ -59,6 +60,7 @@ def run_audit() -> dict[str, object]:
             "provenance_ids_are_unique": not duplicates,
             "recent_records_have_complete_artifacts": all(not row["missing"] for row in rows),
             "archive_index_exists": (ROOT / "docs/program_m_archive.md").is_file(),
+            "current_status_note_exists": (ROOT / "docs/program_m_status.md").is_file(),
         },
     }
 
