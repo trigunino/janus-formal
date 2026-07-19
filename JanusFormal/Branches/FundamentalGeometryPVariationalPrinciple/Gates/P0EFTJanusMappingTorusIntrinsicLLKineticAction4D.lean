@@ -32,6 +32,7 @@ open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothPTInvolution
 open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatPTRadical4D
@@ -39,6 +40,7 @@ open P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
 open P0EFTJanusMappingTorusIntrinsicMetricBVThroatBracket4D
 open P0EFTJanusMappingTorusDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusCanonicalThroatPTMeasureInvariance4D
+open P0EFTJanusMappingTorusGlobalLLCovariance4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -266,6 +268,122 @@ theorem intrinsicLLKineticDensity_affine_quadratic
     intrinsicLLDerivativePairing_symmetric period hPeriod direction field]
   ring
 
+/-- Integrated first variation of the intrinsic kinetic action. -/
+def intrinsicLLKineticFirstVariation
+    (field direction : SmoothThroatField period hPeriod LLFieldFiber)
+    (mu : Measure (EffectiveThroat period hPeriod)) : Real :=
+  ∫ point, intrinsicLLDerivativePairing period hPeriod
+    field direction point ∂mu
+
+/-- Bilinear Hessian of the intrinsic kinetic action. -/
+def intrinsicLLKineticHessian
+    (first second : SmoothThroatField period hPeriod LLFieldFiber)
+    (mu : Measure (EffectiveThroat period hPeriod)) : Real :=
+  ∫ point, intrinsicLLDerivativePairing period hPeriod
+    first second point ∂mu
+
+theorem intrinsicLLKineticHessian_symmetric
+    (first second : SmoothThroatField period hPeriod LLFieldFiber)
+    (mu : Measure (EffectiveThroat period hPeriod)) :
+    intrinsicLLKineticHessian period hPeriod first second mu =
+      intrinsicLLKineticHessian period hPeriod second first mu := by
+  unfold intrinsicLLKineticHessian
+  apply integral_congr_ae
+  exact Filter.Eventually.of_forall fun point =>
+    intrinsicLLDerivativePairing_symmetric period hPeriod first second point
+
+/-- Exact integrated quadratic expansion under precisely the three required
+integrability hypotheses. -/
+theorem intrinsicLLKineticAction_affine_quadratic
+    (field direction : SmoothThroatField period hPeriod LLFieldFiber)
+    (mu : Measure (EffectiveThroat period hPeriod)) (epsilon : Real)
+    (hBase : Integrable (intrinsicLLKineticDensity period hPeriod field) mu)
+    (hFirst : Integrable
+      (intrinsicLLDerivativePairing period hPeriod field direction) mu)
+    (hDirection : Integrable
+      (intrinsicLLKineticDensity period hPeriod direction) mu) :
+    intrinsicLLKineticAction period hPeriod (field + epsilon • direction) mu =
+      intrinsicLLKineticAction period hPeriod field mu +
+        epsilon * intrinsicLLKineticFirstVariation period hPeriod
+          field direction mu +
+        epsilon ^ 2 * intrinsicLLKineticAction period hPeriod direction mu := by
+  unfold intrinsicLLKineticAction intrinsicLLKineticFirstVariation
+  simp_rw [intrinsicLLKineticDensity_affine_quadratic period hPeriod
+    field direction epsilon]
+  calc
+    (∫ point,
+        intrinsicLLKineticDensity period hPeriod field point +
+            epsilon * intrinsicLLDerivativePairing period hPeriod
+              field direction point +
+          epsilon ^ 2 * intrinsicLLKineticDensity period hPeriod direction point
+        ∂mu) =
+      (∫ point,
+        intrinsicLLKineticDensity period hPeriod field point +
+          epsilon * intrinsicLLDerivativePairing period hPeriod
+            field direction point ∂mu) +
+        ∫ point, epsilon ^ 2 *
+          intrinsicLLKineticDensity period hPeriod direction point ∂mu := by
+      simpa only [Pi.add_apply] using
+        integral_add (hBase.add (hFirst.const_mul epsilon))
+          (hDirection.const_mul (epsilon ^ 2))
+    _ = ((∫ point, intrinsicLLKineticDensity period hPeriod field point ∂mu) +
+          ∫ point, epsilon * intrinsicLLDerivativePairing period hPeriod
+            field direction point ∂mu) +
+        ∫ point, epsilon ^ 2 *
+          intrinsicLLKineticDensity period hPeriod direction point ∂mu := by
+      congr 1
+      simpa only [Pi.add_apply] using
+        integral_add hBase (hFirst.const_mul epsilon)
+    _ = _ := by simp only [integral_const_mul]
+
+private theorem intrinsic_quadratic_hasDerivAt
+    (base linear quadratic : Real) :
+    HasDerivAt
+      (fun epsilon : Real => base + epsilon * linear + epsilon ^ 2 * quadratic)
+      linear 0 := by
+  have hAffine : HasDerivAt
+      (fun epsilon : Real => base + epsilon * linear) linear 0 := by
+    have h := (hasDerivAt_id (0 : Real)).mul_const linear |>.const_add base
+    exact h.congr_deriv (one_mul linear)
+  have hSquare : HasDerivAt (fun epsilon : Real => epsilon * epsilon) 0 0 := by
+    have h := (hasDerivAt_id (0 : Real)).mul (hasDerivAt_id (0 : Real))
+    exact h.congr_deriv (by norm_num)
+  have hQuadratic : HasDerivAt
+      (fun epsilon : Real => epsilon * epsilon * quadratic) 0 0 := by
+    exact (hSquare.mul_const quadratic).congr_deriv (by ring)
+  have hTotal := hAffine.add hQuadratic
+  exact (hTotal.congr_deriv (by ring)).congr_of_eventuallyEq
+    (Filter.Eventually.of_forall fun epsilon => by
+      simp only [Pi.add_apply]
+      ring)
+
+/-- The actual first derivative of the intrinsic action. -/
+theorem intrinsicLLKineticAction_affine_hasDerivAt
+    (field direction : SmoothThroatField period hPeriod LLFieldFiber)
+    (mu : Measure (EffectiveThroat period hPeriod))
+    (hBase : Integrable (intrinsicLLKineticDensity period hPeriod field) mu)
+    (hFirst : Integrable
+      (intrinsicLLDerivativePairing period hPeriod field direction) mu)
+    (hDirection : Integrable
+      (intrinsicLLKineticDensity period hPeriod direction) mu) :
+    HasDerivAt
+      (fun epsilon : Real => intrinsicLLKineticAction period hPeriod
+        (field + epsilon • direction) mu)
+      (intrinsicLLKineticFirstVariation period hPeriod field direction mu) 0 := by
+  rw [show (fun epsilon : Real => intrinsicLLKineticAction period hPeriod
+      (field + epsilon • direction) mu) = fun epsilon : Real =>
+        intrinsicLLKineticAction period hPeriod field mu +
+          epsilon * intrinsicLLKineticFirstVariation period hPeriod
+            field direction mu +
+          epsilon ^ 2 * intrinsicLLKineticAction period hPeriod direction mu from by
+      funext epsilon
+      exact intrinsicLLKineticAction_affine_quadratic period hPeriod
+        field direction mu epsilon hBase hFirst hDirection]
+  exact intrinsic_quadratic_hasDerivAt
+    (intrinsicLLKineticAction period hPeriod field mu)
+    (intrinsicLLKineticFirstVariation period hPeriod field direction mu)
+    (intrinsicLLKineticAction period hPeriod direction mu)
+
 /-- Canonical PT pullback of an LL field on the actual throat. -/
 def intrinsicLLFieldPT
     (field : SmoothThroatField period hPeriod LLFieldFiber) :
@@ -282,6 +400,37 @@ def intrinsicThroatCovectorPTPullback
     ThroatCotangentFiber period hPeriod point :=
   covector.comp
     (throatPTDerivativeEquiv period hPeriod point).toContinuousLinearMap
+
+theorem intrinsicLLDifferentialCovector_pt
+    (field : SmoothThroatField period hPeriod LLFieldFiber)
+    (point : EffectiveThroat period hPeriod) (component : Fin 4) :
+    intrinsicLLDifferentialCovector period hPeriod
+        (intrinsicLLFieldPT period hPeriod field) point component =
+      intrinsicThroatCovectorPTPullback period hPeriod point
+        (intrinsicLLDifferentialCovector period hPeriod field
+          (fixedThroatPT period hPeriod point) component) := by
+  ext vector
+  change (mvfderiv throatCoverModelWithCorners
+      (field.toFun ∘ fixedThroatPT period hPeriod) point vector) component =
+    (mvfderiv throatCoverModelWithCorners field.toFun
+      (fixedThroatPT period hPeriod point)
+      (throatPTDerivativeEquiv period hPeriod point vector)) component
+  have hRaw :
+      mfderiv throatCoverModelWithCorners (modelWithCornersSelf Real LLFieldFiber)
+          (field.toFun ∘ fixedThroatPT period hPeriod) point vector =
+        mfderiv throatCoverModelWithCorners (modelWithCornersSelf Real LLFieldFiber)
+          field.toFun (fixedThroatPT period hPeriod point)
+          (mfderiv throatCoverModelWithCorners throatCoverModelWithCorners
+            (fixedThroatPT period hPeriod) point vector) :=
+    mfderiv_comp_apply point
+      (field.contMDiff_toFun.mdifferentiableAt (by simp))
+      ((fixedThroatPT_contMDiff period hPeriod).mdifferentiableAt (by simp))
+      vector
+  simp only [Function.comp_apply] at hRaw
+  have hValue := congrArg
+    (fun tangent => NormedSpace.fromTangentSpace
+      (field.toFun (fixedThroatPT period hPeriod point)) tangent) hRaw
+  exact congrArg (fun value : LLFieldFiber => value component) hValue
 
 theorem intrinsicThroatInversePairingAt_pt
     (point : EffectiveThroat period hPeriod)
@@ -316,6 +465,93 @@ theorem intrinsicThroatInversePairingAt_pt
         (fixedThroatPT period hPeriod point)]
     simp
   exact congrArg second hRaised
+
+theorem intrinsicLLDerivativePairing_pt
+    (first second : SmoothThroatField period hPeriod LLFieldFiber)
+    (point : EffectiveThroat period hPeriod) :
+    intrinsicLLDerivativePairing period hPeriod
+        (intrinsicLLFieldPT period hPeriod first)
+        (intrinsicLLFieldPT period hPeriod second) point =
+      intrinsicLLDerivativePairing period hPeriod first second
+        (fixedThroatPT period hPeriod point) := by
+  unfold intrinsicLLDerivativePairing
+  apply Finset.sum_congr rfl
+  intro component _
+  rw [intrinsicLLDifferentialCovector_pt,
+    intrinsicLLDifferentialCovector_pt]
+  exact intrinsicThroatInversePairingAt_pt period hPeriod point _ _
+
+theorem intrinsicLLKineticDensity_pt
+    (field : SmoothThroatField period hPeriod LLFieldFiber)
+    (point : EffectiveThroat period hPeriod) :
+    intrinsicLLKineticDensity period hPeriod
+        (intrinsicLLFieldPT period hPeriod field) point =
+      intrinsicLLKineticDensity period hPeriod field
+        (fixedThroatPT period hPeriod point) := by
+  unfold intrinsicLLKineticDensity
+  rw [intrinsicLLDerivativePairing_pt]
+
+/-- Intrinsic LL kinetic action with the installed canonical throat volume. -/
+def canonicalIntrinsicLLKineticAction
+    (field : SmoothThroatField period hPeriod LLFieldFiber) : Real :=
+  intrinsicLLKineticAction period hPeriod field
+    (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+
+/-- Unconditional canonical PT covariance of the integrated intrinsic action. -/
+theorem canonicalIntrinsicLLKineticAction_pt
+    (field : SmoothThroatField period hPeriod LLFieldFiber) :
+    canonicalIntrinsicLLKineticAction period hPeriod
+        (intrinsicLLFieldPT period hPeriod field) =
+      canonicalIntrinsicLLKineticAction period hPeriod field := by
+  unfold canonicalIntrinsicLLKineticAction intrinsicLLKineticAction
+  calc
+    (∫ point, intrinsicLLKineticDensity period hPeriod
+        (intrinsicLLFieldPT period hPeriod field) point
+      ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
+      ∫ point, intrinsicLLKineticDensity period hPeriod field
+          (fixedThroatPT period hPeriod point)
+        ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) := by
+      apply integral_congr_ae
+      exact Filter.Eventually.of_forall
+        (intrinsicLLKineticDensity_pt period hPeriod field)
+    _ = _ := by
+      simpa [fixedThroatPTMeasurableEquiv] using
+        (intrinsicCanonicalThroatVolumeMeasure_pt_measurePreserving
+          period hPeriod).integral_comp'
+          (intrinsicLLKineticDensity period hPeriod field)
+
+/-- Componentwise inverse-metric contraction of an LL cotangent one-jet. -/
+def intrinsicLLCotangentJetPairingAt
+    (point : EffectiveThroat period hPeriod)
+    (first second : Fin 4 → ThroatCotangentFiber period hPeriod point) : Real :=
+  ∑ component : Fin 4,
+    intrinsicThroatInversePairingAt period hPeriod point
+      (first component) (second component)
+
+/-- Canonical PT pullback of all four LL cotangent components. -/
+def intrinsicLLCotangentJetPTPullback
+    (point : EffectiveThroat period hPeriod)
+    (jet : Fin 4 → ThroatCotangentFiber period hPeriod
+      (fixedThroatPT period hPeriod point)) :
+    Fin 4 → ThroatCotangentFiber period hPeriod point :=
+  fun component => intrinsicThroatCovectorPTPullback period hPeriod point
+    (jet component)
+
+/-- Canonical covariance of the genuine inverse-metric LL contraction under
+the true throat PT differential. -/
+theorem intrinsicLLCotangentJetPairingAt_pt
+    (point : EffectiveThroat period hPeriod)
+    (first second : Fin 4 → ThroatCotangentFiber period hPeriod
+      (fixedThroatPT period hPeriod point)) :
+    intrinsicLLCotangentJetPairingAt period hPeriod point
+        (intrinsicLLCotangentJetPTPullback period hPeriod point first)
+        (intrinsicLLCotangentJetPTPullback period hPeriod point second) =
+      intrinsicLLCotangentJetPairingAt period hPeriod
+        (fixedThroatPT period hPeriod point) first second := by
+  apply Finset.sum_congr rfl
+  intro component _
+  exact intrinsicThroatInversePairingAt_pt period hPeriod point
+    (first component) (second component)
 
 end
 

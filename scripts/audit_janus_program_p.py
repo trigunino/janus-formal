@@ -713,6 +713,19 @@ PROGRAM_P_GATES = {
             "theorem canonicalLatitudeNormal_is_unit_spacelike",
         ),
     ),
+    "P0EFTJanusMappingTorusIntrinsicLLKineticAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicLLDifferentialCovector",
+            "def intrinsicLLDerivativePairing",
+            "def intrinsicLLKineticAction",
+            "theorem intrinsicLLKineticDensity_affine_quadratic",
+            "theorem intrinsicLLKineticHessian_symmetric",
+            "theorem intrinsicLLKineticAction_affine_hasDerivAt",
+            "theorem intrinsicLLDifferentialCovector_pt",
+            "theorem canonicalIntrinsicLLKineticAction_pt",
+        ),
+    ),
     "P0EFTJanusGaussianNormalIntegratedBoundaryBox.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1073,6 +1086,19 @@ PROGRAM_P_GATES = {
             "theorem weightedCutoffDeterminant_add_multiplicity",
             "theorem weightedCutoffDeterminant_pt_invariant",
             "theorem weightedCutoffDeterminant_ne_zero_of_norm_lt_one",
+        ),
+    ),
+    "P0EFTJanusFiniteModeSpectralStatisticalDeterminant4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteSpectrumDeterminant",
+            "theorem finiteSpectrumDeterminant_pos",
+            "theorem finiteSpectrumDeterminant_ext",
+            "def spectralStatisticalDeterminant",
+            "theorem spectralStatisticalDeterminant_add_multiplicity",
+            "def finiteSectorListDeterminant",
+            "theorem finiteSectorListDeterminant_append",
+            "theorem finiteSpectrumDeterminant_singleton_ne",
         ),
     ),
     "P0EFTJanusFiniteModeCommonRegulatorListAdditivity4D.lean": (
@@ -1534,6 +1560,17 @@ PROGRAM_P_GATES = {
             "theorem productThroatUnboundedDirac_surjective",
             "theorem productThroatUnboundedDirac_fredholm_criterion",
             "theorem productThroatUnboundedDiracIndex_zero",
+        ),
+    ),
+    "P0EFTJanusProductThroatDiracSignScope4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem productThroatDiracSquaredEigenvalue_positive",
+            "theorem productThroatDiracEigenvalue_positive_fold_pos",
+            "theorem productThroatDiracEigenvalue_pt_fold_neg",
+            "theorem productThroatDiracEigenvalue_pt_eq_neg_positive",
+            "def ProductThroatDiracHasModeSignCrossing",
+            "theorem productThroatDirac_has_no_mode_sign_crossing",
         ),
     ),
     "P0EFTJanusProductThroatHolonomyCommonDomain4D.lean": (
@@ -4207,6 +4244,57 @@ PROGRAM_P_GATES = {
             "theorem stableRadialReferenceEquiv_deckOperator_referencePhase",
             "def ambientRadialReferenceCoordinateFrame",
             "theorem ambientAtlasTangentTransition_radialReferencePhase",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientRadialReferencePointwiseReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientRadialReferenceAtlasFrame",
+            "def ambientRadialReferenceAtlasForm",
+            "theorem ambientRadialReferenceAtlasForm_posDef",
+            "def ambientRadialReferenceOrthonormalAtlasReduction",
+            "theorem ambientRadialReferenceOrthogonalTransition_eq_canonical",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientRadialReferenceSmoothReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientRadialReferenceInverseFrame_contMDiffOn",
+            "def ambientRadialReferenceContMDiffOrthonormalAtlasReduction",
+            "theorem ambientRadialReferenceSmoothOrthogonalTransition_eq_canonical",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientCanonicalPinMinusActualPrincipalBundle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalAmbientPinMinusPrincipalBundleCore",
+            "def canonicalAmbientPinMinusPrincipalFiber_isFiberBundle",
+            "theorem canonicalAmbientPinMinusTransitionLift_projects_to_radialReduction",
+            "theorem canonicalAmbientPinMinusPrincipalTransition_restricts_to_throat",
+            "structure CanonicalAmbientPinMinusActualPrincipalBundle",
+            "def canonicalAmbientPinMinusActualPrincipalBundle",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCandidateAIntegratedMetricHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CandidateAGlobalDensityC2Contract",
+            "def candidateAMetricHessianDensity",
+            "theorem candidateAMetricHessianDensity_symmetric",
+            "structure DominatedCandidateASecondVariationContract",
+            "theorem integratedCandidateAFirstVariationAlongSecond_hasDerivAt",
+            "theorem integratedCandidateAMetricHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCandidateAPartialSameActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def candidateAPartialSectorialSameActionHessian",
+            "theorem candidateAPartialSectorialSameActionHessian_symmetric",
+            "def candidateAPartialSectorialEulerCurve",
+            "theorem candidateAPartialSectorialEulerCurve_zero",
+            "theorem candidateAPartialSectorialEulerCurve_hasDerivAt",
+            "theorem candidateAPartialSectorialAction_hasDerivAt",
         ),
     ),
     "P0EFTJanusMappingTorusAmbientCanonicalReferencePinMinusCech4D.lean": (
@@ -6900,6 +6988,12 @@ PROGRAM_P_GATES = {
             "theorem commonPairedD9LinearBRSTDifferential_d9Coordinate",
         ),
     ),
+    "P0EFTJanusCommonPairedD9LinearBRSTKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem commonPairedD9LinearBRSTDifferential_eq_zero_iff",
+        ),
+    ),
     "P0EFTJanusCommonPairedD9U1SymbolComplex4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -9138,6 +9232,38 @@ PROGRAM_P_GATES = {
             "theorem zeroModeEta_unit_jump_eq_neg_two_doubledLevelShift",
             "theorem largeGaugeAnomalyParity_eq_spectralFlow_mod_two",
             "theorem ptPaired_zeroModeEta_unit_jumps_cancel",
+        ),
+    ),
+    "P0EFTJanusCircleDeterminantClutchingOrbitQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def circleLargeGaugeMonodromyScalar",
+            "theorem circleLargeGaugeMonodromyScalar_ne_zero",
+            "theorem circleLargeGaugeFrameCoordinateTransition_apply_eq_mul",
+            "def circleDeterminantClutchingTranslate",
+            "theorem circleDeterminantClutchingTranslate_add",
+            "def circleDeterminantClutchingSetoid",
+            "abbrev CircleDeterminantClutchingTotal",
+            "def circleDeterminantClutchingBase",
+            "theorem circleDeterminantClutchingBase_continuous",
+            "theorem circleDeterminantClutchingMk_endpoints",
+            "def circleDeterminantClutchingGauge",
+            "def circleDeterminantClutchingGaugeHomeomorph",
+            "theorem clutching_relation_iff_untwisted_kernel",
+            "def circleDeterminantClutchingBundleHomeomorph",
+            "theorem circleDeterminantClutchingBundleHomeomorph_proj",
+            "theorem circleDeterminantClutchingBundleHomeomorph_mk_add",
+            "theorem circleDeterminantClutchingBundleHomeomorph_mk_smul",
+        ),
+    ),
+    "P0EFTJanusCircleHeatEtaRegularization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def circleHeatEtaSummand",
+            "theorem circleHeatEtaSummand_summable",
+            "def circleHeatEta",
+            "theorem circleHeatEta_pt_eq_neg_positive",
+            "theorem circleHeatEta_unit_eq_periodic",
         ),
     ),
     "P0EFTJanusCircleActualCrossingEtaBridge4D.lean": (

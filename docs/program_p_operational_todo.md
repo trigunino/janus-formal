@@ -8,8 +8,8 @@ Ce fichier est la file de travail courte de Programme P. Le registre détaillé
 `docs/program_p_exhaustive_todo.md` reste le journal historique des preuves et
 des sous-résultats.
 
-État vérifié du registre historique : **1038/1146**, soit **90,58 %**, avec
-**108 cases ouvertes**. Ce pourcentage n'est plus utilisé comme mesure de
+État vérifié du registre historique : **1047/1154**, soit **90,73 %**, avec
+**107 cases ouvertes**. Ce pourcentage n'est plus utilisé comme mesure de
 fermeture globale : le nombre de cases ouvertes n'a pas diminué pendant
 l'ajout de centaines de microlemmes.
 
@@ -190,7 +190,7 @@ que si leur critère le dit explicitement.
 
 ### `P-LL-INTRINSIC-01` — Première action LL à contraction métrique réelle
 
-- État : `READY`. Portée : `SECTORIEL`, vrai throat.
+- État : `DONE` (2026-07-19). Portée : `SECTORIEL`, vrai throat.
 - But : remplacer le poids auxiliaire `1+‖llAuxMetric‖²` par la contraction via
   l'inverse d'une `SmoothNondegenerateThroatMetric`, puis dériver action,
   première variation, Hessien symétrique et covariance PT canonique.
@@ -199,10 +199,18 @@ que si leur critère le dit explicitement.
 - Gate proposé : `P0EFTJanusMappingTorusIntrinsicLLKineticAction4D`.
 - Acceptation : aucune positivité lorentzienne ou PDE forte non prouvée.
 - Porte terminale : aucune.
+- Appui : `P0EFTJanusMappingTorusIntrinsicLLKineticAction4D` contracte les
+  quatre différentielles LL par le vrai inverse musical de la métrique
+  intrinsèque non dégénérée ; l'expansion quadratique donne la première
+  variation et un Hessien symétrique, sans assertion de positivité.
+- Validation : gate, façade et audit compilés le 2026-07-19 ; l'action
+  canonique est PT-invariante via la vraie règle de chaîne et la mesure du
+  throat. L'intégrabilité n'est supposée qu'au théorème de différentiation
+  globale ; aucune PDE forte ni porte terminale n'est fermée.
 
 ### `P5-MATTER-DIFFEO-ACTION-ID` — Même action matière pour Euler et Noether
 
-- État : `READY`. Portée : `SECTORIEL`, huit scalaires.
+- État : `BLOQUÉ-PHYSIQUE` (2026-07-19). Portée : `SECTORIEL`, huit scalaires.
 - But : identifier `sameConfigurationGeneralLorentzMatterAction` à
   `globalMatterMultipletAction` avec mêmes champs, métrique, masses et mesure,
   puis transporter l'invariance difféomorphe vers l'action possédant déjà son
@@ -213,10 +221,20 @@ que si leur critère le dit explicitement.
 - Acceptation : égalité effective des densités ; pas de structure à champs
   `Prop` supposés.
 - Porte terminale : aucune, mais dépendance directe de `T03` et `T05`.
+- Blocage vérifié : `globalHolonomicScalarDensity` contient
+  `+(massSquared / 2) * field²`, tandis que `holonomicScalarDensity`, donc
+  `sameConfigurationGeneralLorentzMatterAction`, contient
+  `-1 / 2 * massSquared * field²`. Avec la même masse, les densités ne peuvent
+  coïncider hors secteur sans masse/champ nul. Il faut d'abord choisir et
+  propager une convention de signe physique commune ; supposer directement
+  l'égalité violerait l'acceptation de la carte.
+- Second prérequis : `MatterMultipletActionData` ne porte qu'une magnitude
+  diagonale, alors que la configuration Noether porte une métrique lorentzienne
+  générale et une frame. Une réalisation diagonale effective reste nécessaire.
 
 ### `P9-BRST-FULL-LINEAR-KERNEL` — Noyau exact du bloc BRST linéaire
 
-- État : `READY`. Portée : `SECTORIEL`, BRST linéaire.
+- État : `DONE` (2026-07-19). Portée : `SECTORIEL`, BRST linéaire.
 - But : prouver `Q state = 0` si et seulement si les deux ghosts abéliens sont
   constants, en laissant explicitement libres potentiels initiaux et ghost
   difféomorphe.
@@ -225,10 +243,16 @@ que si leur critère le dit explicitement.
 - Gate proposé : `P0EFTJanusCommonPairedD9LinearBRSTKernel4D`.
 - Acceptation : ne pas appeler ce noyau « cohomologie BRST complète ».
 - Porte terminale : aucune.
+- Appui : `P0EFTJanusCommonPairedD9LinearBRSTKernel4D` prouve
+  `Q state = 0` si et seulement si chacun des deux ghosts abéliens globaux
+  est constant. Les potentiels initiaux et le ghost difféomorphe sont absents
+  du membre droit, donc explicitement libres.
+- Validation : gate, façade et audit compilés le 2026-07-19 ; noyau du seul
+  bloc linéaire, aucune cohomologie BRST complète et aucune porte terminale.
 
 ### `P9-DIRAC-SIGN-SCOPE` — Portée exacte du Dirac spectral produit
 
-- État : `READY`. Portée : `SECTORIEL`, modèle produit.
+- État : `DONE` (2026-07-19). Portée : `SECTORIEL`, modèle produit.
 - But : prouver que `fold.sign * sqrt(D²)` garde le signe du fold et ne réalise
   pas les crossings du vrai Dirac géométrique signé.
 - Départ : `P0EFTJanusProductThroatUnboundedDirac4D`,
@@ -236,10 +260,17 @@ que si leur critère le dit explicitement.
 - Gate proposé : `P0EFTJanusProductThroatDiracSignScope4D`.
 - Acceptation : corriger la portée documentaire ; ne ferme pas le Dirac Janus.
 - Porte terminale : aucune.
+- Appui : `P0EFTJanusProductThroatDiracSignScope4D` prouve la stricte
+  positivité des valeurs au fold positif, leur stricte négativité au fold PT,
+  l'opposition exacte entre folds et l'absence de crossing de signe entre
+  modes pour tout fold fixé.
+- Validation : gate, façade et audit compilés le 2026-07-19 ; ce résultat
+  borne explicitement la portée du modèle `sign * sqrt(D²)` et ne construit
+  pas le Dirac géométrique Janus. Aucune porte terminale.
 
 ### `P9-FINITE-SPECTRAL-DET` — Déterminant finite-mode dépendant du spectre
 
-- État : `READY`. Portée : `FINITE-MODE`.
+- État : `DONE` (2026-07-19). Portée : `FINITE-MODE`.
 - But : définir un déterminant utilisant réellement
   `sector.spectrum.eigenvalueSq`, avec shift positif explicite, puis prouver
   extensionalité, pondération statistique et produit des listes.
@@ -249,12 +280,19 @@ que si leur critère le dit explicitement.
 - Acceptation : le déterminant change lorsque le spectre change ; aucune limite
   infinie ou ligne de Quillen revendiquée.
 - Porte terminale : aucune.
+- Appui : `P0EFTJanusFiniteModeSpectralStatisticalDeterminant4D` prend le
+  produit réel des `shift + eigenvalueSq mode`, avec shift strictement positif,
+  puis applique multiplicité et statistique. Il prouve extensionalité,
+  non-annulation, addition des multiplicités et produit des listes.
+- Validation : gate, façade et audit compilés le 2026-07-19 ; un spectre à
+  un mode fournit un témoin injectif de dépendance spectrale. Aucune limite,
+  ligne de Quillen ou porte terminale.
 
 ## 5. Cartes dépendantes — ordre critique
 
-### `PE-RADIAL-SMOOTH-O4` — Réduction orthogonale radiale lisse
+### `PE-RADIAL-SMOOTH-O4` — Réduction orthogonale radiale lisse — `DONE`
 
-- État : `DÉPENDANCE`. Portée : `GLOBAL`, vrai atlas tangent D8.
+- État : `DONE` (2026-07-19). Portée : `GLOBAL`, vrai atlas tangent D8.
 - But : empaqueter les frames radiales dans
   `AmbientContMDiffOrthonormalAtlasReduction` et identifier leur transition à
   la phase orthogonale du vrai winding.
@@ -263,10 +301,15 @@ que si leur critère le dit explicitement.
   `AmbientCanonicalReferenceOrthogonalCocycle4D`.
 - Gate proposé : `P0EFTJanusMappingTorusAmbientRadialReferenceSmoothReduction4D`.
 - Acceptation : vraie régularité `ContMDiffOn`, sans contrat supposant la loi.
+- Validation (2026-07-19) : la différentielle locale du vrai plongement donne
+  une famille de frames `C∞`; l'inversion lisse des opérateurs prouve le
+  `ContMDiffOn` joint de la famille inverse. Forme, frames et transitions sont
+  empaquetées dans `ambientRadialReferenceContMDiffOrthonormalAtlasReduction`.
+  Les overlaps restent exactement la phase `O(4)` du vrai winding, sans contrat.
 
-### `PE-PIN-CANONICAL-BUNDLE` — Bundle principal Pin⁻ canonique réel
+### `PE-PIN-CANONICAL-BUNDLE` — Bundle principal Pin⁻ canonique réel — `DONE`
 
-- État : `DÉPENDANCE` de `PE-RADIAL-SMOOTH-O4`. Portée : `GLOBAL`.
+- État : `DONE` (2026-07-19). Portée : `GLOBAL`.
 - But : projeter le lift canonique du winding sur cette réduction, prouver le
   cocycle, sa continuité et sa restriction au throat, puis construire le vrai
   bundle principal `Pin⁻(4)`.
@@ -274,11 +317,17 @@ que si leur critère le dit explicitement.
   `AmbientCanonicalPinMinusEdgeGauge4D`, `AmbientPinMinusPrincipalBundle4D`.
 - Gate proposé : `P0EFTJanusMappingTorusAmbientCanonicalPinMinusActualPrincipalBundle4D`.
 - Acceptation : aucune hypothèse `AmbientReferenceWindingOrthogonalReductionLaw`.
+- Validation (2026-07-19) :
+  `canonicalAmbientPinMinusPrincipalBundleCore` construit directement le vrai
+  `FiberBundleCore` depuis le cocycle canonique continu. Son action droite est
+  équivariante, libre et transitive ; la projection est exactement la réduction
+  radiale lisse et la restriction au throat est le cocycle normal `Pin⁻(1)`.
+  Aucun `AmbientReferenceWindingOrthogonalReductionLaw` n'est requis.
 
 ### `P-STOKES-CUT-01` — Green–Stokes sur le bulk coupé au throat
 
-- État : `DÉPENDANCE` de `P-H1-FRAME-01` pour le complété ; preuve lisse
-  attaquable indépendamment. Portée : `GLOBAL` sur le domaine coupé.
+- État : `BLOQUÉ-PHYSIQUE` (2026-07-19). Portée : `GLOBAL` sur le domaine
+  coupé.
 - But : construire les deux lifts de bord, leurs orientations et la formule
   Green–Stokes ; déterminer si le flux quotient est somme, différence ou nul.
 - Départ : `P0EFTJanusMappingTorusIntrinsicD8ScalarNormalStokes4D`,
@@ -286,10 +335,16 @@ que si leur critère le dit explicitement.
 - Gate proposé : `P0EFTJanusMappingTorusCutOpenScalarStokes4D`.
 - Acceptation : ne jamais traiter le throat one-sided comme un bord ordinaire
   sans preuve.
+- Blocage vérifié : aucun module ne construit actuellement le quotient coupé
+  comme variété à bord avec ses deux inclusions du throat et leurs orientations.
+  `IntrinsicD8ScalarNormalStokesContract` contient la formule d'intégration
+  par parties recherchée comme champ `Prop`; l'instancier supposerait donc la
+  conclusion et violerait la consigne opérationnelle. `P-H1-FRAME-01` fournit
+  bien l'indépendance du complété, mais pas cette géométrie de bord.
 
-### `P5-CANDIDATEA-METRIC-HESSIAN` — Hessien de la même interaction
+### `P5-CANDIDATEA-METRIC-HESSIAN` — Hessien de la même interaction — `DONE`
 
-- État : `DÉPENDANCE`. Portée : `SECTORIEL`, interaction Candidate A diagonale.
+- État : `DONE` (2026-07-19). Portée : `SECTORIEL`, interaction Candidate A diagonale.
 - But : dériver la première variation intégrée dans une seconde direction
   métrique, identifier le résultat au Hessien de cette même interaction et
   prouver sa symétrie sous les hypothèses analytiques visibles.
@@ -299,10 +354,15 @@ que si leur critère le dit explicitement.
 - Gate proposé : `P0EFTJanusMappingTorusCandidateAIntegratedMetricHessian4D`.
 - Acceptation : domaine ouvert de la racine et domination de seconde variation
   explicités ; aucun EH/Maxwell/ghost revendiqué.
+- Validation (2026-07-19) : le second `fderiv` de la même densité globale sur
+  `ScalePair` construit le Hessien à huit composantes. La première variation
+  intégrée se dérive dans une seconde direction sous un contrat explicitant
+  domaine positif, régularité C² et majorant intégrable ; le Hessien est
+  symétrique. Aucun terme EH, Maxwell, ghost ou bord n'est revendiqué.
 
-### `P5-PARTIAL-SAME-ACTION-HESSIAN` — Hessien de l'action sectorielle sommée
+### `P5-PARTIAL-SAME-ACTION-HESSIAN` — Hessien de l'action sectorielle sommée — `DONE`
 
-- État : `DÉPENDANCE` de `P5-CANDIDATEA-METRIC-HESSIAN`.
+- État : `DONE` (2026-07-19).
 - Portée : `SECTORIEL` sur `ProgramPRobinCompleteVariation4D`.
 - But : sommer interaction Candidate A, matière, Robin et LL, puis prouver que
   la dérivée de l'Euler de cette même somme est son Hessien symétrique.
@@ -311,10 +371,15 @@ que si leur critère le dit explicitement.
 - Gate proposé : `P0EFTJanusMappingTorusCandidateAPartialSameActionHessian4D`.
 - Acceptation : le nom et le théorème disent explicitement « sectoriel » ;
   aucune fermeture de `hessianMatchesNaturalFredholmFamily`.
+- Validation (2026-07-19) : le Hessien global Candidate A est sommé aux vrais
+  Hessians matière, Robin et LL sur `ProgramPRobinCompleteVariation4D`.
+  L'Euler de l'action sectorielle déjà prouvée se dérive vers cette somme,
+  qui est symétrique. Aucun EH/Maxwell/ghost ni accord avec la famille de
+  Fredholm naturelle complète n'est revendiqué.
 
-### `P9-CIRCLE-CLUTCHING-QUOTIENT` — Vrai quotient de la ligne cercle
+### `P9-CIRCLE-CLUTCHING-QUOTIENT` — Vrai quotient de la ligne cercle — `DONE`
 
-- État : `DÉPENDANCE`. Portée : `SECTORIEL`, famille cercle.
+- État : `DONE` (2026-07-19). Portée : `SECTORIEL`, famille cercle.
 - But : construire le quotient du total espace sur `[0,1]` par la transition
   d'extrémité et un isomorphisme de fibrés avec la ligne obtenue sur
   `AddCircle 1`.
@@ -322,16 +387,41 @@ que si leur critère le dit explicitement.
   `P0EFTJanusCircleDeterminantTopologicalBundle`.
 - Acceptation : le quotient/clutching est construit, pas déclaré trivial par
   définition ; aucune identification Quillen globale.
+- Validation (2026-07-19) : le vrai quotient topologique de `ℝ × ℂ` par
+  la monodromie exacte est relié à la ligne descendue sur `AddCircle 1` par un
+  homéomorphisme explicite couvrant la projection. La jauge logarithmique
+  neutralise exactement toute puissance entière de monodromie ; les formules
+  fibre par fibre préservent addition et multiplication scalaire complexe.
+  Aucune identification Quillen globale n'est revendiquée.
 
 ### `P9-CIRCLE-HEAT-ETA` — Eta thermique analytique du cercle
 
-- État : `DÉPENDANCE`. Portée : `SECTORIEL`, famille cercle.
+- État : `DONE` (2026-07-19). Portée : `SECTORIEL`, famille cercle.
 - But : définir `η_t(a)=Σₙ λₙ(a) exp(-t λₙ(a)^2)` pour `t>0`, prouver
   sommabilité, covariance PT et relabeling de grande jauge.
 - Départ : gates chaleur nucléaire du cercle,
   `P0EFTJanusCircleBoundedTransformSpectralFlow`.
 - Acceptation : résultat thermique du cercle seulement ; aucun théorème APS,
   eta régularisé global ou inflow géométrique.
+- Porte terminale : aucune.
+- Appui : `P0EFTJanusCircleHeatEtaRegularization4D` définit la série effective
+  `Σₙ λₙ exp(-t λₙ²)`, prouve sa sommabilité absolue à tout temps positif,
+  son oddité PT et l'égalité exacte des holonomies unité/périodique après
+  relabeling Fourier `n ↦ n+1`.
+- Validation : gate, façade et audit compilés le 2026-07-19 ; aucun passage
+  `t → 0`, invariant APS, eta global ou inflow n'est revendiqué.
+
+### `P0-ROOT-REGULAR-MOVING-SIMILARITY` — Cadres mobiles réguliers `0/0`
+
+- État : `DONE` (2026-07-19). Portée : `RÉDUIT`, chemins monomiaux diagonaux.
+- But : transporter les limites de racines par une similarité mobile régulière
+  et vérifier que la trichotomie `0/0` survit dans le repère mobile.
+- Gate : `P0EFTJanusRegularMovingSimilarityZeroOverZero4D`.
+- Acceptation : changement de base et inverse convergents ; aucune conclusion
+  pour un cadre singulier arbitraire ou un changement général de type Jordan.
+- Porte terminale : aucune.
+- Validation : gate déjà importé et audité ; recompilation Lean, façade et
+  audit verts le 2026-07-19.
 
 ## 6. Verrous globaux — ne pas distribuer comme petites cartes
 
