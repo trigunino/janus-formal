@@ -7,6 +7,9 @@
 - `TH-BP01` ferme : base effective D8 mesuree et interaction Candidate A integree.
 - `TH-BP02` ferme : invariance PT de la premiere variation integree.
 - `TH-BP03` ferme (passe 2) : chaine de variation des champs induits et reponse croisee nulle des secteurs non metrique/matiere.
+- `TH-BP04` ferme (passe 3) : equivalence entre stationnarite LL canonique et equation forte PT-symetrique sous contrat d'integration par parties.
+- `TH-BP05` ferme (passe 4) : trace thermique nucleaire du throat produit lisse et completement monotone aux temps positifs.
+- `TH-BP06` ferme (passe 5) : les equations d'Euler scalaires locales impliquent conditionnellement la conservation globale du stress.
 - Reprise P : identifier cette variation a des courants physiques, puis deriver energie, entropie et loi d'etat. `TH-P01` et les entrees microscopiques restent ouverts.
 
 `TH01-TH03` sont fermés comme noyau **conditionnel T/X**. Ils classifient les

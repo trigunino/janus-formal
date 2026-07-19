@@ -215,6 +215,229 @@ theorem productThroatCommonGraphDirac_contDiff_two
       productThroatCommonGraphDiracDerivative_contDiff_one
         data fold reference
 
+/-- Exact third derivative on the fixed common graph domain. -/
+def productThroatCommonGraphDiracThirdDerivativeCLM
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (holonomy : ℝ) :
+    ProductThroatCommonGraphDomain data fold reference →L[Complex]
+      ProductThroatHeatHilbert data :=
+  (productThroatDiracHolonomyThirdDerivativeOperator
+    data fold holonomy).comp
+      (productThroatCommonGraphFstCLM data fold reference)
+
+def productThroatCommonGraphDiracThirdDerivativeReal
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (holonomy : ℝ) : ProductThroatCommonGraphOperatorReal data fold reference :=
+  productThroatCommonGraphDiracThirdDerivativeCLM
+    data fold reference holonomy
+
+theorem productThroatCommonGraphDiracSecondDerivative_taylor_remainder_le
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (first second : ℝ) :
+    ‖productThroatCommonGraphDiracSecondDerivativeReal
+          data fold reference second -
+        productThroatCommonGraphDiracSecondDerivativeReal
+          data fold reference first -
+        (second - first) •
+          productThroatCommonGraphDiracThirdDerivativeReal
+            data fold reference first‖ ≤
+      (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first| ^ 2 := by
+  unfold productThroatCommonGraphDiracSecondDerivativeReal
+    productThroatCommonGraphDiracThirdDerivativeReal
+    ProductThroatCommonGraphOperatorReal
+  change ‖productThroatCommonGraphDiracSecondDerivativeCLM
+      data fold reference second -
+      productThroatCommonGraphDiracSecondDerivativeCLM
+        data fold reference first -
+      (second - first) •
+        productThroatCommonGraphDiracThirdDerivativeCLM
+          data fold reference first‖ ≤ _
+  calc
+    _ = ‖(productThroatDiracHolonomySecondDerivativeOperator data fold second -
+          productThroatDiracHolonomySecondDerivativeOperator data fold first -
+          (second - first) •
+            productThroatDiracHolonomyThirdDerivativeOperator
+              data fold first).comp
+        (productThroatCommonGraphFstCLM data fold reference)‖ := by
+      congr 1
+    _ ≤ ‖productThroatDiracHolonomySecondDerivativeOperator data fold second -
+          productThroatDiracHolonomySecondDerivativeOperator data fold first -
+          (second - first) •
+            productThroatDiracHolonomyThirdDerivativeOperator
+              data fold first‖ *
+        ‖productThroatCommonGraphFstCLM data fold reference‖ :=
+      ContinuousLinearMap.opNorm_comp_le _ _
+    _ ≤ ((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+          |second - first| ^ 2) * 1 :=
+      mul_le_mul
+        (productThroatDiracHolonomySecondDerivativeOperator_taylor_remainder_le
+          data fold first second)
+        (productThroatCommonGraphFstCLM_norm_le data fold reference)
+        (norm_nonneg (productThroatCommonGraphFstCLM data fold reference))
+        (mul_nonneg
+          (mul_nonneg (by norm_num)
+            (inv_nonneg.mpr (pow_nonneg
+              (productThroatDiracGap_positive data).le 3)))
+          (sq_nonneg _))
+    _ = _ := mul_one _
+
+theorem productThroatCommonGraphDiracSecondDerivative_hasDerivAt
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (holonomy : ℝ) :
+    HasDerivAt
+      (productThroatCommonGraphDiracSecondDerivativeReal data fold reference)
+      (productThroatCommonGraphDiracThirdDerivativeReal
+        data fold reference holonomy)
+      holonomy := by
+  apply HasDerivAt.of_isLittleO
+  have hBigO :
+      (fun parameter =>
+        productThroatCommonGraphDiracSecondDerivativeReal
+            data fold reference parameter -
+          productThroatCommonGraphDiracSecondDerivativeReal
+            data fold reference holonomy -
+          (parameter - holonomy) •
+            productThroatCommonGraphDiracThirdDerivativeReal
+              data fold reference holonomy) =O[nhds holonomy]
+        (fun parameter : ℝ => ‖parameter - holonomy‖ ^ 2) := by
+    have hBound : IsBigOWith
+        (15 * (productThroatDiracGap data ^ 3)⁻¹) (nhds holonomy)
+        (fun parameter =>
+          productThroatCommonGraphDiracSecondDerivativeReal
+              data fold reference parameter -
+            productThroatCommonGraphDiracSecondDerivativeReal
+              data fold reference holonomy -
+            (parameter - holonomy) •
+              productThroatCommonGraphDiracThirdDerivativeReal
+                data fold reference holonomy)
+        (fun parameter : ℝ => ‖parameter - holonomy‖ ^ 2) := by
+      apply IsBigOWith.of_bound
+      filter_upwards with parameter
+      simpa only [norm_pow, norm_norm, Real.norm_eq_abs, abs_abs] using
+        (productThroatCommonGraphDiracSecondDerivative_taylor_remainder_le
+          data fold reference holonomy parameter)
+    exact hBound.isBigO
+  exact hBigO.trans_isLittleO
+    (isLittleO_pow_sub_sub holonomy (by norm_num : 1 < 2))
+
+theorem productThroatCommonGraphDiracThirdDerivative_sub_norm_le
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (first second : ℝ) :
+    ‖productThroatCommonGraphDiracThirdDerivativeCLM
+          data fold reference second -
+        productThroatCommonGraphDiracThirdDerivativeCLM
+          data fold reference first‖ ≤
+      (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first| := by
+  calc
+    _ = ‖(productThroatDiracHolonomyThirdDerivativeOperator data fold second -
+          productThroatDiracHolonomyThirdDerivativeOperator data fold first).comp
+        (productThroatCommonGraphFstCLM data fold reference)‖ := by rfl
+    _ ≤ ‖productThroatDiracHolonomyThirdDerivativeOperator data fold second -
+          productThroatDiracHolonomyThirdDerivativeOperator data fold first‖ *
+        ‖productThroatCommonGraphFstCLM data fold reference‖ :=
+      ContinuousLinearMap.opNorm_comp_le _ _
+    _ ≤ ((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+          |second - first|) * 1 :=
+      mul_le_mul
+        (productThroatDiracHolonomyThirdDerivativeOperator_sub_norm_le
+          data fold first second)
+        (productThroatCommonGraphFstCLM_norm_le data fold reference)
+        (norm_nonneg (productThroatCommonGraphFstCLM data fold reference))
+        (mul_nonneg
+          (mul_nonneg (by norm_num)
+            (inv_nonneg.mpr (pow_nonneg
+              (productThroatDiracGap_positive data).le 3)))
+          (abs_nonneg _))
+    _ = _ := mul_one _
+
+theorem productThroatCommonGraphDiracThirdDerivative_lipschitz
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist) :
+    LipschitzWith
+      ⟨15 * (productThroatDiracGap data ^ 3)⁻¹,
+        mul_nonneg (by norm_num)
+          (inv_nonneg.mpr (pow_nonneg
+            (productThroatDiracGap_positive data).le 3))⟩
+      (productThroatCommonGraphDiracThirdDerivativeReal
+        data fold reference) := by
+  apply LipschitzWith.of_dist_le_mul
+  intro first second
+  simp only [dist_eq_norm, Real.norm_eq_abs]
+  unfold productThroatCommonGraphDiracThirdDerivativeReal
+    ProductThroatCommonGraphOperatorReal
+  change ‖productThroatCommonGraphDiracThirdDerivativeCLM
+      data fold reference first -
+      productThroatCommonGraphDiracThirdDerivativeCLM
+        data fold reference second‖ ≤
+    (15 * (productThroatDiracGap data ^ 3)⁻¹) * |first - second|
+  simpa [abs_sub_comm] using
+    (productThroatCommonGraphDiracThirdDerivative_sub_norm_le
+      data fold reference second first)
+
+theorem productThroatCommonGraphDiracSecondDerivative_contDiff_one
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist) :
+    ContDiff ℝ 1
+      (productThroatCommonGraphDiracSecondDerivativeReal
+        data fold reference) := by
+  rw [contDiff_one_iff_deriv]
+  constructor
+  · intro holonomy
+    exact (productThroatCommonGraphDiracSecondDerivative_hasDerivAt
+      data fold reference holonomy).differentiableAt
+  · have hDeriv :
+        deriv (productThroatCommonGraphDiracSecondDerivativeReal
+          data fold reference) =
+          productThroatCommonGraphDiracThirdDerivativeReal
+            data fold reference := by
+      funext holonomy
+      exact (productThroatCommonGraphDiracSecondDerivative_hasDerivAt
+        data fold reference holonomy).deriv
+    exact hDeriv.symm ▸
+      (productThroatCommonGraphDiracThirdDerivative_lipschitz
+        data fold reference).continuous
+
+theorem productThroatCommonGraphDiracDerivative_contDiff_two
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist) :
+    ContDiff ℝ 2
+      (productThroatCommonGraphDiracDerivativeReal data fold reference) := by
+  change ContDiff ℝ (1 + 1)
+    (productThroatCommonGraphDiracDerivativeReal data fold reference)
+  rw [contDiff_succ_iff_deriv]
+  refine ⟨(productThroatCommonGraphDiracDerivative_contDiff_one
+    data fold reference).differentiable (by norm_num), ?_, ?_⟩
+  · intro hImpossible
+    norm_num at hImpossible
+  · have hDeriv :
+        deriv (productThroatCommonGraphDiracDerivativeReal data fold reference) =
+          productThroatCommonGraphDiracSecondDerivativeReal
+            data fold reference := by
+      funext holonomy
+      exact (productThroatCommonGraphDiracDerivative_hasDerivAt
+        data fold reference holonomy).deriv
+    exact hDeriv.symm ▸
+      productThroatCommonGraphDiracSecondDerivative_contDiff_one
+        data fold reference
+
+theorem productThroatCommonGraphDirac_contDiff_three
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist) :
+    ContDiff ℝ 3 (productThroatCommonGraphDiracReal data fold reference) := by
+  change ContDiff ℝ (2 + 1)
+    (productThroatCommonGraphDiracReal data fold reference)
+  rw [contDiff_succ_iff_deriv]
+  refine ⟨(productThroatCommonGraphDirac_contDiff_two
+    data fold reference).differentiable (by norm_num), ?_, ?_⟩
+  · intro hImpossible
+    norm_num at hImpossible
+  · have hDeriv :
+        deriv (productThroatCommonGraphDiracReal data fold reference) =
+          productThroatCommonGraphDiracDerivativeReal
+            data fold reference := by
+      funext holonomy
+      exact (productThroatCommonGraphDirac_hasDerivAt
+        data fold reference holonomy).deriv
+    exact hDeriv.symm ▸
+      productThroatCommonGraphDiracDerivative_contDiff_two
+        data fold reference
+
 end
 
 end P0EFTJanusProductThroatHolonomyGraphSecondDerivative4D

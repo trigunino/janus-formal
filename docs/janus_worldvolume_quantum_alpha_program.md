@@ -170,10 +170,23 @@ operator, vertices and zero-mode prescription; it cannot be recovered from
 Programme P now supplies a reusable classical LL bridge: the global compact-
 throat action and variation, an energy-Hilbert self-adjoint Fredholm operator
 with trivial kernel and index zero, and a square-zero smooth ultralocal BV
-model. `P0EFTJanusProgramPQuantumLLBridge.lean` imports these facts into A.
+model. It also supplies a periodic shifted-Sobolev coefficient model, a
+positive pullback Hessian and a physical quotient with the zero mode removed.
+`P0EFTJanusProgramPQuantumLLBridge.lean` imports these facts into A.
 They do not yet identify the physical Sobolev fluctuation operator, compact
 resolvent, primed determinant, gauge fermion or derivative-dependent BV
 completion; consequently `beta_LL` and `gamma_LL` remain undetermined.
+The bridge now proves an exact reduction theorem: after importing P, LL closure
+is equivalent to the physical Sobolev comparison, determinant/compact-resolvent
+construction, perturbative gauge fermion and computation of the LL RG data.
+Independently of P, `P0EFTJanusLLDeterminantGaugeFixingInterface.lean` now
+constructs the finite regulated primed determinant, proves it nonzero after
+removing all certified zero modes, and reduces continuum closure exactly to
+gauge fixing, physical-Hessian matching, regulator removal and LL RG residues.
+It also proves gauge invariance whenever two admissible gauge choices preserve
+the regulated physical spectrum. The Callan--Symanzik gate propagates any
+certified intervals for `beta_LL` and `gamma_LL` to rigorous upper/lower bounds
+on the full logarithmic coefficient, including a sufficient positivity test.
 
 The manifest audit now reflects this distinction: the repository candidate is
 ready for the non-LL conditional calculation, but not for the total RG

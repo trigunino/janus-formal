@@ -25,6 +25,7 @@ open P0EFTJanusGlobalSeparatedDiracModel
 open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProductThroatHeatOperator4D
 open P0EFTJanusProductThroatUnboundedDirac4D
+open P0EFTJanusProductThroatUnboundedDiracFredholm4D
 open P0EFTJanusProductThroatHolonomyCommonDomain4D
 open scoped ENNReal lp
 
@@ -128,9 +129,271 @@ theorem productThroatDiracEigenvalueAt_contDiff
   simpa [productThroatDiracEigenvalueAt,
     productThroatDiracSquaredEigenvalueAt] using
       (contDiff_const.mul hSqrt : ContDiff ℝ (⊤ : WithTop ℕ∞)
-        (fun holonomy => fold.spectralSign *
+      (fun holonomy => fold.spectralSign *
           Real.sqrt (sphereEigenvalueSquared data mode.1.1 +
             ((mode.2 : ℝ) + holonomy) ^ 2)))
+
+/-- Relative change of the squared eigenvalue around a real holonomy.  This is
+the scalar input for a mode-uniform binomial functional calculus. -/
+def productThroatDiracRelativeSquaredIncrement
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (mode : ProductThroatHeatMode data) : ℝ :=
+  (productThroatDiracSquaredEigenvalueAt data (center + increment) mode -
+      productThroatDiracSquaredEigenvalueAt data center mode) /
+    productThroatDiracSquaredEigenvalueAt data center mode
+
+/-- Exact multiplicative factorization by the relative squared increment. -/
+theorem productThroatDiracSquaredEigenvalueAt_add_factorization
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (mode : ProductThroatHeatMode data) :
+    productThroatDiracSquaredEigenvalueAt data (center + increment) mode =
+      productThroatDiracSquaredEigenvalueAt data center mode *
+        (1 + productThroatDiracRelativeSquaredIncrement
+          data center increment mode) := by
+  have hEnergy : productThroatDiracSquaredEigenvalueAt data center mode ≠ 0 :=
+    ne_of_gt (productThroatDiracSquaredEigenvalueAt_positive data center mode)
+  unfold productThroatDiracRelativeSquaredIncrement
+  field_simp
+  ring
+
+/-- Uniform estimate for the relative squared increment.  Its constants depend
+only on the positive product gap, never on the infinite mode label. -/
+theorem productThroatDiracRelativeSquaredIncrement_abs_le
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (mode : ProductThroatHeatMode data) :
+    |productThroatDiracRelativeSquaredIncrement data center increment mode| ≤
+      2 * |increment| / productThroatDiracGap data +
+        |increment| ^ 2 / productThroatDiracGap data ^ 2 := by
+  let x : ℝ := (mode.2 : ℝ) + center
+  let energy := productThroatDiracSquaredEigenvalueAt data center mode
+  let gap := productThroatDiracGap data
+  have hEnergy : 0 < energy :=
+    productThroatDiracSquaredEigenvalueAt_positive data center mode
+  have hGap : 0 < gap := productThroatDiracGap_positive data
+  have hGapSq : gap ^ 2 ≤ energy := by
+    dsimp [gap, energy, productThroatDiracGap,
+      productThroatDiracSquaredEigenvalueAt]
+    rw [Real.sq_sqrt
+      (sphere_eigenvalue_squared_positive data 0).le]
+    exact le_trans (sphereEigenvalueSquared_zero_le data mode.1.1)
+      (le_add_of_nonneg_right (sq_nonneg _))
+  have hXSq : x ^ 2 ≤ energy := by
+    dsimp [x, energy, productThroatDiracSquaredEigenvalueAt]
+    exact le_add_of_nonneg_left
+      (sphere_eigenvalue_squared_positive data mode.1.1).le
+  have hX : |x| ≤ Real.sqrt energy := by
+    rw [← Real.sqrt_sq_eq_abs]
+    exact Real.sqrt_le_sqrt hXSq
+  have hGapRoot : gap ≤ Real.sqrt energy := by
+    have hRootNonnegative := Real.sqrt_nonneg energy
+    have hRootSq := Real.sq_sqrt hEnergy.le
+    nlinarith
+  have hExpansion :
+      productThroatDiracSquaredEigenvalueAt data (center + increment) mode -
+          productThroatDiracSquaredEigenvalueAt data center mode =
+        2 * x * increment + increment ^ 2 := by
+    dsimp [x, productThroatDiracSquaredEigenvalueAt]
+    ring
+  have hNumerator : |2 * x * increment + increment ^ 2| ≤
+      2 * |x| * |increment| + |increment| ^ 2 := by
+    calc
+      _ ≤ |2 * x * increment| + |increment ^ 2| := abs_add_le _ _
+      _ = _ := by rw [abs_mul, abs_mul, abs_pow]; norm_num
+  have hXGap : |x| * gap ≤ energy := by
+    calc
+      |x| * gap ≤ Real.sqrt energy * Real.sqrt energy :=
+        mul_le_mul hX hGapRoot hGap.le (Real.sqrt_nonneg energy)
+      _ = energy := by rw [← pow_two, Real.sq_sqrt hEnergy.le]
+  have hFirst : 2 * |x| * |increment| / energy ≤
+      2 * |increment| / gap := by
+    rw [div_le_div_iff₀ hEnergy hGap]
+    nlinarith [mul_nonneg (abs_nonneg increment)
+      (sub_nonneg.mpr hXGap)]
+  have hSecond : |increment| ^ 2 / energy ≤
+      |increment| ^ 2 / gap ^ 2 := by
+    exact div_le_div_of_nonneg_left (sq_nonneg |increment|)
+      (sq_pos_of_pos hGap) hGapSq
+  unfold productThroatDiracRelativeSquaredIncrement
+  rw [hExpansion, abs_div, abs_of_pos hEnergy]
+  calc
+    _ ≤ (2 * |x| * |increment| + |increment| ^ 2) / energy :=
+      (div_le_div_iff_of_pos_right hEnergy).2 hNumerator
+    _ = 2 * |x| * |increment| / energy + |increment| ^ 2 / energy :=
+      add_div _ _ _
+    _ ≤ _ := add_le_add hFirst hSecond
+
+/-- On the uniform radius `gap / 4`, every spectral mode lies strictly inside
+the convergence disk of the square-root binomial series. -/
+theorem productThroatDiracRelativeSquaredIncrement_abs_lt_one
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (mode : ProductThroatHeatMode data)
+    (hIncrement : |increment| < productThroatDiracGap data / 4) :
+    |productThroatDiracRelativeSquaredIncrement data center increment mode| < 1 := by
+  have hGap := productThroatDiracGap_positive data
+  have hFirst : 2 * |increment| / productThroatDiracGap data < (1 : ℝ) / 2 := by
+    rw [div_lt_iff₀ hGap]
+    nlinarith
+  have hIncrementNonnegative : 0 ≤ |increment| := abs_nonneg _
+  have hQuarterNonnegative : 0 ≤ productThroatDiracGap data / 4 := by positivity
+  have hSq : |increment| ^ 2 < (productThroatDiracGap data / 4) ^ 2 :=
+    (sq_lt_sq₀ hIncrementNonnegative hQuarterNonnegative).2 hIncrement
+  have hSecond : |increment| ^ 2 / productThroatDiracGap data ^ 2 <
+      (1 : ℝ) / 16 := by
+    rw [div_lt_iff₀ (sq_pos_of_pos hGap)]
+    nlinarith
+  have hBound := productThroatDiracRelativeSquaredIncrement_abs_le
+    data center increment mode
+  nlinarith
+
+/-- Consequently the binomial base `1 + relativeIncrement` stays positive on
+the same uniform ball. -/
+theorem productThroatDiracRelativeSquaredIncrement_one_add_positive
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (mode : ProductThroatHeatMode data)
+    (hIncrement : |increment| < productThroatDiracGap data / 4) :
+    0 < 1 + productThroatDiracRelativeSquaredIncrement
+      data center increment mode := by
+  have hAbs := productThroatDiracRelativeSquaredIncrement_abs_lt_one
+    data center increment mode hIncrement
+  linarith [neg_lt_of_abs_lt hAbs]
+
+/-- Mode-independent majorant of the relative squared increment. -/
+def productThroatDiracRelativeSquaredIncrementBound
+    (data : ProductThroatSpectralData) (increment : ℝ) : ℝ :=
+  2 * |increment| / productThroatDiracGap data +
+    |increment| ^ 2 / productThroatDiracGap data ^ 2
+
+theorem productThroatDiracRelativeSquaredIncrementBound_nonnegative
+    (data : ProductThroatSpectralData) (increment : ℝ) :
+    0 ≤ productThroatDiracRelativeSquaredIncrementBound data increment := by
+  unfold productThroatDiracRelativeSquaredIncrementBound
+  have hGap := (productThroatDiracGap_positive data).le
+  exact add_nonneg
+    (div_nonneg (mul_nonneg (by norm_num) (abs_nonneg increment)) hGap)
+    (div_nonneg (sq_nonneg |increment|) (sq_nonneg _))
+
+theorem productThroatDiracRelativeSquaredIncrementBound_lt_one
+    (data : ProductThroatSpectralData) (increment : ℝ)
+    (hIncrement : |increment| < productThroatDiracGap data / 4) :
+    productThroatDiracRelativeSquaredIncrementBound data increment < 1 := by
+  have hGap := productThroatDiracGap_positive data
+  have hFirst : 2 * |increment| / productThroatDiracGap data < (1 : ℝ) / 2 := by
+    rw [div_lt_iff₀ hGap]
+    nlinarith
+  have hIncrementNonnegative : 0 ≤ |increment| := abs_nonneg _
+  have hQuarterNonnegative : 0 ≤ productThroatDiracGap data / 4 := by positivity
+  have hSq : |increment| ^ 2 < (productThroatDiracGap data / 4) ^ 2 :=
+    (sq_lt_sq₀ hIncrementNonnegative hQuarterNonnegative).2 hIncrement
+  have hSecond : |increment| ^ 2 / productThroatDiracGap data ^ 2 <
+      (1 : ℝ) / 16 := by
+    rw [div_lt_iff₀ (sq_pos_of_pos hGap)]
+    nlinarith
+  unfold productThroatDiracRelativeSquaredIncrementBound
+  nlinarith
+
+/-- The relative squared increment as a diagonal multiplier on the full
+product Hilbert space. -/
+def productThroatDiracRelativeSquaredIncrementImage
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (state : ProductThroatHeatHilbert data) : ProductThroatHeatHilbert data := by
+  let bound := productThroatDiracRelativeSquaredIncrementBound data increment
+  let image : ProductThroatHeatMode data → Complex := fun mode =>
+    (productThroatDiracRelativeSquaredIncrement data center increment mode : Complex) *
+      state mode
+  have hBound : 0 ≤ bound :=
+    productThroatDiracRelativeSquaredIncrementBound_nonnegative data increment
+  have hMajorant : Memℓp
+      (fun mode => (bound : Complex) * state mode) 2 :=
+    (lp.memℓp state).const_mul (bound : Complex)
+  have hImage : Memℓp image 2 := hMajorant.mono' (fun mode => by
+    rw [show image mode =
+        (productThroatDiracRelativeSquaredIncrement data center increment mode : Complex) *
+          state mode by rfl,
+      norm_mul, norm_mul, Complex.norm_real, Complex.norm_real,
+      Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hBound]
+    exact mul_le_mul_of_nonneg_right
+      (productThroatDiracRelativeSquaredIncrement_abs_le
+        data center increment mode) (norm_nonneg _))
+  exact ⟨image, hImage⟩
+
+@[simp]
+theorem productThroatDiracRelativeSquaredIncrementImage_apply
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (state : ProductThroatHeatHilbert data) (mode : ProductThroatHeatMode data) :
+    productThroatDiracRelativeSquaredIncrementImage data center increment state mode =
+      (productThroatDiracRelativeSquaredIncrement data center increment mode : Complex) *
+        state mode :=
+  rfl
+
+theorem productThroatDiracRelativeSquaredIncrementImage_norm_le
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (state : ProductThroatHeatHilbert data) :
+    ‖productThroatDiracRelativeSquaredIncrementImage
+        data center increment state‖ ≤
+      productThroatDiracRelativeSquaredIncrementBound data increment * ‖state‖ := by
+  have hBound :=
+    productThroatDiracRelativeSquaredIncrementBound_nonnegative data increment
+  calc
+    _ ≤ ‖((productThroatDiracRelativeSquaredIncrementBound data increment : ℝ) :
+          Complex) • state‖ := lp.norm_mono (by norm_num) (fun mode => by
+      change ‖(productThroatDiracRelativeSquaredIncrement
+          data center increment mode : Complex) * state mode‖ ≤
+        ‖((productThroatDiracRelativeSquaredIncrementBound data increment : ℝ) :
+          Complex) * state mode‖
+      rw [norm_mul, norm_mul, Complex.norm_real, Complex.norm_real,
+        Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hBound]
+      exact mul_le_mul_of_nonneg_right
+        (productThroatDiracRelativeSquaredIncrement_abs_le
+          data center increment mode) (norm_nonneg _))
+    _ = _ := by
+      rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hBound]
+
+/-- Bounded diagonal operator of relative squared increments. -/
+def productThroatDiracRelativeSquaredIncrementOperator
+    (data : ProductThroatSpectralData) (center increment : ℝ) :
+    ProductThroatHeatHilbert data →L[Complex] ProductThroatHeatHilbert data :=
+  LinearMap.mkContinuous
+    { toFun := productThroatDiracRelativeSquaredIncrementImage data center increment
+      map_add' := by
+        intro first second
+        ext mode
+        simp [productThroatDiracRelativeSquaredIncrementImage_apply]
+        ring
+      map_smul' := by
+        intro scalar state
+        ext mode
+        simp [productThroatDiracRelativeSquaredIncrementImage_apply]
+        ring }
+    (productThroatDiracRelativeSquaredIncrementBound data increment)
+    (productThroatDiracRelativeSquaredIncrementImage_norm_le
+      data center increment)
+
+@[simp]
+theorem productThroatDiracRelativeSquaredIncrementOperator_apply
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (state : ProductThroatHeatHilbert data) (mode : ProductThroatHeatMode data) :
+    productThroatDiracRelativeSquaredIncrementOperator data center increment
+        state mode =
+      (productThroatDiracRelativeSquaredIncrement data center increment mode : Complex) *
+        state mode :=
+  rfl
+
+theorem productThroatDiracRelativeSquaredIncrementOperator_norm_le
+    (data : ProductThroatSpectralData) (center increment : ℝ) :
+    ‖productThroatDiracRelativeSquaredIncrementOperator data center increment‖ ≤
+      productThroatDiracRelativeSquaredIncrementBound data increment := by
+  apply LinearMap.mkContinuous_norm_le
+  exact productThroatDiracRelativeSquaredIncrementBound_nonnegative data increment
+
+theorem productThroatDiracRelativeSquaredIncrementOperator_norm_lt_one
+    (data : ProductThroatSpectralData) (center increment : ℝ)
+    (hIncrement : |increment| < productThroatDiracGap data / 4) :
+    ‖productThroatDiracRelativeSquaredIncrementOperator data center increment‖ < 1 :=
+  lt_of_le_of_lt
+    (productThroatDiracRelativeSquaredIncrementOperator_norm_le
+      data center increment)
+    (productThroatDiracRelativeSquaredIncrementBound_lt_one
+      data increment hIncrement)
 
 theorem productThroatDiracHolonomyDerivativeCoefficient_abs_le_one
     (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)

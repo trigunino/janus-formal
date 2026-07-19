@@ -12,6 +12,7 @@ Read these files in order:
 2. [`docs/current_status.md`](docs/current_status.md) — current integration, CI and scientific status;
 3. [`docs/program_m_meta_theory_selection.md`](docs/program_m_meta_theory_selection.md) — Program M theory-selection protocol;
 4. [`docs/program_m_plain_language.md`](docs/program_m_plain_language.md) — Program M for non-specialists;
+   Current checkpoint: [`docs/program_m_archive.md`](docs/program_m_archive.md).
 5. [`formal/axioms/program_m_foundations.md`](formal/axioms/program_m_foundations.md) — minimal relational pilot and anti-smuggling rules;
 6. [`docs/program_master_roadmap.md`](docs/program_master_roadmap.md) — detailed dependency graph;
 7. [`docs/program_p_variational_principle.md`](docs/program_p_variational_principle.md) — Program P in detail;

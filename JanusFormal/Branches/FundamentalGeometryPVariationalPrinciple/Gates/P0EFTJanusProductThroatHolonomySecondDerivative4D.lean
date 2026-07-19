@@ -550,6 +550,531 @@ theorem productThroatDiracHolonomySecondDerivativeOperator_lipschitz
     (productThroatDiracHolonomySecondDerivativeOperator_sub_norm_le
       data fold second first)
 
+/-- Exact fourth holonomy derivative coefficient. -/
+def productThroatDiracHolonomyFourthDerivativeCoefficient
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (mode : ProductThroatHeatMode data) : ℝ :=
+  -3 * fold.spectralSign * sphereEigenvalueSquared data mode.1.1 *
+      (sphereEigenvalueSquared data mode.1.1 -
+        4 * ((mode.2 : ℝ) + holonomy) ^ 2) /
+    (productThroatDiracSquaredEigenvalueAt data holonomy mode ^ 3 *
+      Real.sqrt (productThroatDiracSquaredEigenvalueAt data holonomy mode))
+
+theorem productThroatDiracHolonomyThirdDerivativeCoefficient_hasDerivAt
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (mode : ProductThroatHeatMode data) :
+    HasDerivAt
+      (fun parameter => productThroatDiracHolonomyThirdDerivativeCoefficient
+        data fold parameter mode)
+      (productThroatDiracHolonomyFourthDerivativeCoefficient
+        data fold holonomy mode) holonomy := by
+  let shifted : ℝ → ℝ := fun parameter => (mode.2 : ℝ) + parameter
+  let energy : ℝ → ℝ := fun parameter =>
+    sphereEigenvalueSquared data mode.1.1 + shifted parameter ^ 2
+  let denominator : ℝ → ℝ := fun parameter =>
+    energy parameter ^ 2 * Real.sqrt (energy parameter)
+  let constant : ℝ :=
+    -3 * fold.spectralSign * sphereEigenvalueSquared data mode.1.1
+  have hShifted : HasDerivAt shifted 1 holonomy := by
+    dsimp only [shifted]
+    simpa [add_comm] using (hasDerivAt_id holonomy).const_add (mode.2 : ℝ)
+  have hEnergy : HasDerivAt energy (2 * shifted holonomy) holonomy := by
+    let raw : ℝ → ℝ :=
+      (fun _ => sphereEigenvalueSquared data mode.1.1) + shifted ^ 2
+    have hRawBase := (hasDerivAt_const holonomy
+      (sphereEigenvalueSquared data mode.1.1)).add (hShifted.pow 2)
+    have hRaw : HasDerivAt raw (2 * shifted holonomy) holonomy := by
+      apply hRawBase.congr_deriv
+      norm_num
+    apply hRaw.congr_of_eventuallyEq
+    filter_upwards with parameter
+    rfl
+  have hEnergyPositive : 0 < energy holonomy := by
+    exact add_pos_of_pos_of_nonneg
+      (sphere_eigenvalue_squared_positive data mode.1.1) (sq_nonneg _)
+  have hSqrt : HasDerivAt (fun parameter => Real.sqrt (energy parameter))
+      (shifted holonomy / Real.sqrt (energy holonomy)) holonomy := by
+    have hRaw := hEnergy.sqrt (ne_of_gt hEnergyPositive)
+    convert hRaw using 1
+    field_simp [ne_of_gt (Real.sqrt_pos.2 hEnergyPositive)]
+  have hDenominator : HasDerivAt denominator
+      (4 * energy holonomy * shifted holonomy * Real.sqrt (energy holonomy) +
+        energy holonomy ^ 2 *
+          (shifted holonomy / Real.sqrt (energy holonomy))) holonomy := by
+    have hEnergySquared := hEnergy.mul hEnergy
+    have hRaw := hEnergySquared.mul hSqrt
+    have hRaw' : HasDerivAt denominator
+        (((2 * shifted holonomy) * energy holonomy +
+            energy holonomy * (2 * shifted holonomy)) *
+              Real.sqrt (energy holonomy) +
+          (energy holonomy * energy holonomy) *
+            (shifted holonomy / Real.sqrt (energy holonomy))) holonomy := by
+      apply hRaw.congr_of_eventuallyEq
+      filter_upwards with parameter
+      dsimp only [denominator, Pi.mul_apply]
+      ring
+    apply hRaw'.congr_deriv
+    ring
+  have hNumerator : HasDerivAt (fun parameter => constant * shifted parameter)
+      constant holonomy := by
+    simpa using hShifted.const_mul constant
+  have hQuotient := hNumerator.div hDenominator
+    (mul_ne_zero (pow_ne_zero 2 (ne_of_gt hEnergyPositive))
+      (ne_of_gt (Real.sqrt_pos.2 hEnergyPositive)))
+  have hDerivative :
+      (constant * denominator holonomy - constant * shifted holonomy *
+          (4 * energy holonomy * shifted holonomy *
+              Real.sqrt (energy holonomy) +
+            energy holonomy ^ 2 *
+              (shifted holonomy / Real.sqrt (energy holonomy)))) /
+        denominator holonomy ^ 2 =
+      productThroatDiracHolonomyFourthDerivativeCoefficient
+        data fold holonomy mode := by
+    have hSqrtSq : Real.sqrt (energy holonomy) ^ 2 = energy holonomy :=
+      Real.sq_sqrt hEnergyPositive.le
+    unfold productThroatDiracHolonomyFourthDerivativeCoefficient
+    change
+      (constant * denominator holonomy - constant * shifted holonomy *
+          (4 * energy holonomy * shifted holonomy *
+              Real.sqrt (energy holonomy) +
+            energy holonomy ^ 2 *
+              (shifted holonomy / Real.sqrt (energy holonomy)))) /
+        denominator holonomy ^ 2 =
+      constant *
+          (sphereEigenvalueSquared data mode.1.1 -
+            4 * shifted holonomy ^ 2) /
+        (energy holonomy ^ 3 * Real.sqrt (energy holonomy))
+    dsimp only [denominator]
+    field_simp [ne_of_gt hEnergyPositive,
+      ne_of_gt (Real.sqrt_pos.2 hEnergyPositive)]
+    rw [hSqrtSq]
+    have hEnergyEq : energy holonomy =
+        sphereEigenvalueSquared data mode.1.1 + shifted holonomy ^ 2 := rfl
+    rw [hEnergyEq]
+    ring
+  have hExact := hQuotient.congr_deriv hDerivative
+  apply hExact.congr_of_eventuallyEq
+  filter_upwards with parameter
+  unfold productThroatDiracHolonomyThirdDerivativeCoefficient
+  change constant * shifted parameter / denominator parameter =
+    constant * shifted parameter / denominator parameter
+  rfl
+
+theorem productThroatDiracHolonomyFourthDerivativeCoefficient_abs_le
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (mode : ProductThroatHeatMode data) :
+    |productThroatDiracHolonomyFourthDerivativeCoefficient
+        data fold holonomy mode| ≤
+      15 * (productThroatDiracGap data ^ 3)⁻¹ := by
+  let sphere := sphereEigenvalueSquared data mode.1.1
+  let shifted : ℝ := (mode.2 : ℝ) + holonomy
+  let energy := productThroatDiracSquaredEigenvalueAt data holonomy mode
+  have hSphere : 0 < sphere :=
+    sphere_eigenvalue_squared_positive data mode.1.1
+  have hEnergy : 0 < energy :=
+    productThroatDiracSquaredEigenvalueAt_positive data holonomy mode
+  have hEnergyEq : energy = sphere + shifted ^ 2 := rfl
+  have hSphereEnergy : sphere ≤ energy := by
+    rw [hEnergyEq]
+    exact le_add_of_nonneg_right (sq_nonneg _)
+  have hShiftedEnergy : shifted ^ 2 ≤ energy := by
+    rw [hEnergyEq]
+    exact le_add_of_nonneg_left hSphere.le
+  have hFactor : |sphere - 4 * shifted ^ 2| ≤ 5 * energy := by
+    calc
+      |sphere - 4 * shifted ^ 2| ≤ |sphere| + |4 * shifted ^ 2| :=
+        abs_sub _ _
+      _ = sphere + 4 * shifted ^ 2 := by
+        rw [abs_of_pos hSphere, abs_of_nonneg
+          (mul_nonneg (by norm_num) (sq_nonneg _))]
+      _ ≤ 5 * energy := by nlinarith
+  have hNumerator : 3 * sphere * |sphere - 4 * shifted ^ 2| ≤
+      15 * energy ^ 2 := by
+    calc
+      3 * sphere * |sphere - 4 * shifted ^ 2| ≤
+          (3 * energy) * (5 * energy) :=
+        mul_le_mul
+          (mul_le_mul_of_nonneg_left hSphereEnergy (by norm_num)) hFactor
+          (abs_nonneg _) (mul_nonneg (by norm_num) hEnergy.le)
+      _ = 15 * energy ^ 2 := by ring
+  have hGapSqrt : productThroatDiracGap data ≤ Real.sqrt energy := by
+    apply Real.sqrt_le_sqrt
+    exact le_trans (sphereEigenvalueSquared_zero_le data mode.1.1)
+      hSphereEnergy
+  rw [productThroatDiracHolonomyFourthDerivativeCoefficient,
+    abs_div, abs_mul, abs_mul, abs_mul]
+  have hSign : |fold.spectralSign| = 1 := by cases fold <;> norm_num
+  rw [abs_neg, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 3), hSign,
+    mul_one, abs_of_pos hSphere, abs_mul,
+    abs_of_pos (pow_pos hEnergy 3),
+    abs_of_pos (Real.sqrt_pos.2 hEnergy)]
+  change 3 * sphere * |sphere - 4 * shifted ^ 2| /
+      (energy ^ 3 * Real.sqrt energy) ≤ _
+  calc
+    3 * sphere * |sphere - 4 * shifted ^ 2| /
+          (energy ^ 3 * Real.sqrt energy) ≤
+        (15 * energy ^ 2) / (energy ^ 3 * Real.sqrt energy) :=
+      div_le_div_of_nonneg_right hNumerator
+        (mul_nonneg (pow_nonneg hEnergy.le 3) (Real.sqrt_nonneg _))
+    _ = 15 * (Real.sqrt energy)⁻¹ ^ 3 := by
+      have hSqrtSq : Real.sqrt energy ^ 2 = energy :=
+        Real.sq_sqrt hEnergy.le
+      field_simp [ne_of_gt hEnergy, ne_of_gt (Real.sqrt_pos.2 hEnergy)]
+      rw [hSqrtSq]
+    _ ≤ 15 * (productThroatDiracGap data)⁻¹ ^ 3 := by
+      apply mul_le_mul_of_nonneg_left _ (by norm_num)
+      exact pow_le_pow_left₀ (inv_nonneg.mpr (Real.sqrt_nonneg energy))
+        (inv_anti₀ (productThroatDiracGap_positive data) hGapSqrt) 3
+    _ = 15 * (productThroatDiracGap data ^ 3)⁻¹ := by
+      rw [inv_pow]
+
+theorem productThroatDiracHolonomyThirdDerivativeCoefficient_lipschitz
+    (data : ProductThroatSpectralData) (fold : Fold)
+    (first second : ℝ) (mode : ProductThroatHeatMode data) :
+    |productThroatDiracHolonomyThirdDerivativeCoefficient
+        data fold second mode -
+      productThroatDiracHolonomyThirdDerivativeCoefficient
+        data fold first mode| ≤
+      (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first| := by
+  have hMVT := convex_univ.norm_image_sub_le_of_norm_hasDerivWithin_le
+    (s := (Set.univ : Set ℝ))
+    (f := fun parameter => productThroatDiracHolonomyThirdDerivativeCoefficient
+      data fold parameter mode)
+    (f' := fun parameter => productThroatDiracHolonomyFourthDerivativeCoefficient
+      data fold parameter mode)
+    (C := 15 * (productThroatDiracGap data ^ 3)⁻¹)
+    (fun parameter _ =>
+      (productThroatDiracHolonomyThirdDerivativeCoefficient_hasDerivAt
+        data fold parameter mode).hasDerivWithinAt)
+    (fun parameter _ => by
+      rw [Real.norm_eq_abs]
+      exact productThroatDiracHolonomyFourthDerivativeCoefficient_abs_le
+        data fold parameter mode)
+    (Set.mem_univ first) (Set.mem_univ second)
+  simpa [Real.norm_eq_abs] using hMVT
+
+/-- Bounded diagonal third-derivative multiplier. -/
+def productThroatDiracHolonomyThirdDerivativeImage
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (state : ProductThroatHeatHilbert data) : ProductThroatHeatHilbert data := by
+  let thirdDerivative : ProductThroatHeatMode data → Complex := fun mode =>
+    (productThroatDiracHolonomyThirdDerivativeCoefficient
+      data fold holonomy mode : Complex) * state mode
+  have hScaled : Memℓp (fun mode =>
+      (((3 * (productThroatDiracGap data ^ 2)⁻¹ : ℝ)) : Complex) *
+        state mode) 2 :=
+    (lp.memℓp state).const_mul
+      (((3 * (productThroatDiracGap data ^ 2)⁻¹ : ℝ)) : Complex)
+  have hThird : Memℓp thirdDerivative 2 := hScaled.mono' (fun mode => by
+    change ‖(productThroatDiracHolonomyThirdDerivativeCoefficient
+        data fold holonomy mode : Complex) * state mode‖ ≤
+      ‖(((3 * (productThroatDiracGap data ^ 2)⁻¹ : ℝ)) : Complex) *
+        state mode‖
+    rw [norm_mul, norm_mul, Complex.norm_real, Complex.norm_real,
+      Real.norm_eq_abs, Real.norm_eq_abs,
+      abs_of_nonneg (mul_nonneg (by norm_num)
+        (inv_nonneg.mpr (sq_nonneg (productThroatDiracGap data))))]
+    exact mul_le_mul_of_nonneg_right
+      (productThroatDiracHolonomyThirdDerivativeCoefficient_abs_le
+        data fold holonomy mode) (norm_nonneg _))
+  exact ⟨thirdDerivative, hThird⟩
+
+@[simp] theorem productThroatDiracHolonomyThirdDerivativeImage_apply
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (state : ProductThroatHeatHilbert data)
+    (mode : ProductThroatHeatMode data) :
+    productThroatDiracHolonomyThirdDerivativeImage
+        data fold holonomy state mode =
+      (productThroatDiracHolonomyThirdDerivativeCoefficient
+        data fold holonomy mode : Complex) * state mode := rfl
+
+theorem productThroatDiracHolonomyThirdDerivativeImage_norm_le
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (state : ProductThroatHeatHilbert data) :
+    ‖productThroatDiracHolonomyThirdDerivativeImage
+      data fold holonomy state‖ ≤
+      (3 * (productThroatDiracGap data ^ 2)⁻¹) * ‖state‖ := by
+  calc
+    _ ≤ ‖(((3 * (productThroatDiracGap data ^ 2)⁻¹ : ℝ)) : Complex) •
+          state‖ :=
+      lp.norm_mono (by norm_num) (fun mode => by
+        change ‖(productThroatDiracHolonomyThirdDerivativeCoefficient
+            data fold holonomy mode : Complex) * state mode‖ ≤
+          ‖(((3 * (productThroatDiracGap data ^ 2)⁻¹ : ℝ)) : Complex) *
+            state mode‖
+        rw [norm_mul, norm_mul, Complex.norm_real, Complex.norm_real,
+          Real.norm_eq_abs, Real.norm_eq_abs,
+          abs_of_nonneg (mul_nonneg (by norm_num)
+            (inv_nonneg.mpr (sq_nonneg (productThroatDiracGap data))))]
+        exact mul_le_mul_of_nonneg_right
+          (productThroatDiracHolonomyThirdDerivativeCoefficient_abs_le
+            data fold holonomy mode) (norm_nonneg _))
+    _ = (3 * (productThroatDiracGap data ^ 2)⁻¹) * ‖state‖ := by
+      rw [norm_smul, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_nonneg (mul_nonneg (by norm_num)
+          (inv_nonneg.mpr (sq_nonneg (productThroatDiracGap data))))]
+
+def productThroatDiracHolonomyThirdDerivativeOperator
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ) :
+    ProductThroatHeatHilbert data →L[Complex] ProductThroatHeatHilbert data :=
+  LinearMap.mkContinuous
+    { toFun := productThroatDiracHolonomyThirdDerivativeImage data fold holonomy
+      map_add' := by
+        intro first second
+        ext mode
+        simp [productThroatDiracHolonomyThirdDerivativeImage_apply]
+        ring
+      map_smul' := by
+        intro scalar state
+        ext mode
+        simp [productThroatDiracHolonomyThirdDerivativeImage_apply]
+        ring }
+    (3 * (productThroatDiracGap data ^ 2)⁻¹)
+    (fun state => productThroatDiracHolonomyThirdDerivativeImage_norm_le
+      data fold holonomy state)
+
+@[simp] theorem productThroatDiracHolonomyThirdDerivativeOperator_apply
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ)
+    (state : ProductThroatHeatHilbert data) :
+    productThroatDiracHolonomyThirdDerivativeOperator data fold holonomy state =
+      productThroatDiracHolonomyThirdDerivativeImage data fold holonomy state := rfl
+
+theorem productThroatDiracHolonomySecondDerivativeCoefficient_taylor_remainder_le
+    (data : ProductThroatSpectralData) (fold : Fold)
+    (first second : ℝ) (mode : ProductThroatHeatMode data) :
+    |productThroatDiracHolonomySecondDerivativeCoefficient data fold second mode -
+        productThroatDiracHolonomySecondDerivativeCoefficient data fold first mode -
+        productThroatDiracHolonomyThirdDerivativeCoefficient data fold first mode *
+          (second - first)| ≤
+      (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first| ^ 2 := by
+  let adjusted : ℝ → ℝ := fun parameter =>
+    productThroatDiracHolonomySecondDerivativeCoefficient data fold parameter mode -
+      productThroatDiracHolonomyThirdDerivativeCoefficient data fold first mode *
+        parameter
+  have hDerivative : ∀ parameter : ℝ,
+      HasDerivAt adjusted
+        (productThroatDiracHolonomyThirdDerivativeCoefficient
+            data fold parameter mode -
+          productThroatDiracHolonomyThirdDerivativeCoefficient
+            data fold first mode) parameter := by
+    intro parameter
+    have hRaw :=
+      (productThroatDiracHolonomySecondDerivativeCoefficient_hasDerivAt
+        data fold parameter mode).sub
+      ((hasDerivAt_id parameter).const_mul
+        (productThroatDiracHolonomyThirdDerivativeCoefficient
+          data fold first mode))
+    have hRaw' : HasDerivAt
+        ((fun x => productThroatDiracHolonomySecondDerivativeCoefficient
+            data fold x mode) -
+          fun x => productThroatDiracHolonomyThirdDerivativeCoefficient
+            data fold first mode * x)
+        (productThroatDiracHolonomyThirdDerivativeCoefficient
+            data fold parameter mode -
+          productThroatDiracHolonomyThirdDerivativeCoefficient
+            data fold first mode) parameter := by simpa using hRaw
+    apply hRaw'.congr_of_eventuallyEq
+    filter_upwards with x
+    rfl
+  have hMVT := (convex_uIcc first second).norm_image_sub_le_of_norm_hasDerivWithin_le
+    (f := adjusted)
+    (f' := fun parameter =>
+      productThroatDiracHolonomyThirdDerivativeCoefficient
+          data fold parameter mode -
+        productThroatDiracHolonomyThirdDerivativeCoefficient
+          data fold first mode)
+    (C := (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first|)
+    (fun parameter _ => (hDerivative parameter).hasDerivWithinAt)
+    (fun parameter hParameter => by
+      rw [Real.norm_eq_abs]
+      exact le_trans
+        (productThroatDiracHolonomyThirdDerivativeCoefficient_lipschitz
+          data fold first parameter mode)
+        (mul_le_mul_of_nonneg_left (abs_sub_left_of_mem_uIcc hParameter)
+          (mul_nonneg (by norm_num)
+            (inv_nonneg.mpr (pow_nonneg
+              (productThroatDiracGap_positive data).le 3)))))
+    left_mem_uIcc right_mem_uIcc
+  calc
+    _ = ‖adjusted second - adjusted first‖ := by
+      rw [Real.norm_eq_abs]
+      congr 1
+      simp only [adjusted]
+      ring
+    _ ≤ (15 * (productThroatDiracGap data ^ 3)⁻¹) *
+          |second - first| * ‖second - first‖ := hMVT
+    _ = (15 * (productThroatDiracGap data ^ 3)⁻¹) *
+          |second - first| ^ 2 := by
+      rw [Real.norm_eq_abs]
+      ring
+
+theorem productThroatDiracHolonomySecondDerivativeOperator_taylor_remainder_le
+    (data : ProductThroatSpectralData) (fold : Fold)
+    (first second : ℝ) :
+    ‖productThroatDiracHolonomySecondDerivativeOperator data fold second -
+        productThroatDiracHolonomySecondDerivativeOperator data fold first -
+        (second - first) •
+          productThroatDiracHolonomyThirdDerivativeOperator data fold first‖ ≤
+      (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first| ^ 2 := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · exact mul_nonneg
+      (mul_nonneg (by norm_num)
+        (inv_nonneg.mpr (pow_nonneg
+          (productThroatDiracGap_positive data).le 3)))
+      (sq_nonneg _)
+  · intro state
+    calc
+      ‖(productThroatDiracHolonomySecondDerivativeOperator data fold second -
+          productThroatDiracHolonomySecondDerivativeOperator data fold first -
+          (second - first) •
+            productThroatDiracHolonomyThirdDerivativeOperator
+              data fold first) state‖ ≤
+          ‖(((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+              |second - first| ^ 2 : ℝ) : Complex) • state‖ :=
+        lp.norm_mono (by norm_num) (fun mode => by
+          simp only [sub_apply, smul_apply,
+            productThroatDiracHolonomySecondDerivativeOperator_apply,
+            productThroatDiracHolonomyThirdDerivativeOperator_apply]
+          rw [show
+            (productThroatDiracHolonomySecondDerivativeImage data fold second state -
+                productThroatDiracHolonomySecondDerivativeImage data fold first state -
+                (second - first) •
+                  productThroatDiracHolonomyThirdDerivativeImage
+                    data fold first state) mode =
+              ((productThroatDiracHolonomySecondDerivativeCoefficient
+                  data fold second mode -
+                productThroatDiracHolonomySecondDerivativeCoefficient
+                  data fold first mode -
+                productThroatDiracHolonomyThirdDerivativeCoefficient
+                  data fold first mode * (second - first) : ℝ) : Complex) *
+                state mode by
+              simp [productThroatDiracHolonomySecondDerivativeImage_apply,
+                productThroatDiracHolonomyThirdDerivativeImage_apply]
+              ring]
+          rw [show ((((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+                |second - first| ^ 2 : ℝ) : Complex) • state) mode =
+              (((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+                |second - first| ^ 2 : ℝ) : Complex) * state mode by rfl,
+            norm_mul, norm_mul, Complex.norm_real, Complex.norm_real,
+            Real.norm_eq_abs, Real.norm_eq_abs,
+            abs_of_nonneg (mul_nonneg
+              (mul_nonneg (by norm_num)
+                (inv_nonneg.mpr (pow_nonneg
+                  (productThroatDiracGap_positive data).le 3)))
+              (sq_nonneg _))]
+          exact mul_le_mul_of_nonneg_right
+            (productThroatDiracHolonomySecondDerivativeCoefficient_taylor_remainder_le
+              data fold first second mode) (norm_nonneg _))
+      _ = ((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+          |second - first| ^ 2) * ‖state‖ := by
+        rw [norm_smul, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_nonneg (mul_nonneg
+            (mul_nonneg (by norm_num)
+              (inv_nonneg.mpr (pow_nonneg
+                (productThroatDiracGap_positive data).le 3)))
+            (sq_nonneg _))]
+
+theorem productThroatDiracHolonomySecondDerivativeOperator_hasDerivAt
+    (data : ProductThroatSpectralData) (fold : Fold) (holonomy : ℝ) :
+    HasDerivAt
+      (productThroatDiracHolonomySecondDerivativeOperator data fold)
+      (productThroatDiracHolonomyThirdDerivativeOperator data fold holonomy)
+      holonomy := by
+  apply HasDerivAt.of_isLittleO
+  have hBigO :
+      (fun parameter =>
+        productThroatDiracHolonomySecondDerivativeOperator data fold parameter -
+          productThroatDiracHolonomySecondDerivativeOperator data fold holonomy -
+          (parameter - holonomy) •
+            productThroatDiracHolonomyThirdDerivativeOperator
+              data fold holonomy) =O[nhds holonomy]
+        (fun parameter : ℝ => ‖parameter - holonomy‖ ^ 2) := by
+    have hBound : IsBigOWith
+        (15 * (productThroatDiracGap data ^ 3)⁻¹) (nhds holonomy)
+        (fun parameter =>
+          productThroatDiracHolonomySecondDerivativeOperator data fold parameter -
+            productThroatDiracHolonomySecondDerivativeOperator data fold holonomy -
+            (parameter - holonomy) •
+              productThroatDiracHolonomyThirdDerivativeOperator
+                data fold holonomy)
+        (fun parameter : ℝ => ‖parameter - holonomy‖ ^ 2) := by
+      apply IsBigOWith.of_bound
+      filter_upwards with parameter
+      simpa only [norm_pow, norm_norm, Real.norm_eq_abs, abs_abs] using
+        (productThroatDiracHolonomySecondDerivativeOperator_taylor_remainder_le
+          data fold holonomy parameter)
+    exact hBound.isBigO
+  exact hBigO.trans_isLittleO
+    (isLittleO_pow_sub_sub holonomy (by norm_num : 1 < 2))
+
+theorem productThroatDiracHolonomyThirdDerivativeOperator_sub_norm_le
+    (data : ProductThroatSpectralData) (fold : Fold)
+    (first second : ℝ) :
+    ‖productThroatDiracHolonomyThirdDerivativeOperator data fold second -
+        productThroatDiracHolonomyThirdDerivativeOperator data fold first‖ ≤
+      (15 * (productThroatDiracGap data ^ 3)⁻¹) * |second - first| := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · exact mul_nonneg
+      (mul_nonneg (by norm_num)
+        (inv_nonneg.mpr (pow_nonneg
+          (productThroatDiracGap_positive data).le 3)))
+      (abs_nonneg _)
+  · intro state
+    calc
+      ‖(productThroatDiracHolonomyThirdDerivativeOperator data fold second -
+          productThroatDiracHolonomyThirdDerivativeOperator
+            data fold first) state‖ =
+          ‖productThroatDiracHolonomyThirdDerivativeImage
+              data fold second state -
+            productThroatDiracHolonomyThirdDerivativeImage
+              data fold first state‖ := rfl
+      _ ≤ ‖(((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+            |second - first| : ℝ) : Complex) • state‖ :=
+        lp.norm_mono (by norm_num) (fun mode => by
+          change ‖(productThroatDiracHolonomyThirdDerivativeCoefficient
+                data fold second mode : Complex) * state mode -
+              (productThroatDiracHolonomyThirdDerivativeCoefficient
+                data fold first mode : Complex) * state mode‖ ≤
+            ‖(((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+                |second - first| : ℝ) : Complex) * state mode‖
+          rw [← sub_mul, ← Complex.ofReal_sub, norm_mul, norm_mul,
+            Complex.norm_real, Complex.norm_real, Real.norm_eq_abs,
+            Real.norm_eq_abs,
+            abs_of_nonneg (mul_nonneg
+              (mul_nonneg (by norm_num)
+                (inv_nonneg.mpr (pow_nonneg
+                  (productThroatDiracGap_positive data).le 3)))
+              (abs_nonneg _))]
+          exact mul_le_mul_of_nonneg_right
+            (productThroatDiracHolonomyThirdDerivativeCoefficient_lipschitz
+              data fold first second mode) (norm_nonneg _))
+      _ = ((15 * (productThroatDiracGap data ^ 3)⁻¹) *
+          |second - first|) * ‖state‖ := by
+        rw [norm_smul, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_nonneg (mul_nonneg
+            (mul_nonneg (by norm_num)
+              (inv_nonneg.mpr (pow_nonneg
+                (productThroatDiracGap_positive data).le 3)))
+            (abs_nonneg _))]
+
+theorem productThroatDiracHolonomyThirdDerivativeOperator_lipschitz
+    (data : ProductThroatSpectralData) (fold : Fold) :
+    LipschitzWith
+      ⟨15 * (productThroatDiracGap data ^ 3)⁻¹,
+        mul_nonneg (by norm_num)
+          (inv_nonneg.mpr (pow_nonneg
+            (productThroatDiracGap_positive data).le 3))⟩
+      (productThroatDiracHolonomyThirdDerivativeOperator data fold) := by
+  apply LipschitzWith.of_dist_le_mul
+  intro first second
+  simp only [dist_eq_norm, Real.norm_eq_abs]
+  change ‖productThroatDiracHolonomyThirdDerivativeOperator data fold first -
+      productThroatDiracHolonomyThirdDerivativeOperator data fold second‖ ≤
+    (15 * (productThroatDiracGap data ^ 3)⁻¹) * |first - second|
+  simpa [abs_sub_comm] using
+    (productThroatDiracHolonomyThirdDerivativeOperator_sub_norm_le
+      data fold second first)
+
 end
 
 end P0EFTJanusProductThroatHolonomySecondDerivative4D

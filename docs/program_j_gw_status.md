@@ -7,6 +7,9 @@
 - `GW-BP01` ferme : fonctionnelle Candidate A integree sur la base D8 mesuree.
 - `GW-BP02` ferme : invariance PT de cette fonctionnelle.
 - `GW-BP03` ferme (passe 2) : racine diagonale globale, fermeture spectrale cote moins et controle des faces singulieres.
+- `GW-BP04` ferme (passe 3) : echange PT involutif sur les champs lisses des deux secteurs du quotient D8.
+- `GW-BP05` ferme (passe 4) : pullback PT lisse et involutif des tenseurs covariants symetriques generaux sur D8.
+- `GW-BP06` ferme (passe 5) : certificat inconditionnel de covariance du stress scalaire et d'echange des deux secteurs.
 - Reprise P : seconde variation tensorielle complete, fond FLRW physique et couplage a la matiere visible. `GW-P01/GW-P03/GW-P07/GW-P08` restent ouverts.
 
 `GW01-Minkowski-TT` est fermé au niveau **T/C**. L'interface algébrique

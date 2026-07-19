@@ -278,6 +278,45 @@ def coverAmbientDerivativeSection :
     simp [inTangentCoordinates, ContinuousLinearMap.inCoordinates]
     rfl
 
+/-- Postcomposition of the true immersion derivative by a fixed ambient
+continuous linear map is again a smooth bundle-hom section. -/
+def postcomposeCoverAmbientDerivativeSection
+    (operator : AmbientCoordinates →L[Real] AmbientCoordinates) :
+    ContMDiffSection coverModelWithCorners
+      (CoverCoordinates →L[Real] AmbientCoordinates) ∞
+      (CoverAmbientHomFiber period hPeriod) where
+  toFun := fun point =>
+    operator.comp (coverAmbientDerivative period hPeriod point)
+  contMDiff_toFun := by
+    intro point
+    rw [contMDiffAt_section]
+    have hDerivative :=
+      (coverAmbientDerivativeSection period hPeriod).contMDiff point
+    rw [contMDiffAt_section] at hDerivative
+    have hPostcomposition : ContDiff Real ∞
+        (fun derivative : CoverCoordinates →L[Real] AmbientCoordinates =>
+          operator.comp derivative) :=
+      contDiff_const.clm_comp contDiff_id
+    have hComposition :=
+      hPostcomposition.comp_contMDiffAt hDerivative
+    convert hComposition using 1 <;> try rfl
+    funext x
+    apply ContinuousLinearMap.ext
+    intro vector
+    simp [hom_trivializationAt_apply,
+      ContinuousLinearMap.inCoordinates]
+    by_cases hx : x ∈
+        (trivializationAt CoverCoordinates
+          (CoverIntrinsicTangent period hPeriod) point).baseSet
+    · have hx' : x ∈ (chartAt CoverModel point).source := by
+        simpa only [CoverIntrinsicTangent,
+          TangentBundle.trivializationAt_baseSet] using hx
+      rfl
+    · have hx' : x ∉ (chartAt CoverModel point).source := by
+        simpa only [CoverIntrinsicTangent,
+          TangentBundle.trivializationAt_baseSet] using hx
+      rfl
+
 private abbrev AmbientCovector :=
   AmbientCoordinates →L[Real] Real
 
@@ -476,6 +515,19 @@ private def ambientDeckLinear :
     P0EFTJanusMappingTorusDeckInvariantLorentzCocycle4D.euclideanReflection.toContinuousLinearEquiv
     (ContinuousLinearEquiv.refl Real Real)
 
+/-- Public linear part of the genuine ambient deck generator. -/
+def coverAmbientDeckGeneratorLinear :
+    AmbientCoordinates →L[Real] AmbientCoordinates :=
+  ambientDeckLinear.toContinuousLinearMap
+
+@[simp]
+theorem coverAmbientDeckGeneratorLinear_apply
+    (point : AmbientCoordinates) :
+    coverAmbientDeckGeneratorLinear point =
+      (P0EFTJanusMappingTorusDeckInvariantLorentzCocycle4D.euclideanReflection
+        point.1, point.2) := by
+  rfl
+
 private def ambientTimeTranslation : AmbientCoordinates := by
   change EuclideanR4 × Real
   exact (0, period)
@@ -590,6 +642,48 @@ theorem coverAmbientDerivative_generator_natural
   rw [hComposite, mfderiv_comp point hAmbient hCoverAt,
     mfderiv_ambientDeckMap]
   rfl
+
+/-- Public form of immersion-derivative naturality under the genuine deck
+generator. -/
+theorem coverAmbientDerivative_deckGenerator_natural
+    (point : EffectiveCover period hPeriod) :
+    (coverAmbientDerivative period hPeriod ((1 : Int) +ᵥ point)).comp
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          ((1 : Int) +ᵥ ·) point) =
+      coverAmbientDeckGeneratorLinear.comp
+        (coverAmbientDerivative period hPeriod point) := by
+  simpa [coverAmbientDeckGeneratorLinear] using
+    coverAmbientDerivative_generator_natural period hPeriod point
+
+/-- Postcomposition by an ambient operator commuting with the deck linear
+part preserves the exact generator cocycle of the immersion derivative. -/
+theorem postcomposeCoverAmbientDerivativeSection_deckGenerator_natural
+    (operator : AmbientCoordinates →L[Real] AmbientCoordinates)
+    (hCommutes :
+      operator.comp coverAmbientDeckGeneratorLinear =
+        coverAmbientDeckGeneratorLinear.comp operator)
+    (point : EffectiveCover period hPeriod) :
+    ((postcomposeCoverAmbientDerivativeSection period hPeriod operator)
+        ((1 : Int) +ᵥ point)).comp
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          ((1 : Int) +ᵥ ·) point) =
+      coverAmbientDeckGeneratorLinear.comp
+        ((postcomposeCoverAmbientDerivativeSection period hPeriod operator)
+          point) := by
+  apply ContinuousLinearMap.ext
+  intro vector
+  have hDerivative := congrArg (fun derivative => derivative vector)
+    (coverAmbientDerivative_deckGenerator_natural period hPeriod point)
+  have hOperator := congrArg (fun current => current
+      (coverAmbientDerivative period hPeriod point vector)) hCommutes
+  simp only [ContinuousLinearMap.comp_apply] at hDerivative hOperator
+  change operator
+      (coverAmbientDerivative period hPeriod ((1 : Int) +ᵥ point)
+        (mfderiv coverModelWithCorners coverModelWithCorners
+          ((1 : Int) +ᵥ ·) point vector)) =
+    coverAmbientDeckGeneratorLinear
+      (operator (coverAmbientDerivative period hPeriod point vector))
+  exact (congrArg operator hDerivative).trans hOperator
 
 private theorem ambientDeckLinear_preserves_minkowski
     (first second : AmbientCoordinates) :
