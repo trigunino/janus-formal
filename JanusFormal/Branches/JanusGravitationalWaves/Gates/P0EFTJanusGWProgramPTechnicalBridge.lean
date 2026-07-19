@@ -1,6 +1,9 @@
 import JanusFormal.Branches.JanusGravitationalWaves.Gates.P0EFTJanusGWStabilityCausalityGate
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGlobalDiagonalRootFrontierControl4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothPTFieldAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzTensorPTSmoothness4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusScalarStressCovarianceExchangeCertificate4D
 
 namespace JanusFormal
 namespace P0EFTJanusGWProgramPTechnicalBridge
@@ -10,6 +13,29 @@ set_option autoImplicit false
 open P0EFTJanusReciprocalBimetricPotential
 open P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 open P0EFTJanusGlobalDiagonalRootFrontierControl4D
+open P0EFTJanusMappingTorusSmoothPTFieldAction4D
+
+/-- The genuine smooth symmetric covariant two-tensor pullback is globally
+defined on D8 and involutive, with the analytic regularity obligation closed. -/
+def smooth_general_tensor_pt_pullback_is_involutive :=
+  P0EFTJanusMappingTorusGeneralLorentzTensorPTSmoothness4D.smoothPTTensorPullback_involutive
+
+/-- P supplies an unconditional certificate combining scalar-stress covariance
+with two-sector exchange. It fixes the source transformation law, not the
+visible-matter content or waveform normalization. -/
+theorem scalar_stress_covariance_exchange_certificate_exists
+    (period : Real) (hPeriod : period ≠ 0) :
+    Nonempty
+      (P0EFTJanusScalarStressCovarianceExchangeCertificate4D.ScalarStressCovarianceExchangeCertificate4D
+        period hPeriod) :=
+  P0EFTJanusScalarStressCovarianceExchangeCertificate4D.scalarStressCovarianceExchange_unconditional
+    period hPeriod
+
+/-- The smooth two-sector coefficient fields now carry an exact involutive PT
+exchange on the effective D8 quotient. This supplies the global symmetry
+carrier for perturbations, not their covariant spin-2 Hessian. -/
+def smooth_tensor_sector_exchange_is_involutive :=
+  sectorExchange_involutive
 
 /-- The selected global diagonal root has controlled closed-minus frontier,
 and its zero-spectrum faces are exactly identified. This is the global root
@@ -34,6 +60,9 @@ structure GWBridgeBoundary where
   integratedLocalInteractionClosed : Prop
   measuredPTInvarianceClosed : Prop
   globalDiagonalRootFrontierClosed : Prop
+  smoothPTSectorExchangeClosed : Prop
+  smoothGeneralTensorPTActionClosed : Prop
+  scalarStressCovarianceExchangeClosed : Prop
   fullCovariantSecondVariationOpen : Prop
   physicalFLRWBackgroundOpen : Prop
   visibleMatterCouplingOpen : Prop

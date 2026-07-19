@@ -215,6 +215,21 @@ def productThroatHeatNuclearCertificate
   trace_eq :=
     productThroatHeatOperatorDiagonalTrace_eq_nuclearTrace data time fold twist
 
+/-- The nuclear norm of the concrete product-throat expansion is bounded by
+its spectral trace. -/
+theorem productThroatHeatNuclearNormSum_le_trace
+    (data : ProductThroatSpectralData) (time : HeatTime)
+    (fold : Fold) (twist : CircleTwist) :
+    (∑' mode : ProductThroatHeatMode data,
+      ‖productThroatHeatRankOne data time fold twist mode‖) ≤
+      productThroatNuclearHeatTrace data time fold twist := by
+  rw [← productThroatHeatOperatorDiagonalTrace_eq_nuclearTrace]
+  unfold productThroatHeatOperatorDiagonalTrace
+  exact Summable.tsum_le_tsum
+    (productThroatHeatRankOne_opNorm_le data time fold twist)
+    (productThroatHeatRankOne_norm_summable data time fold twist)
+    (productThroatHeatWeight_summable data time fold twist)
+
 end
 
 end P0EFTJanusProductThroatHeatOperatorNuclearExpansion4D

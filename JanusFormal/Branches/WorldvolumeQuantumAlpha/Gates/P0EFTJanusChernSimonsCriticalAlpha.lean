@@ -86,13 +86,13 @@ theorem hierarchy_exponent_positive
   have hNumerator :
       0 < 3 * s.vacuum.sexticCoupling +
         s.vacuum.logCoefficient := by
-    positivity
+    nlinarith [hSexticVacuum, s.vacuum.logCoefficientPositive]
   have hProduct :
       0 < 3 * s.vacuum.logCoefficient * (-s.vacuum.logRatio) := by
     nlinarith [hStationary, hNumerator]
   have hCoefficient : 0 < 3 * s.vacuum.logCoefficient := by
-    positivity
-  exact (mul_pos_iff.mp hProduct).resolve_right (not_lt_of_ge (le_of_lt hCoefficient))
+    nlinarith [s.vacuum.logCoefficientPositive]
+  exact pos_of_mul_pos_right hProduct (le_of_lt hCoefficient)
 
 /--
 The microscopic formula in exponential form:

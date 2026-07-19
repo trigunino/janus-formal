@@ -108,6 +108,47 @@ theorem positive_log_from_controlled_ll_remainder
   rw [log_coefficient_non_ll_ll_decomposition r betaLL gammaLL hBeta hGamma]
   linarith
 
+/-- Interval control of the unknown LL residues gives a certified interval for
+the full logarithmic coefficient. -/
+theorem log_coefficient_bounds_from_ll_intervals
+    (r : CompositeRGData) (betaLL gammaLL betaLower betaUpper gammaLower gammaUpper : ℝ)
+    (hCoupling : 0 ≤ r.sexticCoupling)
+    (hBeta :
+      r.sexticBeta =
+        (475 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL)
+    (hGamma :
+      r.compositeAnomalousDimension =
+        (5 / (16 * Real.pi ^ 2)) * r.sexticCoupling + gammaLL)
+    (hBetaLower : betaLower ≤ betaLL) (hBetaUpper : betaLL ≤ betaUpper)
+    (hGammaLower : gammaLower ≤ gammaLL) (hGammaUpper : gammaLL ≤ gammaUpper) :
+    (445 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLower -
+        3 * gammaUpper * r.sexticCoupling ≤ r.logCoefficient ∧
+      r.logCoefficient ≤
+        (445 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaUpper -
+          3 * gammaLower * r.sexticCoupling := by
+  rw [log_coefficient_non_ll_ll_decomposition r betaLL gammaLL hBeta hGamma]
+  constructor <;> nlinarith
+
+theorem positive_log_from_ll_interval_certificate
+    (r : CompositeRGData) (betaLL gammaLL betaLower betaUpper gammaLower gammaUpper : ℝ)
+    (hCoupling : 0 ≤ r.sexticCoupling)
+    (hBeta :
+      r.sexticBeta =
+        (475 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLL)
+    (hGamma :
+      r.compositeAnomalousDimension =
+        (5 / (16 * Real.pi ^ 2)) * r.sexticCoupling + gammaLL)
+    (hBetaLower : betaLower ≤ betaLL) (hBetaUpper : betaLL ≤ betaUpper)
+    (hGammaLower : gammaLower ≤ gammaLL) (hGammaUpper : gammaLL ≤ gammaUpper)
+    (hPositiveLower :
+      0 < (445 / (32 * Real.pi ^ 2)) * r.sexticCoupling ^ 2 + betaLower -
+        3 * gammaUpper * r.sexticCoupling) :
+    0 < r.logCoefficient := by
+  have hBounds := log_coefficient_bounds_from_ll_intervals r betaLL gammaLL
+    betaLower betaUpper gammaLower gammaUpper hCoupling hBeta hGamma
+    hBetaLower hBetaUpper hGammaLower hGammaUpper
+  linarith
+
 /-- The remaining local-stability question is now a concrete comparison of
 the total anomalous-dimension term with the total beta function. -/
 structure ComputedCSInputStatus where

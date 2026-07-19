@@ -52,6 +52,34 @@ def ambientUnitReflection
     (by
       simp [hUnit])
 
+/-- One unit Euclidean reflection factor, without an orientation-parity
+restriction.  This public wrapper lets the full orthogonal Cartan--Dieudonné
+factorization be reused by the ambient Pin-minus projection. -/
+structure AmbientUnitReflectionFactor where
+  vector : CoverCoordinates
+  unit : ambientCoverEuclideanQuadraticForm vector = 1
+
+/-- Orthogonal reflection carried by one unit factor. -/
+def AmbientUnitReflectionFactor.reflectionEquiv
+    (factor : AmbientUnitReflectionFactor) :
+    CoverCoordinates ≃ₗ[Real] CoverCoordinates :=
+  ambientUnitReflection factor.vector factor.unit
+
+/-- Ordered product of an arbitrary finite list of unit reflections. -/
+def ambientReflectionProductOfUnitFactors
+    (factors : List AmbientUnitReflectionFactor) :
+    CoverCoordinates ≃ₗ[Real] CoverCoordinates :=
+  (factors.map AmbientUnitReflectionFactor.reflectionEquiv).prod
+
+/-- A Cartan--Dieudonné factorization of an arbitrary ambient orthogonal
+isometry; unlike the Spin factorization below, its length need not be even. -/
+structure AmbientO4UnitReflectionFactorization
+    (target : ambientCoverEuclideanQuadraticForm.IsometryEquiv
+      ambientCoverEuclideanQuadraticForm) where
+  factors : List AmbientUnitReflectionFactor
+  factorization :
+    ambientReflectionProductOfUnitFactors factors = target.toLinearEquiv
+
 private theorem ambientIotaUnit_mem_lipschitzGroup
     (vector : CoverCoordinates)
     (unit : AmbientCliffordAlgebraˣ)

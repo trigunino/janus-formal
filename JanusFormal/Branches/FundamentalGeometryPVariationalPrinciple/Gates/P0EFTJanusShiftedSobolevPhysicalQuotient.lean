@@ -116,6 +116,15 @@ theorem zeroMode_range_isTopCompl_ker
   ContinuousLinearMap.IsIdempotentElem.isTopCompl
     (potentialZeroModeProjection_isIdempotentElem targetWeight)
 
+/-- The complemented zero-mode range is closed.  Registering this proof makes
+the quotient carry Mathlib's genuine `NormedAddCommGroup` structure, rather
+than only its default seminormed quotient structure. -/
+instance potentialZeroModeProjection_range_isClosed
+    (targetWeight : LatticeMode → Real) :
+    IsClosed ((potentialZeroModeProjection targetWeight).range :
+      Set (ShiftedPotentialHilbert targetWeight)) :=
+  (zeroMode_range_isTopCompl_ker targetWeight).isClosed
+
 theorem mem_zeroModeProjection_ker_iff
     (targetWeight : LatticeMode → Real)
     (potential : ShiftedPotentialHilbert targetWeight) :

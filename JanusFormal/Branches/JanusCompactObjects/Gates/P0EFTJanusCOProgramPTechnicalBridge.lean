@@ -1,6 +1,8 @@
 import JanusFormal.Branches.JanusCompactObjects.Gates.P0EFTJanusCOFutureBimetricInterface
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalFieldBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeometricNormalJunction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
 
 namespace JanusFormal
 namespace P0EFTJanusCOProgramPTechnicalBridge
@@ -11,6 +13,24 @@ open P0EFTJanusMappingTorusGlobalFieldBridge4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusH1GraphTrace4D
 open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+open P0EFTJanusMappingTorusGeometricNormalJunction4D
+
+/-- Stationarity of the geometric junction action implies the corresponding
+weak normal balance on the actual embedded throat. Israel/null identification
+and the physical matter source remain separate. -/
+def geometric_junction_stationarity_implies_weak_balance :=
+  stationary_weak_geometric_normal_balance
+
+/-- With the explicit geometric Robin normal law, stationarity yields the
+weak Robin balance. The physical identification of its coefficients remains
+an input for compact-object matter. -/
+def geometric_robin_law_stationarity_implies_weak_balance :=
+  stationary_weak_robin_balance_of_geometricNormalLaw
+
+/-- The actual intrinsic Lorentz metric restricts to a smooth nondegenerate
+metric on the effective throat. -/
+def intrinsic_compact_object_throat_metric_is_nondegenerate :=
+  P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D.intrinsicGeneralLorentzMetricThroatTrace_nondegenerate
 
 /-- P now constructs an unconditional finite smooth spanning tangent family on
 the compact effective D8 quotient. -/
@@ -35,6 +55,9 @@ structure COBridgeBoundary where
   throatPTEquivarianceClosed : Prop
   finiteSmoothTangentFrameClosed : Prop
   graphH1ThroatTraceAvailable : Prop
+  geometricNormalWeakBalanceClosed : Prop
+  geometricRobinWeakBalanceClosed : Prop
+  intrinsicThroatMetricNondegenerateClosed : Prop
   staticEulerEquationsOpen : Prop
   signedMatterStressOpen : Prop
   junctionAndConversionLawOpen : Prop
