@@ -26,6 +26,18 @@ The use of binary relations is a pilot restriction. Higher-arity, enriched,
 categorical, algebraic and spectral primitives must be recorded as distinct
 branches rather than encoded silently.
 
+## Coefficient language
+
+The primitive relational signature remains value-free. When scalar values are
+needed, the ambient coefficient language may be a signed additive group such
+as `ℝ`. This single language includes zero, nonnegative restrictions and signed
+assignments; an "unsigned base" is therefore not maintained as a competing
+ontology.
+
+Allowing negative values does not impose a Janus sector structure. A chosen
+nontrivial involution, odd equivariance `q(σx) = -q(x)`, nonvanishing and a
+physical interpretation remain explicit additional hypotheses.
+
 ## Equivalence
 
 Two `MF-A0` systems are equivalent only when bijections of `Obj` and `Rel`
@@ -145,6 +157,10 @@ physical metric without additional reconstruction theorems.
   an interface quotient exactly when it preserves the generated equivalence
   relation. Lean proves involutivity on every such quotient; the finite audit
   accepts paired interfaces and rejects unpaired identifications.
+- `MF-PBRIDGE-002` (**T/X/C**): every nonzero odd real M charge factors exactly
+  into P's binary `JanusCharge` sign and a positive magnitude, and M's exchange
+  maps to P's `ptCharge`. The adapter supplies no metric, throat, physical mass
+  interpretation, mediator law or action.
   reconstructed spaces;
 - `MF-NOGO-001` (**T**): non-isomorphic empty-edge and self-loop systems on
   two objects produce the same reconstructed topology;

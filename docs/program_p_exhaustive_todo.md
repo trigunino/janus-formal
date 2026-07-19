@@ -16,10 +16,12 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**1007 fermées sur 1115 ; 108 ouvertes** (90,31 %).
+**1038 fermées sur 1146 ; 108 ouvertes** (90,58 %).
 
 Documents de référence :
 
+- `docs/program_p_operational_todo.md` — file courte distribuable aux LLM et
+  compteur fixe des 14 portes terminales ;
 - `docs/program_master_roadmap.md` ;
 - `docs/research_dashboard.md` ;
 - `docs/program_p_explicit_covariant_candidate.md` ;
@@ -240,7 +242,20 @@ correspondance algébrique des coefficients, puis asymptotique effective.
   action droite libre/transitive, carré central et projection d'orientation.
 - [ ] Étendre ce relèvement normal au fibré tangent ambiant par une structure
   `Pin` compatible. Les réalisations ambiantes orientées `Spin/SpinC` sont
-  exclues par la non-orientabilité prouvée ci-dessous.
+  exclues par la non-orientabilité prouvée ci-dessous. Une équivalence radiale
+  du vrai espace tangent du cover vers `ℝ⁴` est maintenant construite depuis
+  la véritable dérivée d'immersion, avec loi exacte sous tout enroulement de deck.
+  Elle envoie aussi la normale canonique réelle du throat sur le premier
+  vecteur ambiant. Sur un vrai overlap d'atlas, les deux lifts sont aussi prouvés
+  localement égaux au translate par le winding réel figé ; après différentiation
+  et transport dépendant des fibres, le vrai Jacobien d'atlas est exactement la
+  puissance de réflexion correspondante dans les frames radiales. La dépendance
+  lisse atlas-wide, la réduction orthogonale Čech et son lift `Pin⁻` restent à construire.
+  - [x] Conjuguer tout enroulement de deck par le split radial/référence fixe et
+    identifier le vrai `mfderiv` de transition d'atlas à la phase canonique
+    `O(4)` du même winding dans les frames radiales de coordonnées. Ces frames
+    sont pointwise : leur dépendance lisse et leur identification à la réduction
+    orthonormale de Whitney restent ouvertes.
   - [x] Prouver que la descente déterminantielle ambiante est vide, exhiber
     l'obstruction d'un overlap renversant l'orientation et en déduire
     l'inexistence de réalisations Čech continues orientées `Spin` ou `SpinC`.
@@ -1376,6 +1391,14 @@ par toute évolution admissible.
                 des quatre gradients locaux, et un tel patch total existe à
                 chaque point. Le changement de variables de la mesure canonique
                 dans ces patches reste le verrou de l'IPP globale.
+                - [x] Sur le collier de latitude positive, identifier la densité
+                  canonique au Jacobien exact `ENNReal.ofReal (cos²)`, prouver
+                  l'IPP pondérée sur chaque fibre puis son identité mesurée sur
+                  la vraie base `S² × temps`, et exprimer ponctuellement la
+                  dérivée normale par la somme des quatre gradients locaux d'un
+                  patch holonome total existant. Le patch reste dépendant du
+                  point : aucune sélection mesurable ni IPP globale dans une
+                  carte `Vector4` unique n'est affirmée.
       - [x] À partir d'une famille tangentielle lisse finie couvrante fournie,
         construire le graphe global du premier jet dans `L²`, sa fermeture
         complète `H1GraphSpace`, l'inclusion continue vers `L²` et la densité
@@ -1387,6 +1410,11 @@ par toute évolution admissible.
         `C∞`, couvrante et fibre-par-fibre génératrice, par trivialisation
         locale finie et partition de l'unité sur le quotient compact, puis la
         raccorder directement au graphe `H¹`.
+        Preuve d'appui : `P0EFTJanusMappingTorusH1FrameIndependence4D` prouve
+        l'équivalence des normes et complétés pour deux familles reliées, dans
+        les deux sens, par des coefficients lisses uniformément bornés sur un
+        recouvrement compact fini ; il raccorde aussi la frame physique aux
+        composantes localisées de l'atlas fixe.
       - [x] Pour la mesure d'espace-temps poussée depuis une mesure finie du
         throat, construire `HasH1TraceBound` avec constante exacte `1` et la
         trace continue correspondante. L'identification à l'espace Sobolev
@@ -1767,6 +1795,12 @@ par toute évolution admissible.
                 `SmoothGeneralLorentzMetric`, prouver sa non-dégénérescence
                 globale et spécialiser la densité scalaire, sa première
                 variation et son reste quadratique pointwise.
+                Preuve d'appui supplémentaire :
+                `P0EFTJanusMappingTorusIntrinsicConformalCandidateARoot4D`
+                construit globalement sur D8 le secteur conforme positif
+                `a g₀,b g₀`, sa racine Candidate A intrinsèque et son accord
+                dans toute frame avec la spécialisation `Matrix4` isotrope.
+                Cette note n'ajoute aucune unité au compteur historique.
                 - [x] Supprimer ensuite l'exigence erronée d'une frame globale
                   en séparant le scalaire intrinsèque
                   `g⁻¹(dφ,dφ)/2 - m²φ²/2` de sa mesure d'intégration. Pour toute
@@ -1786,6 +1820,11 @@ par toute évolution admissible.
                       quotient ; produire l'atlas fini compatible, identifier
                       la mesure recollée et obtenir une action intrinsèque
                       constante non nulle.
+                      - [x] Prouver que cette même mesure lorentzienne canonique
+                        est préservée par chaque tranche du vrai flot temporel
+                        complet D8 : wrap du domaine fondamental, monodromie par
+                        réflexion aux enroulements impairs, skew-product
+                        mesure-préservant et semiconjugaison exacte au quotient.
   - [x] Construire sur le vrai quotient D8 compact une action scalaire globale
     à repère diagonal fixé : valeur, différentielle de variété, contraction par
     l'inverse de la même métrique et volume métrique proviennent des mêmes
@@ -2069,6 +2108,11 @@ par toute évolution admissible.
       vraie forme bilinéaire symétrique sur ce tangent commun et l'identifier à
       la seconde variation mixte déjà prouvée sur le paquet à six directions.
       Ce pont reste sectoriel : il n'ajoute ni terme EH, ni Maxwell, ni BRST.
+      Preuve d'appui supplémentaire : le gate
+      `P0EFTJanusCompleteVariationModuleCore4D` étend cette structure au vrai
+      `ProgramPCompleteVariation4D`, rend linéaire son inclusion canonique et
+      ses lectures normales, ghosts tangents et métriques locales. Cette note
+      n'ajoute aucune unité au compteur historique.
       - [x] Identifier le sous-module exact annulant simultanément les lectures
         matière et LL, prouver que le Hessien réel l'annule dans ses deux
         arguments, puis le faire descendre en une forme bilinéaire symétrique
@@ -2143,6 +2187,11 @@ complexe BRST, aux anomalies et aux conditions au bord.
 - [ ] Construire l'action EH des deux métriques sur la géométrie globale.
 - [ ] Dériver sa première variation en coordonnées arbitraires.
 - [x] Construire et varier les termes GHY sur toute famille finie de faces non nulles en jauge normale de Gauss.
+  Preuve d'appui locale :
+  `P0EFTJanusMappingTorusCanonicalThroatGaussianNormalGHYBridge4D` identifie le
+  1-jet du collier de latitude canonique à des données Gaussian-normal avec
+  `∂ₙh|₀ = 0`, seconde forme et trace nulles, et lifts normaux opposés. Cela ne
+  constitue pas une intégration EH/GHY globale.
   - [x] Pour toute famille finie pondérée de faces en jauge normale de Gauss,
     construire les courbes GHY exact-inverse et sommer leurs vraies dérivées.
 - [x] Prouver l'annulation intégrée du flux EH+GHY pour ces faces et conditions au bord retenues.
@@ -2418,10 +2467,39 @@ non contrôlé et produit les conditions de jonction annoncées.
     `A_axis ∘ dι` en une vraie section lisse de bundle-hom sur le cover,
     prouver que sa linéarisation de Gram est la fonction lisse identiquement
     nulle, puis vérifier son cocycle exact sous le générateur deck. L'action de
-    tout `ℤ`, la descente au quotient, `B ∘ K` et le complexe global restent
-    ouverts.
+    tout `ℤ` sur la direction bundle-hom, sa propre descente au quotient,
+    `B ∘ K` et le complexe global restent ouverts.
+    - [x] Pour la seule sortie scalaire déjà nulle `J_F(R(F))`, construire
+      l'invariance deck pour tout winding, la descendre par `descendSmooth` au
+      vrai quotient D8 et prouver qu'elle y reste identiquement nulle. La
+      direction bundle-hom `R(F)` est descendue séparément ci-dessous, mais
+      aucun complexe fonctionnel global `K/J` n'est encore affirmé.
+      - [x] Écrire la direction `A_axis ∘ dι` comme la différentielle d'un
+        potentiel ambiant lisse fixé par tout winding, descendre ce potentiel
+        au vrai quotient D8, puis construire sa section bundle-hom lisse dont
+        le pullback est exactement la direction cover initiale. Cette descente
+        concerne seulement les trois rotations spatiales concrètes.
+        - [x] Sur le domaine réel où la linéarisation de Gram d'une section
+          quotient produit un champ cover lisse et deck-invariant, construire
+          l'opérateur quotient `J`, prouver que les trois sections de rotation
+          appartiennent à ce domaine par le calcul de noyau effectif, puis
+          établir littéralement `J ∘ R = 0` comme champ lisse sur D8, pour
+          chaque composante de Gram. Ce sous-complexe restreint ne construit
+          ni `B ∘ K`, ni le complexe fonctionnel global, ni sa cohomologie.
+  - [x] Pour la vraie sortie Lorentz--Gram déjà descendue comme tenseur lisse
+    sur le quotient D8, définir l'identité algébrique d'ordre zéro `B_sym` par
+    antisymétrisation, caractériser son noyau comme les tenseurs symétriques,
+    identifier le pullback de `K` à la formule de Gram du dérivé d'immersion,
+    puis prouver `B_sym(K) = 0` comme champ global. Ce n'est ni l'opérateur de
+    Bianchi différentiel, ni le complexe global `B ∘ K`, ni un résultat Sobolev.
 - [ ] Promouvoir l'exactitude symbolique non nulle vers un complexe
   différentiel lorentzien global.
+  - [x] Sur les mêmes espaces réels pointwise `Fin 4`, identifier le symbole de
+    déformation de Saint--Venant à la perturbation de jauge du symbole
+    d'Einstein linéarisé et établir les trois compositions
+    `K_SV ∘ R = 0`, `G ∘ R = 0` et `B ∘ G = 0`. Ce pont reste plat et au
+    symbole principal : aucun complexe différentiel global, Sobolev ou de bord
+    n'en est déduit.
 - [x] Étendre la reconstruction Fourier axiale à la maille dénombrable
   `ℤ^4`, avec pivot dominant, résidu du zéro-mode et contrôle `ℓ²` uniforme
   pour tout poids non négatif commun aux coefficients métriques et potentiels.
@@ -2449,12 +2527,41 @@ non contrôlé et produit les conditions de jonction annoncées.
         l'injectivité. Cela reste un sous-espace temporel finite-mode ; aucune
         série infinie, norme Sobolev, direction spatiale ni complétion de bundle
         n'est identifiée.
+        - [x] Dans le seul secteur scalaire temporel spatialement constant,
+          descendre le temps du vrai quotient D8 vers le cercle, calculer la
+          marginale temporelle de la mesure lorentzienne canonique normalisée,
+          puis réaliser isométriquement toute suite `ℓ²(ℤ, ℂ)` comme section
+          quotient `L²`, avec convergence de la série infinie, récupération des
+          coefficients avant pullback et compatibilité finite-mode. Construire
+          aussi la complétion temporelle pondérée `H¹`, injectée dans les deux
+          séries `L²` du champ et de sa dérivée spectrale. Les modes spatiaux,
+          bundles non triviaux, recollements Sobolev intrinsèques et traces au
+          bord restent ouverts.
+          Preuve d'appui :
+          `P0EFTJanusMappingTorusInfiniteTemporalH1SmoothCoreClosure4D` rend le
+          cœur `Finsupp` dense dans ce graphe temporel et identifie sa dérivée
+          synthétisée à `mvfderiv` et à la composante temporelle de `dc`.
 - [ ] Contrôler convergence des séries, modes zéro et cohomologie globale.
   - [x] Réaliser injectivement les coefficients temporels complexes à support
     fini comme vrais ghosts lisses réels `U(1)^2`, identifier le mode zéro au
     ghost constant et prouver que sa plage est incluse dans le noyau du vrai
-    opérateur exact `c ↦ dc`. L'inclusion inverse, la cohomologie et le pont
-    entre dérivée Fourier et `mvfderiv` sur le quotient restent ouverts.
+    opérateur exact `c ↦ dc`. Sur tous les ghosts lisses `U(1)^2` du vrai
+    quotient D8 connecté, prouver aussi l'inclusion inverse : ce noyau est
+    exactement l'espace des ghosts constants, et l'identifier par une équivalence
+    explicite à l'algèbre de Lie `ℝ²`. La cohomologie globale complète et les
+    séries infinies restent ouvertes.
+    - [x] Sur ce seul sous-espace temporel finite-mode, identifier la dérivée
+      ordinaire à `mvfderiv` sur la vraie vitesse de translation, calculer le
+      multiplicateur exact `2π i n / T`, lire ce champ dérivé dans `dc`, puis
+      prouver l'égalité exacte entre son noyau et la plage du mode zéro. Aucun
+      résultat pour les ghosts lisses généraux, les séries infinies ou une
+      complétion Sobolev n'en découle.
+  - [x] Sur la seule complétion `H¹` du secteur scalaire temporel spatialement
+    constant, inclure continûment le mode constant et prouver que sa plage est
+    exactement le noyau du multiplicateur dérivé, puis transporter cette
+    égalité de noyaux à la vraie section quotient `L²(D8)` par injectivité de la
+    synthèse Fourier. Ce résultat ne calcule ni le complexe BRST Sobolev complet,
+    ni les modes spatiaux, ni la cohomologie globale des ghosts.
 - [ ] Imposer et analyser les conditions au bord du mapping torus/throat.
   - [x] Sur le sous-espace strictement temporel à support Fourier fini construit
     ci-dessus, composer avec la vraie restriction lisse au throat et prouver
@@ -2471,6 +2578,16 @@ non contrôlé et produit les conditions de jonction annoncées.
     formule de pairing, symétrie, positivité, noyau égal à celui de `J` et
     positivité définie après retrait du zéro-mode.
   - [ ] Identifier ce pullback au Hessien de la même action Janus globale.
+    - [x] Dans le modèle périodique de coefficients uniquement, identifier le
+      Hessien quotient à la seconde dérivée de Fréchet de cette même action de
+      coefficients, puis à l'unique descente de `J†J`, et prouver sa
+      non-dégénérescence. Le pont vers l'action Janus globale reste ouvert.
+    - [x] Établir l'obstruction avec l'action globale réduite actuellement
+      assemblée : son Hessien est nul sur tout slot métrique pur, tandis que le
+      Hessien quotient périodique est non nul sur toute classe physique non
+      nulle. Sans bloc Einstein--Hilbert ni application globale des classes
+      périodiques vers les variations métriques, ces Hessians ne peuvent donc
+      pas être identifiés.
 - [x] Construire le quotient normé topologique par `ker J` dans ce modèle périodique.
   - [x] Dans le modèle périodique de coefficients Sobolev décalés, construire
     une projection bornée du mode zéro, la scission topologique et le quotient
@@ -2604,7 +2721,10 @@ Hessien physique réellement descendu.
   continue orientée `Spin` ou `SpinC`; le remplacement géométrique pertinent
   est `Pin⁻`.
 - [ ] Dériver les données Čech `Pin⁻`/`PinC` depuis l'atlas réel, et non depuis
-  des transitions fournies. Les données orientées SpinC ne sont plus revendiquées.
+  des transitions fournies. L'égalité locale des vrais lifts avec le translate
+  par le winding réel et sa dérivation tangentielle dans les frames radiales
+  sont établies ; la réduction orthogonale Čech reste ouverte. Les données
+  orientées SpinC ne sont plus revendiquées.
   - [x] Sur les triples intersections du vrai atlas D8, prouver que deux
     relèvements Spin fournis composent en un troisième relèvement dont le
     défaut de Cech est exactement trivial. L'existence et le choix global lisse
@@ -2693,6 +2813,21 @@ Hessien physique réellement descendu.
         vrai théorème de dérivée. Ces magnitudes restent fixées à la métrique de
         base le long de la courbe matière : aucune variation croisée
         métrique--matière, ni EH/Maxwell/ghost/Hessien Candidate A, n'en découle.
+        - [x] Au niveau de la densité pointwise D8, faire varier simultanément
+          la magnitude métrique sectorielle exponentielle, le vrai champ
+          matière affine et son covecteur `dφ` le long du même
+          `ProgramPRobinCompleteVariation4D`, puis prouver le `HasDerivAt`
+          explicite des termes volume, cinétique et masse. Le passage sous
+          l'intégrale, le tenseur de stress covariant et le Hessien mixte de
+          l'action globale Candidate A restent ouverts.
+          - [x] Sous le contrat explicite de mesurabilité, intégrabilité,
+            domination et Lipschitz local requis pour dériver sous l'intégrale,
+            sommer les huit densités sur la même mesure et les mêmes masses,
+            puis prouver que leur variation intégrée est le `HasDerivAt` de
+            l'unique action métrique--matière sur la courbe commune. Au point
+            de base, cette action est littéralement celle des données matière
+            sectorielles Candidate A. Le résultat reste conditionnel ; stress
+            covariant, Hessien mixte, EH, Maxwell et ghosts restent absents.
     - [x] Sur la même direction synchronisée, donner le Taylor exact de cette
       même action matière+Robin+LL : Euler assemblé réel, moitié du Hessien
       assemblé diagonal réel, puis coefficients cubique et quartique LL
@@ -3485,6 +3620,11 @@ Hessien physique réellement descendu.
               - [x] Sur les observations enrichies issues des directions lisses
                 Robin+LL, identifier directement leur Hessien au pairing du vrai
                 Jacobi réduit, avec bloc scalaire `H¹` explicitement nul.
+                - [x] Composer cette identification avec la vraie dérivée de la
+                  courbe Euler représentative de l'action matière+Robin+LL : sur
+                  cette tranche lisse, elle vaut exactement le pairing du Jacobi
+                  Fredholm réduit. Les blocs métrique, Maxwell et ghosts ainsi
+                  qu'une famille Fredholm globale restent absents.
                 - [x] En déduire qu'une inclusion lisse Robin+LL dans le noyau
                   du vrai Jacobi réduit annule ce Hessien enrichi contre toute
                   observation lisse Robin+LL, sans réciproque.
@@ -3977,6 +4117,12 @@ Hessien physique réellement descendu.
     l'existence de la dérivée de son Euler, l'identifier à la somme des huit
     Hessians de la même action et établir sa symétrie de Helmholtz. Les blocs
     métrique, jauge et ghosts restent absents.
+    - [x] Ajouter une vraie direction métrique diagonale au même objet : dériver
+      pointwise l'Euler matière, identifier sa dérivée métrique à la seconde
+      variation mixte de la même densité, puis passer les deux dérivées sous
+      l'intégrale avec des contrats explicites de mesurabilité, intégrabilité
+      et domination Lipschitz. Ce Hessien mixte intégré reste conditionnel et
+      limité aux huit scalaires, sans EH, Maxwell, ghosts ni bord.
   - [x] Pour l'action unique matière complète + Robin + LL, prouver que la
     dérivée de son Euler est son Hessien assemblé et que celui-ci satisfait la
     symétrie de Helmholtz. Les secteurs EH, jauge et ghosts restent ouverts.
@@ -3998,6 +4144,11 @@ Hessien physique réellement descendu.
     jonction Robin et LL PT, prouver la symétrie de sa vraie seconde variation
     sous échange simultané des trois directions. Cette condition de Helmholtz
     assemblée reste réduite et ne contient aucun bloc métrique, jauge ou ghost.
+  - [x] Pour le multiplet global des huit composantes matière, formuler la
+    condition non linéaire directement comme l'égalité des deux dérivées de
+    l'Euler à tout champ de fond et la prouver par leurs identifications au
+    Hessien symétrique de la même action. Les blocs EH/métrique, Maxwell et
+    ghosts gauge-fixés restent absents.
 - [ ] Reconstruire ou identifier l'action globale normalisée à partir de ces
   données.
   - [x] Pour le bloc scalaire holonome global D8, reconstruire exactement
@@ -4025,6 +4176,25 @@ Hessien physique réellement descendu.
     moitié de la diagonale de son Hessien assemblé. Cette normalisation ne
     couvre toujours pas EH, Maxwell ni les ghosts.
 - [ ] Prouver l'identité de Noether pour les difféomorphismes diagonaux.
+  - [x] Regrouper métrique lorentzienne générale, scalaire, frame et mesure
+    dans une même configuration D8, prouver l'invariance finie inconditionnelle
+    de son action scalaire globale sous leur pullback diagonal simultané, puis
+    obtenir `HasDerivAt ... 0 0` et `deriv = 0` sur le vrai flot complet de
+    translation temporelle. Ce sous-groupe scalaire n'identifie pas encore
+    l'adjoint d'Euler, les Bianchi, un courant local ni l'action Programme P
+    complète.
+    - [x] Spécialiser ce résultat à la vraie mesure lorentzienne canonique et
+      prouver d'abord que son pullback par chaque tranche temporelle lui est
+      littéralement égal ; l'action scalaire globale reste alors constante et
+      sa dérivée s'annule en ne transformant que métrique, champ et frame, avec
+      la mesure physique laissée fixe. Aucun courant local, adjoint d'Euler ni
+      bloc Candidate A supplémentaire n'est obtenu.
+  - [x] Étendre l'invariance diagonale finie et sa dérivée temporelle nulle aux
+    huit vraies composantes matière extraites d'un même `IndependentFields`,
+    avec métrique, frame et mesure communes. Ce résultat porte sur la somme des
+    huit actions scalaires covariantes ; son identification à
+    `globalMatterMultipletAction`, ainsi que les blocs EH, Maxwell, ghosts et
+    bord, restent ouverts.
 - [ ] Dériver les deux identités de Bianchi avec échange matière/interaction et
   flux de frontière.
 - [x] Déterminer dans le modèle réduit exact quand les conservations sectorielles se séparent réellement.
@@ -4035,6 +4205,11 @@ Hessien physique réellement descendu.
 - [ ] Calculer les paramètres PPN pour les couplages matière exacts.
 - [ ] Dériver la réduction ADM depuis l'action EH/GHY/matière covariante.
 - [ ] Construire lapses, shifts, moments et contraintes primaires exactes.
+  - [x] Dans la réduction FLRW Candidate-A seulement, dériver la transformée de
+    Legendre de la même action sous la forme exacte `H = N₊ C₊ + N₋ C₋` pour
+    tous lapses, puis identifier ses deux dérivées partielles aux contraintes
+    primaires `C₊` et `C₋`. Les shifts, l'ADM covariant et le domaine global
+    restent ouverts.
 - [ ] Calculer les contraintes secondaires et leur rang générique.
   - [x] Dans la réduction FLRW Candidate-A fournie, prolonger le témoin isolé
     en une famille affine dont le locus paramétrique de mineur `3 x 3` non nul
@@ -4043,6 +4218,13 @@ Hessien physique réellement descendu.
     dérivation ADM/covariante et l'exclusion du mode de Boulware--Deser restent
     ouverts.
 - [ ] Prouver la fermeture du crochet fonctionnel avec dérivées spatiales.
+  - [x] Sur le seul réseau scalaire à deux sites `Fin 2`, introduire une vraie
+    différence spatiale nearest-neighbour dans le même Hamiltonien, prouver
+    que le covecteur affiché est sa dérivée effective sur toute ligne affine,
+    factoriser exactement le crochet de deux smearings en coefficient
+    antisymétrique fois courant spatial et exhiber un témoin non nul. Ce modèle
+    finite-lattice ne ferme ni le crochet ADM continuum, ni l'algèbre des
+    hypersurfaces, ni l'analyse du mode de Boulware--Deser.
 - [ ] Prouver l'algèbre de déformation des hypersurfaces ou documenter son
   obstruction.
 - [ ] Exclure le mode de Boulware--Deser sur le domaine physique, ou rejeter
@@ -4273,6 +4455,13 @@ champs et avec les mêmes conditions au bord.
   - [ ] Passer à l'opérateur Janus global non borné, avec domaine commun et
     dépendance lisse sur le vrai espace de paramètres.
 - [ ] Relier cette famille au Hessien naturel de l'action Programme P.
+  - [x] À géométrie produit, fold et holonomie fixés, restreindre la fibre
+    Dirac Fredholm au même domaine de graphe commun réel, dériver sa symétrie
+    de l'auto-adjonction formelle, construire son action quadratique canonique
+    et prouver que son pairing est exactement la vraie seconde dérivée de
+    Fréchet de cette même action ; la fibre est simultanément bijective et
+    d'indice zéro. Cette action spectrale propre à la fibre n'est pas l'action
+    naturelle globale Programme P et ne varie ni géométrie ni bord.
   - [x] Sur la somme directe bosonique réduite bulk scalaire + jonction Robin
     + LL PT-symétrique, assembler l'opérateur de Jacobi bloc-diagonal, prouver
     que son pairing est exactement la somme des trois Hessians naturels,
@@ -4289,6 +4478,13 @@ champs et avec les mêmes conditions au bord.
         prouver que le pairing Fredholm sur le secteur lisse dense est
         exactement son Hessien mixte effectif. Cette action réduite n'est pas
         l'action Programme P complète.
+        - [x] En faisant varier uniquement le couplage Robin `kPlus` sur les
+          mêmes espaces réduits fixés, construire une famille `C∞` en norme
+          d'opérateur, prouver bijectivité, image fermée et indice algébrique
+          nul lorsque `kPlus + kMinus ≠ 0`, puis identifier le pairing de chaque
+          membre au Hessien mixte de la même action réduite au même couplage.
+          Ce n'est ni la famille naturelle globale, ni une variation de la
+          géométrie, des domaines, de la jauge ou des ghosts.
         - [x] Injecter exactement le champ LL stocké dans son domaine lisse
           `LLH¹`, puis prouver que la diagonale du pairing Fredholm réduit
           reconstruit cette même action assemblée, après ajout des seuls termes
@@ -4307,6 +4503,14 @@ champs et avec les mêmes conditions au bord.
             projection lisse Robin+LL son pairing au Fredholm réduit. Le scalaire
             réduit est nul et les blocs EH, Maxwell, ghost et bulk auxiliaire
             restent absents.
+            - [x] Placer les ghosts linéaires appariés `U(1)²` et
+              difféomorphisme dans ce même wrapper Robin-complet, prouver que
+              la projection, le vecteur et le pairing Fredholm réduits sont
+              invariants sous leur différentielle BRST, puis identifier le
+              Hessien réduit après `Q` au pairing Fredholm avant `Q`. Cette
+              invariance vient exactement de la projection qui élimine les
+              ghosts : aucun bloc Fredholm ghost ni BRST non linéaire global
+              n'est construit.
     - [x] Munir cette somme réduite de la vraie structure hilbertienne ℓ² via
       `WithLp`, transporter l'opérateur bloc et prouver son auto-adjonction
       effective, tout en conservant pairing Hessien, bijectivité, image fermée
@@ -4360,7 +4564,26 @@ champs et avec les mêmes conditions au bord.
           - [x] Construire le conoyau du symbole apparié et prouver qu'au
             covecteur non nul toute classe y est nulle. Il s'agit uniquement
             de la cohomologie du symbole ponctuel, pas du complexe BRST global.
+  - [x] Pour le seul sous-complexe abélien temporel finite-mode, insérer le
+    doublet de vrais ghosts lisses des secteurs plus/minus dans le bloc BRST/D9
+    commun, identifier sa différentielle à la paire des vrais potentiels
+    exacts `dc`, puis prouver que son noyau est exactement la paire des modes
+    constants et que la coordonnée ghost D9 s'annule après une étape. Les
+    domaines Sobolev, le ghost difféomorphe et la cohomologie globale restent
+    ouverts.
+    - [x] Sans troncature temporelle, sur la paire entière de ghosts abéliens
+      lisses globaux du vrai quotient D8, prouver que les deux sorties
+      potentielles du bloc BRST/D9 commun s'annulent exactement pour deux
+      ghosts constants, et identifier linéairement ce noyau restreint à
+      `ℝ² × ℝ²`. Ce
+      résultat n'est ni le noyau du BRST complet, ni sa cohomologie Sobolev.
 - [ ] Fixer un régulateur commun à tous les secteurs physiques et ghosts.
+  - [x] Au seul cutoff temporel fini, réaliser chaque mode non nul comme un
+    vrai ghost lisse `U(1)^2` dans le même wrapper matière + Robin + LL,
+    identifier son image BRST à `dc`, puis prendre comme valeur propre du
+    régulateur la norme carrée du même multiplicateur Fourier et prouver son
+    invariance PT. La chiralité reste une donnée explicite ; aucun domaine
+    ghost complété, cutoff continuum ni calcul d'anomalie n'est affirmé.
 - [ ] Insérer les multiplicités, statistiques et signes de tous les champs dans
   les coefficients de chaleur et le déterminant.
   - [x] Au cutoff D10 fini, coder les multiplicités et signes bosoniques,
@@ -4422,6 +4645,15 @@ champs et avec les mêmes conditions au bord.
 - [ ] Calculer l'anomalie locale dans le régulateur commun.
 - [ ] Calculer l'holonomie eta et l'anomalie globale.
 - [ ] Comparer le représentant eta à la classe d'inflow.
+  - [x] Dans le représentant cercle/zero-mode, identifier exactement le saut
+    eta de grande jauge unité à `-2` fois le flux spectral unité, sa réduction
+    modulo deux et l'annulation des deux sauts reliés par PT. Ce pont reste
+    limité au cercle : il ne construit ni théorème APS, ni indice familial, ni
+    classe d'inflow globale.
+    - [x] Relier ce flux abstrait au crossing orienté déjà calculé pour la vraie
+      famille bornée du cercle : le saut eta vaut `-2` fois l'incrément spectral
+      affine exact de chaque mode, et les deux folds primitifs PT s'annulent.
+      Cette identification reste propre au cercle normalisé.
 - [ ] Prouver l'annulation PT/inflow pour le contenu de champs complet.
 - [ ] Construire et trivialiser la section de partition lorsque permis.
   - [x] Construire sur la famille cercle une section déterminante régularisée

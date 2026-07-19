@@ -5,6 +5,13 @@
 Program M asks whether familiar physical structures can be obtained from
 weaker mathematics instead of being assumed at the start.
 
+Current checkpoint: the foundational phase is consolidated and the geometric
+comparison is waiting for Program P. The coefficient language may contain
+signed values from the start; zero and nonnegative values are special cases.
+What is *not* assumed universally is a nontrivial involution pairing those
+values into two opposite sectors. See
+[`program_m_status.md`](program_m_status.md).
+
 It does **not** begin by assuming a universe, four dimensions, a metric, two
 sectors or a Janus throat. Its first pilot contains only objects and labelled
 relations between them.

@@ -31,6 +31,8 @@ open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D
 open P0EFTJanusMappingTorusCanonicalLatitudeScalarIPP4D
 open P0EFTJanusMappingTorusPositiveLatitudeJacobian4D
 open P0EFTJanusMappingTorusCanonicalTotalR4BallParametrization4D
@@ -86,10 +88,11 @@ theorem canonicalPositiveLatitudeWeightedNormalCurrent_contDiff
     ContDiff Real ∞
       (canonicalPositiveLatitudeWeightedNormalCurrent
         period hPeriod field base) := by
-  simpa [canonicalPositiveLatitudeWeightedNormalCurrent,
-    canonicalPositiveLatitudeWeight] using
-      (Real.contDiff_cos.pow 2).mul
-        (canonicalLatitudeDerivative_contDiff period hPeriod field base)
+  change ContDiff Real ∞ (fun normal : Real =>
+    Real.cos normal ^ 2 *
+      canonicalLatitudeDerivative period hPeriod field base normal)
+  exact (Real.contDiff_cos.pow 2).mul
+    (canonicalLatitudeDerivative_contDiff period hPeriod field base)
 
 theorem canonicalPositiveLatitudeWeightedNormalCurrent_hasDerivAt
     (field : SmoothScalarField period hPeriod)
@@ -117,8 +120,8 @@ def canonicalPositiveLatitudeWeightedScalarKineticFiber
     (field variation : SmoothScalarField period hPeriod)
     (base : CanonicalLatitudeBase) : Real :=
   ∫ normal in (0 : Real)..1,
-    canonicalPositiveLatitudeWeight normal *
-      canonicalLatitudeDerivative period hPeriod field base normal *
+    canonicalPositiveLatitudeWeightedNormalCurrent
+        period hPeriod field base normal *
       canonicalLatitudeDerivative period hPeriod variation base normal
 
 /-- Weighted Euler term produced by the normal IPP. -/
@@ -169,7 +172,6 @@ theorem canonicalPositiveLatitudeWeightedScalarKineticFiber_eq_euler_add_boundar
   unfold canonicalPositiveLatitudeWeightedScalarKineticFiber
     canonicalPositiveLatitudeWeightedScalarEulerFiber
     canonicalPositiveLatitudeWeightedScalarBoundaryFiber
-    canonicalPositiveLatitudeWeightedNormalCurrent
   rw [hIPP]
   ring
 
@@ -217,10 +219,15 @@ theorem exists_holonomicPatch_canonicalLatitudeDerivative_eq_localGradientSum
   rw [canonicalLatitudeDerivative_eq_mvfderiv_normal]
   change scalarDifferential period hPeriod field point
       (canonicalLatitudeNormalVector period hPeriod base normal) = _
-  simpa only [hCoordinate] using
-    (scalarDifferential_eq_sum_frameCoordinate_mul_localScalarGradient
-      period hPeriod field patch coordinate
-        (canonicalLatitudeNormalVector period hPeriod base normal))
+  calc
+    _ = scalarDifferential period hPeriod field
+        (patch.coordinateMap coordinate)
+        (canonicalLatitudeNormalVector period hPeriod base normal) := by
+      rw [hCoordinate]
+    _ = _ :=
+      scalarDifferential_eq_sum_frameCoordinate_mul_localScalarGradient
+        period hPeriod field patch coordinate
+          (canonicalLatitudeNormalVector period hPeriod base normal)
 
 end
 

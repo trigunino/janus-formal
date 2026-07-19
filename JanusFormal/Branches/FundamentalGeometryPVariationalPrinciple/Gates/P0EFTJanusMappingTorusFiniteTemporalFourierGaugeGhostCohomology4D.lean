@@ -65,9 +65,13 @@ def temporalFourierDerivativeMultiplier (mode : Int) : Complex :=
 def temporalFourierDerivativeCoefficients
     (coefficients : FiniteTemporalFourierCoefficients) :
     FiniteTemporalFourierCoefficients :=
-  coefficients.sum fun mode coefficient =>
-    Finsupp.single mode
-      (coefficient * temporalFourierDerivativeMultiplier period mode)
+  Finsupp.onFinset coefficients.support
+    (fun mode =>
+      coefficients mode * temporalFourierDerivativeMultiplier period mode)
+    (by
+      intro mode hNonzero
+      exact Finsupp.mem_support_iff.mpr (fun hCoefficient =>
+        hNonzero (by rw [hCoefficient, zero_mul])))
 
 @[simp]
 theorem temporalFourierDerivativeCoefficients_single
@@ -76,23 +80,25 @@ theorem temporalFourierDerivativeCoefficients_single
         (Finsupp.single mode coefficient) =
       Finsupp.single mode
         (coefficient * temporalFourierDerivativeMultiplier period mode) := by
-  unfold temporalFourierDerivativeCoefficients
-  rw [Finsupp.sum_single_index]
-  simp
+  classical
+  apply Finsupp.ext
+  intro current
+  change (Finsupp.single mode coefficient) current *
+      temporalFourierDerivativeMultiplier period current =
+    (Finsupp.single mode
+      (coefficient * temporalFourierDerivativeMultiplier period mode)) current
+  by_cases hCurrent : current = mode
+  · subst current
+    rw [Finsupp.single_eq_same, Finsupp.single_eq_same]
+  · rw [Finsupp.single_eq_of_ne hCurrent,
+      Finsupp.single_eq_of_ne hCurrent, zero_mul]
 
 @[simp]
 theorem temporalFourierDerivativeCoefficients_apply
     (coefficients : FiniteTemporalFourierCoefficients) (mode : Int) :
     temporalFourierDerivativeCoefficients period coefficients mode =
       coefficients mode * temporalFourierDerivativeMultiplier period mode := by
-  classical
-  rw [temporalFourierDerivativeCoefficients, Finsupp.sum_apply,
-    Finsupp.sum_eq_single mode, Finsupp.single_eq_same]
-  · intro other _ hOther
-    exact Finsupp.single_eq_of_ne' hOther
-  · intro hMode
-    rw [Finsupp.not_mem_support_iff.mp hMode]
-    simp
+  rfl
 
 theorem temporalFourierDerivativeCoefficients_add
     (first second : FiniteTemporalFourierCoefficients) :
@@ -119,7 +125,7 @@ theorem finiteTemporalFourierTimeSlice_deriv_eq_mvfderiv
     (coefficients : FiniteTemporalFourierCoefficients)
     (point : EffectiveQuotient period) :
     deriv (finiteTemporalFourierTimeSlice period coefficients point) 0 =
-      mvfderiv coverModelWithCorners
+      mfderiv coverModelWithCorners 𝓘(Real, Complex)
         (finiteTemporalFourierFieldLinearMap period coefficients).toFun point
         (effectiveTimeTranslationVelocity period hPeriodPos.out.ne' point) := by
   unfold finiteTemporalFourierTimeSlice
@@ -129,13 +135,14 @@ theorem finiteTemporalFourierTimeSlice_deriv_eq_mvfderiv
         finiteTemporalFourierFieldLinearMap period coefficients
           (effectiveTimeFlow period hPeriodPos.out.ne' parameter point)),
     effectiveTimeTranslationVelocity_eq_timeFlow_mfderiv]
-  simpa only [Function.comp_apply, effectiveTimeFlow_zero] using
-    (mfderiv_comp_apply 0
+  have hComp := mfderiv_comp_apply 0
       ((finiteTemporalFourierFieldLinearMap period coefficients
         ).contMDiff_toFun.mdifferentiable (by simp)
           (effectiveTimeFlow period hPeriodPos.out.ne' 0 point))
       ((effectiveTimeFlow_orbit_contMDiff period hPeriodPos.out.ne' point
-        ).mdifferentiable (by simp) 0) 1)
+        ).mdifferentiable (by simp) 0) 1
+  rw [effectiveTimeFlow_zero] at hComp
+  convert hComp using 1 <;> rfl
 
 /-- One Fourier mode, including its coefficient, has the expected derivative
 along the genuine quotient time flow. -/
@@ -150,11 +157,43 @@ theorem finiteTemporalFourierTimeSlice_single_hasDerivAt
           (Finsupp.single mode coefficient)) point) 0 := by
   obtain ⟨representative, rfl⟩ :=
     mappingTorusMk_surjective (sphereData period) point
-  simpa [finiteTemporalFourierTimeSlice,
-    temporalFourierDerivativeMultiplier, mul_assoc] using
-    HasDerivAt.const_mul coefficient
-      ((hasDerivAt_fourier period mode representative.time
+  have hShift : HasDerivAt
+      (fun parameter : Real =>
+        fourier mode
+          ((representative.time + parameter : Real) : AddCircle period))
+      (temporalFourierDerivativeMultiplier period mode *
+        fourier mode (representative.time : AddCircle period)) 0 := by
+    simpa [temporalFourierDerivativeMultiplier] using
+      ((hasDerivAt_fourier period mode (representative.time + 0)
         ).comp_const_add representative.time 0)
+  have hScaled := HasDerivAt.const_mul coefficient hShift
+  have hSlice : finiteTemporalFourierTimeSlice period
+        (Finsupp.single mode coefficient)
+        (mappingTorusMk (sphereData period) representative) =
+      fun parameter : Real => coefficient *
+        fourier mode
+          ((representative.time + parameter : Real) : AddCircle period) := by
+    funext parameter
+    unfold finiteTemporalFourierTimeSlice
+    rw [effectiveTimeFlow_mk,
+      finiteTemporalFourierField_mk_eq_circle,
+      temporalFourierPolynomialCircleLinearMap_single]
+    rfl
+  have hDerivative : finiteTemporalFourierFieldLinearMap period
+        (temporalFourierDerivativeCoefficients period
+          (Finsupp.single mode coefficient))
+        (mappingTorusMk (sphereData period) representative) =
+      coefficient * (temporalFourierDerivativeMultiplier period mode *
+        fourier mode (representative.time : AddCircle period)) := by
+    rw [temporalFourierDerivativeCoefficients_single,
+      finiteTemporalFourierFieldLinearMap_single]
+    change (coefficient * temporalFourierDerivativeMultiplier period mode) *
+        temporalComplexFourierQuotientField period mode
+          (mappingTorusMk (sphereData period) representative) = _
+    rw [temporalComplexFourierQuotientField_mk]
+    exact mul_assoc _ _ _
+  rw [hSlice, hDerivative]
+  exact hScaled
 
 /-- Every finite Fourier polynomial obeys the same multiplier formula along
 the genuine quotient time flow. -/
@@ -167,21 +206,65 @@ theorem finiteTemporalFourierTimeSlice_hasDerivAt
   classical
   induction coefficients using Finsupp.induction with
   | zero =>
-      simpa [finiteTemporalFourierTimeSlice,
-        temporalFourierDerivativeCoefficients] using
-        (hasDerivAt_const (x := (0 : Real)) (c := (0 : Complex)))
+      have hSlice : finiteTemporalFourierTimeSlice period 0 point =
+          fun _ : Real => (0 : Complex) := by
+        funext parameter
+        change (finiteTemporalFourierFieldLinearMap period 0).toFun
+          (effectiveTimeFlow period hPeriodPos.out.ne' parameter point) = 0
+        rw [map_zero]
+        rfl
+      have hDerivative : finiteTemporalFourierFieldLinearMap period
+          (temporalFourierDerivativeCoefficients period 0) point = 0 := by
+        have hCoefficients :
+            temporalFourierDerivativeCoefficients period 0 = 0 := by
+          apply Finsupp.ext
+          intro mode
+          simp
+        rw [hCoefficients, map_zero]
+        rfl
+      rw [hSlice, hDerivative]
+      exact hasDerivAt_const (x := (0 : Real)) (c := (0 : Complex))
   | single_add mode coefficient rest hCoefficient hMode ih =>
       have hSingle := finiteTemporalFourierTimeSlice_single_hasDerivAt
         period mode coefficient point
-      simpa [finiteTemporalFourierTimeSlice,
-        temporalFourierDerivativeCoefficients_add] using hSingle.add ih
+      have hSlice : finiteTemporalFourierTimeSlice period
+          (Finsupp.single mode coefficient + rest) point =
+          fun parameter =>
+            finiteTemporalFourierTimeSlice period
+                (Finsupp.single mode coefficient) point parameter +
+              finiteTemporalFourierTimeSlice period rest point parameter := by
+        funext parameter
+        have hFields : finiteTemporalFourierFieldLinearMap period
+              (Finsupp.single mode coefficient + rest) =
+            finiteTemporalFourierFieldLinearMap period
+                (Finsupp.single mode coefficient) +
+              finiteTemporalFourierFieldLinearMap period rest :=
+          map_add _ _ _
+        have hEvaluated := congrArg
+          (fun field : SmoothQuotientField period hPeriodPos.out.ne' Complex =>
+            field.toFun
+              (effectiveTimeFlow period hPeriodPos.out.ne' parameter point))
+          hFields
+        exact hEvaluated
+      have hDerivative : finiteTemporalFourierFieldLinearMap period
+          (temporalFourierDerivativeCoefficients period
+            (Finsupp.single mode coefficient + rest)) point =
+          finiteTemporalFourierFieldLinearMap period
+              (temporalFourierDerivativeCoefficients period
+                (Finsupp.single mode coefficient)) point +
+            finiteTemporalFourierFieldLinearMap period
+              (temporalFourierDerivativeCoefficients period rest) point := by
+        rw [temporalFourierDerivativeCoefficients_add, map_add]
+        rfl
+      rw [hSlice, hDerivative]
+      exact hSingle.add ih
 
 /-- Public intrinsic derivative formula for the finite Fourier field.  The
 coefficient at mode `n` is multiplied by `2π i n / period`. -/
 theorem finiteTemporalFourierField_mvfderiv_timeTranslationVelocity
     (coefficients : FiniteTemporalFourierCoefficients)
     (point : EffectiveQuotient period) :
-    mvfderiv coverModelWithCorners
+    mfderiv coverModelWithCorners 𝓘(Real, Complex)
         (finiteTemporalFourierFieldLinearMap period coefficients).toFun point
         (effectiveTimeTranslationVelocity period hPeriodPos.out.ne' point) =
       finiteTemporalFourierFieldLinearMap period
@@ -217,32 +300,46 @@ theorem finiteTemporalFourierExactGauge_timeTranslationVelocity
       (fun quotientPoint => complexGaugeCoordinateCLM component
         (finiteTemporalFourierFieldLinearMap period coefficients quotientPoint))
       point (effectiveTimeTranslationVelocity period hPeriodPos.out.ne' point) = _
-  have hComp := mfderiv_comp_apply point
-    (complexGaugeCoordinateCLM component).contDiff.mdifferentiableAt
-    ((finiteTemporalFourierFieldLinearMap period coefficients
-      ).contMDiff_toFun.mdifferentiableAt (by simp))
+  have hCoordinate : MDifferentiableAt 𝓘(Real, Complex) 𝓘(Real, Real)
+      (complexGaugeCoordinateCLM component)
+      (finiteTemporalFourierFieldLinearMap period coefficients point) :=
+    (complexGaugeCoordinateCLM component).differentiableAt.mdifferentiableAt
+  have hField : MDifferentiableAt coverModelWithCorners 𝓘(Real, Complex)
+      (finiteTemporalFourierFieldLinearMap period coefficients).toFun point :=
+    (finiteTemporalFourierFieldLinearMap period coefficients
+      ).contMDiff_toFun.mdifferentiableAt (by simp)
+  have hComp := mfderiv_comp_apply point hCoordinate hField
     (effectiveTimeTranslationVelocity period hPeriodPos.out.ne' point)
   rw [finiteTemporalFourierField_mvfderiv_timeTranslationVelocity] at hComp
-  simpa only [Function.comp_apply, mfderiv_eq_fderiv,
-    ContinuousLinearMap.fderiv, complexGaugeCoordinateCLM_apply] using hComp
+  simp only [mfderiv_eq_fderiv, ContinuousLinearMap.fderiv] at hComp
+  convert hComp using 1 <;> rfl
 
 private theorem finiteTemporalFourierDerivativeField_eq_zero_of_exact
     (coefficients : FiniteTemporalFourierCoefficients)
     (hExact : finiteTemporalFourierExactGaugeLinearMap period coefficients = 0) :
     finiteTemporalFourierFieldLinearMap period
         (temporalFourierDerivativeCoefficients period coefficients) = 0 := by
+  change exactGaugePotential period hPeriodPos.out.ne'
+      (finiteTemporalFourierGaugeGhostLinearMap period coefficients) = 0 at hExact
   apply SmoothQuotientField.ext period hPeriodPos.out.ne' Complex
   intro point
+  change finiteTemporalFourierFieldLinearMap period
+      (temporalFourierDerivativeCoefficients period coefficients) point = 0
   apply complexGaugeLieAlgebraEquiv.injective
-  apply DFunLike.ext _ _
+  rw [map_zero]
+  apply PiLp.ext
   intro component
   have hEvaluation := congrArg
     (fun potential : SmoothAbelianGaugePotential period hPeriodPos.out.ne' =>
       potential.toFun component point
         (effectiveTimeTranslationVelocity period hPeriodPos.out.ne' point))
     hExact
+  change (finiteTemporalFourierExactGaugeLinearMap period coefficients).toFun
+      component point
+        (effectiveTimeTranslationVelocity period hPeriodPos.out.ne' point) = 0
+    at hEvaluation
   rw [finiteTemporalFourierExactGauge_timeTranslationVelocity] at hEvaluation
-  simpa using hEvaluation
+  exact hEvaluation
 
 private theorem temporalFourierDerivativeMultiplier_ne_zero
     (mode : Int) (hMode : mode ≠ 0) :

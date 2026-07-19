@@ -208,8 +208,11 @@ theorem effectiveTimeTranslationVelocity_eq_timeFlow_mfderiv
       mfderiv 𝓘(Real, Real) coverModelWithCorners
         (fun parameter : Real =>
           effectiveTimeFlow period hPeriod parameter point) 0 1 := by
-  simpa only [effectiveTimeTranslationCurve] using
-    effectiveTimeTranslationVelocity_eq_curve_mfderiv period hPeriod point
+  change effectiveTimeTranslationVelocity period hPeriod point =
+    mfderiv 𝓘(Real, Real) coverModelWithCorners
+      (effectiveTimeTranslationCurve period hPeriod point) 0 1
+  exact effectiveTimeTranslationVelocity_eq_curve_mfderiv
+    period hPeriod point
 
 /-- Each orbit of the genuine complete quotient time flow is smooth. -/
 theorem effectiveTimeFlow_orbit_contMDiff
@@ -217,8 +220,9 @@ theorem effectiveTimeFlow_orbit_contMDiff
     ContMDiff 𝓘(Real, Real) coverModelWithCorners ω
       (fun parameter : Real =>
         effectiveTimeFlow period hPeriod parameter point) := by
-  simpa only [effectiveTimeTranslationCurve] using
-    effectiveTimeTranslationCurve_contMDiff period hPeriod point
+  change ContMDiff 𝓘(Real, Real) coverModelWithCorners ω
+    (effectiveTimeTranslationCurve period hPeriod point)
+  exact effectiveTimeTranslationCurve_contMDiff period hPeriod point
 
 /-- Exact remaining regularity input for two arbitrary metric derivatives
 along the fixed analytic time flow.  No arbitrary tangent ghost is
