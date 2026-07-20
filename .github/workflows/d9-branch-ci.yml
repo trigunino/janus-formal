@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build-program-p:
-    name: Build Program P
+    name: Build Program P and D9 packet leaf
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -22,12 +22,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Lean target
+      - name: Build Lean targets
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
           build: true
-          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+          build-args: >-
+            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeGhostBlockD9FiniteZeroModePacket4D
           test: false
           lint: false
           use-mathlib-cache: true
