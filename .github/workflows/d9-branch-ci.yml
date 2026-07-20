@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   build-d9-leaf:
-    name: Build D9 finite packet leaf
+    name: Build D9 finite cokernel support leaf
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -31,7 +31,7 @@ jobs:
         with:
           auto-config: false
           build: true
-          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeGhostBlockD9FiniteZeroModePacket4D
+          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeGhostBlockD9FiniteCokernelSupport4D
           test: false
           lint: false
           use-mathlib-cache: true
