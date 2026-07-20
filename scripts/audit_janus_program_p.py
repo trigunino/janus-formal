@@ -5974,6 +5974,39 @@ PROGRAM_P_GATES = {
             "theorem latitudeAmbientVelocity_inner_fixedLatitudeDerivative_zero",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeNormalCovectorCollarDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCoverLorentzTensor_normalLatitude_slice_orthogonal",
+            "theorem intrinsicMetric_normal_canonicalLatitudeCollarBase_orthogonal",
+            "theorem mfderiv_canonicalLatitudeCollarMap_decomposition",
+            "theorem canonicalLatitudeNormalCovector_comp_mfderiv_collar_apply",
+            "theorem mfderiv_cutBulkCanonicalCutoffCollarPullback_eq_normalCovector",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeAdaptedHolonomicGreenCurrentFlux4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localMetricMatrix_adapted_zero_row",
+            "theorem localInverseMetricMatrix_adapted_zero_row",
+            "theorem localScalarGradient_adapted_zero_normal",
+            "theorem localActualScalarRaisedGradient_adapted_zero_normal",
+            "theorem localActualScalarGreenCurrent_adapted_zero_normal",
+            "theorem localActualScalarGreenCurrent_adapted_zero_eq_globalNormalFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeHolonomicGlobalCutoffPullback4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeHolonomicGlobalCutoffPullback",
+            "theorem canonicalLatitudeHolonomicGlobalCutoffPullback_eventuallyEq",
+            "def canonicalLatitudeCenteredHolonomicGlobalCutoffPullback",
+            "theorem canonicalLatitudeCenteredHolonomicGlobalCutoffPullback_eventuallyEq",
+            "theorem canonicalLatitudeCenteredHolonomicGlobalCutoffPullback_fderiv_basis",
+            "theorem canonicalLatitudeCenteredHolonomicGlobalCutoffPullback_normalOnlyAt",
+            "theorem localActualCenteredGlobalCutoffGreenCoordinateDivergence_eq_normalCurrent_of_free",
+        ),
+    ),
     "P0EFTJanusMappingTorusHolonomicDiagonalSharp4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
