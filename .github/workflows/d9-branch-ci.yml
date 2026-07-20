@@ -12,9 +12,32 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: d9-branch-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  build-d9-leaf:
+    name: Build D9 finite packet leaf
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build D9 leaf
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeGhostBlockD9FiniteZeroModePacket4D
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
   build-program-p:
-    name: Build Program P and D9 packet leaf
+    name: Build Program P integration head
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -22,14 +45,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Lean targets
+      - name: Build Program P
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
           build: true
-          build-args: >-
-            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
-            JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeGhostBlockD9FiniteZeroModePacket4D
+          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
           test: false
           lint: false
           use-mathlib-cache: true
