@@ -20,6 +20,7 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeScalarNormalCurrent4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusCanonicalHolonomicChartBallRealization4D
 open P0EFTJanusMappingTorusCanonicalTotalR4BallParametrization4D
 
@@ -132,6 +133,21 @@ structure NormalAdaptedHolonomicChart
       coordinateMap 0 (Pi.single 0 1) =
         canonicalLatitudeNormalVector period hPeriod base normal
 
+def NormalAdaptedHolonomicChart.toSmoothHolonomicFrameChart4
+    {base : CanonicalLatitudeBase} {normal : Real}
+    (chart : NormalAdaptedHolonomicChart period hPeriod base normal) :
+    SmoothHolonomicFrameChart4 period hPeriod :=
+  smoothHolonomicFrameChart4OfLocalDiffeomorph period hPeriod
+    chart.coordinateMap chart.isLocalDiffeomorph
+
+theorem NormalAdaptedHolonomicChart.frame_zero_normal
+    {base : CanonicalLatitudeBase} {normal : Real}
+    (chart : NormalAdaptedHolonomicChart period hPeriod base normal) :
+    (chart.toSmoothHolonomicFrameChart4 period hPeriod).frame 0 0 =
+      canonicalLatitudeNormalVector period hPeriod base normal := by
+  rw [SmoothHolonomicFrameChart4.frame_eq_coordinateDerivative]
+  exact chart.derivative_normal
+
 /-- Every canonical latitude point admits a total normal-adapted holonomic
 chart; no overlap or field equation is assumed. -/
 theorem normalAdaptedHolonomicChart_exists
@@ -203,7 +219,6 @@ theorem normalAdaptedHolonomicChart_exists
       (hReparametrization.mdifferentiable (by simp) 0)
       (map_zero reparametrization)
       (Pi.single 0 1 : Vector4)
-    have hReparametrizationZero : reparametrization 0 = 0 := map_zero _
     have hReparametrizationBasis :
         reparametrization (Pi.single 0 1 : Vector4) = targetPreimage := by
       dsimp [reparametrization]
@@ -222,6 +237,19 @@ theorem normalAdaptedHolonomicChart_exists
       baseMap 0 targetPreimage = _
     rw [← hBase.mfderivToContinuousLinearEquiv_coe (by simp) 0]
     exact baseDerivative.apply_symm_apply _
+
+theorem smoothHolonomicFrameChart4_normalAdapted_exists
+    (base : CanonicalLatitudeBase) (normal : Real) :
+    ∃ patch : SmoothHolonomicFrameChart4 period hPeriod,
+      patch.coordinateMap 0 =
+          quotientNormalLatitude period hPeriod
+            (canonicalLatitudeAnchor period hPeriod base) normal ∧
+        patch.frame 0 0 =
+          canonicalLatitudeNormalVector period hPeriod base normal := by
+  let chart := Classical.choice
+    (normalAdaptedHolonomicChart_exists period hPeriod base normal)
+  exact ⟨chart.toSmoothHolonomicFrameChart4 period hPeriod,
+    chart.at_zero, chart.frame_zero_normal period hPeriod⟩
 
 end
 end P0EFTJanusMappingTorusCanonicalLatitudeNormalAdaptedHolonomicChart4D
