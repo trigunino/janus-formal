@@ -4,10 +4,36 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+PROGRAM_P_OPERATIONAL_TODO = Path("docs/program_p_operational_todo.md")
+TERMINAL_GATE_IDS = tuple(f"T{index:02d}" for index in range(1, 15))
+TERMINAL_GATE_SCOPES = {
+    "GLOBAL",
+    "SECTORIEL",
+    "RÉDUIT",
+    "FINITE-MODE",
+    "POINTWISE",
+    "CONDITIONNEL",
+    "DOCUMENTAIRE",
+}
+
+
+@dataclass(frozen=True)
+class TerminalGateEvidence:
+    module: Path
+    facade: Path
+    theorem: str
+    scope: str
+    expected_type_fragment: str
+
+
+# A checked terminal gate must first receive concrete evidence here.  Empty is
+# intentional while T01--T14 are all open.
+TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {}
 GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates"
 )
@@ -2938,6 +2964,40 @@ PROGRAM_P_GATES = {
             "theorem powerLawZeroOverZeroPath_denominator_faster_tendsto_atTop",
         ),
     ),
+    "P0EFTJanusGlobalDiagonalRealPowerZeroOverZeroClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def realPowerZeroOverZeroPath",
+            "theorem realPowerZeroOverZeroPath_mem_globalDomain",
+            "theorem realPowerZeroOverZeroPath_zero",
+            "theorem realPowerZeroOverZeroPath_continuous",
+            "theorem realPowerZeroOverZeroPath_tendsto_common_boundary",
+            "theorem realPowerZeroOverZeroPath_root_eq_sqrt_rpow_sub",
+            "theorem realPowerZeroOverZeroPath_equal_exponents_tendsto_one",
+            "theorem realPowerZeroOverZeroPath_numerator_faster_tendsto_zero",
+            "theorem realPowerZeroOverZeroPath_denominator_faster_tendsto_atTop",
+        ),
+    ),
+    "P0EFTJanusGlobalDiagonalFunctionalZeroOverZeroClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def functionalZeroOverZeroPath",
+            "theorem functionalZeroOverZeroPath_mem_globalDomain",
+            "theorem functionalZeroOverZeroPath_tendsto_common_boundary",
+            "theorem functionalZeroOverZeroPath_root_eq",
+            "theorem functionalZeroOverZeroPath_root_tendsto_of_ratio",
+            "theorem functionalZeroOverZeroPath_root_tendsto_atTop_of_ratio",
+        ),
+    ),
+    "P0EFTJanusRegularMovingSimilarityFunctionalZeroOverZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def functionalFiniteLimitSpectrum",
+            "theorem functionalSpectrum_tendsto_of_ratio",
+            "theorem regularMovingSimilarity_functional_full_matrix_limit",
+            "theorem regularMovingSimilarity_functional_no_finite_matrix_limit",
+        ),
+    ),
     "P0EFTJanusPositiveRootFrontierSuite4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3164,6 +3224,16 @@ PROGRAM_P_GATES = {
             "theorem localLeviCivitaStressDivergence_eq_zero_of_euler",
         ),
     ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalInverseDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localMetricMatrix_fderiv_basis",
+            "def localActualInverseMetricDerivative",
+            "theorem localActualInverseMetricDerivative_eq_leviCivita",
+            "theorem localActualInverseMetricDerivative_apply",
+            "theorem localMetricInverseEntry_fderiv_basis",
+        ),
+    ),
     "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3185,6 +3255,79 @@ PROGRAM_P_GATES = {
             "theorem localSmoothScalarStressDivergence_apply",
             "theorem localSmoothScalarStressDivergence_contDiff",
             "theorem localSmoothScalarStressDivergence_eq_zero_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarGreenDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def covariantScalarGreenJetCurrent",
+            "def covariantScalarGreenJetDivergence",
+            "theorem covariantScalarGreenJetDivergence_eq_waveDifference",
+            "def localSmoothScalarGreenCurrent",
+            "def localSmoothScalarGreenDivergence",
+            "theorem localSmoothScalarGreenDivergence_eq_waveDifference",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarRaisedGradientDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localScalarGradient_fderiv_basis",
+            "def localActualScalarRaisedGradient",
+            "theorem localActualScalarRaisedGradient_eq_localSmooth",
+            "theorem localActualScalarRaisedGradient_fderiv_basis",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarGreenCoordinateDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localScalarRepresentative_fderiv_basis",
+            "def localActualScalarGreenCurrent",
+            "theorem localActualScalarGreenCurrent_eq_localSmooth",
+            "theorem localActualScalarGreenCurrent_fderiv_basis_leibniz",
+            "theorem localActualScalarGreenCurrent_fderiv_basis",
+            "def localActualScalarGreenCoordinateDivergence",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarCovariantDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coordinateRaisedScalarPartialDerivative",
+            "def coordinateRaisedScalarCovariantDerivative",
+            "theorem coordinateRaisedScalarCovariantDerivative_eq_hessian",
+            "def localActualScalarRaisedGradientDivergence",
+            "theorem localActualScalarRaisedGradientDivergence_eq_wave",
+            "theorem localActualScalarGreenCoordinateDivergence_eq_waveDifference",
+            "theorem localActualScalarGreenCoordinateDivergence_eq_localSmooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalCutoffScalarGreenDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localActualCutoffScalarGreenCurrent",
+            "def localActualCutoffScalarGreenCoordinateDivergence",
+            "theorem localActualCutoffScalarGreenCurrent_fderiv_basis",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_leibniz",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_gradientFlux_of_free",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalCutoffGreenNormalTangentialSplit4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localActualCutoffScalarGreenCoordinateDivergenceTerm",
+            "def localActualCutoffScalarGreenCoordinateNormalDivergence",
+            "def localActualCutoffScalarGreenCoordinateTangentialDivergence",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_normal_add_tangential",
+            "def LocalCutoffNormalOnlyAt",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_normalGradientFlux_of_free",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkPointwiseScalarGreenDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def QuotientPointwiseActualScalarGreenDivergenceIdentity",
+            "theorem quotientPointwiseActualScalarGreenDivergenceIdentity",
+            "def CutBulkPointwiseActualScalarGreenDivergenceIdentity",
+            "theorem cutBulkPointwiseActualScalarGreenDivergenceIdentity",
         ),
     ),
     "P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaOverlap4D.lean": (
@@ -3211,6 +3354,25 @@ PROGRAM_P_GATES = {
             "theorem CanonicalRebasedHolonomicAtlasTransitionJetContract.toStressCompatibility",
             "structure CanonicalHolonomicAtlasStressConservationBridge",
             "theorem CanonicalHolonomicAtlasStressConservationBridge.stressCompatible",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalHolonomicAtlasScalarGreenDivergenceTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localActualScalarGreenCoordinateDivergence_eq_of_rebasedTransitions",
+            "structure CanonicalRebasedHolonomicAtlasScalarGreenTransitionJetContract",
+            "def CanonicalAtlasActualScalarGreenDivergenceCompatible",
+            "theorem CanonicalRebasedHolonomicAtlasScalarGreenTransitionJetContract.compatible",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalScalarGreenDivergenceGluing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalHolonomicAtlasScalarGreenDivergenceBridge",
+            "def globalActualScalarGreenDivergence",
+            "theorem globalActualScalarGreenDivergence_eq_local",
+            "theorem globalActualScalarGreenDivergence_eq_waveDifference",
+            "def cutBulkGlobalActualScalarGreenDivergence",
         ),
     ),
     "P0EFTJanusMappingTorusCanonicalHolonomicAtlasCoverReduction4D.lean": (
@@ -3251,6 +3413,20 @@ PROGRAM_P_GATES = {
             "theorem canonicalTotalHolonomicAtlasCover_covers",
             "theorem canonicalHolonomicAtlasCoverRealizable_unconditional",
             "theorem canonicalTotalHolonomicAtlas_scalarStressConservation_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalTotalHolonomicAtlasScalarGreenConservation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localActualScalarGreenCoordinateDivergence_eq_zero_of_equalMassEuler",
+            "def HolonomicAtlasLocalActualScalarGreenDivergenceFree",
+            "theorem holonomicAtlasLocalActualScalarGreenDivergenceFree_of_equalMassEuler",
+            "def QuotientPointwiseActualScalarGreenDivergenceFree",
+            "theorem canonicalTotalHolonomicAtlas_scalarGreenDivergenceFree_of_equalMassEuler",
+            "def globalEqualMassEulerActualScalarGreenDivergence",
+            "theorem globalEqualMassEulerActualScalarGreenDivergence_eq_local",
+            "def cutBulkGlobalEqualMassEulerActualScalarGreenDivergence",
+            "theorem cutBulkPointwiseActualScalarGreenDivergenceFree_of_equalMassEuler",
         ),
     ),
     "P0EFTJanusMappingTorusGlobalScalarStressConservation4D.lean": (
@@ -3907,6 +4083,17 @@ PROGRAM_P_GATES = {
             "theorem independentMatter_completeTimeDiagonalAction_hasDerivAt_zero",
         ),
     ),
+    "P0EFTJanusMappingTorusGlobalMatterArbitraryDiffeomorphismNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def arbitraryDiffeomorphismMatterActionOrbit",
+            "theorem arbitraryDiffeomorphismMatterActionOrbit_eq",
+            "theorem arbitraryDiffeomorphismMatterActionOrbit_hasDerivAt_zero",
+            "theorem arbitraryDiffeomorphismMatterActionOrbit_deriv_eq_zero",
+            "theorem independentMatter_arbitraryDiffeomorphismAction_hasDerivAt_zero",
+            "theorem independentMatter_arbitraryDiffeomorphismAction_deriv_eq_zero",
+        ),
+    ),
     "P0EFTJanusMappingTorusCanonicalLorentzVolumeTimeTranslationInvariance4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -4192,6 +4379,24 @@ PROGRAM_P_GATES = {
             "theorem canonicalLatitudeAmbientPinMinusTransitionLift_projection",
         ),
     ),
+    "P0EFTJanusPrimitiveMonopolePinMinusCharacterCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def primitiveMonopolePinMinusTransition",
+            "theorem primitiveMonopolePinMinusTransition_pt",
+            "theorem primitiveMonopolePinMinusTransition_pt_product",
+            "theorem primitiveMonopolePinMinusTransition_square",
+            "theorem primitiveMonopolePinMinusTransition_projection",
+            "theorem leastNonzeroThroatMonopolePinMinusTransition_square",
+        ),
+    ),
+    "P0EFTJanusNormalRootSpinCDeterminantChernCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem normalRoot_primitiveSpinCTwist_determinant_separation",
+            "theorem primitiveSpinCTwist_determinant_even",
+        ),
+    ),
     "P0EFTJanusMappingTorusAmbientPinMinusReferenceWindingFrontier4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -4273,6 +4478,114 @@ PROGRAM_P_GATES = {
             "theorem canonicalAmbientPinMinusPrincipalTransition_restricts_to_throat",
             "structure CanonicalAmbientPinMinusActualPrincipalBundle",
             "def canonicalAmbientPinMinusActualPrincipalBundle",
+        ),
+    ),
+    "P0EFTJanusCanonicalEffectiveDecoratedMappingTorus4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalSmoothEffectiveThroatEmbedding",
+            "structure CanonicalEffectiveDecoratedMappingTorus",
+            "def canonicalEffectiveDecoratedMappingTorus",
+            "theorem canonicalEffectiveDecoratedMappingTorus_lorentzMetric",
+            "theorem canonicalEffectiveDecoratedMappingTorus_actionMeasure",
+            "theorem canonicalEffectiveDecoratedMappingTorus_throatEmbedding",
+            "theorem canonicalEffectiveDecoratedMappingTorus_pinMinusCore",
+        ),
+    ),
+    "P0EFTJanusCanonicalDecoratedConformalCandidateA4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalDecoratedConformalCandidateA",
+            "def canonicalDecoratedConformalCandidateA",
+            "theorem canonicalDecoratedConformalCandidateA_plusMetric",
+            "theorem canonicalDecoratedConformalCandidateA_minusMetric",
+            "theorem canonicalDecoratedConformalCandidateA_rootScale_apply",
+            "theorem canonicalDecoratedConformalCandidateA_rootOperator_apply",
+            "theorem canonicalDecoratedConformalCandidateA_rootOperator_square",
+            "theorem canonicalDecoratedConformalCandidateA_root_square",
+            "theorem canonicalDecoratedConformalCandidateA_density_eq_isotropicMatrix4",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothConformalCandidateARoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def conformalRelativeRatioField",
+            "theorem conformalRelativeRatioField_pos",
+            "def smoothConformalCandidateARootScale",
+            "theorem smoothConformalCandidateARootScale_apply",
+            "theorem conformalCandidateARootAt_eq_smooth_scale",
+            "theorem smoothConformalCandidateARootScale_square",
+            "abbrev SmoothAmbientTangentSection",
+            "def smoothConformalCandidateARootAction",
+            "theorem smoothConformalCandidateARootAction_apply",
+            "def smoothConformalCandidateARootOperator",
+            "def smoothConformalRelativeAction",
+            "def smoothConformalRelativeOperator",
+            "theorem smoothConformalCandidateARootOperator_square",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothConformalCandidateARootInverse4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothConformalCandidateARootScale_pos",
+            "theorem smoothConformalCandidateARootScale_mul_swapped",
+            "def smoothConformalCandidateARootInverseOperator",
+            "theorem smoothConformalCandidateARootInverseOperator_left",
+            "theorem smoothConformalCandidateARootInverseOperator_right",
+        ),
+    ),
+    "P0EFTJanusCanonicalDecoratedProgramPFieldDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalDecoratedProgramPFieldDomain",
+            "def canonicalDecoratedProgramPFieldDomain",
+            "theorem canonicalDecoratedProgramPFieldDomain_configuration",
+            "theorem canonicalPositiveOperatorFields_ptMatched",
+            "theorem canonicalDecoratedProgramPFieldDomain_ptMatched",
+            "theorem canonicalDecoratedProgramPFieldDomain_root_square",
+            "theorem canonicalDecoratedProgramPFieldDomain_satisfies_boundary",
+            "theorem canonicalDecoratedProgramPFieldDomain_embedding_injective",
+        ),
+    ),
+    "P0EFTJanusCanonicalDecoratedGeneralLorentzFieldPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalDecoratedGeneralLorentzFieldPacket",
+            "def canonicalDecoratedGeneralLorentzFields",
+            "def canonicalDecoratedGeneralLorentzFieldPacket",
+            "theorem canonicalDecoratedGeneralLorentzFields_scaffold",
+            "theorem canonicalDecoratedGeneralLorentzFieldPacket_metrics",
+            "theorem canonicalDecoratedGeneralLorentzFields_pt_fixed",
+            "theorem canonicalDecoratedGeneralLorentzFieldPacket_satisfies_boundary",
+            "theorem canonicalDecoratedGeneralLorentzBoundary_pt_fixed",
+        ),
+    ),
+    "P0EFTJanusCanonicalPTPairedConformalGeneralLorentzFieldPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptPairedConformalScale",
+            "theorem ptPairedConformalScale_pos",
+            "theorem conformalSmoothGeneralLorentzMetric_ptPullback",
+            "theorem ptPairedConformalMetricPair_pt_fixed",
+            "structure CanonicalPTPairedConformalGeneralLorentzFieldPacket",
+            "def canonicalPTPairedConformalGeneralLorentzFields",
+            "def canonicalPTPairedConformalGeneralLorentzFieldPacket",
+            "theorem canonicalPTPairedConformalGeneralLorentzFields_scaffold",
+            "theorem canonicalPTPairedConformalGeneralLorentzFieldPacket_metrics",
+            "theorem canonicalPTPairedConformalGeneralLorentzFields_pt_fixed",
+            "theorem canonicalPTPairedConformalGeneralLorentzFieldPacket_root_square",
+            "theorem canonicalPTPairedConformalGeneralLorentzFieldPacket_satisfies_boundary",
+            "theorem canonicalPTPairedConformalGeneralLorentzBoundary_pt_fixed",
+            "def periodicSineCoverField",
+            "def periodicSineQuotientField",
+            "theorem periodicSineQuotientField_mk",
+            "def explicitPositivePTScale",
+            "theorem explicitPositivePTScale_pos",
+            "theorem explicitPositivePTScale_ne_partner",
+            "theorem conformalSmoothGeneralLorentzMetric_injective_scale",
+            "theorem explicitPositivePTConformalMetrics_ne",
+            "def explicitDistinctPTPairedConformalGeneralLorentzFieldPacket",
+            "theorem explicitDistinctPTPairedConformalGeneralLorentzFieldPacket_metrics_ne",
         ),
     ),
     "P0EFTJanusMappingTorusCandidateAIntegratedMetricHessian4D.lean": (
@@ -5596,6 +5909,710 @@ PROGRAM_P_GATES = {
             "theorem volumeDensity_sq_eq_absDet_sameMetric",
         ),
     ),
+    "P0EFTJanusMappingTorusHolonomicCoordinateEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicCoefficientLinearMap",
+            "theorem holonomicVectorCoefficient_tangentCoordinate",
+            "def holonomicReconstructionLinearMap",
+            "def holonomicCoordinateLinearEquiv",
+            "def holonomicCoordinateEquiv",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCollarHolonomicCoordinateEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def collarHolonomicCoordinateLinearEquiv",
+            "def collarHolonomicCoordinateEquiv",
+            "theorem collarHolonomicCoordinateEquiv_normal",
+            "theorem collarHolonomicCoordinateEquiv_time",
+            "theorem collarHolonomicCoordinateEquiv_sphere",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeHolonomicCutoffDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicNormalCoordinate",
+            "def canonicalLatitudeHolonomicCollarCutoff",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_contDiff",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_fderiv_basis",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_fderiv_normal",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_normalOnlyAt",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_differentiableAt",
+            "theorem localActualCanonicalLatitudeCutoffGreenCoordinateDivergence_eq_normalFlux_of_free",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalSharp4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicDiagonalPair",
+            "def holonomicDiagonalSharp",
+            "theorem holonomicDiagonalPair_sharp",
+            "theorem covector_holonomicDiagonalSharp",
+            "theorem diagonalHolonomicKineticDensity_eq_model_sharp_contraction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalMusical4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicDiagonalCovector",
+            "def holonomicDiagonalFlat",
+            "theorem holonomicDiagonalFlat_bijective",
+            "def holonomicDiagonalMusical",
+            "theorem holonomicDiagonalMusical_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalLorentzFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicSqrtScale",
+            "def holonomicDiagonalLorentzFrame",
+            "theorem holonomicDiagonalLorentzFrame_coefficient",
+            "theorem holonomicDiagonalPair_eq_modelMinkowskiPair",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalVolumeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicDiagonalGramMatrix",
+            "theorem holonomicDiagonalGramMatrix_eq_lorentzMetric",
+            "def holonomicDiagonalGramVolumeDensity",
+            "theorem holonomicDiagonalGramVolumeDensity_eq_sqrt_prod",
+            "theorem diagonalMetricVolumeDensity_eq_holonomicDiagonalGramVolumeDensity",
+        ),
+    ),
+    "P0EFTJanusMappingTorusLocalHolonomicDiagonalLorentzMetric4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localHolonomicDiagonalMusical",
+            "def localHolonomicDiagonalTensor",
+            "def localHolonomicDiagonalLorentzFrame",
+            "theorem localHolonomicDiagonalTensor_apply",
+            "theorem localHolonomicDiagonalTensor_lorentzian",
+            "theorem localHolonomicDiagonalMusical_inverse",
+        ),
+    ),
+    "P0EFTJanusMappingTorusLocalHolonomicDiagonalGluingCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def PreservesHolonomicDiagonalPair",
+            "theorem localHolonomicDiagonalTensor_eq_iff_transition_preserves",
+            "def HolonomicDiagonalGluingCondition",
+            "theorem holonomicDiagonalGluingCondition_iff_local_tensors_eq",
+        ),
+    ),
+    "P0EFTJanusMappingTorusPointwiseHolonomicDiagonalLorentzMetric4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pointwiseHolonomicDiagonalMusical",
+            "def pointwiseHolonomicDiagonalTensor",
+            "theorem pointwiseHolonomicDiagonalTensor_eq_musical",
+            "theorem pointwiseHolonomicDiagonalTensor_nondegenerate",
+            "theorem pointwiseHolonomicDiagonalTensor_lorentzian",
+            "theorem pointwiseHolonomicDiagonalTensor_eq_local",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothHolonomicDiagonalRealization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothHolonomicDiagonalRealization",
+            "def SmoothHolonomicDiagonalRealization.toSmoothGeneralLorentzMetric",
+            "theorem SmoothHolonomicDiagonalRealization.toSmoothGeneralLorentzMetric_tensor",
+            "theorem SmoothHolonomicDiagonalRealization.toSmoothGeneralLorentzMetric_musical",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryOrientedFluxSign4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def orientedCutLiftFlux",
+            "theorem equatorialBand_orientedCutLiftFlux_deck_generator",
+            "theorem equatorialBand_twoCutLiftFlux_sum",
+            "theorem equatorialBand_twoCutLiftFlux_difference",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatBoundaryDoubleCover4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutThroatBoundaryToBulk",
+            "theorem range_cutThroatBoundaryToBulk",
+            "theorem cutThroatBoundaryToBulk_deck",
+            "theorem cutThroatBoundary_deck_ne_self",
+            "theorem cutThroatBoundary_fiber_equiv_two",
+        ),
+    ),
+    "P0EFTJanusMappingTorusPositiveHemisphereCutBulk4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ClosedPositiveHemisphere",
+            "def cutBulkData",
+            "def cutBulkToAmbient",
+            "theorem cutBulkToAmbient_surjective",
+            "def cutBoundaryInclusion",
+            "theorem cutBoundaryInclusion_injective",
+            "theorem cutBulkToAmbient_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryClosedEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBoundaryInclusion_isClosedEmbedding",
+            "theorem isClosed_range_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatSmoothFiniteCollar4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev cutCollarModelWithCorners",
+            "theorem cutThroatBoundary_isManifold",
+            "theorem cutThroatFiniteCollar_isManifold",
+            "theorem cutThroatFiniteCollar_boundary",
+            "theorem contMDiff_cutThroatFace",
+            "theorem contMDiff_cutOuterFace",
+            "theorem cutThroatFiniteCollar_boundary_eq_face_ranges",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatLatitudeCollarAttachment4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def unitCollarTubularParameter",
+            "def positiveLatitudeFiber",
+            "theorem positiveLatitudeFiber_injective",
+            "def cutCollarCoverAttachment",
+            "theorem cutCollarCoverAttachment_equivariant",
+            "def cutCollarAttachment",
+            "theorem continuous_cutCollarAttachment",
+            "theorem cutCollarAttachment_injective",
+            "theorem cutCollarAttachment_cutThroatFace",
+            "def cutOuterLatitudeInclusion",
+            "theorem cutCollarAttachment_isClosedEmbedding",
+            "theorem cutOuterLatitudeInclusion_isClosedEmbedding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkLatitudeBand4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkLatitudeCoordinate",
+            "theorem continuous_cutBulkLatitudeCoordinate",
+            "theorem cutBulkLatitudeCoordinate_cutCollarAttachment",
+            "theorem range_cutCollarAttachment",
+            "theorem range_cutOuterLatitudeInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarRemainderDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOuterRemainder",
+            "theorem cutBulkLatitudeCoordinate_nonneg",
+            "theorem isClosed_cutBulkOuterRemainder",
+            "theorem range_cutCollarAttachment_union_outerRemainder",
+            "theorem range_cutCollarAttachment_inter_outerRemainder",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatOpenCollarEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def CutThroatOpenCollar",
+            "theorem isOpen_cutThroatOpenCollar",
+            "def cutOpenCollarAttachment",
+            "theorem range_cutOpenCollarAttachment",
+            "theorem isOpen_range_cutOpenCollarAttachment",
+            "theorem cutOpenCollarAttachment_isOpenEmbedding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatOpenCollarSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutThroatOpenCollarOpen",
+            "def cutThroatOpenCollarChartedSpace",
+            "theorem cutThroatOpenCollar_isManifold",
+            "theorem cutThroatOpenCollar_val_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryOpenCollarFace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryOpenCollarFace",
+            "theorem contMDiff_cutBoundaryOpenCollarFace",
+            "theorem cutOpenCollarAttachment_cutBoundaryOpenCollarFace",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatOpenCollarBoundary4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutThroatOpenCollar_boundary",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenAtlasCover4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCap",
+            "theorem isOpen_cutBulkOpenCap",
+            "def CutBulkOpenCap",
+            "theorem cutBulkOpenCap_subtypeVal_isOpenEmbedding",
+            "theorem openCollar_union_openCap",
+            "theorem openCollar_inter_openCap",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCapSmoothMappingTorus4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveHemisphereInteriorOpen",
+            "def cutBulkOpenCapData",
+            "abbrev SmoothCutBulkOpenCap",
+            "def cutBulkOpenCapCoverChartedSpace",
+            "theorem cutBulkOpenCapCover_isManifold",
+            "def cutBulkOpenCapProductDeck",
+            "theorem cutBulkOpenCapProductDeck_contMDiff",
+            "theorem cutBulkOpenCapCover_deck_contMDiff",
+            "def cutBulkOpenCapQuotientChartedSpace",
+            "theorem smoothCutBulkOpenCap_isManifold",
+            "theorem cutBulkOpenCap_projection_isLocalDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCapIdentification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveHemisphereInteriorToClosed",
+            "theorem positiveHemisphereInteriorToClosed_isOpenEmbedding",
+            "def cutBulkOpenCapCoverInclusion",
+            "theorem cutBulkOpenCapCoverInclusion_equivariant",
+            "theorem cutBulkOpenCapCoverInclusion_isOpenEmbedding",
+            "def smoothCutBulkOpenCapToCutBulk",
+            "theorem smoothCutBulkOpenCapToCutBulk_injective",
+            "theorem range_smoothCutBulkOpenCapToCutBulk",
+            "theorem smoothCutBulkOpenCapToCutBulk_isOpenEmbedding",
+            "def smoothCutBulkOpenCapHomeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicOpenCapSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkOpenCapChartedSpace",
+            "theorem intrinsicCutBulkOpenCap_isManifold",
+            "theorem smoothCapHomeomorph_contMDiff",
+            "theorem smoothCapHomeomorph_symm_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapCoverCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveUnitTubularParameterOpen",
+            "def positiveUnitTubularMap",
+            "theorem positiveUnitTubularMap_isOpenEmbedding",
+            "def positiveUnitLatitudeBandOpen",
+            "def positiveUnitTubularHomeomorph",
+            "theorem positiveUnitTubularHomeomorph_contMDiff",
+            "theorem positiveUnitTubularHomeomorph_symm_contMDiff",
+            "def positiveUnitTubularDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapCoverExactOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem mem_positiveUnitLatitudeBandOpen_iff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusEquivariantSmoothDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def mappingTorusEquivariantMap",
+            "theorem mappingTorusEquivariantMap_mk",
+            "theorem mappingTorusEquivariantMap_contMDiff",
+            "def mappingTorusInvariantMap",
+            "theorem mappingTorusInvariantMap_mk",
+            "theorem mappingTorusInvariantMap_contMDiff",
+            "def mappingTorusInvariantMapProd",
+            "theorem mappingTorusInvariantMapProd_mk",
+            "theorem mappingTorusInvariantMapProd_contMDiff",
+        ),
+    ),
+    "P0EFTJanusIdentityMappingTorusSmoothFunctor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def identityMappingTorusData",
+            "def identityMappingTorusCoverChartedSpace",
+            "theorem identityMappingTorusCover_isManifold",
+            "theorem identityMappingTorusCover_deck_contMDiff",
+            "def identityMappingTorusQuotientChartedSpace",
+            "theorem identityMappingTorus_isManifold",
+            "theorem identityMappingTorus_projection_isLocalDiffeomorph",
+            "def identityMappingTorusCoverMap",
+            "theorem identityMappingTorusCoverMap_equivariant",
+            "theorem identityMappingTorusCoverMap_contMDiff",
+            "theorem identityMappingTorusCoverMap_isOpenEmbedding",
+            "theorem identityMappingTorusMap_injective",
+            "theorem continuous_identityMappingTorusMap",
+            "theorem identityMappingTorusMap_isOpenMap",
+            "theorem identityMappingTorusMap_isOpenEmbedding",
+            "theorem identityMappingTorusMap_contMDiff",
+            "def identityMappingTorusDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapQuotientCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CollarOverlapFiberModel",
+            "abbrev SmoothCutCollarOverlap",
+            "abbrev SmoothCutCapOverlap",
+            "def smoothCutCollarOverlapChartedSpace",
+            "def smoothCutCapOverlapChartedSpace",
+            "theorem smoothCutCollarOverlap_isManifold",
+            "theorem smoothCutCapOverlap_isManifold",
+            "def smoothCutCollarCapOverlapDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapOverlapSmoothEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveUnitLatitudeBandToCapFiber",
+            "theorem positiveUnitLatitudeBandToCapFiber_contMDiff",
+            "theorem positiveUnitLatitudeBandToCapFiber_isOpenEmbedding",
+            "def smoothCutCapOverlapToSmoothCap",
+            "theorem smoothCutCapOverlapToSmoothCap_isOpenEmbedding",
+            "theorem smoothCutCapOverlapToSmoothCap_contMDiff",
+        ),
+    ),
+    "P0EFTJanusIdentityMappingTorusLocalDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem identityMappingTorusMap_isLocalDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapOverlapLocalDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem positiveUnitLatitudeBandToCapFiber_isLocalDiffeomorph",
+            "theorem smoothCutCapOverlapToSmoothCap_isLocalDiffeomorph",
+            "theorem smoothCutCapOverlapToSmoothCap_inverse_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapOverlapDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCapOverlapToIntrinsicCap",
+            "theorem smoothCutCapOverlapToIntrinsicCap_isOpenEmbedding",
+            "def intrinsicCapOverlapOpen",
+            "def smoothCutCapOverlapIntrinsicDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapOverlapExactIntrinsicRange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCapOverlapToCutBulk",
+            "theorem smoothCutCapOverlapToCutBulk_isOpenEmbedding",
+            "theorem cutBulkLatitudeCoordinate_smoothCutCapOverlapToCutBulk_mk",
+            "theorem range_smoothCutCapOverlapToCutBulk",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapExactIntrinsicRange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapToCutBulk",
+            "theorem smoothCutCollarOverlapToCutBulk_isOpenEmbedding",
+            "theorem range_smoothCutCollarOverlapToCutBulk",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapOpenCollarIdentification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapToIntrinsicOpenCollar",
+            "theorem cutOpenCollarAttachment_smoothCutCollarOverlapToIntrinsicOpenCollar",
+            "theorem smoothCutCollarOverlapToIntrinsicOpenCollar_isOpenEmbedding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapNormalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapNormalCover",
+            "theorem smoothCutCollarOverlapNormalCover_invariant",
+            "def smoothCutCollarOverlapNormal",
+            "theorem smoothCutCollarOverlapNormal_mk",
+            "theorem smoothCutCollarOverlapNormal_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapBoundarySmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapBoundary",
+            "theorem smoothCutCollarOverlapBoundary_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapIntrinsicSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothCutCollarOverlapNormal_mem_Ioo",
+            "def smoothCutCollarOverlapInterval",
+            "theorem smoothCutCollarOverlapInterval_contMDiff",
+            "def smoothCutCollarOverlapNaturalOpenCollar",
+            "theorem smoothCutCollarOverlapNaturalOpenCollar_contMDiff",
+            "theorem cutOpenCollarAttachment_smoothCutCollarOverlapNaturalOpenCollar",
+            "theorem smoothCutCollarOverlapToIntrinsicOpenCollar_eq_natural",
+            "theorem smoothCutCollarOverlapToIntrinsicOpenCollar_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkPositiveUnitTubularProductDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveUnitNormalOpen",
+            "def positiveUnitTubularToProduct",
+            "def positiveUnitTubularFromProduct",
+            "theorem positiveUnitTubularToProduct_contMDiff",
+            "theorem positiveUnitTubularFromProduct_contMDiff",
+            "def positiveUnitTubularProductDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusIdentityMappingTorusProductDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev identityMappingTorusProductData",
+            "def identityMappingTorusProductForward",
+            "def identityMappingTorusProductInverseCover",
+            "def identityMappingTorusProductInverseCoverQuotient",
+            "theorem identityMappingTorusProductInverseCoverQuotient_invariant",
+            "def identityMappingTorusProductInverse",
+            "theorem identityMappingTorusProductForward_leftInverse",
+            "theorem identityMappingTorusProductForward_rightInverse",
+            "theorem identityMappingTorusProductForward_contMDiff",
+            "theorem identityMappingTorusProductInverseCover_contMDiff",
+            "theorem identityMappingTorusProductInverse_contMDiff",
+            "def identityMappingTorusProductDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapProductDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev SmoothCutCollarProductTorus",
+            "def smoothCutCollarOverlapFiberProductDiffeomorph",
+            "def smoothCutCollarProductTorusDiffeomorph",
+            "def smoothCutCollarOverlapProductDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarPositiveOpenDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutThroatPositiveOpenCollarOpen",
+            "def positiveCollarProductToOpen",
+            "def positiveCollarOpenToProduct",
+            "theorem positiveUnitNormalToInterval_contMDiff",
+            "theorem positiveCollarProductToOpen_contMDiff",
+            "theorem positiveCollarOpenToProduct_contMDiff",
+            "def positiveCollarProductDiffeomorph",
+            "def smoothCutCollarOverlapIntrinsicDiffeomorph",
+            "def smoothCutCollarOverlapToPositiveOpen",
+            "theorem smoothCutCollarOverlapIntrinsicDiffeomorph_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkInteriorModelDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coverToCutCollarCoordinates",
+            "def cutCollarModelInteriorOpen",
+            "def coverModelToCutCollarInterior",
+            "def cutCollarInteriorToCoverModel",
+            "theorem coverModelToCutCollarInterior_leftInverse",
+            "theorem coverModelToCutCollarInterior_rightInverse",
+            "theorem coverModelToCutCollarInterior_contMDiff",
+            "theorem cutCollarInteriorToCoverModel_contMDiff",
+            "def coverModelCutCollarInteriorDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapCommonModel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coverModelCutCollarChartedSpace",
+            "theorem coverModelCutCollar_isManifold",
+            "theorem coverModelCutCollarDiffeomorph_contMDiff",
+            "theorem coverModelCutCollarDiffeomorph_symm_contMDiff",
+            "theorem coverModelStandardToCutCollar_contMDiff",
+            "theorem coverModelCutCollarToStandard_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapCommonModel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkOpenCapCommonChartedSpace",
+            "theorem intrinsicCutBulkOpenCapCommon_isManifold",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapCommonCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCapStandardToCommon_contMDiff",
+            "theorem intrinsicCapCommonToStandard_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapCommonBoundaryless4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCapStandardCommonDiffeomorph",
+            "theorem intrinsicCutBulkOpenCapCommon_boundaryless",
+            "theorem intrinsicCutBulkOpenCapCommon_boundary_eq_empty",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapIntrinsicCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothCutCapOverlapToIntrinsicCapOpen_common_contMDiff",
+            "theorem intrinsicCapOpenToSmoothCutCapOverlap_common_contMDiff",
+            "def smoothCutCapOverlapIntrinsicCommonDiffeomorph",
+            "def intrinsicCollarCapOverlapDiffeomorph",
+            "theorem intrinsicCollarCapOverlapDiffeomorph_bulk_eq_attachment",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapPartialDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCollarCapPartialDiffeomorph",
+            "theorem intrinsicCollarCapPartialDiffeomorph_source",
+            "theorem intrinsicCollarCapPartialDiffeomorph_target",
+            "theorem intrinsicCollarCapPartialDiffeomorph_bulk_eq_attachment",
+            "theorem intrinsicCollarCapPartialDiffeomorph_contMDiffOn",
+            "theorem intrinsicCollarCapPartialDiffeomorph_symm_contMDiffOn",
+            "theorem intrinsicCollarCapPartialDiffeomorph_isLocalStructomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapAttachmentTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCollarCapAttachmentTransition",
+            "theorem intrinsicCollarCapAttachmentTransition_source",
+            "theorem intrinsicCollarCapPartialDiffeomorph_eqOnSource_attachmentTransition",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapCoordinateCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCollarCapCoordinateTransition_mem_contDiffGroupoid",
+            "theorem intrinsicCollarCapAttachmentCoordinateTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCollarCapTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCapCollarTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCollarCollarTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCapCapTransition_mem_contDiffGroupoid",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalIsManifold4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkGlobal_isManifold",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutOpenCollarGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem cutOpenCollarAttachment_contMDiff",),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem cutBoundaryInclusion_contMDiff",),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalBoundary4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkGlobal_isBoundaryPoint_iff",
+            "theorem cutBulkGlobal_boundary_eq_zeroLatitude",
+            "theorem cutBulkLatitudeCoordinate_cutBoundaryInclusion",
+            "theorem range_cutBoundaryInclusion_eq_zeroLatitude",
+            "theorem cutBulkGlobal_boundary_eq_range_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryGlobalHomeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryGlobalBoundaryHomeomorph",
+            "theorem cutBoundaryGlobalBoundaryHomeomorph_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalChartedSpace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutOpenCollarAttachmentPartialHomeomorph",
+            "def cutBulkOpenCapInclusionPartialHomeomorph",
+            "def liftedCutBulkCollarChart",
+            "def liftedCutBulkCapChart",
+            "def cutBulkGlobalChartAt",
+            "theorem mem_source_cutBulkGlobalChartAt",
+            "def cutBulkGlobalChartedSpace",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryScalarCurrentDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryScalarCurrentCover",
+            "theorem cutBoundaryScalarCurrentCover_contMDiff",
+            "theorem cutBoundaryScalarCurrentCover_invariant",
+            "def cutBoundaryScalarCurrent",
+            "theorem cutBoundaryScalarCurrent_contMDiff",
+            "theorem cutBoundaryScalarCurrent_deck",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryScalarCurrentIntegralCancellation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryCanonicalMeasure",
+            "theorem orientationDeck_eq_throatTimeFlow",
+            "theorem cutBoundaryCanonicalMeasure_orientationDeck_measurePreserving",
+            "theorem integral_cutBoundaryScalarCurrent_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalBoundaryMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkGlobalBoundaryCanonicalMeasure",
+            "theorem integral_cutBulkGlobalBoundaryCanonicalMeasure",
+            "def cutBulkGlobalBoundaryScalarCurrent",
+            "theorem continuous_cutBulkGlobalBoundaryScalarCurrent",
+            "theorem integral_cutBulkGlobalBoundaryScalarCurrent_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterActionMassSignObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalHolonomicScalarDensity_sub_holonomicScalarDensity",
+            "theorem globalHolonomicScalarDensity_eq_holonomicScalarDensity_iff",
+            "theorem globalHolonomicScalarDensity_ne_holonomicScalarDensity",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterActionMassSignIntegratedObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterActionMassSignDefect",
+            "theorem globalHolonomicScalarAction_sub_measuredGeneralLorentzAction",
+            "theorem globalHolonomicScalarAction_eq_measuredGeneralLorentzAction_iff",
+            "theorem globalHolonomicScalarAction_ne_measuredGeneralLorentzAction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMultipletMassSignIntegratedObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterMultipletMassSignDefectIntegral",
+            "theorem globalMatterMultipletAction_sub_sameConfigurationAction",
+            "theorem globalMatterMultipletAction_eq_sameConfigurationAction_iff",
+            "theorem globalMatterMultipletAction_ne_sameConfigurationAction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMultipletMassSignNoCancellation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterActionMassSignDefect_nonneg",
+            "theorem matterActionMassSignDefect_integral_nonneg",
+            "theorem matterMultipletMassSignDefectIntegral_nonneg",
+            "theorem matterMultipletMassSignDefectIntegral_eq_zero_iff",
+            "theorem matterMultipletMassSignDefectIntegral_ne_zero_of_exists",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMassSignDefectAEZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterActionMassSignDefect_integral_eq_zero_iff_ae",
+            "theorem matterActionMassSignDefect_ae_zero_iff_field_ae_zero",
+            "theorem matterActionMassSignDefect_integral_pos",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMultipletMassiveFieldNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalMatterMultipletAction_ne_sameConfigurationAction_of_massive_field",
+        ),
+    ),
     "P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -6826,6 +7843,17 @@ PROGRAM_P_GATES = {
             "theorem regularMovingSimilarity_denominator_faster_tendsto_atTop",
         ),
     ),
+    "P0EFTJanusRegularMovingSimilarityFullMatrixLimit4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def powerLawFiniteLimitSpectrum",
+            "theorem powerLawSpectrum_equal_exponents_tendsto",
+            "theorem powerLawSpectrum_numerator_faster_tendsto",
+            "theorem regularMovingSimilarity_equal_exponents_full_matrix_limit",
+            "theorem regularMovingSimilarity_numerator_faster_full_matrix_limit",
+            "theorem regularMovingSimilarity_denominator_faster_no_finite_matrix_limit",
+        ),
+    ),
     "P0EFTJanusMappingTorusCanonicalLatitudeCutoffScalarCurrent4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -6911,6 +7939,29 @@ PROGRAM_P_GATES = {
             "theorem activeValuationsNonnegative_iff_exists_finite_limit",
         ),
     ),
+    "P0EFTJanusFixedConjugateSingularFrameValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fixedConjugateTransport",
+            "theorem fixedConjugateTransport_tendsto_of_activeValuationsNonnegative",
+            "theorem activeValuationsNonnegative_iff_exists_fixedConjugate_finite_limit",
+            "def fixedConjugateFinitePolynomialTransport",
+            "theorem finitePolynomialValuationsNonnegative_iff_exists_fixedConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingConjugateSingularFrameValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugatePath",
+            "theorem exists_finite_limit_movingConjugatePath_iff",
+            "def movingConjugateMonomialTransport",
+            "theorem movingConjugateMonomialTransport_tendsto",
+            "theorem activeValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+            "def movingConjugateFinitePolynomialTransport",
+            "theorem movingConjugateFinitePolynomialTransport_tendsto",
+            "theorem finitePolynomialValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
     "P0EFTJanusSignedMonomialMatrixValuationCriterion4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -6952,6 +8003,75 @@ PROGRAM_P_GATES = {
             "def FinitePolynomialValuationsNonnegative",
             "theorem finitePolynomialTransportedMatrix_tendsto",
             "theorem finitePolynomialTransportedMatrix_no_finite_limit_of_negativeEntry",
+            "theorem finitePolynomialValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AsymptoticMatrixData",
+            "def normalizedEntry",
+            "def transportedEntry",
+            "def transportedMatrix",
+            "def valuationLimit",
+            "def ValuationsNonnegative",
+            "theorem transportedMatrix_tendsto",
+            "theorem transportedMatrix_no_finite_limit_of_negativeEntry",
+            "theorem valuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusAnalyticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AnalyticMatrixData",
+            "def residual",
+            "def AnalyticMatrixData.toAsymptoticMatrixData",
+            "theorem valuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusActiveAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActiveAsymptoticMatrixData",
+            "def ActiveValuationsNonnegative",
+            "theorem transportedMatrix_tendsto",
+            "theorem transportedMatrix_no_finite_limit_of_negative_active_entry",
+            "theorem activeValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingActiveAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugateActiveAsymptoticTransport",
+            "theorem movingConjugateActiveAsymptoticTransport_tendsto",
+            "theorem activeValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusAnalyticMatrixWithZeroValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AnalyticMatrixData",
+            "def AnalyticMatrixData.toActiveAsymptoticMatrixData",
+            "def ActiveValuationsNonnegative",
+            "theorem transportedMatrix_tendsto",
+            "theorem transportedMatrix_no_finite_limit_of_negative_active_entry",
+            "theorem activeValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingAnalyticMatrixWithZeroValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugateAnalyticTransport",
+            "theorem movingConjugateAnalyticTransport_tendsto",
+            "theorem activeValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugateAsymptoticTransport",
+            "theorem movingConjugateAsymptoticTransport_tendsto",
+            "theorem valuationsNonnegative_iff_exists_movingConjugate_finite_limit",
         ),
     ),
     "P0EFTJanusRegularAroundSingularPolynomialTransport4D.lean": (
@@ -7128,6 +8248,504 @@ PROGRAM_P_GATES = {
             "theorem tsupport_cutoffCollarScalarCurrentDensity_subset",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentHalfCollarStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutoffCollarScalarCurrentDensity_boundary_zero",
+            "theorem intervalIntegral_cutoffCurrentDivergence_eq_neg_throatFlux",
+            "theorem productHalfCollarIntegral_cutoffCurrentDivergence_eq_neg_throatFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryFirstSheetCurrentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBoundaryFirstLift",
+            "theorem cutBoundaryScalarCurrent_firstLift",
+            "theorem measuredScalarGreenCurrent_zero_eq_firstSheetIntegral",
+            "theorem productHalfCollarIntegral_eq_neg_firstSheetBoundaryCurrent",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryTwoSheetOrientedCurrentIntegral4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBoundarySecondLift",
+            "def firstSheetOrientedScalarCurrent",
+            "def secondSheetOrientedScalarCurrent",
+            "theorem secondSheetOrientedScalarCurrent_eq_first",
+            "def twoSheetOrientedScalarCurrentIntegral",
+            "theorem twoSheetOrientedScalarCurrentIntegral_eq_two_mul_first",
+            "theorem two_mul_productHalfCollarIntegral_eq_neg_twoSheetOrientedCurrent",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkScalarCurrentCover",
+            "theorem continuous_cutBulkScalarCurrentCover",
+            "theorem cutBulkScalarCurrentCover_invariant",
+            "def cutBulkScalarCurrent",
+            "theorem continuous_cutBulkScalarCurrent",
+            "theorem cutBulkScalarCurrent_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentOpenCapSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCapScalarCurrentCover",
+            "def smoothCutBulkOpenCapScalarCurrent",
+            "theorem smoothCutBulkOpenCapScalarCurrent_contMDiff",
+            "theorem smoothCutBulkOpenCapScalarCurrent_eq_bulk",
+            "theorem cutBulkScalarCurrent_intrinsicOpenCap_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentOpenCollarSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkScalarCurrentCollarCover",
+            "theorem cutBulkScalarCurrentCollarCover_contMDiff",
+            "theorem cutBulkScalarCurrent_finiteCollar_contMDiff",
+            "theorem cutBulkScalarCurrent_openCollar_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenAtlasGlobalLocalDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutOpenCollarAttachmentPartialDiffeomorph",
+            "def cutBulkOpenCapInclusionPartialDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkScalarCurrent_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkLatitudeGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCapLatitudeCover",
+            "def smoothCutBulkOpenCapLatitude",
+            "theorem cutBulkLatitudeCoordinate_intrinsicOpenCap_contMDiff",
+            "theorem cutBulkLatitudeCoordinate_openCollar_contMDiff",
+            "theorem cutBulkLatitudeCoordinate_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCutoffGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkLatitudeCoordinate_le_one",
+            "def cutBulkCanonicalCutoff",
+            "theorem cutBulkCanonicalCutoff_canonicalLatitudeCutBulkCollarMap",
+            "theorem cutBulkCanonicalCutoff_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCutoffCollarDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkCanonicalCutoff_canonicalCollarFiber_hasDerivAt",
+            "theorem deriv_cutBulkCanonicalCutoff_canonicalCollarFiber",
+            "theorem cutBulkCanonicalCutoff_canonicalCollar_base_independent",
+            "theorem cutBulkCanonicalCutoff_fixedNormalBaseCurve_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkToAmbientOpenCollarSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkToAmbientCollarCover",
+            "theorem cutBulkToAmbientCollarCover_contMDiff",
+            "theorem cutBulkToAmbient_finiteCollar_contMDiff",
+            "theorem cutBulkToAmbient_openCollar_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkToAmbientOpenCapSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCapToAmbientCover",
+            "def smoothCutBulkOpenCapToAmbient",
+            "theorem smoothCutBulkOpenCapToAmbient_contMDiff",
+            "theorem cutBulkToAmbient_intrinsicOpenCap_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkToAmbientGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullback4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_mdifferentiable",
+            "def cutBulkAmbientTensorPullback",
+            "theorem cutBulkAmbientTensorPullback_apply",
+            "theorem cutBulkAmbientTensorPullback_symmetric",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullbackLorentz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def CutBulkDerivativeIsomorphismAt",
+            "def CutBulkFiberIsNondegenerate",
+            "def CutBulkFiberIsLorentzian",
+            "theorem cutBulkAmbientTensorPullback_nondegenerate",
+            "theorem cutBulkAmbientTensorPullback_lorentzian",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCapAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothCutBulkOpenCapToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalCapDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_derivative_isomorphism_on_openCap",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarNormalDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarNormalDerivativeEquiv",
+            "theorem cutCollarNormalDerivativeEquiv_coe",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarCoverNormalExtensionDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def signedCutCollarModelWithCorners",
+            "def cutCollarCoverNormalExtension",
+            "theorem cutCollarCoverNormalExtension_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarTubularNormalLift4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarTubularNormalLift",
+            "theorem cutCollarTubularNormalLift_contMDiff",
+            "theorem cutCollarTubularNormalLift_derivative_isomorphism",
+            "def cutCollarTubularParameterLift",
+            "theorem cutCollarTubularParameterLift_contMDiff",
+            "theorem cutCollarTubularParameterLift_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarTubularSphereDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarTubularSphereMap",
+            "theorem cutCollarTubularSphereMap_contMDiff",
+            "theorem cutCollarTubularSphereMap_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarTubularSpacetimeDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarTimeReassociation",
+            "def cutCollarTubularSpacetimeMap",
+            "theorem cutCollarTubularSpacetimeMap_contMDiff",
+            "theorem cutCollarTubularSpacetimeMap_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusTubularBandToAmbientCoverDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def tubularBandSpacetimeToAmbientCover",
+            "theorem tubularBandSpacetimeToAmbientCover_isLocalDiffeomorph",
+            "theorem tubularBandSpacetimeToAmbientCover_derivative_isomorphism",
+            "def tubularBandSpacetimeToAmbient",
+            "theorem tubularBandSpacetimeToAmbient_isLocalDiffeomorph",
+            "theorem tubularBandSpacetimeToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarProductToAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarProductToAmbient",
+            "theorem cutCollarProductToAmbient_contMDiff",
+            "theorem cutCollarProductToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarCoverToAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarCoverToAmbient",
+            "theorem cutCollarCoverToAmbient_contMDiff",
+            "theorem cutCollarCoverToAmbient_derivative_isomorphism",
+            "theorem cutCollarCoverToAmbient_eq_existing",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkFiniteCollarAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarCoverProjection",
+            "theorem cutCollarCoverProjection_isLocalDiffeomorph",
+            "def cutBulkFiniteCollarToAmbient",
+            "theorem cutBulkFiniteCollarToAmbient_contMDiff",
+            "theorem cutBulkFiniteCollarToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCollarAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutThroatOpenCollar_val_isLocalDiffeomorph",
+            "def cutBulkOpenCollarToAmbient",
+            "theorem cutBulkOpenCollarToAmbient_contMDiff",
+            "theorem cutBulkOpenCollarToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalCollarDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_derivative_isomorphism_at_openCollarAttachment",
+            "theorem cutBulkToAmbient_derivative_isomorphism_on_openCollar",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullbackGlobalLorentz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkAmbientTensorPullback_nondegenerate_global",
+            "theorem cutBulkAmbientTensorPullback_lorentzian_global",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullbackSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CutBulkSmoothCovariantTwoTensor",
+            "structure CutBulkSmoothSymmetricCovariantTwoTensor",
+            "theorem cutBulkAmbientTensorPullback_contMDiff",
+            "def cutBulkAmbientSmoothTensorPullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientSmoothGeneralLorentzMetric4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkToAmbientDerivativeEquiv",
+            "theorem cutBulkToAmbientDerivativeEquiv_coe",
+            "def cutBulkAmbientPullbackMusical",
+            "theorem cutBulkAmbientPullbackMusical_apply",
+            "structure CutBulkSmoothGeneralLorentzMetric",
+            "def cutBulkAmbientSmoothGeneralLorentzMetricPullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothInverseMusical4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CutBulkSmoothVectorField",
+            "abbrev CutBulkSmoothCovectorField",
+            "def cutBulkInverseMetricSharp",
+            "def cutBulkSmoothInverseMusical",
+            "theorem cutBulkSmoothInverseMusical_apply",
+            "theorem cutBulkSmoothInverseMusical_flat",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkMetricVolumeDensityNaturality4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkMetricGramMatrix",
+            "def cutBulkMetricVolumeDensity",
+            "def cutBulkAmbientFramePullback",
+            "theorem cutBulkMetricGramMatrix_ambientPullback",
+            "theorem cutBulkMetricGramDeterminant_ambientPullback",
+            "theorem cutBulkMetricVolumeDensity_ambientPullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicMetricVolumeDensity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkSmoothGeneralLorentzMetric",
+            "def intrinsicCutBulkPointwiseFrame",
+            "theorem intrinsicCutBulkMetricVolumeDensity_eq_ambient",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGradient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CutBulkSmoothScalarField",
+            "def cutBulkSmoothScalarPullback",
+            "theorem cutBulkSmoothScalarPullback_apply",
+            "def cutBulkSmoothScalarDifferential",
+            "theorem cutBulkSmoothScalarDifferential_apply",
+            "theorem cutBulkSmoothScalarDifferential_pullback",
+            "def cutBulkSmoothScalarGradient",
+            "theorem cutBulkSmoothScalarGradient_flat",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGreenCurrent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkSmoothScalarGreenCurrent",
+            "theorem cutBulkSmoothScalarGreenCurrent_apply",
+            "theorem cutBulkSmoothScalarGreenCurrent_flat",
+            "def intrinsicCutBulkSmoothScalarGreenCurrent",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffScalarGreenCurrent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkSmoothCutoffScalarGreenCurrent",
+            "theorem intrinsicCutBulkSmoothCutoffScalarGreenCurrent_apply",
+            "theorem intrinsicCutBulkSmoothCutoffScalarGreenCurrent_canonicalNormalFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenNormalDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkSmoothCutoffGreenNormalFlux",
+            "theorem canonicalCutBulkSmoothCutoffGreenNormalFlux_eq_scalarCurrent",
+            "theorem canonicalCutBulkSmoothCutoffGreenNormalFlux_hasDerivAt",
+            "theorem deriv_canonicalCutBulkSmoothCutoffGreenNormalFlux",
+            "def canonicalCutBulkSmoothCutoffGreenNormalDivergenceDensity",
+            "theorem canonicalCutBulkSmoothCutoffGreenNormalDivergenceDensity_eq_genuine",
+            "def cutBulkSmoothCutoffGreenNormalDivergenceMeasure",
+            "theorem cutBulkSmoothCutoffGreenNormalDivergenceMeasure_eq_genuine",
+            "theorem two_mul_cutBulkSmoothCutoffGreenNormalDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricDensitizedDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricFlux_hasDerivAt",
+            "theorem deriv_canonicalCutBulkSmoothCutoffGreenMetricFlux",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_eq_jacobian_correction",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_eq_weightedCutoffDerivative_mul_flux_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_eq_joint",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_integrable",
+            "theorem intervalIntegral_metricDensitizedDivergence_eq_neg_throatFlux",
+            "theorem productHalfCollarIntegral_metricDensitizedDivergence_eq_neg_throatFlux",
+            "def cutBulkSmoothCutoffGreenMetricDivergenceMeasure",
+            "theorem cutBulkSmoothCutoffGreenMetricDivergenceMeasure_univ",
+            "theorem two_mul_cutBulkSmoothCutoffGreenMetricDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricNormalDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalPositiveLatitudeWeight_pos_of_mem_Icc",
+            "def canonicalCutBulkSmoothCutoffGreenMetricNormalDivergence",
+            "theorem canonicalPositiveLatitudeWeight_mul_metricNormalDivergence",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricNormalDivergence_eq_of_euler",
+            "def cutBulkSmoothCutoffGreenMetricNormalDivergenceMeasure",
+            "theorem cutBulkSmoothCutoffGreenMetricNormalDivergenceMeasure_eq_metric",
+            "theorem two_mul_cutBulkSmoothCutoffGreenMetricNormalDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricTangentialCompensation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkSmoothCutoffGreenMetricTangentialCompensation",
+            "theorem metricNormalDivergence_add_tangentialCompensation_eq_cutoffGradientFlux_of_euler",
+            "theorem metricDensitizedDivergence_add_weightedTangentialCompensation_eq_weightedCutoffGradientFlux_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkMetricMeasureDomination4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_canonicalLatitudeCutBulkCollarMap",
+            "theorem map_cutBulkCanonicalCollarMeasure_toAmbient",
+            "theorem map_cutBulkCanonicalCollarMeasure_le_intrinsicLorentzVolume",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGreenCurrentCollarFlux4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkSmoothScalarDifferential_pullback_inverseDerivative",
+            "theorem intrinsicCutBulkSmoothScalarGreenCurrent_flux_inverseDerivative",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGreenCurrentCanonicalNormalFlux4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCutBulkSmoothScalarGreenCurrent_canonicalNormalFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCutoffGreenCurrentNormalFluxBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkIntrinsicGreenNormalFlux",
+            "theorem canonicalCutBulkIntrinsicGreenNormalFlux_eq_greenCurrent",
+            "theorem cutBulkScalarCurrent_canonicalCollarPath_eq_cutoff_mul_intrinsicFlux",
+            "theorem cutoff_mul_canonicalCutBulkIntrinsicGreenNormalFlux_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGenuineGreenCurrentMeasuredStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalMeasuredCutBulkIntrinsicGreenNormalFlux",
+            "theorem canonicalMeasuredCutBulkIntrinsicGreenNormalFlux_eq_greenCurrent",
+            "theorem productHalfCollarIntegral_cutoffDivergence_eq_neg_genuineFlux",
+            "theorem twoSheetOrientedScalarCurrentIntegral_eq_two_mul_genuineFlux",
+            "theorem two_mul_cutBulkCanonicalDivergenceMeasure_univ_eq_neg_genuineFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGenuineGreenNormalDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkGenuineGreenNormalDivergenceDensity",
+            "theorem canonicalCutBulkGenuineGreenNormalDivergenceDensity_eq_canonical",
+            "def cutBulkGenuineGreenNormalDivergenceMeasure",
+            "theorem cutBulkGenuineGreenNormalDivergenceMeasure_eq_canonical",
+            "theorem two_mul_cutBulkGenuineGreenNormalDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkEqualMassEulerGreenNormalDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalCutBulkGenuineGreenNormalDivergenceDensity_eq_cutoffDerivative_mul_flux_of_euler",
+            "theorem canonicalCutBulkGenuineGreenNormalDivergenceDensity_eq_zero_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentCollarCoordinateBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBulkCollarLift",
+            "theorem cutBulkScalarCurrent_canonicalCollarLift",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentNormalDivergenceBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBulkCollarPath",
+            "theorem cutBulkScalarCurrent_canonicalCollarPath",
+            "theorem cutBulkScalarCurrent_canonicalCollarPath_hasDerivAt",
+            "theorem deriv_cutBulkScalarCurrent_canonicalCollarPath",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentCanonicalStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem productCanonicalCollarIntegral_deriv_globalCurrent_eq_neg_boundary",
+            "theorem two_mul_productCanonicalCollarIntegral_deriv_globalCurrent_eq_neg_boundary",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCollarMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBulkCollarMap",
+            "def cutBulkCanonicalCollarMeasure",
+            "theorem integral_cutBulkCanonicalCollarMeasure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalCutBulkDivergenceDensity_integrable",
+            "def cutBulkCanonicalDivergenceMeasure",
+            "theorem cutBulkCanonicalDivergenceMeasure_univ",
+            "theorem two_mul_cutBulkCanonicalDivergenceMeasure_univ_eq_neg_boundary",
+        ),
+    ),
     "P0EFTJanusCanonicalLatitudeScalarCurrentJointSmooth4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -7140,6 +8758,14 @@ PROGRAM_P_GATES = {
             "theorem jointCutoffCollarScalarCurrentDensity_eq",
             "theorem jointCutoffCollarScalarCurrentDensity_eq_zero_of_one_le_abs",
             "theorem jointCutoffCollarScalarCurrentDensity_eventuallyEq_zero",
+        ),
+    ),
+    "P0EFTJanusCanonicalLatitudeScalarCurrentJointDivergenceSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def jointCutoffCollarScalarCurrentDivergence",
+            "theorem jointCutoffCollarScalarCurrentDivergence_contMDiff",
+            "theorem jointCutoffCollarScalarCurrentDivergence_eq",
         ),
     ),
     "P0EFTJanusEquatorialTubularAmbientInverseJointSmooth4D.lean": (
@@ -11105,6 +12731,79 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
 }
 
 
+def terminal_gate_states(todo_source: str) -> dict[str, bool]:
+    """Read the fixed T01--T14 registry without counting any micro-gate."""
+    try:
+        section = todo_source.split("## 7. Les 14 portes terminales fixes", 1)[1]
+        section = section.split("## 8. Intégration et audit à renforcer", 1)[0]
+    except IndexError as error:
+        raise AssertionError("missing fixed terminal-gate section") from error
+    matches = re.findall(r"^- \[([ x])\] `(T\d{2})` — ", section, re.MULTILINE)
+    identifiers = tuple(identifier for _, identifier in matches)
+    if identifiers != TERMINAL_GATE_IDS:
+        raise AssertionError(
+            f"terminal-gate denominator changed: {identifiers!r}"
+        )
+    return {identifier: mark == "x" for mark, identifier in matches}
+
+
+def assert_terminal_gate_registry(repo_root: Path = REPO_ROOT) -> tuple[int, int]:
+    todo_source = (repo_root / PROGRAM_P_OPERATIONAL_TODO).read_text(
+        encoding="utf-8"
+    )
+    states = terminal_gate_states(todo_source)
+    unknown_evidence = set(TERMINAL_GATE_EVIDENCE) - set(TERMINAL_GATE_IDS)
+    if unknown_evidence:
+        raise AssertionError(f"unknown terminal-gate evidence: {unknown_evidence}")
+
+    for identifier, closed in states.items():
+        evidence = TERMINAL_GATE_EVIDENCE.get(identifier)
+        if closed and evidence is None:
+            raise AssertionError(
+                f"terminal gate {identifier} is checked without typed evidence"
+            )
+        if evidence is None:
+            continue
+        if evidence.scope not in TERMINAL_GATE_SCOPES:
+            raise AssertionError(f"invalid scope for terminal gate {identifier}")
+        if not evidence.theorem or "." not in evidence.theorem:
+            raise AssertionError(
+                f"terminal gate {identifier} needs a fully qualified theorem"
+            )
+        if not evidence.expected_type_fragment:
+            raise AssertionError(
+                f"terminal gate {identifier} needs an expected type fragment"
+            )
+
+        module_source = (repo_root / evidence.module).read_text(encoding="utf-8")
+        theorem_name = evidence.theorem.rsplit(".", 1)[1]
+        theorem_match = re.search(
+            rf"\btheorem\s+{re.escape(theorem_name)}\b[\s\S]*?(?=\n(?:theorem|def|structure|class|instance|end)\b|\Z)",
+            module_source,
+        )
+        if theorem_match is None:
+            raise AssertionError(
+                f"missing terminal theorem {evidence.theorem} for {identifier}"
+            )
+        theorem_source = theorem_match.group(0)
+        if evidence.expected_type_fragment not in theorem_source:
+            raise AssertionError(f"unexpected theorem type for terminal gate {identifier}")
+        if "ProgramStatus" in theorem_source:
+            raise AssertionError(
+                f"terminal gate {identifier} is only a ProgramStatus contract"
+            )
+        if re.search(r"\b(?:sorry|admit|axiom)\b", module_source):
+            raise AssertionError(f"proof placeholder in terminal gate {identifier}")
+
+        facade_source = (repo_root / evidence.facade).read_text(encoding="utf-8")
+        module_import = str(evidence.module.with_suffix("")).replace("\\", ".")
+        if f"import {module_import}" not in facade_source:
+            raise AssertionError(f"terminal facade omits {identifier}")
+
+    closed_count = sum(states.values())
+    return closed_count, len(TERMINAL_GATE_IDS)
+
+
 def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     """Require key declarations, facade imports, and placeholder-free proofs."""
     facades: dict[str, str] = {}
@@ -11798,8 +13497,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
 
 
 def run_audit() -> None:
+    closed_terminal, total_terminal = assert_terminal_gate_registry()
     assert_program_p_gate_integrity()
-    print("Program P/P-F integrity audit: all checks passed")
+    print(
+        "Program P/P-F integrity audit: all checks passed; "
+        f"terminal gates {closed_terminal}/{total_terminal}"
+    )
 
 
 if __name__ == "__main__":
