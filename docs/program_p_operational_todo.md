@@ -928,8 +928,18 @@ que si leur critère le dit explicitement.
   reconnaît le cutoff holonome, y compris dans les cartes centrées à latitude
   arbitraire, comme le vrai pullback local du cutoff global ; elle en déduit que
   sa divergence locale libre au centre vaut exactement `cutoff' ×` le courant
-  normal canonique. Il reste à identifier la divergence tangentielle locale à
-  la compensation jacobienne, puis à recoller les représentants locaux. La gate
+  normal canonique. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeLocalGlobalCutoffDivergenceMetricBridge4D`
+  identifie ensuite cette divergence locale totale à la somme de la divergence
+  normale métrique et de la compensation jacobienne déjà construites. Cette
+  formulation est invariante ; elle évite d'identifier séparément deux termes
+  normal/tangentiels dépendant du second jet de la carte. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceGluing4D`
+  définit enfin la valeur globale correspondante sur le collier canonique,
+  prouve que tout représentant holonome adapté centré la calcule et en déduit
+  l'indépendance exacte de la carte et du représentant tangentiel. Le recollement
+  du secteur cutoff canonique du collier est ainsi fermé sans contrat de jets.
+  La gate
   `P0EFTJanusMappingTorusCanonicalHolonomicAtlasScalarGreenDivergenceTransition4D`
   prouve désormais l'invariance exacte de la divergence réelle sur les overlaps
   sous les jets de transition rebasés de la métrique et des deux scalaires ; le

@@ -6007,6 +6007,21 @@ PROGRAM_P_GATES = {
             "theorem localActualCenteredGlobalCutoffGreenCoordinateDivergence_eq_normalCurrent_of_free",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeLocalGlobalCutoffDivergenceMetricBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localActualCenteredGlobalCutoffGreenCoordinateDivergence_eq_metricNormal_add_compensation",
+            "theorem localNormal_add_tangentialDivergence_eq_metricNormal_add_compensation",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceGluing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCenteredGlobalCutoffDivergence",
+            "theorem canonicalLatitudeCenteredGlobalCutoffDivergence_eq_local",
+            "theorem localCenteredGlobalCutoffDivergence_independent",
+        ),
+    ),
     "P0EFTJanusMappingTorusHolonomicDiagonalSharp4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
