@@ -917,12 +917,19 @@ que si leur critère le dit explicitement.
   tangentielle normale. La gate
   `P0EFTJanusMappingTorusCanonicalLatitudeAmbientOrthogonality4D` généralise
   maintenant l'orthogonalité normale/tangentielle du throat à toute latitude
-  non polaire du collier. Il reste à transporter cette formule par l'isomorphisme
-  de dérivée du collier vers la covariable normale métrique pour reconnaître le
-  cutoff holonome comme son vrai pullback local, puis à identifier `J⁰` au flux
-  normal global et la vraie
-  divergence tangentielle locale à cette compensation, puis à recoller les
-  représentants locaux. La gate
+  non polaire du collier. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeNormalCovectorCollarDerivative4D`
+  transporte cette formule par la dérivée du collier et prouve exactement que
+  le vrai cutoff global vérifie `dχ = χ' · n♭` sur son intérieur. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeAdaptedHolonomicGreenCurrentFlux4D`
+  prouve ensuite que la composante locale adaptée `J⁰` est exactement le flux
+  normal du véritable courant global sur le bulk coupé. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeHolonomicGlobalCutoffPullback4D`
+  reconnaît le cutoff holonome, y compris dans les cartes centrées à latitude
+  arbitraire, comme le vrai pullback local du cutoff global ; elle en déduit que
+  sa divergence locale libre au centre vaut exactement `cutoff' ×` le courant
+  normal canonique. Il reste à identifier la divergence tangentielle locale à
+  la compensation jacobienne, puis à recoller les représentants locaux. La gate
   `P0EFTJanusMappingTorusCanonicalHolonomicAtlasScalarGreenDivergenceTransition4D`
   prouve désormais l'invariance exacte de la divergence réelle sur les overlaps
   sous les jets de transition rebasés de la métrique et des deux scalaires ; le
