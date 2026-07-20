@@ -127,6 +127,7 @@ theorem d9GaugeGhostFinitePointwiseIndex_additive {ι : Type*}
     (modes : Finset ι) (covector : ι → TangentVector3) :
     d9GaugeGhostFinitePointwiseIndex modes covector =
       d9SeparatedFinitePointwiseIndex modes covector := by
+  classical
   unfold d9GaugeGhostFinitePointwiseIndex d9SeparatedFinitePointwiseIndex
   apply Finset.sum_congr rfl
   intro mode _
@@ -137,6 +138,7 @@ zero total index, even when some members lie at the zero covector. -/
 theorem d9GaugeGhostFinitePointwiseIndex_zero {ι : Type*}
     (modes : Finset ι) (covector : ι → TangentVector3) :
     d9GaugeGhostFinitePointwiseIndex modes covector = 0 := by
+  classical
   simp [d9GaugeGhostFinitePointwiseIndex,
     d9GaugeGhostBlock_pointwise_index_zero]
 
@@ -144,6 +146,7 @@ theorem d9GaugeGhostFinitePointwiseIndex_zero {ι : Type*}
 theorem d9SeparatedFinitePointwiseIndex_zero {ι : Type*}
     (modes : Finset ι) (covector : ι → TangentVector3) :
     d9SeparatedFinitePointwiseIndex modes covector = 0 := by
+  classical
   simp [d9SeparatedFinitePointwiseIndex, d9GaugePointwiseIndex_zero,
     d9GhostPointwiseIndex_zero]
 
