@@ -106,6 +106,71 @@ theorem combinedPointwiseIndex_additive (covector : TangentVector3) :
     combinedSymbol_ker_finrank_additive, combinedCokernel_finrank_additive]
   omega
 
+/-- Total pointwise index of a finite family of combined gauge--ghost blocks.
+This models finite field, internal-space or regulator multiplicities without
+introducing a global differential operator. -/
+def d9GaugeGhostFinitePointwiseIndex {ι : Type*}
+    (modes : Finset ι) (covector : ι → TangentVector3) : Int :=
+  modes.sum fun mode => d9GaugeGhostBlockPointwiseIndex (covector mode)
+
+/-- The same finite total computed after separating each gauge and ghost
+symbol block. -/
+def d9SeparatedFinitePointwiseIndex {ι : Type*}
+    (modes : Finset ι) (covector : ι → TangentVector3) : Int :=
+  modes.sum fun mode =>
+    d9GaugePointwiseIndex (covector mode) +
+      d9GhostPointwiseIndex (covector mode)
+
+/-- Pointwise gauge--ghost additivity commutes with every finite multiplicity
+sum, including mixtures of zero and nonzero covectors. -/
+theorem d9GaugeGhostFinitePointwiseIndex_additive {ι : Type*}
+    (modes : Finset ι) (covector : ι → TangentVector3) :
+    d9GaugeGhostFinitePointwiseIndex modes covector =
+      d9SeparatedFinitePointwiseIndex modes covector := by
+  unfold d9GaugeGhostFinitePointwiseIndex d9SeparatedFinitePointwiseIndex
+  apply Finset.sum_congr rfl
+  intro mode _
+  exact combinedPointwiseIndex_additive (covector mode)
+
+/-- Every finite collection of combined gauge--ghost pointwise symbols has
+zero total index, even when some members lie at the zero covector. -/
+theorem d9GaugeGhostFinitePointwiseIndex_zero {ι : Type*}
+    (modes : Finset ι) (covector : ι → TangentVector3) :
+    d9GaugeGhostFinitePointwiseIndex modes covector = 0 := by
+  simp [d9GaugeGhostFinitePointwiseIndex,
+    d9GaugeGhostBlock_pointwise_index_zero]
+
+/-- The separated gauge and ghost computation has the same zero total. -/
+theorem d9SeparatedFinitePointwiseIndex_zero {ι : Type*}
+    (modes : Finset ι) (covector : ι → TangentVector3) :
+    d9SeparatedFinitePointwiseIndex modes covector = 0 := by
+  simp [d9SeparatedFinitePointwiseIndex, d9GaugePointwiseIndex_zero,
+    d9GhostPointwiseIndex_zero]
+
+/-- Consequently the finite total is independent of all pointwise covector
+regimes and may be transported between finite regulator or field packets. -/
+theorem d9GaugeGhostFinitePointwiseIndex_stable {ι : Type*}
+    (modes : Finset ι) (first second : ι → TangentVector3) :
+    d9GaugeGhostFinitePointwiseIndex modes first =
+      d9GaugeGhostFinitePointwiseIndex modes second := by
+  calc
+    d9GaugeGhostFinitePointwiseIndex modes first = 0 :=
+      d9GaugeGhostFinitePointwiseIndex_zero modes first
+    _ = d9GaugeGhostFinitePointwiseIndex modes second :=
+      (d9GaugeGhostFinitePointwiseIndex_zero modes second).symm
+
+/-- Reusable finite-multiplicity closure certificate for the D9 gauge--ghost
+pointwise block. -/
+theorem d9GaugeGhostFiniteMultiplicityIndex_certificate {ι : Type*}
+    (modes : Finset ι) (covector : ι → TangentVector3) :
+    d9GaugeGhostFinitePointwiseIndex modes covector =
+        d9SeparatedFinitePointwiseIndex modes covector ∧
+      d9GaugeGhostFinitePointwiseIndex modes covector = 0 ∧
+      d9SeparatedFinitePointwiseIndex modes covector = 0 := by
+  refine ⟨d9GaugeGhostFinitePointwiseIndex_additive modes covector, ?_⟩
+  exact ⟨d9GaugeGhostFinitePointwiseIndex_zero modes covector,
+    d9SeparatedFinitePointwiseIndex_zero modes covector⟩
+
 end
 end P0EFTJanusGaugeGhostBlockD9SeparatedCokernelIndex4D
 end JanusFormal
