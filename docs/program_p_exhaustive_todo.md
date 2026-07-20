@@ -16,7 +16,7 @@ Légende :
 - **rejet** : résultat qui invaliderait Candidate A ou imposerait sa révision.
 
 Comptage mécanique de toutes les cases Markdown, à tous les niveaux :
-**1047 fermées sur 1154 ; 107 ouvertes** (90,73 %).
+**1058 fermées sur 1165 ; 107 ouvertes** (90,82 %).
 
 Documents de référence :
 
@@ -86,6 +86,29 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     du temps, prouver son involutivité et l'instancier sur le throat fixe.
   - [x] Promouvoir cet objet en variété lisse (`IsManifold` et atlas lisse).
   - [ ] Ajouter toutes les décorations physiques globales sur ce même objet.
+    - [x] Assembler sur le même quotient effectif D8 la métrique lorentzienne
+      intrinsèque lisse, sa mesure d'action finie non nulle, les
+      difféomorphismes PT ambiant/throat, l'embedding lisse du throat et le
+      vrai bundle principal ambiant `Pin⁻(4)`. Les champs matière, `U(1)^2`,
+      `PinC` et l'action complète restent hors de ce paquet canonique.
+      - [x] Étendre ce même paquet par deux métriques Candidate A conformes
+        positives `g₊=a g₀`, `g₋=b g₀`, leur racine intrinsèque sur chaque
+        fibre tangentielle et leur densité ; prouver le carré exact et l'accord
+        avec le potentiel matriciel isotrope dans toute frame. Les paires de
+        métriques générales non conformes restent ouvertes.
+        - [x] Promouvoir le coefficient `sqrt(b/a)` en vrai champ scalaire
+          lisse global et identifier la racine ponctuelle à ce champ multiplié
+          par l'identité tangentielle. La famille conforme de racines est donc
+          lisse ; la famille non conforme générale reste ouverte.
+          - [x] Construire l'opérateur linéaire induit sur les sections
+            tangentielles globales lisses et prouver point par point qu'il est
+            exactement la racine intrinsèque déjà construite.
+            - [x] Construire sur les mêmes sections l'opérateur relatif
+              `(b/a) id` et prouver globalement que la composition de
+              l'opérateur racine avec lui-même lui est exactement égale.
+              - [x] Prouver que l'échange des deux facteurs conformes positifs
+                fournit une famille inverse lisse, avec compositions gauche
+                et droite exactement égales à l'identité sur les sections.
     - [x] Donner aux covers concrets `S³ × ℝ` et `S² × ℝ` leurs atlas
       analytiques, puis prouver que les deux quotients sont des variétés
       topologiques `C⁰` et que la projection de covering est `C⁰`.
@@ -616,8 +639,34 @@ correspondance algébrique des coefficients, puis asymptotique effective.
     Les classes du fibré tangent ambiant et le twist monopolaire restent ouverts.
     - [x] Prouver en outre que le produit des deux caractères normaux opposés
       vaut exactement `1` pour tout enroulement.
+  - [x] Sur le vrai atlas du throat, construire le lift ambiant `Pin⁻(4)` de
+    la normale latitude canonique, prouver son cocycle Čech, sa projection sur
+    la réflexion orthogonale alignée et le carré central non trivial du tour
+    fondamental. Le twist monopolaire et les classes globales restent ouverts.
+  - [x] Relier l'entier de Chern monopolaire au caractère de transition
+    `Pin⁻(4)` : PT donne l'inverse, les charges opposées se compensent et tout
+    secteur primitif se projette sur la réflexion avec carré central non
+    trivial. Ce pont porte seulement sur l'entier de transition ; le vrai
+    bundle principal `U(1)` monopolaire et ses classes globales restent ouverts.
 - [ ] Fixer les domaines géométriques sur lesquels métriques, racines,
   opérateurs et conditions au bord sont simultanément définis.
+  - [x] Assembler sans champ de statut la géométrie décorée canonique, le
+    domaine commun champs/LL/D7/D9/D10/bord et l'inclusion linéaire injective
+    des variations indépendantes dans le tangent complet. La configuration
+    canonique est effectivement PT-fixe et conserve son carré de racine et sa
+    vraie trace de bord. L'accord action/Hessien/Fredholm reste ouvert.
+    - [x] Remplacer dans ce noyau le scaffold métrique diagonal par deux vraies
+      métriques lorentziennes générales intrinsèques sans dupliquer les champs
+      non métriques ; prouver PT-fixité du paquet et de sa trace de bord.
+      Une paire générale distincte et sa racine restent ouvertes.
+      - [x] À partir de tout facteur conforme positif, construire son partenaire
+        par pullback PT, prouver la naturalité PT de la métrique conforme, puis
+        assembler une paire potentiellement distincte avec racine/densité
+        Candidate A, champs non métriques inchangés et bord PT-fixe.
+        Le secteur non conforme général reste ouvert.
+        - [x] Construire un facteur positif explicite `2 + sin(2πt/T)`,
+          prouver qu'il diffère de son partenaire PT, puis que les deux
+          métriques du paquet canonique sont réellement distinctes.
 
   Le package typé `ProgramPCommonGeometricDomain4D` est maintenant non vide et
   force une même configuration pour les métriques diagonales, la racine
@@ -954,6 +1003,10 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       racine nilpotente finie non nulle. Son inverse diverge et son mode de
       Sylvester dégénère. Les cadres singuliers arbitraires et changements de
       type Jordan restent ouverts.
+      - [x] Étendre ce calcul à `P_k(t)=diag(t^k,1,1,1)` pour tout entier
+        `k≥0` : la conjugaison décale exactement l'ordre nilpotent de `k` et
+        classifie limite nulle, limite critique non nulle ou divergence selon
+        la comparaison de `m` avec `n+k`.
     - [x] Fermer deux témoins explicites de changement de type Jordan :
       `I+tE₀₁ → I` passe d'un bloc non semi-simple à l'identité avec racine
       affine lisse `I+(t/2)E₀₁` et valeur propre de Sylvester constante `2` ;
@@ -977,13 +1030,85 @@ ad hoc les espaces de champs, les opérateurs D7/D9/D10 et les termes de bord.
       `m=n`, vers `0` si le numérateur s'annule plus vite, et vers `+∞` si le
       dénominateur s'annule plus vite. Les chemins non linéaires, matriciels et
       les dégénérescences de Jordan arbitraires restent hors de cette famille.
+      - [x] Étendre exactement cette trichotomie à tous les exposants réels
+        strictement positifs, avec chemin continu jusqu'au même coin `0/0`.
+        Les fonctions positives arbitraires restent hors de cette famille.
+        - [x] Pour deux fonctions scalaires arbitraires tendant vers zéro,
+          construire le chemin diagonal commun et classifier la limite de la
+          racine par la limite finie ou infinie de leur ratio. Ceci ne classe
+          toujours pas les chemins matriciels non diagonaux.
+          - [x] Sous une similarité mobile régulière, promouvoir toute limite
+            finie du ratio en limite explicite de la matrice-racine entière et
+            exclure toute limite matricielle finie lorsque le ratio diverge.
 - [ ] Étendre la suite explicite retenue à tous les chemins matriciels `0/0`,
   aux similarités mobiles ou cadres singuliers arbitraires, puis classifier
   les changements généraux de type Jordan et construire l'atlas de branches.
+  - [x] Exclure toute extension matricielle continue monovaluée qui contient
+    la famille diagonale et coïncide avec sa racine principale intérieure : sa
+    restriction hérite des deux limites diagonales incompatibles au même coin.
+    Ceci est une obstruction universelle, pas une classification des chemins.
+  - [x] Pour toute conjugaison réelle fixe munie d'un inverse, reconstruire
+    exactement le spectre diagonal, transporter la trichotomie monomiale et
+    exclure le prolongement continu sur cette classe simultanément
+    diagonalisable. Les similarités mobiles sont traitées séparément.
   - [x] Pour toute similarité mobile régulière dont le changement de base et
     l'inverse convergent, transporter les limites matricielles et prouver que
     la trichotomie monomiale `0/0` reste exactement inchangée après extraction
     dans le repère mobile. Les cadres singuliers arbitraires restent ouverts.
+    - [x] Pour les deux branches à limite finie, promouvoir cette convergence
+      coordonnée en convergence du spectre entier puis de la matrice-racine
+      conjuguée, avec limite explicite dans le repère mobile limite.
+    - [x] Pour la branche à dénominateur plus rapide, exclure toute limite
+      matricielle finie : sa conjugaison inverse aurait une entrée diagonale
+      finie, contrairement à la divergence extraite vers `+∞`.
+  - [x] Pour les cadres diagonaux singuliers à exposants entiers, classifier
+    exactement l'existence d'une limite finie de toute matrice monomiale par
+    la non-négativité de ses valuations actives, y compris coefficients signés ;
+    étendre le critère suffisant et l'obstruction aux sommes monomiales finies
+    à terme dominant non nul. Les cadres singuliers non diagonaux et séries
+    non analytiques restent ouverts.
+    - [x] Pour les sommes monomiales finies à terme dominant non nul, promouvoir
+      convergence et obstruction en une équivalence exacte entre existence
+      d'une limite matricielle finie et non-négativité de toutes les valuations.
+    - [x] Étendre l'équivalence monomiale à tout cadre singulier obtenu par
+      conjugaison fixe inversible d'un cadre diagonal : la limite finie existe
+      exactement sous la même condition de valuations et vaut la conjugaison
+      fixe de la limite diagonale. Les cadres singuliers dont les directions
+      propres varient avec le paramètre restent ouverts.
+      - [x] Étendre le même critère exact aux sommes monomiales finies à terme
+        dominant non nul : une conjugaison fixe inversible conserve
+        l'équivalence entre valuations non négatives et limite finie.
+      - [x] Autoriser une conjugaison extérieure mobile régulière, avec matrice
+        et inverse convergentes : pour les matrices monomiales et polynomiales
+        finies, elle préserve et reflète exactement l'existence d'une limite
+        finie du transport singulier intérieur. Les directions propres sans
+        limite ou à inverse extérieur divergent restent ouvertes.
+        - [x] Identifier la limite dans les deux cas : elle est exactement la
+          conjugaison de la limite de valuation diagonale par les limites de
+          la base extérieure mobile et de son inverse.
+    - [x] Étendre le critère exact de valuation à toute matrice dont chaque
+      entrée possède un terme dominant asymptotique non nul certifié : les
+      valuations non négatives sont équivalentes à l'existence d'une limite
+      matricielle finie. Cela couvre les séries convergentes une fois leur
+      asymptotique dominante fournie, sans classifier les cadres arbitraires.
+      - [x] Autoriser un masque actif abstrait : les entrées actives gardent
+        un terme dominant non nul certifié, les entrées inactives sont
+        éventuellement nulles et n'imposent aucune valuation.
+        - [x] Transporter ce critère actif abstrait par toute base extérieure
+          mobile régulière convergente, avec limite conjuguée explicite et
+          équivalence nécessaire/suffisante conservée.
+      - [x] Pour tout germe de série convergente non nul, extraire
+        automatiquement son ordre, factoriser l'entrée par la puissance
+        dominante et fournir le résidu continu non nul requis par le critère.
+        - [x] Autoriser aussi les entrées à série identiquement nulle : elles
+          sont inactives et n'imposent aucune valuation, tandis que les entrées
+          analytiques actives conservent le critère nécessaire et suffisant.
+          - [x] Transporter ce critère analytique avec entrées nulles par toute
+            base extérieure mobile régulière dont la matrice et l'inverse
+            convergent, avec limite conjuguée explicite.
+      - [x] Transporter exactement ce critère par toute base extérieure mobile
+        régulière dont la matrice et l'inverse convergent ; identifier la limite
+        à la conjugaison de la limite de valuation par les deux limites de base.
 - [x] Dériver la variation de la racine sur ce domaine par rapport aux deux métriques indépendantes, inverse métrique comprise.
   - [x] Cette dérivée complète est prouvée au point diagonal de Minkowski pour
     la branche locale, y compris la dérivée de l'inverse dans
@@ -1712,6 +1837,158 @@ par toute évolution admissible.
             boundary functional au flux normal tangent concret et fermer les
             formules de première variation, stationnarité et Euler faible sous
             Dirichlet. Le contrat Green--Stokes lui-même reste à prouver.
+            - [x] Fermer le ledger de signe des deux lifts du throat coupé : le
+              deck inverse simultanément le courant scalaire et l'orientation
+              sortante, donc les contributions orientées sont égales, leur
+              somme vaut deux fois un lift et leur différence est nulle. La
+              variété coupée et Stokes global restent ouverts.
+              - [x] Identifier le bord topologique correct du cut comme le
+                double revêtement d'orientation connexe du throat one-sided,
+                prouver que son image est exactement le throat et que chaque
+                fibre contient deux lifts distincts échangés par le deck. La
+                structure de variété à bord reste à construire.
+                - [x] Construire le bulk coupé topologique comme mapping torus
+                  de l'hémisphère positif fermé à période doublée, prouver
+                  sa surjectivité vers le bulk initial, l'injectivité de son
+                  double bord et la commutation du carré bord/bulk. La
+                  structure lisse à bord et Stokes restent ouverts.
+                  - [x] Prouver que l'inclusion compacte du double bord dans
+                    le bulk coupé hausdorff est un plongement fermé. Le
+                    recollement lisse reste ouvert.
+                  - [x] Construire le collier fini du double bord comme vrai
+                    4-manifold analytique à bord, identifier exactement sa
+                    frontière aux deux faces lisses injectives throat/interface.
+                    Le recollement au reste du bulk et Stokes restent ouverts.
+                    - [x] Attacher le collier de latitude `[0,1]` au bulk coupé
+                      par un plongement fermé, identifier sa face zéro à
+                      l'inclusion du double throat et sa face un à une interface
+                      extérieure explicite plongée fermée. La compatibilité
+                      lisse globale et Stokes restent ouverts.
+                      - [x] Faire descendre la latitude au quotient, identifier
+                        exactement l'image du collier à la bande fermée
+                        `0 ≤ latitude ≤ sin 1` et l'interface extérieure au
+                        niveau `latitude = sin 1`.
+                        - [x] Décomposer le bulk coupé en deux fermés couvrants,
+                          collier et reste extérieur, dont l'intersection est
+                          exactement l'interface latitude `sin 1`.
+                          - [x] Retirer la face artificielle et identifier le
+                            collier ouvert au vrai ouvert intrinsèque
+                            `latitude < sin 1` par un plongement ouvert.
+                            - [x] Munir le collier ouvert de l'atlas analytique
+                              induit du collier fini et prouver l'analyticité
+                              de son inclusion.
+                            - [x] Construire le cap ouvert `latitude > 0`,
+                              prouver qu'il couvre le bulk avec le collier et
+                              identifier l'overlap à `0 < latitude < sin 1`.
+                              - [x] Construire le modèle du cap comme mapping
+                                torus analytique 4D de l'hémisphère strictement
+                                positif, avec projection locale difféomorphe.
+                                - [x] L'identifier par plongement ouvert au cap
+                                  intrinsèque `latitude > 0` et construire
+                                  l'homéomorphie canonique correspondante.
+                                  - [x] Transporter l'atlas analytique sur le
+                                    cap intrinsèque et prouver l'analyticité
+                                    de cette homéomorphie dans les deux sens.
+                                    - [x] Restreindre le difféomorphisme
+                                      tubulaire à `0 < normal < 1` et prouver
+                                      la transition `C∞` collier–calotte
+                                      dans les deux sens sur les revêtements.
+                                      - [x] Identifier exactement son image à
+                                        `0 < latitude < sin 1`.
+                                      - [x] Prouver le lemme générique de
+                                        descente lisse d'une application de
+                                        revêtements équivariante sous les decks.
+                                        - [x] Construire le foncteur lisse
+                                          des mapping tori à monodromie
+                                          identité et son action sur les
+                                          difféomorphismes de fibres.
+                                          - [x] L'instancier sur la transition
+                                            tubulaire et descendre le
+                                            difféomorphisme `C∞` aux deux
+                                            mapping tori de l'overlap.
+                                            - [x] Plonger ouvertement et `C∞`
+                                              le mapping torus de bande stricte
+                                              dans la calotte lisse complète.
+                                              - [x] Identifier exactement son
+                                                image intrinsèque à
+                                                `0 < latitude < sin 1`.
+                                                - [x] Transporter cette image
+                                                  intrinsèque exacte au modèle
+                                                  lisse de l'overlap collier.
+                                                  - [x] Factoriser ce modèle
+                                                    par plongement ouvert dans
+                                                    le collier intrinsèque.
+                                                    - [x] Descendre la
+                                                      coordonnée normale en
+                                                      fonction `C∞` quotient.
+                                                      - [x] Descendre la
+                                                        projection vers le
+                                                        bord du collier en
+                                                        application `C∞`.
+                                                        - [x] Assembler les
+                                                          deux composantes et
+                                                          identifier la carte
+                                                          canonique `C∞` vers
+                                                          le collier intrinsèque.
+                                                          - [x] Identifier les
+                                                            paramètres stricts
+                                                            au produit bord ×
+                                                            `Ioo(0,1)` par un
+                                                            difféomorphisme `C∞`.
+                                                            - [x] Prouver que
+                                                              le mapping torus
+                                                              identité commute
+                                                              `C∞` au facteur
+                                                              produit passif.
+                                                              - [x] Instancier
+                                                                ce résultat et
+                                                                identifier
+                                                                l'overlap à bord
+                                                                × `Ioo(0,1)`.
+                                                                - [x] Identifier
+                                                                  ce produit au
+                                                                  sous-ouvert
+                                                                  intrinsèque
+                                                                  `normal > 0`
+                                                                  dans les deux
+                                                                  sens `C∞`.
+                                                                  - [x] Identifier
+                                                                    le modèle
+                                                                    euclidien du
+                                                                    cap à
+                                                                    l'intérieur du
+                                                                    modèle demi-espace
+                                                                    du collier dans
+                                                                    les deux sens
+                                                                    `C∞`.
+                                                                    - [x] Recharter
+                                                                      le modèle du
+                                                                      cap dans ce
+                                                                      modèle commun
+                                                                      demi-espace.
+                                                                      - [x] Composer
+                                                                        l'atlas du
+                                                                        cap intrinsèque
+                                                                        avec ce modèle
+                                                                        commun et
+                                                                        prouver sa
+                                                                        compatibilité
+                                                                        `C∞`.
+                                                                        - [x] Relever
+                                                                          les cartes
+                                                                          des deux
+                                                                          ouverts et
+                                                                          installer
+                                                                          l'atlas
+                                                                          topologique
+                                                                          global.
+                    - [x] Descendre le courant tordu en vrai scalaire lisse sur
+                      le double bord : invariance sous les windings pairs et
+                      anti-invariance sous le deck résiduel prouvées.
+                      - [x] Identifier le deck résiduel à la translation de
+                        demi-période, prouver l'invariance de la mesure
+                        canonique et l'annulation de l'intégrale scalaire non
+                        orientée. Le flux orienté de Stokes reste distinct.
         - [x] Sur le collier latitude canonique, appliquer la vraie IPP
           `intervalIntegral` fibre par fibre puis contre la mesure canonique,
           identifier le terme intérieur à `mvfderiv` sur le normal et obtenir
@@ -1872,9 +2149,35 @@ par toute évolution admissible.
       scalaire global `C∞` sur le quotient D8 et prouver son unicité.
     - [x] Prouver les règles de chaîne exactes de cette différentielle sous
       restriction au throat et pullback PT.
-    - [x] Sur le secteur diagonal global, contracter cette différentielle par
+  - [x] Sur le secteur diagonal global, contracter cette différentielle par
       l'inverse exact de la même métrique, multiplier par son volume
       `sqrt(|det g|)`, intégrer la densité et construire deux secteurs échangés.
+    - [x] Promouvoir les quatre coefficients du repère holonomique fixé en une
+      équivalence linéaire continue exacte avec l'espace tangent modèle.
+    - [x] Construire le sharp diagonal explicite dans ces coordonnées, prouver
+      son identité d'inverse et retrouver exactement le terme cinétique sous
+      le pont de composantes du covecteur modèle.
+    - [x] Promouvoir le flat diagonal en application linéaire continue, prouver
+      sa bijectivité par le sharp et obtenir le musical continu exact vers le
+      dual du tangent modèle.
+    - [x] Construire la frame continue obtenue par racines carrées des quatre
+      magnitudes positives et identifier exactement le pairing diagonal au
+      pairing de Minkowski d'inertie `(3,1)`.
+    - [x] Identifier la matrice de Gram holonomique à la matrice lorentzienne
+      diagonale et prouver l'égalité exacte de sa densité `sqrt |det|` avec le
+      facteur de volume de l'action globale.
+    - [x] Tirer le musical diagonal vers chaque trivialisation tangente
+      canonique, obtenir un vrai tenseur local inversible sur la fibre tangente
+      et certifier son inertie lorentzienne par une frame locale explicite.
+    - [x] Prouver que l'accord de deux tenseurs locaux sur un overlap équivaut
+      exactement à la préservation du pairing diagonal par la transition de
+      frames, puis formuler le contrat cocycle global correspondant.
+    - [x] Assembler canoniquement une famille ponctuelle globale par les patches
+      centrés, prouver sa non-dégérescence et son inertie lorentzienne, puis son
+      accord avec toute réalisation locale sous le cocycle.
+    - [x] Isoler l'interface de réalisation tensorielle lisse exacte et prouver
+      qu'elle produit automatiquement un vrai `SmoothGeneralLorentzMetric`
+      avec le musical et l'inertie déjà certifiés.
     - [ ] Achever la complétion Sobolev intrinsèque et l'équation d'Euler
       covariante avec les conditions au bord retenues.
       - [x] Dans le quotient fonctionnel `H¹` canonique déjà complet, définir
@@ -2781,6 +3084,11 @@ Hessien physique réellement descendu.
     empaqueter le bundle principal complet. L'existence inconditionnelle du
     relèvement Čech ambiant reste le verrou distinct.
 - [ ] Prouver l'accord des classes caractéristiques `Pin⁻`/`PinC` et déterminant.
+  - [x] Combiner les résultats existants de séparation du normal-root et du
+    monopole avec la loi du déterminant `SpinC` : les magnitudes de Chern sont
+    respectivement `0`, `1` et `2`, le déterminant est pair et les trois rôles
+    sont distincts. L'identification des vrais bundles et classes globales
+    `Pin⁻`/`PinC` reste ouverte.
 - [ ] Construire la descente effective et le théorème d'intégrabilité des jets
   d'ordre supérieur.
   - [x] Prouver existence et unicité de la descente `C∞` de toute application
@@ -2914,6 +3222,28 @@ Hessien physique réellement descendu.
       construire les huit données d'action avec une mesure commune sous le
       contrat exact d'intégrabilité des pairings. Le contrat analytique reste
       à décharger sur le domaine fonctionnel global retenu.
+      - [x] Formaliser l'obstruction de signe entre cette densité globale et la
+        densité covariante utilisée par Noether : à volume et cinétique
+        identifiés, leur égalité équivaut à l'annulation du terme massif et
+        échoue pour masse, champ et volume non nuls.
+        - [x] Intégrer cette identité sous hypothèses explicites : la différence
+          des deux actions globales est exactement l'intégrale du défaut
+          massif, et leur égalité équivaut à l'annulation de cette intégrale.
+          - [x] Sommer ce certificat sur les huit vraies composantes : sous les
+            ponts masse, mesure, volume et cinétique composante par composante,
+            la différence entre l'action Euler et l'action Noether est la somme
+            exacte des huit défauts intégrés.
+            - [x] Pour des masses carrées non négatives, prouver que ces huit
+              défauts intégrés sont non négatifs et que leur somme s'annule si
+              et seulement si chacun s'annule : aucune compensation entre
+              composantes n'est possible.
+              - [x] Sous masse strictement positive, volume strictement positif
+                presque partout et intégrabilité, prouver qu'un défaut intégré
+                s'annule si et seulement si le champ correspondant est nul
+                presque partout ; tout champ non nul donne un défaut positif.
+                - [x] En déduire, sous les ponts composante par composante,
+                  qu'un seul champ de masse positive non nul presque partout
+                  force l'inégalité des deux actions matière à huit champs.
       - [x] Injecter fidèlement toute paire de directions matière dans le même
         `IndependentFieldVariation` que D9 et LL, prouver que l'extraction des
         huit composantes commute exactement avec la courbe simultanée, puis
@@ -4212,6 +4542,10 @@ Hessien physique réellement descendu.
     huit actions scalaires covariantes ; son identification à
     `globalMatterMultipletAction`, ainsi que les blocs EH, Maxwell, ghosts et
     bord, restent ouverts.
+    - [x] Remplacer la seule orbite de translation temporelle par toute courbe
+      de difféomorphismes lisses D8 : l'action covariante des huit scalaires
+      reste exactement constante et sa dérivée est nulle en tout paramètre.
+      Aucun adjoint d'Euler, courant local ni bloc non matière n'est obtenu.
 - [ ] Dériver les deux identités de Bianchi avec échange matière/interaction et
   flux de frontière.
 - [x] Déterminer dans le modèle réduit exact quand les conservations sectorielles se séparent réellement.

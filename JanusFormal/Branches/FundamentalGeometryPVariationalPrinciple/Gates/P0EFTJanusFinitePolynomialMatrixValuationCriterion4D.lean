@@ -164,6 +164,22 @@ theorem finitePolynomialTransportedMatrix_no_finite_limit_of_negativeEntry
   exact transportedEntry_eq_normalized_inverse data frameExponent i j ht.ne'
     hNegative.le
 
+theorem finitePolynomialValuationsNonnegative_iff_exists_finite_limit
+    {ι : Type*} (data : FinitePolynomialMatrixData ι)
+    (frameExponent : Fin 4 → Nat) :
+    FinitePolynomialValuationsNonnegative data frameExponent ↔
+      ∃ candidate : Matrix4,
+        Tendsto (finitePolynomialTransportedMatrix data frameExponent)
+          (nhdsWithin 0 (Set.Ioi 0)) (nhds candidate) := by
+  constructor
+  · intro hValuation
+    exact ⟨finitePolynomialLimit data frameExponent,
+      finitePolynomialTransportedMatrix_tendsto data frameExponent hValuation⟩
+  · rintro ⟨candidate, hCandidate⟩ i j
+    by_contra hValuation
+    exact finitePolynomialTransportedMatrix_no_finite_limit_of_negativeEntry
+      data frameExponent (Nat.lt_of_not_ge hValuation) candidate hCandidate
+
 end
 end P0EFTJanusFinitePolynomialMatrixValuationCriterion4D
 end JanusFormal
