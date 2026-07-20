@@ -1,0 +1,33 @@
+name: D9 branch Lean build
+
+on:
+  push:
+    branches:
+      - agent/d9-finite-multiplicity-index
+  pull_request:
+    branches:
+      - codex/program-p-full-closure
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-program-p:
+    name: Build Program P
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Lean target
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+          test: false
+          lint: false
+          use-mathlib-cache: true
