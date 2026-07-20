@@ -5965,6 +5965,15 @@ PROGRAM_P_GATES = {
             "theorem normalTangentialAdaptedHolonomicChart_exists",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeAmbientOrthogonality4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem latitudeAmbientVelocity_eq_axis_sub_radius",
+            "theorem sphereAmbientMap_inner_mfderiv_zero",
+            "theorem sphereAmbientDerivative_fixedLatitude_latitudeCoordinate_zero",
+            "theorem latitudeAmbientVelocity_inner_fixedLatitudeDerivative_zero",
+        ),
+    ),
     "P0EFTJanusMappingTorusHolonomicDiagonalSharp4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

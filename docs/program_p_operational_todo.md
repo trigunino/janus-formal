@@ -914,7 +914,10 @@ que si leur critère le dit explicitement.
   `P0EFTJanusMappingTorusCutBulkCanonicalCutoffCollarMFDeriv4D` calcule désormais
   la différentielle manifold complète du vrai cutoff global tiré sur le produit
   du collier : elle vaut exactement `cutoff'` multiplié par la composante
-  tangentielle normale. Il reste à transporter cette formule par l'isomorphisme
+  tangentielle normale. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeAmbientOrthogonality4D` généralise
+  maintenant l'orthogonalité normale/tangentielle du throat à toute latitude
+  non polaire du collier. Il reste à transporter cette formule par l'isomorphisme
   de dérivée du collier vers la covariable normale métrique pour reconnaître le
   cutoff holonome comme son vrai pullback local, puis à identifier `J⁰` au flux
   normal global et la vraie
