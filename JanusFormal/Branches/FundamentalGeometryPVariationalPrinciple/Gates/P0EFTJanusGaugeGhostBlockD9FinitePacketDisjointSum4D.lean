@@ -55,13 +55,15 @@ def packetDisjointSumLinearEquiv {ι κ V : Type*}
 @[simp] theorem packetDisjointSumLinearEquiv_symm_inl_apply
     {ι κ V : Type*} [AddCommMonoid V] [Module Real V]
     (separated : (ι → V) × (κ → V)) (mode : ι) :
-    (packetDisjointSumLinearEquiv.symm separated) (Sum.inl mode) =
+    ((packetDisjointSumLinearEquiv
+        (ι := ι) (κ := κ) (V := V)).symm separated) (Sum.inl mode) =
       separated.1 mode := rfl
 
 @[simp] theorem packetDisjointSumLinearEquiv_symm_inr_apply
     {ι κ V : Type*} [AddCommMonoid V] [Module Real V]
     (separated : (ι → V) × (κ → V)) (mode : κ) :
-    (packetDisjointSumLinearEquiv.symm separated) (Sum.inr mode) =
+    ((packetDisjointSumLinearEquiv
+        (ι := ι) (κ := κ) (V := V)).symm separated) (Sum.inr mode) =
       separated.2 mode := rfl
 
 /-- Split a combined D9 zero-mode packet into two disjoint mode families. -/
