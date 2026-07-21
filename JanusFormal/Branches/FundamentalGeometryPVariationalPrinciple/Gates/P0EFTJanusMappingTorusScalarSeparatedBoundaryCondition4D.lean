@@ -24,6 +24,7 @@ open MeasureTheory
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCanonicalLatitudeScalarIPP4D
 open P0EFTJanusMappingTorusCutBulkGlobalScalarBoundaryForm4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -62,7 +63,7 @@ theorem canonicalLatitudeScalarBoundaryGreenForm_eq_zero_of_separated
   · have hValueCoefficient : valueCoefficient base ≠ 0 := by
       rcases hNondegenerate base with hValue | hNormal'
       · exact hValue
-      · exact False.elim (hNormal hNormal')
+      · exact False.elim (hNormal' hNormal)
     have hFieldValue :
         canonicalLatitudeScalarBoundaryValue period hPeriod field base = 0 := by
       have hEquation : valueCoefficient base *
