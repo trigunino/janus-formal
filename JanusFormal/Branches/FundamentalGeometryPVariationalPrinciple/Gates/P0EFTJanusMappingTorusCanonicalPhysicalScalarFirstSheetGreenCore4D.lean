@@ -1,23 +1,18 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGraphTraceBound4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
 
 /-!
 # Correct dense physical scalar Green core
 
-This file is the physically faithful scalar entry point.
-
 The smooth Euler core has a dense, rather than surjective, trace range in the
 first-sheet boundary L2 space.  The graph trace is completed using coarea,
 ellipticity and normal-control estimates.  Density of the zero-Cauchy minimal
 core makes the completed graph single-valued.  Surjectivity is requested only
-for the completed trace, exactly where an extension theorem for Sobolev boundary
-data belongs.
-
-The resulting object is a genuine completed boundary triple and supports all
-closed Lagrangian boundary domains without the impossible assumption that every
-L2 pair has a smooth representative.
+for the completed trace, exactly where a Sobolev boundary extension theorem
+belongs.
 -/
 
 namespace JanusFormal
@@ -35,6 +30,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGraphTraceBound4D
 open P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
@@ -84,7 +80,7 @@ def core
     exact (canonicalPhysicalScalarFirstSheetHilbertTrace_certificate
       period hPeriod first second).2
 
-/-- The physical Euler equation is zero of the core operator. -/
+/-- Physical Euler equation is zero of the core operator. -/
 theorem eulerEquation_iff_operator_eq_zero
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -93,7 +89,7 @@ theorem eulerEquation_iff_operator_eq_zero
       green.core.operator field = 0 :=
   green.operatorData.eulerEquation_iff_operator_eq_zero field
 
-/-- Physical graph-elliptic estimate for the corrected core. -/
+/-- Physical graph-elliptic estimate. -/
 structure GraphEllipticEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared) where
@@ -103,7 +99,7 @@ structure GraphEllipticEstimate
     ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ≤
       constant * ‖canonicalScalarGreenCoreToGraph green.core field‖
 
-/-- Physical normal-trace graph estimate for the corrected core. -/
+/-- Physical normal-trace graph estimate. -/
 structure NormalGraphEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared) where
@@ -129,10 +125,7 @@ theorem valueTrace_norm_le_graph
     period hPeriod coarea
     (smoothToCanonicalPhysicalScalarH1 period hPeriod field)
   rw [canonicalPhysicalScalarH1TraceOfCoarea_agrees_on_smooth] at hTrace
-  have hNormEquality :=
-    P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGraphTraceBound4D.smoothCanonicalPhysicalScalarFirstSheetValueL2_norm_eq_throatTrace
-      period hPeriod field
-  rw [hNormEquality]
+  rw [smoothCanonicalPhysicalScalarFirstSheetValueL2_norm_eq_throatTrace]
   calc
     ‖smoothCanonicalPhysicalTraceL2 period hPeriod field‖ ≤
         canonicalPhysicalScalarH1TraceCoareaConstant period hPeriod coarea *
