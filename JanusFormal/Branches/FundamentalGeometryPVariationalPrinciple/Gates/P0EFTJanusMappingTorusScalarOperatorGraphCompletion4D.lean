@@ -265,9 +265,13 @@ def canonicalScalarCompletedNormalTrace
     canonicalScalarCompletedValueTrace data traceBound
         (canonicalScalarSmoothToOperatorGraphLinearMap data field) =
       (data.boundaryTrace field).1 := by
-  rw [canonicalScalarCompletedValueTrace,
-    canonicalScalarCompletedBoundaryTrace_agrees_on_smooth]
-  rfl
+  change
+    (canonicalScalarCompletedBoundaryTrace data traceBound
+      (canonicalScalarSmoothToOperatorGraphLinearMap data field)).1 =
+        (data.boundaryTrace field).1
+  exact congrArg Prod.fst
+    (canonicalScalarCompletedBoundaryTrace_agrees_on_smooth
+      data traceBound field)
 
 @[simp] theorem canonicalScalarCompletedNormalTrace_smooth
     (data : CanonicalScalarHilbertGreenSystem
@@ -277,9 +281,13 @@ def canonicalScalarCompletedNormalTrace
     canonicalScalarCompletedNormalTrace data traceBound
         (canonicalScalarSmoothToOperatorGraphLinearMap data field) =
       (data.boundaryTrace field).2 := by
-  rw [canonicalScalarCompletedNormalTrace,
-    canonicalScalarCompletedBoundaryTrace_agrees_on_smooth]
-  rfl
+  change
+    (canonicalScalarCompletedBoundaryTrace data traceBound
+      (canonicalScalarSmoothToOperatorGraphLinearMap data field)).2 =
+        (data.boundaryTrace field).2
+  exact congrArg Prod.snd
+    (canonicalScalarCompletedBoundaryTrace_agrees_on_smooth
+      data traceBound field)
 
 /-- Surjectivity survives completion because the algebraic core already realizes
 every Hilbert boundary pair. -/
