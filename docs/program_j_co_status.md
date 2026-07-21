@@ -24,6 +24,9 @@ Holes: Gravastars and Plugstars*, DOI `10.4236/jmp.2025.1610072`, pages
 - `CO-BP01` fermé : plongement effectif de la gorge D8 disponible.
 - `CO-BP02` fermé : équivariance PT de la géométrie effective de gorge.
 - `CO-BP03` fermé (passe 2) : famille finie de générateurs tangents lisses sur le quotient D8 compact et trace de gorge graph-H1 disponible.
+- `CO-BP04` fermé (passe 3) : stationnarité de l'action de jonction géométrique implique la balance normale faible sur la gorge effective.
+- `CO-BP05` fermé (passe 4) : la loi normale de Robin géométrique transforme la stationnarité en balance faible de Robin.
+- `CO-BP06` fermé (passe 5) : restriction non dégénérée de la métrique lorentzienne intrinsèque sur la gorge effective.
 - Reprise P : solution compacte bimétrique, tenseur matière et métrique extérieure physique. `CO-P07/CO-P08/CO-P09` restent ouverts.
 
 **T/X** : le noyau algébrique constant-density et le ratio cité sont

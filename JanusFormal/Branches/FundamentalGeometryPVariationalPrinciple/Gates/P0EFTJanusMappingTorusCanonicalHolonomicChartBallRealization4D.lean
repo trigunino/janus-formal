@@ -322,6 +322,36 @@ private theorem ballQuotientCoordinateMap_zero
   rw [(extChartAt coverModelWithCorners anchor).left_inv
     (mem_extChartAt_source anchor)]
 
+/-- Public wrapper for reusing the realized ball coordinate map in adapted
+holonomic charts. -/
+def realizedBallQuotientCoordinateMap
+    (anchor : EffectiveCover period hPeriod)
+    {center : CoverCoordinates} {radius : Real}
+    (parametrization : TotalR4BallParametrization center radius) :
+    Vector4 → EffectiveQuotient period hPeriod :=
+  ballQuotientCoordinateMap period hPeriod anchor parametrization
+
+theorem realizedBallQuotientCoordinateMap_isLocalDiffeomorph
+    (anchor : EffectiveCover period hPeriod)
+    {center : CoverCoordinates} {radius : Real}
+    (parametrization : TotalR4BallParametrization center radius)
+    (hBall : Metric.ball center radius ⊆
+      (extChartAt coverModelWithCorners anchor).target) :
+    IsLocalDiffeomorph (modelWithCornersSelf Real Vector4)
+      coverModelWithCorners ∞
+      (realizedBallQuotientCoordinateMap period hPeriod anchor
+        parametrization) :=
+  ballQuotientCoordinateMap_isLocalDiffeomorph period hPeriod anchor
+    parametrization hBall
+
+theorem realizedBallQuotientCoordinateMap_zero
+    (anchor : EffectiveCover period hPeriod) {radius : Real}
+    (parametrization : TotalR4BallParametrization
+      (extChartAt coverModelWithCorners anchor anchor) radius) :
+    realizedBallQuotientCoordinateMap period hPeriod anchor parametrization 0 =
+      mappingTorusMk (sphereData period hPeriod) anchor :=
+  ballQuotientCoordinateMap_zero period hPeriod anchor parametrization
+
 /-- The quotient local diffeomorphism closes the chart-through-every-point
 gate as soon as the standard total `R^4` ball parametrization is supplied. -/
 theorem canonicalHolonomicChartThroughEveryPoint_of_totalR4BallParametrizations

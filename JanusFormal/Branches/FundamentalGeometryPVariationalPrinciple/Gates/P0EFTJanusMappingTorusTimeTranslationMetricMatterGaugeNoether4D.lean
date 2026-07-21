@@ -200,6 +200,30 @@ private theorem effectiveTimeTranslationVelocity_eq_curve_mfderiv
       simp [tangentMap, effectiveTimeTranslationCurve]
       exact HEq.rfl
 
+/-- Public form of the intrinsic time-translation velocity: it is the
+manifold derivative at zero of the genuine complete quotient flow. -/
+theorem effectiveTimeTranslationVelocity_eq_timeFlow_mfderiv
+    (point : EffectiveQuotient period hPeriod) :
+    effectiveTimeTranslationVelocity period hPeriod point =
+      mfderiv 𝓘(Real, Real) coverModelWithCorners
+        (fun parameter : Real =>
+          effectiveTimeFlow period hPeriod parameter point) 0 1 := by
+  change effectiveTimeTranslationVelocity period hPeriod point =
+    mfderiv 𝓘(Real, Real) coverModelWithCorners
+      (effectiveTimeTranslationCurve period hPeriod point) 0 1
+  exact effectiveTimeTranslationVelocity_eq_curve_mfderiv
+    period hPeriod point
+
+/-- Each orbit of the genuine complete quotient time flow is smooth. -/
+theorem effectiveTimeFlow_orbit_contMDiff
+    (point : EffectiveQuotient period hPeriod) :
+    ContMDiff 𝓘(Real, Real) coverModelWithCorners ω
+      (fun parameter : Real =>
+        effectiveTimeFlow period hPeriod parameter point) := by
+  change ContMDiff 𝓘(Real, Real) coverModelWithCorners ω
+    (effectiveTimeTranslationCurve period hPeriod point)
+  exact effectiveTimeTranslationCurve_contMDiff period hPeriod point
+
 /-- Exact remaining regularity input for two arbitrary metric derivatives
 along the fixed analytic time flow.  No arbitrary tangent ghost is
 integrated. -/

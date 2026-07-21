@@ -4,10 +4,36 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+PROGRAM_P_OPERATIONAL_TODO = Path("docs/program_p_operational_todo.md")
+TERMINAL_GATE_IDS = tuple(f"T{index:02d}" for index in range(1, 15))
+TERMINAL_GATE_SCOPES = {
+    "GLOBAL",
+    "SECTORIEL",
+    "RÉDUIT",
+    "FINITE-MODE",
+    "POINTWISE",
+    "CONDITIONNEL",
+    "DOCUMENTAIRE",
+}
+
+
+@dataclass(frozen=True)
+class TerminalGateEvidence:
+    module: Path
+    facade: Path
+    theorem: str
+    scope: str
+    expected_type_fragment: str
+
+
+# A checked terminal gate must first receive concrete evidence here.  Empty is
+# intentional while T01--T14 are all open.
+TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {}
 GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates"
 )
@@ -698,6 +724,34 @@ PROGRAM_P_GATES = {
             "theorem extrinsicTrace_eq",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalThroatGaussianNormalGHYBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeInducedMetric",
+            "theorem canonicalLatitudeInducedMetric_entry_hasDerivAt_zero",
+            "def canonicalThroatGaussianData",
+            "theorem canonicalLatitudeMetric_matchesGaussian_oneJet",
+            "theorem canonicalLatitudeMetric_zero_eq_gaussian",
+            "theorem canonicalThroat_secondFundamentalForm_zero",
+            "theorem canonicalThroat_secondFundamentalForm_lifts_opposite",
+            "theorem canonicalThroat_extrinsicTrace_zero",
+            "theorem canonicalLatitudeCollar_lifts_opposite",
+            "theorem canonicalLatitudeNormal_is_unit_spacelike",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIntrinsicLLKineticAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicLLDifferentialCovector",
+            "def intrinsicLLDerivativePairing",
+            "def intrinsicLLKineticAction",
+            "theorem intrinsicLLKineticDensity_affine_quadratic",
+            "theorem intrinsicLLKineticHessian_symmetric",
+            "theorem intrinsicLLKineticAction_affine_hasDerivAt",
+            "theorem intrinsicLLDifferentialCovector_pt",
+            "theorem canonicalIntrinsicLLKineticAction_pt",
+        ),
+    ),
     "P0EFTJanusGaussianNormalIntegratedBoundaryBox.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -954,6 +1008,15 @@ PROGRAM_P_GATES = {
             "theorem reducedLegendreTransform_eq_lapse_constraints",
         ),
     ),
+    "P0EFTJanusReducedFLRWPrimaryLapseDerivatives.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedLegendreTransform_eq_lapse_constraints_for_all_lapses",
+            "theorem reducedLegendreTransform_plusLapse_hasDerivAt",
+            "theorem reducedLegendreTransform_minusLapse_hasDerivAt",
+            "theorem reducedFLRW_primary_lapse_derivatives_from_same_action",
+        ),
+    ),
     "P0EFTJanusPTFlatVacuumFLRWConstraintNoGo.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1024,6 +1087,85 @@ PROGRAM_P_GATES = {
             "theorem pairedRegulatedChiralTrace_eq_zero",
             "theorem pairedRegulatedEvenHeatTrace_eq_two_mul",
             "theorem oneZeroMode_regulated_witness",
+        ),
+    ),
+    "P0EFTJanusFiniteModeCommonPhysicalGhostHeatRegulator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "inductive FieldStatistics",
+            "def statisticsSign",
+            "structure WeightedSector",
+            "def signedMultiplicityHeatTrace",
+            "def commonFiniteHeatTrace",
+            "theorem commonFiniteHeatTrace_nil",
+            "theorem commonFiniteHeatTrace_cons",
+            "theorem signedMultiplicityHeatTrace_add",
+            "def signedPairedChiralTrace",
+            "theorem signedPairedChiralTrace_eq_zero",
+            "theorem truncated_d10_signed_chiral_trace_cancels",
+        ),
+    ),
+    "P0EFTJanusFiniteModeStatisticalDeterminant4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def weightedCutoffDeterminant",
+            "theorem weightedCutoffDeterminant_add_multiplicity",
+            "theorem weightedCutoffDeterminant_pt_invariant",
+            "theorem weightedCutoffDeterminant_ne_zero_of_norm_lt_one",
+        ),
+    ),
+    "P0EFTJanusFiniteModeSpectralStatisticalDeterminant4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteSpectrumDeterminant",
+            "theorem finiteSpectrumDeterminant_pos",
+            "theorem finiteSpectrumDeterminant_ext",
+            "def spectralStatisticalDeterminant",
+            "theorem spectralStatisticalDeterminant_add_multiplicity",
+            "def finiteSectorListDeterminant",
+            "theorem finiteSectorListDeterminant_append",
+            "theorem finiteSpectrumDeterminant_singleton_ne",
+        ),
+    ),
+    "P0EFTJanusFiniteModeCommonRegulatorListAdditivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem commonFiniteHeatTrace_append",
+            "theorem signedPairedChiralTrace_sum_eq_zero",
+            "theorem signedPairedChiralTrace_sum_append_eq_zero",
+        ),
+    ),
+    "P0EFTJanusFiniteModeStatisticalDeterminantProduct4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def weightedCutoffDeterminantProduct",
+            "theorem weightedCutoffDeterminantProduct_append",
+            "theorem weightedCutoffDeterminantProduct_pt_invariant",
+            "theorem weightedCutoffDeterminantProduct_ne_zero_of_norm_lt_one",
+        ),
+    ),
+    "P0EFTJanusFiniteModeTypeErasedCommonRegulator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ErasedWeightedSector",
+            "def eraseWeightedSector",
+            "def ErasedWeightedSector.heatTrace",
+            "def ErasedWeightedSector.chiralTrace",
+            "def heterogeneousCommonFiniteHeatTrace",
+            "theorem heterogeneousCommonFiniteHeatTrace_append",
+            "theorem erased_signedPairedChiralTrace_eq_zero",
+            "theorem heterogeneousSignedPairedChiralTrace_sum_eq_zero",
+        ),
+    ),
+    "P0EFTJanusFiniteModeTypeErasedStatisticalDeterminantProduct4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def erasedCutoffDeterminantFactor",
+            "theorem erasedCutoffDeterminantFactor_pt_invariant",
+            "def heterogeneousWeightedCutoffDeterminantProduct",
+            "theorem heterogeneousWeightedCutoffDeterminantProduct_append",
+            "theorem heterogeneousWeightedCutoffDeterminantProduct_pt_invariant",
+            "theorem heterogeneousWeightedCutoffDeterminantProduct_ne_zero_of_norm_lt_one",
         ),
     ),
     "P0EFTJanusPairedHeatKernelCutoffLimit.lean": (
@@ -1379,6 +1521,34 @@ PROGRAM_P_GATES = {
             "theorem productThroatHeatNuclearSum_eq_operator",
             "structure ProductThroatHeatNuclearCertificate",
             "def productThroatHeatNuclearCertificate",
+            "theorem productThroatHeatNuclearNormSum_le_trace",
+        ),
+    ),
+    "P0EFTJanusProductThroatHeatOperatorSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def productThroatHeatModeSquaredEigenvalue",
+            "theorem productThroatHeatModeSquaredEigenvalue_nonnegative",
+            "def productThroatHeatModeWeightReal",
+            "theorem productThroatHeatModeWeightReal_of_heatTime",
+            "def productThroatHeatProjection",
+            "theorem productThroatHeatProjection_opNorm_le_one",
+            "def productThroatHeatRankOneRealIteratedDerivative",
+            "theorem productThroatHeatRankOneRealIteratedDerivative_hasDerivAt",
+            "theorem productThroatHeatRankOneRealIteratedDerivative_uniform_summable",
+            "theorem productThroatHeatRankOneRealIteratedDerivative_uniform_norm_le",
+            "def productThroatHeatOperatorRealIteratedDerivative",
+            "def productThroatHeatModeTraceEquiv",
+            "def productThroatHeatOperatorRealDiagonalCoefficient",
+            "theorem productThroatHeatOperatorRealDiagonalCoefficient_summable",
+            "def productThroatHeatOperatorRealDiagonalTrace",
+            "theorem productThroatHeatOperatorRealDiagonalTrace_eq_nuclearTraceDerivative",
+            "theorem productThroatHeatOperatorRealDiagonalTrace_pt_eq_positive",
+            "theorem productThroatHeatOperatorRealIteratedDerivative_hasDerivAt",
+            "theorem productThroatHeatOperatorRealIteratedDerivative_contDiffOn_nat",
+            "theorem productThroatHeatOperatorReal_contDiffOn_infty",
+            "theorem productThroatHeatRankOneReal_zero_of_heatTime",
+            "theorem productThroatHeatOperatorReal_zero_of_heatTime",
         ),
     ),
     "P0EFTJanusProductThroatUnboundedDiracSquared4D.lean": (
@@ -1418,6 +1588,17 @@ PROGRAM_P_GATES = {
             "theorem productThroatUnboundedDiracIndex_zero",
         ),
     ),
+    "P0EFTJanusProductThroatDiracSignScope4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem productThroatDiracSquaredEigenvalue_positive",
+            "theorem productThroatDiracEigenvalue_positive_fold_pos",
+            "theorem productThroatDiracEigenvalue_pt_fold_neg",
+            "theorem productThroatDiracEigenvalue_pt_eq_neg_positive",
+            "def ProductThroatDiracHasModeSignCrossing",
+            "theorem productThroatDirac_has_no_mode_sign_crossing",
+        ),
+    ),
     "P0EFTJanusProductThroatHolonomyCommonDomain4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -1435,9 +1616,23 @@ PROGRAM_P_GATES = {
             "def productThroatDiracEigenvalueAt",
             "theorem productThroatDiracEigenvalueAt_hasDerivAt",
             "theorem productThroatDiracEigenvalueAt_contDiff",
+            "def productThroatDiracRelativeSquaredIncrement",
+            "theorem productThroatDiracSquaredEigenvalueAt_add_factorization",
+            "theorem productThroatDiracRelativeSquaredIncrement_abs_le",
+            "theorem productThroatDiracRelativeSquaredIncrement_abs_lt_one",
             "def productThroatDiracHolonomyDerivativeCoefficient",
             "def productThroatDiracHolonomyDerivativeOperator",
             "theorem productThroatDiracHolonomyDerivativeOperator_norm_le",
+        ),
+    ),
+    "P0EFTJanusProductThroatHolonomyBinomialFunctionalCalculus4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def productThroatDiracBinomialSqrtOperatorTerm",
+            "theorem productThroatDiracBinomialSqrtOperatorTerm_summable",
+            "theorem productThroatDiracRelativeSquaredIncrementOperator_pow_apply",
+            "def productThroatDiracBinomialSqrtOperator",
+            "theorem productThroatDiracBinomialSqrtOperator_apply",
         ),
     ),
     "P0EFTJanusProductThroatHolonomyDerivativeLipschitz4D.lean": (
@@ -1465,6 +1660,15 @@ PROGRAM_P_GATES = {
             "theorem productThroatDiracHolonomyDerivativeOperator_hasDerivAt",
             "theorem productThroatDiracHolonomySecondDerivativeOperator_sub_norm_le",
             "theorem productThroatDiracHolonomySecondDerivativeOperator_lipschitz",
+            "def productThroatDiracHolonomyFourthDerivativeCoefficient",
+            "theorem productThroatDiracHolonomyThirdDerivativeCoefficient_hasDerivAt",
+            "theorem productThroatDiracHolonomyFourthDerivativeCoefficient_abs_le",
+            "theorem productThroatDiracHolonomyThirdDerivativeCoefficient_lipschitz",
+            "def productThroatDiracHolonomyThirdDerivativeOperator",
+            "theorem productThroatDiracHolonomySecondDerivativeCoefficient_taylor_remainder_le",
+            "theorem productThroatDiracHolonomySecondDerivativeOperator_taylor_remainder_le",
+            "theorem productThroatDiracHolonomySecondDerivativeOperator_hasDerivAt",
+            "theorem productThroatDiracHolonomyThirdDerivativeOperator_lipschitz",
         ),
     ),
     "P0EFTJanusProductThroatHolonomyOperatorDifferentiable4D.lean": (
@@ -1499,6 +1703,13 @@ PROGRAM_P_GATES = {
             "theorem productThroatCommonGraphDiracSecondDerivative_lipschitz",
             "theorem productThroatCommonGraphDiracDerivative_contDiff_one",
             "theorem productThroatCommonGraphDirac_contDiff_two",
+            "def productThroatCommonGraphDiracThirdDerivativeCLM",
+            "theorem productThroatCommonGraphDiracSecondDerivative_taylor_remainder_le",
+            "theorem productThroatCommonGraphDiracSecondDerivative_hasDerivAt",
+            "theorem productThroatCommonGraphDiracThirdDerivative_lipschitz",
+            "theorem productThroatCommonGraphDiracSecondDerivative_contDiff_one",
+            "theorem productThroatCommonGraphDiracDerivative_contDiff_two",
+            "theorem productThroatCommonGraphDirac_contDiff_three",
         ),
     ),
     "P0EFTJanusProductThroatHolonomyGraphFredholmFamily4D.lean": (
@@ -1510,6 +1721,22 @@ PROGRAM_P_GATES = {
             "theorem productThroatCommonGraphDirac_surjective",
             "theorem productThroatCommonGraphDirac_fredholm_criterion",
             "theorem productThroatCommonGraphDiracIndex_zero",
+        ),
+    ),
+    "P0EFTJanusProductThroatHolonomyFredholmSameActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def productThroatCommonGraphFstRealCLM",
+            "def productThroatCommonGraphDiracRealCLM",
+            "def productThroatCommonGraphDiracForm",
+            "theorem productThroatCommonGraphDiracForm_comm",
+            "def productThroatCommonGraphDiracHessian",
+            "theorem productThroatCommonGraphDiracHessian_eq_form",
+            "def productThroatCommonGraphDiracQuadraticAction",
+            "theorem productThroatCommonGraphDiracQuadraticAction_hasFDerivAt",
+            "theorem productThroatCommonGraphDiracQuadraticAction_second_fderiv",
+            "theorem productThroatCommonGraphDirac_pairing_eq_sameActionHessian",
+            "theorem productThroatCommonGraphDirac_fredholm_sameActionHessian",
         ),
     ),
     "P0EFTJanusProductThroatHolonomyGraphRealFredholmFamily4D.lean": (
@@ -1547,6 +1774,15 @@ PROGRAM_P_GATES = {
             "def productThroatCommonGraphDiracInverseCanonical",
             "theorem productThroatCommonGraphDiracInverseCanonical_eq_restricted",
             "theorem productThroatCommonGraphDiracInverseCanonical_contDiff_one",
+            "theorem continuousLinearMap_inverse_contDiffAt_real_three",
+            "theorem productThroatCommonGraphDiracInverseCanonical_contDiff_three",
+        ),
+    ),
+    "P0EFTJanusProductThroatHolonomyC3FredholmCertificate4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProductThroatHolonomyC3FredholmCertificate",
+            "def productThroatHolonomyC3FredholmCertificate",
         ),
     ),
     "P0EFTJanusProductThroatHolonomyGraphInverseDerivative4D.lean": (
@@ -2728,6 +2964,40 @@ PROGRAM_P_GATES = {
             "theorem powerLawZeroOverZeroPath_denominator_faster_tendsto_atTop",
         ),
     ),
+    "P0EFTJanusGlobalDiagonalRealPowerZeroOverZeroClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def realPowerZeroOverZeroPath",
+            "theorem realPowerZeroOverZeroPath_mem_globalDomain",
+            "theorem realPowerZeroOverZeroPath_zero",
+            "theorem realPowerZeroOverZeroPath_continuous",
+            "theorem realPowerZeroOverZeroPath_tendsto_common_boundary",
+            "theorem realPowerZeroOverZeroPath_root_eq_sqrt_rpow_sub",
+            "theorem realPowerZeroOverZeroPath_equal_exponents_tendsto_one",
+            "theorem realPowerZeroOverZeroPath_numerator_faster_tendsto_zero",
+            "theorem realPowerZeroOverZeroPath_denominator_faster_tendsto_atTop",
+        ),
+    ),
+    "P0EFTJanusGlobalDiagonalFunctionalZeroOverZeroClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def functionalZeroOverZeroPath",
+            "theorem functionalZeroOverZeroPath_mem_globalDomain",
+            "theorem functionalZeroOverZeroPath_tendsto_common_boundary",
+            "theorem functionalZeroOverZeroPath_root_eq",
+            "theorem functionalZeroOverZeroPath_root_tendsto_of_ratio",
+            "theorem functionalZeroOverZeroPath_root_tendsto_atTop_of_ratio",
+        ),
+    ),
+    "P0EFTJanusRegularMovingSimilarityFunctionalZeroOverZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def functionalFiniteLimitSpectrum",
+            "theorem functionalSpectrum_tendsto_of_ratio",
+            "theorem regularMovingSimilarity_functional_full_matrix_limit",
+            "theorem regularMovingSimilarity_functional_no_finite_matrix_limit",
+        ),
+    ),
     "P0EFTJanusPositiveRootFrontierSuite4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2779,6 +3049,75 @@ PROGRAM_P_GATES = {
             "structure DominatedCandidateAVariationContract",
             "theorem candidateAActionCurve_integrable_and_hasDerivAt",
             "theorem candidateAActionCurve_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCandidateARobinCompleteMatterTrueLLActionBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem metricCurve_robinComplete_eq_independentFieldCurve_metrics",
+            "def candidateARobinCompleteMatterTrueLLActionCurve",
+            "def candidateARobinCompleteMatterTrueLLEuler",
+            "theorem candidateARobinCompleteMatterTrueLLAction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCandidateASectorMetricMatterRobinTrueLLAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def candidateASectorMetricMatterRobinTrueLLActionCurve",
+            "def candidateASectorMetricMatterRobinTrueLLEuler",
+            "theorem candidateASectorMetricMatterRobinTrueLLActionCurve_eq",
+            "theorem candidateASectorMetricMatterRobinTrueLLAction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIndependentMetricMatterPointwiseVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def independentMatterMagnitudeVelocityAt",
+            "theorem independentMatterMagnitude_curve_hasDerivAt",
+            "theorem independentMatterComponent_curve_eq_affine",
+            "theorem independentMatterCovector_curve_hasDerivAt",
+            "def independentMatterVolumeVelocity",
+            "def independentMatterKineticVelocity",
+            "def independentMetricMatterFirstVariationDensity",
+            "def programPMetricMatterDensityCurve",
+            "theorem programPMetricMatterDensityCurve_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIndependentMetricMatterIntegratedVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalIndependentMetricMatterAction",
+            "def programPMetricMatterActionCurve",
+            "def integratedIndependentMetricMatterFirstVariation",
+            "structure DominatedIndependentMetricMatterVariationContract",
+            "theorem programPMetricMatterComponentAction_hasDerivAt",
+            "theorem programPMetricMatterActionCurve_hasDerivAt",
+            "theorem programPMetricMatterActionCurve_zero_eq_actionData",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIndependentMetricMatterPointwiseMixedHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def independentMatterEulerLagrangian",
+            "def independentMatterEulerDensity",
+            "theorem independentMetricMatterFirstVariationDensity_matterOnly",
+            "def independentMetricMatterMixedDensity",
+            "theorem independentMatterEulerDensity_metricOnlyCurve_hasDerivAt",
+            "def programPMetricMatterPointwiseMixedDerivativeCurve",
+            "theorem programPMetricMatterPointwiseMixedDerivativeCurve_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIndependentMetricMatterIntegratedMixedHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPMetricMatterNestedActionCurve",
+            "def integratedIndependentMatterEulerCurve",
+            "def integratedIndependentMetricMatterMixedVariation",
+            "structure DominatedIndependentMetricMatterMixedVariationContract",
+            "theorem programPMetricMatterNestedActionCurve_matter_hasDerivAt",
+            "theorem integratedIndependentMatterEulerCurve_hasDerivAt",
+            "def programPMetricMatterIntegratedMixedDerivativeCurve",
+            "theorem programPMetricMatterIntegratedMixedDerivativeCurve_hasDerivAt",
         ),
     ),
     "P0EFTJanusMetricCoupledScalarMatterJetVariation.lean": (
@@ -2885,6 +3224,16 @@ PROGRAM_P_GATES = {
             "theorem localLeviCivitaStressDivergence_eq_zero_of_euler",
         ),
     ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalInverseDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localMetricMatrix_fderiv_basis",
+            "def localActualInverseMetricDerivative",
+            "theorem localActualInverseMetricDerivative_eq_leviCivita",
+            "theorem localActualInverseMetricDerivative_apply",
+            "theorem localMetricInverseEntry_fderiv_basis",
+        ),
+    ),
     "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2906,6 +3255,79 @@ PROGRAM_P_GATES = {
             "theorem localSmoothScalarStressDivergence_apply",
             "theorem localSmoothScalarStressDivergence_contDiff",
             "theorem localSmoothScalarStressDivergence_eq_zero_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarGreenDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def covariantScalarGreenJetCurrent",
+            "def covariantScalarGreenJetDivergence",
+            "theorem covariantScalarGreenJetDivergence_eq_waveDifference",
+            "def localSmoothScalarGreenCurrent",
+            "def localSmoothScalarGreenDivergence",
+            "theorem localSmoothScalarGreenDivergence_eq_waveDifference",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarRaisedGradientDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localScalarGradient_fderiv_basis",
+            "def localActualScalarRaisedGradient",
+            "theorem localActualScalarRaisedGradient_eq_localSmooth",
+            "theorem localActualScalarRaisedGradient_fderiv_basis",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarGreenCoordinateDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localScalarRepresentative_fderiv_basis",
+            "def localActualScalarGreenCurrent",
+            "theorem localActualScalarGreenCurrent_eq_localSmooth",
+            "theorem localActualScalarGreenCurrent_fderiv_basis_leibniz",
+            "theorem localActualScalarGreenCurrent_fderiv_basis",
+            "def localActualScalarGreenCoordinateDivergence",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarCovariantDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coordinateRaisedScalarPartialDerivative",
+            "def coordinateRaisedScalarCovariantDerivative",
+            "theorem coordinateRaisedScalarCovariantDerivative_eq_hessian",
+            "def localActualScalarRaisedGradientDivergence",
+            "theorem localActualScalarRaisedGradientDivergence_eq_wave",
+            "theorem localActualScalarGreenCoordinateDivergence_eq_waveDifference",
+            "theorem localActualScalarGreenCoordinateDivergence_eq_localSmooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalCutoffScalarGreenDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localActualCutoffScalarGreenCurrent",
+            "def localActualCutoffScalarGreenCoordinateDivergence",
+            "theorem localActualCutoffScalarGreenCurrent_fderiv_basis",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_leibniz",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_gradientFlux_of_free",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGeneralLorentzMetricLocalCutoffGreenNormalTangentialSplit4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localActualCutoffScalarGreenCoordinateDivergenceTerm",
+            "def localActualCutoffScalarGreenCoordinateNormalDivergence",
+            "def localActualCutoffScalarGreenCoordinateTangentialDivergence",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_normal_add_tangential",
+            "def LocalCutoffNormalOnlyAt",
+            "theorem localActualCutoffScalarGreenCoordinateDivergence_eq_normalGradientFlux_of_free",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkPointwiseScalarGreenDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def QuotientPointwiseActualScalarGreenDivergenceIdentity",
+            "theorem quotientPointwiseActualScalarGreenDivergenceIdentity",
+            "def CutBulkPointwiseActualScalarGreenDivergenceIdentity",
+            "theorem cutBulkPointwiseActualScalarGreenDivergenceIdentity",
         ),
     ),
     "P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaOverlap4D.lean": (
@@ -2932,6 +3354,25 @@ PROGRAM_P_GATES = {
             "theorem CanonicalRebasedHolonomicAtlasTransitionJetContract.toStressCompatibility",
             "structure CanonicalHolonomicAtlasStressConservationBridge",
             "theorem CanonicalHolonomicAtlasStressConservationBridge.stressCompatible",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalHolonomicAtlasScalarGreenDivergenceTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localActualScalarGreenCoordinateDivergence_eq_of_rebasedTransitions",
+            "structure CanonicalRebasedHolonomicAtlasScalarGreenTransitionJetContract",
+            "def CanonicalAtlasActualScalarGreenDivergenceCompatible",
+            "theorem CanonicalRebasedHolonomicAtlasScalarGreenTransitionJetContract.compatible",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalScalarGreenDivergenceGluing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalHolonomicAtlasScalarGreenDivergenceBridge",
+            "def globalActualScalarGreenDivergence",
+            "theorem globalActualScalarGreenDivergence_eq_local",
+            "theorem globalActualScalarGreenDivergence_eq_waveDifference",
+            "def cutBulkGlobalActualScalarGreenDivergence",
         ),
     ),
     "P0EFTJanusMappingTorusCanonicalHolonomicAtlasCoverReduction4D.lean": (
@@ -2972,6 +3413,20 @@ PROGRAM_P_GATES = {
             "theorem canonicalTotalHolonomicAtlasCover_covers",
             "theorem canonicalHolonomicAtlasCoverRealizable_unconditional",
             "theorem canonicalTotalHolonomicAtlas_scalarStressConservation_closure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalTotalHolonomicAtlasScalarGreenConservation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localActualScalarGreenCoordinateDivergence_eq_zero_of_equalMassEuler",
+            "def HolonomicAtlasLocalActualScalarGreenDivergenceFree",
+            "theorem holonomicAtlasLocalActualScalarGreenDivergenceFree_of_equalMassEuler",
+            "def QuotientPointwiseActualScalarGreenDivergenceFree",
+            "theorem canonicalTotalHolonomicAtlas_scalarGreenDivergenceFree_of_equalMassEuler",
+            "def globalEqualMassEulerActualScalarGreenDivergence",
+            "theorem globalEqualMassEulerActualScalarGreenDivergence_eq_local",
+            "def cutBulkGlobalEqualMassEulerActualScalarGreenDivergence",
+            "theorem cutBulkPointwiseActualScalarGreenDivergenceFree_of_equalMassEuler",
         ),
     ),
     "P0EFTJanusMappingTorusGlobalScalarStressConservation4D.lean": (
@@ -3456,6 +3911,19 @@ PROGRAM_P_GATES = {
             "theorem canonicalLatitudeMeasuredScalarKinetic_eq_euler_of_endpointDirichlet",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalPositiveLatitudeWeightedScalarIPP4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalPositiveLatitudeWeight",
+            "theorem canonicalPositiveLatitudeJacobian_eq_weight",
+            "def canonicalPositiveLatitudeWeightedNormalCurrent",
+            "def canonicalPositiveLatitudeWeightedNormalDivergence",
+            "theorem canonicalPositiveLatitudeWeightedNormalCurrent_hasDerivAt",
+            "theorem canonicalPositiveLatitudeWeightedScalarKineticFiber_eq_euler_add_boundary",
+            "theorem canonicalPositiveLatitudeMeasuredWeightedScalarKinetic_eq_integral_euler_add_boundary",
+            "theorem exists_holonomicPatch_canonicalLatitudeDerivative_eq_localGradientSum",
+        ),
+    ),
     "P0EFTJanusMappingTorusCanonicalLatitudeScalarGreenCurrent4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3587,6 +4055,64 @@ PROGRAM_P_GATES = {
             "theorem measuredGeneralLorentzHolonomicScalarAction_diffeomorphism_unconditional",
             "def smoothGeneralLorentzScalarDiffeomorphismOrbitOfFlow",
             "theorem smoothGeneralLorentzScalarDiffeomorphismOrbitOfFlow_action_eq",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalScalarDiagonalDiffeomorphismNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalGeneralLorentzScalarConfiguration",
+            "def sameConfigurationGeneralLorentzScalarAction",
+            "def diagonalDiffeomorphismPullback",
+            "theorem sameConfigurationGeneralLorentzScalarAction_diagonal_invariant",
+            "def completeTimeDiagonalScalarActionOrbit",
+            "theorem completeTimeDiagonalScalarActionOrbit_hasDerivAt_zero",
+            "theorem completeTimeDiagonalScalarActionOrbit_deriv_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalMatterMultipletDiagonalDiffeomorphismNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalGeneralLorentzMatterConfiguration",
+            "def scalarComponentConfiguration",
+            "def sameConfigurationGeneralLorentzMatterAction",
+            "def matterDiagonalDiffeomorphismPullback",
+            "theorem sameConfigurationGeneralLorentzMatterAction_diagonal_invariant",
+            "def independentMatterGeneralLorentzConfiguration",
+            "def completeTimeDiagonalMatterActionOrbit",
+            "theorem completeTimeDiagonalMatterActionOrbit_hasDerivAt_zero",
+            "theorem independentMatter_completeTimeDiagonalAction_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalMatterArbitraryDiffeomorphismNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def arbitraryDiffeomorphismMatterActionOrbit",
+            "theorem arbitraryDiffeomorphismMatterActionOrbit_eq",
+            "theorem arbitraryDiffeomorphismMatterActionOrbit_hasDerivAt_zero",
+            "theorem arbitraryDiffeomorphismMatterActionOrbit_deriv_eq_zero",
+            "theorem independentMatter_arbitraryDiffeomorphismAction_hasDerivAt_zero",
+            "theorem independentMatter_arbitraryDiffeomorphismAction_deriv_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLorentzVolumeTimeTranslationInvariance4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def spacetimeBaseTimeTranslation",
+            "theorem spacetimeBaseTimeTranslation_measurePreserving",
+            "theorem effectiveTimeFlow_spacetimeFundamentalDomainMap_wrapped",
+            "theorem intrinsicCanonicalLorentzVolumeMeasure_timeTranslation_measurePreserving",
+            "theorem intrinsicCanonicalLorentzVolumeMeasure_timeTranslation_map",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalMeasureScalarTimeTranslationNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCanonicalLorentzVolumeMeasure_timeDiffeomorphism_pullback",
+            "def canonicalMeasureScalarConfiguration",
+            "def fixedCanonicalMeasureScalarTimeOrbit",
+            "theorem fixedCanonicalMeasureScalarTimeOrbit_eq",
+            "theorem fixedCanonicalMeasureScalarTimeOrbit_hasDerivAt_zero",
+            "theorem fixedCanonicalMeasureScalarTimeOrbit_deriv_eq_zero",
         ),
     ),
     "P0EFTJanusMappingTorusGeneralLorentzScalarStressCovariance4D.lean": (
@@ -3723,6 +4249,83 @@ PROGRAM_P_GATES = {
             "theorem ambientPinMinusReferenceZ4Character_intCast",
         ),
     ),
+    "P0EFTJanusMappingTorusAmbientPinMinusTopologicalGroup4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientPinMinusCliffordBasis",
+            "def ambientPinMinusCliffordLeftRegularCoordinates",
+            "theorem ambientPinMinusCliffordLeftRegularCoordinates_injective",
+            "instance ambientPinMinusCliffordNormedRing",
+            "instance ambientPinMinusCliffordNormedSpace",
+            "instance ambientPinMinusCliffordFiniteDimensional",
+            "theorem ambientPinMinusCliffordLeftRegularCoordinates_isometry",
+            "theorem continuous_ambientPinMinusClifford_star",
+            "instance ambientCoordinatePinMinusIsTopologicalGroup",
+            "theorem ambientCoordinatePinMinus_coe_isEmbedding",
+            "theorem continuous_ambientPinMinusReferenceZ4Character",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusProjectionContinuity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientPinMinusCliffordIotaRangeEquiv",
+            "theorem continuous_ambientPinMinusTwistedVectorInIotaRange",
+            "theorem continuous_ambientPinMinusVectorAction_uncurried",
+            "theorem ambientLinearEquivMatrixCoordinates_isEmbedding",
+            "theorem continuous_ambientPinMinusProjection",
+            "theorem ambientOrthogonalToLinearEquiv_isEmbedding",
+            "theorem ambientReducedTangentTransition_continuousOn",
+            "theorem exists_open_continuousReducedTangentLiftAround_of_localSections_of_smoothReduction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusOrthogonalProjection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientPinMinus_involute_parity",
+            "theorem ambientPinMinusVectorAction_preserves_pinQuadraticForm",
+            "theorem ambientPinMinusVectorAction_preserves_euclideanQuadraticForm",
+            "def ambientPinMinusQuadraticIsometry",
+            "instance ambientOrthogonalIsometryGroup",
+            "def ambientPinMinusOrthogonalProjection",
+            "theorem continuous_ambientPinMinusOrthogonalProjection",
+            "theorem ambientPinMinusOrthogonalProjection_surjective",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientOrthogonalTopologicalGroup4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "instance ambientLinearEquivT2Space",
+            "instance ambientOrthogonalIsometryT2Space",
+            "theorem continuous_ambientOrthogonalIsometry_mul",
+            "theorem continuous_ambientOrthogonalIsometry_inv",
+            "instance ambientOrthogonalIsometryIsTopologicalGroup",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusPointwiseTangentLift4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientPinMinusProjection_unitNormalGenerator_eq_reflection",
+            "def ambientUnitReflectionFactorPinMinusLift",
+            "theorem ambientPinMinusProjection_liftOfUnitFactors",
+            "theorem ambientPinMinusO4Surjective",
+            "def ambientPinMinusPointwiseTangentTransitionLift",
+            "theorem ambientPinMinusPointwiseTangentTransitionLift_projects",
+            "theorem ambientPinMinusPointwiseTangentTransitionLift_twisted_action",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusLocalSectionCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientPinMinusTotalPointwiseTangentTransitionLift",
+            "theorem ambientPinMinusTotalPointwiseTangentTransitionLift_projects_on_source",
+            "structure AmbientPinMinusContinuousReducedTangentLiftOn",
+            "theorem ambientPinMinusPointwiseSelection_continuous_iff_promotes",
+            "structure AmbientPinMinusProjectionLocalSectionNear",
+            "def AmbientPinMinusProjectionHasLocalSections",
+            "theorem exists_open_continuousPinMinusLiftAround_of_localSections",
+            "theorem exists_open_continuousReducedTangentLiftAround_of_localSections",
+        ),
+    ),
     "P0EFTJanusMappingTorusAmbientPinMinusCechExtension4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3776,6 +4379,24 @@ PROGRAM_P_GATES = {
             "theorem canonicalLatitudeAmbientPinMinusTransitionLift_projection",
         ),
     ),
+    "P0EFTJanusPrimitiveMonopolePinMinusCharacterCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def primitiveMonopolePinMinusTransition",
+            "theorem primitiveMonopolePinMinusTransition_pt",
+            "theorem primitiveMonopolePinMinusTransition_pt_product",
+            "theorem primitiveMonopolePinMinusTransition_square",
+            "theorem primitiveMonopolePinMinusTransition_projection",
+            "theorem leastNonzeroThroatMonopolePinMinusTransition_square",
+        ),
+    ),
+    "P0EFTJanusNormalRootSpinCDeterminantChernCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem normalRoot_primitiveSpinCTwist_determinant_separation",
+            "theorem primitiveSpinCTwist_determinant_even",
+        ),
+    ),
     "P0EFTJanusMappingTorusAmbientPinMinusReferenceWindingFrontier4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -3805,6 +4426,188 @@ PROGRAM_P_GATES = {
             "def throatAmbientChartCompatibilityOverlap",
             "theorem throatAmbientOverlapCoordinate_mem_ambientAtlasTransition_source",
             "theorem ambientTransitionWinding_throatAmbientOverlapCoordinate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientAtlasDeckLiftEventuallyEq4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientTransitionWinding_realizes_transition",
+            "theorem ambientTransitionWinding_realizes_transition_eventuallyEq",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientAtlasRadialTangentTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientTransitionWinding_realizes_transition_mfderiv",
+            "theorem ambientAtlasTangentTransition_radialDeckOperator",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientAtlasRadialReferenceTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem stableRadialReferenceEquiv_deckOperator",
+            "theorem stableRadialReferenceEquiv_deckOperator_referencePhase",
+            "def ambientRadialReferenceCoordinateFrame",
+            "theorem ambientAtlasTangentTransition_radialReferencePhase",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientRadialReferencePointwiseReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientRadialReferenceAtlasFrame",
+            "def ambientRadialReferenceAtlasForm",
+            "theorem ambientRadialReferenceAtlasForm_posDef",
+            "def ambientRadialReferenceOrthonormalAtlasReduction",
+            "theorem ambientRadialReferenceOrthogonalTransition_eq_canonical",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientRadialReferenceSmoothReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientRadialReferenceInverseFrame_contMDiffOn",
+            "def ambientRadialReferenceContMDiffOrthonormalAtlasReduction",
+            "theorem ambientRadialReferenceSmoothOrthogonalTransition_eq_canonical",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientCanonicalPinMinusActualPrincipalBundle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalAmbientPinMinusPrincipalBundleCore",
+            "def canonicalAmbientPinMinusPrincipalFiber_isFiberBundle",
+            "theorem canonicalAmbientPinMinusTransitionLift_projects_to_radialReduction",
+            "theorem canonicalAmbientPinMinusPrincipalTransition_restricts_to_throat",
+            "structure CanonicalAmbientPinMinusActualPrincipalBundle",
+            "def canonicalAmbientPinMinusActualPrincipalBundle",
+        ),
+    ),
+    "P0EFTJanusCanonicalEffectiveDecoratedMappingTorus4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalSmoothEffectiveThroatEmbedding",
+            "structure CanonicalEffectiveDecoratedMappingTorus",
+            "def canonicalEffectiveDecoratedMappingTorus",
+            "theorem canonicalEffectiveDecoratedMappingTorus_lorentzMetric",
+            "theorem canonicalEffectiveDecoratedMappingTorus_actionMeasure",
+            "theorem canonicalEffectiveDecoratedMappingTorus_throatEmbedding",
+            "theorem canonicalEffectiveDecoratedMappingTorus_pinMinusCore",
+        ),
+    ),
+    "P0EFTJanusCanonicalDecoratedConformalCandidateA4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalDecoratedConformalCandidateA",
+            "def canonicalDecoratedConformalCandidateA",
+            "theorem canonicalDecoratedConformalCandidateA_plusMetric",
+            "theorem canonicalDecoratedConformalCandidateA_minusMetric",
+            "theorem canonicalDecoratedConformalCandidateA_rootScale_apply",
+            "theorem canonicalDecoratedConformalCandidateA_rootOperator_apply",
+            "theorem canonicalDecoratedConformalCandidateA_rootOperator_square",
+            "theorem canonicalDecoratedConformalCandidateA_root_square",
+            "theorem canonicalDecoratedConformalCandidateA_density_eq_isotropicMatrix4",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothConformalCandidateARoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def conformalRelativeRatioField",
+            "theorem conformalRelativeRatioField_pos",
+            "def smoothConformalCandidateARootScale",
+            "theorem smoothConformalCandidateARootScale_apply",
+            "theorem conformalCandidateARootAt_eq_smooth_scale",
+            "theorem smoothConformalCandidateARootScale_square",
+            "abbrev SmoothAmbientTangentSection",
+            "def smoothConformalCandidateARootAction",
+            "theorem smoothConformalCandidateARootAction_apply",
+            "def smoothConformalCandidateARootOperator",
+            "def smoothConformalRelativeAction",
+            "def smoothConformalRelativeOperator",
+            "theorem smoothConformalCandidateARootOperator_square",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothConformalCandidateARootInverse4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothConformalCandidateARootScale_pos",
+            "theorem smoothConformalCandidateARootScale_mul_swapped",
+            "def smoothConformalCandidateARootInverseOperator",
+            "theorem smoothConformalCandidateARootInverseOperator_left",
+            "theorem smoothConformalCandidateARootInverseOperator_right",
+        ),
+    ),
+    "P0EFTJanusCanonicalDecoratedProgramPFieldDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalDecoratedProgramPFieldDomain",
+            "def canonicalDecoratedProgramPFieldDomain",
+            "theorem canonicalDecoratedProgramPFieldDomain_configuration",
+            "theorem canonicalPositiveOperatorFields_ptMatched",
+            "theorem canonicalDecoratedProgramPFieldDomain_ptMatched",
+            "theorem canonicalDecoratedProgramPFieldDomain_root_square",
+            "theorem canonicalDecoratedProgramPFieldDomain_satisfies_boundary",
+            "theorem canonicalDecoratedProgramPFieldDomain_embedding_injective",
+        ),
+    ),
+    "P0EFTJanusCanonicalDecoratedGeneralLorentzFieldPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CanonicalDecoratedGeneralLorentzFieldPacket",
+            "def canonicalDecoratedGeneralLorentzFields",
+            "def canonicalDecoratedGeneralLorentzFieldPacket",
+            "theorem canonicalDecoratedGeneralLorentzFields_scaffold",
+            "theorem canonicalDecoratedGeneralLorentzFieldPacket_metrics",
+            "theorem canonicalDecoratedGeneralLorentzFields_pt_fixed",
+            "theorem canonicalDecoratedGeneralLorentzFieldPacket_satisfies_boundary",
+            "theorem canonicalDecoratedGeneralLorentzBoundary_pt_fixed",
+        ),
+    ),
+    "P0EFTJanusCanonicalPTPairedConformalGeneralLorentzFieldPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptPairedConformalScale",
+            "theorem ptPairedConformalScale_pos",
+            "theorem conformalSmoothGeneralLorentzMetric_ptPullback",
+            "theorem ptPairedConformalMetricPair_pt_fixed",
+            "structure CanonicalPTPairedConformalGeneralLorentzFieldPacket",
+            "def canonicalPTPairedConformalGeneralLorentzFields",
+            "def canonicalPTPairedConformalGeneralLorentzFieldPacket",
+            "theorem canonicalPTPairedConformalGeneralLorentzFields_scaffold",
+            "theorem canonicalPTPairedConformalGeneralLorentzFieldPacket_metrics",
+            "theorem canonicalPTPairedConformalGeneralLorentzFields_pt_fixed",
+            "theorem canonicalPTPairedConformalGeneralLorentzFieldPacket_root_square",
+            "theorem canonicalPTPairedConformalGeneralLorentzFieldPacket_satisfies_boundary",
+            "theorem canonicalPTPairedConformalGeneralLorentzBoundary_pt_fixed",
+            "def periodicSineCoverField",
+            "def periodicSineQuotientField",
+            "theorem periodicSineQuotientField_mk",
+            "def explicitPositivePTScale",
+            "theorem explicitPositivePTScale_pos",
+            "theorem explicitPositivePTScale_ne_partner",
+            "theorem conformalSmoothGeneralLorentzMetric_injective_scale",
+            "theorem explicitPositivePTConformalMetrics_ne",
+            "def explicitDistinctPTPairedConformalGeneralLorentzFieldPacket",
+            "theorem explicitDistinctPTPairedConformalGeneralLorentzFieldPacket_metrics_ne",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCandidateAIntegratedMetricHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CandidateAGlobalDensityC2Contract",
+            "def candidateAMetricHessianDensity",
+            "theorem candidateAMetricHessianDensity_symmetric",
+            "structure DominatedCandidateASecondVariationContract",
+            "theorem integratedCandidateAFirstVariationAlongSecond_hasDerivAt",
+            "theorem integratedCandidateAMetricHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCandidateAPartialSameActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def candidateAPartialSectorialSameActionHessian",
+            "theorem candidateAPartialSectorialSameActionHessian_symmetric",
+            "def candidateAPartialSectorialEulerCurve",
+            "theorem candidateAPartialSectorialEulerCurve_zero",
+            "theorem candidateAPartialSectorialEulerCurve_hasDerivAt",
+            "theorem candidateAPartialSectorialAction_hasDerivAt",
         ),
     ),
     "P0EFTJanusMappingTorusAmbientCanonicalReferencePinMinusCech4D.lean": (
@@ -3873,12 +4676,100 @@ PROGRAM_P_GATES = {
             "theorem coverAmbientDerivative_factor",
             "theorem coverAmbientDerivative_apply_product",
             "def coverAmbientDerivativeSection",
+            "def postcomposeCoverAmbientDerivativeSection",
             "def intrinsicCoverLorentzTensor",
             "theorem intrinsicCoverLorentzTensor_apply",
             "theorem intrinsicCoverLorentzTensor_symmetric",
             "theorem coverAmbientDerivative_timeReverse_components",
             "theorem coverAmbientDerivative_generator_natural",
+            "def coverAmbientDeckGeneratorLinear",
+            "theorem coverAmbientDerivative_deckGenerator_natural",
+            "theorem postcomposeCoverAmbientDerivativeSection_deckGenerator_natural",
             "theorem intrinsicCoverLorentzTensor_generator_isometry",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCoverLorentzGramFrechet4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coverAmbientDerivativeCoordinates",
+            "def coverAmbientLorentzPair",
+            "def coverLorentzGramComponentBilinear",
+            "def coverLorentzGramCompatibilityComponent",
+            "def coverLorentzGramComponentLinearization",
+            "theorem coverLorentzGramCompatibilityComponent_hasFDerivAt",
+            "theorem coverLorentzGramCompatibilityComponent_fderiv",
+            "theorem coverLorentzGramCompatibility_actualDerivative_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCoverLorentzGramRotationKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def euclideanAmbientSpatialRotation",
+            "theorem euclideanAmbientSpatialRotation_skew",
+            "def coverAmbientSpatialRotation",
+            "theorem coverAmbientSpatialRotation_lorentz_skew",
+            "def coverLorentzGramRotationDirection",
+            "theorem coverLorentzGramComponentLinearization_rotation_zero",
+            "theorem actualCoverLorentzGramLinearization_rotation_zero",
+            "theorem coverAmbientSpatialRotation_axisZero_ne_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCoverLorentzGramRotationSection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCoverLorentzGramRotationHom",
+            "theorem smoothCoverLorentzGramRotationHom_apply",
+            "def actualCoverLorentzGramRotationLinearizationField",
+            "theorem actualCoverLorentzGramRotationLinearizationField_eq_zero",
+            "theorem actualCoverLorentzGramRotationLinearizationField_contMDiff",
+            "theorem euclideanAmbientSpatialRotation_reflection_commutes",
+            "theorem coverAmbientSpatialRotation_deckGenerator_commutes",
+            "theorem smoothCoverLorentzGramRotationHom_deckGenerator_natural",
+            "theorem actualCoverLorentzGramRotationLinearizationField_deckGenerator",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCoverLorentzGramRotationQuotientZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def actualCoverLorentzGramRotationInvariantField",
+            "def quotientLorentzGramRotationLinearizationField",
+            "theorem quotientLorentzGramRotationLinearizationField_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCoverLorentzGramRotationQuotientDirection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem euclideanReflection_euclideanAmbientSpatialRotation",
+            "def coverLorentzGramRotationPotential",
+            "theorem coverLorentzGramRotationPotential_deckInvariant",
+            "theorem coverLorentzGramRotationPotential_mfderiv",
+            "theorem smoothCoverLorentzGramRotationHom_deck_natural",
+            "def quotientLorentzGramRotationHom",
+            "def smoothQuotientLorentzGramRotationHom",
+            "theorem smoothQuotientLorentzGramRotationHom_pullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusQuotientLorentzGramRotationComplex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def quotientLorentzGramRotationOperator",
+            "theorem quotientLorentzGramRotationOperator_pullbackJet",
+            "def quotientLorentzGramJacobianPullback",
+            "theorem quotientLorentzGramJacobianPullback_rotation_zero",
+            "theorem quotientLorentzGramRotationOperator_admissible",
+            "def quotientLorentzGramJacobianOperator",
+            "theorem quotientLorentzGramJacobian_comp_rotation_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusQuotientLorentzGramAlgebraicIdentity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev QuotientTensorAlgebraicIdentityField",
+            "def quotientTensorAlgebraicSymmetryIdentityOperator",
+            "theorem quotientTensorAlgebraicSymmetryIdentityOperator_eq_zero_iff",
+            "def quotientCanonicalLorentzGramCompatibilityOutput",
+            "theorem quotientCanonicalLorentzGramCompatibilityOutput_pullback",
+            "theorem quotientTensorAlgebraicSymmetryIdentity_comp_lorentzGram_eq_zero",
         ),
     ),
     "P0EFTJanusMappingTorusIntrinsicLorentzMetricDescent4D.lean": (
@@ -3922,6 +4813,19 @@ PROGRAM_P_GATES = {
             "theorem intrinsicHolonomicScalarDensity_integrable_zeroMeasure",
             "def intrinsicHolonomicScalarActionZeroMeasure",
             "theorem intrinsicHolonomicScalarActionZeroMeasure_line_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusIntrinsicConformalCandidateARoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def conformalSmoothGeneralLorentzMetric",
+            "def conformalRelativeEndomorphismAt",
+            "theorem conformalRelativeEndomorphismAt_apply",
+            "def conformalCandidateARootAt",
+            "theorem conformalCandidateARootAt_square",
+            "def intrinsicConformalCandidateADensity",
+            "theorem conformalCandidateARootAt_in_every_frame",
+            "theorem intrinsicConformalCandidateADensity_eq_isotropicMatrix4",
         ),
     ),
     "P0EFTJanusMappingTorusFrameFreeIntrinsicScalarAction4D.lean": (
@@ -4480,6 +5384,15 @@ PROGRAM_P_GATES = {
             "theorem induced_cross_response_zero",
         ),
     ),
+    "P0EFTJanusIndependentFieldVariationLinearSpace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem SmoothDiagonalMetricVariation.ext",
+            "theorem IndependentFieldVariation.ext",
+            "def independentGaugeVariationLinearMap",
+            "def independentLLFieldVariationLinearMap",
+        ),
+    ),
     "P0EFTJanusD9D10ExactFieldContentBridge4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -4686,6 +5599,273 @@ PROGRAM_P_GATES = {
             "theorem programPCommonGeometricDomain4D_nonempty",
         ),
     ),
+    "P0EFTJanusCompleteVariationD9FieldAssembly4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationD9Field",
+            "theorem completeVariationD9Field_normalMode",
+            "theorem completeVariationD9Field_gaugeOneForm",
+            "theorem completeVariationD9Field_metricPerturbation",
+            "theorem completeVariationD9Field_u1Ghost",
+            "theorem completeVariationD9Field_diffeomorphismGhost",
+            "theorem completeVariationD9Field_spinor",
+        ),
+    ),
+    "P0EFTJanusSingleTruncatedD10ModeTangentNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def lowestPositiveTruncatedD10Mode",
+            "theorem lowestPositiveTruncatedD10Mode_label",
+            "def lowestPositiveProgramPD10Mode",
+            "theorem lowestPositiveProgramPD10Mode_separatedMode",
+            "def unitLLCompleteVariation",
+            "theorem unitLLCompleteVariation_llField_at",
+            "theorem unitLLCompleteVariation_D9_eq_zero",
+            "theorem lowestPositiveD10Mode_tangentFiber_not_subsingleton",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationFiniteD10AnomalyRegulatorBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationD10WeightedSector",
+            "theorem completeVariationD10WeightedSector_spectrum",
+            "theorem completeVariationD10WeightedSector_hessian_eigenvalue",
+            "theorem completeVariationD10Mode_mem_boundaryDomain_iff",
+            "theorem completeVariationD10WeightedSector_signed_chiral_trace_eq_zero",
+            "theorem completeVariation_hessian_finiteD10_signed_chiral_trace_cancels",
+        ),
+    ),
+    "P0EFTJanusIndependentCompleteVariationEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def independentCompleteVariation",
+            "theorem independentCompleteVariation_independent",
+            "theorem independentCompleteVariation_injective",
+            "theorem independentCompleteVariation_leftInverse",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationModuleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "instance : AddCommGroup (ProgramPCompleteVariation4D",
+            "instance : Module Real (ProgramPCompleteVariation4D",
+            "def independentCompleteVariationLinearMap",
+            "theorem normalModeAt_add",
+            "theorem normalModeAt_smul",
+            "theorem diffeomorphismGhostAt_add",
+            "theorem diffeomorphismGhostAt_smul",
+            "theorem metricPerturbationAt_add",
+            "theorem metricPerturbationAt_smul",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationBoundaryDomainBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def independentBoundaryTangentDomain4D",
+            "theorem completeVariation_mem_boundaryDomain_iff",
+            "theorem boundaryDomain_congr_independent",
+            "def withGeometricCompletionSlots",
+            "theorem withGeometricCompletionSlots_mem_boundaryDomain_iff",
+            "theorem independentCompleteVariation_mem_boundaryDomain_iff",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationMatterActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationMatterActionCurve",
+            "def completeVariationMatterHessian",
+            "theorem completeVariationMatterActionCurve_on_independent",
+            "theorem completeVariationMatterHessian_on_independent",
+            "theorem completeVariationMatterAction_matterOnly_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationLLActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationLLActionCurve",
+            "def completeVariationLLHessian",
+            "theorem completeVariationLLActionCurve_on_independent",
+            "theorem completeVariationLLHessian_on_independent",
+            "theorem completeVariationLLAction_llOnly_hasDerivAt",
+            "theorem completeVariationLLFirstVariation_llOnly_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationMatterLLActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationMatterLLActionCurve",
+            "def completeVariationMatterLLHessian",
+            "def completeVariationMatterLLFirstVariation",
+            "theorem completeVariationMatterLLHessian_on_independent",
+            "theorem completeVariationMatterLLAction_combined_hasDerivAt",
+            "theorem completeVariationMatterLLFirstVariation_combined_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIndependentMatterLLHessianBilinear4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def independentMatterComponentLinearMap",
+            "def matterMultipletHessianBilinear",
+            "def independentMatterLLHessianBilinear",
+            "theorem independentMatterLLHessianBilinear_apply",
+            "theorem independentMatterLLHessianBilinear_symmetric",
+            "theorem independentMatterLLHessianBilinear_is_secondVariation_on_combined",
+        ),
+    ),
+    "P0EFTJanusIndependentMatterLLInactiveQuotientHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterLLInvisibleSubmodule",
+            "theorem mem_matterLLInvisibleSubmodule_iff",
+            "theorem matterLLHessian_zero_left",
+            "theorem matterLLHessian_zero_right",
+            "def independentMatterLLInactiveQuotientHessian",
+            "theorem independentMatterLLInactiveQuotientHessian_mkQ",
+            "theorem independentMatterLLInactiveQuotientHessian_symmetric",
+            "theorem gaugeOnly_mem_matterLLInvisibleSubmodule",
+        ),
+    ),
+    "P0EFTJanusIndependentMatterLLActionVisibleQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterLLActionVisibleProjection",
+            "def matterLLActionInvisibleSubmodule",
+            "theorem completeVariationMatterLLActionCurve_congr_visible",
+            "theorem completeVariationMatterLLActionCurve_add_invisible",
+            "def matterLLVisibleQuotientActionCurve",
+            "theorem matterLLVisibleQuotientActionCurve_mkQ",
+            "theorem actionInvisible_le_hessianInvisible",
+            "def matterLLActionVisibleQuotientHessian",
+            "theorem matterLLActionVisibleQuotientHessian_mkQ",
+            "theorem matterLLActionVisibleQuotientHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationMatterLLBoundaryAgreement4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterLLActionCurve_withGeometricCompletionSlots",
+            "theorem matterLLFirstVariation_withGeometricCompletionSlots",
+            "theorem matterLLHessian_withGeometricCompletionSlots",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationGlobalMetricD9Projection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationWithGlobalMetric",
+            "theorem completeVariationWithGlobalMetric_independent",
+            "theorem completeVariationWithGlobalMetric_tensor",
+            "theorem completeVariationWithGlobalMetric_injective",
+            "theorem completeVariationWithGlobalMetric_metricPerturbationAt",
+            "theorem completeVariationWithGlobalMetric_xy",
+            "theorem completeVariationWithGlobalMetric_xz",
+            "theorem completeVariationWithGlobalMetric_yz",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationGeneralMetricBVBRSTBoundary4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationWithGeneralMetricBV",
+            "theorem completeVariationWithGeneralMetricBV_BRST_fullMetric",
+            "theorem completeVariationWithGeneralMetricBV_BRST_square",
+            "theorem completeVariationWithGeneralMetricBV_metricPerturbationAt",
+            "theorem completeVariationWithGeneralMetricBV_BRST_metricPerturbationAt",
+            "theorem completeVariationWithGeneralMetricBV_throatTrace",
+            "theorem completeVariationWithGeneralMetricBV_BRST_throatTrace",
+            "theorem completeVariationWithGeneralMetricBV_mem_boundaryDomain_iff",
+            "theorem completeVariationWithGeneralMetricBV_BRST_mem_boundaryDomain_iff",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationMatterLLGeneralMetricBVAgreement4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterLLActionCurve_withGeneralMetricBV",
+            "theorem matterLLActionCurve_withGeneralMetricBV_BRST",
+            "theorem matterLLFirstVariation_withGeneralMetricBV",
+            "theorem matterLLHessian_withGeneralMetricBV",
+            "theorem matterLLHessian_withGeneralMetricBV_BRST",
+            "theorem matterLLGeneralMetricBV_BRST_boundary_agreement",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationPairedLinearBRSTBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationPairedLinearBRSTGhosts",
+            "theorem completeVariationPairedGhostCoordinate_eq_common",
+            "theorem completeVariationPairedLinearBRSTGhosts_BRST_d9Coordinate",
+            "theorem completeVariationPairedLinearBRSTGhosts_BRST_square",
+            "theorem completeVariationPairedLinearBRSTGhosts_BRST_eq_zero",
+            "theorem zeroPairedLinearBRSTGhosts_mem_boundaryDomain",
+            "theorem completeVariationPairedLinearBRSTGhosts_BRST_mem_boundaryDomain",
+            "theorem matterLLActionCurve_pairedLinearBRSTGhosts",
+            "theorem matterLLFirstVariation_pairedLinearBRSTGhosts",
+            "theorem matterLLHessian_pairedLinearBRSTGhosts",
+        ),
+    ),
+    "P0EFTJanusRobinCompleteVariationPairedLinearBRSTBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def robinCompleteVariationPairedLinearBRSTGhosts",
+            "theorem robinCompleteVariationPairedLinearBRSTGhosts_ghosts",
+            "theorem robinCompleteVariationPairedLinearBRSTGhosts_BRST_square",
+            "theorem robinCompleteVariationPairedLinearBRSTGhosts_BRST_mem_boundaryDomain",
+            "theorem robinCompleteMatterTrueLLActionCurve_pairedLinearBRSTGhosts",
+            "theorem robinCompleteMatterTrueLLHessian_pairedLinearBRSTGhosts",
+        ),
+    ),
+    "P0EFTJanusRobinCompleteVariationPairedLinearBRSTReducedFredholm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedRobinLLSector_robinCompletePairedLinearBRST",
+            "theorem reducedRobinLLFredholmVector_robinCompletePairedLinearBRST",
+            "theorem reducedRobinLLFredholmPairing_pairedLinearBRST_invariant",
+            "theorem robinCompleteHessian_reducedPairedLinearBRST_BRST_eq_fredholmPairing",
+        ),
+    ),
+    "P0EFTJanusMatterLLVisibleQuotientGeneralMetricBVD9Bridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem visibleQuotientActionCurve_withGeneralMetricBV",
+            "theorem visibleQuotientHessian_withGeneralMetricBV",
+            "theorem visibleQuotient_generalMetricBV_D9_boundary_agreement",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationNormalPinMinusGeneralMetricD9Bridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationWithGeneralMetricBVAndNormal",
+            "def completeVariationD9FieldInNormalChart",
+            "theorem completeVariationD9FieldInNormalChart_oneLoop_pinMinus",
+            "theorem visibleQuotientActionCurve_withGeneralMetricBVAndNormal",
+            "theorem visibleQuotientHessian_withGeneralMetricBVAndNormal",
+            "theorem completeVariationWithGeneralMetricBVAndNormal_mem_boundaryDomain_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPCommonLLActionVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroSmoothDiagonalMetricVariation",
+            "theorem metricCurve_zeroSmoothDiagonalMetricVariation",
+            "def llFluxIndependentVariation",
+            "theorem llFluxIndependentVariation_injective",
+            "theorem independentFieldCurve_llFluxIndependentVariation",
+            "theorem commonDomain_independentFieldCurve_llFlux",
+            "theorem globalPTSymmetricDifferentialLLAction_independentFieldCurve_hasDerivAt",
+            "theorem globalPTSymmetricDifferentialLLFirstVariation_independentFieldCurve_hasDerivAt",
+            "theorem commonDomain_LLAction_independentFieldCurve_hasDerivAt",
+            "theorem d9GaugeOneForm_llFluxIndependentVariation",
+            "theorem d9U1Ghost_llFluxIndependentVariation",
+            "theorem d9MatterCoefficient_llFluxIndependentVariation",
+            "theorem d9MetricPerturbation_llFluxIndependentVariation",
+            "theorem d9ProvidedSlots_identify_llFluxIndependentVariations",
+        ),
+    ),
+    "P0EFTJanusProgramPCommonLLActualHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def LLActualHelmholtzCondition",
+            "theorem ll_actual_helmholtz_condition",
+        ),
+    ),
     "P0EFTJanusMappingTorusDeckTrivialIsotropyExtension4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -4729,6 +5909,710 @@ PROGRAM_P_GATES = {
             "theorem volumeDensity_sq_eq_absDet_sameMetric",
         ),
     ),
+    "P0EFTJanusMappingTorusHolonomicCoordinateEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicCoefficientLinearMap",
+            "theorem holonomicVectorCoefficient_tangentCoordinate",
+            "def holonomicReconstructionLinearMap",
+            "def holonomicCoordinateLinearEquiv",
+            "def holonomicCoordinateEquiv",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCollarHolonomicCoordinateEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def collarHolonomicCoordinateLinearEquiv",
+            "def collarHolonomicCoordinateEquiv",
+            "theorem collarHolonomicCoordinateEquiv_normal",
+            "theorem collarHolonomicCoordinateEquiv_time",
+            "theorem collarHolonomicCoordinateEquiv_sphere",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeHolonomicCutoffDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicNormalCoordinate",
+            "def canonicalLatitudeHolonomicCollarCutoff",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_contDiff",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_fderiv_basis",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_fderiv_normal",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_normalOnlyAt",
+            "theorem canonicalLatitudeHolonomicCollarCutoff_differentiableAt",
+            "theorem localActualCanonicalLatitudeCutoffGreenCoordinateDivergence_eq_normalFlux_of_free",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalSharp4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicDiagonalPair",
+            "def holonomicDiagonalSharp",
+            "theorem holonomicDiagonalPair_sharp",
+            "theorem covector_holonomicDiagonalSharp",
+            "theorem diagonalHolonomicKineticDensity_eq_model_sharp_contraction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalMusical4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicDiagonalCovector",
+            "def holonomicDiagonalFlat",
+            "theorem holonomicDiagonalFlat_bijective",
+            "def holonomicDiagonalMusical",
+            "theorem holonomicDiagonalMusical_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalLorentzFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicSqrtScale",
+            "def holonomicDiagonalLorentzFrame",
+            "theorem holonomicDiagonalLorentzFrame_coefficient",
+            "theorem holonomicDiagonalPair_eq_modelMinkowskiPair",
+        ),
+    ),
+    "P0EFTJanusMappingTorusHolonomicDiagonalVolumeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def holonomicDiagonalGramMatrix",
+            "theorem holonomicDiagonalGramMatrix_eq_lorentzMetric",
+            "def holonomicDiagonalGramVolumeDensity",
+            "theorem holonomicDiagonalGramVolumeDensity_eq_sqrt_prod",
+            "theorem diagonalMetricVolumeDensity_eq_holonomicDiagonalGramVolumeDensity",
+        ),
+    ),
+    "P0EFTJanusMappingTorusLocalHolonomicDiagonalLorentzMetric4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def localHolonomicDiagonalMusical",
+            "def localHolonomicDiagonalTensor",
+            "def localHolonomicDiagonalLorentzFrame",
+            "theorem localHolonomicDiagonalTensor_apply",
+            "theorem localHolonomicDiagonalTensor_lorentzian",
+            "theorem localHolonomicDiagonalMusical_inverse",
+        ),
+    ),
+    "P0EFTJanusMappingTorusLocalHolonomicDiagonalGluingCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def PreservesHolonomicDiagonalPair",
+            "theorem localHolonomicDiagonalTensor_eq_iff_transition_preserves",
+            "def HolonomicDiagonalGluingCondition",
+            "theorem holonomicDiagonalGluingCondition_iff_local_tensors_eq",
+        ),
+    ),
+    "P0EFTJanusMappingTorusPointwiseHolonomicDiagonalLorentzMetric4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pointwiseHolonomicDiagonalMusical",
+            "def pointwiseHolonomicDiagonalTensor",
+            "theorem pointwiseHolonomicDiagonalTensor_eq_musical",
+            "theorem pointwiseHolonomicDiagonalTensor_nondegenerate",
+            "theorem pointwiseHolonomicDiagonalTensor_lorentzian",
+            "theorem pointwiseHolonomicDiagonalTensor_eq_local",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSmoothHolonomicDiagonalRealization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothHolonomicDiagonalRealization",
+            "def SmoothHolonomicDiagonalRealization.toSmoothGeneralLorentzMetric",
+            "theorem SmoothHolonomicDiagonalRealization.toSmoothGeneralLorentzMetric_tensor",
+            "theorem SmoothHolonomicDiagonalRealization.toSmoothGeneralLorentzMetric_musical",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryOrientedFluxSign4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def orientedCutLiftFlux",
+            "theorem equatorialBand_orientedCutLiftFlux_deck_generator",
+            "theorem equatorialBand_twoCutLiftFlux_sum",
+            "theorem equatorialBand_twoCutLiftFlux_difference",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatBoundaryDoubleCover4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutThroatBoundaryToBulk",
+            "theorem range_cutThroatBoundaryToBulk",
+            "theorem cutThroatBoundaryToBulk_deck",
+            "theorem cutThroatBoundary_deck_ne_self",
+            "theorem cutThroatBoundary_fiber_equiv_two",
+        ),
+    ),
+    "P0EFTJanusMappingTorusPositiveHemisphereCutBulk4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ClosedPositiveHemisphere",
+            "def cutBulkData",
+            "def cutBulkToAmbient",
+            "theorem cutBulkToAmbient_surjective",
+            "def cutBoundaryInclusion",
+            "theorem cutBoundaryInclusion_injective",
+            "theorem cutBulkToAmbient_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryClosedEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBoundaryInclusion_isClosedEmbedding",
+            "theorem isClosed_range_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatSmoothFiniteCollar4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev cutCollarModelWithCorners",
+            "theorem cutThroatBoundary_isManifold",
+            "theorem cutThroatFiniteCollar_isManifold",
+            "theorem cutThroatFiniteCollar_boundary",
+            "theorem contMDiff_cutThroatFace",
+            "theorem contMDiff_cutOuterFace",
+            "theorem cutThroatFiniteCollar_boundary_eq_face_ranges",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatLatitudeCollarAttachment4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def unitCollarTubularParameter",
+            "def positiveLatitudeFiber",
+            "theorem positiveLatitudeFiber_injective",
+            "def cutCollarCoverAttachment",
+            "theorem cutCollarCoverAttachment_equivariant",
+            "def cutCollarAttachment",
+            "theorem continuous_cutCollarAttachment",
+            "theorem cutCollarAttachment_injective",
+            "theorem cutCollarAttachment_cutThroatFace",
+            "def cutOuterLatitudeInclusion",
+            "theorem cutCollarAttachment_isClosedEmbedding",
+            "theorem cutOuterLatitudeInclusion_isClosedEmbedding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkLatitudeBand4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkLatitudeCoordinate",
+            "theorem continuous_cutBulkLatitudeCoordinate",
+            "theorem cutBulkLatitudeCoordinate_cutCollarAttachment",
+            "theorem range_cutCollarAttachment",
+            "theorem range_cutOuterLatitudeInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarRemainderDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOuterRemainder",
+            "theorem cutBulkLatitudeCoordinate_nonneg",
+            "theorem isClosed_cutBulkOuterRemainder",
+            "theorem range_cutCollarAttachment_union_outerRemainder",
+            "theorem range_cutCollarAttachment_inter_outerRemainder",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatOpenCollarEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def CutThroatOpenCollar",
+            "theorem isOpen_cutThroatOpenCollar",
+            "def cutOpenCollarAttachment",
+            "theorem range_cutOpenCollarAttachment",
+            "theorem isOpen_range_cutOpenCollarAttachment",
+            "theorem cutOpenCollarAttachment_isOpenEmbedding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatOpenCollarSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutThroatOpenCollarOpen",
+            "def cutThroatOpenCollarChartedSpace",
+            "theorem cutThroatOpenCollar_isManifold",
+            "theorem cutThroatOpenCollar_val_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryOpenCollarFace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryOpenCollarFace",
+            "theorem contMDiff_cutBoundaryOpenCollarFace",
+            "theorem cutOpenCollarAttachment_cutBoundaryOpenCollarFace",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutThroatOpenCollarBoundary4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutThroatOpenCollar_boundary",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenAtlasCover4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCap",
+            "theorem isOpen_cutBulkOpenCap",
+            "def CutBulkOpenCap",
+            "theorem cutBulkOpenCap_subtypeVal_isOpenEmbedding",
+            "theorem openCollar_union_openCap",
+            "theorem openCollar_inter_openCap",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCapSmoothMappingTorus4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveHemisphereInteriorOpen",
+            "def cutBulkOpenCapData",
+            "abbrev SmoothCutBulkOpenCap",
+            "def cutBulkOpenCapCoverChartedSpace",
+            "theorem cutBulkOpenCapCover_isManifold",
+            "def cutBulkOpenCapProductDeck",
+            "theorem cutBulkOpenCapProductDeck_contMDiff",
+            "theorem cutBulkOpenCapCover_deck_contMDiff",
+            "def cutBulkOpenCapQuotientChartedSpace",
+            "theorem smoothCutBulkOpenCap_isManifold",
+            "theorem cutBulkOpenCap_projection_isLocalDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCapIdentification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveHemisphereInteriorToClosed",
+            "theorem positiveHemisphereInteriorToClosed_isOpenEmbedding",
+            "def cutBulkOpenCapCoverInclusion",
+            "theorem cutBulkOpenCapCoverInclusion_equivariant",
+            "theorem cutBulkOpenCapCoverInclusion_isOpenEmbedding",
+            "def smoothCutBulkOpenCapToCutBulk",
+            "theorem smoothCutBulkOpenCapToCutBulk_injective",
+            "theorem range_smoothCutBulkOpenCapToCutBulk",
+            "theorem smoothCutBulkOpenCapToCutBulk_isOpenEmbedding",
+            "def smoothCutBulkOpenCapHomeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicOpenCapSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkOpenCapChartedSpace",
+            "theorem intrinsicCutBulkOpenCap_isManifold",
+            "theorem smoothCapHomeomorph_contMDiff",
+            "theorem smoothCapHomeomorph_symm_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapCoverCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveUnitTubularParameterOpen",
+            "def positiveUnitTubularMap",
+            "theorem positiveUnitTubularMap_isOpenEmbedding",
+            "def positiveUnitLatitudeBandOpen",
+            "def positiveUnitTubularHomeomorph",
+            "theorem positiveUnitTubularHomeomorph_contMDiff",
+            "theorem positiveUnitTubularHomeomorph_symm_contMDiff",
+            "def positiveUnitTubularDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapCoverExactOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem mem_positiveUnitLatitudeBandOpen_iff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusEquivariantSmoothDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def mappingTorusEquivariantMap",
+            "theorem mappingTorusEquivariantMap_mk",
+            "theorem mappingTorusEquivariantMap_contMDiff",
+            "def mappingTorusInvariantMap",
+            "theorem mappingTorusInvariantMap_mk",
+            "theorem mappingTorusInvariantMap_contMDiff",
+            "def mappingTorusInvariantMapProd",
+            "theorem mappingTorusInvariantMapProd_mk",
+            "theorem mappingTorusInvariantMapProd_contMDiff",
+        ),
+    ),
+    "P0EFTJanusIdentityMappingTorusSmoothFunctor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def identityMappingTorusData",
+            "def identityMappingTorusCoverChartedSpace",
+            "theorem identityMappingTorusCover_isManifold",
+            "theorem identityMappingTorusCover_deck_contMDiff",
+            "def identityMappingTorusQuotientChartedSpace",
+            "theorem identityMappingTorus_isManifold",
+            "theorem identityMappingTorus_projection_isLocalDiffeomorph",
+            "def identityMappingTorusCoverMap",
+            "theorem identityMappingTorusCoverMap_equivariant",
+            "theorem identityMappingTorusCoverMap_contMDiff",
+            "theorem identityMappingTorusCoverMap_isOpenEmbedding",
+            "theorem identityMappingTorusMap_injective",
+            "theorem continuous_identityMappingTorusMap",
+            "theorem identityMappingTorusMap_isOpenMap",
+            "theorem identityMappingTorusMap_isOpenEmbedding",
+            "theorem identityMappingTorusMap_contMDiff",
+            "def identityMappingTorusDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapQuotientCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CollarOverlapFiberModel",
+            "abbrev SmoothCutCollarOverlap",
+            "abbrev SmoothCutCapOverlap",
+            "def smoothCutCollarOverlapChartedSpace",
+            "def smoothCutCapOverlapChartedSpace",
+            "theorem smoothCutCollarOverlap_isManifold",
+            "theorem smoothCutCapOverlap_isManifold",
+            "def smoothCutCollarCapOverlapDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapOverlapSmoothEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveUnitLatitudeBandToCapFiber",
+            "theorem positiveUnitLatitudeBandToCapFiber_contMDiff",
+            "theorem positiveUnitLatitudeBandToCapFiber_isOpenEmbedding",
+            "def smoothCutCapOverlapToSmoothCap",
+            "theorem smoothCutCapOverlapToSmoothCap_isOpenEmbedding",
+            "theorem smoothCutCapOverlapToSmoothCap_contMDiff",
+        ),
+    ),
+    "P0EFTJanusIdentityMappingTorusLocalDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem identityMappingTorusMap_isLocalDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapOverlapLocalDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem positiveUnitLatitudeBandToCapFiber_isLocalDiffeomorph",
+            "theorem smoothCutCapOverlapToSmoothCap_isLocalDiffeomorph",
+            "theorem smoothCutCapOverlapToSmoothCap_inverse_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapOverlapDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCapOverlapToIntrinsicCap",
+            "theorem smoothCutCapOverlapToIntrinsicCap_isOpenEmbedding",
+            "def intrinsicCapOverlapOpen",
+            "def smoothCutCapOverlapIntrinsicDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapOverlapExactIntrinsicRange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCapOverlapToCutBulk",
+            "theorem smoothCutCapOverlapToCutBulk_isOpenEmbedding",
+            "theorem cutBulkLatitudeCoordinate_smoothCutCapOverlapToCutBulk_mk",
+            "theorem range_smoothCutCapOverlapToCutBulk",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapExactIntrinsicRange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapToCutBulk",
+            "theorem smoothCutCollarOverlapToCutBulk_isOpenEmbedding",
+            "theorem range_smoothCutCollarOverlapToCutBulk",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapOpenCollarIdentification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapToIntrinsicOpenCollar",
+            "theorem cutOpenCollarAttachment_smoothCutCollarOverlapToIntrinsicOpenCollar",
+            "theorem smoothCutCollarOverlapToIntrinsicOpenCollar_isOpenEmbedding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapNormalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapNormalCover",
+            "theorem smoothCutCollarOverlapNormalCover_invariant",
+            "def smoothCutCollarOverlapNormal",
+            "theorem smoothCutCollarOverlapNormal_mk",
+            "theorem smoothCutCollarOverlapNormal_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapBoundarySmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothCutCollarOverlapBoundary",
+            "theorem smoothCutCollarOverlapBoundary_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapIntrinsicSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothCutCollarOverlapNormal_mem_Ioo",
+            "def smoothCutCollarOverlapInterval",
+            "theorem smoothCutCollarOverlapInterval_contMDiff",
+            "def smoothCutCollarOverlapNaturalOpenCollar",
+            "theorem smoothCutCollarOverlapNaturalOpenCollar_contMDiff",
+            "theorem cutOpenCollarAttachment_smoothCutCollarOverlapNaturalOpenCollar",
+            "theorem smoothCutCollarOverlapToIntrinsicOpenCollar_eq_natural",
+            "theorem smoothCutCollarOverlapToIntrinsicOpenCollar_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkPositiveUnitTubularProductDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def positiveUnitNormalOpen",
+            "def positiveUnitTubularToProduct",
+            "def positiveUnitTubularFromProduct",
+            "theorem positiveUnitTubularToProduct_contMDiff",
+            "theorem positiveUnitTubularFromProduct_contMDiff",
+            "def positiveUnitTubularProductDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusIdentityMappingTorusProductDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev identityMappingTorusProductData",
+            "def identityMappingTorusProductForward",
+            "def identityMappingTorusProductInverseCover",
+            "def identityMappingTorusProductInverseCoverQuotient",
+            "theorem identityMappingTorusProductInverseCoverQuotient_invariant",
+            "def identityMappingTorusProductInverse",
+            "theorem identityMappingTorusProductForward_leftInverse",
+            "theorem identityMappingTorusProductForward_rightInverse",
+            "theorem identityMappingTorusProductForward_contMDiff",
+            "theorem identityMappingTorusProductInverseCover_contMDiff",
+            "theorem identityMappingTorusProductInverse_contMDiff",
+            "def identityMappingTorusProductDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarOverlapProductDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev SmoothCutCollarProductTorus",
+            "def smoothCutCollarOverlapFiberProductDiffeomorph",
+            "def smoothCutCollarProductTorusDiffeomorph",
+            "def smoothCutCollarOverlapProductDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarPositiveOpenDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutThroatPositiveOpenCollarOpen",
+            "def positiveCollarProductToOpen",
+            "def positiveCollarOpenToProduct",
+            "theorem positiveUnitNormalToInterval_contMDiff",
+            "theorem positiveCollarProductToOpen_contMDiff",
+            "theorem positiveCollarOpenToProduct_contMDiff",
+            "def positiveCollarProductDiffeomorph",
+            "def smoothCutCollarOverlapIntrinsicDiffeomorph",
+            "def smoothCutCollarOverlapToPositiveOpen",
+            "theorem smoothCutCollarOverlapIntrinsicDiffeomorph_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkInteriorModelDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coverToCutCollarCoordinates",
+            "def cutCollarModelInteriorOpen",
+            "def coverModelToCutCollarInterior",
+            "def cutCollarInteriorToCoverModel",
+            "theorem coverModelToCutCollarInterior_leftInverse",
+            "theorem coverModelToCutCollarInterior_rightInverse",
+            "theorem coverModelToCutCollarInterior_contMDiff",
+            "theorem cutCollarInteriorToCoverModel_contMDiff",
+            "def coverModelCutCollarInteriorDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCapCommonModel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def coverModelCutCollarChartedSpace",
+            "theorem coverModelCutCollar_isManifold",
+            "theorem coverModelCutCollarDiffeomorph_contMDiff",
+            "theorem coverModelCutCollarDiffeomorph_symm_contMDiff",
+            "theorem coverModelStandardToCutCollar_contMDiff",
+            "theorem coverModelCutCollarToStandard_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapCommonModel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkOpenCapCommonChartedSpace",
+            "theorem intrinsicCutBulkOpenCapCommon_isManifold",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapCommonCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCapStandardToCommon_contMDiff",
+            "theorem intrinsicCapCommonToStandard_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicCapCommonBoundaryless4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCapStandardCommonDiffeomorph",
+            "theorem intrinsicCutBulkOpenCapCommon_boundaryless",
+            "theorem intrinsicCutBulkOpenCapCommon_boundary_eq_empty",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapIntrinsicCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothCutCapOverlapToIntrinsicCapOpen_common_contMDiff",
+            "theorem intrinsicCapOpenToSmoothCutCapOverlap_common_contMDiff",
+            "def smoothCutCapOverlapIntrinsicCommonDiffeomorph",
+            "def intrinsicCollarCapOverlapDiffeomorph",
+            "theorem intrinsicCollarCapOverlapDiffeomorph_bulk_eq_attachment",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapPartialDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCollarCapPartialDiffeomorph",
+            "theorem intrinsicCollarCapPartialDiffeomorph_source",
+            "theorem intrinsicCollarCapPartialDiffeomorph_target",
+            "theorem intrinsicCollarCapPartialDiffeomorph_bulk_eq_attachment",
+            "theorem intrinsicCollarCapPartialDiffeomorph_contMDiffOn",
+            "theorem intrinsicCollarCapPartialDiffeomorph_symm_contMDiffOn",
+            "theorem intrinsicCollarCapPartialDiffeomorph_isLocalStructomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapAttachmentTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCollarCapAttachmentTransition",
+            "theorem intrinsicCollarCapAttachmentTransition_source",
+            "theorem intrinsicCollarCapPartialDiffeomorph_eqOnSource_attachmentTransition",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCollarCapCoordinateCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCollarCapCoordinateTransition_mem_contDiffGroupoid",
+            "theorem intrinsicCollarCapAttachmentCoordinateTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCollarCapTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCapCollarTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCollarCollarTransition_mem_contDiffGroupoid",
+            "theorem liftedCutBulkCapCapTransition_mem_contDiffGroupoid",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalIsManifold4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkGlobal_isManifold",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutOpenCollarGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem cutOpenCollarAttachment_contMDiff",),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem cutBoundaryInclusion_contMDiff",),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalBoundary4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkGlobal_isBoundaryPoint_iff",
+            "theorem cutBulkGlobal_boundary_eq_zeroLatitude",
+            "theorem cutBulkLatitudeCoordinate_cutBoundaryInclusion",
+            "theorem range_cutBoundaryInclusion_eq_zeroLatitude",
+            "theorem cutBulkGlobal_boundary_eq_range_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryGlobalHomeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryGlobalBoundaryHomeomorph",
+            "theorem cutBoundaryGlobalBoundaryHomeomorph_apply",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalChartedSpace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutOpenCollarAttachmentPartialHomeomorph",
+            "def cutBulkOpenCapInclusionPartialHomeomorph",
+            "def liftedCutBulkCollarChart",
+            "def liftedCutBulkCapChart",
+            "def cutBulkGlobalChartAt",
+            "theorem mem_source_cutBulkGlobalChartAt",
+            "def cutBulkGlobalChartedSpace",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryScalarCurrentDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryScalarCurrentCover",
+            "theorem cutBoundaryScalarCurrentCover_contMDiff",
+            "theorem cutBoundaryScalarCurrentCover_invariant",
+            "def cutBoundaryScalarCurrent",
+            "theorem cutBoundaryScalarCurrent_contMDiff",
+            "theorem cutBoundaryScalarCurrent_deck",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryScalarCurrentIntegralCancellation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBoundaryCanonicalMeasure",
+            "theorem orientationDeck_eq_throatTimeFlow",
+            "theorem cutBoundaryCanonicalMeasure_orientationDeck_measurePreserving",
+            "theorem integral_cutBoundaryScalarCurrent_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalBoundaryMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkGlobalBoundaryCanonicalMeasure",
+            "theorem integral_cutBulkGlobalBoundaryCanonicalMeasure",
+            "def cutBulkGlobalBoundaryScalarCurrent",
+            "theorem continuous_cutBulkGlobalBoundaryScalarCurrent",
+            "theorem integral_cutBulkGlobalBoundaryScalarCurrent_eq_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterActionMassSignObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalHolonomicScalarDensity_sub_holonomicScalarDensity",
+            "theorem globalHolonomicScalarDensity_eq_holonomicScalarDensity_iff",
+            "theorem globalHolonomicScalarDensity_ne_holonomicScalarDensity",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterActionMassSignIntegratedObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterActionMassSignDefect",
+            "theorem globalHolonomicScalarAction_sub_measuredGeneralLorentzAction",
+            "theorem globalHolonomicScalarAction_eq_measuredGeneralLorentzAction_iff",
+            "theorem globalHolonomicScalarAction_ne_measuredGeneralLorentzAction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMultipletMassSignIntegratedObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterMultipletMassSignDefectIntegral",
+            "theorem globalMatterMultipletAction_sub_sameConfigurationAction",
+            "theorem globalMatterMultipletAction_eq_sameConfigurationAction_iff",
+            "theorem globalMatterMultipletAction_ne_sameConfigurationAction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMultipletMassSignNoCancellation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterActionMassSignDefect_nonneg",
+            "theorem matterActionMassSignDefect_integral_nonneg",
+            "theorem matterMultipletMassSignDefectIntegral_nonneg",
+            "theorem matterMultipletMassSignDefectIntegral_eq_zero_iff",
+            "theorem matterMultipletMassSignDefectIntegral_ne_zero_of_exists",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMassSignDefectAEZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterActionMassSignDefect_integral_eq_zero_iff_ae",
+            "theorem matterActionMassSignDefect_ae_zero_iff_field_ae_zero",
+            "theorem matterActionMassSignDefect_integral_pos",
+        ),
+    ),
+    "P0EFTJanusMappingTorusMatterMultipletMassiveFieldNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalMatterMultipletAction_ne_sameConfigurationAction_of_massive_field",
+        ),
+    ),
     "P0EFTJanusMappingTorusGlobalHolonomicScalarVariation4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -4763,6 +6647,3415 @@ PROGRAM_P_GATES = {
             "def strongStaticScalarJacobiRiesz",
             "theorem strongStaticScalarJacobiRiesz_represents",
             "theorem strongStaticScalarJacobiRiesz_kernel",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGlobalHolonomicScalarActualHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalHolonomicScalarActionDirectionalDerivative",
+            "theorem globalHolonomicScalarActionDirectionalDerivative_eq_weakEuler",
+            "theorem globalHolonomicScalarActionDirectionalDerivative_hasDerivAt",
+            "def globalHolonomicScalarActionMixedHessian",
+            "theorem globalHolonomicScalarActionMixedHessian_eq_jacobi",
+            "theorem globalHolonomicScalarActionMixedHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusGlobalHolonomicScalarActualHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def GlobalHolonomicScalarActualHelmholtzCondition",
+            "theorem global_holonomic_scalar_actual_helmholtz_condition",
+        ),
+    ),
+    "P0EFTJanusGlobalHolonomicScalarActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalHolonomicScalarAction_eq_half_actualMixedHessian",
+        ),
+    ),
+    "P0EFTJanusGlobalMatterMultipletActualEulerHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev MatterMultipletActionData",
+            "def matterMultipletAffineCurve",
+            "def globalMatterMultipletAction",
+            "def globalIndependentMatterAction",
+            "def globalMatterMultipletEuler",
+            "theorem globalMatterMultipletAction_hasDerivAt",
+            "def globalMatterMultipletHessian",
+            "theorem globalMatterMultipletEuler_hasDerivAt",
+            "theorem globalMatterMultipletHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusGlobalMatterMultipletActualHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def GlobalMatterMultipletActualHelmholtzCondition",
+            "theorem global_matter_multiplet_actual_helmholtz_condition",
+        ),
+    ),
+    "P0EFTJanusIndependentMatterMetricActionData4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def independentMatterMagnitude",
+            "theorem independentMatterMagnitude_pos",
+            "structure IndependentMatterMetricActionContract",
+            "def independentMatterMetricActionData",
+            "theorem independentMatterMetricActionData_magnitude",
+            "theorem independentMatterMetricActionData_measure",
+            "theorem globalIndependentMatterAction_eq_sectorMetric_sum",
+        ),
+    ),
+    "P0EFTJanusGlobalMatterMultipletActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalMatterMultipletAction_eq_half_hessian",
+            "theorem globalIndependentMatterAction_eq_half_hessian",
+        ),
+    ),
+    "P0EFTJanusMatterRobinLLActualActionEulerHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterRobinLLAction",
+            "def matterRobinLLEuler",
+            "theorem matterRobinLLAction_hasDerivAt",
+            "def matterRobinLLHessian",
+            "theorem matterRobinLLEuler_hasDerivAt",
+            "theorem matterRobinLLHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusMatterRobinLLActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterRobinLLAction_reconstructed_from_euler_and_hessian",
+        ),
+    ),
+    "P0EFTJanusCommonMatterActionVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterVariationComponentFamily",
+            "def matterOnlyIndependentVariation",
+            "theorem matterOnlyIndependentVariation_injective",
+            "theorem independentMatterComponentFamily_independentFieldCurve_matterOnly",
+            "theorem globalIndependentMatterAction_matterOnlyCurve_hasDerivAt",
+            "theorem d9MatterCoefficient_matterOnlyIndependentVariation",
+            "theorem d9GaugeOneForm_matterOnlyIndependentVariation",
+            "theorem d9U1Ghost_matterOnlyIndependentVariation",
+            "theorem d9MetricPerturbation_matterOnlyIndependentVariation",
+        ),
+    ),
+    "P0EFTJanusCommonGaugeD9Variation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def gaugeOnlyIndependentVariation",
+            "theorem gaugeOnlyIndependentVariation_injective",
+            "theorem d9GaugeOneForm_gaugeOnlyIndependentVariation",
+            "theorem d9MatterCoefficient_gaugeOnlyIndependentVariation",
+            "theorem d9U1Ghost_gaugeOnlyIndependentVariation",
+            "theorem d9MetricPerturbation_gaugeOnlyIndependentVariation",
+        ),
+    ),
+    "P0EFTJanusCommonGaugeD9TemporalKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def TemporalGaugeDirection",
+            "theorem d9GaugeOneForm_temporalGaugeDirection",
+            "theorem gaugeOnlyIndependentVariation_temporal_ne_zero",
+            "theorem temporalGaugeDirection_information_lost_by_d9",
+        ),
+    ),
+    "P0EFTJanusCommonGhostD9Variation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ghostOnlyIndependentVariation",
+            "theorem ghostOnlyIndependentVariation_injective",
+            "theorem d9U1Ghost_ghostOnlyIndependentVariation",
+            "theorem d9GaugeOneForm_ghostOnlyIndependentVariation",
+            "theorem d9MatterCoefficient_ghostOnlyIndependentVariation",
+            "theorem d9MetricPerturbation_ghostOnlyIndependentVariation",
+        ),
+    ),
+    "P0EFTJanusCommonAuxiliaryD9Kernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def auxiliaryOnlyIndependentVariation",
+            "theorem auxiliaryOnlyIndependentVariation_injective",
+            "theorem d9GaugeOneForm_auxiliaryOnlyIndependentVariation",
+            "theorem d9MatterCoefficient_auxiliaryOnlyIndependentVariation",
+            "theorem d9U1Ghost_auxiliaryOnlyIndependentVariation",
+            "theorem d9MetricPerturbation_auxiliaryOnlyIndependentVariation",
+        ),
+    ),
+    "P0EFTJanusCommonMetricD9Variation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def metricOnlyIndependentVariation",
+            "theorem metricOnlyIndependentVariation_injective",
+            "theorem d9MetricPerturbation_metricOnlyIndependentVariation",
+            "theorem d9GaugeOneForm_metricOnlyIndependentVariation",
+            "theorem d9U1Ghost_metricOnlyIndependentVariation",
+            "theorem d9MatterCoefficient_metricOnlyIndependentVariation",
+        ),
+    ),
+    "P0EFTJanusCommonMetricD9TemporalKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def TemporalMetricDirection",
+            "theorem d9MetricPerturbation_temporalMetricDirection",
+            "theorem metricOnlyIndependentVariation_temporal_ne_zero",
+            "theorem temporalMetricDirection_information_lost_by_d9",
+        ),
+    ),
+    "P0EFTJanusCommonCompleteSectorD9Variation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CommonSectorDirections",
+            "def combinedIndependentVariation",
+            "theorem combinedIndependentVariation_injective",
+            "theorem d9MetricPerturbation_combined",
+            "theorem d9MatterCoefficient_combined",
+            "theorem d9GaugeOneForm_combined",
+            "theorem d9U1Ghost_combined",
+            "theorem d9_auxiliary_ll_invisible",
+            "theorem d9_combined_temporal_blocks_invisible",
+        ),
+    ),
+    "P0EFTJanusCommonCompleteSectorD9ProjectionKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure VisibleD9Projection",
+            "def combinedVisibleD9Projection",
+            "theorem combinedVisibleD9Projection_eq_iff_visible_blocks",
+            "theorem combinedVisibleD9Projection_auxiliary_ll_kernel",
+        ),
+    ),
+    "P0EFTJanusCommonCompleteSectorD9VisibleQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def combinedVisibleD9Setoid",
+            "def descendedCombinedVisibleD9Projection",
+            "theorem descendedCombinedVisibleD9Projection_mk",
+            "theorem descendedCombinedVisibleD9Projection_injective",
+            "theorem auxiliary_ll_modifications_same_quotient_class",
+        ),
+    ),
+    "P0EFTJanusCommonCompleteSectorMatterActionVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem independentMatterComponentFamily_combinedIndependentVariation",
+            "theorem globalIndependentMatterAction_combinedCurve_eq_matterOnlyCurve",
+            "theorem globalIndependentMatterAction_combinedCurve_hasDerivAt",
+            "theorem globalIndependentMatterAction_combinedCurve_independent_other_sectors",
+        ),
+    ),
+    "P0EFTJanusCombinedLLActionVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem combinedIndependentVariation_llData",
+            "theorem globalPTSymmetricDifferentialLLAction_congr_llData",
+            "theorem globalPTSymmetricDifferentialLLFluxFirstVariation_congr_llData",
+            "theorem globalPTSymmetricDifferentialLLAction_combined_curve",
+            "theorem globalPTSymmetricDifferentialLLAction_combined_curve_hasDerivAt",
+            "theorem globalPTSymmetricDifferentialLLFirstVariation_combined_curve_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActionVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure MatterRobinLLEnrichedDirections",
+            "def enrichedCommonVariation",
+            "theorem enrichedCommonVariation_injective",
+            "def commonMatterRobinLLEuler",
+            "theorem commonMatterRobinLLAction_hasDerivAt",
+            "def commonMatterRobinLLHessian",
+            "theorem commonMatterRobinLLEuler_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActualHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem commonMatterRobinLLHessian_symmetric",
+            "theorem commonMatterRobinLLEuler_mixed_derivatives_commute",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def matterRobinLLRadialDirection",
+            "theorem commonMatterRobinLLAction_reconstructed",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLInactiveSectorKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def MatterRobinLLInactive",
+            "theorem commonMatterRobinLLHessian_left_kernel",
+            "theorem commonMatterRobinLLHessian_right_kernel",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActiveProjection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActiveMatterRobinLLDirection",
+            "def activeMatterRobinLLProjection",
+            "def activeMatterRobinLLEuler",
+            "theorem commonMatterRobinLLEuler_factors_activeProjection",
+            "def activeMatterRobinLLHessian",
+            "theorem commonMatterRobinLLHessian_factors_activeProjection",
+            "theorem commonMatterRobinLLEuler_congr_activeProjection",
+            "theorem commonMatterRobinLLHessian_congr_left_activeProjection",
+            "theorem commonMatterRobinLLHessian_congr_right_activeProjection",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActiveProjectionKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def activeMatterRobinLLProjection",
+            "def inactiveMatterRobinLLDirections",
+            "theorem mem_inactiveMatterRobinLLDirections_iff",
+            "def inactiveMatterRobinLLDirection",
+            "theorem mem_inactive_iff_exists_inactive_sectors",
+            "theorem activeMatterRobinLLProjection_eq_iff",
+            "theorem mem_activeMatterRobinLLProjection_fiber_iff",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActiveQuotientHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActiveMatterRobinLLDirection",
+            "def activeDirection",
+            "def activeDirectionSetoid",
+            "theorem commonMatterRobinLLHessian_congr_active",
+            "def quotientMatterRobinLLHessian",
+            "theorem quotientMatterRobinLLHessian_mk",
+            "theorem quotientMatterRobinLLHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLQuotientEulerVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem commonMatterRobinLLEuler_congr_active",
+            "def quotientMatterRobinLLEuler",
+            "theorem quotientMatterRobinLLEuler_mk",
+            "theorem commonMatterRobinLLEuler_hasDerivAt_quotientHessian_mk",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActiveQuotientReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem commonMatterRobinLLEuler_congr_active",
+            "def quotientMatterRobinLLEuler",
+            "theorem quotientMatterRobinLLEuler_mk",
+            "theorem activeDirection_radial",
+            "theorem commonMatterRobinLLAction_reconstructed_through_active_quotient",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLActiveD9FactorizationObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem zero_unit_Robin_active_projections_ne",
+            "theorem same_d9_projection_distinct_active_classes",
+            "theorem no_active_projection_factorization_through_current_d9",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLEnrichedD9Projection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure RobinEnrichedVisibleD9Projection",
+            "def robinEnrichedVisibleD9Projection",
+            "theorem robinEnrichedVisibleD9Projection_eq_iff",
+            "theorem robinEnrichedVisibleD9Projection_fixed_common_injective",
+            "theorem zero_unit_Robin_enriched_d9_ne",
+            "theorem robinEnrichedVisibleD9Projection_auxiliary_ll_invisible",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLReducedNaturalFredholmBlock4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def commonRobinLLDirection",
+            "theorem commonMatterRobinLLHessian_eq_reducedNatural_robinLL_block",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLReducedFredholmOperatorPairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def reducedRobinLLInclusion",
+            "def reducedBosonicJacobiOperatorBlockPairing",
+            "theorem reducedBosonicJacobiOperator_pairing_eq_commonMatterRobinLLHessian",
+            "theorem reducedBosonicJacobiOperator_shared_inclusion_kernel",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLVisibleD9Projection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure VisibleLLDirection",
+            "structure RobinLLVisibleD9Projection",
+            "def robinLLVisibleD9Projection",
+            "theorem robinLLVisibleD9Projection_ll",
+            "theorem robinLLVisibleD9Projection_eq_iff",
+            "theorem robinLLVisibleD9Projection_fixed_nonLL_eq_iff",
+            "theorem robinLLVisibleD9Projection_independent_auxiliary_invisible",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLAuxiliaryEnrichedD9Projection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure RobinLLAuxiliaryEnrichedVisibleD9Projection",
+            "def robinLLAuxiliaryEnrichedVisibleD9Projection",
+            "theorem robinLLAuxiliaryEnriched_projection_eq_iff",
+            "theorem robinLLAuxiliaryEnriched_projection_fixed_data_injective_auxiliary",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinLLDirections4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FullMatterRobinLLDirections",
+            "def fullMatterRobinLLVariation",
+            "theorem fullMatterRobinLLVariation_injective",
+            "theorem fullMatterRobinLLVariation_metrics",
+            "theorem fullMatterRobinLLVariation_matter",
+            "theorem fullMatterRobinLLVariation_gauge",
+            "theorem fullMatterRobinLLVariation_ghosts",
+            "theorem fullMatterRobinLLVariation_auxiliaries",
+            "theorem fullMatterRobinLLVariation_llField",
+            "theorem fullMatterRobinLLVariation_llAuxMetric",
+            "theorem fullMatterRobinLLVariation_llMeasure",
+            "theorem fullMatterRobinLLVariation_robin",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinLLAuxiliaryEnrichedD9Projection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FullRobinLLAuxiliaryVisibleD9Projection",
+            "def fullRobinLLAuxiliaryVisibleD9Projection",
+            "theorem fullRobinLLAuxiliaryVisibleD9Projection_eq_iff",
+            "def withCompleteLLDirection",
+            "theorem fullProjection_fixed_data_injective_completeLL",
+        ),
+    ),
+    "P0EFTJanusMappingTorusDifferentialLLMeasureHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def differentialLLMeasureCurve",
+            "def differentialLLMeasureFirstVariationDensity",
+            "theorem differentialLLDensity_measureCurve_affine",
+            "def differentialLLMeasureFluxHessianDensity",
+            "theorem measureFirstVariation_fluxCurve_quadratic",
+            "theorem fluxFirstVariation_measureCurve_affine",
+            "theorem measureFirstVariation_auxMetricCurve_invariant",
+        ),
+    ),
+    "P0EFTJanusDifferentialLLKineticSimultaneousVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def differentialLLKineticDensity",
+            "theorem differentialLLKineticDensity_simultaneous_polynomial",
+            "def differentialLLKineticFirstVariation",
+            "theorem differentialLLKineticFirstVariation_eq_linearCoefficient",
+        ),
+    ),
+    "P0EFTJanusLLMeasureFieldTwoParameterDensity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def llMeasureFieldCurve",
+            "theorem llWorldvolumeDensity_twoParameter",
+            "theorem llWorldvolumeDensity_affine_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusPTSymmetricDifferentialLLMeasureHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def differentialLLMeasureDirectionPT",
+            "def ptSymmetricDifferentialLLMeasureFluxHessianDensity",
+            "theorem ptSymmetricMeasureFluxHessianDensity_eq_point_average",
+            "theorem ptMeasureFirstVariation_fluxCurves_quadratic",
+            "theorem ptFluxFirstVariation_measureCurves_affine",
+            "theorem ptMeasureFirstVariation_auxMetricCurves_invariant",
+            "theorem ptSymmetricMeasureFluxHessianDensity_continuous",
+            "def globalPTSymmetricDifferentialLLMeasureFluxHessian",
+            "theorem ptSymmetricMeasureFluxHessianDensity_integrable",
+        ),
+    ),
+    "P0EFTJanusPTSymmetricDifferentialLLKineticSimultaneousVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptSymmetricDifferentialLLKineticDensity",
+            "def ptSymmetricDifferentialLLKineticFirstVariation",
+            "theorem ptSymmetricDifferentialLLKineticDensity_simultaneous_polynomial",
+            "theorem ptSymmetricKineticFirstVariation_eq_linearCoefficient",
+            "theorem ptSymmetricDifferentialLLKineticFirstVariation_continuous",
+            "theorem ptSymmetricDifferentialLLKineticFirstVariation_integrable",
+        ),
+    ),
+    "P0EFTJanusLLMeasureFieldTwoParameterRawAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem llMeasureFieldPolynomial_integrable",
+            "theorem globalLLAction_twoParameter_raw",
+            "theorem globalLLAction_twoParameter_diagonal_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIntegrableQuarticPolynomial.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quartic_integrable",
+            "theorem integral_quartic",
+            "theorem integral_quartic_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTDifferentialLLKineticSimultaneousVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalPTDifferentialLLKineticAction",
+            "theorem globalPTDifferentialLLKineticAction_simultaneous_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusDifferentialLLFullCurveActionDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def differentialLLFullCurve",
+            "def globalPTSymmetricDifferentialLLKineticAction",
+            "def globalPTSymmetricLLWorldvolumeAction",
+            "theorem globalPTSymmetricDifferentialLLAction_fullCurve_decomposition",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullDifferentialLLSimultaneousVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def llVariationPT",
+            "def globalPTLLWorldvolumeAction",
+            "def globalPTFullDifferentialLLAction",
+            "def fullLLCurve",
+            "theorem globalPTFullDifferentialLLAction_simultaneous_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTLLMeasureFieldTwoParameter4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptAverage",
+            "def ptCoeff",
+            "theorem ptCoeff_integrable",
+            "def globalPTLLAction",
+            "theorem globalPTLLAction_twoParameter",
+            "theorem globalPTLLAction_diagonal_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusTruePTDifferentialLLSimultaneousVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullLLCurve_eq_differentialLLFullCurve",
+            "theorem globalPTFullDifferentialLLAction_eq_true",
+            "theorem truePTAction_fullCurve_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTLLWorldvolumeHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def llWorldvolumeHessianDensity",
+            "def ptLLWorldvolumeHessianDensity",
+            "theorem llFirstVariationDensity_second_direction_expansion",
+            "theorem llWorldvolumeHessianDensity_symmetric",
+            "theorem ptLLWorldvolumeHessianDensity_symmetric",
+            "theorem ptLLWorldvolumeHessianDensity_integrable",
+            "def globalPTLLWorldvolumeHessian",
+            "theorem globalPTLLWorldvolumeHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTDifferentialLLKineticMixedHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def differentialLLKineticMixedHessianDensity",
+            "theorem differentialLLKineticMixedHessianDensity_symmetric",
+            "theorem differentialLLKineticMixedHessianDensity_add_first",
+            "theorem differentialLLKineticMixedHessianDensity_smul_first",
+            "def ptSymmetricDifferentialLLKineticMixedHessianDensity",
+            "theorem ptSymmetricDifferentialLLKineticMixedHessianDensity_symmetric",
+            "def globalPTDifferentialLLKineticMixedHessian",
+            "theorem globalPTDifferentialLLKineticMixedHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTLLWorldvolumeHessianVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptLLFirstVariationDensity",
+            "def globalPTLLFirstVariation",
+            "theorem globalPTLLFirstVariation_second_direction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullLLHessianAssembly4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullDirectionLLVariation",
+            "def globalPTFullLLHessianForm",
+            "theorem globalPTFullLLHessianForm_formula",
+            "theorem globalPTFullLLHessianForm_symmetric",
+        ),
+    ),
+    "P0EFTJanusDifferentialLLKineticTwoParameterPolynomial4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def differentialLLKineticTwoParameterDensity",
+            "theorem differentialLLKineticTwoParameterDensity_polynomial",
+            "def differentialLLKineticSTCoefficient",
+            "theorem differentialLLKineticSTCoefficient_eq_mixedHessianDensity",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTDifferentialLLKineticHessianVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalPTDifferentialLLKineticFirstVariation_second_direction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullLLHessianVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalPTFullLLFirstVariation",
+            "theorem globalPTFullLLFirstVariation_second_direction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusThroatDerivativeEnergyBilinearExpansion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatDerivativeEnergy_twoDirection",
+            "theorem throatDerivativePairing_symmetric",
+        ),
+    ),
+    "P0EFTJanusTruePTFullLLFirstVariationBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalPTLLFirstVariation_eq_orbit_average",
+            "theorem globalPTFullLLFirstVariation_eq_true_coefficient",
+            "theorem truePTAction_fullCurve_hasDerivAt_fullFirstVariation",
+        ),
+    ),
+    "P0EFTJanusFullLLVariationalAPI4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullLLEuler",
+            "def fullLLHessian",
+            "def fullLLFieldCurve",
+            "def fullLLEulerAlong",
+            "theorem truePTAction_fullCurve_hasDerivAt_fullLLEuler",
+            "theorem fullLLEuler_second_direction_hasDerivAt",
+            "theorem fullLLHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActionVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullMatterRobinTrueLLAction",
+            "def fullMatterRobinTrueLLEuler",
+            "theorem fullMatterRobinTrueLLAction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActualHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalMatterRobinFullLLFirstVariation",
+            "def globalMatterRobinFullLLHessian",
+            "theorem globalMatterRobinFullLLFirstVariation_eq_trueActionEuler",
+            "theorem globalMatterRobinFullLLHessian_symmetric",
+            "theorem globalMatterRobinFullLLFirstVariation_second_direction_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusDifferentialLLKineticMixedHessianIntegrability4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem differentialLLKineticMixedHessianDensity_continuous",
+            "theorem differentialLLKineticMixedHessianDensity_integrable",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTDifferentialLLKineticMixedHessianLinearity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ptMixedHessianDensity_continuous",
+            "theorem ptMixedHessianDensity_integrable",
+            "theorem ptMixedHessianDensity_add_first",
+            "theorem globalPTMixedHessian_add_first",
+            "theorem ptMixedHessianDensity_neg_first",
+            "theorem globalPTMixedHessian_neg_first",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTLLWorldvolumeHessianLinearity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def addVariation",
+            "theorem llWorldvolumeHessianDensity_add_first",
+            "theorem ptLLWorldvolumeHessianDensity_add_first",
+            "theorem globalPTLLWorldvolumeHessian_add_first",
+            "def negVariation",
+            "theorem llWorldvolumeHessianDensity_neg_first",
+            "theorem ptLLWorldvolumeHessianDensity_neg_first",
+            "theorem globalPTLLWorldvolumeHessian_neg_first",
+        ),
+    ),
+    "P0EFTJanusFullLLHessianExplicitAdditivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def addDirection",
+            "theorem fullDirectionLLVariation_addDirection",
+            "theorem fullLLHessian_add_first",
+            "def negDirection",
+            "theorem fullDirectionLLVariation_negDirection",
+            "theorem fullLLHessian_neg_first",
+        ),
+    ),
+    "P0EFTJanusFullLLHessianExplicitPolarization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def subDirection",
+            "theorem fullLLHessian_add_second",
+            "theorem fullLLHessian_neg_second",
+            "theorem fullLLHessian_polarization",
+        ),
+    ),
+    "P0EFTJanusFullLLMixedHessianTaylorPolarization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem fullLLHessian_eq_difference_integrated_C2",),
+    ),
+    "P0EFTJanusMatterRobinHessianExplicitLinearity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem matterVariationComponentFamily_addDirection",
+            "theorem matterVariationComponentFamily_negDirection",
+            "theorem addDirection_robin",
+            "theorem negDirection_robin",
+            "theorem globalMatterMultipletHessian_add_first",
+            "theorem globalMatterMultipletHessian_neg_first",
+            "theorem robinHessian_add_first",
+            "theorem robinHessian_neg_first",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLTaylorPolarization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem assembledHessian_add_first",
+            "theorem assembledHessian_neg_first",
+            "theorem assembledHessian_add_second",
+            "theorem assembledHessian_neg_second",
+            "theorem assembledHessian_polarization",
+            "theorem assembledHessian_eq_difference_C2",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLTaylorPolarizationEnrichedD9Observation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem mixedHessian_eq_difference_enrichedD9_diagonal_C2",),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLTaylorPolarizationActiveQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientHessian_mk_eq_difference_diagonal_C2",
+            "theorem quotientHessian_mk_eq_difference_enrichedD9_diagonal",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveBulkDirections4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def SameActiveDirections",
+            "theorem fullMatterRobinTrueLLEuler_sameActive",
+            "theorem fullMatterRobinTrueLLAction_curve_sameActive",
+            "theorem globalMatterRobinFullLLHessian_sameActive_left",
+            "theorem globalMatterRobinFullLLHessian_sameActive_right",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActiveDirection",
+            "def activeProjection",
+            "def activeRepresentative",
+            "theorem activeProjection_eq_iff",
+            "theorem activeProjection_surjective",
+            "def activeEuler",
+            "theorem trueEuler_factors_active",
+            "def activeHessian",
+            "theorem fullHessian_factors_active",
+            "theorem activeHessian_symmetric",
+            "def inactiveDirection",
+            "theorem activeProjection_inactiveDirection",
+            "def activeSetoid",
+            "def quotientHessian",
+            "theorem quotientHessian_mk",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientEulerVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def quotientEuler",
+            "theorem quotientEuler_mk",
+            "def representativeEulerCurve",
+            "theorem representativeEulerCurve_hasDerivAt_quotientHessian",
+            "theorem quotientHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveD9Comparison4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem enrichedD9_recovers_robin_fullLL",
+            "theorem enrichedD9_equal_recovers_complete_slots_and_matter_trace",
+            "theorem enrichedD9_plus_not_complete_for_active_matter",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinLLGlobalMatterEnrichedD9Projection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalMatterEnrichedD9Projection",
+            "def globalMatterEnrichedD9Projection",
+            "def toActiveDirection",
+            "theorem toActiveDirection_projection",
+            "def activeEmbedding",
+            "theorem toActiveDirection_activeEmbedding",
+            "theorem activeEmbedding_injective",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def descendedActiveProjection",
+            "theorem descendedActiveProjection_mk",
+            "theorem descendedActiveProjection_injective",
+            "theorem descendedActiveProjection_surjective",
+            "def activeQuotientEquiv",
+            "theorem activeQuotientEquiv_mk",
+            "theorem activeQuotientEquiv_symm_active",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLReducedFredholmBlock4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullRobinLLDirection",
+            "theorem fullLLHessian_zeroAuxMeasure_eq_fluxHessian",
+            "theorem globalMatterRobinFullLLHessian_eq_reducedNatural_robinLL_block",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientD9ImageEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ActiveD9Image",
+            "def activeDirectionD9ImageEquiv",
+            "def activeQuotientD9ImageEquiv",
+            "theorem activeQuotientD9ImageEquiv_mk",
+            "theorem activeQuotientD9ImageEquiv_inverse",
+        ),
+    ),
+    "P0EFTJanusDifferentialLLFullCurveTaylorDensity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def rawFullLLCubicDensity",
+            "def rawFullLLQuarticDensity",
+            "theorem differentialLLDensity_fullCurve_exact_taylor",
+        ),
+    ),
+    "P0EFTJanusPTLLWorldvolumeCubicVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptLLWorldvolumeCubicCoefficient",
+            "theorem ptLLWorldvolumeCubicCoefficient_formula",
+            "theorem ptLLWorldvolumeCubicCoefficient_continuous",
+            "theorem ptLLWorldvolumeCubicCoefficient_integrable",
+            "def globalPTLLWorldvolumeCubicCoefficient",
+            "def globalPTLLWorldvolumeThirdDiagonalVariation",
+            "theorem globalPTLLWorldvolumeThirdDiagonalVariation_formula",
+            "theorem cubicTerm_iteratedDeriv_three",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTDifferentialLLKineticTaylorOrder34D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def rawTaylorCoeff",
+            "def ptTaylorCoeff",
+            "theorem rawTaylorCoeff_continuous",
+            "theorem ptTaylorCoeff_continuous",
+            "theorem ptTaylorCoeff_integrable",
+            "theorem density_taylor_polynomial",
+            "theorem integrated_taylor_polynomial",
+            "theorem third_iteratedDeriv_integrated_curve",
+            "theorem fourth_iteratedDeriv_integrated_curve",
+        ),
+    ),
+    "P0EFTJanusPTRawFullLLTaylorOrder34Support4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptRawFullLLCubicDensity",
+            "def ptRawFullLLQuarticDensity",
+            "theorem rawFullLLCubicDensity_continuous",
+            "theorem rawFullLLQuarticDensity_continuous",
+            "theorem ptRawFullLLCubicDensity_continuous",
+            "theorem ptRawFullLLQuarticDensity_continuous",
+            "theorem ptRawFullLLCubicDensity_integrable",
+            "theorem ptRawFullLLQuarticDensity_integrable",
+            "def globalPTRawFullLLCubicCoefficient",
+            "def globalPTRawFullLLQuarticCoefficient",
+            "def globalPTRawFullLLThirdVariation",
+            "def globalPTRawFullLLFourthVariation",
+            "theorem globalPTRawFullLLThirdVariation_factorial",
+            "theorem globalPTRawFullLLFourthVariation_factorial",
+            "theorem cubic_monomial_iteratedDeriv",
+            "theorem quartic_monomial_iteratedDeriv",
+        ),
+    ),
+    "P0EFTJanusGlobalPTDifferentialLLFullCurveTaylorReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ptTaylorCoeff",
+            "theorem ptTaylorCoeff_integrable",
+            "theorem globalPTAction_fullCurve_quartic",
+            "def globalPTFullLLTaylorEuler",
+            "def globalPTFullLLTaylorHessianDiagonal",
+            "def globalPTFullLLTaylorCubic",
+            "def globalPTFullLLTaylorQuartic",
+            "theorem ptTaylorCoeff_two_is_half_actual_diagonal_hessian",
+            "theorem globalPTFullLLTaylorHessianDiagonal_eq_actual",
+            "theorem globalPTFullLLTaylorEuler_eq_actual",
+            "theorem globalPTAction_fullCurve_exact_taylor",
+            "theorem globalPTAction_fullDirection_exact_taylor",
+        ),
+    ),
+    "P0EFTJanusGlobalPTFullLLActionHigherDerivatives4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalPTAction_fullCurve_third_iteratedDeriv",
+            "theorem globalPTAction_fullCurve_fourth_iteratedDeriv",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullLLTaylorCoefficient12Bridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem coefficient_one_integrable",
+            "theorem coefficient_two_integrable",
+            "theorem integral_coefficient_one_eq_fullLLEuler",
+            "theorem integral_coefficient_two_eq_half_fullLLHessian",
+        ),
+    ),
+    "P0EFTJanusGlobalMatterMultipletAffineTaylor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem globalMatterMultipletAction_affine_exact_taylor",),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLExactTaylor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem fullMatterRobinTrueLLAction_exact_taylor",),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLHigherDerivatives4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullMatterRobinTrueLLCurve",
+            "theorem fullMatterRobinTrueLLCurve_third_iteratedDeriv",
+            "theorem fullMatterRobinTrueLLCurve_fourth_iteratedDeriv",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLTaylorCoefficientBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullMatterRobinTrueLLTaylorC1",
+            "def fullMatterRobinTrueLLTaylorC2",
+            "theorem fullMatterRobinTrueLLTaylorC1_eq_trueActionEuler",
+            "theorem fullMatterRobinTrueLLTaylorC2_eq_half_trueActionHessian",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLMixedTaylorCoefficient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fullMatterRobinTrueLLFirstCoefficientAlongSecond",
+            "def fullMatterRobinTrueLLMixedTaylorCoefficient",
+            "theorem fullMatterRobinTrueLLFirstCoefficientAlongSecond_hasDerivAt",
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_actualHessian",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLMixedClairaut4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_comm",
+            "theorem fullMatterRobinTrueLL_effectiveMixedDeriv_comm",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLMixedActiveQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_factors_active",
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_quotientHessian",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLMixedReducedFredholmPairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullRobinLLDirection_matterHessian_eq_zero",
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_reducedJacobi_pairing",
+            "theorem quotientHessian_fullRobinLL_eq_reducedJacobi_pairing",
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_zero_of_reducedJacobi_kernel",
+            "theorem quotientHessian_fullRobinLL_eq_zero_of_reducedJacobi_kernel",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLMixedEnrichedD9Observation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_enrichedD9ActiveHessian",
+            "theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_of_enrichedD9ActiveReadings",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLTaylorC1EnrichedD9Observation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLTaylorC1_eq_enrichedD9ActiveEuler",
+            "theorem fullMatterRobinTrueLLTaylorC1_eq_of_enrichedD9ActiveReading",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLTaylorC2EnrichedD9Observation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLTaylorC2_eq_half_enrichedD9ActiveHessian",
+            "theorem fullMatterRobinTrueLLTaylorC2_eq_of_enrichedD9ActiveReading",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLExactTaylorEnrichedD9Observation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem fullMatterRobinTrueLLAction_exact_taylor_enrichedD9",),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLExactTaylorActiveQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem fullMatterRobinTrueLLAction_exact_taylor_activeQuotient",),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientDerivatives4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem trueActionCurve_hasDerivAt_activeQuotientEuler",
+            "theorem representativeEulerCurve_hasDerivAt_activeQuotientHessian",
+            "theorem representativeEulerCurve_hasDerivAt_activeQuotientHessian_mixed",
+            "theorem representativeEulerCurve_swapped_hasDerivAt_activeQuotientHessian_mixed",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientC2Polarization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def activeQuotientAdd",
+            "def activeQuotientSub",
+            "theorem activeRepresentative_class",
+            "theorem quotientHessian_eq_polarized_activeQuotientC2",
+            "theorem polarized_activeQuotientC2_symmetric",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientC2InversePolarization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem activeQuotientAdd_mk",
+            "theorem activeQuotientSub_mk",
+            "theorem quotientHessian_diagonal_eq_two_activeQuotientC2",
+            "theorem activeQuotientC2_eq_quarter_polarized_diagonal",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientHessianAdditivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientHessian_activeQuotientAdd_first",
+            "theorem quotientHessian_activeQuotientAdd_second",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientEulerC2Additivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem activeQuotientC2_add_exact_cross",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientHessianZeroNeg4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def activeQuotientZero",
+            "def activeQuotientNeg",
+            "theorem quotientHessian_activeQuotientNeg_first",
+            "theorem quotientHessian_activeQuotientNeg_second",
+            "theorem quotientHessian_activeQuotientZero_first",
+            "theorem quotientHessian_activeQuotientZero_second",
+            "theorem quotientHessian_activeQuotientSub_first",
+            "theorem quotientHessian_activeQuotientSub_second",
+            "theorem activeQuotientC2_neg",
+            "theorem activeQuotientC2_zero",
+            "theorem activeQuotientC2_sub_exact_cross",
+            "theorem activeQuotientC2_parallelogram",
+            "theorem quotientHessian_eq_half_C2_add_sub_difference",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeComplementaryImages4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroCokernelGaugeImage",
+            "def zeroCokernelGhostImage",
+            "theorem zeroCokernelGaugeImage_inf_zeroCokernelGhostImage",
+            "theorem zeroCokernelGaugeImage_sup_zeroCokernelGhostImage",
+            "theorem zeroCokernelGaugeGhostImages_complementary",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeComplementaryQuotients4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem zeroCokernelGhostProjection_ker",
+            "theorem zeroCokernelGaugeProjection_ker",
+            "theorem zeroCokernelGhostProjection_surjective",
+            "theorem zeroCokernelGaugeProjection_surjective",
+            "def zeroCokernelQuotientGaugeEquivGhost",
+            "def zeroCokernelQuotientGhostEquivGauge",
+            "theorem zeroCokernelQuotientGaugeEquivGhost_mk",
+            "theorem zeroCokernelQuotientGhostEquivGauge_mk",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeSplitExactSequences4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem gaugeInclusion_then_ghostProjection_zero",
+            "theorem ghostInclusion_then_gaugeProjection_zero",
+            "theorem gaugeInclusion_range_eq_ghostProjection_ker",
+            "theorem ghostInclusion_range_eq_gaugeProjection_ker",
+            "theorem gaugeProjection_retracts_gaugeInclusion",
+            "theorem ghostProjection_retracts_ghostInclusion",
+            "theorem gauge_to_cokernel_to_ghost_split_exact",
+            "theorem ghost_to_cokernel_to_gauge_split_exact",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9SeparatedSymbols4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9GaugeLinearSymbol",
+            "def d9GhostLinearSymbol",
+            "theorem combinedSymbol_gaugeProjection",
+            "theorem combinedSymbol_ghostProjection",
+            "theorem combinedSymbol_gaugeInclusion",
+            "theorem combinedSymbol_ghostInclusion",
+            "theorem combinedSymbol_ker_prod",
+            "theorem combinedSymbol_range_prod",
+            "theorem combinedSymbol_separated_blocks_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9SeparatedFinrank4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9GaugeLinearSymbol_ker_nonzero",
+            "theorem d9GaugeLinearSymbol_range_nonzero",
+            "theorem d9GhostLinearSymbol_ker_nonzero",
+            "theorem d9GhostLinearSymbol_range_nonzero",
+            "theorem d9GaugeLinearSymbol_ker_zero",
+            "theorem d9GaugeLinearSymbol_range_zero",
+            "theorem d9GhostLinearSymbol_ker_zero",
+            "theorem d9GhostLinearSymbol_range_zero",
+            "theorem combinedSymbol_range_finrank_additive",
+            "theorem combinedSymbol_ker_finrank_additive",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9SeparatedCokernelIndex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9GaugeCokernel",
+            "abbrev D9GhostCokernel",
+            "theorem d9GaugeCokernel_finrank_nonzero",
+            "theorem d9GhostCokernel_finrank_nonzero",
+            "theorem d9GaugeCokernel_finrank_zero",
+            "theorem d9GhostCokernel_finrank_zero",
+            "def d9GaugePointwiseIndex",
+            "def d9GhostPointwiseIndex",
+            "theorem d9GaugePointwiseIndex_zero",
+            "theorem d9GhostPointwiseIndex_zero",
+            "theorem combinedCokernel_finrank_additive",
+            "theorem combinedPointwiseIndex_additive",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9SeparatedCokernelEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def combinedToSeparatedCokernels",
+            "theorem combinedToSeparatedCokernels_mk",
+            "def combinedCokernelEquivSeparated",
+            "theorem combinedCokernelEquivSeparated_mk",
+            "theorem combinedCokernelEquivSeparated_nonzero",
+            "theorem combinedCokernelEquivSeparated_zero_mk",
+            "theorem packedFullReadingClass_separates",
+            "theorem combinedCokernelProjection_gauge_compatible",
+            "theorem combinedCokernelProjection_ghost_compatible",
+            "theorem d9GaugeCokernelProjection_ker",
+            "theorem d9GhostCokernelProjection_ker",
+            "theorem separatedCokernelProjection_surjective",
+            "theorem d9Gauge_pointwise_short_exact",
+            "theorem d9Ghost_pointwise_short_exact",
+            "theorem combinedProjection_under_equiv_is_product",
+            "theorem combinedExactMiddle_is_product",
+            "theorem combined_pointwise_short_exact_product_certificate",
+        ),
+    ),
+    "P0EFTJanusMatrixZeroOverZeroUniversalExtensionNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem no_continuous_universal_matrix_extension_of_diagonal_restriction",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCutoffNormalField4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCollarCutoff",
+            "theorem canonicalLatitudeCollarCutoff_eq_one",
+            "theorem canonicalLatitudeCollarCutoff_eq_zero_of_one_le_abs",
+            "theorem canonicalLatitudeCollarCutoff_contDiff",
+            "def cutoffCanonicalLatitudeNormalCoordinate",
+            "theorem cutoffCanonicalLatitudeNormalCoordinate_eq_normal",
+            "theorem cutoffCanonicalLatitudeNormalCoordinate_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphFrameChange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure UniformSmoothFrameChange",
+            "theorem frameDerivative_eq_matrix",
+            "theorem smoothFirstJet_norm_le",
+            "theorem smoothToH1Graph_norm_le",
+            "def h1GraphFrameChangeEquiv",
+            "theorem h1GraphFrameChangeEquiv_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1FrameIndependence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CompactFiniteSmoothFrameChange",
+            "theorem frameDerivative_eq_patch_matrix",
+            "theorem compactSmoothFirstJet_norm_le",
+            "theorem compactSmoothToH1Graph_norm_le",
+            "def compactH1GraphFrameEquiv",
+            "theorem compactH1GraphFrameEquiv_smooth",
+            "theorem canonicalFrameDerivative_eq_fixedAtlasLocalized",
+            "theorem canonicalFrame_fixedAtlas_density_equivalence",
+        ),
+    ),
+    "P0EFTJanusFixedSimilarityMatrixZeroOverZeroNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fixedSimilarityMatrixPair",
+            "def fixedSimilarityExtractSpectrum",
+            "theorem fixedSimilarityExtractSpectrum_transport",
+            "theorem fixedSimilarityPowerLaw_equal_exponents_tendsto_one",
+            "theorem fixedSimilarityPowerLaw_numerator_faster_tendsto_zero",
+            "theorem fixedSimilarityPowerLaw_denominator_faster_tendsto_atTop",
+            "theorem no_continuous_fixed_similarity_matrix_root_extension",
+        ),
+    ),
+    "P0EFTJanusRegularMovingSimilarityZeroOverZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure RegularMovingSimilarityAt",
+            "def movingSimilarityExtractSpectrum",
+            "theorem movingSimilarityExtractSpectrum_principalRoot",
+            "theorem regularMovingSimilarity_transport_matrix_limit",
+            "theorem regularMovingSimilarity_equal_exponents_tendsto_one",
+            "theorem regularMovingSimilarity_numerator_faster_tendsto_zero",
+            "theorem regularMovingSimilarity_denominator_faster_tendsto_atTop",
+        ),
+    ),
+    "P0EFTJanusRegularMovingSimilarityFullMatrixLimit4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def powerLawFiniteLimitSpectrum",
+            "theorem powerLawSpectrum_equal_exponents_tendsto",
+            "theorem powerLawSpectrum_numerator_faster_tendsto",
+            "theorem regularMovingSimilarity_equal_exponents_full_matrix_limit",
+            "theorem regularMovingSimilarity_numerator_faster_full_matrix_limit",
+            "theorem regularMovingSimilarity_denominator_faster_no_finite_matrix_limit",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCutoffScalarCurrent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutoffLatitudeScalarCurrentCoordinate",
+            "def cutoffLatitudeScalarCurrentCoordinateDivergence",
+            "theorem cutoffLatitudeScalarCurrentCoordinate_eq_collar",
+            "theorem cutoffLatitudeScalarCurrentCoordinate_eq_zero_of_one_le_abs",
+            "theorem cutoffLatitudeScalarCurrent_hasDerivAt",
+            "theorem cutoffLatitudeScalarCurrentCoordinateDivergence_eq_green",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphFrameChangeCoherence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem h1GraphFrameChangeEquiv_trans",
+            "theorem h1GraphFrameChangeEquiv_symm",
+        ),
+    ),
+    "P0EFTJanusPositiveAffineJordanRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev jordanNilpotent",
+            "theorem jordanNilpotent_square",
+            "abbrev positiveAffineJordanRoot",
+            "theorem positiveAffineJordanRoot_square",
+            "theorem positiveAffineJordanRoot_coefficients_unique",
+            "theorem fixedNilpotentCoefficient_tendsto_atTop",
+            "theorem fixedNilpotentRoot_no_finite_limit",
+            "def monomialJordanRoot",
+            "def collapsedJordanLimit",
+            "def criticalJordanLimit",
+            "theorem monomialJordanCoefficient_eq_pow_sub",
+            "theorem monomialJordanCoefficient_vanishing",
+            "theorem monomialJordanCoefficient_critical",
+            "theorem monomialJordanCoefficient_diverging",
+            "theorem monomialJordanRoot_vanishing_limit",
+            "theorem monomialJordanRoot_critical_limit",
+            "def arbitraryAmplitudeJordanRoot",
+            "def jordanRatio",
+            "theorem arbitraryAmplitudeJordanRoot_tendsto_of_ratio",
+            "theorem arbitraryAmplitudeJordanRoot_tendsto_iff_ratio",
+            "theorem arbitraryAmplitudeJordanRoot_no_finite_limit_of_ratio_atTop",
+        ),
+    ),
+    "P0EFTJanusMonomialSingularSimilarityJordan4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def monomialSingularChange",
+            "def monomialSingularInverse",
+            "theorem monomialSingularInverse_mul_change",
+            "theorem monomialSingularChange_mul_inverse",
+            "theorem monomialSingularSimilarity_shifts_order",
+            "theorem monomialSingularSimilarity_vanishing_limit",
+            "theorem monomialSingularSimilarity_critical_limit",
+            "theorem monomialSingularSimilarity_diverging_entry",
+        ),
+    ),
+    "P0EFTJanusMultiExponentDiagonalSimilarity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def multiExponentChange",
+            "def multiExponentInverse",
+            "theorem multiExponentInverse_mul_change",
+            "theorem multiExponentChange_mul_inverse",
+            "theorem multiExponentSimilarity_entry",
+            "def transportedMonomialEntry",
+            "theorem transportedMonomialEntry_eq_positivePower",
+            "theorem transportedMonomialEntry_eq_inversePower",
+            "theorem transportedMonomialEntry_tendsto_zero",
+            "theorem transportedMonomialEntry_tendsto_coefficient",
+            "theorem transportedMonomialEntry_tendsto_atTop",
+        ),
+    ),
+    "P0EFTJanusGlobalMonomialMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure NonnegativeMonomialMatrixData",
+            "def transportedMatrix",
+            "def ActiveValuationsNonnegative",
+            "def valuationLimit",
+            "theorem transportedMatrix_tendsto_of_activeValuationsNonnegative",
+            "theorem transportedMatrix_no_finite_limit_of_negative_activeValuation",
+            "theorem activeValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusFixedConjugateSingularFrameValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fixedConjugateTransport",
+            "theorem fixedConjugateTransport_tendsto_of_activeValuationsNonnegative",
+            "theorem activeValuationsNonnegative_iff_exists_fixedConjugate_finite_limit",
+            "def fixedConjugateFinitePolynomialTransport",
+            "theorem finitePolynomialValuationsNonnegative_iff_exists_fixedConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingConjugateSingularFrameValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugatePath",
+            "theorem exists_finite_limit_movingConjugatePath_iff",
+            "def movingConjugateMonomialTransport",
+            "theorem movingConjugateMonomialTransport_tendsto",
+            "theorem activeValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+            "def movingConjugateFinitePolynomialTransport",
+            "theorem movingConjugateFinitePolynomialTransport_tendsto",
+            "theorem finitePolynomialValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusSignedMonomialMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem transportedMonomialEntry_tendsto_atBot",
+            "structure SignedMonomialMatrixData",
+            "def signedTransportedMatrix",
+            "def SignedActiveValuationsNonnegative",
+            "def signedValuationLimit",
+            "theorem signedTransportedMatrix_tendsto",
+            "theorem signedTransportedMatrix_no_finite_limit_of_negativeValuation",
+            "theorem signedActiveValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusFiniteMonomialLeadingValuation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteMonomialSum",
+            "def normalizedFiniteMonomialSum",
+            "theorem finiteMonomialSum_div_leadingPower",
+            "theorem normalizedFiniteMonomialSum_tendsto_leadingCoefficient",
+            "theorem finiteMonomialSum_ratio_tendsto_leadingCoefficient",
+        ),
+    ),
+    "P0EFTJanusSignedNormalizedInversePowerDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem normalized_mul_inversePower_tendsto_atTop",
+            "theorem normalized_mul_inversePower_tendsto_atBot",
+            "theorem normalized_mul_inversePower_no_finite_limit",
+        ),
+    ),
+    "P0EFTJanusFinitePolynomialMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FinitePolynomialMatrixData",
+            "def finitePolynomialTransportedEntry",
+            "def finitePolynomialTransportedMatrix",
+            "def finitePolynomialLimit",
+            "def FinitePolynomialValuationsNonnegative",
+            "theorem finitePolynomialTransportedMatrix_tendsto",
+            "theorem finitePolynomialTransportedMatrix_no_finite_limit_of_negativeEntry",
+            "theorem finitePolynomialValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AsymptoticMatrixData",
+            "def normalizedEntry",
+            "def transportedEntry",
+            "def transportedMatrix",
+            "def valuationLimit",
+            "def ValuationsNonnegative",
+            "theorem transportedMatrix_tendsto",
+            "theorem transportedMatrix_no_finite_limit_of_negativeEntry",
+            "theorem valuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusAnalyticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AnalyticMatrixData",
+            "def residual",
+            "def AnalyticMatrixData.toAsymptoticMatrixData",
+            "theorem valuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusActiveAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActiveAsymptoticMatrixData",
+            "def ActiveValuationsNonnegative",
+            "theorem transportedMatrix_tendsto",
+            "theorem transportedMatrix_no_finite_limit_of_negative_active_entry",
+            "theorem activeValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingActiveAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugateActiveAsymptoticTransport",
+            "theorem movingConjugateActiveAsymptoticTransport_tendsto",
+            "theorem activeValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusAnalyticMatrixWithZeroValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure AnalyticMatrixData",
+            "def AnalyticMatrixData.toActiveAsymptoticMatrixData",
+            "def ActiveValuationsNonnegative",
+            "theorem transportedMatrix_tendsto",
+            "theorem transportedMatrix_no_finite_limit_of_negative_active_entry",
+            "theorem activeValuationsNonnegative_iff_exists_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingAnalyticMatrixWithZeroValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugateAnalyticTransport",
+            "theorem movingConjugateAnalyticTransport_tendsto",
+            "theorem activeValuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularMovingAsymptoticMatrixValuationCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def movingConjugateAsymptoticTransport",
+            "theorem movingConjugateAsymptoticTransport_tendsto",
+            "theorem valuationsNonnegative_iff_exists_movingConjugate_finite_limit",
+        ),
+    ),
+    "P0EFTJanusRegularAroundSingularPolynomialTransport4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def regularAroundTransport",
+            "theorem regularAroundTransport_tendsto",
+            "theorem regularAroundTransport_no_finite_limit_of_survivingExtractor",
+            "theorem regularAroundTransport_no_finite_limit_of_survivingEntry",
+        ),
+    ),
+    "P0EFTJanusCommonPairedD9GhostPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CommonPairedD9GhostPacket",
+            "def CommonPairedD9GhostPacket.independentVariation",
+            "theorem commonPairedD9GhostPacket_injective",
+            "def commonPairedD9GhostCoordinate",
+            "theorem commonPairedD9GhostCoordinate_firstU1",
+            "theorem commonPairedD9GhostCoordinate_secondU1",
+            "theorem commonPairedD9GhostCoordinate_diffeomorphism",
+        ),
+    ),
+    "P0EFTJanusCommonPairedD9LinearBRSTBlock4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CommonPairedD9LinearBRSTBlock",
+            "def zeroCommonPairedD9LinearBRSTBlock",
+            "def commonPairedD9LinearBRSTDifferential",
+            "theorem commonPairedD9LinearBRSTDifferential_square_zero",
+            "def CommonPairedD9LinearBRSTBlock.toGhostPacket",
+            "def CommonPairedD9GhostPacket.toLinearBRSTBlock",
+            "theorem toLinearBRSTBlock_toGhostPacket",
+            "theorem commonPairedD9LinearBRSTDifferential_d9Coordinate",
+        ),
+    ),
+    "P0EFTJanusCommonPairedD9LinearBRSTKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem commonPairedD9LinearBRSTDifferential_eq_zero_iff",
+        ),
+    ),
+    "P0EFTJanusCommonPairedD9U1SymbolComplex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def commonPairedD9AfterBRSTVariation",
+            "theorem commonPairedD9AfterBRSTVariation_u1Ghost_zero",
+            "theorem ghostPrincipalSymbol_commonPairedD9AfterBRST_zero",
+            "theorem commonPairedD9_u1Symbol_projections",
+        ),
+    ),
+    "P0EFTJanusCommonPairedD9OrdinaryThroatGhostNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ordinaryThroatQuadraticGhostBRST",
+            "theorem throatGhostLieBracket_self_zero",
+            "theorem ordinaryThroatQuadraticGhostBRST_eq_zero",
+            "theorem commonPairedD9LinearBRST_diffeomorphism_pointwise",
+            "theorem no_nontrivial_ordinaryThroatQuadraticGhostBRST",
+        ),
+    ),
+    "P0EFTJanusCommonD8GradedGhostPacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CommonD8GradedGhostPacket",
+            "def commonD8GradedGhostDifferential",
+            "theorem commonD8GradedGhostDifferential_square_zero",
+            "def commonD8GradedQuadraticGhostPacket",
+            "theorem commonD8GradedQuadraticGhostPacket_diffeomorphism",
+            "theorem commonD8GradedQuadraticGhostPacket_square_zero",
+        ),
+    ),
+    "P0EFTJanusCompleteVariationGaugeFunctionalTypeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GaugeVariationPair",
+            "def completeVariationGaugeDirection",
+            "def completeVariationGaugeActionCurve",
+            "def completeVariationGaugeHessian",
+            "theorem completeVariationGaugeDirection_on_independent",
+            "theorem completeVariationGaugeDirection_on_gaugeOnly",
+            "theorem completeVariationGaugeActionCurve_on_gaugeOnly",
+            "theorem completeVariationGaugeHessian_on_gaugeOnly",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphPermutationFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def permuteSmoothD8Frame",
+            "theorem norm_comp_fin_equiv",
+            "theorem norm_comp_fintype_equiv",
+            "def permutationUniformSmoothFrameChange",
+            "def permutationUniformSmoothFrameChangeBack",
+            "theorem constantMatrixAction_norm_le_card",
+            "structure ConstantOrthogonalFrameChange",
+            "def constantOrthogonalUniformSmoothFrameChange",
+            "def constantOrthogonalUniformSmoothFrameChangeBack",
+            "def permutationH1GraphEquiv",
+            "theorem permutationH1GraphEquiv_smooth",
+            "def constantOrthogonalH1GraphEquiv",
+            "theorem constantOrthogonalH1GraphEquiv_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusEquatorialTubularCoverInjectivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def EquatorialTubularParameter",
+            "def equatorialTubularMap",
+            "theorem equatorialTubularMap_normal_inverse",
+            "theorem equatorialTubularMap_injective",
+            "theorem equatorialTubularMap_deck_reflection",
+            "def equatorialTubularNormalInverse",
+            "def equatorialTubularTailInverse",
+            "theorem equatorialTubularNormalInverse_map",
+            "theorem equatorialTubularTailInverse_map",
+            "def equatorialTubularReconstructCoordinates",
+            "theorem equatorialTubularReconstructCoordinates_map",
+            "theorem equatorialTubularNormalInverse_reflection",
+            "def RawSphericalTubularBand",
+            "def rawEquatorialTubularNormalInverse",
+            "theorem rawEquatorialTubularNormalInverse_contDiffOn",
+            "theorem rawEquatorialTubularNormalInverse_continuousOn",
+            "theorem equatorialTubularNormalInverse_continuous",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularRawInverseSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def rawEquatorialTubularTailInverse",
+            "theorem rawEquatorialTubularTailInverse_contDiffOn",
+            "theorem rawEquatorialTubularTailInverse_continuousOn",
+            "theorem rawEquatorialTubularInverse_contDiffOn",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularRangeEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def EquatorialTubularImage",
+            "def equatorialTubularMapToImage",
+            "theorem equatorialTubularMapToImage_injective",
+            "def equatorialTubularEquivImage",
+            "theorem equatorialTubularEquivImage_symm_normal",
+            "theorem equatorialTubularEquivImage_symm_tail",
+            "theorem equatorialTubularEquivImage_inverse_pair",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularHomeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem equatorialTubularMap_continuous",
+            "theorem equatorialTubularTailInverse_continuousOnImage",
+            "theorem equatorialTubularEquivImage_symm_continuous",
+            "def equatorialTubularHomeomorphImage",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularOpenEmbedding4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def EquatorialSphericalBand",
+            "def equatorialBandNormal",
+            "def equatorialBandBase",
+            "theorem equatorialTubularMap_equatorialBandParameter",
+            "theorem equatorialTubularImage_eq_band",
+            "theorem equatorialTubularImage_isOpen",
+            "theorem equatorialTubularMap_openEmbedding",
+        ),
+    ),
+    "P0EFTJanusLatitudeCutoffCurrentZeroExtensionPrerequisite4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutoffCollarScalarCurrentDensity_contDiff",
+            "theorem cutoffCollarScalarCurrentDensity_eq_zero_of_one_le_abs",
+            "theorem support_cutoffCollarScalarCurrentDensity_subset",
+            "theorem tsupport_cutoffCollarScalarCurrentDensity_subset",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentHalfCollarStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutoffCollarScalarCurrentDensity_boundary_zero",
+            "theorem intervalIntegral_cutoffCurrentDivergence_eq_neg_throatFlux",
+            "theorem productHalfCollarIntegral_cutoffCurrentDivergence_eq_neg_throatFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryFirstSheetCurrentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBoundaryFirstLift",
+            "theorem cutBoundaryScalarCurrent_firstLift",
+            "theorem measuredScalarGreenCurrent_zero_eq_firstSheetIntegral",
+            "theorem productHalfCollarIntegral_eq_neg_firstSheetBoundaryCurrent",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBoundaryTwoSheetOrientedCurrentIntegral4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBoundarySecondLift",
+            "def firstSheetOrientedScalarCurrent",
+            "def secondSheetOrientedScalarCurrent",
+            "theorem secondSheetOrientedScalarCurrent_eq_first",
+            "def twoSheetOrientedScalarCurrentIntegral",
+            "theorem twoSheetOrientedScalarCurrentIntegral_eq_two_mul_first",
+            "theorem two_mul_productHalfCollarIntegral_eq_neg_twoSheetOrientedCurrent",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkScalarCurrentCover",
+            "theorem continuous_cutBulkScalarCurrentCover",
+            "theorem cutBulkScalarCurrentCover_invariant",
+            "def cutBulkScalarCurrent",
+            "theorem continuous_cutBulkScalarCurrent",
+            "theorem cutBulkScalarCurrent_cutBoundaryInclusion",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentOpenCapSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCapScalarCurrentCover",
+            "def smoothCutBulkOpenCapScalarCurrent",
+            "theorem smoothCutBulkOpenCapScalarCurrent_contMDiff",
+            "theorem smoothCutBulkOpenCapScalarCurrent_eq_bulk",
+            "theorem cutBulkScalarCurrent_intrinsicOpenCap_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentOpenCollarSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkScalarCurrentCollarCover",
+            "theorem cutBulkScalarCurrentCollarCover_contMDiff",
+            "theorem cutBulkScalarCurrent_finiteCollar_contMDiff",
+            "theorem cutBulkScalarCurrent_openCollar_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenAtlasGlobalLocalDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutOpenCollarAttachmentPartialDiffeomorph",
+            "def cutBulkOpenCapInclusionPartialDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkScalarCurrent_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkLatitudeGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCapLatitudeCover",
+            "def smoothCutBulkOpenCapLatitude",
+            "theorem cutBulkLatitudeCoordinate_intrinsicOpenCap_contMDiff",
+            "theorem cutBulkLatitudeCoordinate_openCollar_contMDiff",
+            "theorem cutBulkLatitudeCoordinate_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCutoffGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkLatitudeCoordinate_le_one",
+            "def cutBulkCanonicalCutoff",
+            "theorem cutBulkCanonicalCutoff_canonicalLatitudeCutBulkCollarMap",
+            "theorem cutBulkCanonicalCutoff_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCutoffCollarDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkCanonicalCutoff_canonicalCollarFiber_hasDerivAt",
+            "theorem deriv_cutBulkCanonicalCutoff_canonicalCollarFiber",
+            "theorem cutBulkCanonicalCutoff_canonicalCollar_base_independent",
+            "theorem cutBulkCanonicalCutoff_fixedNormalBaseCurve_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkToAmbientOpenCollarSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkToAmbientCollarCover",
+            "theorem cutBulkToAmbientCollarCover_contMDiff",
+            "theorem cutBulkToAmbient_finiteCollar_contMDiff",
+            "theorem cutBulkToAmbient_openCollar_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkToAmbientOpenCapSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkOpenCapToAmbientCover",
+            "def smoothCutBulkOpenCapToAmbient",
+            "theorem smoothCutBulkOpenCapToAmbient_contMDiff",
+            "theorem cutBulkToAmbient_intrinsicOpenCap_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkToAmbientGlobalSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullback4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_mdifferentiable",
+            "def cutBulkAmbientTensorPullback",
+            "theorem cutBulkAmbientTensorPullback_apply",
+            "theorem cutBulkAmbientTensorPullback_symmetric",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullbackLorentz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def CutBulkDerivativeIsomorphismAt",
+            "def CutBulkFiberIsNondegenerate",
+            "def CutBulkFiberIsLorentzian",
+            "theorem cutBulkAmbientTensorPullback_nondegenerate",
+            "theorem cutBulkAmbientTensorPullback_lorentzian",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCapAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem smoothCutBulkOpenCapToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalCapDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_derivative_isomorphism_on_openCap",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarNormalDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarNormalDerivativeEquiv",
+            "theorem cutCollarNormalDerivativeEquiv_coe",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarCoverNormalExtensionDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def signedCutCollarModelWithCorners",
+            "def cutCollarCoverNormalExtension",
+            "theorem cutCollarCoverNormalExtension_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarTubularNormalLift4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarTubularNormalLift",
+            "theorem cutCollarTubularNormalLift_contMDiff",
+            "theorem cutCollarTubularNormalLift_derivative_isomorphism",
+            "def cutCollarTubularParameterLift",
+            "theorem cutCollarTubularParameterLift_contMDiff",
+            "theorem cutCollarTubularParameterLift_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarTubularSphereDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarTubularSphereMap",
+            "theorem cutCollarTubularSphereMap_contMDiff",
+            "theorem cutCollarTubularSphereMap_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarTubularSpacetimeDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarTimeReassociation",
+            "def cutCollarTubularSpacetimeMap",
+            "theorem cutCollarTubularSpacetimeMap_contMDiff",
+            "theorem cutCollarTubularSpacetimeMap_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusTubularBandToAmbientCoverDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def tubularBandSpacetimeToAmbientCover",
+            "theorem tubularBandSpacetimeToAmbientCover_isLocalDiffeomorph",
+            "theorem tubularBandSpacetimeToAmbientCover_derivative_isomorphism",
+            "def tubularBandSpacetimeToAmbient",
+            "theorem tubularBandSpacetimeToAmbient_isLocalDiffeomorph",
+            "theorem tubularBandSpacetimeToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarProductToAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarProductToAmbient",
+            "theorem cutCollarProductToAmbient_contMDiff",
+            "theorem cutCollarProductToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutCollarCoverToAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarCoverToAmbient",
+            "theorem cutCollarCoverToAmbient_contMDiff",
+            "theorem cutCollarCoverToAmbient_derivative_isomorphism",
+            "theorem cutCollarCoverToAmbient_eq_existing",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkFiniteCollarAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutCollarCoverProjection",
+            "theorem cutCollarCoverProjection_isLocalDiffeomorph",
+            "def cutBulkFiniteCollarToAmbient",
+            "theorem cutBulkFiniteCollarToAmbient_contMDiff",
+            "theorem cutBulkFiniteCollarToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkOpenCollarAmbientDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutThroatOpenCollar_val_isLocalDiffeomorph",
+            "def cutBulkOpenCollarToAmbient",
+            "theorem cutBulkOpenCollarToAmbient_contMDiff",
+            "theorem cutBulkOpenCollarToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalCollarDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_derivative_isomorphism_at_openCollarAttachment",
+            "theorem cutBulkToAmbient_derivative_isomorphism_on_openCollar",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGlobalDerivativeIsomorphism4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_derivative_isomorphism",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullbackGlobalLorentz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkAmbientTensorPullback_nondegenerate_global",
+            "theorem cutBulkAmbientTensorPullback_lorentzian_global",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientTensorPullbackSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CutBulkSmoothCovariantTwoTensor",
+            "structure CutBulkSmoothSymmetricCovariantTwoTensor",
+            "theorem cutBulkAmbientTensorPullback_contMDiff",
+            "def cutBulkAmbientSmoothTensorPullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkAmbientSmoothGeneralLorentzMetric4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkToAmbientDerivativeEquiv",
+            "theorem cutBulkToAmbientDerivativeEquiv_coe",
+            "def cutBulkAmbientPullbackMusical",
+            "theorem cutBulkAmbientPullbackMusical_apply",
+            "structure CutBulkSmoothGeneralLorentzMetric",
+            "def cutBulkAmbientSmoothGeneralLorentzMetricPullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothInverseMusical4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CutBulkSmoothVectorField",
+            "abbrev CutBulkSmoothCovectorField",
+            "def cutBulkInverseMetricSharp",
+            "def cutBulkSmoothInverseMusical",
+            "theorem cutBulkSmoothInverseMusical_apply",
+            "theorem cutBulkSmoothInverseMusical_flat",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkMetricVolumeDensityNaturality4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkMetricGramMatrix",
+            "def cutBulkMetricVolumeDensity",
+            "def cutBulkAmbientFramePullback",
+            "theorem cutBulkMetricGramMatrix_ambientPullback",
+            "theorem cutBulkMetricGramDeterminant_ambientPullback",
+            "theorem cutBulkMetricVolumeDensity_ambientPullback",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkIntrinsicMetricVolumeDensity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkSmoothGeneralLorentzMetric",
+            "def intrinsicCutBulkPointwiseFrame",
+            "theorem intrinsicCutBulkMetricVolumeDensity_eq_ambient",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGradient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure CutBulkSmoothScalarField",
+            "def cutBulkSmoothScalarPullback",
+            "theorem cutBulkSmoothScalarPullback_apply",
+            "def cutBulkSmoothScalarDifferential",
+            "theorem cutBulkSmoothScalarDifferential_apply",
+            "theorem cutBulkSmoothScalarDifferential_pullback",
+            "def cutBulkSmoothScalarGradient",
+            "theorem cutBulkSmoothScalarGradient_flat",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGreenCurrent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkSmoothScalarGreenCurrent",
+            "theorem cutBulkSmoothScalarGreenCurrent_apply",
+            "theorem cutBulkSmoothScalarGreenCurrent_flat",
+            "def intrinsicCutBulkSmoothScalarGreenCurrent",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffScalarGreenCurrent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCutBulkSmoothCutoffScalarGreenCurrent",
+            "theorem intrinsicCutBulkSmoothCutoffScalarGreenCurrent_apply",
+            "theorem intrinsicCutBulkSmoothCutoffScalarGreenCurrent_canonicalNormalFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenNormalDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkSmoothCutoffGreenNormalFlux",
+            "theorem canonicalCutBulkSmoothCutoffGreenNormalFlux_eq_scalarCurrent",
+            "theorem canonicalCutBulkSmoothCutoffGreenNormalFlux_hasDerivAt",
+            "theorem deriv_canonicalCutBulkSmoothCutoffGreenNormalFlux",
+            "def canonicalCutBulkSmoothCutoffGreenNormalDivergenceDensity",
+            "theorem canonicalCutBulkSmoothCutoffGreenNormalDivergenceDensity_eq_genuine",
+            "def cutBulkSmoothCutoffGreenNormalDivergenceMeasure",
+            "theorem cutBulkSmoothCutoffGreenNormalDivergenceMeasure_eq_genuine",
+            "theorem two_mul_cutBulkSmoothCutoffGreenNormalDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricDensitizedDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricFlux_hasDerivAt",
+            "theorem deriv_canonicalCutBulkSmoothCutoffGreenMetricFlux",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_eq_jacobian_correction",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_eq_weightedCutoffDerivative_mul_flux_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_eq_joint",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricDensitizedDivergence_integrable",
+            "theorem intervalIntegral_metricDensitizedDivergence_eq_neg_throatFlux",
+            "theorem productHalfCollarIntegral_metricDensitizedDivergence_eq_neg_throatFlux",
+            "def cutBulkSmoothCutoffGreenMetricDivergenceMeasure",
+            "theorem cutBulkSmoothCutoffGreenMetricDivergenceMeasure_univ",
+            "theorem two_mul_cutBulkSmoothCutoffGreenMetricDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricNormalDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalPositiveLatitudeWeight_pos_of_mem_Icc",
+            "def canonicalCutBulkSmoothCutoffGreenMetricNormalDivergence",
+            "theorem canonicalPositiveLatitudeWeight_mul_metricNormalDivergence",
+            "theorem canonicalCutBulkSmoothCutoffGreenMetricNormalDivergence_eq_of_euler",
+            "def cutBulkSmoothCutoffGreenMetricNormalDivergenceMeasure",
+            "theorem cutBulkSmoothCutoffGreenMetricNormalDivergenceMeasure_eq_metric",
+            "theorem two_mul_cutBulkSmoothCutoffGreenMetricNormalDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothCutoffGreenMetricTangentialCompensation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkSmoothCutoffGreenMetricTangentialCompensation",
+            "theorem metricNormalDivergence_add_tangentialCompensation_eq_cutoffGradientFlux_of_euler",
+            "theorem metricDensitizedDivergence_add_weightedTangentialCompensation_eq_weightedCutoffGradientFlux_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkMetricMeasureDomination4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkToAmbient_canonicalLatitudeCutBulkCollarMap",
+            "theorem map_cutBulkCanonicalCollarMeasure_toAmbient",
+            "theorem map_cutBulkCanonicalCollarMeasure_le_intrinsicLorentzVolume",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGreenCurrentCollarFlux4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem cutBulkSmoothScalarDifferential_pullback_inverseDerivative",
+            "theorem intrinsicCutBulkSmoothScalarGreenCurrent_flux_inverseDerivative",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkSmoothScalarGreenCurrentCanonicalNormalFlux4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicCutBulkSmoothScalarGreenCurrent_canonicalNormalFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCutoffGreenCurrentNormalFluxBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkIntrinsicGreenNormalFlux",
+            "theorem canonicalCutBulkIntrinsicGreenNormalFlux_eq_greenCurrent",
+            "theorem cutBulkScalarCurrent_canonicalCollarPath_eq_cutoff_mul_intrinsicFlux",
+            "theorem cutoff_mul_canonicalCutBulkIntrinsicGreenNormalFlux_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGenuineGreenCurrentMeasuredStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalMeasuredCutBulkIntrinsicGreenNormalFlux",
+            "theorem canonicalMeasuredCutBulkIntrinsicGreenNormalFlux_eq_greenCurrent",
+            "theorem productHalfCollarIntegral_cutoffDivergence_eq_neg_genuineFlux",
+            "theorem twoSheetOrientedScalarCurrentIntegral_eq_two_mul_genuineFlux",
+            "theorem two_mul_cutBulkCanonicalDivergenceMeasure_univ_eq_neg_genuineFlux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkGenuineGreenNormalDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalCutBulkGenuineGreenNormalDivergenceDensity",
+            "theorem canonicalCutBulkGenuineGreenNormalDivergenceDensity_eq_canonical",
+            "def cutBulkGenuineGreenNormalDivergenceMeasure",
+            "theorem cutBulkGenuineGreenNormalDivergenceMeasure_eq_canonical",
+            "theorem two_mul_cutBulkGenuineGreenNormalDivergenceMeasure_univ_eq_neg_flux",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkEqualMassEulerGreenNormalDivergence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalCutBulkGenuineGreenNormalDivergenceDensity_eq_cutoffDerivative_mul_flux_of_euler",
+            "theorem canonicalCutBulkGenuineGreenNormalDivergenceDensity_eq_zero_of_euler",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentCollarCoordinateBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBulkCollarLift",
+            "theorem cutBulkScalarCurrent_canonicalCollarLift",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentNormalDivergenceBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBulkCollarPath",
+            "theorem cutBulkScalarCurrent_canonicalCollarPath",
+            "theorem cutBulkScalarCurrent_canonicalCollarPath_hasDerivAt",
+            "theorem deriv_cutBulkScalarCurrent_canonicalCollarPath",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkScalarCurrentCanonicalStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem productCanonicalCollarIntegral_deriv_globalCurrent_eq_neg_boundary",
+            "theorem two_mul_productCanonicalCollarIntegral_deriv_globalCurrent_eq_neg_boundary",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCollarMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeCutBulkCollarMap",
+            "def cutBulkCanonicalCollarMeasure",
+            "theorem integral_cutBulkCanonicalCollarMeasure",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonicalCutBulkDivergenceDensity_integrable",
+            "def cutBulkCanonicalDivergenceMeasure",
+            "theorem cutBulkCanonicalDivergenceMeasure_univ",
+            "theorem two_mul_cutBulkCanonicalDivergenceMeasure_univ_eq_neg_boundary",
+        ),
+    ),
+    "P0EFTJanusCanonicalLatitudeScalarCurrentJointSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def jointCanonicalLatitudeValue",
+            "theorem jointCanonicalLatitudeValue_contMDiff",
+            "def jointCanonicalLatitudeDerivative",
+            "theorem jointCanonicalLatitudeDerivative_contMDiff",
+            "def jointCutoffCollarScalarCurrentDensity",
+            "theorem jointCutoffCollarScalarCurrentDensity_contMDiff",
+            "theorem jointCutoffCollarScalarCurrentDensity_eq",
+            "theorem jointCutoffCollarScalarCurrentDensity_eq_zero_of_one_le_abs",
+            "theorem jointCutoffCollarScalarCurrentDensity_eventuallyEq_zero",
+        ),
+    ),
+    "P0EFTJanusCanonicalLatitudeScalarCurrentJointDivergenceSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def jointCutoffCollarScalarCurrentDivergence",
+            "theorem jointCutoffCollarScalarCurrentDivergence_contMDiff",
+            "theorem jointCutoffCollarScalarCurrentDivergence_eq",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularAmbientInverseJointSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equatorialSphericalBandOpen",
+            "def unitThreeSphereRawCoordinates",
+            "theorem unitThreeSphereRawCoordinates_contMDiff",
+            "def equatorialTubularAmbientInverse",
+            "theorem equatorialTubularAmbientInverse_eq",
+            "theorem equatorialTubularAmbientInverse_contMDiff",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularTailSphereJointSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equatorialTubularTailEuclidean",
+            "theorem equatorialTubularTailEuclidean_contMDiff",
+            "theorem equatorialTubularTailEuclidean_mem_sphere",
+            "def equatorialTubularTailSphere",
+            "theorem equatorialTubularTailSphere_contMDiff",
+            "def equatorialTubularTailEquatorial",
+            "theorem equatorialTubularTailEquatorial_contMDiff",
+            "theorem equatorialTubularTailEquatorial_eq_bandBase",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equatorialTubularNormalOpen",
+            "def equatorialTubularNormalSmooth",
+            "theorem equatorialTubularNormalSmooth_contMDiff",
+            "def equatorialTubularSmoothInverse",
+            "theorem equatorialTubularSmoothInverse_contMDiff",
+            "def equatorialTubularSmoothMap",
+            "theorem equatorialTubularSmoothMap_contMDiff",
+            "theorem equatorialTubularSmoothMap_inverse",
+            "theorem equatorialTubularSmoothInverse_map",
+            "def equatorialTubularDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusEquatorialBandScalarCurrentJointSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equatorialBandCanonicalParameter",
+            "theorem equatorialBandCanonicalParameter_contMDiff",
+            "def equatorialBandScalarCurrentDensity",
+            "theorem equatorialBandScalarCurrentDensity_contMDiff",
+        ),
+    ),
+    "P0EFTJanusEquatorialBandScalarCurrentZeroExtension4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equatorialSphericalBandSpacetimeOpen",
+            "def equatorialBandSpacetimeParameter",
+            "theorem equatorialBandSpacetimeParameter_contMDiff",
+            "def equatorialBandSpacetimeScalarCurrentDensity",
+            "theorem equatorialBandSpacetimeScalarCurrentDensity_contMDiff",
+            "def equatorialBandScalarCurrentZeroExtension",
+            "theorem equatorialBandScalarCurrentZeroExtension_eq_on_band",
+            "theorem one_lt_abs_arcsin_of_sin_one_lt_abs",
+            "theorem equatorialBandScalarCurrentDensity_eq_zero_of_sin_one_lt_abs",
+            "theorem equatorialBandScalarCurrentZeroExtension_eq_on_spacetime_band",
+            "theorem equatorialBandScalarCurrentZeroExtension_contMDiff",
+            "theorem equatorialBandScalarCurrentZeroExtension_eq_zero_of_sin_one_lt_abs",
+            "theorem support_equatorialBandScalarCurrentZeroExtension_subset_spatialCylinder",
+        ),
+    ),
+    "P0EFTJanusEquatorialBandScalarCurrentDeckTwist4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalLatitudeBaseDeckGenerator",
+            "def canonicalLatitudeParameterDeckGenerator",
+            "theorem canonicalLatitudeAnchor_deck_generator",
+            "theorem canonicalLatitudeValue_deck_generator",
+            "theorem canonicalLatitudeDerivative_deck_generator",
+            "theorem jointCutoffCollarScalarCurrentDensity_deck_generator",
+            "theorem equatorialTubularSmoothInverse_reflection",
+            "theorem equatorialBandCanonicalParameter_deck_generator",
+            "theorem equatorialBandScalarCurrentDensity_deck_generator",
+            "theorem equatorialBandScalarCurrentZeroExtension_deck_generator",
+            "structure SmoothAmbientNormalSignLift",
+            "theorem SmoothAmbientNormalSignLift.deck_sign",
+            "structure AmbientNormalSignCover",
+            "def ambientNormalSignLineProjection",
+            "def ambientNormalSignOrbitSection",
+            "theorem ambientNormalSignOrbitSection_isSection",
+            "def equatorialBandScalarCurrentNormalSignLift",
+            "def equatorialBandScalarCurrentNormalSignSection",
+            "theorem equatorialBandScalarCurrentNormalSignSection_isSection",
+            "theorem equatorialBandScalarCurrentZeroExtension_eq_zero_of_scalarDeckInvariant",
+        ),
+    ),
+    "P0EFTJanusEquatorialBandScalarCurrentSmoothSignBundle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ambientSignBundleBaseSet",
+            "def ambientSignTransitionWinding",
+            "def ambientNormalSignVectorBundleCore",
+            "theorem ambientNormalSignFiber_isVectorBundle",
+            "theorem ambientNormalSignVectorBundleCore_isContMDiff",
+            "theorem ambientNormalSignFiber_isContMDiffVectorBundle",
+            "def ambientNormalSignBundleEquivOrbitLine",
+            "theorem ambientNormalSignBundleEquivOrbitLine_projection",
+            "def ambientNormalSignBundleSection",
+            "theorem ambientNormalSignBundleSection_localTriv",
+            "theorem ambientNormalSignBundleSection_contMDiff",
+            "theorem ambientNormalSignBundleToOrbit_section",
+            "def ambientNormalSignSmoothSection",
+            "def equatorialBandScalarCurrentSmoothSignSection",
+            "theorem equatorialBandScalarCurrentSmoothSection_toOrbit",
+            "theorem equatorialBandScalarCurrentSmoothSignSection_localTriv",
+        ),
+    ),
+    "P0EFTJanusEquatorialTubularDiffeomorph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def equatorialTubularNormalOpen",
+            "def equatorialTubularNormalSmooth",
+            "theorem equatorialTubularNormalSmooth_contMDiff",
+            "def equatorialTubularSmoothInverse",
+            "theorem equatorialTubularSmoothInverse_contMDiff",
+            "def equatorialTubularSmoothMap",
+            "theorem equatorialTubularSmoothMap_contMDiff",
+            "theorem equatorialTubularSmoothMap_inverse",
+            "theorem equatorialTubularSmoothInverse_map",
+            "def equatorialTubularDiffeomorph",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphSmoothOrthogonalFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothOrthogonalFrameChange",
+            "def smoothOrthogonalUniformFrameChange",
+            "def smoothOrthogonalUniformFrameChangeBack",
+            "def smoothOrthogonalH1GraphEquiv",
+            "theorem smoothOrthogonalH1GraphEquiv_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphSmoothGLFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothGLFrameChange",
+            "theorem smoothMatrix_exists_uniform_entry_bound",
+            "theorem smoothMatrixUniformEntryBound_nonneg",
+            "theorem smoothMatrix_le_uniformEntryBound",
+            "theorem matrixAction_norm_le_card_mul",
+            "def smoothGLUniformFrameChange",
+            "def smoothGLUniformFrameChangeBack",
+            "def smoothGLH1GraphEquiv",
+            "theorem smoothGLH1GraphEquiv_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusTangentZeroSectionSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem tangentZeroSection_contMDiff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphRedundantFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def appendZeroSmoothD8Frame",
+            "def appendZeroUniformFrameChange",
+            "def appendZeroUniformFrameChangeBack",
+            "def appendZeroH1GraphEquiv",
+            "theorem appendZeroH1GraphEquiv_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphFiniteZeroRedundancy4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def appendZeroGenerators",
+            "theorem appendZeroGenerators_add",
+            "def appendZeroGeneratorsH1GraphEquiv",
+            "theorem appendZeroGeneratorsH1GraphEquiv_smooth",
+            "theorem appendZeroGeneratorsH1GraphEquiv_coherent_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusH1GraphDuplicateGenerator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def duplicateGeneratorFrame",
+            "def duplicateGeneratorForward",
+            "def duplicateGeneratorBack",
+            "def duplicateGeneratorH1GraphEquiv",
+            "theorem duplicateGeneratorH1GraphEquiv_smooth",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalH1FunctionQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CanonicalPhysicalScalarL2",
+            "def smoothCanonicalPhysicalScalarL2",
+            "def canonicalPhysicalH1ToL2",
+            "abbrev CanonicalPhysicalScalarH1FunctionQuotient",
+            "def canonicalPhysicalScalarH1FunctionQuotientCompleteSpace",
+            "def canonicalH1FunctionQuotientMap",
+            "def canonicalH1FunctionQuotientToL2",
+            "theorem canonicalH1FunctionQuotientToL2_mk",
+            "theorem canonicalH1FunctionQuotientToL2_injective",
+            "def smoothToCanonicalH1FunctionQuotient",
+            "theorem smoothToCanonicalH1FunctionQuotient_denseRange",
+            "theorem canonicalH1FunctionQuotientToL2_agrees_on_smooth",
+            "def CanonicalH1TraceDescendsToFunctionQuotient",
+            "def CanonicalH1FunctionQuotientTraceExists",
+            "def canonicalH1FunctionQuotientTrace",
+            "theorem canonicalH1FunctionQuotientTrace_agrees_on_smooth",
+            "theorem canonicalH1FunctionQuotientTraceExists_iff",
+            "theorem canonical_h1_function_quotient_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalH1TraceFunctionQuotientDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem unitNormal_point_trace_sq_le_scaled",
+            "theorem smoothCanonicalPhysicalTrace_interpolated_bound",
+            "theorem canonicalPhysicalH1ToL2_agrees_on_smooth",
+            "theorem canonicalPhysicalH1TraceRadialPolar_interpolated_bound",
+            "theorem canonicalPhysicalH1ToL2_ker_le_trace_ker",
+            "theorem canonicalH1TraceDescendsToFunctionQuotient_radialPolar",
+        ),
+    ),
+    "P0EFTJanusEuclideanWeightedLocalFormalAdjoint4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def weightedCoordinateFormalAdjoint",
+            "theorem integral_weighted_fderiv_eq_formalAdjoint",
+            "theorem integral_weighted_fderiv_eq_weighted_formalAdjoint",
+        ),
+    ),
+    "P0EFTJanusMappingTorusLocalScalarGradientDifferentialBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem localScalarGradient_eq_scalarDifferential_frame",
+            "theorem frameDerivative_eq_weight_mul_localScalarGradient_of_vectorAt_eq",
+            "theorem finiteTangentGeneratorOpenPatch_eq_chartAt_source",
+            "theorem finiteTangentGeneratorLocalVector_eq_chartAt_inverseDerivative",
+            "theorem finiteFrameDerivative_eq_weight_mul_localScalarGradient_of_chartAt",
+            "theorem scalarDifferential_eq_sum_frameCoordinate_mul_localScalarGradient",
+            "theorem finiteFrameDerivative_eq_weight_mul_sum_localScalarGradient",
+            "theorem exists_holonomicPatch_finiteFrameDerivative_eq_localGradientSum",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalH1WeakEulerDirichletBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev SmoothHomogeneousDirichletScalarTest",
+            "def CanonicalH1FunctionQuotientDirichletDomain",
+            "theorem smooth_dirichlet_mem_functionQuotientDirichletDomain",
+            "theorem functionQuotientDirichletDomain_le_traceKernel",
+            "def CanonicalH1DirichletGlobalScalarStationary",
+            "def SatisfiesCanonicalH1DirichletWeakScalarEquation",
+            "theorem canonicalH1DirichletGlobalScalarStationary_iff_weakEuler",
+            "theorem canonicalH1Dirichlet_actualHessian_eq_jacobi",
+            "theorem canonicalH1Dirichlet_actualHessian_symmetric",
+            "theorem canonical_h1_weak_euler_dirichlet_bridge4D",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutoffCollarScalarCurrentDensity",
+            "def cutoffCollarScalarCurrentDensitizedDivergence",
+            "theorem cutoffCollarScalarCurrentDensity_hasDerivAt",
+            "theorem cutoffCollarScalarCurrentDensity_boundary_neg_one",
+            "theorem cutoffCollarScalarCurrentDensity_boundary_one",
+            "theorem intervalIntegral_cutoffCollarScalarCurrentDivergence_eq_zero",
+            "theorem productCollarIntegral_cutoffCurrentDivergence_eq_zero",
+        ),
+    ),
+    "P0EFTJanusFinitePartitionDensitizedCurrentGluing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finite_partition_derivative_cancellation",
+            "theorem finite_partition_weighted_current_hasDerivAt",
+            "theorem finite_partition_densitized_leibniz_cancellation",
+            "theorem finite_partition_glued_current_hasDerivAt",
+            "theorem finite_partition_glued_current_eq_current",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLRobinLLExactTaylorReducedFredholm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLCurve_robinLL_exact_taylor_reducedFredholm",
+            "theorem fullMatterRobinTrueLLCurve_robinLL_second_iteratedDeriv",
+            "theorem fullMatterRobinTrueLLCurve_robinLL_third_iteratedDeriv",
+            "theorem fullMatterRobinTrueLLCurve_robinLL_fourth_iteratedDeriv",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLMixedCoefficientActiveQuotientDerivatives4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem representativeEulerCurve_hasDerivAt_mixedTaylorCoefficient",
+            "theorem mixedTaylorCoefficient_eq_activeQuotientHessian",
+            "theorem swappedRepresentativeEulerCurve_hasDerivAt_mixedTaylorCoefficient",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveFiniteNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroActiveDirection",
+            "theorem fullMatterRobinTrueLLCurve_eq_base_of_activeProjection_zero",
+            "theorem fullMatterRobinTrueLLCurve_inactive_hasDerivAt_zero",
+            "theorem fullMatterRobinTrueLLEuler_eq_zero_of_activeProjection_zero",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveHessianKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalMatterRobinFullLLHessian_inactive_left",
+            "theorem globalMatterRobinFullLLHessian_inactive_right",
+        ),
+    ),
+    "P0EFTJanusThroatLinearOperationsZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatPTPullback_zero",
+            "theorem ptAverage_zero",
+            "theorem throatFrameDerivative_zero",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveMixedDerivatives4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem mixedTaylorCoefficient_eq_zero_of_inactive_first",
+            "theorem mixedTaylorCoefficient_eq_zero_of_inactive_second",
+            "theorem representativeEulerCurve_hasDerivAt_zero_of_inactive_first",
+            "theorem representativeEulerCurve_hasDerivAt_zero_of_inactive_second",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullLLFirstVariationZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroLLVariation",
+            "def zeroFullDirection",
+            "theorem smoothThroatField_zero_apply",
+            "theorem llFirstVariationDensity_zero",
+            "theorem differentialLLKineticFirstVariation_zero",
+            "theorem ptSymmetricDifferentialLLKineticFirstVariation_zero",
+            "theorem globalPTLLFirstVariation_zero",
+            "theorem globalPTFullLLFirstVariation_zero",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveQuotientD9Kernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientHessian_eq_zero_of_inactive_first",
+            "theorem quotientHessian_eq_zero_of_inactive_second",
+            "theorem enrichedD9ActiveHessian_eq_zero_of_inactive_first",
+            "theorem enrichedD9ActiveHessian_eq_zero_of_inactive_second",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullLLEulerTaylorZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullLLEuler_zero",
+            "theorem integrated_taylor_coefficient_one_zero",
+            "theorem globalPTFullLLTaylorEuler_zero",
+            "theorem truePTAction_zeroCurve_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusIntegratedPTFullLLHigherTaylorZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem differentialLLFullCurve_zero",
+            "theorem truePTAction_zeroCurve_constant",
+            "theorem fullLLHessian_zero_diagonal",
+            "theorem integrated_taylor_coefficient_two_zero",
+            "theorem globalPTFullLLTaylorCubic_zero",
+            "theorem globalPTFullLLTaylorQuartic_zero",
+            "theorem truePTAction_zeroDirection_exact_taylor",
+        ),
+    ),
+    "P0EFTJanusFullLLMixedZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullLLHessian_zero_left",
+            "theorem fullLLHessian_zero_right",
+            "theorem zeroEulerAlong_hasDerivAt_zero",
+            "theorem EulerAlong_zeroDirection_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusFullLLZeroActiveQuotientEnrichedD94D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem activeProjection_zeroFullDirection",
+            "theorem quotientHessian_zeroLLClass_left",
+            "theorem quotientHessian_zeroLLClass_right",
+            "theorem enrichedD9ActiveHessian_zeroLLObservation_left",
+            "theorem enrichedD9ActiveHessian_zeroLLObservation_right",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveFirstOrderQuotientD94D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientEuler_eq_zero_of_inactive",
+            "theorem fullMatterRobinTrueLLTaylorC1_eq_zero_of_inactive",
+            "theorem enrichedD9ActiveEuler_eq_zero_of_inactive",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveDiagonalOrderTwo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullMatterRobinTrueLLTaylorC2_eq_zero_of_inactive",
+            "theorem quotientHessian_diagonal_eq_zero_of_inactive",
+            "theorem enrichedD9ActiveHessian_diagonal_eq_zero_of_inactive",
+            "theorem fullMatterRobinTrueLLCurve_second_iteratedDeriv_eq_zero_of_inactive",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveOrdersThreeFour4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem inactive_llField_eq_zero",
+            "theorem inactive_llAuxMetric_eq_zero",
+            "theorem inactive_llMeasure_eq_zero",
+            "theorem fullMatterRobinTrueLLCurve_third_iteratedDeriv_eq_zero_of_inactive",
+            "theorem fullMatterRobinTrueLLCurve_fourth_iteratedDeriv_eq_zero_of_inactive",
+            "theorem globalPTFullLLTaylorCubic_eq_zero_of_inactive",
+            "theorem globalPTFullLLTaylorQuartic_eq_zero_of_inactive",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveExactTaylor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem inactive_exactTaylor_coefficients_and_action",
+            "theorem inactive_exactTaylor_iteratedDeriv_one_to_four",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveCharacterization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroActiveQuotientClass",
+            "theorem activeProjection_zero_iff_class_zero",
+            "theorem activeProjection_zero_iff_enrichedD9_reading_zero",
+            "theorem inactive_projection_class_enrichedD9_characterization",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLPureGaugeInactive4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pureGaugeFullDirection",
+            "theorem pureGaugeFullDirection_realizes_common_gaugeOnly",
+            "theorem pureGaugeFullDirection_activeProjection_zero",
+            "theorem pureGaugeFullDirection_matterRobinLL_action_constant",
+            "theorem pureGaugeFullDirection_matterRobinLL_Euler_zero",
+            "theorem pureGaugeFullDirection_matterRobinLL_Hessian_zero_left",
+            "theorem pureGaugeFullDirection_matterRobinLL_Hessian_zero_right",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLPureGaugeSectorialCertificate4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem pureGauge_sectorial_quotient_D9_Taylor_certificate",),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLGaugeTranslationInvariance4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def addPureGauge",
+            "theorem addPureGauge_activeProjection",
+            "theorem addPureGauge_activeQuotientClass",
+            "theorem addPureGauge_enrichedD9_activeReading",
+            "theorem addPureGauge_sectorial_curve",
+            "theorem addPureGauge_TaylorC1",
+            "theorem addPureGauge_TaylorC2",
+            "theorem addPureGauge_sectorial_curve_function",
+            "theorem addPureGauge_iteratedDeriv_one_to_four",
+            "theorem addPureGauge_TaylorCubic",
+            "theorem addPureGauge_TaylorQuartic",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLFourInactiveTranslations4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def fourInactiveDirection",
+            "def addFourInactive",
+            "theorem addFourInactive_activeProjection",
+            "theorem addFourInactive_activeQuotientClass",
+            "theorem addFourInactive_D9_activeReading",
+            "theorem addFourInactive_curve",
+            "theorem addFourInactive_curve_function",
+            "theorem addFourInactive_C1",
+            "theorem addFourInactive_C2",
+            "theorem addFourInactive_iteratedDeriv_one_to_four",
+            "theorem addFourInactive_C3_C4",
+            "theorem addFourInactive_Hessian_three_slots",
+            "theorem addFourInactive_mixedTaylorCoefficient_three_slots",
+            "theorem addFourInactive_representativeEuler_mixedDerivatives_three_slots",
+            "theorem addFourInactive_quotientHessian_three_slots",
+            "theorem addFourInactive_enrichedD9ActiveHessian_three_slots",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveProjectionKernelStructure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActiveProjectionKernelData",
+            "def kernelDataToFull",
+            "theorem kernelDataToFull_activeProjection_zero",
+            "def fullToKernelData",
+            "theorem inactive_full_eq_kernelDataToFull",
+            "theorem activeProjection_zero_iff_free_components",
+            "def activeProjectionKernelEquiv",
+        ),
+    ),
+    "P0EFTJanusGhostAuxiliaryTranslationInvariance4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def addGhost",
+            "def addAuxiliary",
+            "theorem addGhost_activeProjection",
+            "theorem addAuxiliary_activeProjection",
+            "theorem addGhost_quotient",
+            "theorem addAuxiliary_quotient",
+            "theorem addGhost_D9",
+            "theorem addAuxiliary_D9",
+            "theorem addGhost_sectorial_curve",
+            "theorem addAuxiliary_sectorial_curve",
+            "theorem addGhost_C1",
+            "theorem addAuxiliary_C1",
+            "theorem addGhost_C2",
+            "theorem addAuxiliary_C2",
+            "theorem addGhost_curve_function",
+            "theorem addAuxiliary_curve_function",
+            "theorem addGhost_iteratedDeriv_one_to_four",
+            "theorem addAuxiliary_iteratedDeriv_one_to_four",
+            "theorem addGhost_C3",
+            "theorem addAuxiliary_C3",
+            "theorem addGhost_C4",
+            "theorem addAuxiliary_C4",
+        ),
+    ),
+    "P0EFTJanusGhostAuxiliaryMixedTranslationInvariance4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem addGhost_mixed_first",
+            "theorem addGhost_mixed_second",
+            "theorem addAuxiliary_mixed_first",
+            "theorem addAuxiliary_mixed_second",
+            "theorem addGhost_hessian_first",
+            "theorem addGhost_hessian_second",
+            "theorem addAuxiliary_hessian_first",
+            "theorem addAuxiliary_hessian_second",
+            "theorem addGhost_eulerMixed_first",
+            "theorem addGhost_eulerMixed_second",
+            "theorem addAuxiliary_eulerMixed_first",
+            "theorem addAuxiliary_eulerMixed_second",
+        ),
+    ),
+    "P0EFTJanusGhostAuxiliaryMixedQuotientD9Translation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotient_addGhost_first",
+            "theorem quotient_addGhost_second",
+            "theorem quotient_addGhost_both",
+            "theorem quotient_addAuxiliary_first",
+            "theorem quotient_addAuxiliary_second",
+            "theorem quotient_addAuxiliary_both",
+            "theorem d9_addGhost_first",
+            "theorem d9_addGhost_second",
+            "theorem d9_addGhost_both",
+            "theorem d9_addAuxiliary_first",
+            "theorem d9_addAuxiliary_second",
+            "theorem d9_addAuxiliary_both",
+        ),
+    ),
+    "P0EFTJanusGhostFullDirectionPairedD9SymbolBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ghostFullDirection_d9U1Ghost",
+            "theorem ghostFullDirection_pairedD9Coordinate",
+            "theorem ghostFullDirection_pairedD9Symbol",
+            "theorem ghostFullDirection_pairedD9Symbol_eq_zero_iff",
+            "theorem ghostFullDirection_pairedD9Symbol_zero",
+            "theorem ghostFullDirection_zeroModeClass_representative",
+            "theorem ghostFullDirection_zeroModeClass_eq_zero_iff",
+            "theorem ghostFullDirection_pairedD9SymbolInverse_recovers",
+            "theorem ghostFullDirection_pairedD9Coordinate_mem_range",
+            "theorem ghostFullDirection_pairedD9CokernelClass_zero",
+        ),
+    ),
+    "P0EFTJanusPureGaugeFullDirectionD9SymbolBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem pureGaugeFullDirection_d9GaugeOneForm",
+            "theorem pureGaugeFullDirection_d9GaugeSymbol",
+            "theorem pureGaugeFullDirection_d9GaugeSymbol_eq_zero_iff",
+            "def d9GaugeSymbolInverse",
+            "theorem pureGaugeFullDirection_d9GaugeSymbolInverse_recovers",
+            "theorem pureGaugeFullDirection_d9GaugeReading_in_image",
+            "theorem pureGaugeFullDirection_d9GaugeSymbol_zero",
+            "theorem d9GaugeSymbol_zero_kernel_total",
+            "theorem d9GaugeSymbol_zero_image_iff",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9SymbolBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroD9GaugeGhostCoordinate",
+            "def d9GaugeGhostBlockSymbol",
+            "def d9GaugeGhostBlockInverse",
+            "theorem d9GaugeGhostBlockSymbol_formula",
+            "theorem d9GaugeGhostBlockInverse_left",
+            "theorem d9GaugeGhostBlockInverse_right",
+            "theorem d9GaugeGhostBlockSymbol_eq_zero_iff",
+            "theorem d9GaugeGhostBlockSymbol_surjective",
+            "theorem d9GaugeGhostBlockSymbol_zero",
+            "theorem d9GaugeGhostBlockSymbol_zero_image_iff",
+            "def fullGaugeGhostD9Reading",
+            "theorem fullGaugeGhostD9Reading_symbol_formula",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveProjectionFibers4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def inactiveDifferenceData",
+            "theorem activeProjection_eq_iff_subDirection_inactive",
+            "theorem subDirection_inactive_iff_four_differences",
+            "theorem activeProjection_fiber_iff_four_differences",
+            "theorem activeProjection_eq_iff_activeQuotientClass_eq",
+            "theorem activeQuotientClass_eq_iff_subDirection_four_differences",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroKernelData",
+            "def addKernelData",
+            "def inactiveTranslate",
+            "theorem inactiveTranslate_zero",
+            "theorem inactiveTranslate_add",
+            "theorem inactiveTranslate_activeProjection",
+            "def SameInactiveTranslationOrbit",
+            "theorem sameInactiveTranslationOrbit_iff_activeProjection_eq",
+            "theorem sameInactiveTranslationOrbit_iff_activeQuotientClass_eq",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationInvariants4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem inactiveTranslate_eq_addFourInactive",
+            "theorem inactiveTranslate_curve_and_derivatives",
+            "theorem inactiveTranslate_Euler_C1_C2",
+            "theorem inactiveTranslate_C3_C4",
+            "theorem inactiveTranslate_Hessian_quotient_D9",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def inactiveTranslationSetoid",
+            "def inactiveTranslationMk",
+            "def inactiveTranslationQuotientToActiveDirection",
+            "def inactiveTranslationQuotientEquivActiveDirection",
+            "def inactiveTranslationQuotientEquivActiveQuotient",
+            "theorem inactiveTranslation_projection_commutes_activeDirection",
+            "theorem inactiveTranslation_projection_commutes_activeQuotient",
+        ),
+    ),
+    "P0EFTJanusFullLLHessianKernelSymmetry4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def InLeftKernel",
+            "def InRightKernel",
+            "theorem inLeftKernel_iff_inRightKernel",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientKernelReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientHessian_eq_activeHessian_equiv",
+            "theorem quotientHessian_leftKernel_iff_activeHessian_leftKernel",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientEulerReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem quotientEuler_eq_activeEuler_equiv",),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientStationarity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientEuler_stationary_iff_activeEuler_stationary",
+            "theorem representativeEulerCurve_hasDerivAt_activeHessian",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientTwoSidedKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotientHessian_rightKernel_iff_activeHessian_rightKernel",
+            "theorem quotientHessian_leftKernel_iff_rightKernel",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientReducedFredholmPairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def robinLLActiveQuotientDirection",
+            "theorem quotientHessian_robinLL_eq_reducedJacobi_pairing",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLActiveQuotientReducedKernelImage4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem reducedJacobi_kernel_annihilates_quotient_robinLL_image",),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9Hessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def enrichedD9ActiveHessian",
+            "theorem enrichedD9ActiveHessian_activeEmbedding",
+            "theorem fullHessian_eq_enrichedD9ActiveHessian",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9Euler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def enrichedD9ActiveEuler",
+            "theorem enrichedD9ActiveEuler_activeEmbedding",
+            "theorem trueEuler_eq_enrichedD9ActiveEuler",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9EulerHessianTriangle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem representativeEulerCurve_hasDerivAt_enrichedD9ActiveHessian",),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9Stationarity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem trueEuler_stationary_iff_enrichedD9ActiveEuler_stationary",
+            "theorem enrichedD9ActiveEuler_eq_of_toActiveDirection_eq",
+            "theorem enrichedD9ActiveEuler_independent_of_inactive_components",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9HessianCongruence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem enrichedD9ActiveHessian_congr_left",
+            "theorem enrichedD9ActiveHessian_congr_right",
+            "theorem inactive_components_kernel_left",
+            "theorem inactive_components_kernel_right",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9ActiveQuotientBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def enrichedD9ActiveQuotientClass",
+            "theorem activeQuotientEquiv_enrichedD9ActiveQuotientClass",
+            "theorem quotientHessian_enrichedD9_classes",
+            "theorem quotientEuler_enrichedD9_class",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9ReducedFredholmPairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem enrichedD9_robinLL_Hessian_eq_reducedJacobi_pairing",),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9EulerFredholmTriangle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem representativeEulerCurve_hasDerivAt_reducedJacobi_pairing_on_robinLL",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLGlobalMatterEnrichedD9ReducedKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem reducedJacobi_kernel_annihilates_enrichedD9_robinLL_observations",),
+    ),
+    "P0EFTJanusMappingTorusScalarRobinJunctionL2FullSupportInjection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem smoothThroatFieldToL2_injective_of_fullSupport",),
+    ),
+    "P0EFTJanusCommonMatterRobinLLReducedKernelFullSupportRobin4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem reducedJacobi_shared_kernel_robin_eq_zero_of_fullSupport",),
+    ),
+    "P0EFTJanusMappingTorusCanonicalRobinL2Injection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem smoothThroatFieldToCanonicalL2_injective",),
+    ),
+    "P0EFTJanusCommonMatterRobinLLReducedKernelCanonicalRobin4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem reducedJacobi_canonical_shared_kernel_robin_eq_zero",),
+    ),
+    "P0EFTJanusCommonMatterRobinLLReducedKernelCanonicalSharedInclusion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem reducedJacobi_canonical_shared_inclusion_kernel_components",),
+    ),
+    "P0EFTJanusMappingTorusLLH1SmoothEmbeddingKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem llH1SmoothEmbedding_injective",
+            "theorem llH1SmoothEmbedding_eq_zero_iff",
+            "theorem llH1SmoothEmbedding_eq_zero_consequences",
+        ),
+    ),
+    "P0EFTJanusMatterRobinFullLLCanonicalReducedKernelD9Reading4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        ("theorem reducedJacobi_canonical_kernel_robin_ll_and_D9_reading_zero",),
+    ),
+    "P0EFTJanusMatterRobinFullLLCanonicalKernelActiveQuotientZero4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem canonical_reducedJacobi_kernel_activeQuotient_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_quotientHessian_eq_zeroClass",
+            "theorem canonical_reducedJacobi_kernel_quotientEuler_eq_zeroClass",
+            "theorem zeroRobinLLClass_quotientHessian_eq_zero",
+            "theorem zeroRobinLLClass_quotientEuler_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_quotientHessian_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_quotientEuler_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_enrichedD9ActiveHessian_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_enrichedD9ActiveEuler_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_TaylorC1_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_TaylorC2_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_trueCurve_hasDerivAt_zero",
+            "theorem canonical_reducedJacobi_kernel_trueCurve_second_iteratedDeriv_eq_zero",
+            "theorem canonical_reducedJacobi_kernel_higherLL_and_curve_constant",
+            "theorem canonical_reducedJacobi_robinLL_kernel_iff",
+            "theorem canonical_robinLL_activeQuotient_eq_zero_iff",
+            "theorem canonical_reducedJacobi_robinLL_kernel_iff_activeQuotient_zero",
+            "def canonicalSmoothRobinLLInclusionLinear",
+            "def canonicalSmoothRobinLLJacobiLinear",
+            "theorem canonicalSmoothRobinLLJacobiLinear_injective",
+            "theorem canonicalSmoothRobinLLJacobiLinear_ker_eq_bot",
+            "def canonicalSmoothRobinLLJacobiRangeEquiv",
+            "theorem canonicalSmoothRobinLLJacobiRangeEquiv_apply_coe",
+            "theorem canonicalSmoothRobinLLJacobiRangeEquiv_surjective",
+            "theorem canonicalSmoothRobinLLJacobiRangeEquiv_inverse_exact",
+            "theorem pureMetric_sectorial_active_class_and_D9_zero",
+            "theorem pureMetric_sectorial_C1_C2_C3_C4_and_derivatives_zero",
+            "def addPureMetric",
+            "theorem addPureMetric_activeProjection",
+            "theorem addPureMetric_activeQuotientClass",
+            "theorem addPureMetric_enrichedD9_activeReading",
+            "theorem addPureMetric_sectorial_curve",
+            "theorem addPureMetric_TaylorC1",
+            "theorem addPureMetric_TaylorC2",
+            "theorem addPureMetric_TaylorC3_C4",
+            "theorem addPureMetric_iteratedDeriv",
+            "theorem addPureMetric_iteratedDeriv_orders_one_to_four",
+            "theorem addPureMetric_mixedTaylorCoefficient_and_Hessian",
+            "theorem addPureMetric_mixedEulerDerivatives",
+            "theorem addPureMetric_quotientHessian_slots",
+            "theorem addPureMetric_enrichedD9ActiveHessian_slots",
+            "theorem canonicalSmoothRobinLL_quotientHessian_eq_operatorPairing",
+            "def canonicalSmoothRobinLLJacobiRangePullbackForm",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_eq_range_inner",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_kernel_iff",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_symmetric",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_nonneg",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_posDef",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_nondegenerate_bilateral",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_exact_blocks",
+            "theorem canonicalSmoothRobinLLJacobiRangePullbackForm_diagonal_graphNorm",
+            "theorem completedRobinLLJacobi_blocks_bounded",
+            "theorem completedRobinLLJacobi_pairing_bound",
+            "def completedRobinLLJacobiPairingBilinear",
+            "def completedRobinLLJacobiPairingContinuous",
+            "theorem completedRobinLLJacobiPairingContinuous_apply",
+            "theorem completedRobinLLJacobiPairingContinuous_bound",
+            "theorem completedRobinLLJacobiPairingContinuous_symmetric",
+            "theorem completedRobinLLJacobiPairingContinuous_nonneg",
+            "theorem completedRobinLLJacobiPairingContinuous_diagonal_graphNorm",
+            "theorem completedRobinLLJacobiPairingContinuous_diagonal_zero_iff",
+            "theorem completedRobinLLJacobiPairingContinuous_radical_iff",
+            "theorem completedRobinLLJacobiPairingContinuous_rightRadical_iff",
+            "theorem completedRobinLLJacobiPairingContinuous_bilateralRadical_iff",
+            "def completedRobinLLJacobiBlockLinear",
+            "def completedRobinLLJacobiRadical",
+            "theorem mem_completedRobinLLJacobiRadical_iff",
+            "def completedRobinLLJacobiQuotientEquivRange",
+            "theorem mem_completedRobinLLJacobiBlockLinear_range_iff",
+            "def completedRobinLLJacobiQuotientPairing",
+            "theorem completedRobinLLJacobiQuotientPairing_mk",
+            "theorem completedRobinLLJacobiQuotientPairing_symmetric",
+            "theorem completedRobinLLJacobiQuotientPairing_nondegenerate",
+            "theorem completedRobinLLJacobiQuotientPairing_diagonal_rangeGraphNorm",
+            "theorem completedRobinLLJacobiQuotientPairing_nonneg",
+            "theorem completedRobinLLJacobiQuotientPairing_diagonal_zero_iff",
+            "def completedRobinLLJacobiQuotientGraphNorm",
+            "theorem completedRobinLLJacobiQuotientPairing_cauchySchwarz",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_nonneg",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_sq",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_eq_zero_iff",
+            "theorem completedRobinLLJacobiQuotientPairing_smul_smul",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_smul",
+            "theorem completedRobinLLJacobiQuotientPairing_add_diagonal",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_add_le",
+            "def completedRobinLLJacobiQuotientGraphSeminorm",
+            "theorem completedRobinLLJacobiQuotientGraphSeminorm_apply",
+            "theorem completedRobinLLJacobiQuotientGraphSeminorm_eq_zero_iff",
+            "abbrev CompletedRobinLLJacobiGraphNormedQuotient",
+            "def completedRobinLLJacobiQuotientGraphAddGroupNorm",
+            "abbrev completedRobinLLJacobiQuotientGraphNormedAddCommGroup",
+            "theorem completedRobinLLJacobiQuotientGraphNormed_norm_eq",
+            "def completedRobinLLJacobiGraphNormedPairing",
+            "theorem completedRobinLLJacobiGraphNormedPairing_bound",
+            "theorem completedRobinLLJacobiGraphNormedPairing_symmetric",
+            "theorem completedRobinLLJacobiQuotientPairing_neg_second",
+            "theorem completedRobinLLJacobiQuotientPairing_sub_diagonal",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_parallelogram",
+            "theorem completedRobinLLJacobiQuotientPairing_polarization",
+            "def CompletedRobinLLJacobiQuotientOrthogonal",
+            "theorem completedRobinLLJacobiQuotientOrthogonal_symmetric",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_pythagorean_add",
+            "theorem completedRobinLLJacobiQuotientGraphNorm_pythagorean_sub",
+            "theorem completedRobinLLJacobiQuotientPairing_add_left",
+            "theorem completedRobinLLJacobiQuotientPairing_smul_left",
+            "def completedRobinLLJacobiQuotientOrthogonalSubmodule",
+            "theorem mem_completedRobinLLJacobiQuotientOrthogonalSubmodule_iff",
+            "theorem completedRobinLLJacobiQuotient_self_mem_orthogonal_iff",
+            "theorem completedRobinLLJacobiQuotientOrthogonalSubmodule_zero",
+            "def completedRobinLLJacobiQuotientSubmoduleOrthogonal",
+            "theorem completedRobinLLJacobiQuotientSubmoduleOrthogonal_antitone",
+            "theorem iInf_completedRobinLLJacobiQuotientOrthogonalSubmodule_eq_bot",
+            "theorem completedRobinLLJacobiQuotientOrthogonalSubmodule_lt_top",
+            "def completedRobinLLJacobiQuotientSubmoduleDoubleOrthogonal",
+            "theorem completedRobinLLJacobiQuotientSubmodule_le_doubleOrthogonal",
+            "theorem completedRobinLLJacobiQuotient_span_le_doubleOrthogonal",
+            "theorem completedRobinLLJacobiQuotientSubmoduleOrthogonal_top",
+            "theorem completedRobinLLJacobiQuotientSubmoduleOrthogonal_galois",
+            "theorem completedRobinLLJacobiQuotientSubmodule_tripleOrthogonal",
+            "theorem completedRobinLLJacobiQuotientSubmodule_doubleOrthogonal_idempotent",
+            "def CompletedRobinLLJacobiQuotientSubmoduleIsOrthogonallyClosed",
+            "theorem completedRobinLLJacobiQuotient_orthogonal_isOrthogonallyClosed",
+            "theorem completedRobinLLJacobiQuotient_doubleOrthogonal_isOrthogonallyClosed",
+            "theorem completedRobinLLJacobiQuotient_doubleOrthogonal_le_of_le_closed",
+            "theorem completedRobinLLJacobiQuotientSubmodule_doubleOrthogonal_monotone",
+            "def completedRobinLLJacobiQuotientOrthogonalClosureOperator",
+            "theorem completedRobinLLJacobiQuotientOrthogonalClosureOperator_isClosed_iff",
+            "theorem completedRobinLLJacobiQuotientSubmoduleOrthogonal_bot",
+            "theorem completedRobinLLJacobiQuotientOrthogonalClosureOperator_bot",
+            "theorem completedRobinLLJacobiQuotientOrthogonalClosureOperator_top",
+            "theorem completedRobinLLJacobiQuotient_iInf_isOrthogonallyClosed",
+            "def completedRobinLLJacobiQuotientClosedISup",
+            "theorem completedRobinLLJacobiQuotientClosedISup_isOrthogonallyClosed",
+            "theorem completedRobinLLJacobiQuotient_le_closedISup",
+            "theorem completedRobinLLJacobiQuotientClosedISup_le_of_closed_upperBound",
+            "def completedRobinLLJacobiQuotientClosedSup",
+            "theorem completedRobinLLJacobiQuotientClosedSup_comm",
+            "theorem completedRobinLLJacobiQuotient_inf_isOrthogonallyClosed",
+            "theorem completedRobinLLJacobiQuotientClosedSup_inf_absorb",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9SymbolCokernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def packGaugeGhostCoordinate",
+            "def d9GaugeGhostBlockLinearSymbol",
+            "theorem packGaugeGhostCoordinate_symbol",
+            "theorem d9GaugeGhostBlockLinearSymbol_range_nonzero",
+            "theorem d9GaugeGhostBlockLinearSymbol_range_zero",
+            "theorem d9GaugeGhostBlockLinearSymbol_ker_nonzero",
+            "theorem d9GaugeGhostBlockLinearSymbol_ker_zero",
+            "def d9GaugeGhostBlockCokernelProjection",
+            "theorem d9GaugeGhostBlockCokernelClass_zero",
+            "theorem d9GaugeGhostBlockCokernel_eq_zero",
+            "def d9GaugeGhostZeroCokernelEquiv",
+            "theorem fullGaugeGhostD9Reading_cokernel_nonzero",
+            "theorem fullGaugeGhostD9Reading_zeroCokernel_representative",
+            "theorem d9GaugeGhostBlock_nonzero_pointwise_exactness",
+            "theorem d9GaugeGhostBlock_zero_pointwise_cohomology",
+            "theorem fullGaugeGhostD9Reading_zero_mem_kernel",
+            "theorem fullGaugeGhostD9Reading_pointwise_regimes",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationDescents4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def inactiveQuotientEuler",
+            "def inactiveQuotientC1",
+            "def inactiveQuotientHessian",
+            "def inactiveQuotientC2",
+            "def inactiveQuotientCurve",
+            "theorem inactiveQuotientEuler_mk",
+            "theorem inactiveQuotientC1_mk",
+            "theorem inactiveQuotientHessian_mk",
+            "theorem inactiveQuotientC2_mk",
+            "theorem inactiveQuotientCurve_mk",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationHigherDescents4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def inactiveQuotientC3",
+            "def inactiveQuotientC4",
+            "def inactiveQuotientIteratedDerivative",
+            "theorem inactiveQuotientC3_mk",
+            "theorem inactiveQuotientC4_mk",
+            "theorem inactiveQuotientIteratedDerivative_mk",
+            "theorem inactiveQuotientIteratedDerivative_one_to_four_mk",
+            "theorem inactiveQuotientCurve_exact_taylor",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationStationarityHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def inactiveQuotientStationary",
+            "theorem inactiveQuotientStationary_iff_fullEuler",
+            "theorem inactiveQuotientHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationHessianKernels4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem inactiveQuotientHessian_eq_activeHessian",
+            "theorem inactiveQuotientHessian_eq_activeQuotientHessian",
+            "theorem inactiveQuotientHessian_leftKernel_iff_activeHessian_leftKernel",
+            "theorem inactiveQuotientHessian_rightKernel_iff_activeHessian_rightKernel",
+            "theorem inactiveQuotientHessian_leftKernel_iff_rightKernel",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationNondegeneracy4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem inactiveQuotientStationary_iff_activeEuler",
+            "def inactiveQuotientHessianLeftNondegenerate",
+            "def activeHessianLeftNondegenerate",
+            "theorem inactiveQuotientHessianLeftNondegenerate_iff_active",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveTranslationTwoSidedNondegeneracy4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def inactiveQuotientHessianRightNondegenerate",
+            "def activeHessianRightNondegenerate",
+            "theorem inactiveQuotientHessianLeftNondegenerate_iff_right",
+            "theorem activeHessianLeftNondegenerate_iff_right",
+            "theorem inactiveQuotientHessianRightNondegenerate_iff_active",
+            "def inactiveQuotientHessianTwoSidedNondegenerate",
+            "def activeHessianTwoSidedNondegenerate",
+            "theorem inactiveQuotientHessianTwoSidedNondegenerate_iff_active",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveToActiveQuotientNondegeneracy4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroActiveQuotient",
+            "def activeQuotientHessianLeftNondegenerate",
+            "def activeQuotientHessianRightNondegenerate",
+            "theorem activeQuotientHessianLeftNondegenerate_iff_active",
+            "theorem activeQuotientHessianRightNondegenerate_iff_active",
+            "def activeQuotientHessianTwoSidedNondegenerate",
+            "theorem inactiveQuotientHessianLeftNondegenerate_iff_activeQuotient",
+            "theorem inactiveQuotientHessianRightNondegenerate_iff_activeQuotient",
+            "theorem inactiveQuotientHessianTwoSidedNondegenerate_iff_activeQuotient",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLInactiveToActiveQuotientStationarity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def activeQuotientEuler",
+            "def activeQuotientStationary",
+            "theorem inactiveQuotientEuler_eq_activeQuotientEuler",
+            "theorem inactiveQuotientStationary_iff_activeQuotientStationary",
+            "def inactiveQuotientCritical",
+            "def activeQuotientCritical",
+            "theorem inactiveQuotientCritical_iff_activeQuotientCritical",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientTaylor4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def activeQuotientCurve",
+            "def toInactive",
+            "theorem toInactive_mk",
+            "def activeQuotientC1",
+            "def activeQuotientC2",
+            "def activeQuotientC3",
+            "def activeQuotientC4",
+            "theorem activeQuotientCurve_mk",
+            "theorem activeQuotientC1_mk",
+            "theorem activeQuotientC2_mk",
+            "theorem activeQuotientC3_mk",
+            "theorem activeQuotientC4_mk",
+            "theorem activeQuotientCurve_exact_taylor",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLActiveQuotientDerivatives4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def activeQuotientIteratedDerivative",
+            "theorem activeQuotientIteratedDerivative_mk",
+            "theorem activeQuotientIteratedDerivative_normalized_one_to_four",
+            "theorem activeQuotientC1_eq_Euler",
+            "theorem activeQuotientC2_eq_half_Hessian",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9GaugeGhostBlock_zero_cokernel_finrank_decomposition",
+            "theorem d9GaugeGhostBlock_zero_pointwiseEuler_decomposition",
+            "theorem fullGaugeGhostD9Reading_zero_section_gauge",
+            "theorem fullGaugeGhostD9Reading_zero_section_ghost",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeDirectSum4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroCokernelGaugeInclusion",
+            "def zeroCokernelGhostInclusion",
+            "def zeroCokernelGaugeProjection",
+            "def zeroCokernelGhostProjection",
+            "theorem zeroCokernelGaugeProjection_inclusion",
+            "theorem zeroCokernelGhostProjection_inclusion",
+            "theorem zeroCokernelGaugeProjection_ghostInclusion",
+            "theorem zeroCokernelGhostProjection_gaugeInclusion",
+            "theorem zeroCokernel_gauge_add_ghost",
+            "theorem zeroCokernel_gauge_ghost_sum_eq_zero_iff",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeDirectSumEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroCokernelToGaugeGhost",
+            "def gaugeGhostToZeroCokernel",
+            "theorem zeroCokernelToGaugeGhost_apply",
+            "theorem gaugeGhostToZeroCokernel_apply",
+            "theorem zeroCokernelToGaugeGhost_left_inverse",
+            "theorem zeroCokernelToGaugeGhost_right_inverse",
+            "def zeroCokernelGaugeGhostDirectSumEquiv",
+            "theorem zeroCokernelGaugeGhostDirectSumEquiv_apply",
+            "theorem zeroCokernelGaugeGhostDirectSumEquiv_symm_apply",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9PointwiseShortSequence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9GaugeGhostBlock_pointwise_exact_at_coordinate",
+            "theorem d9GaugeGhostBlock_pointwise_quotient_surjective",
+            "def d9GaugeGhostBlockLinearSymbolInverse",
+            "theorem d9GaugeGhostBlockLinearSymbolInverse_left",
+            "theorem d9GaugeGhostBlockLinearSymbolInverse_right",
+            "theorem d9GaugeGhostBlock_nonzero_pointwise_split_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9ZeroModeShortSequence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9GaugeGhostBlock_zero_exact_at_source",
+            "theorem d9GaugeGhostBlock_zero_exact_at_coordinate",
+            "theorem d9GaugeGhostBlock_zero_exact_at_cokernel",
+            "def d9GaugeGhostBlockZeroCokernelSection",
+            "theorem d9GaugeGhostBlockZeroCokernelSection_right",
+            "theorem d9GaugeGhostBlockZeroCokernelSection_left",
+            "theorem d9GaugeGhostBlock_zero_short_sequence_certificate",
+            "theorem fullGaugeGhostD9Reading_zero_section_recovers",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9PointwiseDichotomy4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullGaugeGhostD9Reading_pointwise_dichotomy",
+            "theorem d9GaugeGhostBlock_zero_cokernel_finrank",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9PointwiseFinrank4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9GaugeGhostBlock_nonzero_ker_finrank",
+            "theorem d9GaugeGhostBlock_nonzero_range_finrank",
+            "theorem d9GaugeGhostBlock_nonzero_cokernel_finrank",
+            "theorem d9GaugeGhostBlock_zero_ker_finrank",
+            "theorem d9GaugeGhostBlock_zero_range_finrank",
+            "theorem d9GaugeGhostBlock_zero_cokernel_finrank",
+            "theorem d9GaugeGhostBlock_pointwise_rank_nullity",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9PointwiseCohomologyIndex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9GaugeGhostBlock_pointwise_cokernel_finrank_dichotomy",
+            "def d9GaugeGhostBlockPointwiseIndex",
+            "theorem d9GaugeGhostBlock_pointwise_index_zero",
+            "theorem d9GaugeGhostBlock_pointwise_homology_index_certificate",
+            "theorem fullGaugeGhostD9Reading_pointwise_index_and_regime",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9PointwiseEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9GaugeGhostBlockPointwiseEuler",
+            "theorem d9GaugeGhostBlockPointwiseEuler_eq_cokernel_finrank",
+            "theorem d9GaugeGhostBlock_nonzero_pointwiseEuler",
+            "theorem d9GaugeGhostBlock_zero_pointwiseEuler",
+            "def d9GaugeGhostBlockZeroCompletedEuler",
+            "theorem d9GaugeGhostBlock_zero_completedEuler",
+            "theorem d9GaugeGhostBlock_nonzero_pointwiseEuler_stable",
+        ),
+    ),
+    "P0EFTJanusGhostAuxiliaryInactiveSectorNoether4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ghostFullDirection",
+            "def auxiliaryFullDirection",
+            "theorem fullVariation_ghostFullDirection",
+            "theorem fullVariation_auxiliaryFullDirection",
+            "theorem activeProjection_ghostFullDirection",
+            "theorem activeProjection_auxiliaryFullDirection",
+            "theorem ghost_sector_curve_constant",
+            "theorem auxiliary_sector_curve_constant",
+            "theorem ghost_sector_euler_zero",
+            "theorem auxiliary_sector_euler_zero",
+            "theorem ghost_sector_hessian_zero",
+            "theorem auxiliary_sector_hessian_zero",
+        ),
+    ),
+    "P0EFTJanusGhostAuxiliaryInactiveExactCertificates4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ghostFullDirection_certificate",
+            "theorem auxiliaryFullDirection_certificate",
+        ),
+    ),
+    "P0EFTJanusFullMatterRobinTrueLLPureMetricInactive4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pureMetricFullDirection",
+            "theorem pureMetricFullDirection_realizes_common_metricOnly",
+            "theorem pureMetricFullDirection_activeProjection_zero",
+            "theorem pureMetricFullDirection_sectorial_action_constant",
+            "theorem pureMetricFullDirection_sectorial_Euler_zero",
+            "theorem pureMetricFullDirection_sectorial_Hessian_zero_left",
+            "theorem pureMetricFullDirection_sectorial_Hessian_zero_right",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLD9Visibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9VisibleVariation",
+            "theorem d9VisibleVariation_eq_iff_common_eq",
+            "theorem d9VisibleVariation_robin_invisible",
+            "theorem d9_blocks_robin_invisible",
+            "theorem enrichedCommonVariation_ne_of_robin_ne",
+        ),
+    ),
+    "P0EFTJanusCommonMatterRobinLLD9ReconstructionObstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def zeroRobinDirection",
+            "def unitRobinDirection",
+            "theorem zeroRobinDirection_ne_unitRobinDirection",
+            "theorem zero_unit_Robin_same_d9_projection",
+            "theorem no_global_leftInverse_from_current_d9_projection",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierCompatibilityHelmholtzBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFourierCurvaturePairing",
+            "theorem finiteFourierCurvaturePairing_symmetric",
+            "def finiteFourierSaintVenantBridge",
+            "theorem finiteFourierLorentzGram_is_compatible",
+            "theorem finiteFourierSaintVenant_restricted_helmholtz",
+            "theorem finiteFourierGaugePairing_helmholtz",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierCompatibilityQuotientPairing.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFourierCompatibilitySetoid",
+            "def quotientSaintVenant",
+            "theorem quotientSaintVenant_injective",
+            "def quotientCompatibilityPairing",
+            "theorem quotientCompatibilityPairing_mk",
+            "theorem quotientCompatibilityPairing_symmetric",
+            "theorem quotient_mk_lorentzGram_eq_zero",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierCompatibilityQuotientSeparation.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem quotient_eq_iff_saintVenant_eq",
+            "theorem quotientSaintVenant_eq_zero_iff",
+            "theorem quotientCompatibilityPairing_separates",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierCompatibilityQuotientImageEquiv.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def quotientSaintVenantToImage",
+            "theorem quotientSaintVenantToImage_mk",
+            "theorem range_quotientSaintVenant_eq_range_saintVenant",
+            "theorem quotientSaintVenantToImage_bijective",
+            "def quotientSaintVenantImageEquiv",
+            "theorem quotientSaintVenantImageEquiv_apply",
+        ),
+    ),
+    "P0EFTJanusFiniteFourierCompatibilityImagePairing.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def saintVenantImagePairing",
+            "theorem saintVenantImagePairing_eq_curvaturePairing",
+            "theorem saintVenantImagePairing_mk",
+            "theorem saintVenantImagePairing_symmetric",
+            "theorem saintVenantImagePairing_separates",
         ),
     ),
     "P0EFTJanusMappingTorusGlobalHolonomicScalarStaticH1Fredholm4D.lean": (
@@ -5090,6 +10383,32 @@ PROGRAM_P_GATES = {
             "theorem coverAmbientDerivative_latitudeNormal",
             "theorem coverAmbientDerivative_latitudeNormal_ne_zero",
             "theorem coverLatitudeNormalVector_ne_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusStableRadialTangentTrivialization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def stableRadialTangentMap",
+            "theorem stableRadialTangentMap_injective",
+            "def stableRadialTangentEquiv",
+        ),
+    ),
+    "P0EFTJanusMappingTorusGenuineStableRadialTangentTrivialization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def genuineStableRadialTangentEquiv",
+            "theorem genuineStableRadialTangentEquiv_apply",
+            "theorem genuineStableRadialTangentEquiv_latitudeNormal",
+            "theorem genuineStableRadialTangentEquiv_deckGenerator",
+            "theorem genuineStableRadialTangentEquiv_deckWinding",
+        ),
+    ),
+    "P0EFTJanusMappingTorusStableRadialReferenceConjugacy4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def stableRadialReferenceEquiv",
+            "theorem stableRadialReferenceEquiv_referenceVector",
+            "theorem stableRadialReferenceEquiv_conjugation",
         ),
     ),
     "P0EFTJanusMappingTorusIntrinsicCanonicalLatitudeNormalLorentz4D.lean": (
@@ -5500,6 +10819,88 @@ PROGRAM_P_GATES = {
             "theorem independentFieldsBRSTPair_differential",
         ),
     ),
+    "P0EFTJanusMappingTorusAbelianGaugeGlobalZeroMode4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "noncomputable local instance effectiveQuotientConnectedSpace",
+            "theorem effectiveQuotient_nonempty",
+            "private theorem realField_isLocallyConstant_of_mvfderiv_eq_zero",
+            "theorem exactGaugePotential_eq_zero_iff_exists_constant",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAbelianGaugeGlobalH04D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalAbelianGaugeZeroMode",
+            "def constantGhost",
+            "theorem exactGaugePotential_constantGhost",
+            "def globalAbelianGaugeZeroModeEquiv",
+            "def globalAbelianGaugeZeroModeLinearEquiv",
+            "def globalAbelianGaugeZeroModeRealPairEquiv",
+            "def globalAbelianGaugeZeroModeRealPairLinearEquiv",
+        ),
+    ),
+    "P0EFTJanusCommonPairedD9GlobalAbelianH04D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev CommonPairedD9GlobalAbelianGhost",
+            "abbrev CommonPairedD9GlobalAbelianGhostZeroMode",
+            "theorem commonPairedD9LinearBRSTDifferential_potentials_eq_zero_iff_constants",
+            "private def pairedZeroModeProductLinearEquiv",
+            "def commonPairedD9GlobalAbelianGhostZeroModeLinearEquiv",
+            "def commonPairedD9GlobalAbelianGhostZeroModeEquiv",
+        ),
+    ),
+    "P0EFTJanusCircleEtaSpectralFlowBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem zeroModeEta_unit_jump_eq_neg_two_spectralFlow",
+            "theorem zeroModeEta_unit_jump_eq_neg_two_doubledLevelShift",
+            "theorem largeGaugeAnomalyParity_eq_spectralFlow_mod_two",
+            "theorem ptPaired_zeroModeEta_unit_jumps_cancel",
+        ),
+    ),
+    "P0EFTJanusCircleDeterminantClutchingOrbitQuotient4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def circleLargeGaugeMonodromyScalar",
+            "theorem circleLargeGaugeMonodromyScalar_ne_zero",
+            "theorem circleLargeGaugeFrameCoordinateTransition_apply_eq_mul",
+            "def circleDeterminantClutchingTranslate",
+            "theorem circleDeterminantClutchingTranslate_add",
+            "def circleDeterminantClutchingSetoid",
+            "abbrev CircleDeterminantClutchingTotal",
+            "def circleDeterminantClutchingBase",
+            "theorem circleDeterminantClutchingBase_continuous",
+            "theorem circleDeterminantClutchingMk_endpoints",
+            "def circleDeterminantClutchingGauge",
+            "def circleDeterminantClutchingGaugeHomeomorph",
+            "theorem clutching_relation_iff_untwisted_kernel",
+            "def circleDeterminantClutchingBundleHomeomorph",
+            "theorem circleDeterminantClutchingBundleHomeomorph_proj",
+            "theorem circleDeterminantClutchingBundleHomeomorph_mk_add",
+            "theorem circleDeterminantClutchingBundleHomeomorph_mk_smul",
+        ),
+    ),
+    "P0EFTJanusCircleHeatEtaRegularization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def circleHeatEtaSummand",
+            "theorem circleHeatEtaSummand_summable",
+            "def circleHeatEta",
+            "theorem circleHeatEta_pt_eq_neg_positive",
+            "theorem circleHeatEta_unit_eq_periodic",
+        ),
+    ),
+    "P0EFTJanusCircleActualCrossingEtaBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem actualCircleFundamentalCrossing_eq_unit_spectralFlow",
+            "theorem zeroModeEta_unit_jump_eq_neg_two_actualCircleCrossing",
+            "theorem zeroModeEta_unit_jump_eq_neg_two_actualEigenvalueIncrement",
+            "theorem actualPtPaired_zeroModeEta_unit_jumps_cancel",
+        ),
+    ),
     "P0EFTJanusMappingTorusAbelianGaugeNoetherOperator4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5581,6 +10982,27 @@ PROGRAM_P_GATES = {
             "theorem matterGauge_translation_invariant_iff_noether_everywhere",
         ),
     ),
+    "P0EFTJanusMatterLLActualU1NoetherSubidentity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def frozenLLMatterGaugeAction",
+            "def frozenLLMatterGaugeEuler",
+            "theorem frozenLLMatterGaugeAction_hasDerivAt",
+            "def pureU1Parameter",
+            "theorem matterGaugeGenerator_pureU1",
+            "theorem frozenLLMatterGaugeAction_pureU1_invariant",
+            "theorem matterGaugeNoetherOperator_actualEuler_pureU1_zero",
+        ),
+    ),
+    "P0EFTJanusMatterLLActualU1NoetherPairedLinearBRSTBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def completeVariationPairedU1Parameters",
+            "theorem matterGaugeGenerator_completeVariationPairedU1_eq_BRST_potentials",
+            "theorem frozenLLMatterGaugeAction_pairedLinearBRSTU1_invariant",
+            "theorem matterGaugeNoetherOperator_actualEuler_pairedLinearBRSTU1_zero",
+        ),
+    ),
     "P0EFTJanusMappingTorusMetricMatterGaugeNoetherOperator4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5614,6 +11036,8 @@ PROGRAM_P_GATES = {
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "def effectiveTimeTranslationGhost",
+            "theorem effectiveTimeTranslationVelocity_eq_timeFlow_mfderiv",
+            "theorem effectiveTimeFlow_orbit_contMDiff",
             "structure TimeTranslationMetricPairContract",
             "def TimeTranslationMetricPairContract.toFlow",
             "theorem TimeTranslationMetricPairContract.toFlow_generates_timeGhost",
@@ -6597,6 +12021,14 @@ PROGRAM_P_GATES = {
             "theorem globalDifferentialLLAuxMetricHessian_comm",
         ),
     ),
+    "P0EFTJanusDifferentialLLActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem differentialLLDensity_eq_half_fluxHessianDensity",
+            "theorem globalDifferentialLLAction_eq_half_fluxHessian",
+            "theorem globalPTSymmetricDifferentialLLAction_eq_half_fluxHessian",
+        ),
+    ),
     "P0EFTJanusMappingTorusPTSymmetricLLWeakEulerJacobiOperator4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -6664,6 +12096,117 @@ PROGRAM_P_GATES = {
             "theorem reducedBosonicJacobiIndex_zero",
         ),
     ),
+    "P0EFTJanusReducedBosonicLLCompleteVariationHessianBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def reducedLLSmoothCompleteVariation",
+            "theorem reducedLLSmoothCompleteVariation_injective",
+            "theorem completeVariationLLHessian_eq_reducedBosonic_LL_block",
+            "theorem completeVariationMatterLLHessian_eq_reducedBosonic_LL_block",
+            "theorem reducedBosonic_LL_pairing_is_completeAction_secondVariation",
+        ),
+    ),
+    "P0EFTJanusRobinExtendedCompleteVariationReducedFredholm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPRobinCompleteVariation4D",
+            "def includeCompleteVariation",
+            "theorem includeCompleteVariation_injective",
+            "def programPRobinBoundaryTangentDomain4D",
+            "theorem includeCompleteVariation_mem_boundaryDomain_iff",
+            "theorem boundaryDomain_congr_robin",
+            "def toFullMatterRobinLLDirections",
+            "def robinCompleteMatterTrueLLActionCurve",
+            "def robinCompleteMatterTrueLLEuler",
+            "theorem robinCompleteMatterTrueLLAction_hasDerivAt",
+            "def robinCompleteMatterTrueLLHessian",
+            "theorem robinCompleteMatterTrueLLHessian_symmetric",
+            "theorem robinCompleteMatterTrueLLEuler_hasDerivAt",
+            "def reducedRobinLLFredholmPairing",
+            "theorem robinCompleteHessian_reducedRobinLL_eq_fredholmPairing",
+        ),
+    ),
+    "P0EFTJanusRobinCompleteVariationGeneralMetricBVBRST4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def robinCompleteVariationWithGeneralMetricBV",
+            "theorem robinCompleteVariationWithGeneralMetricBV_robin",
+            "theorem robinCompleteVariationWithGeneralMetricBV_BRST_fullMetric",
+            "theorem robinCompleteVariationWithGeneralMetricBV_BRST_square",
+            "theorem robinCompleteVariationWithGeneralMetricBV_metricPerturbationAt",
+            "theorem robinCompleteVariationWithGeneralMetricBV_BRST_metricPerturbationAt",
+            "theorem robinCompleteMatterTrueLLActionCurve_generalMetricBV_BRST",
+            "theorem robinCompleteMatterTrueLLEuler_generalMetricBV_BRST",
+            "theorem robinCompleteMatterTrueLLHessian_generalMetricBV_BRST",
+            "theorem robinCompleteVariationWithGeneralMetricBV_BRST_mem_boundaryDomain_iff",
+        ),
+    ),
+    "P0EFTJanusMappingTorusReducedBosonicActualActionHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def robinJunctionActionDirectionalDerivative",
+            "theorem robinJunctionActionMixedHessian_eq_robinHessian",
+            "def globalPTSymmetricDifferentialLLActionDirectionalDerivative",
+            "theorem globalPTSymmetricDifferentialLLActionMixedHessian_eq_fluxHessian",
+            "def reducedBosonicSmoothAction",
+            "theorem reducedBosonicSmoothActionDirectionalDerivative_eq",
+            "def reducedBosonicSmoothActionMixedHessian",
+            "theorem reducedBosonicSmoothActionMixedHessian_eq",
+            "theorem reducedBosonicNaturalHessian_smooth_eq_actualScalarActionHessian",
+            "theorem reducedBosonicNaturalHessian_smooth_eq_actualActionHessians",
+            "theorem reducedBosonicNaturalHessian_smooth_eq_assembledActionMixedHessian",
+        ),
+    ),
+    "P0EFTJanusMappingTorusReducedBosonicRobinCouplingFredholmHessianFamily4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def reducedBosonicRobinCouplingOperatorFamily",
+            "def reducedBosonicRobinCouplingOperatorFamilyPairing",
+            "theorem reducedBosonicRobinCouplingOperatorFamily_contDiff",
+            "theorem reducedBosonicRobinCouplingOperatorFamily_fredholm_index_zero",
+            "theorem reducedBosonicRobinCouplingOperatorFamily_pairing_eq_sameActionHessian",
+        ),
+    ),
+    "P0EFTJanusRobinJunctionActualHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def RobinJunctionActualHelmholtzCondition",
+            "theorem robin_junction_actual_helmholtz_condition",
+        ),
+    ),
+    "P0EFTJanusRobinJunctionActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem robinJunctionAction_reconstructed_from_euler_and_actualHessian",
+            "theorem robinJunctionAction_affine_exact_taylor",
+        ),
+    ),
+    "P0EFTJanusReducedBosonicActualHelmholtz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedBosonicSmoothActionMixedHessian_symmetric",
+        ),
+    ),
+    "P0EFTJanusReducedBosonicActualEulerLinearization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedBosonicSmoothEuler_hasDerivAt",
+        ),
+    ),
+    "P0EFTJanusReducedBosonicActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem reducedBosonicSmoothAction_reconstructed_from_euler_and_actualHessian",
+        ),
+    ),
+    "P0EFTJanusReducedFredholmActionReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def storedLLH1Smooth",
+            "theorem storedLLH1Smooth_toTest",
+            "theorem reducedBosonicSmoothAction_reconstructed_from_naturalFredholmDiagonal",
+        ),
+    ),
     "P0EFTJanusMappingTorusReducedBosonicHilbertFredholmHessian4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -6692,6 +12235,17 @@ PROGRAM_P_GATES = {
             "theorem lorentzGramSymbol_injective",
             "theorem range_lorentzGramSymbol_eq_symmetric_saintVenant_kernel",
             "theorem arbitrary_frequency_saintVenant_symbol_sequence_exact",
+        ),
+    ),
+    "P0EFTJanusSaintVenantEinsteinBianchiSymbolBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def symmetricStrainSymbol",
+            "def raisedTensorDivergenceSymbol",
+            "theorem saintVenantSymbol_comp_symmetricStrain_eq_zero",
+            "theorem linearizedEinsteinSymbol_comp_symmetricStrain_eq_zero",
+            "theorem raisedTensorDivergenceSymbol_comp_linearizedEinstein_eq_zero",
+            "theorem saintVenant_einstein_bianchi_symbol_bridge",
         ),
     ),
     "P0EFTJanusFiniteFourierSaintVenantExactness.lean": (
@@ -6772,6 +12326,145 @@ PROGRAM_P_GATES = {
             "theorem shifted_sobolev_lattice_lorentzGram_gate",
         ),
     ),
+    "P0EFTJanusShiftedSobolevMappingTorusTimeModeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def firstTemporalMode",
+            "theorem firstTemporalMode_ne_zero",
+            "def physicalTemporalModeCoefficientLinearMap",
+            "theorem decode_physicalTemporalModeCoefficient",
+            "theorem physicalTemporalModeCoefficientLinearMap_injective",
+            "def smoothTemporalModeLinearMap",
+            "theorem smoothTemporalModeLinearMap_injective",
+            "def physicalCoefficientToSmoothTemporalModeEquiv",
+            "theorem smoothTemporalMode_lift_mk",
+            "theorem smoothTemporalMode_lift_deck_invariant",
+            "theorem shiftedSobolev_mappingTorus_timeMode_bridge4D",
+        ),
+    ),
+    "P0EFTJanusShiftedSobolevMappingTorusFiniteTemporalFourierBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def temporalComplexFourierCoverField",
+            "def temporalComplexFourierQuotientField",
+            "abbrev FiniteTemporalFourierCoefficients",
+            "def finiteTemporalFourierFieldLinearMap",
+            "theorem finiteTemporalFourierField_lift_formula",
+            "theorem finiteTemporalFourierField_lift_deck_invariant",
+            "theorem temporalFourierPolynomialCircle_coefficient",
+            "theorem finiteTemporalFourierFieldLinearMap_injective",
+            "theorem shiftedSobolev_mappingTorus_finiteTemporalFourier_bridge4D",
+        ),
+    ),
+    "P0EFTJanusMappingTorusInfiniteTemporalFourierSobolevBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def mappingTorusTimeCircle",
+            "theorem mappingTorusTimeCircle_mk",
+            "def positiveCanonicalLorentzVolumeMeasure",
+            "theorem positiveCanonicalLorentzVolumeMeasure_eq_intrinsic",
+            "theorem mappingTorusTimeCircle_positiveCanonical_marginal",
+            "def normalizedCanonicalLorentzVolumeMeasure",
+            "theorem mappingTorusTimeCircle_measurePreserving",
+            "def circleFourierSynthesis",
+            "def mappingTorusTemporalL2Synthesis",
+            "theorem mappingTorusTemporalL2_hasSum",
+            "theorem circleFourierSynthesis_coefficient",
+            "theorem mappingTorusTemporalL2Synthesis_injective",
+            "theorem mappingTorusTemporalL2Synthesis_finite_eq_smoothFieldToL2",
+            "def temporalH1FieldCoefficientOperator",
+            "def temporalH1DerivativeCoefficientOperator",
+            "theorem temporalH1FieldCoefficientOperator_injective",
+            "def temporalH1FieldL2",
+            "def temporalH1DerivativeL2",
+            "theorem temporalH1FieldL2_hasSum",
+            "theorem temporalH1DerivativeL2_hasSum",
+            "theorem mappingTorus_infiniteTemporalFourierSobolev_bridge4D",
+        ),
+    ),
+    "P0EFTJanusMappingTorusInfiniteTemporalH1ZeroModeCohomology4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def temporalH1ZeroModeCoefficientOperator",
+            "theorem temporalH1ZeroModeCoefficientOperator_apply",
+            "theorem temporalH1ZeroModeCoefficientOperator_injective",
+            "theorem temporalH1DerivativeMultiplier_ne_zero",
+            "theorem temporalH1FieldScale_ne_zero",
+            "theorem temporalH1DerivativeCoefficient_kernel_eq_zeroMode_range",
+            "theorem temporalH1DerivativeL2_kernel_eq_zeroMode_range",
+            "theorem mappingTorus_infiniteTemporalH1_zeroMode_exact4D",
+        ),
+    ),
+    "P0EFTJanusMappingTorusInfiniteTemporalH1SmoothCoreClosure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteTemporalH1SmoothCore",
+            "theorem finiteTemporalH1SmoothCore_denseRange",
+            "def temporalH1GraphLinearMap",
+            "theorem finiteTemporalH1SmoothGraph_dense",
+            "theorem temporalH1FieldL2_smoothCore_eq_smoothFieldToL2",
+            "theorem temporalH1DerivativeL2_smoothCore_eq_smoothDerivativeL2",
+            "theorem smoothCoreDerivative_eq_mvfderiv_timeTranslation",
+            "theorem smoothCoreExactGauge_timeTranslationVelocity",
+        ),
+    ),
+    "P0EFTJanusMappingTorusFiniteTemporalFourierGaugeGhostZeroMode4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def complexGaugeLieAlgebraEquiv",
+            "def complexSmoothFieldGaugeGhostLinearMap",
+            "theorem complexSmoothFieldGaugeGhostLinearMap_injective",
+            "def finiteTemporalFourierGaugeGhostLinearMap",
+            "theorem finiteTemporalFourierGaugeGhostLinearMap_injective",
+            "theorem finiteTemporalFourierGaugeGhostLinearMap_zeroMode",
+            "theorem exactGaugePotential_constantGaugeGhost_eq_zero",
+            "theorem temporalZeroMode_range_le_exactGauge_kernel",
+        ),
+    ),
+    "P0EFTJanusMappingTorusFiniteTemporalFourierGaugeGhostCohomology4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def temporalFourierDerivativeMultiplier",
+            "def temporalFourierDerivativeCoefficients",
+            "theorem temporalFourierDerivativeCoefficients_apply",
+            "theorem finiteTemporalFourierTimeSlice_deriv_eq_mvfderiv",
+            "theorem finiteTemporalFourierField_mvfderiv_timeTranslationVelocity",
+            "theorem finiteTemporalFourierExactGauge_timeTranslationVelocity",
+            "theorem finiteTemporalFourierExactGauge_kernel_le_zeroMode_range",
+            "theorem finiteTemporalFourierExactGauge_kernel_eq_zeroMode_range",
+        ),
+    ),
+    "P0EFTJanusMappingTorusPairedFiniteTemporalBRSTD9Cohomology4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev PairedFiniteTemporalGhostCoefficients",
+            "def pairedFiniteTemporalExactGaugeLinearMap",
+            "theorem pairedFiniteTemporalExactGauge_eq_zero_iff",
+            "def pairedFiniteTemporalBRSTBlock",
+            "theorem pairedFiniteTemporalBRSTBlock_image_potentials",
+            "theorem pairedFiniteTemporalBRSTBlock_d9Coordinate_after_differential",
+        ),
+    ),
+    "P0EFTJanusRobinCompleteVariationFiniteTemporalGhostRegulator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def temporalGaugeGhostCutoffField",
+            "def temporalGaugeGhostCutoffRobinVariation",
+            "theorem temporalGaugeGhostCutoffPairedBlock_BRST_potential",
+            "def temporalGaugeGhostCutoffSpectrum",
+            "theorem temporalGaugeGhostCutoffSpectrum_eigenvalueSq_eq_derivative",
+            "theorem temporalGaugeGhostCutoffSpectrum_eigenvalueSq_pt",
+            "def temporalGaugeGhostWeightedSector",
+        ),
+    ),
+    "P0EFTJanusShiftedSobolevMappingTorusFiniteTemporalFourierThroatTrace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteTemporalFourierThroatTraceLinearMap",
+            "theorem finiteTemporalFourierThroatTraceLinearMap_injective",
+            "theorem finiteTemporalFourierField_satisfiesDirichlet_zero_iff",
+        ),
+    ),
     "P0EFTJanusShiftedSobolevPullbackHessian.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -6786,12 +12479,66 @@ PROGRAM_P_GATES = {
             "theorem shifted_pullback_hessian_gate",
         ),
     ),
+    "P0EFTJanusShiftedSobolevSameActionHessian.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def shiftedTargetIdentityAction",
+            "def shiftedCoefficientAction",
+            "theorem shiftedCoefficientAction_eq_target_comp",
+            "theorem shiftedCoefficientAction_add_kernel",
+            "def shiftedCoefficientRiesz",
+            "def shiftedCoefficientActionHessian",
+            "theorem shiftedCoefficientAction_hasFDerivAt",
+            "theorem shiftedCoefficientAction_fderiv",
+            "theorem shiftedCoefficientAction_second_fderiv",
+            "theorem shiftedCoefficientAction_second_fderiv_pairing",
+            "theorem shifted_sobolev_same_action_hessian_gate",
+        ),
+    ),
+    "P0EFTJanusShiftedSobolevQuotientSameActionHessian.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def physicalQuotientRepresentative",
+            "theorem physicalQuotientRepresentative_injective",
+            "theorem physicalQuotientRepresentative_class",
+            "def physicalQuotientSymbol",
+            "theorem physicalQuotientSymbol_mk",
+            "def physicalQuotientAction",
+            "theorem physicalQuotientAction_eq_sourceAction",
+            "theorem physicalQuotientAction_mk",
+            "def physicalQuotientActionHessian",
+            "theorem physicalQuotientActionHessian_mk_mk",
+            "theorem physicalQuotientAction_hasFDerivAt",
+            "theorem physicalQuotientAction_fderiv",
+            "theorem physicalQuotientAction_second_fderiv",
+            "theorem physicalQuotientActionHessian_nondegenerate",
+            "theorem shifted_sobolev_quotient_same_action_hessian_gate",
+        ),
+    ),
+    "P0EFTJanusShiftedSobolevCurrentReducedMetricHessianMismatch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem periodicPhysicalHessian_ne_currentReducedPureMetricHessian",
+        ),
+    ),
+    "P0EFTJanusShiftedSobolevFrechetQuotientBridge.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def shiftedCoefficientActionHessianLinear",
+            "theorem shiftedCoefficientActionHessianLinear_annihilates_zeroMode_left",
+            "theorem shiftedCoefficientActionHessianLinear_annihilates_zeroMode_right",
+            "def genericShiftedCoefficientQuotientHessian",
+            "theorem physicalQuotientActionHessian_eq_generic_descent",
+            "theorem shifted_sobolev_frechet_quotient_bridge_gate",
+        ),
+    ),
     "P0EFTJanusShiftedSobolevPhysicalQuotient.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "def potentialZeroModeProjection",
             "theorem potentialZeroModeProjection_opNorm_le",
             "theorem zeroMode_range_isTopCompl_ker",
+            "instance potentialZeroModeProjection_range_isClosed",
             "theorem zeroModeProjection_range_eq_symbol_ker",
             "abbrev PhysicalPotentialQuotient",
             "def physicalQuotientEquivZeroFree",
@@ -6815,6 +12562,22 @@ PROGRAM_P_GATES = {
             "theorem secondary_at_site_of_local_primary_preservation",
             "theorem twoSiteWitness_local_constraint_covectors_independent",
             "theorem twoSiteWitness_secondary_preservation_fixes_each_lapse_ratio",
+        ),
+    ),
+    "P0EFTJanusTwoSiteSpatialDerivativePoissonBracket.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev TwoSiteField",
+            "def spatialDifference",
+            "def spatialHamiltonian",
+            "def spatialHamiltonianDifferential",
+            "theorem spatialHamiltonian_fieldLine_hasDerivAt",
+            "def spatialCurrent",
+            "def smearingWedge",
+            "theorem spatialHamiltonian_poisson_factorization",
+            "def bracketWitnessField",
+            "theorem bracketWitness_spatialDifference_nonzero",
+            "theorem bracketWitness_poisson_nonzero",
         ),
     ),
     "P0EFTJanusNonlinearCanonicalPoissonJetJacobi.lean": (
@@ -6966,6 +12729,79 @@ PROGRAM_P_D10_INFINITE_CIRCLE_GATES = {
         ),
     ),
 }
+
+
+def terminal_gate_states(todo_source: str) -> dict[str, bool]:
+    """Read the fixed T01--T14 registry without counting any micro-gate."""
+    try:
+        section = todo_source.split("## 7. Les 14 portes terminales fixes", 1)[1]
+        section = section.split("## 8. Intégration et audit à renforcer", 1)[0]
+    except IndexError as error:
+        raise AssertionError("missing fixed terminal-gate section") from error
+    matches = re.findall(r"^- \[([ x])\] `(T\d{2})` — ", section, re.MULTILINE)
+    identifiers = tuple(identifier for _, identifier in matches)
+    if identifiers != TERMINAL_GATE_IDS:
+        raise AssertionError(
+            f"terminal-gate denominator changed: {identifiers!r}"
+        )
+    return {identifier: mark == "x" for mark, identifier in matches}
+
+
+def assert_terminal_gate_registry(repo_root: Path = REPO_ROOT) -> tuple[int, int]:
+    todo_source = (repo_root / PROGRAM_P_OPERATIONAL_TODO).read_text(
+        encoding="utf-8"
+    )
+    states = terminal_gate_states(todo_source)
+    unknown_evidence = set(TERMINAL_GATE_EVIDENCE) - set(TERMINAL_GATE_IDS)
+    if unknown_evidence:
+        raise AssertionError(f"unknown terminal-gate evidence: {unknown_evidence}")
+
+    for identifier, closed in states.items():
+        evidence = TERMINAL_GATE_EVIDENCE.get(identifier)
+        if closed and evidence is None:
+            raise AssertionError(
+                f"terminal gate {identifier} is checked without typed evidence"
+            )
+        if evidence is None:
+            continue
+        if evidence.scope not in TERMINAL_GATE_SCOPES:
+            raise AssertionError(f"invalid scope for terminal gate {identifier}")
+        if not evidence.theorem or "." not in evidence.theorem:
+            raise AssertionError(
+                f"terminal gate {identifier} needs a fully qualified theorem"
+            )
+        if not evidence.expected_type_fragment:
+            raise AssertionError(
+                f"terminal gate {identifier} needs an expected type fragment"
+            )
+
+        module_source = (repo_root / evidence.module).read_text(encoding="utf-8")
+        theorem_name = evidence.theorem.rsplit(".", 1)[1]
+        theorem_match = re.search(
+            rf"\btheorem\s+{re.escape(theorem_name)}\b[\s\S]*?(?=\n(?:theorem|def|structure|class|instance|end)\b|\Z)",
+            module_source,
+        )
+        if theorem_match is None:
+            raise AssertionError(
+                f"missing terminal theorem {evidence.theorem} for {identifier}"
+            )
+        theorem_source = theorem_match.group(0)
+        if evidence.expected_type_fragment not in theorem_source:
+            raise AssertionError(f"unexpected theorem type for terminal gate {identifier}")
+        if "ProgramStatus" in theorem_source:
+            raise AssertionError(
+                f"terminal gate {identifier} is only a ProgramStatus contract"
+            )
+        if re.search(r"\b(?:sorry|admit|axiom)\b", module_source):
+            raise AssertionError(f"proof placeholder in terminal gate {identifier}")
+
+        facade_source = (repo_root / evidence.facade).read_text(encoding="utf-8")
+        module_import = str(evidence.module.with_suffix("")).replace("\\", ".")
+        if f"import {module_import}" not in facade_source:
+            raise AssertionError(f"terminal facade omits {identifier}")
+
+    closed_count = sum(states.values())
+    return closed_count, len(TERMINAL_GATE_IDS)
 
 
 def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
@@ -7320,6 +13156,8 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8NormalPinMinusPrincipalBundleProved",
         "paEffectiveD8NormalPinMinusAssociatedRootsProved",
         "paEffectiveD8AmbientPinMinusProjection4DProved",
+        "paEffectiveD8AmbientPinMinusPointwiseTangentLift4DProved",
+        "paEffectiveD8AmbientPinMinusLocalSectionCriterion4DProved",
         "paEffectiveD8AmbientPinMinusCechExtension4DConditionalProved",
         "paEffectiveD8AmbientPinMinusPrincipalBundleFromCech4DProved",
         "paEffectiveD8AmbientPinMinusReferenceWindingFrontier4DConditionalProved",
@@ -7465,10 +13303,14 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paD9GlobalTensorHolonomicMetricBridge4DProved",
         "paD9CanonicalGlobalTensorHolonomicMetricCompletion4DProved",
         "paProgramPCommonGeometricDomain4DProved",
+        "paCompleteVariationD9FieldAssembly4DProved",
+        "paSingleTruncatedD10ModeTangentNoGo4DProved",
+        "paCompleteVariationFiniteD10AnomalyRegulatorBridge4DConditionalProved",
         "paEffectiveD8GlobalHolonomicScalarDifferentialProved",
         "paEffectiveD8GlobalHolonomicScalarAction4DProved",
         "paEffectiveD8GlobalHolonomicScalarVariation4DUnderIntegrabilityContractProved",
         "paEffectiveD8GlobalHolonomicScalarWeakJacobiRiesz4DProved",
+        "paEffectiveD8GlobalHolonomicScalarActualHessian4DProved",
         "paEffectiveD8GlobalHolonomicScalarStaticH1Fredholm4DProved",
         "paEffectiveD8GlobalHolonomicScalarStaticH1GraphBridge4DProved",
         "paEffectiveD8StaticScalarUniformGraphEllipticityBridge4DProved",
@@ -7519,6 +13361,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paEffectiveD8GeneralLorentzMetricBVFirstLevel4DProved",
         "paEffectiveD8GeneralLorentzMetricBVPTCovariance4DProved",
         "paEffectiveD8GeneralLorentzMetricBVThroatBoundary4DProved",
+        "paCompleteVariationGeneralMetricBVBRSTBoundary4DProved",
         "paEffectiveD8IntrinsicMetricBVThroatBracket4DProved",
         "paEffectiveD8IntrinsicMetricBVThroatIntegrated4DProved",
         "paEffectiveD8IntrinsicMetricBVThroatPairingRegularity4DProved",
@@ -7600,6 +13443,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paProductThroatNuclearHeatTraceSmooth4DProved",
         "paProductThroatHeatOperator4DProved",
         "paProductThroatHeatOperatorNuclearExpansion4DProved",
+        "paProductThroatHeatOperatorSmooth4DProved",
         "paProductThroatUnboundedDiracSquared4DProved",
         "paProductThroatUnboundedDirac4DProved",
         "paProductThroatUnboundedDiracFredholm4DProved",
@@ -7615,6 +13459,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         "paProductThroatHolonomyGraphInverseRegularity4DProved",
         "paProductThroatHolonomyGraphInverseLocalBound4DProved",
         "paProductThroatHolonomyGraphInverseC1_4DProved",
+        "paProductThroatHolonomyC3FredholmCertificate4DProved",
         "paProductThroatHolonomyGraphInverseDerivative4DProved",
         "paCircleHeatNuclearTraceContinuityProved",
         "paCircleHeatNuclearTraceDerivativeProved",
@@ -7652,8 +13497,12 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
 
 
 def run_audit() -> None:
+    closed_terminal, total_terminal = assert_terminal_gate_registry()
     assert_program_p_gate_integrity()
-    print("Program P/P-F integrity audit: all checks passed")
+    print(
+        "Program P/P-F integrity audit: all checks passed; "
+        f"terminal gates {closed_terminal}/{total_terminal}"
+    )
 
 
 if __name__ == "__main__":

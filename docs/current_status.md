@@ -58,6 +58,18 @@ and Python workflows. The PR 10 theorem head was validated locally before
 merge; this document does not claim an independent post-merge CI run for
 `96e60eb4`.
 
+## Program M foundation checkpoint — 19 July 2026
+
+Program M's foundational layer is consolidated and paused pending a stable
+geometric integration target from Program P. Its coefficient language is now
+explicitly signed-capable: unsigned/nonnegative assignments are restrictions,
+while a nontrivial involution and odd charge law remain optional added
+structure. The compiled `MF-PBRIDGE-002` adapter maps every nonzero odd real
+charge to P's binary `JanusCharge` plus a separate positive magnitude, without
+supplying a metric, throat, physical mass interpretation or action. The next
+test is a comparison of the same adapter on non-throat and throat geometries.
+See [`program_m_status.md`](program_m_status.md).
+
 The previously recorded successful runs include:
 
 ```text
@@ -177,8 +189,13 @@ iterated domain of `D ∘ D`, and the generator is uniquely `-D²`. Abstract
 functional calculus remains open. At every positive circle time, the heat
 operator now also has an operator-norm-convergent expansion into explicit
 rank-one Fourier maps with summable operator norms; its nuclear trace equals
-the existing spectral heat trace. A general Mathlib trace-class API and the
-full Fredholm/Quillen family and the
+the existing spectral heat trace. The full product-throat operator now has the
+same concrete nuclear certificate, its nuclear norm is bounded by its trace,
+and its positive-time family is `C∞` in operator norm. At every derivative
+order, its explicit degeneracy-resolved diagonal sum equals the nuclear trace
+derivative and obeys PT. These facts close the
+trace-class properties required by Program P despite the absence of a general
+Mathlib trace-class API. The full Fredholm/Quillen family and the
 field/ghost-weighted anomaly problem remain separate and open.
 
 D10 now also contains a concrete symmetric finite Fourier family: its matrix

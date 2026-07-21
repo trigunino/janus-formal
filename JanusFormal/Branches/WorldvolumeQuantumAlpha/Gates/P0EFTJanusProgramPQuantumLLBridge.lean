@@ -1,14 +1,21 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalLLWorldvolume4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricLLH1FredholmOperator4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevPhysicalQuotient
 
 namespace JanusFormal.P0EFTJanusProgramPQuantumLLBridge
 
 set_option autoImplicit false
 
+open scoped InnerProductSpace
+open P0EFTJanusLatticeFourierSaintVenantExactness
+open P0EFTJanusWeightedL2LatticeSaintVenantExactness
 open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 open P0EFTJanusMappingTorusPTSymmetricLLH1FredholmOperator4D
 open P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
+open P0EFTJanusShiftedSobolevLatticeLorentzGram
+open P0EFTJanusShiftedSobolevPullbackHessian
+open P0EFTJanusShiftedSobolevPhysicalQuotient
 
 noncomputable section
 
@@ -37,12 +44,26 @@ theorem program_p_smooth_throat_bv_square_zero
         (smoothThroatBVBRST period hPeriod field) = 0 :=
   smoothThroatBVBRST_square_zero period hPeriod field
 
+/-- Program P already supplies a periodic shifted-Sobolev quotient with its
+zero mode removed and a nondegenerate positive pullback Hessian. -/
+theorem program_p_shifted_sobolev_quotient_packet
+    (targetWeight : LatticeMode → Real) :
+    Nonempty (PhysicalPotentialQuotient targetWeight ≃L[Real]
+      ZeroFreePotentialSubspace targetWeight) ∧
+    (∀ potential : ZeroFreePotentialSubspace targetWeight,
+      ⟪shiftedPullbackHessian targetWeight potential.1, potential.1⟫_Real = 0 ↔
+        potential = 0) := by
+  rcases shifted_sobolev_physical_quotient_gate targetWeight with
+    ⟨_, _, hEquivalence, hNondegenerate⟩
+  exact ⟨hEquivalence, hNondegenerate⟩
+
 structure ProgramPToAQuantumLLStatus where
   globalLLActionImported : Prop
   ptVariationImported : Prop
   hessianImported : Prop
   energyHilbertFredholmPacketImported : Prop
   smoothUltralocalBVMasterImported : Prop
+  periodicShiftedSobolevQuotientImported : Prop
   physicalSobolevComparisonDerived : Prop
   compactResolventOrPrimedDeterminantDerived : Prop
   perturbativeGaugeFermionFixed : Prop
@@ -53,7 +74,8 @@ def programPBridgeAvailable (s : ProgramPToAQuantumLLStatus) : Prop :=
   s.ptVariationImported ∧
   s.hessianImported ∧
   s.energyHilbertFredholmPacketImported ∧
-  s.smoothUltralocalBVMasterImported
+  s.smoothUltralocalBVMasterImported ∧
+  s.periodicShiftedSobolevQuotientImported
 
 def physicalQuantumLLClosed (s : ProgramPToAQuantumLLStatus) : Prop :=
   programPBridgeAvailable s ∧
@@ -61,6 +83,53 @@ def physicalQuantumLLClosed (s : ProgramPToAQuantumLLStatus) : Prop :=
   s.compactResolventOrPrimedDeterminantDerived ∧
   s.perturbativeGaugeFermionFixed ∧
   s.llBetaAndAnomalousDimensionComputed
+
+/-- Status after importing every LL result currently supplied by Program P. -/
+def importedProgramPStatus
+    (physicalSobolevComparisonDerived
+      compactResolventOrPrimedDeterminantDerived
+      perturbativeGaugeFermionFixed
+      llBetaAndAnomalousDimensionComputed : Prop) :
+    ProgramPToAQuantumLLStatus where
+  globalLLActionImported := True
+  ptVariationImported := True
+  hessianImported := True
+  energyHilbertFredholmPacketImported := True
+  smoothUltralocalBVMasterImported := True
+  periodicShiftedSobolevQuotientImported := True
+  physicalSobolevComparisonDerived := physicalSobolevComparisonDerived
+  compactResolventOrPrimedDeterminantDerived :=
+    compactResolventOrPrimedDeterminantDerived
+  perturbativeGaugeFermionFixed := perturbativeGaugeFermionFixed
+  llBetaAndAnomalousDimensionComputed := llBetaAndAnomalousDimensionComputed
+
+theorem imported_program_p_bridge_available
+    (physicalSobolevComparisonDerived
+      compactResolventOrPrimedDeterminantDerived
+      perturbativeGaugeFermionFixed
+      llBetaAndAnomalousDimensionComputed : Prop) :
+    programPBridgeAvailable
+      (importedProgramPStatus physicalSobolevComparisonDerived
+        compactResolventOrPrimedDeterminantDerived perturbativeGaugeFermionFixed
+        llBetaAndAnomalousDimensionComputed) := by
+  simp [programPBridgeAvailable, importedProgramPStatus]
+
+/-- After the Program P import, no classical/Fredholm/BV premise remains:
+quantum LL closure is exactly the four physical completion obligations. -/
+theorem physical_quantum_ll_closed_iff_remaining_obligations
+    (physicalSobolevComparisonDerived
+      compactResolventOrPrimedDeterminantDerived
+      perturbativeGaugeFermionFixed
+      llBetaAndAnomalousDimensionComputed : Prop) :
+    physicalQuantumLLClosed
+        (importedProgramPStatus physicalSobolevComparisonDerived
+          compactResolventOrPrimedDeterminantDerived perturbativeGaugeFermionFixed
+          llBetaAndAnomalousDimensionComputed) ↔
+      physicalSobolevComparisonDerived ∧
+      compactResolventOrPrimedDeterminantDerived ∧
+      perturbativeGaugeFermionFixed ∧
+      llBetaAndAnomalousDimensionComputed := by
+  simp [physicalQuantumLLClosed, programPBridgeAvailable, importedProgramPStatus]
 
 end
 

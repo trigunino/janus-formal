@@ -39,6 +39,22 @@ Every reconstruction must be entered in the
 [`program_m_provenance_register.md`](program_m_provenance_register.md).
 A non-technical introduction and current proof boundary are maintained in
 [`program_m_plain_language.md`](program_m_plain_language.md).
+The first exhaustive finite audit is documented in
+[`program_m_finite_enumeration.md`](program_m_finite_enumeration.md).
+The first order-theoretic quotient is documented in
+[`program_m_causal_skeleton.md`](program_m_causal_skeleton.md).
+Its lossless fiber decoration is documented in
+[`program_m_decorated_skeleton.md`](program_m_decorated_skeleton.md).
+The first controlled information-loss audit is documented in
+[`program_m_controlled_compression.md`](program_m_controlled_compression.md).
+The rule governing observable-safe compression is documented in
+[`program_m_observable_factorization.md`](program_m_observable_factorization.md).
+The locally finite causal-set comparison and its finite no-go are documented in
+[`program_m_causal_set_gate.md`](program_m_causal_set_gate.md).
+The exact finite-order invariant and dimension-estimator boundary is documented
+in [`program_m_dimension_invariants.md`](program_m_dimension_invariants.md).
+The order-embedding no-go and faithful-embedding obligations are documented in
+[`program_m_manifoldlike_gate.md`](program_m_manifoldlike_gate.md).
 
 ## Evidence rule
 
@@ -149,6 +165,12 @@ This slice does not validate perturbations, lensing, CMB or structure growth.
 - `M-COMP-001`: Janus/Lambda-CDM/CPL comparison matrix;
 - `M-NOGO-001`: rejected or degenerate candidate registry.
 
-Program M is presently a research protocol. Its foundational signature and
-ledger format are specified, but every emergence theorem remains **O**; it does
-not yet derive a topology, a throat, Janus or any competitor.
+Program M now contains proved reconstruction and no-go results through the
+order-theoretic skeleton, plus a compiled faithful-embedding contract. It does
+not yet derive a continuum geometry, a throat, Janus or any competitor; see
+[`program_m_faithful_embedding_interface.md`](program_m_faithful_embedding_interface.md).
+The stronger chain-time contract and its limits are recorded in
+[`program_m_well_conditioned_embedding.md`](program_m_well_conditioned_embedding.md).
+Third parties can run the current order-only diagnostics through
+[`program_m_order_candidate_gate.md`](program_m_order_candidate_gate.md); its
+compatibility status is deliberately weaker than a geometry certificate.

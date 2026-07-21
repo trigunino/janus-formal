@@ -22,6 +22,7 @@ import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusBackgroundVe
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusAbelianGhostDecoupling
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusLLGhostOperatorFrontier
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusProgramPQuantumLLBridge
+import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusLLDeterminantGaugeFixingInterface
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusSexticLoopOrder
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusGaugeLoopSexticCoverage
 import JanusFormal.Branches.WorldvolumeQuantumAlpha.Gates.P0EFTJanusMCSPropagatorPowerCounting
@@ -75,6 +76,7 @@ structure ProgramStatus where
   llGhostOperatorDerived : Prop
   llBetaUnderdeterminationProved : Prop
   programPClassicalFredholmBVBridgeImported : Prop
+  llPrimedDeterminantInterfaceDerived : Prop
   pureSexticLoopOrderDerived : Prop
   gaugeSexticVertexBasisThroughSixDerived : Prop
   mcsTransversePropagatorDerived : Prop
@@ -149,6 +151,7 @@ def mathematicalQuantumProgramClosed (s : ProgramStatus) : Prop :=
   s.llGhostOperatorDerived /\
   s.llBetaUnderdeterminationProved /\
   s.programPClassicalFredholmBVBridgeImported /\
+  s.llPrimedDeterminantInterfaceDerived /\
   s.pureSexticLoopOrderDerived /\
   s.gaugeSexticVertexBasisThroughSixDerived /\
   s.mcsTransversePropagatorDerived /\
@@ -221,6 +224,7 @@ def honestQuantumFrontier (s : ProgramStatus) : Prop :=
   s.abelianGhostSymbolDerived /\
   s.llBetaUnderdeterminationProved /\
   s.programPClassicalFredholmBVBridgeImported /\
+  s.llPrimedDeterminantInterfaceDerived /\
   s.pureSexticLoopOrderDerived /\
   s.gaugeSexticVertexBasisThroughSixDerived /\
   s.mcsTransversePropagatorDerived /\

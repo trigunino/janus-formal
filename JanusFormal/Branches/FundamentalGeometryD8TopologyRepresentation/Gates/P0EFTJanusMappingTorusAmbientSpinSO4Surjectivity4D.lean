@@ -159,6 +159,11 @@ private def AmbientUnitVector.reflectionEquiv
     CoverCoordinates ≃ₗ[Real] CoverCoordinates :=
   ambientUnitReflection unitVector.vector unitVector.unit
 
+private def AmbientUnitVector.toReflectionFactor
+    (unitVector : AmbientUnitVector) : AmbientUnitReflectionFactor where
+  vector := unitVector.vector
+  unit := unitVector.unit
+
 private theorem ambientHilbertUnitReflection_conjugates
     (vector : AmbientHilbert) (hNormSq : ‖vector‖ ^ 2 = 1) :
     ambientHilbertConjugation
@@ -366,6 +371,62 @@ private theorem linearIsometryListProd_toLinearEquiv
           (rest.map fun next => next.toLinearEquiv).prod
       rw [← inductionHypothesis]
       rfl
+
+/-- Cartan--Dieudonné gives a finite unit-reflection factorization for every
+ambient orthogonal isometry, with no determinant or orientation restriction. -/
+theorem ambientO4HasUnitReflectionFactorization
+    (target : ambientCoverEuclideanQuadraticForm.IsometryEquiv
+      ambientCoverEuclideanQuadraticForm) :
+    Nonempty (AmbientO4UnitReflectionFactorization target) := by
+  obtain ⟨vectors, _, hReflections⟩ :=
+    (ambientHilbertLinearIsometryEquiv target).reflections_generate_dim
+  let unitVectors := ambientUnitFactors vectors
+  have hHilbertProduct :
+      (vectors.map fun vector =>
+          ((Real ∙ vector).orthogonal.reflection).toLinearEquiv).prod =
+        (ambientHilbertLinearIsometryEquiv target).toLinearEquiv := by
+    have hReflectionsLinear := congrArg
+      (fun isometry : AmbientHilbert ≃ₗᵢ[Real] AmbientHilbert =>
+        isometry.toLinearEquiv) hReflections
+    rw [linearIsometryListProd_toLinearEquiv] at hReflectionsLinear
+    simpa only [List.map_map, Function.comp_def] using
+      hReflectionsLinear.symm
+  have hOrthogonalProduct :
+      (vectors.map fun vector =>
+          ambientHilbertConjugation
+            (((Real ∙ vector).orthogonal.reflection).toLinearEquiv)).prod =
+        target.toLinearEquiv := by
+    calc
+      _ = ambientHilbertConjugation
+          ((vectors.map fun vector =>
+            ((Real ∙ vector).orthogonal.reflection).toLinearEquiv).prod) := by
+          simpa only [List.map_map, Function.comp_def] using
+            (map_list_prod ambientHilbertConjugation
+              (vectors.map fun vector =>
+                ((Real ∙ vector).orthogonal.reflection).toLinearEquiv)).symm
+      _ = target.toLinearEquiv := by
+        rw [hHilbertProduct,
+          ambientHilbertLinearIsometryEquiv_conjugates_to_target]
+  have hUnitProduct :
+      (unitVectors.map AmbientUnitVector.reflectionEquiv).prod =
+        target.toLinearEquiv :=
+    (ambientUnitFactors_reflectionProduct vectors).trans hOrthogonalProduct
+  refine ⟨{
+    factors := unitVectors.map AmbientUnitVector.toReflectionFactor
+    factorization := ?_ }⟩
+  rw [ambientReflectionProductOfUnitFactors, List.map_map]
+  have hMap :
+      unitVectors.map
+          (AmbientUnitReflectionFactor.reflectionEquiv ∘
+            AmbientUnitVector.toReflectionFactor) =
+        unitVectors.map AmbientUnitVector.reflectionEquiv := by
+    apply List.map_congr_left
+    intro unitVector _
+    apply LinearEquiv.ext
+    intro tangent
+    rfl
+  rw [hMap]
+  exact hUnitProduct
 
 /-- Cartan--Dieudonne and determinant parity supply the exact finite input
 required by the explicit even-reflection Clifford lift. -/
