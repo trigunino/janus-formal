@@ -237,8 +237,8 @@ theorem map_polarCoord_symm_latitudeMeasure :
   apply Measure.ext
   intro measurableSet hMeasurableSet
   rw [Measure.map_apply measurable_polarCoord_symm hMeasurableSet,
-    Measure.withDensity_apply _ hMeasurableSet]
-  rw [Measure.withDensity_apply _
+    withDensity_apply _ hMeasurableSet]
+  rw [withDensity_apply _
     (measurable_polarCoord_symm hMeasurableSet)]
   have hPolar := Real.lintegral_comp_polarCoord_symm
     (positiveCartesianHalfPlane.indicator
@@ -351,7 +351,7 @@ theorem latitudePolarReconstruction_measurePreserving :
     map_polarCoord_symm_latitudeMeasure
   simpa [latitudePolarReconstruction, latitudeAngleMeasure,
     Measure.volumeIoiPow, latitudePolarDensity, cylindricalDensity,
-    Measure.prod_withDensity, Measure.prod_restrict,
+    prod_withDensity, Measure.prod_restrict,
     Measure.map_map, hMeasurableSet] using hFull
 
 /-- Reassociate `S² × ((0,∞) × ℝ)` to `(S² × (0,∞)) × ℝ`. -/
@@ -368,10 +368,13 @@ theorem cylindricalReassociate_measurePreserving :
       (((volume : Measure EuclideanR3).toSphere.prod
         (Measure.volumeIoiPow 2)).prod volume) := by
   refine ⟨by fun_prop, ?_⟩
-  exact (Measure.prodAssoc_prod
-    (μ := (volume : Measure EuclideanR3).toSphere)
-    (ν := Measure.volumeIoiPow 2)
-    (τ := volume)).symm
+  change Measure.map MeasurableEquiv.prodAssoc.symm
+      ((volume : Measure EuclideanR3).toSphere.prod
+        ((Measure.volumeIoiPow 2).prod volume)) =
+    (((volume : Measure EuclideanR3).toSphere.prod
+      (Measure.volumeIoiPow 2)).prod volume)
+  apply MeasurableEquiv.prodAssoc.map_measurableEquiv_injective
+  simp [Measure.prodAssoc_prod]
 
 /-- Full latitude-radial reconstruction of the split four-space. -/
 def latitudeRadialReconstruction
@@ -412,11 +415,16 @@ theorem latitudeRadialReconstruction_eq_smul
       parameter.2.1.1 * Real.sin parameter.2.2.1
     rfl
 
-/-! ## Removing the common radial factor -/
+/-! ## Cancelling the common radial factor -/
 
 /-- Compactly supported radial normalizer of mass one for `volumeIoiPow 3`. -/
 def radialNormalizer (radius : PositiveRadius) : ENNReal :=
   if radius.1 < 1 then 4 else 0
+
+/-- The radial normalizer is measurable. -/
+theorem radialNormalizer_measurable : Measurable radialNormalizer := by
+  unfold radialNormalizer
+  fun_prop
 
 /-- The radial normalizer has total mass one. -/
 theorem lintegral_radialNormalizer :
@@ -430,144 +438,304 @@ theorem lintegral_radialNormalizer :
   rw [hIndicator, lintegral_indicator measurableSet_Iio]
   simp [Measure.volumeIoiPow_apply_Iio, oneRadius]
 
-/-- Exact coarea formula in the split product sphere. -/
-theorem productEquatorialLatitude_lintegral
-    (integrand : ProductSphere3 → ENNReal)
-    (hIntegrand : Measurable integrand) :
-    ∫⁻ point : ProductSphere3, integrand point
-        ∂(volume : Measure ProductR4).toSphere =
-      ∫⁻ point : Sphere2,
-        ∫⁻ latitude : LatitudeAngle,
-          ENNReal.ofReal (Real.cos latitude.1 ^ 2) *
-            integrand (productEquatorialLatitude (point, latitude.1))
-          ∂(volume.comap ((↑) : LatitudeAngle → Real))
-        ∂(volume : Measure EuclideanR3).toSphere := by
-  have hPolar4 :=
+/-- Probability radial measure used to cancel the common `r³` factor. -/
+def normalizedRadialMeasure : Measure PositiveRadius :=
+  (Measure.volumeIoiPow 3).withDensity radialNormalizer
+
+@[simp] theorem normalizedRadialMeasure_univ :
+    normalizedRadialMeasure Set.univ = 1 := by
+  rw [normalizedRadialMeasure, withDensity_apply _ MeasurableSet.univ,
+    Measure.restrict_univ]
+  exact lintegral_radialNormalizer
+
+/-- Radial reconstruction of the split four-space. -/
+def radialReconstruction4
+    (parameter : ProductSphere3 × PositiveRadius) : ProductR4 :=
+  parameter.2.1 • parameter.1.1
+
+/-- Radial reconstruction is a measurable embedding. -/
+theorem radialReconstruction4_measurableEmbedding :
+    MeasurableEmbedding radialReconstruction4 := by
+  have hFormula : radialReconstruction4 =
+      ((↑) : ({0}ᶜ : Set ProductR4) → ProductR4) ∘
+        (homeomorphUnitSphereProd ProductR4).symm := by
+    funext parameter
+    simp [radialReconstruction4,
+      homeomorphUnitSphereProd_symm_apply_coe, Function.comp_def]
+  rw [hFormula]
+  exact (MeasurableEmbedding.subtype_coe
+    (measurableSet_singleton (0 : ProductR4)).compl).comp
+      (homeomorphUnitSphereProd ProductR4).symm.measurableEmbedding
+
+/-- The generalized polar theorem reconstructs split four-dimensional
+Lebesgue measure from its unit sphere and `r³ dr`. -/
+theorem radialReconstruction4_measurePreserving :
+    MeasurePreserving radialReconstruction4
+      ((volume : Measure ProductR4).toSphere.prod
+        (Measure.volumeIoiPow 3))
+      (volume : Measure ProductR4) := by
+  have hPolar :=
     Measure.measurePreserving_homeomorphUnitSphereProd
       (μ := (volume : Measure ProductR4))
-  have hRadialMass := lintegral_radialNormalizer
-  calc
-    ∫⁻ point : ProductSphere3, integrand point
-        ∂(volume : Measure ProductR4).toSphere =
-      ∫⁻ point : ProductSphere3,
-        ∫⁻ radius : PositiveRadius,
-          radialNormalizer radius * integrand point
-          ∂Measure.volumeIoiPow 3
-        ∂(volume : Measure ProductR4).toSphere := by
-          apply lintegral_congr
-          intro point
-          rw [← ENNReal.one_mul (integrand point), ← hRadialMass,
-            lintegral_const_mul]
-          exact hIntegrand.const_mul _
-    _ = ∫⁻ value : ProductR4,
-        radialNormalizer
-            ⟨‖value‖, by
-              by_cases hValue : value = 0
-              · simp [hValue]
-              · simpa using norm_pos_iff.mpr hValue⟩ *
-          integrand
-            ⟨‖value‖⁻¹ • value, by
-              by_cases hValue : value = 0
-              · simp [hValue]
-              · simp [Metric.mem_sphere, dist_zero_right, norm_smul,
-                  hValue]⟩ := by
-          rw [← hPolar4.lintegral_comp_emb
-            (homeomorphUnitSphereProd ProductR4).measurableEmbedding]
-          apply lintegral_congr
-          intro value
-          simp [homeomorphUnitSphereProd_apply_fst_coe,
-            homeomorphUnitSphereProd_apply_snd_coe]
-    _ = ∫⁻ parameter : Sphere2 × (PositiveRadius × LatitudeAngle),
-        radialNormalizer parameter.2.1 *
-          integrand
-            (productEquatorialLatitude
-              (parameter.1, parameter.2.2.1))
-        ∂((volume : Measure EuclideanR3).toSphere.prod
-          ((Measure.volumeIoiPow 3).prod latitudeAngleMeasure)) := by
-          rw [← latitudeRadialReconstruction_measurePreserving.lintegral_comp]
-          · apply lintegral_congr
-            intro parameter
-            rw [latitudeRadialReconstruction_eq_smul]
-            have hNorm :
-                ‖latitudeRadialReconstruction parameter‖ =
-                  parameter.2.1.1 := by
-              rw [latitudeRadialReconstruction_eq_smul,
-                norm_smul]
-              have hSphere :
-                  ‖(productEquatorialLatitude
-                    (parameter.1, parameter.2.2.1)).1‖ = 1 := by
-                simpa [Metric.mem_sphere, dist_zero_right] using
-                  (productEquatorialLatitude
-                    (parameter.1, parameter.2.2.1)).2
-              simp [hSphere, abs_of_pos parameter.2.1.2]
-            simp [hNorm, latitudeRadialReconstruction_eq_smul,
-              parameter.2.1.2.ne']
-          · fun_prop
-    _ = ∫⁻ point : Sphere2,
-        ∫⁻ latitude : LatitudeAngle,
-          ENNReal.ofReal (Real.cos latitude.1 ^ 2) *
-            integrand (productEquatorialLatitude (point, latitude.1))
-          ∂(volume.comap ((↑) : LatitudeAngle → Real))
-        ∂(volume : Measure EuclideanR3).toSphere := by
-          rw [lintegral_prod]
-          apply lintegral_congr
-          intro point
-          rw [lintegral_prod]
-          rw [Measure.lintegral_withDensity_eq_lintegral_mul]
-          · apply lintegral_congr
-            intro radius
-            rw [mul_assoc, ← lintegral_const_mul]
-            · rw [lintegral_radialNormalizer, one_mul]
-            · fun_prop
-          · fun_prop
-          · fun_prop
+  have hPolarSymm := MeasurePreserving.symm
+    (homeomorphUnitSphereProd ProductR4).toMeasurableEquiv hPolar
+  have hSubtype : MeasurePreserving
+      ((↑) : ({0}ᶜ : Set ProductR4) → ProductR4)
+      ((volume : Measure ProductR4).comap (↑))
+      (volume : Measure ProductR4) := by
+    refine ⟨measurable_subtype_coe, ?_⟩
+    rw [map_comap_subtype_coe
+        (measurableSet_singleton (0 : ProductR4)).compl,
+      Measure.restrict_compl_singleton]
+  simpa [radialReconstruction4,
+    homeomorphUnitSphereProd_symm_apply_coe,
+    Function.comp_def] using hSubtype.comp hPolarSymm
 
-/-- Exact coarea formula on Mathlib's standard `S³`. -/
-theorem standardEquatorialLatitude_lintegral
-    (integrand : Sphere3 → ENNReal)
-    (hIntegrand : Measurable integrand) :
-    ∫⁻ point : Sphere3, integrand point
-        ∂(volume : Measure EuclideanR4).toSphere =
-      ∫⁻ point : Sphere2,
-        ∫⁻ latitude : LatitudeAngle,
-          ENNReal.ofReal (Real.cos latitude.1 ^ 2) *
-            integrand
-              (unitThreeSphereHomeomorph
-                (equatorialLatitude
-                  (equatorialTwoSphereHomeomorph.symm point)
-                  latitude.1))
-          ∂(volume.comap ((↑) : LatitudeAngle → Real))
-        ∂(volume : Measure EuclideanR3).toSphere := by
-  have hSphereMeasure : MeasurePreserving tailNormalSphereEquiv
+/-- Move the radial coordinate to the middle:
+`((u,ν),r) ↦ (u,(r,ν))`. -/
+def latitudeRadiusReassociate
+    (parameter : (Sphere2 × LatitudeAngle) × PositiveRadius) :
+    Sphere2 × (PositiveRadius × LatitudeAngle) :=
+  (parameter.1.1, (parameter.2, parameter.1.2))
+
+/-- The preceding permutation preserves the corresponding product measures. -/
+theorem latitudeRadiusReassociate_measurePreserving :
+    MeasurePreserving latitudeRadiusReassociate
+      ((((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure).prod
+        (Measure.volumeIoiPow 3)))
+      ((volume : Measure EuclideanR3).toSphere.prod
+        ((Measure.volumeIoiPow 3).prod latitudeAngleMeasure)) := by
+  have hAssoc : MeasurePreserving
+      (MeasurableEquiv.prodAssoc :
+        ((Sphere2 × LatitudeAngle) × PositiveRadius) ≃ₘ
+          Sphere2 × (LatitudeAngle × PositiveRadius))
+      ((((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure).prod
+        (Measure.volumeIoiPow 3)))
+      ((volume : Measure EuclideanR3).toSphere.prod
+        (latitudeAngleMeasure.prod (Measure.volumeIoiPow 3))) :=
+    ⟨MeasurableEquiv.prodAssoc.measurable, Measure.prodAssoc_prod⟩
+  have hSwap : MeasurePreserving
+      (Prod.map id Prod.swap :
+        Sphere2 × (LatitudeAngle × PositiveRadius) →
+          Sphere2 × (PositiveRadius × LatitudeAngle))
+      ((volume : Measure EuclideanR3).toSphere.prod
+        (latitudeAngleMeasure.prod (Measure.volumeIoiPow 3)))
+      ((volume : Measure EuclideanR3).toSphere.prod
+        ((Measure.volumeIoiPow 3).prod latitudeAngleMeasure)) := by
+    refine ⟨by fun_prop, ?_⟩
+    rw [← Measure.map_prod_map
+      ((volume : Measure EuclideanR3).toSphere)
+      (latitudeAngleMeasure.prod (Measure.volumeIoiPow 3))
+      measurable_id measurable_swap]
+    simp [Measure.prod_swap]
+  simpa [latitudeRadiusReassociate, Function.comp_def] using hSwap.comp hAssoc
+
+/-- Latitude map with the angle subtype exposed. -/
+def productEquatorialLatitudeSubtype
+    (parameter : Sphere2 × LatitudeAngle) : ProductSphere3 :=
+  productEquatorialLatitude (parameter.1, parameter.2.1)
+
+/-- Latitude and radius as a product map. -/
+def productLatitudeRadiusMap
+    (parameter : (Sphere2 × LatitudeAngle) × PositiveRadius) :
+    ProductSphere3 × PositiveRadius :=
+  Prod.map productEquatorialLatitudeSubtype id parameter
+
+/-- The radial reconstruction after latitude-radius mapping agrees with the
+latitude-radial reconstruction after reassociation. -/
+theorem radialReconstruction4_productLatitudeRadiusMap
+    (parameter : (Sphere2 × LatitudeAngle) × PositiveRadius) :
+    radialReconstruction4 (productLatitudeRadiusMap parameter) =
+      latitudeRadialReconstruction (latitudeRadiusReassociate parameter) := by
+  rw [latitudeRadialReconstruction_eq_smul]
+  rfl
+
+/-- The latitude-radius product map preserves the full radial measures. -/
+theorem productLatitudeRadiusMap_measurePreserving :
+    MeasurePreserving productLatitudeRadiusMap
+      ((((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure).prod
+        (Measure.volumeIoiPow 3)))
+      ((volume : Measure ProductR4).toSphere.prod
+        (Measure.volumeIoiPow 3)) := by
+  have hFunction :
+      radialReconstruction4 ∘ productLatitudeRadiusMap =
+        latitudeRadialReconstruction ∘ latitudeRadiusReassociate := by
+    funext parameter
+    exact radialReconstruction4_productLatitudeRadiusMap parameter
+  have hComposed : MeasurePreserving
+      (radialReconstruction4 ∘ productLatitudeRadiusMap)
+      ((((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure).prod
+        (Measure.volumeIoiPow 3)))
+      (volume : Measure ProductR4) := by
+    rw [hFunction]
+    exact latitudeRadialReconstruction_measurePreserving.comp
+      latitudeRadiusReassociate_measurePreserving
+  refine ⟨by fun_prop, ?_⟩
+  apply radialReconstruction4_measurableEmbedding.map_injective
+  rw [Measure.map_map radialReconstruction4_measurableEmbedding.measurable
+      (by fun_prop : Measurable productLatitudeRadiusMap),
+    hComposed.map_eq,
+    radialReconstruction4_measurePreserving.map_eq]
+
+/-- A measure-preserving map remains measure-preserving after installing on the
+source the pullback of a measurable target density. -/
+private theorem measurePreserving_withDensity
+    {Source Target : Type*}
+    [MeasurableSpace Source] [MeasurableSpace Target]
+    {sourceMeasure : Measure Source} {targetMeasure : Measure Target}
+    {map : Source → Target}
+    (hMap : MeasurePreserving map sourceMeasure targetMeasure)
+    (density : Target → ENNReal) (hDensity : Measurable density) :
+    MeasurePreserving map
+      (sourceMeasure.withDensity (density ∘ map))
+      (targetMeasure.withDensity density) := by
+  refine ⟨hMap.measurable, ?_⟩
+  apply Measure.ext
+  intro measurableSet hMeasurableSet
+  rw [Measure.map_apply hMap.measurable hMeasurableSet,
+    withDensity_apply _ (hMap.measurable hMeasurableSet),
+    withDensity_apply _ hMeasurableSet]
+  simpa [Function.comp_def] using
+    hMap.setLIntegral_comp_preimage hMeasurableSet hDensity
+
+/-- The weighted latitude measure maps exactly to the split-product sphere
+measure. -/
+theorem productEquatorialLatitudeSubtype_weighted_map :
+    Measure.map productEquatorialLatitudeSubtype
+        ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure) =
+      (volume : Measure ProductR4).toSphere := by
+  let density : ProductSphere3 × PositiveRadius → ENNReal :=
+    fun parameter => radialNormalizer parameter.2
+  have hDensity : Measurable density :=
+    radialNormalizer_measurable.comp measurable_snd
+  have hWeighted := measurePreserving_withDensity
+    productLatitudeRadiusMap_measurePreserving density hDensity
+  have hMapNormalized :
+      Measure.map productLatitudeRadiusMap
+          (((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure).prod
+            normalizedRadialMeasure) =
+        (volume : Measure ProductR4).toSphere.prod normalizedRadialMeasure := by
+    simpa [density, normalizedRadialMeasure, productLatitudeRadiusMap,
+      Function.comp_def, prod_withDensity_right radialNormalizer_measurable]
+      using hWeighted.map_eq
+  have hProduct :
+      (Measure.map productEquatorialLatitudeSubtype
+          ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure)).prod
+          normalizedRadialMeasure =
+        (volume : Measure ProductR4).toSphere.prod normalizedRadialMeasure := by
+    calc
+      _ = Measure.map productLatitudeRadiusMap
+          ((((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure).prod
+            normalizedRadialMeasure)) := by
+          simpa [productLatitudeRadiusMap] using
+            Measure.map_prod_map
+              ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure)
+              normalizedRadialMeasure
+              (by fun_prop : Measurable productEquatorialLatitudeSubtype)
+              measurable_id
+      _ = _ := hMapNormalized
+  have hFirstMarginal := congrArg
+    (Measure.map
+      (Prod.fst : ProductSphere3 × PositiveRadius → ProductSphere3)) hProduct
+  simpa using hFirstMarginal
+
+/-! ## Returning from angle subtypes and the split sphere -/
+
+/-- Real-valued latitude density. -/
+def realLatitudeWeight (latitude : Real) : ENNReal :=
+  ENNReal.ofReal (Real.cos latitude ^ 2)
+
+theorem realLatitudeWeight_measurable : Measurable realLatitudeWeight := by
+  unfold realLatitudeWeight
+  fun_prop
+
+/-- Inclusion of the latitude-angle subtype with its weighted measure. -/
+theorem latitudeAngleInclusion_measurePreserving :
+    MeasurePreserving ((↑) : LatitudeAngle → Real)
+      latitudeAngleMeasure
+      ((volume.restrict LatitudeAngle).withDensity realLatitudeWeight) := by
+  have hBase : MeasurePreserving ((↑) : LatitudeAngle → Real)
+      (volume.comap ((↑) : LatitudeAngle → Real))
+      (volume.restrict LatitudeAngle) := by
+    refine ⟨measurable_subtype_coe, ?_⟩
+    exact map_comap_subtype_coe measurableSet_Ioo
+  simpa [latitudeAngleMeasure, realLatitudeWeight, Function.comp_def] using
+    measurePreserving_withDensity hBase realLatitudeWeight
+      realLatitudeWeight_measurable
+
+/-- Inclusion of latitude parameters from the angle subtype to real latitude. -/
+def latitudeParameterInclusion
+    (parameter : Sphere2 × LatitudeAngle) : Sphere2 × Real :=
+  (parameter.1, parameter.2.1)
+
+/-- The inclusion of latitude parameters is measure-preserving. -/
+theorem latitudeParameterInclusion_measurePreserving :
+    MeasurePreserving latitudeParameterInclusion
+      ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure)
+      ((volume : Measure EuclideanR3).toSphere.prod
+        ((volume.restrict LatitudeAngle).withDensity realLatitudeWeight)) := by
+  simpa [latitudeParameterInclusion] using
+    MeasurePreserving.prod
+      (MeasurePreserving.id ((volume : Measure EuclideanR3).toSphere))
+      latitudeAngleInclusion_measurePreserving
+
+/-- The parameter measure written on `S² × ℝ`. -/
+def standardLatitudeParameterMeasure : Measure (Sphere2 × Real) :=
+  (((volume : Measure EuclideanR3).toSphere.prod
+    (volume.restrict LatitudeAngle)).withDensity
+      (fun parameter => realLatitudeWeight parameter.2))
+
+/-- The subtype parameter measure pushes to the standard weighted parameter
+measure. -/
+theorem latitudeParameterInclusion_map :
+    Measure.map latitudeParameterInclusion
+        ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure) =
+      standardLatitudeParameterMeasure := by
+  calc
+    _ = (volume : Measure EuclideanR3).toSphere.prod
+        ((volume.restrict LatitudeAngle).withDensity realLatitudeWeight) :=
+      latitudeParameterInclusion_measurePreserving.map_eq
+    _ = standardLatitudeParameterMeasure := by
+      exact prod_withDensity_right realLatitudeWeight_measurable
+
+/-- Exact coarea formula on the split-product sphere, with real latitude
+parameters. -/
+theorem productEquatorialLatitude_weighted_map :
+    Measure.map productEquatorialLatitude standardLatitudeParameterMeasure =
+      (volume : Measure ProductR4).toSphere := by
+  calc
+    _ = Measure.map productEquatorialLatitude
+        (Measure.map latitudeParameterInclusion
+          ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure)) := by
+      rw [latitudeParameterInclusion_map]
+    _ = Measure.map
+        (productEquatorialLatitude ∘ latitudeParameterInclusion)
+        ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure) := by
+      rw [Measure.map_map (by fun_prop) (by fun_prop)]
+    _ = Measure.map productEquatorialLatitudeSubtype
+        ((volume : Measure EuclideanR3).toSphere.prod latitudeAngleMeasure) := by
+      congr 1
+    _ = _ := productEquatorialLatitudeSubtype_weighted_map
+
+/-- The coordinate-splitting sphere equivalence preserves `Measure.toSphere`. -/
+theorem tailNormalSphereEquiv_measurePreserving :
+    MeasurePreserving tailNormalSphereEquiv
       (volume : Measure EuclideanR4).toSphere
       (volume : Measure ProductR4).toSphere := by
-    refine ⟨tailNormalSphereEquiv.measurable, ?_⟩
-    apply Measure.ext
-    intro measurableSet hMeasurableSet
-    rw [Measure.map_apply tailNormalSphereEquiv.measurable hMeasurableSet]
-    rw [(volume : Measure EuclideanR4).toSphere_apply'
+  refine ⟨tailNormalSphereEquiv.measurable, ?_⟩
+  apply Measure.ext
+  intro measurableSet hMeasurableSet
+  rw [Measure.map_apply tailNormalSphereEquiv.measurable hMeasurableSet]
+  rw [(volume : Measure EuclideanR4).toSphere_apply'
       (tailNormalSphereEquiv.measurable hMeasurableSet),
-      (volume : Measure ProductR4).toSphere_apply' hMeasurableSet]
-    have hVolume := tailNormalLinearIsometryEquiv.measurePreserving.map_eq
-    simpa [tailNormalSphereEquiv, Set.image_image,
-      LinearIsometryEquiv.norm_map] using congrArg
-      (fun measure : Measure ProductR4 =>
-        (Module.finrank Real ProductR4 : ENNReal) *
-          measure (Set.Ioo (0 : Real) 1 •
-            ((↑) '' measurableSet))) hVolume
-  rw [← hSphereMeasure.lintegral_comp hIntegrand]
-  rw [productEquatorialLatitude_lintegral
-    (integrand ∘ tailNormalSphereEquiv.symm)
-    (hIntegrand.comp tailNormalSphereEquiv.symm.measurable)]
-  apply lintegral_congr
-  intro point
-  apply lintegral_congr
-  intro latitude
-  rw [Function.comp_apply]
-  congr 2
-  exact tailNormalSphereEquiv.injective
-    (by rw [tailNormalSphereEquiv_standardLatitude,
-      tailNormalSphereEquiv.apply_symm_apply])
+    (volume : Measure ProductR4).toSphere_apply' hMeasurableSet]
+  have hVolume := tailNormalLinearIsometryEquiv.measurePreserving.map_eq
+  simpa [tailNormalSphereEquiv, Set.image_image,
+    LinearIsometryEquiv.norm_map] using congrArg
+    (fun measure : Measure ProductR4 =>
+      (Module.finrank Real ProductR4 : ENNReal) *
+        measure (Set.Ioo (0 : Real) 1 •
+          ((↑) '' measurableSet))) hVolume
 
 /-- Measure form of the standard equatorial coarea formula. -/
 def standardEquatorialLatitude
@@ -585,23 +753,21 @@ theorem standardEquatorialLatitude_weighted_map :
           (fun parameter =>
             ENNReal.ofReal (Real.cos parameter.2 ^ 2))) =
       (volume : Measure EuclideanR4).toSphere := by
-  apply Measure.ext
-  intro measurableSet hMeasurableSet
-  rw [Measure.map_apply (by fun_prop) hMeasurableSet]
-  rw [Measure.withDensity_apply _
-    ((by fun_prop : Measurable standardEquatorialLatitude) hMeasurableSet)]
-  rw [standardEquatorialLatitude_lintegral
-    (measurableSet.indicator (fun _ => (1 : ENNReal)))
-    (measurable_const.indicator hMeasurableSet)]
-  rw [lintegral_prod]
-  apply lintegral_congr
-  intro point
-  rw [lintegral_restrict]
-  · rw [Measure.lintegral_withDensity_eq_lintegral_mul]
-    · rfl
-    · fun_prop
-    · fun_prop
-  · exact measurableSet_Ioo
+  have hFactor : standardEquatorialLatitude =
+      tailNormalSphereEquiv.symm ∘ productEquatorialLatitude := by
+    funext parameter
+    apply tailNormalSphereEquiv.injective
+    rw [Function.comp_apply, tailNormalSphereEquiv.apply_symm_apply,
+      tailNormalSphereEquiv_standardLatitude]
+  rw [show (((volume : Measure EuclideanR3).toSphere.prod
+      (volume.restrict LatitudeAngle)).withDensity
+        (fun parameter => ENNReal.ofReal (Real.cos parameter.2 ^ 2))) =
+      standardLatitudeParameterMeasure by rfl]
+  rw [hFactor, ← Measure.map_map tailNormalSphereEquiv.symm.measurable
+    (by fun_prop : Measurable productEquatorialLatitude)]
+  rw [productEquatorialLatitude_weighted_map]
+  exact (MeasurePreserving.symm tailNormalSphereEquiv
+    tailNormalSphereEquiv_measurePreserving).map_eq
 
 end
 end P0EFTJanusMeasureToSphereEquatorialCoarea4D
