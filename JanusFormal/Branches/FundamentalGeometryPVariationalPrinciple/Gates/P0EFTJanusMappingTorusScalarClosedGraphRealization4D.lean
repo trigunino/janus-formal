@@ -142,7 +142,7 @@ noncomputable def canonicalScalarClosedBoundaryTrace
       (field : Ambient) := by
   have hEqual := congrArg Subtype.val
     ((canonicalScalarGraphToClosedDomainEquiv data hClosable).apply_symm_apply field)
-  simpa using hEqual
+  exact hEqual
 
 @[simp] theorem canonicalScalarClosedOperatorInclusion_equiv
     (data : CanonicalScalarHilbertGreenSystem
@@ -225,6 +225,7 @@ theorem canonicalScalarClosedGreenIdentity
     (canonicalScalarGraphToClosedDomainEquiv data hClosable).symm second
   have hGreen := canonicalScalarCompletedGreenIdentity
     data traceBound firstGraph secondGraph
+  unfold canonicalScalarCompletedBoundaryGreenPairing at hGreen
   simpa [canonicalScalarClosedOperator,
     canonicalScalarClosedOperatorInclusion,
     canonicalScalarClosedBoundaryTrace,
