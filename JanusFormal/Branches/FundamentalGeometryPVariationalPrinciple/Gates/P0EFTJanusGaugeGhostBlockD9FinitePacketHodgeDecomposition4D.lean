@@ -120,7 +120,8 @@ def d9GaugeGhostFinitePacketRegularSymbol {ι : Type*}
   toFun packet :=
     ⟨d9GaugeGhostFinitePacketSymbol covector packet.1, by
       intro mode hZero
-      simp [d9GaugeGhostFinitePacketSymbol_apply, hZero]⟩
+      simp [d9GaugeGhostFinitePacketSymbol_apply, hZero,
+        normSquared, tangentDot, zeroTangent]⟩
   map_add' first second := by
     apply Subtype.ext
     simp
@@ -201,18 +202,21 @@ theorem d9GaugeGhostFinitePacketHodgeEquiv_symbol
   apply Prod.ext
   · funext mode
     change d9GaugeGhostFinitePacketSymbol covector packet mode.1 = 0
-    simp [d9GaugeGhostFinitePacketSymbol_apply, mode.property]
+    simp [d9GaugeGhostFinitePacketSymbol_apply, mode.property,
+      normSquared, tangentDot, zeroTangent]
   · apply Subtype.ext
+    change d9GaugeGhostFinitePacketRegularProjection covector
+        (d9GaugeGhostFinitePacketSymbol covector packet) =
+      d9GaugeGhostFinitePacketSymbol covector
+        (d9GaugeGhostFinitePacketRegularProjection covector packet)
     classical
     funext mode
     by_cases hZero : covector mode = zeroTangent
-    · simp [d9GaugeGhostFinitePacketSymbol_apply, hZero]
-    · have hNorm : normSquared (covector mode) ≠ 0 :=
-        ne_of_gt (norm_squared_positive_of_nonzero (covector mode) hZero)
-      simp [d9GaugeGhostFinitePacketSymbol_apply,
-        d9GaugeGhostFinitePacketRegularProjection,
-        d9GaugeGhostFinitePacketGeneralizedInverse,
-        hZero, smul_smul, hNorm]
+    · simp [d9GaugeGhostFinitePacketRegularProjection_apply,
+        d9GaugeGhostFinitePacketSymbol_apply, hZero,
+        normSquared, tangentDot, zeroTangent]
+    · simp [d9GaugeGhostFinitePacketRegularProjection_apply,
+        d9GaugeGhostFinitePacketSymbol_apply, hZero]
 
 /-- The packet dimension splits into zero-mode and regular contributions. -/
 theorem d9GaugeGhostFinitePacketHodge_finrank
