@@ -10,6 +10,8 @@ open P0EFTJanusGaugeGhostBlockD9FinitePacketOperator4D
 open P0EFTJanusGaugeFixedPrincipalSymbols
 open P0EFTJanusImmersionFiberAlgebra
 
+local instance : DecidableEq TangentVector3 := Classical.decEq _
+
 /-- The reciprocal packet operator away from the zero-symbol support, extended
 by zero on the zero modes.  It is the canonical algebraic generalized inverse
 of the finite block-diagonal D9 symbol. -/
@@ -192,7 +194,8 @@ theorem d9GaugeGhostFinitePacketSymbol_generalizedInverse_symbol
   funext mode
   by_cases hZero : covector mode = zeroTangent
   · simp [d9GaugeGhostFinitePacketGeneralizedInverse,
-      d9GaugeGhostFinitePacketSymbol_apply, hZero]
+      d9GaugeGhostFinitePacketSymbol_apply, hZero,
+      normSquared, tangentDot, zeroTangent]
   · have hNorm : normSquared (covector mode) ≠ 0 :=
       ne_of_gt (norm_squared_positive_of_nonzero (covector mode) hZero)
     simp [d9GaugeGhostFinitePacketGeneralizedInverse,
@@ -341,12 +344,15 @@ theorem d9GaugeGhostFinitePacketProjection_support_certificate
         LinearMap.range (d9GaugeGhostFinitePacketSymbol covector) ∧
       LinearMap.ker (d9GaugeGhostFinitePacketRegularProjection covector) =
         LinearMap.ker (d9GaugeGhostFinitePacketSymbol covector) := by
-  rw [d9GaugeGhostFinitePacketZeroProjection_range,
-    d9GaugeGhostFinitePacketZeroProjection_ker,
-    d9GaugeGhostFinitePacketRegularProjection_range,
-    d9GaugeGhostFinitePacketRegularProjection_ker,
-    d9GaugeGhostFinitePacketSymbol_ker_eq_zeroSupported,
-    d9GaugeGhostFinitePacketSymbol_range_eq_zeroVanishing]
+  exact ⟨
+    (d9GaugeGhostFinitePacketZeroProjection_range covector).trans
+      (d9GaugeGhostFinitePacketSymbol_ker_eq_zeroSupported covector).symm,
+    (d9GaugeGhostFinitePacketZeroProjection_ker covector).trans
+      (d9GaugeGhostFinitePacketSymbol_range_eq_zeroVanishing covector).symm,
+    (d9GaugeGhostFinitePacketRegularProjection_range covector).trans
+      (d9GaugeGhostFinitePacketSymbol_range_eq_zeroVanishing covector).symm,
+    (d9GaugeGhostFinitePacketRegularProjection_ker covector).trans
+      (d9GaugeGhostFinitePacketSymbol_ker_eq_zeroSupported covector).symm⟩
 
 /-- Reusable generalized-inverse and complementary-projection certificate. -/
 theorem d9GaugeGhostFinitePacketGeneralizedInverse_certificate
