@@ -119,8 +119,10 @@ def canonicalScalarHilbertBoundarySymplecticOrthogonal
   carrier := {datum | ∀ test, test ∈ subspace →
     canonicalScalarHilbertBoundarySymplecticForm datum test = 0}
   zero_mem' := by
-    intro test hTest
-    simp
+    intro test _
+    change canonicalScalarHilbertBoundarySymplecticForm
+      ((0 : Trace), (0 : Trace)) test = 0
+    exact canonicalScalarHilbertBoundarySymplecticForm_zero_left test
   add_mem' := by
     intro first second hFirst hSecond test hTest
     rw [canonicalScalarHilbertBoundarySymplecticForm_add_left,
@@ -192,13 +194,27 @@ theorem canonicalScalarHilbertSeparatedBoundarySubmodule_le_orthogonal
     (fun value : Trace => inner Real first.2 value) hSecondConstraint
   simp [inner_add_left, inner_add_right, real_inner_smul_left,
     real_inner_smul_right] at hFirstNormal hFirstValue hSecondValue hSecondNormal
-  have hScaled :
-      (a ^ 2 + b ^ 2) *
-          canonicalScalarHilbertBoundarySymplecticForm first second = 0 := by
+  by_cases hA : a = 0
+  · have hB : b ≠ 0 := by
+      rcases hNondegenerate with hA' | hB'
+      · exact False.elim (hA' hA)
+      · exact hB'
+    have hValueNormal : inner Real first.1 second.2 = 0 := by
+      have h : b * inner Real first.1 second.2 = 0 := by
+        simpa [hA] using hSecondValue
+      exact (mul_eq_zero.mp h).resolve_left hB
+    have hNormalValue : inner Real first.2 second.1 = 0 := by
+      have h : b * inner Real first.2 second.1 = 0 := by
+        simpa [hA] using hFirstValue
+      exact (mul_eq_zero.mp h).resolve_left hB
     unfold canonicalScalarHilbertBoundarySymplecticForm
-    nlinarith
-  exact (mul_eq_zero.mp hScaled).resolve_left
-    (ne_of_gt (coefficient_square_sum_pos a b hNondegenerate))
+    rw [hValueNormal, hNormalValue]
+    ring
+  · have hMultiple :
+        a * canonicalScalarHilbertBoundarySymplecticForm first second = 0 := by
+      unfold canonicalScalarHilbertBoundarySymplecticForm
+      nlinarith [hFirstNormal, hSecondNormal]
+    exact (mul_eq_zero.mp hMultiple).resolve_left hA
 
 /-- A datum symplectically orthogonal to a separated subspace satisfies the
 same separated condition. -/
@@ -219,20 +235,29 @@ theorem canonicalScalarHilbertBoundarySymplecticOrthogonal_le_separated
     change a • (b • residual) + b • (-a • residual) = 0
     module
   have hOrth := hDatum probe hProbe
-  have hOrthExpanded :
-      -(a * inner Real datum.1 residual +
-          b * inner Real datum.2 residual) = 0 := by
+  have hOrthRaw :
+      -(a * inner Real datum.1 residual) -
+          b * inner Real datum.2 residual = 0 := by
     simpa [probe, canonicalScalarHilbertBoundarySymplecticForm,
       real_inner_smul_right] using hOrth
+  have hOrthExpanded :
+      a * inner Real datum.1 residual +
+          b * inner Real datum.2 residual = 0 := by
+    linarith
   have hResidualExpanded :
       inner Real residual residual =
         a * inner Real datum.1 residual +
           b * inner Real datum.2 residual := by
-    simp [residual, inner_add_left, real_inner_smul_left]
+    simp only [residual, inner_add_left, real_inner_smul_left]
   have hResidualInner : inner Real residual residual = 0 := by
-    linarith
+    calc
+      inner Real residual residual =
+          a * inner Real datum.1 residual +
+            b * inner Real datum.2 residual := hResidualExpanded
+      _ = 0 := hOrthExpanded
   have hResidualNormSq : ‖residual‖ ^ 2 = 0 := by
-    simpa [real_inner_self_eq_norm_sq] using hResidualInner
+    rw [← real_inner_self_eq_norm_sq residual]
+    exact hResidualInner
   have hResidualNorm : ‖residual‖ = 0 := by
     nlinarith [sq_nonneg ‖residual‖]
   have hResidual : residual = 0 := norm_eq_zero.mp hResidualNorm
@@ -299,10 +324,19 @@ def canonicalScalarHilbertRobinBoundarySubmodule (coefficient : Real) :
     datum ∈ canonicalScalarHilbertRobinBoundarySubmodule
         (Trace := Trace) coefficient ↔
       datum.2 = coefficient • datum.1 := by
-  change -coefficient • datum.1 + datum.2 = 0 ↔ _
-  constructor <;> intro h
-  · exact eq_of_sub_eq_zero (by simpa [sub_eq_add_neg, add_comm] using h)
-  · rw [h]
+  unfold canonicalScalarHilbertRobinBoundarySubmodule
+  rw [mem_canonicalScalarHilbertSeparatedBoundarySubmodule]
+  simp only [one_smul]
+  constructor
+  · intro h
+    have hSub : datum.2 - coefficient • datum.1 = 0 := by
+      calc
+        datum.2 - coefficient • datum.1 =
+            (-coefficient) • datum.1 + datum.2 := by module
+        _ = 0 := h
+    exact sub_eq_zero.mp hSub
+  · intro h
+    rw [h]
     module
 
 /-- Dirichlet is closed Lagrangian. -/
