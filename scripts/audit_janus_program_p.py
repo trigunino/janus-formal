@@ -6068,6 +6068,79 @@ PROGRAM_P_GATES = {
             "theorem d9MatterSpinorGlobalCovariantDerivative_pairing_compatible",
         ),
     ),
+    "P0EFTJanusProgramPD9MatterSpinorCliffordActionNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem normalizedD9MatterSpinorDeckGenerator",
+            "theorem centralizer_ambientHalfGammaGenerator_commutative",
+            "structure D9MatterSpinorDeckCompatibleCliffordFrame",
+            "theorem no_d9MatterSpinorDeckCompatibleCliffordFrame",
+        ),
+    ),
+    "P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9DoubledMatterSpinor",
+            "def d9DoubledMatterSpinorDeckGenerator",
+            "def d9DoubledMatterSpinorCliffordGamma",
+            "theorem d9DoubledMatterSpinorCliffordGamma_sq",
+            "theorem d9DoubledMatterSpinorCliffordGamma_anticommute",
+            "theorem d9DoubledMatterSpinorCliffordGamma_deck_compatible",
+            "structure ProgramPD9MatterSpinorDoubledCliffordFrameCertificate4D",
+            "theorem programPD9MatterSpinorDoubledCliffordFrameCertificate4D_nonempty",
+        ),
+    ),
+    "P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9DoubledMatterFiber",
+            "def d9DoubledMatterFiberHalfSpinorLinearEquiv",
+            "def d9DoubledMatterSpinorMonodromy",
+            "theorem d9DoubledMatterSpinorMonodromy_one_eq_deckGenerator",
+            "def smoothThroatDoubledMatterSpinorVectorBundleCore",
+            "theorem smoothThroatDoubledMatterSpinorVectorBundleCore_isContMDiff",
+            "structure ProgramPD9MatterSpinorDoubledSmoothVectorBundleCertificate4D",
+            "theorem programPD9MatterSpinorDoubledSmoothVectorBundleCertificate4D_nonempty",
+        ),
+    ),
+    "P0EFTJanusProgramPD9MatterSpinorDoubledSmoothSectionDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothThroatDoubledMatterSpinorLift",
+            "theorem SmoothThroatDoubledMatterSpinorLift.deck_monodromy",
+            "def d9DoubledMatterSpinorSectionFiber",
+            "def d9DoubledMatterSpinorBundleSection",
+            "theorem d9DoubledMatterSpinorBundleSection_localTriv",
+            "theorem d9DoubledMatterSpinorBundleSection_contMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPD9MatterSpinorDoubledGlobalCovariantDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9DoubledMatterSpinorGlobalCovariantDerivativeAt",
+            "theorem d9DoubledMatterSpinorGlobalCovariantDerivativeAt_isCovariant",
+            "def d9DoubledMatterSpinorGlobalCovariantDerivative",
+            "structure ProgramPD9MatterSpinorDoubledGlobalCovariantDerivativeCertificate4D",
+            "theorem programPD9MatterSpinorDoubledGlobalCovariantDerivativeCertificate4D_nonempty",
+        ),
+    ),
+    "P0EFTJanusProgramPD9MatterSpinorDoubledFlatCoverConnection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9DoubledMatterSpinorFlatCoverDerivative",
+            "theorem d9DoubledMatterSpinorFlatCoverDerivative_deck_equivariant",
+            "def zeroSmoothThroatDoubledMatterSpinorLift",
+            "structure ProgramPD9MatterSpinorDoubledFlatCoverConnectionCertificate4D",
+            "theorem programPD9MatterSpinorDoubledFlatCoverConnectionCertificate4D_nonempty",
+        ),
+    ),
+    "P0EFTJanusProgramPD9MatterSpinorDoubledFlatGlobalConnectionBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9DoubledMatterSpinorGlobalCovariantDerivative_descended_local",
+            "theorem d9DoubledMatterSpinorGlobalCovariantDerivative_descended_flatCover",
+        ),
+    ),
     "P0EFTJanusProgramPThroatMatterSpinorSectionLinearSpace4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

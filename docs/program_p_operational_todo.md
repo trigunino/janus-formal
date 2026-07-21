@@ -1910,8 +1910,94 @@ que si leur critère le dit explicitement.
 - Résultat : pour deux sections descendues arbitraires et toute direction
   tangente, la dérivée globale du pairing est exactement la somme des pairings
   avec la dérivée covariante de chaque argument.
-- Limite : action de Clifford puis opérateur de Dirac géométrique.
+- Limite : migrer sections et connexion vers le bundle doublé construit par
+  les cartes suivantes, puis définir l'opérateur de Dirac géométrique.
 - Porte terminale : aucune ; ferme la compatibilité hermitienne globale.
+
+### `P-T01-D9-MATTER-SPINOR-CLIFFORD-NOGO` — Obstruction de rang deux
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorCliffordActionNoGo4D`.
+- Résultat : après retrait de la phase scalaire `U(1)`, la monodromie du
+  demi-spinor est le générateur `J`; son centralisateur dans `M₂(ℂ)` est
+  commutatif. Deux générateurs de Clifford inversibles et anticommutants ne
+  peuvent donc pas tous commuter avec cette monodromie. Aucune action de
+  Clifford 3D globale n'existe sur le seul demi-spinor D9 actuel.
+- Limite : descendre le module doublé et son action de Clifford en bundle
+  lisse, puis construire le Dirac.
+- Porte terminale : aucune ; remplace une construction impossible par le
+  verrou structurel exact.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-CLIFFORD` — Frame de Clifford doublée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D`.
+- Résultat : le module `S ⊕ Sᵒᵖ` porte la transition normalisée
+  `diag(J,-J)` et trois générateurs complexes linéaires explicites. Chacun
+  carre à `-1`, ils anticommutent deux à deux et commutent exactement avec la
+  transition deck doublée.
+- Limite : migrer sections et connexion vers le vrai bundle lisse doublé,
+  puis contracter Clifford avec la dérivée covariante pour le Dirac.
+- Porte terminale : aucune ; fournit la première action de Clifford compatible
+  avec la monodromie D9.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-SMOOTH-BUNDLE` — Bundle lisse doublé
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D`.
+- Résultat : le partenaire opposé est identifié à `oppositeRoot choice`; la
+  somme des deux monodromies définit un vrai `VectorBundleCore` réel lisse.
+  Après identification complexe, sa transition d'un tour est exactement la
+  phase de racine multipliée par `diag(J,-J)`, donc par la transition compatible
+  avec la frame de Clifford construite précédemment.
+- Limite : descendre les paires de sections, transporter la connexion plate et
+  globale, puis définir le Dirac.
+- Porte terminale : aucune ; réalise géométriquement le module doublé.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-SMOOTH-SECTIONS` — Sections lisses doublées
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledSmoothSectionDescent4D`.
+- Résultat : toute paire de lifts lisses associés aux racines opposées
+  satisfait la monodromie doublée et descend en une vraie section lisse du
+  bundle doublé. Ses coordonnées dans chaque trivialisation locale sont
+  exactement le lift local attendu.
+- Limite : transporter la connexion plate et globale, puis construire le Dirac.
+- Porte terminale : aucune ; fournit l'espace géométrique requis pour les
+  champs de matière doublés.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-GLOBAL-CONNECTION` — Connexion globale doublée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledGlobalCovariantDerivative4D`.
+- Résultat : le vrai bundle lisse doublé porte une `CovariantDerivative`
+  globale canonique obtenue par dérivation dans la trivialisation locale ;
+  les axiomes d'additivité et de Leibniz sont prouvés.
+- Limite : identifier cette connexion à la connexion plate du revêtement,
+  puis la contracter avec la frame de Clifford pour construire le Dirac.
+- Porte terminale : aucune ; fournit la connexion globale requise par le Dirac.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-FLAT-COVER-CONNECTION` — Connexion plate doublée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledFlatCoverConnection4D`.
+- Résultat : la dérivée ordinaire de tout lift lisse doublé obéit à
+  l'exacte covariance deck pour la monodromie doublée ; elle définit donc la
+  connexion plate canonique sur le revêtement.
+- Limite : prouver son identification avec la connexion globale du bundle,
+  puis construire le Dirac.
+- Porte terminale : aucune ; ferme la construction plate sur le revêtement.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-FLAT-GLOBAL-BRIDGE` — Pont global/plat doublé
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledFlatGlobalConnectionBridge4D`.
+- Résultat : sur toute section doublée descendue, la connexion globale est
+  exactement la dérivée plate du lift composée avec la différentielle de
+  l'inverse local de la projection du revêtement.
+- Limite : contracter cette connexion avec la frame de Clifford compatible
+  pour construire l'opérateur de Dirac D9.
+- Porte terminale : aucune ; ferme l'identification connexion globale/plate.
 
 ### `P-T01-D9-MATTER-SPINOR-SECTION-NOGO` — Obstruction des champs actuels
 
