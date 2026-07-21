@@ -110,7 +110,15 @@ theorem cutBulkGlobalFirstSheetOrientedCurrentIntegral_eq
   unfold firstSheetOrientedScalarCurrentIntegral firstSheetOrientedScalarCurrent
   apply integral_congr_ae
   exact Filter.Eventually.of_forall fun base => by
-    rw [cutBulkGlobalBoundaryScalarCurrent_firstLift]
+    change orientedCutLiftFlux .increasing
+        (cutBulkGlobalBoundaryScalarCurrent period hPeriod field test
+          (canonicalLatitudeCutBulkGlobalBoundaryFirstLift period hPeriod base)) =
+      orientedCutLiftFlux .increasing
+        (cutBoundaryScalarCurrent period hPeriod field test
+          (canonicalLatitudeCutBoundaryFirstLift period hPeriod base))
+    exact congrArg (orientedCutLiftFlux .increasing)
+      (cutBulkGlobalBoundaryScalarCurrent_firstLift
+        period hPeriod field test base)
 
 /-- Transport through the exact boundary homeomorphism does not change the
 second oriented sheet contribution. -/
@@ -124,7 +132,15 @@ theorem cutBulkGlobalSecondSheetOrientedCurrentIntegral_eq
   unfold secondSheetOrientedScalarCurrentIntegral secondSheetOrientedScalarCurrent
   apply integral_congr_ae
   exact Filter.Eventually.of_forall fun base => by
-    rw [cutBulkGlobalBoundaryScalarCurrent_secondLift]
+    change orientedCutLiftFlux .decreasing
+        (cutBulkGlobalBoundaryScalarCurrent period hPeriod field test
+          (canonicalLatitudeCutBulkGlobalBoundarySecondLift period hPeriod base)) =
+      orientedCutLiftFlux .decreasing
+        (cutBoundaryScalarCurrent period hPeriod field test
+          (canonicalLatitudeCutBoundarySecondLift period hPeriod base))
+    exact congrArg (orientedCutLiftFlux .decreasing)
+      (cutBulkGlobalBoundaryScalarCurrent_secondLift
+        period hPeriod field test base)
 
 /-- The boundary functional on the exact manifold boundary is exactly the
 previous two-sheet oriented period. -/
