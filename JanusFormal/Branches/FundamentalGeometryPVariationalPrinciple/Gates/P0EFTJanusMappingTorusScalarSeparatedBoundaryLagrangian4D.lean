@@ -101,8 +101,10 @@ theorem canonicalScalarBoundarySymplecticForm_eq_zero_of_mem_separated
   change valueCoefficient * first.1 + normalCoefficient * first.2 = 0 at hFirst
   change valueCoefficient * second.1 + normalCoefficient * second.2 = 0 at hSecond
   by_cases hNormalCoefficient : normalCoefficient = 0
-  · have hValueCoefficient : valueCoefficient ≠ 0 :=
-      hNondegenerate.resolve_right (fun h => h hNormalCoefficient)
+  · have hValueCoefficient : valueCoefficient ≠ 0 := by
+      rcases hNondegenerate with hValue | hNormal
+      · exact hValue
+      · exact False.elim (hNormal hNormalCoefficient)
     have hFirstValue : first.1 = 0 := by
       have h : valueCoefficient * first.1 = 0 := by
         simpa [hNormalCoefficient] using hFirst
@@ -153,6 +155,9 @@ theorem canonicalScalarBoundarySymplecticOrthogonal_le_separatedLine
       (canonicalScalarSeparatedBoundaryLine valueCoefficient normalCoefficient :
         Set CanonicalScalarBoundaryDatum) := by
   intro datum hDatum
+  change ∀ test,
+    test ∈ canonicalScalarSeparatedBoundaryLine valueCoefficient normalCoefficient →
+      canonicalScalarBoundarySymplecticForm datum test = 0 at hDatum
   have hGenerator := hDatum
     (canonicalScalarSeparatedBoundaryGenerator valueCoefficient normalCoefficient)
     (canonicalScalarSeparatedBoundaryGenerator_mem
@@ -182,40 +187,55 @@ theorem canonicalScalarSeparatedBoundaryLine_symplecticOrthogonal_eq
 def canonicalScalarSeparatedBoundarySectionSubmodule
     (valueCoefficient normalCoefficient : CanonicalLatitudeBase → Real) :
     Submodule Real CanonicalScalarBoundarySection where
-  carrier := {section | ∀ base,
-    section base ∈ canonicalScalarSeparatedBoundaryLine
-      (valueCoefficient base) (normalCoefficient base)}
+  carrier := {boundarySection | ∀ base,
+    valueCoefficient base * (boundarySection base).1 +
+      normalCoefficient base * (boundarySection base).2 = 0}
   zero_mem' := by
     intro base
-    exact (canonicalScalarSeparatedBoundaryLine
-      (valueCoefficient base) (normalCoefficient base)).zero_mem
+    simp
   add_mem' := by
     intro first second hFirst hSecond base
-    exact (canonicalScalarSeparatedBoundaryLine
-      (valueCoefficient base) (normalCoefficient base)).add_mem
-        (hFirst base) (hSecond base)
+    have hFirstBase := hFirst base
+    have hSecondBase := hSecond base
+    change valueCoefficient base * ((first + second) base).1 +
+      normalCoefficient base * ((first + second) base).2 = 0
+    simp only [Pi.add_apply, Prod.fst_add, Prod.snd_add]
+    change valueCoefficient base * (first base).1 +
+      normalCoefficient base * (first base).2 = 0 at hFirstBase
+    change valueCoefficient base * (second base).1 +
+      normalCoefficient base * (second base).2 = 0 at hSecondBase
+    linarith
   smul_mem' := by
-    intro scalar section hSection base
-    exact (canonicalScalarSeparatedBoundaryLine
-      (valueCoefficient base) (normalCoefficient base)).smul_mem scalar
-        (hSection base)
+    intro scalar boundarySection hBoundarySection base
+    have hBoundaryBase := hBoundarySection base
+    change valueCoefficient base * ((scalar • boundarySection) base).1 +
+      normalCoefficient base * ((scalar • boundarySection) base).2 = 0
+    simp only [Pi.smul_apply, Prod.fst_smul, Prod.snd_smul]
+    change valueCoefficient base * (boundarySection base).1 +
+      normalCoefficient base * (boundarySection base).2 = 0 at hBoundaryBase
+    calc
+      valueCoefficient base * (scalar * (boundarySection base).1) +
+          normalCoefficient base * (scalar * (boundarySection base).2) =
+        scalar * (valueCoefficient base * (boundarySection base).1 +
+          normalCoefficient base * (boundarySection base).2) := by ring
+      _ = 0 := by rw [hBoundaryBase, mul_zero]
 
 @[simp] theorem mem_canonicalScalarSeparatedBoundarySectionSubmodule
     (valueCoefficient normalCoefficient : CanonicalLatitudeBase → Real)
-    (section : CanonicalScalarBoundarySection) :
-    section ∈ canonicalScalarSeparatedBoundarySectionSubmodule
+    (boundarySection : CanonicalScalarBoundarySection) :
+    boundarySection ∈ canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient ↔
       ∀ base,
-        valueCoefficient base * (section base).1 +
-          normalCoefficient base * (section base).2 = 0 := by
-  rfl
+        valueCoefficient base * (boundarySection base).1 +
+          normalCoefficient base * (boundarySection base).2 = 0 :=
+  Iff.rfl
 
 /-- Pointwise symplectic orthogonal of a boundary-section submodule. -/
 def canonicalScalarBoundarySectionPointwiseOrthogonal
     (subspace : Submodule Real CanonicalScalarBoundarySection) :
     Set CanonicalScalarBoundarySection :=
-  {section | ∀ test ∈ subspace, ∀ base,
-    canonicalScalarBoundarySymplecticForm (section base) (test base) = 0}
+  {boundarySection | ∀ test ∈ subspace, ∀ base,
+    canonicalScalarBoundarySymplecticForm (boundarySection base) (test base) = 0}
 
 /-- The variable-coefficient separated section space is pointwise isotropic. -/
 theorem canonicalScalarSeparatedBoundarySection_le_pointwiseOrthogonal
@@ -227,10 +247,22 @@ theorem canonicalScalarSeparatedBoundarySection_le_pointwiseOrthogonal
       canonicalScalarBoundarySectionPointwiseOrthogonal
         (canonicalScalarSeparatedBoundarySectionSubmodule
           valueCoefficient normalCoefficient) := by
-  intro section hSection test hTest base
+  intro boundarySection hBoundarySection test hTest base
+  have hBoundaryBase :=
+    (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient boundarySection).1 hBoundarySection base
+  have hTestBase :=
+    (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient test).1 hTest base
   exact canonicalScalarBoundarySymplecticForm_eq_zero_of_mem_separated
     (valueCoefficient base) (normalCoefficient base) (hNondegenerate base)
-      (section base) (test base) (hSection base) (hTest base)
+      (boundarySection base) (test base)
+      ((mem_canonicalScalarSeparatedBoundaryLine
+        (valueCoefficient base) (normalCoefficient base)
+        (boundarySection base)).2 hBoundaryBase)
+      ((mem_canonicalScalarSeparatedBoundaryLine
+        (valueCoefficient base) (normalCoefficient base)
+        (test base)).2 hTestBase)
 
 /-- The global generator section detects every datum outside the separated
 section space. -/
@@ -241,20 +273,31 @@ theorem canonicalScalarBoundarySectionPointwiseOrthogonal_le_separated
           valueCoefficient normalCoefficient) ⊆
       (canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient : Set CanonicalScalarBoundarySection) := by
-  intro section hSection
-  let generator : CanonicalScalarBoundarySection := fun base =>
+  intro boundarySection hBoundarySection
+  change ∀ test,
+    test ∈ canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient →
+      ∀ base,
+        canonicalScalarBoundarySymplecticForm
+          (boundarySection base) (test base) = 0 at hBoundarySection
+  apply (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+    valueCoefficient normalCoefficient boundarySection).2
+  intro base
+  let generator : CanonicalScalarBoundarySection := fun currentBase =>
     canonicalScalarSeparatedBoundaryGenerator
-      (valueCoefficient base) (normalCoefficient base)
+      (valueCoefficient currentBase) (normalCoefficient currentBase)
   have hGenerator : generator ∈
       canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient := by
-    intro base
-    exact canonicalScalarSeparatedBoundaryGenerator_mem
-      (valueCoefficient base) (normalCoefficient base)
-  intro base
-  have hAt := hSection generator hGenerator base
-  change valueCoefficient base * (section base).1 +
-    normalCoefficient base * (section base).2 = 0
+    apply (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient generator).2
+    intro currentBase
+    change valueCoefficient currentBase * normalCoefficient currentBase +
+      normalCoefficient currentBase * (-valueCoefficient currentBase) = 0
+    ring
+  have hAt := hBoundarySection generator hGenerator base
+  change valueCoefficient base * (boundarySection base).1 +
+    normalCoefficient base * (boundarySection base).2 = 0
   dsimp [generator, canonicalScalarSeparatedBoundaryGenerator] at hAt
   unfold canonicalScalarBoundarySymplecticForm at hAt
   linarith
@@ -286,7 +329,20 @@ theorem canonicalLatitudeScalarSeparatedBoundaryCondition_iff_boundarySection_me
       canonicalLatitudeScalarBoundarySection period hPeriod field ∈
         canonicalScalarSeparatedBoundarySectionSubmodule
           valueCoefficient normalCoefficient := by
-  rfl
+  constructor
+  · intro hBoundary
+    apply (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient
+      (canonicalLatitudeScalarBoundarySection period hPeriod field)).2
+    intro base
+    simpa [canonicalLatitudeScalarBoundarySection,
+      canonicalLatitudeScalarBoundaryDatum] using hBoundary base
+  · intro hBoundary base
+    have hBase := (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient
+      (canonicalLatitudeScalarBoundarySection period hPeriod field)).1 hBoundary base
+    simpa [canonicalLatitudeScalarBoundarySection,
+      canonicalLatitudeScalarBoundaryDatum] using hBase
 
 /-- The measured symplectic pairing vanishes on every common separated boundary
 section. -/
@@ -302,9 +358,19 @@ theorem canonicalScalarBoundarySectionGreenPairing_eq_zero_of_mem_separated
     canonicalScalarBoundarySectionGreenPairing period first second = 0 := by
   apply canonicalScalarBoundarySectionGreenPairing_eq_zero_of_pointwise
   intro base
+  have hFirstBase :=
+    (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient first).1 hFirst base
+  have hSecondBase :=
+    (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+      valueCoefficient normalCoefficient second).1 hSecond base
   exact canonicalScalarBoundarySymplecticForm_eq_zero_of_mem_separated
     (valueCoefficient base) (normalCoefficient base) (hNondegenerate base)
-      (first base) (second base) (hFirst base) (hSecond base)
+      (first base) (second base)
+      ((mem_canonicalScalarSeparatedBoundaryLine
+        (valueCoefficient base) (normalCoefficient base) (first base)).2 hFirstBase)
+      ((mem_canonicalScalarSeparatedBoundaryLine
+        (valueCoefficient base) (normalCoefficient base) (second base)).2 hSecondBase)
 
 /-- The exact two-sheet global pairing also vanishes on the separated section
 space. -/
