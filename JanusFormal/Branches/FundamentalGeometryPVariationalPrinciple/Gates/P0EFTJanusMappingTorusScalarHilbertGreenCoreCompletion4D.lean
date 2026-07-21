@@ -309,6 +309,11 @@ structure CanonicalScalarCompletedBoundaryTripleData
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable
+  {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Closed maximal graph domain. -/
 abbrev MaximalDomain
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound) :=
@@ -377,7 +382,11 @@ theorem lagrangianOperator_symmetric
     core traceBound first.1 second.1
   unfold canonicalScalarGreenCoreCompletedBoundaryPairing at hGreen
   rw [hBoundary] at hGreen
-  linarith
+  change inner Real (canonicalScalarGreenCoreGraphOperator core first.1)
+        (canonicalScalarGreenCoreGraphInclusion core second.1) =
+    inner Real (canonicalScalarGreenCoreGraphInclusion core first.1)
+      (canonicalScalarGreenCoreGraphOperator core second.1)
+  exact sub_eq_zero.mp (by simpa using hGreen)
 
 /-- Boundary-adjoint admissibility inside the completed maximal graph. -/
 def lagrangianAdjointAdmissible
@@ -414,6 +423,8 @@ theorem lagrangianAdjointAdmissible_iff_mem
       have hApplied := hCandidate ⟨test, hTestDomain⟩
       rw [hTrace] at hApplied
       exact hApplied
+    change canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound candidate ∈
+      condition.subspace
     rw [← condition.lagrangian]
     exact hOrthogonal
   · intro hCandidate test

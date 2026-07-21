@@ -42,6 +42,11 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable
+  {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Strong Green system whose domain is the corrected completed maximal graph. -/
 def toStrongSystem
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound) :
@@ -62,7 +67,7 @@ def toStrongSystem
 theorem toStrongSystem_graphMap_eq_val
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (field : triple.MaximalDomain) :
-    canonicalScalarOperatorGraphLinearMap triple.toStrongSystem field = field.1 :=
+    canonicalScalarOperatorGraphLinearMap (toStrongSystem triple) field = field.1 :=
   rfl
 
 /-- The norm of the strong-system graph lift is the norm already carried by the
@@ -71,19 +76,20 @@ theorem toStrongSystem_graphLift_norm
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (field : triple.MaximalDomain) :
     ‖canonicalScalarSmoothToOperatorGraphLinearMap
-        triple.toStrongSystem field‖ = ‖field‖ :=
+        (toStrongSystem triple) field‖ = ‖field‖ :=
   rfl
 
 /-- Continuity of the completed trace supplies the graph-bound hypothesis for
 the strong presentation. -/
 def toStrongSystemBoundaryGraphBound
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound) :
-    HasCanonicalScalarHilbertBoundaryGraphBound triple.toStrongSystem where
+    HasCanonicalScalarHilbertBoundaryGraphBound (toStrongSystem triple) where
   constant := ‖canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound‖
-  nonnegative := norm_nonneg _
+  nonnegative := norm_nonneg
+    (canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound)
   bound := by
     intro field
-    rw [triple.toStrongSystem_graphLift_norm]
+    rw [toStrongSystem_graphLift_norm triple]
     exact (canonicalScalarGreenCoreCompletedBoundaryTrace
       core traceBound).le_opNorm field
 
@@ -102,10 +108,10 @@ structure StrongAdjointTestCore
 /-- Conversion to the generic dense-adjoint-core package. -/
 def StrongAdjointTestCore.toGeneric
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
-    (testCore : triple.StrongAdjointTestCore
+    (testCore : StrongAdjointTestCore triple
       (TestDomain := TestDomain)) :
     CanonicalScalarAdjointTestCore
-      (TestDomain := TestDomain) triple.toStrongSystem where
+      (TestDomain := TestDomain) (toStrongSystem triple) where
   inclusion := testCore.inclusion
   operator := testCore.operator
   dense := testCore.dense
@@ -114,29 +120,29 @@ def StrongAdjointTestCore.toGeneric
 /-- A dense formal-adjoint core closes the strong completed presentation. -/
 theorem toStrongSystem_closable
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
-    (testCore : triple.StrongAdjointTestCore
+    (testCore : StrongAdjointTestCore triple
       (TestDomain := TestDomain)) :
-    CanonicalScalarGraphClosable triple.toStrongSystem :=
-  (testCore.toGeneric triple).graphClosable
+    CanonicalScalarGraphClosable (toStrongSystem triple) :=
+  (StrongAdjointTestCore.toGeneric triple testCore).graphClosable
 
 /-- Strong-system bridge certificate. -/
 theorem strongSystem_certificate
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
-    (testCore : triple.StrongAdjointTestCore
+    (testCore : StrongAdjointTestCore triple
       (TestDomain := TestDomain)) :
-    Function.Surjective triple.toStrongSystem.boundaryTrace ∧
-      CanonicalScalarGraphClosable triple.toStrongSystem ∧
+    Function.Surjective (toStrongSystem triple).boundaryTrace ∧
+      CanonicalScalarGraphClosable (toStrongSystem triple) ∧
       (∀ first second : triple.MaximalDomain,
-        inner Real (triple.toStrongSystem.operator first)
-              (triple.toStrongSystem.inclusion second) -
-            inner Real (triple.toStrongSystem.inclusion first)
-              (triple.toStrongSystem.operator second) =
+        inner Real ((toStrongSystem triple).operator first)
+              ((toStrongSystem triple).inclusion second) -
+            inner Real ((toStrongSystem triple).inclusion first)
+              ((toStrongSystem triple).operator second) =
           2 * canonicalScalarHilbertBoundarySymplecticForm
-            (triple.toStrongSystem.boundaryTrace first)
-            (triple.toStrongSystem.boundaryTrace second)) :=
+            ((toStrongSystem triple).boundaryTrace first)
+            ((toStrongSystem triple).boundaryTrace second)) :=
   ⟨triple.boundary_surjective,
-    triple.toStrongSystem_closable testCore,
-    triple.toStrongSystem.green_identity⟩
+    toStrongSystem_closable triple testCore,
+    (toStrongSystem triple).green_identity⟩
 
 end CanonicalScalarCompletedBoundaryTripleData
 

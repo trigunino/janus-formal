@@ -57,18 +57,9 @@ theorem canonicalScalarBoundaryCorePairEmbedding_denseRange
     DenseRange
       (canonicalScalarBoundaryCorePairEmbedding
         valueEmbedding normalEmbedding) := by
-  intro boundary
-  rw [Metric.mem_closure_iff]
-  intro ε hε
-  obtain ⟨value, hValue⟩ :=
-    (Metric.mem_closure_iff.mp (hValueDense boundary.1)) ε hε
-  obtain ⟨normal, hNormal⟩ :=
-    (Metric.mem_closure_iff.mp (hNormalDense boundary.2)) ε hε
-  refine ⟨(value, normal), ?_⟩
-  change max
-      (dist (valueEmbedding value) boundary.1)
-      (dist (normalEmbedding normal) boundary.2) < ε
-  exact max_lt hValue hNormal
+  change DenseRange (Prod.map (fun value => valueEmbedding value)
+    (fun normal => normalEmbedding normal))
+  exact hValueDense.prodMap hNormalDense
 
 /-- Smooth Cauchy-extension data for one raw smooth boundary trace.  Density is
 a conclusion of this structure, not one of its inputs. -/
@@ -87,6 +78,9 @@ structure CanonicalScalarSmoothCauchyExtensionData
 
 namespace CanonicalScalarSmoothCauchyExtensionData
 
+variable {boundaryTrace : Domain →ₗ[Real]
+  CanonicalScalarHilbertBoundaryDatum (Trace := Trace)}
+
 /-- The embedded smooth boundary-pair core has dense range. -/
 theorem pairEmbedding_denseRange
     (extensionData : CanonicalScalarSmoothCauchyExtensionData
@@ -104,7 +98,7 @@ theorem boundaryTrace_denseRange
       (ValueCore := ValueCore) (NormalCore := NormalCore) boundaryTrace) :
     DenseRange boundaryTrace := by
   intro boundary
-  have hPairClosure := extensionData.pairEmbedding_denseRange boundary
+  have hPairClosure := pairEmbedding_denseRange extensionData boundary
   apply closure_mono ?_ hPairClosure
   intro boundaryCore hBoundaryCore
   rcases hBoundaryCore with ⟨data, rfl⟩
@@ -129,7 +123,7 @@ def installGreenCore
   inclusion := inclusion
   operator := operator
   boundaryTrace := boundaryTrace
-  boundary_dense := extensionData.boundaryTrace_denseRange
+  boundary_dense := boundaryTrace_denseRange extensionData
   green_identity := greenIdentity
 
 /-- Smooth Cauchy-extension certificate. -/
@@ -141,7 +135,7 @@ theorem certificate
         boundaryTrace (extensionData.extension data) =
           canonicalScalarBoundaryCorePairEmbedding
             extensionData.valueEmbedding extensionData.normalEmbedding data) :=
-  ⟨extensionData.boundaryTrace_denseRange,
+  ⟨boundaryTrace_denseRange extensionData,
     extensionData.boundary_extension⟩
 
 end CanonicalScalarSmoothCauchyExtensionData
@@ -158,6 +152,11 @@ structure CanonicalScalarCompletedCauchyExtensionData
         (extension boundary) = boundary
 
 namespace CanonicalScalarCompletedCauchyExtensionData
+
+variable
+  {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- A continuous completed extension implies completed trace surjectivity. -/
 theorem boundaryTrace_surjective
@@ -177,7 +176,7 @@ def toBoundaryTriple
     (hInclusion : Function.Injective
       (canonicalScalarGreenCoreGraphInclusion core)) :
     CanonicalScalarCompletedBoundaryTripleData core traceBound where
-  boundary_surjective := extensionData.boundaryTrace_surjective
+  boundary_surjective := boundaryTrace_surjective extensionData
   inclusion_injective := hInclusion
 
 /-- Completed extension certificate. -/
@@ -189,7 +188,7 @@ theorem certificate
       (∀ boundary,
         canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound
             (extensionData.extension boundary) = boundary) :=
-  ⟨extensionData.boundaryTrace_surjective,
+  ⟨boundaryTrace_surjective extensionData,
     extensionData.boundary_extension⟩
 
 end CanonicalScalarCompletedCauchyExtensionData

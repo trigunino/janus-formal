@@ -32,12 +32,16 @@ open MeasureTheory Set Topology
 open P0EFTJanusMetricCoupledScalarMatterJetVariation
 open P0EFTJanusScalarStressCovariantJetConservation4D
 open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D
+open P0EFTJanusMappingTorusIntrinsicLorentzScalarAction4D
 open P0EFTJanusMappingTorusCanonicalHolonomicAtlasCoverReduction4D
 open P0EFTJanusMappingTorusCanonicalTotalHolonomicAtlasScalarStressClosure4D
 open P0EFTJanusMappingTorusFrameFreeIntrinsicScalarAction4D
@@ -196,9 +200,12 @@ structure CanonicalPhysicalScalarEulerChartWitness
 noncomputable def canonicalPhysicalScalarEulerChartWitness
     (point : EffectiveQuotient period hPeriod) :
     CanonicalPhysicalScalarEulerChartWitness period hPeriod point := by
-  obtain ⟨patch, _hPatch, coordinate, hCoordinate⟩ :=
-    canonicalTotalHolonomicAtlasCover_covers period hPeriod point
-  exact ⟨patch, coordinate, hCoordinate⟩
+  classical
+  let hCover := canonicalTotalHolonomicAtlasCover_covers period hPeriod point
+  let patch := hCover.choose
+  have hPatchData := hCover.choose_spec
+  let coordinate := hPatchData.2.choose
+  exact ⟨patch, coordinate, hPatchData.2.choose_spec⟩
 
 /-- Exact overlap-compatibility proposition for the physical scalar residual. -/
 def CanonicalPhysicalScalarEulerAtlasCompatible
@@ -273,6 +280,12 @@ structure CanonicalPhysicalScalarEulerGlobalOperatorData
   continuous : ∀ field : SmoothScalarField period hPeriod,
     Continuous (canonicalPhysicalScalarEulerGlobalResidual
       period hPeriod massSquared field)
+  ae_zero_eq_zero : ∀ field : SmoothScalarField period hPeriod,
+    canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared field =ᵐ[
+          intrinsicCanonicalLorentzVolumeMeasure period hPeriod] 0 →
+      canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared field = 0
   map_add : ∀ first second : SmoothScalarField period hPeriod,
     canonicalPhysicalScalarEulerGlobalResidual
         period hPeriod massSquared (first + second) =
@@ -288,6 +301,8 @@ structure CanonicalPhysicalScalarEulerGlobalOperatorData
         period hPeriod massSquared field
 
 namespace CanonicalPhysicalScalarEulerGlobalOperatorData
+
+variable {period : Real} {hPeriod : period ≠ 0} {massSquared : Real}
 
 /-- The global residual is L2 for the canonical physical bulk measure. -/
 theorem residual_memLp
@@ -325,7 +340,18 @@ def toBulkL2LinearMap
           (canonicalPhysicalScalarEulerGlobalResidual
             period hPeriod massSquared second))]
       with point hSum hFirst hSecond hAdd
-    rw [hSum, hAdd, hFirst, hSecond]
+    rw [hSum, hAdd]
+    change canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared (first + second) point =
+      ((operatorData.residual_memLp first).toLp
+          (canonicalPhysicalScalarEulerGlobalResidual
+            period hPeriod massSquared first) :
+        EffectiveQuotient period hPeriod → Real) point +
+      ((operatorData.residual_memLp second).toLp
+          (canonicalPhysicalScalarEulerGlobalResidual
+            period hPeriod massSquared second) :
+        EffectiveQuotient period hPeriod → Real) point
+    rw [hFirst, hSecond]
     exact congrFun (operatorData.map_add first second) point
   map_smul' scalar field := by
     apply Lp.ext
@@ -337,7 +363,21 @@ def toBulkL2LinearMap
           (canonicalPhysicalScalarEulerGlobalResidual
             period hPeriod massSquared field))]
       with point hScaled hField hSmul
-    rw [hScaled, hSmul, hField]
+    rw [hScaled]
+    change canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared (scalar • field) point =
+      ((scalar • (operatorData.residual_memLp field).toLp
+        (canonicalPhysicalScalarEulerGlobalResidual
+          period hPeriod massSquared field)) :
+          CanonicalPhysicalBulkL2 period hPeriod) point
+    rw [hSmul]
+    change canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared (scalar • field) point =
+      scalar • ((operatorData.residual_memLp field).toLp
+        (canonicalPhysicalScalarEulerGlobalResidual
+          period hPeriod massSquared field) :
+          EffectiveQuotient period hPeriod → Real) point
+    rw [hField]
     exact congrFun (operatorData.map_smul scalar field) point
 
 /-- The L2 Euler operator agrees almost everywhere with the selected global
@@ -366,9 +406,11 @@ theorem eulerEquation_iff_operator_eq_zero
   · intro hResidual
     apply Lp.ext
     filter_upwards
-      [operatorData.toBulkL2LinearMap_ae field] with point hPoint
-    rw [hPoint, congrFun hResidual point]
-    rfl
+      [operatorData.toBulkL2LinearMap_ae field,
+       Lp.coeFn_zero Real (2 : ENNReal)
+         (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)]
+      with point hPoint hZero
+    rw [hPoint, congrFun hResidual point, hZero]
   · intro hOperator
     funext point
     have hAe : canonicalPhysicalScalarEulerGlobalResidual
@@ -381,17 +423,9 @@ theorem eulerEquation_iff_operator_eq_zero
             (0 : CanonicalPhysicalBulkL2 period hPeriod) := by
         rw [hOperator]
       exact (operatorData.toBulkL2LinearMap_ae field).symm.trans
-        (hMiddle.trans (Lp.coeFn_zero _))
-    have hContinuous := operatorData.continuous field
-    have hZeroContinuous : Continuous
-        (fun _ : EffectiveQuotient period hPeriod => (0 : Real)) :=
-      continuous_const
-    have hFunctions :
-        canonicalPhysicalScalarEulerGlobalResidual
-            period hPeriod massSquared field = 0 :=
-      (Continuous.ae_eq_iff_eq
-        (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
-        hContinuous hZeroContinuous).1 hAe
+        (hMiddle.trans (Lp.coeFn_zero Real (2 : ENNReal)
+          (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)))
+    have hFunctions := operatorData.ae_zero_eq_zero field hAe
     exact congrFun hFunctions point
 
 end CanonicalPhysicalScalarEulerGlobalOperatorData

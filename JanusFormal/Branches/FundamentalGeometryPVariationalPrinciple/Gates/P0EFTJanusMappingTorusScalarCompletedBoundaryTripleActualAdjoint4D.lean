@@ -43,6 +43,11 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable
+  {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Actual Hilbert adjoint admissibility for one Lagrangian realization. -/
 def actualAdjointAdmissible
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
@@ -58,7 +63,7 @@ def actualAdjointDomain
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
     Set Ambient :=
-  {candidate | triple.actualAdjointAdmissible condition candidate}
+  {candidate | actualAdjointAdmissible triple condition candidate}
 
 /-- The ambient domain of the original realization. -/
 def realizationDomain
@@ -84,8 +89,8 @@ structure MaximalAdjointRegularity
 theorem realizationDomain_subset_actualAdjointDomain
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
-    triple.realizationDomain condition ⊆
-      triple.actualAdjointDomain condition := by
+    realizationDomain triple condition ⊆
+      actualAdjointDomain triple condition := by
   rintro candidate ⟨field, rfl⟩
   refine ⟨triple.lagrangianOperator condition field, ?_⟩
   intro test
@@ -128,15 +133,15 @@ theorem maximal_mem_boundaryAdjoint_of_actualAdjointPair
 theorem actualAdjointDomain_subset_realizationDomain
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
-    (regularity : triple.MaximalAdjointRegularity condition) :
-    triple.actualAdjointDomain condition ⊆
-      triple.realizationDomain condition := by
+    (regularity : MaximalAdjointRegularity triple condition) :
+    actualAdjointDomain triple condition ⊆
+      realizationDomain triple condition := by
   intro candidate hCandidate
   rcases hCandidate with ⟨adjointValue, hPair⟩
   obtain ⟨maximal, hMaximalCandidate, hMaximalAdjoint⟩ :=
     regularity.represent candidate adjointValue hPair
   have hBoundaryAdjoint :=
-    triple.maximal_mem_boundaryAdjoint_of_actualAdjointPair
+    maximal_mem_boundaryAdjoint_of_actualAdjointPair triple
       condition candidate adjointValue hPair maximal
       hMaximalCandidate hMaximalAdjoint
   have hDomain : maximal ∈ triple.lagrangianDomainSubmodule condition :=
@@ -149,19 +154,19 @@ theorem actualAdjointDomain_subset_realizationDomain
 theorem actualAdjointDomain_eq_realizationDomain
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
-    (regularity : triple.MaximalAdjointRegularity condition) :
-    triple.actualAdjointDomain condition =
-      triple.realizationDomain condition :=
+    (regularity : MaximalAdjointRegularity triple condition) :
+    actualAdjointDomain triple condition =
+      realizationDomain triple condition :=
   Set.Subset.antisymm
-    (triple.actualAdjointDomain_subset_realizationDomain
+    (actualAdjointDomain_subset_realizationDomain triple
       condition regularity)
-    (triple.realizationDomain_subset_actualAdjointDomain condition)
+    (realizationDomain_subset_actualAdjointDomain triple condition)
 
 /-- The adjoint value is the original operator value on the realization domain. -/
 theorem actualAdjointValue_eq_operator
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
-    (regularity : triple.MaximalAdjointRegularity condition)
+    (regularity : MaximalAdjointRegularity triple condition)
     (field : triple.lagrangianDomainSubmodule condition)
     (adjointValue : Ambient)
     (hPair : ∀ test : triple.lagrangianDomainSubmodule condition,
@@ -176,7 +181,7 @@ theorem actualAdjointValue_eq_operator
     unfold residual
     rw [inner_sub_right, ← hPair test]
     exact sub_eq_zero.mpr
-      (triple.lagrangianOperator_symmetric condition test field).symm
+      (triple.lagrangianOperator_symmetric condition test field)
   let good : Set Ambient := {test | inner Real test residual = 0}
   have hGoodClosed : IsClosed good := by
     dsimp [good]
@@ -203,13 +208,13 @@ theorem actualAdjointValue_eq_operator
 theorem actualAdjoint_certificate
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
-    (regularity : triple.MaximalAdjointRegularity condition) :
-    triple.actualAdjointDomain condition =
-        triple.realizationDomain condition ∧
+    (regularity : MaximalAdjointRegularity triple condition) :
+    actualAdjointDomain triple condition =
+        realizationDomain triple condition ∧
       triple.lagrangianAdjointDomain condition =
         (triple.lagrangianDomainSubmodule condition :
           Set triple.MaximalDomain) :=
-  ⟨triple.actualAdjointDomain_eq_realizationDomain condition regularity,
+  ⟨actualAdjointDomain_eq_realizationDomain triple condition regularity,
     triple.lagrangianAdjointDomain_eq condition⟩
 
 end CanonicalScalarCompletedBoundaryTripleData

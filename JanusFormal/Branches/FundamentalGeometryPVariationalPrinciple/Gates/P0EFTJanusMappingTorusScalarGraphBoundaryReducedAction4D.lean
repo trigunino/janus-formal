@@ -65,11 +65,28 @@ theorem canonicalScalarGraphBoundarySchurOperator_isSymmetric
     (canonicalScalarGraphBoundarySchurOperator
       data traceBound spectralParameter poissonData robin).toLinearMap.IsSymmetric := by
   intro first second
-  unfold canonicalScalarGraphBoundarySchurOperator
-  simp only [ContinuousLinearMap.sub_apply, inner_sub_left, inner_sub_right]
-  rw [canonicalScalarGraphDirichletToNeumann_isSymmetric
-      data traceBound spectralParameter poissonData first second,
-    hRobin first second]
+  change inner Real
+      (canonicalScalarGraphDirichletToNeumann
+          data traceBound spectralParameter poissonData first - robin first) second =
+    inner Real first
+      (canonicalScalarGraphDirichletToNeumann
+          data traceBound spectralParameter poissonData second - robin second)
+  calc
+    _ = inner Real
+          (canonicalScalarGraphDirichletToNeumann
+            data traceBound spectralParameter poissonData first) second -
+        inner Real (robin first) second := inner_sub_left _ _ _
+    _ = inner Real first
+          (canonicalScalarGraphDirichletToNeumann
+            data traceBound spectralParameter poissonData second) -
+        inner Real first (robin second) := congrArg₂ (· - ·)
+          (canonicalScalarGraphDirichletToNeumann_isSymmetric
+            data traceBound spectralParameter poissonData first second)
+          (hRobin first second)
+    _ = _ := (inner_sub_right first
+      (canonicalScalarGraphDirichletToNeumann
+        data traceBound spectralParameter poissonData second)
+      (robin second)).symm
 
 /-- Exact affine Taylor formula for the reduced Robin action. -/
 theorem canonicalScalarGraphRobinReducedAction_affine
@@ -96,9 +113,17 @@ theorem canonicalScalarGraphRobinReducedAction_affine
   unfold canonicalScalarGraphRobinReducedAction
   simp only [map_add, map_smul, inner_add_left, inner_add_right,
     real_inner_smul_left, real_inner_smul_right]
-  rw [canonicalScalarGraphBoundarySchurOperator_isSymmetric
-    data traceBound spectralParameter poissonData robin hRobin
-      boundary variation]
+  have hCross : inner Real boundary
+      (canonicalScalarGraphBoundarySchurOperator
+        data traceBound spectralParameter poissonData robin variation) =
+      inner Real variation
+        (canonicalScalarGraphBoundarySchurOperator
+          data traceBound spectralParameter poissonData robin boundary) := by
+    rw [real_inner_comm]
+    exact canonicalScalarGraphBoundarySchurOperator_isSymmetric
+      data traceBound spectralParameter poissonData robin hRobin
+        variation boundary
+  rw [hCross]
   ring
 
 /-- First derivative of the reduced Robin action. -/
@@ -112,7 +137,9 @@ theorem canonicalScalarGraphRobinReducedAction_hasDerivAt
     (robin : Trace →L[Real] Trace)
     (hRobin : robin.toLinearMap.IsSymmetric)
     (boundary variation : Trace) :
-    HasDerivAt
+    @HasDerivAt Real _ Real
+      Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule _ _
       (fun parameter : Real =>
         canonicalScalarGraphRobinReducedAction
           data traceBound spectralParameter poissonData robin
@@ -120,24 +147,7 @@ theorem canonicalScalarGraphRobinReducedAction_hasDerivAt
       (inner Real variation
         (canonicalScalarGraphBoundarySchurOperator
           data traceBound spectralParameter poissonData robin boundary)) 0 := by
-  rw [show (fun parameter : Real =>
-      canonicalScalarGraphRobinReducedAction
-        data traceBound spectralParameter poissonData robin
-        (boundary + parameter • variation)) =
-    (fun parameter : Real =>
-      canonicalScalarGraphRobinReducedAction
-          data traceBound spectralParameter poissonData robin boundary +
-        parameter * inner Real variation
-          (canonicalScalarGraphBoundarySchurOperator
-            data traceBound spectralParameter poissonData robin boundary) +
-        parameter ^ 2 *
-          canonicalScalarGraphRobinReducedAction
-            data traceBound spectralParameter poissonData robin variation) from by
-      funext parameter
-      exact canonicalScalarGraphRobinReducedAction_affine
-        data traceBound spectralParameter poissonData robin hRobin
-          boundary variation parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  have hPolynomial := (((hasDerivAt_const (x := (0 : Real))
       (canonicalScalarGraphRobinReducedAction
         data traceBound spectralParameter poissonData robin boundary)).add
       ((hasDerivAt_id (0 : Real)).mul_const
@@ -146,7 +156,13 @@ theorem canonicalScalarGraphRobinReducedAction_hasDerivAt
             data traceBound spectralParameter poissonData robin boundary)))).add
       (((hasDerivAt_id (0 : Real)).pow 2).mul_const
         (canonicalScalarGraphRobinReducedAction
-          data traceBound spectralParameter poissonData robin variation))) using 1 <;> norm_num
+          data traceBound spectralParameter poissonData robin variation)))
+  norm_num at hPolynomial
+  apply hPolynomial.congr_of_eventuallyEq
+  filter_upwards [] with parameter
+  exact canonicalScalarGraphRobinReducedAction_affine
+    data traceBound spectralParameter poissonData robin hRobin
+      boundary variation parameter
 
 /-- Boundary stationarity predicate. -/
 def CanonicalScalarGraphRobinBoundaryStationary
@@ -209,6 +225,7 @@ theorem canonicalScalarGraphRobinBoundaryStationary_iff_mem_kernel
           data traceBound spectralParameter poissonData robin).toLinearMap := by
   rw [canonicalScalarGraphRobinBoundaryStationary_iff_schur_zero,
     LinearMap.mem_ker]
+  rfl
 
 /-- Boundary stationarity is equivalent to the Poisson solution satisfying the
 homogeneous Robin bulk problem. -/
