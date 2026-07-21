@@ -122,8 +122,13 @@ def canonicalScalarCompletedRobinDomainSubmodule
     (field : CanonicalScalarOperatorGraphSpace data) :
     field ∈ canonicalScalarCompletedDirichletDomainSubmodule data traceBound ↔
       canonicalScalarCompletedValueTrace data traceBound field = 0 := by
-  change (canonicalScalarCompletedBoundaryTrace data traceBound field).1 = 0 ↔ _
-  rfl
+  unfold canonicalScalarCompletedDirichletDomainSubmodule
+  rw [mem_canonicalScalarCompletedSeparatedDomainSubmodule]
+  change
+    (1 : Real) • (canonicalScalarCompletedBoundaryTrace data traceBound field).1 +
+          (0 : Real) • (canonicalScalarCompletedBoundaryTrace data traceBound field).2 = 0 ↔
+      (canonicalScalarCompletedBoundaryTrace data traceBound field).1 = 0
+  simp
 
 @[simp] theorem mem_canonicalScalarCompletedNeumannDomainSubmodule
     (data : CanonicalScalarHilbertGreenSystem
@@ -132,8 +137,13 @@ def canonicalScalarCompletedRobinDomainSubmodule
     (field : CanonicalScalarOperatorGraphSpace data) :
     field ∈ canonicalScalarCompletedNeumannDomainSubmodule data traceBound ↔
       canonicalScalarCompletedNormalTrace data traceBound field = 0 := by
-  change (canonicalScalarCompletedBoundaryTrace data traceBound field).2 = 0 ↔ _
-  rfl
+  unfold canonicalScalarCompletedNeumannDomainSubmodule
+  rw [mem_canonicalScalarCompletedSeparatedDomainSubmodule]
+  change
+    (0 : Real) • (canonicalScalarCompletedBoundaryTrace data traceBound field).1 +
+          (1 : Real) • (canonicalScalarCompletedBoundaryTrace data traceBound field).2 = 0 ↔
+      (canonicalScalarCompletedBoundaryTrace data traceBound field).2 = 0
+  simp
 
 @[simp] theorem mem_canonicalScalarCompletedRobinDomainSubmodule
     (data : CanonicalScalarHilbertGreenSystem
@@ -144,12 +154,32 @@ def canonicalScalarCompletedRobinDomainSubmodule
         data traceBound coefficient ↔
       canonicalScalarCompletedNormalTrace data traceBound field =
         coefficient • canonicalScalarCompletedValueTrace data traceBound field := by
-  change -coefficient •
-      (canonicalScalarCompletedBoundaryTrace data traceBound field).1 +
-        (canonicalScalarCompletedBoundaryTrace data traceBound field).2 = 0 ↔ _
-  constructor <;> intro h
-  · exact eq_of_sub_eq_zero (by simpa [sub_eq_add_neg, add_comm] using h)
-  · rw [h]
+  unfold canonicalScalarCompletedRobinDomainSubmodule
+  rw [mem_canonicalScalarCompletedSeparatedDomainSubmodule]
+  change
+    (-coefficient) • (canonicalScalarCompletedBoundaryTrace data traceBound field).1 +
+          (1 : Real) • (canonicalScalarCompletedBoundaryTrace data traceBound field).2 = 0 ↔
+      (canonicalScalarCompletedBoundaryTrace data traceBound field).2 =
+        coefficient • (canonicalScalarCompletedBoundaryTrace data traceBound field).1
+  simp only [one_smul]
+  constructor
+  · intro h
+    have hSub :
+        (canonicalScalarCompletedBoundaryTrace data traceBound field).2 -
+            coefficient •
+              (canonicalScalarCompletedBoundaryTrace data traceBound field).1 = 0 := by
+      calc
+        (canonicalScalarCompletedBoundaryTrace data traceBound field).2 -
+              coefficient •
+                (canonicalScalarCompletedBoundaryTrace data traceBound field).1 =
+            (-coefficient) •
+                (canonicalScalarCompletedBoundaryTrace data traceBound field).1 +
+              (canonicalScalarCompletedBoundaryTrace data traceBound field).2 := by
+                module
+        _ = 0 := h
+    exact sub_eq_zero.mp hSub
+  · intro h
+    rw [h]
     module
 
 /-- The completed trace of a completed separated-domain vector lies in the
