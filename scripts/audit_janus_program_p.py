@@ -3393,6 +3393,9 @@ PROGRAM_P_GATES = {
             "structure TotalR4BallParametrization",
             "def TotalR4BallParametrizationsExist",
             "def smoothHolonomicFrameChart4OfLocalDiffeomorph",
+            "def realizedBallQuotientCoordinateMap",
+            "theorem realizedBallQuotientCoordinateMap_isLocalDiffeomorph",
+            "theorem realizedBallQuotientCoordinateMap_zero",
             "theorem canonicalHolonomicChartThroughEveryPoint_of_totalR4BallParametrizations",
         ),
     ),
@@ -5942,6 +5945,35 @@ PROGRAM_P_GATES = {
             "theorem localActualCanonicalLatitudeCutoffGreenCoordinateDivergence_eq_normalFlux_of_free",
         ),
     ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeNormalAdaptedHolonomicChart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure NormalAdaptedHolonomicChart",
+            "def NormalAdaptedHolonomicChart.toSmoothHolonomicFrameChart4",
+            "theorem NormalAdaptedHolonomicChart.frame_zero_normal",
+            "theorem normalAdaptedHolonomicChart_exists",
+            "theorem smoothHolonomicFrameChart4_normalAdapted_exists",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeNormalTangentialAdaptedHolonomicChart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure NormalTangentialAdaptedHolonomicChart",
+            "def NormalTangentialAdaptedHolonomicChart.toSmoothHolonomicFrameChart4",
+            "theorem NormalTangentialAdaptedHolonomicChart.frame_zero_normal",
+            "theorem NormalTangentialAdaptedHolonomicChart.frame_tangential",
+            "theorem normalTangentialAdaptedHolonomicChart_exists",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalLatitudeAmbientOrthogonality4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem latitudeAmbientVelocity_eq_axis_sub_radius",
+            "theorem sphereAmbientMap_inner_mfderiv_zero",
+            "theorem sphereAmbientDerivative_fixedLatitude_latitudeCoordinate_zero",
+            "theorem latitudeAmbientVelocity_inner_fixedLatitudeDerivative_zero",
+        ),
+    ),
     "P0EFTJanusMappingTorusHolonomicDiagonalSharp4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -8346,6 +8378,13 @@ PROGRAM_P_GATES = {
             "theorem deriv_cutBulkCanonicalCutoff_canonicalCollarFiber",
             "theorem cutBulkCanonicalCutoff_canonicalCollar_base_independent",
             "theorem cutBulkCanonicalCutoff_fixedNormalBaseCurve_hasDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCutBulkCanonicalCutoffCollarMFDeriv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def cutBulkCanonicalCutoffCollarPullback",
+            "theorem mfderiv_cutBulkCanonicalCutoffCollarPullback_apply",
         ),
     ),
     "P0EFTJanusMappingTorusCutBulkToAmbientOpenCollarSmooth4D.lean": (

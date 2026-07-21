@@ -902,10 +902,25 @@ que si leur critère le dit explicitement.
   prouve dans `R⁴` que la dérivée d'indice `0` vaut exactement `cutoff'` et que
   les trois dérivées restantes sont nulles, satisfaisant ainsi le contrat
   `LocalCutoffNormalOnlyAt`; elle instancie aussi la règle de Leibniz covariante
-  et réduit la divergence locale conservée à `cutoff' × J⁰`. Il reste à
-  composer ce changement avec une
-  paramétrisation locale totale du collier pour obtenir la carte holonome
-  adaptée et identifier `J⁰` au flux normal global, puis à identifier la vraie
+  et réduit la divergence locale conservée à `cutoff' × J⁰`. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeNormalAdaptedHolonomicChart4D`
+  reparamètre maintenant une vraie carte holonome totale en chaque point du
+  collier de sorte que son vecteur de frame d'indice `0` soit exactement la
+  normale canonique globale. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeNormalTangentialAdaptedHolonomicChart4D`
+  applique une correction linéaire inversible qui fixe cet axe normal et place
+  exactement les trois autres vecteurs de frame dans le noyau de la covariable
+  normale métrique. La gate
+  `P0EFTJanusMappingTorusCutBulkCanonicalCutoffCollarMFDeriv4D` calcule désormais
+  la différentielle manifold complète du vrai cutoff global tiré sur le produit
+  du collier : elle vaut exactement `cutoff'` multiplié par la composante
+  tangentielle normale. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeAmbientOrthogonality4D` généralise
+  maintenant l'orthogonalité normale/tangentielle du throat à toute latitude
+  non polaire du collier. Il reste à transporter cette formule par l'isomorphisme
+  de dérivée du collier vers la covariable normale métrique pour reconnaître le
+  cutoff holonome comme son vrai pullback local, puis à identifier `J⁰` au flux
+  normal global et la vraie
   divergence tangentielle locale à cette compensation, puis à recoller les
   représentants locaux. La gate
   `P0EFTJanusMappingTorusCanonicalHolonomicAtlasScalarGreenDivergenceTransition4D`
