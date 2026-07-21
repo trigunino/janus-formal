@@ -32,6 +32,16 @@ universe u
 variable {Trace : Type u}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
 
+/-- Two Lagrangian boundary-condition records are equal once their underlying
+subspaces are equal; closedness and maximality fields are propositions. -/
+theorem canonicalScalarHilbertLagrangianBoundaryCondition_ext
+    {first second : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+    (hSubspace : first.subspace = second.subspace) : first = second := by
+  cases first
+  cases second
+  cases hSubspace
+  rfl
+
 /-- Continuous linear symplectomorphism of the paired scalar Hilbert trace
 space. -/
 structure CanonicalScalarHilbertBoundarySymplecticEquiv where
@@ -150,7 +160,7 @@ theorem canonicalScalarHilbertBoundaryQuarterTurn_dirichlet_eq_neumann :
           (Trace := Trace)) =
       CanonicalScalarHilbertLagrangianBoundaryCondition.neumann
         (Trace := Trace) := by
-  apply CanonicalScalarHilbertLagrangianBoundaryCondition.ext
+  apply canonicalScalarHilbertLagrangianBoundaryCondition_ext
   ext datum
   change (-datum.2, datum.1) ∈
       canonicalScalarHilbertDirichletBoundarySubmodule (Trace := Trace) ↔
@@ -196,7 +206,7 @@ theorem canonicalScalarHilbertBoundaryShear_neumann_eq_robinGraph
           (Trace := Trace)) =
       CanonicalScalarHilbertLagrangianBoundaryCondition.robinGraph
         robin hRobin := by
-  apply CanonicalScalarHilbertLagrangianBoundaryCondition.ext
+  apply canonicalScalarHilbertLagrangianBoundaryCondition_ext
   ext datum
   change (datum.1, datum.2 - robin datum.1) ∈
       canonicalScalarHilbertNeumannBoundarySubmodule (Trace := Trace) ↔
