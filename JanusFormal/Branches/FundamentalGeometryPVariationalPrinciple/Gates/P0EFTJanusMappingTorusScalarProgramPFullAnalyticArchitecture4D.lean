@@ -1,3 +1,4 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarRemainingAnalyticInputs4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCoerciveBoundaryProblem4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarInterfaceGluing4D
@@ -23,17 +24,19 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Full scalar analytic architecture for Program P
 
 This head imports the complete post-Green--Stokes scalar architecture developed
-on `dev-branch`:
+on `dev-branch`, including the corrected Program P-B physical closure:
 
-* physical bulk and throat Hilbert realization;
-* closed graph and actual single-valued operator;
-* abstract closed Lagrangian boundary conditions;
-* Dirichlet, Neumann, scalar Robin and operator-valued Robin realizations;
-* graph-bounded Cauchy trace and physical Green identity bridge;
+* physical Euler residual on the canonical total atlas;
+* concrete value and normal traces on the oriented cut boundary;
+* first-sheet L2 Hilbert Cauchy trace and exact Green pairing;
+* dense smooth Green core rather than impossible smooth L2 surjectivity;
+* graph completion with a surjective completed trace;
+* closed Dirichlet, Neumann, scalar Robin and operator-valued Robin domains;
+* actual Hilbert self-adjointness from maximal regularity;
+* compact resolvent, Fredholm alternative and finite eigenvalue multiplicity;
 * Dirichlet resolvent, Poisson, Weyl/DtN and Calderon constructions;
 * Schur complements, Krein formulas and relative Robin resolvents;
 * one- and two-bulk reduced boundary actions and coercive minimization;
-* compact resolvent, Fredholm alternative and finite eigenvalue multiplicity;
 * Rayleigh, Courant--Fischer, Morse and Maslov formulations;
 * spectral zeta, Fredholm determinant and one-loop interfaces;
 * PT symmetry, two-sector exchange and quadratic diagonalization;
