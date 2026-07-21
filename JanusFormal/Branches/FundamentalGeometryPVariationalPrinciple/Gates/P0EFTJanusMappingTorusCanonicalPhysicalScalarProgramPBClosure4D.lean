@@ -5,6 +5,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerLinearity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarBulkEulerGreenBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
@@ -42,8 +43,10 @@ The path is deliberately split at the correct regularity levels:
 8. coercive compact resolvent and semibounded spectral closure.
 
 The spherical coarea theorem and the resulting physical value trace are now
-unconditional.  The post-coarea heads isolate the remaining elliptic, Cauchy
-extension, adjoint-regularity, compactness and semiboundedness inputs.
+unconditional.  Continuity and linearity of the selected global Euler residual
+are also theorems once overlap compatibility is supplied.  The post-coarea heads
+isolate the remaining coordinate-invariance, bulk Green-pairing, elliptic,
+Cauchy-extension, adjoint-regularity, compactness and semiboundedness inputs.
 
 Unlike the early compatibility facade, this head never assumes that the smooth
 trace is surjective onto the full infinite-dimensional L2 boundary space.
