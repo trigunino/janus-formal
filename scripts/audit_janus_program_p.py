@@ -6062,6 +6062,12 @@ PROGRAM_P_GATES = {
             "theorem d9MatterSpinorGlobalCovariantDerivative_descended_flatCover",
         ),
     ),
+    "P0EFTJanusProgramPD9MatterSpinorGlobalConnectionHermitian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9MatterSpinorGlobalCovariantDerivative_pairing_compatible",
+        ),
+    ),
     "P0EFTJanusProgramPThroatMatterSpinorSectionLinearSpace4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

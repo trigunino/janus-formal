@@ -1864,9 +1864,7 @@ que si leur critère le dit explicitement.
   la dérivée plate du pairing est exactement la somme des deux pairings avec
   la dérivée de chaque argument ; la connexion plate est donc hermitienne sur
   le revêtement.
-- Limite : identifier cette connexion plate hermitienne au
-  `CovariantDerivative` global du bundle quotient, puis construire l'action de
-  Clifford.
+- Limite : construire l'action de Clifford.
 - Porte terminale : aucune ; ferme la compatibilité métrique requise avant le
   Dirac géométrique.
 
@@ -1878,8 +1876,7 @@ que si leur critère le dit explicitement.
   transportée dans chaque fibre et empaquetée comme un vrai
   `CovariantDerivative` Mathlib sur le bundle spinoriel D9 ; son additivité et
   sa règle de Leibniz sont prouvées pour toute section différentiable.
-- Limite : prouver sa régularité comme `ContMDiffCovariantDerivative` et son
-  transport explicite de la compatibilité hermitienne globale.
+- Limite : prouver sa régularité comme `ContMDiffCovariantDerivative`.
 - Porte terminale : aucune ; ferme le type global de connexion requis avant
   l'action de Clifford et le Dirac.
 
@@ -1902,9 +1899,19 @@ que si leur critère le dit explicitement.
 - Résultat : sur toute section descendue, la dérivée covariante globale est
   exactement la dérivée plate du lift sur le revêtement, composée avec la
   dérivée de l'inverse local canonique du revêtement.
-- Limite : régularité `ContMDiffCovariantDerivative`, compatibilité hermitienne
-  globale, action de Clifford puis opérateur de Dirac.
+- Limite : régularité `ContMDiffCovariantDerivative`, action de Clifford puis
+  opérateur de Dirac.
 - Porte terminale : aucune ; ferme l'identification plate/globale.
+
+### `P-T01-D9-MATTER-SPINOR-GLOBAL-HERMITIAN` — Compatibilité hermitienne globale
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorGlobalConnectionHermitian4D`.
+- Résultat : pour deux sections descendues arbitraires et toute direction
+  tangente, la dérivée globale du pairing est exactement la somme des pairings
+  avec la dérivée covariante de chaque argument.
+- Limite : action de Clifford puis opérateur de Dirac géométrique.
+- Porte terminale : aucune ; ferme la compatibilité hermitienne globale.
 
 ### `P-T01-D9-MATTER-SPINOR-SECTION-NOGO` — Obstruction des champs actuels
 
