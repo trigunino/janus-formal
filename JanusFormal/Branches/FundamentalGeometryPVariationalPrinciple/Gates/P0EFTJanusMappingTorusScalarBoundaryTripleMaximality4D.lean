@@ -64,7 +64,7 @@ def canonicalScalarSeparatedGreenDomainSubmodule
     (valueCoefficient normalCoefficient : CanonicalLatitudeBase → Real)
     (field : Domain) :
     field ∈ canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient ↔
+        period system valueCoefficient normalCoefficient ↔
       system.boundary field ∈
         canonicalScalarSeparatedBoundarySectionSubmodule
           valueCoefficient normalCoefficient :=
@@ -76,10 +76,10 @@ def canonicalScalarSeparatedGreenDomainInclusion
       (Domain := Domain) (Ambient := Ambient))
     (valueCoefficient normalCoefficient : CanonicalLatitudeBase → Real) :
     canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient →ₗ[Real] Ambient :=
+        period system valueCoefficient normalCoefficient →ₗ[Real] Ambient :=
   system.inclusion.comp
     (canonicalScalarSeparatedGreenDomainSubmodule
-      system valueCoefficient normalCoefficient).subtype
+      period system valueCoefficient normalCoefficient).subtype
 
 /-- Operator restricted to a separated Green domain. -/
 def canonicalScalarSeparatedGreenDomainOperator
@@ -87,10 +87,10 @@ def canonicalScalarSeparatedGreenDomainOperator
       (Domain := Domain) (Ambient := Ambient))
     (valueCoefficient normalCoefficient : CanonicalLatitudeBase → Real) :
     canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient →ₗ[Real] Ambient :=
+        period system valueCoefficient normalCoefficient →ₗ[Real] Ambient :=
   system.operator.comp
     (canonicalScalarSeparatedGreenDomainSubmodule
-      system valueCoefficient normalCoefficient).subtype
+      period system valueCoefficient normalCoefficient).subtype
 
 /-- Every nondegenerate separated Lagrangian boundary condition makes the
 restricted Green operator symmetric. -/
@@ -101,17 +101,17 @@ theorem canonicalScalarSeparatedGreenDomainOperator_symmetric
     (hNondegenerate : ∀ base,
       valueCoefficient base ≠ 0 ∨ normalCoefficient base ≠ 0)
     (first second : canonicalScalarSeparatedGreenDomainSubmodule
-      system valueCoefficient normalCoefficient) :
+      period system valueCoefficient normalCoefficient) :
     inner Real
         (canonicalScalarSeparatedGreenDomainOperator
-          system valueCoefficient normalCoefficient first)
+          period system valueCoefficient normalCoefficient first)
         (canonicalScalarSeparatedGreenDomainInclusion
-          system valueCoefficient normalCoefficient second) =
+          period system valueCoefficient normalCoefficient second) =
       inner Real
         (canonicalScalarSeparatedGreenDomainInclusion
-          system valueCoefficient normalCoefficient first)
+          period system valueCoefficient normalCoefficient first)
         (canonicalScalarSeparatedGreenDomainOperator
-          system valueCoefficient normalCoefficient second) := by
+          period system valueCoefficient normalCoefficient second) := by
   have hFirstBoundary :
       system.boundary first.1 ∈
         canonicalScalarSeparatedBoundarySectionSubmodule
@@ -141,7 +141,7 @@ def canonicalScalarSeparatedBoundaryAdjointAdmissible
     (valueCoefficient normalCoefficient : CanonicalLatitudeBase → Real)
     (candidate : Domain) : Prop :=
   ∀ test : canonicalScalarSeparatedGreenDomainSubmodule
-      system valueCoefficient normalCoefficient,
+      period system valueCoefficient normalCoefficient,
     ∀ base : CanonicalLatitudeBase,
       canonicalScalarBoundarySymplecticForm
         (system.boundary candidate base)
@@ -155,7 +155,7 @@ def canonicalScalarSeparatedBoundaryAdjointDomain
     Set Domain :=
   {candidate |
     canonicalScalarSeparatedBoundaryAdjointAdmissible
-      system valueCoefficient normalCoefficient candidate}
+      period system valueCoefficient normalCoefficient candidate}
 
 /-- Surjectivity of the boundary trace plus Lagrangian maximality identifies the
 boundary-adjoint candidates exactly with the separated domain. -/
@@ -167,13 +167,19 @@ theorem canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
       valueCoefficient base ≠ 0 ∨ normalCoefficient base ≠ 0)
     (candidate : Domain) :
     canonicalScalarSeparatedBoundaryAdjointAdmissible
-        system valueCoefficient normalCoefficient candidate ↔
+        period system valueCoefficient normalCoefficient candidate ↔
       candidate ∈ canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient := by
+        period system valueCoefficient normalCoefficient := by
   constructor
   · intro hCandidate
+    change ∀ test : canonicalScalarSeparatedGreenDomainSubmodule
+        period system valueCoefficient normalCoefficient,
+      ∀ base : CanonicalLatitudeBase,
+        canonicalScalarBoundarySymplecticForm
+          (system.boundary candidate base)
+          (system.boundary test.1 base) = 0 at hCandidate
     apply (mem_canonicalScalarSeparatedGreenDomainSubmodule
-      (period := period) system valueCoefficient normalCoefficient candidate).2
+      period system valueCoefficient normalCoefficient candidate).2
     apply (mem_canonicalScalarSeparatedBoundarySectionSubmodule
       valueCoefficient normalCoefficient (system.boundary candidate)).2
     intro base
@@ -191,9 +197,9 @@ theorem canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
       ring
     obtain ⟨test, hTrace⟩ := system.boundary_surjective generator
     have hTestDomain : test ∈ canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient := by
+        period system valueCoefficient normalCoefficient := by
       apply (mem_canonicalScalarSeparatedGreenDomainSubmodule
-        (period := period) system valueCoefficient normalCoefficient test).2
+        period system valueCoefficient normalCoefficient test).2
       rw [hTrace]
       exact hGenerator
     have hAt := hCandidate ⟨test, hTestDomain⟩ base
@@ -203,23 +209,24 @@ theorem canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
     dsimp [generator, canonicalScalarSeparatedBoundaryGenerator] at hAt
     unfold canonicalScalarBoundarySymplecticForm at hAt
     linarith
-  · intro hCandidate test base
-    have hCandidateBoundary : system.boundary candidate ∈
-        canonicalScalarSeparatedBoundarySectionSubmodule
-          valueCoefficient normalCoefficient :=
-      (mem_canonicalScalarSeparatedGreenDomainSubmodule
-        (period := period) system valueCoefficient normalCoefficient candidate).1
-          hCandidate
+  · intro hCandidate
+    change system.boundary candidate ∈
+      canonicalScalarSeparatedBoundarySectionSubmodule
+        valueCoefficient normalCoefficient at hCandidate
+    change ∀ test : canonicalScalarSeparatedGreenDomainSubmodule
+        period system valueCoefficient normalCoefficient,
+      ∀ base : CanonicalLatitudeBase,
+        canonicalScalarBoundarySymplecticForm
+          (system.boundary candidate base)
+          (system.boundary test.1 base) = 0
+    intro test base
     have hTestBoundary : system.boundary test.1 ∈
         canonicalScalarSeparatedBoundarySectionSubmodule
-          valueCoefficient normalCoefficient :=
-      (mem_canonicalScalarSeparatedGreenDomainSubmodule
-        (period := period) system valueCoefficient normalCoefficient test.1).1
-          test.2
+          valueCoefficient normalCoefficient := test.2
     have hCandidateBase :=
       (mem_canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient (system.boundary candidate)).1
-          hCandidateBoundary base
+          hCandidate base
     have hTestBase :=
       (mem_canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient (system.boundary test.1)).1
@@ -242,13 +249,12 @@ theorem canonicalScalarSeparatedBoundaryAdjointDomain_eq
     (hNondegenerate : ∀ base,
       valueCoefficient base ≠ 0 ∨ normalCoefficient base ≠ 0) :
     canonicalScalarSeparatedBoundaryAdjointDomain
-        system valueCoefficient normalCoefficient =
+        period system valueCoefficient normalCoefficient =
       (canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient : Set Domain) := by
+        period system valueCoefficient normalCoefficient : Set Domain) := by
   ext candidate
   exact canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
-    (period := period) system valueCoefficient normalCoefficient
-      hNondegenerate candidate
+    period system valueCoefficient normalCoefficient hNondegenerate candidate
 
 /-- Analytic interface for a future closed unbounded realization. -/
 structure CanonicalScalarAdjointBoundaryCharacterization
@@ -259,7 +265,7 @@ structure CanonicalScalarAdjointBoundaryCharacterization
   mem_adjointDomain_iff : ∀ candidate : Domain,
     candidate ∈ adjointDomain ↔
       canonicalScalarSeparatedBoundaryAdjointAdmissible
-        system valueCoefficient normalCoefficient candidate
+        period system valueCoefficient normalCoefficient candidate
 
 /-- Once an analytic operator proves the adjoint characterization, maximal
 Lagrangianity gives equality of adjoint and original domains. -/
@@ -273,22 +279,21 @@ theorem CanonicalScalarAdjointBoundaryCharacterization.adjointDomain_eq
       period system valueCoefficient normalCoefficient) :
     characterization.adjointDomain =
       (canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient : Set Domain) := by
+        period system valueCoefficient normalCoefficient : Set Domain) := by
   ext candidate
   rw [characterization.mem_adjointDomain_iff]
   exact canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
-    (period := period) system valueCoefficient normalCoefficient
-      hNondegenerate candidate
+    period system valueCoefficient normalCoefficient hNondegenerate candidate
 
 /-- Dirichlet specialization of boundary-adjoint maximality. -/
 theorem canonicalScalarDirichletBoundaryAdjointDomain_eq
     (system : CanonicalScalarGlobalGreenSystem period
       (Domain := Domain) (Ambient := Ambient)) :
-    canonicalScalarSeparatedBoundaryAdjointDomain system
+    canonicalScalarSeparatedBoundaryAdjointDomain period system
         (fun _ => 1) (fun _ => 0) =
-      (canonicalScalarSeparatedGreenDomainSubmodule system
+      (canonicalScalarSeparatedGreenDomainSubmodule period system
         (fun _ => 1) (fun _ => 0) : Set Domain) := by
-  apply canonicalScalarSeparatedBoundaryAdjointDomain_eq (period := period)
+  apply canonicalScalarSeparatedBoundaryAdjointDomain_eq period system
   intro base
   exact Or.inl one_ne_zero
 
@@ -296,11 +301,11 @@ theorem canonicalScalarDirichletBoundaryAdjointDomain_eq
 theorem canonicalScalarNeumannBoundaryAdjointDomain_eq
     (system : CanonicalScalarGlobalGreenSystem period
       (Domain := Domain) (Ambient := Ambient)) :
-    canonicalScalarSeparatedBoundaryAdjointDomain system
+    canonicalScalarSeparatedBoundaryAdjointDomain period system
         (fun _ => 0) (fun _ => 1) =
-      (canonicalScalarSeparatedGreenDomainSubmodule system
+      (canonicalScalarSeparatedGreenDomainSubmodule period system
         (fun _ => 0) (fun _ => 1) : Set Domain) := by
-  apply canonicalScalarSeparatedBoundaryAdjointDomain_eq (period := period)
+  apply canonicalScalarSeparatedBoundaryAdjointDomain_eq period system
   intro base
   exact Or.inr one_ne_zero
 
@@ -309,11 +314,11 @@ theorem canonicalScalarRobinBoundaryAdjointDomain_eq
     (system : CanonicalScalarGlobalGreenSystem period
       (Domain := Domain) (Ambient := Ambient))
     (coefficient : CanonicalLatitudeBase → Real) :
-    canonicalScalarSeparatedBoundaryAdjointDomain system
+    canonicalScalarSeparatedBoundaryAdjointDomain period system
         (fun base => -coefficient base) (fun _ => 1) =
-      (canonicalScalarSeparatedGreenDomainSubmodule system
+      (canonicalScalarSeparatedGreenDomainSubmodule period system
         (fun base => -coefficient base) (fun _ => 1) : Set Domain) := by
-  apply canonicalScalarSeparatedBoundaryAdjointDomain_eq (period := period)
+  apply canonicalScalarSeparatedBoundaryAdjointDomain_eq period system
   intro base
   exact Or.inr one_ne_zero
 
@@ -326,25 +331,25 @@ theorem canonicalScalarSeparatedGreenDomain_maximalSymmetry_certificate
     (hNondegenerate : ∀ base,
       valueCoefficient base ≠ 0 ∨ normalCoefficient base ≠ 0) :
     (∀ first second : canonicalScalarSeparatedGreenDomainSubmodule
-        system valueCoefficient normalCoefficient,
+        period system valueCoefficient normalCoefficient,
       inner Real
           (canonicalScalarSeparatedGreenDomainOperator
-            system valueCoefficient normalCoefficient first)
+            period system valueCoefficient normalCoefficient first)
           (canonicalScalarSeparatedGreenDomainInclusion
-            system valueCoefficient normalCoefficient second) =
+            period system valueCoefficient normalCoefficient second) =
         inner Real
           (canonicalScalarSeparatedGreenDomainInclusion
-            system valueCoefficient normalCoefficient first)
+            period system valueCoefficient normalCoefficient first)
           (canonicalScalarSeparatedGreenDomainOperator
-            system valueCoefficient normalCoefficient second)) ∧
+            period system valueCoefficient normalCoefficient second)) ∧
       canonicalScalarSeparatedBoundaryAdjointDomain
-          system valueCoefficient normalCoefficient =
+          period system valueCoefficient normalCoefficient =
         (canonicalScalarSeparatedGreenDomainSubmodule
-          system valueCoefficient normalCoefficient : Set Domain) := by
+          period system valueCoefficient normalCoefficient : Set Domain) := by
   exact ⟨canonicalScalarSeparatedGreenDomainOperator_symmetric
-      (period := period) system valueCoefficient normalCoefficient hNondegenerate,
+      period system valueCoefficient normalCoefficient hNondegenerate,
     canonicalScalarSeparatedBoundaryAdjointDomain_eq
-      (period := period) system valueCoefficient normalCoefficient hNondegenerate⟩
+      period system valueCoefficient normalCoefficient hNondegenerate⟩
 
 end
 end P0EFTJanusMappingTorusScalarBoundaryTripleMaximality4D
