@@ -10,6 +10,7 @@ open P0EFTJanusGaugeGhostBlockD9FiniteZeroModePacket4D
 open P0EFTJanusGaugeGhostBlockD9FiniteCokernelSupport4D
 open P0EFTJanusGaugeGhostBlockD9SeparatedCokernelIndex4D
 open P0EFTJanusGaugeGhostBlockD9PointwiseCohomologyIndex4D
+open P0EFTJanusGaugeFixedPrincipalSymbols
 open P0EFTJanusImmersionFiberAlgebra
 
 /-- Pull a linear packet back along an equivalence of its mode labels.  This
@@ -52,8 +53,8 @@ def packetReindexLinearEquiv {ι κ V : Type*}
   rfl
 
 theorem packetReindexLinearEquiv_trans_apply
-    {ι κ λ V : Type*} [AddCommMonoid V] [Module Real V]
-    (first : ι ≃ κ) (second : κ ≃ λ) (packet : λ → V) :
+    {ι κ μ V : Type*} [AddCommMonoid V] [Module Real V]
+    (first : ι ≃ κ) (second : κ ≃ μ) (packet : μ → V) :
     packetReindexLinearEquiv first
         (packetReindexLinearEquiv second packet) =
       packetReindexLinearEquiv (first.trans second) packet := by
