@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCutBoundaryScalarCauchyTrace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCutBoundaryScalarCurrentIntegralCancellation4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusCompactQuotient
 
 /-!
 # L2 realization of the scalar Cauchy trace on the cut boundary
@@ -22,6 +23,9 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal
 open MeasureTheory Set Topology
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusMappingTorusOrientationDoubleCover
@@ -44,7 +48,7 @@ local instance cutBoundaryIsManifold :
 
 local instance cutBoundaryCompactSpace :
     CompactSpace (CutThroatBoundary period hPeriod) :=
-  P0EFTJanusMappingTorusSmoothQuotientManifold.fixedThroatQuotientCompactSpace
+  fixedThroatQuotientCompactSpace
     (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
 
 local instance cutBoundaryMeasurableSpace :
@@ -101,6 +105,7 @@ def smoothCutBoundaryScalarValueTraceL2 :
         ((cutBoundaryScalarValueTrace_memLp period hPeriod second).toLp
           (cutBoundaryScalarValueTrace period hPeriod second))]
       with boundary hSum hFirst hSecond hAdd
+    simp only [Pi.add_apply] at hAdd
     rw [hSum, hAdd, hFirst, hSecond]
     exact cutBoundaryScalarValueTrace_add period hPeriod first second boundary
   map_smul' scalar field := by
@@ -112,6 +117,8 @@ def smoothCutBoundaryScalarValueTraceL2 :
         ((cutBoundaryScalarValueTrace_memLp period hPeriod field).toLp
           (cutBoundaryScalarValueTrace period hPeriod field))]
       with boundary hScaled hField hSmul
+    simp only [Pi.smul_apply, RingHom.id_apply] at hSmul
+    simp only [RingHom.id_apply]
     rw [hScaled, hSmul, hField]
     exact cutBoundaryScalarValueTrace_smul
       period hPeriod scalar field boundary
@@ -135,6 +142,7 @@ def smoothCutBoundaryScalarNormalTraceL2 :
         ((cutBoundaryScalarNormalTrace_memLp period hPeriod second).toLp
           (cutBoundaryScalarNormalTrace period hPeriod second))]
       with boundary hSum hFirst hSecond hAdd
+    simp only [Pi.add_apply] at hAdd
     rw [hSum, hAdd, hFirst, hSecond]
     exact cutBoundaryScalarNormalTrace_add period hPeriod first second boundary
   map_smul' scalar field := by
@@ -146,6 +154,8 @@ def smoothCutBoundaryScalarNormalTraceL2 :
         ((cutBoundaryScalarNormalTrace_memLp period hPeriod field).toLp
           (cutBoundaryScalarNormalTrace period hPeriod field))]
       with boundary hScaled hField hSmul
+    simp only [Pi.smul_apply, RingHom.id_apply] at hSmul
+    simp only [RingHom.id_apply]
     rw [hScaled, hSmul, hField]
     exact cutBoundaryScalarNormalTrace_smul
       period hPeriod scalar field boundary
@@ -203,6 +213,8 @@ theorem cutBoundaryDeckL2Pullback_valueTrace
     cutBoundaryDeckL2Pullback period hPeriod
         (smoothCutBoundaryScalarValueTraceL2 period hPeriod field) =
       smoothCutBoundaryScalarValueTraceL2 period hPeriod field := by
+  change Lp.compMeasurePreserving (orientationDeck period hPeriod) _
+      (smoothCutBoundaryScalarValueTraceL2 period hPeriod field) = _
   apply Lp.ext
   filter_upwards
     [Lp.coeFn_compMeasurePreserving
@@ -211,10 +223,10 @@ theorem cutBoundaryDeckL2Pullback_valueTrace
         period hPeriod),
      smoothCutBoundaryScalarValueTraceL2_ae period hPeriod field,
      (cutBoundaryCanonicalMeasure_orientationDeck_measurePreserving
-        period hPeriod).quasiMeasurePreserving
-       |>.ae_preimage
+        period hPeriod).quasiMeasurePreserving.ae
          (smoothCutBoundaryScalarValueTraceL2_ae period hPeriod field)]
     with boundary hDeck hValue hValueDeck
+  simp only [Function.comp_apply] at hDeck hValueDeck
   rw [hDeck, hValueDeck, hValue]
   exact cutBoundaryScalarValueTrace_deck period hPeriod field boundary
 
@@ -224,6 +236,8 @@ theorem cutBoundaryDeckL2Pullback_normalTrace
     cutBoundaryDeckL2Pullback period hPeriod
         (smoothCutBoundaryScalarNormalTraceL2 period hPeriod field) =
       -smoothCutBoundaryScalarNormalTraceL2 period hPeriod field := by
+  change Lp.compMeasurePreserving (orientationDeck period hPeriod) _
+      (smoothCutBoundaryScalarNormalTraceL2 period hPeriod field) = _
   apply Lp.ext
   filter_upwards
     [Lp.coeFn_compMeasurePreserving
@@ -232,12 +246,13 @@ theorem cutBoundaryDeckL2Pullback_normalTrace
         period hPeriod),
      smoothCutBoundaryScalarNormalTraceL2_ae period hPeriod field,
      (cutBoundaryCanonicalMeasure_orientationDeck_measurePreserving
-        period hPeriod).quasiMeasurePreserving
-       |>.ae_preimage
+        period hPeriod).quasiMeasurePreserving.ae
          (smoothCutBoundaryScalarNormalTraceL2_ae period hPeriod field),
      Lp.coeFn_neg
        (smoothCutBoundaryScalarNormalTraceL2 period hPeriod field)]
     with boundary hDeck hNormal hNormalDeck hNeg
+  simp only [Function.comp_apply] at hDeck hNormalDeck
+  simp only [Pi.neg_apply] at hNeg
   rw [hDeck, hNormalDeck, hNeg, hNormal]
   exact cutBoundaryScalarNormalTrace_deck period hPeriod field boundary
 
@@ -259,8 +274,10 @@ def smoothCutBoundaryScalarValueTraceEvenL2 :
       CutBoundaryEvenL2Submodule period hPeriod where
   toFun field :=
     ⟨smoothCutBoundaryScalarValueTraceL2 period hPeriod field, by
-      rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,
-        cutBoundaryDeckL2Pullback_valueTrace, sub_self]⟩
+      change cutBoundaryDeckL2Pullback period hPeriod
+          (smoothCutBoundaryScalarValueTraceL2 period hPeriod field) -
+        smoothCutBoundaryScalarValueTraceL2 period hPeriod field = 0
+      rw [cutBoundaryDeckL2Pullback_valueTrace, sub_self]⟩
   map_add' first second := by
     apply Subtype.ext
     simp
@@ -274,8 +291,10 @@ def smoothCutBoundaryScalarNormalTraceOddL2 :
       CutBoundaryOddL2Submodule period hPeriod where
   toFun field :=
     ⟨smoothCutBoundaryScalarNormalTraceL2 period hPeriod field, by
-      rw [LinearMap.mem_ker, LinearMap.add_apply, LinearMap.id_apply,
-        cutBoundaryDeckL2Pullback_normalTrace, neg_add_cancel]⟩
+      change cutBoundaryDeckL2Pullback period hPeriod
+          (smoothCutBoundaryScalarNormalTraceL2 period hPeriod field) +
+        smoothCutBoundaryScalarNormalTraceL2 period hPeriod field = 0
+      rw [cutBoundaryDeckL2Pullback_normalTrace, neg_add_cancel]⟩
   map_add' first second := by
     apply Subtype.ext
     simp

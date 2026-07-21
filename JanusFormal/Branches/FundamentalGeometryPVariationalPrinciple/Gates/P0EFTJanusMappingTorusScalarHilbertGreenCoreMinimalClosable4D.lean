@@ -44,58 +44,59 @@ def minimalDomainSubmodule
 def minimalInclusion
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace)) :
-    core.minimalDomainSubmodule →ₗ[Real] Ambient :=
-  core.inclusion.comp core.minimalDomainSubmodule.subtype
+    minimalDomainSubmodule core →ₗ[Real] Ambient :=
+  core.inclusion.comp (minimalDomainSubmodule core).subtype
 
 /-- Minimal smooth operator. -/
 def minimalOperator
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace)) :
-    core.minimalDomainSubmodule →ₗ[Real] Ambient :=
-  core.operator.comp core.minimalDomainSubmodule.subtype
+    minimalDomainSubmodule core →ₗ[Real] Ambient :=
+  core.operator.comp (minimalDomainSubmodule core).subtype
 
 /-- Formal-adjoint pairing against zero-trace tests. -/
 theorem maximal_minimal_pairing
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
-    (field : Domain) (test : core.minimalDomainSubmodule) :
-    inner Real (core.operator field) (core.minimalInclusion test) =
-      inner Real (core.inclusion field) (core.minimalOperator test) := by
+    (field : Domain) (test : minimalDomainSubmodule core) :
+    inner Real (core.operator field) (minimalInclusion core test) =
+      inner Real (core.inclusion field) (minimalOperator core test) := by
   have hGreen := core.green_identity field test.1
   have hTraceZero : core.boundaryTrace test.1 = 0 :=
     LinearMap.mem_ker.mp test.2
-  rw [hTraceZero,
-    canonicalScalarHilbertBoundarySymplecticForm_zero_right] at hGreen
-  linarith
+  rw [hTraceZero] at hGreen
+  unfold canonicalScalarHilbertBoundarySymplecticForm at hGreen
+  simp at hGreen
+  exact sub_eq_zero.mp hGreen
 
 /-- Density of the minimal smooth core. -/
 def MinimalCoreDense
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace)) : Prop :=
-  DenseRange core.minimalInclusion
+  DenseRange (minimalInclusion core)
 
 /-- The formal-adjoint pairing extends to one completed graph vector. -/
 theorem completedGraph_pairing_minimal
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
     (graphField : CanonicalScalarGreenCoreGraphSpace core)
-    (test : core.minimalDomainSubmodule) :
+    (test : minimalDomainSubmodule core) :
     inner Real (canonicalScalarGreenCoreGraphOperator core graphField)
-        (core.minimalInclusion test) =
+        (minimalInclusion core test) =
       inner Real (canonicalScalarGreenCoreGraphInclusion core graphField)
-        (core.minimalOperator test) := by
+        (minimalOperator core test) := by
   let good : Set (CanonicalScalarGreenCoreGraphSpace core) :=
     {field |
       inner Real (canonicalScalarGreenCoreGraphOperator core field)
-          (core.minimalInclusion test) =
+          (minimalInclusion core test) =
         inner Real (canonicalScalarGreenCoreGraphInclusion core field)
-          (core.minimalOperator test)}
+          (minimalOperator core test)}
   have hGoodClosed : IsClosed good := by
     dsimp [good]
     apply isClosed_eq <;> fun_prop
   have hRange : Set.range (canonicalScalarGreenCoreToGraph core) ⊆ good := by
     rintro field ⟨smoothField, rfl⟩
-    exact core.maximal_minimal_pairing smoothField test
+    exact maximal_minimal_pairing core smoothField test
   have hClosure : closure (Set.range
       (canonicalScalarGreenCoreToGraph core)) = Set.univ :=
     (canonicalScalarGreenCoreToGraph_denseRange core).closure_range
@@ -109,26 +110,26 @@ theorem completedGraph_pairing_minimal
 theorem graphOperator_eq_zero_of_graphInclusion_eq_zero
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
-    (hDense : core.MinimalCoreDense)
+    (hDense : MinimalCoreDense core)
     (graphField : CanonicalScalarGreenCoreGraphSpace core)
     (hVertical : canonicalScalarGreenCoreGraphInclusion core graphField = 0) :
     canonicalScalarGreenCoreGraphOperator core graphField = 0 := by
   let residual : Ambient := canonicalScalarGreenCoreGraphOperator core graphField
-  have hTestOrthogonal (test : core.minimalDomainSubmodule) :
-      inner Real residual (core.minimalInclusion test) = 0 := by
-    have hPairing := core.completedGraph_pairing_minimal graphField test
+  have hTestOrthogonal (test : minimalDomainSubmodule core) :
+      inner Real residual (minimalInclusion core test) = 0 := by
+    have hPairing := completedGraph_pairing_minimal core graphField test
     rw [hVertical] at hPairing
     simpa [residual] using hPairing
   let good : Set Ambient := {test | inner Real residual test = 0}
   have hGoodClosed : IsClosed good := by
     dsimp [good]
     apply isClosed_eq <;> fun_prop
-  have hRange : Set.range core.minimalInclusion ⊆ good := by
+  have hRange : Set.range (minimalInclusion core) ⊆ good := by
     rintro test ⟨smoothTest, rfl⟩
     exact hTestOrthogonal smoothTest
-  have hClosure : closure (Set.range core.minimalInclusion) = Set.univ :=
+  have hClosure : closure (Set.range (minimalInclusion core)) = Set.univ :=
     hDense.closure_range
-  have hResidualMem : residual ∈ closure (Set.range core.minimalInclusion) := by
+  have hResidualMem : residual ∈ closure (Set.range (minimalInclusion core)) := by
     rw [hClosure]
     trivial
   have hResidualOrthogonal : inner Real residual residual = 0 :=
@@ -142,7 +143,7 @@ injective. -/
 theorem graphInclusion_injective_of_minimal_dense
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
-    (hDense : core.MinimalCoreDense) :
+    (hDense : MinimalCoreDense core) :
     Function.Injective (canonicalScalarGreenCoreGraphInclusion core) := by
   intro first second hInclusion
   have hDifferenceInclusion :
@@ -150,7 +151,7 @@ theorem graphInclusion_injective_of_minimal_dense
     rw [map_sub, hInclusion, sub_self]
   have hDifferenceOperator :
       canonicalScalarGreenCoreGraphOperator core (first - second) = 0 :=
-    core.graphOperator_eq_zero_of_graphInclusion_eq_zero
+    graphOperator_eq_zero_of_graphInclusion_eq_zero core
       hDense (first - second) hDifferenceInclusion
   apply Subtype.ext
   apply Prod.ext
@@ -162,13 +163,13 @@ theorem graphInclusion_injective_of_minimal_dense
 theorem minimalCoreClosable_certificate
     (core : CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
-    (hDense : core.MinimalCoreDense) :
+    (hDense : MinimalCoreDense core) :
     Function.Injective (canonicalScalarGreenCoreGraphInclusion core) ∧
       (∀ graphField : CanonicalScalarGreenCoreGraphSpace core,
         canonicalScalarGreenCoreGraphInclusion core graphField = 0 →
           canonicalScalarGreenCoreGraphOperator core graphField = 0) :=
-  ⟨core.graphInclusion_injective_of_minimal_dense hDense,
-    core.graphOperator_eq_zero_of_graphInclusion_eq_zero hDense⟩
+  ⟨graphInclusion_injective_of_minimal_dense core hDense,
+    graphOperator_eq_zero_of_graphInclusion_eq_zero core hDense⟩
 
 end CanonicalScalarHilbertGreenCore
 

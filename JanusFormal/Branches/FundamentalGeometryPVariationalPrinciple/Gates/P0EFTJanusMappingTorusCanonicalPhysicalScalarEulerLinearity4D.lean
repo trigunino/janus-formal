@@ -31,7 +31,11 @@ open P0EFTJanusScalarStressCovariantJetConservation4D
 open P0EFTJanusScalarStressCoordinateConnectionJet4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D
+open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
+open P0EFTJanusMappingTorusIntrinsicLorentzScalarAction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 
@@ -70,10 +74,10 @@ theorem localScalarGradient_add
   unfold localScalarGradient
   rw [localScalarRepresentative_add]
   rw [fderiv_add
-    (localScalarRepresentative_contDiff
-      period hPeriod first patch).differentiableAt
-    (localScalarRepresentative_contDiff
-      period hPeriod second patch).differentiableAt]
+    ((localScalarRepresentative_contDiff
+      period hPeriod first patch).differentiable (by simp)).differentiableAt
+    ((localScalarRepresentative_contDiff
+      period hPeriod second patch).differentiable (by simp)).differentiableAt]
   rfl
 
 /-- Local first derivatives are homogeneous. -/
@@ -101,10 +105,10 @@ theorem fderiv_localScalarRepresentative_add
   funext coordinate
   rw [localScalarRepresentative_add]
   exact fderiv_add
-    (localScalarRepresentative_contDiff
-      period hPeriod first patch).differentiableAt
-    (localScalarRepresentative_contDiff
-      period hPeriod second patch).differentiableAt
+    ((localScalarRepresentative_contDiff
+      period hPeriod first patch).differentiable (by simp)).differentiableAt
+    ((localScalarRepresentative_contDiff
+      period hPeriod second patch).differentiable (by simp)).differentiableAt
 
 /-- The function-valued first derivative is homogeneous. -/
 theorem fderiv_localScalarRepresentative_smul
@@ -128,12 +132,13 @@ theorem localScalarPartialGradient_add
         localScalarPartialGradient period hPeriod second patch coordinate := by
   ext firstIndex secondIndex
   unfold localScalarPartialGradient
+  simp only [Matrix.add_apply]
   rw [fderiv_localScalarRepresentative_add]
   rw [fderiv_add
-    ((localScalarRepresentative_contDiff period hPeriod first patch).fderiv_right
-      (m := ∞) (by simp)).differentiableAt
-    ((localScalarRepresentative_contDiff period hPeriod second patch).fderiv_right
-      (m := ∞) (by simp)).differentiableAt]
+    (((localScalarRepresentative_contDiff period hPeriod first patch).fderiv_right
+      (m := ∞) (by simp)).differentiable (by simp)).differentiableAt
+    (((localScalarRepresentative_contDiff period hPeriod second patch).fderiv_right
+      (m := ∞) (by simp)).differentiable (by simp)).differentiableAt]
   rfl
 
 /-- Local second coordinate derivatives are homogeneous. -/
@@ -146,8 +151,20 @@ theorem localScalarPartialGradient_smul
       scalar • localScalarPartialGradient period hPeriod field patch coordinate := by
   ext firstIndex secondIndex
   unfold localScalarPartialGradient
+  simp only [Matrix.smul_apply, Pi.smul_apply, smul_eq_mul]
   rw [fderiv_localScalarRepresentative_smul]
-  rw [fderiv_const_smul_field]
+  change (fderiv Real
+      (scalar • fderiv Real
+        (localScalarRepresentative period hPeriod field patch)) coordinate) _ _ = _
+  have hDerivative :
+      fderiv Real (scalar • fderiv Real
+          (localScalarRepresentative period hPeriod field patch)) =
+        scalar • fderiv Real (fderiv Real
+          (localScalarRepresentative period hPeriod field patch)) :=
+    fderiv_const_smul_field (𝕜 := Real) (R := Real)
+      (f := fderiv Real
+        (localScalarRepresentative period hPeriod field patch)) scalar
+  rw [congrFun hDerivative coordinate]
   rfl
 
 /-- Covariant Hessians are additive in the scalar field. -/
@@ -161,10 +178,11 @@ theorem localCovariantScalarJet_hessian_add
       (localCovariantScalarJet period hPeriod metric patch first coordinate).hessian +
         (localCovariantScalarJet period hPeriod metric patch second coordinate).hessian := by
   ext firstIndex secondIndex
-  unfold localCovariantScalarJet coordinateScalarJetNormalForm
-    coordinateCovariantHessian localCoordinateScalarJet
+  simp only [localCovariantScalarJet, coordinateScalarJetNormalForm,
+    coordinateCovariantHessian, localCoordinateScalarJet]
   rw [localScalarPartialGradient_add, localScalarGradient_add]
   simp only [Matrix.add_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [coordinateCovariantHessian, localCoordinateScalarJet]
   ring
 
 /-- Covariant Hessians are homogeneous in the scalar field. -/
@@ -179,12 +197,24 @@ theorem localCovariantScalarJet_hessian_smul
       scalar •
         (localCovariantScalarJet period hPeriod metric patch field coordinate).hessian := by
   ext firstIndex secondIndex
-  unfold localCovariantScalarJet coordinateScalarJetNormalForm
-    coordinateCovariantHessian localCoordinateScalarJet
+  simp only [localCovariantScalarJet, coordinateScalarJetNormalForm,
+    coordinateCovariantHessian, localCoordinateScalarJet]
   rw [localScalarPartialGradient_smul, localScalarGradient_smul]
   simp only [Matrix.smul_apply, Pi.smul_apply, smul_eq_mul]
-  rw [← Finset.mul_sum]
-  apply congrArg
+  simp only [coordinateCovariantHessian, localCoordinateScalarJet]
+  have hSum : (∑ upper,
+      (localLeviCivitaConnectionJet period hPeriod metric patch coordinate).christoffel
+          upper firstIndex secondIndex *
+        (scalar * localScalarGradient period hPeriod field patch coordinate upper)) =
+      scalar * ∑ upper,
+        (localLeviCivitaConnectionJet period hPeriod metric patch coordinate).christoffel
+          upper firstIndex secondIndex *
+        localScalarGradient period hPeriod field patch coordinate upper := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro upper _
+    ring
+  rw [hSum]
   ring
 
 /-- The local covariant wave contraction is additive. -/
@@ -224,10 +254,10 @@ theorem localCovariantScalarWave_smul
   unfold covariantScalarJetWave
   rw [localCovariantScalarJet_hessian_smul]
   simp only [Matrix.smul_apply, smul_eq_mul]
-  rw [← Finset.mul_sum]
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro firstIndex _
-  rw [← Finset.mul_sum]
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro secondIndex _
   ring
@@ -248,7 +278,9 @@ theorem localSmoothScalarEulerResidual_add_zeroSource
   unfold localSmoothScalarEulerResidual covariantScalarStressEulerResidual
     pointwiseScalarPotentialSlope
   rw [localCovariantScalarWave_add]
-  rfl
+  rw [localScalarRepresentative_add]
+  simp only [Pi.add_apply]
+  ring
 
 /-- The zero-source local Euler residual is homogeneous. -/
 theorem localSmoothScalarEulerResidual_smul_zeroSource
@@ -264,7 +296,9 @@ theorem localSmoothScalarEulerResidual_smul_zeroSource
   unfold localSmoothScalarEulerResidual covariantScalarStressEulerResidual
     pointwiseScalarPotentialSlope
   rw [localCovariantScalarWave_smul]
-  rfl
+  rw [localScalarRepresentative_smul]
+  simp only [Pi.smul_apply, smul_eq_mul]
+  ring
 
 /-- The concrete physical atlas residual is additive. -/
 theorem canonicalPhysicalScalarEulerAtlasResidual_add
@@ -345,8 +379,16 @@ structure CanonicalPhysicalScalarEulerGlobalizationData
   continuous : ∀ field : SmoothScalarField period hPeriod,
     Continuous (canonicalPhysicalScalarEulerGlobalResidual
       period hPeriod massSquared field)
+  ae_zero_eq_zero : ∀ field : SmoothScalarField period hPeriod,
+    canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared field =ᵐ[
+          intrinsicCanonicalLorentzVolumeMeasure period hPeriod] 0 →
+      canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared field = 0
 
 namespace CanonicalPhysicalScalarEulerGlobalizationData
+
+variable {period : Real} {hPeriod : period ≠ 0} {massSquared : Real}
 
 /-- Conversion to the original operator-data interface, with linearity filled
 by theorem. -/
@@ -357,6 +399,7 @@ def toOperatorData
       period hPeriod massSquared where
   compatible := globalization.compatible
   continuous := globalization.continuous
+  ae_zero_eq_zero := globalization.ae_zero_eq_zero
   map_add := canonicalPhysicalScalarEulerGlobalResidual_add
     period hPeriod massSquared
   map_smul := canonicalPhysicalScalarEulerGlobalResidual_smul
@@ -389,7 +432,7 @@ theorem certificate
           (first + second) =
         canonicalPhysicalScalarEulerGlobalResidual period hPeriod massSquared first +
           canonicalPhysicalScalarEulerGlobalResidual period hPeriod massSquared second) ∧
-      (∀ scalar field,
+      (∀ (scalar : Real) (field : SmoothScalarField period hPeriod),
         canonicalPhysicalScalarEulerGlobalResidual period hPeriod massSquared
             (scalar • field) =
           scalar • canonicalPhysicalScalarEulerGlobalResidual

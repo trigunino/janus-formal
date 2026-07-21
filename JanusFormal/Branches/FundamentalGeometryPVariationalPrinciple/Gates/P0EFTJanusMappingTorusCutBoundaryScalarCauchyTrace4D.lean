@@ -24,6 +24,8 @@ noncomputable section
 
 open scoped Manifold ContDiff
 open Set Topology
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusMappingTorusOrientationDoubleCover
@@ -36,15 +38,28 @@ open P0EFTJanusMappingTorusCutBulkGlobalBoundaryMeasure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-local instance cutBoundaryChartedSpace :
-    ChartedSpace ThroatCoverModel (CutThroatBoundary period hPeriod) :=
-  P0EFTJanusMappingTorusCutThroatSmoothFiniteCollar4D.cutThroatBoundaryChartedSpace
+private abbrev sphereData := reflectedSphereData period hPeriod
+private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  P0EFTJanusMappingTorusSmoothFieldDescent4D.effectiveQuotientChartedSpace
     period hPeriod
 
-local instance cutBoundaryIsManifold :
+local instance effectiveQuotientIsManifold :
+    IsManifold coverModelWithCorners ω (EffectiveQuotient period hPeriod) :=
+  P0EFTJanusMappingTorusSmoothFieldDescent4D.effectiveQuotientIsManifold
+    period hPeriod
+
+local instance boundaryChartedSpace :
+    ChartedSpace ThroatCoverModel (CutThroatBoundary period hPeriod) :=
+  P0EFTJanusMappingTorusCutBoundaryScalarCurrentDescent4D.boundaryChartedSpace
+    period hPeriod
+
+local instance boundaryIsManifold :
     IsManifold throatCoverModelWithCorners ω
       (CutThroatBoundary period hPeriod) :=
-  P0EFTJanusMappingTorusCutThroatSmoothFiniteCollar4D.cutThroatBoundary_isManifold
+  P0EFTJanusMappingTorusCutBoundaryScalarCurrentDescent4D.boundaryIsManifold
     period hPeriod
 
 /-- Constant unit scalar on the physical quotient. -/
@@ -152,8 +167,20 @@ theorem cutBoundaryScalarNormalTrace_firstLift
   rw [cutBoundaryScalarNormalTrace,
     cutBoundaryScalarCurrent_firstLift]
   unfold canonicalLatitudeScalarGreenCurrent
-  simp [canonicalScalarUnitField, canonicalLatitudeValue,
-    canonicalLatitudeDerivative, canonicalNormalSlice]
+  have hUnitSlice : canonicalLatitudeValue period hPeriod
+      (canonicalScalarUnitField period hPeriod) base = fun _ => 1 := by
+    funext normal
+    rfl
+  have hUnitDerivative : canonicalLatitudeDerivative period hPeriod
+      (canonicalScalarUnitField period hPeriod) base 0 = 0 := by
+    unfold canonicalLatitudeDerivative
+    rw [hUnitSlice]
+    simp
+  rw [hUnitDerivative]
+  change -(canonicalLatitudeValue period hPeriod field base 0 * 0 -
+      canonicalLatitudeDerivative period hPeriod field base 0 * 1) =
+    canonicalLatitudeDerivative period hPeriod field base 0
+  ring
 
 /-- The value trace is additive. -/
 theorem cutBoundaryScalarValueTrace_add
@@ -261,7 +288,6 @@ theorem cutBoundaryScalarNormalTrace_deck
       -cutBoundaryScalarNormalTrace period hPeriod field boundary := by
   unfold cutBoundaryScalarNormalTrace
   rw [cutBoundaryScalarCurrent_deck]
-  ring
 
 /-- The descended Green current is exactly the pointwise symplectic pairing of
 value and normal traces. -/

@@ -48,6 +48,9 @@ structure CanonicalScalarAdjointTestCore
 
 namespace CanonicalScalarAdjointTestCore
 
+variable {data : CanonicalScalarHilbertGreenSystem
+  (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+
 /-- The formal-adjoint pairing extends from the algebraic graph core to every
 completed graph vector. -/
 theorem completedGraph_pairing

@@ -39,7 +39,7 @@ def canonicalPhysicalLatitudeFrameComparisonOfCoarea
     CanonicalLatitudeFrameEnergyComparison period hPeriod :=
   (canonicalNormalFrameReconstructionBound period hPeriod).combineCoarea
     period hPeriod
-    (canonicalLatitudeCoareaBoundOfMeasureToSphereCoarea
+    (canonicalLatitudeCoareaBoundOfMeasureToSphereDomination
       period hPeriod coarea)
 
 /-- Explicit trace constant obtained from the coarea theorem. -/
@@ -90,12 +90,12 @@ theorem canonicalPhysicalScalarH1TraceOfCoarea_norm_le
     ‖canonicalPhysicalScalarH1TraceOfCoarea period hPeriod coarea field‖ ≤
       canonicalPhysicalScalarH1TraceCoareaConstant period hPeriod coarea *
         ‖field‖ := by
-  simpa [canonicalPhysicalScalarH1TraceOfCoarea,
-    canonicalPhysicalScalarH1TraceBoundOfCoarea,
-    canonicalPhysicalScalarH1TraceCoareaConstant,
-    canonicalPhysicalLatitudeFrameComparisonOfCoarea] using
-    canonicalPhysicalH1Trace_norm_le period hPeriod
-      (canonicalPhysicalScalarH1TraceBoundOfCoarea period hPeriod coarea) field
+  change ‖canonicalPhysicalH1TraceOfLatitudeComparison period hPeriod
+      (canonicalPhysicalLatitudeFrameComparisonOfCoarea period hPeriod coarea)
+      field‖ ≤ _
+  rw [← canonicalPhysicalLatitudeFrameComparisonOfCoarea_constant]
+  exact canonicalPhysicalH1TraceOfLatitudeComparison_norm_le period hPeriod
+    (canonicalPhysicalLatitudeFrameComparisonOfCoarea period hPeriod coarea) field
 
 /-- Squared smooth trace estimate with the explicit product constant. -/
 theorem smoothCanonicalPhysicalTrace_norm_sq_le_ofCoarea
@@ -104,12 +104,11 @@ theorem smoothCanonicalPhysicalTrace_norm_sq_le_ofCoarea
     ‖smoothCanonicalPhysicalTraceL2 period hPeriod field‖ ^ 2 ≤
       (canonicalPhysicalScalarH1TraceCoareaConstant period hPeriod coarea) ^ 2 *
         ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 := by
-  simpa [canonicalPhysicalScalarH1TraceCoareaConstant,
-    canonicalPhysicalLatitudeFrameComparisonOfCoarea] using
-    CanonicalLatitudeFrameEnergyComparison.squaredBound
-      period hPeriod
-      (canonicalPhysicalLatitudeFrameComparisonOfCoarea
-        period hPeriod coarea) field
+  rw [← canonicalPhysicalLatitudeFrameComparisonOfCoarea_constant]
+  exact CanonicalLatitudeFrameEnergyComparison.squaredBound
+    period hPeriod
+    (canonicalPhysicalLatitudeFrameComparisonOfCoarea
+      period hPeriod coarea) field
 
 /-- The coarea theorem discharges the exact physical H1-trace frontier. -/
 theorem canonicalPhysicalH1TraceExists_ofCoarea

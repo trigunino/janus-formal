@@ -51,11 +51,15 @@ def canonicalScalarGraphRobinHomogeneousSolutionSubmodule
   add_mem' := by
     intro first second hFirst hSecond
     exact ⟨by rw [map_add, hFirst.1, hSecond.1, add_zero],
-      by rw [map_add, map_add, hFirst.2, hSecond.2]⟩
+      by
+        rw [map_add, map_add, hFirst.2, hSecond.2]
+        exact (map_add robin _ _).symm⟩
   smul_mem' := by
     intro scalar field hField
     exact ⟨by rw [map_smul, hField.1, smul_zero],
-      by rw [map_smul, map_smul, hField.2]⟩
+      by
+        rw [map_smul, map_smul, hField.2]
+        exact (map_smul robin scalar _).symm⟩
 
 @[simp] theorem mem_canonicalScalarGraphRobinHomogeneousSolutionSubmodule
     (data : CanonicalScalarHilbertGreenSystem
@@ -92,6 +96,7 @@ def canonicalScalarGraphRobinSolutionToSchurKernel
         data traceBound spectralParameter field.1 field.2.1
       have hBoundary := field.2.2
       rw [hReconstruct] at hBoundary
+      rw [poissonData.value_trace] at hBoundary
       change canonicalScalarGraphDirichletToNeumann
           data traceBound spectralParameter poissonData
             (canonicalScalarCompletedValueTrace data traceBound field.1) -
@@ -186,44 +191,39 @@ theorem canonicalScalarGraphRobinHomogeneousSolutionSubmodule_eq_bot_iff
       LinearMap.ker
         (canonicalScalarGraphBoundarySchurOperator
           data traceBound spectralParameter poissonData robin).toLinearMap = ⊥ := by
+  let equivalence := canonicalScalarGraphRobinSolutionSchurKernelEquiv
+    data traceBound spectralParameter poissonData robin
   constructor
   · intro hBulk
-    apply LinearMap.ker_eq_bot.mpr
-    intro first second hEqual
-    have hLift :
-        canonicalScalarGraphSchurKernelToRobinSolution
-            data traceBound spectralParameter poissonData robin first =
-          canonicalScalarGraphSchurKernelToRobinSolution
-            data traceBound spectralParameter poissonData robin second := by
-      have hFirstZero : canonicalScalarGraphSchurKernelToRobinSolution
-          data traceBound spectralParameter poissonData robin first = 0 := by
-        rw [show canonicalScalarGraphSchurKernelToRobinSolution
-          data traceBound spectralParameter poissonData robin first ∈
-            canonicalScalarGraphRobinHomogeneousSolutionSubmodule
-              data traceBound spectralParameter robin from Subtype.property _]
-        simpa [hBulk]
-      have hSecondZero : canonicalScalarGraphSchurKernelToRobinSolution
-          data traceBound spectralParameter poissonData robin second = 0 := by
-        rw [show canonicalScalarGraphSchurKernelToRobinSolution
-          data traceBound spectralParameter poissonData robin second ∈
-            canonicalScalarGraphRobinHomogeneousSolutionSubmodule
-              data traceBound spectralParameter robin from Subtype.property _]
-        simpa [hBulk]
-      rw [hFirstZero, hSecondZero]
-    exact (canonicalScalarGraphRobinSolutionSchurKernelEquiv
-      data traceBound spectralParameter poissonData robin).symm.injective hLift
+    apply (LinearMap.ker
+      (canonicalScalarGraphBoundarySchurOperator
+        data traceBound spectralParameter poissonData robin).toLinearMap).eq_bot_iff.mpr
+    intro boundary hBoundary
+    let boundaryVector : LinearMap.ker
+        (canonicalScalarGraphBoundarySchurOperator
+          data traceBound spectralParameter poissonData robin).toLinearMap :=
+      ⟨boundary, hBoundary⟩
+    let bulkVector := equivalence.symm boundaryVector
+    have hBulkValueZero : bulkVector.1 = 0 := by
+      simpa [hBulk] using bulkVector.2
+    have hBulkVectorZero : bulkVector = 0 := Subtype.ext hBulkValueZero
+    have hBoundaryVectorZero : boundaryVector = 0 := by
+      apply equivalence.symm.injective
+      simpa [bulkVector] using hBulkVectorZero
+    exact congrArg Subtype.val hBoundaryVectorZero
   · intro hBoundary
-    apply Submodule.eq_bot_iff.mpr
+    apply (canonicalScalarGraphRobinHomogeneousSolutionSubmodule
+      data traceBound spectralParameter robin).eq_bot_iff.mpr
     intro field hField
-    have hValue : canonicalScalarGraphRobinSolutionToSchurKernel
-        data traceBound spectralParameter poissonData robin ⟨field, hField⟩ = 0 := by
-      apply Subtype.ext
-      have hMem := (canonicalScalarGraphRobinSolutionToSchurKernel
-        data traceBound spectralParameter poissonData robin ⟨field, hField⟩).2
-      simpa [hBoundary] using hMem
-    have hFieldZero := (canonicalScalarGraphRobinSolutionSchurKernelEquiv
-      data traceBound spectralParameter poissonData robin).injective hValue
-    exact congrArg Subtype.val hFieldZero
+    let bulkVector : canonicalScalarGraphRobinHomogeneousSolutionSubmodule
+        data traceBound spectralParameter robin := ⟨field, hField⟩
+    have hKernelValueZero : (equivalence bulkVector).1 = 0 := by
+      simpa [hBoundary] using (equivalence bulkVector).2
+    have hKernelZero : equivalence bulkVector = 0 :=
+      Subtype.ext hKernelValueZero
+    have hBulkZero : bulkVector = 0 :=
+      equivalence.injective (by simpa using hKernelZero)
+    exact congrArg Subtype.val hBulkZero
 
 /-- Finite-dimensionality of the boundary Schur kernel transfers to the bulk
 Robin homogeneous-solution space. -/
