@@ -1,4 +1,4 @@
-import Mathlib.Analysis.Normed.Algebra.OperatorNorm
+import Mathlib.Analysis.NormedSpace.OperatorNorm.NNNorm
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianBirmanSchwinger4D
 
 /-!

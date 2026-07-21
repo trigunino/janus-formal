@@ -142,6 +142,13 @@ theorem canonicalScalarGraphDirichletToNeumann_isSymmetric
   rw [hFirstOperator, hSecondOperator,
     real_inner_smul_left, real_inner_smul_right] at hGreen
   unfold canonicalScalarCompletedBoundaryGreenPairing at hGreen
+  unfold canonicalScalarHilbertBoundarySymplecticForm at hGreen
+  change _ = 2 * (inner Real
+      (canonicalScalarCompletedValueTrace data traceBound (poissonData.poisson first))
+      (canonicalScalarCompletedNormalTrace data traceBound (poissonData.poisson second)) -
+    inner Real
+      (canonicalScalarCompletedNormalTrace data traceBound (poissonData.poisson first))
+      (canonicalScalarCompletedValueTrace data traceBound (poissonData.poisson second))) at hGreen
   rw [poissonData.value_trace first, poissonData.value_trace second] at hGreen
   change spectralParameter * inner Real
           (canonicalScalarOperatorGraphInclusion data (poissonData.poisson first))
@@ -163,10 +170,8 @@ theorem canonicalScalarGraphDirichletToNeumann_isSymmetric
           (canonicalScalarGraphDirichletToNeumann
             data traceBound spectralParameter poissonData first) second = 0 := by
     linarith
-  have hComm := real_inner_comm
-    (canonicalScalarGraphDirichletToNeumann
-      data traceBound spectralParameter poissonData first) second
-  linarith
+  apply Eq.symm
+  exact sub_eq_zero.mp hZero
 
 /-- Cauchy-data graph of homogeneous solutions. -/
 def canonicalScalarGraphCauchyDataSubmodule
@@ -251,7 +256,9 @@ theorem canonicalScalarGraph_poisson_satisfies_robin_iff
         data traceBound spectralParameter poissonData boundary = robin boundary ↔
     canonicalScalarGraphDirichletToNeumann
         data traceBound spectralParameter poissonData boundary - robin boundary = 0
-  exact eq_comm.trans sub_eq_zero.symm
+  constructor
+  · exact sub_eq_zero.mpr
+  · exact sub_eq_zero.mp
 
 /-- Reduced on-shell Dirichlet action. -/
 def canonicalScalarGraphDirichletOnShellAction
@@ -289,8 +296,16 @@ theorem canonicalScalarGraphDirichletOnShellAction_affine
   unfold canonicalScalarGraphDirichletOnShellAction
   simp only [map_add, map_smul, inner_add_left, inner_add_right,
     real_inner_smul_left, real_inner_smul_right]
-  rw [canonicalScalarGraphDirichletToNeumann_isSymmetric
-    data traceBound spectralParameter poissonData boundary variation]
+  have hCross : inner Real boundary
+      (canonicalScalarGraphDirichletToNeumann
+        data traceBound spectralParameter poissonData variation) =
+      inner Real variation
+        (canonicalScalarGraphDirichletToNeumann
+          data traceBound spectralParameter poissonData boundary) := by
+    rw [real_inner_comm]
+    exact canonicalScalarGraphDirichletToNeumann_isSymmetric
+      data traceBound spectralParameter poissonData variation boundary
+  rw [hCross]
   ring
 
 /-- First variation of the reduced on-shell action is the Dirichlet-to-Neumann
@@ -303,7 +318,9 @@ theorem canonicalScalarGraphDirichletOnShellAction_hasDerivAt
     (poissonData : CanonicalScalarGraphDirichletPoissonData
       data traceBound spectralParameter)
     (boundary variation : Trace) :
-    HasDerivAt
+    @HasDerivAt Real _ Real
+      Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule _ _
       (fun parameter : Real =>
         canonicalScalarGraphDirichletOnShellAction
           data traceBound spectralParameter poissonData
@@ -311,24 +328,7 @@ theorem canonicalScalarGraphDirichletOnShellAction_hasDerivAt
       (inner Real variation
         (canonicalScalarGraphDirichletToNeumann
           data traceBound spectralParameter poissonData boundary)) 0 := by
-  rw [show (fun parameter : Real =>
-      canonicalScalarGraphDirichletOnShellAction
-        data traceBound spectralParameter poissonData
-        (boundary + parameter • variation)) =
-    (fun parameter : Real =>
-      canonicalScalarGraphDirichletOnShellAction
-          data traceBound spectralParameter poissonData boundary +
-        parameter * inner Real variation
-          (canonicalScalarGraphDirichletToNeumann
-            data traceBound spectralParameter poissonData boundary) +
-        parameter ^ 2 *
-          canonicalScalarGraphDirichletOnShellAction
-            data traceBound spectralParameter poissonData variation) from by
-      funext parameter
-      exact canonicalScalarGraphDirichletOnShellAction_affine
-        data traceBound spectralParameter poissonData
-          boundary variation parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  have hPolynomial := (((hasDerivAt_const (x := (0 : Real))
       (canonicalScalarGraphDirichletOnShellAction
         data traceBound spectralParameter poissonData boundary)).add
       ((hasDerivAt_id (0 : Real)).mul_const
@@ -337,7 +337,13 @@ theorem canonicalScalarGraphDirichletOnShellAction_hasDerivAt
             data traceBound spectralParameter poissonData boundary)))).add
       (((hasDerivAt_id (0 : Real)).pow 2).mul_const
         (canonicalScalarGraphDirichletOnShellAction
-          data traceBound spectralParameter poissonData variation))) using 1 <;> norm_num
+          data traceBound spectralParameter poissonData variation)))
+  norm_num at hPolynomial
+  apply hPolynomial.congr_of_eventuallyEq
+  filter_upwards [] with parameter
+  exact canonicalScalarGraphDirichletOnShellAction_affine
+    data traceBound spectralParameter poissonData
+      boundary variation parameter
 
 /-- Poisson/DtN closure certificate. -/
 theorem canonicalScalarGraphPoissonDirichletToNeumann_certificate

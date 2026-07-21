@@ -58,15 +58,22 @@ theorem canonicalScalarGraphPoisson_change_parameter
         (canonicalScalarOperatorGraphInclusion data
           (secondPoisson.poisson boundary))
   let candidate := secondPoisson.poisson boundary + correction
-  apply (firstPoisson.unique candidate boundary).symm
+  symm
+  apply firstPoisson.unique candidate boundary
   · dsimp [candidate, correction]
     rw [map_add, map_smul, secondPoisson.value_trace,
-      firstDirichletResolvent.value_zero, map_zero, smul_zero, add_zero]
+      firstDirichletResolvent.value_zero]
+    simp
   · dsimp [candidate, correction]
-    rw [map_add, map_smul,
-      firstDirichletResolvent.equation]
+    rw [map_add, map_smul]
+    have hResolvent := firstDirichletResolvent.equation
+      (canonicalScalarOperatorGraphInclusion data
+        (secondPoisson.poisson boundary))
+    rw [canonicalScalarGraphShiftedOperator_apply] at hResolvent
+    have hResolventOperator := sub_eq_iff_eq_add.mp hResolvent
+    rw [hResolventOperator]
     have hSecond := secondPoisson.homogeneous boundary
-    rw [canonicalScalarGraphShiftedOperator_apply] at hSecond ⊢
+    rw [canonicalScalarGraphShiftedOperator_apply] at hSecond
     have hSecondOperator :
         canonicalScalarOperatorGraphOperator data
             (secondPoisson.poisson boundary) =
@@ -74,6 +81,7 @@ theorem canonicalScalarGraphPoisson_change_parameter
             (secondPoisson.poisson boundary) :=
       sub_eq_zero.mp hSecond
     rw [hSecondOperator]
+    simp only [map_add, map_smul]
     module
 
 /-- Linear-map form of the Poisson change-of-parameter identity. -/
@@ -94,7 +102,8 @@ theorem canonicalScalarGraphPoisson_change_parameter_clm
           (firstDirichletResolvent.resolvent.comp
             ((canonicalScalarOperatorGraphInclusion data).comp
               secondPoisson.poisson)) := by
-  ext boundary
+  apply ContinuousLinearMap.ext
+  intro boundary
   exact canonicalScalarGraphPoisson_change_parameter
     data traceBound firstParameter secondParameter firstPoisson secondPoisson
       firstDirichletResolvent boundary
@@ -145,6 +154,15 @@ theorem canonicalScalarGraphDirichletToNeumann_weyl_identity
   rw [hFirstOperator, hSecondOperator,
     real_inner_smul_left, real_inner_smul_right] at hGreen
   unfold canonicalScalarCompletedBoundaryGreenPairing at hGreen
+  change _ = 2 * (inner Real
+      (canonicalScalarCompletedValueTrace data traceBound
+        (firstPoisson.poisson firstBoundary))
+      (canonicalScalarCompletedNormalTrace data traceBound
+        (secondPoisson.poisson secondBoundary)) - inner Real
+      (canonicalScalarCompletedNormalTrace data traceBound
+        (firstPoisson.poisson firstBoundary))
+      (canonicalScalarCompletedValueTrace data traceBound
+        (secondPoisson.poisson secondBoundary))) at hGreen
   rw [firstPoisson.value_trace, secondPoisson.value_trace] at hGreen
   change
     firstParameter * inner Real
@@ -188,10 +206,10 @@ theorem canonicalScalarGraphDirichletToNeumann_weyl_identity_self
             (firstPoisson.poisson boundary))
           (canonicalScalarOperatorGraphInclusion data
             (secondPoisson.poisson boundary)) := by
-  simpa [inner_sub_right] using
-    canonicalScalarGraphDirichletToNeumann_weyl_identity
+  have hIdentity := canonicalScalarGraphDirichletToNeumann_weyl_identity
       data traceBound firstParameter secondParameter firstPoisson secondPoisson
         boundary boundary
+  simpa [inner_sub_right, real_inner_comm] using hIdentity
 
 /-- Difference of Robin Schur operators is exactly the difference of Weyl
 functions when the Robin operator is fixed. -/
@@ -213,7 +231,8 @@ theorem canonicalScalarGraphBoundarySchurOperator_sub
           data traceBound firstParameter firstPoisson -
         canonicalScalarGraphDirichletToNeumann
           data traceBound secondParameter secondPoisson := by
-  module
+  ext boundary
+  simp [canonicalScalarGraphBoundarySchurOperator]
 
 /-- Poisson/Weyl comparison certificate. -/
 theorem canonicalScalarGraphWeylFunctionIdentity_certificate

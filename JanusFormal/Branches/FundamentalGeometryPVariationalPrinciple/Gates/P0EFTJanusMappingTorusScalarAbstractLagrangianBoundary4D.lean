@@ -198,6 +198,7 @@ theorem canonicalScalarCompletedLagrangianDomainOperator_symmetric
     first.2 second.2
   have hGreen := canonicalScalarCompletedGreenIdentity
     data traceBound first.1 second.1
+  unfold canonicalScalarCompletedBoundaryGreenPairing at hGreen
   rw [hBoundary] at hGreen
   change inner Real
       (canonicalScalarOperatorGraphOperator data first.1)
@@ -263,8 +264,7 @@ theorem canonicalScalarCompletedLagrangianAdjointAdmissible_iff_mem
       have hApplied := hCandidate ⟨test, hTestDomain⟩
       rw [hTrace] at hApplied
       exact hApplied
-    rw [← condition.lagrangian]
-    exact hOrthogonal
+    simpa [condition.lagrangian] using hOrthogonal
   · intro hCandidate test
     have hCandidateOrthogonal :
         canonicalScalarCompletedBoundaryTrace data traceBound candidate ∈
@@ -435,8 +435,7 @@ theorem canonicalScalarClosedLagrangianAdjointAdmissible_iff_mem
       have hApplied := hCandidate ⟨test, hTestDomain⟩
       rw [hTrace] at hApplied
       exact hApplied
-    rw [← condition.lagrangian]
-    exact hOrthogonal
+    simpa [condition.lagrangian] using hOrthogonal
   · intro hCandidate test
     have hCandidateOrthogonal :
         canonicalScalarClosedBoundaryTrace data hClosable traceBound candidate ∈

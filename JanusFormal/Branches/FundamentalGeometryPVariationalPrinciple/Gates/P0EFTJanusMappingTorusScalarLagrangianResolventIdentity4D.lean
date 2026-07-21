@@ -145,7 +145,29 @@ theorem canonicalScalarClosedLagrangian_resolvents_commute
           data hClosable traceBound condition firstParameter source) := by
   by_cases hParameters : firstParameter = secondParameter
   · subst secondParameter
-    rfl
+    have hResolventEq : ∀ source : Ambient,
+        firstResolvent.resolvent source = secondResolvent.resolvent source := by
+      intro source
+      calc
+        firstResolvent.resolvent source = firstResolvent.resolvent
+            (canonicalScalarClosedLagrangianShiftedOperator
+              data hClosable traceBound condition firstParameter
+                (secondResolvent.resolvent source)) := by
+          rw [secondResolvent.left_inverse]
+        _ = secondResolvent.resolvent source := firstResolvent.right_inverse _
+    change canonicalScalarClosedLagrangianDomainInclusion
+        data hClosable traceBound condition
+          (firstResolvent.resolvent
+            (canonicalScalarClosedLagrangianDomainInclusion
+              data hClosable traceBound condition
+                (secondResolvent.resolvent source))) =
+      canonicalScalarClosedLagrangianDomainInclusion
+        data hClosable traceBound condition
+          (secondResolvent.resolvent
+            (canonicalScalarClosedLagrangianDomainInclusion
+              data hClosable traceBound condition
+                (firstResolvent.resolvent source)))
+    rw [hResolventEq, hResolventEq]
   · have hFirst := canonicalScalarClosedLagrangian_resolvent_identity
       data hClosable traceBound condition firstParameter secondParameter
         firstResolvent secondResolvent source
@@ -167,8 +189,8 @@ theorem canonicalScalarClosedLagrangian_resolvents_commute
               data hClosable traceBound condition firstParameter source) := by
       rw [← hFirst]
       have hSecondNeg := congrArg Neg.neg hSecond
-      simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using hSecondNeg
-    exact (smul_left_cancel₀ Ambient hCoefficient).mp hMultiple
+      simpa only [neg_sub, ← neg_smul] using hSecondNeg
+    exact (smul_right_injective Ambient hCoefficient) hMultiple
 
 /-- Continuous-linear-map form of resolvent commutation. -/
 theorem canonicalScalarClosedLagrangian_resolvents_commute_clm
@@ -245,10 +267,9 @@ theorem canonicalScalarClosedLagrangian_compactResolvent_propagates
           data hClosable traceBound condition compactParameter).comp
         (otherResolvent.ambientResolvent
           data hClosable traceBound condition otherParameter)) := by
-    simpa [Function.comp_def] using
-      hCompact.comp_clm
-        (otherResolvent.ambientResolvent
-          data hClosable traceBound condition otherParameter)
+    exact hCompact.comp_clm
+      (otherResolvent.ambientResolvent
+        data hClosable traceBound condition otherParameter)
   have hScaled : IsCompactOperator
       ((compactParameter - otherParameter) •
         ((compactResolvent.ambientResolvent
@@ -279,13 +300,13 @@ theorem canonicalScalarClosedLagrangian_compactResolvent_propagates
                 data hClosable traceBound condition compactParameter).comp
               (otherResolvent.ambientResolvent
                 data hClosable traceBound condition otherParameter)) := by
-    module at hIdentity ⊢
+    exact eq_sub_of_add_eq (by simpa [add_comm] using hIdentity.symm)
   rw [hOther]
   exact hDifference
 
 /-- Once one bounded resolvent is compact, all bounded resolvents are compact
 and hence admit the compact self-adjoint spectral package. -/
-theorem canonicalScalarClosedLagrangian_compactResolvent_independent_of_parameter
+noncomputable def canonicalScalarClosedLagrangian_compactResolvent_independent_of_parameter
     (data : CanonicalScalarHilbertGreenSystem
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
     (hClosable : CanonicalScalarGraphClosable data)

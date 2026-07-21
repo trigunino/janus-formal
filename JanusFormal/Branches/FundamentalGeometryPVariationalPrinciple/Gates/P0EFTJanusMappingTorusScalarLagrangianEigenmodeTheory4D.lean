@@ -228,7 +228,7 @@ noncomputable def canonicalScalarClosedLagrangianOperatorToResolventEigenspace
       data hClosable traceBound condition referenceParameter) :
     canonicalScalarClosedLagrangianOperatorEigenspace
         data hClosable traceBound condition operatorEigenvalue →ₗ[Real]
-      LinearMap.eigenspace
+      Module.End.eigenspace
         (bounded.ambientResolvent
           data hClosable traceBound condition referenceParameter).toLinearMap
         (operatorEigenvalue - referenceParameter)⁻¹ where
@@ -269,7 +269,9 @@ theorem canonicalScalarClosedLagrangianOperatorToResolventEigenspace_injective
   apply Subtype.ext
   apply canonicalScalarClosedLagrangianDomainInclusion_injective
     data hClosable traceBound condition
-  exact congrArg Subtype.val hEqual
+  have hValues := congrArg Subtype.val hEqual
+  dsimp [canonicalScalarClosedLagrangianOperatorToResolventEigenspace] at hValues
+  exact hValues
 
 /-- Every resolvent eigenvector at the reciprocal eigenvalue reconstructs an
 operator eigenfield. -/
@@ -283,7 +285,7 @@ noncomputable def canonicalScalarClosedLagrangianResolventToOperatorEigenspace
     (hDifference : operatorEigenvalue - referenceParameter ≠ 0)
     (bounded : CanonicalScalarClosedLagrangianBoundedResolventAt
       data hClosable traceBound condition referenceParameter) :
-    LinearMap.eigenspace
+    Module.End.eigenspace
         (bounded.ambientResolvent
           data hClosable traceBound condition referenceParameter).toLinearMap
         (operatorEigenvalue - referenceParameter)⁻¹ →ₗ[Real]
@@ -302,21 +304,41 @@ noncomputable def canonicalScalarClosedLagrangianResolventToOperatorEigenspace
     have hTransfer := canonicalScalarClosedLagrangianResolvent_eigenvector_transfer
       data hClosable traceBound condition referenceParameter bounded
         difference⁻¹ (inv_ne_zero hDifference) vector.1 hVector
+    simp only [inv_inv] at hTransfer
+    have hInclusion := hTransfer.1
+    rw [map_smul] at hInclusion
     refine ⟨field, ?_⟩
     apply (mem_canonicalScalarClosedLagrangianOperatorEigenspace
       data hClosable traceBound condition operatorEigenvalue field).2
     have hCoefficient :
-        referenceParameter + (difference⁻¹)⁻¹ = operatorEigenvalue := by
-      rw [inv_inv]
+        referenceParameter + difference = operatorEigenvalue := by
       dsimp [difference]
       ring
-    simpa [field, hCoefficient] using hTransfer.2
+    dsimp [field] at hTransfer ⊢
+    change canonicalScalarClosedLagrangianDomainOperator
+        data hClosable traceBound condition
+          (difference • bounded.resolvent vector.1) =
+      operatorEigenvalue •
+        canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition
+            (difference • bounded.resolvent vector.1)
+    change canonicalScalarClosedLagrangianDomainOperator
+        data hClosable traceBound condition
+          (difference • bounded.resolvent vector.1) =
+      operatorEigenvalue •
+        (difference • canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition (bounded.resolvent vector.1))
+    rw [hInclusion]
+    exact hTransfer.2.trans
+      (congrArg (fun coefficient : Real => coefficient • vector.1) hCoefficient)
   map_add' first second := by
     apply Subtype.ext
-    simp [map_add]
+    dsimp
+    rw [map_add, smul_add]
   map_smul' scalar field := by
     apply Subtype.ext
-    simp [map_smul]
+    dsimp
+    rw [map_smul, smul_smul, smul_smul, mul_comm]
 
 /-- Exact linear equivalence between operator and reciprocal resolvent
 eigenspaces. -/
@@ -332,7 +354,7 @@ noncomputable def canonicalScalarClosedLagrangianOperatorResolventEigenspaceEqui
       data hClosable traceBound condition referenceParameter) :
     canonicalScalarClosedLagrangianOperatorEigenspace
         data hClosable traceBound condition operatorEigenvalue ≃ₗ[Real]
-      LinearMap.eigenspace
+      Module.End.eigenspace
         (bounded.ambientResolvent
           data hClosable traceBound condition referenceParameter).toLinearMap
         (operatorEigenvalue - referenceParameter)⁻¹ where
@@ -345,6 +367,8 @@ noncomputable def canonicalScalarClosedLagrangianOperatorResolventEigenspaceEqui
   left_inv := by
     intro field
     apply Subtype.ext
+    dsimp [canonicalScalarClosedLagrangianResolventToOperatorEigenspace,
+      canonicalScalarClosedLagrangianOperatorToResolventEigenspace]
     apply canonicalScalarClosedLagrangianDomainInclusion_injective
       data hClosable traceBound condition
     let difference := operatorEigenvalue - referenceParameter
@@ -371,6 +395,8 @@ noncomputable def canonicalScalarClosedLagrangianOperatorResolventEigenspaceEqui
   right_inv := by
     intro vector
     apply Subtype.ext
+    dsimp [canonicalScalarClosedLagrangianResolventToOperatorEigenspace,
+      canonicalScalarClosedLagrangianOperatorToResolventEigenspace]
     let difference := operatorEigenvalue - referenceParameter
     have hVector :
         bounded.ambientResolvent
@@ -411,7 +437,7 @@ theorem canonicalScalarClosedLagrangianOperatorEigenspace_finiteDimensional
       (canonicalScalarClosedLagrangianOperatorEigenspace
         data hClosable traceBound condition operatorEigenvalue) := by
   letI : FiniteDimensional Real
-      (LinearMap.eigenspace
+      (Module.End.eigenspace
         (compact.bounded.ambientResolvent
           data hClosable traceBound condition referenceParameter).toLinearMap
         (operatorEigenvalue - referenceParameter)⁻¹) :=

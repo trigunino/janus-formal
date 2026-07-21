@@ -86,8 +86,9 @@ theorem canonicalScalarHilbertRobinGraphSubmodule_le_orthogonal
   have hSecondGraph :=
     (mem_canonicalScalarHilbertRobinGraphSubmodule robin second).1 hSecond
   unfold canonicalScalarHilbertBoundarySymplecticForm
-  rw [hFirstGraph, hSecondGraph, ← hRobin first.1 second.1]
-  ring
+  rw [hFirstGraph, hSecondGraph]
+  apply sub_eq_zero.mpr
+  simpa using (hRobin first.1 second.1).symm
 
 /-- Symplectic orthogonality to a symmetric Robin graph forces the same Robin
 condition. -/
@@ -110,7 +111,10 @@ theorem canonicalScalarHilbertBoundarySymplecticOrthogonal_le_robinGraph
           inner Real datum.2 residual = 0 := by
     unfold canonicalScalarHilbertBoundarySymplecticForm at hOrth
     dsimp [probe] at hOrth
-    rw [← hRobin datum.1 residual] at hOrth
+    have hSymm : inner Real (robin datum.1) residual =
+        inner Real datum.1 (robin residual) := by
+      simpa using hRobin datum.1 residual
+    rw [hSymm]
     exact hOrth
   have hResidualExpanded :
       inner Real residual residual =

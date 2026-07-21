@@ -49,6 +49,16 @@ structure CanonicalScalarGraphKreinRobinRealization
 
 namespace CanonicalScalarGraphKreinRobinRealization
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {spectralParameter : Real}
+  {poissonData : CanonicalScalarGraphDirichletPoissonData
+    data traceBound spectralParameter}
+  {dirichletResolvent : CanonicalScalarGraphDirichletResolventData
+    data traceBound spectralParameter}
+
 /-- Robin graph resolvent. -/
 noncomputable def resolventData
     (realization : CanonicalScalarGraphKreinRobinRealization
@@ -85,7 +95,13 @@ theorem resolvent_sub_resolvent
       second.correction - first.correction := by
   have hFirst := first.resolvent_sub_dirichlet
   have hSecond := second.resolvent_sub_dirichlet
-  module at hFirst hSecond ⊢
+  calc
+    first.resolventData.resolvent - second.resolventData.resolvent =
+        (first.resolventData.resolvent - dirichletResolvent.resolvent) -
+          (second.resolventData.resolvent - dirichletResolvent.resolvent) := by module
+    _ = (-first.correction) - (-second.correction) :=
+      congrArg₂ (· - ·) hFirst hSecond
+    _ = second.correction - first.correction := by module
 
 /-- Equality of boundary corrections implies equality of the Robin resolvents. -/
 theorem resolvent_eq_of_correction_eq
@@ -94,8 +110,9 @@ theorem resolvent_eq_of_correction_eq
     (hCorrection : first.correction = second.correction) :
     first.resolventData.resolvent = second.resolventData.resolvent := by
   have hDifference := first.resolvent_sub_resolvent second
-  rw [hCorrection, sub_self] at hDifference
-  exact sub_eq_zero.mp hDifference
+  rw [hCorrection] at hDifference
+  have hZero : second.correction - second.correction = 0 := sub_self second.correction
+  exact sub_eq_zero.mp (hDifference.trans hZero)
 
 /-- Compactness data for one Krein correction. -/
 structure CompactCorrection
