@@ -66,15 +66,28 @@ theorem d9GaugeGhostFiniteCokernelFinrank_eq_zeroMultiplicity_mul
         d9ZeroCovectorMultiplicity, d9ZeroCovectorModes]
   | @insert mode modes hMode ih =>
       by_cases hZero : covector mode = zeroTangent
-      · simp [d9GaugeGhostFiniteCokernelFinrank,
-          d9ZeroCovectorMultiplicity, d9ZeroCovectorModes,
-          d9GaugeGhostZeroCokernelFinrank, hMode, hZero, ih,
-          Nat.succ_mul, Nat.add_mul, Nat.add_comm]
+      · have hFinrank :
+            Module.finrank Real
+                (D9GaugeGhostBlockCokernel (covector mode)) =
+              d9GaugeGhostZeroCokernelFinrank := by
+          simp [d9GaugeGhostZeroCokernelFinrank, hZero]
+        have hMultiplicity :
+            d9ZeroCovectorMultiplicity (insert mode modes) covector =
+              d9ZeroCovectorMultiplicity modes covector + 1 := by
+          simp [d9ZeroCovectorMultiplicity, d9ZeroCovectorModes,
+            hMode, hZero, Nat.add_comm]
+        rw [d9GaugeGhostFiniteCokernelFinrank, Finset.sum_insert hMode,
+          hFinrank, ih, hMultiplicity]
+        simp [Nat.add_mul, Nat.add_comm]
       · have hNonzeroFinrank :=
           d9GaugeGhostBlock_nonzero_cokernel_finrank (covector mode) hZero
-        simp [d9GaugeGhostFiniteCokernelFinrank,
-          d9ZeroCovectorMultiplicity, d9ZeroCovectorModes,
-          hMode, hZero, hNonzeroFinrank, ih]
+        have hMultiplicity :
+            d9ZeroCovectorMultiplicity (insert mode modes) covector =
+              d9ZeroCovectorMultiplicity modes covector := by
+          simp [d9ZeroCovectorMultiplicity, d9ZeroCovectorModes,
+            hMode, hZero]
+        rw [d9GaugeGhostFiniteCokernelFinrank, Finset.sum_insert hMode,
+          hNonzeroFinrank, zero_add, ih, hMultiplicity]
 
 /-- The separated gauge-plus-ghost computation has the same exact support. -/
 theorem d9SeparatedFiniteCokernelFinrank_eq_zeroMultiplicity_mul
