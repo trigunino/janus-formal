@@ -8,9 +8,9 @@ canonical quadratic crossing form on the kernel at a singular parameter.  The
 sign of that form is the finite-dimensional local orientation used in spectral
 flow and determinant-line crossing formulas.
 
-This file keeps differentiability and simplicity explicit.  It relates every
-boundary crossing vector to the corresponding homogeneous Robin bulk mode via
-the Poisson equivalence.
+This file keeps differentiability, Robin symmetry and simplicity explicit.  It
+relates every boundary crossing vector to the corresponding homogeneous Robin
+bulk mode via the Poisson equivalence.
 -/
 
 namespace JanusFormal
@@ -150,12 +150,13 @@ theorem CanonicalScalarBoundarySimpleCrossingData.orientation_eq_one_or_neg_one
   unfold CanonicalScalarBoundarySimpleCrossingData.orientation
   split_ifs <;> simp
 
-/-- Schur-curve data for one Robin boundary family. -/
+/-- Schur-curve data for one symmetric Robin boundary family. -/
 structure CanonicalScalarGraphRobinSchurCurve
     (data : CanonicalScalarHilbertGreenSystem
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace))
     (traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data)
     (robin : Trace →L[Real] Trace) where
+  robin_symmetric : robin.toLinearMap.IsSymmetric
   poissonData : ∀ spectralParameter : Real,
     CanonicalScalarGraphDirichletPoissonData
       data traceBound spectralParameter
@@ -179,14 +180,7 @@ noncomputable def CanonicalScalarGraphRobinSchurCurve.toBoundaryOperatorCurve
   symmetric spectralParameter :=
     canonicalScalarGraphBoundarySchurOperator_isSymmetric
       data traceBound spectralParameter (curve.poissonData spectralParameter)
-        robin (by
-          intro first second
-          have h := real_inner_comm (robin first) second
-          have h' := real_inner_comm first (robin second)
-          -- Symmetry of the Robin map is not derivable from an arbitrary map;
-          -- this field is intended to be used only with symmetric Robin data.
-          exact by
-            simpa [h, h'] using h)
+        robin curve.robin_symmetric
   derivative_symmetric := curve.derivative_symmetric
 
 /-- Bulk mode associated with a boundary crossing vector. -/
