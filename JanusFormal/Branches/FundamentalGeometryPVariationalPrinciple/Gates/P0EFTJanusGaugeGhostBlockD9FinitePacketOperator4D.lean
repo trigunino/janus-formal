@@ -183,9 +183,8 @@ theorem d9GaugeGhostFinitePacketSymbol_ker_eq_zeroSupported
     rw [LinearMap.mem_ker]
     funext mode
     by_cases hZero : covector mode = zeroTangent
-    · rw [hZero]
-      simp [d9GaugeGhostFinitePacketSymbol,
-        d9GaugeGhostBlockLinearSymbol, normSquared, tangentDot, zeroTangent]
+    · simp [d9GaugeGhostFinitePacketSymbol_apply, hZero,
+        normSquared, tangentDot, zeroTangent]
     · have hPacket := hSupport mode hZero
       simp [d9GaugeGhostFinitePacketSymbol, hPacket]
 
@@ -199,9 +198,8 @@ theorem d9GaugeGhostFinitePacketSymbol_range_eq_zeroVanishing
   constructor
   · rintro ⟨preimage, rfl⟩
     intro mode hZero
-    rw [hZero]
-    simp [d9GaugeGhostFinitePacketSymbol,
-      d9GaugeGhostBlockLinearSymbol, normSquared, tangentDot, zeroTangent]
+    simp [d9GaugeGhostFinitePacketSymbol_apply, hZero,
+      normSquared, tangentDot, zeroTangent]
   · intro hPacket
     classical
     let preimage : D9GaugeGhostFinitePacket ι := fun mode =>
