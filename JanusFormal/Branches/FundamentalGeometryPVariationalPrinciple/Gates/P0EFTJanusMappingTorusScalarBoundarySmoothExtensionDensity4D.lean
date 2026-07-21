@@ -70,17 +70,18 @@ theorem canonicalScalarBoundaryCorePairEmbedding_denseRange
       (dist (normalEmbedding normal) boundary.2) < ε
   exact max_lt hValue hNormal
 
-/-- Smooth Cauchy-extension data for one Hilbert Green core. -/
+/-- Smooth Cauchy-extension data for one raw smooth boundary trace.  Density is
+a conclusion of this structure, not one of its inputs. -/
 structure CanonicalScalarSmoothCauchyExtensionData
-    (core : CanonicalScalarHilbertGreenCore
-      (Domain := Domain) (Ambient := Ambient) (Trace := Trace)) where
+    (boundaryTrace : Domain →ₗ[Real]
+      CanonicalScalarHilbertBoundaryDatum (Trace := Trace)) where
   valueEmbedding : ValueCore →ₗ[Real] Trace
   normalEmbedding : NormalCore →ₗ[Real] Trace
   valueDense : DenseRange valueEmbedding
   normalDense : DenseRange normalEmbedding
   extension : ValueCore × NormalCore →ₗ[Real] Domain
   boundary_extension : ∀ data,
-    core.boundaryTrace (extension data) =
+    boundaryTrace (extension data) =
       canonicalScalarBoundaryCorePairEmbedding
         valueEmbedding normalEmbedding data
 
@@ -89,7 +90,7 @@ namespace CanonicalScalarSmoothCauchyExtensionData
 /-- The embedded smooth boundary-pair core has dense range. -/
 theorem pairEmbedding_denseRange
     (extensionData : CanonicalScalarSmoothCauchyExtensionData
-      (ValueCore := ValueCore) (NormalCore := NormalCore) core) :
+      (ValueCore := ValueCore) (NormalCore := NormalCore) boundaryTrace) :
     DenseRange
       (canonicalScalarBoundaryCorePairEmbedding
         extensionData.valueEmbedding extensionData.normalEmbedding) :=
@@ -100,8 +101,8 @@ theorem pairEmbedding_denseRange
 /-- A smooth Cauchy extension proves density of the smooth bulk boundary trace. -/
 theorem boundaryTrace_denseRange
     (extensionData : CanonicalScalarSmoothCauchyExtensionData
-      (ValueCore := ValueCore) (NormalCore := NormalCore) core) :
-    DenseRange core.boundaryTrace := by
+      (ValueCore := ValueCore) (NormalCore := NormalCore) boundaryTrace) :
+    DenseRange boundaryTrace := by
   intro boundary
   have hPairClosure := extensionData.pairEmbedding_denseRange boundary
   apply closure_mono ?_ hPairClosure
@@ -111,7 +112,7 @@ theorem boundaryTrace_denseRange
   exact extensionData.boundary_extension data
 
 /-- Build the corrected smooth Green core once the Cauchy extension is known. -/
-def installBoundaryDensity
+def installGreenCore
     (inclusion : Domain →ₗ[Real] Ambient)
     (operator : Domain →ₗ[Real] Ambient)
     (boundaryTrace : Domain →ₗ[Real]
@@ -122,16 +123,7 @@ def installBoundaryDensity
         2 * canonicalScalarHilbertBoundarySymplecticForm
           (boundaryTrace first) (boundaryTrace second))
     (extensionData : CanonicalScalarSmoothCauchyExtensionData
-      (ValueCore := ValueCore) (NormalCore := NormalCore)
-      ({ inclusion := inclusion
-         operator := operator
-         boundaryTrace := boundaryTrace
-         boundary_dense := by
-           exact fun boundary => by
-             simpa using extensionData.boundaryTrace_denseRange boundary
-         green_identity := greenIdentity } :
-        CanonicalScalarHilbertGreenCore
-          (Domain := Domain) (Ambient := Ambient) (Trace := Trace))) :
+      (ValueCore := ValueCore) (NormalCore := NormalCore) boundaryTrace) :
     CanonicalScalarHilbertGreenCore
       (Domain := Domain) (Ambient := Ambient) (Trace := Trace) where
   inclusion := inclusion
@@ -139,6 +131,18 @@ def installBoundaryDensity
   boundaryTrace := boundaryTrace
   boundary_dense := extensionData.boundaryTrace_denseRange
   green_identity := greenIdentity
+
+/-- Smooth Cauchy-extension certificate. -/
+theorem certificate
+    (extensionData : CanonicalScalarSmoothCauchyExtensionData
+      (ValueCore := ValueCore) (NormalCore := NormalCore) boundaryTrace) :
+    DenseRange boundaryTrace ∧
+      (∀ data,
+        boundaryTrace (extensionData.extension data) =
+          canonicalScalarBoundaryCorePairEmbedding
+            extensionData.valueEmbedding extensionData.normalEmbedding data) :=
+  ⟨extensionData.boundaryTrace_denseRange,
+    extensionData.boundary_extension⟩
 
 end CanonicalScalarSmoothCauchyExtensionData
 
