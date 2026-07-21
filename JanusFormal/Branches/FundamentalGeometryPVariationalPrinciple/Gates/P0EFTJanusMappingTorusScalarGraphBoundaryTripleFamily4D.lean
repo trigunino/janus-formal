@@ -5,13 +5,13 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Spectral families of scalar graph boundary triples
 
 The previous leaves construct Poisson, Dirichlet-to-Neumann, Calderon and Krein
-objects at one spectral parameter.  This file packages a whole real parameter
+objects at one spectral parameter. This file packages a whole real parameter
 set.
 
 A family contains a fixed continuous value-boundary lift and, at every admitted
-parameter, a bounded Dirichlet resolvent.  The Poisson operator and Weyl function
-are then constructed canonically.  Their parameter-change and Weyl identities
-hold uniformly.  Supplying a Robin Schur inverse at one parameter constructs the
+parameter, a bounded Dirichlet resolvent. The Poisson operator and Weyl function
+are then constructed canonically. Their parameter-change and Weyl identities
+hold uniformly. Supplying a Robin Schur inverse at one parameter constructs the
 corresponding Robin resolvent by the Krein formula.
 -/
 
@@ -249,8 +249,9 @@ theorem robinResolvent_sub_dirichlet
 theorem certificate
     (family : CanonicalScalarGraphBoundaryTripleFamily
       data traceBound parameters) :
-    (∀ spectralParameter : Real, spectralParameter ∈ parameters →
-      (family.weyl spectralParameter ‹spectralParameter ∈ parameters›).toLinearMap.IsSymmetric) ∧
+    (∀ spectralParameter : Real,
+      ∀ hParameter : spectralParameter ∈ parameters,
+        (family.weyl spectralParameter hParameter).toLinearMap.IsSymmetric) ∧
       (∀ firstParameter secondParameter : Real,
         ∀ hFirst : firstParameter ∈ parameters,
         ∀ hSecond : secondParameter ∈ parameters,
