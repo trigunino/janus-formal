@@ -1,0 +1,42 @@
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPD9MatterSpinorGlobalConnectionHermitian4D.lean:206:2: error: `simp` made no progress
+
+Note: The target expression is not type-correct under the `instances` transparency level, which may have triggered the failure. This is usually caused by unfolding of semireducible definitions in prior tactic steps. Use `set_option linter.tacticCheckInstances true` to investigate the source of the issue.
+Full error:
+  Application type mismatch: The argument
+    (mfderiv% fun point => d9MatterSpinorHermitianPairing (first.toFun point) (second.toFun point))
+        (↑localInverse base) ∘SL
+      mfderiv% ↑localInverse base
+  has type
+    @ContinuousLinearMap ℝ ℝ Field.toSemifield.toDivisionSemiring.toSemiring
+      Field.toSemifield.toDivisionSemiring.toSemiring (RingHom.id ℝ) (TangentSpace throatCoverModelWithCorners base)
+      (instTopologicalSpaceTangentSpace throatCoverModelWithCorners base)
+      (instAddCommGroupTangentSpace throatCoverModelWithCorners base).toAddCommMonoid
+      (TangentSpace 𝓘(ℝ, ℂ)
+        (d9MatterSpinorHermitianPairing (first.toFun (↑localInverse base)) (second.toFun (↑localInverse base))))
+      (instTopologicalSpaceTangentSpace 𝓘(ℝ, ℂ)
+        (d9MatterSpinorHermitianPairing (first.toFun (↑localInverse base)) (second.toFun (↑localInverse base))))
+      (instAddCommGroupTangentSpace 𝓘(ℝ, ℂ)
+          (d9MatterSpinorHermitianPairing (first.toFun (↑localInverse base))
+            (second.toFun (↑localInverse base)))).toAddCommMonoid
+      (instModuleTangentSpace throatCoverModelWithCorners base)
+      (instModuleTangentSpace 𝓘(ℝ, ℂ)
+        (d9MatterSpinorHermitianPairing (first.toFun (↑localInverse base)) (second.toFun (↑localInverse base))))
+  but is expected to have type
+    @ContinuousLinearMap ℝ ℝ Field.toSemifield.toDivisionSemiring.toSemiring
+      Field.toSemifield.toDivisionSemiring.toSemiring (RingHom.id ℝ) (TangentSpace throatCoverModelWithCorners base)
+      (instTopologicalSpaceTangentSpace throatCoverModelWithCorners base)
+      (instAddCommGroupTangentSpace throatCoverModelWithCorners base).toAddCommMonoid
+      (TangentSpace 𝓘(ℝ, ℂ)
+        (((fun point => d9MatterSpinorHermitianPairing (first.toFun point) (second.toFun point)) ∘ ↑localInverse) base))
+      (instTopologicalSpaceTangentSpace 𝓘(ℝ, ℂ)
+        (((fun point => d9MatterSpinorHermitianPairing (first.toFun point) (second.toFun point)) ∘ ↑localInverse) base))
+      (instAddCommGroupTangentSpace 𝓘(ℝ, ℂ)
+          (((fun point => d9MatterSpinorHermitianPairing (first.toFun point) (second.toFun point)) ∘ ↑localInverse)
+            base)).toAddCommMonoid
+      (instModuleTangentSpace throatCoverModelWithCorners base)
+      (instModuleTangentSpace 𝓘(ℝ, ℂ)
+        (((fun point => d9MatterSpinorHermitianPairing (first.toFun point) (second.toFun point)) ∘ ↑localInverse) base))
+  in the application
+    ⇑((mfderiv% fun point => d9MatterSpinorHermitianPairing (first.toFun point) (second.toFun point))
+          (↑localInverse base) ∘SL
+        mfderiv% ↑localInverse base)
