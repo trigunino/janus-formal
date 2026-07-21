@@ -604,7 +604,7 @@ private theorem ambientTransitionWinding_add
   apply IsCancelVAdd.right_cancel _ _ (projection.localInverseAt first base)
   rw [add_vadd, hFirstSecondDeck, hSecondThirdDeck, hFirstThirdDeck]
 
-private theorem ambientTransitionWinding_eventuallyEq
+theorem ambientTransitionWinding_eventuallyEq
     (first second : AmbientCover period hPeriod)
     (coordinate : CoverModel)
     (hCoordinate : coordinate ∈

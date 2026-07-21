@@ -1,6 +1,8 @@
 import JanusFormal.Branches.JanusPTPhaseTransition.Gates.P0EFTJanusPT03ScaleNoGo
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCandidateAFunctionalVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceSecondDerivative
 
 namespace JanusFormal
 namespace P0EFTJanusPTProgramPTechnicalBridge
@@ -10,6 +12,25 @@ set_option autoImplicit false
 open P0EFTJanusReciprocalBimetricPotential
 open P0EFTJanusIntegratedMinkowskiInteractionOpenDomain4D
 open P0EFTJanusMappingTorusCandidateAFunctionalVariation4D
+open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
+
+/-- The regular holonomic scalar action on a general Lorentz metric has its
+actual line derivative on the compact effective D8 quotient. It provides a
+covariant order-parameter carrier, not a renormalized thermal potential. -/
+def general_scalar_action_has_first_variation :=
+  generalHolonomicScalarAction_line_hasDerivAt
+
+/-- The same regular scalar functional has an exact line expansion with its
+quadratic remainder. This exposes a controlled curvature carrier without
+identifying it with a renormalized finite-temperature potential. -/
+def general_scalar_action_has_quadratic_line_expansion :=
+  generalHolonomicScalarAction_line_expansion
+
+/-- The circle nuclear heat trace has a nonnegative second derivative at
+positive heat time, providing a convex spectral contribution. It is not by
+itself the renormalized Janus order-parameter potential. -/
+def circle_heat_trace_second_variation_is_nonnegative :=
+  P0EFTJanusCircleHeatNuclearTraceSecondDerivative.circleHeatNuclearTraceRealSecondDerivative_nonnegative
 
 /-- On the smooth global D8 metric curve, P identifies the actual derivative
 of the integrated Candidate-A action under its explicit domination contract. -/
@@ -34,6 +55,9 @@ structure PTBridgeBoundary where
   integratedPTInvariantInteractionClosed : Prop
   localMetricOrderParameterCandidateAvailable : Prop
   globalActionFirstVariationClosed : Prop
+  generalLorentzScalarVariationClosed : Prop
+  scalarQuadraticRemainderClosed : Prop
+  spectralHeatTraceConvexityClosed : Prop
   renormalizedEffectivePotentialOpen : Prop
   physicalTemperatureLawOpen : Prop
   absoluteNormalizationOpen : Prop

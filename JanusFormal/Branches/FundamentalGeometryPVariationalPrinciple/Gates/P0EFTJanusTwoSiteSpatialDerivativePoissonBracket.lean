@@ -1,0 +1,166 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteSpatialFunctionalPoisson
+
+/-!
+# Exact two-site Poisson bracket with a spatial difference
+
+This gate adds one nearest-neighbour spatial difference to the finite-site
+canonical phase space already used by the reduced FLRW gates.  The displayed
+functional differentials are proved to be the actual derivatives of the same
+two-site Hamiltonians, and their Poisson bracket is computed exactly as the
+antisymmetric smearing coefficient times a nonzero spatial current.
+
+This is a two-site scalar finite-lattice sector.  It is not the continuum ADM
+constraint bracket, has no shift or spatial tensor indices, and does not prove
+the hypersurface-deformation algebra or remove the Boulware--Deser mode.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusTwoSiteSpatialDerivativePoissonBracket
+
+set_option autoImplicit false
+
+noncomputable section
+
+open P0EFTJanusReducedFLRWSecondaryConstraint
+open P0EFTJanusFiniteSpatialFunctionalPoisson
+
+abbrev TwoSiteField := SpatialField (Fin 2)
+abbrev TwoSiteSmearing := Fin 2 → ℝ
+
+/-- The oriented nearest-neighbour difference of the plus scale coordinate. -/
+def spatialDifference (x : TwoSiteField) : ℝ :=
+  (x 1).aPlus - (x 0).aPlus
+
+/-- Two-site scalar Hamiltonian with an actual nearest-neighbour term. -/
+def spatialHamiltonian
+    (smearing : TwoSiteSmearing) (x : TwoSiteField) : ℝ :=
+  smearing 0 *
+      ((1 / 2 : ℝ) * (x 0).pPlus ^ 2 +
+        (1 / 2 : ℝ) * spatialDifference x ^ 2) +
+    smearing 1 *
+      ((1 / 2 : ℝ) * (x 1).pPlus ^ 2 +
+        (1 / 2 : ℝ) * spatialDifference x ^ 2)
+
+private def siteZeroDifferential
+    (smearing : TwoSiteSmearing) (x : TwoSiteField) : CanonicalCovector :=
+  { aPlus := -(smearing 0 + smearing 1) * spatialDifference x
+    pPlus := smearing 0 * (x 0).pPlus
+    aMinus := 0
+    pMinus := 0 }
+
+private def siteOneDifferential
+    (smearing : TwoSiteSmearing) (x : TwoSiteField) : CanonicalCovector :=
+  { aPlus := (smearing 0 + smearing 1) * spatialDifference x
+    pPlus := smearing 1 * (x 1).pPlus
+    aMinus := 0
+    pMinus := 0 }
+
+/-- Coordinate functional differential of the two-site Hamiltonian. -/
+def spatialHamiltonianDifferential
+    (smearing : TwoSiteSmearing) (x : TwoSiteField) :
+    FunctionalDifferential (Fin 2) :=
+  ![siteZeroDifferential smearing x, siteOneDifferential smearing x]
+
+/-- The displayed differential is the actual derivative of the same
+nearest-neighbour Hamiltonian along every affine field line. -/
+theorem spatialHamiltonian_fieldLine_hasDerivAt
+    (smearing : TwoSiteSmearing) (x variation : TwoSiteField) :
+    HasDerivAt
+      (fun t => spatialHamiltonian smearing (fieldLine x variation t))
+      (differentialApply (spatialHamiltonianDifferential smearing x)
+        variation) 0 := by
+  have hq0 : HasDerivAt
+      (fun t : ℝ => (fieldLine x variation t 0).aPlus)
+      (variation 0).aPlus 0 := by
+    simpa [fieldLine, phaseLine] using
+      affineCoordinate_hasDerivAt (x 0).aPlus (variation 0).aPlus
+  have hp0 : HasDerivAt
+      (fun t : ℝ => (fieldLine x variation t 0).pPlus)
+      (variation 0).pPlus 0 := by
+    simpa [fieldLine, phaseLine] using
+      affineCoordinate_hasDerivAt (x 0).pPlus (variation 0).pPlus
+  have hq1 : HasDerivAt
+      (fun t : ℝ => (fieldLine x variation t 1).aPlus)
+      (variation 1).aPlus 0 := by
+    simpa [fieldLine, phaseLine] using
+      affineCoordinate_hasDerivAt (x 1).aPlus (variation 1).aPlus
+  have hp1 : HasDerivAt
+      (fun t : ℝ => (fieldLine x variation t 1).pPlus)
+      (variation 1).pPlus 0 := by
+    simpa [fieldLine, phaseLine] using
+      affineCoordinate_hasDerivAt (x 1).pPlus (variation 1).pPlus
+  have hDifference := hq1.sub hq0
+  have hSiteZero :=
+    (((hp0.pow 2).const_mul (1 / 2 : ℝ)).add
+      ((hDifference.pow 2).const_mul (1 / 2 : ℝ))).const_mul
+        (smearing 0)
+  have hSiteOne :=
+    (((hp1.pow 2).const_mul (1 / 2 : ℝ)).add
+      ((hDifference.pow 2).const_mul (1 / 2 : ℝ))).const_mul
+        (smearing 1)
+  have hTotal := hSiteZero.add hSiteOne
+  refine (hTotal.congr_of_eventuallyEq
+    (Filter.Eventually.of_forall ?_)).congr_deriv ?_
+  · intro t
+    simp [spatialHamiltonian, spatialDifference, fieldLine, phaseLine]
+  · have hqBaseZero : (fieldLine x variation 0 0).aPlus = (x 0).aPlus := by
+      simp [fieldLine, phaseLine]
+    have hpBaseZero : (fieldLine x variation 0 0).pPlus = (x 0).pPlus := by
+      simp [fieldLine, phaseLine]
+    have hqBaseOne : (fieldLine x variation 0 1).aPlus = (x 1).aPlus := by
+      simp [fieldLine, phaseLine]
+    have hpBaseOne : (fieldLine x variation 0 1).pPlus = (x 1).pPlus := by
+      simp [fieldLine, phaseLine]
+    simp [differentialApply, spatialHamiltonianDifferential,
+      siteZeroDifferential, siteOneDifferential, spatialDifference,
+      covectorApply, Fin.sum_univ_two]
+    rw [hqBaseZero, hpBaseZero, hqBaseOne, hpBaseOne]
+    ring
+
+/-- The current generated by the nearest-neighbour difference. -/
+def spatialCurrent (x : TwoSiteField) : ℝ :=
+  spatialDifference x * ((x 0).pPlus + (x 1).pPlus)
+
+/-- Antisymmetric two-site coefficient of two smearings. -/
+def smearingWedge
+    (first second : TwoSiteSmearing) : ℝ :=
+  first 0 * second 1 - first 1 * second 0
+
+/-- Exact bracket factorization.  The spatial difference is part of the
+functional before differentiation; it is not inserted as a supplied bracket. -/
+theorem spatialHamiltonian_poisson_factorization
+    (first second : TwoSiteSmearing) (x : TwoSiteField) :
+    finitePoisson (spatialHamiltonianDifferential first x)
+        (spatialHamiltonianDifferential second x) =
+      smearingWedge first second * spatialCurrent x := by
+  simp [finitePoisson, spatialHamiltonianDifferential,
+    siteZeroDifferential, siteOneDifferential, canonicalPoisson,
+    smearingWedge, spatialCurrent, spatialDifference, Fin.sum_univ_two]
+  ring
+
+/-- A concrete field for which both the spatial difference and current are
+nonzero. -/
+def bracketWitnessField : TwoSiteField :=
+  ![{ aPlus := 0, pPlus := 1, aMinus := 0, pMinus := 0 },
+    { aPlus := 1, pPlus := 0, aMinus := 0, pMinus := 0 }]
+
+def firstSiteSmearing : TwoSiteSmearing := ![1, 0]
+def secondSiteSmearing : TwoSiteSmearing := ![0, 1]
+
+theorem bracketWitness_spatialDifference_nonzero :
+    spatialDifference bracketWitnessField ≠ 0 := by
+  norm_num [spatialDifference, bracketWitnessField]
+
+theorem bracketWitness_poisson_nonzero :
+    finitePoisson
+        (spatialHamiltonianDifferential firstSiteSmearing bracketWitnessField)
+        (spatialHamiltonianDifferential secondSiteSmearing bracketWitnessField) =
+      1 := by
+  rw [spatialHamiltonian_poisson_factorization]
+  norm_num [smearingWedge, spatialCurrent, spatialDifference,
+    bracketWitnessField, firstSiteSmearing, secondSiteSmearing]
+
+end
+
+end P0EFTJanusTwoSiteSpatialDerivativePoissonBracket
+end JanusFormal

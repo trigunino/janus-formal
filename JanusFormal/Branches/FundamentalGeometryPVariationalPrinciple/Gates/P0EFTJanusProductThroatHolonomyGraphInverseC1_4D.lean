@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatHolonomyGraphInverseLocalBound4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatHolonomyGraphSecondDerivative4D
 import Mathlib.Analysis.Calculus.ContDiff.RestrictScalars
 
 /-!
@@ -20,6 +21,7 @@ open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProductThroatHeatOperator4D
 open P0EFTJanusProductThroatUnboundedDiracFredholm4D
 open P0EFTJanusProductThroatHolonomyGraphFamily4D
+open P0EFTJanusProductThroatHolonomyGraphSecondDerivative4D
 open P0EFTJanusProductThroatHolonomyGraphRealFredholmFamily4D
 open P0EFTJanusProductThroatHolonomyGraphInverseRegularity4D
 open scoped Topology
@@ -100,6 +102,85 @@ theorem productThroatCommonGraphDiracInverseCanonical_contDiff_one
     (fun parameter => ContinuousLinearMap.inverse
       (productThroatCommonGraphDiracCLM data fold reference parameter)) holonomy
   exact hInverse.comp holonomy hFamily
+
+/-- Complex smoothness of inversion restricted to the real scalar field at
+order three. -/
+theorem continuousLinearMap_inverse_contDiffAt_real_three
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (equiv : ProductThroatCommonGraphDomain data fold reference ≃L[Complex]
+      ProductThroatHeatHilbert data) :
+    ContDiffAt ℝ 3
+      (ContinuousLinearMap.inverse :
+        (ProductThroatCommonGraphDomain data fold reference →L[Complex]
+          ProductThroatHeatHilbert data) →
+        (ProductThroatHeatHilbert data →L[Complex]
+          ProductThroatCommonGraphDomain data fold reference))
+      (equiv : ProductThroatCommonGraphDomain data fold reference →L[Complex]
+        ProductThroatHeatHilbert data) := by
+  have hComplex : ContDiffAt Complex 3 ContinuousLinearMap.inverse
+      (equiv : ProductThroatCommonGraphDomain data fold reference →L[Complex]
+        ProductThroatHeatHilbert data) :=
+    contDiffAt_map_inverse equiv
+  exact hComplex.restrict_scalars ℝ
+
+theorem productThroatCommonGraphDiracInverseCanonical_contDiff_three
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist) :
+    ContDiff ℝ 3
+      (productThroatCommonGraphDiracInverseCanonical data fold reference) := by
+  rw [contDiff_iff_contDiffAt]
+  intro holonomy
+  have hInverse := continuousLinearMap_inverse_contDiffAt_real_three
+    data fold reference
+      (productThroatCommonGraphDiracContinuousLinearEquiv_real
+        data fold reference holonomy)
+  have hFamily : ContDiffAt ℝ 3
+      (productThroatCommonGraphDiracReal data fold reference) holonomy :=
+    (productThroatCommonGraphDirac_contDiff_three
+      data fold reference).contDiffAt
+  change ContDiffAt ℝ 3
+    (fun parameter => ContinuousLinearMap.inverse
+      (productThroatCommonGraphDiracCLM data fold reference parameter)) holonomy
+  exact hInverse.comp holonomy hFamily
+
+/-- Inversion is smooth to every order over `ℝ` at every complex-linear
+equivalence. -/
+theorem continuousLinearMap_inverse_contDiffAt_real_top
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (equiv : ProductThroatCommonGraphDomain data fold reference ≃L[Complex]
+      ProductThroatHeatHilbert data) :
+    ContDiffAt ℝ (⊤ : WithTop ℕ∞)
+      (ContinuousLinearMap.inverse :
+        (ProductThroatCommonGraphDomain data fold reference →L[Complex]
+          ProductThroatHeatHilbert data) →
+        (ProductThroatHeatHilbert data →L[Complex]
+          ProductThroatCommonGraphDomain data fold reference))
+      (equiv : ProductThroatCommonGraphDomain data fold reference →L[Complex]
+        ProductThroatHeatHilbert data) := by
+  have hComplex : ContDiffAt Complex (⊤ : WithTop ℕ∞)
+      ContinuousLinearMap.inverse
+      (equiv : ProductThroatCommonGraphDomain data fold reference →L[Complex]
+        ProductThroatHeatHilbert data) :=
+    contDiffAt_map_inverse equiv
+  exact hComplex.restrict_scalars ℝ
+
+/-- Any `C∞` upgrade of the direct common-graph family automatically upgrades
+its canonical inverse to `C∞`; no order-by-order inverse calculation remains. -/
+theorem productThroatCommonGraphDiracInverseCanonical_contDiff_top
+    (data : ProductThroatSpectralData) (fold : Fold) (reference : CircleTwist)
+    (hForward : ContDiff ℝ (⊤ : WithTop ℕ∞)
+      (productThroatCommonGraphDiracReal data fold reference)) :
+    ContDiff ℝ (⊤ : WithTop ℕ∞)
+      (productThroatCommonGraphDiracInverseCanonical data fold reference) := by
+  rw [contDiff_iff_contDiffAt]
+  intro holonomy
+  have hInverse := continuousLinearMap_inverse_contDiffAt_real_top
+    data fold reference
+      (productThroatCommonGraphDiracContinuousLinearEquiv_real
+        data fold reference holonomy)
+  change ContDiffAt ℝ (⊤ : WithTop ℕ∞)
+    (fun parameter => ContinuousLinearMap.inverse
+      (productThroatCommonGraphDiracCLM data fold reference parameter)) holonomy
+  exact hInverse.comp holonomy hForward.contDiffAt
 
 end
 

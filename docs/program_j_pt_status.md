@@ -6,6 +6,9 @@
 
 - `PT-BP01` ferme : interaction Candidate A locale/integree et invariance PT sur la base D8 mesuree.
 - `PT-BP02` ferme (passe 2) : derivee effective de l'action globale Candidate A sous contrat explicite de domination.
+- `PT-BP03` ferme (passe 3) : action scalaire holonome reguliere sur metrique lorentzienne generale et premiere variation effective.
+- `PT-BP04` ferme (passe 4) : developpement exact le long d'une droite avec reste quadratique controle pour la fonctionnelle scalaire generale.
+- `PT-BP05` ferme (passe 5) : seconde derivee non negative de la trace thermique nucleaire du cercle aux temps positifs.
 - Reprise P : extraire un parametre d'ordre scalaire et son potentiel effectif renormalise. Ce pont ne ferme pas `PT-P01/PT-P03` et ne fournit pas encore de temperature critique.
 
 `PT01-PT03` ferment un noyau de Landau **conditionnel T/X**. Ils établissent ce

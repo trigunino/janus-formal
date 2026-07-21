@@ -49,3 +49,26 @@ The tensor result fixes two polarizations in each of one massless and one
 massive TT channel, over whatever spatial spectrum the background and boundary
 conditions provide.  It selects no finite global count and does not revive
 `1001`.
+
+## Exact TT kernel classification
+
+The two-sheet Fourier equations are now diagonalized without an additional
+physical assumption. Their symbol determinant factors exactly as
+
+`(1/4) (omega^2-k^2) (omega^2-k^2-4 coupling)`.
+
+Consequently, for nonzero coupling:
+
+- away from both dispersion shells, the TT kernel is trivial;
+- on the massless shell, every solution is common (`h_plus=h_minus`);
+- on the massive shell, every solution is relative (`h_plus=-h_minus`).
+
+Positive coupling gives a strict relative mass gap. Negative coupling instead
+produces a low-momentum interval with no real frequency. These are exact
+statements for the isolated flat TT reduction only; they do not close the ADM
+scalar/vector sector.
+
+Off both shells, the inverse `2 x 2` tensor symbol is also explicit and proved
+to be the unique response to an arbitrary pair of sheet sources. Its
+denominator is precisely the factored determinant above, so the reduced
+propagator introduces no additional tensor pole.

@@ -1,0 +1,56 @@
+name: D9 branch Lean build
+
+on:
+  push:
+    branches:
+      - agent/d9-finite-multiplicity-index
+  pull_request:
+    branches:
+      - codex/program-p-full-closure
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: d9-branch-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-d9-leaf:
+    name: Build D9 finite cokernel support leaf
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build D9 leaf
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaugeGhostBlockD9FiniteCokernelSupport4D
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
+  build-program-p:
+    name: Build Program P integration head
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Program P
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          build-args: JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+          test: false
+          lint: false
+          use-mathlib-cache: true
