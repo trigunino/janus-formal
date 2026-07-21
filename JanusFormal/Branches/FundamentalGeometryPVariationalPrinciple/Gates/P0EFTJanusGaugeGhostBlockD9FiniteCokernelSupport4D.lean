@@ -58,7 +58,16 @@ private theorem d9ZeroCovectorModes_insert_of_zero
     d9ZeroCovectorModes (insert mode modes) covector =
       insert mode (d9ZeroCovectorModes modes covector) := by
   ext x
-  simp [d9ZeroCovectorModes, hZero]
+  simp only [d9ZeroCovectorModes, Finset.mem_filter, Finset.mem_insert]
+  constructor
+  · rintro ⟨hxInsert, hxZero⟩
+    rcases hxInsert with rfl | hxModes
+    · exact Or.inl rfl
+    · exact Or.inr ⟨hxModes, hxZero⟩
+  · intro hx
+    rcases hx with rfl | ⟨hxModes, hxZero⟩
+    · exact ⟨Or.inl rfl, hZero⟩
+    · exact ⟨Or.inr hxModes, hxZero⟩
 
 private theorem d9ZeroCovectorModes_insert_of_nonzero
     {ι : Type*} [DecidableEq ι] (mode : ι) (modes : Finset ι)
@@ -67,7 +76,14 @@ private theorem d9ZeroCovectorModes_insert_of_nonzero
     d9ZeroCovectorModes (insert mode modes) covector =
       d9ZeroCovectorModes modes covector := by
   ext x
-  simp [d9ZeroCovectorModes, hZero]
+  simp only [d9ZeroCovectorModes, Finset.mem_filter, Finset.mem_insert]
+  constructor
+  · rintro ⟨hxInsert, hxZero⟩
+    rcases hxInsert with rfl | hxModes
+    · exact False.elim (hZero hxZero)
+    · exact ⟨hxModes, hxZero⟩
+  · rintro ⟨hxModes, hxZero⟩
+    exact ⟨Or.inr hxModes, hxZero⟩
 
 private theorem d9ZeroCovectorMultiplicity_insert_of_zero
     {ι : Type*} [DecidableEq ι] (mode : ι) (modes : Finset ι)
@@ -80,7 +96,9 @@ private theorem d9ZeroCovectorMultiplicity_insert_of_zero
     d9ZeroCovectorModes_insert_of_zero mode modes covector hZero]
   have hNotMem : mode ∉ d9ZeroCovectorModes modes covector := by
     intro hMembership
-    exact hMode (Finset.mem_of_mem_filter hMembership)
+    have hMembership' : mode ∈ modes ∧ covector mode = zeroTangent := by
+      simpa only [d9ZeroCovectorModes, Finset.mem_filter] using hMembership
+    exact hMode hMembership'.1
   simp [hNotMem, Nat.add_comm]
 
 private theorem d9ZeroCovectorMultiplicity_insert_of_nonzero
