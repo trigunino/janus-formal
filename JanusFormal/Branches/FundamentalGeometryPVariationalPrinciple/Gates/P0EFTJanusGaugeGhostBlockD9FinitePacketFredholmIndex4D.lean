@@ -41,30 +41,31 @@ theorem d9GaugeGhostFinitePacketKernel_finrank_eq_zeroModeData
       Module.finrank Real (D9GaugeGhostPacketZeroModeData covector) :=
   (d9GaugeGhostFinitePacketKernelEquivZeroModeData covector).finrank_eq
 
-/-- Finite zero-mode data has the expected multiplicity times one-block
-coordinate dimension. -/
+/-- Finite zero-mode data has the expected filtered multiplicity times the
+one-block coordinate dimension.  The subtype `Fintype` is installed only
+inside the proof, so no decidable equality on tangent covectors leaks into the
+public statement. -/
 theorem d9GaugeGhostPacketZeroModeData_finrank
     {ι : Type*} [Fintype ι] (covector : ι → TangentVector3) :
     Module.finrank Real (D9GaugeGhostPacketZeroModeData covector) =
-      Fintype.card (D9GaugeGhostPacketZeroMode covector) *
+      d9ZeroCovectorMultiplicity Finset.univ covector *
         Module.finrank Real D9GaugeGhostLinearCoordinate := by
-  rw [Module.finrank_pi_fintype]
-  simp
-
-/-- The subtype cardinality agrees with the previously defined filtered
-zero-covector multiplicity on the full finite mode set. -/
-theorem d9GaugeGhostPacketZeroMode_card_eq_zeroMultiplicity
-    {ι : Type*} [Fintype ι] (covector : ι → TangentVector3) :
-    Fintype.card (D9GaugeGhostPacketZeroMode covector) =
-      d9ZeroCovectorMultiplicity Finset.univ covector := by
   classical
-  simpa [D9GaugeGhostPacketZeroMode, d9ZeroCovectorMultiplicity,
-    d9ZeroCovectorModes] using
-    (Fintype.subtype_card
+  letI : Fintype (D9GaugeGhostPacketZeroMode covector) :=
+    Fintype.ofFinite _
+  have hCard :
+      Fintype.card (D9GaugeGhostPacketZeroMode covector) =
+        d9ZeroCovectorMultiplicity Finset.univ covector := by
+    change Fintype.card {mode : ι // covector mode = zeroTangent} =
+      (Finset.univ.filter fun mode : ι =>
+        covector mode = zeroTangent).card
+    exact Fintype.card_of_subtype
       (Finset.univ.filter fun mode : ι => covector mode = zeroTangent)
       (by
         intro mode
-        simp))
+        simp)
+  rw [Module.finrank_pi_fintype]
+  simp [hCard]
 
 private theorem d9GaugeGhostCoordinate_finrank_eq_zeroCokernelFinrank :
     Module.finrank Real D9GaugeGhostLinearCoordinate =
@@ -84,13 +85,12 @@ theorem d9GaugeGhostFinitePacketKernel_finrank_eq_zeroMultiplicity_mul
         (LinearMap.ker (d9GaugeGhostFinitePacketSymbol covector)) =
         Module.finrank Real (D9GaugeGhostPacketZeroModeData covector) :=
       d9GaugeGhostFinitePacketKernel_finrank_eq_zeroModeData covector
-    _ = Fintype.card (D9GaugeGhostPacketZeroMode covector) *
+    _ = d9ZeroCovectorMultiplicity Finset.univ covector *
         Module.finrank Real D9GaugeGhostLinearCoordinate :=
       d9GaugeGhostPacketZeroModeData_finrank covector
     _ = d9ZeroCovectorMultiplicity Finset.univ covector *
         d9GaugeGhostZeroCokernelFinrank := by
-      rw [d9GaugeGhostPacketZeroMode_card_eq_zeroMultiplicity covector,
-        d9GaugeGhostCoordinate_finrank_eq_zeroCokernelFinrank]
+      rw [d9GaugeGhostCoordinate_finrank_eq_zeroCokernelFinrank]
 
 /-- Since the packet symbol is an endomorphism of a finite-dimensional space,
 its kernel and cokernel have equal dimension. -/
