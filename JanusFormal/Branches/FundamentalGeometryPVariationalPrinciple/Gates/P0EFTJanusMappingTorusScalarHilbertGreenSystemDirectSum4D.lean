@@ -61,7 +61,7 @@ def canonicalScalarHilbertGreenSystemDirectSumOperator
   map_add' first second := by ext <;> simp
   map_smul' scalar field := by ext <;> simp
 
-/-- Product paired Cauchy trace.  Values and normal traces are grouped by
+/-- Product paired Cauchy trace. Values and normal traces are grouped by
 geometric type rather than by sector. -/
 def canonicalScalarHilbertGreenSystemDirectSumBoundaryTrace
     (left : CanonicalScalarHilbertGreenSystem
@@ -71,8 +71,8 @@ def canonicalScalarHilbertGreenSystemDirectSumBoundaryTrace
     DomainLeft × DomainRight →ₗ[Real]
       CanonicalScalarHilbertBoundaryDatum (Trace := TraceLeft × TraceRight) where
   toFun field :=
-    ((left.boundaryTrace field.1).1, (right.boundaryTrace field.2).1,
-     (left.boundaryTrace field.1).2, (right.boundaryTrace field.2).2)
+    (((left.boundaryTrace field.1).1, (right.boundaryTrace field.2).1),
+      ((left.boundaryTrace field.1).2, (right.boundaryTrace field.2).2))
   map_add' first second := by ext <;> simp
   map_smul' scalar field := by ext <;> simp
 
@@ -145,7 +145,7 @@ noncomputable def canonicalScalarHilbertGreenSystemDirectSumBoundaryCondition
       (TraceLeft × TraceRight) :=
   leftCondition.directSum rightCondition
 
-/-- Direct sum of two graph bounds.  The estimate itself is kept as an explicit
+/-- Direct sum of two graph bounds. The estimate itself is kept as an explicit
 quantitative input because the product graph norm constants depend on the chosen
 norm conventions. -/
 structure CanonicalScalarHilbertGreenSystemDirectSumGraphBound
