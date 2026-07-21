@@ -35,11 +35,11 @@ open P0EFTJanusMappingTorusNormalPinMinusPrincipalBundle
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-private abbrev AmbientData := reflectedSphereData period hPeriod
+abbrev AmbientData := reflectedSphereData period hPeriod
 
-private abbrev AmbientCover := MappingTorusCover (AmbientData period hPeriod)
+abbrev AmbientCover := MappingTorusCover (AmbientData period hPeriod)
 
-private abbrev AmbientBase := MappingTorus (AmbientData period hPeriod)
+abbrev AmbientBase := MappingTorus (AmbientData period hPeriod)
 
 private abbrev ThroatCover :=
   MappingTorusCover (fixedEquatorData period hPeriod)

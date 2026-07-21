@@ -514,9 +514,9 @@ que si leur critère le dit explicitement.
   radiale lisse et la restriction au throat est le cocycle normal `Pin⁻(1)`.
   Aucun `AmbientReferenceWindingOrthogonalReductionLaw` n'est requis.
 
-### `P-STOKES-CUT-01` — Green–Stokes sur le bulk coupé au throat
+### `P-STOKES-CUT-01` — Green–Stokes sur le bulk coupé au throat — `DONE`
 
-- État : `EN COURS` (2026-07-20). Portée : `GLOBAL` sur le domaine
+- État : `DONE` (2026-07-21). Portée : `GLOBAL` sur le domaine
   coupé.
 - But : construire les deux lifts de bord, leurs orientations et la formule
   Green–Stokes ; déterminer si le flux quotient est somme, différence ou nul.
@@ -917,12 +917,29 @@ que si leur critère le dit explicitement.
   tangentielle normale. La gate
   `P0EFTJanusMappingTorusCanonicalLatitudeAmbientOrthogonality4D` généralise
   maintenant l'orthogonalité normale/tangentielle du throat à toute latitude
-  non polaire du collier. Il reste à transporter cette formule par l'isomorphisme
-  de dérivée du collier vers la covariable normale métrique pour reconnaître le
-  cutoff holonome comme son vrai pullback local, puis à identifier `J⁰` au flux
-  normal global et la vraie
-  divergence tangentielle locale à cette compensation, puis à recoller les
-  représentants locaux. La gate
+  non polaire du collier. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeNormalCovectorCollarDerivative4D`
+  transporte cette formule par la dérivée du collier et prouve exactement que
+  le vrai cutoff global vérifie `dχ = χ' · n♭` sur son intérieur. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeAdaptedHolonomicGreenCurrentFlux4D`
+  prouve ensuite que la composante locale adaptée `J⁰` est exactement le flux
+  normal du véritable courant global sur le bulk coupé. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeHolonomicGlobalCutoffPullback4D`
+  reconnaît le cutoff holonome, y compris dans les cartes centrées à latitude
+  arbitraire, comme le vrai pullback local du cutoff global ; elle en déduit que
+  sa divergence locale libre au centre vaut exactement `cutoff' ×` le courant
+  normal canonique. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeLocalGlobalCutoffDivergenceMetricBridge4D`
+  identifie ensuite cette divergence locale totale à la somme de la divergence
+  normale métrique et de la compensation jacobienne déjà construites. Cette
+  formulation est invariante ; elle évite d'identifier séparément deux termes
+  normal/tangentiels dépendant du second jet de la carte. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceGluing4D`
+  définit enfin la valeur globale correspondante sur le collier canonique,
+  prouve que tout représentant holonome adapté centré la calcule et en déduit
+  l'indépendance exacte de la carte et du représentant tangentiel. Le recollement
+  du secteur cutoff canonique du collier est ainsi fermé sans contrat de jets.
+  La gate
   `P0EFTJanusMappingTorusCanonicalHolonomicAtlasScalarGreenDivergenceTransition4D`
   prouve désormais l'invariance exacte de la divergence réelle sur les overlaps
   sous les jets de transition rebasés de la métrique et des deux scalaires ; le
@@ -944,7 +961,70 @@ que si leur critère le dit explicitement.
   que, pour deux solutions du collier sans source et de même masse, la densité
   mesurée se réduit exactement à `cutoff' × flux normal vrai` : il ne subsiste
   aucun terme de bulk et cette densité s'annule exactement dans le cœur où le
-  cutoff est constant.
+  cutoff est constant. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceMeasuredStokes4D`
+  prolonge désormais la divergence locale recollée aux deux faces par la densité
+  canonique, identifie sous Euler la mesure poussée obtenue à la mesure genuine
+  déjà construite et lui applique le Stokes orienté à deux feuilles. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeMetricCollarMeasureBridge4D` montre
+  ensuite que le collier muni du vrai jacobien `cos²(normal)` se pousse
+  exactement sur le morceau positif du volume lorentzien intrinsèque, lequel
+  est une sous-mesure du volume complet. Elle confirme aussi que la mesure nue
+  précédente ne doit pas leur être identifiée. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceIntrinsicMetricBridge4D`
+  pondère ensuite la divergence locale recollée par cette mesure exacte : sa
+  densité est précisément la divergence normale densitisée plus la compensation
+  tangentielle pondérée, et sa mesure intrinsèque positive est construite. Le
+  contrat résiduel `CanonicalLatitudeCenteredMetricTangentialCancellation`
+  isole exactement l'annulation intégrée manquante et implique immédiatement
+  le Stokes complet. Ce contrat, puis le Stokes métrique complet, sont déjà
+  prouvés sans hypothèse supplémentaire dans le sous-secteur Euler--Dirichlet,
+  où le courant de Green est identiquement nul. Plus généralement, l'intégrale
+  métrique complète se factorise sous Euler en un coefficient scalaire fois le
+  flux de Green mesuré. Ce coefficient est prouvé strictement non dégénéré :
+  le contrat tangentiel est donc exactement équivalent à la nullité du flux
+  mesuré. Enfin, la gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceFullEulerBridge4D`
+  montre que les vraies équations d'Euler 4D sur l'atlas total annulent la
+  divergence de Green dans toute carte adaptée et suppriment donc l'hypothèse
+  locale `hFree`. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceOrientedBoundaryObstruction4D`
+  identifie alors exactement le verrou : sous Euler, le Stokes métrique complet
+  équivaut à la nullité du flux orienté à deux feuilles. L'annulation deck-odd
+  déjà prouvée pour l'intégrale non orientée ne peut pas la remplacer. Il reste
+  donc à obtenir la nullité du flux par le théorème de divergence global orienté
+  sur le bulk coupé. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeEulerWronskianNoGo4D` formalise le
+  contre-exemple élémentaire masse nulle `1`/`id` : les deux équations d'Euler
+  normales sont satisfaites mais leur Wronskien vaut `1`. Une condition globale
+  de secteur/cohomologie est donc nécessaire. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudeOrientedFluxOddSymmetry4D` donne un
+  critère global non circulaire suffisant : une symétrie mesurable de la base,
+  préservant la mesure et rendant le courant ponctuellement impair, annule le
+  flux orienté et ferme le Stokes métrique sous Euler. Le prochain verrou est
+  désormais partiellement levé par la gate
+  `P0EFTJanusMappingTorusCanonicalLatitudePTFixedOrientedFlux4D` : elle prouve
+  que PT inverse la coordonnée normale après retour au domaine fondamental et
+  instancie le critère pour deux champs scalaires individuellement PT-fixes.
+  Leur flux orienté est nul et le Stokes métrique est fermé sous Euler. Hors de
+  ce secteur PT-fixe, il reste à fournir l'annulation de la classe de période
+  par une condition globale admissible ou un argument cohomologique. La gate
+  `P0EFTJanusMappingTorusCanonicalLatitudePTFixedProjection4D` construit en
+  outre le projecteur canonique de Reynolds `½(id + PT)` sur ce secteur, prouve
+  qu'il est idempotent et caractérise exactement ses points fixes. Le flux
+  orienté de deux champs projetés est donc nul sans hypothèse supplémentaire ;
+  la gate
+  `P0EFTJanusMappingTorusCanonicalLatitudePTFixedProjectionEuler4D` prouve
+  maintenant que PT puis ce projecteur préservent exactement le résidu et les
+  solutions d'Euler normales. Le Stokes métrique projeté est donc fermé à
+  partir des seules équations d'Euler des champs initiaux, sans hypothèse Euler
+  supplémentaire sur leurs projections. Enfin, la gate finale proposée
+  `P0EFTJanusMappingTorusCutOpenScalarStokes4D` existe désormais : elle expose
+  la formule mesurée générale, l'obstruction métrique exacte par la période
+  orientée, et les fermetures concrètes Dirichlet, PT-fixe et PT-projetée. La
+  carte est close sans instancier le contrat Stokes circulaire ; la période
+  non nulle hors de ces secteurs reste explicitement une obstruction, pas une
+  preuve manquante de cette carte.
 
 ### `P5-CANDIDATEA-METRIC-HESSIAN` — Hessien de la même interaction — `DONE`
 
@@ -1437,6 +1517,603 @@ que si leur critère le dit explicitement.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
+
+### `P-T01-COMMON-VECTOR-PAIRING` — Pairing vectoriel sur le domaine commun
+
+- État : `DONE` (2026-07-21). Portée : `POINTWISE/GLOBAL-TYPED`.
+- Gate : `P0EFTJanusProgramPCommonVectorPairingBridge4D`.
+- Résultat : équivalence exacte entre le modèle vectoriel P-D et la vraie
+  coordonnée tangente D9 ; la classification invariante est transportée aux
+  variations lisses complètes du domaine géométrique commun, avec certificat
+  canonique compilé.
+- Limite : les pairings spin-two, spinor et BRST, puis leur globalisation en
+  module naturel, restent requis ; `T01` reste ouverte.
+- Porte terminale : aucune ; prérequis direct de `T01`.
+
+### `P-T01-COMMON-SPINTWO-PAIRING` — Pairing spin-two sur le domaine commun
+
+- État : `DONE` (2026-07-21). Portée : `POINTWISE/GLOBAL-TYPED`.
+- Gate : `P0EFTJanusProgramPCommonSpinTwoPairingBridge4D`.
+- Résultat : changement de coordonnées exact entre le vrai tenseur traceless
+  D9 et le modèle spin-two ; l’unique pairing invariant devient exactement le
+  pairing de Frobenius, à une normalisation près, sur les variations métriques
+  globales du domaine commun.
+- Limite : les pairings spinor et BRST, puis la globalisation en module naturel,
+  restent requis ; `T01` reste ouverte.
+- Porte terminale : aucune ; prérequis direct de `T01`.
+
+### `P-T01-COMMON-GHOST-PAIRING` — Pairing ghost sur le domaine commun
+
+- État : `DONE` (2026-07-21). Portée : `POINTWISE/GLOBAL-TYPED`.
+- Gate : `P0EFTJanusProgramPCommonGhostPairingBridge4D`.
+- Résultat : les labels P-D ghost/antighost sont reliés aux deux vraies
+  coordonnées U(1) D9 ; la neutralité supprime exactement les deux blocs
+  diagonaux et conserve les deux coefficients dirigés sur les variations
+  globales communes.
+- Limite : la relation entre ces deux coefficients exige encore la structure
+  Grassmann/BRST complète ; le pairing spinor et la globalisation naturelle
+  restent ouverts, donc `T01` reste ouverte.
+- Porte terminale : aucune ; prérequis direct de `T01`.
+
+### `P-T01-SPINOR-COORDINATE-NOGO` — Le rang quatre ne choisit pas le pairing
+
+- État : `DONE` (2026-07-21). Portée : `RÉDUIT/GLOBAL-TYPED`.
+- Gate : `P0EFTJanusProgramPCommonSquaredSpinorPairingNoGo4D`.
+- Résultat : deux formes bilinéaires de formes différentes sont transportées
+  par la même équivalence `MatterFiber ≃ D9SquaredSpinorCoordinateFiber` ; le
+  simple raccord de coordonnées ne peut donc sélectionner le pairing spinor.
+- Déverrouillage requis : construire l’action géométrique `SpinC`/Clifford et
+  sa structure hermitienne sur le vrai bundle, puis classifier ses invariants.
+- Porte terminale : aucune ; obstruction explicite sur le chemin de `T01`.
+
+### `P-T01-RANKTWO-SPINC-HERMITIAN` — Pairing hermitien Clifford SpinC
+
+- État : `DONE` (2026-07-21). Portée : `ALGÉBRIQUE/RANG-DEUX`.
+- Gate : `P0EFTJanusProgramPRankTwoSpinCHermitianPairing4D`.
+- Résultat : le caractère naturel `(spin, phase) ↦ spin·phase` tue le sous-groupe
+  diagonal `(-1,-1)`, descend au vrai quotient `CliffordSpinC2` et agit
+  unitairement sur une ligne complexe ; son pairing hermitien est invariant et
+  non dégénéré.
+- Limite : cette représentation algébrique locale n’est pas encore associée à
+  un bundle `SpinC` global sur la géométrie Janus ni au `MatterFiber` commun.
+- Porte terminale : aucune ; prérequis direct du pairing spinor de `T01`.
+
+### `P-T01-RANKTWO-SPINC-CLASSIFICATION` — Unicité du pairing spinor local
+
+- État : `DONE` (2026-07-21). Portée : `ALGÉBRIQUE/RANG-DEUX`.
+- Gate : `P0EFTJanusProgramPRankTwoSpinCHermitianClassification4D`.
+- Résultat : toute forme sesquilinéaire sur la ligne spinor complexe est un
+  multiple unique du pairing hermitien canonique ; toute cette famille est
+  invariante sous le caractère `CliffordSpinC2` construit précédemment.
+- Limite : classification locale de fibre seulement ; descente sur le bundle
+  Janus et identification au champ matière commun restent ouvertes.
+- Porte terminale : aucune ; ferme la classification spinor locale requise par
+  `T01`, sans fermer sa globalisation.
+
+### `P-T01-RANKTWO-SPINC-CECH-DESCENT` — Descente Čech du pairing spinor
+
+- État : `DONE` (2026-07-21). Portée : `CONDITIONNEL/MULTI-CHART`.
+- Gate : `P0EFTJanusProgramPRankTwoSpinCCechHermitianDescent4D`.
+- Résultat : toute présentation Čech principale `CliffordSpinC2` fournit la
+  ligne complexe associée ; pour deux sections compatibles, le pairing
+  hermitien est exactement indépendant de la carte sur chaque overlap.
+- Limite : le théorème consomme une présentation Čech ; il ne dérive pas encore
+  le bundle principal multi-chart de la géométrie Janus effective.
+- Porte terminale : aucune ; réduit la globalisation spinor de `T01` à la
+  construction du bundle principal Janus réel.
+
+### `P-T01-NORMAL-Z4-HERMITIAN` — Métrique hermitienne de la racine normale
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/COL-EFFECTIF`.
+- Gate : `P0EFTJanusProgramPNormalZ4RootHermitianMetric4D`.
+- Résultat : les transitions de la vraie ligne complexe `NormalZ4Root` du col
+  sont unitaires pour tout winding ; le pairing hermitien canonique est donc
+  non dégénéré et exactement indépendant des coordonnées de bundle.
+- Limite : cette ligne globale du col n'est pas encore identifiée au bundle
+  spinor ambiant associé au bundle principal `Pin⁻(4)` de Janus.
+- Porte terminale : aucune ; fournit le premier pairing hermitien sur un vrai
+  bundle global Janus et rapproche `T01` du pont `Pin⁻ → PinC/spinor`.
+
+### `P-T01-NORMAL-Z4-PIN-ASSOCIATION` — Ligne racine associée au Pin⁻ normal
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/COL-EFFECTIF`.
+- Gate : `P0EFTJanusProgramPNormalZ4RootPinMinusAssociation4D`.
+- Résultat : un caractère unitaire explicite `Pin⁻(1) ≃ ZMod 4 → U(1)`
+  induit exactement tous les changements de cartes de la ligne complexe
+  `NormalZ4Root`; le même winding est identifié à la restriction au col des
+  transitions du vrai bundle principal ambiant `Pin⁻(4)`.
+- Limite : l'association est prouvée sur la restriction normale cyclique ; une
+  représentation spinor du groupe `PinC(4)` ambiant complet reste à construire.
+- Porte terminale : aucune ; ferme le pont global `Pin⁻` normal vers la ligne
+  hermitienne et isole désormais le vrai verrou `PinC(4)` ambiant.
+
+### `P-T01-AMBIENT-PINC-CECH` — Extension PinC du cocycle ambiant
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/ALGÉBRIQUE-MULTI-CHART`.
+- Gate : `P0EFTJanusProgramPAmbientPinCCechExtension4D`.
+- Résultat : le groupe ambiant
+  `PinC(4) := (Pin⁻(4) × U(1))/⟨(-1,-1)⟩` et son quotient diagonal sont
+  construits ; le vrai cocycle multi-chart du bundle principal `Pin⁻(4)` est
+  extrait de son `FiberBundleCore` puis poussé en un cocycle `PinC(4)` global.
+- Limite : cette présentation Čech est algébrique ; continuité du quotient,
+  vrai `FiberBundleCore PinC(4)` et représentation spinor restent ouverts.
+- Porte terminale : aucune ; déverrouille la prochaine carte topologique puis
+  l'association d'un vrai bundle spinor ambiant.
+
+### `P-T01-AMBIENT-PINC-ACTUAL-BUNDLE` — Bundle principal PinC ambiant réel
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE`.
+- Gate : `P0EFTJanusProgramPAmbientPinCActualPrincipalBundle4D`.
+- Résultat : la topologie quotient rend `PinC(4)` groupe topologique ; le vrai
+  cocycle continu `Pin⁻(4)` est poussé en un `FiberBundleCore PinC(4)` sur le
+  quotient ambiant Janus, avec action droite équivariante, libre et transitive.
+- Limite : la représentation spinor complexe de `PinC(4)`, son bundle associé
+  et son pairing hermitien global restent à construire.
+- Porte terminale : aucune ; ferme la globalisation principale `PinC(4)` et
+  déplace le verrou de `T01` sur le module spinor ambiant associé.
+
+### `P-T01-AMBIENT-PINC-DETERMINANT` — Secteur déterminant du PinC canonique
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/OBSTRUCTION-EXPLICITE`.
+- Gate : `P0EFTJanusProgramPAmbientPinCDeterminantTriviality4D`.
+- Résultat : le caractère déterminant `PinC(4) → U(1)` est construit comme le
+  carré de la phase et descend bien le quotient diagonal ; sur le bundle
+  canonique induit par `(pin,1)`, toutes ses transitions valent exactement `1`.
+- Limite : ce bundle ne porte donc pas encore le secteur monopole/déterminant
+  non trivial requis par le modèle physique.
+- Porte terminale : aucune ; isole le prochain verrou réel : construire un
+  twist principal `U(1)` global compatible, puis le module spinor associé.
+
+### `P-T01-AMBIENT-PINC-TWISTED-CECH` — Réduction au cocycle U(1) ambiant
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/ALGÉBRIQUE-CONDITIONNEL`.
+- Gate : `P0EFTJanusProgramPAmbientPinCTwistedCechBundle4D`.
+- Résultat : tout cocycle `U(1)` sur la couverture ambiante canonique se
+  combine au vrai cocycle `Pin⁻(4)` en un cocycle `PinC(4)` ; son caractère
+  déterminant est exactement le carré de la transition `U(1)`. Le twist
+  trivial redonne transition par transition le bundle `PinC` canonique.
+- Limite : aucun cocycle `U(1)` ambiant non trivial n'est encore construit ;
+  les gates monopole existantes ne donnent que des données locales ou de
+  Chern arithmétiques.
+- Porte terminale : aucune ; réduit le prochain verrou à construire un vrai
+  cocycle `U(1)` non trivial compatible avec la couverture ambiante.
+
+### `P-T01-AMBIENT-U1-WINDING` — Bundle U(1) ambiant issu du winding
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE`.
+- Gate : `P0EFTJanusProgramPAmbientCircleWindingBundle4D`.
+- Résultat : le vrai winding entier des recouvrements ambiants, évalué dans
+  chacun des deux caractères quart-de-tour, définit un `FiberBundleCore U(1)`
+  continu et le cocycle exigé par le twist `PinC`. Sa restriction compatible
+  au col est la racine normale existante, et le générateur a carré `-1`.
+- Limite : la non-trivialité de sa classe de Chern ordinaire n'est pas
+  affirmée ; cette phase est le secteur de winding/racine normale, pas encore
+  une preuve du monopole primitif global.
+- Porte terminale : aucune ; débloque la construction du vrai bundle
+  principal `PinC(4)` twisté et de son déterminant non trivial.
+
+### `P-T01-AMBIENT-PINC-WINDING-ACTUAL` — Bundle PinC twisté réel
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE`.
+- Gate : `P0EFTJanusProgramPAmbientWindingTwistedPinCActualBundle4D`.
+- Résultat : les transitions continues du vrai bundle `Pin⁻(4)` et du bundle
+  `U(1)` de winding sont envoyées dans
+  `(Pin⁻(4) × U(1))/⟨(-1,-1)⟩`, donnant un vrai `FiberBundleCore PinC(4)`.
+  Son déterminant vaut transition par transition le carré de la phase de
+  winding ; sur le recouvrement réel d'un tour de deck il vaut explicitement
+  `-1`, contrairement au bundle canonique à phase unité.
+- Limite : la classe de Chern monopole primitive et la représentation spinor
+  complexe associée ne sont pas encore construites.
+- Porte terminale : aucune ; débloque désormais la construction du module
+  spinor ambiant associé et de son pairing hermitien.
+
+### `P-T01-AMBIENT-PINC-DETERMINANT-LINE` — Ligne déterminant associée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE-HERMITIEN`.
+- Gate : `P0EFTJanusProgramPAmbientPinCDeterminantLineBundle4D`.
+- Résultat : le caractère déterminant continu du vrai bundle `PinC(4)` twisté
+  agit sur `ℂ` et construit un `FiberBundleCore` complexe associé. Son pairing
+  hermitien est préservé par tous les changements de cartes et son changement
+  de carte d'un tour vaut explicitement `-id`.
+- Limite : cette ligne de rang un n'est pas le module spinor ambiant ; la
+  représentation complexe Clifford-compatible de `PinC(4)` reste à fournir.
+- Porte terminale : aucune ; ferme le secteur ligne déterminant et réduit le
+  verrou spinor à la représentation ambiante elle-même.
+
+### `P-T01-AMBIENT-CLIFFORD-GAMMA` — Représentation gamma ambiante
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/ALGÉBRIQUE`.
+- Gate : `P0EFTJanusProgramPAmbientCliffordGammaRepresentation4D`.
+- Résultat : quatre matrices gamma complexes explicites satisfont la relation
+  de Clifford quadratique ambiante et induisent un morphisme d'algèbres continu
+  de l'algèbre de Clifford vers `Mat₄(ℂ)`.
+- Limite : cette carte seule ne fournit ni la descente `PinC(4)` ni le bundle.
+- Porte terminale : aucune ; fournit la représentation requise par la descente.
+
+### `P-T01-AMBIENT-PINC-SPINOR-REP` — Représentation spinorielle PinC
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/ALGÉBRIQUE`.
+- Gate : `P0EFTJanusProgramPAmbientPinCSpinorRepresentation4D`.
+- Résultat : l'action gamma de `Pin⁻(4)` et l'action scalaire de `U(1)` tuent
+  explicitement `(-1,-1)` et descendent en une représentation de `PinC(4)` sur
+  `ℂ⁴`, compatible avec la relation quadratique de Clifford.
+- Limite : la préservation hermitienne globale reste une carte séparée.
+- Porte terminale : aucune ; débloque le bundle spinor associé réel.
+
+### `P-T01-AMBIENT-PINC-SPINOR-ACTUAL` — Bundle spinor ambiant réel
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE`.
+- Gate : `P0EFTJanusProgramPAmbientPinCActualSpinorBundle4D`.
+- Résultat : les transitions continues du vrai bundle `PinC(4)` twisté agissent
+  sur `ℂ⁴` et construisent un véritable `FiberBundleCore` spinoriel.
+- Limite : l'invariance du pairing hermitien et la classe de Chern monopole
+  primitive ne sont pas encore établies.
+- Porte terminale : aucune ; réduit le prochain verrou spinor à l'hermiticité.
+
+### `P-T01-AMBIENT-PINC-SPINOR-HERMITIAN` — Métrique spinorielle globale
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE-HERMITIEN`.
+- Gate : `P0EFTJanusProgramPAmbientPinCSpinorHermitianBundle4D`.
+- Résultat : le pairing hermitien standard non dégénéré sur `ℂ⁴` est préservé
+  par les quatre actions gamma du caractère `ZMod 4`, par toute phase `U(1)`
+  et donc par chaque changement de carte du vrai bundle spinor ambiant.
+- Limite : cette carte ne construit pas encore l'opérateur de Dirac global ni
+  la classe de Chern monopole primitive.
+- Porte terminale : aucune ; ferme le verrou du module spinor hermitien ambiant.
+
+### `P-T01-AMBIENT-HALF-SPINOR-D9` — Pont spinoriel de rang D9
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/ALGÉBRIQUE-TYPÉE`.
+- Gate : `P0EFTJanusProgramPAmbientHalfSpinorD9Bridge4D`.
+- Résultat : le caractère `ZMod 4` ambiant préserve explicitement un bloc
+  complexe de rang deux de la représentation Dirac `ℂ⁴`. Ce bloc possède le
+  rang réel quatre attendu et une équivalence linéaire canonique explicite avec
+  le `MatterFiber` D9.
+- Limite : le `FiberBundleCore` global de ce demi-spinor et son transport vers
+  le champ commun D9 restent à construire.
+- Porte terminale : aucune ; ferme le mismatch de rang qui bloquait le pont D9.
+
+### `P-T01-AMBIENT-HALF-SPINOR-ACTUAL` — Bundle demi-spinor réel
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/TOPOLOGIQUE-TYPÉE`.
+- Gate : `P0EFTJanusProgramPAmbientHalfSpinorActualBundle4D`.
+- Résultat : l'inclusion et la projection linéaires continues du bloc `ℂ²`
+  extraient du vrai bundle Dirac ambiant un `FiberBundleCore` complexe de rang
+  deux ; chaque transition du bundle `ℂ⁴` préserve explicitement ce sous-bundle.
+- Limite : son pairing doit encore être transporté vers le `MatterFiber` D9 et
+  injecté dans le certificat du domaine commun.
+- Porte terminale : aucune ; globalise le rang spinor exactement attendu par D9.
+
+### `P-T01-D9-MATTER-SPINOR-HERMITIAN` — Pairing spinor du champ commun
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorHermitianPairing4D`.
+- Résultat : le pairing hermitien du demi-spinor global est non dégénéré puis
+  transporté par l'équivalence linéaire canonique sur le vrai `MatterFiber`
+  D9 ; le changement de carte correspondant préserve exactement ce pairing.
+- Limite : le domaine commun doit encore enregistrer ce changement de carte
+  comme bundle de champs/sections, au-delà de ses coefficients locaux.
+- Porte terminale : aucune ; ferme le pairing spinor typé qui manquait à `T01`.
+
+### `P-T01-D9-MATTER-SPINOR-ACTUAL` — Bundle spinor du champ D9
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorActualBundle4D`.
+- Résultat : le bundle demi-spinor est transporté par l'équivalence linéaire
+  continue en un vrai `FiberBundleCore MatterFiber`; son pairing hermitien D9
+  reste invariant sous tous les changements de cartes.
+- Limite : les coefficients `d9MatterCoefficient` restent des fonctions locales
+  et doivent encore être empaquetés comme sections compatibles de ce bundle.
+- Porte terminale : aucune ; fournit enfin l'objet bundle attendu par le domaine.
+
+### `P-T01-THROAT-MATTER-SPINOR-PULLBACK` — Bundle spinor sur la gorge
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPThroatMatterSpinorPullbackBundle4D`.
+- Résultat : le bundle `MatterFiber` ambiant est tiré en arrière le long de
+  l'inclusion canonique de la gorge en un vrai `FiberBundleCore`; son pairing
+  hermitien reste invariant sous les changements de cartes tirés en arrière.
+- Limite : il reste à remplacer les coefficients de matière triviaux par des
+  sections compatibles avec ce bundle.
+- Porte terminale : aucune ; fournit le bundle exact sur la base de D9.
+
+### `P-T01-D9-MATTER-SPINOR-SMOOTH-BUNDLE` — Bundle vectoriel spinoriel lisse
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorSmoothVectorBundle4D`.
+- Résultat : la représentation de monodromie `gamma × racine quartique`
+  sur `MatterFiber` est réelle-linéaire et satisfait exactement le cocycle;
+  chaque monodromie possède l'inverse continu explicite de winding opposé,
+  et ces transitions localement constantes définissent un `VectorBundleCore`
+  analytique, donc un vrai `ContMDiffVectorBundle` sur la gorge.
+- Limite : identifier ce modèle lisse au pullback ambiant existant, puis choisir
+  une connexion compatible avant de construire le Dirac.
+- Porte terminale : aucune ; ferme la régularité du bundle nécessaire au
+  terme cinétique spinoriel.
+
+### `P-T01-D9-MATTER-SPINOR-SMOOTH-PULLBACK-BRIDGE` — Identification deck
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorSmoothPullbackBridge4D`.
+- Résultat : pour tout winding entier, le changement de carte du pullback
+  ambiant est exactement la monodromie `gamma × racine quartique` du bundle
+  lisse; cette action préserve le pairing et les sections spinorielles déjà
+  migrées satisfont explicitement la même loi deck.
+- Limite : construire une connexion hermitienne compatible et son action de
+  Clifford avant de définir le Dirac géométrique.
+- Porte terminale : aucune ; identifie les présentations utilisées par le bundle
+  lisse, le pullback ambiant et l'espace de sections D9.
+
+### `P-T01-D9-MATTER-SPINOR-FLAT-COVER-CONNECTION` — Connexion plate sur le revêtement
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorFlatCoverConnection4D`.
+- Résultat : la dérivée de variété ordinaire d'une section spinorielle lisse
+  sur le revêtement est construite et satisfait exactement la covariance sous
+  tout deck entier, avec la monodromie `gamma × racine quartique`.
+- Limite : empaqueter cette loi comme dérivée covariante globale sur le bundle
+  et ajouter l'action de Clifford.
+- Porte terminale : aucune ; ferme la loi de recollement différentielle requise
+  avant la construction du Dirac géométrique.
+
+### `P-T01-D9-MATTER-SPINOR-FLAT-HERMITIAN` — Compatibilité hermitienne
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorFlatConnectionHermitian4D`.
+- Résultat : pour deux sections lisses arbitraires et toute direction tangente,
+  la dérivée plate du pairing est exactement la somme des deux pairings avec
+  la dérivée de chaque argument ; la connexion plate est donc hermitienne sur
+  le revêtement.
+- Limite : construire l'action de Clifford.
+- Porte terminale : aucune ; ferme la compatibilité métrique requise avant le
+  Dirac géométrique.
+
+### `P-T01-D9-MATTER-SPINOR-GLOBAL-COVARIANT-DERIVATIVE` — Dérivée covariante globale
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorGlobalCovariantDerivative4D`.
+- Résultat : une dérivée en coordonnées de trivialisation préférée est
+  transportée dans chaque fibre et empaquetée comme un vrai
+  `CovariantDerivative` Mathlib sur le bundle spinoriel D9 ; son additivité et
+  sa règle de Leibniz sont prouvées pour toute section différentiable.
+- Limite : prouver sa régularité comme `ContMDiffCovariantDerivative`.
+- Porte terminale : aucune ; ferme le type global de connexion requis avant
+  l'action de Clifford et le Dirac.
+
+### `P-T01-D9-MATTER-SPINOR-SMOOTH-SECTION-DESCENT` — Descente lisse des sections
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorSmoothSectionDescent4D`.
+- Résultat : toute section lisse deck-équivariante définit une vraie section
+  dépendante du bundle quotient ; ses coordonnées dans chaque trivialisation
+  sont exactement le lift composé avec l'inverse local, et sa section de
+  l'espace total est lisse.
+- Limite : empaqueter si nécessaire cette preuve dans l'API
+  `ContMDiffSection` sans alourdir l'élaboration.
+- Porte terminale : aucune ; ferme la descente lisse requise par la connexion.
+
+### `P-T01-D9-MATTER-SPINOR-FLAT-GLOBAL-BRIDGE` — Identification des connexions
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorFlatGlobalConnectionBridge4D`.
+- Résultat : sur toute section descendue, la dérivée covariante globale est
+  exactement la dérivée plate du lift sur le revêtement, composée avec la
+  dérivée de l'inverse local canonique du revêtement.
+- Limite : régularité `ContMDiffCovariantDerivative`, action de Clifford puis
+  opérateur de Dirac.
+- Porte terminale : aucune ; ferme l'identification plate/globale.
+
+### `P-T01-D9-MATTER-SPINOR-GLOBAL-HERMITIAN` — Compatibilité hermitienne globale
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorGlobalConnectionHermitian4D`.
+- Résultat : pour deux sections descendues arbitraires et toute direction
+  tangente, la dérivée globale du pairing est exactement la somme des pairings
+  avec la dérivée covariante de chaque argument.
+- Limite : migrer sections et connexion vers le bundle doublé construit par
+  les cartes suivantes, puis définir l'opérateur de Dirac géométrique.
+- Porte terminale : aucune ; ferme la compatibilité hermitienne globale.
+
+### `P-T01-D9-MATTER-SPINOR-CLIFFORD-NOGO` — Obstruction de rang deux
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorCliffordActionNoGo4D`.
+- Résultat : après retrait de la phase scalaire `U(1)`, la monodromie du
+  demi-spinor est le générateur `J`; son centralisateur dans `M₂(ℂ)` est
+  commutatif. Deux générateurs de Clifford inversibles et anticommutants ne
+  peuvent donc pas tous commuter avec cette monodromie. Aucune action de
+  Clifford 3D globale n'existe sur le seul demi-spinor D9 actuel.
+- Limite : descendre le module doublé et son action de Clifford en bundle
+  lisse, puis construire le Dirac.
+- Porte terminale : aucune ; remplace une construction impossible par le
+  verrou structurel exact.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-CLIFFORD` — Frame de Clifford doublée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D`.
+- Résultat : le module `S ⊕ Sᵒᵖ` porte la transition normalisée
+  `diag(J,-J)` et trois générateurs complexes linéaires explicites. Chacun
+  carre à `-1`, ils anticommutent deux à deux et commutent exactement avec la
+  transition deck doublée.
+- Limite : migrer sections et connexion vers le vrai bundle lisse doublé,
+  puis contracter Clifford avec la dérivée covariante pour le Dirac.
+- Porte terminale : aucune ; fournit la première action de Clifford compatible
+  avec la monodromie D9.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-SMOOTH-BUNDLE` — Bundle lisse doublé
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D`.
+- Résultat : le partenaire opposé est identifié à `oppositeRoot choice`; la
+  somme des deux monodromies définit un vrai `VectorBundleCore` réel lisse.
+  Après identification complexe, sa transition d'un tour est exactement la
+  phase de racine multipliée par `diag(J,-J)`, donc par la transition compatible
+  avec la frame de Clifford construite précédemment.
+- Limite : descendre les paires de sections, transporter la connexion plate et
+  globale, puis définir le Dirac.
+- Porte terminale : aucune ; réalise géométriquement le module doublé.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-SMOOTH-SECTIONS` — Sections lisses doublées
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledSmoothSectionDescent4D`.
+- Résultat : toute paire de lifts lisses associés aux racines opposées
+  satisfait la monodromie doublée et descend en une vraie section lisse du
+  bundle doublé. Ses coordonnées dans chaque trivialisation locale sont
+  exactement le lift local attendu.
+- Limite : transporter la connexion plate et globale, puis construire le Dirac.
+- Porte terminale : aucune ; fournit l'espace géométrique requis pour les
+  champs de matière doublés.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-GLOBAL-CONNECTION` — Connexion globale doublée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledGlobalCovariantDerivative4D`.
+- Résultat : le vrai bundle lisse doublé porte une `CovariantDerivative`
+  globale canonique obtenue par dérivation dans la trivialisation locale ;
+  les axiomes d'additivité et de Leibniz sont prouvés.
+- Limite : identifier cette connexion à la connexion plate du revêtement,
+  puis la contracter avec la frame de Clifford pour construire le Dirac.
+- Porte terminale : aucune ; fournit la connexion globale requise par le Dirac.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-FLAT-COVER-CONNECTION` — Connexion plate doublée
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledFlatCoverConnection4D`.
+- Résultat : la dérivée ordinaire de tout lift lisse doublé obéit à
+  l'exacte covariance deck pour la monodromie doublée ; elle définit donc la
+  connexion plate canonique sur le revêtement.
+- Limite : prouver son identification avec la connexion globale du bundle,
+  puis construire le Dirac.
+- Porte terminale : aucune ; ferme la construction plate sur le revêtement.
+
+### `P-T01-D9-MATTER-SPINOR-DOUBLED-FLAT-GLOBAL-BRIDGE` — Pont global/plat doublé
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorDoubledFlatGlobalConnectionBridge4D`.
+- Résultat : sur toute section doublée descendue, la connexion globale est
+  exactement la dérivée plate du lift composée avec la différentielle de
+  l'inverse local de la projection du revêtement.
+- Limite : contracter cette connexion avec la frame de Clifford compatible
+  pour construire l'opérateur de Dirac D9.
+- Porte terminale : aucune ; ferme l'identification connexion globale/plate.
+
+### `P-T01-D9-MATTER-SPINOR-SECTION-NOGO` — Obstruction des champs actuels
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorSectionNoGo4D`.
+- Résultat : une variation de matière constante explicitement admise par
+  l'espace actuel échoue la transition spinorielle après un tour de gorge.
+  Les `SmoothQuotientField MatterFiber` actuels ne peuvent donc pas servir
+  directement de sections du bundle spinoriel non trivial.
+- Limite : `T01` exige désormais une redéfinition ou une restriction typée du
+  champ `matter` comme section compatible, puis la migration de ses usages.
+- Porte terminale : aucune ; obstruction constructive et verrou suivant précis.
+
+### `P-T01-THROAT-MATTER-SPINOR-SECTIONS` — Espace de sections spinorielles
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPThroatMatterSpinorSectionSpace4D`.
+- Résultat : `SmoothThroatMatterSpinorLift` encode un coefficient lisse sur le
+  revêtement de la gorge avec la loi d'équivariance exacte du bundle spinoriel;
+  cet espace est non vide et contient la section nulle canonique.
+- Limite : installer sa structure de module puis migrer le composant `matter`
+  de `IndependentFieldVariation` et ses consommateurs D9/D10.
+- Porte terminale : aucune ; fournit le type correct exigé par la migration.
+
+### `P-T01-THROAT-MATTER-SPINOR-SECTION-MODULE` — Module des sections
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPThroatMatterSpinorSectionLinearSpace4D`.
+- Résultat : les changements de cartes `MatterFiber` sont explicitement
+  additifs et réels-linéaires; les sections lisses équivariantes forment donc
+  un `Module Real` utilisable comme espace de variations.
+- Limite : migrer le composant `matter` sans casser les consommateurs existants.
+- Porte terminale : aucune ; prérequis direct de la migration de `T01`.
+
+### `P-T01-D9-MATTER-SPINOR-COEFFICIENT` — Coefficient D9 typé
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorCoefficientMigration4D`.
+- Résultat : le nouveau coefficient D9 est évalué depuis une paire de sections
+  spinorielles; sa loi de deck est prouvée et son pairing hermitien est invariant.
+- Limite : remplacer progressivement l'ancien `d9MatterCoefficient` dans les
+  assemblages de variation, d'action et de Hessien.
+- Porte terminale : aucune ; premier pont de migration sans rupture d'API.
+
+### `P-T01-SPINORIAL-COMPLETE-VARIATION` — Tangent complet spinoriel
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPSpinorialCompleteVariation4D`.
+- Résultat : le nouveau tangent complet est le produit du tangent historique
+  privé de sa matière triviale et de la vraie paire de sections spinorielles;
+  il conserve une structure de module réelle et prouve l'ancienne matière nulle.
+- Limite : migrer les consommateurs restants vers sa composante spinorielle.
+- Porte terminale : aucune ; paquet de transition typé pour la migration.
+
+### `P-T01-SPINORIAL-D9-ASSEMBLY` — Assemblage D9 migré
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPSpinorialCompleteVariationD9FieldAssembly4D`.
+- Résultat : le champ local D9 lit désormais son spinor depuis la vraie section;
+  ses composantes bosoniques et ghost sont prouvées identiques à l'assemblage
+  historique appliqué au tangent sans matière.
+- Limite : migrer les usages d'action/Hessien et la branche D10.
+- Porte terminale : aucune ; premier consommateur complet effectivement migré.
+
+### `P-T01-SPINORIAL-D9-DOMAIN-REFINEMENT` — Contrat commun D9 raffiné
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPSpinorialD9DomainAgreementRefinement4D`.
+- Résultat : tout contrat commun D7/D9/D10 existant reçoit un raffinement D9
+  canonique sur le nouveau tangent spinoriel; les coordonnées normales et gauge
+  restent celles du tangent historique sans matière, tandis que le spinor vient
+  explicitement de la section équivariante.
+- Limite : la coordonnée modale D10 et l'action/Hessien restent sur l'ancien type.
+- Porte terminale : aucune ; migre le point d'entrée central du domaine D9.
+
+### `P-T01-D9-SPINOR-PAIRING-SMOOTH` — Pairing lisse des sections D9
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorPairingSmooth4D`.
+- Résultat : le pairing hermitien de deux vraies sections spinorielles est
+  explicitement `C∞` sur le revêtement de la gorge; son auto-pairing est
+  invariant sous tout winding deck et possède un certificat compilé.
+- Limite : effectuer la descente lisse de cette densité vers le quotient gorge,
+  puis l'utiliser dans l'action/Hessien migrés.
+- Porte terminale : aucune ; ferme la régularité locale du pairing de `T01`.
+
+### `P-T01-D9-SPINOR-PAIRING-DESCENT` — Descente globale du pairing D9
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorPairingDescent4D`.
+- Résultat : l'auto-pairing lisse et deck-invariant descend effectivement en un
+  `SmoothThroatField Complex` sur le quotient gorge; sa valeur sur un représentant
+  est prouvée égale au pairing hermitien du coefficient spinoriel correspondant.
+- Limite : injecter ce scalaire global dans l'action matière et sa variation.
+- Porte terminale : aucune ; fournit la densité globale requise par `T01`.
+
+### `P-T01-D9-SPINOR-REAL-DENSITY` — Densité réelle positive
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorRealDensity4D`.
+- Résultat : la partie réelle de l'auto-pairing descendu définit un vrai
+  `SmoothThroatField Real`; sa formule locale est exacte et sa positivité est
+  démontrée par la somme des deux normes carrées complexes.
+- Limite : choisir la mesure/couplage et intégrer cette densité dans l'action.
+- Porte terminale : aucune ; fournit le terme scalaire positif de l'action D9.
+
+### `P-T01-D9-SPINOR-MASS-ACTION` — Action de masse canonique
+
+- État : `DONE` (2026-07-21). Portée : `GLOBAL/CHAMP-COMMUN`.
+- Gate : `P0EFTJanusProgramPD9MatterSpinorMassAction4D`.
+- Résultat : la densité spinorielle réelle est intégrable contre la mesure
+  volumique canonique de la gorge; son intégrale pondérée par `m²/2` définit
+  une action positive pour `m² ≥ 0`, nulle à masse ou variation nulle.
+- Limite : construire le terme cinétique/Dirac, puis migrer variation et Hessien.
+- Porte terminale : aucune ; fournit le premier terme d'action D9 authentiquement
+  porté par les sections spinorielles globales.
 
 ## 6. Verrous globaux — ne pas distribuer comme petites cartes
 
