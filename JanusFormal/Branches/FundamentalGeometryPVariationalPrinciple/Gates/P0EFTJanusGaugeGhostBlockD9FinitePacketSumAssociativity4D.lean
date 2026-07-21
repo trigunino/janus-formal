@@ -133,15 +133,7 @@ theorem packetDisjointSumAssocLinearEquiv_split_naturality
         (ι := κ) (κ := μ) (V := V) rightOuter.2
     (rightOuter.1, (rightInner.1, rightInner.2)) =
       (leftInner.1, (leftInner.2, leftOuter.2)) := by
-  dsimp [packetDisjointSumLinearEquiv, packetDisjointSumAssocLinearEquiv]
-  apply Prod.ext
-  · funext mode
-    rfl
-  · apply Prod.ext
-    · funext mode
-      rfl
-    · funext mode
-      rfl
+  rfl
 
 /-- Reassociate the combined D9 gauge--ghost zero-cokernel packet. -/
 def d9GaugeGhostZeroCokernelPacketAssoc (ι κ μ : Type*) :
