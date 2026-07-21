@@ -205,11 +205,14 @@ theorem CanonicalScalarClosedCoerciveCompactEmbeddingAt.compact_ambientResolvent
         data hClosable traceBound a b spectralParameter
           (compactData.coercive.boundedResolvent
             data hClosable traceBound a b spectralParameter)) := by
-  simpa [CanonicalScalarClosedBoundedResolventAt.ambientResolvent,
-    Function.comp_def] using
-    compactData.compact_inclusion.comp_clm
+  change IsCompactOperator
+    ((canonicalScalarClosedSeparatedDomainInclusionCLM
+      data hClosable traceBound a b).comp
       (compactData.coercive.boundedResolvent
-        data hClosable traceBound a b spectralParameter).resolvent
+        data hClosable traceBound a b spectralParameter).resolvent)
+  exact compactData.compact_inclusion.comp_clm
+    (compactData.coercive.boundedResolvent
+      data hClosable traceBound a b spectralParameter).resolvent
 
 /-- Canonical compact-resolvent spectral package produced by coercivity,
 surjectivity and compact embedding. -/
@@ -249,14 +252,14 @@ theorem canonicalScalarClosedCoerciveCompactSpectrum_certificate
               data hClosable traceBound a b spectralParameter)) ∧
       (∀ eigenvalue : Real, eigenvalue ≠ 0 →
         FiniteDimensional Real
-          (LinearMap.eigenspace
+          (Module.End.eigenspace
             (CanonicalScalarClosedBoundedResolventAt.ambientResolvent
               data hClosable traceBound a b spectralParameter
                 (compactData.coercive.boundedResolvent
                   data hClosable traceBound a b spectralParameter)).toLinearMap
               eigenvalue)) ∧
       (⨆ eigenvalue : Real,
-        LinearMap.eigenspace
+        Module.End.eigenspace
           (CanonicalScalarClosedBoundedResolventAt.ambientResolvent
             data hClosable traceBound a b spectralParameter
               (compactData.coercive.boundedResolvent

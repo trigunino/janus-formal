@@ -59,7 +59,8 @@ def canonicalScalarClosedRobinGraphDomainSubmodule
           data hClosable traceBound field).2 =
         robin (canonicalScalarClosedBoundaryTrace
           data hClosable traceBound field).1 := by
-  rfl
+  simp [canonicalScalarClosedRobinGraphDomainSubmodule,
+    mem_canonicalScalarHilbertRobinGraphSubmodule]
 
 /-- Ambient inclusion restricted to an operator-valued Robin domain. -/
 def canonicalScalarClosedRobinGraphDomainInclusion

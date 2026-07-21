@@ -412,8 +412,20 @@ theorem CanonicalScalarClosedBoundedResolventAt.toLinearMap_eq_algebraicResolven
   intro source
   apply (bounded.resolventPoint
     data hClosable traceBound a b spectralParameter).1
-  rw [bounded.left_inverse,
-    canonicalScalarClosedShiftedOperator_resolvent]
+  calc
+    canonicalScalarClosedSeparatedShiftedOperator
+        data hClosable traceBound a b spectralParameter
+        (bounded.resolvent source) = source := bounded.left_inverse source
+    _ = canonicalScalarClosedSeparatedShiftedOperator
+        data hClosable traceBound a b spectralParameter
+        (canonicalScalarClosedAlgebraicResolvent
+          data hClosable traceBound a b spectralParameter
+          (bounded.resolventPoint data hClosable traceBound a b spectralParameter)
+          source) :=
+      (canonicalScalarClosedShiftedOperator_resolvent
+        data hClosable traceBound a b spectralParameter
+        (bounded.resolventPoint data hClosable traceBound a b spectralParameter)
+        source).symm
 
 end
 end P0EFTJanusMappingTorusScalarClosedResolvent4D

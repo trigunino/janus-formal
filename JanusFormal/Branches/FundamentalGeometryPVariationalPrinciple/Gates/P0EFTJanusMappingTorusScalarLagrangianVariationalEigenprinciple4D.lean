@@ -87,9 +87,17 @@ theorem canonicalScalarClosedLagrangianJacobiPairing_comm
     canonicalScalarClosedLagrangianJacobiPairing
         data hClosable traceBound condition first second =
       canonicalScalarClosedLagrangianJacobiPairing
-        data hClosable traceBound condition second first :=
-  canonicalScalarClosedLagrangianDomainOperator_symmetric
-    data hClosable traceBound condition first second
+        data hClosable traceBound condition second first := by
+  unfold canonicalScalarClosedLagrangianJacobiPairing
+  calc
+    _ = inner Real
+        (canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition first)
+        (canonicalScalarClosedLagrangianDomainOperator
+          data hClosable traceBound condition second) :=
+      canonicalScalarClosedLagrangianDomainOperator_symmetric
+        data hClosable traceBound condition first second
+    _ = _ := real_inner_comm _ _
 
 /-- Symmetry of the mass pairing. -/
 theorem canonicalScalarClosedLagrangianMassPairing_comm
@@ -203,6 +211,11 @@ def canonicalScalarClosedLagrangianConstrainedFunctional
 
 /-- Affine curve in the actual operator domain. -/
 def canonicalScalarClosedLagrangianAffineCurve
+    {data : CanonicalScalarHilbertGreenSystem
+      (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+    {hClosable : CanonicalScalarGraphClosable data}
+    {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+    {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
     (field variation : LagrangianDomain data hClosable traceBound condition)
     (parameter : Real) : LagrangianDomain data hClosable traceBound condition :=
   field + parameter • variation
@@ -228,6 +241,7 @@ theorem canonicalScalarClosedLagrangianQuadraticFunctional_affine
   unfold canonicalScalarClosedLagrangianQuadraticFunctional
     canonicalScalarClosedLagrangianAffineCurve
   rw [canonicalScalarClosedLagrangianJacobiPairing_add_left,
+    canonicalScalarClosedLagrangianJacobiPairing_add_right,
     canonicalScalarClosedLagrangianJacobiPairing_add_right,
     canonicalScalarClosedLagrangianJacobiPairing_smul_left,
     canonicalScalarClosedLagrangianJacobiPairing_smul_right,
@@ -331,7 +345,7 @@ theorem canonicalScalarClosedLagrangianConstrainedFunctional_hasDerivAt
         funext parameter
         exact canonicalScalarClosedLagrangianConstrainedFunctional_affine
           data hClosable traceBound condition eigenvalue field variation parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  simpa [Pi.add_apply] using (((hasDerivAt_const (x := (0 : Real))
       (canonicalScalarClosedLagrangianConstrainedFunctional
         data hClosable traceBound condition eigenvalue field)).add
       ((hasDerivAt_id (0 : Real)).mul_const
@@ -341,7 +355,7 @@ theorem canonicalScalarClosedLagrangianConstrainedFunctional_hasDerivAt
             data hClosable traceBound condition field variation)))).add
       (((hasDerivAt_id (0 : Real)).pow 2).mul_const
         (canonicalScalarClosedLagrangianConstrainedFunctional
-          data hClosable traceBound condition eigenvalue variation))) using 1 <;> norm_num
+          data hClosable traceBound condition eigenvalue variation)))
 
 /-- Weak constrained stationarity at a candidate eigenvalue. -/
 def CanonicalScalarClosedLagrangianStationaryAt
@@ -517,7 +531,8 @@ theorem canonicalScalarClosedLagrangianRayleighQuotient_eigenfield
     canonicalScalarClosedLagrangianQuadraticFunctional
     canonicalScalarClosedLagrangianJacobiPairing
   rw [hEigen, real_inner_smul_left,
-    canonicalScalarClosedLagrangianMassFunctional_eq_norm_sq]
+    canonicalScalarClosedLagrangianMassFunctional_eq_norm_sq,
+    real_inner_self_eq_norm_sq]
   field_simp
 
 /-- Variational-eigenvalue certificate. -/

@@ -31,6 +31,7 @@ universe u
 
 variable {Trace : Type u}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
+  [CompleteSpace Trace]
 
 /-- Two Lagrangian boundary-condition records are equal once their underlying
 subspaces are equal; closedness and maximality fields are propositions. -/
@@ -68,7 +69,15 @@ noncomputable def trans
   equiv := first.equiv.trans second.equiv
   preserves := by
     intro x y
-    rw [second.preserves, first.preserves]
+    calc
+      canonicalScalarHilbertBoundarySymplecticForm
+          ((first.equiv.trans second.equiv) x)
+          ((first.equiv.trans second.equiv) y) =
+        canonicalScalarHilbertBoundarySymplecticForm
+          (first.equiv x) (first.equiv y) :=
+        second.preserves (first.equiv x) (first.equiv y)
+      _ = canonicalScalarHilbertBoundarySymplecticForm x y :=
+        first.preserves x y
 
 /-- Inverse boundary symplectomorphism. -/
 noncomputable def symm
@@ -113,7 +122,15 @@ noncomputable def transport
       have hOrth := hDatum (symplectic.equiv test) hMapped
       have hPreserves := symplectic.preserves
         (symplectic.equiv.symm datum) test
-      simpa using hPreserves.symm.trans hOrth
+      calc
+        canonicalScalarHilbertBoundarySymplecticForm
+            (symplectic.equiv.symm datum) test =
+          canonicalScalarHilbertBoundarySymplecticForm
+            (symplectic.equiv (symplectic.equiv.symm datum))
+            (symplectic.equiv test) := hPreserves.symm
+        _ = canonicalScalarHilbertBoundarySymplecticForm datum
+            (symplectic.equiv test) := by simp
+        _ = 0 := hOrth
     · intro datum hDatum test hTest
       have hDatumBase : symplectic.equiv.symm datum ∈ condition.subspace :=
         hDatum
@@ -136,7 +153,7 @@ noncomputable def canonicalScalarHilbertBoundaryQuarterTurnEquiv :
   invFun datum := (-datum.2, datum.1)
   left_inv := by intro datum; ext <;> simp
   right_inv := by intro datum; ext <;> simp
-  map_add' := by intro first second; ext <;> simp
+  map_add' := by intro first second; ext <;> simp <;> abel
   map_smul' := by intro scalar datum; ext <;> simp
   continuous_toFun := by fun_prop
   continuous_invFun := by fun_prop
@@ -176,7 +193,7 @@ noncomputable def canonicalScalarHilbertBoundaryShearEquiv
   invFun datum := (datum.1, datum.2 - robin datum.1)
   left_inv := by intro datum; ext <;> simp
   right_inv := by intro datum; ext <;> simp
-  map_add' := by intro first second; ext <;> simp [map_add]
+  map_add' := by intro first second; ext <;> simp [map_add] <;> abel
   map_smul' := by intro scalar datum; ext <;> simp [map_smul]
   continuous_toFun := by fun_prop
   continuous_invFun := by fun_prop
@@ -192,7 +209,11 @@ noncomputable def canonicalScalarHilbertBoundaryShear
     intro first second
     unfold canonicalScalarHilbertBoundarySymplecticForm
     dsimp [canonicalScalarHilbertBoundaryShearEquiv]
-    rw [inner_add_right, inner_add_left, hRobin first.1 second.1]
+    rw [inner_add_right, inner_add_left]
+    have hSymm : inner Real (robin first.1) second.1 =
+        inner Real first.1 (robin second.1) := by
+      simpa using hRobin first.1 second.1
+    rw [hSymm]
     ring
 
 /-- A symmetric shear transports Neumann exactly to the Robin graph of the

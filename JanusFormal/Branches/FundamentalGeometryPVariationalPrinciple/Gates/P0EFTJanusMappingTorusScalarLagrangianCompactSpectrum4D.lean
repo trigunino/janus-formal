@@ -99,12 +99,12 @@ theorem CanonicalScalarClosedLagrangianCompactResolventAt.finiteDimensional_eige
       data hClosable traceBound condition spectralParameter)
     (eigenvalue : Real) (hEigenvalue : eigenvalue ≠ 0) :
     FiniteDimensional Real
-      (LinearMap.eigenspace
+      (Module.End.eigenspace
         (compact.bounded.ambientResolvent
           data hClosable traceBound condition spectralParameter).toLinearMap
         eigenvalue) :=
-  compact.compact_ambient.finite_dimensional_eigenspace
-    eigenvalue hEigenvalue
+  ContinuousLinearMap.finite_dimensional_eigenspace
+    compact.compact_ambient eigenvalue hEigenvalue
 
 /-- Spectral completeness of the compact symmetric ambient resolvent. -/
 theorem CanonicalScalarClosedLagrangianCompactResolventAt.spectral_complete
@@ -117,11 +117,12 @@ theorem CanonicalScalarClosedLagrangianCompactResolventAt.spectral_complete
     (compact : CanonicalScalarClosedLagrangianCompactResolventAt
       data hClosable traceBound condition spectralParameter) :
     (⨆ eigenvalue : Real,
-      LinearMap.eigenspace
+      Module.End.eigenspace
         (compact.bounded.ambientResolvent
           data hClosable traceBound condition spectralParameter).toLinearMap
         eigenvalue)ᗮ = ⊥ :=
-  compact.compact_ambient.orthogonalComplement_iSup_eigenspaces_eq_bot
+  ContinuousLinearMap.orthogonalComplement_iSup_eigenspaces_eq_bot
+    compact.compact_ambient
     (compact.ambient_isSymmetric
       data hClosable traceBound condition spectralParameter)
 
@@ -167,7 +168,9 @@ theorem canonicalScalarClosedLagrangianResolvent_eigenvector_transfer
       canonicalScalarClosedLagrangianShiftedOperator
           data hClosable traceBound condition spectralParameter field =
         eigenvalue⁻¹ • vector := by
-    dsimp [field]
+    change canonicalScalarClosedLagrangianShiftedOperator
+        data hClosable traceBound condition spectralParameter
+          (eigenvalue⁻¹ • bounded.resolvent vector) = _
     rw [map_smul, bounded.left_inverse]
   refine ⟨hInclusion, ?_⟩
   have hExpanded := canonicalScalarClosedLagrangianShiftedOperator_apply
@@ -177,7 +180,10 @@ theorem canonicalScalarClosedLagrangianResolvent_eigenvector_transfer
       canonicalScalarClosedLagrangianDomainOperator
           data hClosable traceBound condition field -
         spectralParameter • vector at hExpanded
-  module at hExpanded ⊢
+  have hAdded := congrArg (fun value => value + spectralParameter • vector)
+    hExpanded
+  simpa [field, map_smul, add_smul, add_assoc, add_comm, add_left_comm,
+    hInclusion] using hAdded.symm
 
 /-- Compact embedding plus coercive-surjective inverse data. -/
 structure CanonicalScalarClosedLagrangianCoerciveCompactEmbeddingAt
@@ -208,11 +214,14 @@ theorem CanonicalScalarClosedLagrangianCoerciveCompactEmbeddingAt.compact_ambien
       ((compactData.coercive.boundedResolvent
         data hClosable traceBound condition spectralParameter).ambientResolvent
           data hClosable traceBound condition spectralParameter) := by
-  simpa [CanonicalScalarClosedLagrangianBoundedResolventAt.ambientResolvent,
-    Function.comp_def] using
-    compactData.compact_inclusion.comp_clm
+  change IsCompactOperator
+    ((canonicalScalarClosedLagrangianDomainInclusionCLM
+      data hClosable traceBound condition).comp
       (compactData.coercive.boundedResolvent
-        data hClosable traceBound condition spectralParameter).resolvent
+        data hClosable traceBound condition spectralParameter).resolvent)
+  exact compactData.compact_inclusion.comp_clm
+    (compactData.coercive.boundedResolvent
+      data hClosable traceBound condition spectralParameter).resolvent
 
 /-- Canonical compact-resolvent package derived from coercivity and compact
 embedding. -/
@@ -249,12 +258,12 @@ theorem canonicalScalarLagrangianCompactSpectrum_certificate
           data hClosable traceBound condition spectralParameter) ∧
       (∀ eigenvalue : Real, eigenvalue ≠ 0 →
         FiniteDimensional Real
-          (LinearMap.eigenspace
+          (Module.End.eigenspace
             (compact.bounded.ambientResolvent
               data hClosable traceBound condition spectralParameter).toLinearMap
             eigenvalue)) ∧
       (⨆ eigenvalue : Real,
-        LinearMap.eigenspace
+        Module.End.eigenspace
           (compact.bounded.ambientResolvent
             data hClosable traceBound condition spectralParameter).toLinearMap
           eigenvalue)ᗮ = ⊥ := by
@@ -263,8 +272,8 @@ theorem canonicalScalarLagrangianCompactSpectrum_certificate
     compact.compact_ambient,
     compact.finiteDimensional_eigenspace
       data hClosable traceBound condition spectralParameter,
-    compact.spectral_complete
-      data hClosable traceBound condition spectralParameter⟩
+    CanonicalScalarClosedLagrangianCompactResolventAt.spectral_complete
+      data hClosable traceBound condition spectralParameter compact⟩
 
 end
 end P0EFTJanusMappingTorusScalarLagrangianCompactSpectrum4D

@@ -226,12 +226,10 @@ theorem CanonicalScalarClosedLagrangianSemiboundedData.zero_eigenspace_eq_bot
   have hDifference : first - second ∈
       canonicalScalarClosedLagrangianOperatorEigenspace
         data hClosable traceBound condition 0 := by
-    change canonicalScalarClosedLagrangianDomainOperator
-        data hClosable traceBound condition (first - second) =
-      (0 : Real) • canonicalScalarClosedLagrangianDomainInclusion
-        data hClosable traceBound condition (first - second)
+    rw [canonicalScalarClosedLagrangianOperatorEigenspace, LinearMap.mem_ker]
+    simp only [zero_smul, sub_zero]
+    simp only [zero_smul, sub_zero] at hEqual
     rw [map_sub, hEqual, sub_self]
-    simp
   by_contra hFields
   have hNonzero : first - second ≠ 0 := sub_ne_zero.mpr hFields
   apply semibounded.not_hasEigenvalue_zero

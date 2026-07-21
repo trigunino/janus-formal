@@ -20,6 +20,8 @@ noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
+open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
+open P0EFTJanusMappingTorusScalarHilbertRobinGraph4D
 open P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D
 
 universe u v w
@@ -175,7 +177,8 @@ theorem canonicalScalarGraphCalderonComplement_idempotent
         data traceBound spectralParameter poissonData) =
       canonicalScalarGraphCalderonComplement
         data traceBound spectralParameter poissonData := by
-  ext boundary
+  apply ContinuousLinearMap.ext
+  intro boundary
   apply Prod.ext <;> simp [canonicalScalarGraphCalderonComplement]
 
 /-- Range of the complementary projector is the Dirichlet vertical subspace. -/
@@ -241,7 +244,9 @@ noncomputable def canonicalScalarGraphCalderonSplittingEquiv
      ⟨canonicalScalarGraphCalderonComplement
         data traceBound spectralParameter poissonData boundary,
       by
-        rw [← canonicalScalarGraphCalderonComplement_range_eq_dirichlet]
+        rw [← canonicalScalarGraphCalderonComplement_range_eq_dirichlet
+          (data := data) (traceBound := traceBound)
+          (spectralParameter := spectralParameter) (poissonData := poissonData)]
         exact LinearMap.mem_range_self _ boundary⟩)
   invFun components := components.1.1 + components.2.1
   left_inv boundary := canonicalScalarGraphCalderon_add_complement
@@ -249,6 +254,9 @@ noncomputable def canonicalScalarGraphCalderonSplittingEquiv
   right_inv components := by
     apply Prod.ext
     · apply Subtype.ext
+      change canonicalScalarGraphCalderonProjector
+          data traceBound spectralParameter poissonData
+            (components.1.1 + components.2.1) = components.1.1
       have hCauchy := components.1.2
       have hRange : components.1.1 ∈ LinearMap.range
           (canonicalScalarGraphCalderonProjector
@@ -256,17 +264,34 @@ noncomputable def canonicalScalarGraphCalderonSplittingEquiv
         rw [canonicalScalarGraphCalderonProjector_range_eq_cauchyData]
         exact hCauchy
       rcases hRange with ⟨source, hSource⟩
-      rw [map_add, hSource,
-        ← ContinuousLinearMap.comp_apply,
-        canonicalScalarGraphCalderonProjector_idempotent]
+      have hIdempotent := congrArg (fun operator => operator source)
+        (canonicalScalarGraphCalderonProjector_idempotent
+          data traceBound spectralParameter poissonData)
+      simp only [ContinuousLinearMap.comp_apply] at hIdempotent
+      rw [map_add, ← hSource]
+      change canonicalScalarGraphCalderonProjector
+          data traceBound spectralParameter poissonData
+            (canonicalScalarGraphCalderonProjector
+              data traceBound spectralParameter poissonData source) +
+          canonicalScalarGraphCalderonProjector
+            data traceBound spectralParameter poissonData components.2.1 =
+        canonicalScalarGraphCalderonProjector
+          data traceBound spectralParameter poissonData source
+      rw [hIdempotent]
       have hVertical := components.2.2
       have hKernel : components.2.1 ∈ LinearMap.ker
           (canonicalScalarGraphCalderonProjector
             data traceBound spectralParameter poissonData).toLinearMap := by
         rw [canonicalScalarGraphCalderonProjector_ker_eq_dirichlet]
         exact hVertical
-      rw [LinearMap.mem_ker.mp hKernel, add_zero]
+      have hVerticalZero : canonicalScalarGraphCalderonProjector
+          data traceBound spectralParameter poissonData components.2.1 = 0 :=
+        LinearMap.mem_ker.mp hKernel
+      rw [hVerticalZero, add_zero]
     · apply Subtype.ext
+      change canonicalScalarGraphCalderonComplement
+          data traceBound spectralParameter poissonData
+            (components.1.1 + components.2.1) = components.2.1
       have hCauchy := components.1.2
       have hCauchyKernel : components.1.1 ∈ LinearMap.ker
           (canonicalScalarGraphCalderonComplement
@@ -278,9 +303,12 @@ noncomputable def canonicalScalarGraphCalderonSplittingEquiv
           rw [canonicalScalarGraphCalderonProjector_range_eq_cauchyData]
           exact hCauchy
         rcases hRange with ⟨source, hSource⟩
-        rw [hSource]
+        rw [← hSource]
         apply Prod.ext <;> simp [canonicalScalarGraphCalderonComplement]
-      rw [map_add, LinearMap.mem_ker.mp hCauchyKernel]
+      have hCauchyZero : canonicalScalarGraphCalderonComplement
+          data traceBound spectralParameter poissonData components.1.1 = 0 :=
+        LinearMap.mem_ker.mp hCauchyKernel
+      rw [map_add, hCauchyZero]
       have hVertical := components.2.2
       have hRange : components.2.1 ∈ LinearMap.range
           (canonicalScalarGraphCalderonComplement
@@ -288,12 +316,24 @@ noncomputable def canonicalScalarGraphCalderonSplittingEquiv
         rw [canonicalScalarGraphCalderonComplement_range_eq_dirichlet]
         exact hVertical
       rcases hRange with ⟨source, hSource⟩
-      rw [hSource,
-        ← ContinuousLinearMap.comp_apply,
-        canonicalScalarGraphCalderonComplement_idempotent,
-        zero_add]
+      have hIdempotent := congrArg (fun operator => operator source)
+        (canonicalScalarGraphCalderonComplement_idempotent
+          data traceBound spectralParameter poissonData)
+      simp only [ContinuousLinearMap.comp_apply] at hIdempotent
+      rw [← hSource]
+      change 0 + canonicalScalarGraphCalderonComplement
+          data traceBound spectralParameter poissonData
+            (canonicalScalarGraphCalderonComplement
+              data traceBound spectralParameter poissonData source) =
+        canonicalScalarGraphCalderonComplement
+          data traceBound spectralParameter poissonData source
+      rw [hIdempotent, zero_add]
   map_add' first second := by
-    apply Prod.ext <;> apply Subtype.ext <;> simp
+    apply Prod.ext
+    · apply Subtype.ext
+      exact map_add _ first second
+    · apply Subtype.ext
+      exact map_add _ first second
   map_smul' scalar boundary := by
     apply Prod.ext <;> apply Subtype.ext <;> simp
 

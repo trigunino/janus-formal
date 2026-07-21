@@ -148,12 +148,12 @@ theorem CanonicalScalarClosedCompactResolventAt.finiteDimensional_eigenspace
       data hClosable traceBound a b spectralParameter)
     (eigenvalue : Real) (hEigenvalue : eigenvalue ≠ 0) :
     FiniteDimensional Real
-      (LinearMap.eigenspace
+      (Module.End.eigenspace
         (CanonicalScalarClosedBoundedResolventAt.ambientResolvent
           data hClosable traceBound a b spectralParameter
             compact.bounded).toLinearMap eigenvalue) :=
-  compact.compact_ambient.finite_dimensional_eigenspace
-    eigenvalue hEigenvalue
+  ContinuousLinearMap.finite_dimensional_eigenspace
+    compact.compact_ambient eigenvalue hEigenvalue
 
 /-- Compact self-adjoint spectral completeness: the common orthogonal complement
 of all ambient-resolvent eigenspaces is trivial. -/
@@ -166,11 +166,12 @@ theorem CanonicalScalarClosedCompactResolventAt.spectral_complete
     (compact : CanonicalScalarClosedCompactResolventAt
       data hClosable traceBound a b spectralParameter) :
     (⨆ eigenvalue : Real,
-      LinearMap.eigenspace
+      Module.End.eigenspace
         (CanonicalScalarClosedBoundedResolventAt.ambientResolvent
           data hClosable traceBound a b spectralParameter
             compact.bounded).toLinearMap eigenvalue)ᗮ = ⊥ :=
-  compact.compact_ambient.orthogonalComplement_iSup_eigenspaces_eq_bot
+  ContinuousLinearMap.orthogonalComplement_iSup_eigenspaces_eq_bot
+    compact.compact_ambient
     (compact.ambient_isSymmetric
       data hClosable traceBound a b spectralParameter)
 
@@ -216,8 +217,11 @@ theorem canonicalScalarClosedResolvent_eigenvector_transfer
       canonicalScalarClosedSeparatedShiftedOperator
           data hClosable traceBound a b spectralParameter field =
         eigenvalue⁻¹ • vector := by
-    dsimp [field]
-    rw [map_smul, bounded.left_inverse]
+    change canonicalScalarClosedSeparatedShiftedOperator
+        data hClosable traceBound a b spectralParameter
+          (eigenvalue⁻¹ • bounded.resolvent vector) = _
+    rw [map_smul]
+    rw [bounded.left_inverse]
   refine ⟨hInclusion, ?_⟩
   have hExpanded := canonicalScalarClosedSeparatedShiftedOperator_apply
     data hClosable traceBound a b spectralParameter field
@@ -226,7 +230,9 @@ theorem canonicalScalarClosedResolvent_eigenvector_transfer
       canonicalScalarClosedSeparatedDomainOperator
           data hClosable traceBound a b field -
         spectralParameter • vector at hExpanded
-  module at hExpanded ⊢
+  have hAdded := congrArg (fun value => value + spectralParameter • vector) hExpanded
+  simpa [field, map_smul, add_smul, add_assoc, add_comm, add_left_comm,
+    hInclusion] using hAdded.symm
 
 /-- Spectral closure certificate collecting symmetry, compactness, finite
 multiplicity and completeness. -/
@@ -246,12 +252,12 @@ theorem canonicalScalarClosedCompactResolventSpectrum_certificate
           data hClosable traceBound a b spectralParameter compact.bounded) ∧
       (∀ eigenvalue : Real, eigenvalue ≠ 0 →
         FiniteDimensional Real
-          (LinearMap.eigenspace
+          (Module.End.eigenspace
             (CanonicalScalarClosedBoundedResolventAt.ambientResolvent
               data hClosable traceBound a b spectralParameter
                 compact.bounded).toLinearMap eigenvalue)) ∧
       (⨆ eigenvalue : Real,
-        LinearMap.eigenspace
+        Module.End.eigenspace
           (CanonicalScalarClosedBoundedResolventAt.ambientResolvent
             data hClosable traceBound a b spectralParameter
               compact.bounded).toLinearMap eigenvalue)ᗮ = ⊥ := by

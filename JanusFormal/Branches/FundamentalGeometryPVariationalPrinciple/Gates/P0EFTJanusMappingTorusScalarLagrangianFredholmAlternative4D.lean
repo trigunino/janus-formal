@@ -118,7 +118,7 @@ theorem continuousLinearMap_smul_bijective
   constructor
   · intro first second hEqual
     have hOperatorEqual : operator first = operator second := by
-      exact (smul_left_cancel₀ Ambient hScalar).mp hEqual
+      exact (smul_right_injective Ambient hScalar) hEqual
     exact hOperator.1 hOperatorEqual
   · intro target
     obtain ⟨source, hSource⟩ := hOperator.2 (scalar⁻¹ • target)
@@ -152,16 +152,16 @@ theorem canonicalScalarClosedLagrangianFredholmFactor_bijective_of_mem_resolvent
   let ambientResolvent := referenceResolvent.ambientResolvent
     data hClosable traceBound condition referenceParameter
   have hCoreUnit : IsUnit
-      (inverseDifference • ContinuousLinearMap.id Real Ambient - ambientResolvent) := by
+      (inverseDifference • (1 : Ambient →L[Real] Ambient) - ambientResolvent) := by
     simpa [inverseDifference, ambientResolvent, resolventSet,
       Algebra.algebraMap_eq_smul_one] using hAmbientResolvent
   have hCoreBijective : Function.Bijective
-      (inverseDifference • ContinuousLinearMap.id Real Ambient - ambientResolvent) := by
+      (inverseDifference • (1 : Ambient →L[Real] Ambient) - ambientResolvent) := by
     rw [← ContinuousLinearMap.isUnit_iff_bijective]
     exact hCoreUnit
   have hScaledBijective : Function.Bijective
       (difference •
-        (inverseDifference • ContinuousLinearMap.id Real Ambient -
+        (inverseDifference • (1 : Ambient →L[Real] Ambient) -
           ambientResolvent)) :=
     continuousLinearMap_smul_bijective difference hDifference _ hCoreBijective
   have hFactorEquality :
@@ -169,13 +169,14 @@ theorem canonicalScalarClosedLagrangianFredholmFactor_bijective_of_mem_resolvent
           data hClosable traceBound condition referenceParameter targetParameter
             referenceResolvent =
         difference •
-          (inverseDifference • ContinuousLinearMap.id Real Ambient -
+          (inverseDifference • (1 : Ambient →L[Real] Ambient) -
             ambientResolvent) := by
     ext source
     dsimp [canonicalScalarClosedLagrangianFredholmFactor,
       difference, inverseDifference, ambientResolvent]
-    simp [hDifference]
-    module
+    rw [smul_sub, smul_smul]
+    rw [mul_inv_cancel₀ hDifference, one_smul]
+    rfl
   rw [hFactorEquality]
   exact hScaledBijective
 
@@ -208,8 +209,16 @@ theorem canonicalScalarClosedLagrangianResolventPoint_of_factor_bijective
   constructor
   · intro first second hEqual
     have hFactorEqual : factor (referenceShift first) = factor (referenceShift second) := by
-      simpa [factor, referenceShift, targetShift,
-        canonicalScalarClosedLagrangianShiftedOperator_factorization] using hEqual
+      calc
+        factor (referenceShift first) = targetShift first :=
+          canonicalScalarClosedLagrangianShiftedOperator_factorization
+            data hClosable traceBound condition referenceParameter targetParameter
+              referenceResolvent first
+        _ = targetShift second := hEqual
+        _ = factor (referenceShift second) :=
+          (canonicalScalarClosedLagrangianShiftedOperator_factorization
+            data hClosable traceBound condition referenceParameter targetParameter
+              referenceResolvent second).symm
     exact hReference.1 (hFactor.1 hFactorEqual)
   · intro target
     obtain ⟨middle, hMiddle⟩ := hFactor.2 target
@@ -280,14 +289,19 @@ theorem canonicalScalarClosedLagrangian_fredholmAlternative
     refine ⟨field, ?_, ?_⟩
     · intro hField
       apply hVector.2
-      rw [← hTransfer.1, hField]
-      simp
+      dsimp [field] at hField
+      have hResolventZero : compact.bounded.resolvent vector = 0 := by
+        apply (smul_right_injective _ (inv_ne_zero hResolventEigenvalue))
+        simpa using hField
+      rw [← compact.bounded.left_inverse vector, hResolventZero, map_zero]
     · have hCoefficient :
           referenceParameter + resolventEigenvalue⁻¹ = targetParameter := by
         dsimp [resolventEigenvalue]
         rw [inv_inv]
         ring
-      simpa [field, hCoefficient] using hTransfer.2
+      dsimp [field] at hTransfer ⊢
+      rw [hTransfer.1]
+      simpa [field, map_smul, hCoefficient] using hTransfer.2
   · right
     apply canonicalScalarClosedLagrangianResolventPoint_of_factor_bijective
       data hClosable traceBound condition referenceParameter targetParameter
@@ -323,7 +337,9 @@ theorem canonicalScalarClosedLagrangian_not_resolvent_iff_hasEigenvalue
     apply hFieldNonzero
     exact hResolvent.1 (by
       rw [canonicalScalarClosedLagrangianShiftedOperator_apply, hField]
-      module)
+      simpa using sub_self (targetParameter •
+        canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition field))
 
 /-- Discrete-spectrum certificate for an arbitrary compact-resolvent Lagrangian
 boundary realization. -/

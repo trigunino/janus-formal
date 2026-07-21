@@ -88,8 +88,12 @@ def smoothToCanonicalPhysicalBulkL2 :
         (smoothFieldToL2 period hPeriod Real
           (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) second)]
       with point hSum hFirst hSecond hAdd
-    rw [hSum, hAdd, hFirst, hSecond]
-    rfl
+    calc
+      _ = (first + second).toFun point := hSum
+      _ =
+          first.toFun point + second.toFun point := rfl
+      _ = _ := by
+        simpa only [Pi.add_apply, hFirst, hSecond] using hAdd.symm
   map_smul' scalar field := by
     apply Lp.ext
     filter_upwards
@@ -101,8 +105,11 @@ def smoothToCanonicalPhysicalBulkL2 :
         (smoothFieldToL2 period hPeriod Real
           (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field)]
       with point hScaled hField hSmul
-    rw [hScaled, hSmul, hField]
-    rfl
+    calc
+      _ = (scalar • field).toFun point := hScaled
+      _ = scalar • field.toFun point := rfl
+      _ = _ := by
+        simpa only [Pi.smul_apply, hField, RingHom.id_apply] using hSmul.symm
 
 /-- Forgetting the derivative part of the physical graph H1 completion. -/
 def canonicalPhysicalScalarH1ToBulkL2 :
