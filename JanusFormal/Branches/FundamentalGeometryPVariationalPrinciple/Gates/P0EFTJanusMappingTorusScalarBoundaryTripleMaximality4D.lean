@@ -33,6 +33,7 @@ open P0EFTJanusMappingTorusScalarBoundarySymplecticPlane4D
 open P0EFTJanusMappingTorusScalarSeparatedBoundaryLagrangian4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+include hPeriod
 
 universe u v
 
@@ -118,12 +119,23 @@ theorem canonicalScalarSeparatedGreenDomainOperator_symmetric
           system valueCoefficient normalCoefficient first)
         (canonicalScalarSeparatedGreenDomainOperator
           system valueCoefficient normalCoefficient second) := by
+  have hFirstBoundary :
+      system.boundary first.1 ∈
+        canonicalScalarSeparatedBoundarySectionSubmodule
+          valueCoefficient normalCoefficient := by
+    exact first.2
+  have hSecondBoundary :
+      system.boundary second.1 ∈
+        canonicalScalarSeparatedBoundarySectionSubmodule
+          valueCoefficient normalCoefficient := by
+    exact second.2
   have hBoundary :
       canonicalScalarGlobalBoundarySectionGreenPairing period
           (system.boundary first.1) (system.boundary second.1) = 0 :=
     canonicalScalarGlobalBoundarySectionGreenPairing_eq_zero_of_mem_separated
       period valueCoefficient normalCoefficient hNondegenerate
-        (system.boundary first.1) (system.boundary second.1) first.2 second.2
+        (system.boundary first.1) (system.boundary second.1)
+          hFirstBoundary hSecondBoundary
   have hGreen := system.green_identity first.1 second.1
   rw [hBoundary] at hGreen
   change inner Real (system.operator first.1) (system.inclusion second.1) =
@@ -171,6 +183,12 @@ theorem canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
         system valueCoefficient normalCoefficient := by
   constructor
   · intro hCandidate
+    change (∀ test : canonicalScalarSeparatedGreenDomainSubmodule
+        system valueCoefficient normalCoefficient,
+      ∀ base : CanonicalLatitudeBase,
+        canonicalScalarBoundarySymplecticForm
+          (system.boundary candidate base)
+          (system.boundary test.1 base) = 0) at hCandidate
     change system.boundary candidate ∈
       canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient
@@ -188,14 +206,39 @@ theorem canonicalScalarSeparatedBoundaryAdjointAdmissible_iff_mem
     have hApplied := hCandidate ⟨test, hTestDomain⟩ base
     rw [hTrace] at hApplied
     exact hApplied
-  · intro hCandidate test base
+  · intro hCandidate
     change system.boundary candidate ∈
       canonicalScalarSeparatedBoundarySectionSubmodule
         valueCoefficient normalCoefficient at hCandidate
+    change ∀ test : canonicalScalarSeparatedGreenDomainSubmodule
+        system valueCoefficient normalCoefficient,
+      ∀ base : CanonicalLatitudeBase,
+        canonicalScalarBoundarySymplecticForm
+          (system.boundary candidate base)
+          (system.boundary test.1 base) = 0
+    intro test base
+    have hTestBoundary :
+        system.boundary test.1 ∈
+          canonicalScalarSeparatedBoundarySectionSubmodule
+            valueCoefficient normalCoefficient := by
+      exact test.2
+    have hCandidateBase :=
+      (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+        valueCoefficient normalCoefficient (system.boundary candidate)).1
+          hCandidate base
+    have hTestBase :=
+      (mem_canonicalScalarSeparatedBoundarySectionSubmodule
+        valueCoefficient normalCoefficient (system.boundary test.1)).1
+          hTestBoundary base
     exact canonicalScalarBoundarySymplecticForm_eq_zero_of_mem_separated
       (valueCoefficient base) (normalCoefficient base) (hNondegenerate base)
         (system.boundary candidate base) (system.boundary test.1 base)
-        (hCandidate base) (test.2 base)
+        ((mem_canonicalScalarSeparatedBoundaryLine
+          (valueCoefficient base) (normalCoefficient base)
+            (system.boundary candidate base)).2 hCandidateBase)
+        ((mem_canonicalScalarSeparatedBoundaryLine
+          (valueCoefficient base) (normalCoefficient base)
+            (system.boundary test.1 base)).2 hTestBase)
 
 /-- The separated domain equals its boundary-adjoint domain.  This is the exact
 maximal formal-symmetry statement supplied by the boundary triple. -/
