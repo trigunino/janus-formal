@@ -67,14 +67,22 @@ def d9PacketSumHexagonLeftShortEquiv (ι κ μ : Type*) :
   (d9PacketSumSwapEquiv ι (Sum κ μ)).trans
     (d9PacketSumAssocEquiv κ μ ι)
 
+private def d9PacketSumHexagonLeftFirstEquiv (ι κ μ : Type*) :
+    Sum ι (Sum κ μ) ≃ Sum (Sum κ ι) μ :=
+  ((d9PacketSumAssocEquiv ι κ μ).symm).trans
+    (d9PacketSumSwapLeftEquiv ι κ μ)
+
+private def d9PacketSumHexagonLeftSecondEquiv (ι κ μ : Type*) :
+    Sum (Sum κ ι) μ ≃ Sum κ (Sum μ ι) :=
+  (d9PacketSumAssocEquiv κ ι μ).trans
+    (d9PacketSumSwapRightEquiv κ ι μ)
+
 /-- Expanded route for moving the first label across the two members of the
 right-associated pair one at a time. -/
 def d9PacketSumHexagonLeftLongEquiv (ι κ μ : Type*) :
     Sum ι (Sum κ μ) ≃ Sum κ (Sum μ ι) :=
-  ((((d9PacketSumAssocEquiv ι κ μ).symm).trans
-      (d9PacketSumSwapLeftEquiv ι κ μ)).trans
-    (d9PacketSumAssocEquiv κ ι μ)).trans
-      (d9PacketSumSwapRightEquiv κ ι μ)
+  (d9PacketSumHexagonLeftFirstEquiv ι κ μ).trans
+    (d9PacketSumHexagonLeftSecondEquiv ι κ μ)
 
 /-- The first braiding hexagon commutes on three disjoint labels. -/
 theorem d9PacketSumHexagonLeft_coherence (ι κ μ : Type*) :
@@ -92,15 +100,23 @@ def d9PacketSumHexagonRightShortEquiv (ι κ μ : Type*) :
     Sum (Sum ι κ) μ ≃ Sum μ (Sum ι κ) :=
   d9PacketSumSwapEquiv (Sum ι κ) μ
 
+private def d9PacketSumHexagonRightFirstEquiv (ι κ μ : Type*) :
+    Sum (Sum ι κ) μ ≃ Sum ι (Sum μ κ) :=
+  (d9PacketSumAssocEquiv ι κ μ).trans
+    (d9PacketSumSwapRightEquiv ι κ μ)
+
+private def d9PacketSumHexagonRightSecondEquiv (ι κ μ : Type*) :
+    Sum ι (Sum μ κ) ≃ Sum (Sum μ ι) κ :=
+  ((d9PacketSumAssocEquiv ι μ κ).symm).trans
+    (d9PacketSumSwapLeftEquiv ι μ κ)
+
 /-- Expanded route for moving the right label across the two members of the
 left-associated pair one at a time. -/
 def d9PacketSumHexagonRightLongEquiv (ι κ μ : Type*) :
     Sum (Sum ι κ) μ ≃ Sum μ (Sum ι κ) :=
-  (((((d9PacketSumAssocEquiv ι κ μ).trans
-      (d9PacketSumSwapRightEquiv ι κ μ)).trans
-    ((d9PacketSumAssocEquiv ι μ κ).symm)).trans
-      (d9PacketSumSwapLeftEquiv ι μ κ)).trans
-        (d9PacketSumAssocEquiv μ ι κ)
+  ((d9PacketSumHexagonRightFirstEquiv ι κ μ).trans
+    (d9PacketSumHexagonRightSecondEquiv ι κ μ)).trans
+      (d9PacketSumAssocEquiv μ ι κ)
 
 /-- The second braiding hexagon commutes on three disjoint labels. -/
 theorem d9PacketSumHexagonRight_coherence (ι κ μ : Type*) :
