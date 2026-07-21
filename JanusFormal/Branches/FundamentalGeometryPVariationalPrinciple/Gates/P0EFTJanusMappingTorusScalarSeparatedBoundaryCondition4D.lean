@@ -198,14 +198,15 @@ theorem canonicalLatitudeScalarRobinBoundaryCondition_iff
   constructor
   · intro hBoundary base
     have hEquation := hBoundary base
-    unfold CanonicalLatitudeScalarRobinBoundaryCondition
-      CanonicalLatitudeScalarSeparatedBoundaryCondition at hEquation
-    dsimp at hEquation
+    change -coefficient base *
+        canonicalLatitudeScalarBoundaryValue period hPeriod field base +
+      1 * canonicalLatitudeScalarBoundaryNormalDerivative period hPeriod field base = 0
+      at hEquation
     linarith
   · intro hBoundary base
-    unfold CanonicalLatitudeScalarRobinBoundaryCondition
-      CanonicalLatitudeScalarSeparatedBoundaryCondition
-    dsimp
+    change -coefficient base *
+        canonicalLatitudeScalarBoundaryValue period hPeriod field base +
+      1 * canonicalLatitudeScalarBoundaryNormalDerivative period hPeriod field base = 0
     rw [hBoundary base]
     ring
 
