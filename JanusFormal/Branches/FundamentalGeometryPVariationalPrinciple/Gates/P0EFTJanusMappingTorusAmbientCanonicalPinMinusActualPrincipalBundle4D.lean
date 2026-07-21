@@ -34,9 +34,15 @@ open P0EFTJanusMappingTorusAmbientPinMinusPrincipalBundle4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-private abbrev AmbientData := reflectedSphereData period hPeriod
-private abbrev AmbientCover := MappingTorusCover (AmbientData period hPeriod)
-private abbrev AmbientBase := MappingTorus (AmbientData period hPeriod)
+abbrev AmbientData :=
+  P0EFTJanusMappingTorusAmbientTangentOrientationCocycle.AmbientData
+    period hPeriod
+abbrev AmbientCover :=
+  P0EFTJanusMappingTorusAmbientTangentOrientationCocycle.AmbientCover
+    period hPeriod
+abbrev AmbientBase :=
+  P0EFTJanusMappingTorusAmbientTangentOrientationCocycle.AmbientBase
+    period hPeriod
 private abbrev ThroatData := fixedEquatorData period hPeriod
 private abbrev ThroatCover := MappingTorusCover (ThroatData period hPeriod)
 private abbrev ThroatBase := MappingTorus (ThroatData period hPeriod)
@@ -82,7 +88,7 @@ def canonicalAmbientPinMinusPrincipalCoordChange
   canonicalAmbientReferencePinMinusTransitionLift period hPeriod first second
       (ambientQuotientLocalChart period hPeriod first base) * pin
 
-private theorem canonicalAmbientPinMinusPrincipalCoordChange_continuousOn
+theorem canonicalAmbientPinMinusPrincipalCoordChange_continuousOn
     [TopologicalSpace AmbientCoordinatePinMinusGroup]
     [IsTopologicalGroup AmbientCoordinatePinMinusGroup]
     (first second : AmbientCover period hPeriod) :
@@ -101,6 +107,39 @@ private theorem canonicalAmbientPinMinusPrincipalCoordChange_continuousOn
     exact chartCoordinate_mem_transition_source period hPeriod first second
       point.1 ⟨hPoint.1.1, hPoint.1.2⟩
   · exact continuousOn_snd
+
+/-- The canonical left transition multiplier is continuous on each overlap. -/
+theorem canonicalAmbientPinMinusPrincipalTransition_continuousOn
+    [TopologicalSpace AmbientCoordinatePinMinusGroup]
+    [IsTopologicalGroup AmbientCoordinatePinMinusGroup]
+    (first second : AmbientCover period hPeriod) :
+    ContinuousOn
+      (fun base : AmbientBase period hPeriod =>
+        canonicalAmbientPinMinusPrincipalCoordChange period hPeriod
+          first second base 1)
+      (ambientPinMinusBundleBaseSet period hPeriod first ∩
+        ambientPinMinusBundleBaseSet period hPeriod second) := by
+  have hTransition :=
+    (canonicalAmbientReferencePinMinusTransitionLift_continuousOn
+      period hPeriod first second).comp
+      ((ambientQuotientLocalChart period hPeriod first).continuousOn.mono
+        (show
+          ambientPinMinusBundleBaseSet period hPeriod first ∩
+              ambientPinMinusBundleBaseSet period hPeriod second ⊆
+            (ambientQuotientLocalChart period hPeriod first).source by
+          intro base hBase
+          exact hBase.1)) (by
+        intro base hBase
+        exact chartCoordinate_mem_transition_source period hPeriod first second
+          base hBase)
+  simp only [canonicalAmbientPinMinusPrincipalCoordChange, mul_one]
+  change ContinuousOn
+    (canonicalAmbientReferencePinMinusTransitionLift period hPeriod first second ∘
+      (ambientQuotientLocalChart period hPeriod first :
+        AmbientBase period hPeriod → CoverModel))
+    (ambientPinMinusBundleBaseSet period hPeriod first ∩
+      ambientPinMinusBundleBaseSet period hPeriod second)
+  exact hTransition
 
 /-- Genuine canonical principal-bundle core over the ambient quotient. -/
 def canonicalAmbientPinMinusPrincipalBundleCore
