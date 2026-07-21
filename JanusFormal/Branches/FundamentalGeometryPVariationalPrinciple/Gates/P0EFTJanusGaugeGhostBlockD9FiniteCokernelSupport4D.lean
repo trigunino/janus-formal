@@ -52,39 +52,39 @@ theorem d9GaugeGhostFiniteCokernelFinrank_additive {ι : Type*}
   exact combinedCokernel_finrank_additive (covector mode)
 
 private theorem d9ZeroCovectorModes_insert_of_zero
-    {ι : Type*} (mode : ι) (modes : Finset ι)
+    {ι : Type*} [DecidableEq ι] (mode : ι) (modes : Finset ι)
     (covector : ι → TangentVector3)
     (hZero : covector mode = zeroTangent) :
     d9ZeroCovectorModes (insert mode modes) covector =
       insert mode (d9ZeroCovectorModes modes covector) := by
-  classical
+  ext x
   simp [d9ZeroCovectorModes, hZero]
 
 private theorem d9ZeroCovectorModes_insert_of_nonzero
-    {ι : Type*} (mode : ι) (modes : Finset ι)
+    {ι : Type*} [DecidableEq ι] (mode : ι) (modes : Finset ι)
     (covector : ι → TangentVector3)
     (hZero : covector mode ≠ zeroTangent) :
     d9ZeroCovectorModes (insert mode modes) covector =
       d9ZeroCovectorModes modes covector := by
-  classical
+  ext x
   simp [d9ZeroCovectorModes, hZero]
 
 private theorem d9ZeroCovectorMultiplicity_insert_of_zero
-    {ι : Type*} (mode : ι) (modes : Finset ι)
+    {ι : Type*} [DecidableEq ι] (mode : ι) (modes : Finset ι)
     (covector : ι → TangentVector3)
     (hMode : mode ∉ modes)
     (hZero : covector mode = zeroTangent) :
     d9ZeroCovectorMultiplicity (insert mode modes) covector =
       d9ZeroCovectorMultiplicity modes covector + 1 := by
-  classical
   rw [d9ZeroCovectorMultiplicity, d9ZeroCovectorMultiplicity,
     d9ZeroCovectorModes_insert_of_zero mode modes covector hZero]
-  rw [Finset.card_insert_of_not_mem]
-  intro hMembership
-  exact hMode (Finset.mem_of_mem_filter hMembership)
+  have hNotMem : mode ∉ d9ZeroCovectorModes modes covector := by
+    intro hMembership
+    exact hMode (Finset.mem_of_mem_filter hMembership)
+  simp [hNotMem, Nat.add_comm]
 
 private theorem d9ZeroCovectorMultiplicity_insert_of_nonzero
-    {ι : Type*} (mode : ι) (modes : Finset ι)
+    {ι : Type*} [DecidableEq ι] (mode : ι) (modes : Finset ι)
     (covector : ι → TangentVector3)
     (hZero : covector mode ≠ zeroTangent) :
     d9ZeroCovectorMultiplicity (insert mode modes) covector =
