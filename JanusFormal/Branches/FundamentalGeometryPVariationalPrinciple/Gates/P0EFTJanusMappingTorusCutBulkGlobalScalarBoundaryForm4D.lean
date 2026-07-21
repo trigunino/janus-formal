@@ -154,15 +154,14 @@ theorem cutBulkGlobalScalarBoundaryGreenForm_antisymm
 manifold-boundary versions of the same antisymmetric form. -/
 theorem cutBulkGlobalScalarBoundaryGreenForm_certificate
     (field test : SmoothQuotientField period hPeriod Real) :
-    canonicalLatitudeScalarBoundaryGreenForm period hPeriod field test =
-        fun base => canonicalLatitudeScalarGreenCurrent period hPeriod field test base 0 ∧
+    (∀ base, canonicalLatitudeScalarBoundaryGreenForm period hPeriod field test base =
+        canonicalLatitudeScalarGreenCurrent period hPeriod field test base 0) ∧
       cutBulkGlobalScalarBoundaryGreenForm period hPeriod field test =
         2 * canonicalLatitudeMeasuredScalarBoundaryGreenForm period hPeriod field test ∧
       cutBulkGlobalScalarBoundaryGreenForm period hPeriod field test =
         -cutBulkGlobalScalarBoundaryGreenForm period hPeriod test field := by
-  exact ⟨funext fun base =>
-      canonicalLatitudeScalarBoundaryGreenForm_eq_greenCurrent
-        period hPeriod field test base,
+  exact ⟨canonicalLatitudeScalarBoundaryGreenForm_eq_greenCurrent
+      period hPeriod field test,
     cutBulkGlobalScalarBoundaryGreenForm_eq_two_mul_measured
       period hPeriod field test,
     cutBulkGlobalScalarBoundaryGreenForm_antisymm
