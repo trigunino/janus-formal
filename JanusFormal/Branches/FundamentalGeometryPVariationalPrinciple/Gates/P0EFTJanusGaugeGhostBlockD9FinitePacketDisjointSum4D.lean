@@ -121,9 +121,9 @@ theorem d9GaugeGhostZeroCokernelPacketDisjointSum_right_naturality
   · funext mode
     rfl
 
-/-- Combined zero-mode packet dimensions add across disjoint mode families. -/
+/-- Combined zero-mode packet dimensions add across disjoint finite mode families. -/
 theorem d9GaugeGhostZeroCokernelPacket_finrank_disjointSum
-    (ι κ : Type*) :
+    (ι κ : Type*) [Fintype ι] [Fintype κ] :
     Module.finrank Real (D9GaugeGhostZeroCokernelPacket (Sum ι κ)) =
       Module.finrank Real (D9GaugeGhostZeroCokernelPacket ι) +
         Module.finrank Real (D9GaugeGhostZeroCokernelPacket κ) := by
@@ -138,9 +138,9 @@ theorem d9GaugeGhostZeroCokernelPacket_finrank_disjointSum
         Module.finrank Real (D9GaugeGhostZeroCokernelPacket κ) :=
       Module.finrank_prod
 
-/-- Gauge-coordinate packet dimensions add across disjoint mode families. -/
+/-- Gauge-coordinate packet dimensions add across disjoint finite mode families. -/
 theorem d9GaugeZeroCoordinatePacket_finrank_disjointSum
-    (ι κ : Type*) :
+    (ι κ : Type*) [Fintype ι] [Fintype κ] :
     Module.finrank Real (D9GaugeZeroCoordinatePacket (Sum ι κ)) =
       Module.finrank Real (D9GaugeZeroCoordinatePacket ι) +
         Module.finrank Real (D9GaugeZeroCoordinatePacket κ) := by
@@ -154,9 +154,9 @@ theorem d9GaugeZeroCoordinatePacket_finrank_disjointSum
         Module.finrank Real (D9GaugeZeroCoordinatePacket κ) :=
       Module.finrank_prod
 
-/-- Ghost-coordinate packet dimensions add across disjoint mode families. -/
+/-- Ghost-coordinate packet dimensions add across disjoint finite mode families. -/
 theorem d9GhostZeroCoordinatePacket_finrank_disjointSum
-    (ι κ : Type*) :
+    (ι κ : Type*) [Fintype ι] [Fintype κ] :
     Module.finrank Real (D9GhostZeroCoordinatePacket (Sum ι κ)) =
       Module.finrank Real (D9GhostZeroCoordinatePacket ι) +
         Module.finrank Real (D9GhostZeroCoordinatePacket κ) := by
