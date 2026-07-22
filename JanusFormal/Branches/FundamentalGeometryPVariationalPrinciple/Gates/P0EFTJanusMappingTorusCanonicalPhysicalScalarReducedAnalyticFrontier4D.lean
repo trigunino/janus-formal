@@ -1,30 +1,39 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosed4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongAnalyticClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 
 /-!
 # Reduced analytic frontier after closing spherical coarea
 
-The spherical coarea theorem and the physical value trace are no longer
-hypotheses.  This file records the remaining dependency graph in the corrected
-first-sheet construction.
+The spherical coarea theorem and the physical value trace are theorems.  The
+corrected completed-boundary architecture also derives closability, density of
+all Lagrangian domains, completed trace surjectivity, shifted-operator
+surjectivity, semiboundedness and compact resolvent from more concrete inputs.
 
-For a concrete smooth Green core, completion of the paired Cauchy trace now
-requires exactly four PDE/completion inputs:
+The historical coarse interface below remains for compatibility.  It asks for a
+graph-elliptic estimate, normal graph estimate, minimal-core density, completed
+trace surjectivity and a strong analytic closure package.
 
-1. a graph-elliptic estimate controlling the physical `H¹` norm;
-2. a graph estimate for the normal trace;
-3. density of the smooth zero-Cauchy minimal core;
-4. surjectivity of the completed Cauchy trace.
+The preferred fully reduced interface is
+`FullyReducedAnalyticFrontier`.  Its actual mathematical fields are:
 
-The first two produce the graph-boundary estimate.  The latter two make the
-completed boundary triple genuine.  Closability of the resulting strong system
-is then derived, not assumed.
+* covariant wave naturality across the total atlas;
+* continuity of the global Euler residual;
+* the global Euler-skew/divergence integral identity;
+* dense smooth value and normal boundary cores;
+* a smooth Cauchy jet extension and its graph estimate;
+* continuous-to-smooth approximation in physical bulk `L²`;
+* shrinking zero-Cauchy collar cutoffs;
+* a squared Gårding estimate;
+* higher regularity with a bounded normal trace;
+* smooth graph approximation of Hilbert adjoint pairs;
+* coercivity of one canonical shifted form;
+* compact approximations converging to the physical `H¹ -> L²` inclusion.
 
-After this completion, the genuinely spectral inputs are exactly those already
-isolated by `CanonicalPhysicalScalarFirstSheetStrongAnalyticData`: density of
-the selected closed boundary domain, characterization of the true Hilbert
-adjoint, one compact resolvent point, and a lower quadratic-form bound.  The
-boundary condition and reference parameter are choices, not missing theorems.
+From these inputs the code constructs the dense physical Green core, the
+surjective completed boundary triple, actual Hilbert self-adjointness, a compact
+reference resolvent, the Fredholm alternative, spectral completeness and the
+lower spectral bound.
 -/
 
 namespace JanusFormal
@@ -38,6 +47,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosed4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongAnalyticClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 
@@ -50,8 +60,7 @@ theorem coarea_closed :
       period hPeriod :=
   canonicalPhysicalScalarLatitudeCoareaTheorem period hPeriod
 
-/-- Exact inputs still needed to pass from a concrete smooth Green core to a
-completed, surjective boundary triple. -/
+/-- Historical coarse inputs still accepted by the compatibility route. -/
 structure CoareaClosedCompletedBoundaryInputs
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared) where
@@ -65,8 +74,7 @@ structure CoareaClosedCompletedBoundaryInputs
 
 namespace CoareaClosedCompletedBoundaryInputs
 
-/-- The paired Cauchy trace graph bound obtained from the two remaining
-quantitative PDE estimates. -/
+/-- Paired Cauchy trace graph bound from the coarse estimates. -/
 def traceBound
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -76,8 +84,7 @@ def traceBound
   green.boundaryGraphBound period hPeriod
     (coarea_closed period hPeriod) inputs.elliptic inputs.normal
 
-/-- Conversion to the legacy completed-boundary input package.  The former
-coarea field is filled by the theorem proved in the preceding gates. -/
+/-- Conversion to the completed-boundary input package. -/
 def toCompletedBoundaryTripleInputs
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -90,7 +97,7 @@ def toCompletedBoundaryTripleInputs
   minimalDense := inputs.minimalDense
   completedTraceSurjective := inputs.completedTraceSurjective
 
-/-- The corrected completed boundary triple. -/
+/-- Corrected completed boundary triple. -/
 def triple
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -98,7 +105,7 @@ def triple
       period hPeriod green) :=
   (inputs.toCompletedBoundaryTripleInputs green).triple green
 
-/-- The corresponding strong physical Green system. -/
+/-- Corresponding strong compatibility presentation. -/
 def strongSystem
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -106,8 +113,7 @@ def strongSystem
       period hPeriod green) :=
   (inputs.toCompletedBoundaryTripleInputs green).strongSystem green
 
-/-- Closability follows from minimal-core density after completion; it is not an
-additional analytic input. -/
+/-- Closability is derived from minimal-core density after completion. -/
 theorem strongSystem_closable
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -119,9 +125,7 @@ theorem strongSystem_closable
 
 end CoareaClosedCompletedBoundaryInputs
 
-/-- The spectral/adjoint data that remain after the boundary triple has been
-completed.  Its theorem fields are density of the selected domain, the actual
-Hilbert-adjoint characterization, compact resolvent, and semiboundedness. -/
+/-- Historical strong analytic package. -/
 abbrev RemainingStrongAnalyticData
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
@@ -130,12 +134,7 @@ abbrev RemainingStrongAnalyticData
   CanonicalPhysicalScalarFirstSheetStrongAnalyticData
     period hPeriod green (inputs.toCompletedBoundaryTripleInputs green)
 
-/-- Complete reduced frontier after spherical coarea.
-
-The `green` field contains the concrete operator atlas, dense smooth boundary
-range, and the bulk Green--Stokes identity.  `boundary` contains the four
-completion inputs displayed above.  `spectral` contains the four final
-closed-operator/spectral theorems. -/
+/-- Historical coarse frontier retained for downstream compatibility. -/
 structure ReducedAnalyticFrontier (massSquared : Real) where
   green : CanonicalPhysicalScalarFirstSheetGreenCoreData
     period hPeriod massSquared
@@ -144,6 +143,70 @@ structure ReducedAnalyticFrontier (massSquared : Real) where
   spectral : RemainingStrongAnalyticData
     period hPeriod green boundary
 
+/-- Preferred current frontier.  It contains only concrete geometric,
+approximation, elliptic, adjoint, coercivity and compactness data. -/
+abbrev FullyReducedAnalyticFrontier
+    (massSquared : Real)
+    (ValueCore : Type*) (NormalCore : Type*)
+    [AddCommGroup ValueCore] [Module Real ValueCore]
+    [AddCommGroup NormalCore] [Module Real NormalCore]
+    (Regularity : Type*)
+    [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
+    [CompleteSpace Regularity] :=
+  CanonicalPhysicalScalarFullyReducedAnalyticData
+    period hPeriod massSquared ValueCore NormalCore
+    (Regularity := Regularity)
+
+/-- Every fully reduced frontier produces actual Hilbert self-adjointness. -/
+theorem fullyReduced_actualAdjointDomain_eq
+    {ValueCore NormalCore Regularity : Type*}
+    [AddCommGroup ValueCore] [Module Real ValueCore]
+    [AddCommGroup NormalCore] [Module Real NormalCore]
+    [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
+    [CompleteSpace Regularity]
+    (frontier : FullyReducedAnalyticFrontier
+      period hPeriod massSquared ValueCore NormalCore Regularity) :
+    frontier.boundary.triple.actualAdjointDomain frontier.condition =
+      frontier.boundary.triple.realizationDomain frontier.condition :=
+  frontier.actualAdjointDomain_eq period hPeriod
+
+/-- Every fully reduced frontier produces the direct Fredholm alternative. -/
+theorem fullyReduced_fredholmAlternative
+    {ValueCore NormalCore Regularity : Type*}
+    [AddCommGroup ValueCore] [Module Real ValueCore]
+    [AddCommGroup NormalCore] [Module Real NormalCore]
+    [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
+    [CompleteSpace Regularity]
+    (frontier : FullyReducedAnalyticFrontier
+      period hPeriod massSquared ValueCore NormalCore Regularity)
+    (spectralParameter : Real)
+    (hParameter : spectralParameter ≠ frontier.referenceParameter) :
+    frontier.boundary.triple.LagrangianHasEigenvalue
+        frontier.condition spectralParameter ∨
+      frontier.boundary.triple.LagrangianResolventPoint
+        frontier.condition spectralParameter :=
+  frontier.fredholmAlternative period hPeriod spectralParameter hParameter
+
+/-- Frontier-reduction certificate. -/
+theorem fullyReduced_certificate
+    {ValueCore NormalCore Regularity : Type*}
+    [AddCommGroup ValueCore] [Module Real ValueCore]
+    [AddCommGroup NormalCore] [Module Real NormalCore]
+    [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
+    [CompleteSpace Regularity]
+    (frontier : FullyReducedAnalyticFrontier
+      period hPeriod massSquared ValueCore NormalCore Regularity) :
+    DenseRange
+        (P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D.smoothToCanonicalPhysicalBulkL2
+          period hPeriod) ∧
+      IsCompactOperator
+        (P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D.canonicalPhysicalScalarH1ToBulkL2
+          period hPeriod) ∧
+      frontier.boundary.triple.actualAdjointDomain frontier.condition =
+        frontier.boundary.triple.realizationDomain frontier.condition :=
+  ⟨frontier.boundary.smoothing.smoothToCanonicalPhysicalBulkL2_denseRange,
+    frontier.rellichApproximation.rellich,
+    frontier.actualAdjointDomain_eq period hPeriod⟩
 
 end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarReducedAnalyticFrontier4D
