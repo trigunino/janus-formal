@@ -80,33 +80,6 @@ theorem canonicalLatitudeCauchyNormalProfileSecondDeriv_contDiff :
     canonicalLatitudeCauchyNormalProfileDeriv 0 = 1 := by
   exact deriv_canonicalLatitudeCauchyNormalProfile_zero
 
-/-- The first value-profile derivative vanishes locally at the throat. -/
-theorem canonicalLatitudeCauchyValueProfileDeriv_eventuallyEq_zero :
-    canonicalLatitudeCauchyValueProfileDeriv =ᶠ[𝓝 0]
-      fun _ : Real => 0 := by
-  have hLocal := canonicalLatitudeCauchyValueProfile_eventuallyEq_one
-  filter_upwards [hLocal] with normal hNormal
-  unfold canonicalLatitudeCauchyValueProfileDeriv
-  have hNear : canonicalLatitudeCauchyValueProfile =ᶠ[𝓝 normal]
-      fun _ : Real => 1 := by
-    exact hLocal.filter_mono (nhds_le_iff_eventually.mp
-      (show 𝓝 normal ≤ 𝓝 0 from by simpa [hNormal]))
-  exact ((hasDerivAt_const (x := normal) (c := (1 : Real))).congr_of_eventuallyEq
-    hNear).deriv
-
-/-- The first normal-profile derivative is locally one at the throat. -/
-theorem canonicalLatitudeCauchyNormalProfileDeriv_eventuallyEq_one :
-    canonicalLatitudeCauchyNormalProfileDeriv =ᶠ[𝓝 0]
-      fun _ : Real => 1 := by
-  have hLocal := canonicalLatitudeCauchyNormalProfile_eventuallyEq_id
-  filter_upwards [hLocal] with normal hNormal
-  unfold canonicalLatitudeCauchyNormalProfileDeriv
-  have hNear : canonicalLatitudeCauchyNormalProfile =ᶠ[𝓝 normal]
-      fun value : Real => value := by
-    exact hLocal.filter_mono (nhds_le_iff_eventually.mp
-      (show 𝓝 normal ≤ 𝓝 0 from by simpa [hNormal]))
-  exact ((hasDerivAt_id normal).congr_of_eventuallyEq hNear).deriv
-
 /-- First normal derivative of one local Cauchy slice. -/
 def canonicalLatitudeLocalCauchyExtensionNormalDeriv
     (data : (CanonicalLatitudeBase → Real) ×
