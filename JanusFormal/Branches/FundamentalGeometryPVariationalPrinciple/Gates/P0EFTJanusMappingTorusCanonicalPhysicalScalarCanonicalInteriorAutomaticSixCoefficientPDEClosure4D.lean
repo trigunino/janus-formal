@@ -4,10 +4,17 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 /-!
 # Minimal canonical PDE closure over the open fundamental strip
 
-This is the concrete form of the dense-parametrized minimal boundary package.
-The source type, source measure, open positivity and measure preservation are all
-fixed by the open fundamental-strip construction.  The only remaining support
-input is density of that explicit physical map.
+The physical source, source measure, open positivity, measure preservation and
+density of the physical parametrization are all theorems of the open
+fundamental-strip construction.
+
+The remaining PDE inputs are therefore exactly:
+
+* Euler overlap compatibility, boundary-core density and the Green-divergence
+  identity;
+* one first-jet energy estimate;
+* one normal elliptic regularity estimate;
+* six tangential Euler coefficient estimates.
 -/
 
 namespace JanusFormal
@@ -18,6 +25,7 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
+open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalInteriorCauchyJetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
@@ -32,8 +40,7 @@ variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
 
-/-- Minimal completed-boundary data with the physical measure source fixed to the
-open fundamental strip. -/
+/-- Minimal completed-boundary data with physical full support discharged. -/
 structure CanonicalPhysicalScalarCanonicalInteriorAutomaticSixCoefficientPDEData
     (massSquared : Real) where
   geometric : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
@@ -106,7 +113,7 @@ theorem certificate
             data.geometric.greenCore.core
             (data.completedInputs.traceBound data.geometric.greenCore)
             (data.completedExtension boundary) = boundary) :=
-  ⟨data.geometric.interiorDenseRange.denseRange,
+  ⟨canonicalLorentzInteriorPhysicalMap_denseRange period hPeriod,
     data.toDenseParametrizedAutomaticSixCoefficientPDEData.certificate.1,
     data.toDenseParametrizedAutomaticSixCoefficientPDEData.certificate.2.2.1,
     data.toDenseParametrizedAutomaticSixCoefficientPDEData.certificate.2.2.2.1,
