@@ -1,15 +1,15 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalFullSupport4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalCauchyJetCompatibilityGreenCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 
 /-!
-# Canonical Cauchy-jet Green core from the open fundamental strip
+# Canonical Cauchy-jet Green core on the physical mapping torus
 
-The source of the physical parametrization is fixed to round `S³` times the
-interior of one fundamental time interval.  Its measure is explicit,
-open-positive and measure-preserving, and its physical image is now proved
-dense.  Thus physical full support and Euler `L²` faithfulness are theorems.
+Full support of the physical Lorentz volume is now a theorem.  Consequently the
+canonical Green-core interface has no parametrization field and no fieldwise
+almost-everywhere faithfulness field.
 
-The remaining Green-core inputs are only:
+Its remaining inputs are exactly:
 
 * overlap compatibility of the physical Euler residual;
 * density of the canonical smooth periodic and antiperiodic boundary cores;
@@ -27,9 +27,11 @@ open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerGreenL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalFullSupport4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalCauchyJetCompatibilityGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
@@ -41,7 +43,7 @@ private abbrev ValueCore :=
 private abbrev NormalCore :=
   CanonicalLatitudeSmoothAntiperiodicNormalCore period
 
-/-- Canonical Green-core data after closing physical full support. -/
+/-- Canonical physical Green-core data after closing measure full support. -/
 structure CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
     (massSquared : Real) where
   euler : CanonicalPhysicalScalarEulerCompatibilityOnlyData
@@ -59,7 +61,18 @@ structure CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
 
 namespace CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
 
-/-- Conversion to the generic dense-parametrized canonical Green-core package. -/
+/-- Direct conversion to the canonical compatibility-based Cauchy-jet package. -/
+def toCanonicalCauchyJetCompatibilityData
+    (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
+      period hPeriod massSquared) :
+    CanonicalPhysicalScalarCanonicalCauchyJetCompatibilityData
+      period hPeriod massSquared where
+  eulerCompatibility := data.euler.toCanonicalCompatibilityData period hPeriod
+  boundaryDensity := data.boundaryDensity
+  integral_eq_divergence := data.integral_eq_divergence
+
+/-- Compatibility conversion through the generic dense-parametrized layer.  This
+is retained for downstream packages that still consume that interface. -/
 def toDenseParametrizedCauchyJetData
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :
@@ -75,39 +88,33 @@ def toDenseParametrizedCauchyJetData
   boundaryDensity := data.boundaryDensity
   integral_eq_divergence := data.integral_eq_divergence
 
-/-- Conversion to the canonical compatibility-based Cauchy-jet package. -/
-def toCanonicalCauchyJetCompatibilityData
-    (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
-      period hPeriod massSquared) :=
-  data.toDenseParametrizedCauchyJetData.toCanonicalCauchyJetCompatibilityData
-
 /-- Full support of the physical Lorentz volume. -/
 def physicalMeasureOpenPositive
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :
     (P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D.intrinsicCanonicalLorentzVolumeMeasure
       period hPeriod).IsOpenPosMeasure :=
-  data.toDenseParametrizedCauchyJetData.physicalMeasureOpenPositive
+  intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure period hPeriod
 
 /-- Explicit global smooth Cauchy extension. -/
 def extension
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :=
-  data.toDenseParametrizedCauchyJetData.extension
+  data.toCanonicalCauchyJetCompatibilityData.extension
 
 /-- Genuine faithful physical Euler operator. -/
 def operatorData
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :=
-  data.toDenseParametrizedCauchyJetData.operatorData
+  data.toCanonicalCauchyJetCompatibilityData.operatorData
 
 /-- Correct dense physical scalar Green core. -/
 def greenCore
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :=
-  data.toDenseParametrizedCauchyJetData.greenCore
+  data.toCanonicalCauchyJetCompatibilityData.greenCore
 
-/-- Open-fundamental-strip Green-core certificate. -/
+/-- Canonical physical Green-core certificate. -/
 theorem certificate
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :
@@ -125,7 +132,7 @@ theorem certificate
             (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)
             boundary) :=
   ⟨canonicalLorentzInteriorPhysicalMap_denseRange period hPeriod,
-    data.physicalMeasureOpenPositive,
+    intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure period hPeriod,
     data.toCanonicalCauchyJetCompatibilityData.boundaryTrace_denseRange,
     data.toCanonicalCauchyJetCompatibilityData.cauchyTrace_extension⟩
 
