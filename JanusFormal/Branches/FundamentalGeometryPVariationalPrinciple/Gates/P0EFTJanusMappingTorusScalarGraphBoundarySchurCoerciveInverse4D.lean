@@ -37,6 +37,15 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {spectralParameter : Real}
+  {poissonData : CanonicalScalarGraphDirichletPoissonData
+    data traceBound spectralParameter}
+  {robin : Trace →L[Real] Trace}
+
 /-- Norm-coercive and surjective boundary Schur operator. -/
 structure CanonicalScalarGraphBoundarySchurCoerciveSurjectiveData
     (data : CanonicalScalarHilbertGreenSystem

@@ -30,6 +30,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusCanonicalLatitudeScalarCurrentJointSmooth4D
 open P0EFTJanusMappingTorusCutBoundaryScalarCauchyTrace4D
 open P0EFTJanusMappingTorusCutBulkGlobalScalarCauchyGreen4D
+open P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -61,8 +62,12 @@ theorem canonicalPhysicalScalarFirstSheetValue_continuous
   have hParameter : Continuous
       (fun base : CanonicalLatitudeBase => (base, (0 : Real))) :=
     continuous_id.prodMk continuous_const
-  exact (jointCanonicalLatitudeValue_contMDiff period hPeriod field).continuous.comp
-    hParameter
+  have hJoint : Continuous (jointCanonicalLatitudeValue period hPeriod field) :=
+    (jointCanonicalLatitudeValue_contMDiff period hPeriod field).continuous
+  have hComposed := hJoint.comp hParameter
+  apply hComposed.congr
+  intro base
+  exact jointCanonicalLatitudeValue_eq period hPeriod field (base, 0)
 
 /-- Joint smoothness gives continuity of the first-sheet normal derivative. -/
 theorem canonicalPhysicalScalarFirstSheetNormal_continuous
@@ -71,8 +76,13 @@ theorem canonicalPhysicalScalarFirstSheetNormal_continuous
   have hParameter : Continuous
       (fun base : CanonicalLatitudeBase => (base, (0 : Real))) :=
     continuous_id.prodMk continuous_const
-  exact (jointCanonicalLatitudeDerivative_contMDiff period hPeriod field).continuous.comp
-    hParameter
+  have hJoint : Continuous
+      (jointCanonicalLatitudeDerivative period hPeriod field) :=
+    (jointCanonicalLatitudeDerivative_contMDiff period hPeriod field).continuous
+  have hComposed := hJoint.comp hParameter
+  apply hComposed.congr
+  intro base
+  exact jointCanonicalLatitudeDerivative_eq period hPeriod field (base, 0)
 
 /-- First-sheet values are square-integrable. -/
 theorem canonicalPhysicalScalarFirstSheetValue_memLp
@@ -122,6 +132,7 @@ def smoothCanonicalPhysicalScalarFirstSheetValueL2 :
           period hPeriod second).toLp
             (canonicalPhysicalScalarFirstSheetValue period hPeriod second))]
       with base hSum hFirst hSecond hAdd
+    simp only [Pi.add_apply] at hAdd
     rw [hSum, hAdd, hFirst, hSecond]
     rfl
   map_smul' scalar field := by
@@ -136,6 +147,8 @@ def smoothCanonicalPhysicalScalarFirstSheetValueL2 :
           period hPeriod field).toLp
             (canonicalPhysicalScalarFirstSheetValue period hPeriod field))]
       with base hScaled hField hSmul
+    simp only [Pi.smul_apply, RingHom.id_apply] at hSmul
+    simp only [RingHom.id_apply]
     rw [hScaled, hSmul, hField]
     rfl
 
@@ -163,6 +176,7 @@ def smoothCanonicalPhysicalScalarFirstSheetNormalL2 :
           period hPeriod second).toLp
             (canonicalPhysicalScalarFirstSheetNormal period hPeriod second))]
       with base hSum hFirst hSecond hAdd
+    simp only [Pi.add_apply] at hAdd
     rw [hSum, hAdd, hFirst, hSecond]
     exact canonicalLatitudeDerivative_add
       period hPeriod first second base 0
@@ -178,6 +192,8 @@ def smoothCanonicalPhysicalScalarFirstSheetNormalL2 :
           period hPeriod field).toLp
             (canonicalPhysicalScalarFirstSheetNormal period hPeriod field))]
       with base hScaled hField hSmul
+    simp only [Pi.smul_apply, RingHom.id_apply] at hSmul
+    simp only [RingHom.id_apply]
     rw [hScaled, hSmul, hField]
     exact canonicalLatitudeDerivative_smul
       period hPeriod scalar field base 0
@@ -228,8 +244,8 @@ theorem inner_firstSheetValue_normal
       period hPeriod test]
     with base hValue hNormal
   rw [hValue, hNormal]
-  simp [canonicalPhysicalScalarFirstSheetValue,
-    canonicalPhysicalScalarFirstSheetNormal]
+  simp only [canonicalPhysicalScalarFirstSheetValue,
+    canonicalPhysicalScalarFirstSheetNormal, Real.inner_apply]
 
 /-- L2 normal-value inner product is the second concrete latitude term. -/
 theorem inner_firstSheetNormal_value
@@ -250,8 +266,8 @@ theorem inner_firstSheetNormal_value
       period hPeriod test]
     with base hNormal hValue
   rw [hNormal, hValue]
-  simp [canonicalPhysicalScalarFirstSheetValue,
-    canonicalPhysicalScalarFirstSheetNormal]
+  simp only [canonicalPhysicalScalarFirstSheetValue,
+    canonicalPhysicalScalarFirstSheetNormal, Real.inner_apply]
 
 /-- The Hilbert symplectic boundary form is exactly the concrete first-sheet
 Cauchy pairing. -/
@@ -265,16 +281,29 @@ theorem canonicalScalarHilbertBoundarySymplecticForm_firstSheet_eq
       cutBulkGlobalFirstSheetScalarCauchyPairing
         period hPeriod field test := by
   unfold canonicalScalarHilbertBoundarySymplecticForm
+  change inner Real
+        (smoothCanonicalPhysicalScalarFirstSheetValueL2 period hPeriod field)
+        (smoothCanonicalPhysicalScalarFirstSheetNormalL2 period hPeriod test) -
+      inner Real
+        (smoothCanonicalPhysicalScalarFirstSheetNormalL2 period hPeriod field)
+        (smoothCanonicalPhysicalScalarFirstSheetValueL2 period hPeriod test) = _
   rw [inner_firstSheetValue_normal,
     inner_firstSheetNormal_value,
     cutBulkGlobalFirstSheetScalarCauchyPairing_eq_latitude,
     ← integral_sub]
-  · rfl
-  · exact (canonicalPhysicalScalarFirstSheetValue_memLp
+  · change Integrable
+      (canonicalPhysicalScalarFirstSheetValue period hPeriod field *
+        canonicalPhysicalScalarFirstSheetNormal period hPeriod test)
+      (canonicalLatitudeBaseMeasure period)
+    exact (canonicalPhysicalScalarFirstSheetValue_memLp
       period hPeriod field).integrable_mul
         (canonicalPhysicalScalarFirstSheetNormal_memLp
           period hPeriod test)
-  · exact (canonicalPhysicalScalarFirstSheetNormal_memLp
+  · change Integrable
+      (canonicalPhysicalScalarFirstSheetNormal period hPeriod field *
+        canonicalPhysicalScalarFirstSheetValue period hPeriod test)
+      (canonicalLatitudeBaseMeasure period)
+    exact (canonicalPhysicalScalarFirstSheetNormal_memLp
       period hPeriod field).integrable_mul
         (canonicalPhysicalScalarFirstSheetValue_memLp
           period hPeriod test)

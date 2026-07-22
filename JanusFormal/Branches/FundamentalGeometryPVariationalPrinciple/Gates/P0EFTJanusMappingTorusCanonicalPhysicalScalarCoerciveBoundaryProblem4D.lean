@@ -156,13 +156,13 @@ theorem cauchyData_closed_lagrangian
 theorem certificate
     (physical : CanonicalPhysicalScalarDirichletCoerciveData period hPeriod) :
     (∀ boundary : PhysicalTrace period hPeriod,
-      canonicalScalarCompletedValueTrace
+          canonicalScalarCompletedValueTrace
           physical.system physical.abstractGraphBound
-          (physical.poisson boundary) = boundary) ∧
+          (physical.poisson period hPeriod boundary) = boundary) ∧
       (∀ boundary : PhysicalTrace period hPeriod,
         canonicalScalarGraphShiftedOperator
           physical.system physical.spectralParameter
-          (physical.poisson boundary) = 0) ∧
+          (physical.poisson period hPeriod boundary) = 0) ∧
       physical.dirichletToNeumann.toLinearMap.IsSymmetric :=
   ⟨physical.poissonData.value_trace,
     physical.poissonData.homogeneous,
@@ -246,7 +246,8 @@ theorem certificate
       period hPeriod dirichlet) :
     Function.Bijective robinData.schur ∧
       (∀ source : PhysicalTrace period hPeriod,
-        robinData.schur (robinData.schurInverse source) = source) ∧
+        robinData.schur period hPeriod
+          (robinData.schurInverse period hPeriod source) = source) ∧
       robinData.robinResolvent.resolvent -
           dirichlet.dirichletResolvent.resolvent =
         -canonicalScalarGraphKreinBoundaryCorrection
@@ -279,7 +280,7 @@ theorem canonicalPhysicalScalarRobinReducedAction_minimizer
     (positive : CanonicalPhysicalScalarRobinPositiveActionData
       period hPeriod robinData)
     (source : PhysicalTrace period hPeriod) :
-    let solution := robinData.schurInverse source
+    let solution := robinData.schurInverse period hPeriod source
     CanonicalScalarGraphBoundarySourceStationary
         dirichlet.system dirichlet.abstractGraphBound
           dirichlet.spectralParameter dirichlet.poissonData robinData.robin

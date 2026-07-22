@@ -30,7 +30,11 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarGreenIdentityBridge4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
+open P0EFTJanusMappingTorusScalarHilbertBoundaryDirectSum4D
 open P0EFTJanusMappingTorusScalarHilbertGreenSystemDirectSum4D
+open P0EFTJanusMappingTorusScalarLagrangianResolvent4D
+open P0EFTJanusMappingTorusScalarLagrangianEigenmodeTheory4D
+open P0EFTJanusMappingTorusScalarLagrangianFredholmAlternative4D
 open P0EFTJanusMappingTorusScalarLagrangianAnalyticClosure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -46,6 +50,8 @@ local instance canonicalThroatVolumeFinite :
   intrinsicCanonicalThroatVolumeMeasure_isFinite period hPeriod
 
 private abbrev PhysicalTrace := CanonicalPhysicalThroatL2 period hPeriod
+private abbrev ProductTrace := WithLp 2
+  (PhysicalTrace period hPeriod × PhysicalTrace period hPeriod)
 
 /-- Two physical scalar Green bridges. -/
 structure CanonicalPhysicalScalarTwoSectorGreenData where
@@ -67,7 +73,8 @@ def rightSystem
 /-- Product physical Green system. -/
 def system
     (green : CanonicalPhysicalScalarTwoSectorGreenData period hPeriod) :=
-  green.leftSystem.directSum green.rightSystem
+  CanonicalScalarHilbertGreenSystem.directSum
+    green.leftSystem green.rightSystem
 
 /-- Product Lagrangian boundary condition. -/
 noncomputable def boundaryCondition
@@ -76,8 +83,9 @@ noncomputable def boundaryCondition
       CanonicalScalarHilbertLagrangianBoundaryCondition
         (PhysicalTrace period hPeriod)) :
     CanonicalScalarHilbertLagrangianBoundaryCondition
-      (PhysicalTrace period hPeriod × PhysicalTrace period hPeriod) :=
-  leftCondition.directSum rightCondition
+      (ProductTrace period hPeriod) :=
+  CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+    leftCondition rightCondition
 
 /-- Product Green identity certificate. -/
 theorem green_certificate
@@ -109,7 +117,8 @@ structure CanonicalPhysicalScalarTwoSectorAnalyticClosureData
   analytic : CanonicalScalarLagrangianAnalyticClosureData
     green.system closable
       (graphBound.toAbstract green.leftSystem green.rightSystem)
-      (green.boundaryCondition leftCondition rightCondition)
+      (CanonicalPhysicalScalarTwoSectorGreenData.boundaryCondition
+        period hPeriod green leftCondition rightCondition)
 
 namespace CanonicalPhysicalScalarTwoSectorAnalyticClosureData
 
@@ -125,7 +134,8 @@ def condition
     {green : CanonicalPhysicalScalarTwoSectorGreenData period hPeriod}
     (closure : CanonicalPhysicalScalarTwoSectorAnalyticClosureData
       period hPeriod green) :=
-  green.boundaryCondition closure.leftCondition closure.rightCondition
+  CanonicalPhysicalScalarTwoSectorGreenData.boundaryCondition
+    period hPeriod green closure.leftCondition closure.rightCondition
 
 /-- Actual product closed-operator domain. -/
 def operatorDomain

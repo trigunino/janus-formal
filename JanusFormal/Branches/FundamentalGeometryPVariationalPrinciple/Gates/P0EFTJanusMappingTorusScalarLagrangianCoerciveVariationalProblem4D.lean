@@ -28,6 +28,7 @@ open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarLagrangianResolvent4D
+open P0EFTJanusMappingTorusScalarLagrangianEigenmodeTheory4D
 open P0EFTJanusMappingTorusScalarLagrangianSemiboundedSpectrum4D
 open P0EFTJanusMappingTorusScalarLagrangianVariationalEigenprinciple4D
 
@@ -89,7 +90,10 @@ theorem canonicalScalarClosedLagrangianSourceAction_affine
           canonicalScalarClosedLagrangianQuadraticFunctional
             data hClosable traceBound condition variation := by
   unfold canonicalScalarClosedLagrangianSourceAction
-  rw [canonicalScalarClosedLagrangianQuadraticFunctional_affine]
+  have hQuadratic := canonicalScalarClosedLagrangianQuadraticFunctional_affine
+    data hClosable traceBound condition field variation parameter
+  unfold canonicalScalarClosedLagrangianAffineCurve at hQuadratic
+  rw [hQuadratic]
   simp only [map_add, map_smul, inner_add_right, real_inner_smul_right]
   ring
 
@@ -102,7 +106,9 @@ theorem canonicalScalarClosedLagrangianSourceAction_hasDerivAt
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
     (source : Ambient)
     (field variation : LagrangianDomain data hClosable traceBound condition) :
-    HasDerivAt
+    @HasDerivAt Real _ Real
+      Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule _ _
       (fun parameter : Real =>
         canonicalScalarClosedLagrangianSourceAction
           data hClosable traceBound condition source
@@ -112,26 +118,7 @@ theorem canonicalScalarClosedLagrangianSourceAction_hasDerivAt
         inner Real source
           (canonicalScalarClosedLagrangianDomainInclusion
             data hClosable traceBound condition variation)) 0 := by
-  rw [show (fun parameter : Real =>
-      canonicalScalarClosedLagrangianSourceAction
-        data hClosable traceBound condition source
-        (field + parameter • variation)) =
-    (fun parameter : Real =>
-      canonicalScalarClosedLagrangianSourceAction
-          data hClosable traceBound condition source field +
-        parameter *
-          (canonicalScalarClosedLagrangianJacobiPairing
-              data hClosable traceBound condition field variation -
-            inner Real source
-              (canonicalScalarClosedLagrangianDomainInclusion
-                data hClosable traceBound condition variation)) +
-        (1 / 2 : Real) * parameter ^ 2 *
-          canonicalScalarClosedLagrangianQuadraticFunctional
-            data hClosable traceBound condition variation) from by
-      funext parameter
-      exact canonicalScalarClosedLagrangianSourceAction_affine
-        data hClosable traceBound condition source field variation parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  have hPolynomial := (((hasDerivAt_const (x := (0 : Real))
       (canonicalScalarClosedLagrangianSourceAction
         data hClosable traceBound condition source field)).add
       ((hasDerivAt_id (0 : Real)).mul_const
@@ -142,7 +129,12 @@ theorem canonicalScalarClosedLagrangianSourceAction_hasDerivAt
               data hClosable traceBound condition variation)))).add
       ((((hasDerivAt_id (0 : Real)).pow 2).const_mul (1 / 2 : Real)).mul_const
         (canonicalScalarClosedLagrangianQuadraticFunctional
-          data hClosable traceBound condition variation))) using 1 <;> norm_num
+          data hClosable traceBound condition variation)))
+  norm_num at hPolynomial
+  apply hPolynomial.congr_of_eventuallyEq
+  filter_upwards [] with parameter
+  exact canonicalScalarClosedLagrangianSourceAction_affine
+    data hClosable traceBound condition source field variation parameter
 
 /-- Weak source stationarity. -/
 def CanonicalScalarClosedLagrangianSourceStationary
@@ -271,9 +263,14 @@ theorem canonicalScalarClosedLagrangianSourceAction_sub_solution
   have hField : field = solution + displacement := by
     dsimp [displacement]
     module
-  rw [hField,
-    canonicalScalarClosedLagrangianSourceAction_affine
-      data hClosable traceBound condition source solution displacement 1]
+  rw [hField]
+  have hDisplacement : solution + displacement - solution = displacement := by
+    module
+  rw [hDisplacement]
+  have hAffine := canonicalScalarClosedLagrangianSourceAction_affine
+    data hClosable traceBound condition source solution displacement 1
+  norm_num at hAffine
+  rw [hAffine]
   unfold canonicalScalarClosedLagrangianJacobiPairing
   rw [hSolution]
   ring
@@ -310,22 +307,50 @@ theorem canonicalScalarClosedLagrangianSourceAction_unique_minimizer
       data hClosable traceBound condition source solution field hSolution
     have hBound := semibounded.bound (field - solution)
     unfold canonicalScalarClosedLagrangianQuadraticFunctional
-      canonicalScalarClosedLagrangianJacobiPairing at hBound
-    linarith [sq_nonneg
-      ‖canonicalScalarClosedLagrangianDomainInclusion
-        data hClosable traceBound condition (field - solution)‖]
+      canonicalScalarClosedLagrangianJacobiPairing at hDifference
+    have hEnergyNonnegative :
+        0 ≤ inner Real
+          (canonicalScalarClosedLagrangianDomainOperator
+            data hClosable traceBound condition (field - solution))
+          (canonicalScalarClosedLagrangianDomainInclusion
+            data hClosable traceBound condition (field - solution)) := by
+      exact le_trans
+        (mul_nonneg hPositive.le (sq_nonneg _)) hBound
+    have hDifferenceNonnegative :
+        0 ≤ canonicalScalarClosedLagrangianSourceAction
+              data hClosable traceBound condition source field -
+            canonicalScalarClosedLagrangianSourceAction
+              data hClosable traceBound condition source solution := by
+      rw [hDifference]
+      exact mul_nonneg (by norm_num) hEnergyNonnegative
+    exact sub_nonneg.mp hDifferenceNonnegative
   · intro field hEqual
     have hDifference := canonicalScalarClosedLagrangianSourceAction_sub_solution
       data hClosable traceBound condition source solution field hSolution
     rw [hEqual, sub_self] at hDifference
     have hBound := semibounded.bound (field - solution)
     unfold canonicalScalarClosedLagrangianQuadraticFunctional
-      canonicalScalarClosedLagrangianJacobiPairing at hBound hDifference
+      canonicalScalarClosedLagrangianJacobiPairing at hDifference
+    have hEnergyZero :
+        inner Real
+          (canonicalScalarClosedLagrangianDomainOperator
+            data hClosable traceBound condition (field - solution))
+          (canonicalScalarClosedLagrangianDomainInclusion
+            data hClosable traceBound condition (field - solution)) = 0 := by
+      linarith
     have hNorm : ‖canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition (field - solution)‖ = 0 := by
-      nlinarith [sq_nonneg
-        ‖canonicalScalarClosedLagrangianDomainInclusion
-          data hClosable traceBound condition (field - solution)‖]
+      rw [hEnergyZero] at hBound
+      by_contra hNormZero
+      have hNormPositive : 0 < ‖canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition (field - solution)‖ :=
+        lt_of_le_of_ne (norm_nonneg _) (Ne.symm hNormZero)
+      have hProductPositive :
+          0 < semibounded.lowerBound *
+            ‖canonicalScalarClosedLagrangianDomainInclusion
+              data hClosable traceBound condition (field - solution)‖ ^ 2 :=
+        mul_pos hPositive (sq_pos_of_pos hNormPositive)
+      exact (not_lt_of_ge hBound) hProductPositive
     have hZero : canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition (field - solution) = 0 :=
       norm_eq_zero.mp hNorm

@@ -39,6 +39,15 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {parameters : Set Real}
+  {family : CanonicalScalarGraphBoundaryTripleFamily
+    data traceBound parameters}
+  {Index : Type*}
+
 /-- A Robin boundary condition equipped with an absolute Fredholm determinant
 normalization. -/
 structure CanonicalScalarGraphRobinDeterminantRealization
@@ -159,18 +168,17 @@ theorem relativeOneLoop_eq_absolute_difference
           spectralParameter hParameter).get
           ((system.realization first).determinant.oneLoop_isSome_iff
             spectralParameter hParameter |>.2 hFirst) -
-        ((system.realization second).determinant.oneLoop
+      ((system.realization second).determinant.oneLoop
           spectralParameter hParameter).get
           ((system.realization second).determinant.oneLoop_isSome_iff
             spectralParameter hParameter |>.2 hSecond) := by
-  unfold relativeOneLoop
-  rw [dif_pos (system.relativeDeterminant_ne_zero_of_regular
-    first second spectralParameter hParameter hFirst hSecond)]
-  rw [(system.realization first).determinant.oneLoop_eq_some
+  have hRelativeNonzero := system.relativeDeterminant_ne_zero_of_regular
+    first second spectralParameter hParameter hFirst hSecond
+  simp only [relativeOneLoop, dif_pos hRelativeNonzero, Option.get_some,
+    (system.realization first).determinant.oneLoop_eq_some
       spectralParameter hParameter hFirst,
     (system.realization second).determinant.oneLoop_eq_some
       spectralParameter hParameter hSecond]
-  simp only [Option.get_some]
   have hAgreement := system.agrees_with_absolute
     first second spectralParameter hParameter
   have hRelativePositive :

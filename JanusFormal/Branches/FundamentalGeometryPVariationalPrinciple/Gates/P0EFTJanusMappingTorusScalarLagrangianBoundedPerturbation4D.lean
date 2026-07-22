@@ -98,16 +98,22 @@ theorem canonicalScalarClosedLagrangianPerturbedOperator_symmetric
           data hClosable traceBound condition first)
         (canonicalScalarClosedLagrangianPerturbedOperator
           data hClosable traceBound condition perturbation second) := by
-  rw [canonicalScalarClosedLagrangianPerturbedOperator_apply,
+  simp only [canonicalScalarClosedLagrangianPerturbedOperator_apply,
     canonicalScalarClosedLagrangianPerturbedOperator_apply,
-    inner_add_left, inner_add_right,
-    canonicalScalarClosedLagrangianDomainOperator_symmetric
-      data hClosable traceBound condition first second,
-    hPerturbation
+    inner_add_left, inner_add_right]
+  rw [canonicalScalarClosedLagrangianDomainOperator_symmetric
+    data hClosable traceBound condition first second]
+  exact congrArg (fun value : Real =>
+    inner Real
+        (canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition first)
+        (canonicalScalarClosedLagrangianDomainOperator
+          data hClosable traceBound condition second) + value)
+    (hPerturbation
       (canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition first)
       (canonicalScalarClosedLagrangianDomainInclusion
-        data hClosable traceBound condition second)]
+        data hClosable traceBound condition second))
 
 /-- Shifted perturbed operator. -/
 noncomputable def canonicalScalarClosedLagrangianPerturbedShiftedOperator
@@ -340,16 +346,46 @@ theorem canonicalScalarClosedLagrangianPerturbed_resolvent_identity_domain
     baseResolvent.left_inverse]
   have hPerturbed := perturbed.left_inverse source
   rw [canonicalScalarClosedLagrangianPerturbedShiftedOperator_apply,
-    canonicalScalarClosedLagrangianPerturbedOperator_apply,
-    canonicalScalarClosedLagrangianShiftedOperator_apply] at hPerturbed
-  change canonicalScalarClosedLagrangianShiftedOperator
+    canonicalScalarClosedLagrangianPerturbedOperator_apply] at hPerturbed
+  have hPerturbed' :
+      canonicalScalarClosedLagrangianShiftedOperator
         data hClosable traceBound condition spectralParameter
         (perturbed.resolvent source) +
-      perturbation
-        (perturbed.ambientResolvent
-          data hClosable traceBound condition perturbation spectralParameter source) =
-    source at hPerturbed
-  module at hPerturbed ⊢
+        perturbation
+          (perturbed.ambientResolvent data hClosable traceBound condition
+            perturbation spectralParameter source) = source := by
+    rw [canonicalScalarClosedLagrangianShiftedOperator_apply]
+    change
+      (canonicalScalarClosedLagrangianDomainOperator
+          data hClosable traceBound condition (perturbed.resolvent source) -
+        spectralParameter • canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition (perturbed.resolvent source)) +
+        perturbation (canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition (perturbed.resolvent source)) = source
+    calc
+      _ = canonicalScalarClosedLagrangianDomainOperator
+            data hClosable traceBound condition (perturbed.resolvent source) +
+          perturbation (canonicalScalarClosedLagrangianDomainInclusion
+            data hClosable traceBound condition (perturbed.resolvent source)) -
+          spectralParameter • canonicalScalarClosedLagrangianDomainInclusion
+            data hClosable traceBound condition (perturbed.resolvent source) := by
+        module
+      _ = source := hPerturbed
+  calc
+    _ = canonicalScalarClosedLagrangianShiftedOperator
+          data hClosable traceBound condition spectralParameter
+            (perturbed.resolvent source) -
+        (canonicalScalarClosedLagrangianShiftedOperator
+            data hClosable traceBound condition spectralParameter
+              (perturbed.resolvent source) +
+          perturbation
+            (perturbed.ambientResolvent data hClosable traceBound condition
+              perturbation spectralParameter source)) :=
+      congrArg (fun value : Ambient =>
+        canonicalScalarClosedLagrangianShiftedOperator
+          data hClosable traceBound condition spectralParameter
+            (perturbed.resolvent source) - value) hPerturbed'.symm
+    _ = _ := by module
 
 /-- Ambient perturbative resolvent identity
 `R^V - R = - R V R^V`. -/
@@ -434,7 +470,11 @@ theorem canonicalScalarClosedLagrangianPerturbedAmbientResolvent_compact
             baseResolvent factorInverse).ambientResolvent
         data hClosable traceBound condition perturbation spectralParameter) := by
   rw [canonicalScalarClosedLagrangianPerturbedAmbientResolvent_ofFactor_eq]
-  simpa [Function.comp_def] using hCompact.comp_clm factorInverse.inverse
+  change IsCompactOperator (fun source =>
+    baseResolvent.ambientResolvent
+      data hClosable traceBound condition spectralParameter
+      (factorInverse.inverse source))
+  exact hCompact.comp_clm factorInverse.inverse
 
 /-- Symmetry of a perturbed ambient resolvent. -/
 theorem canonicalScalarClosedLagrangianPerturbedAmbientResolvent_isSymmetric

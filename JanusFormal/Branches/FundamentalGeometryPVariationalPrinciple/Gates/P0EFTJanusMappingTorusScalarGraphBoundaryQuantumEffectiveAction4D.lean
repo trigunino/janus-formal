@@ -26,6 +26,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D
 open P0EFTJanusMappingTorusScalarGraphBoundaryTripleFamily4D
+open P0EFTJanusMappingTorusScalarGraphBoundarySpectrumReduction4D
 open P0EFTJanusMappingTorusScalarGraphBoundaryReducedAction4D
 open P0EFTJanusMappingTorusScalarGraphBoundaryCoerciveAction4D
 open P0EFTJanusMappingTorusScalarGraphBoundaryFredholmDeterminant4D
@@ -212,7 +213,7 @@ theorem canonicalScalarGraphBoundaryQuantumEffectiveAction_hasDerivAt
   have hLoop := determinantData.oneLoop_eq_some
     spectralParameter hParameter hRegular
   unfold canonicalScalarGraphBoundaryQuantumEffectiveAction
-  rw [hLoop]
+  simp only [hLoop, Option.get_some]
   simpa using canonicalScalarGraphRobinReducedAction_hasDerivAt
     data traceBound spectralParameter
       (family.poissonData spectralParameter hParameter)

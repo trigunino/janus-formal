@@ -38,6 +38,18 @@ variable {DomainLeft : Type u₁} {DomainRight : Type u₂}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
 
+variable
+  {left : CanonicalScalarHilbertGreenSystem
+    (Domain := DomainLeft) (Ambient := AmbientLeft) (Trace := Trace)}
+  {leftTraceBound : HasCanonicalScalarHilbertBoundaryGraphBound left}
+  {right : CanonicalScalarHilbertGreenSystem
+    (Domain := DomainRight) (Ambient := AmbientRight) (Trace := Trace)}
+  {rightTraceBound : HasCanonicalScalarHilbertBoundaryGraphBound right}
+  {spectralParameter : Real}
+  {interfaceData : CanonicalScalarGraphInterfacePoissonData
+    left leftTraceBound right rightTraceBound spectralParameter}
+  {junction : Trace →L[Real] Trace}
+
 /-- Norm-coercive and surjective interface Schur problem. -/
 structure CanonicalScalarGraphInterfaceSchurCoerciveSurjectiveData
     (interfaceData : CanonicalScalarGraphInterfacePoissonData
@@ -168,6 +180,7 @@ theorem gluedSolution_junction_equation
         junction (canonicalScalarCompletedValueTrace left leftTraceBound
           (coercive.gluedSolution source).1) =
       source := by
+  rw [(coercive.gluedSolution_value_trace source).1]
   change interfaceData.schurOperator junction (coercive.inverse source) = source
   exact coercive.schur_inverse source
 
@@ -178,6 +191,7 @@ theorem boundary_unique
     (source boundary : Trace)
     (hEquation : interfaceData.schurOperator junction boundary = source) :
     boundary = coercive.inverse source := by
+  change boundary = coercive.algebraicInverse source
   rw [← hEquation, coercive.inverse_schur]
 
 end CanonicalScalarGraphInterfaceSchurCoerciveSurjectiveData
@@ -225,9 +239,22 @@ theorem canonicalScalarGraphInterfaceSourceAction_sub_solution
     CanonicalScalarGraphInterfacePoissonData.reducedInterfaceAction
   simp only [map_add, inner_add_left, inner_add_right,
     inner_sub_right]
-  rw [interfaceData.schurOperator_isSymmetric junction hJunction
-      solution displacement,
-    hSolution]
+  have hSymmetry := interfaceData.schurOperator_isSymmetric junction hJunction
+  have hCross : inner Real solution
+        (interfaceData.schurOperator junction displacement) =
+      inner Real displacement
+        (interfaceData.schurOperator junction solution) := by
+    calc
+      _ = inner Real
+          (interfaceData.schurOperator junction solution) displacement := by
+        symm
+        simpa using hSymmetry solution displacement
+      _ = _ := real_inner_comm _ _
+  rw [hCross, hSolution]
+  rw [real_inner_comm displacement source]
+  have hCancel : solution + displacement - solution = displacement := by
+    module
+  rw [hCancel]
   ring
 
 /-- Positive interface Schur data give a unique global source minimizer. -/
@@ -258,7 +285,9 @@ theorem canonicalScalarGraphInterfaceSourceAction_unique_minimizer
     have hBound := positive.lower_bound (boundary - solution)
     unfold CanonicalScalarGraphInterfacePoissonData.reducedInterfaceAction
       at hDifference
-    linarith [sq_nonneg ‖boundary - solution‖]
+    have hLowerTerm : 0 ≤ positive.constant * ‖boundary - solution‖ ^ 2 :=
+      mul_nonneg (le_of_lt positive.constant_pos) (sq_nonneg _)
+    linarith
   · intro boundary hEqual
     have hDifference := canonicalScalarGraphInterfaceSourceAction_sub_solution
       interfaceData junction positive.junction_symmetric
@@ -267,8 +296,19 @@ theorem canonicalScalarGraphInterfaceSourceAction_unique_minimizer
     have hBound := positive.lower_bound (boundary - solution)
     unfold CanonicalScalarGraphInterfacePoissonData.reducedInterfaceAction
       at hDifference
-    have hNorm : ‖boundary - solution‖ = 0 := by
-      nlinarith [sq_nonneg ‖boundary - solution‖]
+    have hInnerZero : inner Real (boundary - solution)
+        (interfaceData.schurOperator junction (boundary - solution)) = 0 := by
+      linarith
+    rw [hInnerZero] at hBound
+    have hNormNotPositive : ¬ 0 < ‖boundary - solution‖ := by
+      intro hNormPositive
+      have hProductPositive : 0 <
+          positive.constant * ‖boundary - solution‖ ^ 2 :=
+        mul_pos positive.constant_pos (pow_pos hNormPositive 2)
+      exact (not_lt_of_ge hBound) hProductPositive
+    have hNorm : ‖boundary - solution‖ = 0 :=
+      le_antisymm (le_of_not_gt hNormNotPositive)
+        (norm_nonneg (boundary - solution))
     exact sub_eq_zero.mp (norm_eq_zero.mp hNorm)
 
 /-- Coercive interface-gluing certificate. -/

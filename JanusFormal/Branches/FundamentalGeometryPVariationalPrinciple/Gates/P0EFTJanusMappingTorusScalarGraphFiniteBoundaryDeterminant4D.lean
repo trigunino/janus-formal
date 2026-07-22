@@ -37,6 +37,11 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
   [FiniteDimensional Real Trace]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+
 /-- Basis-independent determinant of one boundary Schur operator. -/
 noncomputable def canonicalScalarGraphBoundarySchurDeterminant
     (data : CanonicalScalarHilbertGreenSystem
@@ -82,7 +87,18 @@ theorem canonicalScalarGraphBoundarySchurDeterminant_eq_zero_iff_exists
           data traceBound spectralParameter poissonData robin).toLinearMap,
         boundary ≠ 0 := by
   rw [canonicalScalarGraphBoundarySchurDeterminant_eq_zero_iff]
-  exact Submodule.ne_bot_iff
+  constructor
+  · intro hKernel
+    rw [Submodule.ne_bot_iff] at hKernel
+    obtain ⟨boundary, hBoundary, hNonzero⟩ := hKernel
+    refine ⟨⟨boundary, hBoundary⟩, ?_⟩
+    intro hZero
+    exact hNonzero (congrArg Subtype.val hZero)
+  · rintro ⟨boundary, hNonzero⟩
+    rw [Submodule.ne_bot_iff]
+    refine ⟨boundary.1, boundary.2, ?_⟩
+    intro hZero
+    exact hNonzero (Subtype.ext hZero)
 
 /-- Finite-boundary determinant criterion for nonzero homogeneous Robin bulk
 modes. -/
@@ -118,7 +134,7 @@ theorem canonicalScalarGraphBoundarySchurDeterminant_ne_zero_iff_bulk_trivial
   rw [ne_eq, canonicalScalarGraphBoundarySchurDeterminant_eq_zero_iff_bulkMode]
   constructor
   · intro hNoMode
-    apply Submodule.eq_bot_iff.mpr
+    apply (Submodule.eq_bot_iff _).mpr
     intro field hField
     by_contra hNonzero
     exact hNoMode ⟨⟨field, hField⟩, by
@@ -126,11 +142,11 @@ theorem canonicalScalarGraphBoundarySchurDeterminant_ne_zero_iff_bulk_trivial
       exact hNonzero (congrArg Subtype.val hZero)⟩
   · intro hBot hMode
     rcases hMode with ⟨field, hField⟩
-    have hMembership : field.1 ∈
-        canonicalScalarGraphRobinHomogeneousSolutionSubmodule
-          data traceBound spectralParameter robin := field.2
-    rw [hBot] at hMembership
-    exact hField (Subsingleton.elim field 0)
+    have hValueZero : field.1 = 0 := by
+      apply (Submodule.mem_bot Real).mp
+      rw [← hBot]
+      exact field.2
+    exact hField (Subtype.ext hValueZero)
 
 /-- Determinant function of a finite-dimensional boundary-triple family. -/
 noncomputable def CanonicalScalarGraphBoundaryTripleFamily.schurDeterminant
@@ -150,7 +166,8 @@ theorem CanonicalScalarGraphBoundaryTripleFamily.schurDeterminant_eq_zero_iff_bu
       data traceBound parameters)
     (robin : Trace →L[Real] Trace)
     (spectralParameter : Real) (hParameter : spectralParameter ∈ parameters) :
-    family.schurDeterminant robin spectralParameter hParameter = 0 ↔
+    CanonicalScalarGraphBoundaryTripleFamily.schurDeterminant
+        family robin spectralParameter hParameter = 0 ↔
       ∃ field : canonicalScalarGraphRobinHomogeneousSolutionSubmodule
         data traceBound spectralParameter robin, field ≠ 0 :=
   canonicalScalarGraphBoundarySchurDeterminant_eq_zero_iff_bulkMode

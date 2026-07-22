@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarSymmetricCoreClosable4D
 
 /-!
@@ -35,9 +36,10 @@ open P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
+open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarSymmetricCoreClosable4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 local instance canonicalLorentzVolumeFinite :
     IsFiniteMeasure
@@ -135,7 +137,8 @@ def smoothLagrangianDomainSubmodule
       P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D.CanonicalScalarHilbertLagrangianBoundaryCondition
         (BoundaryL2 period))
     (field : SmoothDomain period hPeriod) :
-    field ∈ green.smoothLagrangianDomainSubmodule condition ↔
+    field ∈ smoothLagrangianDomainSubmodule
+        period hPeriod green condition ↔
       green.system.boundaryTrace field ∈ condition.subspace :=
   Iff.rfl
 
@@ -146,10 +149,10 @@ def smoothLagrangianInclusion
     (condition :
       P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D.CanonicalScalarHilbertLagrangianBoundaryCondition
         (BoundaryL2 period)) :
-    green.smoothLagrangianDomainSubmodule condition →ₗ[Real]
-      BulkL2 period :=
+    smoothLagrangianDomainSubmodule period hPeriod green condition →ₗ[Real]
+      BulkL2 period hPeriod :=
   green.system.inclusion.comp
-    (green.smoothLagrangianDomainSubmodule condition).subtype
+    (smoothLagrangianDomainSubmodule period hPeriod green condition).subtype
 
 /-- Euler operator restricted to a smooth physical Lagrangian core. -/
 def smoothLagrangianOperator
@@ -158,10 +161,10 @@ def smoothLagrangianOperator
     (condition :
       P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D.CanonicalScalarHilbertLagrangianBoundaryCondition
         (BoundaryL2 period)) :
-    green.smoothLagrangianDomainSubmodule condition →ₗ[Real]
-      BulkL2 period :=
+    smoothLagrangianDomainSubmodule period hPeriod green condition →ₗ[Real]
+      BulkL2 period hPeriod :=
   green.system.operator.comp
-    (green.smoothLagrangianDomainSubmodule condition).subtype
+    (smoothLagrangianDomainSubmodule period hPeriod green condition).subtype
 
 /-- Every smooth Lagrangian physical core is symmetric. -/
 theorem smoothLagrangianOperator_symmetric
@@ -170,18 +173,20 @@ theorem smoothLagrangianOperator_symmetric
     (condition :
       P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D.CanonicalScalarHilbertLagrangianBoundaryCondition
         (BoundaryL2 period))
-    (first second : green.smoothLagrangianDomainSubmodule condition) :
-    inner Real (green.smoothLagrangianOperator condition first)
-          (green.smoothLagrangianInclusion condition second) =
-      inner Real (green.smoothLagrangianInclusion condition first)
-          (green.smoothLagrangianOperator condition second) := by
+    (first second : smoothLagrangianDomainSubmodule
+      period hPeriod green condition) :
+    inner Real (smoothLagrangianOperator period hPeriod green condition first)
+          (smoothLagrangianInclusion period hPeriod green condition second) =
+      inner Real (smoothLagrangianInclusion period hPeriod green condition first)
+          (smoothLagrangianOperator period hPeriod green condition second) := by
   have hBoundary := condition.pairing_eq_zero
     (green.system.boundaryTrace first.1)
     (green.system.boundaryTrace second.1)
     first.2 second.2
   have hGreen := green.system.green_identity first.1 second.1
   rw [hBoundary] at hGreen
-  linarith
+  apply sub_eq_zero.mp
+  simpa [smoothLagrangianOperator, smoothLagrangianInclusion] using hGreen
 
 /-- Green system restricted to a chosen smooth Lagrangian core.  Its boundary
 trace is zero because the isotropic condition has already been imposed; the
@@ -193,11 +198,12 @@ def restrictedSymmetricSystem
       P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D.CanonicalScalarHilbertLagrangianBoundaryCondition
         (BoundaryL2 period)) :
     CanonicalScalarHilbertGreenSystem
-      (Domain := green.smoothLagrangianDomainSubmodule condition)
+      (Domain := smoothLagrangianDomainSubmodule
+        period hPeriod green condition)
       (Ambient := BulkL2 period hPeriod)
       (Trace := PUnit) where
-  inclusion := green.smoothLagrangianInclusion condition
-  operator := green.smoothLagrangianOperator condition
+  inclusion := smoothLagrangianInclusion period hPeriod green condition
+  operator := smoothLagrangianOperator period hPeriod green condition
   boundaryTrace := 0
   boundary_surjective := by
     intro boundary
@@ -205,8 +211,8 @@ def restrictedSymmetricSystem
     apply Prod.ext <;> exact Subsingleton.elim _ _
   green_identity := by
     intro first second
-    have hSymmetric := green.smoothLagrangianOperator_symmetric
-      condition first second
+    have hSymmetric := smoothLagrangianOperator_symmetric
+      period hPeriod green condition first second
     simpa using sub_eq_zero.mpr hSymmetric
 
 /-- Density of a selected smooth Lagrangian core is now the only input needed
@@ -217,12 +223,13 @@ theorem restrictedSystem_closable_of_dense
     (condition :
       P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D.CanonicalScalarHilbertLagrangianBoundaryCondition
         (BoundaryL2 period))
-    (hDense : DenseRange (green.smoothLagrangianInclusion condition)) :
+    (hDense : DenseRange
+      (smoothLagrangianInclusion period hPeriod green condition)) :
     CanonicalScalarGraphClosable
-      (green.restrictedSymmetricSystem condition) :=
+      (restrictedSymmetricSystem period hPeriod green condition) :=
   canonicalScalarGraphClosable_of_dense_symmetric
-    (green.restrictedSymmetricSystem condition) hDense
-    (green.smoothLagrangianOperator_symmetric condition)
+    (restrictedSymmetricSystem period hPeriod green condition) hDense
+    (smoothLagrangianOperator_symmetric period hPeriod green condition)
 
 /-- First-sheet physical Green-system certificate. -/
 theorem certificate

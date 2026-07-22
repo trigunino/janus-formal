@@ -51,6 +51,12 @@ structure CanonicalScalarGraphBoundaryTripleFamily
       CanonicalScalarGraphDirichletResolventData
         data traceBound spectralParameter
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {parameters : Set Real}
+
 namespace CanonicalScalarGraphBoundaryTripleFamily
 
 /-- Canonical Poisson data at a parameter of the family. -/

@@ -50,8 +50,8 @@ structure CanonicalScalarBoundarySimpleCrossingLedger
 def CanonicalScalarBoundarySimpleCrossingLedger.spectralFlow
     {curve : CanonicalScalarBoundaryOperatorCurve (Trace := Trace)}
     (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) : Int :=
-  ∑ spectralParameter ∈ ledger.crossingParameters,
-    (ledger.crossingData spectralParameter ‹spectralParameter ∈ ledger.crossingParameters›).orientation
+  ∑ parameter ∈ ledger.crossingParameters.attach,
+    (ledger.crossingData parameter.1 parameter.2).orientation
 
 /-- Every singular parameter is registered by the ledger. -/
 theorem CanonicalScalarBoundarySimpleCrossingLedger.mem_of_singular
@@ -80,45 +80,41 @@ theorem CanonicalScalarBoundarySimpleCrossingLedger.spectralFlow_abs_le_card
     (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) :
     |ledger.spectralFlow| ≤ ledger.crossingParameters.card := by
   unfold CanonicalScalarBoundarySimpleCrossingLedger.spectralFlow
-  have hTerm : ∀ spectralParameter ∈ ledger.crossingParameters,
-      |(ledger.crossingData spectralParameter
-        ‹spectralParameter ∈ ledger.crossingParameters›).orientation| ≤ 1 := by
-    intro spectralParameter hParameter
-    rcases ledger.orientation_eq_one_or_neg_one spectralParameter hParameter with h | h
+  have hTerm : ∀ parameter ∈ ledger.crossingParameters.attach,
+      |(ledger.crossingData parameter.1 parameter.2).orientation| ≤ 1 := by
+    intro parameter _
+    rcases ledger.orientation_eq_one_or_neg_one
+      parameter.1 parameter.2 with h | h
     · rw [h]
       norm_num
     · rw [h]
       norm_num
   calc
-    |∑ spectralParameter ∈ ledger.crossingParameters,
-        (ledger.crossingData spectralParameter
-          ‹spectralParameter ∈ ledger.crossingParameters›).orientation| ≤
-      ∑ spectralParameter ∈ ledger.crossingParameters,
-        |(ledger.crossingData spectralParameter
-          ‹spectralParameter ∈ ledger.crossingParameters›).orientation| := by
-        exact abs_sum_le_sum_abs _ _
-    _ ≤ ∑ _spectralParameter ∈ ledger.crossingParameters, (1 : Int) := by
-      gcongr with spectralParameter hParameter
-      exact hTerm spectralParameter hParameter
+    |∑ parameter ∈ ledger.crossingParameters.attach,
+        (ledger.crossingData parameter.1 parameter.2).orientation| ≤
+      ∑ parameter ∈ ledger.crossingParameters.attach,
+        |(ledger.crossingData parameter.1 parameter.2).orientation| := by
+        exact Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ _parameter ∈ ledger.crossingParameters.attach, (1 : Int) := by
+      gcongr with parameter hParameter
+      exact hTerm parameter hParameter
     _ = ledger.crossingParameters.card := by simp
 
 /-- Positive and negative crossing counts. -/
 def CanonicalScalarBoundarySimpleCrossingLedger.positiveCrossingCount
     {curve : CanonicalScalarBoundaryOperatorCurve (Trace := Trace)}
-    (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) : Nat :=
-  (ledger.crossingParameters.filter fun spectralParameter =>
-    0 < curve.crossingQuadratic spectralParameter
-      (ledger.crossingData spectralParameter
-        (by simp)).generator).card
+  (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) : Nat :=
+  (ledger.crossingParameters.attach.filter fun parameter =>
+    0 < curve.crossingQuadratic parameter.1
+      (ledger.crossingData parameter.1 parameter.2).generator).card
 
 /-- Negative crossing count. -/
 def CanonicalScalarBoundarySimpleCrossingLedger.negativeCrossingCount
     {curve : CanonicalScalarBoundaryOperatorCurve (Trace := Trace)}
-    (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) : Nat :=
-  (ledger.crossingParameters.filter fun spectralParameter =>
-    ¬ 0 < curve.crossingQuadratic spectralParameter
-      (ledger.crossingData spectralParameter
-        (by simp)).generator).card
+  (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) : Nat :=
+  (ledger.crossingParameters.attach.filter fun parameter =>
+    ¬ 0 < curve.crossingQuadratic parameter.1
+      (ledger.crossingData parameter.1 parameter.2).generator).card
 
 /-- Spectral flow is positive crossings minus negative crossings. -/
 theorem CanonicalScalarBoundarySimpleCrossingLedger.spectralFlow_eq_counts
@@ -131,15 +127,8 @@ theorem CanonicalScalarBoundarySimpleCrossingLedger.spectralFlow_eq_counts
   unfold CanonicalScalarBoundarySimpleCrossingLedger.spectralFlow
     CanonicalScalarBoundarySimpleCrossingLedger.positiveCrossingCount
     CanonicalScalarBoundarySimpleCrossingLedger.negativeCrossingCount
-  rw [← Finset.sum_filter_add_sum_filter_neg_eq_sum
-    (s := ledger.crossingParameters)
-    (p := fun spectralParameter =>
-      0 < curve.crossingQuadratic spectralParameter
-        (ledger.crossingData spectralParameter (by simp)).generator)
-    (f := fun spectralParameter =>
-      (ledger.crossingData spectralParameter (by simp)).orientation)]
-  simp only [CanonicalScalarBoundarySimpleCrossingData.orientation]
-  simp [Int.ofNat_sub]
+  simp [CanonicalScalarBoundarySimpleCrossingData.orientation,
+    Finset.sum_ite, sub_eq_add_neg]
 
 /-- A registered Schur crossing gives a nonzero homogeneous Robin bulk mode. -/
 theorem canonicalScalarGraphRegisteredCrossing_has_bulkMode

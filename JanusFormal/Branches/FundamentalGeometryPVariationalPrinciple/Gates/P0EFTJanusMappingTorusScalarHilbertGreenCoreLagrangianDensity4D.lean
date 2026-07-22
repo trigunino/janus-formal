@@ -24,6 +24,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 
 universe u v w
 
@@ -36,11 +37,16 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable
+  {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Smooth zero-Cauchy core embedded in any completed Lagrangian domain. -/
 def minimalCoreToLagrangianDomain
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
-    core.minimalDomainSubmodule →ₗ[Real]
+    minimalDomainSubmodule core →ₗ[Real]
       triple.lagrangianDomainSubmodule condition where
   toFun test :=
     ⟨canonicalScalarGreenCoreToGraph core test.1, by
@@ -62,10 +68,10 @@ def minimalCoreToLagrangianDomain
 theorem lagrangianInclusion_minimalCore
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
-    (test : core.minimalDomainSubmodule) :
+    (test : minimalDomainSubmodule core) :
     triple.lagrangianInclusion condition
-        (triple.minimalCoreToLagrangianDomain condition test) =
-      core.minimalInclusion test :=
+        (minimalCoreToLagrangianDomain triple condition test) =
+      minimalInclusion core test :=
   rfl
 
 /-- The range of the minimal inclusion is contained in every Lagrangian
@@ -73,44 +79,44 @@ realization range. -/
 theorem range_minimalInclusion_subset_lagrangianInclusion
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
-    Set.range core.minimalInclusion ⊆
+    Set.range (minimalInclusion core) ⊆
       Set.range (triple.lagrangianInclusion condition) := by
   rintro value ⟨test, rfl⟩
-  exact ⟨triple.minimalCoreToLagrangianDomain condition test,
-    triple.lagrangianInclusion_minimalCore condition test⟩
+  exact ⟨minimalCoreToLagrangianDomain triple condition test,
+    lagrangianInclusion_minimalCore triple condition test⟩
 
 /-- Density of the minimal smooth core implies density of every completed
 Lagrangian realization. -/
 theorem lagrangianInclusion_denseRange_of_minimalCore
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
-    (hDense : core.MinimalCoreDense) :
+    (hDense : MinimalCoreDense core) :
     DenseRange (triple.lagrangianInclusion condition) := by
   intro value
   exact closure_mono
-    (triple.range_minimalInclusion_subset_lagrangianInclusion condition)
+    (range_minimalInclusion_subset_lagrangianInclusion triple condition)
     (hDense value)
 
 /-- Simultaneous density certificate for all closed Lagrangian boundary
 conditions. -/
 theorem allLagrangianDomains_dense
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
-    (hDense : core.MinimalCoreDense) :
+    (hDense : MinimalCoreDense core) :
     ∀ condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace,
       DenseRange (triple.lagrangianInclusion condition) :=
   fun condition =>
-    triple.lagrangianInclusion_denseRange_of_minimalCore condition hDense
+    lagrangianInclusion_denseRange_of_minimalCore triple condition hDense
 
 /-- Lagrangian-density certificate. -/
 theorem certificate
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
-    (hDense : core.MinimalCoreDense)
+    (hDense : MinimalCoreDense core)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
-    Set.range core.minimalInclusion ⊆
+    Set.range (minimalInclusion core) ⊆
         Set.range (triple.lagrangianInclusion condition) ∧
       DenseRange (triple.lagrangianInclusion condition) :=
-  ⟨triple.range_minimalInclusion_subset_lagrangianInclusion condition,
-    triple.lagrangianInclusion_denseRange_of_minimalCore condition hDense⟩
+  ⟨range_minimalInclusion_subset_lagrangianInclusion triple condition,
+    lagrangianInclusion_denseRange_of_minimalCore triple condition hDense⟩
 
 end CanonicalScalarCompletedBoundaryTripleData
 

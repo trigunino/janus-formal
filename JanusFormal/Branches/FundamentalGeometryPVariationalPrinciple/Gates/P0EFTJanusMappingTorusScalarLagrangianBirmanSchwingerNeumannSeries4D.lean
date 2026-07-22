@@ -23,7 +23,7 @@ namespace P0EFTJanusMappingTorusScalarLagrangianBirmanSchwingerNeumannSeries4D
 set_option autoImplicit false
 noncomputable section
 
-open Set Topology Module
+open Set Topology Module Filter
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
@@ -54,12 +54,8 @@ theorem canonicalScalarBirmanSchwingerGeometricSum_left
         canonicalScalarBirmanSchwingerGeometricSum operator order =
       ContinuousLinearMap.id Real Ambient - (-operator) ^ (order + 1) := by
   unfold canonicalScalarBirmanSchwingerGeometricSum
-  rw [Finset.mul_sum]
-  induction order with
-  | zero => simp
-  | succ order ih =>
-      rw [Finset.sum_range_succ, mul_add, ih]
-      noncomm_ring
+  rw [← ContinuousLinearMap.one_def]
+  simpa using mul_neg_geom_sum (-operator) (order + 1)
 
 /-- Right finite geometric identity. -/
 theorem canonicalScalarBirmanSchwingerGeometricSum_right
@@ -68,12 +64,8 @@ theorem canonicalScalarBirmanSchwingerGeometricSum_right
         (ContinuousLinearMap.id Real Ambient + operator) =
       ContinuousLinearMap.id Real Ambient - (-operator) ^ (order + 1) := by
   unfold canonicalScalarBirmanSchwingerGeometricSum
-  rw [Finset.sum_mul]
-  induction order with
-  | zero => simp
-  | succ order ih =>
-      rw [Finset.sum_range_succ, add_mul, ih]
-      noncomm_ring
+  rw [← ContinuousLinearMap.one_def]
+  simpa using geom_sum_mul_neg (-operator) (order + 1)
 
 /-- Application form of the left geometric identity. -/
 theorem canonicalScalarBirmanSchwingerGeometricSum_left_apply
@@ -105,6 +97,8 @@ theorem left_inverse
     {operator : Ambient →L[Real] Ambient}
     (nilpotent : CanonicalScalarNilpotentBirmanSchwingerData operator) :
     (ContinuousLinearMap.id Real Ambient + operator) * nilpotent.inverse = 1 := by
+  change (ContinuousLinearMap.id Real Ambient + operator) *
+      nilpotent.inverse = ContinuousLinearMap.id Real Ambient
   rw [inverse, canonicalScalarBirmanSchwingerGeometricSum_left,
     nilpotent.nilpotent]
   simp
@@ -114,6 +108,8 @@ theorem right_inverse
     {operator : Ambient →L[Real] Ambient}
     (nilpotent : CanonicalScalarNilpotentBirmanSchwingerData operator) :
     nilpotent.inverse * (ContinuousLinearMap.id Real Ambient + operator) = 1 := by
+  change nilpotent.inverse * (ContinuousLinearMap.id Real Ambient + operator) =
+    ContinuousLinearMap.id Real Ambient
   rw [inverse, canonicalScalarBirmanSchwingerGeometricSum_right,
     nilpotent.nilpotent]
   simp

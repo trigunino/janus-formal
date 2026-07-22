@@ -93,19 +93,27 @@ def canonicalScalarPerturbedKernelToBirmanSchwingerKernel
   toFun field :=
     ⟨canonicalScalarClosedLagrangianShiftedOperator
         data hClosable traceBound condition spectralParameter field.1, by
-      rw [LinearMap.mem_ker]
-      have hPerturbed := LinearMap.mem_ker.mp field.2
+      change canonicalScalarClosedLagrangianPerturbationFactor
+          data hClosable traceBound condition perturbation spectralParameter
+            baseResolvent
+          (canonicalScalarClosedLagrangianShiftedOperator
+            data hClosable traceBound condition spectralParameter field.1) = 0
+      have hPerturbed := field.2
+      change canonicalScalarClosedLagrangianPerturbedShiftedOperator
+        data hClosable traceBound condition perturbation spectralParameter
+          field.1 = 0 at hPerturbed
       have hFactorization := canonicalScalarClosedLagrangianPerturbedShift_factorization
         data hClosable traceBound condition perturbation spectralParameter
           baseResolvent field.1
-      rw [hPerturbed] at hFactorization
-      exact hFactorization.symm⟩
+      exact hFactorization.trans hPerturbed⟩
   map_add' first second := by
     apply Subtype.ext
-    simp
+    exact (canonicalScalarClosedLagrangianShiftedOperator
+      data hClosable traceBound condition spectralParameter).map_add _ _
   map_smul' scalar field := by
     apply Subtype.ext
-    simp
+    exact (canonicalScalarClosedLagrangianShiftedOperator
+      data hClosable traceBound condition spectralParameter).map_smul _ _
 
 /-- A Birman--Schwinger kernel source produces a perturbed bulk kernel vector by
 applying the base resolvent. -/
@@ -126,18 +134,20 @@ def canonicalScalarBirmanSchwingerKernelToPerturbedKernel
         data hClosable traceBound condition perturbation spectralParameter where
   toFun source :=
     ⟨baseResolvent.resolvent source.1, by
-      rw [LinearMap.mem_ker]
+      change canonicalScalarClosedLagrangianPerturbedShiftedOperator
+        data hClosable traceBound condition perturbation spectralParameter
+          (baseResolvent.resolvent source.1) = 0
       rw [← canonicalScalarClosedLagrangianPerturbedShift_factorization
         data hClosable traceBound condition perturbation spectralParameter
           baseResolvent,
         baseResolvent.left_inverse]
-      exact LinearMap.mem_ker.mp source.2⟩
+      exact source.2⟩
   map_add' first second := by
     apply Subtype.ext
-    simp
+    exact baseResolvent.resolvent.map_add _ _
   map_smul' scalar source := by
     apply Subtype.ext
-    simp
+    exact baseResolvent.resolvent.map_smul _ _
 
 /-- Exact Birman--Schwinger kernel equivalence. -/
 noncomputable def canonicalScalarPerturbedBirmanSchwingerKernelEquiv
@@ -199,22 +209,38 @@ theorem canonicalScalarPerturbedKernel_ne_bot_iff_birmanSchwinger
           baseResolvent ≠ ⊥ := by
   rw [Submodule.ne_bot_iff, Submodule.ne_bot_iff]
   constructor
-  · rintro ⟨field, hField⟩
-    refine ⟨canonicalScalarPerturbedBirmanSchwingerKernelEquiv
+  · rintro ⟨field, hFieldMem, hFieldNe⟩
+    let field' : canonicalScalarClosedLagrangianPerturbedKernel
+        data hClosable traceBound condition perturbation spectralParameter :=
+      ⟨field, hFieldMem⟩
+    let equivalence := canonicalScalarPerturbedBirmanSchwingerKernelEquiv
       data hClosable traceBound condition perturbation spectralParameter
-        baseResolvent field, ?_⟩
-    exact fun hZero => hField
-      ((canonicalScalarPerturbedBirmanSchwingerKernelEquiv
+        baseResolvent
+    let source' := equivalence field'
+    refine ⟨source'.1, source'.2, ?_⟩
+    intro hSourceZero
+    have hSourceSubtypeZero : source' = 0 := Subtype.ext hSourceZero
+    have hFieldSubtypeZero : field' = 0 := by
+      apply equivalence.injective
+      simpa [source'] using hSourceSubtypeZero
+    apply hFieldNe
+    simpa [field'] using congrArg Subtype.val hFieldSubtypeZero
+  · rintro ⟨source, hSourceMem, hSourceNe⟩
+    let source' : canonicalScalarClosedLagrangianBirmanSchwingerKernel
         data hClosable traceBound condition perturbation spectralParameter
-          baseResolvent).injective (by simpa using hZero))
-  · rintro ⟨source, hSource⟩
-    refine ⟨(canonicalScalarPerturbedBirmanSchwingerKernelEquiv
+          baseResolvent := ⟨source, hSourceMem⟩
+    let equivalence := canonicalScalarPerturbedBirmanSchwingerKernelEquiv
       data hClosable traceBound condition perturbation spectralParameter
-        baseResolvent).symm source, ?_⟩
-    exact fun hZero => hSource
-      ((canonicalScalarPerturbedBirmanSchwingerKernelEquiv
-        data hClosable traceBound condition perturbation spectralParameter
-          baseResolvent).symm.injective (by simpa using hZero))
+        baseResolvent
+    let field' := equivalence.symm source'
+    refine ⟨field'.1, field'.2, ?_⟩
+    intro hFieldZero
+    have hFieldSubtypeZero : field' = 0 := Subtype.ext hFieldZero
+    have hSourceSubtypeZero : source' = 0 := by
+      apply equivalence.symm.injective
+      simpa [field'] using hFieldSubtypeZero
+    apply hSourceNe
+    simpa [source'] using congrArg Subtype.val hSourceSubtypeZero
 
 /-- Finite-dimensional Birman--Schwinger kernel gives finite-dimensional
 perturbed eigenspace. -/

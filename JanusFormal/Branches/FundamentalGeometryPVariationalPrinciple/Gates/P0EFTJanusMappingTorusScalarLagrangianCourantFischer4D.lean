@@ -48,6 +48,13 @@ private abbrev LagrangianDomain
   canonicalScalarClosedLagrangianDomainSubmodule
     data hClosable traceBound condition
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+
 /-- Nonzero vectors of one trial subspace. -/
 def canonicalScalarTrialSubspaceNonzero
     (trial : Submodule Real
@@ -138,6 +145,12 @@ structure CanonicalScalarCourantFischerData
     canonicalScalarTrialSubspaceRayleighSup
         data hClosable traceBound condition (minimizingSubspace index) =
       enumeration.eigenvalue index
+
+variable
+  {closureData : CanonicalScalarLagrangianAnalyticClosureData
+    data hClosable traceBound condition}
+  {enumeration : CanonicalScalarPositiveSpectrumEnumeration
+    data hClosable traceBound condition closureData}
 
 namespace CanonicalScalarCourantFischerData
 

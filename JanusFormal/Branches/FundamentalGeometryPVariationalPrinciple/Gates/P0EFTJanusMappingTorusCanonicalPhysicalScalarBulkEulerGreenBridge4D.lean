@@ -32,7 +32,7 @@ open P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D
 open P0EFTJanusMappingTorusCutBulkGlobalGreenStokes4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Exact remaining bulk integration-by-parts comparison for the concrete
 physical Euler operator. -/

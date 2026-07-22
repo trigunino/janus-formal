@@ -210,7 +210,7 @@ theorem CanonicalScalarLagrangianAnalyticClosureData.referenceResolvent_spectral
     (closureData : CanonicalScalarLagrangianAnalyticClosureData
       data hClosable traceBound condition) :
     (⨆ eigenvalue : Real,
-      LinearMap.eigenspace
+      Module.End.eigenspace
         (closureData.compactResolvent.bounded.ambientResolvent
           data hClosable traceBound condition
             closureData.referenceParameter).toLinearMap eigenvalue)ᗮ = ⊥ :=
@@ -242,15 +242,15 @@ theorem canonicalScalarLagrangianAnalyticClosure_certificate
             data hClosable traceBound condition eigenvalue →
           closureData.semibounded.lowerBound ≤ eigenvalue) ∧
       (⨆ eigenvalue : Real,
-        LinearMap.eigenspace
+        Module.End.eigenspace
           (closureData.compactResolvent.bounded.ambientResolvent
             data hClosable traceBound condition
               closureData.referenceParameter).toLinearMap eigenvalue)ᗮ = ⊥ :=
   ⟨closureData.adjointDomain_eq data hClosable traceBound condition,
     closureData.fredholmAlternative data hClosable traceBound condition,
     closureData.eigenvalue_ge_lowerBound data hClosable traceBound condition,
-    closureData.referenceResolvent_spectral_complete
-      data hClosable traceBound condition⟩
+    CanonicalScalarLagrangianAnalyticClosureData.referenceResolvent_spectral_complete
+      data hClosable traceBound condition closureData⟩
 
 end
 end P0EFTJanusMappingTorusScalarLagrangianAnalyticClosure4D

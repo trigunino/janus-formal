@@ -1,5 +1,6 @@
 import Mathlib.LinearAlgebra.Determinant
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphInterfaceCoerciveGluing4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphBoundaryReducedAction4D
 
 /-!
 # Finite Galerkin reduction of scalar boundary Schur operators
@@ -26,6 +27,7 @@ open Set Topology Module
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D
+open P0EFTJanusMappingTorusScalarGraphBoundaryReducedAction4D
 open P0EFTJanusMappingTorusScalarGraphBoundarySpectrumReduction4D
 
 universe u v w z
@@ -41,6 +43,15 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Coefficient]
   [FiniteDimensional Real Coefficient]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {spectralParameter : Real}
+  {poissonData : CanonicalScalarGraphDirichletPoissonData
+    data traceBound spectralParameter}
+  {robin : Trace →L[Real] Trace}
+
 /-- Finite boundary Galerkin trial/test space. -/
 structure CanonicalScalarBoundaryGalerkinData where
   embed : Coefficient →L[Real] Trace
@@ -50,6 +61,9 @@ structure CanonicalScalarBoundaryGalerkinData where
   adjoint : ∀ coefficient boundary,
     inner Real (embed coefficient) boundary =
       inner Real coefficient (project boundary)
+
+variable {galerkin : CanonicalScalarBoundaryGalerkinData
+  (Trace := Trace) (Coefficient := Coefficient)}
 
 namespace CanonicalScalarBoundaryGalerkinData
 
@@ -95,9 +109,21 @@ theorem reduce_isSymmetric
     (hOperator : operator.toLinearMap.IsSymmetric) :
     (galerkin.reduce operator).toLinearMap.IsSymmetric := by
   intro first second
-  rw [← galerkin.adjoint first (operator (galerkin.embed second)),
-    ← galerkin.adjoint second (operator (galerkin.embed first)),
-    hOperator (galerkin.embed first) (galerkin.embed second)]
+  unfold reduce
+  change inner Real (galerkin.project (operator (galerkin.embed first))) second =
+    inner Real first (galerkin.project (operator (galerkin.embed second)))
+  calc
+    _ = inner Real second
+        (galerkin.project (operator (galerkin.embed first))) := real_inner_comm _ _
+    _ = inner Real (galerkin.embed second)
+        (operator (galerkin.embed first)) :=
+      (galerkin.adjoint second (operator (galerkin.embed first))).symm
+    _ = inner Real (operator (galerkin.embed first))
+        (galerkin.embed second) := real_inner_comm _ _
+    _ = inner Real (galerkin.embed first)
+        (operator (galerkin.embed second)) :=
+      hOperator (galerkin.embed first) (galerkin.embed second)
+    _ = _ := galerkin.adjoint first (operator (galerkin.embed second))
 
 /-- Projected Robin boundary Schur operator. -/
 def schur
@@ -234,6 +260,7 @@ theorem boundary_ne_zero
     mode.boundary ≠ 0 := by
   intro hZero
   apply mode.coefficient_ne_zero
+  change galerkin.embed mode.coefficient = 0 at hZero
   exact galerkin.embed_injective (by simpa using hZero)
 
 /-- A nonzero Galerkin boundary gives a nonzero Poisson field. -/
@@ -267,13 +294,11 @@ theorem exists_galerkinRobinMode_of_det_eq_zero
   have hKernel := (galerkin.schurDeterminant_eq_zero_iff
     data traceBound spectralParameter poissonData robin).1 hDet
   rw [Submodule.ne_bot_iff] at hKernel
-  rcases hKernel with ⟨coefficient, hCoefficient⟩
+  rcases hKernel with ⟨coefficient, hCoefficient, hCoefficientNonzero⟩
   exact ⟨{
-    coefficient := coefficient.1
-    coefficient_ne_zero := by
-      intro hZero
-      exact hCoefficient (Subtype.ext hZero)
-    projectedEquation := LinearMap.mem_ker.mp coefficient.2 }⟩
+    coefficient := coefficient
+    coefficient_ne_zero := hCoefficientNonzero
+    projectedEquation := LinearMap.mem_ker.mp hCoefficient }⟩
 
 /-- Galerkin boundary-reduction certificate. -/
 theorem canonicalScalarGraphBoundaryGalerkin_certificate

@@ -50,6 +50,13 @@ private abbrev LagrangianDomain
   canonicalScalarClosedLagrangianDomainSubmodule
     data hClosable traceBound condition
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+
 /-- Even domain coordinate. -/
 def canonicalScalarTwoSectorDomainEven
     (field : LagrangianDomain data hClosable traceBound condition ×
@@ -198,23 +205,23 @@ theorem canonicalScalarTwoSectorParentSourceAction_affine
         parameter ^ 2 *
           canonicalScalarTwoSectorParentQuadraticAction
             data hClosable traceBound condition coupling variation := by
+  have hFirst := canonicalScalarClosedLagrangianQuadraticFunctional_affine
+    data hClosable traceBound condition field.1 variation.1 parameter
+  have hSecond := canonicalScalarClosedLagrangianQuadraticFunctional_affine
+    data hClosable traceBound condition field.2 variation.2 parameter
+  simp only [canonicalScalarClosedLagrangianAffineCurve] at hFirst hSecond
   unfold canonicalScalarTwoSectorParentSourceAction
     canonicalScalarTwoSectorParentQuadraticAction
-  simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
-    canonicalScalarClosedLagrangianQuadraticFunctional_affine,
-    canonicalScalarClosedLagrangianMassPairing,
+  simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd]
+  rw [hFirst, hSecond]
+  simp only [canonicalScalarClosedLagrangianMassPairing,
     map_add, map_smul, inner_add_left, inner_add_right,
     real_inner_smul_left, real_inner_smul_right]
   rw [real_inner_comm
       (canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition variation.1)
       (canonicalScalarClosedLagrangianDomainInclusion
-        data hClosable traceBound condition field.2),
-    real_inner_comm
-      (canonicalScalarClosedLagrangianDomainInclusion
-        data hClosable traceBound condition field.1)
-      (canonicalScalarClosedLagrangianDomainInclusion
-        data hClosable traceBound condition variation.2)]
+        data hClosable traceBound condition field.2)]
   ring
 
 /-- Strong coupled equations imply weak stationarity. -/
@@ -235,10 +242,10 @@ theorem canonicalScalarTwoSectorStrongSolution_stationary
   constructor
   · unfold canonicalScalarClosedLagrangianJacobiPairing
       canonicalScalarClosedLagrangianMassPairing
-    rw [← inner_add_left, hSolution.1]
+    rw [← real_inner_smul_left, ← inner_add_left, hSolution.1]
   · unfold canonicalScalarClosedLagrangianJacobiPairing
       canonicalScalarClosedLagrangianMassPairing
-    rw [← inner_add_left, hSolution.2]
+    rw [← real_inner_smul_left, ← inner_add_left, hSolution.2]
 
 /-- Dense weak stationarity implies the strong coupled equations. -/
 theorem canonicalScalarTwoSectorStationary_strongSolution
@@ -261,33 +268,41 @@ theorem canonicalScalarTwoSectorStationary_strongSolution
   · let effectiveSource := source.1 - coupling •
       canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition field.2
-    apply canonicalScalarClosedLagrangian_stationary_sourceSolution
-      data hClosable traceBound condition effectiveSource field.1 hDense
-    intro variation
-    have h := (hStationary (variation, 0)).1
-    unfold canonicalScalarClosedLagrangianMassPairing at h
-    change canonicalScalarClosedLagrangianJacobiPairing
-          data hClosable traceBound condition field.1 variation =
-      inner Real effectiveSource
-        (canonicalScalarClosedLagrangianDomainInclusion
-          data hClosable traceBound condition variation)
-    rw [inner_sub_left, real_inner_smul_left]
-    linarith
+    have hOperator :=
+      canonicalScalarClosedLagrangian_stationary_sourceSolution
+        data hClosable traceBound condition effectiveSource field.1 hDense (by
+          intro variation
+          have h := (hStationary (variation, 0)).1
+          unfold canonicalScalarClosedLagrangianMassPairing at h
+          change canonicalScalarClosedLagrangianJacobiPairing
+                data hClosable traceBound condition field.1 variation =
+            inner Real effectiveSource
+              (canonicalScalarClosedLagrangianDomainInclusion
+                data hClosable traceBound condition variation)
+          rw [inner_sub_left, real_inner_smul_left]
+          linarith)
+    dsimp [effectiveSource] at hOperator
+    rw [hOperator]
+    module
   · let effectiveSource := source.2 - coupling •
       canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition field.1
-    apply canonicalScalarClosedLagrangian_stationary_sourceSolution
-      data hClosable traceBound condition effectiveSource field.2 hDense
-    intro variation
-    have h := (hStationary (0, variation)).2
-    unfold canonicalScalarClosedLagrangianMassPairing at h
-    change canonicalScalarClosedLagrangianJacobiPairing
-          data hClosable traceBound condition field.2 variation =
-      inner Real effectiveSource
-        (canonicalScalarClosedLagrangianDomainInclusion
-          data hClosable traceBound condition variation)
-    rw [inner_sub_left, real_inner_smul_left]
-    linarith
+    have hOperator :=
+      canonicalScalarClosedLagrangian_stationary_sourceSolution
+        data hClosable traceBound condition effectiveSource field.2 hDense (by
+          intro variation
+          have h := (hStationary (0, variation)).2
+          unfold canonicalScalarClosedLagrangianMassPairing at h
+          change canonicalScalarClosedLagrangianJacobiPairing
+                data hClosable traceBound condition field.2 variation =
+            inner Real effectiveSource
+              (canonicalScalarClosedLagrangianDomainInclusion
+                data hClosable traceBound condition variation)
+          rw [inner_sub_left, real_inner_smul_left]
+          linarith)
+    dsimp [effectiveSource] at hOperator
+    rw [hOperator]
+    module
 
 /-- Weak and strong two-sector equations are equivalent under density. -/
 theorem canonicalScalarTwoSectorStationary_iff_strongSolution
@@ -354,10 +369,60 @@ theorem canonicalScalarTwoSectorStrongSolution_iff_even_odd
     constructor
     · have hSum := hDiagonal.1
       have hDiff := hDiagonal.2
-      module at hSum hDiff ⊢
+      calc
+        canonicalScalarClosedLagrangianDomainOperator
+              data hClosable traceBound condition
+              (canonicalScalarTwoSectorDomainEven field +
+                canonicalScalarTwoSectorDomainOdd field) +
+            coupling • canonicalScalarClosedLagrangianDomainInclusion
+              data hClosable traceBound condition
+              (canonicalScalarTwoSectorDomainEven field -
+                canonicalScalarTwoSectorDomainOdd field) =
+            (canonicalScalarClosedLagrangianDomainOperator
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainEven field) +
+              coupling • canonicalScalarClosedLagrangianDomainInclusion
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainEven field)) +
+            (canonicalScalarClosedLagrangianDomainOperator
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainOdd field) -
+              coupling • canonicalScalarClosedLagrangianDomainInclusion
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainOdd field)) := by
+                  simp only [map_add, map_sub, smul_sub]
+                  module
+        _ = (1 / 2 : Real) • (source.1 + source.2) +
+            (1 / 2 : Real) • (source.1 - source.2) := by rw [hSum, hDiff]
+        _ = source.1 := by module
     · have hSum := hDiagonal.1
       have hDiff := hDiagonal.2
-      module at hSum hDiff ⊢
+      calc
+        canonicalScalarClosedLagrangianDomainOperator
+              data hClosable traceBound condition
+              (canonicalScalarTwoSectorDomainEven field -
+                canonicalScalarTwoSectorDomainOdd field) +
+            coupling • canonicalScalarClosedLagrangianDomainInclusion
+              data hClosable traceBound condition
+              (canonicalScalarTwoSectorDomainEven field +
+                canonicalScalarTwoSectorDomainOdd field) =
+            (canonicalScalarClosedLagrangianDomainOperator
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainEven field) +
+              coupling • canonicalScalarClosedLagrangianDomainInclusion
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainEven field)) -
+            (canonicalScalarClosedLagrangianDomainOperator
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainOdd field) -
+              coupling • canonicalScalarClosedLagrangianDomainInclusion
+                data hClosable traceBound condition
+                (canonicalScalarTwoSectorDomainOdd field)) := by
+                  simp only [map_add, map_sub, smul_add]
+                  module
+        _ = (1 / 2 : Real) • (source.1 + source.2) -
+            (1 / 2 : Real) • (source.1 - source.2) := by rw [hSum, hDiff]
+        _ = source.2 := by module
 
 /-- Diagonalization of the unsourced parent quadratic action. -/
 theorem canonicalScalarTwoSectorParentQuadraticAction_diagonalization
@@ -384,12 +449,12 @@ theorem canonicalScalarTwoSectorParentQuadraticAction_diagonalization
           data hClosable traceBound condition
           (canonicalScalarTwoSectorDomainOdd field) := by
   have hReconstruct := canonicalScalarTwoSectorDomain_reconstruction field
-  rw [hReconstruct]
+  nth_rewrite 1 [hReconstruct]
   unfold canonicalScalarTwoSectorParentQuadraticAction
     canonicalScalarClosedLagrangianQuadraticFunctional
     canonicalScalarClosedLagrangianJacobiPairing
-    canonicalScalarClosedLagrangianMassPairing
     canonicalScalarClosedLagrangianMassFunctional
+    canonicalScalarClosedLagrangianMassPairing
   simp only [map_add, map_sub, inner_add_left, inner_add_right,
     inner_sub_left, inner_sub_right]
   rw [canonicalScalarClosedLagrangianDomainOperator_symmetric

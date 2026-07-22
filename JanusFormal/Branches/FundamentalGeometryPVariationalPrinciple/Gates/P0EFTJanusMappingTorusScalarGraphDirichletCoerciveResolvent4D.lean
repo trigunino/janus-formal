@@ -36,6 +36,12 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {spectralParameter : Real}
+
 /-- Shifted graph relation restricted to the completed Dirichlet domain. -/
 def canonicalScalarGraphDirichletShiftedOperator
     (data : CanonicalScalarHilbertGreenSystem
@@ -86,7 +92,16 @@ theorem CanonicalScalarGraphDirichletCoerciveSurjectiveData.injective
   intro first second hEqual
   have hZero : canonicalScalarGraphDirichletShiftedOperator
       data traceBound spectralParameter (first - second) = 0 := by
-    rw [map_sub, hEqual, sub_self]
+    calc
+      canonicalScalarGraphDirichletShiftedOperator
+          data traceBound spectralParameter (first - second) =
+        canonicalScalarGraphDirichletShiftedOperator
+            data traceBound spectralParameter first -
+          canonicalScalarGraphDirichletShiftedOperator
+            data traceBound spectralParameter second :=
+        (canonicalScalarGraphDirichletShiftedOperator
+          data traceBound spectralParameter).map_sub first second
+      _ = 0 := sub_eq_zero.mpr hEqual
   have hBound := coercive.lower_bound (first - second)
   rw [hZero, norm_zero] at hBound
   have hNorm : ‖first - second‖ = 0 := by
@@ -160,8 +175,14 @@ noncomputable def CanonicalScalarGraphDirichletCoerciveSurjectiveData.resolvent
       data traceBound spectralParameter) :
     Ambient →L[Real]
       canonicalScalarCompletedDirichletDomainSubmodule data traceBound :=
-  coercive.algebraicResolvent.mkContinuous
-    coercive.constant⁻¹ coercive.resolvent_norm_le
+  LinearMap.mkContinuous
+    (𝕜 := Real) (𝕜₂ := Real)
+    (E := Ambient)
+    (F := canonicalScalarCompletedDirichletDomainSubmodule data traceBound)
+    (σ := RingHom.id Real)
+    (coercive.algebraicResolvent : Ambient →ₗ[Real]
+      canonicalScalarCompletedDirichletDomainSubmodule data traceBound)
+    coercive.constant⁻¹ (fun source => coercive.resolvent_norm_le source)
 
 /-- Continuous graph-valued Dirichlet resolvent. -/
 noncomputable def CanonicalScalarGraphDirichletCoerciveSurjectiveData.graphResolvent
@@ -180,22 +201,35 @@ noncomputable def CanonicalScalarGraphDirichletCoerciveSurjectiveData.toDirichle
   resolvent := coercive.graphResolvent
   equation := by
     intro source
-    exact coercive.shift_resolvent source
+    change canonicalScalarGraphDirichletShiftedOperator
+      data traceBound spectralParameter (coercive.resolvent source) = source
+    simpa [CanonicalScalarGraphDirichletCoerciveSurjectiveData.resolvent] using
+      coercive.shift_resolvent source
   value_zero := by
     intro source
-    exact (coercive.resolvent source).2
+    change canonicalScalarCompletedValueTrace data traceBound
+      (coercive.resolvent source).1 = 0
+    exact (mem_canonicalScalarCompletedDirichletDomainSubmodule
+      data traceBound (coercive.resolvent source).1).1
+        (coercive.resolvent source).2
   unique := by
     intro field source hEquation hValue
     let dirichletField : canonicalScalarCompletedDirichletDomainSubmodule
         data traceBound := ⟨field,
       (mem_canonicalScalarCompletedDirichletDomainSubmodule
         data traceBound field).2 hValue⟩
-    apply Subtype.ext_iff.mp
+    change field = (coercive.resolvent source).1
     have hInverse := coercive.resolvent_shift dirichletField
     rw [show canonicalScalarGraphDirichletShiftedOperator
         data traceBound spectralParameter dirichletField = source by
       exact hEquation] at hInverse
-    exact congrArg Subtype.val hInverse
+    calc
+      field = dirichletField.1 := rfl
+      _ = (coercive.algebraicResolvent source).1 :=
+        congrArg
+          (fun value : canonicalScalarCompletedDirichletDomainSubmodule
+            data traceBound => value.1) hInverse.symm
+      _ = (coercive.resolvent source).1 := rfl
 
 /-- Coercive Dirichlet resolvent certificate. -/
 theorem canonicalScalarGraphDirichletCoerciveResolvent_certificate

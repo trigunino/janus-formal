@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianVariationalEigenprinciple4D
+import Mathlib.Analysis.InnerProductSpace.ProdL2
 
 /-!
 # Direct sums of scalar Hilbert boundary conditions
@@ -30,16 +31,18 @@ universe u v
 
 variable {TraceLeft : Type u} {TraceRight : Type v}
   [NormedAddCommGroup TraceLeft] [InnerProductSpace Real TraceLeft]
+  [CompleteSpace TraceLeft]
   [NormedAddCommGroup TraceRight] [InnerProductSpace Real TraceRight]
+  [CompleteSpace TraceRight]
 
-private abbrev CombinedTrace := TraceLeft × TraceRight
+private abbrev CombinedTrace := WithLp 2 (TraceLeft × TraceRight)
 
 /-- Left component of a paired boundary datum on a product trace space. -/
 def canonicalScalarHilbertBoundaryDatumLeft :
     CanonicalScalarHilbertBoundaryDatum
         (Trace := CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight)) →L[Real]
       CanonicalScalarHilbertBoundaryDatum (Trace := TraceLeft) where
-  toFun datum := (datum.1.1, datum.2.1)
+  toFun datum := (datum.1.fst, datum.2.fst)
   map_add' first second := by ext <;> rfl
   map_smul' scalar datum := by ext <;> rfl
   cont := by fun_prop
@@ -49,7 +52,7 @@ def canonicalScalarHilbertBoundaryDatumRight :
     CanonicalScalarHilbertBoundaryDatum
         (Trace := CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight)) →L[Real]
       CanonicalScalarHilbertBoundaryDatum (Trace := TraceRight) where
-  toFun datum := (datum.1.2, datum.2.2)
+  toFun datum := (datum.1.snd, datum.2.snd)
   map_add' first second := by ext <;> rfl
   map_smul' scalar datum := by ext <;> rfl
   cont := by fun_prop
@@ -58,14 +61,14 @@ def canonicalScalarHilbertBoundaryDatumRight :
     (datum : CanonicalScalarHilbertBoundaryDatum
       (Trace := CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight))) :
     canonicalScalarHilbertBoundaryDatumLeft datum =
-      (datum.1.1, datum.2.1) :=
+      (datum.1.fst, datum.2.fst) :=
   rfl
 
 @[simp] theorem canonicalScalarHilbertBoundaryDatumRight_apply
     (datum : CanonicalScalarHilbertBoundaryDatum
       (Trace := CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight))) :
     canonicalScalarHilbertBoundaryDatumRight datum =
-      (datum.1.2, datum.2.2) :=
+      (datum.1.snd, datum.2.snd) :=
   rfl
 
 /-- The product Green form is the sum of the two component Green forms. -/
@@ -94,7 +97,7 @@ noncomputable def CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
     { carrier := {datum |
         canonicalScalarHilbertBoundaryDatumLeft datum ∈ left.subspace ∧
           canonicalScalarHilbertBoundaryDatumRight datum ∈ right.subspace}
-      zero_mem' := by simp
+      zero_mem' := ⟨left.subspace.zero_mem, right.subspace.zero_mem⟩
       add_mem' := by
         intro first second hFirst hSecond
         exact ⟨left.subspace.add_mem hFirst.1 hSecond.1,
@@ -134,22 +137,9 @@ noncomputable def CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
         let combinedTest : CanonicalScalarHilbertBoundaryDatum
             (Trace := CombinedTrace (TraceLeft := TraceLeft)
               (TraceRight := TraceRight)) :=
-          ((test.1, 0), (test.2, 0))
-        have hCombined : combinedTest ∈
-            { carrier := {candidate |
-                canonicalScalarHilbertBoundaryDatumLeft candidate ∈ left.subspace ∧
-                  canonicalScalarHilbertBoundaryDatumRight candidate ∈ right.subspace}
-              zero_mem' := by simp
-              add_mem' := by
-                intro first second hFirst hSecond
-                exact ⟨left.subspace.add_mem hFirst.1 hSecond.1,
-                  right.subspace.add_mem hFirst.2 hSecond.2⟩
-              smul_mem' := by
-                intro scalar candidate hCandidate
-                exact ⟨left.subspace.smul_mem scalar hCandidate.1,
-                  right.subspace.smul_mem scalar hCandidate.2⟩ } := by
-          exact ⟨hTest, right.subspace.zero_mem⟩
-        have hOrth := hDatum combinedTest hCombined
+          (WithLp.toLp 2 (test.1, 0), WithLp.toLp 2 (test.2, 0))
+        have hOrth := hDatum combinedTest (by
+          exact ⟨hTest, right.subspace.zero_mem⟩)
         rw [canonicalScalarHilbertBoundarySymplecticForm_directSum] at hOrth
         dsimp [combinedTest] at hOrth
         simpa using hOrth
@@ -158,22 +148,9 @@ noncomputable def CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
         let combinedTest : CanonicalScalarHilbertBoundaryDatum
             (Trace := CombinedTrace (TraceLeft := TraceLeft)
               (TraceRight := TraceRight)) :=
-          ((0, test.1), (0, test.2))
-        have hCombined : combinedTest ∈
-            { carrier := {candidate |
-                canonicalScalarHilbertBoundaryDatumLeft candidate ∈ left.subspace ∧
-                  canonicalScalarHilbertBoundaryDatumRight candidate ∈ right.subspace}
-              zero_mem' := by simp
-              add_mem' := by
-                intro first second hFirst hSecond
-                exact ⟨left.subspace.add_mem hFirst.1 hSecond.1,
-                  right.subspace.add_mem hFirst.2 hSecond.2⟩
-              smul_mem' := by
-                intro scalar candidate hCandidate
-                exact ⟨left.subspace.smul_mem scalar hCandidate.1,
-                  right.subspace.smul_mem scalar hCandidate.2⟩ } := by
-          exact ⟨left.subspace.zero_mem, hTest⟩
-        have hOrth := hDatum combinedTest hCombined
+          (WithLp.toLp 2 (0, test.1), WithLp.toLp 2 (0, test.2))
+        have hOrth := hDatum combinedTest (by
+          exact ⟨left.subspace.zero_mem, hTest⟩)
         rw [canonicalScalarHilbertBoundarySymplecticForm_directSum] at hOrth
         dsimp [combinedTest] at hOrth
         simpa using hOrth
@@ -193,9 +170,13 @@ def canonicalScalarHilbertRobinOperatorDirectSum
     (right : TraceRight →L[Real] TraceRight) :
     CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight) →L[Real]
       CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight) where
-  toFun value := (left value.1, right value.2)
-  map_add' first second := by ext <;> simp
-  map_smul' scalar value := by ext <;> simp
+  toFun value := WithLp.toLp 2 (left value.fst, right value.snd)
+  map_add' first second := by
+    apply (WithLp.equiv 2 (TraceLeft × TraceRight)).injective
+    ext <;> simp
+  map_smul' scalar value := by
+    apply (WithLp.equiv 2 (TraceLeft × TraceRight)).injective
+    ext <;> simp
   cont := by fun_prop
 
 @[simp] theorem canonicalScalarHilbertRobinOperatorDirectSum_apply
@@ -203,7 +184,7 @@ def canonicalScalarHilbertRobinOperatorDirectSum
     (right : TraceRight →L[Real] TraceRight)
     (value : CombinedTrace (TraceLeft := TraceLeft) (TraceRight := TraceRight)) :
     canonicalScalarHilbertRobinOperatorDirectSum left right value =
-      (left value.1, right value.2) :=
+      WithLp.toLp 2 (left value.fst, right value.snd) :=
   rfl
 
 /-- Block-diagonal sum of symmetric Robin operators is symmetric. -/
@@ -214,8 +195,13 @@ theorem canonicalScalarHilbertRobinOperatorDirectSum_isSymmetric
     (hRight : right.toLinearMap.IsSymmetric) :
     (canonicalScalarHilbertRobinOperatorDirectSum left right).toLinearMap.IsSymmetric := by
   intro first second
-  simp [canonicalScalarHilbertRobinOperatorDirectSum,
-    hLeft first.1 second.1, hRight first.2 second.2]
+  change inner Real
+      (WithLp.toLp 2 (left first.fst, right first.snd)) second =
+    inner Real first
+      (WithLp.toLp 2 (left second.fst, right second.snd))
+  rw [WithLp.prod_inner_apply, WithLp.prod_inner_apply]
+  exact congrArg₂ (· + ·) (hLeft first.fst second.fst)
+    (hRight first.snd second.snd)
 
 /-- Direct sum of two Robin-graph conditions is the Robin graph of the
 block-diagonal sum. -/
@@ -224,36 +210,54 @@ theorem canonicalScalarHilbertLagrangianBoundaryCondition_directSum_robinGraph
     (right : TraceRight →L[Real] TraceRight)
     (hLeft : left.toLinearMap.IsSymmetric)
     (hRight : right.toLinearMap.IsSymmetric) :
-    (CanonicalScalarHilbertLagrangianBoundaryCondition.robinGraph left hLeft).directSum
-        (CanonicalScalarHilbertLagrangianBoundaryCondition.robinGraph right hRight) |>.subspace =
+    (CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+      (CanonicalScalarHilbertLagrangianBoundaryCondition.robinGraph left hLeft)
+      (CanonicalScalarHilbertLagrangianBoundaryCondition.robinGraph right hRight)).subspace =
       (CanonicalScalarHilbertLagrangianBoundaryCondition.robinGraph
         (canonicalScalarHilbertRobinOperatorDirectSum left right)
         (canonicalScalarHilbertRobinOperatorDirectSum_isSymmetric
           left right hLeft hRight)).subspace := by
   ext datum
   change
-    (datum.2.1 = left datum.1.1 ∧ datum.2.2 = right datum.1.2) ↔
-      datum.2 = (left datum.1.1, right datum.1.2)
+    (canonicalScalarHilbertBoundaryDatumLeft datum ∈
+          canonicalScalarHilbertRobinGraphSubmodule left ∧
+        canonicalScalarHilbertBoundaryDatumRight datum ∈
+          canonicalScalarHilbertRobinGraphSubmodule right) ↔
+      datum ∈ canonicalScalarHilbertRobinGraphSubmodule
+        (canonicalScalarHilbertRobinOperatorDirectSum left right)
+  rw [mem_canonicalScalarHilbertRobinGraphSubmodule,
+    mem_canonicalScalarHilbertRobinGraphSubmodule,
+    mem_canonicalScalarHilbertRobinGraphSubmodule]
+  change
+    (datum.2.fst = left datum.1.fst ∧
+        datum.2.snd = right datum.1.snd) ↔
+      datum.2 = WithLp.toLp 2 (left datum.1.fst, right datum.1.snd)
   constructor
   · intro h
+    apply (WithLp.equiv 2 (TraceLeft × TraceRight)).injective
     exact Prod.ext h.1 h.2
   · intro h
-    exact ⟨congrArg Prod.fst h, congrArg Prod.snd h⟩
+    exact ⟨congrArg WithLp.fst h, congrArg WithLp.snd h⟩
 
 /-- Direct-sum closure certificate. -/
 theorem canonicalScalarHilbertBoundaryDirectSum_certificate
     (left : CanonicalScalarHilbertLagrangianBoundaryCondition TraceLeft)
     (right : CanonicalScalarHilbertLagrangianBoundaryCondition TraceRight) :
     IsClosed
-        ((left.directSum right).subspace :
+        ((CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+            left right).subspace :
           Set (CanonicalScalarHilbertBoundaryDatum
             (Trace := CombinedTrace (TraceLeft := TraceLeft)
               (TraceRight := TraceRight)))) ∧
       canonicalScalarHilbertBoundarySymplecticOrthogonal
-          (left.directSum right).subspace =
-        (left.directSum right).subspace :=
-  ⟨(left.directSum right).isClosed,
-    (left.directSum right).lagrangian⟩
+          (CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+            left right).subspace =
+        (CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+          left right).subspace :=
+  ⟨(CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+      left right).isClosed,
+    (CanonicalScalarHilbertLagrangianBoundaryCondition.directSum
+      left right).lagrangian⟩
 
 end
 end P0EFTJanusMappingTorusScalarHilbertBoundaryDirectSum4D

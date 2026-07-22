@@ -38,6 +38,13 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w} {Mode : Type z}
   [CompleteSpace Trace]
   [Fintype Mode] [DecidableEq Mode]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+
 /-- Frequency data for a nonnegative finite spectral packet. -/
 structure CanonicalScalarFiniteWavePacket
     (packet : CanonicalScalarFiniteSpectralPacket
@@ -45,6 +52,10 @@ structure CanonicalScalarFiniteWavePacket
   frequency : Mode → Real
   frequency_nonnegative : ∀ mode, 0 ≤ frequency mode
   frequency_sq : ∀ mode, frequency mode ^ 2 = packet.eigenvalue mode
+
+variable
+  {packet : CanonicalScalarFiniteSpectralPacket
+    data hClosable traceBound condition Mode}
 
 namespace CanonicalScalarFiniteWavePacket
 
@@ -126,17 +137,29 @@ theorem positionCoefficient_hasDerivAt
       (fun currentTime =>
         wave.positionCoefficient initialPosition initialSine currentTime mode)
       (wave.velocityCoefficient initialPosition initialSine time mode) time := by
-  unfold positionCoefficient velocityCoefficient
-  convert
+  have hArgument : HasDerivAt
+      (fun currentTime : Real => wave.frequency mode * currentTime)
+      (wave.frequency mode) time :=
+    hasDerivAt_const_mul (wave.frequency mode)
+  have hRaw :=
     ((((Real.hasDerivAt_cos
       (wave.frequency mode * time)).comp time
-        ((hasDerivAt_const (x := time) (wave.frequency mode)).mul
-          (hasDerivAt_id time))).mul_const (initialPosition mode)).add
+        hArgument).mul_const (initialPosition mode)).add
       (((Real.hasDerivAt_sin
         (wave.frequency mode * time)).comp time
-          ((hasDerivAt_const (x := time) (wave.frequency mode)).mul
-            (hasDerivAt_id time))).mul_const (initialSine mode))) using 1 <;>
-    ring
+          hArgument).mul_const (initialSine mode)))
+  have hDerivative : HasDerivAt
+      (fun currentTime =>
+        wave.positionCoefficient initialPosition initialSine currentTime mode)
+      ((-Real.sin (wave.frequency mode * time) * wave.frequency mode) *
+          initialPosition mode +
+        (Real.cos (wave.frequency mode * time) * wave.frequency mode) *
+          initialSine mode) time :=
+    hRaw.congr_of_eventuallyEq
+      (Filter.Eventually.of_forall (fun _currentTime => rfl))
+  apply hDerivative.congr_deriv
+  unfold velocityCoefficient
+  ring
 
 /-- Derivative of every velocity coefficient. -/
 theorem velocityCoefficient_hasDerivAt
@@ -147,19 +170,33 @@ theorem velocityCoefficient_hasDerivAt
       (fun currentTime =>
         wave.velocityCoefficient initialPosition initialSine currentTime mode)
       (wave.accelerationCoefficient initialPosition initialSine time mode) time := by
-  unfold velocityCoefficient accelerationCoefficient positionCoefficient
-  convert
+  have hArgument : HasDerivAt
+      (fun currentTime : Real => wave.frequency mode * currentTime)
+      (wave.frequency mode) time :=
+    hasDerivAt_const_mul (wave.frequency mode)
+  have hRaw :=
     (((((Real.hasDerivAt_sin
       (wave.frequency mode * time)).comp time
-        ((hasDerivAt_const (x := time) (wave.frequency mode)).mul
-          (hasDerivAt_id time))).const_mul (-wave.frequency mode)).mul_const
+        hArgument).const_mul (-wave.frequency mode)).mul_const
             (initialPosition mode)).add
       ((((Real.hasDerivAt_cos
         (wave.frequency mode * time)).comp time
-          ((hasDerivAt_const (x := time) (wave.frequency mode)).mul
-            (hasDerivAt_id time))).const_mul (wave.frequency mode)).mul_const
-              (initialSine mode))) using 1 <;>
-    ring
+          hArgument).const_mul (wave.frequency mode)).mul_const
+              (initialSine mode)))
+  have hDerivative : HasDerivAt
+      (fun currentTime =>
+        wave.velocityCoefficient initialPosition initialSine currentTime mode)
+      (((-wave.frequency mode) *
+          (Real.cos (wave.frequency mode * time) * wave.frequency mode)) *
+          initialPosition mode +
+        (wave.frequency mode *
+          (-Real.sin (wave.frequency mode * time) * wave.frequency mode)) *
+          initialSine mode) time :=
+    hRaw.congr_of_eventuallyEq
+      (Filter.Eventually.of_forall (fun _currentTime => rfl))
+  apply hDerivative.congr_deriv
+  unfold accelerationCoefficient positionCoefficient
+  ring
 
 /-- Operator image of the wave packet. -/
 theorem operator_field
@@ -188,10 +225,11 @@ theorem acceleration_generator_identity
       -canonicalScalarClosedLagrangianDomainOperator
         data hClosable traceBound condition
         (wave.field initialPosition initialSine time) := by
-  rw [packet.inclusion_field, wave.operator_field]
+  unfold accelerationField field
+  rw [packet.inclusion_field, packet.operator_field]
   unfold CanonicalScalarFiniteSpectralPacket.ambientField
-    accelerationField accelerationCoefficient
-  simp only [Finset.sum_neg_distrib]
+    accelerationCoefficient
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
   intro mode _
   rw [wave.frequency_sq]
@@ -218,8 +256,12 @@ theorem modalEnergy_eq_initial
   unfold modalEnergy velocityCoefficient positionCoefficient
   rw [← wave.frequency_sq mode]
   have hTrig := Real.sin_sq_add_cos_sq (wave.frequency mode * time)
-  ring_nf at hTrig ⊢
-  nlinarith
+  calc
+    _ = (1 / 2 : Real) * wave.frequency mode ^ 2 *
+        (Real.sin (wave.frequency mode * time) ^ 2 +
+          Real.cos (wave.frequency mode * time) ^ 2) *
+        (initialPosition mode ^ 2 + initialSine mode ^ 2) := by ring
+    _ = _ := by rw [hTrig]; ring
 
 /-- Total finite-mode energy. -/
 def energy

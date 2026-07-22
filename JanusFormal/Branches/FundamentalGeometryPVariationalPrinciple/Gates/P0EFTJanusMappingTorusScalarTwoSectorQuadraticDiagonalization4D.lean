@@ -31,30 +31,42 @@ universe u
 variable {Hilbert : Type u}
   [NormedAddCommGroup Hilbert] [InnerProductSpace Real Hilbert]
 
+private abbrev SectorPair := WithLp 2 (Hilbert × Hilbert)
+
 /-- Diagonal operator on two identical sectors. -/
 def canonicalScalarTwoSectorDiagonalOperator
     (operator : Hilbert →L[Real] Hilbert) :
-    Hilbert × Hilbert →L[Real] Hilbert × Hilbert where
-  toFun field := (operator field.1, operator field.2)
-  map_add' first second := by ext <;> simp
-  map_smul' scalar field := by ext <;> simp
+    SectorPair (Hilbert := Hilbert) →L[Real]
+      SectorPair (Hilbert := Hilbert) where
+  toFun field := WithLp.toLp 2 (operator field.fst, operator field.snd)
+  map_add' first second := by
+    apply (WithLp.equiv 2 (Hilbert × Hilbert)).injective
+    ext <;> simp
+  map_smul' scalar field := by
+    apply (WithLp.equiv 2 (Hilbert × Hilbert)).injective
+    ext <;> simp
   cont := by fun_prop
 
 /-- Coupled two-sector operator `diag(A,A) + kappa exchange`. -/
 def canonicalScalarTwoSectorCoupledOperator
     (operator : Hilbert →L[Real] Hilbert)
     (coupling : Real) :
-    Hilbert × Hilbert →L[Real] Hilbert × Hilbert :=
+    SectorPair (Hilbert := Hilbert) →L[Real]
+      SectorPair (Hilbert := Hilbert) :=
   canonicalScalarTwoSectorDiagonalOperator operator +
     canonicalScalarTwoSectorMixingOperator coupling
 
 @[simp] theorem canonicalScalarTwoSectorCoupledOperator_apply
     (operator : Hilbert →L[Real] Hilbert)
-    (coupling : Real) (field : Hilbert × Hilbert) :
+    (coupling : Real) (field : SectorPair (Hilbert := Hilbert)) :
     canonicalScalarTwoSectorCoupledOperator operator coupling field =
-      (operator field.1 + coupling • field.2,
-        operator field.2 + coupling • field.1) :=
-  rfl
+      WithLp.toLp 2
+        (operator field.fst + coupling • field.snd,
+          operator field.snd + coupling • field.fst) := by
+  apply (WithLp.equiv 2 (Hilbert × Hilbert)).injective
+  ext <;> simp [canonicalScalarTwoSectorCoupledOperator,
+    canonicalScalarTwoSectorDiagonalOperator,
+    canonicalScalarTwoSectorMixingOperator]
 
 /-- Symmetry of the coupled two-sector operator. -/
 theorem canonicalScalarTwoSectorCoupledOperator_isSymmetric
@@ -63,48 +75,59 @@ theorem canonicalScalarTwoSectorCoupledOperator_isSymmetric
     (coupling : Real) :
     (canonicalScalarTwoSectorCoupledOperator operator coupling).toLinearMap.IsSymmetric := by
   intro first second
-  simp only [canonicalScalarTwoSectorCoupledOperator_apply,
-    inner_add_left, inner_add_right, real_inner_smul_left,
+  change
+    (inner Real (operator first.fst + coupling • first.snd) second.fst +
+      inner Real (operator first.snd + coupling • first.fst) second.snd) =
+    (inner Real first.fst (operator second.fst + coupling • second.snd) +
+      inner Real first.snd (operator second.snd + coupling • second.fst))
+  simp only [inner_add_left, inner_add_right, real_inner_smul_left,
     real_inner_smul_right]
-  rw [hOperator first.1 second.1, hOperator first.2 second.2]
-  have hCrossFirst := real_inner_comm first.2 second.1
-  have hCrossSecond := real_inner_comm first.1 second.2
-  linarith
+  have hFirst := hOperator first.fst second.fst
+  have hSecond := hOperator first.snd second.snd
+  change inner Real (operator first.fst) second.fst =
+    inner Real first.fst (operator second.fst) at hFirst
+  change inner Real (operator first.snd) second.snd =
+    inner Real first.snd (operator second.snd) at hSecond
+  linear_combination hFirst + hSecond
 
 /-- Even coordinate `(x+y)/2`. -/
 def canonicalScalarTwoSectorEvenCoordinate :
-    Hilbert × Hilbert →L[Real] Hilbert :=
-  (1 / 2 : Real) •
-    (ContinuousLinearMap.fst Real Hilbert Hilbert +
-      ContinuousLinearMap.snd Real Hilbert Hilbert)
+    SectorPair (Hilbert := Hilbert) →L[Real] Hilbert where
+  toFun field := (1 / 2 : Real) • (field.fst + field.snd)
+  map_add' first second := by simp; module
+  map_smul' scalar field := by simp; module
+  cont := by fun_prop
 
 /-- Odd coordinate `(x-y)/2`. -/
 def canonicalScalarTwoSectorOddCoordinate :
-    Hilbert × Hilbert →L[Real] Hilbert :=
-  (1 / 2 : Real) •
-    (ContinuousLinearMap.fst Real Hilbert Hilbert -
-      ContinuousLinearMap.snd Real Hilbert Hilbert)
+    SectorPair (Hilbert := Hilbert) →L[Real] Hilbert where
+  toFun field := (1 / 2 : Real) • (field.fst - field.snd)
+  map_add' first second := by simp; module
+  map_smul' scalar field := by simp; module
+  cont := by fun_prop
 
 @[simp] theorem canonicalScalarTwoSectorEvenCoordinate_apply
-    (field : Hilbert × Hilbert) :
+    (field : SectorPair (Hilbert := Hilbert)) :
     canonicalScalarTwoSectorEvenCoordinate field =
-      (1 / 2 : Real) • (field.1 + field.2) :=
+      (1 / 2 : Real) • (field.fst + field.snd) :=
   rfl
 
 @[simp] theorem canonicalScalarTwoSectorOddCoordinate_apply
-    (field : Hilbert × Hilbert) :
+    (field : SectorPair (Hilbert := Hilbert)) :
     canonicalScalarTwoSectorOddCoordinate field =
-      (1 / 2 : Real) • (field.1 - field.2) :=
+      (1 / 2 : Real) • (field.fst - field.snd) :=
   rfl
 
 /-- Reconstruction from even and odd coordinates. -/
 theorem canonicalScalarTwoSectorCoordinate_reconstruction
-    (field : Hilbert × Hilbert) :
+    (field : SectorPair (Hilbert := Hilbert)) :
     field =
-      (canonicalScalarTwoSectorEvenCoordinate field +
-          canonicalScalarTwoSectorOddCoordinate field,
-        canonicalScalarTwoSectorEvenCoordinate field -
-          canonicalScalarTwoSectorOddCoordinate field) := by
+      WithLp.toLp 2
+        (canonicalScalarTwoSectorEvenCoordinate field +
+            canonicalScalarTwoSectorOddCoordinate field,
+          canonicalScalarTwoSectorEvenCoordinate field -
+            canonicalScalarTwoSectorOddCoordinate field) := by
+  apply (WithLp.equiv 2 (Hilbert × Hilbert)).injective
   apply Prod.ext <;>
     simp [canonicalScalarTwoSectorEvenCoordinate,
       canonicalScalarTwoSectorOddCoordinate] <;> module
@@ -113,18 +136,23 @@ theorem canonicalScalarTwoSectorCoordinate_reconstruction
 theorem canonicalScalarTwoSectorCoupledOperator_even_pair
     (operator : Hilbert →L[Real] Hilbert)
     (coupling : Real) (field : Hilbert) :
-    canonicalScalarTwoSectorCoupledOperator operator coupling (field, field) =
-      (operator field + coupling • field,
-        operator field + coupling • field) := by
-  rfl
+    canonicalScalarTwoSectorCoupledOperator operator coupling
+        (WithLp.toLp 2 (field, field)) =
+      WithLp.toLp 2
+        (operator field + coupling • field,
+          operator field + coupling • field) := by
+  simp
 
 /-- Coupled operator on a pure odd pair. -/
 theorem canonicalScalarTwoSectorCoupledOperator_odd_pair
     (operator : Hilbert →L[Real] Hilbert)
     (coupling : Real) (field : Hilbert) :
-    canonicalScalarTwoSectorCoupledOperator operator coupling (field, -field) =
-      (operator field - coupling • field,
-        -(operator field - coupling • field)) := by
+    canonicalScalarTwoSectorCoupledOperator operator coupling
+        (WithLp.toLp 2 (field, -field)) =
+      WithLp.toLp 2
+        (operator field - coupling • field,
+          -(operator field - coupling • field)) := by
+  apply (WithLp.equiv 2 (Hilbert × Hilbert)).injective
   apply Prod.ext
   · simp
     module
@@ -134,7 +162,7 @@ theorem canonicalScalarTwoSectorCoupledOperator_odd_pair
 /-- Two-sector quadratic form. -/
 def canonicalScalarTwoSectorCoupledQuadratic
     (operator : Hilbert →L[Real] Hilbert)
-    (coupling : Real) (field : Hilbert × Hilbert) : Real :=
+    (coupling : Real) (field : SectorPair (Hilbert := Hilbert)) : Real :=
   inner Real
     (canonicalScalarTwoSectorCoupledOperator operator coupling field) field
 
@@ -154,7 +182,7 @@ def canonicalScalarTwoSectorOddQuadratic
 theorem canonicalScalarTwoSectorCoupledQuadratic_diagonalization
     (operator : Hilbert →L[Real] Hilbert)
     (hOperator : operator.toLinearMap.IsSymmetric)
-    (coupling : Real) (field : Hilbert × Hilbert) :
+    (coupling : Real) (field : SectorPair (Hilbert := Hilbert)) :
     canonicalScalarTwoSectorCoupledQuadratic operator coupling field =
       2 * canonicalScalarTwoSectorEvenQuadratic operator coupling
         (canonicalScalarTwoSectorEvenCoordinate field) +
@@ -163,18 +191,16 @@ theorem canonicalScalarTwoSectorCoupledQuadratic_diagonalization
   let evenField := canonicalScalarTwoSectorEvenCoordinate field
   let oddField := canonicalScalarTwoSectorOddCoordinate field
   have hReconstruct := canonicalScalarTwoSectorCoordinate_reconstruction field
-  rw [hReconstruct]
+  conv_lhs => rw [hReconstruct]
   unfold canonicalScalarTwoSectorCoupledQuadratic
     canonicalScalarTwoSectorEvenQuadratic
     canonicalScalarTwoSectorOddQuadratic
   rw [canonicalScalarTwoSectorCoupledOperator_apply]
-  simp only [map_add, map_sub, inner_add_left, inner_add_right,
+  simp only [WithLp.prod_inner_apply, WithLp.toLp_fst, WithLp.toLp_snd,
+    map_add, map_sub, inner_add_left, inner_add_right,
     inner_sub_left, inner_sub_right, real_inner_smul_left,
     real_inner_smul_right]
-  rw [hOperator evenField oddField]
-  have hInner := real_inner_comm evenField oddField
-  ring_nf at hInner ⊢
-  linarith
+  ring
 
 /-- Lower bounds on the shifted even/odd blocks imply a lower bound for the full
 coupled quadratic form. -/
@@ -188,7 +214,7 @@ theorem canonicalScalarTwoSectorCoupledQuadratic_lower_bound
     (hOdd : ∀ field : Hilbert,
       oddLower * ‖field‖ ^ 2 ≤
         canonicalScalarTwoSectorOddQuadratic operator coupling field)
-    (field : Hilbert × Hilbert) :
+    (field : SectorPair (Hilbert := Hilbert)) :
     2 * evenLower * ‖canonicalScalarTwoSectorEvenCoordinate field‖ ^ 2 +
         2 * oddLower * ‖canonicalScalarTwoSectorOddCoordinate field‖ ^ 2 ≤
       canonicalScalarTwoSectorCoupledQuadratic operator coupling field := by
@@ -203,7 +229,7 @@ theorem canonicalScalarTwoSectorQuadraticDiagonalization_certificate
     (hOperator : operator.toLinearMap.IsSymmetric)
     (coupling : Real) :
     (canonicalScalarTwoSectorCoupledOperator operator coupling).toLinearMap.IsSymmetric ∧
-      (∀ field : Hilbert × Hilbert,
+      (∀ field : SectorPair (Hilbert := Hilbert),
         canonicalScalarTwoSectorCoupledQuadratic operator coupling field =
           2 * canonicalScalarTwoSectorEvenQuadratic operator coupling
             (canonicalScalarTwoSectorEvenCoordinate field) +

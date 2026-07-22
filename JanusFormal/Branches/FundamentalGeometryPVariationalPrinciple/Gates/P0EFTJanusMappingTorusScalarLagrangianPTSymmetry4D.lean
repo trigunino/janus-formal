@@ -73,12 +73,20 @@ structure CanonicalScalarClosedLagrangianPTSymmetry
         data hClosable traceBound condition (domainPT field) =
       bulkPT (canonicalScalarClosedLagrangianDomainOperator
         data hClosable traceBound condition field)
-  boundary_intertwines : ∀ field,
-    canonicalScalarClosedBoundaryTrace data hClosable traceBound (domainPT field.1) =
+  boundary_intertwines : ∀ field :
+      LagrangianDomain data hClosable traceBound condition,
+    canonicalScalarClosedBoundaryTrace data hClosable traceBound (domainPT field).1 =
       (tracePT
           (canonicalScalarClosedBoundaryTrace data hClosable traceBound field.1).1,
         tracePT
           (canonicalScalarClosedBoundaryTrace data hClosable traceBound field.1).2)
+
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
 
 /-- PT intertwines every shifted realization. -/
 theorem CanonicalScalarClosedLagrangianPTSymmetry.shifted_intertwines
@@ -170,16 +178,18 @@ def CanonicalScalarClosedLagrangianPTSymmetry.oddSubmodule
       data hClosable traceBound condition)
     (field : LagrangianDomain data hClosable traceBound condition) :
     field ∈ symmetry.evenSubmodule ↔ symmetry.domainPT field = field := by
-  rw [CanonicalScalarClosedLagrangianPTSymmetry.evenSubmodule,
-    LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, sub_eq_zero]
+  change symmetry.domainPT field - field = 0 ↔
+    symmetry.domainPT field = field
+  exact sub_eq_zero
 
 @[simp] theorem CanonicalScalarClosedLagrangianPTSymmetry.mem_oddSubmodule
     (symmetry : CanonicalScalarClosedLagrangianPTSymmetry
       data hClosable traceBound condition)
     (field : LagrangianDomain data hClosable traceBound condition) :
     field ∈ symmetry.oddSubmodule ↔ symmetry.domainPT field = -field := by
-  rw [CanonicalScalarClosedLagrangianPTSymmetry.oddSubmodule,
-    LinearMap.mem_ker, LinearMap.add_apply, LinearMap.id_apply, add_eq_zero_iff_eq_neg]
+  change symmetry.domainPT field + field = 0 ↔
+    symmetry.domainPT field = -field
+  exact add_eq_zero_iff_eq_neg
 
 /-- PT-even projection. -/
 def CanonicalScalarClosedLagrangianPTSymmetry.evenProjection
@@ -205,6 +215,8 @@ theorem CanonicalScalarClosedLagrangianPTSymmetry.even_add_odd
     symmetry.evenProjection field + symmetry.oddProjection field = field := by
   unfold CanonicalScalarClosedLagrangianPTSymmetry.evenProjection
     CanonicalScalarClosedLagrangianPTSymmetry.oddProjection
+  change (1 / 2 : Real) • (symmetry.domainPT field + field) +
+      (1 / 2 : Real) • (field - symmetry.domainPT field) = field
   module
 
 /-- The even projection is PT-even. -/
@@ -215,6 +227,9 @@ theorem CanonicalScalarClosedLagrangianPTSymmetry.evenProjection_mem
     symmetry.evenProjection field ∈ symmetry.evenSubmodule := by
   rw [symmetry.mem_evenSubmodule]
   unfold CanonicalScalarClosedLagrangianPTSymmetry.evenProjection
+  change symmetry.domainPT
+      ((1 / 2 : Real) • (symmetry.domainPT field + field)) =
+    (1 / 2 : Real) • (symmetry.domainPT field + field)
   rw [map_smul, map_add, symmetry.domain_involutive]
   module
 
@@ -226,6 +241,9 @@ theorem CanonicalScalarClosedLagrangianPTSymmetry.oddProjection_mem
     symmetry.oddProjection field ∈ symmetry.oddSubmodule := by
   rw [symmetry.mem_oddSubmodule]
   unfold CanonicalScalarClosedLagrangianPTSymmetry.oddProjection
+  change symmetry.domainPT
+      ((1 / 2 : Real) • (field - symmetry.domainPT field)) =
+    -((1 / 2 : Real) • (field - symmetry.domainPT field))
   rw [map_smul, map_sub, symmetry.domain_involutive]
   module
 
@@ -264,6 +282,7 @@ theorem CanonicalScalarClosedLagrangianPTSymmetry.ambientResolvent_commutes
         (bounded.resolvent (symmetry.bulkPT source)) = _
   rw [symmetry.resolvent_commutes,
     symmetry.inclusion_intertwines]
+  rfl
 
 /-- PT symmetry certificate. -/
 theorem canonicalScalarLagrangianPTSymmetry_certificate

@@ -185,7 +185,7 @@ theorem certificate
     (robin : PhysicalTrace period hPeriod →L[Real]
       PhysicalTrace period hPeriod)
     (hRobin : robin.toLinearMap.IsSymmetric) :
-    reduction.dirichletToNeumann period hPeriod |>.toLinearMap.IsSymmetric ∧
+    (reduction.dirichletToNeumann period hPeriod).toLinearMap.IsSymmetric ∧
       IsClosed
         (reduction.cauchyDataSubmodule period hPeriod :
           Set (CanonicalScalarHilbertBoundaryDatum

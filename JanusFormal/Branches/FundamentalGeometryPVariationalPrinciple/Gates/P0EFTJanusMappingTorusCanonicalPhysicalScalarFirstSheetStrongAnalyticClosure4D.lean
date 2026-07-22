@@ -31,16 +31,19 @@ open Set Topology Module End
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D.CanonicalPhysicalScalarFirstSheetGreenCoreData.CompletedBoundaryTripleInputs
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarLagrangianResolvent4D
+open P0EFTJanusMappingTorusScalarLagrangianEigenmodeTheory4D
+open P0EFTJanusMappingTorusScalarLagrangianFredholmAlternative4D
 open P0EFTJanusMappingTorusScalarLagrangianCompactSpectrum4D
 open P0EFTJanusMappingTorusScalarLagrangianSemiboundedSpectrum4D
 open P0EFTJanusMappingTorusScalarLagrangianAnalyticClosure4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 :=
   CanonicalPhysicalScalarFirstSheetL2 period
@@ -54,13 +57,13 @@ structure CanonicalPhysicalScalarStrongAdjointCharacterization
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period)) where
   adjointDomain : Set (canonicalScalarClosedOperatorDomain
-    (inputs.strongSystem green))
+    (strongSystem period hPeriod green inputs))
   mem_adjointDomain_iff : ∀ candidate,
     candidate ∈ adjointDomain ↔
       canonicalScalarClosedLagrangianAdjointAdmissible
-        (inputs.strongSystem green)
-        (inputs.strongSystem_closable green)
-        (inputs.strongSystemGraphBound green)
+        (strongSystem period hPeriod green inputs)
+        (strongSystem_closable period hPeriod green inputs)
+        (strongSystemGraphBound period hPeriod green inputs)
         condition candidate
 
 namespace CanonicalPhysicalScalarStrongAdjointCharacterization
@@ -75,9 +78,9 @@ def toGeneric
     (adjoint : CanonicalPhysicalScalarStrongAdjointCharacterization
       period hPeriod green inputs condition) :
     CanonicalScalarClosedLagrangianAdjointCharacterization
-      (inputs.strongSystem green)
-      (inputs.strongSystem_closable green)
-      (inputs.strongSystemGraphBound green)
+      (strongSystem period hPeriod green inputs)
+      (strongSystem_closable period hPeriod green inputs)
+      (strongSystemGraphBound period hPeriod green inputs)
       condition where
   adjointDomain := adjoint.adjointDomain
   mem_adjointDomain_iff := adjoint.mem_adjointDomain_iff
@@ -94,16 +97,17 @@ theorem adjointDomain_eq
       period hPeriod green inputs condition) :
     adjoint.adjointDomain =
       (canonicalScalarClosedLagrangianDomainSubmodule
-        (inputs.strongSystem green)
-        (inputs.strongSystem_closable green)
-        (inputs.strongSystemGraphBound green)
+        (strongSystem period hPeriod green inputs)
+        (strongSystem_closable period hPeriod green inputs)
+        (strongSystemGraphBound period hPeriod green inputs)
         condition :
           Set (canonicalScalarClosedOperatorDomain
-            (inputs.strongSystem green))) :=
-  (adjoint.toGeneric green inputs condition).adjointDomain_eq
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+            (strongSystem period hPeriod green inputs))) :=
+  (CanonicalPhysicalScalarStrongAdjointCharacterization.toGeneric
+    period hPeriod green inputs condition adjoint).adjointDomain_eq
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     condition
 
 end CanonicalPhysicalScalarStrongAdjointCharacterization
@@ -118,22 +122,22 @@ structure CanonicalPhysicalScalarFirstSheetStrongAnalyticData
     (BoundaryL2 period)
   denseDomain : DenseRange
     (canonicalScalarClosedLagrangianDomainInclusion
-      (inputs.strongSystem green)
-      (inputs.strongSystem_closable green)
-      (inputs.strongSystemGraphBound green)
+      (strongSystem period hPeriod green inputs)
+      (strongSystem_closable period hPeriod green inputs)
+      (strongSystemGraphBound period hPeriod green inputs)
       condition)
   adjoint : CanonicalPhysicalScalarStrongAdjointCharacterization
     period hPeriod green inputs condition
   referenceParameter : Real
   compactResolvent : CanonicalScalarClosedLagrangianCompactResolventAt
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     condition referenceParameter
   semibounded : CanonicalScalarClosedLagrangianSemiboundedData
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     condition
 
 namespace CanonicalPhysicalScalarFirstSheetStrongAnalyticData
@@ -146,14 +150,15 @@ def toGeneric
     (analytic : CanonicalPhysicalScalarFirstSheetStrongAnalyticData
       period hPeriod green inputs) :
     CanonicalScalarLagrangianAnalyticClosureData
-      (inputs.strongSystem green)
-      (inputs.strongSystem_closable green)
-      (inputs.strongSystemGraphBound green)
+      (strongSystem period hPeriod green inputs)
+      (strongSystem_closable period hPeriod green inputs)
+      (strongSystemGraphBound period hPeriod green inputs)
       analytic.condition where
   referenceParameter := analytic.referenceParameter
   denseDomain := analytic.denseDomain
-  adjointCharacterization := analytic.adjoint.toGeneric
-    green inputs analytic.condition
+  adjointCharacterization :=
+    CanonicalPhysicalScalarStrongAdjointCharacterization.toGeneric
+      period hPeriod green inputs analytic.condition analytic.adjoint
   compactResolvent := analytic.compactResolvent
   semibounded := analytic.semibounded
 
@@ -166,14 +171,14 @@ theorem actualAdjointDomain_eq
       period hPeriod green inputs) :
     analytic.adjoint.adjointDomain =
       (canonicalScalarClosedLagrangianDomainSubmodule
-        (inputs.strongSystem green)
-        (inputs.strongSystem_closable green)
-        (inputs.strongSystemGraphBound green)
+        (strongSystem period hPeriod green inputs)
+        (strongSystem_closable period hPeriod green inputs)
+        (strongSystemGraphBound period hPeriod green inputs)
         analytic.condition :
           Set (canonicalScalarClosedOperatorDomain
-            (inputs.strongSystem green))) :=
-  analytic.adjoint.adjointDomain_eq
-    green inputs analytic.condition
+            (strongSystem period hPeriod green inputs))) :=
+  CanonicalPhysicalScalarStrongAdjointCharacterization.adjointDomain_eq
+    period hPeriod green inputs analytic.condition analytic.adjoint
 
 /-- Physical Fredholm alternative. -/
 theorem fredholmAlternative
@@ -185,19 +190,19 @@ theorem fredholmAlternative
     (spectralParameter : Real)
     (hParameter : spectralParameter ≠ analytic.referenceParameter) :
     CanonicalScalarClosedLagrangianHasEigenvalue
-        (inputs.strongSystem green)
-        (inputs.strongSystem_closable green)
-        (inputs.strongSystemGraphBound green)
+        (strongSystem period hPeriod green inputs)
+        (strongSystem_closable period hPeriod green inputs)
+        (strongSystemGraphBound period hPeriod green inputs)
         analytic.condition spectralParameter ∨
       CanonicalScalarClosedLagrangianResolventPoint
-        (inputs.strongSystem green)
-        (inputs.strongSystem_closable green)
-        (inputs.strongSystemGraphBound green)
+        (strongSystem period hPeriod green inputs)
+        (strongSystem_closable period hPeriod green inputs)
+        (strongSystemGraphBound period hPeriod green inputs)
         analytic.condition spectralParameter :=
   (analytic.toGeneric period hPeriod).fredholmAlternative
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     analytic.condition spectralParameter hParameter
 
 /-- Finite multiplicity of physical eigenspaces. -/
@@ -211,14 +216,14 @@ theorem finiteDimensional_eigenspace
     (hEigenvalue : eigenvalue ≠ analytic.referenceParameter) :
     FiniteDimensional Real
       (canonicalScalarClosedLagrangianOperatorEigenspace
-        (inputs.strongSystem green)
-        (inputs.strongSystem_closable green)
-        (inputs.strongSystemGraphBound green)
+        (strongSystem period hPeriod green inputs)
+        (strongSystem_closable period hPeriod green inputs)
+        (strongSystemGraphBound period hPeriod green inputs)
         analytic.condition eigenvalue) :=
   (analytic.toGeneric period hPeriod).finiteDimensional_eigenspace
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     analytic.condition eigenvalue hEigenvalue
 
 /-- Physical spectral lower bound. -/
@@ -230,15 +235,15 @@ theorem eigenvalue_ge_lowerBound
       period hPeriod green inputs)
     (eigenvalue : Real)
     (hEigenvalue : CanonicalScalarClosedLagrangianHasEigenvalue
-      (inputs.strongSystem green)
-      (inputs.strongSystem_closable green)
-      (inputs.strongSystemGraphBound green)
+      (strongSystem period hPeriod green inputs)
+      (strongSystem_closable period hPeriod green inputs)
+      (strongSystemGraphBound period hPeriod green inputs)
       analytic.condition eigenvalue) :
     analytic.semibounded.lowerBound ≤ eigenvalue :=
   (analytic.toGeneric period hPeriod).eigenvalue_ge_lowerBound
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     analytic.condition eigenvalue hEigenvalue
 
 /-- Compact physical spectral completeness. -/
@@ -249,17 +254,17 @@ theorem spectral_complete
     (analytic : CanonicalPhysicalScalarFirstSheetStrongAnalyticData
       period hPeriod green inputs) :
     (⨆ eigenvalue : Real,
-      LinearMap.eigenspace
+      Module.End.eigenspace
         (analytic.compactResolvent.bounded.ambientResolvent
-          (inputs.strongSystem green)
-          (inputs.strongSystem_closable green)
-          (inputs.strongSystemGraphBound green)
+          (strongSystem period hPeriod green inputs)
+          (strongSystem_closable period hPeriod green inputs)
+          (strongSystemGraphBound period hPeriod green inputs)
           analytic.condition analytic.referenceParameter).toLinearMap
         eigenvalue)ᗮ = ⊥ :=
   analytic.compactResolvent.spectral_complete
-    (inputs.strongSystem green)
-    (inputs.strongSystem_closable green)
-    (inputs.strongSystemGraphBound green)
+    (strongSystem period hPeriod green inputs)
+    (strongSystem_closable period hPeriod green inputs)
+    (strongSystemGraphBound period hPeriod green inputs)
     analytic.condition analytic.referenceParameter
 
 /-- Correct physical compact analytic closure certificate. -/
@@ -271,37 +276,37 @@ theorem certificate
       period hPeriod green inputs) :
     analytic.adjoint.adjointDomain =
         (canonicalScalarClosedLagrangianDomainSubmodule
-          (inputs.strongSystem green)
-          (inputs.strongSystem_closable green)
-          (inputs.strongSystemGraphBound green)
+          (strongSystem period hPeriod green inputs)
+          (strongSystem_closable period hPeriod green inputs)
+          (strongSystemGraphBound period hPeriod green inputs)
           analytic.condition :
             Set (canonicalScalarClosedOperatorDomain
-              (inputs.strongSystem green))) ∧
+              (strongSystem period hPeriod green inputs))) ∧
       (∀ spectralParameter : Real,
         spectralParameter ≠ analytic.referenceParameter →
           CanonicalScalarClosedLagrangianHasEigenvalue
-              (inputs.strongSystem green)
-              (inputs.strongSystem_closable green)
-              (inputs.strongSystemGraphBound green)
+              (strongSystem period hPeriod green inputs)
+              (strongSystem_closable period hPeriod green inputs)
+              (strongSystemGraphBound period hPeriod green inputs)
               analytic.condition spectralParameter ∨
             CanonicalScalarClosedLagrangianResolventPoint
-              (inputs.strongSystem green)
-              (inputs.strongSystem_closable green)
-              (inputs.strongSystemGraphBound green)
+              (strongSystem period hPeriod green inputs)
+              (strongSystem_closable period hPeriod green inputs)
+              (strongSystemGraphBound period hPeriod green inputs)
               analytic.condition spectralParameter) ∧
       (∀ eigenvalue : Real,
         CanonicalScalarClosedLagrangianHasEigenvalue
-            (inputs.strongSystem green)
-            (inputs.strongSystem_closable green)
-            (inputs.strongSystemGraphBound green)
+            (strongSystem period hPeriod green inputs)
+            (strongSystem_closable period hPeriod green inputs)
+            (strongSystemGraphBound period hPeriod green inputs)
             analytic.condition eigenvalue →
           analytic.semibounded.lowerBound ≤ eigenvalue) ∧
       (⨆ eigenvalue : Real,
-        LinearMap.eigenspace
+        Module.End.eigenspace
           (analytic.compactResolvent.bounded.ambientResolvent
-            (inputs.strongSystem green)
-            (inputs.strongSystem_closable green)
-            (inputs.strongSystemGraphBound green)
+            (strongSystem period hPeriod green inputs)
+            (strongSystem_closable period hPeriod green inputs)
+            (strongSystemGraphBound period hPeriod green inputs)
             analytic.condition analytic.referenceParameter).toLinearMap
           eigenvalue)ᗮ = ⊥ :=
   ⟨analytic.actualAdjointDomain_eq period hPeriod,

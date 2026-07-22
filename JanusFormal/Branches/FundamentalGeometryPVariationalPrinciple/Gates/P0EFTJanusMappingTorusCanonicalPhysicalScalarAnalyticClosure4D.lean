@@ -25,6 +25,7 @@ noncomputable section
 
 open scoped ENNReal
 open MeasureTheory Set Topology Module End
+open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
@@ -221,7 +222,7 @@ theorem certificate
               closureData.abstractGraphBound closureData.condition eigenvalue →
           closureData.analytic.semibounded.lowerBound ≤ eigenvalue) ∧
       (⨆ eigenvalue : Real,
-        LinearMap.eigenspace
+        Module.End.eigenspace
           (closureData.analytic.compactResolvent.bounded.ambientResolvent
             closureData.system closureData.closable
               closureData.abstractGraphBound closureData.condition
