@@ -12,6 +12,9 @@ nonnegativity.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedGaussian4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedGaussian4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -24,6 +27,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleGaussian4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -140,7 +144,7 @@ theorem gaussianGeneratingFunctional_nonnegative
     source
 
 /-- Fully reduced physical Gaussian certificate. -/
-theorem certificate
+theorem gaussian_certificate
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -163,5 +167,5 @@ theorem certificate
 end CanonicalPhysicalScalarFullyReducedAnalyticData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedGaussian4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 end JanusFormal

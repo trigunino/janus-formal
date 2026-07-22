@@ -11,6 +11,9 @@ half-line in the resolvent set.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -34,6 +37,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Direct operator eigenspace. -/
 def lagrangianOperatorEigenspace
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
@@ -53,7 +60,7 @@ def lagrangianOperatorEigenspace
       triple.lagrangianOperator condition field =
         eigenvalue • triple.lagrangianInclusion condition field := by
   rw [lagrangianOperatorEigenspace, LinearMap.mem_ker]
-  simp
+  exact sub_eq_zero
 
 /-- Lower-semibounded direct quadratic-form data. -/
 structure LagrangianSemiboundedData
@@ -182,8 +189,11 @@ theorem LagrangianSemiboundedData.zero_eigenspace_eq_bot
       triple.lagrangianOperatorEigenspace condition 0 := by
     rw [triple.mem_lagrangianOperatorEigenspace]
     simp only [zero_smul]
-    simp only [zero_smul] at hEqual
-    rw [map_sub, hEqual, sub_self]
+    have hOperatorEqual :
+        triple.lagrangianOperator condition first =
+          triple.lagrangianOperator condition second := by
+      simpa using hEqual
+    rw [map_sub, hOperatorEqual, sub_self]
   by_contra hFields
   have hNonzero : first - second ≠ 0 := sub_ne_zero.mpr hFields
   apply semibounded.not_hasEigenvalue_zero triple condition hPositive
@@ -215,5 +225,5 @@ theorem directSemiboundedSpectrum_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

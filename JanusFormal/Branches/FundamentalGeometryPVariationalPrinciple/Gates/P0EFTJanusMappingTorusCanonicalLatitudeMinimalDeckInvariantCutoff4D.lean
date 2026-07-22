@@ -23,7 +23,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped Manifold ContDiff ENNReal
-open Set Topology Filter
+open MeasureTheory Set Topology Filter
 open P0EFTJanusReflectionFixedThroat
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
@@ -33,6 +33,7 @@ open P0EFTJanusMappingTorusSmoothDeckInvariantFields4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCutoffNormalField4D
 open P0EFTJanusMappingTorusCanonicalLatitudeMinimalCutoffProfile4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 
@@ -92,7 +93,8 @@ theorem canonicalLatitudeMinimalCutoffProfile_neg
     (index : Nat) (normal : Real) :
     canonicalLatitudeMinimalCutoffProfile index (-normal) =
       canonicalLatitudeMinimalCutoffProfile index normal := by
-  simp [canonicalLatitudeMinimalCutoffProfile, mul_neg]
+  unfold canonicalLatitudeMinimalCutoffProfile
+  rw [mul_neg, ContDiffBump.neg canonicalLatitudeCollarCutoff]
 
 /-- Every monodromy iterate preserves the even shrinking profile. -/
 theorem canonicalLatitudeMinimalCutoffProfile_zpow_reflection
@@ -112,7 +114,7 @@ theorem canonicalLatitudeMinimalCutoffProfile_zpow_reflection
       rw [zpow_add_one]
       change canonicalLatitudeMinimalCutoffProfile index
           (canonicalLatitudeSphereSignedNormal
-            ((sphereReflection ^ winding) (sphereReflection point))) = _
+            ((sphereReflection ^ (winding : Int)) (sphereReflection point))) = _
       rw [ih (sphereReflection point),
         canonicalLatitudeSphereSignedNormal_reflection,
         canonicalLatitudeMinimalCutoffProfile_neg]
@@ -121,7 +123,8 @@ theorem canonicalLatitudeMinimalCutoffProfile_zpow_reflection
       rw [zpow_sub_one]
       change canonicalLatitudeMinimalCutoffProfile index
           (canonicalLatitudeSphereSignedNormal
-            ((sphereReflection ^ winding) (sphereReflection.symm point))) = _
+            ((sphereReflection ^ (-(winding : Int)))
+              (sphereReflection.symm point))) = _
       rw [ih (sphereReflection.symm point)]
       have hInverse : sphereReflection.symm point = sphereReflection point := rfl
       rw [hInverse, canonicalLatitudeSphereSignedNormal_reflection,
@@ -167,7 +170,7 @@ theorem canonicalLatitudeMinimalCoverCutoff_deck
         (winding +ᵥ point) =
       canonicalLatitudeMinimalCoverCutoff period hPeriod index point := by
   unfold canonicalLatitudeMinimalCoverCutoff canonicalLatitudeCoverSignedNormal
-  rw [MappingTorusCover.vadd_fiber]
+  rw [vadd_fiber]
   change canonicalLatitudeMinimalCutoffProfile index
       (canonicalLatitudeSphereSignedNormal
         ((sphereReflection ^ winding) point.fiber)) = _
@@ -195,7 +198,7 @@ def canonicalLatitudeMinimalQuotientCutoff
     canonicalLatitudeMinimalQuotientCutoff period hPeriod index
         (mappingTorusMk (sphereData period hPeriod) point) =
       canonicalLatitudeMinimalCoverCutoff period hPeriod index point :=
-  descendSmooth_mk period hPeriod Real
+  descend_mk period hPeriod Real
     (canonicalLatitudeMinimalDeckInvariantCutoff period hPeriod index) point
 
 /-- The global cutoff takes values in `[0,1]`. -/
@@ -242,10 +245,19 @@ def canonicalLatitudeMinimalCutoffLinearMap
           |>.contMDiff_toFun.mul field.contMDiff_toFun }
   map_add' first second := by
     ext point
+    change
+      canonicalLatitudeMinimalQuotientCutoff period hPeriod index point *
+          (first point + second point) =
+        canonicalLatitudeMinimalQuotientCutoff period hPeriod index point * first point +
+          canonicalLatitudeMinimalQuotientCutoff period hPeriod index point * second point
     ring
   map_smul' scalar field := by
     ext point
-    simp only [smoothQuotientField_smul_apply, smul_eq_mul]
+    change
+      canonicalLatitudeMinimalQuotientCutoff period hPeriod index point *
+          (scalar * field point) =
+        scalar *
+          (canonicalLatitudeMinimalQuotientCutoff period hPeriod index point * field point)
     ring
 
 @[simp] theorem canonicalLatitudeMinimalCutoffLinearMap_apply
@@ -282,13 +294,18 @@ theorem canonicalLatitudeValue_minimalCutoff_eventuallyEq_zero
         (canonicalLatitudeMinimalCutoffLinearMap period hPeriod index field)
         base =ᶠ[𝓝 0]
       fun _ : Real => 0 := by
+  have hSin : Tendsto Real.sin (𝓝 (0 : Real)) (𝓝 (0 : Real)) := by
+    simpa only [Real.sin_zero] using Real.continuous_sin.tendsto (0 : Real)
   have hProfile :=
     (canonicalLatitudeMinimalCutoffProfile_eventuallyEq_zero index).comp_tendsto
-      Real.continuousAt_sin
+      hSin
   filter_upwards [hProfile] with normal hNormal
+  have hNormal' :
+      canonicalLatitudeMinimalCutoffProfile index (Real.sin normal) = 0 := by
+    simpa [Function.comp_def] using hNormal
   unfold canonicalLatitudeValue canonicalNormalSlice
   rw [canonicalLatitudeMinimalCutoffLinearMap_apply,
-    canonicalLatitudeMinimalQuotientCutoff_latitude, hNormal, zero_mul]
+    canonicalLatitudeMinimalQuotientCutoff_latitude, hNormal', zero_mul]
 
 /-- The normal derivative of the cut field vanishes at the throat. -/
 theorem canonicalLatitudeDerivative_minimalCutoff_zero
@@ -315,11 +332,11 @@ theorem smoothFirstSheetValueL2_minimalCutoff_eq_zero
     (field : SmoothQuotientField period hPeriod Real) :
     smoothCanonicalPhysicalScalarFirstSheetValueL2 period hPeriod
         (canonicalLatitudeMinimalCutoffLinearMap period hPeriod index field) = 0 := by
-  apply Lp.ext
+  rw [Lp.ext_iff]
   filter_upwards
     [smoothCanonicalPhysicalScalarFirstSheetValueL2_ae period hPeriod
       (canonicalLatitudeMinimalCutoffLinearMap period hPeriod index field),
-     Lp.coeFn_zero Real]
+     Lp.coeFn_zero Real 2 (canonicalLatitudeBaseMeasure period)]
     with base hValue hZero
   rw [hValue, hZero]
   exact canonicalLatitudeValue_minimalCutoff_zero
@@ -331,11 +348,11 @@ theorem smoothFirstSheetNormalL2_minimalCutoff_eq_zero
     (field : SmoothQuotientField period hPeriod Real) :
     smoothCanonicalPhysicalScalarFirstSheetNormalL2 period hPeriod
         (canonicalLatitudeMinimalCutoffLinearMap period hPeriod index field) = 0 := by
-  apply Lp.ext
+  rw [Lp.ext_iff]
   filter_upwards
     [smoothCanonicalPhysicalScalarFirstSheetNormalL2_ae period hPeriod
       (canonicalLatitudeMinimalCutoffLinearMap period hPeriod index field),
-     Lp.coeFn_zero Real]
+     Lp.coeFn_zero Real 2 (canonicalLatitudeBaseMeasure period)]
     with base hNormal hZero
   rw [hNormal, hZero]
   exact canonicalLatitudeDerivative_minimalCutoff_zero
@@ -347,7 +364,7 @@ theorem smoothFirstSheetCauchyTrace_minimalCutoff_eq_zero
     (field : SmoothQuotientField period hPeriod Real) :
     smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
         (canonicalLatitudeMinimalCutoffLinearMap period hPeriod index field) = 0 := by
-  ext
+  apply Prod.ext
   · exact smoothFirstSheetValueL2_minimalCutoff_eq_zero
       period hPeriod index field
   · exact smoothFirstSheetNormalL2_minimalCutoff_eq_zero
@@ -373,7 +390,7 @@ theorem canonicalLatitudeSphereSignedNormal_sq_zpow_reflection
       intro point
       rw [zpow_add_one]
       change canonicalLatitudeSphereSignedNormal
-          ((sphereReflection ^ winding) (sphereReflection point)) ^ 2 = _
+          ((sphereReflection ^ (winding : Int)) (sphereReflection point)) ^ 2 = _
       rw [ih (sphereReflection point),
         canonicalLatitudeSphereSignedNormal_reflection]
       ring
@@ -381,7 +398,8 @@ theorem canonicalLatitudeSphereSignedNormal_sq_zpow_reflection
       intro point
       rw [zpow_sub_one]
       change canonicalLatitudeSphereSignedNormal
-          ((sphereReflection ^ winding) (sphereReflection.symm point)) ^ 2 = _
+          ((sphereReflection ^ (-(winding : Int)))
+            (sphereReflection.symm point)) ^ 2 = _
       rw [ih (sphereReflection.symm point)]
       have hInverse : sphereReflection.symm point = sphereReflection point := rfl
       rw [hInverse, canonicalLatitudeSphereSignedNormal_reflection]
@@ -396,7 +414,7 @@ def canonicalLatitudeNormalSquareDeckInvariantField :
   deck_invariant := by
     intro winding point
     unfold canonicalLatitudeCoverNormalSquare canonicalLatitudeCoverSignedNormal
-    rw [MappingTorusCover.vadd_fiber]
+    rw [vadd_fiber]
     change canonicalLatitudeSphereSignedNormal
         ((sphereReflection ^ winding) point.fiber) ^ 2 = _
     exact canonicalLatitudeSphereSignedNormal_sq_zpow_reflection
@@ -413,7 +431,7 @@ def canonicalLatitudeQuotientNormalSquare :
     canonicalLatitudeQuotientNormalSquare period hPeriod
         (mappingTorusMk (sphereData period hPeriod) point) =
       canonicalLatitudeCoverSignedNormal period hPeriod point ^ 2 :=
-  descendSmooth_mk period hPeriod Real
+  descend_mk period hPeriod Real
     (canonicalLatitudeNormalSquareDeckInvariantField period hPeriod) point
 
 /-- The exact global throat set. -/
@@ -425,8 +443,8 @@ theorem canonicalLatitudeGlobalThroatSet_isClosed :
     IsClosed (canonicalLatitudeGlobalThroatSet period hPeriod) := by
   unfold canonicalLatitudeGlobalThroatSet
   exact isClosed_eq
-    (canonicalLatitudeQuotientNormalSquare period hPeriod)
-      |>.contMDiff_toFun.continuous continuous_const
+    (canonicalLatitudeQuotientNormalSquare period hPeriod).contMDiff_toFun.continuous
+    continuous_const
 
 /-- Off the throat, the global cutoffs converge pointwise to one. -/
 theorem canonicalLatitudeMinimalQuotientCutoff_tendsto_one
@@ -443,15 +461,19 @@ theorem canonicalLatitudeMinimalQuotientCutoff_tendsto_one
       canonicalLatitudeCoverSignedNormal period hPeriod representative ≠ 0 := by
     intro hZero
     apply hRepresentative
-    rw [canonicalLatitudeQuotientNormalSquare_mk, hZero, zero_pow]
-  simpa using
+    change canonicalLatitudeQuotientNormalSquare period hPeriod
+      (mappingTorusMk (sphereData period hPeriod) representative) = 0
+    rw [canonicalLatitudeQuotientNormalSquare_mk, hZero]
+    norm_num
+  simpa only [canonicalLatitudeMinimalQuotientCutoff_mk,
+    canonicalLatitudeMinimalCoverCutoff] using
     canonicalLatitudeMinimalCutoffProfile_tendsto_one
       (canonicalLatitudeCoverSignedNormal period hPeriod representative) hNormal
 
 /-- Global deck-invariant cutoff certificate. -/
 theorem canonicalLatitudeMinimalDeckInvariantCutoff_certificate
     (index : Nat) :
-    (∀ winding point,
+    (∀ (winding : Int) (point : EffectiveCover period hPeriod),
       canonicalLatitudeMinimalCoverCutoff period hPeriod index
           (winding +ᵥ point) =
         canonicalLatitudeMinimalCoverCutoff period hPeriod index point) ∧

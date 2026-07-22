@@ -15,6 +15,9 @@ resolvent with a compact inclusion of the completed Lagrangian domain.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleCompactSpectrum4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleCompactSpectrum4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -35,6 +38,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- Compact bounded direct resolvent. -/
 structure LagrangianCompactResolventAt
@@ -170,5 +177,5 @@ theorem directLagrangianCompactSpectrum_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleCompactSpectrum4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

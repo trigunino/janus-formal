@@ -16,6 +16,9 @@ multiplicity of every nonreference operator eigenspace.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAnalyticClosure4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAnalyticClosure4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -25,7 +28,9 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D.CanonicalScalarCompletedBoundaryTripleData
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleCompactSpectrum4D
@@ -44,11 +49,17 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Full direct analytic closure data for one completed Lagrangian condition. -/
 structure LagrangianAnalyticClosureData
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) where
-  minimalDense : core.MinimalCoreDense
+  minimalDense :
+    P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore.MinimalCoreDense
+      core
   adjointRegularity : triple.MaximalAdjointRegularity condition
   referenceParameter : Real
   compactResolvent : triple.LagrangianCompactResolventAt
@@ -63,8 +74,8 @@ theorem denseDomain
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
     (analytic : triple.LagrangianAnalyticClosureData condition) :
     DenseRange (triple.lagrangianInclusion condition) :=
-  triple.lagrangianInclusion_denseRange_of_minimalCore
-    condition analytic.minimalDense
+  P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D.CanonicalScalarCompletedBoundaryTripleData.lagrangianInclusion_denseRange_of_minimalCore
+    triple condition analytic.minimalDense
 
 /-- Genuine Hilbert adjoint domain equals the realization domain. -/
 theorem actualAdjointDomain_eq
@@ -205,5 +216,5 @@ end LagrangianAnalyticClosureData
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAnalyticClosure4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

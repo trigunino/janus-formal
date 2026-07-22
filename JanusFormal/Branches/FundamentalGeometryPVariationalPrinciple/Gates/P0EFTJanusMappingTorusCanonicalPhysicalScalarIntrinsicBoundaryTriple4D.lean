@@ -29,7 +29,7 @@ open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 
 universe x y r
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -98,7 +98,8 @@ def triple
     (intrinsic : CanonicalPhysicalScalarIntrinsicBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  intrinsic.toFullyGeometricBoundaryData.triple
+  (intrinsic.toFullyGeometricBoundaryData period hPeriod).triple
+    period hPeriod
 
 /-- Completed boundary inputs. -/
 def completedInputs
@@ -108,7 +109,8 @@ def completedInputs
     (intrinsic : CanonicalPhysicalScalarIntrinsicBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  intrinsic.toFullyGeometricBoundaryData.completedInputs
+  (intrinsic.toFullyGeometricBoundaryData period hPeriod).completedInputs
+    period hPeriod
 
 /-- Intrinsic boundary-triple certificate. -/
 theorem certificate
@@ -128,15 +130,19 @@ theorem certificate
       Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
           intrinsic.geometric.greenCore.core
-          intrinsic.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
-            |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound) :=
+          (((intrinsic.toFullyGeometricBoundaryData period hPeriod)
+            |>.cutoffEllipticBoundaryData period hPeriod)
+            |>.toEllipticBoundaryData period hPeriod
+            |>.toBoundaryConstructionData period hPeriod).traceBound) :=
   ⟨smoothToCanonicalPhysicalBulkL2_denseRange period hPeriod,
-    intrinsic.toFullyGeometricBoundaryData.minimalCollarCutoffData
-      |>.minimalCoreDense intrinsic.geometric.greenCore,
-    intrinsic.triple.inclusion_injective,
-    intrinsic.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
-      |>.toEllipticBoundaryData.toBoundaryConstructionData
-      |>.completedTraceSurjective⟩
+    ((intrinsic.toFullyGeometricBoundaryData period hPeriod)
+      |>.minimalCollarCutoffData period hPeriod)
+      |>.minimalCoreDense period hPeriod intrinsic.geometric.greenCore,
+    (intrinsic.triple period hPeriod).inclusion_injective,
+    ((((intrinsic.toFullyGeometricBoundaryData period hPeriod)
+      |>.cutoffEllipticBoundaryData period hPeriod)
+      |>.toEllipticBoundaryData period hPeriod)
+      |>.toBoundaryConstructionData period hPeriod).completedTraceSurjective⟩
 
 end CanonicalPhysicalScalarIntrinsicBoundaryData
 

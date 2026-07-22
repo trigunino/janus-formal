@@ -61,18 +61,16 @@ theorem canonicalLatitudeMinimalCutoffProfile_nonnegative
     (index : Nat) (normal : Real) :
     0 ≤ canonicalLatitudeMinimalCutoffProfile index normal := by
   unfold canonicalLatitudeMinimalCutoffProfile
-  linarith [ContDiffBump.le_one
-    (canonicalLatitudeCollarCutoff
-      (canonicalLatitudeMinimalCutoffScale index * normal))]
+  linarith [canonicalLatitudeCollarCutoff.le_one
+    (x := canonicalLatitudeMinimalCutoffScale index * normal)]
 
 /-- The profile is at most one. -/
 theorem canonicalLatitudeMinimalCutoffProfile_le_one
     (index : Nat) (normal : Real) :
     canonicalLatitudeMinimalCutoffProfile index normal ≤ 1 := by
   unfold canonicalLatitudeMinimalCutoffProfile
-  linarith [ContDiffBump.nonneg
-    (canonicalLatitudeCollarCutoff
-      (canonicalLatitudeMinimalCutoffScale index * normal))]
+  linarith [canonicalLatitudeCollarCutoff.nonneg
+    (x := canonicalLatitudeMinimalCutoffScale index * normal)]
 
 /-- The profile vanishes wherever the dilated coordinate lies in the bump's
 unit region. -/

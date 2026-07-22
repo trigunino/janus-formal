@@ -35,6 +35,7 @@ open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosed4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetBoundaryExtension4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSquaredGraphEstimates4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
@@ -44,7 +45,7 @@ open P0EFTJanusMappingTorusScalarGreenCoreInteriorDensity4D
 
 universe x y z
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Complete constructive boundary-triple input. -/
 structure CanonicalPhysicalScalarBoundaryTripleConstructionData
@@ -91,7 +92,8 @@ def ellipticEstimate
     (construction : CanonicalPhysicalScalarBoundaryTripleConstructionData
       period hPeriod massSquared ValueCore NormalCore InteriorCore) :
     construction.green.GraphEllipticEstimate period hPeriod :=
-  construction.elliptic.toGraphEllipticEstimate construction.green
+  construction.elliptic.toGraphEllipticEstimate
+    period hPeriod construction.green
 
 /-- Linear normal graph estimate extracted from its squared form. -/
 def normalEstimate
@@ -102,7 +104,8 @@ def normalEstimate
     (construction : CanonicalPhysicalScalarBoundaryTripleConstructionData
       period hPeriod massSquared ValueCore NormalCore InteriorCore) :
     construction.green.NormalGraphEstimate period hPeriod :=
-  construction.normal.toNormalGraphEstimate construction.green
+  construction.normal.toNormalGraphEstimate
+    period hPeriod construction.green
 
 /-- Paired physical graph-boundary estimate. -/
 def traceBound
@@ -183,7 +186,7 @@ def triple
     [AddCommGroup InteriorCore] [Module Real InteriorCore]
     (construction : CanonicalPhysicalScalarBoundaryTripleConstructionData
       period hPeriod massSquared ValueCore NormalCore InteriorCore) :=
-  (construction.completedInputs).triple construction.green
+  (construction.completedInputs).triple period hPeriod construction.green
 
 /-- Completed Cauchy extension with quantitative graph norm control. -/
 def completedExtension
@@ -215,7 +218,7 @@ theorem certificate
       (∀ boundary,
         canonicalScalarGreenCoreCompletedBoundaryTrace
             construction.green.core construction.traceBound
-            (construction.completedExtension boundary) = boundary) :=
+            (construction.completedExtension period hPeriod boundary) = boundary) :=
   ⟨construction.smooth.boundaryTrace_denseRange,
     construction.minimalCoreDense,
     (construction.triple).inclusion_injective,

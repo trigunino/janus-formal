@@ -16,18 +16,22 @@ boundary trace.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingEstimate4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingEstimate4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSquaredGraphEstimates4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 namespace CanonicalPhysicalScalarFirstSheetGreenCoreData
 
@@ -38,9 +42,9 @@ theorem inclusion_norm_le_graph
     (field : SmoothQuotientField period hPeriod Real) :
     ‖green.core.inclusion field‖ ≤
       ‖canonicalScalarGreenCoreToGraph green.core field‖ := by
-  change ‖green.core.inclusion field‖ ≤
-    max ‖green.core.inclusion field‖ ‖green.core.operator field‖
-  exact le_max_left _ _
+  exact WithLp.norm_fst_le
+    (CanonicalPhysicalBulkL2 period hPeriod)
+    (canonicalScalarGreenCoreToGraph green.core field).1
 
 /-- The Euler coordinate is bounded by the graph norm. -/
 theorem operator_norm_le_graph
@@ -49,9 +53,9 @@ theorem operator_norm_le_graph
     (field : SmoothQuotientField period hPeriod Real) :
     ‖green.core.operator field‖ ≤
       ‖canonicalScalarGreenCoreToGraph green.core field‖ := by
-  change ‖green.core.operator field‖ ≤
-    max ‖green.core.inclusion field‖ ‖green.core.operator field‖
-  exact le_max_right _ _
+  exact WithLp.norm_snd_le
+    (CanonicalPhysicalBulkL2 period hPeriod)
+    (canonicalScalarGreenCoreToGraph green.core field).1
 
 /-- Squared physical Gårding estimate. -/
 structure SquaredGardingEstimate
@@ -79,7 +83,7 @@ theorem graphConstant_nonnegative
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (garding : green.SquaredGardingEstimate period hPeriod) :
-    0 ≤ garding.graphConstant green :=
+    0 ≤ garding.graphConstant period hPeriod green :=
   Real.sqrt_nonneg _
 
 /-- Sum of ambient and operator squares is controlled by twice the graph-norm
@@ -106,12 +110,13 @@ def toSquaredGraphEllipticEstimate
       period hPeriod massSquared)
     (garding : green.SquaredGardingEstimate period hPeriod) :
     green.SquaredGraphEllipticEstimate period hPeriod where
-  constant := garding.graphConstant green
-  nonnegative := garding.graphConstant_nonnegative green
+  constant := garding.graphConstant period hPeriod green
+  nonnegative := garding.graphConstant_nonnegative period hPeriod green
   bound_sq := by
     intro field
     have hGarding := garding.bound_sq field
-    have hComponents := garding.component_sq_sum_le_two_graph_sq green field
+    have hComponents := garding.component_sq_sum_le_two_graph_sq
+      period hPeriod green field
     have hScaled :
         garding.constant *
             (‖green.core.inclusion field‖ ^ 2 +
@@ -127,7 +132,7 @@ def toSquaredGraphEllipticEstimate
       _ ≤ garding.constant *
           (2 * ‖canonicalScalarGreenCoreToGraph green.core field‖ ^ 2) :=
         hScaled
-      _ = (garding.graphConstant green) ^ 2 *
+      _ = (garding.graphConstant period hPeriod green) ^ 2 *
           ‖canonicalScalarGreenCoreToGraph green.core field‖ ^ 2 := by
         unfold graphConstant
         rw [Real.sq_sqrt]
@@ -140,7 +145,8 @@ def toGraphEllipticEstimate
       period hPeriod massSquared)
     (garding : green.SquaredGardingEstimate period hPeriod) :
     green.GraphEllipticEstimate period hPeriod :=
-  (garding.toSquaredGraphEllipticEstimate green).toGraphEllipticEstimate green
+  (garding.toSquaredGraphEllipticEstimate period hPeriod green)
+    |>.toGraphEllipticEstimate period hPeriod green
 
 /-- Gårding-to-graph certificate. -/
 theorem certificate
@@ -149,19 +155,19 @@ theorem certificate
     (garding : green.SquaredGardingEstimate period hPeriod) :
     (∀ field : SmoothQuotientField period hPeriod Real,
       ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 ≤
-        (garding.graphConstant green) ^ 2 *
+        (garding.graphConstant period hPeriod green) ^ 2 *
           ‖canonicalScalarGreenCoreToGraph green.core field‖ ^ 2) ∧
       (∀ field : SmoothQuotientField period hPeriod Real,
         ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ≤
-          garding.graphConstant green *
+          garding.graphConstant period hPeriod green *
             ‖canonicalScalarGreenCoreToGraph green.core field‖) :=
-  ⟨(garding.toSquaredGraphEllipticEstimate green).bound_sq,
-    (garding.toGraphEllipticEstimate green).bound⟩
+  ⟨(garding.toSquaredGraphEllipticEstimate period hPeriod green).bound_sq,
+    (garding.toGraphEllipticEstimate period hPeriod green).bound⟩
 
 end SquaredGardingEstimate
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingEstimate4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

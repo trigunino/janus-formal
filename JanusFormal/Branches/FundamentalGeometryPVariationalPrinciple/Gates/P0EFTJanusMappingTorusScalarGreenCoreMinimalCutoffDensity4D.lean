@@ -24,6 +24,7 @@ open Set Topology Filter
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 
 universe u v w
 
@@ -49,13 +50,16 @@ structure CanonicalScalarGreenCoreMinimalCutoffData
 
 namespace CanonicalScalarGreenCoreMinimalCutoffData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+
 /-- One cutoff field as a vector of the minimal domain. -/
 def cutoffMinimal
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core)
-    (index : Nat) : Domain →ₗ[Real] core.minimalDomainSubmodule where
+    (index : Nat) : Domain →ₗ[Real] minimalDomainSubmodule core where
   toFun field :=
     ⟨cutoffData.cutoff index field, by
-      rw [LinearMap.mem_ker]
+      change core.boundaryTrace (cutoffData.cutoff index field) = 0
       exact cutoffData.boundary_zero index field⟩
   map_add' first second := by
     apply Subtype.ext
@@ -68,7 +72,7 @@ def cutoffMinimal
 theorem minimalInclusion_cutoffMinimal
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core)
     (index : Nat) (field : Domain) :
-    core.minimalInclusion (cutoffData.cutoffMinimal index field) =
+    minimalInclusion core (cutoffData.cutoffMinimal index field) =
       core.inclusion (cutoffData.cutoff index field) :=
   rfl
 
@@ -77,7 +81,7 @@ ambient range. -/
 theorem smooth_mem_closure_minimalRange
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core)
     (field : Domain) :
-    core.inclusion field ∈ closure (Set.range core.minimalInclusion) := by
+    core.inclusion field ∈ closure (Set.range (minimalInclusion core)) := by
   apply mem_closure_of_tendsto (cutoffData.tendsto_inclusion field)
   exact Filter.Eventually.of_forall fun index =>
     ⟨cutoffData.cutoffMinimal index field,
@@ -86,7 +90,7 @@ theorem smooth_mem_closure_minimalRange
 /-- The smooth ambient range lies in the closure of the minimal range. -/
 theorem smoothRange_subset_closure_minimalRange
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core) :
-    Set.range core.inclusion ⊆ closure (Set.range core.minimalInclusion) := by
+    Set.range core.inclusion ⊆ closure (Set.range (minimalInclusion core)) := by
   rintro value ⟨field, rfl⟩
   exact cutoffData.smooth_mem_closure_minimalRange field
 
@@ -94,7 +98,7 @@ theorem smoothRange_subset_closure_minimalRange
 density. -/
 theorem minimalCoreDense
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core) :
-    core.MinimalCoreDense := by
+    MinimalCoreDense core := by
   intro value
   have hSmoothClosure : value ∈ closure (Set.range core.inclusion) :=
     cutoffData.smoothDense value
@@ -106,15 +110,15 @@ theorem minimalCoreDense
 theorem graphInclusion_injective
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core) :
     Function.Injective (canonicalScalarGreenCoreGraphInclusion core) :=
-  core.graphInclusion_injective_of_minimal_dense cutoffData.minimalCoreDense
+  graphInclusion_injective_of_minimal_dense core cutoffData.minimalCoreDense
 
 /-- Cutoff-density certificate. -/
 theorem certificate
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core) :
-    core.MinimalCoreDense ∧
+    MinimalCoreDense core ∧
       Function.Injective (canonicalScalarGreenCoreGraphInclusion core) ∧
       Set.range core.inclusion ⊆ closure
-        (Set.range core.minimalInclusion) :=
+        (Set.range (minimalInclusion core)) :=
   ⟨cutoffData.minimalCoreDense,
     cutoffData.graphInclusion_injective,
     cutoffData.smoothRange_subset_closure_minimalRange⟩

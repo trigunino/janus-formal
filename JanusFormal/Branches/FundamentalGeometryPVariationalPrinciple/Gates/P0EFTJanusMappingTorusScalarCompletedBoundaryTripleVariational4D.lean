@@ -16,6 +16,9 @@ Lax--Milgram solution the unique global minimizer.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleVariational4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleVariational4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -38,6 +41,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- Direct shifted Jacobi pairing. -/
 def lagrangianShiftedJacobiPairing
@@ -67,7 +74,10 @@ theorem lagrangianShiftedJacobiPairing_comm
     triple.lagrangianOperator_symmetric condition first second,
     real_inner_comm
       (triple.lagrangianInclusion condition first)
-      (triple.lagrangianInclusion condition second)]
+      (triple.lagrangianInclusion condition second),
+    real_inner_comm
+      (triple.lagrangianInclusion condition first)
+      (triple.lagrangianOperator condition second)]
 
 /-- Direct shifted quadratic functional. -/
 def lagrangianShiftedQuadraticFunctional
@@ -104,9 +114,10 @@ theorem lagrangianShiftedQuadraticFunctional_add
           variation := by
   unfold lagrangianShiftedQuadraticFunctional lagrangianShiftedJacobiPairing
   simp only [map_add, inner_add_left, inner_add_right]
-  rw [triple.lagrangianShiftedJacobiPairing_comm
-      condition spectralParameter field variation]
-  unfold lagrangianShiftedJacobiPairing
+  have hSymmetry := triple.lagrangianShiftedJacobiPairing_comm
+    condition spectralParameter field variation
+  unfold lagrangianShiftedJacobiPairing at hSymmetry
+  rw [hSymmetry]
   ring
 
 /-- Exact source-action expansion. -/
@@ -127,7 +138,9 @@ theorem lagrangianSourceAction_add
           variation := by
   unfold lagrangianSourceAction
   rw [triple.lagrangianShiftedQuadraticFunctional_add]
-  simp only [map_add, inner_add_right]
+  rw [triple.lagrangianShiftedJacobiPairing_comm
+    condition spectralParameter variation field]
+  simp only [map_add, inner_add_right, inner_sub_left]
   unfold lagrangianShiftedJacobiPairing
   ring
 
@@ -138,7 +151,9 @@ theorem lagrangianSourceAction_hasDerivAt
     (spectralParameter : Real)
     (source : Ambient)
     (field variation : triple.lagrangianDomainSubmodule condition) :
-    HasDerivAt
+    @HasDerivAt Real _ Real
+      Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule _ _
       (fun parameter : Real =>
         triple.lagrangianSourceAction condition spectralParameter source
           (field + parameter • variation))
@@ -159,23 +174,19 @@ theorem lagrangianSourceAction_hasDerivAt
           parameter * linearTerm + parameter ^ 2 * quadraticTerm := by
     intro parameter
     rw [triple.lagrangianSourceAction_add]
-    unfold lagrangianShiftedQuadraticFunctional
-    simp only [map_smul, real_inner_smul_left, real_inner_smul_right]
     dsimp [linearTerm, quadraticTerm]
+    unfold lagrangianShiftedQuadraticFunctional
+      lagrangianShiftedJacobiPairing
+    simp only [map_smul, real_inner_smul_left, real_inner_smul_right]
     ring
-  rw [show (fun parameter : Real =>
-      triple.lagrangianSourceAction condition spectralParameter source
-        (field + parameter • variation)) =
-    (fun parameter : Real =>
-      triple.lagrangianSourceAction condition spectralParameter source field +
-        parameter * linearTerm + parameter ^ 2 * quadraticTerm) from by
-      funext parameter
-      exact hPolynomial parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  have hDerivative := (((hasDerivAt_const (x := (0 : Real))
       (triple.lagrangianSourceAction condition spectralParameter source field)).add
       ((hasDerivAt_id (0 : Real)).mul_const linearTerm)).add
-      (((hasDerivAt_id (0 : Real)).pow 2).mul_const quadraticTerm)) using 1 <;>
-    norm_num
+      (((hasDerivAt_id (0 : Real)).pow 2).mul_const quadraticTerm))
+  norm_num at hDerivative
+  apply hDerivative.congr_of_eventuallyEq
+  filter_upwards [] with parameter
+  exact hPolynomial parameter
 
 /-- Weak stationarity of the source action. -/
 def lagrangianSourceStationary
@@ -270,8 +281,12 @@ theorem lagrangianSourceAction_sub_solution
   have hField : field = solution + variation := by
     dsimp [variation]
     module
-  rw [hField, triple.lagrangianSourceAction_add, hSolution, sub_self,
-    inner_zero_left, zero_add, add_sub_cancel_left]
+  rw [hField]
+  have hRecover : solution + variation - solution = variation := by
+    module
+  rw [hRecover, triple.lagrangianSourceAction_add, hSolution, sub_self,
+    inner_zero_left]
+  ring
 
 /-- Coercivity makes the Lax--Milgram source solution the unique global
 minimizer. -/
@@ -304,19 +319,51 @@ theorem LagrangianShiftedFormCoerciveData.unique_minimizer
     have hDifference := triple.lagrangianSourceAction_sub_solution
       condition spectralParameter source solution field hSolution
     unfold lagrangianShiftedQuadraticFunctional
-    rw [lagrangianShiftedJacobiPairing]
+      lagrangianShiftedJacobiPairing at hDifference
     have hCoercive := coercive.coercive (field - solution)
     rw [triple.lagrangianShiftedForm_apply] at hCoercive
-    linarith [sq_nonneg ‖field - solution‖]
+    have hEnergyNonnegative :
+        0 ≤ inner Real
+          (triple.lagrangianShiftedOperator condition spectralParameter
+            (field - solution))
+          (triple.lagrangianInclusion condition (field - solution)) :=
+      le_trans
+        (mul_nonneg
+          (mul_nonneg coercive.constant_pos.le (norm_nonneg _))
+          (norm_nonneg _)) hCoercive
+    have hDifferenceNonnegative :
+        0 ≤ triple.lagrangianSourceAction condition spectralParameter source field -
+          triple.lagrangianSourceAction condition spectralParameter source solution := by
+      rw [hDifference]
+      exact mul_nonneg (by norm_num) hEnergyNonnegative
+    exact sub_nonneg.mp hDifferenceNonnegative
   · intro field hEqual
     have hDifference := triple.lagrangianSourceAction_sub_solution
       condition spectralParameter source solution field hSolution
     rw [hEqual, sub_self] at hDifference
-    unfold lagrangianShiftedQuadraticFunctional at hDifference
+    unfold lagrangianShiftedQuadraticFunctional
+      lagrangianShiftedJacobiPairing at hDifference
     have hCoercive := coercive.coercive (field - solution)
     rw [triple.lagrangianShiftedForm_apply] at hCoercive
+    have hEnergyZero :
+        inner Real
+          (triple.lagrangianShiftedOperator condition spectralParameter
+            (field - solution))
+          (triple.lagrangianInclusion condition (field - solution)) = 0 := by
+      linarith
+    have hProductZero :
+        coercive.constant * ‖field - solution‖ * ‖field - solution‖ = 0 := by
+      apply le_antisymm
+      · rw [hEnergyZero] at hCoercive
+        exact hCoercive
+      · exact mul_nonneg
+          (mul_nonneg coercive.constant_pos.le (norm_nonneg _))
+          (norm_nonneg _)
     have hNorm : ‖field - solution‖ = 0 := by
-      nlinarith [sq_nonneg ‖field - solution‖]
+      rcases mul_eq_zero.mp hProductZero with hConstantNorm | hNorm
+      · exact (mul_eq_zero.mp hConstantNorm).resolve_left
+          (ne_of_gt coercive.constant_pos)
+      · exact hNorm
     exact sub_eq_zero.mp (norm_eq_zero.mp hNorm)
 
 /-- Direct variational certificate. -/
@@ -335,5 +382,5 @@ theorem directVariational_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleVariational4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

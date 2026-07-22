@@ -52,6 +52,10 @@ structure CanonicalScalarGreenCoreRegularityData
 
 namespace CanonicalScalarGreenCoreRegularityData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Continuous extension of the regularity map to the maximal completed graph. -/
 def completedRegularity
     (regularity : CanonicalScalarGreenCoreRegularityData
@@ -102,6 +106,11 @@ theorem regularityInclusion_completedRegularity
     apply isClosed_eq <;> fun_prop
   have hRange : Set.range (canonicalScalarGreenCoreToGraph core) ⊆ good := by
     rintro candidate ⟨smoothField, rfl⟩
+    change regularity.regularityInclusion
+        (regularity.completedRegularity
+          (canonicalScalarGreenCoreToGraph core smoothField)) =
+      canonicalScalarGreenCoreGraphInclusion core
+        (canonicalScalarGreenCoreToGraph core smoothField)
     rw [regularity.completedRegularity_smooth,
       regularity.inclusion_agrees]
     rfl

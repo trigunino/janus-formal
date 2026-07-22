@@ -36,7 +36,7 @@ open P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffDensity4D
 
 universe x y r
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -109,7 +109,8 @@ def genericCutoffData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :
     CanonicalScalarGreenCoreMinimalCutoffData boundaryData.green.core :=
-  (boundaryData.minimalCollarCutoffData).toGeneric boundaryData.green
+  (boundaryData.minimalCollarCutoffData period hPeriod).toGeneric
+    period hPeriod boundaryData.green
 
 /-- Elliptic cutoff boundary construction. -/
 def cutoffEllipticBoundaryData
@@ -125,7 +126,7 @@ def cutoffEllipticBoundaryData
   smooth := boundaryData.geometric.smoothCauchyExtensionData
   garding := boundaryData.garding
   normalRegularity := boundaryData.normalRegularity
-  cutoff := boundaryData.genericCutoffData
+  cutoff := boundaryData.genericCutoffData period hPeriod
   extensionConstant := boundaryData.extensionConstant
   extensionConstant_nonnegative := boundaryData.extensionConstant_nonnegative
   extensionGraphBound := boundaryData.extensionGraphBound
@@ -138,7 +139,8 @@ def triple
     (boundaryData : CanonicalPhysicalScalarFullyGeometricBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  boundaryData.cutoffEllipticBoundaryData.triple
+  (boundaryData.cutoffEllipticBoundaryData period hPeriod).triple
+    period hPeriod
 
 /-- Completed boundary inputs. -/
 def completedInputs
@@ -148,7 +150,8 @@ def completedInputs
     (boundaryData : CanonicalPhysicalScalarFullyGeometricBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  boundaryData.cutoffEllipticBoundaryData.completedInputs
+  (boundaryData.cutoffEllipticBoundaryData period hPeriod).completedInputs
+    period hPeriod
 
 /-- Fully geometric boundary-triple certificate. -/
 theorem certificate
@@ -171,14 +174,17 @@ theorem certificate
       Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
           boundaryData.green.core
-          boundaryData.cutoffEllipticBoundaryData.toEllipticBoundaryData
-            |>.toBoundaryConstructionData.traceBound) :=
+          (((boundaryData.cutoffEllipticBoundaryData period hPeriod)
+            |>.toEllipticBoundaryData period hPeriod)
+            |>.toBoundaryConstructionData period hPeriod).traceBound) :=
   ⟨boundaryData.geometric.smoothCauchyExtensionData.boundaryTrace_denseRange,
     boundaryData.smoothing.smoothToCanonicalPhysicalBulkL2_denseRange,
-    boundaryData.minimalCollarCutoffData.minimalCoreDense boundaryData.green,
-    boundaryData.triple.inclusion_injective,
-    boundaryData.cutoffEllipticBoundaryData.toEllipticBoundaryData
-      |>.toBoundaryConstructionData.completedTraceSurjective⟩
+    (boundaryData.minimalCollarCutoffData period hPeriod).minimalCoreDense
+      period hPeriod boundaryData.green,
+    (boundaryData.triple period hPeriod).inclusion_injective,
+    (((boundaryData.cutoffEllipticBoundaryData period hPeriod)
+      |>.toEllipticBoundaryData period hPeriod)
+      |>.toBoundaryConstructionData period hPeriod).completedTraceSurjective⟩
 
 end CanonicalPhysicalScalarFullyGeometricBoundaryData
 

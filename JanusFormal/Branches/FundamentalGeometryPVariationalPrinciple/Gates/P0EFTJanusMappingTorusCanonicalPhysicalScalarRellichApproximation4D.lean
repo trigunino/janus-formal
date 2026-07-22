@@ -20,10 +20,13 @@ set_option autoImplicit false
 noncomputable section
 
 open Set Topology Filter
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Compact approximation scheme for the physical `H¹ -> L²` inclusion. -/
 structure CanonicalPhysicalScalarRellichApproximationData where

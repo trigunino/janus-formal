@@ -15,6 +15,9 @@ completed Lagrangian realization or a genuine direct resolvent point.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleFredholmAlternative4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleFredholmAlternative4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -36,6 +39,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- Ambient Fredholm factor `I - (lambda-rho) R_rho`. -/
 def lagrangianFredholmFactor
@@ -243,12 +250,14 @@ theorem lagrangianResolvent_eigenvector_transfer
       (resolventEigenvalue⁻¹ • bounded.resolvent vector) = _
     rw [map_smul, bounded.left_inverse]
   refine ⟨hInclusion, ?_⟩
-  have hExpanded := triple.lagrangianShiftedOperator_apply
-    condition referenceParameter field
-  rw [hShifted, hInclusion] at hExpanded
-  have hAdded := congrArg
-    (fun value => value + referenceParameter • vector) hExpanded
-  simpa [add_smul, add_assoc, add_comm, add_left_comm] using hAdded.symm
+  rw [triple.lagrangianShiftedOperator_apply, hInclusion] at hShifted
+  change triple.lagrangianOperator condition field =
+    (referenceParameter + resolventEigenvalue⁻¹) • vector
+  calc
+    triple.lagrangianOperator condition field =
+        resolventEigenvalue⁻¹ • vector + referenceParameter • vector :=
+      sub_eq_iff_eq_add.mp hShifted
+    _ = _ := by rw [add_smul]; ac_rfl
 
 /-- Direct Fredholm alternative for the unbounded Lagrangian realization. -/
 theorem lagrangian_fredholmAlternative
@@ -341,5 +350,5 @@ theorem directFredholmAlternative_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleFredholmAlternative4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

@@ -16,6 +16,9 @@ functional nonnegative.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleGaussian4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleGaussian4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -38,6 +41,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- Classical domain-valued source solution. -/
 def lagrangianClassicalSourceSolution
@@ -97,7 +104,19 @@ theorem lagrangianGaussianPairing_comm
         first second =
       triple.lagrangianGaussianPairing condition spectralParameter bounded
         second first :=
-  bounded.ambient_isSymmetric triple condition spectralParameter first second
+  by
+    unfold lagrangianGaussianPairing
+    have hSymmetry := bounded.ambient_isSymmetric
+      triple condition spectralParameter first second
+    calc
+      inner Real first
+          (bounded.ambientResolvent triple condition spectralParameter second) =
+        inner Real
+          (bounded.ambientResolvent triple condition spectralParameter first)
+          second := hSymmetry.symm
+      _ = inner Real second
+          (bounded.ambientResolvent triple condition spectralParameter first) :=
+        real_inner_comm _ _
 
 /-- On-shell shifted source action. -/
 theorem lagrangianSourceAction_onShell
@@ -116,7 +135,9 @@ theorem lagrangianSourceAction_onShell
   unfold lagrangianSourceAction lagrangianShiftedQuadraticFunctional
     lagrangianShiftedJacobiPairing lagrangianGaussianPairing
     lagrangianClassicalSourceSolution
+    LagrangianBoundedResolventAt.ambientResolvent
   rw [bounded.left_inverse]
+  simp only [ContinuousLinearMap.comp_apply]
   ring
 
 /-- Generating functional is minus the on-shell source action. -/
@@ -152,11 +173,12 @@ theorem lagrangianGaussianGeneratingFunctional_add
           bounded second +
         triple.lagrangianGaussianPairing condition spectralParameter bounded
           first second := by
+  have hSymmetry := triple.lagrangianGaussianPairing_comm
+    condition spectralParameter bounded second first
+  unfold lagrangianGaussianPairing at hSymmetry
   unfold lagrangianGaussianGeneratingFunctional lagrangianGaussianPairing
   simp only [map_add, inner_add_left, inner_add_right]
-  rw [triple.lagrangianGaussianPairing_comm condition spectralParameter
-    bounded second first]
-  unfold lagrangianGaussianPairing
+  rw [hSymmetry]
   ring
 
 /-- Quadratic homogeneity. -/
@@ -192,15 +214,25 @@ theorem LagrangianShiftedFormCoerciveData.gaussian_nonnegative
   let bounded := coercive.boundedResolvent
     triple condition spectralParameter hDense
   let solution := bounded.resolvent source
-  have hEquation := bounded.left_inverse source
+  have hEquation : triple.lagrangianShiftedOperator
+      condition spectralParameter solution = source :=
+    bounded.left_inverse source
   have hCoercive := coercive.coercive solution
   rw [triple.lagrangianShiftedForm_apply] at hCoercive
   unfold lagrangianGaussianGeneratingFunctional lagrangianGaussianPairing
     LagrangianBoundedResolventAt.ambientResolvent
   change 0 ≤ (1 / 2 : Real) *
     inner Real source (triple.lagrangianInclusion condition solution)
+  have hEnergyNonnegative :
+      0 ≤ inner Real
+        (triple.lagrangianShiftedOperator condition spectralParameter solution)
+        (triple.lagrangianInclusion condition solution) :=
+    le_trans
+      (mul_nonneg
+        (mul_nonneg coercive.constant_pos.le (norm_nonneg _))
+        (norm_nonneg _)) hCoercive
   rw [← hEquation]
-  linarith [sq_nonneg ‖solution‖]
+  exact mul_nonneg (by norm_num) hEnergyNonnegative
 
 /-- Direct Gaussian certificate. -/
 theorem directGaussian_certificate
@@ -226,5 +258,5 @@ theorem directGaussian_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleGaussian4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

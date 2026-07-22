@@ -18,18 +18,22 @@ triple.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarSquaredGraphEstimates4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarSquaredGraphEstimates4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosed4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 namespace CanonicalPhysicalScalarFirstSheetGreenCoreData
 
@@ -105,8 +109,8 @@ structure SquaredCompletedBoundaryInputs
     period hPeriod
     (green.boundaryGraphBound period hPeriod
       (canonicalPhysicalScalarLatitudeCoareaTheorem period hPeriod)
-      (elliptic.toGraphEllipticEstimate green)
-      (normal.toNormalGraphEstimate green))
+      (elliptic.toGraphEllipticEstimate period hPeriod green)
+      (normal.toNormalGraphEstimate period hPeriod green))
 
 namespace SquaredCompletedBoundaryInputs
 
@@ -117,8 +121,8 @@ def toCompletedBoundaryTripleInputs
     (inputs : green.SquaredCompletedBoundaryInputs period hPeriod) :
     green.CompletedBoundaryTripleInputs period hPeriod where
   coarea := canonicalPhysicalScalarLatitudeCoareaTheorem period hPeriod
-  elliptic := inputs.elliptic.toGraphEllipticEstimate green
-  normal := inputs.normal.toNormalGraphEstimate green
+  elliptic := inputs.elliptic.toGraphEllipticEstimate period hPeriod green
+  normal := inputs.normal.toNormalGraphEstimate period hPeriod green
   minimalDense := inputs.minimalDense
   completedTraceSurjective := inputs.completedTraceSurjective
 
@@ -127,7 +131,8 @@ def triple
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.SquaredCompletedBoundaryInputs period hPeriod) :=
-  (inputs.toCompletedBoundaryTripleInputs green).triple green
+  (inputs.toCompletedBoundaryTripleInputs period hPeriod green).triple
+    period hPeriod green
 
 /-- Squared estimates install all boundary-completion data. -/
 theorem certificate
@@ -138,9 +143,10 @@ theorem certificate
         (canonicalScalarGreenCoreGraphInclusion green.core) ∧
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace green.core
-          ((inputs.toCompletedBoundaryTripleInputs green).traceBound green)) :=
-  ⟨(inputs.triple green).inclusion_injective,
-    (inputs.triple green).boundary_surjective⟩
+          ((inputs.toCompletedBoundaryTripleInputs period hPeriod green).traceBound
+            period hPeriod green)) :=
+  ⟨(inputs.triple period hPeriod green).inclusion_injective,
+    (inputs.triple period hPeriod green).boundary_surjective⟩
 
 end SquaredCompletedBoundaryInputs
 
@@ -159,11 +165,11 @@ theorem squaredGraphEstimates_certificate
             period hPeriod field‖ ≤
           normal.constant *
             ‖canonicalScalarGreenCoreToGraph green.core field‖) :=
-  ⟨(elliptic.toGraphEllipticEstimate green).bound,
-    (normal.toNormalGraphEstimate green).bound⟩
+  ⟨(elliptic.toGraphEllipticEstimate period hPeriod green).bound,
+    (normal.toNormalGraphEstimate period hPeriod green).bound⟩
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarSquaredGraphEstimates4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

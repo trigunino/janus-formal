@@ -26,6 +26,7 @@ noncomputable section
 open Set Topology Module End
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetDirectAnalyticClosure4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
@@ -39,7 +40,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAnalyticClosure4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
@@ -50,10 +51,11 @@ structure CanonicalPhysicalScalarFirstSheetShiftedFormData
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) where
   condition : CanonicalScalarHilbertLagrangianBoundaryCondition
     (BoundaryL2 period)
-  adjointRegularity : (inputs.triple green).MaximalAdjointRegularity condition
+  adjointRegularity :
+    (inputs.triple period hPeriod green).MaximalAdjointRegularity condition
   referenceParameter : Real
   shiftedFormCoercive :
-    (inputs.triple green).LagrangianShiftedFormCoerciveData
+    (inputs.triple period hPeriod green).LagrangianShiftedFormCoerciveData
       condition referenceParameter
   rellich : PhysicalH1RellichCompactness period hPeriod
 
@@ -66,10 +68,10 @@ theorem denseDomain
     {inputs : green.CompletedBoundaryTripleInputs period hPeriod}
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs) :
-    DenseRange ((inputs.triple green).lagrangianInclusion
+    DenseRange ((inputs.triple period hPeriod green).lagrangianInclusion
       analytic.condition) :=
-  (inputs.triple green).lagrangianInclusion_denseRange_of_minimalCore
-    analytic.condition inputs.minimalDense
+  P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D.CanonicalScalarCompletedBoundaryTripleData.lagrangianInclusion_denseRange_of_minimalCore
+    (inputs.triple period hPeriod green) analytic.condition inputs.minimalDense
 
 /-- Lax--Milgram coercive-surjective shifted operator. -/
 def coerciveSurjectiveAt
@@ -78,10 +80,10 @@ def coerciveSurjectiveAt
     {inputs : green.CompletedBoundaryTripleInputs period hPeriod}
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs) :
-    (inputs.triple green).LagrangianCoerciveSurjectiveAt
+    (inputs.triple period hPeriod green).LagrangianCoerciveSurjectiveAt
       analytic.condition analytic.referenceParameter :=
   analytic.shiftedFormCoercive.toCoerciveSurjectiveAt
-    (inputs.triple green) analytic.condition analytic.referenceParameter
+    (inputs.triple period hPeriod green) analytic.condition analytic.referenceParameter
     (analytic.denseDomain period hPeriod)
 
 /-- Compact physical reference resolvent. -/
@@ -91,7 +93,7 @@ noncomputable def compactResolvent
     {inputs : green.CompletedBoundaryTripleInputs period hPeriod}
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs) :
-    (inputs.triple green).LagrangianCompactResolventAt
+    (inputs.triple period hPeriod green).LagrangianCompactResolventAt
       analytic.condition analytic.referenceParameter :=
   green.compactResolventAt period hPeriod inputs analytic.condition
     analytic.referenceParameter
@@ -105,9 +107,10 @@ def semibounded
     {inputs : green.CompletedBoundaryTripleInputs period hPeriod}
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs) :
-    (inputs.triple green).LagrangianSemiboundedData analytic.condition :=
+    (inputs.triple period hPeriod green).LagrangianSemiboundedData
+      analytic.condition :=
   analytic.shiftedFormCoercive.toSemiboundedData
-    (inputs.triple green) analytic.condition analytic.referenceParameter
+    (inputs.triple period hPeriod green) analytic.condition analytic.referenceParameter
 
 /-- Conversion to the direct physical analytic closure. -/
 noncomputable def toDirectAnalyticData
@@ -132,8 +135,8 @@ theorem actualAdjointDomain_eq
     {inputs : green.CompletedBoundaryTripleInputs period hPeriod}
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs) :
-    (inputs.triple green).actualAdjointDomain analytic.condition =
-      (inputs.triple green).realizationDomain analytic.condition :=
+    (inputs.triple period hPeriod green).actualAdjointDomain analytic.condition =
+      (inputs.triple period hPeriod green).realizationDomain analytic.condition :=
   (analytic.toDirectAnalyticData period hPeriod).actualAdjointDomain_eq
     period hPeriod
 
@@ -146,9 +149,9 @@ theorem fredholmAlternative
       period hPeriod green inputs)
     (spectralParameter : Real)
     (hParameter : spectralParameter ≠ analytic.referenceParameter) :
-    (inputs.triple green).LagrangianHasEigenvalue
+    (inputs.triple period hPeriod green).LagrangianHasEigenvalue
         analytic.condition spectralParameter ∨
-      (inputs.triple green).LagrangianResolventPoint
+      (inputs.triple period hPeriod green).LagrangianResolventPoint
         analytic.condition spectralParameter :=
   (analytic.toDirectAnalyticData period hPeriod).fredholmAlternative
     period hPeriod spectralParameter hParameter
@@ -161,7 +164,7 @@ theorem eigenvalue_ge_referenceParameter
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs)
     (eigenvalue : Real)
-    (hEigenvalue : (inputs.triple green).LagrangianHasEigenvalue
+    (hEigenvalue : (inputs.triple period hPeriod green).LagrangianHasEigenvalue
       analytic.condition eigenvalue) :
     analytic.referenceParameter ≤ eigenvalue := by
   have hLower :=
@@ -179,7 +182,7 @@ theorem spectral_complete
     (⨆ eigenvalue : Real,
       Module.End.eigenspace
         ((analytic.compactResolvent period hPeriod).bounded.ambientResolvent
-          (inputs.triple green) analytic.condition
+          (inputs.triple period hPeriod green) analytic.condition
             analytic.referenceParameter).toLinearMap eigenvalue)ᗮ = ⊥ :=
   (analytic.toDirectAnalyticData period hPeriod).spectral_complete
     period hPeriod
@@ -191,18 +194,18 @@ theorem certificate
     {inputs : green.CompletedBoundaryTripleInputs period hPeriod}
     (analytic : CanonicalPhysicalScalarFirstSheetShiftedFormData
       period hPeriod green inputs) :
-    DenseRange ((inputs.triple green).lagrangianInclusion
+    DenseRange ((inputs.triple period hPeriod green).lagrangianInclusion
         analytic.condition) ∧
-      (inputs.triple green).actualAdjointDomain analytic.condition =
-        (inputs.triple green).realizationDomain analytic.condition ∧
+      (inputs.triple period hPeriod green).actualAdjointDomain analytic.condition =
+        (inputs.triple period hPeriod green).realizationDomain analytic.condition ∧
       (∀ spectralParameter : Real,
         spectralParameter ≠ analytic.referenceParameter →
-          (inputs.triple green).LagrangianHasEigenvalue
+          (inputs.triple period hPeriod green).LagrangianHasEigenvalue
               analytic.condition spectralParameter ∨
-            (inputs.triple green).LagrangianResolventPoint
+            (inputs.triple period hPeriod green).LagrangianResolventPoint
               analytic.condition spectralParameter) ∧
       (∀ eigenvalue : Real,
-        (inputs.triple green).LagrangianHasEigenvalue
+        (inputs.triple period hPeriod green).LagrangianHasEigenvalue
             analytic.condition eigenvalue →
           analytic.referenceParameter ≤ eigenvalue) :=
   ⟨analytic.denseDomain period hPeriod,

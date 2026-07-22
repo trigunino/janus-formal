@@ -154,6 +154,7 @@ theorem graphInclusion_injective_of_minimal_dense
     graphOperator_eq_zero_of_graphInclusion_eq_zero core
       hDense (first - second) hDifferenceInclusion
   apply Subtype.ext
+  apply WithLp.ofLp_injective
   apply Prod.ext
   · exact hInclusion
   · rw [map_sub, sub_eq_zero] at hDifferenceOperator

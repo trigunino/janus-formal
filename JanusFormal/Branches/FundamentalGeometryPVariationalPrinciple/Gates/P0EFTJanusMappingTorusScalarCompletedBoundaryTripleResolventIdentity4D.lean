@@ -15,6 +15,9 @@ resolvent parameter to every other bounded resolvent parameter.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolventIdentity4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolventIdentity4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -36,6 +39,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- Domain-valued direct resolvent identity. -/
 theorem lagrangianResolvent_sub_resolvent_apply
@@ -62,16 +69,29 @@ theorem lagrangianResolvent_sub_resolvent_apply
       triple.lagrangianShiftedOperator condition firstParameter secondField =
         source + (secondParameter - firstParameter) •
           triple.lagrangianInclusion condition secondField := by
-    rw [triple.lagrangianShiftedOperator_apply,
-      triple.lagrangianShiftedOperator_apply] at hSecond ⊢
-    rw [← hSecond]
+    rw [triple.lagrangianShiftedOperator_apply] at hSecond ⊢
+    rw [← hSecond, sub_smul]
     module
-  rw [hShiftRelation, map_add, map_smul,
-    firstResolvent.left_inverse] at hFirstApplied
+  rw [hShiftRelation, map_add, map_smul] at hFirstApplied
   have hRearranged := congrArg
     (fun field => firstResolvent.resolvent source - field) hFirstApplied
-  simpa [sub_eq_add_neg, add_assoc, add_comm, add_left_comm,
-    sub_smul] using hRearranged
+  calc
+    firstResolvent.resolvent source - secondResolvent.resolvent source =
+        -((secondParameter - firstParameter) •
+          firstResolvent.resolvent
+            (triple.lagrangianInclusion condition
+              (secondResolvent.resolvent source))) := by
+      simpa [secondField, sub_eq_add_neg, add_assoc, add_comm, add_left_comm]
+        using hRearranged.symm
+    _ = (firstParameter - secondParameter) •
+        firstResolvent.resolvent
+          (triple.lagrangianInclusion condition
+            (secondResolvent.resolvent source)) := by
+      have hCoefficient : firstParameter - secondParameter =
+          -(secondParameter - firstParameter) := by
+        ring
+      rw [hCoefficient]
+      exact (neg_smul (secondParameter - firstParameter) _).symm
 
 /-- Domain-valued direct resolvent identity as equality of continuous maps. -/
 theorem lagrangianResolvent_sub_resolvent
@@ -87,9 +107,13 @@ theorem lagrangianResolvent_sub_resolvent
         (firstResolvent.resolvent.comp
           (secondResolvent.ambientResolvent
             triple condition secondParameter)) := by
-  ext source
-  exact triple.lagrangianResolvent_sub_resolvent_apply condition
-    firstParameter secondParameter firstResolvent secondResolvent source
+  apply ContinuousLinearMap.ext
+  intro source
+  simpa only [sub_apply, smul_apply,
+    ContinuousLinearMap.comp_apply,
+    LagrangianBoundedResolventAt.ambientResolvent] using
+      triple.lagrangianResolvent_sub_resolvent_apply condition
+        firstParameter secondParameter firstResolvent secondResolvent source
 
 /-- Ambient direct resolvent identity. -/
 theorem ambientResolvent_sub_resolvent
@@ -110,6 +134,7 @@ theorem ambientResolvent_sub_resolvent
   change triple.lagrangianInclusion condition
       (firstResolvent.resolvent source - secondResolvent.resolvent source) = _
   rw [triple.lagrangianResolvent_sub_resolvent_apply]
+  unfold LagrangianBoundedResolventAt.ambientResolvent
   simp
 
 /-- Ambient direct resolvents commute. -/
@@ -128,11 +153,17 @@ theorem ambientResolvent_commute
   by_cases hParameters : firstParameter = secondParameter
   · subst hParameters
     have hResolventEquality : firstResolvent.resolvent = secondResolvent.resolvent := by
-      ext source
-      apply (triple.lagrangianShiftedOperator
-        condition secondParameter).toLinearMap.ker_eq_bot.mp
-      rw [map_sub, firstResolvent.left_inverse, secondResolvent.left_inverse,
-        sub_self]
+      apply ContinuousLinearMap.ext
+      intro source
+      calc
+        firstResolvent.resolvent source =
+            firstResolvent.resolvent
+              (triple.lagrangianShiftedOperator condition firstParameter
+                (secondResolvent.resolvent source)) := by
+          rw [secondResolvent.left_inverse]
+        _ = secondResolvent.resolvent source :=
+          firstResolvent.right_inverse _
+    unfold LagrangianBoundedResolventAt.ambientResolvent
     rw [hResolventEquality]
   · have hFirst := triple.ambientResolvent_sub_resolvent condition
       firstParameter secondParameter firstResolvent secondResolvent
@@ -140,6 +171,26 @@ theorem ambientResolvent_commute
       secondParameter firstParameter secondResolvent firstResolvent
     have hDifference : firstParameter - secondParameter ≠ 0 :=
       sub_ne_zero.mpr hParameters
+    have hSecondRewritten :
+        firstResolvent.ambientResolvent triple condition firstParameter -
+            secondResolvent.ambientResolvent triple condition secondParameter =
+          (firstParameter - secondParameter) •
+            ((secondResolvent.ambientResolvent triple condition secondParameter).comp
+              (firstResolvent.ambientResolvent triple condition firstParameter)) := by
+      calc
+        firstResolvent.ambientResolvent triple condition firstParameter -
+              secondResolvent.ambientResolvent triple condition secondParameter =
+            -(secondResolvent.ambientResolvent triple condition secondParameter -
+              firstResolvent.ambientResolvent triple condition firstParameter) := by
+              module
+        _ = -((secondParameter - firstParameter) •
+              ((secondResolvent.ambientResolvent triple condition secondParameter).comp
+                (firstResolvent.ambientResolvent triple condition firstParameter))) := by
+              rw [hSecond]
+        _ = (firstParameter - secondParameter) •
+              ((secondResolvent.ambientResolvent triple condition secondParameter).comp
+                (firstResolvent.ambientResolvent triple condition firstParameter)) := by
+              rw [← neg_smul, neg_sub]
     have hScaled :
         (firstParameter - secondParameter) •
             ((firstResolvent.ambientResolvent triple condition firstParameter).comp
@@ -147,11 +198,7 @@ theorem ambientResolvent_commute
           (firstParameter - secondParameter) •
             ((secondResolvent.ambientResolvent triple condition secondParameter).comp
               (firstResolvent.ambientResolvent triple condition firstParameter)) := by
-      rw [← hFirst]
-      rw [← neg_sub secondParameter firstParameter,
-        smul_neg, ← neg_smul]
-      rw [← hSecond]
-      module
+      exact hFirst.symm.trans hSecondRewritten
     exact (smul_right_injective _ hDifference) hScaled
 
 /-- Compactness of one ambient resolvent propagates to every other bounded
@@ -196,7 +243,8 @@ theorem compact_ambientResolvent_of_compact
             ((targetResolvent.ambientResolvent triple condition targetParameter).comp
               (compactResolvent.bounded.ambientResolvent
                 triple condition compactParameter)) := by
-    module at hIdentity ⊢
+    rw [← hIdentity]
+    module
   rw [hTargetEquality]
   exact hSum
 
@@ -241,5 +289,5 @@ theorem directResolventIdentity_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolventIdentity4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

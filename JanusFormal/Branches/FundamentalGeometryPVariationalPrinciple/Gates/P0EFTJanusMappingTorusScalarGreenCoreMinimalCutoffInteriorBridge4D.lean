@@ -13,6 +13,9 @@ cutoff approximation package directly.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffInteriorBridge4D
+end P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffInteriorBridge4D
+
+namespace P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffDensity4D
 
 set_option autoImplicit false
 noncomputable section
@@ -20,6 +23,7 @@ noncomputable section
 open Set Topology
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 open P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffDensity4D
 open P0EFTJanusMappingTorusScalarGreenCoreInteriorDensity4D
 
@@ -34,12 +38,15 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarGreenCoreMinimalCutoffData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+
 /-- The minimal zero-Cauchy domain as a dense interior core. -/
 def toInteriorDensityData
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core) :
     CanonicalScalarGreenCoreInteriorDensityData
-      (InteriorCore := core.minimalDomainSubmodule) core where
-  toDomain := core.minimalDomainSubmodule.subtype
+      (InteriorCore := minimalDomainSubmodule core) core where
+  toDomain := (minimalDomainSubmodule core).subtype
   boundary_zero := by
     intro test
     exact LinearMap.mem_ker.mp test.2
@@ -54,16 +61,16 @@ theorem toInteriorDensityData_minimalCoreDense
   rfl
 
 /-- Cutoff/interior bridge certificate. -/
-theorem certificate
+theorem interiorBridgeCertificate
     (cutoffData : CanonicalScalarGreenCoreMinimalCutoffData core) :
     DenseRange
-        (core.inclusion.comp core.minimalDomainSubmodule.subtype) ∧
-      core.MinimalCoreDense :=
+        (core.inclusion.comp (minimalDomainSubmodule core).subtype) ∧
+      MinimalCoreDense core :=
   ⟨cutoffData.minimalCoreDense,
     cutoffData.minimalCoreDense⟩
 
 end CanonicalScalarGreenCoreMinimalCutoffData
 
 end
-end P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffInteriorBridge4D
+end P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffDensity4D
 end JanusFormal

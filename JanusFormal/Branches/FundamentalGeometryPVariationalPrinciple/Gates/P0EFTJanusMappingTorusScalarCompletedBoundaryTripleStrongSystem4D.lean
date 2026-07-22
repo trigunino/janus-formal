@@ -67,31 +67,56 @@ def toStrongSystem
 theorem toStrongSystem_graphMap_eq_val
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (field : triple.MaximalDomain) :
-    canonicalScalarOperatorGraphLinearMap (toStrongSystem triple) field = field.1 :=
+    canonicalScalarOperatorGraphLinearMap (toStrongSystem triple) field =
+      WithLp.ofLp field.1 :=
   rfl
 
-/-- The norm of the strong-system graph lift is the norm already carried by the
-completed maximal graph. -/
-theorem toStrongSystem_graphLift_norm
+/-- The legacy product graph norm controls the completed `L²` product norm. -/
+theorem toStrongSystem_graphLift_control
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (field : triple.MaximalDomain) :
-    ‖canonicalScalarSmoothToOperatorGraphLinearMap
-        (toStrongSystem triple) field‖ = ‖field‖ :=
-  rfl
+    ‖field‖ ≤
+      ‖(WithLp.prodContinuousLinearEquiv 2 Real Ambient Ambient).symm.toContinuousLinearMap‖ *
+        ‖canonicalScalarSmoothToOperatorGraphLinearMap
+          (toStrongSystem triple) field‖ := by
+  let equivalence := WithLp.prodContinuousLinearEquiv 2 Real Ambient Ambient
+  change ‖field.1‖ ≤ ‖equivalence.symm.toContinuousLinearMap‖ *
+    ‖canonicalScalarOperatorGraphLinearMap (toStrongSystem triple) field‖
+  calc
+    ‖field.1‖ = ‖equivalence.symm (equivalence field.1)‖ := by simp
+    _ ≤ ‖equivalence.symm.toContinuousLinearMap‖ * ‖equivalence field.1‖ :=
+      equivalence.symm.toContinuousLinearMap.le_opNorm _
+    _ = _ := by
+      rw [toStrongSystem_graphMap_eq_val]
+      rfl
 
 /-- Continuity of the completed trace supplies the graph-bound hypothesis for
 the strong presentation. -/
 def toStrongSystemBoundaryGraphBound
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound) :
     HasCanonicalScalarHilbertBoundaryGraphBound (toStrongSystem triple) where
-  constant := ‖canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound‖
-  nonnegative := norm_nonneg
-    (canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound)
+  constant := ‖canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound‖ *
+    ‖(WithLp.prodContinuousLinearEquiv 2 Real Ambient Ambient).symm.toContinuousLinearMap‖
+  nonnegative := mul_nonneg
+    (norm_nonneg (canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound))
+    (norm_nonneg
+      (WithLp.prodContinuousLinearEquiv 2 Real Ambient Ambient).symm.toContinuousLinearMap)
   bound := by
     intro field
-    rw [toStrongSystem_graphLift_norm triple]
-    exact (canonicalScalarGreenCoreCompletedBoundaryTrace
-      core traceBound).le_opNorm field
+    calc
+      ‖canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound field‖ ≤
+          ‖canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound‖ *
+            ‖field‖ :=
+        (canonicalScalarGreenCoreCompletedBoundaryTrace
+          core traceBound).le_opNorm field
+      _ ≤ ‖canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound‖ *
+          (‖(WithLp.prodContinuousLinearEquiv 2 Real Ambient Ambient).symm.toContinuousLinearMap‖ *
+            ‖canonicalScalarSmoothToOperatorGraphLinearMap
+              (toStrongSystem triple) field‖) :=
+        mul_le_mul_of_nonneg_left
+          (toStrongSystem_graphLift_control triple field)
+          (norm_nonneg (canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound))
+      _ = _ := by ring
 
 /-- Dense formal-adjoint test data for the strong completed presentation. -/
 structure StrongAdjointTestCore

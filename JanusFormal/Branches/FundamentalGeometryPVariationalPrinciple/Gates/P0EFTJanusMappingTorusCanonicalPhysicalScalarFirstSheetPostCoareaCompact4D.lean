@@ -27,14 +27,18 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetPostCoareaTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D.CanonicalPhysicalScalarFirstSheetGreenCoreData.CompletedBoundaryTripleInputs
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongAnalyticClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetCoerciveCompactClosure4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
+open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
+open P0EFTJanusMappingTorusScalarLagrangianResolvent4D
 open P0EFTJanusMappingTorusScalarLagrangianCompactSpectrum4D
+open P0EFTJanusMappingTorusScalarLagrangianFredholmAlternative4D
 open P0EFTJanusMappingTorusScalarLagrangianSemiboundedSpectrum4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
@@ -52,14 +56,20 @@ structure CanonicalPhysicalScalarFirstSheetPostCoareaCompactData
       condition
   referenceParameter : Real
   coerciveCompact : CanonicalScalarClosedLagrangianCoerciveCompactEmbeddingAt
-    ((trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-    ((trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-    ((trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+    (strongSystem period hPeriod green
+      (trace.toCompletedBoundaryTripleInputs period hPeriod))
+    (strongSystem_closable period hPeriod green
+      (trace.toCompletedBoundaryTripleInputs period hPeriod))
+    (strongSystemGraphBound period hPeriod green
+      (trace.toCompletedBoundaryTripleInputs period hPeriod))
     condition referenceParameter
   semibounded : CanonicalScalarClosedLagrangianSemiboundedData
-    ((trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-    ((trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-    ((trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+    (strongSystem period hPeriod green
+      (trace.toCompletedBoundaryTripleInputs period hPeriod))
+    (strongSystem_closable period hPeriod green
+      (trace.toCompletedBoundaryTripleInputs period hPeriod))
+    (strongSystemGraphBound period hPeriod green
+      (trace.toCompletedBoundaryTripleInputs period hPeriod))
     condition
 
 namespace CanonicalPhysicalScalarFirstSheetPostCoareaCompactData
@@ -88,9 +98,12 @@ theorem denseDomain
       period hPeriod green) :
     DenseRange
       (canonicalScalarClosedLagrangianDomainInclusion
-        ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-        ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-        ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+        (strongSystem period hPeriod green
+          (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+        (strongSystem_closable period hPeriod green
+          (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+        (strongSystemGraphBound period hPeriod green
+          (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
         data.condition) :=
   (data.toCoerciveCompactData period hPeriod).denseDomain period hPeriod
 
@@ -103,29 +116,42 @@ theorem certificate
       period hPeriod green) :
     DenseRange
         (canonicalScalarClosedLagrangianDomainInclusion
-          ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-          ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-          ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+          (strongSystem period hPeriod green
+            (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+          (strongSystem_closable period hPeriod green
+            (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+          (strongSystemGraphBound period hPeriod green
+            (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
           data.condition) ∧
       data.adjoint.adjointDomain =
         (canonicalScalarClosedLagrangianDomainSubmodule
-          ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-          ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-          ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+          (strongSystem period hPeriod green
+            (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+          (strongSystem_closable period hPeriod green
+            (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+          (strongSystemGraphBound period hPeriod green
+            (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
           data.condition :
             Set (canonicalScalarClosedOperatorDomain
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green))) ∧
+              (strongSystem period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod)))) ∧
       (∀ spectralParameter : Real,
         spectralParameter ≠ data.referenceParameter →
           CanonicalScalarClosedLagrangianHasEigenvalue
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+              (strongSystem period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+              (strongSystem_closable period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+              (strongSystemGraphBound period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
               data.condition spectralParameter ∨
             CanonicalScalarClosedLagrangianResolventPoint
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem green)
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystem_closable green)
-              ((data.trace.toCompletedBoundaryTripleInputs period hPeriod).strongSystemGraphBound green)
+              (strongSystem period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+              (strongSystem_closable period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
+              (strongSystemGraphBound period hPeriod green
+                (data.trace.toCompletedBoundaryTripleInputs period hPeriod))
               data.condition spectralParameter) :=
   (data.toCoerciveCompactData period hPeriod).certificate period hPeriod
 

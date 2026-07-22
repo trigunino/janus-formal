@@ -1,5 +1,6 @@
 import Mathlib.Analysis.InnerProductSpace.LaxMilgram
 import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Analysis.InnerProductSpace.Subspace
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
 
 /-!
@@ -17,6 +18,9 @@ bound for the shifted operator, so the result is exactly the
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleLaxMilgram4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleLaxMilgram4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -39,6 +43,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Completeness of every closed completed Lagrangian domain. -/
 @[implicit_reducible]
 noncomputable def lagrangianDomainCompleteSpace
@@ -48,6 +56,36 @@ noncomputable def lagrangianDomainCompleteSpace
   letI : CompleteSpace (CanonicalScalarGreenCoreGraphSpace core) :=
     canonicalScalarGreenCoreGraphCompleteSpace core
   exact (triple.lagrangianDomain_isClosed condition).completeSpace_coe
+
+local instance (priority := 2000) laxMilgramDomainModule
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    Module Real (triple.lagrangianDomainSubmodule condition) :=
+  (lagrangianDomainInnerProductSpace triple condition).toNormedSpace.toModule
+
+local instance (priority := 2000) laxMilgramDomainNormedSpace
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    NormedSpace Real (triple.lagrangianDomainSubmodule condition) :=
+  (lagrangianDomainInnerProductSpace triple condition).toNormedSpace
+
+local instance (priority := 2000) laxMilgramDomainInnerProductSpace
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    InnerProductSpace Real (triple.lagrangianDomainSubmodule condition) :=
+  lagrangianDomainInnerProductSpace triple condition
+
+/-- The domain inclusion repackaged with its canonical Hilbert module instance. -/
+def lagrangianHilbertInclusion
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    triple.lagrangianDomainSubmodule condition →L[Real] Ambient :=
+  { toFun := fun field => triple.lagrangianInclusion condition field
+    map_add' := fun first second =>
+      (triple.lagrangianInclusion condition).map_add first second
+    map_smul' := fun scalar field =>
+      (triple.lagrangianInclusion condition).map_smul scalar field
+    cont := (triple.lagrangianInclusion condition).continuous }
 
 /-- Lax--Milgram data for one shifted completed Lagrangian realization. -/
 structure LagrangianLaxMilgramData
@@ -77,7 +115,8 @@ theorem isCoercive
     (spectralParameter : Real)
     (data : triple.LagrangianLaxMilgramData
       condition spectralParameter) :
-    IsCoercive data.form :=
+    @IsCoercive _ _
+      (laxMilgramDomainNormedSpace triple condition) data.form :=
   ⟨data.constant, data.constant_pos, data.coercive⟩
 
 /-- Riesz representative of an ambient source restricted to the Lagrangian
@@ -91,7 +130,10 @@ noncomputable def sourceRepresenter
     Ambient →L[Real] triple.lagrangianDomainSubmodule condition := by
   letI : CompleteSpace (triple.lagrangianDomainSubmodule condition) :=
     triple.lagrangianDomainCompleteSpace condition
-  exact (triple.lagrangianInclusion condition)†
+  exact (@ContinuousLinearMap.adjoint Real
+    (triple.lagrangianDomainSubmodule condition) Ambient
+    _ _ _ (laxMilgramDomainInnerProductSpace triple condition) _ _ _)
+      (triple.lagrangianHilbertInclusion condition)
 
 /-- Lax--Milgram solution map. -/
 noncomputable def solution
@@ -103,8 +145,11 @@ noncomputable def solution
     Ambient →L[Real] triple.lagrangianDomainSubmodule condition := by
   letI : CompleteSpace (triple.lagrangianDomainSubmodule condition) :=
     triple.lagrangianDomainCompleteSpace condition
-  exact (data.isCoercive triple condition spectralParameter)
-    |>.continuousLinearEquivOfBilin.symm.toContinuousLinearMap.comp
+  let coercive := data.isCoercive triple condition spectralParameter
+  let equivalence := @IsCoercive.continuousLinearEquivOfBilin
+    (triple.lagrangianDomainSubmodule condition) _
+    (laxMilgramDomainInnerProductSpace triple condition) _ data.form coercive
+  exact equivalence.symm.toContinuousLinearMap.comp
       (data.sourceRepresenter triple condition spectralParameter)
 
 /-- Weak source equation solved by the Lax--Milgram field. -/
@@ -123,18 +168,31 @@ theorem solution_weak
       inner Real source (triple.lagrangianInclusion condition test) := by
   letI : CompleteSpace (triple.lagrangianDomainSubmodule condition) :=
     triple.lagrangianDomainCompleteSpace condition
-  have hLax := IsCoercive.continuousLinearEquivOfBilin_apply
-    (data.isCoercive triple condition spectralParameter)
+  let coercive := data.isCoercive triple condition spectralParameter
+  let equivalence := @IsCoercive.continuousLinearEquivOfBilin
+    (triple.lagrangianDomainSubmodule condition) _
+    (laxMilgramDomainInnerProductSpace triple condition) _ data.form coercive
+  have hLax := @IsCoercive.continuousLinearEquivOfBilin_apply
+    (triple.lagrangianDomainSubmodule condition) _
+    (laxMilgramDomainInnerProductSpace triple condition) _ data.form coercive
     (data.solution triple condition spectralParameter source) test
   have hInverse :
-      (data.isCoercive triple condition spectralParameter)
-          |>.continuousLinearEquivOfBilin
+      equivalence
             (data.solution triple condition spectralParameter source) =
         data.sourceRepresenter triple condition spectralParameter source := by
     exact ContinuousLinearEquiv.apply_symm_apply _ _
   rw [hInverse] at hLax
   rw [data.form_eq_pairing] at hLax
-  rw [ContinuousLinearMap.adjoint_inner_left] at hLax
+  have hAdjoint := @ContinuousLinearMap.adjoint_inner_left Real
+    (triple.lagrangianDomainSubmodule condition) Ambient
+    _ _ _ (laxMilgramDomainInnerProductSpace triple condition) _ _ _
+    (triple.lagrangianHilbertInclusion condition) test source
+  have hSource :
+      inner Real
+          (data.sourceRepresenter triple condition spectralParameter source) test =
+        inner Real source (triple.lagrangianInclusion condition test) := by
+    simpa [sourceRepresenter, lagrangianHilbertInclusion] using hAdjoint
+  rw [hSource] at hLax
   exact hLax.symm
 
 /-- The weak source equation is the strong shifted equation by density. -/
@@ -194,15 +252,18 @@ theorem shifted_surjective
 /-- A positive normalization for the domain inclusion norm. -/
 def inclusionNormControl
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
-    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) : Real :=
-  max 1 ‖triple.lagrangianInclusion condition‖
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) : Real := by
+  letI : NormedSpace Real (triple.lagrangianDomainSubmodule condition) :=
+    laxMilgramDomainNormedSpace triple condition
+  exact max 1 ‖triple.lagrangianHilbertInclusion condition‖
 
 /-- The inclusion normalization is strictly positive. -/
 theorem inclusionNormControl_pos
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
-    0 < triple.inclusionNormControl condition :=
-  lt_of_lt_of_le zero_lt_one (le_max_left _ _)
+    0 < inclusionNormControl triple condition := by
+  unfold inclusionNormControl
+  exact lt_of_lt_of_le zero_lt_one (le_max_left _ _)
 
 /-- Explicit coercive constant for the shifted operator norm. -/
 def shiftedCoerciveConstant
@@ -211,7 +272,7 @@ def shiftedCoerciveConstant
     (spectralParameter : Real)
     (data : triple.LagrangianLaxMilgramData
       condition spectralParameter) : Real :=
-  data.constant / triple.inclusionNormControl condition
+  data.constant / inclusionNormControl triple condition
 
 /-- The shifted coercive constant is positive. -/
 theorem shiftedCoerciveConstant_pos
@@ -221,7 +282,7 @@ theorem shiftedCoerciveConstant_pos
     (data : triple.LagrangianLaxMilgramData
       condition spectralParameter) :
     0 < data.shiftedCoerciveConstant triple condition spectralParameter :=
-  div_pos data.constant_pos (triple.inclusionNormControl_pos condition)
+  div_pos data.constant_pos (inclusionNormControl_pos triple condition)
 
 /-- Lax--Milgram coercivity implies the required shifted-operator norm bound. -/
 theorem shifted_lower_bound
@@ -234,6 +295,8 @@ theorem shifted_lower_bound
     data.shiftedCoerciveConstant triple condition spectralParameter * ‖field‖ ≤
       ‖triple.lagrangianShiftedOperator
         condition spectralParameter field‖ := by
+  letI : NormedSpace Real (triple.lagrangianDomainSubmodule condition) :=
+    laxMilgramDomainNormedSpace triple condition
   by_cases hField : ‖field‖ = 0
   · simp [hField]
   have hFieldPos : 0 < ‖field‖ := lt_of_le_of_ne (norm_nonneg _) (Ne.symm hField)
@@ -246,35 +309,39 @@ theorem shifted_lower_bound
         ‖triple.lagrangianShiftedOperator condition spectralParameter field‖ *
           ‖triple.lagrangianInclusion condition field‖ :=
     real_inner_le_norm _ _
-  have hInclusion := (triple.lagrangianInclusion condition).le_opNorm field
+  have hInclusion := @ContinuousLinearMap.le_opNorm Real Real
+    (triple.lagrangianDomainSubmodule condition) Ambient
+    _ _ _ _ (laxMilgramDomainNormedSpace triple condition) _
+    (RingHom.id Real) _
+    (triple.lagrangianHilbertInclusion condition) field
   have hNormOperator :
-      ‖triple.lagrangianInclusion condition‖ ≤
-        triple.inclusionNormControl condition :=
+      ‖triple.lagrangianHilbertInclusion condition‖ ≤
+        inclusionNormControl triple condition :=
     le_max_right _ _
   have hInclusionControl :
       ‖triple.lagrangianInclusion condition field‖ ≤
-        triple.inclusionNormControl condition * ‖field‖ :=
+        inclusionNormControl triple condition * ‖field‖ :=
     hInclusion.trans
       (mul_le_mul_of_nonneg_right hNormOperator (norm_nonneg _))
   have hUpper :
       ‖triple.lagrangianShiftedOperator condition spectralParameter field‖ *
           ‖triple.lagrangianInclusion condition field‖ ≤
-        ‖triple.lagrangianShiftedOperator condition spectralParameter field‖ *
-          (triple.inclusionNormControl condition * ‖field‖) :=
+          ‖triple.lagrangianShiftedOperator condition spectralParameter field‖ *
+          (inclusionNormControl triple condition * ‖field‖) :=
     mul_le_mul_of_nonneg_left hInclusionControl (norm_nonneg _)
   have hCombined :
       data.constant * ‖field‖ * ‖field‖ ≤
         ‖triple.lagrangianShiftedOperator condition spectralParameter field‖ *
-          (triple.inclusionNormControl condition * ‖field‖) :=
+          (inclusionNormControl triple condition * ‖field‖) :=
     hCoercive.trans (hCauchy.trans hUpper)
   have hReduced :
       data.constant * ‖field‖ ≤
         ‖triple.lagrangianShiftedOperator condition spectralParameter field‖ *
-          triple.inclusionNormControl condition := by
+          inclusionNormControl triple condition := by
     nlinarith
   unfold shiftedCoerciveConstant
   rw [div_mul_eq_mul_div]
-  exact (div_le_iff₀ (triple.inclusionNormControl_pos condition)).2 (by
+  exact (div_le_iff₀ (inclusionNormControl_pos triple condition)).2 (by
     simpa [mul_assoc, mul_comm, mul_left_comm] using hReduced)
 
 /-- Lax--Milgram produces the direct coercive-surjective package. -/
@@ -327,5 +394,5 @@ end LagrangianLaxMilgramData
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleLaxMilgram4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

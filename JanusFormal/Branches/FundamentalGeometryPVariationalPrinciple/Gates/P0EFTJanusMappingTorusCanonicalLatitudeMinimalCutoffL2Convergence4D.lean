@@ -38,12 +38,13 @@ open P0EFTJanusMappingTorusL2PTFunctionalSpace4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothApproximation4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarMinimalCollarCutoffDensity4D
 open P0EFTJanusMappingTorusCanonicalLatitudeMinimalDeckInvariantCutoff4D
 open P0EFTJanusMappingTorusCanonicalLatitudeGlobalThroatNull4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
@@ -122,7 +123,8 @@ theorem canonicalLatitudeMinimalCutoffErrorDensity_le
   unfold canonicalLatitudeMinimalCutoffErrorDensity
   change ((cutoff - 1) * field point) ^ 2 ≤ field point ^ 2
   rw [mul_pow]
-  exact mul_le_mul_of_nonneg_right hCoefficient (sq_nonneg _)
+  simpa only [one_mul] using
+    mul_le_mul_of_nonneg_right hCoefficient (sq_nonneg (field point))
 
 /-- The dominating squared field is integrable. -/
 theorem smoothField_sq_integrable
@@ -203,6 +205,7 @@ theorem norm_sq_canonicalLatitudeMinimalCutoffL2Error
         canonicalLatitudeMinimalCutoffErrorDensity
           period hPeriod index field point
         ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod := by
+  unfold canonicalLatitudeMinimalCutoffL2Error
   rw [← real_inner_self_eq_norm_sq, MeasureTheory.L2.inner_def]
   apply integral_congr_ae
   filter_upwards
@@ -216,10 +219,29 @@ theorem norm_sq_canonicalLatitudeMinimalCutoffL2Error
      smoothFieldToL2_ae period hPeriod Real
       (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field]
     with point hSub hCutoff hField
-  rw [hSub, hCutoff, hField]
+  rw [hSub]
+  change inner Real
+      (((smoothFieldToL2 period hPeriod Real
+          (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+          (canonicalLatitudeMinimalCutoffLinearMap
+            period hPeriod index field) :
+            EffectiveQuotient period hPeriod → Real) point) -
+        ((smoothFieldToL2 period hPeriod Real
+          (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field :
+            EffectiveQuotient period hPeriod → Real) point))
+      (((smoothFieldToL2 period hPeriod Real
+          (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+          (canonicalLatitudeMinimalCutoffLinearMap
+            period hPeriod index field) :
+            EffectiveQuotient period hPeriod → Real) point) -
+        ((smoothFieldToL2 period hPeriod Real
+          (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field :
+            EffectiveQuotient period hPeriod → Real) point)) = _
+  rw [hCutoff, hField]
   simp only [canonicalLatitudeMinimalCutoffLinearMap_apply]
   unfold canonicalLatitudeMinimalCutoffErrorDensity
   rw [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
+  ring
 
 /-- Squared `L²` errors converge to zero. -/
 theorem norm_sq_canonicalLatitudeMinimalCutoffL2Error_tendsto_zero
@@ -244,8 +266,13 @@ theorem norm_canonicalLatitudeMinimalCutoffL2Error_tendsto_zero
   have hSquare :=
     norm_sq_canonicalLatitudeMinimalCutoffL2Error_tendsto_zero
       period hPeriod field
-  have hSqrt := Real.continuousAt_sqrt.tendsto.comp hSquare
-  simpa [Real.sqrt_sq (norm_nonneg _)] using hSqrt
+  have hSqrt := Real.continuous_sqrt.continuousAt.tendsto.comp hSquare
+  change Tendsto
+    (fun index : Nat => Real.sqrt
+      (‖canonicalLatitudeMinimalCutoffL2Error
+        period hPeriod index field‖ ^ 2))
+    atTop (𝓝 (Real.sqrt 0)) at hSqrt
+  simpa only [Real.sqrt_sq (norm_nonneg _), Real.sqrt_zero] using hSqrt
 
 /-- Strong convergence of the globally cut smooth fields in physical bulk
 `L²`. -/
@@ -258,16 +285,10 @@ theorem smoothToCanonicalPhysicalBulkL2_minimalCutoff_tendsto
             period hPeriod index field))
       atTop
       (𝓝 (smoothToCanonicalPhysicalBulkL2 period hPeriod field)) := by
-  rw [Metric.tendsto_atTop]
-  intro ε hε
-  have hNormEventually : ∀ᶠ index : Nat in atTop,
-      ‖canonicalLatitudeMinimalCutoffL2Error
-        period hPeriod index field‖ < ε :=
-    (tendsto_order.1
-      (norm_canonicalLatitudeMinimalCutoffL2Error_tendsto_zero
-        period hPeriod field)).2 ε hε
-  filter_upwards [hNormEventually] with index hIndex
-  simpa [canonicalLatitudeMinimalCutoffL2Error, dist_eq_norm] using hIndex
+  rw [tendsto_iff_dist_tendsto_zero]
+  simpa [canonicalLatitudeMinimalCutoffL2Error, dist_eq_norm] using
+    norm_canonicalLatitudeMinimalCutoffL2Error_tendsto_zero
+      period hPeriod field
 
 /-- Concrete physical minimal-collar-cutoff package. -/
 def canonicalPhysicalScalarMinimalCollarCutoffData
@@ -295,7 +316,7 @@ theorem canonicalPhysicalScalarMinimalCoreDense
       period hPeriod massSquared) :
     green.MinimalCoreDense period hPeriod :=
   (canonicalPhysicalScalarMinimalCollarCutoffData
-    period hPeriod green).minimalCoreDense green
+    period hPeriod green).minimalCoreDense period hPeriod green
 
 /-- The completed physical maximal graph is single-valued. -/
 theorem canonicalPhysicalScalarGraphInclusion_injective
@@ -305,7 +326,7 @@ theorem canonicalPhysicalScalarGraphInclusion_injective
       (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreGraphInclusion
         green.core) :=
   (canonicalPhysicalScalarMinimalCollarCutoffData
-    period hPeriod green).graphInclusion_injective green
+    period hPeriod green).graphInclusion_injective period hPeriod green
 
 /-- Complete global-cutoff convergence certificate. -/
 theorem canonicalLatitudeMinimalCutoffL2Convergence_certificate

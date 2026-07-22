@@ -16,6 +16,9 @@ symmetry of the ambient resolvent.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -26,6 +29,7 @@ open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D
+open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
 
 universe u v w
 
@@ -38,6 +42,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
 /-- Direct shifted operator `A_L - lambda I` on the completed Lagrangian
 submodule. -/
 def lagrangianShiftedOperator
@@ -45,8 +53,8 @@ def lagrangianShiftedOperator
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
     (spectralParameter : Real) :
     triple.lagrangianDomainSubmodule condition →L[Real] Ambient :=
-  triple.lagrangianOperator condition -
-    spectralParameter • triple.lagrangianInclusion condition
+  triple.lagrangianOperator condition +
+    (-spectralParameter) • triple.lagrangianInclusion condition
 
 @[simp] theorem lagrangianShiftedOperator_apply
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
@@ -56,7 +64,8 @@ def lagrangianShiftedOperator
     triple.lagrangianShiftedOperator condition spectralParameter field =
       triple.lagrangianOperator condition field -
         spectralParameter • triple.lagrangianInclusion condition field :=
-  rfl
+  by
+    simp [lagrangianShiftedOperator, sub_eq_add_neg]
 
 /-- Direct real resolvent point. -/
 def LagrangianResolventPoint
@@ -237,7 +246,14 @@ theorem LagrangianCoerciveSurjectiveAt.injective
   have hZero :
       triple.lagrangianShiftedOperator condition spectralParameter
         (first - second) = 0 := by
-    rw [map_sub, hEqual, sub_self]
+    calc
+      triple.lagrangianShiftedOperator condition spectralParameter
+          (first - second) =
+          triple.lagrangianShiftedOperator condition spectralParameter first -
+            triple.lagrangianShiftedOperator condition spectralParameter second :=
+        (triple.lagrangianShiftedOperator
+          condition spectralParameter).map_sub first second
+      _ = 0 := by rw [hEqual, sub_self]
   have hBound := coercive.lower_bound (first - second)
   rw [hZero, norm_zero] at hBound
   have hNorm : ‖first - second‖ = 0 := by
@@ -288,10 +304,19 @@ noncomputable def LagrangianCoerciveSurjectiveAt.boundedResolvent
       condition spectralParameter) :
     triple.LagrangianBoundedResolventAt condition spectralParameter where
   resolvent :=
-    (triple.lagrangianAlgebraicResolvent condition spectralParameter
-      (coercive.resolventPoint triple condition spectralParameter)).mkContinuous
-      coercive.constant⁻¹
-      (coercive.resolvent_norm_le triple condition spectralParameter)
+    by
+      let algebraic : Ambient →ₗ[Real]
+          triple.lagrangianDomainSubmodule condition :=
+        triple.lagrangianAlgebraicResolvent condition spectralParameter
+          (coercive.resolventPoint triple condition spectralParameter)
+      refine ⟨algebraic, AddMonoidHomClass.continuous_of_bound
+        algebraic coercive.constant⁻¹ ?_⟩
+      intro source
+      change ‖triple.lagrangianAlgebraicResolvent condition spectralParameter
+          (coercive.resolventPoint triple condition spectralParameter) source‖ ≤
+        coercive.constant⁻¹ * ‖source‖
+      exact coercive.resolvent_norm_le
+        triple condition spectralParameter source
   left_inverse := by
     intro source
     exact triple.shifted_algebraicResolvent condition spectralParameter
@@ -317,5 +342,5 @@ theorem directLagrangianResolvent_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

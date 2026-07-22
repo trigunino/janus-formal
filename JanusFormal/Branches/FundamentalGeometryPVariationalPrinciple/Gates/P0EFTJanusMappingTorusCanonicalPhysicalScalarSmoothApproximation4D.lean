@@ -29,6 +29,7 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusL2PTFunctionalSpace4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothL2Density4D
@@ -80,16 +81,20 @@ theorem exists_smoothApproximation
       ∀ point,
         dist (continuousField point) (smoothField point) <
           smoothApproximationRadius index := by
-  obtain ⟨approximation, hApproximation⟩ :=
+  obtain ⟨approximation, hApproximation, _⟩ :=
     continuousField.continuous.exists_contMDiff_approx
-      coverModelWithCorners ∞
+      coverModelWithCorners (⊤ : ℕ∞)
       (continuous_const : Continuous
         (fun _ : EffectiveQuotient period hPeriod =>
           smoothApproximationRadius index))
       (fun _ => smoothApproximationRadius_pos index)
-  exact ⟨{
+  refine ⟨{
     toFun := approximation
-    contMDiff_toFun := approximation.contMDiff }, hApproximation⟩
+    contMDiff_toFun := approximation.contMDiff }, ?_⟩
+  intro point
+  have hPoint := hApproximation point
+  rw [dist_comm] at hPoint
+  exact hPoint
 
 /-- Chosen smooth approximation. -/
 def smoothApproximation
@@ -126,8 +131,10 @@ theorem smoothApproximationContinuousMap_dist_le
   apply (ContinuousMap.dist_le
     (smoothApproximationRadius_pos index).le).2
   intro point
-  exact le_of_lt
-    (smoothApproximation_spec period hPeriod continuousField index point)
+  have hApproximation :=
+    smoothApproximation_spec period hPeriod continuousField index point
+  rw [dist_comm] at hApproximation
+  exact le_of_lt hApproximation
 
 /-- Uniform convergence of the smooth approximants. -/
 theorem smoothApproximationContinuousMap_tendsto
@@ -141,8 +148,8 @@ theorem smoothApproximationContinuousMap_tendsto
     (Filter.Eventually.of_forall fun index =>
       smoothApproximationContinuousMap_dist_le
         period hPeriod continuousField index)
-  simpa [smoothApproximationRadius] using
-    tendsto_one_div_add_atTop_nhds_zero_nat
+  change Tendsto (fun index : Nat => 1 / ((index : Real) + 1)) atTop (𝓝 0)
+  exact tendsto_one_div_add_atTop_nhds_zero_nat
 
 /-- The continuous and smooth L2 realizations of one approximant agree. -/
 theorem continuousToBulkL2_smoothApproximation
@@ -153,7 +160,15 @@ theorem continuousToBulkL2_smoothApproximation
           period hPeriod continuousField index) =
       smoothToCanonicalPhysicalBulkL2 period hPeriod
         (smoothApproximation period hPeriod continuousField index) := by
-  apply Lp.ext
+  change
+    (ContinuousMap.toLp (2 : ENNReal)
+        (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) Real)
+          (smoothApproximationContinuousMap
+            period hPeriod continuousField index) =
+      smoothFieldToL2 period hPeriod Real
+        (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+          (smoothApproximation period hPeriod continuousField index)
+  rw [Lp.ext_iff]
   filter_upwards
     [ContinuousMap.coeFn_toLp
       (p := (2 : ENNReal))
@@ -165,8 +180,11 @@ theorem continuousToBulkL2_smoothApproximation
       (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
       (smoothApproximation period hPeriod continuousField index)]
     with point hContinuous hSmooth
-  rw [hContinuous, hSmooth]
-  rfl
+  calc
+    _ = smoothApproximationContinuousMap
+          period hPeriod continuousField index point := hContinuous
+    _ = smoothApproximation period hPeriod continuousField index point := rfl
+    _ = _ := hSmooth.symm
 
 /-- Physical L2 convergence of the chosen smooth approximants. -/
 theorem smoothApproximation_tendsto_l2

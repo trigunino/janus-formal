@@ -23,6 +23,7 @@ open Set Topology
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 
 universe u v w z
 
@@ -46,14 +47,17 @@ structure CanonicalScalarGreenCoreInteriorDensityData
 
 namespace CanonicalScalarGreenCoreInteriorDensityData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+
 /-- Interior test fields as vectors of the minimal zero-Cauchy domain. -/
 def toMinimalDomain
     (interior : CanonicalScalarGreenCoreInteriorDensityData
       (InteriorCore := InteriorCore) core) :
-    InteriorCore →ₗ[Real] core.minimalDomainSubmodule where
+    InteriorCore →ₗ[Real] minimalDomainSubmodule core where
   toFun test :=
     ⟨interior.toDomain test, by
-      rw [LinearMap.mem_ker]
+      change core.boundaryTrace (interior.toDomain test) = 0
       exact interior.boundary_zero test⟩
   map_add' first second := by
     apply Subtype.ext
@@ -67,7 +71,7 @@ theorem minimalInclusion_toMinimalDomain
     (interior : CanonicalScalarGreenCoreInteriorDensityData
       (InteriorCore := InteriorCore) core)
     (test : InteriorCore) :
-    core.minimalInclusion (interior.toMinimalDomain test) =
+    minimalInclusion core (interior.toMinimalDomain test) =
       core.inclusion (interior.toDomain test) :=
   rfl
 
@@ -76,7 +80,7 @@ theorem range_interior_subset_minimal
     (interior : CanonicalScalarGreenCoreInteriorDensityData
       (InteriorCore := InteriorCore) core) :
     Set.range (core.inclusion.comp interior.toDomain) ⊆
-      Set.range core.minimalInclusion := by
+      Set.range (minimalInclusion core) := by
   rintro value ⟨test, rfl⟩
   exact ⟨interior.toMinimalDomain test,
     interior.minimalInclusion_toMinimalDomain test⟩
@@ -85,7 +89,7 @@ theorem range_interior_subset_minimal
 theorem minimalCoreDense
     (interior : CanonicalScalarGreenCoreInteriorDensityData
       (InteriorCore := InteriorCore) core) :
-    core.MinimalCoreDense := by
+    MinimalCoreDense core := by
   intro value
   exact closure_mono interior.range_interior_subset_minimal
     (interior.dense value)
@@ -95,16 +99,16 @@ theorem graphInclusion_injective
     (interior : CanonicalScalarGreenCoreInteriorDensityData
       (InteriorCore := InteriorCore) core) :
     Function.Injective (canonicalScalarGreenCoreGraphInclusion core) :=
-  core.graphInclusion_injective_of_minimal_dense interior.minimalCoreDense
+  graphInclusion_injective_of_minimal_dense core interior.minimalCoreDense
 
 /-- Interior-density certificate. -/
 theorem certificate
     (interior : CanonicalScalarGreenCoreInteriorDensityData
       (InteriorCore := InteriorCore) core) :
-    core.MinimalCoreDense ∧
+    MinimalCoreDense core ∧
       Function.Injective (canonicalScalarGreenCoreGraphInclusion core) ∧
       Set.range (core.inclusion.comp interior.toDomain) ⊆
-        Set.range core.minimalInclusion :=
+        Set.range (minimalInclusion core) :=
   ⟨interior.minimalCoreDense,
     interior.graphInclusion_injective,
     interior.range_interior_subset_minimal⟩

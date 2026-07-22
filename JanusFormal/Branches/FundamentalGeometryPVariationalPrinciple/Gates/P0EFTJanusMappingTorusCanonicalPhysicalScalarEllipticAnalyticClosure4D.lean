@@ -20,6 +20,7 @@ noncomputable section
 
 open Set Topology Module End
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEllipticBoundaryTriple4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSequentialAnalyticClosure4D
@@ -30,7 +31,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 
 universe x y z r
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]

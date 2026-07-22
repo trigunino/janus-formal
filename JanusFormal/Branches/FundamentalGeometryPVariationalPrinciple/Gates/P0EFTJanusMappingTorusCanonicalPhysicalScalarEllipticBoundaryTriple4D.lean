@@ -26,6 +26,8 @@ noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData.NormalRegularityData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetBoundaryExtension4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingEstimate4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalRegularity4D
@@ -35,7 +37,7 @@ open P0EFTJanusMappingTorusScalarGreenCoreInteriorDensity4D
 
 universe x y z r
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -90,9 +92,9 @@ def toBoundaryConstructionData
       period hPeriod massSquared ValueCore NormalCore InteriorCore where
   smooth := ellipticData.smooth
   elliptic := ellipticData.garding.toSquaredGraphEllipticEstimate
-    ellipticData.green
+    period hPeriod ellipticData.green
   normal := ellipticData.normalRegularity.toSquaredNormalGraphEstimate
-    ellipticData.green
+    period hPeriod ellipticData.green
   interior := ellipticData.interior
   extensionConstant := ellipticData.extensionConstant
   extensionConstant_nonnegative := ellipticData.extensionConstant_nonnegative
@@ -107,7 +109,8 @@ def triple
     (ellipticData : CanonicalPhysicalScalarEllipticBoundaryData
       period hPeriod massSquared ValueCore NormalCore InteriorCore
       (Regularity := Regularity)) :=
-  ellipticData.toBoundaryConstructionData.triple
+  (ellipticData.toBoundaryConstructionData period hPeriod).triple
+    period hPeriod
 
 /-- Complete physical boundary inputs. -/
 def completedInputs
@@ -118,7 +121,8 @@ def completedInputs
     (ellipticData : CanonicalPhysicalScalarEllipticBoundaryData
       period hPeriod massSquared ValueCore NormalCore InteriorCore
       (Regularity := Regularity)) :=
-  ellipticData.toBoundaryConstructionData.completedInputs
+  (ellipticData.toBoundaryConstructionData period hPeriod).completedInputs
+    period hPeriod
 
 /-- Completed normal trace through the supplied regularity space. -/
 def completedNormalTraceFromRegularity
@@ -131,7 +135,7 @@ def completedNormalTraceFromRegularity
       (Regularity := Regularity)) :=
   fun field => ellipticData.normalRegularity.normalTrace
     (ellipticData.normalRegularity.completedRegularity
-      ellipticData.green field)
+      period hPeriod ellipticData.green field)
 
 /-- Elliptic boundary-triple certificate. -/
 theorem certificate
@@ -148,17 +152,20 @@ theorem certificate
       Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
           ellipticData.green.core
-          ellipticData.toBoundaryConstructionData.traceBound) ∧
+          (ellipticData.toBoundaryConstructionData
+            period hPeriod).traceBound) ∧
       (∀ field,
-        ellipticData.completedNormalTraceFromRegularity field =
-          ellipticData.normalRegularity.completedBoundaryNormalTrace
-            ellipticData.green ellipticData.toBoundaryConstructionData.traceBound
-            field) :=
-  ⟨ellipticData.triple.inclusion_injective,
-    ellipticData.toBoundaryConstructionData.completedTraceSurjective,
+        ellipticData.completedNormalTraceFromRegularity period hPeriod field =
+          completedBoundaryNormalTrace period hPeriod ellipticData.green
+            (ellipticData.toBoundaryConstructionData
+              period hPeriod).traceBound field) :=
+  ⟨(ellipticData.triple period hPeriod).inclusion_injective,
+    (ellipticData.toBoundaryConstructionData
+      period hPeriod).completedTraceSurjective,
     ellipticData.normalRegularity
       |>.normalTrace_completedRegularity_eq_completedBoundaryNormalTrace
-        ellipticData.green ellipticData.toBoundaryConstructionData.traceBound⟩
+        period hPeriod ellipticData.green
+        (ellipticData.toBoundaryConstructionData period hPeriod).traceBound⟩
 
 end CanonicalPhysicalScalarEllipticBoundaryData
 

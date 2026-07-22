@@ -29,6 +29,8 @@ open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotient
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusCompactQuotient
+open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
@@ -75,23 +77,57 @@ theorem one_le_coareaConstant_mul_weight
         ENNReal.ofReal (Real.cos normal ^ 2) := by
   have hCosOne : Real.cos (1 : Real) ≠ 0 := ne_of_gt cos_one_pos
   have hLower := cos_one_sq_le_cos_sq hNormal
-  rw [canonicalLatitudeCoareaMeasureConstant]
-  norm_cast
   have hInvNonnegative : 0 ≤ (Real.cos (1 : Real))⁻¹ ^ 2 := sq_nonneg _
+  have hConstant :
+      (canonicalLatitudeCoareaMeasureConstant : ENNReal) =
+        ENNReal.ofReal ((Real.cos (1 : Real))⁻¹ ^ 2) := by
+    rw [ENNReal.coe_nnreal_eq]
+    rfl
+  rw [hConstant]
   rw [← ENNReal.ofReal_mul hInvNonnegative]
-  apply ENNReal.ofReal_le_ofReal
-  field_simp
-  nlinarith
+  have hReal : (1 : Real) ≤
+      (Real.cos (1 : Real))⁻¹ ^ 2 * Real.cos normal ^ 2 := by
+    calc
+      (1 : Real) = (Real.cos (1 : Real))⁻¹ ^ 2 *
+          Real.cos (1 : Real) ^ 2 := by field_simp
+      _ ≤ _ := mul_le_mul_of_nonneg_left hLower hInvNonnegative
+  simpa using ENNReal.ofReal_le_ofReal hReal
 
 /-- Latitude density on `S² × ℝ`. -/
 def standardLatitudeWeight
     (parameter : StandardSphere2 × Real) : ENNReal :=
   ENNReal.ofReal (Real.cos parameter.2 ^ 2)
 
+/-- Continuity of the standard latitude map. -/
+theorem standardEquatorialLatitude_continuous :
+    Continuous standardEquatorialLatitude := by
+  change Continuous (fun parameter : StandardSphere2 × Real =>
+    unitThreeSphereHomeomorph
+      (equatorialLatitudeUncurried
+        (equatorialTwoSphereHomeomorph.symm parameter.1, parameter.2)))
+  exact unitThreeSphereHomeomorph.continuous.comp
+    (equatorialLatitude_joint_continuous.comp
+      (equatorialTwoSphereHomeomorph.symm.continuous.comp continuous_fst
+        |>.prodMk continuous_snd))
+
 theorem standardLatitudeWeight_measurable :
     Measurable standardLatitudeWeight := by
-  unfold standardLatitudeWeight
-  fun_prop
+  exact ENNReal.measurable_ofReal.comp
+    ((Real.continuous_cos.measurable.comp measurable_snd).pow_const 2)
+
+/-- Restatement of the exact weighted latitude pushforward. -/
+theorem standardLatitude_weighted_map :
+    Measure.map standardEquatorialLatitude
+        (((volume : Measure EuclideanR3).toSphere.prod
+          (volume.restrict LatitudeAngle)).withDensity standardLatitudeWeight) =
+      (volume : Measure EuclideanR4).toSphere := by
+  change Measure.map standardEquatorialLatitude
+      (((volume : Measure EuclideanR3).toSphere.prod
+        (volume.restrict
+          (Set.Ioo (-(Real.pi / 2)) (Real.pi / 2)))).withDensity
+        (fun parameter => ENNReal.ofReal (Real.cos parameter.2 ^ 2))) =
+    (volume : Measure EuclideanR4).toSphere
+  exact P0EFTJanusMeasureToSphereEquatorialCoarea4D.standardEquatorialLatitude_weighted_map
 
 /-- Unweighted positive-latitude measure is dominated by the reciprocal minimum
 of the spherical Jacobian. -/
@@ -108,7 +144,8 @@ theorem standardEquatorialLatitude_positiveCollar_map_le :
   let collar : Set (StandardSphere2 × Real) :=
     Set.univ ×ˢ Set.Ioc (0 : Real) 1
   have hCollarMeasurable : MeasurableSet collar :=
-    measurableSet_univ.prod measurableSet_Ioc
+    (MeasurableSet.univ : MeasurableSet
+      (Set.univ : Set StandardSphere2)).prod measurableSet_Ioc
   have hCollarMeasure :
       baseMeasure.restrict collar =
         sphereMeasure.prod (volume.restrict (Set.Ioc (0 : Real) 1)) := by
@@ -119,18 +156,31 @@ theorem standardEquatorialLatitude_positiveCollar_map_le :
       baseMeasure.restrict collar ≤
         (canonicalLatitudeCoareaMeasureConstant : ENNReal) •
           (baseMeasure.withDensity standardLatitudeWeight).restrict collar := by
-    rw [restrict_withDensity hCollarMeasurable]
-    rw [← withDensity_one (μ := baseMeasure.restrict collar)]
-    rw [← withDensity_smul
-      (μ := baseMeasure.restrict collar)
-      (canonicalLatitudeCoareaMeasureConstant : ENNReal)
-      standardLatitudeWeight_measurable]
-    apply withDensity_mono
-    filter_upwards [ae_restrict_mem hCollarMeasurable] with parameter hParameter
-    simpa [Pi.smul_apply, smul_eq_mul] using
-      one_le_coareaConstant_mul_weight hParameter.2
+    calc
+      baseMeasure.restrict collar =
+          (baseMeasure.restrict collar).withDensity 1 := by
+        rw [withDensity_one]
+      _ ≤ (baseMeasure.restrict collar).withDensity
+          (fun parameter =>
+            (canonicalLatitudeCoareaMeasureConstant : ENNReal) *
+              standardLatitudeWeight parameter) := by
+        apply withDensity_mono
+        filter_upwards [ae_restrict_mem hCollarMeasurable] with parameter hParameter
+        exact one_le_coareaConstant_mul_weight hParameter.2
+      _ = (canonicalLatitudeCoareaMeasureConstant : ENNReal) •
+          (baseMeasure.restrict collar).withDensity standardLatitudeWeight := by
+        change (baseMeasure.restrict collar).withDensity
+            ((canonicalLatitudeCoareaMeasureConstant : ENNReal) •
+              standardLatitudeWeight) = _
+        exact withDensity_smul
+          (μ := baseMeasure.restrict collar)
+          (canonicalLatitudeCoareaMeasureConstant : ENNReal)
+          standardLatitudeWeight_measurable
+      _ = (canonicalLatitudeCoareaMeasureConstant : ENNReal) •
+          (baseMeasure.withDensity standardLatitudeWeight).restrict collar := by
+        rw [restrict_withDensity']
   have hMappedDensity := Measure.map_mono hDensity
-    (by fun_prop : Measurable standardEquatorialLatitude)
+    standardEquatorialLatitude_continuous.measurable
   rw [Measure.map_smul] at hMappedDensity
   have hRestrictedWeightedMap :
       Measure.map standardEquatorialLatitude
@@ -140,10 +190,10 @@ theorem standardEquatorialLatitude_positiveCollar_map_le :
       _ ≤ Measure.map standardEquatorialLatitude
           (baseMeasure.withDensity standardLatitudeWeight) :=
         Measure.map_mono Measure.restrict_le_self
-          (by fun_prop : Measurable standardEquatorialLatitude)
+          standardEquatorialLatitude_continuous.measurable
       _ = _ := by
-        simpa [baseMeasure, sphereMeasure, standardLatitudeWeight] using
-          standardEquatorialLatitude_weighted_map
+        simpa [baseMeasure, sphereMeasure] using
+          standardLatitude_weighted_map
   calc
     Measure.map standardEquatorialLatitude
         (sphereMeasure.prod (volume.restrict (Set.Ioc (0 : Real) 1))) =
@@ -155,7 +205,7 @@ theorem standardEquatorialLatitude_positiveCollar_map_le :
       hMappedDensity
     _ ≤ (canonicalLatitudeCoareaMeasureConstant : ENNReal) •
         (volume : Measure EuclideanR4).toSphere :=
-      Measure.smul_mono hRestrictedWeightedMap
+      by gcongr
 
 /-! ## Product with time and reassociation -/
 
@@ -169,19 +219,31 @@ local instance (period : Real) (hPeriod : period ≠ 0) :
     ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotientChartedSpace period hPeriod
 
+local instance (period : Real) (hPeriod : period ≠ 0) :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance (period : Real) (hPeriod : period ≠ 0) :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
+
 /-- Reassociate and swap time with latitude normal:
 `((u,t),ν) ↦ ((u,ν),t)`. -/
 def canonicalLatitudeCollarReassociate
     (parameter : CanonicalLatitudeCollarParameter) :
     (StandardSphere2 × Real) × Real :=
-  MeasurableEquiv.prodAssoc.symm
-    (Prod.map id Prod.swap (MeasurableEquiv.prodAssoc parameter))
+  ((parameter.1.1, parameter.2), parameter.1.2)
 
 @[simp] theorem canonicalLatitudeCollarReassociate_apply
     (parameter : CanonicalLatitudeCollarParameter) :
     canonicalLatitudeCollarReassociate parameter =
       ((parameter.1.1, parameter.2), parameter.1.2) :=
   rfl
+
+/-- Continuity of the collar reassociation. -/
+theorem canonicalLatitudeCollarReassociate_continuous :
+    Continuous canonicalLatitudeCollarReassociate := by
+  exact ((continuous_fst.comp continuous_fst).prodMk continuous_snd).prodMk
+    (continuous_snd.comp continuous_fst)
 
 /-- Reassociation preserves the collar product measure. -/
 theorem canonicalLatitudeCollarReassociate_measurePreserving
@@ -196,35 +258,30 @@ theorem canonicalLatitudeCollarReassociate_measurePreserving
   let timeMeasure : Measure Real :=
     volume.restrict (canonicalLatitudeTimeInterval period)
   let normalMeasure : Measure Real := canonicalLatitudeUnitNormalMeasure
-  have hAssocTimeNormal : MeasurePreserving
-      (MeasurableEquiv.prodAssoc :
-        ((StandardSphere2 × Real) × Real) ≃ₘ
-          StandardSphere2 × (Real × Real))
-      ((sphereMeasure.prod timeMeasure).prod normalMeasure)
-      (sphereMeasure.prod (timeMeasure.prod normalMeasure)) :=
-    ⟨MeasurableEquiv.prodAssoc.measurable, Measure.prodAssoc_prod⟩
-  have hSwap : MeasurePreserving
-      (Prod.map id Prod.swap :
-        StandardSphere2 × (Real × Real) → StandardSphere2 × (Real × Real))
-      (sphereMeasure.prod (timeMeasure.prod normalMeasure))
-      (sphereMeasure.prod (normalMeasure.prod timeMeasure)) := by
-    refine ⟨by fun_prop, ?_⟩
-    rw [← Measure.map_prod_map sphereMeasure
-      (timeMeasure.prod normalMeasure) measurable_id measurable_swap]
-    simp [Measure.prod_swap]
-  have hAssocNormalTime : MeasurePreserving
-      (MeasurableEquiv.prodAssoc :
-        ((StandardSphere2 × Real) × Real) ≃ₘ
-          StandardSphere2 × (Real × Real))
-      ((sphereMeasure.prod normalMeasure).prod timeMeasure)
-      (sphereMeasure.prod (normalMeasure.prod timeMeasure)) :=
-    ⟨MeasurableEquiv.prodAssoc.measurable, Measure.prodAssoc_prod⟩
-  have hAssocNormalTimeSymm := MeasurePreserving.symm
-    MeasurableEquiv.prodAssoc hAssocNormalTime
-  simpa [canonicalLatitudeCollarMeasure, canonicalLatitudeBaseMeasure,
-    canonicalLatitudeUnitNormalMeasure, sphereMeasure, timeMeasure,
-    normalMeasure, canonicalLatitudeCollarReassociate, Function.comp_def] using
-    hAssocNormalTimeSymm.comp (hSwap.comp hAssocTimeNormal)
+  refine ⟨canonicalLatitudeCollarReassociate_continuous.measurable, ?_⟩
+  letI : IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+    canonicalLatitudeBaseMeasure_isFinite period
+  letI : IsFiniteMeasure
+      ((sphereMeasure.prod timeMeasure).prod normalMeasure) := by
+    change IsFiniteMeasure (canonicalLatitudeCollarMeasure period)
+    unfold canonicalLatitudeCollarMeasure
+    infer_instance
+  change Measure.map canonicalLatitudeCollarReassociate
+      ((sphereMeasure.prod timeMeasure).prod normalMeasure) =
+    (sphereMeasure.prod normalMeasure).prod timeMeasure
+  apply Measure.ext_prod₃'
+  intro sphereSet normalSet timeSet hSphere hNormal hTime
+  rw [Measure.map_apply canonicalLatitudeCollarReassociate_continuous.measurable
+    ((hSphere.prod hNormal).prod hTime)]
+  have hPreimage :
+      canonicalLatitudeCollarReassociate ⁻¹'
+          ((sphereSet ×ˢ normalSet) ×ˢ timeSet) =
+        (sphereSet ×ˢ timeSet) ×ˢ normalSet := by
+    ext parameter
+    simp [canonicalLatitudeCollarReassociate, and_comm, and_left_comm]
+  rw [hPreimage, Measure.prod_prod, Measure.prod_prod,
+    Measure.prod_prod, Measure.prod_prod]
+  ac_rfl
 
 /-- Apply standard latitude to the space-normal pair and leave time unchanged. -/
 def canonicalLatitudeSphereTimeMap
@@ -232,12 +289,24 @@ def canonicalLatitudeSphereTimeMap
     StandardSphere3 × Real :=
   Prod.map standardEquatorialLatitude id parameter
 
+/-- Continuity of latitude on the space-normal pair, with time unchanged. -/
+theorem canonicalLatitudeSphereTimeMap_continuous :
+    Continuous canonicalLatitudeSphereTimeMap :=
+  (standardEquatorialLatitude_continuous.comp continuous_fst).prodMk
+    continuous_snd
+
 /-- The full collar-to-sphere-time parameter map. -/
 def canonicalLatitudeParameterSphereTimeMap
     (parameter : CanonicalLatitudeCollarParameter) :
     StandardSphere3 × Real :=
   canonicalLatitudeSphereTimeMap
     (canonicalLatitudeCollarReassociate parameter)
+
+/-- Continuity of the full collar-to-sphere-time map. -/
+theorem canonicalLatitudeParameterSphereTimeMap_continuous :
+    Continuous canonicalLatitudeParameterSphereTimeMap :=
+  canonicalLatitudeSphereTimeMap_continuous.comp
+    canonicalLatitudeCollarReassociate_continuous
 
 @[simp] theorem canonicalLatitudeParameterSphereTimeMap_apply
     (parameter : CanonicalLatitudeCollarParameter) :
@@ -260,33 +329,54 @@ theorem canonicalLatitudeParameterSphereTimeMap_map_le
       canonicalLatitudeUnitNormalMeasure
   let timeMeasure : Measure Real :=
     volume.restrict (canonicalLatitudeTimeInterval period)
-  have hLatitude := standardEquatorialLatitude_positiveCollar_map_le
+  letI : IsFiniteMeasure timeMeasure := by
+    dsimp [timeMeasure, canonicalLatitudeTimeInterval]
+    infer_instance
+  have hLatitude :
+      Measure.map standardEquatorialLatitude normalParameterMeasure ≤
+        (canonicalLatitudeCoareaMeasureConstant : ENNReal) •
+          (volume : Measure EuclideanR4).toSphere := by
+    simpa [normalParameterMeasure, canonicalLatitudeUnitNormalMeasure] using
+      standardEquatorialLatitude_positiveCollar_map_le
   have hProduct :
       (Measure.map standardEquatorialLatitude normalParameterMeasure).prod
           timeMeasure ≤
         (canonicalLatitudeCoareaMeasureConstant : ENNReal) •
           ((volume : Measure EuclideanR4).toSphere.prod timeMeasure) := by
-    have hRaw := Measure.prod_mono hLatitude (le_refl timeMeasure)
-    simpa [normalParameterMeasure, timeMeasure, canonicalLatitudeUnitNormalMeasure,
-      Measure.prod_smul_left] using hRaw
+    have hRaw :
+        (Measure.map standardEquatorialLatitude normalParameterMeasure).prod
+            timeMeasure ≤
+          (((canonicalLatitudeCoareaMeasureConstant : ENNReal) •
+            (volume : Measure EuclideanR4).toSphere).prod timeMeasure) := by
+      refine Measure.le_iff.2 ?_
+      intro measurableSet hMeasurableSet
+      rw [Measure.prod_apply hMeasurableSet, Measure.prod_apply hMeasurableSet]
+      exact lintegral_mono' hLatitude le_rfl
+    exact hRaw.trans_eq
+      (Measure.prod_smul_left
+        (ν := timeMeasure)
+        (canonicalLatitudeCoareaMeasureConstant : ENNReal))
   calc
     Measure.map canonicalLatitudeParameterSphereTimeMap
         (canonicalLatitudeCollarMeasure period) =
       Measure.map canonicalLatitudeSphereTimeMap
         (Measure.map canonicalLatitudeCollarReassociate
           (canonicalLatitudeCollarMeasure period)) := by
-        rw [Measure.map_map (by fun_prop) (by fun_prop)]
+        rw [Measure.map_map
+          canonicalLatitudeSphereTimeMap_continuous.measurable
+          canonicalLatitudeCollarReassociate_continuous.measurable]
         rfl
     _ = Measure.map canonicalLatitudeSphereTimeMap
         (normalParameterMeasure.prod timeMeasure) := by
-      rw [canonicalLatitudeCollarReassociate_measurePreserving.map_eq]
-      rfl
+      rw [(canonicalLatitudeCollarReassociate_measurePreserving period).map_eq]
     _ = (Measure.map standardEquatorialLatitude normalParameterMeasure).prod
         timeMeasure := by
-      symm
-      simpa [canonicalLatitudeSphereTimeMap] using
-        Measure.map_prod_map normalParameterMeasure timeMeasure
-          (by fun_prop : Measurable standardEquatorialLatitude) measurable_id
+      change Measure.map (Prod.map standardEquatorialLatitude id)
+          (normalParameterMeasure.prod timeMeasure) = _
+      have h := Measure.map_prod_map normalParameterMeasure timeMeasure
+        standardEquatorialLatitude_continuous.measurable measurable_id
+      rw [Measure.map_id] at h
+      exact h.symm
     _ ≤ _ := hProduct
 
 /-! ## Pushforward to the mapping torus -/
@@ -350,10 +440,10 @@ theorem canonicalLatitudeMeasureToSphereCoareaDomination
         rw [Measure.map_map
           (canonicalLorentzFundamentalDomainMap_continuous
             period hPeriod).measurable
-          (by fun_prop : Measurable canonicalLatitudeParameterSphereTimeMap)]
-        congr 1
-        funext parameter
-        exact canonicalLatitudeCollarMap_factor period hPeriod parameter
+          canonicalLatitudeParameterSphereTimeMap_continuous.measurable]
+        apply Measure.map_congr
+        exact Filter.Eventually.of_forall fun parameter =>
+          canonicalLatitudeCollarMap_factor period hPeriod parameter
     _ ≤ Measure.map (canonicalLorentzFundamentalDomainMap period hPeriod)
         ((canonicalLatitudeCoareaMeasureConstant : ENNReal) •
           ((volume : Measure EuclideanR4).toSphere.prod

@@ -17,6 +17,9 @@ pair by smooth core fields whose ambient values and operator values converge in
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointGraphRegularity4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointGraphRegularity4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -26,6 +29,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
+open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointGraphRegularity4D
 
 universe u v w
 
@@ -37,6 +41,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- One actual Hilbert adjoint pair for the selected realization. -/
 def IsActualAdjointPair
@@ -53,7 +61,7 @@ def AdjointPairGraphRegularity
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) : Prop :=
   ∀ candidate adjointValue : Ambient,
     triple.IsActualAdjointPair condition candidate adjointValue →
-      (candidate, adjointValue) ∈
+      WithLp.toLp 2 (candidate, adjointValue) ∈
         canonicalScalarGreenCoreGraphSubmodule core
 
 /-- Graph membership gives the maximal graph representative. -/
@@ -64,7 +72,7 @@ theorem maximalAdjointRegularity_of_graphRegularity
     triple.MaximalAdjointRegularity condition where
   represent := by
     intro candidate adjointValue hPair
-    exact ⟨⟨(candidate, adjointValue),
+    exact ⟨⟨WithLp.toLp 2 (candidate, adjointValue),
       regularity candidate adjointValue hPair⟩, rfl, rfl⟩
 
 /-- A maximal graph representative gives graph membership. -/
@@ -76,7 +84,8 @@ theorem graphRegularity_of_maximalAdjointRegularity
   intro candidate adjointValue hPair
   obtain ⟨maximal, hCandidate, hAdjoint⟩ :=
     regularity.represent candidate adjointValue hPair
-  have hPairEquality : maximal.1 = (candidate, adjointValue) := by
+  have hPairEquality : maximal.1 = WithLp.toLp 2 (candidate, adjointValue) := by
+    apply WithLp.ofLp_injective
     apply Prod.ext
     · exact hCandidate
     · exact hAdjoint
@@ -136,9 +145,17 @@ theorem graphRegularity
         atTop (𝓝 (candidate, adjointValue)) :=
     (approximationData.inclusion_tendsto candidate adjointValue hPair).prodMk_nhds
       (approximationData.operator_tendsto candidate adjointValue hPair)
-  change (candidate, adjointValue) ∈ closure
+  have hWithLpTendsto :
+      Tendsto
+        (fun index => WithLp.toLp 2
+          (core.inclusion (approximation index),
+            core.operator (approximation index)))
+        atTop (𝓝 (WithLp.toLp 2 (candidate, adjointValue))) :=
+    ((WithLp.prod_continuous_toLp 2 Ambient Ambient).tendsto
+      (candidate, adjointValue)).comp hPairTendsto
+  change WithLp.toLp 2 (candidate, adjointValue) ∈ closure
     (Set.range (canonicalScalarGreenCoreGraphLinearMap core))
-  exact mem_closure_of_tendsto hPairTendsto
+  exact mem_closure_of_tendsto hWithLpTendsto
     (Filter.Eventually.of_forall fun index =>
       ⟨approximation index, rfl⟩)
 
@@ -170,5 +187,5 @@ end AdjointPairSmoothApproximationData
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointGraphRegularity4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

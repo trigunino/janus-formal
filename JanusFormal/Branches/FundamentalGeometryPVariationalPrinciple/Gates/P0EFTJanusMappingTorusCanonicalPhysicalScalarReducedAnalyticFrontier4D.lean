@@ -45,13 +45,14 @@ noncomputable section
 open Set Topology
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosed4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongAnalyticClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Coarea is a theorem and therefore does not occur as a field in any reduced
 input package. -/
@@ -103,7 +104,8 @@ def triple
       period hPeriod massSquared)
     (inputs : CoareaClosedCompletedBoundaryInputs
       period hPeriod green) :=
-  (inputs.toCompletedBoundaryTripleInputs green).triple green
+  (inputs.toCompletedBoundaryTripleInputs period hPeriod green).triple
+    period hPeriod green
 
 /-- Corresponding strong compatibility presentation. -/
 def strongSystem
@@ -111,7 +113,9 @@ def strongSystem
       period hPeriod massSquared)
     (inputs : CoareaClosedCompletedBoundaryInputs
       period hPeriod green) :=
-  (inputs.toCompletedBoundaryTripleInputs green).strongSystem green
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D.CanonicalPhysicalScalarFirstSheetGreenCoreData.CompletedBoundaryTripleInputs.strongSystem
+    period hPeriod green
+    (inputs.toCompletedBoundaryTripleInputs period hPeriod green)
 
 /-- Closability is derived from minimal-core density after completion. -/
 theorem strongSystem_closable
@@ -119,9 +123,12 @@ theorem strongSystem_closable
       period hPeriod massSquared)
     (inputs : CoareaClosedCompletedBoundaryInputs
       period hPeriod green) :
-    CanonicalScalarGraphClosable (inputs.strongSystem green) := by
+    CanonicalScalarGraphClosable
+      (inputs.strongSystem period hPeriod green) := by
   simpa [strongSystem] using
-    (inputs.toCompletedBoundaryTripleInputs green).strongSystem_closable green
+    P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetStrongSystem4D.CanonicalPhysicalScalarFirstSheetGreenCoreData.CompletedBoundaryTripleInputs.strongSystem_closable
+      period hPeriod green
+      (inputs.toCompletedBoundaryTripleInputs period hPeriod green)
 
 end CoareaClosedCompletedBoundaryInputs
 
@@ -132,7 +139,8 @@ abbrev RemainingStrongAnalyticData
     (inputs : CoareaClosedCompletedBoundaryInputs
       period hPeriod green) :=
   CanonicalPhysicalScalarFirstSheetStrongAnalyticData
-    period hPeriod green (inputs.toCompletedBoundaryTripleInputs green)
+    period hPeriod green
+      (inputs.toCompletedBoundaryTripleInputs period hPeriod green)
 
 /-- Historical coarse frontier retained for downstream compatibility. -/
 structure ReducedAnalyticFrontier (massSquared : Real) where

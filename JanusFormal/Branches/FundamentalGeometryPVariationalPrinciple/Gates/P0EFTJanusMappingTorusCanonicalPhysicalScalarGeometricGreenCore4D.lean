@@ -39,7 +39,7 @@ open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 universe x y
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
@@ -113,7 +113,7 @@ theorem bulk_green_stokes
       P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D.cutBulkGlobalOrientedScalarCurrentIntegral
         period hPeriod field test :=
   geometric.divergenceIntegralData.pairing_eq_orientedBoundaryCurrent
-    field test
+    period hPeriod field test
 
 /-- Smooth Cauchy extension package with the physical Euler and Green identity. -/
 def smoothCauchyExtensionData
@@ -155,7 +155,7 @@ theorem eulerEquation_iff_operator_eq_zero
     P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D.CanonicalPhysicalScalarEulerEquation
         period hPeriod massSquared field ↔
       geometric.greenCore.core.operator field = 0 :=
-  geometric.greenCore.eulerEquation_iff_operator_eq_zero field
+  geometric.greenCore.eulerEquation_iff_operator_eq_zero period hPeriod field
 
 /-- Geometric Green-core construction certificate. -/
 theorem certificate
