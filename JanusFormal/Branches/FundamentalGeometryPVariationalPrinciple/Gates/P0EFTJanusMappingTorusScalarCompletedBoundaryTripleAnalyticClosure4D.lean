@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleEigenspace4D
 
 /-!
 # Direct analytic closure on a completed scalar boundary triple
@@ -9,7 +10,8 @@ The corrected boundary triple already is the maximal completed graph.  Its
 minimal smooth core controls density, its Lagrangian submodules are closed and
 symmetric, and maximal-adjoint regularity identifies the genuine Hilbert
 adjoint.  One compact reference resolvent and one lower quadratic-form bound
-then provide the full discrete semibounded spectral closure.
+then provide the full discrete semibounded spectral closure, including finite
+multiplicity of every nonreference operator eigenspace.
 -/
 
 namespace JanusFormal
@@ -29,6 +31,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleCompactSpectrum4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleFredholmAlternative4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
+open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleEigenspace4D
 
 universe u v w
 
@@ -85,6 +88,33 @@ theorem fredholmAlternative
   triple.lagrangian_fredholmAlternative condition
     analytic.referenceParameter spectralParameter
     (sub_ne_zero.mpr hParameter) analytic.compactResolvent
+
+/-- Every nonreference direct operator eigenspace has finite multiplicity. -/
+theorem finiteDimensional_operatorEigenspace
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
+    (analytic : triple.LagrangianAnalyticClosureData condition)
+    (eigenvalue : Real)
+    (hEigenvalue : eigenvalue ≠ analytic.referenceParameter) :
+    FiniteDimensional Real
+      (triple.lagrangianOperatorEigenspace condition eigenvalue) :=
+  analytic.compactResolvent.finiteDimensional_operatorEigenspace
+    triple condition analytic.referenceParameter eigenvalue hEigenvalue
+
+/-- Direct eigenfields of distinct eigenvalues are ambient-orthogonal. -/
+theorem eigenfields_orthogonal
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
+    (analytic : triple.LagrangianAnalyticClosureData condition)
+    (firstEigenvalue secondEigenvalue : Real)
+    (hDistinct : firstEigenvalue ≠ secondEigenvalue)
+    (first : triple.lagrangianOperatorEigenspace condition firstEigenvalue)
+    (second : triple.lagrangianOperatorEigenspace condition secondEigenvalue) :
+    inner Real
+        (triple.lagrangianInclusion condition first.1)
+        (triple.lagrangianInclusion condition second.1) = 0 :=
+  triple.lagrangianEigenfields_orthogonal condition
+    firstEigenvalue secondEigenvalue hDistinct first second
 
 /-- Every direct eigenvalue lies above the physical lower form bound. -/
 theorem eigenvalue_ge_lowerBound
@@ -148,6 +178,27 @@ theorem certificate
     analytic.fredholmAlternative triple condition,
     analytic.eigenvalue_ge_lowerBound triple condition,
     analytic.spectral_complete triple condition⟩
+
+/-- Extended direct spectral certificate including finite multiplicity. -/
+theorem spectral_certificate
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
+    (analytic : triple.LagrangianAnalyticClosureData condition) :
+    (∀ eigenvalue : Real,
+      eigenvalue ≠ analytic.referenceParameter →
+        FiniteDimensional Real
+          (triple.lagrangianOperatorEigenspace condition eigenvalue)) ∧
+      (∀ firstEigenvalue secondEigenvalue : Real,
+        firstEigenvalue ≠ secondEigenvalue →
+        ∀ first : triple.lagrangianOperatorEigenspace condition firstEigenvalue,
+        ∀ second : triple.lagrangianOperatorEigenspace condition secondEigenvalue,
+          inner Real
+              (triple.lagrangianInclusion condition first.1)
+              (triple.lagrangianInclusion condition second.1) = 0) :=
+  ⟨analytic.finiteDimensional_operatorEigenspace triple condition,
+    fun firstEigenvalue secondEigenvalue hDistinct first second =>
+      analytic.eigenfields_orthogonal triple condition
+        firstEigenvalue secondEigenvalue hDistinct first second⟩
 
 end LagrangianAnalyticClosureData
 
