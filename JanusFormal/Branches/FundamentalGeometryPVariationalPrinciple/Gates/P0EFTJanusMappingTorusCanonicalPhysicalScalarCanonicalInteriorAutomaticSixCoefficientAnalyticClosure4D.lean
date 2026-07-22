@@ -4,8 +4,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 /-!
 # Analytic closure over the open-fundamental-strip canonical package
 
-The physical full-support route is now concrete: round `S³` times the interior
-of one period, with only density of its image remaining as a topological input.
+The physical full-support route is now completely concrete: round `S³` times
+the interior of one period has open-positive source measure, preserves the
+physical Lorentz volume and has dense physical image.
+
 Together with the minimal PDE package, the final analytic inputs are smooth
 adjoint approximation, shifted coercivity and Rellich compactness.
 -/
@@ -19,6 +21,7 @@ noncomputable section
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
+open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalInteriorAutomaticSixCoefficientPDEClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientAnalyticClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarRellichApproximation4D
@@ -37,8 +40,7 @@ variable {Regularity : Type r}
 private abbrev BoundaryL2 :=
   CanonicalPhysicalScalarFirstSheetL2 period
 
-/-- Full analytic data with the physical measure parametrization fixed to the
-open fundamental strip. -/
+/-- Full analytic data over the canonical minimal physical boundary package. -/
 structure CanonicalPhysicalScalarCanonicalInteriorAutomaticSixCoefficientAnalyticData
     (massSquared : Real) where
   boundary : CanonicalPhysicalScalarCanonicalInteriorAutomaticSixCoefficientPDEData
@@ -160,7 +162,7 @@ theorem certificate
         analytic.boundary.triple.LagrangianHasEigenvalue
             analytic.condition eigenvalue →
           analytic.referenceParameter ≤ eigenvalue) :=
-  ⟨analytic.boundary.geometric.interiorDenseRange.denseRange,
+  ⟨canonicalLorentzInteriorPhysicalMap_denseRange period hPeriod,
     analytic.toDenseParametrizedAutomaticSixCoefficientAnalyticData.certificate.1,
     analytic.toDenseParametrizedAutomaticSixCoefficientAnalyticData.certificate.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
