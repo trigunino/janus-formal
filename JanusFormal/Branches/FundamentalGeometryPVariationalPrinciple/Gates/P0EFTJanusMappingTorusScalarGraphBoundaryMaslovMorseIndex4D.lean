@@ -41,7 +41,8 @@ def CanonicalScalarBoundarySimpleCrossingLedger.maslovIndex
 @[simp] theorem CanonicalScalarBoundarySimpleCrossingLedger.maslovIndex_eq_spectralFlow
     {curve : CanonicalScalarBoundaryOperatorCurve (Trace := Trace)}
     (ledger : CanonicalScalarBoundarySimpleCrossingLedger curve) :
-    ledger.maslovIndex = ledger.spectralFlow :=
+    CanonicalScalarBoundarySimpleCrossingLedger.maslovIndex ledger =
+      ledger.spectralFlow :=
   rfl
 
 /-- Endpoint Morse counts and their spectral-flow comparison theorem. -/
@@ -70,7 +71,7 @@ theorem morse_change_eq_maslov
     {ledger : CanonicalScalarBoundarySimpleCrossingLedger curve}
     (data : CanonicalScalarBoundaryMaslovMorseData curve ledger) :
     (data.rightMorseIndex : Int) - data.leftMorseIndex =
-      -ledger.maslovIndex :=
+      -CanonicalScalarBoundarySimpleCrossingLedger.maslovIndex ledger :=
   data.morse_change_eq
 
 /-- If spectral flow vanishes then the endpoint Morse indices agree. -/
@@ -109,9 +110,10 @@ theorem certificate
     {curve : CanonicalScalarBoundaryOperatorCurve (Trace := Trace)}
     {ledger : CanonicalScalarBoundarySimpleCrossingLedger curve}
     (data : CanonicalScalarBoundaryMaslovMorseData curve ledger) :
-    ledger.maslovIndex = ledger.spectralFlow ∧
+    CanonicalScalarBoundarySimpleCrossingLedger.maslovIndex ledger =
+        ledger.spectralFlow ∧
       (data.rightMorseIndex : Int) - data.leftMorseIndex =
-        -ledger.maslovIndex ∧
+        -CanonicalScalarBoundarySimpleCrossingLedger.maslovIndex ledger ∧
       LinearMap.ker (curve.operator data.leftParameter).toLinearMap = ⊥ ∧
       LinearMap.ker (curve.operator data.rightParameter).toLinearMap = ⊥ :=
   ⟨rfl, data.morse_change_eq_maslov,

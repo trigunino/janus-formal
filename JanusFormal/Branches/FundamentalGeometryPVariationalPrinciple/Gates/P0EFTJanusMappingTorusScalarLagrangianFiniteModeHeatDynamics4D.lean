@@ -38,6 +38,13 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w} {Mode : Type z}
   [CompleteSpace Trace]
   [Fintype Mode] [DecidableEq Mode]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+
 /-- Heat-evolved coefficient of one eigenmode. -/
 def canonicalScalarFiniteModeHeatCoefficient
     (eigenvalue coefficient : Real) (time : Real) : Real :=
@@ -70,8 +77,8 @@ theorem canonicalScalarFiniteModeHeatCoefficient_hasDerivAt
       (-eigenvalue * canonicalScalarFiniteModeHeatCoefficient
         eigenvalue coefficient time) time := by
   unfold canonicalScalarFiniteModeHeatCoefficient
-  convert (((hasDerivAt_id time).neg.mul_const eigenvalue).exp.mul_const coefficient) using 1 <;>
-    ring
+  convert (((hasDerivAt_neg time).mul_const eigenvalue).exp.mul_const coefficient) using 1
+  all_goals first | rfl | ring
 
 /-- Heat coefficient family of a finite spectral packet. -/
 def CanonicalScalarFiniteSpectralPacket.heatCoefficient
@@ -88,7 +95,9 @@ def CanonicalScalarFiniteSpectralPacket.heatField
       data hClosable traceBound condition Mode)
     (initialCoefficient : Mode → Real)
     (time : Real) :=
-  packet.field (packet.heatCoefficient initialCoefficient time)
+  packet.field
+    (CanonicalScalarFiniteSpectralPacket.heatCoefficient
+      packet initialCoefficient time)
 
 /-- Formal time-derivative packet. -/
 def CanonicalScalarFiniteSpectralPacket.heatDerivativeField
@@ -98,14 +107,15 @@ def CanonicalScalarFiniteSpectralPacket.heatDerivativeField
     (time : Real) :=
   packet.field fun mode =>
     -packet.eigenvalue mode *
-      packet.heatCoefficient initialCoefficient time mode
+      CanonicalScalarFiniteSpectralPacket.heatCoefficient
+        packet initialCoefficient time mode
 
 /-- Initial condition. -/
 theorem CanonicalScalarFiniteSpectralPacket.heatField_zero
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (initialCoefficient : Mode → Real) :
-    packet.heatField initialCoefficient 0 =
+    CanonicalScalarFiniteSpectralPacket.heatField packet initialCoefficient 0 =
       packet.field initialCoefficient := by
   unfold CanonicalScalarFiniteSpectralPacket.heatField
     CanonicalScalarFiniteSpectralPacket.heatCoefficient
@@ -119,9 +129,11 @@ theorem CanonicalScalarFiniteSpectralPacket.heatCoefficient_add
       data hClosable traceBound condition Mode)
     (initialCoefficient : Mode → Real)
     (firstTime secondTime : Real) :
-    packet.heatCoefficient initialCoefficient (firstTime + secondTime) =
-      packet.heatCoefficient
-        (packet.heatCoefficient initialCoefficient secondTime) firstTime := by
+    CanonicalScalarFiniteSpectralPacket.heatCoefficient packet initialCoefficient
+        (firstTime + secondTime) =
+      CanonicalScalarFiniteSpectralPacket.heatCoefficient packet
+        (CanonicalScalarFiniteSpectralPacket.heatCoefficient
+          packet initialCoefficient secondTime) firstTime := by
   funext mode
   exact canonicalScalarFiniteModeHeatCoefficient_add
     (packet.eigenvalue mode) (initialCoefficient mode) firstTime secondTime
@@ -132,11 +144,13 @@ theorem CanonicalScalarFiniteSpectralPacket.heatField_add
       data hClosable traceBound condition Mode)
     (initialCoefficient : Mode → Real)
     (firstTime secondTime : Real) :
-    packet.heatField initialCoefficient (firstTime + secondTime) =
-      packet.heatField
-        (packet.heatCoefficient initialCoefficient secondTime) firstTime := by
+    CanonicalScalarFiniteSpectralPacket.heatField packet initialCoefficient
+        (firstTime + secondTime) =
+      CanonicalScalarFiniteSpectralPacket.heatField packet
+        (CanonicalScalarFiniteSpectralPacket.heatCoefficient
+          packet initialCoefficient secondTime) firstTime := by
   unfold CanonicalScalarFiniteSpectralPacket.heatField
-  rw [packet.heatCoefficient_add]
+  rw [CanonicalScalarFiniteSpectralPacket.heatCoefficient_add packet]
 
 /-- Each packet coefficient solves its scalar heat ODE. -/
 theorem CanonicalScalarFiniteSpectralPacket.heatCoefficient_hasDerivAt
@@ -145,9 +159,11 @@ theorem CanonicalScalarFiniteSpectralPacket.heatCoefficient_hasDerivAt
     (initialCoefficient : Mode → Real)
     (time : Real) (mode : Mode) :
     HasDerivAt
-      (fun currentTime => packet.heatCoefficient initialCoefficient currentTime mode)
+      (fun currentTime => CanonicalScalarFiniteSpectralPacket.heatCoefficient
+        packet initialCoefficient currentTime mode)
       (-packet.eigenvalue mode *
-        packet.heatCoefficient initialCoefficient time mode) time :=
+        CanonicalScalarFiniteSpectralPacket.heatCoefficient
+          packet initialCoefficient time mode) time :=
   canonicalScalarFiniteModeHeatCoefficient_hasDerivAt
     (packet.eigenvalue mode) (initialCoefficient mode) time
 
@@ -159,13 +175,17 @@ theorem CanonicalScalarFiniteSpectralPacket.operator_heatField
     (time : Real) :
     canonicalScalarClosedLagrangianDomainOperator
         data hClosable traceBound condition
-        (packet.heatField initialCoefficient time) =
+        (CanonicalScalarFiniteSpectralPacket.heatField
+          packet initialCoefficient time) =
       ∑ mode,
         (packet.eigenvalue mode *
-          packet.heatCoefficient initialCoefficient time mode) •
+          CanonicalScalarFiniteSpectralPacket.heatCoefficient
+            packet initialCoefficient time mode) •
         canonicalScalarClosedLagrangianDomainInclusion
           data hClosable traceBound condition (packet.eigenfield mode) :=
-  packet.operator_field (packet.heatCoefficient initialCoefficient time)
+  packet.operator_field
+    (CanonicalScalarFiniteSpectralPacket.heatCoefficient
+      packet initialCoefficient time)
 
 /-- Exact finite-mode heat generator identity. -/
 theorem CanonicalScalarFiniteSpectralPacket.heat_generator_identity
@@ -175,14 +195,17 @@ theorem CanonicalScalarFiniteSpectralPacket.heat_generator_identity
     (time : Real) :
     canonicalScalarClosedLagrangianDomainInclusion
         data hClosable traceBound condition
-        (packet.heatDerivativeField initialCoefficient time) =
+        (CanonicalScalarFiniteSpectralPacket.heatDerivativeField
+          packet initialCoefficient time) =
       -canonicalScalarClosedLagrangianDomainOperator
         data hClosable traceBound condition
-        (packet.heatField initialCoefficient time) := by
-  rw [packet.inclusion_field, packet.operator_heatField]
+        (CanonicalScalarFiniteSpectralPacket.heatField
+          packet initialCoefficient time) := by
+  unfold CanonicalScalarFiniteSpectralPacket.heatDerivativeField
+  rw [packet.inclusion_field,
+    CanonicalScalarFiniteSpectralPacket.operator_heatField packet]
   unfold CanonicalScalarFiniteSpectralPacket.ambientField
-    CanonicalScalarFiniteSpectralPacket.heatDerivativeField
-  simp only [Finset.smul_sum, Finset.sum_neg_distrib]
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
   intro mode _
   module
@@ -196,7 +219,8 @@ theorem CanonicalScalarFiniteSpectralPacket.heatCoefficient_abs_le
     (time : Real) (hTime : 0 ≤ time)
     (hEigenvalue : ∀ mode, 0 ≤ packet.eigenvalue mode)
     (mode : Mode) :
-    |packet.heatCoefficient initialCoefficient time mode| ≤
+    |CanonicalScalarFiniteSpectralPacket.heatCoefficient
+        packet initialCoefficient time mode| ≤
       |initialCoefficient mode| := by
   unfold CanonicalScalarFiniteSpectralPacket.heatCoefficient
     canonicalScalarFiniteModeHeatCoefficient
@@ -205,28 +229,34 @@ theorem CanonicalScalarFiniteSpectralPacket.heatCoefficient_abs_le
     nlinarith [hEigenvalue mode]
   have hExp : Real.exp (-time * packet.eigenvalue mode) ≤ 1 := by
     simpa using Real.exp_le_one_iff.mpr hExponent
-  exact mul_le_of_le_one_left (abs_nonneg _) (Real.exp_pos _).le hExp
+  exact mul_le_of_le_one_left (abs_nonneg _) hExp
 
 /-- Finite-mode heat certificate. -/
 theorem canonicalScalarFiniteModeHeatDynamics_certificate
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (initialCoefficient : Mode → Real) :
-    packet.heatField initialCoefficient 0 = packet.field initialCoefficient ∧
+    CanonicalScalarFiniteSpectralPacket.heatField
+        packet initialCoefficient 0 = packet.field initialCoefficient ∧
       (∀ firstTime secondTime,
-        packet.heatField initialCoefficient (firstTime + secondTime) =
-          packet.heatField
-            (packet.heatCoefficient initialCoefficient secondTime) firstTime) ∧
+        CanonicalScalarFiniteSpectralPacket.heatField packet initialCoefficient
+            (firstTime + secondTime) =
+          CanonicalScalarFiniteSpectralPacket.heatField packet
+            (CanonicalScalarFiniteSpectralPacket.heatCoefficient
+              packet initialCoefficient secondTime) firstTime) ∧
       (∀ time,
         canonicalScalarClosedLagrangianDomainInclusion
             data hClosable traceBound condition
-            (packet.heatDerivativeField initialCoefficient time) =
+            (CanonicalScalarFiniteSpectralPacket.heatDerivativeField
+              packet initialCoefficient time) =
           -canonicalScalarClosedLagrangianDomainOperator
             data hClosable traceBound condition
-            (packet.heatField initialCoefficient time)) :=
-  ⟨packet.heatField_zero initialCoefficient,
-    packet.heatField_add initialCoefficient,
-    packet.heat_generator_identity initialCoefficient⟩
+            (CanonicalScalarFiniteSpectralPacket.heatField
+              packet initialCoefficient time)) :=
+  ⟨CanonicalScalarFiniteSpectralPacket.heatField_zero packet initialCoefficient,
+    CanonicalScalarFiniteSpectralPacket.heatField_add packet initialCoefficient,
+    CanonicalScalarFiniteSpectralPacket.heat_generator_identity
+      packet initialCoefficient⟩
 
 end
 end P0EFTJanusMappingTorusScalarLagrangianFiniteModeHeatDynamics4D

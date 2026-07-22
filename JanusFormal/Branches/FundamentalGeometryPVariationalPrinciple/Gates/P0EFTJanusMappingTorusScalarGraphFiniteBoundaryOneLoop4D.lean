@@ -137,7 +137,7 @@ theorem canonicalScalarFiniteBoundaryConjugate_det
     LinearMap.det (canonicalScalarFiniteBoundaryConjugate equiv operator) =
       LinearMap.det operator := by
   simpa [canonicalScalarFiniteBoundaryConjugate,
-    LinearMap.comp_assoc] using LinearMap.det_conj operator equiv.symm
+    LinearMap.comp_assoc] using LinearMap.det_conj operator equiv
 
 /-- Finite one-loop term is invariant under boundary-coordinate conjugation. -/
 theorem canonicalScalarFiniteBoundaryOneLoop_conjugate

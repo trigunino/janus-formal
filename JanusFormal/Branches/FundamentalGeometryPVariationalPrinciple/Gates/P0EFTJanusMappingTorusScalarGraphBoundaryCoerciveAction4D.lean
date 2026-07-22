@@ -106,7 +106,9 @@ theorem canonicalScalarGraphBoundarySourceAction_hasDerivAt
     (robin : Trace →L[Real] Trace)
     (hRobin : robin.toLinearMap.IsSymmetric)
     (source boundary variation : Trace) :
-    HasDerivAt
+    @HasDerivAt Real _ Real
+      Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule _ _
       (fun parameter : Real =>
         canonicalScalarGraphBoundarySourceAction
           data traceBound spectralParameter poissonData robin source
@@ -114,24 +116,7 @@ theorem canonicalScalarGraphBoundarySourceAction_hasDerivAt
       (inner Real variation
         (canonicalScalarGraphBoundarySchurOperator
           data traceBound spectralParameter poissonData robin boundary - source)) 0 := by
-  rw [show (fun parameter : Real =>
-      canonicalScalarGraphBoundarySourceAction
-        data traceBound spectralParameter poissonData robin source
-        (boundary + parameter • variation)) =
-    (fun parameter : Real =>
-      canonicalScalarGraphBoundarySourceAction
-          data traceBound spectralParameter poissonData robin source boundary +
-        parameter * inner Real variation
-          (canonicalScalarGraphBoundarySchurOperator
-              data traceBound spectralParameter poissonData robin boundary - source) +
-        parameter ^ 2 *
-          canonicalScalarGraphRobinReducedAction
-            data traceBound spectralParameter poissonData robin variation) from by
-      funext parameter
-      exact canonicalScalarGraphBoundarySourceAction_affine
-        data traceBound spectralParameter poissonData robin hRobin
-          source boundary variation parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  have hPolynomial := (((hasDerivAt_const (x := (0 : Real))
       (canonicalScalarGraphBoundarySourceAction
         data traceBound spectralParameter poissonData robin source boundary)).add
       ((hasDerivAt_id (0 : Real)).mul_const
@@ -140,7 +125,13 @@ theorem canonicalScalarGraphBoundarySourceAction_hasDerivAt
             data traceBound spectralParameter poissonData robin boundary - source)))).add
       (((hasDerivAt_id (0 : Real)).pow 2).mul_const
         (canonicalScalarGraphRobinReducedAction
-          data traceBound spectralParameter poissonData robin variation))) using 1 <;> norm_num
+          data traceBound spectralParameter poissonData robin variation)))
+  norm_num at hPolynomial
+  apply hPolynomial.congr_of_eventuallyEq
+  filter_upwards [] with parameter
+  exact canonicalScalarGraphBoundarySourceAction_affine
+    data traceBound spectralParameter poissonData robin hRobin
+      source boundary variation parameter
 
 /-- Weak stationarity of the sourced boundary action. -/
 def CanonicalScalarGraphBoundarySourceStationary
@@ -207,11 +198,15 @@ theorem canonicalScalarGraphBoundarySourceAction_sub_solution
   have hBoundary : boundary = solution + displacement := by
     dsimp [displacement]
     module
-  rw [hBoundary,
-    canonicalScalarGraphBoundarySourceAction_affine
-      data traceBound spectralParameter poissonData robin hRobin
-        source solution displacement 1,
-    hSolution, sub_self]
+  rw [hBoundary]
+  have hAffine := canonicalScalarGraphBoundarySourceAction_affine
+    data traceBound spectralParameter poissonData robin hRobin
+      source solution displacement 1
+  simp only [one_smul, one_mul, one_pow] at hAffine
+  rw [hAffine, hSolution, sub_self]
+  have hRecover : solution + displacement - solution = displacement := by
+    module
+  rw [hRecover, inner_zero_right]
   ring
 
 /-- Coercivity makes a sourced Schur solution the unique global minimizer. -/
@@ -245,17 +240,51 @@ theorem canonicalScalarGraphBoundarySourceAction_unique_minimizer
       data traceBound spectralParameter poissonData robin
         coercive.robin_symmetric source solution boundary hSolution
     have hBound := coercive.lower_bound (boundary - solution)
-    unfold canonicalScalarGraphRobinReducedAction at hDifference
-    linarith [sq_nonneg ‖boundary - solution‖]
+    have hInnerNonneg : 0 ≤ inner Real (boundary - solution)
+        (canonicalScalarGraphBoundarySchurOperator
+          data traceBound spectralParameter poissonData robin
+            (boundary - solution)) :=
+      (mul_nonneg (le_of_lt coercive.constant_pos)
+        (sq_nonneg ‖boundary - solution‖)).trans hBound
+    have hActionNonneg : 0 ≤ canonicalScalarGraphRobinReducedAction
+        data traceBound spectralParameter poissonData robin
+          (boundary - solution) := by
+      unfold canonicalScalarGraphRobinReducedAction
+      exact mul_nonneg (by norm_num) hInnerNonneg
+    have hDifferenceNonneg : 0 ≤
+        canonicalScalarGraphBoundarySourceAction
+            data traceBound spectralParameter poissonData robin source boundary -
+          canonicalScalarGraphBoundarySourceAction
+            data traceBound spectralParameter poissonData robin source solution := by
+      rw [hDifference]
+      exact hActionNonneg
+    exact sub_nonneg.mp hDifferenceNonneg
   · intro boundary hEqual
     have hDifference := canonicalScalarGraphBoundarySourceAction_sub_solution
       data traceBound spectralParameter poissonData robin
         coercive.robin_symmetric source solution boundary hSolution
-    rw [hEqual, sub_self] at hDifference
     have hBound := coercive.lower_bound (boundary - solution)
-    unfold canonicalScalarGraphRobinReducedAction at hDifference
+    have hActionZero : canonicalScalarGraphRobinReducedAction
+        data traceBound spectralParameter poissonData robin
+          (boundary - solution) = 0 := by
+      rw [← hDifference, hEqual, sub_self]
+    have hInnerZero : inner Real (boundary - solution)
+        (canonicalScalarGraphBoundarySchurOperator
+          data traceBound spectralParameter poissonData robin
+            (boundary - solution)) = 0 := by
+      unfold canonicalScalarGraphRobinReducedAction at hActionZero
+      exact (mul_eq_zero.mp hActionZero).resolve_left (by norm_num)
+    have hProductZero : coercive.constant * ‖boundary - solution‖ ^ 2 = 0 := by
+      apply le_antisymm
+      · rw [hInnerZero] at hBound
+        exact hBound
+      · exact mul_nonneg (le_of_lt coercive.constant_pos)
+          (sq_nonneg ‖boundary - solution‖)
+    have hNormSq : ‖boundary - solution‖ ^ 2 = 0 :=
+      (mul_eq_zero.mp hProductZero).resolve_left
+        (ne_of_gt coercive.constant_pos)
     have hNorm : ‖boundary - solution‖ = 0 := by
-      nlinarith [sq_nonneg ‖boundary - solution‖]
+      exact sq_eq_zero_iff.mp hNormSq
     exact sub_eq_zero.mp (norm_eq_zero.mp hNorm)
 
 /-- Explicit bounded inverse for a sourced boundary Schur equation. -/
@@ -274,6 +303,15 @@ structure CanonicalScalarGraphBoundarySchurBoundedInverseData
   right_inverse : ∀ boundary,
     inverse (canonicalScalarGraphBoundarySchurOperator
       data traceBound spectralParameter poissonData robin boundary) = boundary
+
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {spectralParameter : Real}
+  {poissonData : CanonicalScalarGraphDirichletPoissonData
+    data traceBound spectralParameter}
+  {robin : Trace →L[Real] Trace}
 
 /-- Bounded inverse gives the explicit sourced stationary boundary. -/
 theorem CanonicalScalarGraphBoundarySchurBoundedInverseData.solution

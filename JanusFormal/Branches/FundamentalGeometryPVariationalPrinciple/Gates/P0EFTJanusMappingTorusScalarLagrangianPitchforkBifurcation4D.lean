@@ -92,6 +92,7 @@ theorem euler_eq_zero_iff
     · have hFirst := congrArg Prod.fst hEuler
       simpa [reducedEuler, hComplement] using hFirst
   · rintro ⟨rfl, hReduced⟩
+    change problem.euler parameter (problem.lift parameter kernel) = 0
     rw [problem.euler_lift]
     simp [hReduced]
 
@@ -153,7 +154,9 @@ theorem canonicalScalarPitchforkReducedEuler_neg_sqrt
         (-Real.sqrt (-parameter / cubic)) = 0 := by
   rw [canonicalScalarPitchforkReducedEuler_eq_zero_iff]
   right
-  rw [sq_neg, Real.sq_sqrt hRatio]
+  rw [show (-Real.sqrt (-parameter / cubic)) ^ 2 =
+      Real.sqrt (-parameter / cubic) ^ 2 by ring,
+    Real.sq_sqrt hRatio]
   field_simp
   ring
 

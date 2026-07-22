@@ -142,13 +142,17 @@ theorem canonicalScalarGraphPoissonOfBoundaryLift_unique
   let difference := field - poisson boundary
   have hDifferenceEquation :
       canonicalScalarGraphShiftedOperator data spectralParameter difference = 0 := by
-    dsimp [difference]
+    change canonicalScalarGraphShiftedOperator data spectralParameter
+      (field - canonicalScalarGraphPoissonOfBoundaryLift
+        data traceBound spectralParameter liftData dirichlet boundary) = 0
     rw [map_sub, hEquation,
       canonicalScalarGraphPoissonOfBoundaryLift_homogeneous,
       sub_self]
   have hDifferenceValue :
       canonicalScalarCompletedValueTrace data traceBound difference = 0 := by
-    dsimp [difference]
+    change canonicalScalarCompletedValueTrace data traceBound
+      (field - canonicalScalarGraphPoissonOfBoundaryLift
+        data traceBound spectralParameter liftData dirichlet boundary) = 0
     rw [map_sub, hValue,
       canonicalScalarGraphPoissonOfBoundaryLift_value_trace,
       sub_self]

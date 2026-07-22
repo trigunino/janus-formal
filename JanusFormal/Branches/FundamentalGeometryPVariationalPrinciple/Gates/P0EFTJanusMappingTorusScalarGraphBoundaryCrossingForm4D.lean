@@ -24,6 +24,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D
 open P0EFTJanusMappingTorusScalarGraphBoundarySpectrumReduction4D
+open P0EFTJanusMappingTorusScalarGraphBoundaryReducedAction4D
 open P0EFTJanusMappingTorusScalarGraphFiniteBoundaryDeterminant4D
 
 universe u v w
@@ -34,6 +35,12 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Ambient]
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
+
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {robin : Trace →L[Real] Trace}
 
 /-- Differentiable symmetric family of boundary endomorphisms. -/
 structure CanonicalScalarBoundaryOperatorCurve where
@@ -73,8 +80,14 @@ theorem CanonicalScalarBoundaryOperatorCurve.crossingPairing_comm
     (spectralParameter : Real)
     (first second : curve.crossingSubmodule spectralParameter) :
     curve.crossingPairing spectralParameter first second =
-      curve.crossingPairing spectralParameter second first :=
-  curve.derivative_symmetric spectralParameter first.1 second.1
+      curve.crossingPairing spectralParameter second first := by
+  unfold CanonicalScalarBoundaryOperatorCurve.crossingPairing
+  calc
+    inner Real first.1 (curve.derivative spectralParameter second.1) =
+        inner Real (curve.derivative spectralParameter first.1) second.1 :=
+      (curve.derivative_symmetric spectralParameter first.1 second.1).symm
+    _ = inner Real second.1 (curve.derivative spectralParameter first.1) :=
+      real_inner_comm _ _
 
 /-- Regular crossing: the derivative pairing is nondegenerate on the crossing
 kernel. -/

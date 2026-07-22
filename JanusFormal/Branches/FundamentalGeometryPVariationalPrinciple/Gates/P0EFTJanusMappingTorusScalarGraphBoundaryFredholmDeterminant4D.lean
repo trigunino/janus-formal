@@ -40,6 +40,15 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {parameters : Set Real}
+  {family : CanonicalScalarGraphBoundaryTripleFamily
+    data traceBound parameters}
+  {robin : Trace →L[Real] Trace}
+
 /-- Regularized Fredholm determinant for a boundary Schur family.  Analyticity,
 trace-class hypotheses and normalization are all explicit data of the future
 construction. -/
@@ -87,11 +96,12 @@ noncomputable def oneLoop
     (determinantData : CanonicalScalarGraphBoundaryFredholmDeterminantData
       data traceBound parameters family robin)
     (spectralParameter : Real) (hParameter : spectralParameter ∈ parameters) :
-    Option Real :=
-  if hRegular : determinantData.Regular spectralParameter hParameter then
-    some ((1 / 2 : Real) * Real.log
-      |determinantData.determinant spectralParameter hParameter|)
-  else none
+    Option Real := by
+  classical
+  exact if hRegular : determinantData.Regular spectralParameter hParameter then
+      some ((1 / 2 : Real) * Real.log
+        |determinantData.determinant spectralParameter hParameter|)
+    else none
 
 /-- Singularity is exactly nontrivial Schur kernel. -/
 theorem singular_iff_schurKernel
@@ -111,11 +121,33 @@ theorem singular_iff_bulkMode
     determinantData.Singular spectralParameter hParameter ↔
       ∃ field : canonicalScalarGraphRobinHomogeneousSolutionSubmodule
         data traceBound spectralParameter robin, field ≠ 0 := by
-  rw [determinantData.singular_iff_schurKernel,
-    Submodule.ne_bot_iff]
-  exact (canonicalScalarGraphRobin_hasNonzeroSolution_iff_schurKernel
-    data traceBound spectralParameter
-      (family.poissonData spectralParameter hParameter) robin).symm
+  rw [determinantData.singular_iff_schurKernel]
+  change LinearMap.ker
+      (canonicalScalarGraphBoundarySchurOperator
+        data traceBound spectralParameter
+          (family.poissonData spectralParameter hParameter) robin).toLinearMap ≠ ⊥ ↔ _
+  constructor
+  · intro hKernel
+    rcases (Submodule.ne_bot_iff _).mp hKernel with
+      ⟨boundary, hBoundary, hBoundaryNonzero⟩
+    apply (canonicalScalarGraphRobin_hasNonzeroSolution_iff_schurKernel
+      data traceBound spectralParameter
+        (family.poissonData spectralParameter hParameter) robin).mpr
+    refine ⟨⟨boundary, hBoundary⟩, ?_⟩
+    intro hZero
+    apply hBoundaryNonzero
+    simpa using congrArg Subtype.val hZero
+  · intro hBulk
+    rcases (canonicalScalarGraphRobin_hasNonzeroSolution_iff_schurKernel
+      data traceBound spectralParameter
+        (family.poissonData spectralParameter hParameter) robin).mp hBulk with
+      ⟨boundary, hBoundaryNonzero⟩
+    apply (Submodule.ne_bot_iff _).mpr
+    refine ⟨boundary, boundary.property, ?_⟩
+    intro hZero
+    apply hBoundaryNonzero
+    apply Subtype.ext
+    simpa using hZero
 
 /-- Singularity is exactly a nontrivial Cauchy/Robin Lagrangian intersection. -/
 theorem singular_iff_lagrangianIntersection
@@ -151,11 +183,11 @@ theorem oneLoop_eq_none_iff_bulkMode
     determinantData.oneLoop spectralParameter hParameter = none ↔
       ∃ field : canonicalScalarGraphRobinHomogeneousSolutionSubmodule
         data traceBound spectralParameter robin, field ≠ 0 := by
-  unfold oneLoop Regular
+  rw [← determinantData.singular_iff_bulkMode spectralParameter hParameter]
+  unfold oneLoop Regular Singular
   split_ifs with hRegular
   · simp [hRegular]
-  · simp [hRegular, determinantData.singular_iff_bulkMode
-      spectralParameter hParameter]
+  · simp_all
 
 /-- Value of the one-loop action at a regular point. -/
 theorem oneLoop_eq_some
@@ -166,10 +198,9 @@ theorem oneLoop_eq_some
     determinantData.oneLoop spectralParameter hParameter =
       some ((1 / 2 : Real) * Real.log
         |determinantData.determinant spectralParameter hParameter|) := by
+  classical
   unfold oneLoop
-  split_ifs with h
-  · rfl
-  · exact False.elim (h hRegular)
+  simp [hRegular]
 
 /-- The normalization point is regular. -/
 theorem normalization_regular

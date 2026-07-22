@@ -65,8 +65,10 @@ noncomputable def rightPoissonAtCommon
     P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D.CanonicalScalarGraphDirichletPoissonData
       physical.right.system physical.right.abstractGraphBound
         physical.spectralParameter := by
-  rw [physical.sameParameter]
-  exact physical.right.poissonData
+  simpa [spectralParameter,
+    CanonicalPhysicalScalarDirichletCoerciveData.system,
+    CanonicalPhysicalScalarDirichletCoerciveData.abstractGraphBound,
+    physical.sameParameter] using physical.right.poissonData
 
 /-- Physical two-sided interface Poisson data. -/
 noncomputable def interfaceData
@@ -101,7 +103,7 @@ theorem schur_isSymmetric
     (junction : PhysicalTrace period hPeriod →L[Real]
       PhysicalTrace period hPeriod)
     (hJunction : junction.toLinearMap.IsSymmetric) :
-    (physical.schur junction).toLinearMap.IsSymmetric :=
+    (physical.schur period hPeriod junction).toLinearMap.IsSymmetric :=
   physical.interfaceData.schurOperator_isSymmetric junction hJunction
 
 end CanonicalPhysicalScalarInterfaceDirichletData
@@ -140,7 +142,7 @@ theorem junction_equation
       period hPeriod physical)
     (source : PhysicalTrace period hPeriod) :
     physical.interfaceData.schurOperator gluing.junction
-        (gluing.boundaryInverse source) = source :=
+        (gluing.boundaryInverse period hPeriod source) = source :=
   gluing.coercive.schur_inverse source
 
 /-- Unique minimizing physical interface boundary. -/
@@ -152,7 +154,7 @@ theorem boundary_unique_minimizer
     (∀ boundary : PhysicalTrace period hPeriod,
       canonicalScalarGraphInterfaceSourceAction
           physical.interfaceData gluing.junction source
-          (gluing.boundaryInverse source) ≤
+          (gluing.boundaryInverse period hPeriod source) ≤
         canonicalScalarGraphInterfaceSourceAction
           physical.interfaceData gluing.junction source boundary) ∧
       (∀ boundary : PhysicalTrace period hPeriod,
@@ -160,11 +162,12 @@ theorem boundary_unique_minimizer
             physical.interfaceData gluing.junction source boundary =
           canonicalScalarGraphInterfaceSourceAction
             physical.interfaceData gluing.junction source
-            (gluing.boundaryInverse source) →
-        boundary = gluing.boundaryInverse source) :=
+            (gluing.boundaryInverse period hPeriod source) →
+        boundary = gluing.boundaryInverse period hPeriod source) :=
   canonicalScalarGraphInterfaceSourceAction_unique_minimizer
     physical.interfaceData gluing.junction gluing.positive source
-      (gluing.boundaryInverse source) (gluing.junction_equation source)
+      (gluing.boundaryInverse period hPeriod source)
+      (gluing.junction_equation period hPeriod source)
 
 /-- Physical interface gluing certificate. -/
 theorem certificate
@@ -173,19 +176,19 @@ theorem certificate
       period hPeriod physical)
     (source : PhysicalTrace period hPeriod) :
     physical.interfaceData.schurOperator gluing.junction
-          (gluing.boundaryInverse source) = source ∧
+          (gluing.boundaryInverse period hPeriod source) = source ∧
       (∀ boundary : PhysicalTrace period hPeriod,
         canonicalScalarGraphInterfaceSourceAction
             physical.interfaceData gluing.junction source
-            (gluing.boundaryInverse source) ≤
+            (gluing.boundaryInverse period hPeriod source) ≤
           canonicalScalarGraphInterfaceSourceAction
             physical.interfaceData gluing.junction source boundary) ∧
       P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D.canonicalScalarGraphShiftedOperator
           physical.left.system physical.spectralParameter
-          (gluing.gluedSolution source).1 = 0 ∧
+          (gluing.gluedSolution period hPeriod source).1 = 0 ∧
       P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D.canonicalScalarGraphShiftedOperator
           physical.right.system physical.spectralParameter
-          (gluing.gluedSolution source).2 = 0 :=
+          (gluing.gluedSolution period hPeriod source).2 = 0 :=
   canonicalScalarGraphInterfaceCoerciveGluing_certificate
     physical.interfaceData gluing.junction gluing.coercive gluing.positive source
 

@@ -25,6 +25,7 @@ open Set Topology
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
+open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
@@ -34,7 +35,7 @@ open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 
 universe x y
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev SmoothDomain := SmoothQuotientField period hPeriod Real
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
@@ -165,7 +166,7 @@ theorem boundaryTrace_surjective
     Function.Surjective
       (canonicalScalarGreenCoreCompletedBoundaryTrace
         green.core traceBound) :=
-  (extensionData.toGeneric green).boundaryTrace_surjective
+  (toGeneric period hPeriod green extensionData).boundaryTrace_surjective
 
 /-- Install the complete physical boundary-triple inputs from the two extension
 results and the graph estimates. -/
@@ -184,7 +185,8 @@ def completedBoundaryTripleInputs
   elliptic := elliptic
   normal := normal
   minimalDense := minimalDense
-  completedTraceSurjective := extensionData.boundaryTrace_surjective green
+  completedTraceSurjective :=
+    boundaryTrace_surjective period hPeriod green extensionData
 
 /-- Completed physical extension certificate. -/
 theorem certificate
@@ -200,7 +202,7 @@ theorem certificate
       (∀ boundary,
         canonicalScalarGreenCoreCompletedBoundaryTrace green.core traceBound
             (extensionData.extension boundary) = boundary) :=
-  ⟨extensionData.boundaryTrace_surjective green,
+  ⟨boundaryTrace_surjective period hPeriod green extensionData,
     extensionData.boundary_extension⟩
 
 end CanonicalPhysicalScalarCompletedCauchyExtensionData

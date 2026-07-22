@@ -41,6 +41,15 @@ variable {DomainLeft : Type u₁} {DomainRight : Type u₂}
   [CompleteSpace Trace]
   [FiniteDimensional Real Trace]
 
+variable
+  {left : CanonicalScalarHilbertGreenSystem
+    (Domain := DomainLeft) (Ambient := AmbientLeft) (Trace := Trace)}
+  {leftTraceBound : HasCanonicalScalarHilbertBoundaryGraphBound left}
+  {right : CanonicalScalarHilbertGreenSystem
+    (Domain := DomainRight) (Ambient := AmbientRight) (Trace := Trace)}
+  {rightTraceBound : HasCanonicalScalarHilbertBoundaryGraphBound right}
+  {spectralParameter : Real}
+
 /-- Finite interface gluing determinant. -/
 noncomputable def canonicalScalarGraphInterfaceDeterminant
     (interfaceData : CanonicalScalarGraphInterfacePoissonData
@@ -67,17 +76,27 @@ theorem canonicalScalarGraphInterfaceDeterminant_eq_zero_iff_gluedMode
         field ≠ 0 := by
   rw [canonicalScalarGraphInterfaceDeterminant_eq_zero_iff_kernel,
     Submodule.ne_bot_iff]
+  let equivalence := interfaceData.schurKernelGluedSolutionEquiv junction
   constructor
-  · rintro ⟨boundary, hBoundary⟩
-    refine ⟨interfaceData.schurKernelGluedSolutionEquiv junction boundary, ?_⟩
-    exact fun hZero => hBoundary
-      ((interfaceData.schurKernelGluedSolutionEquiv junction).injective
-        (by simpa using hZero))
+  · rintro ⟨boundary, hBoundary, hBoundaryNonzero⟩
+    let boundarySubtype : LinearMap.ker
+        (interfaceData.schurOperator junction).toLinearMap :=
+      ⟨boundary, hBoundary⟩
+    refine ⟨equivalence boundarySubtype, ?_⟩
+    intro hZero
+    apply hBoundaryNonzero
+    have hSubtypeZero : boundarySubtype = 0 := by
+      apply equivalence.injective
+      simpa using hZero
+    simpa [boundarySubtype] using congrArg Subtype.val hSubtypeZero
   · rintro ⟨field, hField⟩
-    refine ⟨(interfaceData.schurKernelGluedSolutionEquiv junction).symm field, ?_⟩
-    exact fun hZero => hField
-      ((interfaceData.schurKernelGluedSolutionEquiv junction).symm.injective
-        (by simpa using hZero))
+    refine ⟨(equivalence.symm field : Trace),
+      (equivalence.symm field).property, ?_⟩
+    intro hBoundaryZero
+    apply hField
+    apply equivalence.symm.injective
+    apply Subtype.ext
+    simpa using hBoundaryZero
 
 /-- Finite interface one-loop term, undefined at a gluing mode. -/
 noncomputable def canonicalScalarGraphInterfaceOneLoop
@@ -134,10 +153,7 @@ theorem canonicalScalarGraphInterfaceOneLoop_eq_some
     canonicalScalarGraphInterfaceOneLoop interfaceData junction =
       some ((1 / 2 : Real) * Real.log
         |canonicalScalarGraphInterfaceDeterminant interfaceData junction|) := by
-  unfold canonicalScalarGraphInterfaceOneLoop
-  split_ifs with h
-  · rfl
-  · exact False.elim (h hRegular)
+  simp [canonicalScalarGraphInterfaceOneLoop, hRegular]
 
 /-- Finite gluing determinant certificate. -/
 theorem canonicalScalarGraphFiniteInterfaceDeterminant_certificate

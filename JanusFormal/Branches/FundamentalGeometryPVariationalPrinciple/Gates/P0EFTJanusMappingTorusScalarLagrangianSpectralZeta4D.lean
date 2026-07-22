@@ -34,6 +34,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
+open P0EFTJanusMappingTorusScalarLagrangianEigenmodeTheory4D
 open P0EFTJanusMappingTorusScalarLagrangianFredholmAlternative4D
 open P0EFTJanusMappingTorusScalarLagrangianAnalyticClosure4D
 
@@ -74,6 +75,15 @@ structure CanonicalScalarPositiveSpectrumEnumeration
       (canonicalScalarClosedLagrangianOperatorEigenspace
         data hClosable traceBound condition (eigenvalue index)) =
       multiplicity index
+
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+  {closureData : CanonicalScalarLagrangianAnalyticClosureData
+    data hClosable traceBound condition}
 
 namespace CanonicalScalarPositiveSpectrumEnumeration
 
@@ -140,7 +150,8 @@ theorem spectralZetaTerm_positive
   unfold spectralZetaTerm
   have hMultiplicity : 0 < (enumeration.multiplicity index : Real) := by
     exact_mod_cast enumeration.multiplicity_pos index
-  positivity
+  exact mul_pos hMultiplicity
+    (Real.rpow_pos_of_pos (enumeration.positive index) _)
 
 /-- Heat trace is nonnegative whenever the series is summable. -/
 theorem heatTrace_nonnegative
@@ -195,6 +206,9 @@ structure CanonicalScalarSpectralZetaRegularizationData
   agrees : ∀ exponent ∈ agreesOn,
     regularizedZeta exponent = enumeration.spectralZeta exponent
   differentiableAtZero : DifferentiableAt Real regularizedZeta 0
+
+variable {enumeration : CanonicalScalarPositiveSpectrumEnumeration
+  data hClosable traceBound condition closureData}
 
 namespace CanonicalScalarSpectralZetaRegularizationData
 

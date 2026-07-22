@@ -214,21 +214,28 @@ theorem canonicalScalarGraphCauchyRobinIntersection_ne_bot_iff_bulkMode
       ∃ field : canonicalScalarGraphRobinHomogeneousSolutionSubmodule
         data traceBound spectralParameter robin, field ≠ 0 := by
   rw [Submodule.ne_bot_iff]
+  let equivalence := canonicalScalarGraphRobinSolutionLagrangianIntersectionEquiv
+    data traceBound spectralParameter poissonData robin
   constructor
-  · rintro ⟨boundary, hBoundary⟩
-    refine ⟨(canonicalScalarGraphRobinSolutionLagrangianIntersectionEquiv
-      data traceBound spectralParameter poissonData robin).symm boundary, ?_⟩
-    exact fun hZero => hBoundary
-      ((canonicalScalarGraphRobinSolutionLagrangianIntersectionEquiv
-        data traceBound spectralParameter poissonData robin).symm.injective
-        (by simpa using hZero))
+  · rintro ⟨boundary, hBoundary, hBoundaryNonzero⟩
+    let boundarySubtype : canonicalScalarGraphCauchyRobinIntersection
+        data traceBound spectralParameter poissonData robin :=
+      ⟨boundary, hBoundary⟩
+    refine ⟨equivalence.symm boundarySubtype, ?_⟩
+    intro hZero
+    apply hBoundaryNonzero
+    have hSubtypeZero : boundarySubtype = 0 := by
+      apply equivalence.symm.injective
+      simpa using hZero
+    simpa [boundarySubtype] using congrArg Subtype.val hSubtypeZero
   · rintro ⟨field, hField⟩
-    refine ⟨canonicalScalarGraphRobinSolutionLagrangianIntersectionEquiv
-      data traceBound spectralParameter poissonData robin field, ?_⟩
-    exact fun hZero => hField
-      ((canonicalScalarGraphRobinSolutionLagrangianIntersectionEquiv
-        data traceBound spectralParameter poissonData robin).injective
-        (by simpa using hZero))
+    refine ⟨(equivalence field : CanonicalScalarHilbertBoundaryDatum),
+      (equivalence field).property, ?_⟩
+    intro hBoundaryZero
+    apply hField
+    apply equivalence.injective
+    apply Subtype.ext
+    simpa using hBoundaryZero
 
 /-- Finite-dimensional multiplicity transfers from the intersection to the bulk
 and conversely by linear equivalence. -/

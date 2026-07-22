@@ -45,6 +45,13 @@ private abbrev LagrangianDomain
   canonicalScalarClosedLagrangianDomainSubmodule
     data hClosable traceBound condition
 
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
+
 /-- Finite orthonormal packet of genuine closed-operator eigenfields. -/
 structure CanonicalScalarFiniteSpectralPacket
     (data : CanonicalScalarHilbertGreenSystem
@@ -119,10 +126,9 @@ theorem mass_eq_sum_sq
   unfold canonicalScalarClosedLagrangianMassFunctional
     canonicalScalarClosedLagrangianMassPairing
   rw [packet.inclusion_field]
-  simp only [ambientField, inner_sum_left, inner_sum_right,
-    real_inner_smul_left, real_inner_smul_right]
-  classical
-  simp [packet.orthonormal.inner_right]
+  unfold ambientField
+  simpa [pow_two] using
+    (packet.orthonormal.inner_sum coefficient coefficient Finset.univ)
 
 /-- Jacobi quadratic form of a packet is diagonal in the eigenbasis. -/
 theorem quadratic_eq_weighted_sum
@@ -135,11 +141,11 @@ theorem quadratic_eq_weighted_sum
   unfold canonicalScalarClosedLagrangianQuadraticFunctional
     canonicalScalarClosedLagrangianJacobiPairing
   rw [packet.operator_field, packet.inclusion_field]
-  simp only [ambientField, inner_sum_left, inner_sum_right,
-    real_inner_smul_left, real_inner_smul_right]
-  classical
-  simp [packet.orthonormal.inner_right]
-  ring
+  unfold ambientField
+  simpa [pow_two, mul_assoc] using
+    (packet.orthonormal.inner_sum
+      (fun mode => packet.eigenvalue mode * coefficient mode)
+      coefficient Finset.univ)
 
 /-- Nonzero coefficient vector gives nonzero packet. -/
 theorem field_ne_zero_of_coefficient
@@ -151,14 +157,19 @@ theorem field_ne_zero_of_coefficient
   intro hField
   have hMass := packet.mass_eq_sum_sq coefficient
   rw [hField] at hMass
-  simp at hMass
+  simp [canonicalScalarClosedLagrangianMassFunctional,
+    canonicalScalarClosedLagrangianMassPairing] at hMass
   rcases hCoefficient with ⟨mode, hMode⟩
   have hNonnegative : ∀ currentMode, 0 ≤ coefficient currentMode ^ 2 :=
     fun currentMode => sq_nonneg _
-  have hModeLe : coefficient mode ^ 2 ≤ ∑ currentMode, coefficient currentMode ^ 2 :=
-    Finset.single_le_sum hNonnegative (Finset.mem_univ mode)
+  have hModeLe : coefficient mode ^ 2 ≤ ∑ currentMode, coefficient currentMode ^ 2 := by
+    simpa using (Finset.single_le_sum
+      (s := Finset.univ) (f := fun currentMode => coefficient currentMode ^ 2)
+      (fun currentMode _ => hNonnegative currentMode) (Finset.mem_univ mode))
   have hModeSquare : coefficient mode ^ 2 = 0 := by
-    linarith
+    apply le_antisymm
+    · linarith [hModeLe]
+    · exact sq_nonneg _
   exact hMode (sq_eq_zero_iff.mp hModeSquare)
 
 /-- Packet Rayleigh quotient. -/
@@ -195,8 +206,10 @@ theorem rayleighQuotient_ge
       fun mode => sq_nonneg _
     rcases hCoefficient with ⟨mode, hMode⟩
     have hModePositive : 0 < coefficient mode ^ 2 := sq_pos_of_ne_zero hMode
-    exact lt_of_lt_of_le hModePositive
-      (Finset.single_le_sum hNonnegative (Finset.mem_univ mode))
+    exact lt_of_lt_of_le hModePositive (by
+      simpa using (Finset.single_le_sum
+        (s := Finset.univ) (f := fun currentMode => coefficient currentMode ^ 2)
+        (fun currentMode _ => hNonnegative currentMode) (Finset.mem_univ mode)))
   unfold CanonicalScalarFiniteSpectralPacket.rayleighQuotient
   apply (le_div_iff₀ hDenPositive).2
   calc
@@ -205,7 +218,7 @@ theorem rayleighQuotient_ge
       rw [Finset.mul_sum]
     _ ≤ ∑ mode, packet.eigenvalue mode * coefficient mode ^ 2 := by
       gcongr with mode
-      exact mul_le_mul_of_nonneg_right (hLower mode) (sq_nonneg _)
+      exact hLower mode
 
 /-- Upper bound on a packet Rayleigh quotient. -/
 theorem rayleighQuotient_le
@@ -221,15 +234,17 @@ theorem rayleighQuotient_le
       fun mode => sq_nonneg _
     rcases hCoefficient with ⟨mode, hMode⟩
     have hModePositive : 0 < coefficient mode ^ 2 := sq_pos_of_ne_zero hMode
-    exact lt_of_lt_of_le hModePositive
-      (Finset.single_le_sum hNonnegative (Finset.mem_univ mode))
+    exact lt_of_lt_of_le hModePositive (by
+      simpa using (Finset.single_le_sum
+        (s := Finset.univ) (f := fun currentMode => coefficient currentMode ^ 2)
+        (fun currentMode _ => hNonnegative currentMode) (Finset.mem_univ mode)))
   unfold CanonicalScalarFiniteSpectralPacket.rayleighQuotient
   apply (div_le_iff₀ hDenPositive).2
   calc
     ∑ mode, packet.eigenvalue mode * coefficient mode ^ 2 ≤
         ∑ mode, upper * coefficient mode ^ 2 := by
       gcongr with mode
-      exact mul_le_mul_of_nonneg_right (hUpper mode) (sq_nonneg _)
+      exact hUpper mode
     _ = upper * ∑ mode, coefficient mode ^ 2 := by
       rw [Finset.mul_sum]
 

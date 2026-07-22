@@ -44,6 +44,15 @@ variable {DomainLeft : Type u₁} {DomainRight : Type u₂}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
 
+variable
+  {left : CanonicalScalarHilbertGreenSystem
+    (Domain := DomainLeft) (Ambient := AmbientLeft) (Trace := Trace)}
+  {leftTraceBound : HasCanonicalScalarHilbertBoundaryGraphBound left}
+  {right : CanonicalScalarHilbertGreenSystem
+    (Domain := DomainRight) (Ambient := AmbientRight) (Trace := Trace)}
+  {rightTraceBound : HasCanonicalScalarHilbertBoundaryGraphBound right}
+  {spectralParameter : Real}
+
 /-- Poisson data on both sides of one interface. -/
 structure CanonicalScalarGraphInterfacePoissonData
     (left : CanonicalScalarHilbertGreenSystem
@@ -141,13 +150,33 @@ theorem schurOperator_isSymmetric
     (interfaceData.schurOperator junction).toLinearMap.IsSymmetric := by
   intro first second
   unfold schurOperator
-  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply,
-    inner_add_left, inner_add_right, inner_sub_left, inner_sub_right]
-  rw [canonicalScalarGraphDirichletToNeumann_isSymmetric
-      left leftTraceBound spectralParameter interfaceData.leftPoisson first second,
-    canonicalScalarGraphDirichletToNeumann_isSymmetric
-      right rightTraceBound spectralParameter interfaceData.rightPoisson first second,
-    hJunction first second]
+  change inner Real
+      (interfaceData.leftDtN first + interfaceData.rightDtN first - junction first)
+        second =
+    inner Real first
+      (interfaceData.leftDtN second + interfaceData.rightDtN second - junction second)
+  simp only [inner_add_left, inner_add_right, inner_sub_left, inner_sub_right]
+  unfold leftDtN rightDtN
+  have hLeftSymmetry : inner Real
+        (canonicalScalarGraphDirichletToNeumann
+          left leftTraceBound spectralParameter interfaceData.leftPoisson first) second =
+      inner Real first
+        (canonicalScalarGraphDirichletToNeumann
+          left leftTraceBound spectralParameter interfaceData.leftPoisson second) := by
+    simpa using canonicalScalarGraphDirichletToNeumann_isSymmetric
+      left leftTraceBound spectralParameter interfaceData.leftPoisson first second
+  have hRightSymmetry : inner Real
+        (canonicalScalarGraphDirichletToNeumann
+          right rightTraceBound spectralParameter interfaceData.rightPoisson first) second =
+      inner Real first
+        (canonicalScalarGraphDirichletToNeumann
+          right rightTraceBound spectralParameter interfaceData.rightPoisson second) := by
+    simpa using canonicalScalarGraphDirichletToNeumann_isSymmetric
+      right rightTraceBound spectralParameter interfaceData.rightPoisson first second
+  have hJunctionSymmetry : inner Real (junction first) second =
+      inner Real first (junction second) := by
+    simpa using hJunction first second
+  rw [hLeftSymmetry, hRightSymmetry, hJunctionSymmetry]
 
 /-- Glued homogeneous bulk pairs satisfying common value and junction flux law. -/
 def gluedHomogeneousSolutionSubmodule
@@ -168,16 +197,62 @@ def gluedHomogeneousSolutionSubmodule
   zero_mem' := by simp
   add_mem' := by
     intro first second hFirst hSecond
-    exact ⟨by rw [map_add, hFirst.1, hSecond.1, add_zero],
-      by rw [map_add, hFirst.2.1, hSecond.2.1, add_zero],
-      by rw [map_add, map_add, hFirst.2.2.1, hSecond.2.2.1],
-      by rw [map_add, map_add, map_add, hFirst.2.2.2, hSecond.2.2.2]⟩
+    exact ⟨by
+        change canonicalScalarGraphShiftedOperator left spectralParameter
+          (first.1 + second.1) = 0
+        rw [map_add, hFirst.1, hSecond.1, add_zero],
+      by
+        change canonicalScalarGraphShiftedOperator right spectralParameter
+          (first.2 + second.2) = 0
+        rw [map_add, hFirst.2.1, hSecond.2.1, add_zero],
+      by
+        change canonicalScalarCompletedValueTrace left leftTraceBound
+            (first.1 + second.1) =
+          canonicalScalarCompletedValueTrace right rightTraceBound
+            (first.2 + second.2)
+        rw [map_add, map_add, hFirst.2.2.1, hSecond.2.2.1],
+      by
+        change canonicalScalarCompletedNormalTrace left leftTraceBound
+              (first.1 + second.1) +
+            canonicalScalarCompletedNormalTrace right rightTraceBound
+              (first.2 + second.2) =
+          junction (canonicalScalarCompletedValueTrace left leftTraceBound
+            (first.1 + second.1))
+        simp only [map_add]
+        calc
+          _ = (canonicalScalarCompletedNormalTrace left leftTraceBound first.1 +
+                canonicalScalarCompletedNormalTrace right rightTraceBound first.2) +
+              (canonicalScalarCompletedNormalTrace left leftTraceBound second.1 +
+                canonicalScalarCompletedNormalTrace right rightTraceBound second.2) := by
+            abel
+          _ = junction (canonicalScalarCompletedValueTrace left leftTraceBound first.1) +
+              junction (canonicalScalarCompletedValueTrace left leftTraceBound second.1) := by
+            rw [hFirst.2.2.2, hSecond.2.2.2]⟩
   smul_mem' := by
     intro scalar field hField
-    exact ⟨by rw [map_smul, hField.1, smul_zero],
-      by rw [map_smul, hField.2.1, smul_zero],
-      by rw [map_smul, map_smul, hField.2.2.1],
-      by rw [map_smul, map_smul, map_smul, hField.2.2.2]⟩
+    exact ⟨by
+        change canonicalScalarGraphShiftedOperator left spectralParameter
+          (scalar • field.1) = 0
+        rw [map_smul, hField.1, smul_zero],
+      by
+        change canonicalScalarGraphShiftedOperator right spectralParameter
+          (scalar • field.2) = 0
+        rw [map_smul, hField.2.1, smul_zero],
+      by
+        change canonicalScalarCompletedValueTrace left leftTraceBound
+            (scalar • field.1) =
+          canonicalScalarCompletedValueTrace right rightTraceBound
+            (scalar • field.2)
+        rw [map_smul, map_smul, hField.2.2.1],
+      by
+        change canonicalScalarCompletedNormalTrace left leftTraceBound
+              (scalar • field.1) +
+            canonicalScalarCompletedNormalTrace right rightTraceBound
+              (scalar • field.2) =
+          junction (canonicalScalarCompletedValueTrace left leftTraceBound
+            (scalar • field.1))
+        simp only [map_smul]
+        rw [← smul_add, hField.2.2.2]⟩
 
 /-- A Schur-kernel value produces a glued homogeneous pair. -/
 def schurKernelToGluedSolution
@@ -190,14 +265,27 @@ def schurKernelToGluedSolution
     ⟨interfaceData.poissonPair boundary.1,
       ⟨interfaceData.leftPoisson.homogeneous boundary.1,
         interfaceData.rightPoisson.homogeneous boundary.1,
-        by rw [interfaceData.leftPoisson.value_trace,
-          interfaceData.rightPoisson.value_trace],
+        by
+          change canonicalScalarCompletedValueTrace left leftTraceBound
+              (interfaceData.leftPoisson.poisson boundary.1) =
+            canonicalScalarCompletedValueTrace right rightTraceBound
+              (interfaceData.rightPoisson.poisson boundary.1)
+          rw [interfaceData.leftPoisson.value_trace,
+            interfaceData.rightPoisson.value_trace],
         by
           have hKernel := LinearMap.mem_ker.mp boundary.2
           change interfaceData.leftDtN boundary.1 +
               interfaceData.rightDtN boundary.1 - junction boundary.1 = 0
             at hKernel
+          change canonicalScalarCompletedNormalTrace left leftTraceBound
+                (interfaceData.leftPoisson.poisson boundary.1) +
+              canonicalScalarCompletedNormalTrace right rightTraceBound
+                (interfaceData.rightPoisson.poisson boundary.1) =
+            junction (canonicalScalarCompletedValueTrace left leftTraceBound
+              (interfaceData.leftPoisson.poisson boundary.1))
           rw [interfaceData.leftPoisson.value_trace]
+          change interfaceData.leftDtN boundary.1 +
+              interfaceData.rightDtN boundary.1 = junction boundary.1
           exact sub_eq_zero.mp hKernel⟩⟩
   map_add' first second := by
     apply Subtype.ext
@@ -219,11 +307,19 @@ def gluedSolutionToSchurKernel
       have hLeftReconstruct := interfaceData.leftPoisson.reconstruct
         left leftTraceBound spectralParameter field.1.1 field.2.1
       have hRightReconstruct := interfaceData.rightPoisson.reconstruct
-        right rightTraceBound spectralParameter field.1.2 field.2.1
-      have hCommon := field.2.2.1
-      have hJunction := field.2.2.2
+        right rightTraceBound spectralParameter field.1.2 field.2.2.1
+      have hCommon := field.2.2.2.1
+      have hJunction := field.2.2.2.2
       rw [hLeftReconstruct] at hJunction
       rw [hRightReconstruct, ← hCommon] at hJunction
+      rw [interfaceData.leftPoisson.value_trace] at hJunction
+      change interfaceData.leftDtN
+            (canonicalScalarCompletedValueTrace left leftTraceBound field.1.1) +
+          interfaceData.rightDtN
+            (canonicalScalarCompletedValueTrace left leftTraceBound field.1.1) =
+        junction
+          (canonicalScalarCompletedValueTrace left leftTraceBound field.1.1)
+        at hJunction
       change interfaceData.leftDtN
             (canonicalScalarCompletedValueTrace left leftTraceBound field.1.1) +
           interfaceData.rightDtN
@@ -258,9 +354,12 @@ noncomputable def schurKernelGluedSolutionEquiv
     · exact (interfaceData.leftPoisson.reconstruct
         left leftTraceBound spectralParameter field.1.1 field.2.1).symm
     · have hRight := interfaceData.rightPoisson.reconstruct
-        right rightTraceBound spectralParameter field.1.2 field.2.1
-      have hCommon := field.2.2.1
-      rw [← hCommon]
+        right rightTraceBound spectralParameter field.1.2 field.2.2.1
+      have hCommon := field.2.2.2.1
+      change interfaceData.rightPoisson.poisson
+          (canonicalScalarCompletedValueTrace left leftTraceBound field.1.1) =
+        field.1.2
+      rw [hCommon]
       exact hRight.symm
   map_add' := by
     intro first second
@@ -285,7 +384,9 @@ theorem reducedInterfaceAction_hasDerivAt
     (junction : Trace →L[Real] Trace)
     (hJunction : junction.toLinearMap.IsSymmetric)
     (boundary variation : Trace) :
-    HasDerivAt
+    @HasDerivAt Real _ Real
+      Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule _ _
       (fun parameter : Real =>
         interfaceData.reducedInterfaceAction junction
           (boundary + parameter • variation))
@@ -306,23 +407,15 @@ theorem reducedInterfaceAction_hasDerivAt
     intro parameter
     simp only [map_add, map_smul, inner_add_left, inner_add_right,
       real_inner_smul_left, real_inner_smul_right]
-    rw [hSymmetric boundary variation]
+    have hCross : inner Real boundary
+          (interfaceData.schurOperator junction variation) =
+        inner Real variation
+          (interfaceData.schurOperator junction boundary) := by
+      rw [real_inner_comm]
+      exact hSymmetric variation boundary
+    rw [hCross]
     ring
-  rw [show (fun parameter : Real =>
-      (1 / 2 : Real) * inner Real (boundary + parameter • variation)
-        (interfaceData.schurOperator junction
-          (boundary + parameter • variation))) =
-    (fun parameter : Real =>
-      (1 / 2 : Real) * inner Real boundary
-          (interfaceData.schurOperator junction boundary) +
-        parameter * inner Real variation
-          (interfaceData.schurOperator junction boundary) +
-        parameter ^ 2 *
-          ((1 / 2 : Real) * inner Real variation
-            (interfaceData.schurOperator junction variation))) from by
-      funext parameter
-      exact hAffine parameter]
-  convert (((hasDerivAt_const (x := (0 : Real))
+  have hPolynomial := (((hasDerivAt_const (x := (0 : Real))
       ((1 / 2 : Real) * inner Real boundary
         (interfaceData.schurOperator junction boundary))).add
       ((hasDerivAt_id (0 : Real)).mul_const
@@ -330,7 +423,11 @@ theorem reducedInterfaceAction_hasDerivAt
           (interfaceData.schurOperator junction boundary)))).add
       (((hasDerivAt_id (0 : Real)).pow 2).mul_const
         ((1 / 2 : Real) * inner Real variation
-          (interfaceData.schurOperator junction variation)))) using 1 <;> norm_num
+          (interfaceData.schurOperator junction variation))))
+  norm_num at hPolynomial
+  apply hPolynomial.congr_of_eventuallyEq
+  filter_upwards [] with parameter
+  exact hAffine parameter
 
 /-- Interface gluing certificate. -/
 theorem certificate

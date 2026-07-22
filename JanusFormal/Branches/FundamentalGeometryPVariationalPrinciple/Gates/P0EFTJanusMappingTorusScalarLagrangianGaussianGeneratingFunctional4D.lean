@@ -31,6 +31,7 @@ open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarLagrangianResolvent4D
 open P0EFTJanusMappingTorusScalarLagrangianSemiboundedSpectrum4D
+open P0EFTJanusMappingTorusScalarLagrangianVariationalEigenprinciple4D
 open P0EFTJanusMappingTorusScalarLagrangianCoerciveVariationalProblem4D
 
 universe u v w
@@ -142,8 +143,24 @@ theorem canonicalScalarClosedLagrangianGaussianPairing_comm
         data hClosable traceBound condition zeroResolvent first second =
       canonicalScalarClosedLagrangianGaussianPairing
         data hClosable traceBound condition zeroResolvent second first :=
-  canonicalScalarClosedLagrangianGaussianResponse_isSymmetric
-    data hClosable traceBound condition zeroResolvent first second
+  by
+    unfold canonicalScalarClosedLagrangianGaussianPairing
+    have hSymmetry :=
+      canonicalScalarClosedLagrangianGaussianResponse_isSymmetric
+        data hClosable traceBound condition zeroResolvent first second
+    calc
+      inner Real first
+          (canonicalScalarClosedLagrangianGaussianResponse
+            data hClosable traceBound condition zeroResolvent second) =
+        inner Real
+          (canonicalScalarClosedLagrangianGaussianResponse
+            data hClosable traceBound condition zeroResolvent first) second := by
+              symm
+              exact hSymmetry
+      _ = inner Real second
+          (canonicalScalarClosedLagrangianGaussianResponse
+            data hClosable traceBound condition zeroResolvent first) :=
+        real_inner_comm _ _
 
 /-- On-shell source action is minus one half the Gaussian pairing. -/
 theorem canonicalScalarClosedLagrangianSourceAction_onShell
@@ -162,14 +179,26 @@ theorem canonicalScalarClosedLagrangianSourceAction_onShell
       -(1 / 2 : Real) *
         canonicalScalarClosedLagrangianGaussianPairing
           data hClosable traceBound condition zeroResolvent source source := by
+  have hEquation :=
+    canonicalScalarClosedLagrangianClassicalSourceSolution_equation
+      data hClosable traceBound condition zeroResolvent source
   unfold canonicalScalarClosedLagrangianSourceAction
     canonicalScalarClosedLagrangianQuadraticFunctional
     canonicalScalarClosedLagrangianJacobiPairing
     canonicalScalarClosedLagrangianGaussianPairing
     canonicalScalarClosedLagrangianGaussianResponse
-    canonicalScalarClosedLagrangianClassicalSourceSolution
-  rw [canonicalScalarClosedLagrangianClassicalSourceSolution_equation
-    data hClosable traceBound condition zeroResolvent source]
+  rw [hEquation]
+  unfold canonicalScalarClosedLagrangianClassicalSourceSolution
+  have hAmbient :
+      zeroResolvent.ambientResolvent
+          data hClosable traceBound condition 0 source =
+        canonicalScalarClosedLagrangianDomainInclusion
+          data hClosable traceBound condition (zeroResolvent.resolvent source) := by
+    simp [CanonicalScalarClosedLagrangianBoundedResolventAt.ambientResolvent,
+      canonicalScalarClosedLagrangianDomainInclusionCLM,
+      canonicalScalarClosedLagrangianDomainInclusion,
+      canonicalScalarClosedOperatorInclusion]
+  rw [hAmbient]
   ring
 
 /-- Generating functional is minus the on-shell source action. -/
@@ -210,12 +239,13 @@ theorem canonicalScalarClosedLagrangianGaussianGeneratingFunctional_add
           data hClosable traceBound condition zeroResolvent second +
         canonicalScalarClosedLagrangianGaussianPairing
           data hClosable traceBound condition zeroResolvent first second := by
+  have hComm := canonicalScalarClosedLagrangianGaussianPairing_comm
+    data hClosable traceBound condition zeroResolvent second first
+  unfold canonicalScalarClosedLagrangianGaussianPairing at hComm
   unfold canonicalScalarClosedLagrangianGaussianGeneratingFunctional
     canonicalScalarClosedLagrangianGaussianPairing
-    canonicalScalarClosedLagrangianGaussianResponse
   simp only [map_add, inner_add_left, inner_add_right]
-  rw [canonicalScalarClosedLagrangianGaussianPairing_comm
-    data hClosable traceBound condition zeroResolvent second first]
+  rw [hComm]
   ring
 
 /-- Homogeneity of the Gaussian generating functional. -/
@@ -264,11 +294,16 @@ theorem canonicalScalarClosedLagrangianGaussianGeneratingFunctional_nonnegative
     (canonicalScalarClosedLagrangianDomainInclusion
       data hClosable traceBound condition solution)
   rw [← hEquation]
-  unfold canonicalScalarClosedLagrangianQuadraticFunctional
-    canonicalScalarClosedLagrangianJacobiPairing at hBound
-  linarith [sq_nonneg
-    ‖canonicalScalarClosedLagrangianDomainInclusion
-      data hClosable traceBound condition solution‖]
+  change 0 ≤ (1 / 2 : Real) * inner Real
+    (canonicalScalarClosedLagrangianDomainOperator
+      data hClosable traceBound condition solution)
+    (canonicalScalarClosedLagrangianDomainInclusion
+      data hClosable traceBound condition solution)
+  have hLowerTerm : 0 ≤ semibounded.lowerBound *
+      ‖canonicalScalarClosedLagrangianDomainInclusion
+        data hClosable traceBound condition solution‖ ^ 2 :=
+    mul_nonneg (le_of_lt hPositive) (sq_nonneg _)
+  linarith
 
 /-- Gaussian generating-functional certificate. -/
 theorem canonicalScalarLagrangianGaussianGeneratingFunctional_certificate

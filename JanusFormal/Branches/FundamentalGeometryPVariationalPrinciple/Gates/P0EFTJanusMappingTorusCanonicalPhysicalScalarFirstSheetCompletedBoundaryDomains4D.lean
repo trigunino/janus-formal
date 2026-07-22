@@ -29,7 +29,7 @@ open P0EFTJanusMappingTorusScalarHilbertRobinGraph4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 :=
   CanonicalPhysicalScalarFirstSheetL2 period
@@ -71,18 +71,18 @@ def completedValueTrace
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :
-    inputs.MaximalDomain green →L[Real] BoundaryL2 period :=
+    inputs.MaximalDomain period hPeriod green →L[Real] BoundaryL2 period :=
   (ContinuousLinearMap.fst Real (BoundaryL2 period) (BoundaryL2 period)).comp
-    (inputs.boundaryTrace green)
+    (inputs.boundaryTrace period hPeriod green)
 
 /-- Normal component of the corrected completed physical trace. -/
 def completedNormalTrace
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :
-    inputs.MaximalDomain green →L[Real] BoundaryL2 period :=
+    inputs.MaximalDomain period hPeriod green →L[Real] BoundaryL2 period :=
   (ContinuousLinearMap.snd Real (BoundaryL2 period) (BoundaryL2 period)).comp
-    (inputs.boundaryTrace green)
+    (inputs.boundaryTrace period hPeriod green)
 
 /-- Corrected completed physical domain for an arbitrary Lagrangian condition. -/
 def completedLagrangianDomain
@@ -91,14 +91,14 @@ def completedLagrangianDomain
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period)) :=
-  (inputs.triple green).lagrangianDomainSubmodule condition
+  (inputs.triple period hPeriod green).lagrangianDomainSubmodule condition
 
 /-- Corrected completed Dirichlet domain. -/
 abbrev CompletedDirichletDomain
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :=
-  inputs.completedLagrangianDomain green
+  completedLagrangianDomain period hPeriod green inputs
     (completedPhysicalDirichletCondition period)
 
 /-- Corrected completed Neumann domain. -/
@@ -106,7 +106,7 @@ abbrev CompletedNeumannDomain
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :=
-  inputs.completedLagrangianDomain green
+  completedLagrangianDomain period hPeriod green inputs
     (completedPhysicalNeumannCondition period)
 
 /-- Corrected completed scalar Robin domain. -/
@@ -115,7 +115,7 @@ abbrev CompletedScalarRobinDomain
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (coefficient : Real) :=
-  inputs.completedLagrangianDomain green
+  completedLagrangianDomain period hPeriod green inputs
     (completedPhysicalScalarRobinCondition period coefficient)
 
 /-- Corrected completed operator-Robin domain. -/
@@ -125,7 +125,7 @@ abbrev CompletedOperatorRobinDomain
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (robin : BoundaryL2 period →L[Real] BoundaryL2 period)
     (hRobin : robin.toLinearMap.IsSymmetric) :=
-  inputs.completedLagrangianDomain green
+  completedLagrangianDomain period hPeriod green inputs
     (completedPhysicalOperatorRobinCondition period robin hRobin)
 
 /-- Corrected completed Dirichlet membership. -/
@@ -133,10 +133,10 @@ theorem mem_completedDirichletDomain
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
-    (field : inputs.MaximalDomain green) :
-    field ∈ inputs.CompletedDirichletDomain green ↔
-      inputs.completedValueTrace green field = 0 := by
-  change inputs.boundaryTrace green field ∈
+    (field : inputs.MaximalDomain period hPeriod green) :
+    field ∈ CompletedDirichletDomain period hPeriod green inputs ↔
+      completedValueTrace period hPeriod green inputs field = 0 := by
+  change inputs.boundaryTrace period hPeriod green field ∈
       canonicalScalarHilbertSeparatedBoundarySubmodule
         (Trace := BoundaryL2 period) 1 0 ↔ _
   rw [mem_canonicalScalarHilbertSeparatedBoundarySubmodule]
@@ -147,10 +147,10 @@ theorem mem_completedNeumannDomain
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
-    (field : inputs.MaximalDomain green) :
-    field ∈ inputs.CompletedNeumannDomain green ↔
-      inputs.completedNormalTrace green field = 0 := by
-  change inputs.boundaryTrace green field ∈
+    (field : inputs.MaximalDomain period hPeriod green) :
+    field ∈ CompletedNeumannDomain period hPeriod green inputs ↔
+      completedNormalTrace period hPeriod green inputs field = 0 := by
+  change inputs.boundaryTrace period hPeriod green field ∈
       canonicalScalarHilbertSeparatedBoundarySubmodule
         (Trace := BoundaryL2 period) 0 1 ↔ _
   rw [mem_canonicalScalarHilbertSeparatedBoundarySubmodule]
@@ -162,17 +162,23 @@ theorem mem_completedScalarRobinDomain
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (coefficient : Real)
-    (field : inputs.MaximalDomain green) :
-    field ∈ inputs.CompletedScalarRobinDomain green coefficient ↔
-      inputs.completedNormalTrace green field =
-        coefficient • inputs.completedValueTrace green field := by
-  change inputs.boundaryTrace green field ∈
+    (field : inputs.MaximalDomain period hPeriod green) :
+    field ∈ CompletedScalarRobinDomain period hPeriod green inputs coefficient ↔
+      completedNormalTrace period hPeriod green inputs field =
+        coefficient • completedValueTrace period hPeriod green inputs field := by
+  change inputs.boundaryTrace period hPeriod green field ∈
       canonicalScalarHilbertSeparatedBoundarySubmodule
         (Trace := BoundaryL2 period) (-coefficient) 1 ↔ _
   rw [mem_canonicalScalarHilbertSeparatedBoundarySubmodule]
-  change -coefficient • inputs.completedValueTrace green field +
-      inputs.completedNormalTrace green field = 0 ↔ _
-  module
+  simp only [one_smul]
+  change -coefficient • completedValueTrace period hPeriod green inputs field +
+      completedNormalTrace period hPeriod green inputs field = 0 ↔ _
+  constructor
+  · intro h
+    simpa using eq_neg_of_add_eq_zero_right h
+  · intro h
+    rw [h]
+    simp
 
 /-- Corrected completed operator-Robin membership. -/
 theorem mem_completedOperatorRobinDomain
@@ -181,11 +187,11 @@ theorem mem_completedOperatorRobinDomain
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (robin : BoundaryL2 period →L[Real] BoundaryL2 period)
     (hRobin : robin.toLinearMap.IsSymmetric)
-    (field : inputs.MaximalDomain green) :
-    field ∈ inputs.CompletedOperatorRobinDomain green robin hRobin ↔
-      inputs.completedNormalTrace green field =
-        robin (inputs.completedValueTrace green field) := by
-  change inputs.boundaryTrace green field ∈
+    (field : inputs.MaximalDomain period hPeriod green) :
+    field ∈ CompletedOperatorRobinDomain period hPeriod green inputs robin hRobin ↔
+      completedNormalTrace period hPeriod green inputs field =
+        robin (completedValueTrace period hPeriod green inputs field) := by
+  change inputs.boundaryTrace period hPeriod green field ∈
       canonicalScalarHilbertRobinGraphSubmodule robin ↔ _
   rw [mem_canonicalScalarHilbertRobinGraphSubmodule]
   rfl
@@ -197,7 +203,7 @@ def completedLagrangianInclusion
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period)) :=
-  (inputs.triple green).lagrangianInclusion condition
+  (inputs.triple period hPeriod green).lagrangianInclusion condition
 
 /-- Corrected completed Lagrangian operator. -/
 def completedLagrangianOperator
@@ -206,7 +212,7 @@ def completedLagrangianOperator
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period)) :=
-  (inputs.triple green).lagrangianOperator condition
+  (inputs.triple period hPeriod green).lagrangianOperator condition
 
 /-- Every corrected completed Lagrangian realization is symmetric. -/
 theorem completedLagrangianOperator_symmetric
@@ -215,12 +221,12 @@ theorem completedLagrangianOperator_symmetric
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period))
-    (first second : inputs.completedLagrangianDomain green condition) :
-    inner Real (inputs.completedLagrangianOperator green condition first)
-          (inputs.completedLagrangianInclusion green condition second) =
-      inner Real (inputs.completedLagrangianInclusion green condition first)
-          (inputs.completedLagrangianOperator green condition second) :=
-  (inputs.triple green).lagrangianOperator_symmetric
+    (first second : completedLagrangianDomain period hPeriod green inputs condition) :
+    inner Real (completedLagrangianOperator period hPeriod green inputs condition first)
+          (completedLagrangianInclusion period hPeriod green inputs condition second) =
+      inner Real (completedLagrangianInclusion period hPeriod green inputs condition first)
+          (completedLagrangianOperator period hPeriod green inputs condition second) :=
+  (inputs.triple period hPeriod green).lagrangianOperator_symmetric
     condition first second
 
 /-- Corrected completed boundary-adjoint domain equality. -/
@@ -230,29 +236,29 @@ theorem completedLagrangianAdjointDomain_eq
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period)) :
-    (inputs.triple green).lagrangianAdjointDomain condition =
-      (inputs.completedLagrangianDomain green condition :
-        Set (inputs.MaximalDomain green)) :=
-  (inputs.triple green).lagrangianAdjointDomain_eq condition
+    (inputs.triple period hPeriod green).lagrangianAdjointDomain condition =
+      (completedLagrangianDomain period hPeriod green inputs condition :
+        Set (inputs.MaximalDomain period hPeriod green)) :=
+  (inputs.triple period hPeriod green).lagrangianAdjointDomain_eq condition
 
 /-- Corrected standard physical boundary-domain certificate. -/
 theorem completedBoundaryDomains_certificate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :
-    (∀ field : inputs.MaximalDomain green,
-      field ∈ inputs.CompletedDirichletDomain green ↔
-        inputs.completedValueTrace green field = 0) ∧
-    (∀ field : inputs.MaximalDomain green,
-      field ∈ inputs.CompletedNeumannDomain green ↔
-        inputs.completedNormalTrace green field = 0) ∧
+    (∀ field : inputs.MaximalDomain period hPeriod green,
+      field ∈ CompletedDirichletDomain period hPeriod green inputs ↔
+        completedValueTrace period hPeriod green inputs field = 0) ∧
+    (∀ field : inputs.MaximalDomain period hPeriod green,
+      field ∈ CompletedNeumannDomain period hPeriod green inputs ↔
+        completedNormalTrace period hPeriod green inputs field = 0) ∧
     (∀ coefficient field,
-      field ∈ inputs.CompletedScalarRobinDomain green coefficient ↔
-        inputs.completedNormalTrace green field =
-          coefficient • inputs.completedValueTrace green field) :=
-  ⟨inputs.mem_completedDirichletDomain green,
-    inputs.mem_completedNeumannDomain green,
-    inputs.mem_completedScalarRobinDomain green⟩
+      field ∈ CompletedScalarRobinDomain period hPeriod green inputs coefficient ↔
+        completedNormalTrace period hPeriod green inputs field =
+          coefficient • completedValueTrace period hPeriod green inputs field) :=
+  ⟨mem_completedDirichletDomain period hPeriod green inputs,
+    mem_completedNeumannDomain period hPeriod green inputs,
+    mem_completedScalarRobinDomain period hPeriod green inputs⟩
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData.CompletedBoundaryTripleInputs
 

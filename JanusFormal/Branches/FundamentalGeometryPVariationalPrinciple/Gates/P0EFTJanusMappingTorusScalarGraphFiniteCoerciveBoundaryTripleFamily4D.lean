@@ -27,6 +27,7 @@ open Set Topology Module
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarGraphPoissonDirichletToNeumann4D
+open P0EFTJanusMappingTorusScalarGraphPoissonFromDirichletResolvent4D
 open P0EFTJanusMappingTorusScalarGraphKreinResolventFormula4D
 open P0EFTJanusMappingTorusScalarGraphBoundaryTripleFamily4D
 open P0EFTJanusMappingTorusScalarGraphFiniteBoundaryValueLift4D
@@ -42,6 +43,12 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
   [FiniteDimensional Real Trace]
+
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {parameters : Set Real}
 
 /-- Coercive-surjective Dirichlet data at every parameter of a finite-boundary
 spectral set. -/

@@ -22,6 +22,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarOperatorGraphCompletion4D
 open P0EFTJanusMappingTorusScalarClosedGraphRealization4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
+open P0EFTJanusMappingTorusScalarLagrangianVariationalEigenprinciple4D
 open P0EFTJanusMappingTorusScalarLagrangianFiniteSpectralPacket4D
 
 universe u v w z
@@ -33,6 +34,13 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w} {Mode : Type z}
   [NormedAddCommGroup Trace] [InnerProductSpace Real Trace]
   [CompleteSpace Trace]
   [Fintype Mode] [DecidableEq Mode]
+
+variable
+  {data : CanonicalScalarHilbertGreenSystem
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {hClosable : CanonicalScalarGraphClosable data}
+  {traceBound : HasCanonicalScalarHilbertBoundaryGraphBound data}
+  {condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace}
 
 namespace CanonicalScalarFiniteSpectralPacket
 
@@ -58,127 +66,127 @@ def positiveModes
 def morseIndex
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) : Nat :=
-  packet.negativeModes.card
+  (negativeModes packet).card
 
 /-- Finite nullity. -/
 def nullity
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) : Nat :=
-  packet.zeroModes.card
+  (zeroModes packet).card
 
 /-- Number of positive packet modes. -/
 def positiveIndex
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) : Nat :=
-  packet.positiveModes.card
+  (positiveModes packet).card
 
 @[simp] theorem mem_negativeModes
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (mode : Mode) :
-    mode ∈ packet.negativeModes ↔ packet.eigenvalue mode < 0 := by
+    mode ∈ negativeModes packet ↔ packet.eigenvalue mode < 0 := by
   simp [negativeModes]
 
 @[simp] theorem mem_zeroModes
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (mode : Mode) :
-    mode ∈ packet.zeroModes ↔ packet.eigenvalue mode = 0 := by
+    mode ∈ zeroModes packet ↔ packet.eigenvalue mode = 0 := by
   simp [zeroModes]
 
 @[simp] theorem mem_positiveModes
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (mode : Mode) :
-    mode ∈ packet.positiveModes ↔ 0 < packet.eigenvalue mode := by
+    mode ∈ positiveModes packet ↔ 0 < packet.eigenvalue mode := by
   simp [positiveModes]
 
 /-- The three sign sectors partition the finite mode set. -/
 theorem negative_zero_positive_card
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) :
-    packet.morseIndex + packet.nullity + packet.positiveIndex = Fintype.card Mode := by
+    morseIndex packet + nullity packet + positiveIndex packet = Fintype.card Mode := by
   classical
   unfold morseIndex nullity positiveIndex negativeModes zeroModes positiveModes
   have hPartition : Finset.univ =
-      (Finset.univ.filter fun mode => packet.eigenvalue mode < 0) ∪
-      ((Finset.univ.filter fun mode => packet.eigenvalue mode = 0) ∪
-       (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode)) := by
+      ((Finset.univ.filter fun mode => packet.eigenvalue mode < 0) ∪
+       (Finset.univ.filter fun mode => packet.eigenvalue mode = 0)) ∪
+      (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode) := by
     ext mode
     simp only [Finset.mem_univ, Finset.mem_union, Finset.mem_filter, true_and,
       true_iff]
-    exact lt_trichotomy (packet.eigenvalue mode) 0 |>.imp
-      (fun h => Or.inl h)
-      (fun h => Or.inr (Or.inl h))
-      (fun h => Or.inr (Or.inr h))
+    rcases lt_trichotomy (packet.eigenvalue mode) 0 with h | h | h
+    · exact Or.inl (Or.inl h)
+    · exact Or.inl (Or.inr h)
+    · exact Or.inr h
   have hPairwise₁ : Disjoint
       (Finset.univ.filter fun mode => packet.eigenvalue mode < 0)
       (Finset.univ.filter fun mode => packet.eigenvalue mode = 0) := by
-    simp [Finset.disjoint_left]
+    rw [Finset.disjoint_left]
+    intro mode hNegative hZero
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hNegative hZero
+    linarith
   have hPairwise₂ : Disjoint
       (Finset.univ.filter fun mode => packet.eigenvalue mode < 0)
       (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode) := by
-    simp [Finset.disjoint_left]
+    rw [Finset.disjoint_left]
+    intro mode hNegative hPositive
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hNegative hPositive
+    linarith
   have hPairwise₃ : Disjoint
       (Finset.univ.filter fun mode => packet.eigenvalue mode = 0)
       (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode) := by
-    simp [Finset.disjoint_left]
-  rw [← Finset.card_univ, hPartition,
-    Finset.card_union (hPairwise₁.mono_right Finset.le_sup_left),
-    Finset.card_union hPairwise₃]
-  simp only [Nat.add_assoc]
+    rw [Finset.disjoint_left]
+    intro mode hZero hPositive
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hZero hPositive
+    linarith
+  have hPairwiseUnion : Disjoint
+      ((Finset.univ.filter fun mode => packet.eigenvalue mode < 0) ∪
+       (Finset.univ.filter fun mode => packet.eigenvalue mode = 0))
+      (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode) := by
+    rw [Finset.disjoint_union_left]
+    exact ⟨hPairwise₂, hPairwise₃⟩
+  calc
+    (Finset.univ.filter fun mode => packet.eigenvalue mode < 0).card +
+          (Finset.univ.filter fun mode => packet.eigenvalue mode = 0).card +
+        (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode).card =
+      (((Finset.univ.filter fun mode => packet.eigenvalue mode < 0) ∪
+          (Finset.univ.filter fun mode => packet.eigenvalue mode = 0)) ∪
+        (Finset.univ.filter fun mode => 0 < packet.eigenvalue mode)).card := by
+          rw [Finset.card_union_of_disjoint hPairwiseUnion,
+            Finset.card_union_of_disjoint hPairwise₁]
+    _ = Finset.univ.card := congrArg Finset.card hPartition.symm
+    _ = Fintype.card Mode := Finset.card_univ
 
 /-- Morse index zero exactly when all packet eigenvalues are nonnegative. -/
 theorem morseIndex_eq_zero_iff
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) :
-    packet.morseIndex = 0 ↔ ∀ mode, 0 ≤ packet.eigenvalue mode := by
-  unfold morseIndex
-  rw [Finset.card_eq_zero]
-  constructor
-  · intro hEmpty mode
-    by_contra hNegative
-    have hMem : mode ∈ packet.negativeModes := by
-      rw [packet.mem_negativeModes]
-      linarith
-    simpa [hEmpty] using hMem
-  · intro hNonnegative
-    apply Finset.eq_empty_iff_forall_not_mem.mpr
-    intro mode hMem
-    have hNegative := (packet.mem_negativeModes mode).1 hMem
-    linarith [hNonnegative mode]
+    morseIndex packet = 0 ↔ ∀ mode, 0 ≤ packet.eigenvalue mode := by
+  classical
+  simp [morseIndex, negativeModes]
 
 /-- Nullity zero exactly when all packet eigenvalues are nonzero. -/
 theorem nullity_eq_zero_iff
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) :
-    packet.nullity = 0 ↔ ∀ mode, packet.eigenvalue mode ≠ 0 := by
-  unfold nullity
-  rw [Finset.card_eq_zero]
-  constructor
-  · intro hEmpty mode hZero
-    have hMem : mode ∈ packet.zeroModes := by
-      rw [packet.mem_zeroModes]
-      exact hZero
-    simpa [hEmpty] using hMem
-  · intro hNonzero
-    apply Finset.eq_empty_iff_forall_not_mem.mpr
-    intro mode hMem
-    exact hNonzero mode ((packet.mem_zeroModes mode).1 hMem)
+    nullity packet = 0 ↔ ∀ mode, packet.eigenvalue mode ≠ 0 := by
+  classical
+  simp [nullity, zeroModes]
 
 /-- Nonnegative packet spectrum gives a nonnegative Hessian on the entire
 packet. -/
 theorem quadratic_nonnegative_of_morseIndex_zero
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
-    (hMorse : packet.morseIndex = 0)
+    (hMorse : morseIndex packet = 0)
     (coefficient : Mode → Real) :
     0 ≤ canonicalScalarClosedLagrangianQuadraticFunctional
       data hClosable traceBound condition (packet.field coefficient) := by
   rw [packet.quadratic_eq_weighted_sum]
   apply Finset.sum_nonneg
   intro mode _
-  exact mul_nonneg ((packet.morseIndex_eq_zero_iff).1 hMorse mode)
+  exact mul_nonneg ((morseIndex_eq_zero_iff packet).1 hMorse mode)
     (sq_nonneg _)
 
 /-- Strictly positive packet spectrum gives positive Hessian for every nonzero
@@ -206,13 +214,13 @@ theorem quadratic_positive_of_all_positive
 theorem negative_direction_of_mem_negativeModes
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
-    (mode : Mode) (hMode : mode ∈ packet.negativeModes) :
+    (mode : Mode) (hMode : mode ∈ negativeModes packet) :
     canonicalScalarClosedLagrangianQuadraticFunctional
         data hClosable traceBound condition
         (packet.field (fun currentMode => if currentMode = mode then 1 else 0)) < 0 := by
   rw [packet.quadratic_eq_weighted_sum]
   classical
-  simp [packet.mem_negativeModes.mp hMode]
+  simp [(mem_negativeModes packet mode).mp hMode]
 
 /-- Two-sector shifted even eigenvalue. -/
 def evenShiftedEigenvalue
@@ -233,8 +241,8 @@ def twoSectorMorseIndex
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (coupling : Real) : Nat :=
-  (Finset.univ.filter fun mode => packet.evenShiftedEigenvalue coupling mode < 0).card +
-  (Finset.univ.filter fun mode => packet.oddShiftedEigenvalue coupling mode < 0).card
+  (Finset.univ.filter fun mode => evenShiftedEigenvalue packet coupling mode < 0).card +
+  (Finset.univ.filter fun mode => oddShiftedEigenvalue packet coupling mode < 0).card
 
 /-- Vanishing two-sector Morse index is equivalent to nonnegativity of both
 shifted sectors. -/
@@ -242,50 +250,23 @@ theorem twoSectorMorseIndex_eq_zero_iff
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode)
     (coupling : Real) :
-    packet.twoSectorMorseIndex coupling = 0 ↔
+    twoSectorMorseIndex packet coupling = 0 ↔
       (∀ mode, 0 ≤ packet.eigenvalue mode + coupling) ∧
       (∀ mode, 0 ≤ packet.eigenvalue mode - coupling) := by
-  unfold twoSectorMorseIndex evenShiftedEigenvalue oddShiftedEigenvalue
-  rw [Nat.add_eq_zero]
-  constructor
-  · rintro ⟨hEven, hOdd⟩
-    rw [Finset.card_eq_zero] at hEven hOdd
-    constructor
-    · intro mode
-      by_contra hNegative
-      have hMem : mode ∈ Finset.univ.filter
-          (fun mode => packet.eigenvalue mode + coupling < 0) := by
-        simp
-        linarith
-      simpa [hEven] using hMem
-    · intro mode
-      by_contra hNegative
-      have hMem : mode ∈ Finset.univ.filter
-          (fun mode => packet.eigenvalue mode - coupling < 0) := by
-        simp
-        linarith
-      simpa [hOdd] using hMem
-  · rintro ⟨hEven, hOdd⟩
-    constructor <;> rw [Finset.card_eq_zero]
-    · apply Finset.eq_empty_iff_forall_not_mem.mpr
-      intro mode hMem
-      have hNegative : packet.eigenvalue mode + coupling < 0 := by simpa using hMem
-      linarith [hEven mode]
-    · apply Finset.eq_empty_iff_forall_not_mem.mpr
-      intro mode hMem
-      have hNegative : packet.eigenvalue mode - coupling < 0 := by simpa using hMem
-      linarith [hOdd mode]
+  classical
+  simp [twoSectorMorseIndex, evenShiftedEigenvalue, oddShiftedEigenvalue,
+    Nat.add_eq_zero_iff]
 
 /-- Finite Morse-index certificate. -/
 theorem canonicalScalarFiniteMorseIndex_certificate
     (packet : CanonicalScalarFiniteSpectralPacket
       data hClosable traceBound condition Mode) :
-    packet.morseIndex + packet.nullity + packet.positiveIndex = Fintype.card Mode ∧
-      (packet.morseIndex = 0 ↔ ∀ mode, 0 ≤ packet.eigenvalue mode) ∧
-      (packet.nullity = 0 ↔ ∀ mode, packet.eigenvalue mode ≠ 0) :=
-  ⟨packet.negative_zero_positive_card,
-    packet.morseIndex_eq_zero_iff,
-    packet.nullity_eq_zero_iff⟩
+    morseIndex packet + nullity packet + positiveIndex packet = Fintype.card Mode ∧
+      (morseIndex packet = 0 ↔ ∀ mode, 0 ≤ packet.eigenvalue mode) ∧
+      (nullity packet = 0 ↔ ∀ mode, packet.eigenvalue mode ≠ 0) :=
+  ⟨negative_zero_positive_card packet,
+    morseIndex_eq_zero_iff packet,
+    nullity_eq_zero_iff packet⟩
 
 end CanonicalScalarFiniteSpectralPacket
 

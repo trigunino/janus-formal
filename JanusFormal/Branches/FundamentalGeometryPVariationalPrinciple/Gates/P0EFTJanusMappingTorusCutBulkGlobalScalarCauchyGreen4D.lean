@@ -25,13 +25,17 @@ namespace P0EFTJanusMappingTorusCutBulkGlobalScalarCauchyGreen4D
 set_option autoImplicit false
 noncomputable section
 
+open scoped Manifold ContDiff
 open MeasureTheory Set Topology
 open P0EFTJanusGaussianNormalEmbeddedHypersurface
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCutThroatBoundaryDoubleCover4D
 open P0EFTJanusMappingTorusCutThroatSmoothFiniteCollar4D
 open P0EFTJanusMappingTorusCutBoundaryScalarCauchyTrace4D
+open P0EFTJanusMappingTorusCutBoundaryFirstSheetCurrentBridge4D
 open P0EFTJanusMappingTorusCutBulkGlobalChartedSpace4D
 open P0EFTJanusMappingTorusCutBoundaryGlobalHomeomorph4D
 open P0EFTJanusMappingTorusCutBulkGlobalBoundaryMeasure4D
@@ -131,11 +135,12 @@ theorem cutBulkGlobalOrientedBoundaryCurrent_eq_two_mul_cauchyPairing
     cutBulkGlobalOrientedScalarCurrentIntegral period hPeriod field test =
       2 * cutBulkGlobalFirstSheetScalarCauchyPairing
         period hPeriod field test := by
-  rw [cutBulkGlobalOrientedScalarCurrentIntegral_eq_two_mul_first,
-    ← cutBulkGlobalFirstSheetScalarCauchyPairing_eq_current]
-  congr 2
+  rw [cutBulkGlobalOrientedScalarCurrentIntegral_eq_two_mul_first]
+  congr 1
   unfold P0EFTJanusMappingTorusCutBoundaryOrientedFluxSign4D.orientedCutLiftFlux
-  simp [NormalOrientation.sign]
+  simp only [NormalOrientation.sign, one_mul]
+  exact (cutBulkGlobalFirstSheetScalarCauchyPairing_eq_current
+    period hPeriod field test).symm
 
 /-- Physical Green--Stokes identity in concrete Cauchy variables. -/
 theorem cutBulkCanonicalDivergenceMeasure_eq_neg_cauchyPairing
@@ -165,15 +170,10 @@ theorem cutBulkGlobalFirstSheetScalarCauchyPairing_eq_latitude
   apply integral_congr_ae
   exact Filter.Eventually.of_forall fun base => by
     letI := cutBulkGlobalChartedSpace period hPeriod
-    change
-      cutBoundaryScalarValueTrace period hPeriod field
-            (canonicalLatitudeCutBoundaryFirstLift period hPeriod base) *
-          cutBoundaryScalarNormalTrace period hPeriod test
-            (canonicalLatitudeCutBoundaryFirstLift period hPeriod base) -
-        cutBoundaryScalarNormalTrace period hPeriod field
-            (canonicalLatitudeCutBoundaryFirstLift period hPeriod base) *
-          cutBoundaryScalarValueTrace period hPeriod test
-            (canonicalLatitudeCutBoundaryFirstLift period hPeriod base) = _
+    simp only [cutBulkGlobalScalarValueTrace,
+      cutBulkGlobalScalarNormalTrace,
+      canonicalLatitudeCutBulkGlobalBoundaryFirstLift,
+      Homeomorph.symm_apply_apply]
     rw [cutBoundaryScalarValueTrace_firstLift,
       cutBoundaryScalarNormalTrace_firstLift,
       cutBoundaryScalarNormalTrace_firstLift,

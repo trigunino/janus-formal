@@ -123,6 +123,7 @@ theorem euler_eq_zero_iff
     · have hFirst := congrArg Prod.fst hEuler
       simpa [reducedEuler, hComplement] using hFirst
   · rintro ⟨rfl, hReduced⟩
+    change problem.euler (problem.lift kernel) = 0
     rw [problem.euler_lift]
     simp [hReduced]
 

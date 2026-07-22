@@ -27,6 +27,7 @@ open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosure4D
+open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
@@ -36,7 +37,7 @@ open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 local instance canonicalLatitudeBaseMeasureFinite :
     IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
@@ -193,7 +194,8 @@ def boundaryGraphBound
 def MinimalCoreDense
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared) : Prop :=
-  green.core.MinimalCoreDense
+  P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore.MinimalCoreDense
+    green.core
 
 /-- Surjectivity theorem for the completed physical Cauchy trace. -/
 def CompletedBoundaryTraceSurjective
@@ -232,10 +234,11 @@ def triple
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :
     CanonicalScalarCompletedBoundaryTripleData
-      green.core (inputs.traceBound green) where
+      green.core (traceBound period hPeriod green inputs) where
   boundary_surjective := inputs.completedTraceSurjective
   inclusion_injective :=
-    green.core.graphInclusion_injective_of_minimal_dense inputs.minimalDense
+    P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore.graphInclusion_injective_of_minimal_dense
+      green.core inputs.minimalDense
 
 /-- Completed maximal physical domain. -/
 abbrev MaximalDomain
@@ -249,26 +252,26 @@ def boundaryTrace
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod) :
-    inputs.MaximalDomain green →L[Real]
+    MaximalDomain period hPeriod green inputs →L[Real]
       CanonicalScalarHilbertBoundaryDatum (Trace := BoundaryL2 period) :=
   canonicalScalarGreenCoreCompletedBoundaryTrace
-    green.core (inputs.traceBound green)
+    green.core (traceBound period hPeriod green inputs)
 
 /-- Exact completed physical Green identity. -/
 theorem greenIdentity
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (inputs : green.CompletedBoundaryTripleInputs period hPeriod)
-    (first second : inputs.MaximalDomain green) :
+    (first second : MaximalDomain period hPeriod green inputs) :
     inner Real (canonicalScalarGreenCoreGraphOperator green.core first)
           (canonicalScalarGreenCoreGraphInclusion green.core second) -
         inner Real (canonicalScalarGreenCoreGraphInclusion green.core first)
           (canonicalScalarGreenCoreGraphOperator green.core second) =
       2 * canonicalScalarHilbertBoundarySymplecticForm
-        (inputs.boundaryTrace green first)
-        (inputs.boundaryTrace green second) :=
+        (boundaryTrace period hPeriod green inputs first)
+        (boundaryTrace period hPeriod green inputs second) :=
   canonicalScalarGreenCoreCompletedGreenIdentity
-    green.core (inputs.traceBound green) first second
+    green.core (traceBound period hPeriod green inputs) first second
 
 /-- Correct physical boundary-triple certificate. -/
 theorem certificate
@@ -278,19 +281,19 @@ theorem certificate
     DenseRange (canonicalScalarGreenCoreToGraph green.core) ∧
       Function.Injective
         (canonicalScalarGreenCoreGraphInclusion green.core) ∧
-      Function.Surjective (inputs.boundaryTrace green) ∧
-      (∀ first second : inputs.MaximalDomain green,
+      Function.Surjective (boundaryTrace period hPeriod green inputs) ∧
+      (∀ first second : MaximalDomain period hPeriod green inputs,
         inner Real (canonicalScalarGreenCoreGraphOperator green.core first)
               (canonicalScalarGreenCoreGraphInclusion green.core second) -
             inner Real (canonicalScalarGreenCoreGraphInclusion green.core first)
               (canonicalScalarGreenCoreGraphOperator green.core second) =
           2 * canonicalScalarHilbertBoundarySymplecticForm
-            (inputs.boundaryTrace green first)
-            (inputs.boundaryTrace green second)) :=
+            (boundaryTrace period hPeriod green inputs first)
+            (boundaryTrace period hPeriod green inputs second)) :=
   ⟨canonicalScalarGreenCoreToGraph_denseRange green.core,
-    (inputs.triple green).inclusion_injective,
+    (triple period hPeriod green inputs).inclusion_injective,
     inputs.completedTraceSurjective,
-    inputs.greenIdentity green⟩
+    greenIdentity period hPeriod green inputs⟩
 
 end CompletedBoundaryTripleInputs
 

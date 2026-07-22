@@ -44,7 +44,8 @@ theorem canonicalScalarPitchforkPotential_hasDerivAt
   convert ((((hasDerivAt_const (x := amplitude) ((1 / 2 : Real) * parameter)).mul
       ((hasDerivAt_id amplitude).pow 2)).add
     ((hasDerivAt_const (x := amplitude) ((1 / 4 : Real) * cubic)).mul
-      ((hasDerivAt_id amplitude).pow 4)))) using 1 <;> ring
+      ((hasDerivAt_id amplitude).pow 4)))) using 1
+  all_goals first | rfl | (simp [id] <;> ring) | ring
 
 /-- Algebraic Hessian of the quartic potential. -/
 def canonicalScalarPitchforkHessian
@@ -63,7 +64,8 @@ theorem canonicalScalarPitchforkReducedEuler_hasDerivAt
   convert ((hasDerivAt_id amplitude).mul
     ((hasDerivAt_const (x := amplitude) parameter).add
       ((hasDerivAt_const (x := amplitude) cubic).mul
-        ((hasDerivAt_id amplitude).pow 2)))) using 1 <;> ring
+        ((hasDerivAt_id amplitude).pow 2)))) using 1
+  all_goals first | rfl | (simp [id] <;> ring) | ring
 
 /-- The trivial branch Hessian is the control parameter. -/
 @[simp] theorem canonicalScalarPitchforkHessian_zero
@@ -146,7 +148,7 @@ theorem canonicalScalarPitchforkPotential_of_nonzero_critical
   have hSquare := (canonicalScalarPitchforkReducedEuler_nonzero_iff_sq
     cubic parameter amplitude hCubic hAmplitude).1 hCritical
   unfold canonicalScalarPitchforkPotential
-  rw [hSquare]
+  rw [show amplitude ^ 4 = (amplitude ^ 2) ^ 2 by ring, hSquare]
   field_simp
   ring
 
@@ -168,7 +170,8 @@ theorem canonicalScalarPitchforkPotential_sqrt_lt_zero
       cubic parameter _ hCubic.ne' hAmplitude hCritical]
   simp [canonicalScalarPitchforkPotential]
   have hSquare : 0 < parameter ^ 2 := sq_pos_of_ne_zero (ne_of_lt hParameter)
-  positivity
+  exact div_neg_of_neg_of_pos (neg_neg_of_pos hSquare)
+    (mul_pos (by norm_num) hCubic)
 
 /-- Pitchfork-potential certificate. -/
 theorem canonicalScalarPitchforkPotential_certificate
