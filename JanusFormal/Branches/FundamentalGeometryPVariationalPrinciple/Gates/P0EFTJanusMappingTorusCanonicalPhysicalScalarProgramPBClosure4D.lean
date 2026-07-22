@@ -9,6 +9,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeMinimalCutoffL2Convergence4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfiles4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetNormalCalculus4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfileIntegrability4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1TraceCoareaClosed4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
@@ -25,6 +26,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCompatibilityGreenCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCompatibilityGreenCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCompatibilityBridge4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetBoundaryCoreLp4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
@@ -46,6 +48,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyExtensionComponentBounds4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyExtensionH1EulerBounds4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetProfileL2Bound4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerProductRealization4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGreenCoreRegularityFactorization4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetBoundaryTripleConstruction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEllipticBoundaryTriple4D
@@ -55,6 +58,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetClosedBoundaryTriple4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarPDEBoundaryClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetPDEClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetReducedPDEClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetFinalPDEClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetCompletedBoundaryDomains4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
@@ -81,6 +86,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCutoffClosedAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarPDEAnalyticClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFinalPDEAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetCoerciveCompactClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetPostCoareaCompact4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarReducedAnalyticFrontier4D
@@ -96,31 +102,28 @@ The preferred path now follows the actual analytic regularity hierarchy:
 
 1. Euler overlap compatibility constructs the continuous global bulk operator;
 2. the bulk `L²` adjunction defect is reduced to the global divergence integral;
-3. the concrete value and normal Cauchy traces are realized in boundary `L²`;
-4. spherical coarea gives the physical value-trace estimate unconditionally;
-5. the local profiles `η(ν)` and `ν η(ν)` realize the exact Cauchy jet, including
-   its first and second normal derivatives;
-6. the fixed profile moments and a product-coordinate Euler estimate provide the
-   graph bound of the explicit Cauchy lift and the surjective completed trace;
-7. the even shrinking profiles descend globally, annihilate both Cauchy traces
-   and converge strongly in bulk `L²`, so the minimal core is dense;
-8. the geometric energy inequality gives Gårding, while higher elliptic
-   regularity gives the normal trace bound;
-9. the four preceding PDE layers assemble the completed physical boundary
-   triple in `CanonicalPhysicalScalarCauchyJetPDEData`;
-10. closed Dirichlet, Neumann and Robin Lagrangian domains follow;
-11. smooth approximation of Hilbert adjoint pairs gives actual self-adjointness;
-12. coercivity of one shifted form gives the reference resolvent and lower bound
-    by Lax--Milgram;
-13. compact approximations of `H¹ -> L²` give Rellich compactness;
-14. the Fredholm alternative, finite multiplicity, spectral completeness and
-    the lower spectral bound follow directly on the completed boundary triple.
+3. spherical coarea closes the value trace and the fixed Cauchy profile moments;
+4. `η(ν)` and `ν η(ν)` realize the exact Cauchy jet and its first two normal
+   derivatives;
+5. the global Euler residual pulled back by product coarea gives the canonical
+   local residual realization;
+6. one product estimate for that residual completes the graph bound and the
+   bounded right inverse of the completed Cauchy trace;
+7. global shrinking cutoffs annihilate both traces and converge strongly in
+   bulk `L²`, so the minimal core is dense;
+8. the geometric energy inequality gives Gårding, and higher elliptic regularity
+   gives the normal trace bound;
+9. `CanonicalPhysicalScalarCauchyJetFinalPDEData` assembles the genuine completed
+   physical boundary triple from these minimal PDE inputs;
+10. the remaining adjoint, coercivity and Rellich inputs give actual
+    self-adjointness, compact resolvent, Fredholm alternative, finite
+    multiplicity and the lower spectral bound.
 
 The preferred endpoints are
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetPDEClosure4D` for the
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetFinalPDEClosure4D` for the
 boundary theory and
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarPDEAnalyticClosure4D` for the full
-self-adjoint compact spectral theory.
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarFinalPDEAnalyticClosure4D` for the
+full self-adjoint compact spectral theory.
 -/
 
 namespace JanusFormal
