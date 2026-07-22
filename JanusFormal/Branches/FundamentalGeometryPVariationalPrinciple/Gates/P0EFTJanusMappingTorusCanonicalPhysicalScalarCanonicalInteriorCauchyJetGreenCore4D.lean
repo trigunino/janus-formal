@@ -1,16 +1,19 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 
 /-!
 # Canonical Cauchy-jet Green core from the open fundamental strip
 
-The source of the dense physical parametrization is now fixed to round `S³`
-times the interior of one fundamental time interval.  Its measure is explicit,
-open-positive and measure-preserving by theorem.  Consequently the only
-remaining full-support input is the topological density of this concrete map.
+The source of the physical parametrization is fixed to round `S³` times the
+interior of one fundamental time interval.  Its measure is explicit,
+open-positive and measure-preserving, and its physical image is now proved
+dense.  Thus physical full support and Euler `L²` faithfulness are theorems.
 
-This file hides the generic source type and source measure from the canonical
-Green-core interface.
+The remaining Green-core inputs are only:
+
+* overlap compatibility of the physical Euler residual;
+* density of the canonical smooth periodic and antiperiodic boundary cores;
+* the global Euler-skew/divergence integral identity.
 -/
 
 namespace JanusFormal
@@ -26,6 +29,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerGreenL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
+open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
@@ -37,11 +41,9 @@ private abbrev ValueCore :=
 private abbrev NormalCore :=
   CanonicalLatitudeSmoothAntiperiodicNormalCore period
 
-/-- Canonical Green-core data with the physical measure source fixed to the open
-fundamental strip. -/
+/-- Canonical Green-core data after closing physical full support. -/
 structure CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
     (massSquared : Real) where
-  interiorDenseRange : CanonicalLorentzInteriorDenseRangeData period hPeriod
   euler : CanonicalPhysicalScalarEulerCompatibilityOnlyData
     period hPeriod massSquared
   boundaryDensity : CanonicalLatitudeSmoothBoundaryCoreDensityData period
@@ -66,7 +68,9 @@ def toDenseParametrizedCauchyJetData
       (CanonicalLorentzInteriorParameter period)
       (canonicalLorentzInteriorMeasure period)
       massSquared where
-  parameterization := data.interiorDenseRange.toEulerDenseParametrizationData
+  parameterization :=
+    (canonicalLorentzInteriorDenseRangeData period hPeriod)
+      |>.toEulerDenseParametrizationData
   euler := data.euler
   boundaryDensity := data.boundaryDensity
   integral_eq_divergence := data.integral_eq_divergence
@@ -120,7 +124,7 @@ theorem certificate
             (canonicalLatitudeSmoothPeriodicValueEmbedding period)
             (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)
             boundary) :=
-  ⟨data.interiorDenseRange.denseRange,
+  ⟨canonicalLorentzInteriorPhysicalMap_denseRange period hPeriod,
     data.physicalMeasureOpenPositive,
     data.toCanonicalCauchyJetCompatibilityData.boundaryTrace_denseRange,
     data.toCanonicalCauchyJetCompatibilityData.cauchyTrace_extension⟩
