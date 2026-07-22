@@ -1,0 +1,158 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
+
+/-!
+# Physical scalar energy identity with a scalar zeroth-order remainder
+
+For a Klein--Gordon type scalar operator, the zeroth-order part of the first-jet
+energy identity is scalar multiplication on physical bulk `L²`.  Supplying an
+arbitrary bounded operator is therefore unnecessary.
+
+This file packages the concrete identity
+
+`E₁(u) = σ <Au,u> + c ‖u‖²`,
+
+with `|σ| = 1`.  It constructs the former exact-energy package using
+`c • id`, so the complete Gårding and graph-elliptic estimates follow with
+zeroth-order constant `|c|`.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
+
+set_option autoImplicit false
+noncomputable section
+
+open Set Topology
+open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
+
+variable (period : Real) (hPeriod : period ≠ 0)
+
+private abbrev BulkL2 :=
+  CanonicalPhysicalBulkL2 period hPeriod
+
+namespace CanonicalPhysicalScalarFirstSheetGreenCoreData
+
+/-- Exact first-jet energy identity with a scalar zeroth-order remainder. -/
+structure ScalarRemainderEnergyIdentityData
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared) where
+  pairingSign : Real
+  pairingSign_abs : |pairingSign| = 1
+  zerothCoefficient : Real
+  energy_identity : ∀ field : SmoothQuotientField period hPeriod Real,
+    canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field =
+      pairingSign *
+          inner Real (green.core.operator field)
+            (green.core.inclusion field) +
+        zerothCoefficient * ‖green.core.inclusion field‖ ^ 2
+
+namespace ScalarRemainderEnergyIdentityData
+
+/-- Scalar multiplication on physical bulk `L²`. -/
+def zerothOrderOperator
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :
+    BulkL2 period hPeriod →L[Real] BulkL2 period hPeriod :=
+  identity.zerothCoefficient • ContinuousLinearMap.id Real (BulkL2 period hPeriod)
+
+/-- Quadratic form of the scalar multiplication operator. -/
+theorem zerothOrderOperator_pairing
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod)
+    (field : SmoothQuotientField period hPeriod Real) :
+    inner Real
+        (identity.zerothOrderOperator green (green.core.inclusion field))
+        (green.core.inclusion field) =
+      identity.zerothCoefficient * ‖green.core.inclusion field‖ ^ 2 := by
+  simp [zerothOrderOperator, real_inner_smul_left,
+    real_inner_self_eq_norm_sq]
+
+/-- Conversion to the general exact-energy identity package. -/
+def toExactEnergyGardingIdentityData
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :
+    green.ExactEnergyGardingIdentityData period hPeriod where
+  pairingSign := identity.pairingSign
+  pairingSign_abs := identity.pairingSign_abs
+  zerothOrderOperator := identity.zerothOrderOperator green
+  energy_identity := by
+    intro field
+    rw [identity.zerothOrderOperator_pairing green field]
+    exact identity.energy_identity field
+
+/-- Automatic Gårding package. -/
+def toAutomaticEnergyGardingData
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :=
+  (identity.toExactEnergyGardingIdentityData green)
+    |>.toAutomaticEnergyGardingData green
+
+/-- Physical graph-elliptic estimate. -/
+def toGraphEllipticEstimate
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :=
+  (identity.toExactEnergyGardingIdentityData green)
+    |>.toGraphEllipticEstimate green
+
+/-- Direct scalar-remainder Gårding estimate. -/
+theorem componentEnergy_le_euler_pairing
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod)
+    (field : SmoothQuotientField period hPeriod Real) :
+    canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field ≤
+      |inner Real (green.core.operator field)
+          (green.core.inclusion field)| +
+        |identity.zerothCoefficient| *
+          ‖green.core.inclusion field‖ ^ 2 := by
+  rw [identity.energy_identity]
+  let pairing := inner Real (green.core.operator field)
+    (green.core.inclusion field)
+  have hSign : |identity.pairingSign * pairing| = |pairing| := by
+    rw [abs_mul, identity.pairingSign_abs, one_mul]
+  calc
+    identity.pairingSign * pairing +
+        identity.zerothCoefficient * ‖green.core.inclusion field‖ ^ 2 ≤
+      |identity.pairingSign * pairing| +
+        |identity.zerothCoefficient * ‖green.core.inclusion field‖ ^ 2| :=
+      add_le_add (le_abs_self _) (le_abs_self _)
+    _ = |pairing| + |identity.zerothCoefficient| *
+        ‖green.core.inclusion field‖ ^ 2 := by
+      rw [hSign, abs_mul, abs_of_nonneg (sq_nonneg _)]
+
+/-- Scalar-remainder energy certificate. -/
+theorem certificate
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :
+    (∀ field : SmoothQuotientField period hPeriod Real,
+      canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field =
+        identity.pairingSign *
+            inner Real (green.core.operator field)
+              (green.core.inclusion field) +
+          identity.zerothCoefficient * ‖green.core.inclusion field‖ ^ 2) ∧
+      (∀ field : SmoothQuotientField period hPeriod Real,
+        canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field ≤
+          |inner Real (green.core.operator field)
+              (green.core.inclusion field)| +
+            |identity.zerothCoefficient| *
+              ‖green.core.inclusion field‖ ^ 2) :=
+  ⟨identity.energy_identity,
+    identity.componentEnergy_le_euler_pairing green⟩
+
+end ScalarRemainderEnergyIdentityData
+
+end CanonicalPhysicalScalarFirstSheetGreenCoreData
+
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
+end JanusFormal
