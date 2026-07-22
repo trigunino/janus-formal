@@ -23,6 +23,9 @@ adjoint set.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -220,5 +223,5 @@ theorem actualAdjoint_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleActualAdjoint4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

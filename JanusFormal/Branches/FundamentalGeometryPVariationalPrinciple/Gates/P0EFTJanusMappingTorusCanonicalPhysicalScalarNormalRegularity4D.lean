@@ -16,6 +16,9 @@ component of the completed Cauchy trace.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalRegularity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalRegularity4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -30,7 +33,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 universe z
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type z}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -90,7 +93,7 @@ theorem normalGraphConstant_nonnegative
       period hPeriod massSquared)
     (regularity : green.NormalRegularityData
       period hPeriod (Regularity := Regularity)) :
-    0 ≤ regularity.normalGraphConstant green :=
+    0 ≤ regularity.normalGraphConstant period hPeriod green :=
   mul_nonneg (norm_nonneg _) regularity.nonnegative
 
 /-- Higher regularity gives the linear normal graph estimate. -/
@@ -100,8 +103,8 @@ def toNormalGraphEstimate
     (regularity : green.NormalRegularityData
       period hPeriod (Regularity := Regularity)) :
     green.NormalGraphEstimate period hPeriod where
-  constant := regularity.normalGraphConstant green
-  nonnegative := regularity.normalGraphConstant_nonnegative green
+  constant := regularity.normalGraphConstant period hPeriod green
+  nonnegative := regularity.normalGraphConstant_nonnegative period hPeriod green
   bound := by
     intro field
     rw [← regularity.normal_agrees field]
@@ -114,8 +117,9 @@ def toNormalGraphEstimate
           (regularity.constant *
             ‖canonicalScalarGreenCoreToGraph green.core field‖) :=
         mul_le_mul_of_nonneg_left
-          (regularity.regularity_norm_le_graph green field) (norm_nonneg _)
-      _ = regularity.normalGraphConstant green *
+          (regularity.regularity_norm_le_graph period hPeriod green field)
+          (norm_nonneg _)
+      _ = regularity.normalGraphConstant period hPeriod green *
           ‖canonicalScalarGreenCoreToGraph green.core field‖ := by
         unfold normalGraphConstant
         ring
@@ -127,21 +131,28 @@ def toSquaredNormalGraphEstimate
     (regularity : green.NormalRegularityData
       period hPeriod (Regularity := Regularity)) :
     green.SquaredNormalGraphEstimate period hPeriod where
-  constant := regularity.normalGraphConstant green
-  nonnegative := regularity.normalGraphConstant_nonnegative green
+  constant := regularity.normalGraphConstant period hPeriod green
+  nonnegative := regularity.normalGraphConstant_nonnegative period hPeriod green
   bound_sq := by
     intro field
-    have hLinear := (regularity.toNormalGraphEstimate green).bound field
+    have hLinear :=
+      (regularity.toNormalGraphEstimate period hPeriod green).bound field
+    change ‖smoothCanonicalPhysicalScalarFirstSheetNormalL2
+        period hPeriod field‖ ≤
+      regularity.normalGraphConstant period hPeriod green *
+        ‖canonicalScalarGreenCoreToGraph green.core field‖ at hLinear
     have hLeft := norm_nonneg
       (smoothCanonicalPhysicalScalarFirstSheetNormalL2 period hPeriod field)
     have hRight :
-        0 ≤ regularity.normalGraphConstant green *
+        0 ≤ regularity.normalGraphConstant period hPeriod green *
           ‖canonicalScalarGreenCoreToGraph green.core field‖ :=
-      mul_nonneg (regularity.normalGraphConstant_nonnegative green) (norm_nonneg _)
+      mul_nonneg
+        (regularity.normalGraphConstant_nonnegative period hPeriod green)
+        (norm_nonneg _)
     have hSquare :
         ‖smoothCanonicalPhysicalScalarFirstSheetNormalL2
             period hPeriod field‖ ^ 2 ≤
-          (regularity.normalGraphConstant green *
+          (regularity.normalGraphConstant period hPeriod green *
             ‖canonicalScalarGreenCoreToGraph green.core field‖) ^ 2 := by
       nlinarith
     simpa [mul_pow] using hSquare
@@ -163,12 +174,13 @@ theorem completedRegularity_smooth
     (regularity : green.NormalRegularityData
       period hPeriod (Regularity := Regularity))
     (field : SmoothQuotientField period hPeriod Real) :
-    regularity.completedRegularity green
+    regularity.completedRegularity period hPeriod green
         (canonicalScalarGreenCoreToGraph green.core field) =
       regularity.smoothRegularity field :=
   LinearMap.extendOfNorm_eq
     (canonicalScalarGreenCoreToGraph_denseRange green.core)
-    ⟨regularity.constant, regularity.regularity_norm_le_graph green⟩ field
+    ⟨regularity.constant,
+      regularity.regularity_norm_le_graph period hPeriod green⟩ field
 
 /-- Norm estimate for completed higher regularity. -/
 theorem completedRegularity_norm_le
@@ -177,11 +189,12 @@ theorem completedRegularity_norm_le
     (regularity : green.NormalRegularityData
       period hPeriod (Regularity := Regularity))
     (field : CanonicalScalarGreenCoreGraphSpace green.core) :
-    ‖regularity.completedRegularity green field‖ ≤
+    ‖regularity.completedRegularity period hPeriod green field‖ ≤
       regularity.constant * ‖field‖ :=
   LinearMap.norm_extendOfNorm_apply_le
     (canonicalScalarGreenCoreToGraph_denseRange green.core)
-    regularity.constant (regularity.regularity_norm_le_graph green) field
+    regularity.constant
+      (regularity.regularity_norm_le_graph period hPeriod green) field
 
 /-- Normal component of a completed Cauchy trace. -/
 def completedBoundaryNormalTrace
@@ -203,23 +216,30 @@ theorem normalTrace_completedRegularity_eq_completedBoundaryNormalTrace
     (traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound
       green.core)
     (field : CanonicalScalarGreenCoreGraphSpace green.core) :
-    regularity.normalTrace (regularity.completedRegularity green field) =
-      regularity.completedBoundaryNormalTrace green traceBound field := by
+    regularity.normalTrace
+        (regularity.completedRegularity period hPeriod green field) =
+      completedBoundaryNormalTrace period hPeriod green traceBound field := by
   let good : Set (CanonicalScalarGreenCoreGraphSpace green.core) :=
     {candidate |
       regularity.normalTrace
-          (regularity.completedRegularity green candidate) =
-        regularity.completedBoundaryNormalTrace green traceBound candidate}
+          (regularity.completedRegularity period hPeriod green candidate) =
+        completedBoundaryNormalTrace period hPeriod green traceBound candidate}
   have hGoodClosed : IsClosed good := by
     dsimp [good]
     apply isClosed_eq <;> fun_prop
   have hRange : Set.range
       (canonicalScalarGreenCoreToGraph green.core) ⊆ good := by
     rintro candidate ⟨smoothField, rfl⟩
-    rw [regularity.completedRegularity_smooth,
+    change regularity.normalTrace
+        (regularity.completedRegularity period hPeriod green
+          (canonicalScalarGreenCoreToGraph green.core smoothField)) =
+      completedBoundaryNormalTrace period hPeriod green traceBound
+        (canonicalScalarGreenCoreToGraph green.core smoothField)
+    rw [regularity.completedRegularity_smooth period hPeriod green,
       regularity.normal_agrees]
     unfold completedBoundaryNormalTrace
-    rw [canonicalScalarGreenCoreCompletedBoundaryTrace_smooth]
+    rw [ContinuousLinearMap.comp_apply,
+      canonicalScalarGreenCoreCompletedBoundaryTrace_smooth]
     rfl
   have hClosure : closure (Set.range
       (canonicalScalarGreenCoreToGraph green.core)) = Set.univ :=
@@ -239,18 +259,18 @@ theorem certificate
     (∀ field : SmoothQuotientField period hPeriod Real,
       ‖smoothCanonicalPhysicalScalarFirstSheetNormalL2
           period hPeriod field‖ ≤
-        regularity.normalGraphConstant green *
+        regularity.normalGraphConstant period hPeriod green *
           ‖canonicalScalarGreenCoreToGraph green.core field‖) ∧
       (∀ field : CanonicalScalarGreenCoreGraphSpace green.core,
-        ‖regularity.completedRegularity green field‖ ≤
+        ‖regularity.completedRegularity period hPeriod green field‖ ≤
           regularity.constant * ‖field‖) :=
-  ⟨(regularity.toNormalGraphEstimate green).bound,
-    regularity.completedRegularity_norm_le green⟩
+  ⟨(regularity.toNormalGraphEstimate period hPeriod green).bound,
+    regularity.completedRegularity_norm_le period hPeriod green⟩
 
 end NormalRegularityData
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalRegularity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

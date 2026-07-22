@@ -53,6 +53,12 @@ structure CanonicalScalarBoundedSmoothCauchyExtensionData
 
 namespace CanonicalScalarBoundedSmoothCauchyExtensionData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+
+local instance : CompleteSpace (CanonicalScalarGreenCoreGraphSpace core) :=
+  canonicalScalarGreenCoreGraphCompleteSpace core
+
 /-- Dense boundary-core embedding. -/
 def boundaryCoreEmbedding
     (extensionData : CanonicalScalarBoundedSmoothCauchyExtensionData
@@ -137,6 +143,10 @@ theorem completedBoundaryTrace_extension
     apply isClosed_eq <;> fun_prop
   have hRange : Set.range extensionData.boundaryCoreEmbedding ⊆ good := by
     rintro candidate ⟨data, rfl⟩
+    change canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound
+        (extensionData.completedExtension
+          (extensionData.boundaryCoreEmbedding data)) =
+      extensionData.boundaryCoreEmbedding data
     rw [extensionData.completedExtension_core]
     change canonicalScalarGreenCoreCompletedBoundaryTrace core traceBound
         (canonicalScalarGreenCoreToGraph core

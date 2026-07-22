@@ -1,4 +1,5 @@
 import Mathlib.MeasureTheory.Function.ContinuousMapDense
+import Mathlib.Geometry.Manifold.Metrizable
 import Mathlib.Topology.Sequences
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 
@@ -21,7 +22,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped Manifold ContDiff ENNReal
-open MeasureTheory Set Topology Filter
+open MeasureTheory Set Topology Filter TopologicalSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -47,6 +48,10 @@ local instance effectiveQuotientCompactSpace :
     CompactSpace (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotientCompactSpace period hPeriod
 
+local instance effectiveQuotientMetrizableSpace :
+    MetrizableSpace (EffectiveQuotient period hPeriod) :=
+  Manifold.metrizableSpace coverModelWithCorners _
+
 local instance effectiveQuotientMeasurableSpace :
     MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
 
@@ -71,7 +76,7 @@ theorem continuousToCanonicalPhysicalBulkL2_denseRange :
     DenseRange (continuousToCanonicalPhysicalBulkL2 period hPeriod) := by
   exact ContinuousMap.toLp_denseRange Real
     (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) Real
-    (by norm_num : (2 : ENNReal) ≠ ∞)
+    (by norm_num : (2 : ENNReal) ≠ (⊤ : ENNReal))
 
 /-- An `L²` smoothing scheme from continuous functions to smooth quotient
 scalars. -/
@@ -112,7 +117,8 @@ theorem continuousRange_subset_closure_smoothRange
       closure (Set.range
         (smoothToCanonicalPhysicalBulkL2 period hPeriod)) := by
   rintro value ⟨continuousField, rfl⟩
-  exact approximationData.continuous_mem_closure_smoothRange continuousField
+  exact continuous_mem_closure_smoothRange
+    period hPeriod approximationData continuousField
 
 /-- Continuous-to-smooth approximation proves density of smooth physical scalar
 fields in bulk `L²`. -/
@@ -126,7 +132,8 @@ theorem smoothToCanonicalPhysicalBulkL2_denseRange
       (Set.range (continuousToCanonicalPhysicalBulkL2 period hPeriod)) :=
     continuousToCanonicalPhysicalBulkL2_denseRange period hPeriod value
   exact (closure_minimal
-    approximationData.continuousRange_subset_closure_smoothRange
+    (continuousRange_subset_closure_smoothRange
+      period hPeriod approximationData)
     isClosed_closure) hContinuous
 
 /-- Smooth-density certificate. -/
@@ -139,8 +146,10 @@ theorem certificate
         continuousToCanonicalPhysicalBulkL2 period hPeriod continuousField ∈
           closure (Set.range
             (smoothToCanonicalPhysicalBulkL2 period hPeriod))) :=
-  ⟨approximationData.smoothToCanonicalPhysicalBulkL2_denseRange,
-    approximationData.continuous_mem_closure_smoothRange⟩
+  ⟨smoothToCanonicalPhysicalBulkL2_denseRange
+      period hPeriod approximationData,
+    continuous_mem_closure_smoothRange
+      period hPeriod approximationData⟩
 
 end CanonicalPhysicalScalarContinuousSmoothApproximationData
 

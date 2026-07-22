@@ -13,6 +13,9 @@ from the completed physical boundary triple.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedVariational4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedVariational4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -26,6 +29,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleVariational4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -153,7 +157,7 @@ theorem sourceAction_hasDerivAt
     analytic.condition analytic.referenceParameter source field variation
 
 /-- Fully reduced physical variational certificate. -/
-theorem certificate
+theorem variational_certificate
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -182,5 +186,5 @@ theorem certificate
 end CanonicalPhysicalScalarFullyReducedAnalyticData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedVariational4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFullyReducedAnalyticClosure4D
 end JanusFormal

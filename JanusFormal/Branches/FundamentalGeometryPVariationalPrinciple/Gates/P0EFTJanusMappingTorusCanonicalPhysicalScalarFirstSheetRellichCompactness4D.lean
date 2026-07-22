@@ -18,13 +18,18 @@ into a compact resolvent.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
@@ -33,9 +38,13 @@ open P0EFTJanusMappingTorusScalarGreenCoreRegularityFactorization4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolvent4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleCompactSpectrum4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
+
+local instance physicalH1CompleteSpace :
+    CompleteSpace (CanonicalPhysicalScalarH1 period hPeriod) :=
+  canonicalPhysicalScalarH1CompleteSpace period hPeriod
 
 namespace CanonicalPhysicalScalarFirstSheetGreenCoreData
 
@@ -103,10 +112,10 @@ theorem lagrangianInclusion_compact
       (BoundaryL2 period))
     (rellich : PhysicalH1RellichCompactness period hPeriod) :
     IsCompactOperator
-      ((inputs.triple green).lagrangianInclusion condition) :=
+      ((inputs.triple period hPeriod green).lagrangianInclusion condition) :=
   (green.physicalH1RegularityData period hPeriod inputs.elliptic)
     |>.lagrangianInclusion_compact
-      (inputs.triple green) condition rellich
+      (inputs.triple period hPeriod green) condition rellich
 
 /-- Coercivity plus physical Rellich compactness gives the direct compact
 resolvent package. -/
@@ -117,10 +126,10 @@ def coerciveCompactEmbeddingAt
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period))
     (spectralParameter : Real)
-    (coercive : (inputs.triple green).LagrangianCoerciveSurjectiveAt
+    (coercive : (inputs.triple period hPeriod green).LagrangianCoerciveSurjectiveAt
       condition spectralParameter)
     (rellich : PhysicalH1RellichCompactness period hPeriod) :
-    (inputs.triple green).LagrangianCoerciveCompactEmbeddingAt
+    (inputs.triple period hPeriod green).LagrangianCoerciveCompactEmbeddingAt
       condition spectralParameter where
   coercive := coercive
   compact_inclusion := green.lagrangianInclusion_compact
@@ -134,14 +143,14 @@ noncomputable def compactResolventAt
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition
       (BoundaryL2 period))
     (spectralParameter : Real)
-    (coercive : (inputs.triple green).LagrangianCoerciveSurjectiveAt
+    (coercive : (inputs.triple period hPeriod green).LagrangianCoerciveSurjectiveAt
       condition spectralParameter)
     (rellich : PhysicalH1RellichCompactness period hPeriod) :
-    (inputs.triple green).LagrangianCompactResolventAt
+    (inputs.triple period hPeriod green).LagrangianCompactResolventAt
       condition spectralParameter :=
   (green.coerciveCompactEmbeddingAt period hPeriod inputs condition
     spectralParameter coercive rellich).compactResolvent
-      (inputs.triple green) condition spectralParameter
+      (inputs.triple period hPeriod green) condition spectralParameter
 
 /-- Physical Rellich factorization certificate. -/
 theorem certificate
@@ -154,7 +163,7 @@ theorem certificate
     IsCompactOperator
         (canonicalScalarGreenCoreGraphInclusion green.core) ∧
       IsCompactOperator
-        ((inputs.triple green).lagrangianInclusion condition) :=
+        ((inputs.triple period hPeriod green).lagrangianInclusion condition) :=
   ⟨green.maximalGraphInclusion_compact
       period hPeriod inputs.elliptic rellich,
     green.lagrangianInclusion_compact
@@ -163,5 +172,5 @@ theorem certificate
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

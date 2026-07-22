@@ -31,7 +31,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothL2Density4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffDensity4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Physical smoothing plus zero-Cauchy collar cutoff data. -/
 structure CanonicalPhysicalScalarMinimalCollarCutoffData
@@ -73,7 +73,7 @@ theorem minimalCoreDense
     (cutoffData : CanonicalPhysicalScalarMinimalCollarCutoffData
       period hPeriod green) :
     green.MinimalCoreDense period hPeriod :=
-  (cutoffData.toGeneric green).minimalCoreDense
+  (cutoffData.toGeneric period hPeriod green).minimalCoreDense
 
 /-- The physical maximal graph inclusion is injective. -/
 theorem graphInclusion_injective
@@ -84,7 +84,7 @@ theorem graphInclusion_injective
     Function.Injective
       (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreGraphInclusion
         green.core) :=
-  (cutoffData.toGeneric green).graphInclusion_injective
+  (cutoffData.toGeneric period hPeriod green).graphInclusion_injective
 
 /-- Physical smoothing/cutoff density certificate. -/
 theorem certificate
@@ -98,8 +98,8 @@ theorem certificate
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreGraphInclusion
           green.core) :=
   ⟨cutoffData.smoothing.smoothToCanonicalPhysicalBulkL2_denseRange,
-    cutoffData.minimalCoreDense green,
-    cutoffData.graphInclusion_injective green⟩
+    cutoffData.minimalCoreDense period hPeriod green,
+    cutoffData.graphInclusion_injective period hPeriod green⟩
 
 end CanonicalPhysicalScalarMinimalCollarCutoffData
 

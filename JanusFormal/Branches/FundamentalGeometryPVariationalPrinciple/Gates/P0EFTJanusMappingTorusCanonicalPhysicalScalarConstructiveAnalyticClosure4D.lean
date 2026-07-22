@@ -25,6 +25,7 @@ noncomputable section
 
 open Set Topology Module End
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetBoundaryTripleConstruction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetShiftedFormClosure4D
@@ -38,7 +39,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 
 universe x y z
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 

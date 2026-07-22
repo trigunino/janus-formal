@@ -29,16 +29,29 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal
 open MeasureTheory Set Topology
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusL2PTFunctionalSpace4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarGreenDivergence4D
+open P0EFTJanusMappingTorusIntrinsicLorentzScalarAction4D
+open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarBulkEulerGreenBridge4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+private abbrev Vector4 :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D.Vector4
 
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
@@ -115,8 +128,10 @@ theorem canonicalPhysicalScalarEulerSkewDensity_eq_neg_localDivergence
       period hPeriod massSquared field (operatorData.compatible field),
     canonicalPhysicalScalarEulerGlobalResidual_eq_chart
       period hPeriod massSquared test (operatorData.compatible test),
-    localSmoothScalarGreenDivergence_eq_eulerDifference]
-  rfl
+    localSmoothScalarGreenDivergence_eq_eulerDifference
+      period hPeriod massSquared patch field test coordinate]
+  unfold localScalarRepresentative
+  ring
 
 /-- The global skew density is continuous. -/
 theorem canonicalPhysicalScalarEulerSkewDensity_continuous
@@ -138,8 +153,8 @@ theorem canonicalPhysicalScalarEulerSkewDensity_integrable
       (canonicalPhysicalScalarEulerSkewDensity
         period hPeriod massSquared field test)
       (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
-  (operatorData.canonicalPhysicalScalarEulerSkewDensity_continuous
-    field test).memLp_of_hasCompactSupport
+  (canonicalPhysicalScalarEulerSkewDensity_continuous
+    period hPeriod operatorData field test).memLp_of_hasCompactSupport
       (HasCompactSupport.of_compactSpace _)
     |>.integrable one_le_two
 
@@ -162,8 +177,14 @@ theorem inner_euler_bulk_eq_integral
      smoothFieldToL2_ae period hPeriod Real
        (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) test]
     with point hEuler hTest
+  change inner Real
+      ((operatorData.toBulkL2LinearMap field :
+        EffectiveQuotient period hPeriod → Real) point)
+      ((smoothFieldToL2 period hPeriod Real
+        (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) test :
+          EffectiveQuotient period hPeriod → Real) point) = _
   rw [hEuler, hTest]
-  simp
+  exact Real.inner_apply _ _
 
 /-- The physical `L²` adjunction defect is the integral of the global skew
 density. -/
@@ -179,17 +200,20 @@ theorem bulkPairingDefect_eq_integral_skewDensity
         canonicalPhysicalScalarEulerSkewDensity
           period hPeriod massSquared field test point
         ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod := by
-  rw [operatorData.inner_euler_bulk_eq_integral field test]
+  rw [inner_euler_bulk_eq_integral period hPeriod operatorData field test]
   rw [real_inner_comm,
-    operatorData.inner_euler_bulk_eq_integral test field]
+    inner_euler_bulk_eq_integral period hPeriod operatorData test field]
   rw [← integral_sub]
-  · rfl
+  · apply integral_congr_ae
+    exact Filter.Eventually.of_forall fun point => by
+      unfold canonicalPhysicalScalarEulerSkewDensity
+      ring
   · exact (operatorData.residual_memLp field).integrable_mul
-      (smoothField_memLp period hPeriod Real
+      (smoothQuotientField_memLp period hPeriod Real
         (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) test)
-  · exact (smoothField_memLp period hPeriod Real
-      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field).integrable_mul
-        (operatorData.residual_memLp test)
+  · exact (operatorData.residual_memLp test).integrable_mul
+      (smoothQuotientField_memLp period hPeriod Real
+        (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field)
 
 /-- The single remaining global divergence-integration theorem. -/
 structure CanonicalPhysicalScalarEulerDivergenceIntegralData
@@ -216,7 +240,8 @@ def toBulkEulerDivergenceBridge
   operatorData := integralData.operatorData
   pairing_eq_neg_two_divergence := by
     intro field test
-    rw [integralData.operatorData.bulkPairingDefect_eq_integral_skewDensity]
+    rw [bulkPairingDefect_eq_integral_skewDensity
+      period hPeriod integralData.operatorData]
     exact integralData.integral_eq_divergence field test
 
 /-- The integral theorem closes the full oriented Green identity. -/
@@ -230,8 +255,9 @@ theorem pairing_eq_orientedBoundaryCurrent
           (integralData.operatorData.toBulkL2LinearMap test) =
       P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D.cutBulkGlobalOrientedScalarCurrentIntegral
         period hPeriod field test :=
-  integralData.toBulkEulerDivergenceBridge
-    |>.pairing_eq_orientedBoundaryCurrent field test
+  CanonicalPhysicalScalarBulkEulerDivergenceBridge.pairing_eq_orientedBoundaryCurrent
+    period hPeriod
+    (toBulkEulerDivergenceBridge period hPeriod integralData) field test
 
 /-- Euler/Green `L²` reduction certificate. -/
 theorem certificate
@@ -253,8 +279,9 @@ theorem certificate
               (integralData.operatorData.toBulkL2LinearMap test) =
           P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D.cutBulkGlobalOrientedScalarCurrentIntegral
             period hPeriod field test) :=
-  ⟨integralData.operatorData.bulkPairingDefect_eq_integral_skewDensity,
-    integralData.pairing_eq_orientedBoundaryCurrent⟩
+  ⟨bulkPairingDefect_eq_integral_skewDensity
+      period hPeriod integralData.operatorData,
+    pairing_eq_orientedBoundaryCurrent period hPeriod integralData⟩
 
 end CanonicalPhysicalScalarEulerDivergenceIntegralData
 

@@ -22,13 +22,19 @@ noncomputable section
 open scoped Manifold ContDiff
 open Set Topology
 open P0EFTJanusMetricCoupledScalarMatterJetVariation
+open P0EFTJanusScalarStressCovariantJetConservation4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D
+open P0EFTJanusMappingTorusIntrinsicLorentzScalarAction4D
+open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerLinearity4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev Vector4 :=
   P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4
@@ -111,6 +117,12 @@ structure CanonicalPhysicalScalarWaveGlobalizationData
     Continuous
       (canonicalPhysicalScalarEulerGlobalResidual
         period hPeriod massSquared field)
+  ae_zero_eq_zero : ∀ field : SmoothScalarField period hPeriod,
+    canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared field =ᵐ[
+          intrinsicCanonicalLorentzVolumeMeasure period hPeriod] 0 →
+      canonicalPhysicalScalarEulerGlobalResidual
+        period hPeriod massSquared field = 0
 
 namespace CanonicalPhysicalScalarWaveGlobalizationData
 
@@ -123,6 +135,7 @@ def toEulerGlobalizationData
   compatible := canonicalPhysicalScalarEulerAtlasCompatible_all
     period hPeriod globalization.waveNaturality massSquared
   continuous := globalization.residualContinuous
+  ae_zero_eq_zero := globalization.ae_zero_eq_zero
 
 /-- Genuine bulk-L2 Euler operator. -/
 def toBulkL2LinearMap

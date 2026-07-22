@@ -14,6 +14,9 @@ also gives orthogonality of distinct direct eigenvalues.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleEigenspace4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleEigenspace4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -37,6 +40,10 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
   [CompleteSpace Trace]
 
 namespace CanonicalScalarCompletedBoundaryTripleData
+
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
 
 /-- Reference-resolvent eigenvalue corresponding to an operator eigenvalue. -/
 def lagrangianResolventEigenvalue
@@ -68,7 +75,7 @@ theorem ambientResolvent_inclusion_of_mem_eigenspace
     (field : triple.lagrangianOperatorEigenspace condition eigenvalue) :
     bounded.ambientResolvent triple condition referenceParameter
         (triple.lagrangianInclusion condition field.1) =
-      triple.lagrangianResolventEigenvalue referenceParameter eigenvalue •
+      lagrangianResolventEigenvalue referenceParameter eigenvalue •
         triple.lagrangianInclusion condition field.1 := by
   let difference := eigenvalue - referenceParameter
   have hDifferenceZero : difference ≠ 0 := sub_ne_zero.mpr hDifference
@@ -90,7 +97,7 @@ theorem ambientResolvent_inclusion_of_mem_eigenspace
     _ = (difference⁻¹ * difference) •
         bounded.ambientResolvent triple condition referenceParameter
           (triple.lagrangianInclusion condition field.1) := by
-      rw [inv_mul_cancel₀ hDifferenceZero]
+      simp [hDifferenceZero]
     _ = difference⁻¹ •
         (difference •
           bounded.ambientResolvent triple condition referenceParameter
@@ -113,7 +120,7 @@ def operatorEigenspaceToResolventEigenspace
       Module.End.eigenspace
         (bounded.ambientResolvent
           triple condition referenceParameter).toLinearMap
-        (triple.lagrangianResolventEigenvalue
+        (lagrangianResolventEigenvalue
           referenceParameter eigenvalue) where
   toFun field :=
     ⟨triple.lagrangianInclusion condition field.1, by
@@ -155,7 +162,7 @@ theorem LagrangianCompactResolventAt.finiteDimensional_operatorEigenspace
     FiniteDimensional Real
       (triple.lagrangianOperatorEigenspace condition eigenvalue) := by
   let resolventEigenvalue :=
-    triple.lagrangianResolventEigenvalue referenceParameter eigenvalue
+    lagrangianResolventEigenvalue referenceParameter eigenvalue
   have hResolventEigenvalue : resolventEigenvalue ≠ 0 := by
     unfold resolventEigenvalue lagrangianResolventEigenvalue
     exact inv_ne_zero (sub_ne_zero.mpr hDifference)
@@ -218,5 +225,5 @@ theorem directEigenspace_certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleEigenspace4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

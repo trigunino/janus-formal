@@ -19,6 +19,9 @@ reference resolvent and semiboundedness.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -42,6 +45,45 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 namespace CanonicalScalarCompletedBoundaryTripleData
 
+variable {core : CanonicalScalarHilbertGreenCore
+    (Domain := Domain) (Ambient := Ambient) (Trace := Trace)}
+  {traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core}
+
+local instance (priority := 2000) shiftedFormDomainModule
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    Module Real (triple.lagrangianDomainSubmodule condition) :=
+  (lagrangianDomainInnerProductSpace triple condition).toNormedSpace.toModule
+
+local instance (priority := 2000) shiftedFormDomainNormedSpace
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    NormedSpace Real (triple.lagrangianDomainSubmodule condition) :=
+  (lagrangianDomainInnerProductSpace triple condition).toNormedSpace
+
+local instance (priority := 2000) shiftedFormDomainInnerProductSpace
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace) :
+    InnerProductSpace Real (triple.lagrangianDomainSubmodule condition) :=
+  lagrangianDomainInnerProductSpace triple condition
+
+/-- The shifted operator repackaged with the canonical Hilbert module. -/
+def lagrangianHilbertShiftedOperator
+    (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
+    (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
+    (spectralParameter : Real) :
+    triple.lagrangianDomainSubmodule condition →L[Real] Ambient :=
+  { toFun := fun field =>
+      triple.lagrangianShiftedOperator condition spectralParameter field
+    map_add' := fun first second =>
+      (triple.lagrangianShiftedOperator
+        condition spectralParameter).map_add first second
+    map_smul' := fun scalar field =>
+      (triple.lagrangianShiftedOperator
+        condition spectralParameter).map_smul scalar field
+    cont := (triple.lagrangianShiftedOperator
+      condition spectralParameter).continuous }
+
 /-- Algebraic shifted pairing before continuity is bundled. -/
 def lagrangianShiftedPairingLinearMap
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
@@ -52,31 +94,55 @@ def lagrangianShiftedPairingLinearMap
   toFun first :=
     { toFun := fun second =>
         inner Real
-          (triple.lagrangianShiftedOperator
+          (triple.lagrangianHilbertShiftedOperator
             condition spectralParameter first)
-          (triple.lagrangianInclusion condition second)
+          (triple.lagrangianHilbertInclusion condition second)
       map_add' := by
         intro second third
         rw [map_add, inner_add_right]
       map_smul' := by
         intro scalar second
-        rw [map_smul, real_inner_smul_right] }
+        rw [map_smul, real_inner_smul_right]
+        simp }
   map_add' := by
     intro first second
     ext test
-    rw [map_add, inner_add_left]
+    change inner Real
+        ((triple.lagrangianHilbertShiftedOperator
+          condition spectralParameter) (first + second))
+        (triple.lagrangianHilbertInclusion condition test) =
+      inner Real
+          ((triple.lagrangianHilbertShiftedOperator
+            condition spectralParameter) first)
+          (triple.lagrangianHilbertInclusion condition test) +
+        inner Real
+          ((triple.lagrangianHilbertShiftedOperator
+            condition spectralParameter) second)
+          (triple.lagrangianHilbertInclusion condition test)
+    rw [(triple.lagrangianHilbertShiftedOperator
+      condition spectralParameter).map_add, inner_add_left]
   map_smul' := by
     intro scalar first
     ext test
-    rw [map_smul, real_inner_smul_left]
+    change inner Real
+        ((triple.lagrangianHilbertShiftedOperator
+          condition spectralParameter) (scalar • first))
+        (triple.lagrangianHilbertInclusion condition test) =
+      scalar • inner Real
+        ((triple.lagrangianHilbertShiftedOperator
+          condition spectralParameter) first)
+        (triple.lagrangianHilbertInclusion condition test)
+    rw [(triple.lagrangianHilbertShiftedOperator
+      condition spectralParameter).map_smul, real_inner_smul_left]
+    simp
 
 /-- Operator-norm constant for the canonical shifted pairing. -/
 def lagrangianShiftedPairingBound
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
     (spectralParameter : Real) : Real :=
-  ‖triple.lagrangianShiftedOperator condition spectralParameter‖ *
-    ‖triple.lagrangianInclusion condition‖
+  ‖triple.lagrangianHilbertShiftedOperator condition spectralParameter‖ *
+    ‖triple.lagrangianHilbertInclusion condition‖
 
 /-- Bilinear operator-norm estimate. -/
 theorem lagrangianShiftedPairing_norm_le
@@ -86,23 +152,41 @@ theorem lagrangianShiftedPairing_norm_le
     (first second : triple.lagrangianDomainSubmodule condition) :
     ‖triple.lagrangianShiftedPairingLinearMap
         condition spectralParameter first second‖ ≤
-      triple.lagrangianShiftedPairingBound condition spectralParameter *
+        triple.lagrangianShiftedPairingBound condition spectralParameter *
         ‖first‖ * ‖second‖ := by
-  have hShifted :=
-    (triple.lagrangianShiftedOperator condition spectralParameter).le_opNorm first
-  have hInclusion :=
-    (triple.lagrangianInclusion condition).le_opNorm second
+  letI : NormedSpace Real (triple.lagrangianDomainSubmodule condition) :=
+    shiftedFormDomainNormedSpace triple condition
+  have hShifted := @ContinuousLinearMap.le_opNorm Real Real
+    (triple.lagrangianDomainSubmodule condition) Ambient
+    _ _ _ _ (shiftedFormDomainNormedSpace triple condition) _
+    (RingHom.id Real) _
+    (triple.lagrangianHilbertShiftedOperator
+      condition spectralParameter) first
+  have hInclusion := @ContinuousLinearMap.le_opNorm Real Real
+    (triple.lagrangianDomainSubmodule condition) Ambient
+    _ _ _ _ (shiftedFormDomainNormedSpace triple condition) _
+    (RingHom.id Real) _
+    (triple.lagrangianHilbertInclusion condition) second
+  have hShiftedUpperNonnegative :
+      0 ≤ ‖triple.lagrangianHilbertShiftedOperator
+          condition spectralParameter‖ * ‖first‖ :=
+    mul_nonneg
+      (norm_nonneg (triple.lagrangianHilbertShiftedOperator
+        condition spectralParameter))
+      (norm_nonneg first)
   calc
     ‖triple.lagrangianShiftedPairingLinearMap
         condition spectralParameter first second‖ ≤
-      ‖triple.lagrangianShiftedOperator condition spectralParameter first‖ *
-        ‖triple.lagrangianInclusion condition second‖ :=
+      ‖triple.lagrangianHilbertShiftedOperator
+          condition spectralParameter first‖ *
+        ‖triple.lagrangianHilbertInclusion condition second‖ :=
       norm_inner_le_norm _ _
     _ ≤
-      (‖triple.lagrangianShiftedOperator condition spectralParameter‖ * ‖first‖) *
-        (‖triple.lagrangianInclusion condition‖ * ‖second‖) :=
+      (‖triple.lagrangianHilbertShiftedOperator
+          condition spectralParameter‖ * ‖first‖) *
+        (‖triple.lagrangianHilbertInclusion condition‖ * ‖second‖) :=
       mul_le_mul hShifted hInclusion (norm_nonneg _)
-        (mul_nonneg (norm_nonneg _) (norm_nonneg _))
+        hShiftedUpperNonnegative
     _ = triple.lagrangianShiftedPairingBound condition spectralParameter *
         ‖first‖ * ‖second‖ := by
       unfold lagrangianShiftedPairingBound
@@ -115,10 +199,17 @@ def lagrangianShiftedForm
     (spectralParameter : Real) :
     triple.lagrangianDomainSubmodule condition →L[Real]
       triple.lagrangianDomainSubmodule condition →L[Real] Real :=
-  LinearMap.mkContinuous₂
-    (triple.lagrangianShiftedPairingLinearMap condition spectralParameter)
-    (triple.lagrangianShiftedPairingBound condition spectralParameter)
-    (triple.lagrangianShiftedPairing_norm_le condition spectralParameter)
+  by
+    exact @LinearMap.mkContinuous₂ Real Real Real
+      (triple.lagrangianDomainSubmodule condition)
+      (triple.lagrangianDomainSubmodule condition) Real
+      _ _ _ _ _ _
+      (shiftedFormDomainNormedSpace triple condition)
+      (shiftedFormDomainNormedSpace triple condition) _
+      (RingHom.id Real) (RingHom.id Real) _
+      (triple.lagrangianShiftedPairingLinearMap condition spectralParameter)
+      (triple.lagrangianShiftedPairingBound condition spectralParameter)
+      (triple.lagrangianShiftedPairing_norm_le condition spectralParameter)
 
 @[simp] theorem lagrangianShiftedForm_apply
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
@@ -130,7 +221,9 @@ def lagrangianShiftedForm
         (triple.lagrangianShiftedOperator
           condition spectralParameter first)
         (triple.lagrangianInclusion condition second) :=
-  rfl
+  by
+    simp [lagrangianShiftedForm, lagrangianShiftedPairingLinearMap,
+      lagrangianHilbertShiftedOperator, lagrangianHilbertInclusion]
 
 /-- Coercivity of the canonical shifted form. -/
 structure LagrangianShiftedFormCoerciveData
@@ -233,5 +326,5 @@ end LagrangianShiftedFormCoerciveData
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

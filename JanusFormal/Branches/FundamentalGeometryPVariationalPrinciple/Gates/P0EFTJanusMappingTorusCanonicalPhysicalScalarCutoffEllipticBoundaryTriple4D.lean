@@ -24,12 +24,14 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingEstimate4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalRegularity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEllipticBoundaryTriple4D
 open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 open P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffDensity4D
 open P0EFTJanusMappingTorusScalarGreenCoreMinimalCutoffInteriorBridge4D
 
 universe x y r
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -80,7 +82,7 @@ def toEllipticBoundaryData
       (Regularity := Regularity)) :
     CanonicalPhysicalScalarEllipticBoundaryData
       period hPeriod massSquared ValueCore NormalCore
-      cutoffData.green.core.minimalDomainSubmodule
+      (minimalDomainSubmodule cutoffData.green.core)
       (Regularity := Regularity) where
   smooth := cutoffData.smooth
   garding := cutoffData.garding

@@ -31,12 +31,13 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarRellichApproximation4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEllipticAnalyticClosure4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
+open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D.CanonicalScalarHilbertGreenCore
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointGraphRegularity4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 
 universe x y r
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -74,9 +75,11 @@ def toEllipticAnalyticData
       (Regularity := Regularity)) :
     P0EFTJanusMappingTorusCanonicalPhysicalScalarEllipticAnalyticClosure4D.CanonicalPhysicalScalarEllipticAnalyticData
       period hPeriod massSquared ValueCore NormalCore
-      analytic.boundary.green.core.minimalDomainSubmodule
+      (minimalDomainSubmodule analytic.boundary.green.core)
       (Regularity := Regularity) where
-  boundary := analytic.boundary.cutoffEllipticBoundaryData.toEllipticBoundaryData
+  boundary :=
+    (analytic.boundary.cutoffEllipticBoundaryData period hPeriod)
+      |>.toEllipticBoundaryData period hPeriod
   condition := analytic.condition
   adjointApproximation := analytic.adjointApproximation
   referenceParameter := analytic.referenceParameter
@@ -169,8 +172,9 @@ theorem certificate
       Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
           analytic.boundary.green.core
-          analytic.boundary.cutoffEllipticBoundaryData.toEllipticBoundaryData
-            |>.toBoundaryConstructionData.traceBound) ∧
+          (((analytic.boundary.cutoffEllipticBoundaryData period hPeriod)
+            |>.toEllipticBoundaryData period hPeriod)
+            |>.toBoundaryConstructionData period hPeriod).traceBound) ∧
       analytic.boundary.triple.actualAdjointDomain analytic.condition =
         analytic.boundary.triple.realizationDomain analytic.condition ∧
       IsCompactOperator
@@ -187,8 +191,9 @@ theorem certificate
             analytic.condition eigenvalue →
           analytic.referenceParameter ≤ eigenvalue) :=
   ⟨analytic.boundary.smoothing.smoothToCanonicalPhysicalBulkL2_denseRange,
-    analytic.boundary.cutoffEllipticBoundaryData.toEllipticBoundaryData
-      |>.toBoundaryConstructionData.completedTraceSurjective,
+    (((analytic.boundary.cutoffEllipticBoundaryData period hPeriod)
+      |>.toEllipticBoundaryData period hPeriod)
+      |>.toBoundaryConstructionData period hPeriod).completedTraceSurjective,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.rellichApproximation.rellich,
     analytic.fredholmAlternative period hPeriod,

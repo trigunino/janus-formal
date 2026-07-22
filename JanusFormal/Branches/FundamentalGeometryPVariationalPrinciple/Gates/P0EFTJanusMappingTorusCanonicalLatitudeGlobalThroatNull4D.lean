@@ -25,10 +25,12 @@ open MeasureTheory Set Filter Topology
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMeasureToSphereEquatorialCoarea4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCoareaClosure4D
+open P0EFTJanusMappingTorusCanonicalLatitudeMinimalCutoffProfile4D
 open P0EFTJanusMappingTorusCanonicalLatitudeMinimalDeckInvariantCutoff4D
 
 private abbrev StandardSphere2 := Metric.sphere (0 : EuclideanR3) 1
@@ -117,7 +119,7 @@ theorem standardLatitudeParameterMeasure_equator_preimage :
     (standardSphereEquator_isClosed.measurableSet.preimage
       standardEquatorialLatitude_continuous.measurable)
   unfold standardLatitudeParameterMeasure
-  rw [Measure.withDensity_apply _ hMeasurable]
+  rw [withDensity_apply _ hMeasurable]
   exact setLIntegral_measure_zero _ _
     standardLatitudeUnweightedMeasure_equator_preimage
 
@@ -200,6 +202,9 @@ theorem canonicalLorentzFundamentalDomainMap_preimage_throat :
   rw [Set.mem_preimage, Set.mem_prod]
   simp only [Set.mem_univ, and_true]
   unfold canonicalLatitudeGlobalThroatSet standardSphereEquator
+  change canonicalLatitudeQuotientNormalSquare period hPeriod
+      (canonicalLorentzFundamentalDomainMap period hPeriod parameter) = 0 ↔
+    standardSphereFirstCoordinate parameter.1 = 0
   rw [canonicalLatitudeQuotientNormalSquare_fundamentalDomain]
   exact sq_eq_zero_iff
 

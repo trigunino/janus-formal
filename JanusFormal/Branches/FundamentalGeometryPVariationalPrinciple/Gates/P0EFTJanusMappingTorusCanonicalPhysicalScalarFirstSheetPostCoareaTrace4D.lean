@@ -26,7 +26,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetBoundaryExtension4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreMinimalClosable4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- The proved latitude coarea theorem in the spelling consumed by the corrected
 Green core. -/
@@ -80,7 +80,7 @@ theorem completedBoundaryTrace_surjective
     Function.Surjective
       (canonicalScalarGreenCoreCompletedBoundaryTrace green.core
         (data.boundaryGraphBound period hPeriod)) :=
-  data.completedExtension.boundaryTrace_surjective green
+  data.completedExtension.boundaryTrace_surjective period hPeriod green
 
 /-- Post-coarea trace-completion certificate. -/
 theorem certificate
