@@ -128,31 +128,6 @@ theorem certificate
 
 end CanonicalPhysicalScalarCanonicalProductDivergenceReducedPDEData
 
-/-- Density-level reduced PDE data: the local calculation supplies a product
-density and an a.e. identity. -/
-structure CanonicalPhysicalScalarCanonicalProductDivergenceDensityReducedPDEData
-    (massSquared : Real) where
-  waveNaturality :
-    P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D.CanonicalPhysicalScalarWaveAtlasNaturality
-      period hPeriod
-  divergence : CanonicalPhysicalScalarEulerProductDivergenceDensityData
-    period hPeriod massSquared
-  operator_eq : divergence.operatorData =
-    ((P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D.CanonicalPhysicalScalarEulerCompatibilityOnlyData.toCanonicalCompatibilityData
-      period hPeriod
-      { compatible :=
-          P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D.canonicalPhysicalScalarEulerAtlasCompatible_all
-            period hPeriod waveNaturality massSquared }).toOperatorData)
-  energyIdentity : divergence.operatorData.toGreenCoreData.ExactEnergyGardingIdentityData
-    period hPeriod
-  completedNormalRegularity : divergence.operatorData.toGreenCoreData.CompletedNormalRegularityData
-    period hPeriod (Regularity := Regularity)
-  eulerCoefficients :
-    P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.CauchyJetEulerSixBoundedCoefficientData
-      period hPeriod
-      (P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.canonicalEulerProductRealization
-        period hPeriod divergence.operatorData.toCauchyJetGeometricData)
-
 end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalProductDivergenceReducedPDEClosure4D
 end JanusFormal
