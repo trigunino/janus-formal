@@ -1,19 +1,18 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalFullSupport4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedDensityReduction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedApproximation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalCauchyJetCompatibilityGreenCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 
 /-!
 # Canonical Cauchy-jet Green core on the physical mapping torus
 
-Full support of the physical Lorentz volume is a theorem.  Periodic value data
-and antiperiodic normal data are both generated from one common dense core of
-smooth fields supported in the interior of a fundamental time period.
+Full support of the physical Lorentz volume is a theorem.  Density of the
+periodic value core and antiperiodic normal core is also a theorem, generated
+from the single dense core of smooth interior-supported seeds.
 
-The remaining Green-core inputs are therefore:
+The remaining Green-core inputs are exactly:
 
 * overlap compatibility of the physical Euler residual;
-* density of the one common smooth interior seed core;
 * the global Euler-skew/divergence integral identity.
 -/
 
@@ -32,6 +31,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalFullSupport4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 open P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedPeriodization4D
 open P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedDensityReduction4D
+open P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedApproximation4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalCauchyJetCompatibilityGreenCore4D
@@ -47,12 +47,11 @@ private abbrev NormalCore :=
   CanonicalLatitudeSmoothAntiperiodicNormalCore period
 
 /-- Canonical physical Green-core data after closing measure full support and
-reducing both boundary densities to one common seed. -/
+both boundary-core density theorems. -/
 structure CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
     (massSquared : Real) where
   euler : CanonicalPhysicalScalarEulerCompatibilityOnlyData
     period hPeriod massSquared
-  boundarySeedDensity : CanonicalLatitudeSmoothInteriorSeedDensityData period
   integral_eq_divergence :
     ∀ field test : SmoothQuotientField period hPeriod Real,
       (∫ point,
@@ -65,12 +64,20 @@ structure CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
 
 namespace CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
 
-/-- Both canonical boundary densities generated from the common seed. -/
+/-- Unconditional common interior-seed density. -/
+def boundarySeedDensity
+    (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
+      period hPeriod massSquared) :
+    CanonicalLatitudeSmoothInteriorSeedDensityData period :=
+  (canonicalLatitudeContinuousInteriorSeedApproximationData period hPeriod)
+    |>.toInteriorSeedDensityData
+
+/-- Unconditional periodic and antiperiodic boundary densities. -/
 def boundaryDensity
     (data : CanonicalPhysicalScalarCanonicalInteriorCauchyJetData
       period hPeriod massSquared) :
     CanonicalLatitudeSmoothBoundaryCoreDensityData period :=
-  data.boundarySeedDensity.toSmoothBoundaryCoreDensityData hPeriod
+  canonicalLatitudeSmoothBoundaryCoreDensityData period hPeriod
 
 /-- Direct conversion to the canonical compatibility-based Cauchy-jet package. -/
 def toCanonicalCauchyJetCompatibilityData
@@ -147,7 +154,7 @@ theorem certificate
             boundary) :=
   ⟨canonicalLorentzInteriorPhysicalMap_denseRange period hPeriod,
     intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure period hPeriod,
-    data.boundarySeedDensity.dense,
+    canonicalLatitudeSmoothInteriorSeedEmbedding_denseRange period hPeriod,
     data.boundaryDensity.valueDense,
     data.boundaryDensity.normalDense,
     data.toCanonicalCauchyJetCompatibilityData.boundaryTrace_denseRange,
