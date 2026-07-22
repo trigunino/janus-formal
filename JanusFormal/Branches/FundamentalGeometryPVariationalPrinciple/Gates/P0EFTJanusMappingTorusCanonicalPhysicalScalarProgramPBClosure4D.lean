@@ -98,40 +98,54 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarReducedAnalyticFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCutoffClosedAnalyticFrontier4D
 
+-- Preferred minimal physical path.
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerDenseParametrizationClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusH1GraphComponentEnergy4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerFiniteExpansion4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSeparatedExpansion4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetEulerNormalProfiles4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSixCoefficientClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalSixCoefficientPDEClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalAutomaticSixCoefficientPDEClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalAutomaticSixCoefficientAnalyticClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientAnalyticClosure4D
+
 /-!
 # Corrected physical scalar Program P-B closure
 
 This aggregate head contains the concrete scalar physical-instantiation work of
 Program P-B.
 
-The preferred path now follows the actual analytic regularity hierarchy:
+The preferred path now follows the minimal analytic regularity hierarchy:
 
-1. Euler overlap compatibility and full support construct the faithful bulk
-   `L²` operator;
-2. the bulk `L²` adjunction defect is reduced to the global divergence integral;
-3. spherical coarea closes the value trace and the fixed Cauchy profile moments;
-4. `η(ν)` and `ν η(ν)` realize the exact Cauchy jet and its first two normal
-   derivatives;
+1. a continuous dense-range measure-preserving parametrization supplies full
+   support of the physical Lorentz volume;
+2. Euler overlap compatibility then constructs the faithful bulk `L²` operator
+   without a fieldwise almost-everywhere faithfulness input;
+3. the bulk `L²` adjunction defect is reduced to the global divergence integral;
+4. spherical coarea closes the value trace and all six fixed normal profile
+   moments `a`, `b`, `a'`, `b'`, `a''`, `b''`;
 5. the normalized equatorial-tail inverse is explicit and smooth on the tubular
    band, so no tubular-coordinate regularity field remains;
-6. the global Euler residual pulled back by product coarea gives the canonical
-   local residual realization;
-7. one product estimate for that residual completes the graph bound and the
-   bounded right inverse of the completed Cauchy trace;
-8. global shrinking cutoffs annihilate both traces and converge strongly in
-   bulk `L²`, so the minimal core is dense;
-9. the geometric energy inequality gives Gårding, and higher elliptic regularity
-   gives the normal trace bound;
-10. `CanonicalPhysicalScalarCanonicalFinalPDEData` assembles the canonical
-    completed physical boundary triple;
-11. the remaining adjoint, coercivity and Rellich inputs give actual
-    self-adjointness, compact resolvent, Fredholm alternative, finite
-    multiplicity and the lower spectral bound.
+6. the Euler residual of the explicit Cauchy lift is reduced to six tangential
+   boundary `L²` coefficient estimates;
+7. the actual first-jet graph decomposition makes the first Gårding inequality
+   automatic, leaving one component-energy/Euler-pairing estimate;
+8. global shrinking cutoffs make the minimal core dense;
+9. one normal elliptic regularity theorem closes the completed normal trace;
+10. these inputs assemble the completed physical boundary triple and a bounded
+    right inverse of its Cauchy trace;
+11. smooth adjoint approximation, one shifted coercivity theorem and one compact
+    `H¹ -> L²` approximation imply self-adjointness, compact resolvent, the
+    Fredholm alternative, finite multiplicity and the lower spectral bound.
 
 The preferred endpoints are
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalPDEClosure4D` for
-the boundary theory and
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalPDEAnalyticClosure4D`
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEClosure4D`
+for the boundary theory and
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientAnalyticClosure4D`
 for the full self-adjoint compact spectral theory.
 -/
 
