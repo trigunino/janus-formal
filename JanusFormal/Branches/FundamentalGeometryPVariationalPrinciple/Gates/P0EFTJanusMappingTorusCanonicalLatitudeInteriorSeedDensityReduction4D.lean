@@ -4,14 +4,14 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 /-!
 # Both boundary densities from one interior seed approximation
 
-Continuous functions are dense in the canonical boundary `L²`.  It is therefore
-enough to approximate each continuous function by smooth seeds supported inside
-the open fundamental time interval.
+Bounded continuous functions are dense in the canonical boundary `L²`.  It is
+therefore enough to approximate each bounded continuous function by smooth seeds
+supported inside the open fundamental time interval.
 
-The periodization theorem then sends the same seed sequence to both the periodic
+The periodization theorem sends the same seed sequence to both the periodic
 value core and the antiperiodic normal core without changing its `L²` class.
 Thus the two former approximation inputs are replaced by one common
-continuous-to-interior-smooth approximation.
+bounded-continuous-to-interior-smooth approximation.
 -/
 
 namespace JanusFormal
@@ -29,30 +29,28 @@ open P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedPeriodization4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-private abbrev BoundaryL2 :=
-  P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.CanonicalPhysicalScalarFirstSheetL2
-    period
-
-/-- A single continuous-to-smooth approximation by interior-supported seeds. -/
+/-- A single bounded-continuous-to-smooth approximation by interior-supported
+seeds. -/
 structure CanonicalLatitudeContinuousInteriorSeedApproximationData where
-  approximation : C(CanonicalLatitudeBase, Real) → Nat →
+  approximation : (CanonicalLatitudeBase →ᵇ Real) → Nat →
     CanonicalLatitudeSmoothInteriorSeedCore period
   tendsto_l2 : ∀ continuousField,
     Tendsto
       (fun index => canonicalLatitudeSmoothInteriorSeedEmbedding period
         (approximation continuousField index))
       atTop
-      (𝓝 (continuousToCanonicalLatitudeBoundaryL2 period continuousField))
+      (𝓝 (boundedContinuousToCanonicalLatitudeBoundaryL2
+        period continuousField))
 
 namespace CanonicalLatitudeContinuousInteriorSeedApproximationData
 
-/-- Every continuous boundary vector belongs to the closure of the interior-seed
-range. -/
+/-- Every bounded continuous boundary vector belongs to the closure of the
+interior-seed range. -/
 theorem continuous_mem_closure_seedRange
     (approximationData :
       CanonicalLatitudeContinuousInteriorSeedApproximationData period)
-    (continuousField : C(CanonicalLatitudeBase, Real)) :
-    continuousToCanonicalLatitudeBoundaryL2 period continuousField ∈
+    (continuousField : CanonicalLatitudeBase →ᵇ Real) :
+    boundedContinuousToCanonicalLatitudeBoundaryL2 period continuousField ∈
       closure (Set.range
         (canonicalLatitudeSmoothInteriorSeedEmbedding period)) := by
   apply mem_closure_of_tendsto
@@ -60,11 +58,12 @@ theorem continuous_mem_closure_seedRange
   exact Filter.Eventually.of_forall fun index =>
     ⟨approximationData.approximation continuousField index, rfl⟩
 
-/-- The continuous range lies in the closure of the interior-seed range. -/
+/-- The bounded continuous range lies in the closure of the interior-seed
+range. -/
 theorem continuousRange_subset_closure_seedRange
     (approximationData :
       CanonicalLatitudeContinuousInteriorSeedApproximationData period) :
-    Set.range (continuousToCanonicalLatitudeBoundaryL2 period) ⊆
+    Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period) ⊆
       closure (Set.range
         (canonicalLatitudeSmoothInteriorSeedEmbedding period)) := by
   rintro value ⟨continuousField, rfl⟩
@@ -77,8 +76,8 @@ theorem denseRange
     DenseRange (canonicalLatitudeSmoothInteriorSeedEmbedding period) := by
   intro value
   have hContinuous : value ∈ closure
-      (Set.range (continuousToCanonicalLatitudeBoundaryL2 period)) :=
-    continuousToCanonicalLatitudeBoundaryL2_denseRange period value
+      (Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period)) :=
+    boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange period value
   exact (closure_minimal
     approximationData.continuousRange_subset_closure_seedRange
     isClosed_closure) hContinuous
