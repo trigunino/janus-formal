@@ -3,20 +3,15 @@ import Mathlib.Topology.Sequences
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 
 /-!
-# Boundary-core density from continuous deck-compatible approximation
+# Boundary-core density from bounded continuous approximation
 
-Continuous real functions are dense in `L²` for the finite canonical latitude
-base measure.  Therefore density of the canonical periodic and antiperiodic
-smooth cores is reduced to two approximation constructions:
+The canonical latitude base is `S² × ℝ`, hence it is not compact.  The correct
+general dense subspace of boundary `L²` is therefore the space of bounded
+continuous functions, not `ContinuousMap` equipped with a compact-domain norm.
 
-* approximate every continuous function in `L²` by smooth periodic
-  representatives;
-* approximate every continuous function in `L²` by smooth antiperiodic
-  representatives.
-
-The endpoint identifications have measure zero, so these approximation theorems
-may later be constructed by smoothing on one period followed by periodic or
-sign-twisted periodization.
+Bounded continuous real functions are dense for the finite weakly regular
+canonical latitude measure.  Density of the periodic and antiperiodic smooth
+cores is reduced to approximation of these bounded continuous representatives.
 -/
 
 namespace JanusFormal
@@ -39,50 +34,52 @@ local instance canonicalLatitudeBaseMeasureFinite :
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
-/-- Continuous latitude-base functions included in boundary `L²`. -/
-def continuousToCanonicalLatitudeBoundaryL2 :
-    C(CanonicalLatitudeBase, Real) →L[Real] BoundaryL2 period :=
-  ContinuousMap.toLp (2 : ENNReal)
+/-- Bounded continuous latitude-base functions included in boundary `L²`. -/
+def boundedContinuousToCanonicalLatitudeBoundaryL2 :
+    (CanonicalLatitudeBase →ᵇ Real) →L[Real] BoundaryL2 period :=
+  BoundedContinuousFunction.toLp (2 : ENNReal)
     (canonicalLatitudeBaseMeasure period) Real
 
-/-- Continuous functions are dense in the canonical latitude boundary `L²`. -/
-theorem continuousToCanonicalLatitudeBoundaryL2_denseRange :
-    DenseRange (continuousToCanonicalLatitudeBoundaryL2 period) := by
-  exact ContinuousMap.toLp_denseRange Real
+/-- Bounded continuous functions are dense in canonical boundary `L²`. -/
+theorem boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange :
+    DenseRange (boundedContinuousToCanonicalLatitudeBoundaryL2 period) := by
+  exact BoundedContinuousFunction.toLp_denseRange Real
     (canonicalLatitudeBaseMeasure period) Real
     (by norm_num : (2 : ENNReal) ≠ ∞)
 
-/-- Continuous-to-smooth periodic approximation data. -/
+/-- Bounded-continuous-to-smooth periodic approximation data. -/
 structure CanonicalLatitudePeriodicContinuousSmoothApproximationData where
-  approximation : C(CanonicalLatitudeBase, Real) → Nat →
+  approximation : (CanonicalLatitudeBase →ᵇ Real) → Nat →
     CanonicalLatitudeSmoothPeriodicValueCore period
   tendsto_l2 : ∀ continuousField,
     Tendsto
       (fun index => canonicalLatitudeSmoothPeriodicValueEmbedding period
         (approximation continuousField index))
       atTop
-      (𝓝 (continuousToCanonicalLatitudeBoundaryL2 period continuousField))
+      (𝓝 (boundedContinuousToCanonicalLatitudeBoundaryL2
+        period continuousField))
 
-/-- Continuous-to-smooth antiperiodic approximation data. -/
+/-- Bounded-continuous-to-smooth antiperiodic approximation data. -/
 structure CanonicalLatitudeAntiperiodicContinuousSmoothApproximationData where
-  approximation : C(CanonicalLatitudeBase, Real) → Nat →
+  approximation : (CanonicalLatitudeBase →ᵇ Real) → Nat →
     CanonicalLatitudeSmoothAntiperiodicNormalCore period
   tendsto_l2 : ∀ continuousField,
     Tendsto
       (fun index => canonicalLatitudeSmoothAntiperiodicNormalEmbedding period
         (approximation continuousField index))
       atTop
-      (𝓝 (continuousToCanonicalLatitudeBoundaryL2 period continuousField))
+      (𝓝 (boundedContinuousToCanonicalLatitudeBoundaryL2
+        period continuousField))
 
 namespace CanonicalLatitudePeriodicContinuousSmoothApproximationData
 
-/-- Every continuous boundary vector belongs to the closure of the periodic
-smooth range. -/
+/-- Every bounded continuous boundary vector belongs to the closure of the
+periodic smooth range. -/
 theorem continuous_mem_closure_periodicRange
     (approximationData :
       CanonicalLatitudePeriodicContinuousSmoothApproximationData period)
-    (continuousField : C(CanonicalLatitudeBase, Real)) :
-    continuousToCanonicalLatitudeBoundaryL2 period continuousField ∈
+    (continuousField : CanonicalLatitudeBase →ᵇ Real) :
+    boundedContinuousToCanonicalLatitudeBoundaryL2 period continuousField ∈
       closure (Set.range
         (canonicalLatitudeSmoothPeriodicValueEmbedding period)) := by
   apply mem_closure_of_tendsto
@@ -90,11 +87,11 @@ theorem continuous_mem_closure_periodicRange
   exact Filter.Eventually.of_forall fun index =>
     ⟨approximationData.approximation continuousField index, rfl⟩
 
-/-- Continuous range lies in the closure of the periodic smooth range. -/
+/-- The bounded continuous range lies in the closure of the periodic range. -/
 theorem continuousRange_subset_closure_periodicRange
     (approximationData :
       CanonicalLatitudePeriodicContinuousSmoothApproximationData period) :
-    Set.range (continuousToCanonicalLatitudeBoundaryL2 period) ⊆
+    Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period) ⊆
       closure (Set.range
         (canonicalLatitudeSmoothPeriodicValueEmbedding period)) := by
   rintro value ⟨continuousField, rfl⟩
@@ -107,8 +104,8 @@ theorem denseRange
     DenseRange (canonicalLatitudeSmoothPeriodicValueEmbedding period) := by
   intro value
   have hContinuous : value ∈ closure
-      (Set.range (continuousToCanonicalLatitudeBoundaryL2 period)) :=
-    continuousToCanonicalLatitudeBoundaryL2_denseRange period value
+      (Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period)) :=
+    boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange period value
   exact (closure_minimal
     approximationData.continuousRange_subset_closure_periodicRange
     isClosed_closure) hContinuous
@@ -117,13 +114,13 @@ end CanonicalLatitudePeriodicContinuousSmoothApproximationData
 
 namespace CanonicalLatitudeAntiperiodicContinuousSmoothApproximationData
 
-/-- Every continuous boundary vector belongs to the closure of the
+/-- Every bounded continuous boundary vector belongs to the closure of the
 antiperiodic smooth range. -/
 theorem continuous_mem_closure_antiperiodicRange
     (approximationData :
       CanonicalLatitudeAntiperiodicContinuousSmoothApproximationData period)
-    (continuousField : C(CanonicalLatitudeBase, Real)) :
-    continuousToCanonicalLatitudeBoundaryL2 period continuousField ∈
+    (continuousField : CanonicalLatitudeBase →ᵇ Real) :
+    boundedContinuousToCanonicalLatitudeBoundaryL2 period continuousField ∈
       closure (Set.range
         (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)) := by
   apply mem_closure_of_tendsto
@@ -131,11 +128,11 @@ theorem continuous_mem_closure_antiperiodicRange
   exact Filter.Eventually.of_forall fun index =>
     ⟨approximationData.approximation continuousField index, rfl⟩
 
-/-- Continuous range lies in the closure of the antiperiodic smooth range. -/
+/-- The bounded continuous range lies in the closure of the antiperiodic range. -/
 theorem continuousRange_subset_closure_antiperiodicRange
     (approximationData :
       CanonicalLatitudeAntiperiodicContinuousSmoothApproximationData period) :
-    Set.range (continuousToCanonicalLatitudeBoundaryL2 period) ⊆
+    Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period) ⊆
       closure (Set.range
         (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)) := by
   rintro value ⟨continuousField, rfl⟩
@@ -149,8 +146,8 @@ theorem denseRange
       (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period) := by
   intro value
   have hContinuous : value ∈ closure
-      (Set.range (continuousToCanonicalLatitudeBoundaryL2 period)) :=
-    continuousToCanonicalLatitudeBoundaryL2_denseRange period value
+      (Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period)) :=
+    boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange period value
   exact (closure_minimal
     approximationData.continuousRange_subset_closure_antiperiodicRange
     isClosed_closure) hContinuous
