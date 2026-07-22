@@ -2,6 +2,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedForm4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFiniteCoordinateRellich4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerTangentialFiberCancellation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerTangentialTimePrimitive4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalNormalSplit4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreen4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerCanonicalL2Operators4D
@@ -9,6 +11,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorStandardBoundaryProgramPClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D
 
 /-!
 # Preferred physical scalar Program P-B closure
@@ -20,6 +23,7 @@ The preferred endpoint has removed the following independent inputs:
 * physical-measure full support;
 * periodic and antiperiodic boundary-core density;
 * an independently supplied tangential Green density;
+* the time-period integral cancellation, when a periodic primitive is used;
 * normal trace regularity and its constants;
 * maximal-adjoint regularity and smooth adjoint approximation;
 * an arbitrary bounded zeroth-order energy operator;
@@ -31,8 +35,8 @@ The preferred endpoint has removed the following independent inputs:
 The smallest current complete data package uses:
 
 1. an intrinsic global scalar-wave representative;
-2. one integrable normal Green density, with cancellation of the induced
-   tangential remainder and the normal/half-collar integral identity;
+2. one integrable normal Green density, with either direct cancellation of its
+   induced tangential remainder or the finer sphere/time decomposition;
 3. a scalar first-jet energy remainder;
 4. six continuous operators from the completed Cauchy boundary to boundary
    `L²`, together with the exact canonical residual expansion;
@@ -44,6 +48,8 @@ The preferred completed-boundary endpoint is
 `P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorPDEClosure4D`.
 The preferred complete endpoint is
 `P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure4D`.
+The complete frontier is flattened by
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D`.
 Dirichlet, Neumann and constant Robin specializations are exposed by
 `P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorStandardBoundaryProgramPClosure4D`.
 -/
@@ -57,6 +63,10 @@ noncomputable section
 /-- Marker for the preferred completed-boundary endpoint. -/
 theorem canonicalPhysicalScalarProgramPBPreferredPDEClosure_available : True :=
   trivial
+
+/-- Marker for the flattened final obligations package. -/
+theorem canonicalPhysicalScalarProgramPBFinalObligations_available : True :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D.canonicalPhysicalScalarProgramPFinalObligations_available
 
 /-- Marker for the preferred smallest complete scalar Program P-B endpoint. -/
 theorem canonicalPhysicalScalarProgramPBPreferredClosure_available : True :=
