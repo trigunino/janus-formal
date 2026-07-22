@@ -128,6 +128,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalReducedPDEClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointSequentialClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSelfAdjointResolvent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarCompletedBoundaryTripleResolventAdjointRegularity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFiniteRankRellich4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalAutomaticSixCoefficientAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientAnalyticClosure4D
@@ -139,6 +141,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalReducedVariational4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalReducedGaussian4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalProgramPClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventReducedAnalyticClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventAdjointClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventReducedVariational4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventReducedGaussian4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventProgramPClosure4D
 
 /-!
 # Corrected physical scalar Program P-B closure
@@ -146,7 +153,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 This aggregate head contains the concrete scalar physical-instantiation work of
 Program P-B.
 
-The preferred path now follows the final reduced hierarchy:
+The preferred path now follows the adjoint-free final hierarchy:
 
 1. round `S³` times the open fundamental time interval maps densely and
    measure-preservingly to the physical mapping torus, so the Lorentz volume has
@@ -165,19 +172,20 @@ The preferred path now follows the final reduced hierarchy:
    the normal graph estimate;
 8. shrinking global cutoffs make the minimal core dense, and the completed
    Cauchy trace is surjective with a bounded right inverse;
-9. actual-adjoint graph membership constructs smooth adjoint approximation;
-10. a positive-square shifted-form decomposition gives Lax--Milgram coercivity;
+9. a positive-square shifted-form decomposition gives a bounded real resolvent;
+10. symmetry plus that real resolvent proves self-adjointness and reconstructs
+    actual-adjoint graph membership, maximal regularity and smooth adjoint
+    approximation automatically;
 11. finite-rank approximants converging to `H¹ -> L²` give Rellich compactness;
-12. self-adjointness, compact resolvent, the Fredholm alternative, finite
-    multiplicity, the lower spectral bound, the variational minimizer and the
-    Gaussian response follow automatically.
+12. compact spectral theory, the variational minimizer and the Gaussian response
+    follow automatically.
 
 The preferred endpoints are
 `P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalReducedPDEClosure4D`
 for the completed boundary theory,
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalReducedAnalyticClosure4D`
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventReducedAnalyticClosure4D`
 for the self-adjoint compact spectral theory, and
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalProgramPClosure4D`
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventProgramPClosure4D`
 for the combined spectral, variational and Gaussian endpoint.
 -/
 
@@ -191,9 +199,9 @@ noncomputable section
 theorem canonicalPhysicalScalarProgramPBClosure_available : True :=
   trivial
 
-/-- The promoted final endpoint is available from the Program P-B aggregate. -/
-theorem canonicalPhysicalScalarCanonicalFinalEndpoint_available : True :=
-  P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalFinalProgramPClosure4D.canonicalPhysicalScalarCanonicalFinalProgramPClosure_available
+/-- The promoted adjoint-free final endpoint is available from the aggregate. -/
+theorem canonicalPhysicalScalarCanonicalResolventEndpoint_available : True :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventProgramPClosure4D.canonicalPhysicalScalarCanonicalResolventProgramPClosure_available
 
 end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBClosure4D
