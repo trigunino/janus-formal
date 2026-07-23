@@ -29,6 +29,7 @@ open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
@@ -138,8 +139,8 @@ theorem spectral_complete
     (⨆ eigenvalue : Real,
       Module.End.eigenspace
         ((data.compactResolvent period hPeriod).bounded.ambientResolvent
-          data.boundary.triple data.condition data.referenceParameter)
-          |>.toLinearMap eigenvalue)ᗮ = ⊥ :=
+          (data.boundary.triple period hPeriod)
+          data.condition data.referenceParameter).toLinearMap eigenvalue)ᗮ = ⊥ :=
   (data.toIntrinsicWaveRieszResolventData period hPeriod)
     |>.spectral_complete period hPeriod
 
@@ -166,10 +167,9 @@ theorem certificate
               data.condition spectralParameter) :=
   ⟨data.boundary.geometric.toNormalTangentialSplitData
       |>.tangential_integral_eq_zero,
-    data.boundary.toIntrinsicWaveRieszReducedPDEData.rieszBoundaryData
-      |>.boundedSmoothExtension.rieszBoundaryTrace_surjective,
+    (data.boundary.certificate period hPeriod).2.2.2.1,
     data.actualAdjointDomain_eq period hPeriod,
-    data.finiteRankRellich.rellich,
+    data.finiteRankRellich.rellich period hPeriod,
     data.fredholmAlternative period hPeriod⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszResolventData

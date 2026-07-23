@@ -160,13 +160,7 @@ theorem certificate
               (data.geometric.greenCore period hPeriod).core field) =
           (data.geometric.greenCore period hPeriod).core.boundaryTrace field) :=
   ⟨data.geometric.intrinsicWave.toWaveAtlasNaturality,
-    (data.rieszBoundaryData period hPeriod).minimalCoreDense period hPeriod,
-    (data.rieszBoundaryData period hPeriod).graphInclusion_injective period hPeriod,
-    ((data.rieszBoundaryData period hPeriod).boundedSmoothExtension period hPeriod)
-      |>.rieszBoundaryTrace_surjective,
-    data.completedBoundaryTrace_extension period hPeriod,
-    ((data.rieszBoundaryData period hPeriod).boundedSmoothExtension period hPeriod)
-      |>.rieszBoundaryTrace_smooth⟩
+    (data.rieszBoundaryData period hPeriod).certificate period hPeriod⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveRieszReducedPDEData
 

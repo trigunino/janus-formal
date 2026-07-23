@@ -44,6 +44,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
 universe r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -119,18 +120,10 @@ theorem mem_lagrangianDomainSubmodule_iff
     field ∈ data.boundary.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarSeparatedCondition
           period a b hNondegenerate) ↔
-      a • (canonicalScalarGreenCoreCompletedBoundaryTrace
-          data.boundary.geometric.greenCore.core
-          (data.boundary.completedInputs.traceBound
-            data.boundary.geometric.greenCore) field).1 +
-        b • (canonicalScalarGreenCoreCompletedBoundaryTrace
-          data.boundary.geometric.greenCore.core
-          (data.boundary.completedInputs.traceBound
-            data.boundary.geometric.greenCore) field).2 = 0 := by
-  change canonicalScalarGreenCoreCompletedBoundaryTrace
-      data.boundary.geometric.greenCore.core
-      (data.boundary.completedInputs.traceBound
-        data.boundary.geometric.greenCore) field ∈
+      a • (data.boundary.completedBoundaryTrace period hPeriod field).1 +
+        b • (data.boundary.completedBoundaryTrace period hPeriod field).2 =
+          0 := by
+  change data.boundary.completedBoundaryTrace period hPeriod field ∈
         canonicalScalarHilbertSeparatedBoundarySubmodule
           (Trace := BoundaryL2 period) a b ↔ _
   exact mem_canonicalScalarHilbertSeparatedBoundarySubmodule
@@ -214,18 +207,21 @@ abbrev CanonicalPhysicalScalarCanonicalDirichletResolventData
     (massSquared : Real) :=
   CanonicalPhysicalScalarCanonicalSeparatedResolventData
     period hPeriod massSquared 1 0 (Or.inl one_ne_zero)
+      (Regularity := Regularity)
 
 /-- Final Neumann input package. -/
 abbrev CanonicalPhysicalScalarCanonicalNeumannResolventData
     (massSquared : Real) :=
   CanonicalPhysicalScalarCanonicalSeparatedResolventData
     period hPeriod massSquared 0 1 (Or.inr one_ne_zero)
+      (Regularity := Regularity)
 
 /-- Final constant Robin input package. -/
 abbrev CanonicalPhysicalScalarCanonicalRobinResolventData
     (massSquared coefficient : Real) :=
   CanonicalPhysicalScalarCanonicalSeparatedResolventData
     period hPeriod massSquared (-coefficient) 1 (Or.inr one_ne_zero)
+      (Regularity := Regularity)
 
 namespace CanonicalPhysicalScalarCanonicalSeparatedResolventData
 
@@ -236,14 +232,8 @@ theorem mem_dirichletDomain_iff
     (field : data.boundary.triple.MaximalDomain) :
     field ∈ data.boundary.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarDirichletCondition period) ↔
-      (canonicalScalarGreenCoreCompletedBoundaryTrace
-        data.boundary.geometric.greenCore.core
-        (data.boundary.completedInputs.traceBound
-          data.boundary.geometric.greenCore) field).1 = 0 := by
-  change canonicalScalarGreenCoreCompletedBoundaryTrace
-      data.boundary.geometric.greenCore.core
-      (data.boundary.completedInputs.traceBound
-        data.boundary.geometric.greenCore) field ∈
+      (data.boundary.completedBoundaryTrace period hPeriod field).1 = 0 := by
+  change data.boundary.completedBoundaryTrace period hPeriod field ∈
         canonicalScalarHilbertDirichletBoundarySubmodule
           (Trace := BoundaryL2 period) ↔ _
   exact mem_canonicalScalarHilbertDirichletBoundarySubmodule
@@ -256,14 +246,8 @@ theorem mem_neumannDomain_iff
     (field : data.boundary.triple.MaximalDomain) :
     field ∈ data.boundary.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarNeumannCondition period) ↔
-      (canonicalScalarGreenCoreCompletedBoundaryTrace
-        data.boundary.geometric.greenCore.core
-        (data.boundary.completedInputs.traceBound
-          data.boundary.geometric.greenCore) field).2 = 0 := by
-  change canonicalScalarGreenCoreCompletedBoundaryTrace
-      data.boundary.geometric.greenCore.core
-      (data.boundary.completedInputs.traceBound
-        data.boundary.geometric.greenCore) field ∈
+      (data.boundary.completedBoundaryTrace period hPeriod field).2 = 0 := by
+  change data.boundary.completedBoundaryTrace period hPeriod field ∈
         canonicalScalarHilbertNeumannBoundarySubmodule
           (Trace := BoundaryL2 period) ↔ _
   exact mem_canonicalScalarHilbertNeumannBoundarySubmodule
@@ -277,19 +261,10 @@ theorem mem_robinDomain_iff
     (field : data.boundary.triple.MaximalDomain) :
     field ∈ data.boundary.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarRobinCondition period coefficient) ↔
-      (canonicalScalarGreenCoreCompletedBoundaryTrace
-          data.boundary.geometric.greenCore.core
-          (data.boundary.completedInputs.traceBound
-            data.boundary.geometric.greenCore) field).2 =
+      (data.boundary.completedBoundaryTrace period hPeriod field).2 =
         coefficient •
-          (canonicalScalarGreenCoreCompletedBoundaryTrace
-            data.boundary.geometric.greenCore.core
-            (data.boundary.completedInputs.traceBound
-              data.boundary.geometric.greenCore) field).1 := by
-  change canonicalScalarGreenCoreCompletedBoundaryTrace
-      data.boundary.geometric.greenCore.core
-      (data.boundary.completedInputs.traceBound
-        data.boundary.geometric.greenCore) field ∈
+          (data.boundary.completedBoundaryTrace period hPeriod field).1 := by
+  change data.boundary.completedBoundaryTrace period hPeriod field ∈
         canonicalScalarHilbertRobinBoundarySubmodule
           (Trace := BoundaryL2 period) coefficient ↔ _
   exact mem_canonicalScalarHilbertRobinBoundarySubmodule

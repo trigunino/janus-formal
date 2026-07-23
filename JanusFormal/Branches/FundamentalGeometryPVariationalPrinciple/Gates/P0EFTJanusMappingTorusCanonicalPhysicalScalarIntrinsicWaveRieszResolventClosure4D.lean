@@ -36,8 +36,11 @@ set_option autoImplicit false
 noncomputable section
 
 open Set Topology MeasureTheory Module End
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszReducedPDEClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFiniteRankRellich4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
@@ -53,6 +56,11 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleFredholmAlternative4D
 open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleSemiboundedSpectrum4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+local instance rieszResolventPhysicalH1CompleteSpace :
+    CompleteSpace (CanonicalPhysicalScalarH1 period hPeriod) :=
+  canonicalPhysicalScalarH1CompleteSpace period hPeriod
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
@@ -78,8 +86,9 @@ theorem denseDomain
       period hPeriod massSquared) :
     DenseRange
       (analytic.boundary.triple.lagrangianInclusion analytic.condition) :=
-  analytic.boundary.triple.lagrangianInclusion_denseRange_of_minimalCore
-    analytic.condition analytic.boundary.rieszBoundaryData.minimalCoreDense
+  P0EFTJanusMappingTorusScalarHilbertGreenCoreLagrangianDensity4D.CanonicalScalarCompletedBoundaryTripleData.lagrangianInclusion_denseRange_of_minimalCore
+    (analytic.boundary.triple period hPeriod) analytic.condition
+    (analytic.boundary.certificate period hPeriod).2.1
 
 /-- Shifted coercivity generated from the positive decomposition. -/
 def shiftedFormCoercive
@@ -126,7 +135,7 @@ theorem rellich
     (analytic : CanonicalPhysicalScalarIntrinsicWaveRieszResolventData
       period hPeriod massSquared) :
     PhysicalH1RellichCompactness period hPeriod :=
-  analytic.finiteRankRellich.rellich
+  analytic.finiteRankRellich.rellich period hPeriod
 
 /-- Compactness of the selected Riesz-completed Lagrangian inclusion. -/
 theorem lagrangianInclusion_compact
@@ -134,10 +143,10 @@ theorem lagrangianInclusion_compact
       period hPeriod massSquared) :
     IsCompactOperator
       (analytic.boundary.triple.lagrangianInclusion analytic.condition) :=
-  (analytic.boundary.geometric.greenCore.physicalH1RegularityData
-      period hPeriod analytic.boundary.graphEllipticEstimate)
+  ((analytic.boundary.geometric.greenCore period hPeriod).physicalH1RegularityData
+      period hPeriod (analytic.boundary.graphEllipticEstimate period hPeriod))
     |>.lagrangianInclusion_compact
-      analytic.boundary.triple analytic.condition
+      (analytic.boundary.triple period hPeriod) analytic.condition
       (analytic.rellich period hPeriod)
 
 /-- Coercive inverse with compact selected-domain inclusion. -/
@@ -260,8 +269,7 @@ theorem certificate
           FiniteDimensional Real
             (analytic.boundary.triple.lagrangianOperatorEigenspace
               analytic.condition eigenvalue)) :=
-  ⟨analytic.boundary.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
+  ⟨(analytic.boundary.certificate period hPeriod).2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.rellich period hPeriod,
     analytic.fredholmAlternative period hPeriod,

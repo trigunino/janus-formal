@@ -28,6 +28,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -90,9 +91,9 @@ theorem mem_lagrangianDomainSubmodule_iff
     field ∈ data.toFinalData.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarSeparatedCondition
           period a b hNondegenerate) ↔
-      a • (data.toFinalData.completedBoundaryTrace field).1 +
-        b • (data.toFinalData.completedBoundaryTrace field).2 = 0 := by
-  change data.toFinalData.completedBoundaryTrace field ∈
+      a • (data.toFinalData.completedBoundaryTrace period hPeriod field).1 +
+        b • (data.toFinalData.completedBoundaryTrace period hPeriod field).2 = 0 := by
+  change data.toFinalData.completedBoundaryTrace period hPeriod field ∈
       canonicalScalarHilbertSeparatedBoundarySubmodule
         (Trace := BoundaryL2 period) a b ↔ _
   exact mem_canonicalScalarHilbertSeparatedBoundarySubmodule
@@ -136,7 +137,32 @@ theorem sourceSolution_unique_minimizer
     {a b : Real} {hNondegenerate : a ≠ 0 ∨ b ≠ 0}
     (data : CanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveSeparatedFinalData
       period hPeriod massSquared a b hNondegenerate Energy)
-    (source : BulkL2 period hPeriod) :=
+    (source : BulkL2 period hPeriod) :
+    (∀ field : data.toFinalData.triple.lagrangianDomainSubmodule
+        (canonicalPhysicalScalarSeparatedCondition
+          period a b hNondegenerate),
+      data.toFinalData.triple.lagrangianSourceAction
+          (canonicalPhysicalScalarSeparatedCondition
+            period a b hNondegenerate)
+          data.referenceParameter source
+          (data.sourceSolution period hPeriod source) ≤
+        data.toFinalData.triple.lagrangianSourceAction
+          (canonicalPhysicalScalarSeparatedCondition
+            period a b hNondegenerate)
+          data.referenceParameter source field) ∧
+      (∀ field : data.toFinalData.triple.lagrangianDomainSubmodule
+          (canonicalPhysicalScalarSeparatedCondition
+            period a b hNondegenerate),
+        data.toFinalData.triple.lagrangianSourceAction
+            (canonicalPhysicalScalarSeparatedCondition
+              period a b hNondegenerate)
+            data.referenceParameter source field =
+          data.toFinalData.triple.lagrangianSourceAction
+            (canonicalPhysicalScalarSeparatedCondition
+              period a b hNondegenerate)
+            data.referenceParameter source
+            (data.sourceSolution period hPeriod source) →
+        field = data.sourceSolution period hPeriod source) :=
   data.toFinalData.sourceSolution_unique_minimizer period hPeriod source
 
 /-- Gaussian generating functional. -/
@@ -236,8 +262,8 @@ theorem mem_dirichletDomain_iff
     (field : data.toFinalData.triple.MaximalDomain) :
     field ∈ data.toFinalData.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarDirichletCondition period) ↔
-      (data.toFinalData.completedBoundaryTrace field).1 = 0 := by
-  change data.toFinalData.completedBoundaryTrace field ∈
+      (data.toFinalData.completedBoundaryTrace period hPeriod field).1 = 0 := by
+  change data.toFinalData.completedBoundaryTrace period hPeriod field ∈
       canonicalScalarHilbertDirichletBoundarySubmodule
         (Trace := BoundaryL2 period) ↔ _
   exact mem_canonicalScalarHilbertDirichletBoundarySubmodule
@@ -250,8 +276,8 @@ theorem mem_neumannDomain_iff
     (field : data.toFinalData.triple.MaximalDomain) :
     field ∈ data.toFinalData.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarNeumannCondition period) ↔
-      (data.toFinalData.completedBoundaryTrace field).2 = 0 := by
-  change data.toFinalData.completedBoundaryTrace field ∈
+      (data.toFinalData.completedBoundaryTrace period hPeriod field).2 = 0 := by
+  change data.toFinalData.completedBoundaryTrace period hPeriod field ∈
       canonicalScalarHilbertNeumannBoundarySubmodule
         (Trace := BoundaryL2 period) ↔ _
   exact mem_canonicalScalarHilbertNeumannBoundarySubmodule
@@ -265,9 +291,10 @@ theorem mem_robinDomain_iff
     (field : data.toFinalData.triple.MaximalDomain) :
     field ∈ data.toFinalData.triple.lagrangianDomainSubmodule
         (canonicalPhysicalScalarRobinCondition period coefficient) ↔
-      (data.toFinalData.completedBoundaryTrace field).2 =
-        coefficient • (data.toFinalData.completedBoundaryTrace field).1 := by
-  change data.toFinalData.completedBoundaryTrace field ∈
+      (data.toFinalData.completedBoundaryTrace period hPeriod field).2 =
+        coefficient •
+          (data.toFinalData.completedBoundaryTrace period hPeriod field).1 := by
+  change data.toFinalData.completedBoundaryTrace period hPeriod field ∈
       canonicalScalarHilbertRobinBoundarySubmodule
         (Trace := BoundaryL2 period) coefficient ↔ _
   exact mem_canonicalScalarHilbertRobinBoundarySubmodule

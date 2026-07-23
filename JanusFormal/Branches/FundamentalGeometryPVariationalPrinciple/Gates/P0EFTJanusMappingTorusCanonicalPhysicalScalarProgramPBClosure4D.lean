@@ -98,7 +98,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarReducedAnalyticFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCutoffClosedAnalyticFrontier4D
 
--- Preferred minimal physical path.
+-- Historical conditional elliptic/coercive path.
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerDenseParametrizationClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
@@ -148,45 +148,15 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventProgramPClosure4D
 
 /-!
-# Corrected physical scalar Program P-B closure
+# Scalar Program P-B compatibility aggregate
 
-This aggregate head contains the concrete scalar physical-instantiation work of
-Program P-B.
+This historical aggregate exposes both the Lorentzian Green construction and
+the conditional elliptic/coercive analytic hierarchy.  The latter requires
+independent graph estimates, boundary residual operators, coercivity and
+Rellich data; it is not a consequence of the Lorentzian wave principal symbol.
 
-The preferred path now follows the adjoint-free final hierarchy:
-
-1. round `S³` times the open fundamental time interval maps densely and
-   measure-preservingly to the physical mapping torus, so the Lorentz volume has
-   full topological support;
-2. smooth interior-supported boundary seeds are dense in boundary `L²`, and
-   periodization produces both the periodic value core and antiperiodic normal
-   core;
-3. scalar-wave naturality gives massive Euler overlap compatibility, while one
-   global Euler-skew/divergence identity constructs the physical Green core;
-4. the tubular inverse and global smooth Cauchy extension are explicit;
-5. all fixed normal profile moments are theorems, and six bounded boundary
-   operators generate the complete Euler graph estimate for the Cauchy lift;
-6. one exact first-jet energy identity with a bounded zeroth-order operator gives
-   Gårding and the graph-elliptic estimate;
-7. one bounded completed-graph regularity map with bounded normal trace gives
-   the normal graph estimate;
-8. shrinking global cutoffs make the minimal core dense, and the completed
-   Cauchy trace is surjective with a bounded right inverse;
-9. a positive-square shifted-form decomposition gives a bounded real resolvent;
-10. symmetry plus that real resolvent proves self-adjointness and reconstructs
-    actual-adjoint graph membership, maximal regularity and smooth adjoint
-    approximation automatically;
-11. finite-rank approximants converging to `H¹ -> L²` give Rellich compactness;
-12. compact spectral theory, the variational minimizer and the Gaussian response
-    follow automatically.
-
-The preferred endpoints are
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalReducedPDEClosure4D`
-for the completed boundary theory,
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventReducedAnalyticClosure4D`
-for the self-adjoint compact spectral theory, and
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventProgramPClosure4D`
-for the combined spectral, variational and Gaussian endpoint.
+The preferred physical endpoint and the explicit regime separation are in
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBPreferredClosure4D`.
 -/
 
 namespace JanusFormal
@@ -195,11 +165,11 @@ namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBClosure4D
 set_option autoImplicit false
 noncomputable section
 
-/-- Marker theorem for the corrected physical scalar B-closure head. -/
+/-- Compatibility marker for this historical aggregate head. -/
 theorem canonicalPhysicalScalarProgramPBClosure_available : True :=
   trivial
 
-/-- The promoted adjoint-free final endpoint is available from the aggregate. -/
+/-- The conditional elliptic resolvent endpoint remains available. -/
 theorem canonicalPhysicalScalarCanonicalResolventEndpoint_available : True :=
   P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalResolventProgramPClosure4D.canonicalPhysicalScalarCanonicalResolventProgramPClosure_available
 

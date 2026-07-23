@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 .venv-cosmo/
 .lake/
+.b/
 *.egg-info/
 
 data/raw/

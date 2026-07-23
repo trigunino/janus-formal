@@ -21,7 +21,9 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
@@ -29,6 +31,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerTangentialFiberCancellation4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev Sphere2 := Metric.sphere (0 : EuclideanR3) 1
 
@@ -104,7 +107,7 @@ theorem time_integral_zero
     (∫ time,
       data.timeDensity field test normal (sphere, time)
       ∂volume.restrict (canonicalLatitudeTimeInterval period)) = 0 := by
-  have hOrder : min 0 period ≤ max 0 period := min_le_max _ _
+  have hOrder : min 0 period ≤ max 0 period := min_le_max
   have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (a := min 0 period) (b := max 0 period)
     (fun time _ => data.timePrimitive_hasDerivAt

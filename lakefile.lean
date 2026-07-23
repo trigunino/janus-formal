@@ -2,6 +2,9 @@ import Lake
 open Lake DSL
 
 package janus_formal where
+  buildDir := ".b"
+  leanLibDir := "l"
+  irDir := "i"
   moreLeanArgs := #["-DmaxHeartbeats=800000"]
 
 require mathlib from git
