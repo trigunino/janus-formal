@@ -35,6 +35,7 @@ open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotient
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeMinimalDeckInvariantCutoff4D
 open P0EFTJanusMappingTorusCanonicalLatitudeTubularCollarEmbedding4D
@@ -121,14 +122,16 @@ theorem canonicalLatitudeBandArcsin_contMDiff :
       (fun point : BandCover period hPeriod =>
         Real.arcsin (canonicalLatitudeBandSignedNormal period hPeriod point)) := by
   intro point
+  have hBand :
+      |canonicalLatitudeBandSignedNormal period hPeriod point| < 1 := by
+    change |canonicalLatitudeCoverSignedNormal period hPeriod point.1| < 1
+    exact point.2
   have hLower :
       canonicalLatitudeBandSignedNormal period hPeriod point ≠ -1 := by
-    have hBand := (abs_lt.mp point.2).1
-    exact ne_of_gt hBand
+    exact ne_of_gt (abs_lt.mp hBand).1
   have hUpper :
       canonicalLatitudeBandSignedNormal period hPeriod point ≠ 1 := by
-    have hBand := (abs_lt.mp point.2).2
-    exact ne_of_lt hBand
+    exact ne_of_lt (abs_lt.mp hBand).2
   exact (Real.contDiffAt_arcsin hLower hUpper).contMDiffAt.comp point
     (canonicalLatitudeBandSignedNormal_contMDiff period hPeriod).contMDiffAt
 
@@ -203,16 +206,20 @@ theorem canonicalLatitudeCoverTubularEquatorialBaseOnBand_contMDiff :
 
 /-- Arbitrary fallback base, used only outside the open tubular band. -/
 def canonicalLatitudeCoverTubularEquatorialBaseFallback : StandardSphere2 :=
-  Classical.choice inferInstance
+  Classical.choice
+    ((NormedSpace.sphere_nonempty
+      (x := (0 : EuclideanR3)) (r := 1)).2 zero_le_one).coe_sort
 
 /-- Total normalized-tail base map.  Its value outside the band is irrelevant. -/
 def canonicalLatitudeCoverTubularEquatorialBase
-    (point : EffectiveCover period hPeriod) : StandardSphere2 :=
-  if hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod then
-    canonicalLatitudeCoverTubularEquatorialBaseOnBand period hPeriod
-      ⟨point, hPoint⟩
-  else
-    canonicalLatitudeCoverTubularEquatorialBaseFallback
+    (point : EffectiveCover period hPeriod) : StandardSphere2 := by
+  classical
+  exact
+    if hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod then
+      canonicalLatitudeCoverTubularEquatorialBaseOnBand period hPeriod
+        ⟨point, hPoint⟩
+    else
+      canonicalLatitudeCoverTubularEquatorialBaseFallback
 
 /-- The total base map is smooth at every point of the tubular band. -/
 theorem canonicalLatitudeCoverTubularEquatorialBase_contMDiffAt
@@ -263,7 +270,7 @@ def canonicalLatitudeTubularCoverInverseRegularityData :
     CanonicalLatitudeTubularCoverInverseRegularityData
       period hPeriod :=
   (canonicalLatitudeTubularEquatorialBaseRegularityData period hPeriod)
-    |>.toCoverInverseRegularityData
+    |>.toCoverInverseRegularityData period hPeriod
 
 /-- The inverse-coordinate regularity input is completely discharged. -/
 theorem canonicalLatitudeTubularCoverInverseRegularity_certificate :
@@ -287,7 +294,7 @@ theorem canonicalLatitudeTubularCoverInverseRegularity_certificate :
                 period hPeriod).parameter point) =
             mappingTorusMk (sphereData period hPeriod) point) :=
   (canonicalLatitudeTubularEquatorialBaseRegularityData period hPeriod)
-    |>.certificate
+    |>.certificate period hPeriod
 
 end
 end P0EFTJanusMappingTorusEquatorialTubularCoverBaseRegularity4D

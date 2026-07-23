@@ -19,17 +19,34 @@ noncomputable section
 
 open scoped ENNReal Manifold ContDiff
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusL2PTFunctionalSpace4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
 
 local instance canonicalLorentzVolumeFinite :
     IsFiniteMeasure
@@ -39,7 +56,7 @@ local instance canonicalLorentzVolumeFinite :
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
 /-- Global Euler residual pulled back to product coarea coordinates. -/
-def canonicalEulerProductResidual
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.canonicalEulerProductResidual
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -48,35 +65,37 @@ def canonicalEulerProductResidual
     (data : ValueCore × NormalCore)
     (parameter : CanonicalLatitudeCauchyJetProductParameter) : Real :=
   canonicalPhysicalScalarEulerGlobalResidual
-    period hPeriod massSquared (geometric.extension data)
+    period hPeriod massSquared (geometric.extension period hPeriod data)
       (canonicalLatitudeCauchyJetProductPhysicalMap
         period hPeriod parameter)
 
 /-- Squared Euler norm as a bulk integral. -/
-theorem operator_norm_sq_eq_bulk_residual_integral
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.operator_norm_sq_eq_bulk_residual_integral
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 =
+    ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ ^ 2 =
       ∫ point,
         canonicalPhysicalScalarEulerGlobalResidual
-          period hPeriod massSquared (geometric.extension data) point ^ 2
+          period hPeriod massSquared
+            (geometric.extension period hPeriod data) point ^ 2
         ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod := by
-  change ‖geometric.operatorData.toBulkL2LinearMap
-      (geometric.extension data)‖ ^ 2 = _
+  change ‖(geometric.operatorData period hPeriod).toBulkL2LinearMap
+      (geometric.extension period hPeriod data)‖ ^ 2 = _
   rw [← real_inner_self_eq_norm_sq, MeasureTheory.L2.inner_def]
   apply integral_congr_ae
   filter_upwards
-    [geometric.operatorData.toBulkL2LinearMap_ae
-      (geometric.extension data)] with point hPoint
+    [(geometric.operatorData period hPeriod).toBulkL2LinearMap_ae
+      (geometric.extension period hPeriod data)] with point hPoint
   rw [hPoint]
   simp [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
 
 /-- The bulk residual integral is exactly its product-coordinate pullback. -/
-theorem bulk_residual_integral_eq_product
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.bulk_residual_integral_eq_product
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -85,47 +104,61 @@ theorem bulk_residual_integral_eq_product
     (data : ValueCore × NormalCore) :
     (∫ point,
       canonicalPhysicalScalarEulerGlobalResidual
-        period hPeriod massSquared (geometric.extension data) point ^ 2
+        period hPeriod massSquared
+          (geometric.extension period hPeriod data) point ^ 2
       ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod) =
       ∫ parameter,
-        geometric.canonicalEulerProductResidual data parameter ^ 2
+        geometric.canonicalEulerProductResidual period hPeriod data parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period := by
+  let map := canonicalLatitudeCauchyJetProductPhysicalMap period hPeriod
+  let sourceMeasure := canonicalLatitudeCauchyJetProductMeasure period
+  let targetMeasure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod
   let residual := canonicalPhysicalScalarEulerGlobalResidual
-    period hPeriod massSquared (geometric.extension data)
+    period hPeriod massSquared (geometric.extension period hPeriod data)
+  have hMeasure := canonicalLatitudeCauchyJetProductPhysicalMap_measurePreserving
+    period hPeriod
   have hIntegrable : Integrable (fun point => residual point ^ 2)
-      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
-    (geometric.operatorData.residual_memLp
-      (geometric.extension data)).integrable_sq
-  have hMap :=
-    (canonicalLatitudeCauchyJetProductPhysicalMap_measurePreserving
-      period hPeriod).integral_comp hIntegrable
-  simpa [canonicalEulerProductResidual, residual] using hMap.symm
+      targetMeasure :=
+    ((geometric.operatorData period hPeriod).residual_memLp
+      (geometric.extension period hPeriod data)).integrable_sq
+  have hStronglyMeasurable : AEStronglyMeasurable
+      (fun point => residual point ^ 2) (Measure.map map sourceMeasure) := by
+    rw [hMeasure.map_eq]
+    exact hIntegrable.aestronglyMeasurable
+  have hMapIntegral := MeasureTheory.integral_map
+    hMeasure.measurable.aemeasurable hStronglyMeasurable
+  rw [hMeasure.map_eq] at hMapIntegral
+  simpa [P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.canonicalEulerProductResidual,
+    residual, map, sourceMeasure,
+    targetMeasure] using hMapIntegral
 
 /-- Exact product-coordinate identity for the squared Euler norm. -/
-theorem operator_norm_sq_eq_product_residual_integral
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.operator_norm_sq_eq_product_residual_integral
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 =
+    ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ ^ 2 =
       ∫ parameter,
-        geometric.canonicalEulerProductResidual data parameter ^ 2
+        geometric.canonicalEulerProductResidual period hPeriod data parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period := by
-  rw [geometric.operator_norm_sq_eq_bulk_residual_integral,
-    geometric.bulk_residual_integral_eq_product]
+  rw [geometric.operator_norm_sq_eq_bulk_residual_integral period hPeriod,
+    geometric.bulk_residual_integral_eq_product period hPeriod]
 
 /-- Canonical Euler product realization package. -/
-def canonicalEulerProductRealization
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.canonicalEulerProductRealization
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
-    (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
+  (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore) :
     geometric.CauchyJetEulerProductRealizationData period hPeriod where
-  residual := geometric.canonicalEulerProductResidual
-  operator_norm_sq_eq := geometric.operator_norm_sq_eq_product_residual_integral
+  residual := geometric.canonicalEulerProductResidual period hPeriod
+  operator_norm_sq_eq :=
+    geometric.operator_norm_sq_eq_product_residual_integral period hPeriod
 
 /-- Canonical Euler-product realization certificate. -/
 theorem certificate
@@ -135,11 +168,12 @@ theorem certificate
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore) :
     ∀ data : ValueCore × NormalCore,
-      ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 =
+      ‖(geometric.greenCore period hPeriod).core.operator
+          (geometric.extension period hPeriod data)‖ ^ 2 =
         ∫ parameter,
-          geometric.canonicalEulerProductResidual data parameter ^ 2
+          geometric.canonicalEulerProductResidual period hPeriod data parameter ^ 2
           ∂canonicalLatitudeCauchyJetProductMeasure period :=
-  geometric.operator_norm_sq_eq_product_residual_integral
+  geometric.operator_norm_sq_eq_product_residual_integral period hPeriod
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 

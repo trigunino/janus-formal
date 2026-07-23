@@ -36,6 +36,10 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
@@ -43,11 +47,27 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalFullSupport4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerGreenL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalWaveCauchyJetGreenCore4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
 
 /-- Pullback of the physical Euler skew density to canonical boundary-normal
 product coordinates. -/

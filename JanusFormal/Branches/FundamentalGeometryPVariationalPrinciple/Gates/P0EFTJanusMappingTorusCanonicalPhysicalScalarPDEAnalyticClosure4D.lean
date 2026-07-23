@@ -33,6 +33,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -134,6 +135,7 @@ theorem finiteDimensional_operatorEigenspace
       (analytic.boundary.triple.lagrangianOperatorEigenspace
         analytic.condition eigenvalue) :=
   (analytic.toCutoffClosedAnalyticData period hPeriod)
+    |>.toFullyReducedAnalyticData period hPeriod
     |>.toEllipticAnalyticData period hPeriod
     |>.toSequentialAnalyticData period hPeriod
     |>.toConstructiveAnalyticData period hPeriod
@@ -168,9 +170,10 @@ theorem certificate
       (Regularity := Regularity)) :
     Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
-          analytic.boundary.geometric.greenCore.core
-          (analytic.boundary.completedInputs.traceBound
-            analytic.boundary.geometric.greenCore)) ∧
+          (analytic.boundary.geometric.greenCore period hPeriod).core
+          ((analytic.boundary.completedInputs period hPeriod).traceBound
+            period hPeriod
+            (analytic.boundary.geometric.greenCore period hPeriod))) ∧
       analytic.boundary.triple.actualAdjointDomain analytic.condition =
         analytic.boundary.triple.realizationDomain analytic.condition ∧
       IsCompactOperator
@@ -186,7 +189,7 @@ theorem certificate
         analytic.boundary.triple.LagrangianHasEigenvalue
             analytic.condition eigenvalue →
           analytic.referenceParameter ≤ eigenvalue) :=
-  ⟨analytic.boundary.completedTraceSurjective,
+  ⟨analytic.boundary.completedTraceSurjective period hPeriod,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.rellichApproximation.rellich,
     analytic.fredholmAlternative period hPeriod,

@@ -29,6 +29,8 @@ open Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarRellichApproximation4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -60,21 +62,25 @@ theorem approximation_compact
   have hIncluded : IsCompactOperator
       (range.subtypeL ∘L (data.approximation index).rangeRestrict) :=
     hRangeCompact.clm_comp range.subtypeL
-  simpa [range] using hIncluded
+  have hFactor :
+      range.subtypeL ∘L (data.approximation index).rangeRestrict =
+        data.approximation index := by
+    rfl
+  rwa [hFactor] at hIncluded
 
 /-- Conversion to the generic compact-approximation package. -/
 def toRellichApproximationData
     (data : CanonicalPhysicalScalarFiniteRankRellichData period hPeriod) :
     CanonicalPhysicalScalarRellichApproximationData period hPeriod where
   approximation := data.approximation
-  compact := data.approximation_compact
+  compact := data.approximation_compact period hPeriod
   tendsto := data.tendsto
 
 /-- Physical Rellich compactness. -/
 theorem rellich
     (data : CanonicalPhysicalScalarFiniteRankRellichData period hPeriod) :
     PhysicalH1RellichCompactness period hPeriod :=
-  data.toRellichApproximationData.rellich
+  (data.toRellichApproximationData period hPeriod).rellich
 
 /-- Finite-rank Rellich certificate. -/
 theorem certificate
@@ -84,8 +90,8 @@ theorem certificate
         (canonicalPhysicalScalarH1ToBulkL2 period hPeriod) ∧
       Tendsto data.approximation atTop
         (𝓝 (canonicalPhysicalScalarH1ToBulkL2 period hPeriod)) :=
-  ⟨data.approximation_compact,
-    data.rellich,
+  ⟨data.approximation_compact period hPeriod,
+    data.rellich period hPeriod,
     data.tendsto⟩
 
 end CanonicalPhysicalScalarFiniteRankRellichData

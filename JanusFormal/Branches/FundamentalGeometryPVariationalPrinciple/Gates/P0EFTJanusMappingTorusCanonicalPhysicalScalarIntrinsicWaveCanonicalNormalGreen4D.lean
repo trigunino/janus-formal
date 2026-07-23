@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWave4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalNormalSplit4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveLocalGreen4D
 
 /-!
 # Intrinsic scalar Green data from one normal divergence component
@@ -24,6 +25,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
@@ -33,6 +35,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalNormalSplit4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Smallest current geometric Green input. -/
 structure CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
@@ -81,7 +84,7 @@ def toCanonicalNormalSplitData
 def tangentialDensity
     (data : CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
       period hPeriod massSquared) :=
-  data.toCanonicalNormalSplitData.tangentialDensity
+  (data.toCanonicalNormalSplitData period hPeriod).tangentialDensity period hPeriod
 
 /-- Full normal/tangential Green package. -/
 def toNormalTangentialGreenData
@@ -91,15 +94,17 @@ def toNormalTangentialGreenData
       period hPeriod massSquared where
   intrinsicWave := data.intrinsicWave
   normalDensity := data.normalDensity
-  tangentialDensity := data.tangentialDensity
+  tangentialDensity := data.tangentialDensity period hPeriod
   normalDensity_integrable := data.normalDensity_integrable
   tangentialDensity_integrable :=
-    data.toCanonicalNormalSplitData.tangentialDensity_integrable
+    (data.toCanonicalNormalSplitData period hPeriod).tangentialDensity_integrable
+      period hPeriod
   localDivergence_eq_normal_add_tangential :=
-    data.toCanonicalNormalSplitData.localDivergence_eq_normal_add_tangential
+    (data.toCanonicalNormalSplitData period hPeriod).localDivergence_eq_normal_add_tangential
+      period hPeriod
   tangential_base_integral_zero := by
     intro field test normal
-    simpa [tangentialDensity,
+    simpa [tangentialDensity, toCanonicalNormalSplitData,
       CanonicalPhysicalScalarEulerCanonicalNormalSplitData.tangentialDensity] using
       data.tangential_base_integral_zero field test normal
   normal_integral_eq_halfCollar := data.normal_integral_eq_halfCollar
@@ -108,7 +113,7 @@ def toNormalTangentialGreenData
 def greenCore
     (data : CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
       period hPeriod massSquared) :=
-  data.toCanonicalNormalSplitData.greenCore
+  (data.toCanonicalNormalSplitData period hPeriod).greenCore period hPeriod
 
 /-- Smallest geometric Green certificate. -/
 theorem certificate
@@ -117,11 +122,11 @@ theorem certificate
     P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D.CanonicalPhysicalScalarWaveAtlasNaturality
         period hPeriod ∧
       (∀ field test,
-        Integrable (data.tangentialDensity field test)
+        Integrable (data.tangentialDensity period hPeriod field test)
           (canonicalLatitudeCauchyJetProductMeasure period)) ∧
       (∀ field test,
         (∫ parameter,
-          data.tangentialDensity field test parameter
+          data.tangentialDensity period hPeriod field test parameter
           ∂canonicalLatitudeCauchyJetProductMeasure period) = 0) ∧
       (∀ field test,
         (∫ point,
@@ -132,10 +137,11 @@ theorem certificate
         -2 * P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.cutBulkCanonicalDivergenceMeasure
           period hPeriod massSquared field test Set.univ) :=
   ⟨data.intrinsicWave.toWaveAtlasNaturality,
-    data.toCanonicalNormalSplitData.tangentialDensity_integrable,
-    data.toCanonicalNormalSplitData.toNormalTangentialSplitData
-      |>.tangential_integral_eq_zero,
-    data.toCanonicalNormalSplitData.certificate.2.2.2⟩
+    (data.toCanonicalNormalSplitData period hPeriod).tangentialDensity_integrable
+      period hPeriod,
+    ((data.toCanonicalNormalSplitData period hPeriod).toNormalTangentialSplitData
+      period hPeriod).tangential_integral_eq_zero period hPeriod,
+    ((data.toCanonicalNormalSplitData period hPeriod).certificate period hPeriod).2.2.2⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
 

@@ -23,6 +23,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
@@ -32,6 +33,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerNormalHalfCollarTransport
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreen4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Intrinsic-wave Green data with transport-generated normal component. -/
 structure CanonicalPhysicalScalarIntrinsicWaveTransportedNormalGreenData
@@ -62,7 +64,7 @@ def toTransportedNormalDensityData
       period hPeriod massSquared) :
     CanonicalPhysicalScalarEulerTransportedNormalDensityData
       period hPeriod massSquared where
-  waveNaturality := data.intrinsicWave.toWaveAtlasNaturality
+  waveNaturality := data.intrinsicWave.toWaveAtlasNaturality period hPeriod
   transportData := data.transportData
   halfCollarDivergence_integrable := data.halfCollarDivergence_integrable
   tangential_base_integral_zero := data.tangential_base_integral_zero
@@ -71,7 +73,7 @@ def toTransportedNormalDensityData
 def normalDensity
     (data : CanonicalPhysicalScalarIntrinsicWaveTransportedNormalGreenData
       period hPeriod massSquared) :=
-  data.toTransportedNormalDensityData.normalDensity
+  (data.toTransportedNormalDensityData period hPeriod).normalDensity period hPeriod
 
 /-- Conversion to the smallest canonical-normal Green package. -/
 def toCanonicalNormalGreenData
@@ -80,21 +82,24 @@ def toCanonicalNormalGreenData
     CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
       period hPeriod massSquared where
   intrinsicWave := data.intrinsicWave
-  normalDensity := data.normalDensity
+  normalDensity := data.normalDensity period hPeriod
   normalDensity_integrable :=
-    data.toTransportedNormalDensityData.normalDensity_integrable
+    (data.toTransportedNormalDensityData period hPeriod).normalDensity_integrable
+      period hPeriod
   tangential_base_integral_zero := by
     intro field test normal
-    exact data.toTransportedNormalDensityData.toCanonicalNormalSplitData
+    exact ((data.toTransportedNormalDensityData period hPeriod)
+      |>.toCanonicalNormalSplitData period hPeriod)
       |>.tangential_base_integral_zero field test normal
   normal_integral_eq_halfCollar :=
-    data.toTransportedNormalDensityData.normal_integral_eq_halfCollar
+    (data.toTransportedNormalDensityData period hPeriod).normal_integral_eq_halfCollar
+      period hPeriod
 
 /-- Correct dense physical Green core. -/
 def greenCore
     (data : CanonicalPhysicalScalarIntrinsicWaveTransportedNormalGreenData
       period hPeriod massSquared) :=
-  data.toCanonicalNormalGreenData.greenCore
+  (data.toCanonicalNormalGreenData period hPeriod).greenCore period hPeriod
 
 /-- Transport-generated intrinsic Green certificate. -/
 theorem certificate
@@ -103,11 +108,11 @@ theorem certificate
     P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D.CanonicalPhysicalScalarWaveAtlasNaturality
         period hPeriod ∧
       (∀ field test,
-        Integrable (data.normalDensity field test)
+        Integrable (data.normalDensity period hPeriod field test)
           (canonicalLatitudeCauchyJetProductMeasure period)) ∧
       (∀ field test,
         (∫ parameter,
-          data.normalDensity field test parameter
+          data.normalDensity period hPeriod field test parameter
           ∂canonicalLatitudeCauchyJetProductMeasure period) =
         -2 *
           (∫ base, (∫ normal in (0 : Real)..1,
@@ -122,10 +127,12 @@ theorem certificate
             period hPeriod) =
         -2 * P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.cutBulkCanonicalDivergenceMeasure
           period hPeriod massSquared field test Set.univ) :=
-  ⟨data.intrinsicWave.toWaveAtlasNaturality,
-    data.toTransportedNormalDensityData.normalDensity_integrable,
-    data.toTransportedNormalDensityData.normal_integral_eq_halfCollar,
-    data.toCanonicalNormalGreenData.certificate.2.2.2⟩
+  ⟨data.intrinsicWave.toWaveAtlasNaturality period hPeriod,
+    (data.toTransportedNormalDensityData period hPeriod).normalDensity_integrable
+      period hPeriod,
+    (data.toTransportedNormalDensityData period hPeriod).normal_integral_eq_halfCollar
+      period hPeriod,
+    ((data.toCanonicalNormalGreenData period hPeriod).certificate period hPeriod).2.2.2⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveTransportedNormalGreenData
 

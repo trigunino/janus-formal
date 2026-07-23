@@ -46,8 +46,9 @@ def canonicalLatitudeCauchyNormalProfile (normal : Real) : Real :=
 /-- Smoothness of the value profile. -/
 theorem canonicalLatitudeCauchyValueProfile_contDiff :
     ContDiff Real ∞ canonicalLatitudeCauchyValueProfile := by
-  simpa [canonicalLatitudeCauchyValueProfile] using
-    canonicalLatitudeCollarCutoff_contDiff
+  change ContDiff Real ∞
+    (fun normal : Real => canonicalLatitudeCollarCutoff normal)
+  exact canonicalLatitudeCollarCutoff_contDiff
 
 /-- Smoothness of the normal profile. -/
 theorem canonicalLatitudeCauchyNormalProfile_contDiff :
@@ -59,8 +60,9 @@ theorem canonicalLatitudeCauchyNormalProfile_contDiff :
 theorem canonicalLatitudeCauchyValueProfile_eventuallyEq_one :
     canonicalLatitudeCauchyValueProfile =ᶠ[𝓝 0]
       fun _ : Real => 1 := by
-  simpa [canonicalLatitudeCauchyValueProfile] using
-    (canonicalLatitudeCollarCutoff.eventuallyEq_one)
+  change (fun normal : Real => canonicalLatitudeCollarCutoff normal) =ᶠ[𝓝 0]
+    fun _ : Real => 1
+  exact canonicalLatitudeCollarCutoff.eventuallyEq_one
 
 /-- The normal profile is locally exactly the identity. -/
 theorem canonicalLatitudeCauchyNormalProfile_eventuallyEq_id :
@@ -149,8 +151,9 @@ theorem canonicalLatitudeLocalCauchyExtensionSlice_contDiff
     (base : CanonicalLatitudeBase) :
     ContDiff Real ∞
       (canonicalLatitudeLocalCauchyExtensionSlice data base) := by
-  unfold canonicalLatitudeLocalCauchyExtensionSlice
-  unfold canonicalLatitudeLocalCauchyExtension
+  change ContDiff Real ∞ (fun normal : Real =>
+    canonicalLatitudeCauchyValueProfile normal * data.1 base +
+      canonicalLatitudeCauchyNormalProfile normal * data.2 base)
   exact
     (canonicalLatitudeCauchyValueProfile_contDiff.mul contDiff_const).add
       (canonicalLatitudeCauchyNormalProfile_contDiff.mul contDiff_const)
@@ -191,10 +194,9 @@ theorem canonicalLatitudeLocalCauchyExtensionSlice_hasDerivAt_zero
   have hAffine : HasDerivAt
       (fun normal : Real => data.1 base + normal * data.2 base)
       (data.2 base) 0 := by
-    convert
-      (hasDerivAt_const (x := (0 : Real)) (c := data.1 base)).add
-        ((hasDerivAt_id (x := (0 : Real))).mul_const (data.2 base)) using 1
-    ring
+    simpa using
+      ((hasDerivAt_id (x := (0 : Real))).mul_const (data.2 base)
+        |>.const_add (data.1 base))
   exact hAffine.congr_of_eventuallyEq
     (canonicalLatitudeLocalCauchyExtensionSlice_eventuallyEq_affine data base)
 

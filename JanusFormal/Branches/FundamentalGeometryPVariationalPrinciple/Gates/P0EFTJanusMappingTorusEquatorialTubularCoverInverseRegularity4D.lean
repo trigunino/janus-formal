@@ -31,8 +31,10 @@ open P0EFTJanusMappingTorusSmoothQuotient
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCanonicalLatitudeMinimalDeckInvariantCutoff4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D
 open P0EFTJanusMappingTorusCanonicalLatitudeTubularCollarEmbedding4D
+open P0EFTJanusMappingTorusEquatorialTubularCoverInjectivity4D
 open P0EFTJanusMappingTorusEquatorialTubularCoverInverse4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCoverInverseReduction4D
 
@@ -63,7 +65,7 @@ theorem canonicalLatitudeCoverTime_contMDiff :
 def canonicalLatitudeTubularCoverParameterOnBand
     (point : EffectiveCover period hPeriod)
     (hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod) :
-    CanonicalLatitudeTubularCollar :=
+    CanonicalLatitudeTubularCollar period :=
   let inverse := equatorialTubularMapInverse
     ⟨point.fiber, hPoint⟩
   ((equatorialTwoSphereHomeomorph inverse.1, point.time), inverse.2)
@@ -84,7 +86,11 @@ theorem canonicalLatitudeTubularCoverParameterOnBand_reconstruct
   unfold canonicalLatitudeTubularPhysicalMap canonicalLatitudeTubularCoverMap
   apply congrArg (mappingTorusMk (sphereData period hPeriod))
   apply MappingTorusCover.ext
-  · simpa [inverse, bandPoint, equatorialTubularMap] using hFiber
+  · change equatorialLatitude
+        (equatorialTwoSphereHomeomorph.symm
+          (equatorialTwoSphereHomeomorph inverse.1)) inverse.2.1 =
+        point.fiber
+    simpa [equatorialTubularMap] using hFiber
   · rfl
 
 /-- The only remaining inverse-coordinate regularity input: a smooth standard
@@ -103,8 +109,10 @@ structure CanonicalLatitudeTubularEquatorialBaseRegularityData where
 namespace CanonicalLatitudeTubularEquatorialBaseRegularityData
 
 /-- An arbitrary fallback parameter used only outside the open band. -/
-def fallbackParameter : CanonicalLatitudeTubularCollar :=
-  Classical.choice inferInstance
+def fallbackParameter (base : CanonicalLatitudeBase) :
+    CanonicalLatitudeTubularCollar period := by
+  change CanonicalLatitudeBase × CanonicalLatitudeTubularNormal
+  exact (base, ⟨0, by constructor <;> nlinarith [Real.pi_pos]⟩)
 
 /-- Total tubular parameter function.  On the open band it is the explicit
 inverse; outside the band its value is irrelevant. -/
@@ -112,12 +120,14 @@ def parameter
     (baseData : CanonicalLatitudeTubularEquatorialBaseRegularityData
       period hPeriod)
     (point : EffectiveCover period hPeriod) :
-    CanonicalLatitudeTubularCollar :=
-  if hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod then
-    canonicalLatitudeTubularCoverParameterOnBand
-      period hPeriod point hPoint
-  else
-    fallbackParameter period hPeriod
+    CanonicalLatitudeTubularCollar period := by
+  classical
+  exact
+    if hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod then
+      canonicalLatitudeTubularCoverParameterOnBand
+        period hPeriod point hPoint
+    else
+      fallbackParameter period (baseData.base point, point.time)
 
 /-- Near a band point, the total parameter is the explicit inverse. -/
 theorem parameter_eventuallyEq_onBand
@@ -125,14 +135,16 @@ theorem parameter_eventuallyEq_onBand
       period hPeriod)
     (point : EffectiveCover period hPeriod)
     (hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod) :
-    baseData.parameter =ᶠ[𝓝 point]
-      fun nearby => canonicalLatitudeTubularCoverParameterOnBand
-        period hPeriod nearby
-        (show nearby ∈ canonicalLatitudeCoverTubularBand period hPeriod from
-          Classical.decEq True ▸ hPoint) := by
+    ∀ᶠ nearby in 𝓝 point,
+      ∀ hNearby : nearby ∈
+          canonicalLatitudeCoverTubularBand period hPeriod,
+        baseData.parameter period hPeriod nearby =
+          canonicalLatitudeTubularCoverParameterOnBand
+            period hPeriod nearby hNearby := by
   have hNeighborhood :=
     (canonicalLatitudeCoverTubularBand_isOpen period hPeriod).mem_nhds hPoint
   filter_upwards [hNeighborhood] with nearby hNearby
+  intro _
   simp [parameter, hNearby]
 
 /-- The base component of the total inverse is smooth at every band point. -/
@@ -143,7 +155,7 @@ theorem parameter_base_contMDiffAt
     (hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod) :
     ContMDiffAt coverModelWithCorners
       canonicalLatitudeBaseModelWithCorners ∞
-      (fun nearby => (baseData.parameter nearby).1) point := by
+      (fun nearby => (baseData.parameter period hPeriod nearby).1) point := by
   have hBase : ContMDiffAt coverModelWithCorners (𝓡 2) ∞
       baseData.base point :=
     baseData.smoothAt point hPoint
@@ -170,13 +182,15 @@ theorem parameter_normal_contMDiffAt
     (point : EffectiveCover period hPeriod)
     (hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod) :
     ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
-      (fun nearby => (baseData.parameter nearby).2.1) point := by
+      (fun nearby => (baseData.parameter period hPeriod nearby).2.1) point := by
   let signed := canonicalLatitudeCoverSignedNormal period hPeriod
+  have hSigned : |signed point| < 1 := by
+    simpa [canonicalLatitudeCoverTubularBand, signed] using hPoint
   have hLower : signed point ≠ -1 := by
-    have := (abs_lt.mp hPoint).1
+    have := (abs_lt.mp hSigned).1
     exact ne_of_gt this
   have hUpper : signed point ≠ 1 := by
-    have := (abs_lt.mp hPoint).2
+    have := (abs_lt.mp hSigned).2
     exact ne_of_lt this
   have hArcsin : ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
       (fun nearby => Real.arcsin (signed nearby)) point :=
@@ -190,7 +204,9 @@ theorem parameter_normal_contMDiffAt
     canonicalLatitudeTubularCoverParameterOnBand,
     equatorialTubularMapInverse,
     equatorialTubularNormalInverseSubtype,
-    equatorialTubularNormalInverse, signed]
+    equatorialTubularNormalInverse, signed,
+    canonicalLatitudeCoverSignedNormal,
+    canonicalLatitudeSphereSignedNormal]
 
 /-- Exact reconstruction by the total parameter on the open band. -/
 theorem parameter_reconstruct
@@ -199,7 +215,7 @@ theorem parameter_reconstruct
     (point : EffectiveCover period hPeriod)
     (hPoint : point ∈ canonicalLatitudeCoverTubularBand period hPeriod) :
     canonicalLatitudeTubularPhysicalMap period hPeriod
-        (baseData.parameter point) =
+        (baseData.parameter period hPeriod point) =
       mappingTorusMk (sphereData period hPeriod) point := by
   simp [parameter, hPoint,
     canonicalLatitudeTubularCoverParameterOnBand_reconstruct]
@@ -210,10 +226,12 @@ def toCoverInverseRegularityData
       period hPeriod) :
     CanonicalLatitudeTubularCoverInverseRegularityData
       period hPeriod where
-  parameter := baseData.parameter
-  base_contMDiffAt := baseData.parameter_base_contMDiffAt
-  normal_contMDiffAt := baseData.parameter_normal_contMDiffAt
-  reconstruct := baseData.parameter_reconstruct
+  parameter := baseData.parameter period hPeriod
+  base_contMDiffAt :=
+    baseData.parameter_base_contMDiffAt period hPeriod
+  normal_contMDiffAt :=
+    baseData.parameter_normal_contMDiffAt period hPeriod
+  reconstruct := baseData.parameter_reconstruct period hPeriod
 
 /-- Base-regularity reduction certificate. -/
 theorem certificate
@@ -223,19 +241,21 @@ theorem certificate
       point ∈ canonicalLatitudeCoverTubularBand period hPeriod →
         ContMDiffAt coverModelWithCorners
           canonicalLatitudeBaseModelWithCorners ∞
-          (fun nearby => (baseData.parameter nearby).1) point) ∧
+          (fun nearby =>
+            (baseData.parameter period hPeriod nearby).1) point) ∧
       (∀ point : EffectiveCover period hPeriod,
         point ∈ canonicalLatitudeCoverTubularBand period hPeriod →
           ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
-            (fun nearby => (baseData.parameter nearby).2.1) point) ∧
+            (fun nearby =>
+              (baseData.parameter period hPeriod nearby).2.1) point) ∧
       (∀ point : EffectiveCover period hPeriod,
         point ∈ canonicalLatitudeCoverTubularBand period hPeriod →
           canonicalLatitudeTubularPhysicalMap period hPeriod
-              (baseData.parameter point) =
+              (baseData.parameter period hPeriod point) =
             mappingTorusMk (sphereData period hPeriod) point) :=
-  ⟨baseData.parameter_base_contMDiffAt,
-    baseData.parameter_normal_contMDiffAt,
-    baseData.parameter_reconstruct⟩
+  ⟨baseData.parameter_base_contMDiffAt period hPeriod,
+    baseData.parameter_normal_contMDiffAt period hPeriod,
+    baseData.parameter_reconstruct period hPeriod⟩
 
 end CanonicalLatitudeTubularEquatorialBaseRegularityData
 

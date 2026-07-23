@@ -32,6 +32,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -65,7 +66,7 @@ def toCutoffClosedBoundaryData
     CanonicalPhysicalScalarCutoffClosedBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity) :=
-  boundaryData.extensionBounds.toCutoffClosedBoundaryData
+  boundaryData.extensionBounds.toCutoffClosedBoundaryData period hPeriod
     boundaryData.constructive.toGeometricGreenCoreData
     boundaryData.garding boundaryData.normalRegularity
 
@@ -77,7 +78,8 @@ def triple
     (boundaryData : CanonicalPhysicalScalarCauchyJetClosedBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  boundaryData.toCutoffClosedBoundaryData.triple
+  (boundaryData.toCutoffClosedBoundaryData period hPeriod).triple
+    period hPeriod
 
 /-- Constructed completed boundary inputs. -/
 def completedInputs
@@ -87,7 +89,8 @@ def completedInputs
     (boundaryData : CanonicalPhysicalScalarCauchyJetClosedBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  boundaryData.toCutoffClosedBoundaryData.completedInputs
+  (boundaryData.toCutoffClosedBoundaryData period hPeriod).completedInputs
+    period hPeriod
 
 /-- The zero-Cauchy minimal core is dense. -/
 theorem minimalCoreDense
@@ -98,7 +101,8 @@ theorem minimalCoreDense
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :
     boundaryData.constructive.greenCore.MinimalCoreDense period hPeriod :=
-  (boundaryData.toCutoffClosedBoundaryData.certificate).1
+  ((boundaryData.toCutoffClosedBoundaryData period hPeriod).certificate
+    period hPeriod).1
 
 /-- The maximal graph inclusion is injective. -/
 theorem graphInclusion_injective
@@ -111,7 +115,8 @@ theorem graphInclusion_injective
     Function.Injective
       (canonicalScalarGreenCoreGraphInclusion
         boundaryData.constructive.greenCore.core) :=
-  (boundaryData.toCutoffClosedBoundaryData.certificate).2.1
+  ((boundaryData.toCutoffClosedBoundaryData period hPeriod).certificate
+    period hPeriod).2.1
 
 /-- The completed Cauchy trace is surjective. -/
 theorem completedTrace_surjective
@@ -124,10 +129,13 @@ theorem completedTrace_surjective
     Function.Surjective
       (canonicalScalarGreenCoreCompletedBoundaryTrace
         boundaryData.constructive.greenCore.core
-        boundaryData.toCutoffClosedBoundaryData.toFullyGeometricBoundaryData
-          |>.cutoffEllipticBoundaryData.toEllipticBoundaryData
-            |>.toBoundaryConstructionData.traceBound) :=
-  (boundaryData.toCutoffClosedBoundaryData.certificate).2.2
+        ((((boundaryData.toCutoffClosedBoundaryData period hPeriod)
+          |>.toFullyGeometricBoundaryData period hPeriod)
+          |>.cutoffEllipticBoundaryData period hPeriod)
+          |>.toEllipticBoundaryData period hPeriod
+          |>.toBoundaryConstructionData period hPeriod).traceBound) :=
+  ((boundaryData.toCutoffClosedBoundaryData period hPeriod).certificate
+    period hPeriod).2.2
 
 /-- Constructive Cauchy-jet boundary certificate. -/
 theorem certificate
@@ -147,9 +155,11 @@ theorem certificate
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
           boundaryData.constructive.greenCore.core
-          boundaryData.toCutoffClosedBoundaryData.toFullyGeometricBoundaryData
-            |>.cutoffEllipticBoundaryData.toEllipticBoundaryData
-              |>.toBoundaryConstructionData.traceBound) :=
+          ((((boundaryData.toCutoffClosedBoundaryData period hPeriod)
+            |>.toFullyGeometricBoundaryData period hPeriod)
+            |>.cutoffEllipticBoundaryData period hPeriod)
+            |>.toEllipticBoundaryData period hPeriod
+            |>.toBoundaryConstructionData period hPeriod).traceBound) :=
   ⟨boundaryData.constructive.boundaryTrace_denseRange,
     boundaryData.minimalCoreDense period hPeriod,
     boundaryData.graphInclusion_injective period hPeriod,

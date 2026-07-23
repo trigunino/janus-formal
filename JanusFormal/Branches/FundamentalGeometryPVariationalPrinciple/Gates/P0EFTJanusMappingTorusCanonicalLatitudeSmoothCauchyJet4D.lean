@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetSupport4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetAllWindingDeck4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 
 /-!
@@ -23,6 +24,7 @@ noncomputable section
 
 open scoped Manifold ContDiff
 open Set Topology Filter
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfiles4D
@@ -53,6 +55,8 @@ local instance canonicalLatitudeParameterIsManifold :
     IsManifold canonicalLatitudeParameterModelWithCorners ω
       CanonicalLatitudeParameter :=
   inferInstance
+
+variable {period : Real}
 
 /-- Smooth value and oriented-normal boundary representatives with the correct
 mapping-torus deck parity. -/
@@ -166,7 +170,7 @@ theorem certificate
       (∀ base,
         deriv (fun normal => data.localExtension (base, normal)) 0 =
           data.normal base) ∧
-      (∀ winding parameter,
+      (∀ (winding : Int) (parameter : CanonicalLatitudeParameter),
         data.localExtension
             ((canonicalLatitudeCollarDeckEquiv period ^ winding) parameter) =
           data.localExtension parameter) ∧

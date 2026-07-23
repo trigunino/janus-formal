@@ -27,7 +27,6 @@ open Set Topology
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCompatibilityGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCompatibilityBridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerProductRealization4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
@@ -37,6 +36,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -52,9 +52,10 @@ structure CanonicalPhysicalScalarCauchyJetFinalPDEData
   gardingEnergy : geometric.greenCore.EnergyGardingData period hPeriod
   normalRegularity : geometric.greenCore.NormalEllipticRegularityData
     period hPeriod (Regularity := Regularity)
-  eulerEstimate : geometric.toCauchyJetGeometricData.CauchyJetEulerProductEstimateData
+  eulerEstimate : (geometric.toCauchyJetGeometricData period hPeriod).CauchyJetEulerProductEstimateData
     period hPeriod
-    geometric.toCauchyJetGeometricData.canonicalEulerProductRealization
+    ((geometric.toCauchyJetGeometricData period hPeriod)
+      |>.canonicalEulerProductRealization period hPeriod)
 
 namespace CanonicalPhysicalScalarCauchyJetFinalPDEData
 
@@ -73,7 +74,8 @@ def toReducedPDEData
   gardingEnergy := finalData.gardingEnergy
   normalRegularity := finalData.normalRegularity
   eulerRealization :=
-    finalData.geometric.toCauchyJetGeometricData.canonicalEulerProductRealization
+    (finalData.geometric.toCauchyJetGeometricData period hPeriod)
+      |>.canonicalEulerProductRealization period hPeriod
   eulerEstimate := finalData.eulerEstimate
 
 /-- Genuine completed physical boundary triple. -/
@@ -84,7 +86,7 @@ def triple
     (finalData : CanonicalPhysicalScalarCauchyJetFinalPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  finalData.toReducedPDEData.triple
+  (finalData.toReducedPDEData period hPeriod).triple period hPeriod
 
 /-- Complete physical boundary input. -/
 def completedInputs
@@ -94,7 +96,7 @@ def completedInputs
     (finalData : CanonicalPhysicalScalarCauchyJetFinalPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  finalData.toReducedPDEData.completedInputs
+  (finalData.toReducedPDEData period hPeriod).completedInputs period hPeriod
 
 /-- Bounded completed Cauchy extension. -/
 def completedExtension
@@ -104,7 +106,7 @@ def completedExtension
     (finalData : CanonicalPhysicalScalarCauchyJetFinalPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  finalData.toReducedPDEData.completedExtension
+  (finalData.toReducedPDEData period hPeriod).completedExtension period hPeriod
 
 /-- The sole extension-specific inequality in its final explicit form. -/
 theorem euler_product_bound
@@ -116,12 +118,13 @@ theorem euler_product_bound
       (Regularity := Regularity))
     (data : ValueCore × NormalCore) :
     (∫ parameter,
-      finalData.geometric.toCauchyJetGeometricData.canonicalEulerProductResidual
-        data parameter ^ 2
+      ((finalData.geometric.toCauchyJetGeometricData period hPeriod)
+        |>.canonicalEulerProductResidual period hPeriod data parameter) ^ 2
       ∂P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D.canonicalLatitudeCauchyJetProductMeasure
         period) ≤
       finalData.eulerEstimate.constant ^ 2 *
-        ‖finalData.geometric.toCauchyJetGeometricData.boundaryCoreEmbedding data‖ ^ 2 :=
+        ‖(finalData.geometric.toCauchyJetGeometricData period hPeriod)
+          |>.boundaryCoreEmbedding period hPeriod data‖ ^ 2 :=
   finalData.eulerEstimate.product_bound_sq data
 
 /-- Final reduced physical boundary certificate. -/
@@ -132,20 +135,22 @@ theorem certificate
     (finalData : CanonicalPhysicalScalarCauchyJetFinalPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :
-    finalData.geometric.greenCore.MinimalCoreDense period hPeriod ∧
+    (finalData.geometric.greenCore period hPeriod).MinimalCoreDense period hPeriod ∧
       Function.Injective
         (canonicalScalarGreenCoreGraphInclusion
-          finalData.geometric.greenCore.core) ∧
+          (finalData.geometric.greenCore period hPeriod).core) ∧
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
-          finalData.geometric.greenCore.core
-          (finalData.completedInputs.traceBound finalData.geometric.greenCore)) ∧
+          (finalData.geometric.greenCore period hPeriod).core
+          ((finalData.completedInputs period hPeriod).traceBound period hPeriod
+            (finalData.geometric.greenCore period hPeriod))) ∧
       (∀ boundary,
         canonicalScalarGreenCoreCompletedBoundaryTrace
-            finalData.geometric.greenCore.core
-            (finalData.completedInputs.traceBound finalData.geometric.greenCore)
-            (finalData.completedExtension boundary) = boundary) :=
-  finalData.toReducedPDEData.certificate
+            (finalData.geometric.greenCore period hPeriod).core
+            ((finalData.completedInputs period hPeriod).traceBound period hPeriod
+              (finalData.geometric.greenCore period hPeriod))
+            (finalData.completedExtension period hPeriod boundary) = boundary) :=
+  (finalData.toReducedPDEData period hPeriod).certificate period hPeriod
 
 end CanonicalPhysicalScalarCauchyJetFinalPDEData
 

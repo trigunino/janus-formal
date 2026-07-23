@@ -36,6 +36,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -59,9 +60,10 @@ theorem finalProgramP_certificate
     (source : BulkL2 period hPeriod) :
     Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
-          analytic.boundary.geometric.greenCore.core
-          (analytic.boundary.completedInputs.traceBound
-            analytic.boundary.geometric.greenCore)) ∧
+          (analytic.boundary.geometric.greenCore period hPeriod).core
+          ((analytic.boundary.completedInputs period hPeriod).traceBound
+            period hPeriod
+            (analytic.boundary.geometric.greenCore period hPeriod))) ∧
       analytic.boundary.triple.actualAdjointDomain analytic.condition =
         analytic.boundary.triple.realizationDomain analytic.condition ∧
       analytic.boundary.triple.lagrangianShiftedOperator
@@ -84,7 +86,7 @@ theorem finalProgramP_certificate
               analytic.condition spectralParameter ∨
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
-  ⟨analytic.boundary.certificate.2.2.2.2.1,
+  ⟨(analytic.boundary.certificate period hPeriod).2.2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.sourceSolution_equation period hPeriod source,
     analytic.sourceSolution_stationary period hPeriod source,

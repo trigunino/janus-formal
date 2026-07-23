@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetBoundaryCoreLp4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetSquaredGraphBound4D
 
 /-!
 # Reduction of the physical Cauchy `L²` estimate to a product integral
@@ -16,26 +17,44 @@ the graph estimate.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetBulkL2Reduction4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open scoped ENNReal Manifold ContDiff
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusL2PTFunctionalSpace4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfiles4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetDeckGluing4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCandidateExtension4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGraphBound4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetSquaredGraphBound4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
 
 local instance canonicalLorentzVolumeFinite :
     IsFiniteMeasure
@@ -55,8 +74,8 @@ def localProductExtension
     (data : ValueCore × NormalCore)
     (parameter : CanonicalLatitudeCauchyJetProductParameter) : Real :=
   canonicalLatitudeLocalCauchyExtension
-    (geometric.boundaryCore.valueRepresentative data.1,
-      geometric.boundaryCore.normalRepresentative data.2)
+    ((geometric.candidateExtension period hPeriod).valueRepresentative data.1,
+      (geometric.candidateExtension period hPeriod).normalRepresentative data.2)
     parameter
 
 /-- Squared physical norm as a bulk integral. -/
@@ -67,18 +86,20 @@ theorem inclusion_norm_sq_eq_bulk_integral
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 =
+    ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ ^ 2 =
       ∫ point,
-        geometric.extension data point ^ 2
+        geometric.extension period hPeriod data point ^ 2
         ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod := by
-  change ‖smoothToCanonicalPhysicalBulkL2 period hPeriod
-      (geometric.extension data)‖ ^ 2 = _
+  change ‖smoothFieldToL2 period hPeriod Real
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+      (geometric.extension period hPeriod data)‖ ^ 2 = _
   rw [← real_inner_self_eq_norm_sq, MeasureTheory.L2.inner_def]
   apply integral_congr_ae
   filter_upwards
     [smoothFieldToL2_ae period hPeriod Real
       (intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
-      (geometric.extension data)]
+      (geometric.extension period hPeriod data)]
     with point hPoint
   rw [hPoint]
   simp [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
@@ -92,10 +113,10 @@ theorem bulk_integral_eq_product_integral
       period hPeriod massSquared ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     (∫ point,
-        geometric.extension data point ^ 2
+        geometric.extension period hPeriod data point ^ 2
         ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod) =
       ∫ parameter,
-        geometric.localProductExtension data parameter ^ 2
+        geometric.localProductExtension period hPeriod data parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period := by
   let map := canonicalLatitudeCauchyJetProductPhysicalMap period hPeriod
   let sourceMeasure := canonicalLatitudeCauchyJetProductMeasure period
@@ -103,23 +124,34 @@ theorem bulk_integral_eq_product_integral
   have hMeasure := canonicalLatitudeCauchyJetProductPhysicalMap_measurePreserving
     period hPeriod
   have hIntegrable : Integrable
-      (fun point => geometric.extension data point ^ 2) targetMeasure :=
+      (fun point => geometric.extension period hPeriod data point ^ 2)
+        targetMeasure :=
     (P0EFTJanusMappingTorusL2PTFunctionalSpace4D.smoothQuotientField_memLp
       period hPeriod Real targetMeasure
-      (geometric.extension data)).integrable_sq
-  have hMapIntegral := hMeasure.integral_comp hIntegrable
+      (geometric.extension period hPeriod data)).integrable_sq
+  have hStronglyMeasurable : AEStronglyMeasurable
+      (fun point => geometric.extension period hPeriod data point ^ 2)
+      (Measure.map map sourceMeasure) := by
+    rw [hMeasure.map_eq]
+    exact hIntegrable.aestronglyMeasurable
+  have hMapIntegral := MeasureTheory.integral_map
+    hMeasure.measurable.aemeasurable hStronglyMeasurable
+  rw [hMeasure.map_eq] at hMapIntegral
   rw [hMapIntegral]
   apply integral_congr_ae
   filter_upwards
     [ae_productCoarea_normal_mem_latitudeAngle period]
     with parameter hNormal
   have hCandidate :=
-    (geometric.boundaryCore.deckData data).globalCandidate_productCoarea
+    ((geometric.candidateExtension period hPeriod).deckData
+      period hPeriod data).globalCandidate_productCoarea
       period hPeriod parameter hNormal
-  change geometric.extension data (map parameter) ^ 2 = _
-  simpa [CanonicalPhysicalScalarCauchyJetGeometricData.extension,
+  change geometric.extension period hPeriod data (map parameter) ^ 2 = _
+  simpa [map, CanonicalPhysicalScalarCauchyJetGeometricData.extension,
     CanonicalPhysicalScalarCauchyJetCandidateExtensionData.extension,
     CanonicalPhysicalScalarCauchyJetCandidateExtensionData.deckData,
+    canonicalLatitudeDeckCauchyDataLinearMapOfRepresentatives,
+    canonicalLatitudeDeckCauchyDataOfRepresentatives,
     CanonicalPhysicalScalarCauchyJetGeometricData.localProductExtension]
     using congrArg (fun value : Real => value ^ 2) hCandidate
 
@@ -131,12 +163,13 @@ theorem inclusion_norm_sq_eq_product_integral
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 =
+    ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ ^ 2 =
       ∫ parameter,
-        geometric.localProductExtension data parameter ^ 2
+        geometric.localProductExtension period hPeriod data parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period := by
-  rw [geometric.inclusion_norm_sq_eq_bulk_integral,
-    geometric.bulk_integral_eq_product_integral]
+  rw [geometric.inclusion_norm_sq_eq_bulk_integral period hPeriod,
+    geometric.bulk_integral_eq_product_integral period hPeriod]
 
 /-- Product-integral estimate for the local explicit jet. -/
 structure CauchyJetProductL2EstimateData
@@ -149,9 +182,10 @@ structure CauchyJetProductL2EstimateData
   nonnegative : 0 ≤ constant
   product_bound_sq : ∀ data : ValueCore × NormalCore,
     (∫ parameter,
-      geometric.localProductExtension data parameter ^ 2
+      geometric.localProductExtension period hPeriod data parameter ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-        constant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+        constant ^ 2 *
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
 
 namespace CauchyJetProductL2EstimateData
 
@@ -164,9 +198,11 @@ theorem inclusion_bound_sq
       period hPeriod massSquared ValueCore NormalCore}
     (estimate : geometric.CauchyJetProductL2EstimateData period hPeriod)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 ≤
-      estimate.constant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
-  rw [geometric.inclusion_norm_sq_eq_product_integral]
+    ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ ^ 2 ≤
+      estimate.constant ^ 2 *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
+  rw [geometric.inclusion_norm_sq_eq_product_integral period hPeriod]
   exact estimate.product_bound_sq data
 
 /-- Combine the now-physical bulk estimate with a squared Euler-residual
@@ -180,14 +216,16 @@ def toSquaredComponentGraphEstimateData
     (estimate : geometric.CauchyJetProductL2EstimateData period hPeriod)
     (operatorConstant : Real) (hOperatorConstant : 0 ≤ operatorConstant)
     (operatorBound : ∀ data : ValueCore × NormalCore,
-      ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 ≤
-        operatorConstant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2) :
+      ‖(geometric.greenCore period hPeriod).core.operator
+          (geometric.extension period hPeriod data)‖ ^ 2 ≤
+        operatorConstant ^ 2 *
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2) :
     geometric.CauchyJetSquaredComponentGraphEstimateData period hPeriod where
   inclusionConstant := estimate.constant
   inclusionConstant_nonnegative := estimate.nonnegative
   operatorConstant := operatorConstant
   operatorConstant_nonnegative := hOperatorConstant
-  inclusion_bound_sq := estimate.inclusion_bound_sq
+  inclusion_bound_sq := estimate.inclusion_bound_sq period hPeriod
   operator_bound_sq := operatorBound
 
 /-- Bulk-`L²` reduction certificate. -/
@@ -199,20 +237,23 @@ theorem certificate
       period hPeriod massSquared ValueCore NormalCore}
     (estimate : geometric.CauchyJetProductL2EstimateData period hPeriod) :
     (∀ data : ValueCore × NormalCore,
-      ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 =
+      ‖(geometric.greenCore period hPeriod).core.inclusion
+          (geometric.extension period hPeriod data)‖ ^ 2 =
         ∫ parameter,
-          geometric.localProductExtension data parameter ^ 2
+          geometric.localProductExtension period hPeriod data parameter ^ 2
           ∂canonicalLatitudeCauchyJetProductMeasure period) ∧
       (∀ data : ValueCore × NormalCore,
-        ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 ≤
-          estimate.constant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2) :=
-  ⟨geometric.inclusion_norm_sq_eq_product_integral,
-    estimate.inclusion_bound_sq⟩
+        ‖(geometric.greenCore period hPeriod).core.inclusion
+            (geometric.extension period hPeriod data)‖ ^ 2 ≤
+          estimate.constant ^ 2 *
+            ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2) :=
+  ⟨geometric.inclusion_norm_sq_eq_product_integral period hPeriod,
+    estimate.inclusion_bound_sq period hPeriod⟩
 
 end CauchyJetProductL2EstimateData
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetBulkL2Reduction4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

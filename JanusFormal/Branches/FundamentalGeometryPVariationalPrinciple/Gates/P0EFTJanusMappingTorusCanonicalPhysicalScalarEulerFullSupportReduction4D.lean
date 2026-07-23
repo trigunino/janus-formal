@@ -30,12 +30,14 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerLinearity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Compatibility-only physical Euler data. -/
 structure CanonicalPhysicalScalarEulerCompatibilityOnlyData
@@ -75,7 +77,7 @@ theorem residual_eq_zero_of_ae_eq_zero
   letI : (intrinsicCanonicalLorentzVolumeMeasure
     period hPeriod).IsOpenPosMeasure := openPositive
   exact Measure.eq_of_ae_eq hZero
-    (data.residual_continuous field) continuous_const
+    (data.residual_continuous period hPeriod field) continuous_const
 
 /-- Full compatibility data generated from one global full-support theorem. -/
 def toCompatibilityData
@@ -88,7 +90,7 @@ def toCompatibilityData
       period hPeriod massSquared where
   compatible := data.compatible
   ae_zero_eq_zero :=
-    data.residual_eq_zero_of_ae_eq_zero openPositive
+    data.residual_eq_zero_of_ae_eq_zero period hPeriod openPositive
 
 /-- Genuine bulk `L²` Euler operator from compatibility and full support. -/
 def toBulkL2LinearMap
@@ -97,7 +99,7 @@ def toBulkL2LinearMap
     (openPositive :
       (intrinsicCanonicalLorentzVolumeMeasure
         period hPeriod).IsOpenPosMeasure) :=
-  (data.toCompatibilityData openPositive).toBulkL2LinearMap
+  (data.toCompatibilityData period hPeriod openPositive).toBulkL2LinearMap
 
 /-- Compatibility/full-support reduction certificate. -/
 theorem certificate
@@ -116,8 +118,8 @@ theorem certificate
               intrinsicCanonicalLorentzVolumeMeasure period hPeriod] 0 →
           canonicalPhysicalScalarEulerGlobalResidual
             period hPeriod massSquared field = 0) :=
-  ⟨data.residual_continuous,
-    data.residual_eq_zero_of_ae_eq_zero openPositive⟩
+  ⟨data.residual_continuous period hPeriod,
+    data.residual_eq_zero_of_ae_eq_zero period hPeriod openPositive⟩
 
 end CanonicalPhysicalScalarEulerCompatibilityOnlyData
 

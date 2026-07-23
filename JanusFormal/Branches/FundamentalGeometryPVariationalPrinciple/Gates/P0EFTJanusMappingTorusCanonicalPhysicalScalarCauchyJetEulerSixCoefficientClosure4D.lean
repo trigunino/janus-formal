@@ -25,7 +25,7 @@ PDE-specific.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSixCoefficientClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -36,14 +36,12 @@ open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetEulerNormalProfiles4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerProductRealization4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerFiniteExpansion4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSeparatedExpansion4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev ProfileIndex :=
   CanonicalLatitudeCauchyJetEulerNormalProfileIndex
@@ -91,7 +89,7 @@ structure CauchyJetEulerSixCoefficientData
       coefficient index data base ^ 2
       ∂canonicalLatitudeBaseMeasure period) ≤
         coefficientConstant index ^ 2 *
-          ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
   residual_sq_integrable : ∀ data,
     Integrable
       (fun parameter => realization.residual data parameter ^ 2)
@@ -140,7 +138,7 @@ theorem scaledNormalProfile_sq_integrable
       period hPeriod realization)
     (index : ProfileIndex) :
     Integrable
-      (fun normal => data.scaledNormalProfile index normal ^ 2)
+      (fun normal => data.scaledNormalProfile period hPeriod index normal ^ 2)
       canonicalLatitudeCauchyJetNormalMeasure := by
   unfold scaledNormalProfile
   have hProfile :=
@@ -163,7 +161,7 @@ theorem scaled_component_sq_integrable
     (index : ProfileIndex) (boundary : ValueCore × NormalCore) :
     Integrable
       (fun parameter : CanonicalLatitudeCauchyJetProductParameter =>
-        (data.scaledNormalProfile index parameter.2 *
+        (data.scaledNormalProfile period hPeriod index parameter.2 *
           data.coefficient index boundary parameter.1) ^ 2)
       (canonicalLatitudeCauchyJetProductMeasure period) := by
   have hOriginal := data.separated_component_sq_integrable index boundary
@@ -172,7 +170,6 @@ theorem scaled_component_sq_integrable
   unfold scaledNormalProfile
   rw [mul_assoc, mul_pow,
     Real.sq_sqrt (by norm_num : (0 : Real) ≤ 6)]
-  ring
 
 /-- Pointwise square majorization by the six rescaled components. -/
 theorem residual_sq_le_scaled_sum
@@ -189,7 +186,7 @@ theorem residual_sq_le_scaled_sum
     (parameter : CanonicalLatitudeCauchyJetProductParameter) :
     realization.residual boundary parameter ^ 2 ≤
       ∑ index : ProfileIndex,
-        (data.scaledNormalProfile index parameter.2 *
+        (data.scaledNormalProfile period hPeriod index parameter.2 *
           data.coefficient index boundary parameter.1) ^ 2 := by
   let a := canonicalLatitudeCauchyJetEulerNormalProfile .value parameter.2 *
     data.coefficient .value boundary parameter.1
@@ -205,8 +202,18 @@ theorem residual_sq_le_scaled_sum
     data.coefficient .normalSecond boundary parameter.1
   have hSix := six_term_sum_sq_le a b c d e f
   rw [data.residual_eq]
-  simpa [a, b, c, d, e, f, scaledNormalProfile, mul_pow,
-    Real.sq_sqrt (by norm_num : (0 : Real) ≤ 6)] using hSix
+  calc
+    _ ≤ 6 * (a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 + f ^ 2) := by
+      simpa [a, b, c, d, e, f] using hSix
+    _ = ∑ index : ProfileIndex,
+        (data.scaledNormalProfile period hPeriod index parameter.2 *
+          data.coefficient index boundary parameter.1) ^ 2 := by
+      rw [show (Finset.univ : Finset ProfileIndex) =
+        {.value, .normal, .valueFirst, .normalFirst, .valueSecond, .normalSecond} by
+          decide]
+      simp [a, b, c, d, e, f, scaledNormalProfile, mul_pow,
+        Real.sq_sqrt (by norm_num : (0 : Real) ≤ 6)]
+      ring
 
 /-- Conversion to the separated expansion interface. -/
 def toSeparatedExpansionData
@@ -221,16 +228,16 @@ def toSeparatedExpansionData
       period hPeriod realization) :
     geometric.CauchyJetEulerSeparatedExpansionData
       period hPeriod realization ProfileIndex where
-  normalProfile := data.scaledNormalProfile
+  normalProfile := data.scaledNormalProfile period hPeriod
   boundaryCoefficient := data.coefficient
   coefficientConstant := data.coefficientConstant
   coefficientConstant_nonnegative := data.coefficientConstant_nonnegative
-  normalProfile_sq_integrable := data.scaledNormalProfile_sq_integrable
+  normalProfile_sq_integrable := data.scaledNormalProfile_sq_integrable period hPeriod
   boundaryCoefficient_sq_integrable := data.coefficient_sq_integrable
-  component_sq_integrable := data.scaled_component_sq_integrable
+  component_sq_integrable := data.scaled_component_sq_integrable period hPeriod
   coefficient_bound_sq := data.coefficient_bound_sq
   residual_sq_integrable := data.residual_sq_integrable
-  residual_sq_le_sum := data.residual_sq_le_scaled_sum
+  residual_sq_le_sum := data.residual_sq_le_scaled_sum period hPeriod
 
 /-- Final Euler product estimate from the six tangential coefficient estimates. -/
 def toEulerProductEstimateData
@@ -244,7 +251,8 @@ def toEulerProductEstimateData
     (data : geometric.CauchyJetEulerSixCoefficientData
       period hPeriod realization) :
     geometric.CauchyJetEulerProductEstimateData period hPeriod realization :=
-  data.toSeparatedExpansionData.toEulerProductEstimateData
+  (data.toSeparatedExpansionData period hPeriod).toEulerProductEstimateData
+    period hPeriod
 
 /-- Six-coefficient closure certificate. -/
 theorem certificate
@@ -261,14 +269,16 @@ theorem certificate
       (∫ parameter,
         realization.residual boundary parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-        data.toSeparatedExpansionData.toFiniteExpansionData.combinedConstant ^ 2 *
-          ‖geometric.boundaryCoreEmbedding boundary‖ ^ 2 :=
-  data.toSeparatedExpansionData.toFiniteExpansionData.product_bound_sq
+        ((data.toSeparatedExpansionData period hPeriod).toFiniteExpansionData
+          period hPeriod).combinedConstant ^ 2 *
+          ‖geometric.boundaryCoreEmbedding period hPeriod boundary‖ ^ 2 :=
+  ((data.toSeparatedExpansionData period hPeriod).toFiniteExpansionData
+    period hPeriod).product_bound_sq period hPeriod
 
 end CauchyJetEulerSixCoefficientData
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSixCoefficientClosure4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

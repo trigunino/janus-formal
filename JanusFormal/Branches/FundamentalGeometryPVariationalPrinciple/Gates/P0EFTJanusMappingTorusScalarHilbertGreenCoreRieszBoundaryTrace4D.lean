@@ -1,4 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Analysis.InnerProductSpace.ProdL2
 import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.PiProd
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarBoundaryCauchyGraphExtension4D
 
@@ -38,6 +39,9 @@ trace regularity theorem in the boundary-triple construction.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreRieszBoundaryTrace4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreRieszBoundaryTrace4D
+
+namespace P0EFTJanusMappingTorusScalarBoundaryCauchyGraphExtension4D
 
 set_option autoImplicit false
 noncomputable section
@@ -64,6 +68,9 @@ variable {Domain : Type u} {Ambient : Type v} {Trace : Type w}
 
 private abbrev Boundary :=
   CanonicalScalarHilbertBoundaryDatum (Trace := Trace)
+
+private abbrev HilbertBoundary :=
+  WithLp 2 (CanonicalScalarHilbertBoundaryDatum (Trace := Trace))
 
 /-- Boundary complex structure `J(u,n)=(-n,u)`. -/
 def canonicalScalarHilbertBoundaryComplexStructure :
@@ -116,20 +123,22 @@ theorem canonicalScalarHilbertBoundarySymplecticForm_eq_inner_complexStructure
     (first second : Boundary (Trace := Trace)) :
     canonicalScalarHilbertBoundarySymplecticForm first second =
       inner Real
-        (canonicalScalarHilbertBoundaryComplexStructure first) second := by
+        (WithLp.toLp 2
+          (canonicalScalarHilbertBoundaryComplexStructure first))
+        (WithLp.toLp 2 second) := by
   simp [canonicalScalarHilbertBoundarySymplecticForm,
     canonicalScalarHilbertBoundaryComplexStructure,
-    real_inner_neg_left, add_comm]
+    WithLp.prod_inner_apply, inner_neg_left, add_comm, sub_eq_add_neg]
 
 /-- Applying `-J` converts the Hilbert pairing back to the symplectic form. -/
 theorem canonicalScalarHilbertBoundarySymplecticForm_complexStructureInv
     (first second : Boundary (Trace := Trace)) :
     canonicalScalarHilbertBoundarySymplecticForm
         (canonicalScalarHilbertBoundaryComplexStructureInv first) second =
-      inner Real first second := by
+      inner Real (WithLp.toLp 2 first) (WithLp.toLp 2 second) := by
   simp [canonicalScalarHilbertBoundarySymplecticForm,
     canonicalScalarHilbertBoundaryComplexStructureInv,
-    real_inner_neg_left, add_comm]
+    WithLp.prod_inner_apply, inner_neg_left, add_comm]
 
 /-- Equality of symplectic pairings on a dense boundary core separates boundary
 vectors. -/
@@ -168,17 +177,25 @@ theorem canonicalScalarHilbertBoundary_eq_of_symplectic_eq_on_dense
     canonicalScalarHilbertBoundaryComplexStructure first -
       canonicalScalarHilbertBoundaryComplexStructure second
   have hAt := hAll differenceJ
-  have hInner : inner Real differenceJ differenceJ = 0 := by
-    dsimp [differenceJ]
-    rw [inner_sub_left,
+  have hInner :
+      inner Real (WithLp.toLp 2 differenceJ)
+        (WithLp.toLp 2 differenceJ) = 0 := by
+    change inner Real
+      (WithLp.toLp 2
+        (canonicalScalarHilbertBoundaryComplexStructure first -
+          canonicalScalarHilbertBoundaryComplexStructure second))
+      (WithLp.toLp 2 differenceJ) = 0
+    rw [WithLp.toLp_sub, inner_sub_left,
       ← canonicalScalarHilbertBoundarySymplecticForm_eq_inner_complexStructure,
       ← canonicalScalarHilbertBoundarySymplecticForm_eq_inner_complexStructure]
     exact sub_eq_zero.mpr hAt
-  have hNormSq : ‖differenceJ‖ ^ 2 = 0 := by
+  have hNormSq : ‖WithLp.toLp 2 differenceJ‖ ^ 2 = 0 := by
     simpa [real_inner_self_eq_norm_sq] using hInner
-  have hDifferenceJ : differenceJ = 0 := by
+  have hDifferenceJL2 : WithLp.toLp 2 differenceJ = 0 := by
     apply norm_eq_zero.mp
-    nlinarith [sq_nonneg ‖differenceJ‖]
+    nlinarith [sq_nonneg ‖WithLp.toLp 2 differenceJ‖]
+  have hDifferenceJ : differenceJ = 0 := by
+    exact WithLp.toLp_injective 2 (by simpa using hDifferenceJL2)
   apply canonicalScalarHilbertBoundaryComplexStructure_injective
   exact sub_eq_zero.mp hDifferenceJ
 
@@ -206,15 +223,33 @@ def extensionOperator
   (canonicalScalarGreenCoreGraphOperator core).comp
     extensionData.completedExtension
 
+/-- Ambient inclusion with the boundary pair equipped with its L² Hilbert
+norm. -/
+def hilbertExtensionInclusion
+    (extensionData : CanonicalScalarBoundedSmoothCauchyExtensionData
+      (ValueCore := ValueCore) (NormalCore := NormalCore) core) :
+    HilbertBoundary (Trace := Trace) →L[Real] Ambient :=
+  extensionData.extensionInclusion.comp
+    (WithLp.prodContinuousLinearEquiv 2 Real Trace Trace).toContinuousLinearMap
+
+/-- Operator coordinate with the boundary pair equipped with its L² Hilbert
+norm. -/
+def hilbertExtensionOperator
+    (extensionData : CanonicalScalarBoundedSmoothCauchyExtensionData
+      (ValueCore := ValueCore) (NormalCore := NormalCore) core) :
+    HilbertBoundary (Trace := Trace) →L[Real] Ambient :=
+  extensionData.extensionOperator.comp
+    (WithLp.prodContinuousLinearEquiv 2 Real Trace Trace).toContinuousLinearMap
+
 /-- Riesz representative of the Green defect against the completed extension. -/
 def greenRieszMap
     (extensionData : CanonicalScalarBoundedSmoothCauchyExtensionData
       (ValueCore := ValueCore) (NormalCore := NormalCore) core) :
     CanonicalScalarGreenCoreGraphSpace core →L[Real]
-      Boundary (Trace := Trace) :=
-  ((extensionData.extensionInclusion)†).comp
+      HilbertBoundary (Trace := Trace) :=
+  ((extensionData.hilbertExtensionInclusion)†).comp
       (canonicalScalarGreenCoreGraphOperator core) -
-    ((extensionData.extensionOperator)†).comp
+    ((extensionData.hilbertExtensionOperator)†).comp
       (canonicalScalarGreenCoreGraphInclusion core)
 
 /-- Riesz-constructed completed Cauchy trace. -/
@@ -224,7 +259,8 @@ def rieszBoundaryTrace
     CanonicalScalarGreenCoreGraphSpace core →L[Real]
       Boundary (Trace := Trace) :=
   canonicalScalarHilbertBoundaryComplexStructureInv.comp
-    ((1 / 2 : Real) • extensionData.greenRieszMap)
+    ((WithLp.prodContinuousLinearEquiv 2 Real Trace Trace).toContinuousLinearMap.comp
+      ((1 / 2 : Real) • extensionData.greenRieszMap))
 
 /-- Inner-product formula for the Green Riesz representative. -/
 theorem greenRieszMap_inner
@@ -232,15 +268,19 @@ theorem greenRieszMap_inner
       (ValueCore := ValueCore) (NormalCore := NormalCore) core)
     (field : CanonicalScalarGreenCoreGraphSpace core)
     (boundary : Boundary (Trace := Trace)) :
-    inner Real (extensionData.greenRieszMap field) boundary =
+    inner Real (extensionData.greenRieszMap field)
+        (WithLp.toLp 2 boundary) =
       inner Real (canonicalScalarGreenCoreGraphOperator core field)
           (extensionData.extensionInclusion boundary) -
         inner Real (canonicalScalarGreenCoreGraphInclusion core field)
           (extensionData.extensionOperator boundary) := by
   unfold greenRieszMap
-  rw [ContinuousLinearMap.sub_apply, inner_sub_left,
+  rw [ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.comp_apply,
+    inner_sub_left,
     ContinuousLinearMap.adjoint_inner_left,
     ContinuousLinearMap.adjoint_inner_left]
+  simp [hilbertExtensionInclusion, hilbertExtensionOperator]
 
 /-- The Riesz trace represents the completed Green defect. -/
 theorem rieszBoundaryTrace_green_pairing
@@ -255,8 +295,14 @@ theorem rieszBoundaryTrace_green_pairing
         inner Real (canonicalScalarGreenCoreGraphInclusion core field)
           (extensionData.extensionOperator boundary) := by
   unfold rieszBoundaryTrace
+  change 2 * canonicalScalarHilbertBoundarySymplecticForm
+      (canonicalScalarHilbertBoundaryComplexStructureInv
+        (WithLp.ofLp
+          ((1 / 2 : Real) • extensionData.greenRieszMap field)))
+      boundary = _
   rw [canonicalScalarHilbertBoundarySymplecticForm_complexStructureInv]
-  rw [real_inner_smul_left, extensionData.greenRieszMap_inner]
+  rw [WithLp.toLp_ofLp, real_inner_smul_left,
+    extensionData.greenRieszMap_inner]
   ring
 
 /-- The Riesz trace agrees with the original smooth Cauchy trace. -/
@@ -274,6 +320,8 @@ theorem rieszBoundaryTrace_smooth
   have hRiesz := extensionData.rieszBoundaryTrace_green_pairing
     (canonicalScalarGreenCoreToGraph core field)
     (extensionData.boundaryCoreEmbedding data)
+  simp only [extensionInclusion, extensionOperator,
+    ContinuousLinearMap.comp_apply] at hRiesz
   rw [extensionData.completedExtension_core] at hRiesz
   have hRiesz' :
       2 * canonicalScalarHilbertBoundarySymplecticForm
@@ -289,7 +337,16 @@ theorem rieszBoundaryTrace_smooth
   have hGreen := core.green_identity field
     (extensionData.smooth.extension data)
   rw [extensionData.smooth.boundary_extension data] at hGreen
-  nlinarith [hRiesz', hGreen]
+  have hGreen' :
+      inner Real (core.operator field)
+          (core.inclusion (extensionData.smooth.extension data)) -
+        inner Real (core.inclusion field)
+          (core.operator (extensionData.smooth.extension data)) =
+        2 * canonicalScalarHilbertBoundarySymplecticForm
+          (core.boundaryTrace field)
+          (extensionData.boundaryCoreEmbedding data) := by
+    simpa [boundaryCoreEmbedding] using hGreen
+  nlinarith [hRiesz', hGreen']
 
 /-- The operator norm of the Riesz trace supplies the complete smooth graph
 trace estimate. -/
@@ -298,7 +355,8 @@ def rieszBoundaryGraphBound
       (ValueCore := ValueCore) (NormalCore := NormalCore) core) :
     HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound core where
   constant := ‖extensionData.rieszBoundaryTrace‖
-  nonnegative := norm_nonneg _
+  nonnegative :=
+    ContinuousLinearMap.opNorm_nonneg extensionData.rieszBoundaryTrace
   bound := by
     intro field
     rw [← extensionData.rieszBoundaryTrace_smooth field]
@@ -324,6 +382,11 @@ theorem completedBoundaryTrace_eq_rieszBoundaryTrace
     apply isClosed_eq <;> fun_prop
   have hRange : Set.range (canonicalScalarGreenCoreToGraph core) ⊆ good := by
     rintro candidate ⟨smoothField, rfl⟩
+    change canonicalScalarGreenCoreCompletedBoundaryTrace core
+        extensionData.rieszBoundaryGraphBound
+          (canonicalScalarGreenCoreToGraph core smoothField) =
+      extensionData.rieszBoundaryTrace
+        (canonicalScalarGreenCoreToGraph core smoothField)
     rw [canonicalScalarGreenCoreCompletedBoundaryTrace_smooth,
       extensionData.rieszBoundaryTrace_smooth]
   have hClosure : closure
@@ -392,5 +455,5 @@ theorem rieszBoundaryTrace_certificate
 end CanonicalScalarBoundedSmoothCauchyExtensionData
 
 end
-end P0EFTJanusMappingTorusScalarHilbertGreenCoreRieszBoundaryTrace4D
+end P0EFTJanusMappingTorusScalarBoundaryCauchyGraphExtension4D
 end JanusFormal

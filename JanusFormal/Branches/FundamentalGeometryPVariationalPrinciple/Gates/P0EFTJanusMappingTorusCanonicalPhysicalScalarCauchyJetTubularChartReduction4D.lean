@@ -30,7 +30,9 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfiles4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetDeckGluing4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothCauchyJet4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGlobalCandidate4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetOpenCoverSmoothness4D
@@ -89,9 +91,13 @@ def smoothDeckData
       period ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     SmoothCanonicalLatitudeDeckCauchyData period where
-  toCanonicalLatitudeDeckCauchyData := smoothCore.core.deckData data
+  value := (smoothCore.core.deckData period data).value
+  normal := (smoothCore.core.deckData period data).normal
   value_contMDiff := smoothCore.value_contMDiff data.1
   normal_contMDiff := smoothCore.normal_contMDiff data.2
+  value_periodic := (smoothCore.core.deckData period data).value_periodic
+  normal_antiperiodic :=
+    (smoothCore.core.deckData period data).normal_antiperiodic
 
 end CanonicalPhysicalScalarSmoothCauchyJetBoundaryCoreData
 
@@ -120,6 +126,8 @@ structure CanonicalLatitudeCauchyJetTubularAtlasData where
 
 namespace CanonicalLatitudeCauchyJetLocalChartAt
 
+variable {point : EffectiveQuotient period hPeriod}
+
 /-- Smooth boundary data make the local chart expression smooth. -/
 theorem localExpression_contMDiffAt
     (chart : CanonicalLatitudeCauchyJetLocalChartAt period hPeriod point)
@@ -140,9 +148,10 @@ theorem candidate_contMDiffAt
     (chart : CanonicalLatitudeCauchyJetLocalChartAt period hPeriod point)
     (data : SmoothCanonicalLatitudeDeckCauchyData period) :
     ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
-      (canonicalLatitudeCauchyJetGlobalCandidate period hPeriod data) point :=
-  (chart.localExpression_contMDiffAt data).congr_of_eventuallyEq
-    (chart.candidate_eventuallyEq data).symm
+      (canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+        data.toDeckCauchyData) point :=
+  (chart.localExpression_contMDiffAt period hPeriod data).congr_of_eventuallyEq
+    (chart.candidate_eventuallyEq data.toDeckCauchyData)
 
 end CanonicalLatitudeCauchyJetLocalChartAt
 
@@ -155,8 +164,9 @@ theorem candidate_contMDiffAt
     (point : EffectiveQuotient period hPeriod)
     (hPoint : point ∈ canonicalLatitudeCauchyJetTubularRegion period hPeriod) :
     ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
-      (canonicalLatitudeCauchyJetGlobalCandidate period hPeriod data) point :=
-  (atlas.chartAt point hPoint).candidate_contMDiffAt data
+      (canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+        data.toDeckCauchyData) point :=
+  (atlas.chartAt point hPoint).candidate_contMDiffAt period hPeriod data
 
 /-- Convert smooth boundary cores and the local atlas to the sole tubular
 smoothness package required by the polar open-cover theorem. -/
@@ -172,8 +182,8 @@ def toTubularSmoothnessData
   core := smoothCore.core
   tubular_smoothAt := by
     intro data point hPoint
-    exact atlas.candidate_contMDiffAt
-      (smoothCore.smoothDeckData data) point hPoint
+    exact atlas.candidate_contMDiffAt period hPeriod
+      (smoothCore.smoothDeckData period data) point hPoint
 
 /-- Install the complete globally smooth candidate extension. -/
 def toCandidateExtensionData
@@ -183,7 +193,8 @@ def toCandidateExtensionData
     (atlas : CanonicalLatitudeCauchyJetTubularAtlasData period hPeriod)
     (smoothCore : CanonicalPhysicalScalarSmoothCauchyJetBoundaryCoreData
       period ValueCore NormalCore) :=
-  (atlas.toTubularSmoothnessData smoothCore).toCandidateExtensionData
+  (atlas.toTubularSmoothnessData period hPeriod smoothCore)
+    |>.toCandidateExtensionData period hPeriod
 
 /-- Tubular-chart reduction certificate. -/
 theorem certificate
@@ -195,11 +206,12 @@ theorem certificate
       period ValueCore NormalCore) :
     (∀ data : ValueCore × NormalCore,
       ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
-        (smoothCore.core.candidate hPeriod data)) ∧
+        (smoothCore.core.candidate period hPeriod data)) ∧
       DenseRange
         (P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
           period hPeriod) :=
-  (atlas.toTubularSmoothnessData smoothCore).certificate
+  (atlas.toTubularSmoothnessData period hPeriod smoothCore)
+    |>.certificate period hPeriod
 
 end CanonicalLatitudeCauchyJetTubularAtlasData
 

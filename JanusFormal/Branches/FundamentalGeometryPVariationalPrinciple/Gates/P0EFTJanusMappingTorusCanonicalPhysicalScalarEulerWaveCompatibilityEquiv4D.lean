@@ -16,6 +16,9 @@ with wave naturality.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerWaveCompatibilityEquiv4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerWaveCompatibilityEquiv4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -25,12 +28,14 @@ open Set Topology
 open P0EFTJanusMetricCoupledScalarMatterJetVariation
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarJet4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev Vector4 :=
   P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4
@@ -50,6 +55,7 @@ theorem waveCompatible_of_eulerCompatible
       firstCoordinate secondCoordinate hCoordinate
   rw [canonicalPhysicalScalarEulerAtlasResidual_eq_wave_sub_mass,
     canonicalPhysicalScalarEulerAtlasResidual_eq_wave_sub_mass] at hEulerOverlap
+  rw [hValue] at hEulerOverlap
   linarith
 
 /-- For a fixed field and mass, wave naturality and Euler compatibility are
@@ -88,6 +94,7 @@ def toWaveGlobalizationData
   residualContinuous := fun field =>
     canonicalPhysicalScalarEulerGlobalResidual_continuous_of_compatible
       period hPeriod massSquared field (data.compatible field)
+  ae_zero_eq_zero := data.ae_zero_eq_zero
 
 /-- Both globalization interfaces construct the same operator data. -/
 theorem toWaveGlobalizationData_operatorData_eq
@@ -98,7 +105,7 @@ theorem toWaveGlobalizationData_operatorData_eq
   rfl
 
 /-- Compatibility-equivalence certificate. -/
-theorem certificate
+theorem waveCompatibility_certificate
     (data : CanonicalPhysicalScalarEulerCompatibilityData
       period hPeriod massSquared) :
     CanonicalPhysicalScalarWaveAtlasNaturality period hPeriod ∧
@@ -114,5 +121,5 @@ theorem certificate
 end CanonicalPhysicalScalarEulerCompatibilityData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerWaveCompatibilityEquiv4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 end JanusFormal

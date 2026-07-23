@@ -44,8 +44,8 @@ def equatorialTubularNormalInverseSubtype
     Set.Ioo (-(Real.pi / 2)) (Real.pi / 2) :=
   ⟨equatorialTubularNormalInverse point.1, by
     constructor
-    · exact Real.neg_pi_div_two_lt_arcsin (abs_lt.mp point.2).1
-    · exact Real.arcsin_lt_pi_div_two (abs_lt.mp point.2).2⟩
+    · exact Real.neg_pi_div_two_lt_arcsin.mpr (abs_lt.mp point.2).1
+    · exact Real.arcsin_lt_pi_div_two.mpr (abs_lt.mp point.2).2⟩
 
 /-- The denominator occurring in the inverse tail is positive on the open
 band. -/
@@ -77,13 +77,13 @@ theorem equatorialTubularTailInverse_norm
     nlinarith
   have hCosSquare : c ^ 2 = 1 - x ^ 2 := by
     dsimp [c]
-    rw [Real.cos_arcsin, sq_sqrt hDenPositive.le]
+    rw [Real.cos_arcsin, Real.sq_sqrt hDenPositive.le]
   have hNormSquare : ‖equatorialTubularTailInverse point.1‖ ^ 2 = 1 := by
     rw [EuclideanSpace.real_norm_sq_eq]
     change (∑ index : Fin 3,
       (point.1.1 index.succ / c) ^ 2) = 1
     simp_rw [div_pow]
-    rw [Finset.sum_div, hTail, hCosSquare]
+    rw [← Finset.sum_div, hTail, hCosSquare]
     exact div_self hDenPositive.ne'
   nlinarith [norm_nonneg (equatorialTubularTailInverse point.1)]
 
@@ -118,6 +118,7 @@ theorem equatorialTubularMapInverse_normal
         have hAbsNonnegative : 0 ≤ |Real.sin parameter.2.1| := abs_nonneg _
         have hAbsSquare : |Real.sin parameter.2.1| ^ 2 < 1 := by
           simpa [sq_abs] using hSquare
+        change |Real.sin parameter.2.1| < 1
         nlinarith⟩).2.1 = parameter.2.1 :=
   equatorialTubularMap_normal_inverse parameter
 
@@ -133,6 +134,7 @@ theorem equatorialTubularMapInverse_base
         have hAbsNonnegative : 0 ≤ |Real.sin parameter.2.1| := abs_nonneg _
         have hAbsSquare : |Real.sin parameter.2.1| ^ 2 < 1 := by
           simpa [sq_abs] using hSquare
+        change |Real.sin parameter.2.1| < 1
         nlinarith⟩).1 = parameter.1 := by
   apply equatorialTwoSphereHomeomorph.injective
   rw [equatorialTubularMapInverse, equatorialTubularBaseInverse,
@@ -152,6 +154,7 @@ theorem equatorialTubularMapInverse_left
         have hAbsNonnegative : 0 ≤ |Real.sin parameter.2.1| := abs_nonneg _
         have hAbsSquare : |Real.sin parameter.2.1| ^ 2 < 1 := by
           simpa [sq_abs] using hSquare
+        change |Real.sin parameter.2.1| < 1
         nlinarith⟩ = parameter := by
   apply Prod.ext
   · exact equatorialTubularMapInverse_base parameter
@@ -178,8 +181,11 @@ theorem equatorialTubularMap_inverse
         ((EuclideanSpace.equiv (Fin 3) Real)
           (equatorialTubularTailInverse point.1)) tail =
       point.1.1 tail.succ
-    simp [equatorialTubularTailInverse,
-      (cos_equatorialTubularNormalInverse_pos point).ne']
+    have hCos : Real.cos (Real.arcsin (point.1.1 0)) ≠ 0 := by
+      simpa [equatorialTubularNormalInverse] using
+        (cos_equatorialTubularNormalInverse_pos point).ne'
+    simp [equatorialTubularTailInverse, equatorialTubularNormalInverse]
+    field_simp [hCos]
 
 /-- Equivalence between tubular parameters and the open spherical band. -/
 def equatorialTubularEquivBand :
@@ -193,6 +199,7 @@ def equatorialTubularEquivBand :
       have hAbsNonnegative : 0 ≤ |Real.sin parameter.2.1| := abs_nonneg _
       have hAbsSquare : |Real.sin parameter.2.1| ^ 2 < 1 := by
         simpa [sq_abs] using hSquare
+      change |Real.sin parameter.2.1| < 1
       nlinarith⟩
   invFun := equatorialTubularMapInverse
   left_inv := equatorialTubularMapInverse_left

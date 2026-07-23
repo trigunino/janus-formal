@@ -30,19 +30,42 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal
 open MeasureTheory Set Topology Filter Function
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalScalarGreenDivergence4D
+open P0EFTJanusMappingTorusIntrinsicLorentzScalarAction4D
+open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalFullSupport4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerGreenL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerProductDivergenceClosure4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
 
 private abbrev Vector4 :=
   P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4
@@ -71,8 +94,7 @@ noncomputable def canonicalPhysicalScalarEulerProductPatch
 product point. -/
 theorem canonicalPhysicalScalarEulerProductPatch_zero
     (parameter : CanonicalLatitudeCauchyJetProductParameter) :
-    (canonicalPhysicalScalarEulerProductPatch period hPeriod parameter)
-        |>.coordinateMap 0 =
+    (canonicalPhysicalScalarEulerProductPatch period hPeriod parameter).coordinateMap 0 =
       canonicalLatitudeCauchyJetProductPhysicalMap
         period hPeriod parameter := by
   exact (canonicalPhysicalScalarEulerProductWitness
@@ -141,8 +163,8 @@ theorem canonicalPhysicalScalarEulerProductSkewDensity_integrable
   have hPullback :=
     (canonicalLatitudeCauchyJetProductPhysicalMap_measurePreserving
       period hPeriod).integrable_comp_of_integrable hGlobal
-  simpa [canonicalPhysicalScalarEulerProductSkewDensity,
-    Function.comp_def] using hPullback
+  unfold canonicalPhysicalScalarEulerProductSkewDensity
+  exact hPullback
 
 /-- Integrability of the canonical local Green-divergence density is automatic. -/
 theorem canonicalPhysicalScalarEulerProductLocalDivergenceDensity_integrable

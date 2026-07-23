@@ -1,4 +1,5 @@
 import Mathlib.MeasureTheory.Measure.OpenPos
+import Mathlib.Dynamics.Ergodic.MeasurePreserving
 
 /-!
 # Open-positive measures transported by dense measure-preserving maps
@@ -39,7 +40,9 @@ theorem DenseRange.nonempty_preimage_of_isOpen
   obtain ⟨target, hTarget⟩ := hNonempty
   have hClosure : target ∈ closure (Set.range map) := hDense target
   have hMeet : (Set.range map ∩ targetSet).Nonempty :=
-    (mem_closure_iff.1 hClosure) targetSet (hOpen.mem_nhds hTarget)
+    by
+      simpa [Set.inter_comm] using
+        (mem_closure_iff.1 hClosure) targetSet hOpen hTarget
   rcases hMeet with ⟨value, ⟨source, rfl⟩, hValue⟩
   exact ⟨source, hValue⟩
 
@@ -56,7 +59,7 @@ theorem MeasurePreserving.isOpenPosMeasure_of_continuous_denseRange
     have hPreimageOpen : IsOpen (map ⁻¹' targetSet) :=
       hOpen.preimage hContinuous
     have hPreimageNonempty : (map ⁻¹' targetSet).Nonempty :=
-      hDense.nonempty_preimage_of_isOpen hOpen hNonempty
+      DenseRange.nonempty_preimage_of_isOpen hDense hOpen hNonempty
     have hSourcePositive :
         sourceMeasure (map ⁻¹' targetSet) ≠ 0 :=
       hPreimageOpen.measure_ne_zero sourceMeasure hPreimageNonempty
@@ -80,9 +83,9 @@ def targetOpenPositive
     targetMeasure.IsOpenPosMeasure := by
   letI : sourceMeasure.IsOpenPosMeasure :=
     parameterization.sourceOpenPositive
-  exact parameterization.measurePreserving
-    |>.isOpenPosMeasure_of_continuous_denseRange
-      parameterization.continuous parameterization.denseRange
+  exact MeasurePreserving.isOpenPosMeasure_of_continuous_denseRange
+    parameterization.measurePreserving parameterization.continuous
+      parameterization.denseRange
 
 /-- Open-positive transport certificate. -/
 theorem certificate

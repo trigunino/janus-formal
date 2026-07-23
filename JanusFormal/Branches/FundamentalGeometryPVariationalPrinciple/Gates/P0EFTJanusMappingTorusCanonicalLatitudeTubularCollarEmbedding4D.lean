@@ -35,7 +35,7 @@ abbrev CanonicalLatitudeTubularNormal :=
   Set.Ioo (-(Real.pi / 2)) (Real.pi / 2)
 
 /-- Model tubular collar with unrestricted cover time. -/
-abbrev CanonicalLatitudeTubularCollar :=
+def CanonicalLatitudeTubularCollar (_period : Real) :=
   CanonicalLatitudeBase × CanonicalLatitudeTubularNormal
 
 /-- Negation preserves the open latitude band. -/
@@ -47,7 +47,8 @@ def canonicalLatitudeTubularNormalNeg
 
 /-- Deck generator on the tubular collar. -/
 def canonicalLatitudeTubularDeckEquiv (period : Real) :
-    CanonicalLatitudeTubularCollar ≃ CanonicalLatitudeTubularCollar where
+    CanonicalLatitudeTubularCollar period ≃
+      CanonicalLatitudeTubularCollar period where
   toFun parameter :=
     (canonicalLatitudeBaseDeck period parameter.1,
       canonicalLatitudeTubularNormalNeg parameter.2)
@@ -56,18 +57,26 @@ def canonicalLatitudeTubularDeckEquiv (period : Real) :
       canonicalLatitudeTubularNormalNeg parameter.2)
   left_inv parameter := by
     rcases parameter with ⟨⟨sphere, time⟩, normal⟩
-    ext <;> simp [canonicalLatitudeBaseDeck,
-      canonicalLatitudeTubularNormalNeg]
+    change (((sphere, time + period - period),
+      canonicalLatitudeTubularNormalNeg
+        (canonicalLatitudeTubularNormalNeg normal)) :
+        CanonicalLatitudeBase × CanonicalLatitudeTubularNormal) =
+      ((sphere, time), normal)
+    ext <;> simp [canonicalLatitudeTubularNormalNeg]
   right_inv parameter := by
     rcases parameter with ⟨⟨sphere, time⟩, normal⟩
-    ext <;> simp [canonicalLatitudeBaseDeck,
-      canonicalLatitudeTubularNormalNeg]
+    change (((sphere, time - period + period),
+      canonicalLatitudeTubularNormalNeg
+        (canonicalLatitudeTubularNormalNeg normal)) :
+        CanonicalLatitudeBase × CanonicalLatitudeTubularNormal) =
+      ((sphere, time), normal)
+    ext <;> simp [canonicalLatitudeTubularNormalNeg]
 
-instance (period : Real) : VAdd Int CanonicalLatitudeTubularCollar where
+instance (period : Real) : VAdd Int (CanonicalLatitudeTubularCollar period) where
   vadd winding parameter :=
     (canonicalLatitudeTubularDeckEquiv period ^ winding) parameter
 
-instance (period : Real) : AddAction Int CanonicalLatitudeTubularCollar where
+instance (period : Real) : AddAction Int (CanonicalLatitudeTubularCollar period) where
   zero_vadd parameter := by
     change (canonicalLatitudeTubularDeckEquiv period ^ (0 : Int)) parameter =
       parameter
@@ -81,7 +90,7 @@ instance (period : Real) : AddAction Int CanonicalLatitudeTubularCollar where
 
 /-- Explicit tubular map into the physical cover. -/
 def canonicalLatitudeTubularCoverMap
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     EffectiveCover period hPeriod :=
   normalLatitudeCover period hPeriod
     (canonicalLatitudeAnchor period hPeriod parameter.1) parameter.2.1
@@ -116,7 +125,7 @@ theorem canonicalLatitudeTubularCoverMap_injective :
 
 /-- Generator equivariance of the tubular cover map. -/
 theorem canonicalLatitudeTubularCoverMap_deck
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularCoverMap period hPeriod
         (canonicalLatitudeTubularDeckEquiv period parameter) =
       (1 : Int) +ᵥ canonicalLatitudeTubularCoverMap period hPeriod parameter := by
@@ -130,7 +139,7 @@ theorem canonicalLatitudeTubularCoverMap_deck
 
 /-- Inverse-generator equivariance. -/
 theorem canonicalLatitudeTubularCoverMap_deck_inv
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularCoverMap period hPeriod
         ((canonicalLatitudeTubularDeckEquiv period).symm parameter) =
       (-1 : Int) +ᵥ canonicalLatitudeTubularCoverMap period hPeriod parameter := by
@@ -143,18 +152,18 @@ theorem canonicalLatitudeTubularCoverMap_deck_inv
 
 /-- Equivariance under every integer winding. -/
 theorem canonicalLatitudeTubularCoverMap_vadd
-    (winding : Int) (parameter : CanonicalLatitudeTubularCollar) :
+    (winding : Int) (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularCoverMap period hPeriod (winding +ᵥ parameter) =
       winding +ᵥ canonicalLatitudeTubularCoverMap period hPeriod parameter := by
   change canonicalLatitudeTubularCoverMap period hPeriod
       ((canonicalLatitudeTubularDeckEquiv period ^ winding) parameter) = _
-  induction winding using Int.induction_on with
+  induction winding using Int.induction_on generalizing parameter with
   | zero =>
       simp
   | succ winding ih =>
       rw [zpow_add_one]
       change canonicalLatitudeTubularCoverMap period hPeriod
-          ((canonicalLatitudeTubularDeckEquiv period ^ winding)
+          ((canonicalLatitudeTubularDeckEquiv period ^ (winding : Int))
             (canonicalLatitudeTubularDeckEquiv period parameter)) = _
       rw [ih (canonicalLatitudeTubularDeckEquiv period parameter),
         canonicalLatitudeTubularCoverMap_deck]
@@ -166,38 +175,40 @@ theorem canonicalLatitudeTubularCoverMap_vadd
             ((canonicalLatitudeTubularDeckEquiv period).symm parameter)) = _
       rw [ih ((canonicalLatitudeTubularDeckEquiv period).symm parameter),
         canonicalLatitudeTubularCoverMap_deck_inv]
-      simp [add_vadd]
+      rw [← add_vadd]
+      simp [sub_eq_add_neg]
 
 /-- Orbit quotient of the genuine tubular band. -/
 abbrev CanonicalLatitudeTubularCollarQuotient (period : Real) :=
-  AddAction.orbitRel.Quotient Int CanonicalLatitudeTubularCollar
+  AddAction.orbitRel.Quotient Int (CanonicalLatitudeTubularCollar period)
 
 /-- Tubular quotient projection. -/
 def canonicalLatitudeTubularCollarMk (period : Real) :
-    CanonicalLatitudeTubularCollar →
+    CanonicalLatitudeTubularCollar period →
       CanonicalLatitudeTubularCollarQuotient period :=
-  Quotient.mk (AddAction.orbitRel Int CanonicalLatitudeTubularCollar)
+  Quotient.mk (AddAction.orbitRel Int (CanonicalLatitudeTubularCollar period))
 
 /-- Equality in the tubular quotient is equality up to a unique-unneeded deck
 iterate. -/
 theorem canonicalLatitudeTubularCollarMk_eq_iff_exists_vadd
-    (first second : CanonicalLatitudeTubularCollar) :
+    (first second : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularCollarMk period first =
         canonicalLatitudeTubularCollarMk period second ↔
       ∃ winding : Int, winding +ᵥ second = first := by
+  unfold canonicalLatitudeTubularCollarMk
   rw [Quotient.eq'', AddAction.orbitRel_apply,
     AddAction.mem_orbit_iff]
 
 /-- Physical bulk point represented by one tubular parameter. -/
 def canonicalLatitudeTubularPhysicalMap
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     EffectiveQuotient period hPeriod :=
   mappingTorusMk (sphereData period hPeriod)
     (canonicalLatitudeTubularCoverMap period hPeriod parameter)
 
 /-- The physical tubular map is constant on model deck orbits. -/
 theorem canonicalLatitudeTubularPhysicalMap_vadd
-    (winding : Int) (parameter : CanonicalLatitudeTubularCollar) :
+    (winding : Int) (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularPhysicalMap period hPeriod
         (winding +ᵥ parameter) =
       canonicalLatitudeTubularPhysicalMap period hPeriod parameter := by
@@ -213,7 +224,7 @@ def canonicalLatitudeTubularCollarToBulk :
       EffectiveQuotient period hPeriod :=
   Quotient.lift (canonicalLatitudeTubularPhysicalMap period hPeriod)
     (fun first second hOrbit => by
-      change AddAction.orbitRel Int CanonicalLatitudeTubularCollar
+      change AddAction.orbitRel Int (CanonicalLatitudeTubularCollar period)
         first second at hOrbit
       rw [AddAction.orbitRel_apply, AddAction.mem_orbit_iff] at hOrbit
       rcases hOrbit with ⟨winding, hWinding⟩
@@ -222,7 +233,7 @@ def canonicalLatitudeTubularCollarToBulk :
         period hPeriod winding second)
 
 @[simp] theorem canonicalLatitudeTubularCollarToBulk_mk
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularCollarToBulk period hPeriod
         (canonicalLatitudeTubularCollarMk period parameter) =
       canonicalLatitudeTubularPhysicalMap period hPeriod parameter :=

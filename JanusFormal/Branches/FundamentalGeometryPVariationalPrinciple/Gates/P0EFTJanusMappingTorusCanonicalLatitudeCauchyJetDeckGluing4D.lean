@@ -72,6 +72,12 @@ theorem canonicalLatitudeLocalCauchyExtension_deck
         (canonicalLatitudeCollarDeck period parameter) =
       canonicalLatitudeLocalCauchyExtension (value, normal) parameter := by
   unfold canonicalLatitudeCollarDeck canonicalLatitudeLocalCauchyExtension
+  change canonicalLatitudeCauchyValueProfile (-parameter.2) *
+        value (canonicalLatitudeBaseDeck period parameter.1) +
+      canonicalLatitudeCauchyNormalProfile (-parameter.2) *
+        normal (canonicalLatitudeBaseDeck period parameter.1) =
+    canonicalLatitudeCauchyValueProfile parameter.2 * value parameter.1 +
+      canonicalLatitudeCauchyNormalProfile parameter.2 * normal parameter.1
   rw [canonicalLatitudeCauchyValueProfile_neg,
     canonicalLatitudeCauchyNormalProfile_neg,
     hValue parameter.1, hNormal parameter.1]

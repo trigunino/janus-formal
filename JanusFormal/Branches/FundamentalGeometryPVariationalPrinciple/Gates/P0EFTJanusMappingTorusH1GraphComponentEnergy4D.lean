@@ -141,9 +141,16 @@ theorem smoothFirstJetToL2_eq_component_sum
           (smoothFieldToL2 period hPeriod Fiber mu field) +
         derivativeJetInjection period hPeriod Fiber frame mu
           (smoothFrameDerivativeToL2 period hPeriod Fiber frame mu field) := by
+  have hJet :
+      (smoothFirstJetToL2 period hPeriod Fiber frame mu field :
+        EffectiveQuotient period hPeriod →
+          Fiber × (Fin frame.count → Fiber)) =ᵐ[mu]
+        smoothFirstJet period hPeriod Fiber frame field := by
+    simpa only [smoothFirstJetToL2] using
+      (smoothFirstJet_memLp period hPeriod Fiber frame mu field).coeFn_toLp
   apply Lp.ext
   filter_upwards
-    [(smoothFirstJet_memLp period hPeriod Fiber frame mu field).coeFn_toLp,
+    [hJet,
      smoothFieldToL2_ae period hPeriod Fiber mu field,
      smoothFrameDerivativeToL2_ae period hPeriod Fiber frame mu field,
      (ContinuousLinearMap.inl Real Fiber
@@ -160,8 +167,19 @@ theorem smoothFirstJetToL2_eq_component_sum
        (derivativeJetInjection period hPeriod Fiber frame mu
         (smoothFrameDerivativeToL2 period hPeriod Fiber frame mu field))]
     with point hJet hValue hDerivative hInl hInr hAdd
-  rw [hJet, hAdd, hInl, hInr, hValue, hDerivative]
-  rfl
+  rw [hJet, hAdd]
+  change smoothFirstJet period hPeriod Fiber frame field point =
+    (valueJetInjection period hPeriod Fiber frame mu
+        (smoothFieldToL2 period hPeriod Fiber mu field) :
+      EffectiveQuotient period hPeriod →
+        Fiber × (Fin frame.count → Fiber)) point +
+      (derivativeJetInjection period hPeriod Fiber frame mu
+          (smoothFrameDerivativeToL2 period hPeriod Fiber frame mu field) :
+        EffectiveQuotient period hPeriod →
+          Fiber × (Fin frame.count → Fiber)) point
+  simp only [valueJetInjection, derivativeJetInjection]
+  rw [hInl, hInr, hValue, hDerivative]
+  simp [smoothFirstJet]
 
 /-- Operator-norm weighted value coefficient. -/
 def valueJetWeight

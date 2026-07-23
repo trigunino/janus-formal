@@ -20,7 +20,7 @@ namespace P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedDensityReduction4D
 set_option autoImplicit false
 noncomputable section
 
-open scoped Manifold ContDiff ENNReal
+open scoped Manifold ContDiff ENNReal BoundedContinuousFunction
 open MeasureTheory Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
@@ -67,7 +67,7 @@ theorem continuousRange_subset_closure_seedRange
       closure (Set.range
         (canonicalLatitudeSmoothInteriorSeedEmbedding period)) := by
   rintro value ⟨continuousField, rfl⟩
-  exact approximationData.continuous_mem_closure_seedRange continuousField
+  exact approximationData.continuous_mem_closure_seedRange period continuousField
 
 /-- Smooth interior-supported seeds are dense in boundary `L²`. -/
 theorem denseRange
@@ -79,7 +79,7 @@ theorem denseRange
       (Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period)) :=
     boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange period value
   exact (closure_minimal
-    approximationData.continuousRange_subset_closure_seedRange
+    (approximationData.continuousRange_subset_closure_seedRange period)
     isClosed_closure) hContinuous
 
 /-- Install the single interior-seed density datum. -/
@@ -87,15 +87,15 @@ def toInteriorSeedDensityData
     (approximationData :
       CanonicalLatitudeContinuousInteriorSeedApproximationData period) :
     CanonicalLatitudeSmoothInteriorSeedDensityData period where
-  dense := approximationData.denseRange
+  dense := approximationData.denseRange period
 
 /-- Install both canonical periodic and antiperiodic boundary densities. -/
 def toBoundaryCoreDensityData
     (approximationData :
       CanonicalLatitudeContinuousInteriorSeedApproximationData period) :
     CanonicalLatitudeSmoothBoundaryCoreDensityData period :=
-  approximationData.toInteriorSeedDensityData
-    |>.toSmoothBoundaryCoreDensityData hPeriod
+  approximationData.toInteriorSeedDensityData period
+    |>.toSmoothBoundaryCoreDensityData period hPeriod
 
 /-- Periodic approximation obtained by periodizing the common seed sequence. -/
 def toPeriodicApproximationData
@@ -123,15 +123,16 @@ def toAntiperiodicApproximationData
 
 /-- Common-seed density certificate. -/
 theorem certificate
+    (hPeriod : period ≠ 0)
     (approximationData :
       CanonicalLatitudeContinuousInteriorSeedApproximationData period) :
     DenseRange (canonicalLatitudeSmoothInteriorSeedEmbedding period) ∧
       DenseRange (canonicalLatitudeSmoothPeriodicValueEmbedding period) ∧
       DenseRange
         (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period) :=
-  ⟨approximationData.denseRange,
-    approximationData.toPeriodicApproximationData hPeriod |>.denseRange,
-    approximationData.toAntiperiodicApproximationData hPeriod |>.denseRange⟩
+  ⟨approximationData.denseRange period,
+    approximationData.toPeriodicApproximationData period hPeriod |>.denseRange,
+    approximationData.toAntiperiodicApproximationData period hPeriod |>.denseRange⟩
 
 end CanonicalLatitudeContinuousInteriorSeedApproximationData
 

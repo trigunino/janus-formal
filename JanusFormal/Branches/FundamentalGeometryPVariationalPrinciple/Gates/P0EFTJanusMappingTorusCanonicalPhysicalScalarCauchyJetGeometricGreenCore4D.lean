@@ -43,7 +43,7 @@ open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 
 universe x y
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Geometric smooth-core data with the Cauchy extension replaced by its
 explicit latitude-jet construction. -/
@@ -80,7 +80,8 @@ def candidateExtension
       period hPeriod massSquared ValueCore NormalCore) :
     CanonicalPhysicalScalarCauchyJetCandidateExtensionData
       period hPeriod ValueCore NormalCore :=
-  geometric.tubularInverse.toCandidateExtensionData geometric.boundaryCore
+  geometric.tubularInverse.toCandidateExtensionData
+    period hPeriod geometric.boundaryCore
 
 /-- Linear smooth bulk extension realizing every boundary-core pair. -/
 def extension
@@ -91,7 +92,7 @@ def extension
       period hPeriod massSquared ValueCore NormalCore) :
     ValueCore × NormalCore →ₗ[Real]
       SmoothQuotientField period hPeriod Real :=
-  geometric.candidateExtension.extension
+  (geometric.candidateExtension period hPeriod).extension period hPeriod
 
 /-- Exact paired Cauchy trace of the explicit extension. -/
 theorem cauchyTrace_extension
@@ -102,11 +103,12 @@ theorem cauchyTrace_extension
       period hPeriod massSquared ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
-        (geometric.extension data) =
+        (geometric.extension period hPeriod data) =
       canonicalScalarBoundaryCorePairEmbedding
         geometric.boundaryCore.valueEmbedding
         geometric.boundaryCore.normalEmbedding data :=
-  geometric.candidateExtension.cauchyTrace_extension data
+  (geometric.candidateExtension period hPeriod)
+    |>.cauchyTrace_extension period hPeriod data
 
 /-- Conversion to the earlier geometric Green-core package.  The former
 abstract smooth extension and boundary-extension equations are now theorems. -/
@@ -123,8 +125,8 @@ def toGeometricGreenCoreData
   normalEmbedding := geometric.boundaryCore.normalEmbedding
   valueDense := geometric.boundaryCore.valueDense
   normalDense := geometric.boundaryCore.normalDense
-  extension := geometric.extension
-  boundary_extension := geometric.cauchyTrace_extension
+  extension := geometric.extension period hPeriod
+  boundary_extension := geometric.cauchyTrace_extension period hPeriod
   integral_eq_divergence := geometric.integral_eq_divergence
 
 /-- Genuine physical Euler operator on the smooth scalar core. -/
@@ -134,7 +136,8 @@ def operatorData
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore) :=
-  geometric.toGeometricGreenCoreData.operatorData
+  (geometric.toGeometricGreenCoreData period hPeriod)
+    |>.operatorData period hPeriod
 
 /-- Correct dense physical Green core. -/
 def greenCore
@@ -143,7 +146,8 @@ def greenCore
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore) :=
-  geometric.toGeometricGreenCoreData.greenCore
+  (geometric.toGeometricGreenCoreData period hPeriod)
+    |>.greenCore period hPeriod
 
 /-- The explicit Cauchy extension proves density of the physical smooth boundary
 trace. -/
@@ -155,7 +159,8 @@ theorem boundaryTrace_denseRange
       period hPeriod massSquared ValueCore NormalCore) :
     DenseRange
       (smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod) :=
-  geometric.candidateExtension.boundaryTrace_denseRange
+  (geometric.candidateExtension period hPeriod)
+    |>.boundaryTrace_denseRange period hPeriod
 
 /-- Exact bulk Green--Stokes identity for the constructed physical operator. -/
 theorem bulk_green_stokes
@@ -165,16 +170,17 @@ theorem bulk_green_stokes
     (geometric : CanonicalPhysicalScalarCauchyJetGeometricData
       period hPeriod massSquared ValueCore NormalCore)
     (field test : SmoothQuotientField period hPeriod Real) :
-    inner Real (geometric.operatorData.toBulkL2LinearMap field)
+    inner Real ((geometric.operatorData period hPeriod).toBulkL2LinearMap field)
           (P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D.smoothToCanonicalPhysicalBulkL2
             period hPeriod test) -
         inner Real
           (P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D.smoothToCanonicalPhysicalBulkL2
             period hPeriod field)
-          (geometric.operatorData.toBulkL2LinearMap test) =
+          ((geometric.operatorData period hPeriod).toBulkL2LinearMap test) =
       P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D.cutBulkGlobalOrientedScalarCurrentIntegral
         period hPeriod field test :=
-  geometric.toGeometricGreenCoreData.bulk_green_stokes field test
+  (geometric.toGeometricGreenCoreData period hPeriod)
+    |>.bulk_green_stokes period hPeriod field test
 
 /-- Cauchy-jet geometric Green-core certificate. -/
 theorem certificate
@@ -187,21 +193,21 @@ theorem certificate
         (smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod) ∧
       (∀ data : ValueCore × NormalCore,
         smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
-            (geometric.extension data) =
+            (geometric.extension period hPeriod data) =
           canonicalScalarBoundaryCorePairEmbedding
             geometric.boundaryCore.valueEmbedding
             geometric.boundaryCore.normalEmbedding data) ∧
       (∀ field test : SmoothQuotientField period hPeriod Real,
-        inner Real (geometric.greenCore.core.operator field)
-              (geometric.greenCore.core.inclusion test) -
-            inner Real (geometric.greenCore.core.inclusion field)
-              (geometric.greenCore.core.operator test) =
+        inner Real ((geometric.greenCore period hPeriod).core.operator field)
+              ((geometric.greenCore period hPeriod).core.inclusion test) -
+            inner Real ((geometric.greenCore period hPeriod).core.inclusion field)
+              ((geometric.greenCore period hPeriod).core.operator test) =
           2 * P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D.canonicalScalarHilbertBoundarySymplecticForm
-            (geometric.greenCore.core.boundaryTrace field)
-            (geometric.greenCore.core.boundaryTrace test)) :=
-  ⟨geometric.boundaryTrace_denseRange,
-    geometric.cauchyTrace_extension,
-    geometric.greenCore.core.green_identity⟩
+            ((geometric.greenCore period hPeriod).core.boundaryTrace field)
+            ((geometric.greenCore period hPeriod).core.boundaryTrace test)) :=
+  ⟨geometric.boundaryTrace_denseRange period hPeriod,
+    geometric.cauchyTrace_extension period hPeriod,
+    (geometric.greenCore period hPeriod).core.green_identity⟩
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 

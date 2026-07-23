@@ -27,9 +27,11 @@ noncomputable section
 open Set Topology
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeGlobalThroatNull4D
-open P0EFTJanusMappingTorusCanonicalLatitudeMeasureToSphereCoarea4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCoareaClosure4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCoareaMap4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseParametrization4D
 
@@ -40,9 +42,21 @@ variable (period : Real) (hPeriod : period ≠ 0)
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
 
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
+
 /-- Every real time can be shifted by an integral number of periods into the
 closed fundamental interval. -/
 theorem exists_int_shift_mem_canonicalLorentzClosedTime
+    (hPeriod : period ≠ 0)
     (time : Real) :
     ∃ shift : Int,
       time + (shift : Real) * period ∈
@@ -98,7 +112,9 @@ theorem exists_canonicalLorentzClosedFundamentalRepresentative
   let shiftedCover : MappingTorusCover (sphereData period hPeriod) :=
     shift +ᵥ cover
   refine ⟨(unitThreeSphereHomeomorph shiftedCover.fiber, shiftedCover.time), ?_, ?_⟩
-  · simpa [shiftedCover] using hTime
+  · change cover.time + (shift : Real) * period ∈
+      Set.Icc (min 0 period) (max 0 period)
+    exact hTime
   · unfold canonicalLorentzFundamentalDomainMap
     rw [unitThreeSphereHomeomorph.symm_apply_apply]
     change mappingTorusMk (sphereData period hPeriod) shiftedCover =
@@ -107,7 +123,8 @@ theorem exists_canonicalLorentzClosedFundamentalRepresentative
       (sphereData period hPeriod) shiftedCover cover).2 ⟨shift, rfl⟩
 
 /-- The endpoints of the canonical fundamental interval are distinct. -/
-theorem canonicalLorentzFundamentalTime_min_lt_max :
+theorem canonicalLorentzFundamentalTime_min_lt_max
+    (hPeriod : period ≠ 0) :
     min 0 period < max 0 period := by
   rcases lt_or_gt_of_ne hPeriod with hNegative | hPositive
   · simpa [min_eq_right hNegative.le, max_eq_left hNegative.le]
@@ -134,8 +151,10 @@ theorem canonicalLorentzInteriorPhysicalMap_denseRange :
   have hParameterClosure :
       parameter ∈ closure
         (fiberLine '' Set.Ioo (min 0 period) (max 0 period)) := by
+    have hFiberLineContinuous : Continuous fiberLine :=
+      continuous_const.prodMk continuous_id
     have hImage := mem_closure_image
-      ((continuous_const.prodMk continuous_id).continuousAt)
+      hFiberLineContinuous.continuousAt
       hTimeClosure
     simpa [fiberLine] using hImage
   have hPhysicalClosure :

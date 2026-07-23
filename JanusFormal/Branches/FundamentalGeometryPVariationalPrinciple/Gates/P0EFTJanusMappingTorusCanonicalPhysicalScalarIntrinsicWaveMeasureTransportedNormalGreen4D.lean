@@ -21,6 +21,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
@@ -31,6 +32,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerNormalHalfCollarTransport
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTransportedNormalGreen4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Intrinsic-wave Green data whose normal transport is specified solely by its
 pushforward measure. -/
@@ -64,7 +66,7 @@ def toTransportedNormalGreenData
     CanonicalPhysicalScalarIntrinsicWaveTransportedNormalGreenData
       period hPeriod massSquared where
   intrinsicWave := data.intrinsicWave
-  transportData := data.measureTransport.toNormalToHalfCollarTransportData
+  transportData := data.measureTransport.toNormalToHalfCollarTransportData period
   halfCollarDivergence_integrable := data.halfCollarDivergence_integrable
   tangential_base_integral_zero := data.tangential_base_integral_zero
 
@@ -72,19 +74,20 @@ def toTransportedNormalGreenData
 def normalDensity
     (data : CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalGreenData
       period hPeriod massSquared) :=
-  data.toTransportedNormalGreenData.normalDensity
+  (data.toTransportedNormalGreenData period hPeriod).normalDensity period hPeriod
 
 /-- Conversion to the smallest canonical-normal Green package. -/
 def toCanonicalNormalGreenData
     (data : CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalGreenData
       period hPeriod massSquared) :=
-  data.toTransportedNormalGreenData.toCanonicalNormalGreenData
+  (data.toTransportedNormalGreenData period hPeriod).toCanonicalNormalGreenData
+    period hPeriod
 
 /-- Correct dense physical Green core. -/
 def greenCore
     (data : CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalGreenData
       period hPeriod massSquared) :=
-  data.toCanonicalNormalGreenData.greenCore
+  (data.toCanonicalNormalGreenData period hPeriod).greenCore period hPeriod
 
 /-- Measure-transport intrinsic Green certificate. -/
 theorem certificate
@@ -94,7 +97,7 @@ theorem certificate
         (canonicalLatitudeCauchyJetProductMeasure period) =
       (2 : NNReal) • canonicalLatitudeCollarMeasure period ∧
       (∀ field test,
-        Integrable (data.normalDensity field test)
+        Integrable (data.normalDensity period hPeriod field test)
           (canonicalLatitudeCauchyJetProductMeasure period)) ∧
       (∀ field test,
         (∫ point,
@@ -105,9 +108,9 @@ theorem certificate
         -2 * P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.cutBulkCanonicalDivergenceMeasure
           period hPeriod massSquared field test Set.univ) :=
   ⟨data.measureTransport.map_measure,
-    data.toTransportedNormalGreenData.toTransportedNormalDensityData
-      |>.normalDensity_integrable,
-    data.toCanonicalNormalGreenData.certificate.2.2.2⟩
+    ((data.toTransportedNormalGreenData period hPeriod).toTransportedNormalDensityData
+      period hPeriod).normalDensity_integrable period hPeriod,
+    ((data.toCanonicalNormalGreenData period hPeriod).certificate period hPeriod).2.2.2⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalGreenData
 

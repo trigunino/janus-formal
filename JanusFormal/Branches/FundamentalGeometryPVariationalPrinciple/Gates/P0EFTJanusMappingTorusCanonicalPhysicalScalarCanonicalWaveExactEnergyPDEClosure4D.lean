@@ -27,12 +27,13 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalWaveCauchyJetGreenCor
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalWaveBoundedCoefficientPDEClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerBoundedCoefficients4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 universe r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -43,9 +44,9 @@ structure CanonicalPhysicalScalarCanonicalWaveExactEnergyPDEData
     (massSquared : Real) where
   geometric : CanonicalPhysicalScalarCanonicalWaveCauchyJetData
     period hPeriod massSquared
-  energyIdentity : geometric.greenCore.ExactEnergyGardingIdentityData
+  energyIdentity : (geometric.greenCore period hPeriod).ExactEnergyGardingIdentityData
     period hPeriod
-  normalRegularity : geometric.greenCore.NormalEllipticRegularityData
+  normalRegularity : (geometric.greenCore period hPeriod).NormalEllipticRegularityData
     period hPeriod (Regularity := Regularity)
   eulerCoefficients :
     geometric.toCanonicalCauchyJetCompatibilityData.toCompatibilityData.toCauchyJetGeometricData.CauchyJetEulerSixBoundedCoefficientData
@@ -61,8 +62,8 @@ def toWaveBoundedCoefficientPDEData
     CanonicalPhysicalScalarCanonicalWaveBoundedCoefficientPDEData
       period hPeriod massSquared (Regularity := Regularity) where
   geometric := data.geometric
-  energy := data.energyIdentity.toAutomaticEnergyGardingData
-    data.geometric.greenCore
+  energy := data.energyIdentity.toAutomaticEnergyGardingData period hPeriod
+    (data.geometric.greenCore period hPeriod)
   normalRegularity := data.normalRegularity
   eulerCoefficients := data.eulerCoefficients
 
@@ -70,25 +71,28 @@ def toWaveBoundedCoefficientPDEData
 def triple
     (data : CanonicalPhysicalScalarCanonicalWaveExactEnergyPDEData
       period hPeriod massSquared (Regularity := Regularity)) :=
-  data.toWaveBoundedCoefficientPDEData.triple
+  (data.toWaveBoundedCoefficientPDEData period hPeriod).triple period hPeriod
 
 /-- Completed physical boundary inputs. -/
 def completedInputs
     (data : CanonicalPhysicalScalarCanonicalWaveExactEnergyPDEData
       period hPeriod massSquared (Regularity := Regularity)) :=
-  data.toWaveBoundedCoefficientPDEData.completedInputs
+  (data.toWaveBoundedCoefficientPDEData period hPeriod).completedInputs
+    period hPeriod
 
 /-- Bounded right inverse of the completed Cauchy trace. -/
 def completedExtension
     (data : CanonicalPhysicalScalarCanonicalWaveExactEnergyPDEData
       period hPeriod massSquared (Regularity := Regularity)) :=
-  data.toWaveBoundedCoefficientPDEData.completedExtension
+  (data.toWaveBoundedCoefficientPDEData period hPeriod).completedExtension
+    period hPeriod
 
 /-- Physical graph-elliptic estimate. -/
 def graphEllipticEstimate
     (data : CanonicalPhysicalScalarCanonicalWaveExactEnergyPDEData
       period hPeriod massSquared (Regularity := Regularity)) :=
-  data.energyIdentity.toGraphEllipticEstimate data.geometric.greenCore
+  data.energyIdentity.toGraphEllipticEstimate period hPeriod
+    (data.geometric.greenCore period hPeriod)
 
 /-- Exact-energy minimal PDE certificate. -/
 theorem certificate
@@ -99,22 +103,25 @@ theorem certificate
       P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D.canonicalPhysicalScalarFirstJetComponentEnergy
           period hPeriod field =
         data.energyIdentity.pairingSign *
-            inner Real (data.geometric.greenCore.core.operator field)
-              (data.geometric.greenCore.core.inclusion field) +
+            inner Real ((data.geometric.greenCore period hPeriod).core.operator field)
+              ((data.geometric.greenCore period hPeriod).core.inclusion field) +
           inner Real
             (data.energyIdentity.zerothOrderOperator
-              (data.geometric.greenCore.core.inclusion field))
-            (data.geometric.greenCore.core.inclusion field)) ∧
+              ((data.geometric.greenCore period hPeriod).core.inclusion field))
+            ((data.geometric.greenCore period hPeriod).core.inclusion field)) ∧
       Function.Injective
         (canonicalScalarGreenCoreGraphInclusion
-          data.geometric.greenCore.core) ∧
+          (data.geometric.greenCore period hPeriod).core) ∧
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
-          data.geometric.greenCore.core
-          (data.completedInputs.traceBound data.geometric.greenCore)) :=
+          (data.geometric.greenCore period hPeriod).core
+          ((data.completedInputs period hPeriod).traceBound period hPeriod
+            (data.geometric.greenCore period hPeriod))) :=
   ⟨data.energyIdentity.energy_identity,
-    data.toWaveBoundedCoefficientPDEData.certificate.1,
-    data.toWaveBoundedCoefficientPDEData.certificate.2.1⟩
+    ((data.toWaveBoundedCoefficientPDEData period hPeriod).certificate
+      period hPeriod).1,
+    ((data.toWaveBoundedCoefficientPDEData period hPeriod).certificate
+      period hPeriod).2.1⟩
 
 end CanonicalPhysicalScalarCanonicalWaveExactEnergyPDEData
 

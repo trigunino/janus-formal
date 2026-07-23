@@ -42,6 +42,7 @@ open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 universe u
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev ValueCore :=
   CanonicalLatitudeSmoothPeriodicValueCore period
@@ -80,7 +81,7 @@ def eulerCompatibility
     {sourceMeasure : Measure Source}
     (data : CanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetData
       period hPeriod Source sourceMeasure massSquared) :=
-  data.parameterization.toEulerCompatibilityData data.euler
+  data.parameterization.toEulerCompatibilityData period hPeriod data.euler
 
 /-- Conversion to the canonical compatibility-based Cauchy-jet package. -/
 def toCanonicalCauchyJetCompatibilityData
@@ -91,7 +92,7 @@ def toCanonicalCauchyJetCompatibilityData
       period hPeriod Source sourceMeasure massSquared) :
     CanonicalPhysicalScalarCanonicalCauchyJetCompatibilityData
       period hPeriod massSquared where
-  eulerCompatibility := data.eulerCompatibility
+  eulerCompatibility := data.eulerCompatibility period hPeriod
   boundaryDensity := data.boundaryDensity
   integral_eq_divergence := data.integral_eq_divergence
 
@@ -105,7 +106,7 @@ def physicalMeasureOpenPositive
       period hPeriod Source sourceMeasure massSquared) :
     (P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D.intrinsicCanonicalLorentzVolumeMeasure
       period hPeriod).IsOpenPosMeasure :=
-  data.parameterization.physicalMeasureOpenPositive
+  data.parameterization.physicalMeasureOpenPositive period hPeriod
 
 /-- Explicit global smooth Cauchy extension. -/
 def extension
@@ -114,7 +115,8 @@ def extension
     {sourceMeasure : Measure Source}
     (data : CanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetData
       period hPeriod Source sourceMeasure massSquared) :=
-  data.toCanonicalCauchyJetCompatibilityData.extension
+  (data.toCanonicalCauchyJetCompatibilityData period hPeriod).extension
+    period hPeriod
 
 /-- Genuine faithful physical Euler operator. -/
 def operatorData
@@ -123,7 +125,8 @@ def operatorData
     {sourceMeasure : Measure Source}
     (data : CanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetData
       period hPeriod Source sourceMeasure massSquared) :=
-  data.toCanonicalCauchyJetCompatibilityData.operatorData
+  (data.toCanonicalCauchyJetCompatibilityData period hPeriod).operatorData
+    period hPeriod
 
 /-- Correct dense physical scalar Green core. -/
 def greenCore
@@ -132,7 +135,8 @@ def greenCore
     {sourceMeasure : Measure Source}
     (data : CanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetData
       period hPeriod Source sourceMeasure massSquared) :=
-  data.toCanonicalCauchyJetCompatibilityData.greenCore
+  (data.toCanonicalCauchyJetCompatibilityData period hPeriod).greenCore
+    period hPeriod
 
 /-- Dense-parametrized canonical Green-core certificate. -/
 theorem certificate
@@ -148,14 +152,16 @@ theorem certificate
           period hPeriod) ∧
       (∀ boundary : ValueCore period × NormalCore period,
         P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
-            period hPeriod (data.extension boundary) =
+            period hPeriod (data.extension period hPeriod boundary) =
           canonicalScalarBoundaryCorePairEmbedding
             (canonicalLatitudeSmoothPeriodicValueEmbedding period)
             (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)
             boundary) :=
-  ⟨data.physicalMeasureOpenPositive,
-    data.toCanonicalCauchyJetCompatibilityData.boundaryTrace_denseRange,
-    data.toCanonicalCauchyJetCompatibilityData.cauchyTrace_extension⟩
+  ⟨data.physicalMeasureOpenPositive period hPeriod,
+    (data.toCanonicalCauchyJetCompatibilityData period hPeriod)
+      |>.boundaryTrace_denseRange period hPeriod,
+    (data.toCanonicalCauchyJetCompatibilityData period hPeriod)
+      |>.cauchyTrace_extension period hPeriod⟩
 
 end CanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetData
 

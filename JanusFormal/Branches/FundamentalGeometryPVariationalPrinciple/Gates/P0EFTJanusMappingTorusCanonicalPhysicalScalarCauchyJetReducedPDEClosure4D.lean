@@ -23,7 +23,6 @@ open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfileIntegrability4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCompatibilityGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCompatibilityBridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetPDEClosure4D
@@ -32,6 +31,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -81,7 +81,7 @@ def triple
     (reduced : CanonicalPhysicalScalarCauchyJetReducedPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  reduced.toPDEData.triple
+  (reduced.toPDEData period hPeriod).triple period hPeriod
 
 /-- Complete physical boundary input. -/
 def completedInputs
@@ -91,7 +91,7 @@ def completedInputs
     (reduced : CanonicalPhysicalScalarCauchyJetReducedPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  reduced.toPDEData.completedInputs
+  (reduced.toPDEData period hPeriod).completedInputs period hPeriod
 
 /-- Bounded completed Cauchy extension. -/
 def completedExtension
@@ -101,7 +101,7 @@ def completedExtension
     (reduced : CanonicalPhysicalScalarCauchyJetReducedPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :=
-  reduced.toPDEData.completedExtension
+  (reduced.toPDEData period hPeriod).completedExtension period hPeriod
 
 /-- Reduced PDE boundary certificate. -/
 theorem certificate
@@ -111,23 +111,26 @@ theorem certificate
     (reduced : CanonicalPhysicalScalarCauchyJetReducedPDEData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity)) :
-    reduced.geometric.greenCore.MinimalCoreDense period hPeriod ∧
+    (reduced.geometric.greenCore period hPeriod).MinimalCoreDense period hPeriod ∧
       Function.Injective
         (canonicalScalarGreenCoreGraphInclusion
-          reduced.geometric.greenCore.core) ∧
+          (reduced.geometric.greenCore period hPeriod).core) ∧
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
-          reduced.geometric.greenCore.core
-          (reduced.completedInputs.traceBound reduced.geometric.greenCore)) ∧
+          (reduced.geometric.greenCore period hPeriod).core
+          ((reduced.completedInputs period hPeriod).traceBound period hPeriod
+            (reduced.geometric.greenCore period hPeriod))) ∧
       (∀ boundary,
         canonicalScalarGreenCoreCompletedBoundaryTrace
-            reduced.geometric.greenCore.core
-            (reduced.completedInputs.traceBound reduced.geometric.greenCore)
-            (reduced.completedExtension boundary) = boundary) :=
-  ⟨(reduced.toPDEData.certificate).2.1,
-    (reduced.toPDEData.certificate).2.2.1,
-    (reduced.toPDEData.certificate).2.2.2.1,
-    (reduced.toPDEData.certificate).2.2.2.2⟩
+            (reduced.geometric.greenCore period hPeriod).core
+            ((reduced.completedInputs period hPeriod).traceBound period hPeriod
+              (reduced.geometric.greenCore period hPeriod))
+            (reduced.completedExtension period hPeriod boundary) = boundary) :=
+  ⟨((reduced.toPDEData period hPeriod).certificate period hPeriod).2.1,
+    ((reduced.toPDEData period hPeriod).certificate period hPeriod).2.2.1,
+    ((reduced.toPDEData period hPeriod).certificate period hPeriod).2.2.2.1,
+    (reduced.toPDEData period hPeriod).completedBoundaryTrace_extension
+      period hPeriod⟩
 
 end CanonicalPhysicalScalarCauchyJetReducedPDEData
 

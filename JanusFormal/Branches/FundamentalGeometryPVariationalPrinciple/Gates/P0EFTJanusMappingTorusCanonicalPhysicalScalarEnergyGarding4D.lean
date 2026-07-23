@@ -22,6 +22,9 @@ geometric energy estimates to be proved from the intrinsic metric.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -33,6 +36,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingEstimate4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 namespace CanonicalPhysicalScalarFirstSheetGreenCoreData
 
@@ -127,18 +131,18 @@ def toSquaredGardingEstimate
           (|inner Real (green.core.operator field)
               (green.core.inclusion field)| +
             energy.zerothOrderConstant * inclusionNorm ^ 2) :=
-        add_le_add_left hEnergy _
+        add_le_add_right hEnergy _
       _ ≤ inclusionNorm ^ 2 +
           (operatorNorm * inclusionNorm +
             energy.zerothOrderConstant * inclusionNorm ^ 2) :=
-        add_le_add_left
-          (add_le_add_right hPair _) _
+        add_le_add_right
+          (add_le_add_left hPair _) _
       _ ≤ inclusionNorm ^ 2 +
           ((1 / 2 : Real) * operatorNorm ^ 2 +
             (1 / 2 : Real) * inclusionNorm ^ 2 +
             energy.zerothOrderConstant * inclusionNorm ^ 2) :=
-        add_le_add_left
-          (add_le_add_right hYoung _) _
+        add_le_add_right
+          (add_le_add_left hYoung _) _
       _ = (1 / 2 : Real) * operatorNorm ^ 2 +
           (3 / 2 + energy.zerothOrderConstant) * inclusionNorm ^ 2 := by
         ring
@@ -155,7 +159,8 @@ def toGraphEllipticEstimate
       period hPeriod massSquared)
     (energy : green.EnergyGardingData period hPeriod) :
     green.GraphEllipticEstimate period hPeriod :=
-  (energy.toSquaredGardingEstimate green).toGraphEllipticEstimate green
+  (energy.toSquaredGardingEstimate period hPeriod green)
+    |>.toGraphEllipticEstimate period hPeriod green
 
 /-- Energy-Gårding certificate. -/
 theorem certificate
@@ -173,13 +178,13 @@ theorem certificate
             period hPeriod field‖ ≤
           Real.sqrt (2 * energy.gardingConstant) *
             ‖canonicalScalarGreenCoreToGraph green.core field‖) :=
-  ⟨(energy.toSquaredGardingEstimate green).bound_sq,
-    (energy.toGraphEllipticEstimate green).bound⟩
+  ⟨(energy.toSquaredGardingEstimate period hPeriod green).bound_sq,
+    (energy.toGraphEllipticEstimate period hPeriod green).bound⟩
 
 end EnergyGardingData
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

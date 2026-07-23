@@ -28,7 +28,7 @@ variable (period : Real)
 namespace CanonicalPhysicalScalarCauchyJetBoundaryCoreData
 
 /-- The smooth value representative belongs to boundary `L²`. -/
-theorem valueRepresentative_memLp
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetOpenCoverSmoothness4D.CanonicalPhysicalScalarCauchyJetBoundaryCoreData.valueRepresentative_memLp
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -37,11 +37,11 @@ theorem valueRepresentative_memLp
     (value : ValueCore) :
     MemLp (core.valueRepresentative value) (2 : ENNReal)
       (canonicalLatitudeBaseMeasure period) :=
-  (Lp.memLp (core.valueEmbedding value)).congr
-    (core.valueEmbedding_ae value)
+  (memLp_congr_ae (core.valueEmbedding_ae value)).mp
+    (Lp.memLp (core.valueEmbedding value))
 
 /-- The smooth normal representative belongs to boundary `L²`. -/
-theorem normalRepresentative_memLp
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetOpenCoverSmoothness4D.CanonicalPhysicalScalarCauchyJetBoundaryCoreData.normalRepresentative_memLp
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -50,8 +50,8 @@ theorem normalRepresentative_memLp
     (normal : NormalCore) :
     MemLp (core.normalRepresentative normal) (2 : ENNReal)
       (canonicalLatitudeBaseMeasure period) :=
-  (Lp.memLp (core.normalEmbedding normal)).congr
-    (core.normalEmbedding_ae normal)
+  (memLp_congr_ae (core.normalEmbedding_ae normal)).mp
+    (Lp.memLp (core.normalEmbedding normal))
 
 /-- Integrability of the squared value representative. -/
 theorem valueRepresentative_sq_integrable
@@ -63,7 +63,7 @@ theorem valueRepresentative_sq_integrable
     (value : ValueCore) :
     Integrable (fun base => core.valueRepresentative value base ^ 2)
       (canonicalLatitudeBaseMeasure period) :=
-  (core.valueRepresentative_memLp value).integrable_sq
+  (core.valueRepresentative_memLp period value).integrable_sq
 
 /-- Integrability of the squared normal representative. -/
 theorem normalRepresentative_sq_integrable
@@ -75,7 +75,7 @@ theorem normalRepresentative_sq_integrable
     (normal : NormalCore) :
     Integrable (fun base => core.normalRepresentative normal base ^ 2)
       (canonicalLatitudeBaseMeasure period) :=
-  (core.normalRepresentative_memLp normal).integrable_sq
+  (core.normalRepresentative_memLp period normal).integrable_sq
 
 /-- Boundary representative `L²` certificate. -/
 theorem certificate
@@ -90,8 +90,8 @@ theorem certificate
       (∀ normal,
         MemLp (core.normalRepresentative normal) (2 : ENNReal)
           (canonicalLatitudeBaseMeasure period)) :=
-  ⟨core.valueRepresentative_memLp,
-    core.normalRepresentative_memLp⟩
+  ⟨core.valueRepresentative_memLp period,
+    core.normalRepresentative_memLp period⟩
 
 end CanonicalPhysicalScalarCauchyJetBoundaryCoreData
 

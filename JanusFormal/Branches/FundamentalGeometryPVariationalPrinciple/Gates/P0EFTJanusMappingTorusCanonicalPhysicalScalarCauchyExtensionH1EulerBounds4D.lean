@@ -30,6 +30,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -81,7 +82,10 @@ theorem inclusionConstant_nonnegative
     (bounds : CanonicalPhysicalScalarCauchyExtensionH1EulerBounds
       period hPeriod geometric) :
     0 ≤ bounds.inclusionConstant :=
-  mul_nonneg (norm_nonneg _) bounds.h1Constant_nonnegative
+  mul_nonneg
+    (ContinuousLinearMap.opNorm_nonneg
+      (canonicalPhysicalScalarH1ToBulkL2 period hPeriod))
+    bounds.h1Constant_nonnegative
 
 /-- The `H¹` estimate implies the bulk-inclusion component estimate. -/
 theorem inclusion_bound
@@ -114,7 +118,9 @@ theorem inclusion_bound
       (canonicalPhysicalScalarH1ToBulkL2 period hPeriod).le_opNorm extensionH1
     _ ≤ ‖canonicalPhysicalScalarH1ToBulkL2 period hPeriod‖ *
         (bounds.h1Constant * boundaryNorm) :=
-      mul_le_mul_of_nonneg_left hH1 (norm_nonneg _)
+      mul_le_mul_of_nonneg_left hH1
+        (ContinuousLinearMap.opNorm_nonneg
+          (canonicalPhysicalScalarH1ToBulkL2 period hPeriod))
     _ = bounds.inclusionConstant * boundaryNorm := by
       unfold inclusionConstant
       ring
@@ -153,8 +159,9 @@ def toCutoffClosedBoundaryData
     CanonicalPhysicalScalarCutoffClosedBoundaryData
       period hPeriod massSquared ValueCore NormalCore
       (Regularity := Regularity) :=
-  (bounds.toComponentBounds geometric).toCutoffClosedBoundaryData
-    geometric garding normalRegularity
+  (bounds.toComponentBounds period hPeriod geometric)
+    |>.toCutoffClosedBoundaryData
+      period hPeriod geometric garding normalRegularity
 
 /-- H1/Euler extension estimate certificate. -/
 theorem certificate
@@ -174,10 +181,14 @@ theorem certificate
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
           geometric.greenCore.core
-          (bounds.toCutoffClosedBoundaryData geometric garding normalRegularity)
-            |>.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
-              |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound) :=
-  (bounds.toCutoffClosedBoundaryData geometric garding normalRegularity).certificate
+          ((bounds.toCutoffClosedBoundaryData
+              period hPeriod geometric garding normalRegularity)
+            |>.toFullyGeometricBoundaryData period hPeriod
+            |>.cutoffEllipticBoundaryData period hPeriod
+            |>.toEllipticBoundaryData period hPeriod
+            |>.toBoundaryConstructionData period hPeriod).traceBound) :=
+  (bounds.toCutoffClosedBoundaryData
+    period hPeriod geometric garding normalRegularity).certificate period hPeriod
 
 end CanonicalPhysicalScalarCauchyExtensionH1EulerBounds
 

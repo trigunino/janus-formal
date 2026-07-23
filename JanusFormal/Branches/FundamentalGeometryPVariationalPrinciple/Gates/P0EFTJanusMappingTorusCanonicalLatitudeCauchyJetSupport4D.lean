@@ -109,22 +109,26 @@ theorem Icc_neg_one_one_subset_latitudeBand :
 theorem closure_support_canonicalLatitudeCauchyValueProfile_subset_latitudeBand :
     closure (Function.support canonicalLatitudeCauchyValueProfile) ⊆
       Set.Ioo (-(Real.pi / 2)) (Real.pi / 2) := by
-  apply Set.Subset.trans
-  · exact closure_minimal
-      support_canonicalLatitudeCauchyValueProfile_subset
-      isClosed_Icc
-  · exact Icc_neg_one_one_subset_latitudeBand
+  refine Set.Subset.trans ?_ Icc_neg_one_one_subset_latitudeBand
+  apply closure_minimal
+  · intro normal hNormal
+    have hOpen :=
+      support_canonicalLatitudeCauchyValueProfile_subset hNormal
+    exact ⟨hOpen.1.le, hOpen.2.le⟩
+  · exact isClosed_Icc
 
 /-- The closure of the normal-profile support also stays inside the genuine
  tubular band. -/
 theorem closure_support_canonicalLatitudeCauchyNormalProfile_subset_latitudeBand :
     closure (Function.support canonicalLatitudeCauchyNormalProfile) ⊆
       Set.Ioo (-(Real.pi / 2)) (Real.pi / 2) := by
-  apply Set.Subset.trans
-  · exact closure_minimal
-      support_canonicalLatitudeCauchyNormalProfile_subset
-      isClosed_Icc
-  · exact Icc_neg_one_one_subset_latitudeBand
+  refine Set.Subset.trans ?_ Icc_neg_one_one_subset_latitudeBand
+  apply closure_minimal
+  · intro normal hNormal
+    have hOpen :=
+      support_canonicalLatitudeCauchyNormalProfile_subset hNormal
+    exact ⟨hOpen.1.le, hOpen.2.le⟩
+  · exact isClosed_Icc
 
 /-- The local extension is identically zero near the positive latitude pole. -/
 theorem canonicalLatitudeLocalCauchyExtensionSlice_eventuallyEq_zero_at_pos_pole
@@ -149,11 +153,13 @@ theorem canonicalLatitudeLocalCauchyExtensionSlice_eventuallyEq_zero_at_neg_pole
         𝓝 (-(Real.pi / 2))]
       fun _ : Real => 0 := by
   have hPole : (-(Real.pi / 2) : Real) ∈ Set.Iio (-1) := by
-    nlinarith [one_lt_pi_div_two]
+    exact neg_lt_neg one_lt_pi_div_two
   filter_upwards [isOpen_Iio.mem_nhds hPole] with normal hNormal
   unfold canonicalLatitudeLocalCauchyExtensionSlice
   apply canonicalLatitudeLocalCauchyExtension_eq_zero_of_one_le_abs
-  have hNeg : 1 < -normal := by linarith
+  have hNeg : 1 < -normal := by
+    have hNormal' : normal < -1 := hNormal
+    simpa using (neg_lt_neg hNormal')
   exact hNeg.le.trans (neg_le_abs normal)
 
 /-- Strict-support certificate for the exact Cauchy profiles. -/

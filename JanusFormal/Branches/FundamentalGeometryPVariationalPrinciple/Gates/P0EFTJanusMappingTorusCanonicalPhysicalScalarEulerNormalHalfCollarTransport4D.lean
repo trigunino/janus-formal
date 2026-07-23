@@ -28,6 +28,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter Function
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
@@ -36,6 +37,11 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalNormalSplit4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+local instance normalHalfCollarLatitudeBaseMeasureFinite :
+    IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+  canonicalLatitudeBaseMeasure_isFinite period
 
 /-- Field-independent geometric transport from the full weighted normal product
 to the positive unit collar. -/
@@ -128,7 +134,7 @@ theorem normalDensity_integrable
     (data : CanonicalPhysicalScalarEulerTransportedNormalDensityData
       period hPeriod massSquared)
     (field test : SmoothScalarField period hPeriod) :
-    Integrable (data.normalDensity field test)
+    Integrable (data.normalDensity period hPeriod field test)
       (canonicalLatitudeCauchyJetProductMeasure period) := by
   unfold normalDensity
   exact (data.transportData.integrable_comp
@@ -143,7 +149,7 @@ theorem normal_integral_eq_halfCollar
       period hPeriod massSquared)
     (field test : SmoothScalarField period hPeriod) :
     (∫ parameter,
-      data.normalDensity field test parameter
+      data.normalDensity period hPeriod field test parameter
       ∂canonicalLatitudeCauchyJetProductMeasure period) =
       -2 *
         (∫ base, (∫ normal in (0 : Real)..1,
@@ -155,14 +161,15 @@ theorem normal_integral_eq_halfCollar
   have hIntegrable := data.halfCollarDivergence_integrable field test
   have hTransport := data.transportData.integral_comp collarDensity hIntegrable
   have hIterated := data.transportData.integral_eq_iterated
-    collarDensity hIntegrable
+    period collarDensity hIntegrable
   unfold normalDensity
   rw [integral_neg]
   change -(∫ parameter,
       collarDensity (data.transportData.transport parameter)
       ∂canonicalLatitudeCauchyJetProductMeasure period) = _
   rw [hTransport, hIterated]
-  rfl
+  simp only [collarDensity, canonicalPhysicalScalarHalfCollarDivergenceDensity]
+  ring
 
 /-- Conversion to the canonical one-normal-component Green package. -/
 def toCanonicalNormalSplitData
@@ -171,30 +178,30 @@ def toCanonicalNormalSplitData
     CanonicalPhysicalScalarEulerCanonicalNormalSplitData
       period hPeriod massSquared where
   waveNaturality := data.waveNaturality
-  normalDensity := data.normalDensity
-  normalDensity_integrable := data.normalDensity_integrable
+  normalDensity := data.normalDensity period hPeriod
+  normalDensity_integrable := data.normalDensity_integrable period hPeriod
   tangential_base_integral_zero := by
     intro field test normal
     simpa [normalDensity, sub_neg_eq_add] using
       data.tangential_base_integral_zero field test normal
-  normal_integral_eq_halfCollar := data.normal_integral_eq_halfCollar
+  normal_integral_eq_halfCollar := data.normal_integral_eq_halfCollar period hPeriod
 
 /-- Correct dense physical Green core. -/
 def greenCore
     (data : CanonicalPhysicalScalarEulerTransportedNormalDensityData
       period hPeriod massSquared) :=
-  data.toCanonicalNormalSplitData.greenCore
+  (data.toCanonicalNormalSplitData period hPeriod).greenCore period hPeriod
 
 /-- Transported-normal Green certificate. -/
 theorem certificate
     (data : CanonicalPhysicalScalarEulerTransportedNormalDensityData
       period hPeriod massSquared) :
     (∀ field test,
-      Integrable (data.normalDensity field test)
+      Integrable (data.normalDensity period hPeriod field test)
         (canonicalLatitudeCauchyJetProductMeasure period)) ∧
       (∀ field test,
         (∫ parameter,
-          data.normalDensity field test parameter
+          data.normalDensity period hPeriod field test parameter
           ∂canonicalLatitudeCauchyJetProductMeasure period) =
         -2 *
           (∫ base, (∫ normal in (0 : Real)..1,
@@ -209,9 +216,9 @@ theorem certificate
             period hPeriod) =
         -2 * P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.cutBulkCanonicalDivergenceMeasure
           period hPeriod massSquared field test Set.univ) :=
-  ⟨data.normalDensity_integrable,
-    data.normal_integral_eq_halfCollar,
-    data.toCanonicalNormalSplitData.certificate.2.2.2⟩
+  ⟨data.normalDensity_integrable period hPeriod,
+    data.normal_integral_eq_halfCollar period hPeriod,
+    ((data.toCanonicalNormalSplitData period hPeriod).certificate period hPeriod).2.2.2⟩
 
 end CanonicalPhysicalScalarEulerTransportedNormalDensityData
 

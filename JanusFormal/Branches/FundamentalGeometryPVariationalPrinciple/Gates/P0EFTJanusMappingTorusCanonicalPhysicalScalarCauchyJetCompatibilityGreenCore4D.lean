@@ -30,6 +30,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerGreenL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCandidateExtension4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetTubularChartReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetCoverInverseReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCompatibilityGreenCore4D
 open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
@@ -37,7 +38,7 @@ open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 universe x y
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real) (hPeriod : period ≠ 0) {massSquared : Real}
 
 /-- Explicit physical Green-core data with operator globalization reduced to
 Euler overlap compatibility. -/
@@ -73,7 +74,8 @@ def candidateExtension
       period hPeriod massSquared ValueCore NormalCore) :
     CanonicalPhysicalScalarCauchyJetCandidateExtensionData
       period hPeriod ValueCore NormalCore :=
-  data.tubularInverse.toCandidateExtensionData data.boundaryCore
+  data.tubularInverse.toCandidateExtensionData
+    period hPeriod data.boundaryCore
 
 /-- Linear smooth physical Cauchy extension. -/
 def extension
@@ -84,7 +86,7 @@ def extension
       period hPeriod massSquared ValueCore NormalCore) :
     ValueCore × NormalCore →ₗ[Real]
       SmoothQuotientField period hPeriod Real :=
-  data.candidateExtension.extension
+  (data.candidateExtension period hPeriod).extension period hPeriod
 
 /-- Exact physical Cauchy trace of the explicit extension. -/
 theorem cauchyTrace_extension
@@ -95,11 +97,12 @@ theorem cauchyTrace_extension
       period hPeriod massSquared ValueCore NormalCore)
     (boundary : ValueCore × NormalCore) :
     smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
-        (data.extension boundary) =
+        (data.extension period hPeriod boundary) =
       canonicalScalarBoundaryCorePairEmbedding
         data.boundaryCore.valueEmbedding
         data.boundaryCore.normalEmbedding boundary :=
-  data.candidateExtension.cauchyTrace_extension boundary
+  (data.candidateExtension period hPeriod)
+    |>.cauchyTrace_extension period hPeriod boundary
 
 /-- Conversion to the compatibility-based Green-core construction. -/
 def toCompatibilityGreenCoreData
@@ -115,8 +118,8 @@ def toCompatibilityGreenCoreData
   normalEmbedding := data.boundaryCore.normalEmbedding
   valueDense := data.boundaryCore.valueDense
   normalDense := data.boundaryCore.normalDense
-  extension := data.extension
-  boundary_extension := data.cauchyTrace_extension
+  extension := data.extension period hPeriod
+  boundary_extension := data.cauchyTrace_extension period hPeriod
   integral_eq_divergence := data.integral_eq_divergence
 
 /-- Genuine physical Euler operator. -/
@@ -126,7 +129,8 @@ def operatorData
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (data : CanonicalPhysicalScalarCauchyJetCompatibilityData
       period hPeriod massSquared ValueCore NormalCore) :=
-  data.toCompatibilityGreenCoreData.operatorData
+  (data.toCompatibilityGreenCoreData period hPeriod)
+    |>.operatorData period hPeriod
 
 /-- Correct dense physical scalar Green core. -/
 def greenCore
@@ -135,7 +139,8 @@ def greenCore
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (data : CanonicalPhysicalScalarCauchyJetCompatibilityData
       period hPeriod massSquared ValueCore NormalCore) :=
-  data.toCompatibilityGreenCoreData.greenCore
+  (data.toCompatibilityGreenCoreData period hPeriod)
+    |>.greenCore period hPeriod
 
 /-- Dense smooth physical Cauchy trace. -/
 theorem boundaryTrace_denseRange
@@ -146,7 +151,8 @@ theorem boundaryTrace_denseRange
       period hPeriod massSquared ValueCore NormalCore) :
     DenseRange
       (smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod) :=
-  data.toCompatibilityGreenCoreData.smoothCauchyExtensionData
+  (data.toCompatibilityGreenCoreData period hPeriod)
+    |>.smoothCauchyExtensionData period hPeriod
     |>.boundaryTrace_denseRange
 
 /-- Exact physical Green identity. -/
@@ -157,14 +163,14 @@ theorem green_identity
     (data : CanonicalPhysicalScalarCauchyJetCompatibilityData
       period hPeriod massSquared ValueCore NormalCore)
     (field test : SmoothQuotientField period hPeriod Real) :
-    inner Real (data.greenCore.core.operator field)
-          (data.greenCore.core.inclusion test) -
-        inner Real (data.greenCore.core.inclusion field)
-          (data.greenCore.core.operator test) =
+    inner Real ((data.greenCore period hPeriod).core.operator field)
+          ((data.greenCore period hPeriod).core.inclusion test) -
+        inner Real ((data.greenCore period hPeriod).core.inclusion field)
+          ((data.greenCore period hPeriod).core.operator test) =
       2 * P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D.canonicalScalarHilbertBoundarySymplecticForm
-        (data.greenCore.core.boundaryTrace field)
-        (data.greenCore.core.boundaryTrace test) :=
-  data.greenCore.core.green_identity field test
+        ((data.greenCore period hPeriod).core.boundaryTrace field)
+        ((data.greenCore period hPeriod).core.boundaryTrace test) :=
+  (data.greenCore period hPeriod).core.green_identity field test
 
 /-- Compatibility-Cauchy Green-core certificate. -/
 theorem certificate
@@ -177,21 +183,21 @@ theorem certificate
         (smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod) ∧
       (∀ boundary : ValueCore × NormalCore,
         smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
-            (data.extension boundary) =
+            (data.extension period hPeriod boundary) =
           canonicalScalarBoundaryCorePairEmbedding
             data.boundaryCore.valueEmbedding
             data.boundaryCore.normalEmbedding boundary) ∧
       (∀ field test : SmoothQuotientField period hPeriod Real,
-        inner Real (data.greenCore.core.operator field)
-              (data.greenCore.core.inclusion test) -
-            inner Real (data.greenCore.core.inclusion field)
-              (data.greenCore.core.operator test) =
+        inner Real ((data.greenCore period hPeriod).core.operator field)
+              ((data.greenCore period hPeriod).core.inclusion test) -
+            inner Real ((data.greenCore period hPeriod).core.inclusion field)
+              ((data.greenCore period hPeriod).core.operator test) =
           2 * P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D.canonicalScalarHilbertBoundarySymplecticForm
-            (data.greenCore.core.boundaryTrace field)
-            (data.greenCore.core.boundaryTrace test)) :=
-  ⟨data.boundaryTrace_denseRange,
-    data.cauchyTrace_extension,
-    data.green_identity⟩
+            ((data.greenCore period hPeriod).core.boundaryTrace field)
+            ((data.greenCore period hPeriod).core.boundaryTrace test)) :=
+  ⟨data.boundaryTrace_denseRange period hPeriod,
+    data.cauchyTrace_extension period hPeriod,
+    data.green_identity period hPeriod⟩
 
 end CanonicalPhysicalScalarCauchyJetCompatibilityData
 

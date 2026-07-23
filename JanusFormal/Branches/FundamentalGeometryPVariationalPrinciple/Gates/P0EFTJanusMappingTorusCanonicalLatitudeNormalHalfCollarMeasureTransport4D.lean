@@ -96,7 +96,7 @@ theorem integral_comp
       rw [integral_smul_nnreal_measure]
     _ = 2 * ∫ parameter, function parameter
           ∂canonicalLatitudeCollarMeasure period := by
-      simp [smul_eq_mul]
+      rfl
 
 /-- Conversion to the former analytical transport interface. -/
 def toNormalToHalfCollarTransportData

@@ -17,6 +17,9 @@ instead of repeating a separate coercivity proof and constant.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -115,5 +118,5 @@ end LagrangianShiftedPositiveDecompositionData
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

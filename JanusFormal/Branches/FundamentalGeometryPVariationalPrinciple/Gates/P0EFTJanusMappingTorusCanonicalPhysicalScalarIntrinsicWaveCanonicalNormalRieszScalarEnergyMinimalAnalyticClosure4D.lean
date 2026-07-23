@@ -28,6 +28,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -57,6 +58,7 @@ def toNormalTangentialScalarEnergyMinimalAnalyticData
     CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalAnalyticData
       period hPeriod massSquared Energy where
   boundary := analytic.boundary.toNormalTangentialRieszScalarEnergyPDEData
+    period hPeriod
   condition := analytic.condition
   referenceParameter := analytic.referenceParameter
   shiftedPositiveDecomposition := analytic.shiftedPositiveDecomposition
@@ -140,7 +142,7 @@ theorem certificate
       period hPeriod massSquared Energy) :
     (∀ field test,
       Integrable
-        (analytic.boundary.geometric.tangentialDensity field test)
+        (analytic.boundary.geometric.tangentialDensity period hPeriod field test)
         (P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D.canonicalLatitudeCauchyJetProductMeasure
           period)) ∧
       Function.Surjective analytic.boundary.completedBoundaryTrace ∧
@@ -155,10 +157,9 @@ theorem certificate
               analytic.condition spectralParameter ∨
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
-  ⟨analytic.boundary.geometric.toCanonicalNormalSplitData
-      |>.tangentialDensity_integrable,
-    analytic.boundary.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData
-      |>.boundedSmoothExtension.rieszBoundaryTrace_surjective,
+  ⟨(analytic.boundary.geometric.toCanonicalNormalSplitData period hPeriod)
+      |>.tangentialDensity_integrable period hPeriod,
+    (analytic.boundary.certificate period hPeriod).2.2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.finiteCoordinateRellich.rellich,
     analytic.fredholmAlternative period hPeriod⟩
