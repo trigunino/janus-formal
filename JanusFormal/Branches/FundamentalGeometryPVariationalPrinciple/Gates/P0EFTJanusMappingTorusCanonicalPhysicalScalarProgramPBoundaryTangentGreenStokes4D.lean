@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompleteVariationBoundaryDomainBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCommonMatterActionVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarDirichletOrientedGreenStokesClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDivergence4D
 
 /-!
 # Program P boundary tangents feed the physical scalar Green--Stokes domain
@@ -18,7 +19,7 @@ namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBoundaryTangentGr
 set_option autoImplicit false
 noncomputable section
 
-open Set
+open Set MeasureTheory
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
@@ -34,6 +35,12 @@ open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 open P0EFTJanusMappingTorusCutBulkGlobalOrientedBoundaryCurrent4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCenteredCutoffDivergenceIntrinsicMetricBridge4D
 open P0EFTJanusMappingTorusCanonicalLatitudeScalarGreenCurrent4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerGreenL2Reduction4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerProductDivergenceClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDivergence4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWave4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarDirichletOrientedGreenStokesClosure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -125,6 +132,118 @@ abbrev programPBoundaryTangentScalarComponent
     SmoothQuotientField period hPeriod Real :=
   matterVariationComponentFamily period hPeriod
     variation.independent.matter component
+
+/-- Strong global physical Euler equation used for the on-shell Green sector. -/
+def CanonicalPhysicalScalarGlobalEulerSolution
+    (massSquared : Real)
+    (field : SmoothQuotientField period hPeriod Real) : Prop :=
+  ∀ point,
+    canonicalPhysicalScalarEulerGlobalResidual
+      period hPeriod massSquared field point = 0
+
+/-- Two global physical Euler solutions have identically zero canonical local
+Green-divergence density. -/
+theorem canonicalPhysicalScalarEulerProductLocalDivergenceDensity_eq_zero_of_globalEuler
+    (massSquared : Real)
+    (field test : SmoothQuotientField period hPeriod Real)
+    (hField : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared field)
+    (hTest : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared test)
+    (parameter : CanonicalLatitudeCauchyJetProductParameter) :
+    canonicalPhysicalScalarEulerProductLocalDivergenceDensity
+        period hPeriod field test parameter = 0 := by
+  rw [← canonicalPhysicalScalarEulerProductSkewDensity_eq_localDivergence
+    period hPeriod
+      ((CanonicalPhysicalScalarIntrinsicWaveData.canonical period hPeriod)
+        |>.toWaveAtlasNaturality period hPeriod)
+      massSquared field test parameter]
+  unfold canonicalPhysicalScalarEulerProductSkewDensity
+    canonicalPhysicalScalarEulerSkewDensity
+  rw [hField, hTest]
+  ring
+
+/-- Hence the full product local-divergence integral vanishes on shell. -/
+theorem canonicalPhysicalScalarEulerProductLocalDivergenceIntegral_eq_zero_of_globalEuler
+    (massSquared : Real)
+    (field test : SmoothQuotientField period hPeriod Real)
+    (hField : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared field)
+    (hTest : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared test) :
+    (∫ parameter,
+      canonicalPhysicalScalarEulerProductLocalDivergenceDensity
+        period hPeriod field test parameter
+      ∂canonicalLatitudeCauchyJetProductMeasure period) = 0 := by
+  apply integral_eq_zero_of_ae
+  exact Filter.Eventually.of_forall fun parameter =>
+    canonicalPhysicalScalarEulerProductLocalDivergenceDensity_eq_zero_of_globalEuler
+      period hPeriod massSquared field test hField hTest parameter
+
+/-- Exact local-divergence/cut-bulk identity on the physical Dirichlet Euler
+domain. Both sides are proved zero; no Stokes premise is supplied. -/
+theorem canonicalPhysicalScalarDirichletGlobalEuler_localDivergence_eq_cutBulk
+    (massSquared : Real)
+    (field test : SmoothQuotientField period hPeriod Real)
+    (hFieldEuler : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared field)
+    (hTestEuler : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared test)
+    (hFieldDirichlet : CanonicalLatitudeScalarDirichletBoundaryCondition
+      period hPeriod field)
+    (hTestDirichlet : CanonicalLatitudeScalarDirichletBoundaryCondition
+      period hPeriod test) :
+    (∫ parameter,
+      canonicalPhysicalScalarEulerProductLocalDivergenceDensity
+        period hPeriod field test parameter
+      ∂canonicalLatitudeCauchyJetProductMeasure period) =
+      -2 * cutBulkCanonicalDivergenceMeasure
+        period hPeriod massSquared field test Set.univ := by
+  rw [canonicalPhysicalScalarEulerProductLocalDivergenceIntegral_eq_zero_of_globalEuler
+      period hPeriod massSquared field test hFieldEuler hTestEuler,
+    canonicalPhysicalScalarDirichlet_cutBulkDivergence_zero
+      period hPeriod massSquared field test hFieldDirichlet hTestDirichlet]
+  ring
+
+/-- Program P boundary tangency supplies the Dirichlet hypotheses in the exact
+on-shell local-divergence/cut-bulk identity. -/
+theorem programPBoundaryTangents_localDivergence_eq_cutBulk
+    (domain : ProgramPCommonGeometricDomain4D period hPeriod)
+    (massSquared : Real)
+    (fieldVariation testVariation :
+      ProgramPCompleteVariation4D period hPeriod)
+    (hFieldVariation :
+      fieldVariation ∈
+        programPBoundaryTangentDomain4D period hPeriod domain)
+    (hTestVariation :
+      testVariation ∈
+        programPBoundaryTangentDomain4D period hPeriod domain)
+    (fieldComponent testComponent : MatterComponentIndex)
+    (hFieldEuler : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared
+        (programPBoundaryTangentScalarComponent period hPeriod
+          fieldVariation fieldComponent))
+    (hTestEuler : CanonicalPhysicalScalarGlobalEulerSolution
+      period hPeriod massSquared
+        (programPBoundaryTangentScalarComponent period hPeriod
+          testVariation testComponent)) :
+    let field := programPBoundaryTangentScalarComponent period hPeriod
+      fieldVariation fieldComponent
+    let test := programPBoundaryTangentScalarComponent period hPeriod
+      testVariation testComponent
+    (∫ parameter,
+      canonicalPhysicalScalarEulerProductLocalDivergenceDensity
+        period hPeriod field test parameter
+      ∂canonicalLatitudeCauchyJetProductMeasure period) =
+      -2 * cutBulkCanonicalDivergenceMeasure
+        period hPeriod massSquared field test Set.univ := by
+  dsimp only [programPBoundaryTangentScalarComponent] at hFieldEuler hTestEuler ⊢
+  exact canonicalPhysicalScalarDirichletGlobalEuler_localDivergence_eq_cutBulk
+    period hPeriod massSquared _ _ hFieldEuler hTestEuler
+      (programPBoundaryTangent_matterComponent_canonicalDirichlet
+        period hPeriod domain fieldVariation hFieldVariation fieldComponent)
+      (programPBoundaryTangent_matterComponent_canonicalDirichlet
+        period hPeriod domain testVariation hTestVariation testComponent)
 
 /-- Measured oriented Green--Stokes closure for two Program P boundary
 tangents.  Both Dirichlet facts are conclusions derived from tangent-domain

@@ -28,13 +28,16 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 The physical and elliptic regimes are now separated.
 
-The preferred Lorentzian endpoint is
+The general off-shell Lorentzian boundary-system endpoint is
 `P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveWeightedTransportedLorentzianBoundaryClosure4D`.
-The intrinsic wave is now canonical; its sole remaining geometric input is the
-local-divergence/cut-bulk identity.  The weighted cancellation is derived.  It
-constructs the dense Green core, the exact physical Euler/Green identity and
-symmetric smooth Dirichlet, Neumann and Robin realizations.  It does not assume
-elliptic coercivity or bounded tangential residual maps on boundary `L²`.
+Its unrestricted local-divergence/cut-bulk identity is retained as an explicit
+off-shell interface, not as a Program P theorem.
+
+For Program P itself, boundary tangency derives homogeneous Dirichlet data.
+On the global Euler sector the local divergence vanishes pointwise and the
+cut-bulk divergence vanishes by the proved Dirichlet boundary theorem.
+Therefore the exact local-divergence/cut-bulk identity is now unconditional on
+the physical on-shell domain. No new Stokes or boundary axiom is introduced.
 
 Compact resolvent, semibounded spectrum, variational minimization and Gaussian
 positivity remain available only through the explicitly conditional auxiliary
@@ -73,8 +76,8 @@ theorem canonicalPhysicalScalarProgramPBPreferredLorentzianBoundaryClosure_avail
     True :=
   P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveWeightedTransportedLorentzianBoundaryClosure4D.CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreenData.lorentzianBoundaryClosure_interface_available
 
-/-- The preferred Lorentzian Green input exists exactly when the canonical
-local-divergence input exists. -/
+/-- The unrestricted off-shell Green interface exists exactly when its
+unrestricted local-divergence input exists. -/
 theorem canonicalPhysicalScalarProgramPBPreferredGreen_nonempty_iff
     (period : Real) (hPeriod : period ≠ 0) (massSquared : Real) :
     Nonempty
@@ -86,8 +89,8 @@ theorem canonicalPhysicalScalarProgramPBPreferredGreen_nonempty_iff
   CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreenData.nonempty_iff_canonicalLocalDivergenceData
     period hPeriod
 
-/-- With wave naturality discharged, the preferred Green frontier is exactly
-the displayed local-divergence/cut-bulk identity. -/
+/-- With wave naturality discharged, the unrestricted off-shell Green frontier
+is exactly the displayed universal local-divergence/cut-bulk identity. -/
 theorem canonicalPhysicalScalarProgramPBPreferredGreen_nonempty_iff_stokes
     (period : Real) (hPeriod : period ≠ 0) (massSquared : Real) :
       Nonempty
@@ -122,6 +125,11 @@ def canonicalPhysicalScalarProgramPBPreferredBoundaryTangentMeasuredGreenStokes_
 boundary tangents, with no independent boundary hypothesis. -/
 def canonicalPhysicalScalarProgramPBPreferredBoundaryTangentMetricGreenStokes_certificate :=
   programPBoundaryTangents_metricGreenStokes_certificate
+
+/-- Exact local-divergence/cut-bulk closure on the actual Program P Dirichlet
+Euler sector, with no external Green--Stokes input. -/
+def canonicalPhysicalScalarProgramPBPreferredBoundaryTangentLocalDivergenceCutBulk_certificate :=
+  programPBoundaryTangents_localDivergence_eq_cutBulk
 
 /-- Preferred closure now means the safe Lorentzian Green/boundary endpoint. -/
 theorem canonicalPhysicalScalarProgramPBPreferredClosure_available : True :=
