@@ -15,7 +15,7 @@ theory.  This file exposes the full variational and Gaussian consequences.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszProgramPClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszResolventClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -27,6 +27,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleGaussian4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev BulkL2 :=
   P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D.CanonicalPhysicalBulkL2
@@ -207,8 +208,7 @@ theorem finalProgramP_certificate
               analytic.condition spectralParameter ∨
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
-  ⟨analytic.boundary.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
+  ⟨(analytic.boundary.certificate period hPeriod).2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.sourceSolution_equation period hPeriod source,
     analytic.sourceSolution_stationary period hPeriod source,
@@ -218,10 +218,14 @@ theorem finalProgramP_certificate
 
 end CanonicalPhysicalScalarIntrinsicWaveRieszResolventData
 
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszResolventClosure4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszProgramPClosure4D
+
 /-- Marker theorem for the preferred Riesz Program P endpoint. -/
 theorem canonicalPhysicalScalarIntrinsicWaveRieszProgramPClosure_available : True :=
   trivial
 
-end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszProgramPClosure4D
 end JanusFormal

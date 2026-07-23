@@ -54,6 +54,58 @@ structure ScalarRemainderEnergyIdentityData
             (green.core.inclusion field) +
         zerothCoefficient * ‖green.core.inclusion field‖ ^ 2
 
+/-- First-jet identity after restoring the mass term to the Euler operator.
+The scalar remainder is then forced to be `pairingSign * massSquared`. -/
+structure MassCorrectedEnergyIdentityData
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared) where
+  pairingSign : Real
+  pairingSign_abs : |pairingSign| = 1
+  kinetic_identity : ∀ field : SmoothQuotientField period hPeriod Real,
+    canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field =
+      pairingSign *
+        (inner Real (green.core.operator field)
+            (green.core.inclusion field) +
+          massSquared * ‖green.core.inclusion field‖ ^ 2)
+
+namespace MassCorrectedEnergyIdentityData
+
+/-- Conversion to the scalar-remainder interface, with no independent
+zeroth-order coefficient. -/
+def toScalarRemainderEnergyIdentityData
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.MassCorrectedEnergyIdentityData period hPeriod) :
+    green.ScalarRemainderEnergyIdentityData period hPeriod where
+  pairingSign := identity.pairingSign
+  pairingSign_abs := identity.pairingSign_abs
+  zerothCoefficient := identity.pairingSign * massSquared
+  energy_identity := by
+    intro field
+    rw [identity.kinetic_identity]
+    ring
+
+/-- The mass convention completely determines the old scalar remainder. -/
+theorem certificate
+    (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
+      period hPeriod massSquared)
+    (identity : green.MassCorrectedEnergyIdentityData period hPeriod) :
+    (identity.toScalarRemainderEnergyIdentityData period hPeriod green).zerothCoefficient =
+      identity.pairingSign * massSquared ∧
+      (∀ field : SmoothQuotientField period hPeriod Real,
+        canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field =
+          identity.pairingSign *
+              inner Real (green.core.operator field)
+                (green.core.inclusion field) +
+            identity.pairingSign * massSquared *
+              ‖green.core.inclusion field‖ ^ 2) := by
+  refine ⟨rfl, ?_⟩
+  intro field
+  rw [identity.kinetic_identity]
+  ring
+
+end MassCorrectedEnergyIdentityData
+
 namespace ScalarRemainderEnergyIdentityData
 
 /-- Scalar multiplication on physical bulk `L²`. -/

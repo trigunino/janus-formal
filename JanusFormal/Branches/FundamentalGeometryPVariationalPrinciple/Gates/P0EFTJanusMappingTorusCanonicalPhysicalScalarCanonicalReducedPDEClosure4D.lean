@@ -108,6 +108,15 @@ def completedInputs
       period hPeriod massSquared (Regularity := Regularity)) :=
   (data.toWaveExactEnergyPDEData period hPeriod).completedInputs period hPeriod
 
+/-- Completed physical Cauchy trace. -/
+def completedBoundaryTrace
+    (data : CanonicalPhysicalScalarCanonicalReducedPDEData
+      period hPeriod massSquared (Regularity := Regularity)) :=
+  canonicalScalarGreenCoreCompletedBoundaryTrace
+    (data.geometric.greenCore period hPeriod).core
+    ((data.completedInputs period hPeriod).traceBound period hPeriod
+      (data.geometric.greenCore period hPeriod))
+
 /-- Bounded right inverse of the completed Cauchy trace. -/
 def completedExtension
     (data : CanonicalPhysicalScalarCanonicalReducedPDEData

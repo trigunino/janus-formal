@@ -16,7 +16,7 @@ No independent normal trace regularity or adjoint regularity input is present.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszProgramPClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszResolventClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -27,6 +27,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszProgramPClos
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev BulkL2 :=
   P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D.CanonicalPhysicalBulkL2
@@ -211,8 +212,7 @@ theorem finalProgramP_certificate
               analytic.condition spectralParameter) :=
   ⟨analytic.boundary.geometric.toNormalTangentialSplitData
       |>.tangential_integral_eq_zero,
-    analytic.boundary.toIntrinsicWaveRieszReducedPDEData.rieszBoundaryData
-      |>.boundedSmoothExtension.rieszBoundaryTrace_surjective,
+    (analytic.boundary.certificate period hPeriod).2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.sourceSolution_equation period hPeriod source,
     analytic.sourceSolution_stationary period hPeriod source,
@@ -222,10 +222,14 @@ theorem finalProgramP_certificate
 
 end CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszResolventData
 
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszResolventClosure4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszProgramPClosure4D
+
 /-- Marker theorem for the complete normal/tangential Riesz Program P endpoint. -/
 theorem canonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszProgramPClosure_available : True :=
   trivial
 
-end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszProgramPClosure4D
 end JanusFormal

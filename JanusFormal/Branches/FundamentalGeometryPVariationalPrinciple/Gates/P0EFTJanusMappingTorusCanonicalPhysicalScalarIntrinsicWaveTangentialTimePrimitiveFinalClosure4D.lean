@@ -24,7 +24,7 @@ open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveGreen4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerCanonicalL2Operators4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFiniteCoordinateRellich4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
@@ -34,6 +34,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -123,7 +124,20 @@ theorem sourceSolution_equation
 theorem sourceSolution_unique_minimizer
     (data : CanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveFinalData
       period hPeriod massSquared Energy)
-    (source : BulkL2 period hPeriod) :=
+    (source : BulkL2 period hPeriod) :
+    (∀ field : data.triple.lagrangianDomainSubmodule data.condition,
+      data.triple.lagrangianSourceAction
+          data.condition data.referenceParameter source
+          (data.sourceSolution period hPeriod source) ≤
+        data.triple.lagrangianSourceAction
+          data.condition data.referenceParameter source field) ∧
+      (∀ field : data.triple.lagrangianDomainSubmodule data.condition,
+        data.triple.lagrangianSourceAction
+            data.condition data.referenceParameter source field =
+          data.triple.lagrangianSourceAction
+            data.condition data.referenceParameter source
+            (data.sourceSolution period hPeriod source) →
+        field = data.sourceSolution period hPeriod source) :=
   data.toFinalObligationsData.sourceSolution_unique_minimizer
     period hPeriod source
 
@@ -191,8 +205,7 @@ theorem certificate
             data.triple.LagrangianResolventPoint
               data.condition spectralParameter) :=
   ⟨data.geometric.toTangentialTimePrimitiveData.time_integral_zero,
-    data.toFinalObligationsData.boundaryData.toCanonicalNormalRieszScalarEnergyPDEData.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
+    (data.toFinalObligationsData.certificate period hPeriod source).2.2.1,
     data.actualAdjointDomain_eq period hPeriod,
     data.sourceSolution_equation period hPeriod source,
     (data.sourceSolution_unique_minimizer period hPeriod source).1,

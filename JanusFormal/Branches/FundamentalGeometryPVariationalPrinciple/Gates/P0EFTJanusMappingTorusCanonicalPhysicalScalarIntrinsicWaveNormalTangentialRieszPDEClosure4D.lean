@@ -112,17 +112,17 @@ theorem certificate
       Function.Surjective (data.completedBoundaryTrace period hPeriod) ∧
       (∀ boundary,
         data.completedBoundaryTrace period hPeriod
-          (data.completedExtension period hPeriod boundary) = boundary) :=
-  ⟨(data.geometric.toNormalTangentialSplitData period hPeriod)
-      |>.tangential_integral_eq_zero period hPeriod,
-    ((data.toIntrinsicWaveRieszReducedPDEData period hPeriod).rieszBoundaryData
-      period hPeriod).minimalCoreDense period hPeriod,
-    ((data.toIntrinsicWaveRieszReducedPDEData period hPeriod).rieszBoundaryData
-      period hPeriod).graphInclusion_injective period hPeriod,
-    (((data.toIntrinsicWaveRieszReducedPDEData period hPeriod).rieszBoundaryData
-      period hPeriod).boundedSmoothExtension period hPeriod)
-      |>.rieszBoundaryTrace_surjective,
-    data.completedBoundaryTrace_extension period hPeriod⟩
+          (data.completedExtension period hPeriod boundary) = boundary) := by
+  have reducedCertificate :=
+    (data.toIntrinsicWaveRieszReducedPDEData period hPeriod).certificate
+      period hPeriod
+  exact
+    ⟨(data.geometric.toNormalTangentialSplitData period hPeriod)
+        |>.tangential_integral_eq_zero period hPeriod,
+      reducedCertificate.2.1,
+      reducedCertificate.2.2.1,
+      reducedCertificate.2.2.2.1,
+      reducedCertificate.2.2.2.2.1⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszPDEData
 

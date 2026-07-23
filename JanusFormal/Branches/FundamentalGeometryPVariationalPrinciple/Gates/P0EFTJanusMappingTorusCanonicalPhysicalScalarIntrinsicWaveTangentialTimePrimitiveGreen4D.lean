@@ -20,7 +20,9 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
@@ -30,6 +32,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerTangentialTimePrimitive4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreen4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev Sphere2 := Metric.sphere (0 : EuclideanR3) 1
 

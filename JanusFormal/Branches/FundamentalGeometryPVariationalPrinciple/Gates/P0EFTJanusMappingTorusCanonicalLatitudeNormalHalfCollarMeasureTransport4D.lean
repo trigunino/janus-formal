@@ -1,4 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerNormalHalfCollarTransport4D
+import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-!
 # Normal half-collar transport from one measure identity
@@ -23,6 +25,7 @@ open MeasureTheory Set Topology Function
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerNormalHalfCollarTransport4D
+open P0EFTJanusMeasureToSphereEquatorialCoarea4D
 
 variable (period : Real)
 
@@ -35,6 +38,528 @@ structure CanonicalLatitudeNormalToHalfCollarMeasureTransportData where
   map_measure :
     Measure.map transport (canonicalLatitudeCauchyJetProductMeasure period) =
       (2 : NNReal) • canonicalLatitudeCollarMeasure period
+
+/-- The weighted full latitude angle has total mass `π / 2`. -/
+theorem canonicalLatitudeCauchyJetNormalMeasure_univ :
+    canonicalLatitudeCauchyJetNormalMeasure Set.univ =
+      ENNReal.ofReal (Real.pi / 2) := by
+  unfold canonicalLatitudeCauchyJetNormalMeasure realLatitudeWeight
+  rw [withDensity_apply _ MeasurableSet.univ]
+  simp only [setLIntegral_univ]
+  rw [← ofReal_integral_eq_lintegral_ofReal]
+  · rw [← integral_Ioc_eq_integral_Ioo]
+    rw [← intervalIntegral.integral_of_le (by linarith [Real.pi_pos])]
+    rw [integral_cos_sq]
+    simp
+  · exact (Real.continuous_cos.pow 2).integrableOn_Icc.mono_set
+      Set.Ioo_subset_Icc_self
+  · exact Filter.Eventually.of_forall fun latitude => sq_nonneg _
+
+theorem canonicalLatitudeUnitNormalMeasure_univ :
+    canonicalLatitudeUnitNormalMeasure Set.univ = 1 := by
+  simp [canonicalLatitudeUnitNormalMeasure, Real.volume_Ioc]
+
+theorem canonicalLatitudeBaseMeasure_ne_zero
+    (hPeriod : period ≠ 0) :
+    canonicalLatitudeBaseMeasure period ≠ 0 := by
+  have hSphere :
+      (volume : Measure (EuclideanSpace Real (Fin 3))).toSphere ≠ 0 :=
+    Measure.toSphere_ne_zero
+      (volume : Measure (EuclideanSpace Real (Fin 3)))
+  have hTime :
+      volume.restrict (canonicalLatitudeTimeInterval period) ≠ 0 := by
+    intro hZero
+    have hVolumeZero := Measure.restrict_eq_zero.mp hZero
+    rw [canonicalLatitudeTimeInterval, Real.volume_Ioc,
+      max_sub_min_eq_abs] at hVolumeZero
+    apply (ENNReal.ofReal_pos.mpr (abs_pos.mpr hPeriod)).ne'
+    simpa using hVolumeZero
+  rw [← Measure.measure_univ_ne_zero]
+  rw [show (Set.univ : Set CanonicalLatitudeBase) =
+      (Set.univ :
+        Set (Metric.sphere (0 : EuclideanSpace Real (Fin 3)) 1)) ×ˢ
+        (Set.univ : Set Real) by simp]
+  unfold canonicalLatitudeBaseMeasure
+  rw [Measure.prod_prod]
+  exact mul_ne_zero
+    ((Measure.measure_univ_ne_zero).2 hSphere)
+    ((Measure.measure_univ_ne_zero).2 hTime)
+
+theorem canonicalLatitudeCauchyJetProductMeasure_univ :
+    canonicalLatitudeCauchyJetProductMeasure period Set.univ =
+      canonicalLatitudeBaseMeasure period Set.univ *
+        ENNReal.ofReal (Real.pi / 2) := by
+  letI : SFinite canonicalLatitudeCauchyJetNormalMeasure := by
+    unfold canonicalLatitudeCauchyJetNormalMeasure
+    infer_instance
+  rw [show (Set.univ : Set CanonicalLatitudeCauchyJetProductParameter) =
+      (Set.univ : Set CanonicalLatitudeBase) ×ˢ
+        (Set.univ : Set Real) by simp]
+  unfold canonicalLatitudeCauchyJetProductMeasure
+  rw [Measure.prod_prod, canonicalLatitudeCauchyJetNormalMeasure_univ]
+
+theorem canonicalLatitudeCollarMeasure_univ :
+    canonicalLatitudeCollarMeasure period Set.univ =
+      canonicalLatitudeBaseMeasure period Set.univ := by
+  rw [show (Set.univ : Set CanonicalLatitudeCollarParameter) =
+      (Set.univ : Set CanonicalLatitudeBase) ×ˢ
+        (Set.univ : Set Real) by simp]
+  unfold canonicalLatitudeCollarMeasure
+  rw [Measure.prod_prod, canonicalLatitudeUnitNormalMeasure_univ, mul_one]
+
+/-- With the current normal and collar measures, the proposed factor-two
+pushforward cannot exist for a genuine mapping-torus period: it would force
+`π / 2 = 2`. -/
+theorem not_nonempty_of_period_ne_zero
+    (hPeriod : period ≠ 0) :
+    ¬ Nonempty
+      (CanonicalLatitudeNormalToHalfCollarMeasureTransportData period) := by
+  rintro ⟨data⟩
+  have hMass := congrArg
+    (fun measure : Measure CanonicalLatitudeCollarParameter =>
+      measure Set.univ)
+    data.map_measure
+  rw [Measure.map_apply data.measurable_transport MeasurableSet.univ] at hMass
+  simp only [preimage_univ] at hMass
+  rw [canonicalLatitudeCauchyJetProductMeasure_univ, Measure.smul_apply,
+    canonicalLatitudeCollarMeasure_univ] at hMass
+  letI : IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+    canonicalLatitudeBaseMeasure_isFinite period
+  have hBaseZero :
+      canonicalLatitudeBaseMeasure period Set.univ ≠ 0 :=
+    Measure.measure_univ_ne_zero.mpr
+      (canonicalLatitudeBaseMeasure_ne_zero period hPeriod)
+  have hBaseTop :
+      canonicalLatitudeBaseMeasure period Set.univ ≠ ⊤ :=
+    ne_of_lt (measure_lt_top (canonicalLatitudeBaseMeasure period) Set.univ)
+  have hBasePos :
+      0 < (canonicalLatitudeBaseMeasure period Set.univ).toReal :=
+    ENNReal.toReal_pos hBaseZero hBaseTop
+  have hMassReal := congrArg ENNReal.toReal hMass
+  simp only [ENNReal.toReal_mul] at hMassReal
+  rw [ENNReal.toReal_ofReal (by positivity)] at hMassReal
+  norm_num at hMassReal
+  have hPi : Real.pi = 4 := by
+    nlinarith
+  exact (ne_of_lt Real.pi_lt_four) hPi
+
+/-- The older analytical transport interface is inconsistent for the same
+reason: applying its universal integral identity to the constant function one
+already equates the two incompatible total masses. -/
+theorem analytical_not_nonempty_of_period_ne_zero
+    (hPeriod : period ≠ 0) :
+    ¬ Nonempty (CanonicalLatitudeNormalToHalfCollarTransportData period) := by
+  rintro ⟨data⟩
+  letI : IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+    canonicalLatitudeBaseMeasure_isFinite period
+  letI : IsFiniteMeasure (canonicalLatitudeCollarMeasure period) := by
+    unfold canonicalLatitudeCollarMeasure
+    infer_instance
+  have hIntegral := data.integral_comp
+    (fun _ : CanonicalLatitudeCollarParameter => (1 : Real))
+    (integrable_const 1)
+  simp only [integral_const, Measure.real, smul_eq_mul, mul_one] at hIntegral
+  rw [canonicalLatitudeCauchyJetProductMeasure_univ,
+    canonicalLatitudeCollarMeasure_univ] at hIntegral
+  rw [ENNReal.toReal_mul, ENNReal.toReal_ofReal (by positivity)] at hIntegral
+  have hBaseZero :
+      canonicalLatitudeBaseMeasure period Set.univ ≠ 0 :=
+    Measure.measure_univ_ne_zero.mpr
+      (canonicalLatitudeBaseMeasure_ne_zero period hPeriod)
+  have hBaseTop :
+      canonicalLatitudeBaseMeasure period Set.univ ≠ ⊤ :=
+    ne_of_lt (measure_lt_top (canonicalLatitudeBaseMeasure period) Set.univ)
+  have hBasePos :
+      0 < (canonicalLatitudeBaseMeasure period Set.univ).toReal :=
+    ENNReal.toReal_pos hBaseZero hBaseTop
+  have hPi : Real.pi = 4 := by
+    nlinarith
+  exact (ne_of_lt Real.pi_lt_four) hPi
+
+/-! ## Corrected weighted transport
+
+The factor-two formula is valid after inserting the Radon--Nikodym correction
+which cancels the latitude weight.  The affine normal map
+
+`normal ↦ normal / π + 1 / 2`
+
+sends the supported angle interval to the positive unit collar.  Multiplying
+the pulled-back integrand by `2 / (π cos² normal)` changes the weighted source
+measure into exactly twice Lebesgue measure on that collar.
+-/
+
+private abbrev WeightedLatitudeAngle : Set Real :=
+  Set.Ioo (-(Real.pi / 2)) (Real.pi / 2)
+
+/-- Affine map from the full latitude-angle interval to the positive unit
+normal interval. -/
+def canonicalLatitudeNormalAffineTransport (normal : Real) : Real :=
+  normal * Real.pi⁻¹ + (2 : Real)⁻¹
+
+theorem canonicalLatitudeNormalAffineTransport_measurable :
+    Measurable canonicalLatitudeNormalAffineTransport := by
+  unfold canonicalLatitudeNormalAffineTransport
+  fun_prop
+
+theorem canonicalLatitudeNormalAffineTransport_preimage_unit :
+    canonicalLatitudeNormalAffineTransport ⁻¹' Set.Ioo (0 : Real) 1 =
+      WeightedLatitudeAngle := by
+  ext normal
+  simp only [mem_preimage, mem_Ioo]
+  change
+    (0 < normal * Real.pi⁻¹ + (2 : Real)⁻¹ ∧
+      normal * Real.pi⁻¹ + (2 : Real)⁻¹ < 1) ↔
+    (-(Real.pi / 2) < normal ∧ normal < Real.pi / 2)
+  constructor
+  · intro h
+    constructor
+    · have hPositive := mul_pos h.1 Real.pi_pos
+      field_simp [Real.pi_ne_zero] at hPositive
+      nlinarith
+    · have hPositive := mul_pos (sub_pos.mpr h.2) Real.pi_pos
+      field_simp [Real.pi_ne_zero] at hPositive
+      nlinarith
+  · intro h
+    constructor
+    · have hPositive : 0 < (normal + Real.pi / 2) * Real.pi⁻¹ :=
+        mul_pos (by linarith [h.1]) (inv_pos.mpr Real.pi_pos)
+      field_simp [Real.pi_ne_zero] at hPositive ⊢
+      nlinarith
+    · have hPositive : 0 < (Real.pi / 2 - normal) * Real.pi⁻¹ :=
+        mul_pos (by linarith [h.2]) (inv_pos.mpr Real.pi_pos)
+      field_simp [Real.pi_ne_zero] at hPositive ⊢
+      nlinarith
+
+theorem map_canonicalLatitudeNormalAffineTransport_volume :
+    Measure.map canonicalLatitudeNormalAffineTransport volume =
+      ENNReal.ofReal Real.pi • volume := by
+  change Measure.map
+      ((fun normal : Real => normal + (2 : Real)⁻¹) ∘
+        fun normal : Real => normal * Real.pi⁻¹) volume =
+    ENNReal.ofReal Real.pi • volume
+  rw [← Measure.map_map (measurable_add_const (2 : Real)⁻¹)
+    (measurable_mul_const Real.pi⁻¹)]
+  rw [Real.map_volume_mul_right (inv_ne_zero Real.pi_ne_zero)]
+  rw [Measure.map_smul, map_add_right_eq_self]
+  congr 1
+  simp [abs_of_pos Real.pi_pos]
+
+theorem map_canonicalLatitudeNormalAffineTransport_restrict :
+    Measure.map canonicalLatitudeNormalAffineTransport
+        (volume.restrict WeightedLatitudeAngle) =
+      ENNReal.ofReal Real.pi •
+        volume.restrict (Set.Ioo (0 : Real) 1) := by
+  have hEmbedding :
+      MeasurableEmbedding canonicalLatitudeNormalAffineTransport := by
+    let affineHomeomorph : Real ≃ₜ Real :=
+      (Homeomorph.mulRight₀ Real.pi⁻¹
+        (inv_ne_zero Real.pi_ne_zero)).trans
+        (Homeomorph.addRight (2 : Real)⁻¹)
+    have hFunction :
+        canonicalLatitudeNormalAffineTransport = affineHomeomorph := by
+      funext normal
+      rfl
+    rw [hFunction]
+    exact affineHomeomorph.isClosedEmbedding.measurableEmbedding
+  calc
+    Measure.map canonicalLatitudeNormalAffineTransport
+        (volume.restrict WeightedLatitudeAngle) =
+        (Measure.map canonicalLatitudeNormalAffineTransport volume).restrict
+          (Set.Ioo (0 : Real) 1) := by
+      rw [hEmbedding.restrict_map]
+      rw [canonicalLatitudeNormalAffineTransport_preimage_unit]
+    _ = _ := by
+      rw [map_canonicalLatitudeNormalAffineTransport_volume,
+        Measure.restrict_smul]
+
+theorem map_canonicalLatitudeNormalAffineTransport_scaled_restrict :
+    Measure.map canonicalLatitudeNormalAffineTransport
+        (ENNReal.ofReal (2 / Real.pi) •
+          volume.restrict WeightedLatitudeAngle) =
+      (2 : NNReal) • canonicalLatitudeUnitNormalMeasure := by
+  rw [Measure.map_smul,
+    map_canonicalLatitudeNormalAffineTransport_restrict,
+    smul_smul, ← ENNReal.ofReal_mul (by positivity)]
+  have hPi : Real.pi ≠ 0 := Real.pi_ne_zero
+  rw [div_mul_cancel₀ 2 hPi, ENNReal.ofReal_ofNat]
+  rw [restrict_Ioo_eq_restrict_Ioc]
+  rfl
+
+/-- Radon--Nikodym correction which cancels the latitude `cos²` weight and
+normalizes the affine transport to the geometric factor two. -/
+def canonicalLatitudeNormalHalfCollarCorrection (normal : Real) : ENNReal :=
+  if normal ∈ WeightedLatitudeAngle then
+    ENNReal.ofReal (2 / Real.pi) * (realLatitudeWeight normal)⁻¹
+  else 0
+
+theorem canonicalLatitudeNormalHalfCollarCorrection_measurable :
+    Measurable canonicalLatitudeNormalHalfCollarCorrection := by
+  unfold canonicalLatitudeNormalHalfCollarCorrection
+  exact Measurable.ite measurableSet_Ioo
+    (measurable_const.mul realLatitudeWeight_measurable.inv)
+    measurable_const
+
+theorem canonicalLatitudeNormalHalfCollarCorrection_lt_top
+    (normal : Real) :
+    canonicalLatitudeNormalHalfCollarCorrection normal < ⊤ := by
+  by_cases hNormal : normal ∈ WeightedLatitudeAngle
+  · have hCos : 0 < Real.cos normal :=
+      Real.cos_pos_of_mem_Ioo hNormal
+    rw [canonicalLatitudeNormalHalfCollarCorrection, if_pos hNormal]
+    apply ENNReal.mul_lt_top ENNReal.ofReal_lt_top
+    rw [ENNReal.inv_lt_top]
+    exact ENNReal.ofReal_pos.mpr (sq_pos_of_pos hCos)
+  · simp [canonicalLatitudeNormalHalfCollarCorrection, hNormal]
+
+/-- The corrected weighted normal measure is a constant multiple of Lebesgue
+measure on the full latitude interval. -/
+theorem canonicalLatitudeCorrectedNormalMeasure_eq :
+    canonicalLatitudeCauchyJetNormalMeasure.withDensity
+        canonicalLatitudeNormalHalfCollarCorrection =
+      ENNReal.ofReal (2 / Real.pi) •
+        volume.restrict WeightedLatitudeAngle := by
+  let baseMeasure := volume.restrict WeightedLatitudeAngle
+  calc
+    canonicalLatitudeCauchyJetNormalMeasure.withDensity
+        canonicalLatitudeNormalHalfCollarCorrection =
+        (baseMeasure.withDensity realLatitudeWeight).withDensity
+          canonicalLatitudeNormalHalfCollarCorrection := by
+      rfl
+    _ = baseMeasure.withDensity
+        (realLatitudeWeight *
+          canonicalLatitudeNormalHalfCollarCorrection) := by
+      rw [withDensity_mul baseMeasure realLatitudeWeight_measurable
+        canonicalLatitudeNormalHalfCollarCorrection_measurable]
+    _ = baseMeasure.withDensity
+        (fun _ => ENNReal.ofReal (2 / Real.pi)) := by
+      apply withDensity_congr_ae
+      filter_upwards [ae_restrict_mem measurableSet_Ioo]
+        with normal hNormal
+      have hCos : 0 < Real.cos normal :=
+        Real.cos_pos_of_mem_Ioo hNormal
+      have hWeightZero : realLatitudeWeight normal ≠ 0 := by
+        exact (ENNReal.ofReal_pos.mpr (sq_pos_of_pos hCos)).ne'
+      have hWeightTop : realLatitudeWeight normal ≠ ⊤ := by
+        simp [realLatitudeWeight]
+      change realLatitudeWeight normal *
+          canonicalLatitudeNormalHalfCollarCorrection normal =
+        ENNReal.ofReal (2 / Real.pi)
+      rw [canonicalLatitudeNormalHalfCollarCorrection, if_pos hNormal]
+      calc
+        realLatitudeWeight normal *
+            (ENNReal.ofReal (2 / Real.pi) *
+              (realLatitudeWeight normal)⁻¹) =
+            ENNReal.ofReal (2 / Real.pi) *
+              (realLatitudeWeight normal *
+                (realLatitudeWeight normal)⁻¹) := by
+          ac_rfl
+        _ = _ := by
+          rw [ENNReal.mul_inv_cancel hWeightZero hWeightTop, mul_one]
+    _ = _ := withDensity_const _
+
+/-- Corrected source normal measure. -/
+def canonicalLatitudeCorrectedNormalMeasure : Measure Real :=
+  canonicalLatitudeCauchyJetNormalMeasure.withDensity
+    canonicalLatitudeNormalHalfCollarCorrection
+
+theorem map_canonicalLatitudeCorrectedNormalMeasure :
+    Measure.map canonicalLatitudeNormalAffineTransport
+        canonicalLatitudeCorrectedNormalMeasure =
+      (2 : NNReal) • canonicalLatitudeUnitNormalMeasure := by
+  rw [canonicalLatitudeCorrectedNormalMeasure,
+    canonicalLatitudeCorrectedNormalMeasure_eq]
+  exact map_canonicalLatitudeNormalAffineTransport_scaled_restrict
+
+/-- Product transport preserving the boundary base and applying the corrected
+affine map in the normal coordinate. -/
+def canonicalLatitudeWeightedNormalToHalfCollarTransport
+    (parameter : CanonicalLatitudeCauchyJetProductParameter) :
+    CanonicalLatitudeCollarParameter :=
+  (parameter.1, canonicalLatitudeNormalAffineTransport parameter.2)
+
+theorem canonicalLatitudeWeightedNormalToHalfCollarTransport_measurable :
+    Measurable canonicalLatitudeWeightedNormalToHalfCollarTransport := by
+  unfold canonicalLatitudeWeightedNormalToHalfCollarTransport
+  exact measurable_fst.prodMk
+    (canonicalLatitudeNormalAffineTransport_measurable.comp measurable_snd)
+
+/-- Product coarea measure after insertion of the normal correction. -/
+def canonicalLatitudeCorrectedCauchyJetProductMeasure :
+    Measure CanonicalLatitudeCauchyJetProductParameter :=
+  (canonicalLatitudeCauchyJetProductMeasure period).withDensity
+    (fun parameter =>
+      canonicalLatitudeNormalHalfCollarCorrection parameter.2)
+
+theorem canonicalLatitudeCorrectedCauchyJetProductMeasure_eq :
+    canonicalLatitudeCorrectedCauchyJetProductMeasure period =
+      (canonicalLatitudeBaseMeasure period).prod
+        canonicalLatitudeCorrectedNormalMeasure := by
+  unfold canonicalLatitudeCorrectedCauchyJetProductMeasure
+    canonicalLatitudeCauchyJetProductMeasure
+    canonicalLatitudeCorrectedNormalMeasure
+  letI : SFinite canonicalLatitudeCauchyJetNormalMeasure := by
+    unfold canonicalLatitudeCauchyJetNormalMeasure
+    infer_instance
+  exact
+    (prod_withDensity_right
+      canonicalLatitudeNormalHalfCollarCorrection_measurable).symm
+
+/-- The corrected product transport has exactly the required factor-two
+pushforward. -/
+theorem map_canonicalLatitudeCorrectedCauchyJetProductMeasure :
+    Measure.map canonicalLatitudeWeightedNormalToHalfCollarTransport
+        (canonicalLatitudeCorrectedCauchyJetProductMeasure period) =
+      (2 : NNReal) • canonicalLatitudeCollarMeasure period := by
+  rw [canonicalLatitudeCorrectedCauchyJetProductMeasure_eq]
+  letI : IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+    canonicalLatitudeBaseMeasure_isFinite period
+  letI : SFinite canonicalLatitudeCauchyJetNormalMeasure := by
+    unfold canonicalLatitudeCauchyJetNormalMeasure
+    infer_instance
+  letI : SFinite canonicalLatitudeCorrectedNormalMeasure := by
+    unfold canonicalLatitudeCorrectedNormalMeasure
+    infer_instance
+  change Measure.map
+      (Prod.map id canonicalLatitudeNormalAffineTransport)
+      ((canonicalLatitudeBaseMeasure period).prod
+        canonicalLatitudeCorrectedNormalMeasure) = _
+  rw [← Measure.map_prod_map _ _ measurable_id
+    canonicalLatitudeNormalAffineTransport_measurable,
+    Measure.map_id, map_canonicalLatitudeCorrectedNormalMeasure]
+  unfold canonicalLatitudeCollarMeasure
+  rw [← Measure.coe_nnreal_smul]
+  rw [Measure.prod_smul_right]
+  rw [Measure.coe_nnreal_smul]
+
+/-- Measure-preserving presentation of the corrected transport. -/
+def canonicalLatitudeWeightedNormalToHalfCollarMeasurePreserving :
+    MeasurePreserving canonicalLatitudeWeightedNormalToHalfCollarTransport
+      (canonicalLatitudeCorrectedCauchyJetProductMeasure period)
+      ((2 : NNReal) • canonicalLatitudeCollarMeasure period) where
+  measurable :=
+    canonicalLatitudeWeightedNormalToHalfCollarTransport_measurable
+  map_eq := map_canonicalLatitudeCorrectedCauchyJetProductMeasure period
+
+/-- Corrected pullbacks of integrable collar functions are integrable for the
+original physical coarea measure. -/
+theorem canonicalLatitudeWeightedNormalToHalfCollar_integrable_comp
+    (function : CanonicalLatitudeCollarParameter → Real)
+    (hFunction :
+      Integrable function (canonicalLatitudeCollarMeasure period)) :
+    Integrable
+      (fun parameter =>
+        (canonicalLatitudeNormalHalfCollarCorrection parameter.2).toReal *
+          function
+            (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter))
+      (canonicalLatitudeCauchyJetProductMeasure period) := by
+  have hScaled : Integrable function
+      ((2 : NNReal) • canonicalLatitudeCollarMeasure period) :=
+    hFunction.smul_measure_nnreal
+  have hWeighted :
+      Integrable
+        (function ∘ canonicalLatitudeWeightedNormalToHalfCollarTransport)
+        (canonicalLatitudeCorrectedCauchyJetProductMeasure period) :=
+    (canonicalLatitudeWeightedNormalToHalfCollarMeasurePreserving period)
+      |>.integrable_comp_of_integrable hScaled
+  unfold canonicalLatitudeCorrectedCauchyJetProductMeasure at hWeighted
+  change Integrable
+    (function ∘ canonicalLatitudeWeightedNormalToHalfCollarTransport)
+    ((canonicalLatitudeCauchyJetProductMeasure period).withDensity
+      (canonicalLatitudeNormalHalfCollarCorrection ∘ Prod.snd)) at hWeighted
+  rw [integrable_withDensity_iff_integrable_smul'
+    (canonicalLatitudeNormalHalfCollarCorrection_measurable.comp measurable_snd)
+    (Filter.Eventually.of_forall fun parameter =>
+      canonicalLatitudeNormalHalfCollarCorrection_lt_top parameter.2)] at hWeighted
+  simpa [Function.comp_def, smul_eq_mul] using hWeighted
+
+/-- Corrected affine transport formula against the original coarea measure. -/
+theorem canonicalLatitudeWeightedNormalToHalfCollar_integral_comp
+    (function : CanonicalLatitudeCollarParameter → Real)
+    (hFunction :
+      Integrable function (canonicalLatitudeCollarMeasure period)) :
+    (∫ parameter,
+      (canonicalLatitudeNormalHalfCollarCorrection parameter.2).toReal *
+        function
+          (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter)
+      ∂canonicalLatitudeCauchyJetProductMeasure period) =
+      2 * ∫ parameter, function parameter
+        ∂canonicalLatitudeCollarMeasure period := by
+  have hScaled : Integrable function
+      ((2 : NNReal) • canonicalLatitudeCollarMeasure period) :=
+    hFunction.smul_measure_nnreal
+  calc
+    (∫ parameter,
+      (canonicalLatitudeNormalHalfCollarCorrection parameter.2).toReal *
+        function
+          (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter)
+      ∂canonicalLatitudeCauchyJetProductMeasure period) =
+        ∫ parameter,
+          function
+            (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter)
+          ∂canonicalLatitudeCorrectedCauchyJetProductMeasure period := by
+      symm
+      unfold canonicalLatitudeCorrectedCauchyJetProductMeasure
+      have hIntegral :=
+        integral_withDensity_eq_integral_toReal_smul
+          (μ := canonicalLatitudeCauchyJetProductMeasure period)
+          (canonicalLatitudeNormalHalfCollarCorrection_measurable.comp
+            measurable_snd)
+          (Filter.Eventually.of_forall fun parameter =>
+            canonicalLatitudeNormalHalfCollarCorrection_lt_top parameter.2)
+          (fun parameter =>
+            function
+              (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter))
+      change
+        (∫ parameter,
+          function
+            (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter)
+          ∂(canonicalLatitudeCauchyJetProductMeasure period).withDensity
+            (fun parameter =>
+              canonicalLatitudeNormalHalfCollarCorrection parameter.2)) =
+        ∫ parameter,
+          (canonicalLatitudeNormalHalfCollarCorrection parameter.2).toReal *
+            function
+              (canonicalLatitudeWeightedNormalToHalfCollarTransport parameter)
+          ∂canonicalLatitudeCauchyJetProductMeasure period at hIntegral
+      exact hIntegral
+    _ = ∫ parameter, function parameter
+        ∂((2 : NNReal) • canonicalLatitudeCollarMeasure period) := by
+      have hStrong : AEStronglyMeasurable function
+          (Measure.map canonicalLatitudeWeightedNormalToHalfCollarTransport
+            (canonicalLatitudeCorrectedCauchyJetProductMeasure period)) := by
+        rw [map_canonicalLatitudeCorrectedCauchyJetProductMeasure]
+        exact hScaled.aestronglyMeasurable
+      rw [← map_canonicalLatitudeCorrectedCauchyJetProductMeasure period]
+      exact (MeasureTheory.integral_map
+        canonicalLatitudeWeightedNormalToHalfCollarTransport_measurable.aemeasurable
+        hStrong).symm
+    _ = _ := by
+      rw [integral_smul_nnreal_measure]
+      rfl
+
+/-- Integral of a collar function as the canonical base/positive-normal
+iterated integral. -/
+theorem canonicalLatitudeCollar_integral_eq_iterated
+    (function : CanonicalLatitudeCollarParameter → Real)
+    (hFunction :
+      Integrable function (canonicalLatitudeCollarMeasure period)) :
+    (∫ parameter,
+      function parameter ∂canonicalLatitudeCollarMeasure period) =
+      ∫ base, (∫ normal in (0 : Real)..1,
+        function (base, normal))
+        ∂canonicalLatitudeBaseMeasure period := by
+  letI : IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+    canonicalLatitudeBaseMeasure_isFinite period
+  unfold canonicalLatitudeCollarMeasure at hFunction ⊢
+  rw [integral_prod function hFunction]
+  apply integral_congr_ae
+  exact Filter.Eventually.of_forall fun base => by
+    change (∫ normal,
+      function (base, normal) ∂canonicalLatitudeUnitNormalMeasure) =
+      ∫ normal in (0 : Real)..1, function (base, normal)
+    rw [intervalIntegral.integral_of_le
+      (by norm_num : (0 : Real) ≤ 1)]
+    rfl
 
 namespace CanonicalLatitudeNormalToHalfCollarMeasureTransportData
 

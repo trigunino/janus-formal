@@ -26,7 +26,9 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
@@ -34,6 +36,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalNormalSplit4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev Sphere2 := Metric.sphere (0 : EuclideanR3) 1
 
@@ -166,8 +169,9 @@ theorem tangential_base_integral_zero
           ∂canonicalLatitudeBaseMeasure period :=
       integral_add hSphere hTime
     _ = 0 := by
-      rw [data.sphereDensity_integral_zero field test normal,
-        data.timeDensity_integral_zero field test normal, add_zero]
+      rw [sphereDensity_integral_zero period hPeriod data field test normal,
+        timeDensity_integral_zero period hPeriod data field test normal,
+        add_zero]
 
 /-- Conversion to the canonical one-normal-component Green package. -/
 def toCanonicalNormalSplitData
