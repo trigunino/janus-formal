@@ -18,7 +18,7 @@ then gives the squared Euler component consumed by the graph-bound closure.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -28,13 +28,11 @@ open MeasureTheory Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetNormalCalculus4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGraphBound4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetSquaredGraphBound4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetBulkL2Reduction4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
@@ -49,7 +47,8 @@ structure CauchyJetEulerProductRealizationData
   residual : ValueCore × NormalCore →
     CanonicalLatitudeCauchyJetProductParameter → Real
   operator_norm_sq_eq : ∀ data : ValueCore × NormalCore,
-    ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 =
+    ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ ^ 2 =
       ∫ parameter,
         residual data parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period
@@ -69,7 +68,8 @@ structure CauchyJetEulerProductEstimateData
     (∫ parameter,
       realization.residual data parameter ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-        constant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+        constant ^ 2 *
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
 
 namespace CauchyJetEulerProductEstimateData
 
@@ -85,8 +85,10 @@ theorem operator_bound_sq
     (estimate : geometric.CauchyJetEulerProductEstimateData
       period hPeriod realization)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 ≤
-      estimate.constant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
+    ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ ^ 2 ≤
+      estimate.constant ^ 2 *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
   rw [realization.operator_norm_sq_eq]
   exact estimate.product_bound_sq data
 
@@ -103,8 +105,9 @@ def combine
       period hPeriod realization)
     (bulk : geometric.CauchyJetProductL2EstimateData period hPeriod) :
     geometric.CauchyJetSquaredComponentGraphEstimateData period hPeriod :=
-  bulk.toSquaredComponentGraphEstimateData
-    estimate.constant estimate.nonnegative estimate.operator_bound_sq
+  bulk.toSquaredComponentGraphEstimateData period hPeriod
+    estimate.constant estimate.nonnegative
+      (estimate.operator_bound_sq period hPeriod)
 
 /-- Euler-product reduction certificate. -/
 theorem certificate
@@ -118,20 +121,23 @@ theorem certificate
     (estimate : geometric.CauchyJetEulerProductEstimateData
       period hPeriod realization) :
     (∀ data : ValueCore × NormalCore,
-      ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 =
+      ‖(geometric.greenCore period hPeriod).core.operator
+          (geometric.extension period hPeriod data)‖ ^ 2 =
         ∫ parameter,
           realization.residual data parameter ^ 2
           ∂canonicalLatitudeCauchyJetProductMeasure period) ∧
       (∀ data : ValueCore × NormalCore,
-        ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 ≤
-          estimate.constant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2) :=
+        ‖(geometric.greenCore period hPeriod).core.operator
+            (geometric.extension period hPeriod data)‖ ^ 2 ≤
+          estimate.constant ^ 2 *
+            ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2) :=
   ⟨realization.operator_norm_sq_eq,
-    estimate.operator_bound_sq⟩
+    estimate.operator_bound_sq period hPeriod⟩
 
 end CauchyJetEulerProductEstimateData
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

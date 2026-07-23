@@ -44,13 +44,14 @@ theorem canonicalLatitudeAnchor_deck
 /-- The physical latitude collar map is invariant under the model deck
 generator. -/
 theorem canonicalLatitudeCollarMap_deck
-    (parameter : CanonicalLatitudeCauchyCollar) :
+    (parameter : CanonicalLatitudeCauchyCollar period) :
     canonicalLatitudeCollarMap period hPeriod
         (canonicalLatitudeCollarDeck period parameter) =
       canonicalLatitudeCollarMap period hPeriod parameter := by
   rcases parameter with ⟨base, normal⟩
-  unfold canonicalLatitudeCollarDeck canonicalLatitudeBaseDeck
+  unfold canonicalLatitudeCollarDeck
   unfold canonicalLatitudeCollarMap quotientNormalLatitude
+  simp only [Prod.fst, Prod.snd]
   rw [canonicalLatitudeAnchor_deck]
   rw [normalLatitudeCover_deck_generator_twist]
   simp only [neg_neg]
@@ -60,7 +61,7 @@ theorem canonicalLatitudeCollarMap_deck
 
 /-- Invariance under the inverse model deck generator. -/
 theorem canonicalLatitudeCollarMap_deck_inv
-    (parameter : CanonicalLatitudeCauchyCollar) :
+    (parameter : CanonicalLatitudeCauchyCollar period) :
     canonicalLatitudeCollarMap period hPeriod
         ((canonicalLatitudeCollarDeckEquiv period).symm parameter) =
       canonicalLatitudeCollarMap period hPeriod parameter := by
@@ -72,17 +73,17 @@ theorem canonicalLatitudeCollarMap_deck_inv
 
 /-- The physical collar map is invariant under every integer model winding. -/
 theorem canonicalLatitudeCollarMap_deck_zpow
-    (winding : Int) (parameter : CanonicalLatitudeCauchyCollar) :
+    (winding : Int) (parameter : CanonicalLatitudeCauchyCollar period) :
     canonicalLatitudeCollarMap period hPeriod
         ((canonicalLatitudeCollarDeckEquiv period ^ winding) parameter) =
       canonicalLatitudeCollarMap period hPeriod parameter := by
-  induction winding using Int.induction_on with
+  induction winding using Int.induction_on generalizing parameter with
   | zero =>
       simp
   | succ winding ih =>
       rw [zpow_add_one]
       change canonicalLatitudeCollarMap period hPeriod
-          ((canonicalLatitudeCollarDeckEquiv period ^ winding)
+          ((canonicalLatitudeCollarDeckEquiv period ^ (winding : Int))
             (canonicalLatitudeCollarDeckEquiv period parameter)) = _
       rw [ih (canonicalLatitudeCollarDeckEquiv period parameter)]
       exact canonicalLatitudeCollarMap_deck period hPeriod parameter
@@ -100,7 +101,7 @@ def canonicalLatitudeCauchyCollarToBulk :
       EffectiveQuotient period hPeriod :=
   Quotient.lift (canonicalLatitudeCollarMap period hPeriod)
     (fun first second hOrbit => by
-      change AddAction.orbitRel Int CanonicalLatitudeCauchyCollar
+      change AddAction.orbitRel Int (CanonicalLatitudeCauchyCollar period)
         first second at hOrbit
       rw [AddAction.orbitRel_apply, AddAction.mem_orbit_iff] at hOrbit
       rcases hOrbit with ⟨winding, hWinding⟩
@@ -109,7 +110,7 @@ def canonicalLatitudeCauchyCollarToBulk :
         period hPeriod winding second)
 
 @[simp] theorem canonicalLatitudeCauchyCollarToBulk_mk
-    (parameter : CanonicalLatitudeCauchyCollar) :
+    (parameter : CanonicalLatitudeCauchyCollar period) :
     canonicalLatitudeCauchyCollarToBulk period hPeriod
         (canonicalLatitudeCauchyCollarMk period parameter) =
       canonicalLatitudeCollarMap period hPeriod parameter :=
@@ -130,7 +131,7 @@ theorem canonicalLatitudeCauchyCollarToBulk_zero
 
 /-- Physical-collar descent certificate. -/
 theorem canonicalLatitudeCauchyJetPhysicalCollarMap_certificate :
-    (∀ winding parameter,
+    (∀ (winding : Int) (parameter : CanonicalLatitudeCauchyCollar period),
       canonicalLatitudeCollarMap period hPeriod
           ((canonicalLatitudeCollarDeckEquiv period ^ winding) parameter) =
         canonicalLatitudeCollarMap period hPeriod parameter) ∧

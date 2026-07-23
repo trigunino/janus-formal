@@ -30,6 +30,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]

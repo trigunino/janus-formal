@@ -38,6 +38,7 @@ open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
@@ -91,9 +92,13 @@ def canonicalLatitudeDeckCauchyDataLinearMapOfRepresentatives
   toFun := canonicalLatitudeDeckCauchyDataOfRepresentatives period
     valueRepresentative normalRepresentative valuePeriodic normalAntiperiodic
   map_add' first second := by
-    ext <;> simp [canonicalLatitudeDeckCauchyDataOfRepresentatives]
+    apply CanonicalLatitudeDeckCauchyData.ext
+    · exact map_add valueRepresentative first.1 second.1
+    · exact map_add normalRepresentative first.2 second.2
   map_smul' scalar data := by
-    ext <;> simp [canonicalLatitudeDeckCauchyDataOfRepresentatives]
+    apply CanonicalLatitudeDeckCauchyData.ext
+    · exact map_smul valueRepresentative scalar data.1
+    · exact map_smul normalRepresentative scalar data.2
 
 /-- Boundary-core representatives and smoothness of their explicit global
 candidate. -/
@@ -155,26 +160,38 @@ def extension
       SmoothQuotientField period hPeriod Real where
   toFun data :=
     { toFun := canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
-        (candidate.deckData data)
+        (candidate.deckData period hPeriod data)
       contMDiff_toFun := candidate.candidate_contMDiff data }
   map_add' first second := by
     apply SmoothQuotientField.ext period hPeriod Real
     intro point
     have hCandidate := CanonicalLatitudeDeckCauchyData.globalCandidate_add
-      period hPeriod (candidate.deckData first) (candidate.deckData second)
-    have hDeck : candidate.deckData (first + second) =
-        candidate.deckData first + candidate.deckData second :=
-      map_add candidate.deckData first second
+      period hPeriod (candidate.deckData period hPeriod first)
+        (candidate.deckData period hPeriod second)
+    have hDeck : candidate.deckData period hPeriod (first + second) =
+        candidate.deckData period hPeriod first +
+          candidate.deckData period hPeriod second :=
+      map_add (candidate.deckData period hPeriod) first second
+    change canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+        (candidate.deckData period hPeriod (first + second)) point =
+      canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+          (candidate.deckData period hPeriod first) point +
+        canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+          (candidate.deckData period hPeriod second) point
     rw [hDeck]
     exact congrFun hCandidate point
   map_smul' scalar data := by
     apply SmoothQuotientField.ext period hPeriod Real
     intro point
     have hCandidate := CanonicalLatitudeDeckCauchyData.globalCandidate_smul
-      period hPeriod scalar (candidate.deckData data)
-    have hDeck : candidate.deckData (scalar • data) =
-        scalar • candidate.deckData data :=
-      map_smul candidate.deckData scalar data
+      period hPeriod scalar (candidate.deckData period hPeriod data)
+    have hDeck : candidate.deckData period hPeriod (scalar • data) =
+        scalar • candidate.deckData period hPeriod data :=
+      map_smul (candidate.deckData period hPeriod) scalar data
+    change canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+        (candidate.deckData period hPeriod (scalar • data)) point =
+      scalar * canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
+        (candidate.deckData period hPeriod data) point
     rw [hDeck]
     exact congrFun hCandidate point
 
@@ -187,22 +204,22 @@ theorem valueTrace_extension
       period hPeriod ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     smoothCanonicalPhysicalScalarFirstSheetValueL2 period hPeriod
-        (candidate.extension data) =
+        (candidate.extension period hPeriod data) =
       candidate.valueEmbedding data.1 := by
   apply Lp.ext
   filter_upwards
     [smoothCanonicalPhysicalScalarFirstSheetValueL2_ae period hPeriod
-      (candidate.extension data),
+      (candidate.extension period hPeriod data),
      candidate.valueEmbedding_ae data.1]
     with base hTrace hEmbedding
   rw [hTrace, hEmbedding]
   change canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
-      (candidate.deckData data)
+      (candidate.deckData period hPeriod data)
       (quotientNormalLatitude period hPeriod
         (canonicalLatitudeAnchor period hPeriod base) 0) =
     candidate.valueRepresentative data.1 base
   exact canonicalLatitudeCauchyJetGlobalCandidate_value
-    period hPeriod (candidate.deckData data) base
+    period hPeriod (candidate.deckData period hPeriod data) base
 
 /-- Exact normal trace of the constructed smooth extension. -/
 theorem normalTrace_extension
@@ -213,23 +230,23 @@ theorem normalTrace_extension
       period hPeriod ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     smoothCanonicalPhysicalScalarFirstSheetNormalL2 period hPeriod
-        (candidate.extension data) =
+        (candidate.extension period hPeriod data) =
       candidate.normalEmbedding data.2 := by
   apply Lp.ext
   filter_upwards
     [smoothCanonicalPhysicalScalarFirstSheetNormalL2_ae period hPeriod
-      (candidate.extension data),
+      (candidate.extension period hPeriod data),
      candidate.normalEmbedding_ae data.2]
     with base hTrace hEmbedding
   rw [hTrace, hEmbedding]
   change deriv (fun normal =>
       canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
-        (candidate.deckData data)
+        (candidate.deckData period hPeriod data)
         (quotientNormalLatitude period hPeriod
           (canonicalLatitudeAnchor period hPeriod base) normal)) 0 =
     candidate.normalRepresentative data.2 base
   exact canonicalLatitudeCauchyJetGlobalCandidate_normalDerivative
-    period hPeriod (candidate.deckData data) base
+    period hPeriod (candidate.deckData period hPeriod data) base
 
 /-- Exact paired Cauchy trace. -/
 theorem cauchyTrace_extension
@@ -240,12 +257,12 @@ theorem cauchyTrace_extension
       period hPeriod ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
-        (candidate.extension data) =
+        (candidate.extension period hPeriod data) =
       canonicalScalarBoundaryCorePairEmbedding
         candidate.valueEmbedding candidate.normalEmbedding data := by
-  ext
-  · exact candidate.valueTrace_extension data
-  · exact candidate.normalTrace_extension data
+  apply Prod.ext
+  · exact candidate.valueTrace_extension period hPeriod data
+  · exact candidate.normalTrace_extension period hPeriod data
 
 /-- Dense range of the smooth Cauchy trace. -/
 theorem boundaryTrace_denseRange
@@ -263,8 +280,8 @@ theorem boundaryTrace_denseRange
       normalEmbedding := candidate.normalEmbedding
       valueDense := candidate.valueDense
       normalDense := candidate.normalDense
-      extension := candidate.extension
-      boundary_extension := candidate.cauchyTrace_extension }
+      extension := candidate.extension period hPeriod
+      boundary_extension := candidate.cauchyTrace_extension period hPeriod }
   exact extensionData.boundaryTrace_denseRange
 
 /-- Conversion to the complete smooth physical Cauchy-extension data. -/
@@ -295,8 +312,8 @@ def toSmoothCauchyExtensionData
   normalEmbedding := candidate.normalEmbedding
   valueDense := candidate.valueDense
   normalDense := candidate.normalDense
-  extension := candidate.extension
-  boundary_extension := candidate.cauchyTrace_extension
+  extension := candidate.extension period hPeriod
+  boundary_extension := candidate.cauchyTrace_extension period hPeriod
   bulk_green_stokes := bulkGreenStokes
 
 /-- Candidate-extension certificate. -/
@@ -310,11 +327,11 @@ theorem certificate
         (smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod) ∧
       (∀ data,
         smoothCanonicalPhysicalScalarFirstSheetCauchyTrace period hPeriod
-            (candidate.extension data) =
+            (candidate.extension period hPeriod data) =
           canonicalScalarBoundaryCorePairEmbedding
             candidate.valueEmbedding candidate.normalEmbedding data) :=
-  ⟨candidate.boundaryTrace_denseRange,
-    candidate.cauchyTrace_extension⟩
+  ⟨candidate.boundaryTrace_denseRange period hPeriod,
+    candidate.cauchyTrace_extension period hPeriod⟩
 
 end CanonicalPhysicalScalarCauchyJetCandidateExtensionData
 

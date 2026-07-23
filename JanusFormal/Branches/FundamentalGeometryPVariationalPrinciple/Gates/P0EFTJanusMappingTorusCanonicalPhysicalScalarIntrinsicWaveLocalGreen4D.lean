@@ -22,6 +22,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
@@ -32,6 +33,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerLocalToCutBulkBridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerNormalTangentialSplit4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Intrinsic-wave Green data using the direct local-to-half-collar comparison. -/
 structure CanonicalPhysicalScalarIntrinsicWaveLocalGreenData

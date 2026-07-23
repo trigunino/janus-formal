@@ -28,13 +28,16 @@ Euler graph estimate are then theorems.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerCanonicalL2Operators4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open scoped ENNReal BigOperators
 open MeasureTheory Set Topology Filter Function
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
@@ -42,12 +45,12 @@ open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetEulerNormalProfiles4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerProductRealization4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSixCoefficientClosure4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerBoundedCoefficients4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev ProfileIndex :=
   CanonicalLatitudeCauchyJetEulerNormalProfileIndex
@@ -58,9 +61,23 @@ private abbrev BoundaryL2 :=
 private abbrev CompletedBoundary :=
   CanonicalScalarHilbertBoundaryDatum (Trace := BoundaryL2 period)
 
-local instance canonicalLatitudeBaseMeasureFinite :
+local instance canonicalL2OperatorsLatitudeBaseMeasureFinite :
     IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
   canonicalLatitudeBaseMeasure_isFinite period
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance canonicalL2OperatorsEffectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance canonicalL2OperatorsEffectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance canonicalL2OperatorsEffectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
 
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
@@ -74,16 +91,16 @@ theorem canonicalEulerProductResidual_sq_integrable
     (boundary : ValueCore × NormalCore) :
     Integrable
       (fun parameter =>
-        geometric.canonicalEulerProductResidual boundary parameter ^ 2)
+        geometric.canonicalEulerProductResidual period hPeriod boundary parameter ^ 2)
       (canonicalLatitudeCauchyJetProductMeasure period) := by
   let globalSquare := fun point =>
     canonicalPhysicalScalarEulerGlobalResidual
-      period hPeriod massSquared (geometric.extension boundary) point ^ 2
+      period hPeriod massSquared (geometric.extension period hPeriod boundary) point ^ 2
   have hGlobal : Integrable globalSquare
       (P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D.intrinsicCanonicalLorentzVolumeMeasure
         period hPeriod) :=
-    (geometric.operatorData.residual_memLp
-      (geometric.extension boundary)).integrable_sq
+    ((geometric.operatorData period hPeriod).residual_memLp
+      (geometric.extension period hPeriod boundary)).integrable_sq
   have hPullback :=
     (canonicalLatitudeCauchyJetProductPhysicalMap_measurePreserving
       period hPeriod).integrable_comp_of_integrable hGlobal
@@ -101,30 +118,30 @@ structure CauchyJetEulerSixCanonicalL2OperatorData
   coefficientOperator : ProfileIndex →
     CompletedBoundary period →L[Real] BoundaryL2 period
   residual_eq : ∀ boundary parameter,
-    geometric.canonicalEulerProductResidual boundary parameter =
+    geometric.canonicalEulerProductResidual period hPeriod boundary parameter =
       canonicalLatitudeCauchyJetEulerNormalProfile .value parameter.2 *
           ((coefficientOperator .value
-            (geometric.boundaryCoreEmbedding boundary) :
+            (geometric.boundaryCoreEmbedding period hPeriod boundary) :
               CanonicalLatitudeBase → Real) parameter.1) +
         canonicalLatitudeCauchyJetEulerNormalProfile .normal parameter.2 *
           ((coefficientOperator .normal
-            (geometric.boundaryCoreEmbedding boundary) :
+            (geometric.boundaryCoreEmbedding period hPeriod boundary) :
               CanonicalLatitudeBase → Real) parameter.1) +
         canonicalLatitudeCauchyJetEulerNormalProfile .valueFirst parameter.2 *
           ((coefficientOperator .valueFirst
-            (geometric.boundaryCoreEmbedding boundary) :
+            (geometric.boundaryCoreEmbedding period hPeriod boundary) :
               CanonicalLatitudeBase → Real) parameter.1) +
         canonicalLatitudeCauchyJetEulerNormalProfile .normalFirst parameter.2 *
           ((coefficientOperator .normalFirst
-            (geometric.boundaryCoreEmbedding boundary) :
+            (geometric.boundaryCoreEmbedding period hPeriod boundary) :
               CanonicalLatitudeBase → Real) parameter.1) +
         canonicalLatitudeCauchyJetEulerNormalProfile .valueSecond parameter.2 *
           ((coefficientOperator .valueSecond
-            (geometric.boundaryCoreEmbedding boundary) :
+            (geometric.boundaryCoreEmbedding period hPeriod boundary) :
               CanonicalLatitudeBase → Real) parameter.1) +
         canonicalLatitudeCauchyJetEulerNormalProfile .normalSecond parameter.2 *
           ((coefficientOperator .normalSecond
-            (geometric.boundaryCoreEmbedding boundary) :
+            (geometric.boundaryCoreEmbedding period hPeriod boundary) :
               CanonicalLatitudeBase → Real) parameter.1)
 
 namespace CauchyJetEulerSixCanonicalL2OperatorData
@@ -141,7 +158,7 @@ def coefficient
     (index : ProfileIndex) (boundary : ValueCore × NormalCore) :
     CanonicalLatitudeBase → Real :=
   data.coefficientOperator index
-    (geometric.boundaryCoreEmbedding boundary)
+    (geometric.boundaryCoreEmbedding period hPeriod boundary)
 
 /-- Every canonical coefficient representative is automatically in `L²`. -/
 theorem coefficient_memLp
@@ -153,10 +170,10 @@ theorem coefficient_memLp
     (data : geometric.CauchyJetEulerSixCanonicalL2OperatorData
       period hPeriod)
     (index : ProfileIndex) (boundary : ValueCore × NormalCore) :
-    MemLp (data.coefficient index boundary) (2 : ENNReal)
+    MemLp (data.coefficient period hPeriod index boundary) (2 : ENNReal)
       (canonicalLatitudeBaseMeasure period) :=
-  (data.coefficientOperator index
-    (geometric.boundaryCoreEmbedding boundary)).memLp
+  Lp.memLp (data.coefficientOperator index
+    (geometric.boundaryCoreEmbedding period hPeriod boundary))
 
 /-- Repacking the canonical representative into `L²` recovers the operator
 output exactly. -/
@@ -169,14 +186,14 @@ theorem coefficient_toLp_eq
     (data : geometric.CauchyJetEulerSixCanonicalL2OperatorData
       period hPeriod)
     (index : ProfileIndex) (boundary : ValueCore × NormalCore) :
-    (data.coefficient_memLp index boundary).toLp
-        (data.coefficient index boundary) =
+    (data.coefficient_memLp period hPeriod index boundary).toLp
+        (data.coefficient period hPeriod index boundary) =
       data.coefficientOperator index
-        (geometric.boundaryCoreEmbedding boundary) := by
+        (geometric.boundaryCoreEmbedding period hPeriod boundary) := by
   exact Lp.toLp_coeFn
     (data.coefficientOperator index
-      (geometric.boundaryCoreEmbedding boundary))
-    (data.coefficient_memLp index boundary)
+      (geometric.boundaryCoreEmbedding period hPeriod boundary))
+    (data.coefficient_memLp period hPeriod index boundary)
 
 /-- Conversion to the older bounded-coefficient interface.  All former analytic
 fields are filled automatically. -/
@@ -189,15 +206,17 @@ def toSixBoundedCoefficientData
     (data : geometric.CauchyJetEulerSixCanonicalL2OperatorData
       period hPeriod) :
     geometric.CauchyJetEulerSixBoundedCoefficientData
-      period hPeriod geometric.canonicalEulerProductRealization where
-  coefficient := data.coefficient
-  coefficient_memLp := data.coefficient_memLp
+      period hPeriod (geometric.canonicalEulerProductRealization period hPeriod) where
+  coefficient := data.coefficient period hPeriod
+  coefficient_memLp := data.coefficient_memLp period hPeriod
   coefficientOperator := data.coefficientOperator
-  coefficient_toLp_eq := data.coefficient_toLp_eq
-  residual_sq_integrable := geometric.canonicalEulerProductResidual_sq_integrable
+  coefficient_toLp_eq := data.coefficient_toLp_eq period hPeriod
+  residual_sq_integrable :=
+    geometric.canonicalEulerProductResidual_sq_integrable period hPeriod
   residual_eq := by
     intro boundary parameter
-    simpa [coefficient] using data.residual_eq boundary parameter
+    simpa [coefficient, canonicalEulerProductRealization] using
+      data.residual_eq boundary parameter
 
 /-- Conversion to the complete six-coefficient estimate package. -/
 def toSixCoefficientData
@@ -208,7 +227,8 @@ def toSixCoefficientData
       period hPeriod massSquared ValueCore NormalCore}
     (data : geometric.CauchyJetEulerSixCanonicalL2OperatorData
       period hPeriod) :=
-  data.toSixBoundedCoefficientData.toSixCoefficientData
+  (data.toSixBoundedCoefficientData period hPeriod).toSixCoefficientData
+    period hPeriod
 
 /-- Final Euler product estimate. -/
 def toEulerProductEstimateData
@@ -219,7 +239,8 @@ def toEulerProductEstimateData
       period hPeriod massSquared ValueCore NormalCore}
     (data : geometric.CauchyJetEulerSixCanonicalL2OperatorData
       period hPeriod) :=
-  data.toSixBoundedCoefficientData.toEulerProductEstimateData
+  (data.toSixBoundedCoefficientData period hPeriod).toEulerProductEstimateData
+    period hPeriod
 
 /-- Operator norms provide the complete canonical Euler graph estimate. -/
 theorem certificate
@@ -231,27 +252,28 @@ theorem certificate
     (data : geometric.CauchyJetEulerSixCanonicalL2OperatorData
       period hPeriod) :
     (∀ index boundary,
-      MemLp (data.coefficient index boundary) (2 : ENNReal)
+      MemLp (data.coefficient period hPeriod index boundary) (2 : ENNReal)
         (canonicalLatitudeBaseMeasure period)) ∧
       (∀ boundary,
         Integrable
           (fun parameter =>
-            geometric.canonicalEulerProductResidual boundary parameter ^ 2)
+            geometric.canonicalEulerProductResidual period hPeriod boundary parameter ^ 2)
           (canonicalLatitudeCauchyJetProductMeasure period)) ∧
       (∀ boundary : ValueCore × NormalCore,
         (∫ parameter,
-          geometric.canonicalEulerProductResidual boundary parameter ^ 2
+          geometric.canonicalEulerProductResidual period hPeriod boundary parameter ^ 2
           ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-          data.toSixCoefficientData.toSeparatedExpansionData.toFiniteExpansionData.combinedConstant ^ 2 *
-            ‖geometric.boundaryCoreEmbedding boundary‖ ^ 2) :=
-  ⟨data.coefficient_memLp,
-    geometric.canonicalEulerProductResidual_sq_integrable,
-    data.toSixBoundedCoefficientData.certificate⟩
+          (((data.toSixCoefficientData period hPeriod).toSeparatedExpansionData
+            period hPeriod).toFiniteExpansionData period hPeriod).combinedConstant ^ 2 *
+            ‖geometric.boundaryCoreEmbedding period hPeriod boundary‖ ^ 2) :=
+  ⟨data.coefficient_memLp period hPeriod,
+    geometric.canonicalEulerProductResidual_sq_integrable period hPeriod,
+    (data.toSixBoundedCoefficientData period hPeriod).certificate period hPeriod⟩
 
 end CauchyJetEulerSixCanonicalL2OperatorData
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerCanonicalL2Operators4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

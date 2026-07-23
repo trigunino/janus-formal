@@ -21,7 +21,7 @@ opaque global estimate.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerFiniteExpansion4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -30,13 +30,11 @@ open scoped ENNReal BigOperators
 open MeasureTheory Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGraphBound4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerProductRealization4D
 
 universe x y z
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
@@ -70,7 +68,7 @@ structure CauchyJetEulerFiniteExpansionData
       component index data parameter ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
         constant index ^ 2 *
-          ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
 
 namespace CauchyJetEulerFiniteExpansionData
 
@@ -189,7 +187,7 @@ theorem product_bound_sq
       realization.residual data parameter ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
         expansion.combinedConstant ^ 2 *
-          ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
   have hSumIntegrable : Integrable
       (fun parameter =>
         ∑ index, expansion.component index data parameter ^ 2)
@@ -211,19 +209,19 @@ theorem product_bound_sq
         ∫ parameter,
           expansion.component index data parameter ^ 2
           ∂canonicalLatitudeCauchyJetProductMeasure period :=
-      expansion.integral_sum_components data
+      expansion.integral_sum_components period hPeriod data
     _ ≤ ∑ index,
         expansion.constant index ^ 2 *
-          ‖geometric.boundaryCoreEmbedding data‖ ^ 2 :=
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 :=
       Finset.sum_le_sum fun index _ =>
         expansion.component_bound_sq index data
     _ = expansion.constantSquareSum *
-        ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
       unfold constantSquareSum
       rw [Finset.sum_mul]
     _ = expansion.combinedConstant ^ 2 *
-        ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
-      rw [expansion.combinedConstant_sq]
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
+      rw [expansion.combinedConstant_sq period hPeriod]
 
 /-- Conversion to the final product Euler estimate interface. -/
 def toEulerProductEstimateData
@@ -260,7 +258,7 @@ theorem certificate
         realization.residual data parameter ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
           expansion.combinedConstant ^ 2 *
-            ‖geometric.boundaryCoreEmbedding data‖ ^ 2) ∧
+            ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2) ∧
       0 ≤ expansion.combinedConstant :=
   ⟨expansion.product_bound_sq,
     expansion.combinedConstant_nonnegative⟩
@@ -270,5 +268,5 @@ end CauchyJetEulerFiniteExpansionData
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerFiniteExpansion4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

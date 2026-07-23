@@ -35,12 +35,20 @@ open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProfiles4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetNormalCalculus4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGraphBound4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetBulkL2Reduction4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+local instance canonicalLatitudeBaseMeasureFinite :
+    IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+  canonicalLatitudeBaseMeasure_isFinite period
+
+local instance canonicalLatitudeCauchyJetNormalMeasureSFinite :
+    SFinite canonicalLatitudeCauchyJetNormalMeasure := by
+  unfold canonicalLatitudeCauchyJetNormalMeasure
+  infer_instance
 
 /-- Integrability of the two fixed normal profile squares. -/
 structure CanonicalLatitudeCauchyJetProfileIntegrabilityData where
@@ -124,16 +132,25 @@ theorem normalIntegral_bound
       ∂canonicalLatitudeCauchyJetNormalMeasure) ≤
       2 * profile.valueMoment * value ^ 2 +
         2 * profile.normalMoment * normal ^ 2 := by
+  have hValueTermIntegrable : Integrable
+      (fun normalCoordinate =>
+        2 * canonicalLatitudeCauchyValueProfile normalCoordinate ^ 2 * value ^ 2)
+      canonicalLatitudeCauchyJetNormalMeasure :=
+    (profile.value_sq_integrable.const_mul (2 * value ^ 2)).congr
+      (Filter.Eventually.of_forall fun normalCoordinate => by ring)
+  have hNormalTermIntegrable : Integrable
+      (fun normalCoordinate =>
+        2 * canonicalLatitudeCauchyNormalProfile normalCoordinate ^ 2 * normal ^ 2)
+      canonicalLatitudeCauchyJetNormalMeasure :=
+    (profile.normal_sq_integrable.const_mul (2 * normal ^ 2)).congr
+      (Filter.Eventually.of_forall fun normalCoordinate => by ring)
   have hRightIntegrable : Integrable
       (fun normalCoordinate =>
         2 * canonicalLatitudeCauchyValueProfile normalCoordinate ^ 2 * value ^ 2 +
           2 * canonicalLatitudeCauchyNormalProfile normalCoordinate ^ 2 *
             normal ^ 2)
       canonicalLatitudeCauchyJetNormalMeasure :=
-    ((profile.value_sq_integrable.const_mul
-      (2 * value ^ 2)).add
-      (profile.normal_sq_integrable.const_mul (2 * normal ^ 2))).congr
-        (Filter.Eventually.of_forall fun normalCoordinate => by ring)
+    hValueTermIntegrable.add hNormalTermIntegrable
   have hLeftIntegrable : Integrable
       (fun normalCoordinate =>
         (canonicalLatitudeCauchyValueProfile normalCoordinate * value +
@@ -145,10 +162,46 @@ theorem normalIntegral_bound
         (canonicalLatitudeCauchyNormalProfile_contDiff.continuous.mul
           continuous_const)).pow 2).aestronglyMeasurable
       (Filter.Eventually.of_forall fun normalCoordinate => by
-        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _),
-          Real.norm_eq_abs, abs_of_nonneg]
-        · exact profile.localExtension_sq_le value normal normalCoordinate
-        · positivity)
+        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg
+          (canonicalLatitudeCauchyValueProfile normalCoordinate * value +
+            canonicalLatitudeCauchyNormalProfile normalCoordinate * normal))]
+        exact profile.localExtension_sq_le value normal normalCoordinate)
+  have hValueIntegral :
+      (∫ normalCoordinate,
+        2 * canonicalLatitudeCauchyValueProfile normalCoordinate ^ 2 * value ^ 2
+        ∂canonicalLatitudeCauchyJetNormalMeasure) =
+        2 * profile.valueMoment * value ^ 2 := by
+    calc
+      _ = ∫ normalCoordinate,
+          (2 * value ^ 2) * canonicalLatitudeCauchyValueProfile normalCoordinate ^ 2
+          ∂canonicalLatitudeCauchyJetNormalMeasure := by
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall fun normalCoordinate => by ring
+      _ = (2 * value ^ 2) *
+          ∫ normalCoordinate, canonicalLatitudeCauchyValueProfile normalCoordinate ^ 2
+            ∂canonicalLatitudeCauchyJetNormalMeasure := by
+        rw [integral_const_mul]
+      _ = _ := by
+        unfold valueMoment
+        ring
+  have hNormalIntegral :
+      (∫ normalCoordinate,
+        2 * canonicalLatitudeCauchyNormalProfile normalCoordinate ^ 2 * normal ^ 2
+        ∂canonicalLatitudeCauchyJetNormalMeasure) =
+        2 * profile.normalMoment * normal ^ 2 := by
+    calc
+      _ = ∫ normalCoordinate,
+          (2 * normal ^ 2) * canonicalLatitudeCauchyNormalProfile normalCoordinate ^ 2
+          ∂canonicalLatitudeCauchyJetNormalMeasure := by
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall fun normalCoordinate => by ring
+      _ = (2 * normal ^ 2) *
+          ∫ normalCoordinate, canonicalLatitudeCauchyNormalProfile normalCoordinate ^ 2
+            ∂canonicalLatitudeCauchyJetNormalMeasure := by
+        rw [integral_const_mul]
+      _ = _ := by
+        unfold normalMoment
+        ring
   calc
     (∫ normalCoordinate,
       (canonicalLatitudeCauchyValueProfile normalCoordinate * value +
@@ -164,19 +217,15 @@ theorem normalIntegral_bound
           value normal normalCoordinate)
     _ = 2 * profile.valueMoment * value ^ 2 +
         2 * profile.normalMoment * normal ^ 2 := by
-      rw [integral_add]
-      · rw [integral_const_mul, integral_const_mul]
-        unfold valueMoment normalMoment
-        ring
-      · exact profile.value_sq_integrable.const_mul (2 * value ^ 2)
-      · exact profile.normal_sq_integrable.const_mul (2 * normal ^ 2)
+      rw [integral_add hValueTermIntegrable hNormalTermIntegrable,
+        hValueIntegral, hNormalIntegral]
 
 end CanonicalLatitudeCauchyJetProfileIntegrabilityData
 
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
 /-- Boundary value representative has the expected squared `L²` integral. -/
-theorem valueRepresentative_integral_sq_eq_norm_sq
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.valueRepresentative_integral_sq_eq_norm_sq
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -195,7 +244,7 @@ theorem valueRepresentative_integral_sq_eq_norm_sq
   simp [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
 
 /-- Boundary normal representative has the expected squared `L²` integral. -/
-theorem normalRepresentative_integral_sq_eq_norm_sq
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.normalRepresentative_integral_sq_eq_norm_sq
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -214,7 +263,7 @@ theorem normalRepresentative_integral_sq_eq_norm_sq
   simp [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
 
 /-- Product-integral estimate for the explicit Cauchy jet. -/
-theorem localProductExtension_integral_bound
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.localProductExtension_integral_bound
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -223,13 +272,14 @@ theorem localProductExtension_integral_bound
     (profile : CanonicalLatitudeCauchyJetProfileIntegrabilityData)
     (data : ValueCore × NormalCore) :
     (∫ parameter,
-      geometric.localProductExtension data parameter ^ 2
+      geometric.localProductExtension period hPeriod data parameter ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
       profile.extensionConstant ^ 2 *
-        ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
   let valueNorm := ‖geometric.boundaryCore.valueEmbedding data.1‖
   let normalNorm := ‖geometric.boundaryCore.normalEmbedding data.2‖
-  let boundaryNorm := ‖geometric.boundaryCoreEmbedding data‖
+  let boundaryNorm :=
+    ‖geometric.boundaryCoreEmbedding period hPeriod data‖
   have hValueBoundary : valueNorm ≤ boundaryNorm := by
     change ‖geometric.boundaryCore.valueEmbedding data.1‖ ≤
       max ‖geometric.boundaryCore.valueEmbedding data.1‖
@@ -242,16 +292,93 @@ theorem localProductExtension_integral_bound
     exact le_max_right _ _
   have hValueSq : valueNorm ^ 2 ≤ boundaryNorm ^ 2 := by
     nlinarith [norm_nonneg (geometric.boundaryCore.valueEmbedding data.1),
-      norm_nonneg (geometric.boundaryCoreEmbedding data)]
+      norm_nonneg (geometric.boundaryCoreEmbedding period hPeriod data)]
   have hNormalSq : normalNorm ^ 2 ≤ boundaryNorm ^ 2 := by
     nlinarith [norm_nonneg (geometric.boundaryCore.normalEmbedding data.2),
-      norm_nonneg (geometric.boundaryCoreEmbedding data)]
+      norm_nonneg (geometric.boundaryCoreEmbedding period hPeriod data)]
+  have hCandidateValueRepresentative :
+      (geometric.candidateExtension period hPeriod).valueRepresentative =
+        geometric.boundaryCore.valueRepresentative := rfl
+  have hCandidateNormalRepresentative :
+      (geometric.candidateExtension period hPeriod).normalRepresentative =
+        geometric.boundaryCore.normalRepresentative := rfl
+  have hRightProductIntegrable : Integrable
+      (fun parameter : CanonicalLatitudeBase × Real =>
+        2 * canonicalLatitudeCauchyValueProfile parameter.2 ^ 2 *
+            geometric.boundaryCore.valueRepresentative data.1 parameter.1 ^ 2 +
+          2 * canonicalLatitudeCauchyNormalProfile parameter.2 ^ 2 *
+            geometric.boundaryCore.normalRepresentative data.2 parameter.1 ^ 2)
+      ((canonicalLatitudeBaseMeasure period).prod
+        canonicalLatitudeCauchyJetNormalMeasure) := by
+    have hValue :=
+      (geometric.boundaryCore.valueRepresentative_memLp
+          period data.1).integrable_sq.mul_prod
+        (profile.value_sq_integrable.const_mul 2)
+    have hNormal :=
+      (geometric.boundaryCore.normalRepresentative_memLp
+          period data.2).integrable_sq.mul_prod
+        (profile.normal_sq_integrable.const_mul 2)
+    exact (hValue.add hNormal).congr
+      (Filter.Eventually.of_forall fun parameter => by
+        simp only [Pi.add_apply]
+        ring)
+  have hLeftAEStronglyMeasurable : AEStronglyMeasurable
+      (fun parameter : CanonicalLatitudeBase × Real =>
+        geometric.localProductExtension period hPeriod data parameter ^ 2)
+      ((canonicalLatitudeBaseMeasure period).prod
+        canonicalLatitudeCauchyJetNormalMeasure) := by
+    unfold CanonicalPhysicalScalarCauchyJetGeometricData.localProductExtension
+      canonicalLatitudeLocalCauchyExtension
+    rw [hCandidateValueRepresentative, hCandidateNormalRepresentative]
+    exact
+      (((canonicalLatitudeCauchyValueProfile_contDiff.continuous.aestronglyMeasurable.comp_snd.mul
+          (geometric.boundaryCore.valueRepresentative_memLp period data.1).aestronglyMeasurable.comp_fst).add
+        (canonicalLatitudeCauchyNormalProfile_contDiff.continuous.aestronglyMeasurable.comp_snd.mul
+          (geometric.boundaryCore.normalRepresentative_memLp period data.2).aestronglyMeasurable.comp_fst)).pow 2)
+  have hLeftProductIntegrable : Integrable
+      (fun parameter : CanonicalLatitudeBase × Real =>
+        geometric.localProductExtension period hPeriod data parameter ^ 2)
+      ((canonicalLatitudeBaseMeasure period).prod
+        canonicalLatitudeCauchyJetNormalMeasure) := by
+    exact hRightProductIntegrable.mono' hLeftAEStronglyMeasurable
+      (Filter.Eventually.of_forall fun parameter => by
+        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+        unfold CanonicalPhysicalScalarCauchyJetGeometricData.localProductExtension
+          canonicalLatitudeLocalCauchyExtension
+        rw [hCandidateValueRepresentative, hCandidateNormalRepresentative]
+        exact profile.localExtension_sq_le
+          (geometric.boundaryCore.valueRepresentative data.1 parameter.1)
+          (geometric.boundaryCore.normalRepresentative data.2 parameter.1)
+          parameter.2)
+  have hValueBaseIntegrable : Integrable
+      (fun base =>
+        2 * profile.valueMoment *
+          geometric.boundaryCore.valueRepresentative data.1 base ^ 2)
+      (canonicalLatitudeBaseMeasure period) :=
+    (geometric.boundaryCore.valueRepresentative_memLp
+      period data.1).integrable_sq.const_mul (2 * profile.valueMoment)
+  have hNormalBaseIntegrable : Integrable
+      (fun base =>
+        2 * profile.normalMoment *
+          geometric.boundaryCore.normalRepresentative data.2 base ^ 2)
+      (canonicalLatitudeBaseMeasure period) :=
+    (geometric.boundaryCore.normalRepresentative_memLp
+      period data.2).integrable_sq.const_mul (2 * profile.normalMoment)
+  have hRightBaseIntegrable : Integrable
+      (fun base =>
+        2 * profile.valueMoment *
+            geometric.boundaryCore.valueRepresentative data.1 base ^ 2 +
+          2 * profile.normalMoment *
+            geometric.boundaryCore.normalRepresentative data.2 base ^ 2)
+      (canonicalLatitudeBaseMeasure period) :=
+    hValueBaseIntegrable.add hNormalBaseIntegrable
   unfold canonicalLatitudeCauchyJetProductMeasure
-  rw [integral_prod]
-  · calc
+  rw [integral_prod _ hLeftProductIntegrable]
+  calc
       (∫ base,
         ∫ normalCoordinate,
-          geometric.localProductExtension data (base, normalCoordinate) ^ 2
+          geometric.localProductExtension period hPeriod data
+            (base, normalCoordinate) ^ 2
           ∂canonicalLatitudeCauchyJetNormalMeasure
         ∂canonicalLatitudeBaseMeasure period) ≤
         ∫ base,
@@ -261,27 +388,18 @@ theorem localProductExtension_integral_bound
               geometric.boundaryCore.normalRepresentative data.2 base ^ 2)
           ∂canonicalLatitudeBaseMeasure period := by
         apply integral_mono_ae
-        · exact (integrable_prod_iff
-            (by fun_prop : AEStronglyMeasurable
-              (fun parameter : CanonicalLatitudeBase × Real =>
-                geometric.localProductExtension data parameter ^ 2)
-              ((canonicalLatitudeBaseMeasure period).prod
-                canonicalLatitudeCauchyJetNormalMeasure))).1
-              (by infer_instance) |>.2
-        · exact
-            ((geometric.boundaryCore.valueRepresentative_memLp data.1).integrable_sq.const_mul
-                (2 * profile.valueMoment)).add
-              ((geometric.boundaryCore.normalRepresentative_memLp data.2).integrable_sq.const_mul
-                (2 * profile.normalMoment))
+        · exact hLeftProductIntegrable.integral_prod_left
+        · exact hRightBaseIntegrable
         · filter_upwards [] with base
           exact profile.normalIntegral_bound
             (geometric.boundaryCore.valueRepresentative data.1 base)
             (geometric.boundaryCore.normalRepresentative data.2 base)
       _ = 2 * profile.valueMoment * valueNorm ^ 2 +
           2 * profile.normalMoment * normalNorm ^ 2 := by
-        rw [integral_add, integral_const_mul, integral_const_mul,
-          geometric.valueRepresentative_integral_sq_eq_norm_sq,
-          geometric.normalRepresentative_integral_sq_eq_norm_sq]
+        rw [integral_add hValueBaseIntegrable hNormalBaseIntegrable,
+          integral_const_mul, integral_const_mul,
+          geometric.valueRepresentative_integral_sq_eq_norm_sq period hPeriod,
+          geometric.normalRepresentative_integral_sq_eq_norm_sq period hPeriod]
       _ ≤ 2 * profile.valueMoment * boundaryNorm ^ 2 +
           2 * profile.normalMoment * boundaryNorm ^ 2 := by
         exact add_le_add
@@ -292,35 +410,9 @@ theorem localProductExtension_integral_bound
       _ = profile.extensionConstant ^ 2 * boundaryNorm ^ 2 := by
         rw [profile.extensionConstant_sq]
         ring
-  · exact (by
-      apply integrable_prod_iff.mpr
-      refine ⟨?_, ?_⟩
-      · filter_upwards [] with base
-        exact (profile.value_sq_integrable.const_mul
-          (2 * geometric.boundaryCore.valueRepresentative data.1 base ^ 2)).add
-          (profile.normal_sq_integrable.const_mul
-            (2 * geometric.boundaryCore.normalRepresentative data.2 base ^ 2))
-          |>.mono'
-            (by fun_prop)
-            (Filter.Eventually.of_forall fun normalCoordinate => by
-              rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _),
-                Real.norm_eq_abs, abs_of_nonneg]
-              · exact profile.localExtension_sq_le _ _ normalCoordinate
-              · positivity)
-      · exact
-          ((geometric.boundaryCore.valueRepresentative_memLp data.1).integrable_sq.const_mul
-              (2 * profile.valueMoment)).add
-            ((geometric.boundaryCore.normalRepresentative_memLp data.2).integrable_sq.const_mul
-              (2 * profile.normalMoment))
-          |>.mono'
-            (by fun_prop)
-            (Filter.Eventually.of_forall fun base => by
-              rw [Real.norm_eq_abs, abs_of_nonneg]
-              · exact profile.normalIntegral_bound _ _
-              · positivity))
 
 /-- Canonical product-`L²` estimate package generated by the profile moments. -/
-def cauchyJetProductL2EstimateData
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.cauchyJetProductL2EstimateData
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -330,10 +422,11 @@ def cauchyJetProductL2EstimateData
     geometric.CauchyJetProductL2EstimateData period hPeriod where
   constant := profile.extensionConstant
   nonnegative := profile.extensionConstant_nonnegative
-  product_bound_sq := geometric.localProductExtension_integral_bound profile
+  product_bound_sq := geometric.localProductExtension_integral_bound
+    period hPeriod profile
 
 /-- Bulk `L²` component of the explicit graph bound. -/
-theorem inclusion_bound_sq
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D.CanonicalPhysicalScalarCauchyJetGeometricData.inclusion_bound_sq
     {ValueCore : Type x} {NormalCore : Type y}
     [AddCommGroup ValueCore] [Module Real ValueCore]
     [AddCommGroup NormalCore] [Module Real NormalCore]
@@ -341,10 +434,12 @@ theorem inclusion_bound_sq
       period hPeriod massSquared ValueCore NormalCore)
     (profile : CanonicalLatitudeCauchyJetProfileIntegrabilityData)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 ≤
+    ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ ^ 2 ≤
       profile.extensionConstant ^ 2 *
-        ‖geometric.boundaryCoreEmbedding data‖ ^ 2 :=
-  (geometric.cauchyJetProductL2EstimateData profile).inclusion_bound_sq data
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 :=
+  (geometric.cauchyJetProductL2EstimateData period hPeriod profile)
+    |>.inclusion_bound_sq period hPeriod data
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 

@@ -39,6 +39,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -120,8 +121,8 @@ theorem completedTrace_surjective
     Function.Surjective
       (canonicalScalarGreenCoreCompletedBoundaryTrace
         analytic.boundary.geometric.greenCore.core
-        analytic.boundary.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
-          |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound) :=
+        (analytic.boundary.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
+          |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound)) :=
   (analytic.boundary.certificate).2.2
 
 /-- Actual physical Hilbert self-adjointness. -/
@@ -214,8 +215,8 @@ theorem certificate
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
           analytic.boundary.geometric.greenCore.core
-          analytic.boundary.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
-            |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound) ∧
+          (analytic.boundary.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
+            |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound)) ∧
       analytic.boundary.triple.actualAdjointDomain analytic.condition =
         analytic.boundary.triple.realizationDomain analytic.condition ∧
       IsCompactOperator

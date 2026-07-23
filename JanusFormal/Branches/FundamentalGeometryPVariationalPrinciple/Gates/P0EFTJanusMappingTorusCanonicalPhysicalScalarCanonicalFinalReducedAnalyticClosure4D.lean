@@ -41,6 +41,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTriplePositiveShiftedForm4D
 universe r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -164,7 +165,9 @@ theorem spectral_complete
     |>.toCanonicalAutomaticSixCoefficientAnalyticData period hPeriod
     |>.toCanonicalFinalPDEAnalyticData period hPeriod
     |>.toFinalPDEAnalyticData period hPeriod
-    |>.toEllipticAnalyticData period hPeriod
+    |>.toPDEAnalyticData period hPeriod
+    |>.toCutoffClosedAnalyticData period hPeriod
+    |>.toFullyReducedAnalyticData period hPeriod
     |>.spectral_complete period hPeriod
 
 /-- Final reduced analytic certificate. -/

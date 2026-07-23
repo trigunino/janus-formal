@@ -77,16 +77,20 @@ theorem canonicalLatitudeCauchyJetEulerNormalProfile_contDiff
 theorem canonicalLatitudeCauchyValueProfile_hasCompactSupport :
     HasCompactSupport canonicalLatitudeCauchyValueProfile := by
   unfold HasCompactSupport tsupport
-  exact isCompact_Icc.of_isClosed_subset isClosed_closure
-    (closure_minimal support_canonicalLatitudeCauchyValueProfile_subset
+  exact (isCompact_Icc : IsCompact (Set.Icc (-1 : Real) 1)).of_isClosed_subset
+    isClosed_closure
+    (closure_minimal
+      (support_canonicalLatitudeCauchyValueProfile_subset.trans Ioo_subset_Icc_self)
       isClosed_Icc)
 
 /-- Compact support of the normal profile. -/
 theorem canonicalLatitudeCauchyNormalProfile_hasCompactSupport :
     HasCompactSupport canonicalLatitudeCauchyNormalProfile := by
   unfold HasCompactSupport tsupport
-  exact isCompact_Icc.of_isClosed_subset isClosed_closure
-    (closure_minimal support_canonicalLatitudeCauchyNormalProfile_subset
+  exact (isCompact_Icc : IsCompact (Set.Icc (-1 : Real) 1)).of_isClosed_subset
+    isClosed_closure
+    (closure_minimal
+      (support_canonicalLatitudeCauchyNormalProfile_subset.trans Ioo_subset_Icc_self)
       isClosed_Icc)
 
 /-- Compact support of every Euler normal profile. -/
@@ -101,13 +105,17 @@ theorem canonicalLatitudeCauchyJetEulerNormalProfile_hasCompactSupport
   · exact canonicalLatitudeCauchyValueProfile_hasCompactSupport.deriv.deriv
   · exact canonicalLatitudeCauchyNormalProfile_hasCompactSupport.deriv.deriv
 
-/-- Local finiteness of the weighted normal measure. -/
-local instance canonicalLatitudeCauchyJetNormalMeasureLocallyFinite :
-    IsLocallyFiniteMeasure canonicalLatitudeCauchyJetNormalMeasure := by
-  apply IsLocallyFiniteMeasure.of_le
+/-- Finiteness of the latitude band and weighted normal measure. -/
+local instance latitudeBandFinite : IsFiniteMeasure
     (volume.restrict
-      (Set.Ioo (-(Real.pi / 2)) (Real.pi / 2)))
-  exact canonicalLatitudeCauchyJetNormalMeasure_le_restrictVolume
+      (Set.Ioo (-(Real.pi / 2)) (Real.pi / 2))) := by
+  rw [isFiniteMeasure_restrict]
+  simp
+
+local instance canonicalLatitudeCauchyJetNormalMeasureFinite :
+    IsFiniteMeasure canonicalLatitudeCauchyJetNormalMeasure :=
+  isFiniteMeasure_of_le _
+    canonicalLatitudeCauchyJetNormalMeasure_le_restrictVolume
 
 /-- Every Euler normal profile belongs to weighted normal `L²`. -/
 theorem canonicalLatitudeCauchyJetEulerNormalProfile_memLp
@@ -125,8 +133,7 @@ theorem canonicalLatitudeCauchyJetEulerNormalProfile_sq_integrable
       (fun normal =>
         canonicalLatitudeCauchyJetEulerNormalProfile index normal ^ 2)
       canonicalLatitudeCauchyJetNormalMeasure := by
-  rw [← memLp_two_iff_integrable_sq]
-  exact canonicalLatitudeCauchyJetEulerNormalProfile_memLp index
+  exact (canonicalLatitudeCauchyJetEulerNormalProfile_memLp index).integrable_sq
 
 /-- Squared moment of one Euler normal profile. -/
 def canonicalLatitudeCauchyJetEulerNormalProfileMoment

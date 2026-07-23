@@ -40,6 +40,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 universe r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -75,7 +76,7 @@ def toFinalPDEAnalyticData
     CanonicalPhysicalScalarFinalPDEAnalyticData
       period hPeriod massSquared (ValueCore period) (NormalCore period)
       (Regularity := Regularity) where
-  boundary := analytic.boundary.toFinalPDEData
+  boundary := analytic.boundary.toFinalPDEData period hPeriod
   condition := analytic.condition
   adjointApproximation := analytic.adjointApproximation
   referenceParameter := analytic.referenceParameter
@@ -141,9 +142,10 @@ theorem certificate
       period hPeriod massSquared (Regularity := Regularity)) :
     Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
-          analytic.boundary.geometric.greenCore.core
-          (analytic.boundary.completedInputs.traceBound
-            analytic.boundary.geometric.greenCore)) ∧
+          (analytic.boundary.geometric.greenCore period hPeriod).core
+          ((analytic.boundary.completedInputs period hPeriod).traceBound
+            period hPeriod
+            (analytic.boundary.geometric.greenCore period hPeriod))) ∧
       analytic.boundary.triple.actualAdjointDomain analytic.condition =
         analytic.boundary.triple.realizationDomain analytic.condition ∧
       (∀ spectralParameter : Real,
@@ -161,7 +163,7 @@ theorem certificate
         analytic.boundary.triple.LagrangianHasEigenvalue
             analytic.condition eigenvalue →
           analytic.referenceParameter ≤ eigenvalue) :=
-  ⟨analytic.boundary.certificate.2.2.1,
+  ⟨(analytic.boundary.certificate period hPeriod).2.2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.fredholmAlternative period hPeriod,
     analytic.finiteDimensional_operatorEigenspace period hPeriod,

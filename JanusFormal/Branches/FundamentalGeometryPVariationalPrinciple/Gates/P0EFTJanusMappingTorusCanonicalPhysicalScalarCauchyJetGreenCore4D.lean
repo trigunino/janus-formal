@@ -27,6 +27,7 @@ open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Constructive smooth Green-core data based on an explicit globalized collar
 Cauchy jet. -/
@@ -66,7 +67,8 @@ def toGeometricGreenCoreData
   valueDense := constructive.cauchyGlobalization.valueDense
   normalDense := constructive.cauchyGlobalization.normalDense
   extension := constructive.cauchyGlobalization.extension
-  boundary_extension := constructive.cauchyGlobalization.cauchyTrace_extension
+  boundary_extension :=
+    constructive.cauchyGlobalization.cauchyTrace_extension period hPeriod
   integral_eq_divergence := constructive.integral_eq_divergence
 
 /-- Constructed physical first-sheet Green core. -/
@@ -76,7 +78,8 @@ def greenCore
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (constructive : CanonicalPhysicalScalarCauchyJetGreenCoreData
       period hPeriod massSquared ValueCore NormalCore) :=
-  constructive.toGeometricGreenCoreData.greenCore
+  (constructive.toGeometricGreenCoreData period hPeriod)
+    |>.greenCore period hPeriod
 
 /-- The explicit jet globalization gives a dense smooth Cauchy trace. -/
 theorem boundaryTrace_denseRange
@@ -88,7 +91,7 @@ theorem boundaryTrace_denseRange
     DenseRange
       (P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
         period hPeriod) :=
-  constructive.cauchyGlobalization.boundaryTrace_denseRange
+  constructive.cauchyGlobalization.boundaryTrace_denseRange period hPeriod
 
 /-- Exact globalized Cauchy jet of every core pair. -/
 theorem boundary_extension
@@ -103,7 +106,8 @@ theorem boundary_extension
       P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D.canonicalScalarBoundaryCorePairEmbedding
         constructive.cauchyGlobalization.valueEmbedding
         constructive.cauchyGlobalization.normalEmbedding data :=
-  constructive.cauchyGlobalization.cauchyTrace_extension data
+  constructive.cauchyGlobalization.cauchyTrace_extension
+    period hPeriod data
 
 /-- Constructive Green-core certificate. -/
 theorem certificate
@@ -123,8 +127,9 @@ theorem certificate
           2 * P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D.canonicalScalarHilbertBoundarySymplecticForm
             (constructive.greenCore.core.boundaryTrace field)
             (constructive.greenCore.core.boundaryTrace test)) :=
-  ⟨constructive.boundaryTrace_denseRange,
-    constructive.toGeometricGreenCoreData.greenCore.core.green_identity⟩
+  ⟨constructive.boundaryTrace_denseRange period hPeriod,
+    ((constructive.toGeometricGreenCoreData period hPeriod)
+      |>.greenCore period hPeriod).core.green_identity⟩
 
 end CanonicalPhysicalScalarCauchyJetGreenCoreData
 

@@ -26,10 +26,11 @@ open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveLocalGreen4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveRieszReducedPDEClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerBoundedCoefficients4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Smallest current PDE package using the normal/tangential local Green split
 and the Riesz completed trace. -/
@@ -52,7 +53,7 @@ def toIntrinsicWaveRieszReducedPDEData
       period hPeriod massSquared) :
     CanonicalPhysicalScalarIntrinsicWaveRieszReducedPDEData
       period hPeriod massSquared where
-  geometric := data.geometric.toIntrinsicWaveLocalGreenData
+  geometric := data.geometric.toIntrinsicWaveLocalGreenData period hPeriod
   energyIdentity := data.energyIdentity
   eulerCoefficients := data.eulerCoefficients
 
@@ -60,25 +61,28 @@ def toIntrinsicWaveRieszReducedPDEData
 def triple
     (data : CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszPDEData
       period hPeriod massSquared) :=
-  data.toIntrinsicWaveRieszReducedPDEData.triple
+  (data.toIntrinsicWaveRieszReducedPDEData period hPeriod).triple period hPeriod
 
 /-- Riesz-generated completed Cauchy trace. -/
 def completedBoundaryTrace
     (data : CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszPDEData
       period hPeriod massSquared) :=
-  data.toIntrinsicWaveRieszReducedPDEData.completedBoundaryTrace
+  (data.toIntrinsicWaveRieszReducedPDEData period hPeriod).completedBoundaryTrace
+    period hPeriod
 
 /-- Bounded right inverse of the completed trace. -/
 def completedExtension
     (data : CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszPDEData
       period hPeriod massSquared) :=
-  data.toIntrinsicWaveRieszReducedPDEData.completedExtension
+  (data.toIntrinsicWaveRieszReducedPDEData period hPeriod).completedExtension
+    period hPeriod
 
 /-- Physical graph-elliptic estimate. -/
 def graphEllipticEstimate
     (data : CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszPDEData
       period hPeriod massSquared) :=
-  data.toIntrinsicWaveRieszReducedPDEData.graphEllipticEstimate
+  (data.toIntrinsicWaveRieszReducedPDEData period hPeriod).graphEllipticEstimate
+    period hPeriod
 
 /-- The completed extension is a right inverse of the Riesz trace. -/
 theorem completedBoundaryTrace_extension
@@ -87,9 +91,10 @@ theorem completedBoundaryTrace_extension
     (boundary :
       P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D.CanonicalScalarHilbertBoundaryDatum
         (Trace := P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.CanonicalPhysicalScalarFirstSheetL2 period)) :
-    data.completedBoundaryTrace (data.completedExtension boundary) = boundary :=
-  data.toIntrinsicWaveRieszReducedPDEData
-    |>.completedBoundaryTrace_extension boundary
+    data.completedBoundaryTrace period hPeriod
+        (data.completedExtension period hPeriod boundary) = boundary :=
+  (data.toIntrinsicWaveRieszReducedPDEData period hPeriod)
+    |>.completedBoundaryTrace_extension period hPeriod boundary
 
 /-- Normal/tangential Riesz boundary certificate. -/
 theorem certificate
@@ -100,20 +105,24 @@ theorem certificate
         data.geometric.tangentialDensity field test parameter
         ∂P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D.canonicalLatitudeCauchyJetProductMeasure
           period) = 0) ∧
-      data.geometric.greenCore.MinimalCoreDense period hPeriod ∧
+      (data.geometric.greenCore period hPeriod).MinimalCoreDense period hPeriod ∧
       Function.Injective
         (canonicalScalarGreenCoreGraphInclusion
-          data.geometric.greenCore.core) ∧
-      Function.Surjective data.completedBoundaryTrace ∧
+          (data.geometric.greenCore period hPeriod).core) ∧
+      Function.Surjective (data.completedBoundaryTrace period hPeriod) ∧
       (∀ boundary,
-        data.completedBoundaryTrace
-          (data.completedExtension boundary) = boundary) :=
-  ⟨data.geometric.toNormalTangentialSplitData.tangential_integral_eq_zero,
-    data.toIntrinsicWaveRieszReducedPDEData.rieszBoundaryData.minimalCoreDense,
-    data.toIntrinsicWaveRieszReducedPDEData.rieszBoundaryData.graphInclusion_injective,
-    data.toIntrinsicWaveRieszReducedPDEData.rieszBoundaryData.boundedSmoothExtension
+        data.completedBoundaryTrace period hPeriod
+          (data.completedExtension period hPeriod boundary) = boundary) :=
+  ⟨(data.geometric.toNormalTangentialSplitData period hPeriod)
+      |>.tangential_integral_eq_zero period hPeriod,
+    ((data.toIntrinsicWaveRieszReducedPDEData period hPeriod).rieszBoundaryData
+      period hPeriod).minimalCoreDense period hPeriod,
+    ((data.toIntrinsicWaveRieszReducedPDEData period hPeriod).rieszBoundaryData
+      period hPeriod).graphInclusion_injective period hPeriod,
+    (((data.toIntrinsicWaveRieszReducedPDEData period hPeriod).rieszBoundaryData
+      period hPeriod).boundedSmoothExtension period hPeriod)
       |>.rieszBoundaryTrace_surjective,
-    data.completedBoundaryTrace_extension⟩
+    data.completedBoundaryTrace_extension period hPeriod⟩
 
 end CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszPDEData
 

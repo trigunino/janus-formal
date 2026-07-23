@@ -10,7 +10,7 @@ constants and graph estimate are generated automatically.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalAnalyticClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -22,6 +22,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRi
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -117,7 +118,8 @@ theorem finalProgramP_certificate
     (source : BulkL2 period hPeriod) :
     (∀ index boundary,
       MemLp
-        (analytic.boundary.eulerCoefficientOperators.coefficient index boundary)
+        (analytic.boundary.eulerCoefficientOperators.coefficient
+          period hPeriod index boundary)
         (2 : ENNReal)
         (P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D.canonicalLatitudeBaseMeasure
           period)) ∧
@@ -141,9 +143,8 @@ theorem finalProgramP_certificate
               analytic.condition spectralParameter ∨
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
-  ⟨analytic.boundary.eulerCoefficientOperators.coefficient_memLp,
-    analytic.boundary.toCanonicalNormalRieszScalarEnergyPDEData.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
+  ⟨analytic.boundary.eulerCoefficientOperators.coefficient_memLp period hPeriod,
+    (analytic.boundary.certificate period hPeriod).2.2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.sourceSolution_equation period hPeriod source,
     (analytic.sourceSolution_unique_minimizer period hPeriod source).1,
@@ -152,10 +153,14 @@ theorem finalProgramP_certificate
 
 end CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalAnalyticData
 
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalAnalyticClosure4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure4D
+
 /-- Marker theorem for the canonical-`L²`-operator Program P endpoint. -/
 theorem canonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure_available : True :=
   trivial
 
-end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure4D
 end JanusFormal

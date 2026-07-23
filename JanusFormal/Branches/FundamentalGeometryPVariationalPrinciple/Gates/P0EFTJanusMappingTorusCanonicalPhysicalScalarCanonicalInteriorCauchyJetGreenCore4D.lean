@@ -40,6 +40,7 @@ open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev ValueCore :=
   CanonicalLatitudeSmoothPeriodicValueCore period
@@ -147,7 +148,7 @@ theorem certificate
           period hPeriod) ∧
       (∀ boundary : ValueCore period × NormalCore period,
         P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
-            period hPeriod (data.extension boundary) =
+            period hPeriod (data.extension period hPeriod boundary) =
           canonicalScalarBoundaryCorePairEmbedding
             (canonicalLatitudeSmoothPeriodicValueEmbedding period)
             (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)

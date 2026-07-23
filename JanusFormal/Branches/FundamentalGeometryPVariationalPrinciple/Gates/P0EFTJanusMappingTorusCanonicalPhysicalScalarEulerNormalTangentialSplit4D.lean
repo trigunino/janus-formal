@@ -27,6 +27,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
@@ -35,6 +36,16 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerLocalToCutBulkBridge4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+local instance normalTangentialLatitudeBaseMeasureFinite :
+    IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+  canonicalLatitudeBaseMeasure_isFinite period
+
+local instance normalTangentialLatitudeNormalMeasureSFinite :
+    SFinite canonicalLatitudeCauchyJetNormalMeasure := by
+  unfold canonicalLatitudeCauchyJetNormalMeasure
+  infer_instance
 
 /-- Normal/tangential decomposition data for the canonical local divergence. -/
 structure CanonicalPhysicalScalarEulerNormalTangentialSplitData
@@ -137,7 +148,7 @@ theorem localDivergence_eq_halfCollar
         (∫ parameter,
           data.normalDensity field test parameter
           ∂canonicalLatitudeCauchyJetProductMeasure period) := by
-      rw [data.tangential_integral_eq_zero field test, add_zero]
+      rw [data.tangential_integral_eq_zero period hPeriod field test, add_zero]
     _ = _ := data.normal_integral_eq_halfCollar field test
 
 /-- Conversion to the established local-to-cut-bulk package. -/
@@ -147,19 +158,20 @@ def toLocalToCutBulkData
     CanonicalPhysicalScalarEulerLocalToCutBulkData
       period hPeriod massSquared where
   waveNaturality := data.waveNaturality
-  localDivergence_eq_halfCollar := data.localDivergence_eq_halfCollar
+  localDivergence_eq_halfCollar := data.localDivergence_eq_halfCollar period hPeriod
 
 /-- Canonical local-divergence Green package. -/
 def toCanonicalLocalDivergenceData
     (data : CanonicalPhysicalScalarEulerNormalTangentialSplitData
       period hPeriod massSquared) :=
-  data.toLocalToCutBulkData.toCanonicalLocalDivergenceData
+  (data.toLocalToCutBulkData period hPeriod).toCanonicalLocalDivergenceData
+    period hPeriod
 
 /-- Correct dense physical Green core. -/
 def greenCore
     (data : CanonicalPhysicalScalarEulerNormalTangentialSplitData
       period hPeriod massSquared) :=
-  data.toCanonicalLocalDivergenceData.greenCore
+  (data.toCanonicalLocalDivergenceData period hPeriod).greenCore period hPeriod
 
 /-- Normal/tangential split certificate. -/
 theorem certificate
@@ -177,8 +189,8 @@ theorem certificate
             period hPeriod) =
         -2 * P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.cutBulkCanonicalDivergenceMeasure
           period hPeriod massSquared field test Set.univ) :=
-  ⟨data.tangential_integral_eq_zero,
-    data.toLocalToCutBulkData.certificate.2⟩
+  ⟨data.tangential_integral_eq_zero period hPeriod,
+    ((data.toLocalToCutBulkData period hPeriod).certificate period hPeriod).2⟩
 
 end CanonicalPhysicalScalarEulerNormalTangentialSplitData
 

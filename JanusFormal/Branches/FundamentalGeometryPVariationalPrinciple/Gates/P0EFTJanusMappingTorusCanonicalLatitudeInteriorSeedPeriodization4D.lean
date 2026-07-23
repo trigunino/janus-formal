@@ -27,6 +27,8 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal
 open MeasureTheory Set Topology Filter Function
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 
@@ -102,6 +104,7 @@ theorem CanonicalLatitudeSmoothInteriorSeedCore.eq_zero_of_time_not_mem
 /-- Every time in the open fundamental period has absolute value strictly less
 than the period length. -/
 theorem abs_lt_abs_period_of_mem_openFundamentalTime
+    (hPeriod : period ≠ 0)
     {time : Real}
     (hTime : time ∈ canonicalLatitudeOpenFundamentalTime period) :
     |time| < |period| := by
@@ -109,7 +112,7 @@ theorem abs_lt_abs_period_of_mem_openFundamentalTime
   · rw [canonicalLatitudeOpenFundamentalTime,
       min_eq_right hNegative.le, max_eq_left hNegative.le] at hTime
     rw [abs_of_nonpos hTime.2.le, abs_of_neg hNegative]
-    linarith
+    exact neg_lt_neg hTime.1
   · rw [canonicalLatitudeOpenFundamentalTime,
       min_eq_left hPositive.le, max_eq_right hPositive.le] at hTime
     rw [abs_of_pos hTime.1, abs_of_pos hPositive]
@@ -117,6 +120,7 @@ theorem abs_lt_abs_period_of_mem_openFundamentalTime
 
 /-- Two points in one open fundamental interval differ by less than one period. -/
 theorem abs_sub_lt_abs_period_of_mem_openFundamentalTime
+    (hPeriod : period ≠ 0)
     {first second : Real}
     (hFirst : first ∈ canonicalLatitudeOpenFundamentalTime period)
     (hSecond : second ∈ canonicalLatitudeOpenFundamentalTime period) :
@@ -126,12 +130,14 @@ theorem abs_sub_lt_abs_period_of_mem_openFundamentalTime
       min_eq_right hNegative.le, max_eq_left hNegative.le] at hFirst hSecond
     rw [abs_of_neg hNegative]
     rw [abs_lt]
-    constructor <;> linarith
+    constructor <;>
+      linarith [hFirst.1, hFirst.2, hSecond.1, hSecond.2]
   · rw [canonicalLatitudeOpenFundamentalTime,
       min_eq_left hPositive.le, max_eq_right hPositive.le] at hFirst hSecond
     rw [abs_of_pos hPositive]
     rw [abs_lt]
-    constructor <;> linarith
+    constructor <;>
+      linarith [hFirst.1, hFirst.2, hSecond.1, hSecond.2]
 
 /-- Translation of an interior seed by one integer multiple of a real step. -/
 def canonicalLatitudeInteriorSeedTranslate
@@ -146,7 +152,7 @@ theorem canonicalLatitudeInteriorSeedTranslate_contMDiff
     (step : Real) (winding : Int) :
     ContMDiff canonicalLatitudeBaseModelWithCorners
       𝓘(Real, Real) ∞
-      (canonicalLatitudeInteriorSeedTranslate seed step winding) := by
+      (canonicalLatitudeInteriorSeedTranslate period seed step winding) := by
   unfold canonicalLatitudeInteriorSeedTranslate
   exact seed.contMDiff_toFun.comp
     (contMDiff_fst.prodMk
@@ -156,11 +162,12 @@ theorem canonicalLatitudeInteriorSeedTranslate_contMDiff
 /-- Integer translates of an interior seed form a locally finite family for
 any nonzero step. -/
 theorem canonicalLatitudeInteriorSeedTranslate_support_locallyFinite
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (step : Real) (hStep : step ≠ 0) :
     LocallyFinite fun winding : Int =>
       Function.support
-        (canonicalLatitudeInteriorSeedTranslate seed step winding) := by
+        (canonicalLatitudeInteriorSeedTranslate period seed step winding) := by
   intro base
   have hStepAbs : 0 < |step| := abs_pos.mpr hStep
   obtain ⟨bound, hBound⟩ := exists_nat_gt
@@ -173,7 +180,7 @@ theorem canonicalLatitudeInteriorSeedTranslate_support_locallyFinite
   · refine (Set.finite_Icc (-(bound : Int)) (bound : Int)).subset ?_
     intro winding hWinding
     change (Function.support
-        (canonicalLatitudeInteriorSeedTranslate seed step winding) ∩
+        (canonicalLatitudeInteriorSeedTranslate period seed step winding) ∩
       neighborhood).Nonempty at hWinding
     rcases hWinding with ⟨nearby, hTerm, hNearby⟩
     have hShifted :
@@ -198,8 +205,8 @@ theorem canonicalLatitudeInteriorSeedTranslate_support_locallyFinite
         |nearby.2| = |base.2 + (nearby.2 - base.2)| := by
           congr 1
           ring
-        _ ≤ |base.2| + |nearby.2 - base.2| := abs_add _ _
-        _ < |base.2| + 1 := add_lt_add_left hDifference _
+        _ ≤ |base.2| + |nearby.2 - base.2| := abs_add_le _ _
+        _ < |base.2| + 1 := add_lt_add_right hDifference _
     have hProduct :
         |(winding : Real)| * |step| < |base.2| + 1 + |period| := by
       rw [← abs_mul]
@@ -227,15 +234,16 @@ def canonicalLatitudeInteriorSeedPeriodization
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (step : Real) (base : CanonicalLatitudeBase) : Real :=
   ∑ᶠ winding : Int,
-    canonicalLatitudeInteriorSeedTranslate seed step winding base
+    canonicalLatitudeInteriorSeedTranslate period seed step winding base
 
 /-- Smoothness of a locally finite periodization. -/
 theorem canonicalLatitudeInteriorSeedPeriodization_contMDiff
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (step : Real) (hStep : step ≠ 0) :
     ContMDiff canonicalLatitudeBaseModelWithCorners
       𝓘(Real, Real) ∞
-      (canonicalLatitudeInteriorSeedPeriodization seed step) := by
+      (canonicalLatitudeInteriorSeedPeriodization period seed step) := by
   unfold canonicalLatitudeInteriorSeedPeriodization
   exact contMDiff_finsum
     (fun winding =>
@@ -246,16 +254,17 @@ theorem canonicalLatitudeInteriorSeedPeriodization_contMDiff
 
 /-- A periodization is periodic with its translation step. -/
 theorem canonicalLatitudeInteriorSeedPeriodization_add_step
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (step : Real) (hStep : step ≠ 0)
     (base : CanonicalLatitudeBase) :
-    canonicalLatitudeInteriorSeedPeriodization seed step
+    canonicalLatitudeInteriorSeedPeriodization period seed step
         (base.1, base.2 + step) =
-      canonicalLatitudeInteriorSeedPeriodization seed step base := by
+      canonicalLatitudeInteriorSeedPeriodization period seed step base := by
   let term : Int → Real := fun winding =>
-    canonicalLatitudeInteriorSeedTranslate seed step winding base
+    canonicalLatitudeInteriorSeedTranslate period seed step winding base
   have hLeftFinite : HasFiniteSupport fun winding : Int =>
-      canonicalLatitudeInteriorSeedTranslate seed step winding
+      canonicalLatitudeInteriorSeedTranslate period seed step winding
         (base.1, base.2 + step) :=
     (canonicalLatitudeInteriorSeedTranslate_support_locallyFinite
       period hPeriod seed step hStep).point_finite (base.1, base.2 + step)
@@ -265,18 +274,22 @@ theorem canonicalLatitudeInteriorSeedPeriodization_add_step
   unfold canonicalLatitudeInteriorSeedPeriodization
   calc
     (∑ᶠ winding : Int,
-      canonicalLatitudeInteriorSeedTranslate seed step winding
+      canonicalLatitudeInteriorSeedTranslate period seed step winding
         (base.1, base.2 + step)) =
         ∑' winding : Int,
-          canonicalLatitudeInteriorSeedTranslate seed step winding
+          canonicalLatitudeInteriorSeedTranslate period seed step winding
             (base.1, base.2 + step) := by
       symm
       rw [tsum_eq_finsum]
       exact hLeftFinite
     _ = ∑' winding : Int, term winding := by
-      simpa [term, canonicalLatitudeInteriorSeedTranslate,
-        Equiv.coe_addRight, Int.cast_add, Int.cast_one] using
-        (Equiv.addRight (1 : Int)).tsum_eq term
+      rw [← (Equiv.addRight (1 : Int)).tsum_eq term]
+      apply tsum_congr
+      intro winding
+      simp only [term, canonicalLatitudeInteriorSeedTranslate,
+        Equiv.coe_addRight, Int.cast_add, Int.cast_one]
+      congr 2
+      ring
     _ = ∑ᶠ winding : Int, term winding := by
       rw [tsum_eq_finsum]
       exact hRightFinite
@@ -284,6 +297,7 @@ theorem canonicalLatitudeInteriorSeedPeriodization_add_step
 /-- A nonzero integer shift by a step at least one period long cannot keep two
 times inside the same open fundamental period. -/
 theorem winding_eq_zero_of_time_and_shift_mem
+    (hPeriod : period ≠ 0)
     (step : Real) (hStep : step ≠ 0)
     (hStepLong : |period| ≤ |step|)
     (time : Real) (winding : Int)
@@ -293,13 +307,12 @@ theorem winding_eq_zero_of_time_and_shift_mem
     winding = 0 := by
   by_contra hWinding
   have hWindingAbs : (1 : Real) ≤ |(winding : Real)| := by
-    rcases Int.le_neg_one_or_one_le hWinding with hNegative | hPositive
-    · have hCast : (winding : Real) ≤ -1 := by exact_mod_cast hNegative
-      rw [abs_of_nonpos (by linarith)]
+    rcases Int.cast_le_neg_one_or_one_le_cast_of_ne_zero Real hWinding with
+      hNegative | hPositive
+    · rw [abs_of_nonpos (by linarith)]
       linarith
-    · have hCast : (1 : Real) ≤ winding := by exact_mod_cast hPositive
-      rw [abs_of_nonneg (by linarith)]
-      exact hCast
+    · rw [abs_of_nonneg (by linarith)]
+      exact hPositive
   have hDifference :
       |(time + (winding : Real) * step) - time| < |period| :=
     abs_sub_lt_abs_period_of_mem_openFundamentalTime
@@ -318,27 +331,36 @@ theorem winding_eq_zero_of_time_and_shift_mem
 /-- On the open fundamental period, ordinary periodization agrees with the
 original seed. -/
 theorem canonicalLatitudeInteriorSeedPeriodization_eq_seed
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (base : CanonicalLatitudeBase)
     (hTime : base.2 ∈ canonicalLatitudeOpenFundamentalTime period) :
-    canonicalLatitudeInteriorSeedPeriodization seed period base = seed base := by
+    canonicalLatitudeInteriorSeedPeriodization period seed period base = seed base := by
   unfold canonicalLatitudeInteriorSeedPeriodization
-  apply finsum_eq_single _ 0
-  intro winding hWinding
-  apply seed.eq_zero_of_time_not_mem
-  intro hShifted
-  exact hWinding
-    (winding_eq_zero_of_time_and_shift_mem
-      period hPeriod period hPeriod (le_refl _)
-      base.2 winding hTime hShifted)
+  calc
+    (∑ᶠ winding : Int,
+        canonicalLatitudeInteriorSeedTranslate
+          period seed period winding base) =
+        canonicalLatitudeInteriorSeedTranslate period seed period 0 base := by
+      apply finsum_eq_single _ 0
+      intro winding hWinding
+      apply seed.eq_zero_of_time_not_mem
+      intro hShifted
+      exact hWinding
+        (winding_eq_zero_of_time_and_shift_mem
+          period hPeriod period hPeriod (le_refl _)
+          base.2 winding hTime hShifted)
+    _ = seed base := by
+      simp [canonicalLatitudeInteriorSeedTranslate]
 
 /-- Almost every boundary-base time lies in the open fundamental period. -/
 theorem ae_canonicalLatitudeBase_time_mem_openFundamentalTime :
     ∀ᵐ base ∂canonicalLatitudeBaseMeasure period,
       base.2 ∈ canonicalLatitudeOpenFundamentalTime period := by
   unfold canonicalLatitudeBaseMeasure
-  rw [Measure.prod_ae_iff]
-  filter_upwards [] with sphere
+  apply (Measure.ae_prod_iff_ae_ae
+    (measurableSet_Ioo.preimage measurable_snd)).2
+  refine Filter.Eventually.of_forall fun _sphere => ?_
   have hInterval :
       ∀ᵐ time ∂volume.restrict
           (canonicalLatitudeTimeInterval period),
@@ -354,9 +376,10 @@ theorem ae_canonicalLatitudeBase_time_mem_openFundamentalTime :
 
 /-- Ordinary periodic extension of one interior seed. -/
 def canonicalLatitudePeriodicCoreOfInteriorSeed
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period) :
     CanonicalLatitudeSmoothPeriodicValueCore period where
-  toFun := canonicalLatitudeInteriorSeedPeriodization seed period
+  toFun := canonicalLatitudeInteriorSeedPeriodization period seed period
   contMDiff_toFun :=
     canonicalLatitudeInteriorSeedPeriodization_contMDiff
       period hPeriod seed period hPeriod
@@ -366,7 +389,7 @@ def canonicalLatitudePeriodicCoreOfInteriorSeed
   memLp_toFun := by
     apply seed.memLp_toFun.ae_eq
     filter_upwards
-      [ae_canonicalLatitudeBase_time_mem_openFundamentalTime period hPeriod]
+      [ae_canonicalLatitudeBase_time_mem_openFundamentalTime period]
       with base hTime
     exact (canonicalLatitudeInteriorSeedPeriodization_eq_seed
       period hPeriod seed base hTime).symm
@@ -375,24 +398,26 @@ def canonicalLatitudePeriodicCoreOfInteriorSeed
 def canonicalLatitudeDoublePeriodization
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period) :
     CanonicalLatitudeBase → Real :=
-  canonicalLatitudeInteriorSeedPeriodization seed (2 * period)
+  canonicalLatitudeInteriorSeedPeriodization period seed (2 * period)
 
 /-- Smoothness of the double-periodic extension. -/
 theorem canonicalLatitudeDoublePeriodization_contMDiff
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period) :
     ContMDiff canonicalLatitudeBaseModelWithCorners
       𝓘(Real, Real) ∞
-      (canonicalLatitudeDoublePeriodization seed) :=
+      (canonicalLatitudeDoublePeriodization period seed) :=
   canonicalLatitudeInteriorSeedPeriodization_contMDiff
     period hPeriod seed (2 * period) (mul_ne_zero two_ne_zero hPeriod)
 
 /-- Double periodicity. -/
 theorem canonicalLatitudeDoublePeriodization_add_two_period
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (base : CanonicalLatitudeBase) :
-    canonicalLatitudeDoublePeriodization seed
+    canonicalLatitudeDoublePeriodization period seed
         (base.1, base.2 + 2 * period) =
-      canonicalLatitudeDoublePeriodization seed base :=
+      canonicalLatitudeDoublePeriodization period seed base :=
   canonicalLatitudeInteriorSeedPeriodization_add_step
     period hPeriod seed (2 * period)
       (mul_ne_zero two_ne_zero hPeriod) base
@@ -400,34 +425,44 @@ theorem canonicalLatitudeDoublePeriodization_add_two_period
 /-- On the fundamental interval, double periodization still agrees with the
 seed. -/
 theorem canonicalLatitudeDoublePeriodization_eq_seed
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (base : CanonicalLatitudeBase)
     (hTime : base.2 ∈ canonicalLatitudeOpenFundamentalTime period) :
-    canonicalLatitudeDoublePeriodization seed base = seed base := by
+    canonicalLatitudeDoublePeriodization period seed base = seed base := by
   unfold canonicalLatitudeDoublePeriodization
     canonicalLatitudeInteriorSeedPeriodization
-  apply finsum_eq_single _ 0
-  intro winding hWinding
-  apply seed.eq_zero_of_time_not_mem
-  intro hShifted
-  apply hWinding
-  apply winding_eq_zero_of_time_and_shift_mem
-    period hPeriod (2 * period) (mul_ne_zero two_ne_zero hPeriod)
-      _ base.2 winding hTime hShifted
-  rw [abs_mul, abs_of_nonneg (by norm_num : (0 : Real) ≤ 2)]
-  nlinarith [abs_nonneg period]
+  calc
+    (∑ᶠ winding : Int,
+        canonicalLatitudeInteriorSeedTranslate
+          period seed (2 * period) winding base) =
+        canonicalLatitudeInteriorSeedTranslate
+          period seed (2 * period) 0 base := by
+      apply finsum_eq_single _ 0
+      intro winding hWinding
+      apply seed.eq_zero_of_time_not_mem
+      intro hShifted
+      apply hWinding
+      apply winding_eq_zero_of_time_and_shift_mem
+        period hPeriod (2 * period) (mul_ne_zero two_ne_zero hPeriod)
+          _ base.2 winding hTime hShifted
+      rw [abs_mul, abs_of_nonneg (by norm_num : (0 : Real) ≤ 2)]
+      nlinarith [abs_nonneg period]
+    _ = seed base := by
+      simp [canonicalLatitudeInteriorSeedTranslate]
 
 /-- A half-period translate of the double periodization vanishes on the chosen
 open fundamental interval. -/
 theorem canonicalLatitudeDoublePeriodization_add_period_eq_zero
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period)
     (base : CanonicalLatitudeBase)
     (hTime : base.2 ∈ canonicalLatitudeOpenFundamentalTime period) :
-    canonicalLatitudeDoublePeriodization seed
+    canonicalLatitudeDoublePeriodization period seed
       (base.1, base.2 + period) = 0 := by
   unfold canonicalLatitudeDoublePeriodization
     canonicalLatitudeInteriorSeedPeriodization
-  apply finsum_congr
+  apply finsum_eq_zero_of_forall_eq_zero
   intro winding
   apply seed.eq_zero_of_time_not_mem
   intro hShifted
@@ -448,11 +483,12 @@ theorem canonicalLatitudeDoublePeriodization_add_period_eq_zero
 
 /-- Antiperiodic extension obtained from a double-periodic extension. -/
 def canonicalLatitudeAntiperiodicCoreOfInteriorSeed
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period) :
     CanonicalLatitudeSmoothAntiperiodicNormalCore period where
   toFun := fun base =>
-    canonicalLatitudeDoublePeriodization seed base -
-      canonicalLatitudeDoublePeriodization seed (base.1, base.2 + period)
+    canonicalLatitudeDoublePeriodization period seed base -
+      canonicalLatitudeDoublePeriodization period seed (base.1, base.2 + period)
   contMDiff_toFun := by
     exact (canonicalLatitudeDoublePeriodization_contMDiff
       period hPeriod seed).sub
@@ -462,12 +498,23 @@ def canonicalLatitudeAntiperiodicCoreOfInteriorSeed
           (contMDiff_snd.add contMDiff_const)))
   deck_antiperiodic := by
     intro base
-    rw [canonicalLatitudeDoublePeriodization_add_two_period]
+    change
+      canonicalLatitudeDoublePeriodization period seed
+          (base.1, base.2 + period) -
+        canonicalLatitudeDoublePeriodization period seed
+          (base.1, (base.2 + period) + period) =
+      -(canonicalLatitudeDoublePeriodization period seed base -
+        canonicalLatitudeDoublePeriodization period seed
+          (base.1, base.2 + period))
+    have hTime : (base.2 + period) + period = base.2 + 2 * period := by
+      ring
+    rw [hTime, canonicalLatitudeDoublePeriodization_add_two_period
+      period hPeriod seed base]
     ring
   memLp_toFun := by
     apply seed.memLp_toFun.ae_eq
     filter_upwards
-      [ae_canonicalLatitudeBase_time_mem_openFundamentalTime period hPeriod]
+      [ae_canonicalLatitudeBase_time_mem_openFundamentalTime period]
       with base hTime
     rw [canonicalLatitudeDoublePeriodization_eq_seed
       period hPeriod seed base hTime]
@@ -477,6 +524,7 @@ def canonicalLatitudeAntiperiodicCoreOfInteriorSeed
 
 /-- The periodic core embedding is exactly the seed embedding. -/
 theorem canonicalLatitudePeriodicCoreOfInteriorSeed_embedding
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period) :
     canonicalLatitudeSmoothPeriodicValueEmbedding period
         (canonicalLatitudePeriodicCoreOfInteriorSeed period hPeriod seed) =
@@ -486,7 +534,7 @@ theorem canonicalLatitudePeriodicCoreOfInteriorSeed_embedding
     [canonicalLatitudeSmoothPeriodicValueEmbedding_ae period
       (canonicalLatitudePeriodicCoreOfInteriorSeed period hPeriod seed),
      canonicalLatitudeSmoothInteriorSeedEmbedding_ae period seed,
-     ae_canonicalLatitudeBase_time_mem_openFundamentalTime period hPeriod]
+     ae_canonicalLatitudeBase_time_mem_openFundamentalTime period]
     with base hPeriodic hSeed hTime
   rw [hPeriodic, hSeed]
   exact canonicalLatitudeInteriorSeedPeriodization_eq_seed
@@ -494,6 +542,7 @@ theorem canonicalLatitudePeriodicCoreOfInteriorSeed_embedding
 
 /-- The antiperiodic core embedding is exactly the seed embedding. -/
 theorem canonicalLatitudeAntiperiodicCoreOfInteriorSeed_embedding
+    (hPeriod : period ≠ 0)
     (seed : CanonicalLatitudeSmoothInteriorSeedCore period) :
     canonicalLatitudeSmoothAntiperiodicNormalEmbedding period
         (canonicalLatitudeAntiperiodicCoreOfInteriorSeed period hPeriod seed) =
@@ -503,9 +552,13 @@ theorem canonicalLatitudeAntiperiodicCoreOfInteriorSeed_embedding
     [canonicalLatitudeSmoothAntiperiodicNormalEmbedding_ae period
       (canonicalLatitudeAntiperiodicCoreOfInteriorSeed period hPeriod seed),
      canonicalLatitudeSmoothInteriorSeedEmbedding_ae period seed,
-     ae_canonicalLatitudeBase_time_mem_openFundamentalTime period hPeriod]
+     ae_canonicalLatitudeBase_time_mem_openFundamentalTime period]
     with base hNormal hSeed hTime
   rw [hNormal, hSeed]
+  change
+    canonicalLatitudeDoublePeriodization period seed base -
+      canonicalLatitudeDoublePeriodization period seed
+        (base.1, base.2 + period) = seed.toFun base
   rw [canonicalLatitudeDoublePeriodization_eq_seed
     period hPeriod seed base hTime]
   rw [canonicalLatitudeDoublePeriodization_add_period_eq_zero
@@ -521,6 +574,7 @@ namespace CanonicalLatitudeSmoothInteriorSeedDensityData
 
 /-- One dense interior-seed core makes both canonical boundary cores dense. -/
 def toSmoothBoundaryCoreDensityData
+    (hPeriod : period ≠ 0)
     (density : CanonicalLatitudeSmoothInteriorSeedDensityData period) :
     CanonicalLatitudeSmoothBoundaryCoreDensityData period where
   valueDense := by
@@ -540,11 +594,12 @@ def toSmoothBoundaryCoreDensityData
 
 /-- Periodization density certificate. -/
 theorem certificate
+    (hPeriod : period ≠ 0)
     (density : CanonicalLatitudeSmoothInteriorSeedDensityData period) :
     DenseRange (canonicalLatitudeSmoothPeriodicValueEmbedding period) ∧
       DenseRange (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period) :=
-  ⟨(density.toSmoothBoundaryCoreDensityData hPeriod).valueDense,
-    (density.toSmoothBoundaryCoreDensityData hPeriod).normalDense⟩
+  ⟨(density.toSmoothBoundaryCoreDensityData period hPeriod).valueDense,
+    (density.toSmoothBoundaryCoreDensityData period hPeriod).normalDense⟩
 
 end CanonicalLatitudeSmoothInteriorSeedDensityData
 

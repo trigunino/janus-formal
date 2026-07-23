@@ -20,7 +20,7 @@ namespace P0EFTJanusMappingTorusCanonicalLatitudeBoundaryCoreDensityReduction4D
 set_option autoImplicit false
 noncomputable section
 
-open scoped Manifold ContDiff ENNReal
+open scoped Manifold ContDiff ENNReal BoundedContinuousFunction
 open MeasureTheory Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
@@ -45,7 +45,7 @@ theorem boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange :
     DenseRange (boundedContinuousToCanonicalLatitudeBoundaryL2 period) := by
   exact BoundedContinuousFunction.toLp_denseRange Real
     (canonicalLatitudeBaseMeasure period) Real
-    (by norm_num : (2 : ENNReal) ≠ ∞)
+    (by norm_num : (2 : ENNReal) ≠ (∞ : ENNReal))
 
 /-- Bounded-continuous-to-smooth periodic approximation data. -/
 structure CanonicalLatitudePeriodicContinuousSmoothApproximationData where
@@ -95,7 +95,8 @@ theorem continuousRange_subset_closure_periodicRange
       closure (Set.range
         (canonicalLatitudeSmoothPeriodicValueEmbedding period)) := by
   rintro value ⟨continuousField, rfl⟩
-  exact approximationData.continuous_mem_closure_periodicRange continuousField
+  exact approximationData.continuous_mem_closure_periodicRange
+    period continuousField
 
 /-- Periodic smooth boundary representatives are dense. -/
 theorem denseRange
@@ -107,7 +108,7 @@ theorem denseRange
       (Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period)) :=
     boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange period value
   exact (closure_minimal
-    approximationData.continuousRange_subset_closure_periodicRange
+    (approximationData.continuousRange_subset_closure_periodicRange period)
     isClosed_closure) hContinuous
 
 end CanonicalLatitudePeriodicContinuousSmoothApproximationData
@@ -136,7 +137,8 @@ theorem continuousRange_subset_closure_antiperiodicRange
       closure (Set.range
         (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period)) := by
   rintro value ⟨continuousField, rfl⟩
-  exact approximationData.continuous_mem_closure_antiperiodicRange continuousField
+  exact approximationData.continuous_mem_closure_antiperiodicRange
+    period continuousField
 
 /-- Antiperiodic smooth boundary representatives are dense. -/
 theorem denseRange
@@ -149,7 +151,7 @@ theorem denseRange
       (Set.range (boundedContinuousToCanonicalLatitudeBoundaryL2 period)) :=
     boundedContinuousToCanonicalLatitudeBoundaryL2_denseRange period value
   exact (closure_minimal
-    approximationData.continuousRange_subset_closure_antiperiodicRange
+    (approximationData.continuousRange_subset_closure_antiperiodicRange period)
     isClosed_closure) hContinuous
 
 end CanonicalLatitudeAntiperiodicContinuousSmoothApproximationData
@@ -167,8 +169,8 @@ def toBoundaryCoreDensityData
     (approximationData :
       CanonicalLatitudeBoundaryContinuousSmoothApproximationData period) :
     CanonicalLatitudeSmoothBoundaryCoreDensityData period where
-  valueDense := approximationData.periodic.denseRange
-  normalDense := approximationData.antiperiodic.denseRange
+  valueDense := approximationData.periodic.denseRange period
+  normalDense := approximationData.antiperiodic.denseRange period
 
 /-- Boundary-density reduction certificate. -/
 theorem certificate
@@ -177,8 +179,8 @@ theorem certificate
     DenseRange (canonicalLatitudeSmoothPeriodicValueEmbedding period) ∧
       DenseRange
         (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period) :=
-  ⟨approximationData.periodic.denseRange,
-    approximationData.antiperiodic.denseRange⟩
+  ⟨approximationData.periodic.denseRange period,
+    approximationData.antiperiodic.denseRange period⟩
 
 end CanonicalLatitudeBoundaryContinuousSmoothApproximationData
 

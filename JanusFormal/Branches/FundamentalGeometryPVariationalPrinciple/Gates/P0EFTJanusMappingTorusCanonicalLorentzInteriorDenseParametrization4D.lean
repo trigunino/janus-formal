@@ -27,9 +27,11 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeGlobalThroatNull4D
-open P0EFTJanusMappingTorusCanonicalLatitudeMeasureToSphereCoarea4D
+open P0EFTJanusMappingTorusCanonicalLatitudeCoareaClosure4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCoareaMap4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerDenseParametrizationClosure4D
@@ -40,6 +42,17 @@ variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
 
 /-- Interior of the canonical half-open fundamental time interval. -/
 def canonicalLorentzInteriorTime : Set Real :=
@@ -77,9 +90,16 @@ local instance canonicalLorentzInteriorTimeMeasure_isFinite :
     IsFiniteMeasure (canonicalLorentzInteriorTimeMeasure period) := by
   constructor
   change ((volume : Measure Real).comap
-      (Subtype.val : canonicalLorentzInteriorTime period → Real)) Set.univ < ∞
-  rw [(MeasurableEmbedding.subtype_coe measurableSet_Ioo).comap_apply]
-  simp [canonicalLorentzInteriorTime, Real.volume_Ioo]
+      (Subtype.val : canonicalLorentzInteriorTime period → Real)) Set.univ <
+        (⊤ : ENNReal)
+  have hTimeMeasurable :
+      MeasurableSet (canonicalLorentzInteriorTime period) := by
+    exact measurableSet_Ioo
+  rw [comap_subtype_coe_apply hTimeMeasurable volume Set.univ]
+  rw [Set.image_univ, Subtype.range_coe]
+  unfold canonicalLorentzInteriorTime
+  rw [Real.volume_Ioo]
+  exact ENNReal.ofReal_lt_top
 
 /-- The pulled-back interval measure is positive on every nonempty open subset
 of the open interval. -/
@@ -118,12 +138,16 @@ theorem canonicalLorentzInteriorFundamentalInclusion_measurePreserving :
       (canonicalLorentzInteriorFundamentalInclusion period)
       (canonicalLorentzInteriorMeasure period)
       (canonicalLorentzFundamentalProductMeasure period) := by
-  simpa [canonicalLorentzInteriorFundamentalInclusion,
-    canonicalLorentzInteriorMeasure,
-    canonicalLorentzFundamentalProductMeasure] using
-    MeasurePreserving.prod
-      (MeasurePreserving.id ((volume : Measure EuclideanR4).toSphere))
-      (canonicalLorentzInteriorTimeInclusion_measurePreserving period)
+  change MeasurePreserving
+    (Prod.map id
+      (Subtype.val : canonicalLorentzInteriorTime period → Real))
+    ((volume : Measure EuclideanR4).toSphere.prod
+      (canonicalLorentzInteriorTimeMeasure period))
+    ((volume : Measure EuclideanR4).toSphere.prod
+      (volume.restrict (canonicalLatitudeTimeInterval period)))
+  exact MeasurePreserving.prod
+    (MeasurePreserving.id ((volume : Measure EuclideanR4).toSphere))
+    (canonicalLorentzInteriorTimeInclusion_measurePreserving period)
 
 /-- Continuity of the open fundamental-strip inclusion. -/
 theorem canonicalLorentzInteriorFundamentalInclusion_continuous :

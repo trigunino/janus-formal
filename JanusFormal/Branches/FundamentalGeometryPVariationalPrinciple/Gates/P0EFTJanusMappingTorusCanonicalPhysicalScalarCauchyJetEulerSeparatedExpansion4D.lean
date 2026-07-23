@@ -25,7 +25,7 @@ component constants squared.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSeparatedExpansion4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -35,14 +35,21 @@ open MeasureTheory Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGraphBound4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerL2Reduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerProductRealization4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerFiniteExpansion4D
 
 universe x y z
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+local instance canonicalLatitudeBaseMeasureFinite :
+    IsFiniteMeasure (canonicalLatitudeBaseMeasure period) :=
+  canonicalLatitudeBaseMeasure_isFinite period
+
+local instance canonicalLatitudeCauchyJetNormalMeasureSFinite :
+    SFinite canonicalLatitudeCauchyJetNormalMeasure := by
+  unfold canonicalLatitudeCauchyJetNormalMeasure
+  infer_instance
 
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
@@ -81,7 +88,7 @@ structure CauchyJetEulerSeparatedExpansionData
       boundaryCoefficient index data base ^ 2
       ∂canonicalLatitudeBaseMeasure period) ≤
         coefficientConstant index ^ 2 *
-          ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
   residual_sq_integrable : ∀ data,
     Integrable
       (fun parameter => realization.residual data parameter ^ 2)
@@ -123,7 +130,7 @@ theorem normalProfileMoment_nonnegative
     (expansion : geometric.CauchyJetEulerSeparatedExpansionData
       period hPeriod realization Index)
     (index : Index) :
-    0 ≤ expansion.normalProfileMoment index := by
+    0 ≤ expansion.normalProfileMoment period hPeriod index := by
   unfold normalProfileMoment
   exact integral_nonneg fun _ => sq_nonneg _
 
@@ -140,7 +147,7 @@ def separatedComponentConstant
     (expansion : geometric.CauchyJetEulerSeparatedExpansionData
       period hPeriod realization Index)
     (index : Index) : Real :=
-  Real.sqrt (expansion.normalProfileMoment index) *
+  Real.sqrt (expansion.normalProfileMoment period hPeriod index) *
     expansion.coefficientConstant index
 
 /-- Nonnegativity of every separated component constant. -/
@@ -156,7 +163,7 @@ theorem separatedComponentConstant_nonnegative
     (expansion : geometric.CauchyJetEulerSeparatedExpansionData
       period hPeriod realization Index)
     (index : Index) :
-    0 ≤ expansion.separatedComponentConstant index :=
+    0 ≤ expansion.separatedComponentConstant period hPeriod index :=
   mul_nonneg (Real.sqrt_nonneg _)
     (expansion.coefficientConstant_nonnegative index)
 
@@ -173,12 +180,12 @@ theorem separatedComponentConstant_sq
     (expansion : geometric.CauchyJetEulerSeparatedExpansionData
       period hPeriod realization Index)
     (index : Index) :
-    expansion.separatedComponentConstant index ^ 2 =
-      expansion.normalProfileMoment index *
+    expansion.separatedComponentConstant period hPeriod index ^ 2 =
+      expansion.normalProfileMoment period hPeriod index *
         expansion.coefficientConstant index ^ 2 := by
   unfold separatedComponentConstant
   rw [mul_pow, Real.sq_sqrt
-    (expansion.normalProfileMoment_nonnegative index)]
+    (expansion.normalProfileMoment_nonnegative period hPeriod index)]
 
 /-- Fubini factorization for one separated component. -/
 theorem separatedComponent_integral_eq
@@ -197,7 +204,7 @@ theorem separatedComponent_integral_eq
       (expansion.normalProfile index parameter.2 *
         expansion.boundaryCoefficient index data parameter.1) ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) =
-      expansion.normalProfileMoment index *
+      expansion.normalProfileMoment period hPeriod index *
         (∫ base,
           expansion.boundaryCoefficient index data base ^ 2
           ∂canonicalLatitudeBaseMeasure period) := by
@@ -208,7 +215,7 @@ theorem separatedComponent_integral_eq
           (expansion.normalProfile index normal *
             expansion.boundaryCoefficient index data base) ^ 2
           ∂canonicalLatitudeCauchyJetNormalMeasure) =
-          expansion.normalProfileMoment index *
+          expansion.normalProfileMoment period hPeriod index *
             expansion.boundaryCoefficient index data base ^ 2 := by
       intro base
       have hProfile := expansion.normalProfile_sq_integrable index
@@ -221,14 +228,14 @@ theorem separatedComponent_integral_eq
               expansion.boundaryCoefficient index data base ^ 2 *
                 expansion.normalProfile index normal ^ 2
               ∂canonicalLatitudeCauchyJetNormalMeasure := by
-          apply integral_congr
-          intro normal
+          apply integral_congr_ae
+          filter_upwards [] with normal
           ring
         _ = expansion.boundaryCoefficient index data base ^ 2 *
-            expansion.normalProfileMoment index := by
+            expansion.normalProfileMoment period hPeriod index := by
           rw [integral_const_mul]
           rfl
-        _ = expansion.normalProfileMoment index *
+        _ = expansion.normalProfileMoment period hPeriod index *
             expansion.boundaryCoefficient index data base ^ 2 := by ring
     simp_rw [hInner]
     rw [← integral_const_mul]
@@ -251,13 +258,13 @@ theorem separatedComponent_bound_sq
       (expansion.normalProfile index parameter.2 *
         expansion.boundaryCoefficient index data parameter.1) ^ 2
       ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-      expansion.separatedComponentConstant index ^ 2 *
-        ‖geometric.boundaryCoreEmbedding data‖ ^ 2 := by
-  rw [expansion.separatedComponent_integral_eq index data,
-    expansion.separatedComponentConstant_sq index]
-  exact mul_le_mul_of_nonneg_left
+      expansion.separatedComponentConstant period hPeriod index ^ 2 *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2 := by
+  rw [expansion.separatedComponent_integral_eq period hPeriod index data,
+    expansion.separatedComponentConstant_sq period hPeriod index]
+  simpa [mul_assoc] using mul_le_mul_of_nonneg_left
     (expansion.coefficient_bound_sq index data)
-    (expansion.normalProfileMoment_nonnegative index)
+    (expansion.normalProfileMoment_nonnegative period hPeriod index)
 
 /-- Conversion to the generic finite expansion interface. -/
 def toFiniteExpansionData
@@ -276,12 +283,13 @@ def toFiniteExpansionData
   component := fun index data parameter =>
     expansion.normalProfile index parameter.2 *
       expansion.boundaryCoefficient index data parameter.1
-  constant := expansion.separatedComponentConstant
-  constant_nonnegative := expansion.separatedComponentConstant_nonnegative
+  constant := expansion.separatedComponentConstant period hPeriod
+  constant_nonnegative :=
+    expansion.separatedComponentConstant_nonnegative period hPeriod
   residual_sq_integrable := expansion.residual_sq_integrable
   component_sq_integrable := expansion.component_sq_integrable
   residual_sq_le_sum := expansion.residual_sq_le_sum
-  component_bound_sq := expansion.separatedComponent_bound_sq
+  component_bound_sq := expansion.separatedComponent_bound_sq period hPeriod
 
 /-- Final product Euler estimate generated by the separated expansion. -/
 def toEulerProductEstimateData
@@ -296,7 +304,8 @@ def toEulerProductEstimateData
     (expansion : geometric.CauchyJetEulerSeparatedExpansionData
       period hPeriod realization Index) :
     geometric.CauchyJetEulerProductEstimateData period hPeriod realization :=
-  expansion.toFiniteExpansionData.toEulerProductEstimateData
+  (expansion.toFiniteExpansionData period hPeriod).toEulerProductEstimateData
+    period hPeriod
 
 /-- Separated-expansion certificate. -/
 theorem certificate
@@ -315,21 +324,21 @@ theorem certificate
         (expansion.normalProfile index parameter.2 *
           expansion.boundaryCoefficient index data parameter.1) ^ 2
         ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-        expansion.separatedComponentConstant index ^ 2 *
-          ‖geometric.boundaryCoreEmbedding data‖ ^ 2) ∧
+        expansion.separatedComponentConstant period hPeriod index ^ 2 *
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2) ∧
       (∀ data,
         (∫ parameter,
           realization.residual data parameter ^ 2
           ∂canonicalLatitudeCauchyJetProductMeasure period) ≤
-          expansion.toFiniteExpansionData.combinedConstant ^ 2 *
-            ‖geometric.boundaryCoreEmbedding data‖ ^ 2) :=
-  ⟨expansion.separatedComponent_bound_sq,
-    expansion.toFiniteExpansionData.product_bound_sq⟩
+          (expansion.toFiniteExpansionData period hPeriod).combinedConstant ^ 2 *
+            ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2) :=
+  ⟨expansion.separatedComponent_bound_sq period hPeriod,
+    (expansion.toFiniteExpansionData period hPeriod).product_bound_sq period hPeriod⟩
 
 end CauchyJetEulerSeparatedExpansionData
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSeparatedExpansion4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

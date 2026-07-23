@@ -17,12 +17,16 @@ trace estimate.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalRegularity4D
@@ -31,6 +35,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -88,22 +93,34 @@ theorem regularity_bound_sq_graph
   have hInclusion :
       ‖green.core.inclusion field‖ ≤
         ‖canonicalScalarGreenCoreToGraph green.core field‖ := by
-    change ‖green.core.inclusion field‖ ≤
-      max ‖green.core.inclusion field‖ ‖green.core.operator field‖
-    exact le_max_left _ _
+    exact WithLp.norm_fst_le
+      (CanonicalPhysicalBulkL2 period hPeriod)
+      (canonicalScalarGreenCoreToGraph green.core field).1
   have hOperator :
       ‖green.core.operator field‖ ≤
         ‖canonicalScalarGreenCoreToGraph green.core field‖ := by
-    change ‖green.core.operator field‖ ≤
-      max ‖green.core.inclusion field‖ ‖green.core.operator field‖
-    exact le_max_right _ _
+    exact WithLp.norm_snd_le
+      (CanonicalPhysicalBulkL2 period hPeriod)
+      (canonicalScalarGreenCoreToGraph green.core field).1
   have hComponentSum :
       ‖green.core.inclusion field‖ ^ 2 +
           ‖green.core.operator field‖ ^ 2 ≤
         2 * ‖canonicalScalarGreenCoreToGraph green.core field‖ ^ 2 := by
-    nlinarith [sq_nonneg ‖green.core.inclusion field‖,
-      sq_nonneg ‖green.core.operator field‖,
-      sq_nonneg ‖canonicalScalarGreenCoreToGraph green.core field‖]
+    have hInclusionSq :
+        ‖green.core.inclusion field‖ ^ 2 ≤
+          ‖canonicalScalarGreenCoreToGraph green.core field‖ ^ 2 := by
+      nlinarith [mul_nonneg (sub_nonneg.mpr hInclusion)
+        (add_nonneg
+          (norm_nonneg (canonicalScalarGreenCoreToGraph green.core field))
+          (norm_nonneg (green.core.inclusion field)))]
+    have hOperatorSq :
+        ‖green.core.operator field‖ ^ 2 ≤
+          ‖canonicalScalarGreenCoreToGraph green.core field‖ ^ 2 := by
+      nlinarith [mul_nonneg (sub_nonneg.mpr hOperator)
+        (add_nonneg
+          (norm_nonneg (canonicalScalarGreenCoreToGraph green.core field))
+          (norm_nonneg (green.core.operator field)))]
+    linarith
   calc
     ‖regularity.smoothRegularity field‖ ^ 2 ≤
         regularity.ellipticConstant *
@@ -134,7 +151,8 @@ def toNormalRegularityData
   normal_agrees := regularity.normal_agrees
   constant := regularity.graphRegularityConstant
   nonnegative := regularity.graphRegularityConstant_nonnegative
-  regularity_bound_sq := regularity.regularity_bound_sq_graph green
+  regularity_bound_sq :=
+    regularity.regularity_bound_sq_graph period hPeriod green
 
 /-- Complete normal graph estimate. -/
 def toNormalGraphEstimate
@@ -143,7 +161,8 @@ def toNormalGraphEstimate
     (regularity : green.NormalEllipticRegularityData
       period hPeriod (Regularity := Regularity)) :
     green.NormalGraphEstimate period hPeriod :=
-  (regularity.toNormalRegularityData green).toNormalGraphEstimate green
+  (regularity.toNormalRegularityData period hPeriod green)
+    |>.toNormalGraphEstimate period hPeriod green
 
 /-- Continuous higher-regularity extension to the completed maximal graph. -/
 def completedRegularity
@@ -152,7 +171,8 @@ def completedRegularity
     (regularity : green.NormalEllipticRegularityData
       period hPeriod (Regularity := Regularity)) :
     CanonicalScalarGreenCoreGraphSpace green.core →L[Real] Regularity :=
-  (regularity.toNormalRegularityData green).completedRegularity green
+  (regularity.toNormalRegularityData period hPeriod green)
+    |>.completedRegularity period hPeriod green
 
 /-- The completed regularity trace agrees with the completed Cauchy normal
 component. -/
@@ -163,12 +183,13 @@ theorem normalTrace_completedRegularity
       period hPeriod (Regularity := Regularity))
     (traceBound : HasCanonicalScalarHilbertGreenCoreBoundaryGraphBound green.core)
     (field : CanonicalScalarGreenCoreGraphSpace green.core) :
-    regularity.normalTrace (regularity.completedRegularity green field) =
-      (regularity.toNormalRegularityData green).completedBoundaryNormalTrace
-        green traceBound field :=
-  (regularity.toNormalRegularityData green)
+    regularity.normalTrace
+        (regularity.completedRegularity period hPeriod green field) =
+      NormalRegularityData.completedBoundaryNormalTrace
+        period hPeriod green traceBound field :=
+  (regularity.toNormalRegularityData period hPeriod green)
     |>.normalTrace_completedRegularity_eq_completedBoundaryNormalTrace
-      green traceBound field
+      period hPeriod green traceBound field
 
 /-- Normal elliptic-regularity certificate. -/
 theorem certificate
@@ -184,13 +205,13 @@ theorem certificate
         ‖smoothCanonicalPhysicalScalarFirstSheetNormalL2 period hPeriod field‖ ≤
           ‖regularity.normalTrace‖ * regularity.graphRegularityConstant *
             ‖canonicalScalarGreenCoreToGraph green.core field‖) :=
-  ⟨regularity.regularity_bound_sq_graph green,
-    (regularity.toNormalGraphEstimate green).bound⟩
+  ⟨regularity.regularity_bound_sq_graph period hPeriod green,
+    (regularity.toNormalGraphEstimate period hPeriod green).bound⟩
 
 end NormalEllipticRegularityData
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

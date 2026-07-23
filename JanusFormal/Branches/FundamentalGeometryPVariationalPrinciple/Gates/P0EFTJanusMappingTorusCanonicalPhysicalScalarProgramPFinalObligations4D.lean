@@ -29,7 +29,7 @@ open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreen4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerCanonicalL2Operators4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorPDEClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalAnalyticClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyL2OperatorMinimalProgramPClosure4D
@@ -41,6 +41,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -54,7 +55,7 @@ private abbrev BulkL2 :=
 def assembleCanonicalPhysicalScalarBoundaryData
     (geometric : CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
       period hPeriod massSquared)
-    (energyIdentity : geometric.greenCore.ScalarRemainderEnergyIdentityData
+    (energyIdentity : (geometric.greenCore period hPeriod).ScalarRemainderEnergyIdentityData
       period hPeriod)
     (eulerCoefficientOperators :
       geometric.toNormalTangentialGreenData.toIntrinsicWaveLocalGreenData.toCanonicalLocalDivergenceData.toCanonicalWaveCauchyJetData.toCanonicalCauchyJetCompatibilityData.toCompatibilityData.toCauchyJetGeometricData.CauchyJetEulerSixCanonicalL2OperatorData
@@ -71,7 +72,7 @@ structure CanonicalPhysicalScalarProgramPFinalObligationsData
     [NormedAddCommGroup Energy] [NormedSpace Real Energy] where
   geometric : CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalGreenData
     period hPeriod massSquared
-  energyIdentity : geometric.greenCore.ScalarRemainderEnergyIdentityData
+  energyIdentity : (geometric.greenCore period hPeriod).ScalarRemainderEnergyIdentityData
     period hPeriod
   eulerCoefficientOperators :
     geometric.toNormalTangentialGreenData.toIntrinsicWaveLocalGreenData.toCanonicalLocalDivergenceData.toCanonicalWaveCauchyJetData.toCanonicalCauchyJetCompatibilityData.toCompatibilityData.toCauchyJetGeometricData.CauchyJetEulerSixCanonicalL2OperatorData
@@ -162,7 +163,20 @@ theorem sourceSolution_equation
 theorem sourceSolution_unique_minimizer
     (data : CanonicalPhysicalScalarProgramPFinalObligationsData
       period hPeriod massSquared Energy)
-    (source : BulkL2 period hPeriod) :=
+    (source : BulkL2 period hPeriod) :
+    (∀ field : data.triple.lagrangianDomainSubmodule data.condition,
+      data.triple.lagrangianSourceAction
+          data.condition data.referenceParameter source
+          (data.sourceSolution period hPeriod source) ≤
+        data.triple.lagrangianSourceAction
+          data.condition data.referenceParameter source field) ∧
+      (∀ field : data.triple.lagrangianDomainSubmodule data.condition,
+        data.triple.lagrangianSourceAction
+            data.condition data.referenceParameter source field =
+          data.triple.lagrangianSourceAction
+            data.condition data.referenceParameter source
+            (data.sourceSolution period hPeriod source) →
+        field = data.sourceSolution period hPeriod source) :=
   data.analyticData.sourceSolution_unique_minimizer period hPeriod source
 
 /-- Gaussian generating functional. -/
@@ -206,7 +220,8 @@ theorem certificate
         period hPeriod ∧
       (∀ index boundary,
         MemLp
-          (data.eulerCoefficientOperators.coefficient index boundary)
+          (data.eulerCoefficientOperators.coefficient
+            period hPeriod index boundary)
           (2 : ENNReal)
           (P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D.canonicalLatitudeBaseMeasure
             period)) ∧
@@ -228,16 +243,9 @@ theorem certificate
           data.triple.LagrangianHasEigenvalue
               data.condition spectralParameter ∨
             data.triple.LagrangianResolventPoint
-              data.condition spectralParameter) :=
-  ⟨data.geometric.intrinsicWave.toWaveAtlasNaturality,
-    data.eulerCoefficientOperators.coefficient_memLp,
-    data.boundaryData.toCanonicalNormalRieszScalarEnergyPDEData.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
-    data.actualAdjointDomain_eq period hPeriod,
-    data.sourceSolution_equation period hPeriod source,
-    (data.sourceSolution_unique_minimizer period hPeriod source).1,
-    (data.gaussian_certificate period hPeriod source).2,
-    data.fredholmAlternative period hPeriod⟩
+              data.condition spectralParameter) := by
+  refine ⟨data.geometric.intrinsicWave.toWaveAtlasNaturality period hPeriod, ?_⟩
+  exact data.analyticData.finalProgramP_certificate period hPeriod source
 
 end CanonicalPhysicalScalarProgramPFinalObligationsData
 

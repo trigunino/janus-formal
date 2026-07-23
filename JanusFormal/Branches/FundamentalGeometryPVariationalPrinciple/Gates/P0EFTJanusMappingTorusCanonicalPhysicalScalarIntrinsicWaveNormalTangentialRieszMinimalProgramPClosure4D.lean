@@ -16,7 +16,7 @@ complete compact spectral theory.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalProgramPClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalAnalyticClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -30,6 +30,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -229,10 +230,14 @@ theorem finalProgramP_certificate
 
 end CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalAnalyticData
 
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalAnalyticClosure4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalProgramPClosure4D
+
 /-- Marker theorem for the minimal final Program P endpoint. -/
 theorem canonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalProgramPClosure_available : True :=
   trivial
 
-end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszMinimalProgramPClosure4D
 end JanusFormal

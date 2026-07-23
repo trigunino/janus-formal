@@ -18,18 +18,18 @@ separate graph-norm estimate is required.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetSquaredGraphBound4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
 
 open Set Topology
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGraphBound4D
 
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 namespace CanonicalPhysicalScalarCauchyJetGeometricData
 
@@ -45,11 +45,15 @@ structure CauchyJetSquaredComponentGraphEstimateData
   operatorConstant : Real
   operatorConstant_nonnegative : 0 ≤ operatorConstant
   inclusion_bound_sq : ∀ data : ValueCore × NormalCore,
-    ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 ≤
-      inclusionConstant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+    ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ ^ 2 ≤
+      inclusionConstant ^ 2 *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
   operator_bound_sq : ∀ data : ValueCore × NormalCore,
-    ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 ≤
-      operatorConstant ^ 2 * ‖geometric.boundaryCoreEmbedding data‖ ^ 2
+    ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ ^ 2 ≤
+      operatorConstant ^ 2 *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ ^ 2
 
 namespace CauchyJetSquaredComponentGraphEstimateData
 
@@ -63,18 +67,24 @@ theorem inclusion_bound
     (estimate : geometric.CauchyJetSquaredComponentGraphEstimateData
       period hPeriod)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ≤
-      estimate.inclusionConstant * ‖geometric.boundaryCoreEmbedding data‖ := by
+    ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ ≤
+      estimate.inclusionConstant *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ := by
   have hSquare := estimate.inclusion_bound_sq data
   have hLeft : 0 ≤
-      ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ :=
+      ‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ :=
     norm_nonneg _
   have hRight : 0 ≤
-      estimate.inclusionConstant * ‖geometric.boundaryCoreEmbedding data‖ :=
+      estimate.inclusionConstant *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ :=
     mul_nonneg estimate.inclusionConstant_nonnegative (norm_nonneg _)
   nlinarith [sq_nonneg
-    (‖geometric.greenCore.core.inclusion (geometric.extension data)‖ -
-      estimate.inclusionConstant * ‖geometric.boundaryCoreEmbedding data‖)]
+    (‖(geometric.greenCore period hPeriod).core.inclusion
+        (geometric.extension period hPeriod data)‖ -
+      estimate.inclusionConstant *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖)]
 
 /-- Linear Euler-residual estimate obtained from the squared estimate. -/
 theorem operator_bound
@@ -86,18 +96,24 @@ theorem operator_bound
     (estimate : geometric.CauchyJetSquaredComponentGraphEstimateData
       period hPeriod)
     (data : ValueCore × NormalCore) :
-    ‖geometric.greenCore.core.operator (geometric.extension data)‖ ≤
-      estimate.operatorConstant * ‖geometric.boundaryCoreEmbedding data‖ := by
+    ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ ≤
+      estimate.operatorConstant *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ := by
   have hSquare := estimate.operator_bound_sq data
   have hLeft : 0 ≤
-      ‖geometric.greenCore.core.operator (geometric.extension data)‖ :=
+      ‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ :=
     norm_nonneg _
   have hRight : 0 ≤
-      estimate.operatorConstant * ‖geometric.boundaryCoreEmbedding data‖ :=
+      estimate.operatorConstant *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ :=
     mul_nonneg estimate.operatorConstant_nonnegative (norm_nonneg _)
   nlinarith [sq_nonneg
-    (‖geometric.greenCore.core.operator (geometric.extension data)‖ -
-      estimate.operatorConstant * ‖geometric.boundaryCoreEmbedding data‖)]
+    (‖(geometric.greenCore period hPeriod).core.operator
+        (geometric.extension period hPeriod data)‖ -
+      estimate.operatorConstant *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖)]
 
 /-- Conversion to the linear component-estimate package. -/
 def toComponentGraphEstimateData
@@ -113,8 +129,8 @@ def toComponentGraphEstimateData
   inclusionConstant_nonnegative := estimate.inclusionConstant_nonnegative
   operatorConstant := estimate.operatorConstant
   operatorConstant_nonnegative := estimate.operatorConstant_nonnegative
-  inclusion_bound := estimate.inclusion_bound
-  operator_bound := estimate.operator_bound
+  inclusion_bound := estimate.inclusion_bound period hPeriod
+  operator_bound := estimate.operator_bound period hPeriod
 
 /-- Direct graph bound from the two squared estimates. -/
 theorem graph_bound
@@ -127,10 +143,12 @@ theorem graph_bound
       period hPeriod)
     (data : ValueCore × NormalCore) :
     ‖P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreToGraph
-        geometric.greenCore.core (geometric.extension data)‖ ≤
-      max estimate.inclusionConstant estimate.operatorConstant *
-        ‖geometric.boundaryCoreEmbedding data‖ :=
-  estimate.toComponentGraphEstimateData.graph_bound data
+        (geometric.greenCore period hPeriod).core
+        (geometric.extension period hPeriod data)‖ ≤
+      (Real.sqrt 2 * max estimate.inclusionConstant estimate.operatorConstant) *
+        ‖geometric.boundaryCoreEmbedding period hPeriod data‖ := by
+  exact estimate.toComponentGraphEstimateData period hPeriod
+    |>.graph_bound period hPeriod data
 
 /-- Squared-estimate certificate. -/
 theorem certificate
@@ -142,23 +160,29 @@ theorem certificate
     (estimate : geometric.CauchyJetSquaredComponentGraphEstimateData
       period hPeriod) :
     (∀ data : ValueCore × NormalCore,
-      ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ≤
-        estimate.inclusionConstant * ‖geometric.boundaryCoreEmbedding data‖) ∧
+      ‖(geometric.greenCore period hPeriod).core.inclusion
+          (geometric.extension period hPeriod data)‖ ≤
+        estimate.inclusionConstant *
+          ‖geometric.boundaryCoreEmbedding period hPeriod data‖) ∧
       (∀ data : ValueCore × NormalCore,
-        ‖geometric.greenCore.core.operator (geometric.extension data)‖ ≤
-          estimate.operatorConstant * ‖geometric.boundaryCoreEmbedding data‖) ∧
+        ‖(geometric.greenCore period hPeriod).core.operator
+            (geometric.extension period hPeriod data)‖ ≤
+          estimate.operatorConstant *
+            ‖geometric.boundaryCoreEmbedding period hPeriod data‖) ∧
       (∀ data : ValueCore × NormalCore,
         ‖P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreToGraph
-            geometric.greenCore.core (geometric.extension data)‖ ≤
-          max estimate.inclusionConstant estimate.operatorConstant *
-            ‖geometric.boundaryCoreEmbedding data‖) :=
-  ⟨estimate.inclusion_bound, estimate.operator_bound,
-    estimate.graph_bound⟩
+            (geometric.greenCore period hPeriod).core
+            (geometric.extension period hPeriod data)‖ ≤
+          (Real.sqrt 2 * max estimate.inclusionConstant estimate.operatorConstant) *
+            ‖geometric.boundaryCoreEmbedding period hPeriod data‖) :=
+  ⟨estimate.inclusion_bound period hPeriod,
+    estimate.operator_bound period hPeriod,
+    estimate.graph_bound period hPeriod⟩
 
 end CauchyJetSquaredComponentGraphEstimateData
 
 end CanonicalPhysicalScalarCauchyJetGeometricData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetSquaredGraphBound4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 end JanusFormal

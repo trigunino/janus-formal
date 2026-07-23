@@ -33,6 +33,7 @@ open P0EFTJanusMappingTorusScalarBoundarySmoothExtensionDensity4D
 universe x y
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev BoundaryL2 := CanonicalPhysicalScalarFirstSheetL2 period
 
@@ -142,9 +143,9 @@ theorem cauchyTrace_extension
         (globalization.extension data) =
       canonicalScalarBoundaryCorePairEmbedding
         globalization.valueEmbedding globalization.normalEmbedding data := by
-  ext
-  · exact globalization.valueTrace_extension data
-  · exact globalization.normalTrace_extension data
+  apply Prod.ext
+  · exact globalization.valueTrace_extension period hPeriod data
+  · exact globalization.normalTrace_extension period hPeriod data
 
 /-- The explicit collar globalization proves density of the smooth physical
 Cauchy trace. -/
@@ -164,7 +165,8 @@ theorem boundaryTrace_denseRange
       valueDense := globalization.valueDense
       normalDense := globalization.normalDense
       extension := globalization.extension
-      boundary_extension := globalization.cauchyTrace_extension }
+      boundary_extension :=
+        globalization.cauchyTrace_extension period hPeriod }
   exact extensionData.boundaryTrace_denseRange
 
 /-- Convert the globalization theorem into the smooth physical Cauchy-extension
@@ -197,7 +199,7 @@ def toSmoothCauchyExtensionData
   valueDense := globalization.valueDense
   normalDense := globalization.normalDense
   extension := globalization.extension
-  boundary_extension := globalization.cauchyTrace_extension
+  boundary_extension := globalization.cauchyTrace_extension period hPeriod
   bulk_green_stokes := bulkGreenStokes
 
 /-- Globalization certificate. -/
@@ -214,8 +216,8 @@ theorem certificate
             (globalization.extension data) =
           canonicalScalarBoundaryCorePairEmbedding
             globalization.valueEmbedding globalization.normalEmbedding data) :=
-  ⟨globalization.boundaryTrace_denseRange,
-    globalization.cauchyTrace_extension⟩
+  ⟨globalization.boundaryTrace_denseRange period hPeriod,
+    globalization.cauchyTrace_extension period hPeriod⟩
 
 end CanonicalPhysicalScalarCauchyJetGlobalizationData
 

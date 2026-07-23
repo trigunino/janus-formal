@@ -11,7 +11,7 @@ presented through finite coordinates.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalProgramPClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalAnalyticClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -23,6 +23,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialR
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -118,7 +119,7 @@ theorem finalProgramP_certificate
     (source : BulkL2 period hPeriod) :
     (∀ field test,
       Integrable
-        (analytic.boundary.geometric.tangentialDensity field test)
+        (analytic.boundary.geometric.tangentialDensity period hPeriod field test)
         (P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetProductCoarea4D.canonicalLatitudeCauchyJetProductMeasure
           period)) ∧
       Function.Surjective analytic.boundary.completedBoundaryTrace ∧
@@ -141,10 +142,9 @@ theorem finalProgramP_certificate
               analytic.condition spectralParameter ∨
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
-  ⟨analytic.boundary.geometric.toCanonicalNormalSplitData
-      |>.tangentialDensity_integrable,
-    analytic.boundary.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData
-      |>.boundedSmoothExtension.rieszBoundaryTrace_surjective,
+  ⟨(analytic.boundary.geometric.toCanonicalNormalSplitData period hPeriod)
+      |>.tangentialDensity_integrable period hPeriod,
+    (analytic.boundary.certificate period hPeriod).2.2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.sourceSolution_equation period hPeriod source,
     (analytic.sourceSolution_unique_minimizer period hPeriod source).1,
@@ -153,10 +153,14 @@ theorem finalProgramP_certificate
 
 end CanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalAnalyticData
 
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalAnalyticClosure4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalProgramPClosure4D
+
 /-- Marker theorem for the smallest complete scalar Program P endpoint. -/
 theorem canonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalProgramPClosure_available : True :=
   trivial
 
-end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveCanonicalNormalRieszScalarEnergyMinimalProgramPClosure4D
 end JanusFormal

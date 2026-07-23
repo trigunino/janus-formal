@@ -67,13 +67,13 @@ theorem canonicalLatitudeLocalCauchyExtension_deck_zpow
     canonicalLatitudeLocalCauchyExtension (value, normal)
         ((canonicalLatitudeCollarDeckEquiv period ^ winding) parameter) =
       canonicalLatitudeLocalCauchyExtension (value, normal) parameter := by
-  induction winding using Int.induction_on with
+  induction winding using Int.induction_on generalizing parameter with
   | zero =>
       simp
   | succ winding ih =>
       rw [zpow_add_one]
       change canonicalLatitudeLocalCauchyExtension (value, normal)
-          ((canonicalLatitudeCollarDeckEquiv period ^ winding)
+          ((canonicalLatitudeCollarDeckEquiv period ^ (winding : Int))
             (canonicalLatitudeCollarDeckEquiv period parameter)) = _
       rw [ih (canonicalLatitudeCollarDeckEquiv period parameter)]
       exact canonicalLatitudeLocalCauchyExtension_deck

@@ -26,6 +26,8 @@ open Set Topology Filter
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarRellichApproximation4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -67,38 +69,46 @@ theorem approximation_compact
     (data : CanonicalPhysicalScalarFiniteCoordinateRellichData
       period hPeriod)
     (index : Nat) :
-    IsCompactOperator (data.approximation index) :=
-  (data.analysis_compact index).clm_comp (data.synthesis index)
+    IsCompactOperator (data.approximation period hPeriod index) :=
+  (data.analysis_compact period hPeriod index).clm_comp (data.synthesis index)
 
 /-- Conversion to the generic compact-approximation package. -/
 def toRellichApproximationData
     (data : CanonicalPhysicalScalarFiniteCoordinateRellichData
       period hPeriod) :
     CanonicalPhysicalScalarRellichApproximationData period hPeriod where
-  approximation := data.approximation
-  compact := data.approximation_compact
+  approximation := data.approximation period hPeriod
+  compact := data.approximation_compact period hPeriod
   tendsto := by
-    simpa [approximation] using data.tendsto
+    change Tendsto
+      (fun index => (data.synthesis index).comp (data.analysis index))
+      atTop (𝓝 (canonicalPhysicalScalarH1ToBulkL2 period hPeriod))
+    exact data.tendsto
 
 /-- Physical Rellich compactness. -/
 theorem rellich
     (data : CanonicalPhysicalScalarFiniteCoordinateRellichData
       period hPeriod) :
     PhysicalH1RellichCompactness period hPeriod :=
-  data.toRellichApproximationData.rellich
+  (data.toRellichApproximationData period hPeriod).rellich
 
 /-- Finite-coordinate Rellich certificate. -/
 theorem certificate
     (data : CanonicalPhysicalScalarFiniteCoordinateRellichData
       period hPeriod) :
-    (∀ index : Nat, IsCompactOperator (data.approximation index)) ∧
+    (∀ index : Nat,
+      IsCompactOperator (data.approximation period hPeriod index)) ∧
       IsCompactOperator
         (canonicalPhysicalScalarH1ToBulkL2 period hPeriod) ∧
-      Tendsto data.approximation atTop
+      Tendsto (data.approximation period hPeriod) atTop
         (𝓝 (canonicalPhysicalScalarH1ToBulkL2 period hPeriod)) :=
-  ⟨data.approximation_compact,
-    data.rellich,
-    by simpa [approximation] using data.tendsto⟩
+  ⟨data.approximation_compact period hPeriod,
+    data.rellich period hPeriod,
+    by
+      change Tendsto
+        (fun index => (data.synthesis index).comp (data.analysis index))
+        atTop (𝓝 (canonicalPhysicalScalarH1ToBulkL2 period hPeriod))
+      exact data.tendsto⟩
 
 end CanonicalPhysicalScalarFiniteCoordinateRellichData
 

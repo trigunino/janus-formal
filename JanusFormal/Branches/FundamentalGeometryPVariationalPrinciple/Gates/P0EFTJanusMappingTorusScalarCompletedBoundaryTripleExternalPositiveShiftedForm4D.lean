@@ -18,6 +18,9 @@ semiboundedness conclusions follow exactly as before.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedForm4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedForm4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -135,5 +138,5 @@ end LagrangianShiftedExternalPositiveDecompositionData
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedForm4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

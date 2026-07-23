@@ -97,8 +97,8 @@ theorem canonicalLatitudeQuotientNormalAbsAngle_continuous :
     Continuous (canonicalLatitudeQuotientNormalAbsAngle period hPeriod) :=
   Real.continuous_arcsin.comp
     (Real.continuous_sqrt.comp
-      (canonicalLatitudeQuotientNormalSquare period hPeriod)
-        |>.contMDiff_toFun.continuous)
+      ((canonicalLatitudeQuotientNormalSquare period hPeriod)
+        |>.contMDiff_toFun.continuous))
 
 /-- Absolute arcsine reconstructs the absolute normal coordinate inside the
 latitude band. -/
@@ -117,7 +117,7 @@ theorem arcsin_abs_sin_eq_abs
 /-- On a physical tubular representative the global absolute angle is exactly
 `|nu|`. -/
 theorem canonicalLatitudeQuotientNormalAbsAngle_tubularPhysicalMap
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeQuotientNormalAbsAngle period hPeriod
         (canonicalLatitudeTubularPhysicalMap period hPeriod parameter) =
       |parameter.2.1| := by
@@ -135,7 +135,7 @@ def canonicalLatitudeTubularNormalAbsAngle
     (canonicalLatitudeTubularCollarToBulk period hPeriod point)
 
 @[simp] theorem canonicalLatitudeTubularNormalAbsAngle_mk
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularNormalAbsAngle period hPeriod
         (canonicalLatitudeTubularCollarMk period parameter) =
       |parameter.2.1| :=
@@ -189,6 +189,7 @@ theorem canonicalLatitudeCauchyJet_tubular_union_polar :
       canonicalLatitudeQuotientNormalSquare period hPeriod point < 1
   · exact Or.inl hTubular
   · right
+    change 1 < canonicalLatitudeQuotientNormalAbsAngle period hPeriod point
     have hSquare :
         canonicalLatitudeQuotientNormalSquare period hPeriod point = 1 :=
       le_antisymm
@@ -210,9 +211,11 @@ theorem tubularDescend_eq_zero_of_one_le_absAngle
     data.tubularDescend period point = 0 := by
   refine Quotient.inductionOn point ?_ hPoint
   intro parameter hParameter
+  change 1 ≤ canonicalLatitudeTubularNormalAbsAngle period hPeriod
+    (canonicalLatitudeTubularCollarMk period parameter) at hParameter
   rw [canonicalLatitudeTubularNormalAbsAngle_mk] at hParameter
   exact canonicalLatitudeLocalCauchyExtension_eq_zero_of_one_le_abs
-    (data.value, data.normal) (parameter.1, parameter.2.1) hParameter
+    (data.value, data.normal) parameter.1 parameter.2.1 hParameter
 
 /-- Every explicit global Cauchy candidate vanishes on the canonical polar
 region. -/
@@ -240,10 +243,10 @@ theorem globalCandidate_eq_zero_on_polar
       unfold canonicalLatitudeTubularNormalAbsAngle
       rw [hBulk]
       exact hPolar
-    unfold CanonicalLatitudeDeckCauchyData.tubularBulkField
+    unfold canonicalLatitudeTubularBulkField
     change data.tubularDescend period collarPoint = 0
-    exact data.tubularDescend_eq_zero_of_one_le_absAngle
-      period hPeriod collarPoint hAngle.le
+    exact tubularDescend_eq_zero_of_one_le_absAngle
+      period hPeriod data collarPoint hAngle.le
   · rfl
 
 end CanonicalLatitudeDeckCauchyData
@@ -260,7 +263,7 @@ structure CanonicalPhysicalScalarCauchyJetTubularSmoothnessData
     (point : EffectiveQuotient period hPeriod),
     point ∈ canonicalLatitudeCauchyJetTubularRegion period hPeriod →
       ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
-        (core.candidate hPeriod data) point
+        (core.candidate period hPeriod data) point
 
 namespace CanonicalPhysicalScalarCauchyJetTubularSmoothnessData
 
@@ -283,8 +286,9 @@ def toOpenCoverData
   tubular_smoothAt := tubular.tubular_smoothAt
   zero_on := by
     intro data
-    exact (tubular.core.deckData data).globalCandidate_eq_zero_on_polar
+    exact _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetPolarOpenCover4D.CanonicalLatitudeDeckCauchyData.globalCandidate_eq_zero_on_polar
       period hPeriod
+      (tubular.core.deckData period data)
 
 /-- Install the complete globally smooth candidate extension from the sole
 remaining tubular smoothness theorem. -/
@@ -294,7 +298,8 @@ def toCandidateExtensionData
     [AddCommGroup NormalCore] [Module Real NormalCore]
     (tubular : CanonicalPhysicalScalarCauchyJetTubularSmoothnessData
       period hPeriod ValueCore NormalCore) :=
-  tubular.toOpenCoverData.toCandidateExtensionData
+  (tubular.toOpenCoverData period hPeriod).toCandidateExtensionData
+    period hPeriod
 
 /-- Tubular-smoothness certificate. -/
 theorem certificate
@@ -305,11 +310,11 @@ theorem certificate
       period hPeriod ValueCore NormalCore) :
     (∀ data : ValueCore × NormalCore,
       ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
-        (tubular.core.candidate hPeriod data)) ∧
+        (tubular.core.candidate period hPeriod data)) ∧
       DenseRange
         (P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
           period hPeriod) :=
-  tubular.toOpenCoverData.certificate
+  (tubular.toOpenCoverData period hPeriod).certificate period hPeriod
 
 end CanonicalPhysicalScalarCauchyJetTubularSmoothnessData
 

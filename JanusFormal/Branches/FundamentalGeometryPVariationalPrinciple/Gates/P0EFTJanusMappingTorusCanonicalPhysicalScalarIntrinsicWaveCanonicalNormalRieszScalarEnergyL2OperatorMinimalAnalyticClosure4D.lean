@@ -31,6 +31,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -145,7 +146,8 @@ theorem certificate
       period hPeriod massSquared Energy) :
     (∀ index boundary,
       MemLp
-        (analytic.boundary.eulerCoefficientOperators.coefficient index boundary)
+        (analytic.boundary.eulerCoefficientOperators.coefficient
+          period hPeriod index boundary)
         (2 : ENNReal)
         (P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D.canonicalLatitudeBaseMeasure
           period)) ∧
@@ -161,9 +163,8 @@ theorem certificate
               analytic.condition spectralParameter ∨
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
-  ⟨analytic.boundary.eulerCoefficientOperators.coefficient_memLp,
-    analytic.boundary.toCanonicalNormalRieszScalarEnergyPDEData.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
+  ⟨analytic.boundary.eulerCoefficientOperators.coefficient_memLp period hPeriod,
+    (analytic.boundary.certificate period hPeriod).2.2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.finiteCoordinateRellich.rellich,
     analytic.fredholmAlternative period hPeriod⟩

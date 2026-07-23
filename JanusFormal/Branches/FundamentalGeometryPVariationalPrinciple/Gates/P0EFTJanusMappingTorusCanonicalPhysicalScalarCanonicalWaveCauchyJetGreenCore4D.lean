@@ -25,6 +25,7 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlasNaturality4D
@@ -33,6 +34,7 @@ open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 open P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Preferred canonical Green-core input after reducing overlap compatibility to
 scalar-wave naturality. -/

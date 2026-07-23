@@ -22,12 +22,14 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
 open P0EFTJanusMappingTorusCanonicalLorentzInteriorDenseRange4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- The canonical physical Lorentz volume has full topological support. -/
 theorem intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure :
@@ -37,22 +39,22 @@ theorem intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure :
 namespace CanonicalPhysicalScalarEulerCompatibilityOnlyData
 
 /-- Canonical faithful compatibility package, with full support discharged. -/
-def toCanonicalCompatibilityData
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D.CanonicalPhysicalScalarEulerCompatibilityOnlyData.toCanonicalCompatibilityData
     (data : CanonicalPhysicalScalarEulerCompatibilityOnlyData
       period hPeriod massSquared) :
     P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCompatibilityClosure4D.CanonicalPhysicalScalarEulerCompatibilityData
       period hPeriod massSquared :=
-  data.toCompatibilityData
+  data.toCompatibilityData period hPeriod
     (intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure period hPeriod)
 
 /-- Canonical physical bulk `L²` Euler operator. -/
-def toCanonicalBulkL2LinearMap
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D.CanonicalPhysicalScalarEulerCompatibilityOnlyData.toCanonicalBulkL2LinearMap
     (data : CanonicalPhysicalScalarEulerCompatibilityOnlyData
       period hPeriod massSquared) :=
-  data.toCanonicalCompatibilityData.toBulkL2LinearMap
+  (data.toCanonicalCompatibilityData period hPeriod).toBulkL2LinearMap
 
 /-- Almost-everywhere vanishing of the continuous physical residual is faithful. -/
-theorem residual_eq_zero_of_ae_eq_zero_canonical
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D.CanonicalPhysicalScalarEulerCompatibilityOnlyData.residual_eq_zero_of_ae_eq_zero_canonical
     (data : CanonicalPhysicalScalarEulerCompatibilityOnlyData
       period hPeriod massSquared)
     (field : SmoothScalarField period hPeriod)
@@ -62,12 +64,12 @@ theorem residual_eq_zero_of_ae_eq_zero_canonical
             intrinsicCanonicalLorentzVolumeMeasure period hPeriod] 0) :
     canonicalPhysicalScalarEulerGlobalResidual
       period hPeriod massSquared field = 0 :=
-  data.residual_eq_zero_of_ae_eq_zero
+  data.residual_eq_zero_of_ae_eq_zero period hPeriod
     (intrinsicCanonicalLorentzVolumeMeasure_isOpenPosMeasure period hPeriod)
     field hZero
 
 /-- Canonical Euler full-support certificate. -/
-theorem canonicalFullSupport_certificate
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D.CanonicalPhysicalScalarEulerCompatibilityOnlyData.canonicalFullSupport_certificate
     (data : CanonicalPhysicalScalarEulerCompatibilityOnlyData
       period hPeriod massSquared) :
     (intrinsicCanonicalLorentzVolumeMeasure

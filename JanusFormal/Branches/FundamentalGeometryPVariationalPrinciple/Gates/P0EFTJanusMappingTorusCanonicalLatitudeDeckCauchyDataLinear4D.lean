@@ -37,51 +37,66 @@ theorem CanonicalLatitudeDeckCauchyData.ext
 
 instance : Zero (CanonicalLatitudeDeckCauchyData period) where
   zero :=
-    { value := 0
-      normal := 0
+    { value := fun _ => 0
+      normal := fun _ => 0
       value_periodic := by intro base; rfl
       normal_antiperiodic := by intro base; simp }
 
 instance : Add (CanonicalLatitudeDeckCauchyData period) where
   add first second :=
-    { value := first.value + second.value
-      normal := first.normal + second.normal
+    { value := fun base => first.value base + second.value base
+      normal := fun base => first.normal base + second.normal base
       value_periodic := by
         intro base
-        rw [LinearMap.add_apply, LinearMap.add_apply,
-          first.value_periodic, second.value_periodic]
+        change first.value (canonicalLatitudeBaseDeck period base) +
+            second.value (canonicalLatitudeBaseDeck period base) =
+          first.value base + second.value base
+        rw [first.value_periodic, second.value_periodic]
       normal_antiperiodic := by
         intro base
-        rw [LinearMap.add_apply, LinearMap.add_apply,
-          first.normal_antiperiodic, second.normal_antiperiodic]
+        change first.normal (canonicalLatitudeBaseDeck period base) +
+            second.normal (canonicalLatitudeBaseDeck period base) =
+          -(first.normal base + second.normal base)
+        rw [first.normal_antiperiodic, second.normal_antiperiodic]
         ring }
 
 instance : Neg (CanonicalLatitudeDeckCauchyData period) where
   neg data :=
-    { value := -data.value
-      normal := -data.normal
+    { value := fun base => -data.value base
+      normal := fun base => -data.normal base
       value_periodic := by
         intro base
-        rw [LinearMap.neg_apply, LinearMap.neg_apply,
-          data.value_periodic]
+        change -data.value (canonicalLatitudeBaseDeck period base) =
+          -data.value base
+        rw [data.value_periodic]
       normal_antiperiodic := by
         intro base
-        rw [LinearMap.neg_apply, LinearMap.neg_apply,
-          data.normal_antiperiodic]
-        ring }
+        change -data.normal (canonicalLatitudeBaseDeck period base) =
+          -(-data.normal base)
+        rw [data.normal_antiperiodic] }
 
 instance : AddCommGroup (CanonicalLatitudeDeckCauchyData period) where
-  add_assoc first second third := by
-    ext <;> simp [add_assoc]
-  zero_add data := by
-    ext <;> simp
-  add_zero data := by
-    ext <;> simp
+  add_assoc := by
+    intro first second third
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact add_assoc _ _ _
+  zero_add := by
+    intro data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact zero_add _
+  add_zero := by
+    intro data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact add_zero _
   nsmul := nsmulRec
-  add_comm first second := by
-    ext <;> simp [add_comm]
-  neg_add_cancel data := by
-    ext <;> simp
+  add_comm := by
+    intro first second
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact add_comm _ _
+  neg_add_cancel := by
+    intro data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact neg_add_cancel _
   sub_eq_add_neg := by
     intro first second
     rfl
@@ -89,81 +104,115 @@ instance : AddCommGroup (CanonicalLatitudeDeckCauchyData period) where
 
 instance : SMul Real (CanonicalLatitudeDeckCauchyData period) where
   smul scalar data :=
-    { value := scalar • data.value
-      normal := scalar • data.normal
+    { value := fun base => scalar * data.value base
+      normal := fun base => scalar * data.normal base
       value_periodic := by
         intro base
-        rw [LinearMap.smul_apply, LinearMap.smul_apply,
-          data.value_periodic]
+        change scalar * data.value (canonicalLatitudeBaseDeck period base) =
+          scalar * data.value base
+        rw [data.value_periodic]
       normal_antiperiodic := by
         intro base
-        rw [LinearMap.smul_apply, LinearMap.smul_apply,
-          data.normal_antiperiodic]
+        change scalar * data.normal (canonicalLatitudeBaseDeck period base) =
+          -(scalar * data.normal base)
+        rw [data.normal_antiperiodic]
         ring }
 
 instance : Module Real (CanonicalLatitudeDeckCauchyData period) where
-  one_smul data := by ext <;> simp
-  mul_smul first second data := by ext <;> simp [mul_smul]
-  smul_add scalar first second := by ext <;> simp [smul_add]
-  smul_zero scalar := by ext <;> simp
-  add_smul first second data := by ext <;> simp [add_smul]
-  zero_smul data := by ext <;> simp
+  one_smul := by
+    intro data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact one_mul _
+  mul_smul := by
+    intro first second data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact mul_assoc _ _ _
+  smul_add := by
+    intro scalar first second
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact mul_add _ _ _
+  smul_zero := by
+    intro scalar
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact mul_zero _
+  add_smul := by
+    intro first second data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact add_mul _ _ _
+  zero_smul := by
+    intro data
+    apply CanonicalLatitudeDeckCauchyData.ext <;> funext base <;>
+      exact zero_mul _
 
 namespace CanonicalLatitudeDeckCauchyData
 
 /-- The local collar extension is linear in deck Cauchy data. -/
 def localExtensionLinearMap :
     CanonicalLatitudeDeckCauchyData period →ₗ[Real]
-      (CanonicalLatitudeCauchyCollar → Real) where
+      (CanonicalLatitudeCauchyCollar period → Real) where
   toFun := CanonicalLatitudeDeckCauchyData.localExtension
   map_add' first second := by
     funext parameter
-    simp [CanonicalLatitudeDeckCauchyData.localExtension,
-      canonicalLatitudeLocalCauchyExtension]
+    change canonicalLatitudeCauchyValueProfile parameter.2 *
+          (first.value parameter.1 + second.value parameter.1) +
+        canonicalLatitudeCauchyNormalProfile parameter.2 *
+          (first.normal parameter.1 + second.normal parameter.1) =
+      (canonicalLatitudeCauchyValueProfile parameter.2 * first.value parameter.1 +
+          canonicalLatitudeCauchyNormalProfile parameter.2 * first.normal parameter.1) +
+        (canonicalLatitudeCauchyValueProfile parameter.2 * second.value parameter.1 +
+          canonicalLatitudeCauchyNormalProfile parameter.2 * second.normal parameter.1)
     ring
   map_smul' scalar data := by
     funext parameter
-    simp [CanonicalLatitudeDeckCauchyData.localExtension,
-      canonicalLatitudeLocalCauchyExtension]
+    change canonicalLatitudeCauchyValueProfile parameter.2 *
+          (scalar * data.value parameter.1) +
+        canonicalLatitudeCauchyNormalProfile parameter.2 *
+          (scalar * data.normal parameter.1) =
+      scalar * (canonicalLatitudeCauchyValueProfile parameter.2 *
+          data.value parameter.1 +
+        canonicalLatitudeCauchyNormalProfile parameter.2 * data.normal parameter.1)
     ring
 
 /-- Additivity of the tubular local extension. -/
 theorem tubularLocalExtension_add
     (first second : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
-    (first + second).tubularLocalExtension parameter =
-      first.tubularLocalExtension parameter +
-        second.tubularLocalExtension parameter := by
-  rfl
+    (parameter : CanonicalLatitudeTubularCollar period) :
+    (first + second).tubularLocalExtension period parameter =
+      first.tubularLocalExtension period parameter +
+        second.tubularLocalExtension period parameter := by
+  unfold P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularLocalExtension
+  change _ * (_ + _) + _ * (_ + _) = (_ * _ + _ * _) + (_ * _ + _ * _)
+  ring
 
 /-- Homogeneity of the tubular local extension. -/
 theorem tubularLocalExtension_smul
     (scalar : Real) (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
-    (scalar • data).tubularLocalExtension parameter =
-      scalar • data.tubularLocalExtension parameter := by
-  change _ = scalar * _
-  rfl
+    (parameter : CanonicalLatitudeTubularCollar period) :
+    (scalar • data).tubularLocalExtension period parameter =
+      scalar • data.tubularLocalExtension period parameter := by
+  unfold P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularLocalExtension
+  exact congrFun (map_smul (localExtensionLinearMap period) scalar data)
+    (parameter.1, parameter.2.1)
 
 /-- Additivity after descent to the tubular quotient. -/
 theorem tubularDescend_add
     (first second : CanonicalLatitudeDeckCauchyData period) :
-    (first + second).tubularDescend =
-      first.tubularDescend + second.tubularDescend := by
+    (first + second).tubularDescend period =
+      first.tubularDescend period + second.tubularDescend period := by
   funext quotientPoint
   refine Quotient.inductionOn quotientPoint ?_
   intro parameter
-  rfl
+  exact tubularLocalExtension_add period first second parameter
 
 /-- Homogeneity after descent to the tubular quotient. -/
 theorem tubularDescend_smul
     (scalar : Real) (data : CanonicalLatitudeDeckCauchyData period) :
-    (scalar • data).tubularDescend =
-      scalar • data.tubularDescend := by
+    (scalar • data).tubularDescend period =
+      scalar • data.tubularDescend period := by
   funext quotientPoint
   refine Quotient.inductionOn quotientPoint ?_
   intro parameter
-  rfl
+  exact tubularLocalExtension_smul period scalar data parameter
 
 /-- Additivity on the embedded physical tubular image. -/
 theorem tubularBulkField_add
@@ -175,7 +224,7 @@ theorem tubularBulkField_add
   funext point
   unfold canonicalLatitudeTubularBulkField
   rw [tubularDescend_add]
-  rfl
+  simp only [Pi.add_apply]
 
 /-- Homogeneity on the embedded physical tubular image. -/
 theorem tubularBulkField_smul
@@ -186,7 +235,7 @@ theorem tubularBulkField_smul
   funext point
   unfold canonicalLatitudeTubularBulkField
   rw [tubularDescend_smul]
-  rfl
+  simp only [Pi.smul_apply]
 
 /-- Additivity of the global physical candidate. -/
 theorem globalCandidate_add
@@ -200,6 +249,7 @@ theorem globalCandidate_add
   by_cases hPoint : point ∈ canonicalLatitudeTubularBulkSet period hPeriod
   · simp only [dif_pos hPoint, Pi.add_apply]
     rw [tubularBulkField_add]
+    simp only [Pi.add_apply]
   · simp [hPoint]
 
 /-- Homogeneity of the global physical candidate. -/
@@ -213,6 +263,7 @@ theorem globalCandidate_smul
   by_cases hPoint : point ∈ canonicalLatitudeTubularBulkSet period hPeriod
   · simp only [dif_pos hPoint, Pi.smul_apply]
     rw [tubularBulkField_smul]
+    simp only [Pi.smul_apply]
   · simp [hPoint]
 
 /-- Global candidate as a linear map into ordinary scalar functions on the bulk. -/
@@ -231,7 +282,7 @@ theorem globalCandidateLinearMap_certificate
       globalCandidateLinearMap period hPeriod (first + second) =
         globalCandidateLinearMap period hPeriod first +
           globalCandidateLinearMap period hPeriod second) ∧
-      (∀ scalar data,
+      (∀ (scalar : Real) data,
         globalCandidateLinearMap period hPeriod (scalar • data) =
           scalar • globalCandidateLinearMap period hPeriod data) :=
   ⟨map_add (globalCandidateLinearMap period hPeriod),

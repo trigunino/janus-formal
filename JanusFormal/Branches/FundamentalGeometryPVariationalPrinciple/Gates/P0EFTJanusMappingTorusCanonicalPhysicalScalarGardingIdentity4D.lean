@@ -21,6 +21,9 @@ supplied independently.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -32,6 +35,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev BulkL2 :=
   CanonicalPhysicalBulkL2 period hPeriod
@@ -97,7 +101,8 @@ theorem componentEnergy_le_euler_pairing
     (green.core.inclusion field)
   have hSign : |identity.pairingSign * pairing| = |pairing| := by
     rw [abs_mul, identity.pairingSign_abs, one_mul]
-  have hRemainder := identity.zerothOrderPairing_abs_le green field
+  have hRemainder :=
+    identity.zerothOrderPairing_abs_le period hPeriod green field
   change identity.pairingSign * pairing + remainder ≤
     |pairing| + ‖identity.zerothOrderOperator‖ *
       ‖green.core.inclusion field‖ ^ 2
@@ -106,7 +111,7 @@ theorem componentEnergy_le_euler_pairing
         |identity.pairingSign * pairing| + |remainder| :=
       add_le_add (le_abs_self _) (le_abs_self _)
     _ = |pairing| + |remainder| := by rw [hSign]
-    _ ≤ _ := add_le_add_left hRemainder _
+    _ ≤ _ := add_le_add_right hRemainder _
 
 /-- Conversion to the automatic Gårding package. -/
 def toAutomaticEnergyGardingData
@@ -115,23 +120,26 @@ def toAutomaticEnergyGardingData
     (identity : green.ExactEnergyGardingIdentityData period hPeriod) :
     green.AutomaticEnergyGardingData period hPeriod where
   zerothConstant := ‖identity.zerothOrderOperator‖
-  zerothConstant_nonnegative := norm_nonneg _
+  zerothConstant_nonnegative :=
+    ContinuousLinearMap.opNorm_nonneg identity.zerothOrderOperator
   componentEnergy_le_euler_pairing :=
-    identity.componentEnergy_le_euler_pairing green
+    identity.componentEnergy_le_euler_pairing period hPeriod green
 
 /-- Squared physical Gårding estimate. -/
 def toSquaredGardingEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (identity : green.ExactEnergyGardingIdentityData period hPeriod) :=
-  (identity.toAutomaticEnergyGardingData green).toSquaredGardingEstimate green
+  (identity.toAutomaticEnergyGardingData period hPeriod green)
+    |>.toSquaredGardingEstimate period hPeriod green
 
 /-- Physical graph-elliptic estimate. -/
 def toGraphEllipticEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (identity : green.ExactEnergyGardingIdentityData period hPeriod) :=
-  (identity.toAutomaticEnergyGardingData green).toGraphEllipticEstimate green
+  (identity.toAutomaticEnergyGardingData period hPeriod green)
+    |>.toGraphEllipticEstimate period hPeriod green
 
 /-- Exact-energy Gårding certificate. -/
 theorem certificate
@@ -153,12 +161,12 @@ theorem certificate
             ‖identity.zerothOrderOperator‖ *
               ‖green.core.inclusion field‖ ^ 2) :=
   ⟨identity.energy_identity,
-    identity.componentEnergy_le_euler_pairing green⟩
+    identity.componentEnergy_le_euler_pairing period hPeriod green⟩
 
 end ExactEnergyGardingIdentityData
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

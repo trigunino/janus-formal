@@ -28,8 +28,10 @@ namespace P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedApproximation4D
 set_option autoImplicit false
 noncomputable section
 
-open scoped Manifold ContDiff ENNReal
+open scoped Manifold ContDiff ENNReal BoundedContinuousFunction
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 open P0EFTJanusMappingTorusCanonicalLatitudeBoundaryCoreDensityReduction4D
@@ -64,6 +66,7 @@ private abbrev BoundaryL2 :=
 
 /-- Bounded continuous source multiplied by the `n`th interior time cutoff. -/
 def canonicalLatitudeInteriorCutContinuousField
+    (period : Real) (hPeriod : period ≠ 0)
     (continuousField : CanonicalLatitudeBase →ᵇ Real)
     (index : Nat) (base : CanonicalLatitudeBase) : Real :=
   canonicalLatitudeInteriorBaseCutoff period hPeriod index base *
@@ -90,6 +93,7 @@ theorem canonicalLatitudeInteriorCutContinuousField_norm_le
   rw [Real.norm_eq_abs, abs_mul]
   have hCutoffAbs :
       |canonicalLatitudeInteriorBaseCutoff period hPeriod index base| ≤ 1 := by
+    unfold canonicalLatitudeInteriorBaseCutoff
     rw [abs_of_nonneg
       (canonicalLatitudeInteriorTimeCutoff_nonnegative
         period hPeriod index base.2)]
@@ -280,7 +284,9 @@ theorem norm_sq_canonicalLatitudeInteriorCutContinuousL2_sub
      boundedContinuousToCanonicalLatitudeBoundaryL2_ae
       period continuousField]
     with base hSub hCut hField
-  rw [hSub, hCut, hField]
+  rw [hSub]
+  simp only [Pi.sub_apply]
+  rw [hCut, hField]
   unfold canonicalLatitudeInteriorCutContinuousField
     canonicalLatitudeInteriorCutErrorDensity
   rw [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
@@ -345,15 +351,22 @@ theorem exists_canonicalLatitudeSmoothInteriorApproximation
       Function.support approximation ⊆
         (Set.univ : Set (Metric.sphere (0 : EuclideanR3) 1)) ×ˢ
           canonicalLatitudeOpenFundamentalTime period := by
-  obtain ⟨approximation, hSmooth, hDistance, hSupport⟩ :=
+  obtain ⟨approximation, hDistance, hSupport⟩ :=
     (canonicalLatitudeInteriorCutContinuousField_continuous
       period hPeriod continuousField index).exists_contMDiff_approx
-      canonicalLatitudeBaseModelWithCorners ∞
+      canonicalLatitudeBaseModelWithCorners (⊤ : WithTop Nat)
       (continuous_const : Continuous
         (fun _ : CanonicalLatitudeBase =>
           canonicalLatitudeInteriorSmoothApproximationRadius index))
       (fun _ => canonicalLatitudeInteriorSmoothApproximationRadius_pos index)
-  refine ⟨approximation, hSmooth, hDistance, ?_⟩
+  refine ⟨approximation, ?_, ?_, ?_⟩
+  · apply contMDiff_infty.2
+    intro n
+    exact approximation.contMDiff.of_le
+      (WithTop.coe_le_coe.mpr
+        (show (n : WithTop Nat) ≤ ⊤ from le_top))
+  · intro base
+    simpa only [dist_comm] using hDistance base
   exact hSupport.trans <| by
     intro base hBase
     exact canonicalLatitudeInteriorBaseCutoff_support_subset
@@ -408,8 +421,10 @@ def canonicalLatitudeSmoothInteriorApproximation
         rw [Real.norm_eq_abs, abs_sub_comm]
         exact (hDistance base).trans_le <| by
           unfold canonicalLatitudeInteriorSmoothApproximationRadius
-          have hDenominator : (1 : Real) ≤ index + 1 := by positivity
-          exact one_div_le_one hDenominator
+          have hIndex : (0 : Real) ≤ index := by positivity
+          have hDenominator : (1 : Real) ≤ index + 1 := by linarith
+          exact (div_le_one (by positivity : (0 : Real) < index + 1)).2
+            hDenominator
       calc
         ‖approximation base‖ ≤
             ‖approximation base -
@@ -462,18 +477,18 @@ theorem canonicalLatitudeSmoothInteriorApproximationErrorDensity_le
   have hDistance := canonicalLatitudeSmoothInteriorApproximation_spec
     period hPeriod continuousField index base
   rw [Real.dist_eq, abs_sub_comm] at hDistance
-  nlinarith [sq_nonneg
-    (canonicalLatitudeSmoothInteriorApproximation
-      period hPeriod continuousField index base -
-      canonicalLatitudeInteriorCutContinuousField
-        period hPeriod continuousField index base)]
+  rw [sq_le_sq]
+  rw [abs_of_nonneg (le_of_lt
+    (canonicalLatitudeInteriorSmoothApproximationRadius_pos index))]
+  exact le_of_lt hDistance
 
 /-- Smooth approximation radii converge to zero. -/
 theorem canonicalLatitudeInteriorSmoothApproximationRadius_tendsto_zero :
     Tendsto canonicalLatitudeInteriorSmoothApproximationRadius
       atTop (𝓝 0) := by
-  simpa [canonicalLatitudeInteriorSmoothApproximationRadius] using
-    tendsto_one_div_add_atTop_nhds_zero_nat
+  change Tendsto (fun index : Nat => 1 / ((index : Real) + 1))
+    atTop (𝓝 0)
+  exact tendsto_one_div_add_atTop_nhds_zero_nat
 
 /-- Smooth-versus-cut error densities converge pointwise to zero. -/
 theorem canonicalLatitudeSmoothInteriorApproximationErrorDensity_tendsto_zero
@@ -489,7 +504,8 @@ theorem canonicalLatitudeSmoothInteriorApproximationErrorDensity_tendsto_zero
     (Filter.Eventually.of_forall fun index =>
       canonicalLatitudeSmoothInteriorApproximationErrorDensity_le
         period hPeriod continuousField index base)
-  exact (canonicalLatitudeInteriorSmoothApproximationRadius_tendsto_zero.pow 2)
+  simpa only [zero_pow (by norm_num : (2 : Nat) ≠ 0)] using
+    (canonicalLatitudeInteriorSmoothApproximationRadius_tendsto_zero.pow 2)
 
 /-- Dominated convergence for the smooth-versus-cut squared error. -/
 theorem integral_canonicalLatitudeSmoothInteriorApproximationErrorDensity_tendsto_zero
@@ -521,14 +537,22 @@ theorem integral_canonicalLatitudeSmoothInteriorApproximationErrorDensity_tendst
           have hRadius :
               canonicalLatitudeInteriorSmoothApproximationRadius index ≤ 1 := by
             unfold canonicalLatitudeInteriorSmoothApproximationRadius
-            have hDenominator : (1 : Real) ≤ index + 1 := by positivity
-            exact one_div_le_one hDenominator
-          nlinarith [sq_nonneg
-            (canonicalLatitudeInteriorSmoothApproximationRadius index - 1)])
+            have hIndex : (0 : Real) ≤ index := by positivity
+            have hDenominator : (1 : Real) ≤ index + 1 := by linarith
+            exact (div_le_one (by positivity : (0 : Real) < index + 1)).2
+              hDenominator
+          calc
+            canonicalLatitudeInteriorSmoothApproximationRadius index ^ 2 ≤
+                (1 : Real) ^ 2 := by
+              rw [sq_le_sq, abs_one,
+                abs_of_nonneg (le_of_lt
+                  (canonicalLatitudeInteriorSmoothApproximationRadius_pos index))]
+              exact hRadius
+            _ = 1 := by norm_num)
     (Filter.Eventually.of_forall fun base =>
       canonicalLatitudeSmoothInteriorApproximationErrorDensity_tendsto_zero
         period hPeriod continuousField base)
-  simpa using hTarget
+  simpa [canonicalLatitudeSmoothInteriorApproximationErrorDensity] using hTarget
 
 /-- Squared `L²` distance between the smooth seed and the cut field. -/
 theorem norm_sq_smoothInteriorApproximation_sub_cut
@@ -558,7 +582,9 @@ theorem norm_sq_smoothInteriorApproximation_sub_cut
      canonicalLatitudeInteriorCutContinuousL2_ae
       period hPeriod continuousField index]
     with base hSub hSmooth hCut
-  rw [hSub, hSmooth, hCut]
+  rw [hSub]
+  simp only [Pi.sub_apply]
+  rw [hSmooth, hCut]
   unfold canonicalLatitudeSmoothInteriorApproximationErrorDensity
   rw [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
 
@@ -649,7 +675,7 @@ theorem canonicalLatitudeSmoothInteriorApproximation_tendsto_l2
                   period hPeriod continuousField index -
                   boundedContinuousToCanonicalLatitudeBoundaryL2
                     period continuousField))
-  exact hFirst.add hSecond
+  simpa only [zero_add] using hFirst.add hSecond
 
 /-- Unconditional common interior-seed approximation package. -/
 def canonicalLatitudeContinuousInteriorSeedApproximationData :
@@ -659,25 +685,28 @@ def canonicalLatitudeContinuousInteriorSeedApproximationData :
     period hPeriod
 
 /-- Smooth interior seeds are dense in boundary `L²`. -/
-theorem canonicalLatitudeSmoothInteriorSeedEmbedding_denseRange :
+theorem canonicalLatitudeSmoothInteriorSeedEmbedding_denseRange
+    (hPeriod : period ≠ 0) :
     DenseRange (canonicalLatitudeSmoothInteriorSeedEmbedding period) :=
   (canonicalLatitudeContinuousInteriorSeedApproximationData period hPeriod)
-    |>.denseRange
+    |>.denseRange period
 
 /-- Both canonical boundary cores are dense unconditionally. -/
-def canonicalLatitudeSmoothBoundaryCoreDensityData :
+def canonicalLatitudeSmoothBoundaryCoreDensityData
+    (hPeriod : period ≠ 0) :
     CanonicalLatitudeSmoothBoundaryCoreDensityData period :=
   (canonicalLatitudeContinuousInteriorSeedApproximationData period hPeriod)
-    |>.toBoundaryCoreDensityData hPeriod
+    |>.toBoundaryCoreDensityData period hPeriod
 
 /-- Final canonical boundary-density certificate. -/
-theorem certificate :
+theorem certificate
+    (hPeriod : period ≠ 0) :
     DenseRange (canonicalLatitudeSmoothInteriorSeedEmbedding period) ∧
       DenseRange (canonicalLatitudeSmoothPeriodicValueEmbedding period) ∧
       DenseRange
         (canonicalLatitudeSmoothAntiperiodicNormalEmbedding period) :=
   (canonicalLatitudeContinuousInteriorSeedApproximationData period hPeriod)
-    |>.certificate hPeriod
+    |>.certificate period hPeriod
 
 end
 end P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedApproximation4D

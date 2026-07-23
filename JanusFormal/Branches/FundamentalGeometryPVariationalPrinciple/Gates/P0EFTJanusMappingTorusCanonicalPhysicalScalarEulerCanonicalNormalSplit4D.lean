@@ -28,6 +28,7 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal Interval
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeCutoffCurrentLocalStokes4D
@@ -36,6 +37,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerNormalTangentialSplit4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Green data determined by one normal component. -/
 structure CanonicalPhysicalScalarEulerCanonicalNormalSplitData
@@ -85,7 +87,7 @@ theorem tangentialDensity_integrable
     (data : CanonicalPhysicalScalarEulerCanonicalNormalSplitData
       period hPeriod massSquared)
     (field test : SmoothScalarField period hPeriod) :
-    Integrable (data.tangentialDensity field test)
+    Integrable (data.tangentialDensity period hPeriod field test)
       (canonicalLatitudeCauchyJetProductMeasure period) := by
   have hLocal :=
     canonicalPhysicalScalarEulerProductLocalDivergenceDensity_integrable
@@ -101,7 +103,7 @@ theorem localDivergence_eq_normal_add_tangential
     canonicalPhysicalScalarEulerProductLocalDivergenceDensity
         period hPeriod field test parameter =
       data.normalDensity field test parameter +
-        data.tangentialDensity field test parameter := by
+        data.tangentialDensity period hPeriod field test parameter := by
   unfold tangentialDensity
   ring
 
@@ -113,11 +115,11 @@ def toNormalTangentialSplitData
       period hPeriod massSquared where
   waveNaturality := data.waveNaturality
   normalDensity := data.normalDensity
-  tangentialDensity := data.tangentialDensity
+  tangentialDensity := data.tangentialDensity period hPeriod
   normalDensity_integrable := data.normalDensity_integrable
-  tangentialDensity_integrable := data.tangentialDensity_integrable
+  tangentialDensity_integrable := data.tangentialDensity_integrable period hPeriod
   localDivergence_eq_normal_add_tangential :=
-    data.localDivergence_eq_normal_add_tangential
+    data.localDivergence_eq_normal_add_tangential period hPeriod
   tangential_base_integral_zero := by
     intro field test normal
     simpa [tangentialDensity] using
@@ -128,29 +130,30 @@ def toNormalTangentialSplitData
 def toCanonicalLocalDivergenceData
     (data : CanonicalPhysicalScalarEulerCanonicalNormalSplitData
       period hPeriod massSquared) :=
-  data.toNormalTangentialSplitData.toCanonicalLocalDivergenceData
+  (data.toNormalTangentialSplitData period hPeriod).toCanonicalLocalDivergenceData
+    period hPeriod
 
 /-- Correct dense physical Green core. -/
 def greenCore
     (data : CanonicalPhysicalScalarEulerCanonicalNormalSplitData
       period hPeriod massSquared) :=
-  data.toCanonicalLocalDivergenceData.greenCore
+  (data.toCanonicalLocalDivergenceData period hPeriod).greenCore period hPeriod
 
 /-- Canonical normal-split certificate. -/
 theorem certificate
     (data : CanonicalPhysicalScalarEulerCanonicalNormalSplitData
       period hPeriod massSquared) :
     (∀ field test,
-      Integrable (data.tangentialDensity field test)
+      Integrable (data.tangentialDensity period hPeriod field test)
         (canonicalLatitudeCauchyJetProductMeasure period)) ∧
       (∀ field test parameter,
         canonicalPhysicalScalarEulerProductLocalDivergenceDensity
             period hPeriod field test parameter =
           data.normalDensity field test parameter +
-            data.tangentialDensity field test parameter) ∧
+            data.tangentialDensity period hPeriod field test parameter) ∧
       (∀ field test,
         (∫ parameter,
-          data.tangentialDensity field test parameter
+          data.tangentialDensity period hPeriod field test parameter
           ∂canonicalLatitudeCauchyJetProductMeasure period) = 0) ∧
       (∀ field test,
         (∫ point,
@@ -160,10 +163,11 @@ theorem certificate
             period hPeriod) =
         -2 * P0EFTJanusMappingTorusCutBulkCanonicalDivergenceMeasure4D.cutBulkCanonicalDivergenceMeasure
           period hPeriod massSquared field test Set.univ) :=
-  ⟨data.tangentialDensity_integrable,
-    data.localDivergence_eq_normal_add_tangential,
-    data.toNormalTangentialSplitData.tangential_integral_eq_zero,
-    data.toNormalTangentialSplitData.certificate.2⟩
+  ⟨data.tangentialDensity_integrable period hPeriod,
+    data.localDivergence_eq_normal_add_tangential period hPeriod,
+    (data.toNormalTangentialSplitData period hPeriod).tangential_integral_eq_zero
+      period hPeriod,
+    ((data.toNormalTangentialSplitData period hPeriod).certificate period hPeriod).2⟩
 
 end CanonicalPhysicalScalarEulerCanonicalNormalSplitData
 

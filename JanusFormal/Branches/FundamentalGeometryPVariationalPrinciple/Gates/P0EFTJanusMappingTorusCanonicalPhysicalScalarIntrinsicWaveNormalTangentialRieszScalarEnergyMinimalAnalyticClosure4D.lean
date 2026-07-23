@@ -35,6 +35,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -168,8 +169,8 @@ theorem certificate
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
   ⟨analytic.boundary.energyIdentity.energy_identity,
-    analytic.boundary.toNormalTangentialRieszPDEData.rieszBoundaryData
-      |>.boundedSmoothExtension.rieszBoundaryTrace_surjective,
+    ((analytic.boundary.toNormalTangentialRieszPDEData period hPeriod).certificate
+      period hPeriod).2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.finiteCoordinateRellich.rellich,
     analytic.fredholmAlternative period hPeriod⟩

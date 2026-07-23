@@ -14,7 +14,7 @@ self-adjointness and compact spectral theory.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalProgramPClosure4D
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalAnalyticClosure4D
 
 set_option autoImplicit false
 noncomputable section
@@ -26,6 +26,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialR
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -160,8 +161,8 @@ theorem finalProgramP_certificate
             analytic.boundary.triple.LagrangianResolventPoint
               analytic.condition spectralParameter) :=
   ⟨analytic.boundary.energyIdentity.energy_identity,
-    analytic.boundary.toNormalTangentialRieszPDEData.rieszBoundaryData
-      |>.boundedSmoothExtension.rieszBoundaryTrace_surjective,
+    ((analytic.boundary.toNormalTangentialRieszPDEData period hPeriod).certificate
+      period hPeriod).2.2.2.1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.sourceSolution_equation period hPeriod source,
     (analytic.sourceSolution_unique_minimizer period hPeriod source).1,
@@ -170,10 +171,14 @@ theorem finalProgramP_certificate
 
 end CanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalAnalyticData
 
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalAnalyticClosure4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalProgramPClosure4D
+
 /-- Marker theorem for the smallest complete Program P endpoint. -/
 theorem canonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalProgramPClosure_available : True :=
   trivial
 
-end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveNormalTangentialRieszScalarEnergyMinimalProgramPClosure4D
 end JanusFormal

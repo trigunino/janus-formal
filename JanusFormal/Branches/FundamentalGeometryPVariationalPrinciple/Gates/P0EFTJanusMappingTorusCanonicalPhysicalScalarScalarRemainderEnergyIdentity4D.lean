@@ -18,6 +18,9 @@ zeroth-order constant `|c|`.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 
 set_option autoImplicit false
 noncomputable section
@@ -30,6 +33,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarGardingIdentity4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev BulkL2 :=
   CanonicalPhysicalBulkL2 period hPeriod
@@ -67,7 +71,8 @@ theorem zerothOrderOperator_pairing
     (identity : green.ScalarRemainderEnergyIdentityData period hPeriod)
     (field : SmoothQuotientField period hPeriod Real) :
     inner Real
-        (identity.zerothOrderOperator green (green.core.inclusion field))
+        (identity.zerothOrderOperator period hPeriod green
+          (green.core.inclusion field))
         (green.core.inclusion field) =
       identity.zerothCoefficient * ‖green.core.inclusion field‖ ^ 2 := by
   simp [zerothOrderOperator, real_inner_smul_left,
@@ -81,10 +86,10 @@ def toExactEnergyGardingIdentityData
     green.ExactEnergyGardingIdentityData period hPeriod where
   pairingSign := identity.pairingSign
   pairingSign_abs := identity.pairingSign_abs
-  zerothOrderOperator := identity.zerothOrderOperator green
+  zerothOrderOperator := identity.zerothOrderOperator period hPeriod green
   energy_identity := by
     intro field
-    rw [identity.zerothOrderOperator_pairing green field]
+    rw [identity.zerothOrderOperator_pairing period hPeriod green field]
     exact identity.energy_identity field
 
 /-- Automatic Gårding package. -/
@@ -92,16 +97,16 @@ def toAutomaticEnergyGardingData
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :=
-  (identity.toExactEnergyGardingIdentityData green)
-    |>.toAutomaticEnergyGardingData green
+  (identity.toExactEnergyGardingIdentityData period hPeriod green)
+    |>.toAutomaticEnergyGardingData period hPeriod green
 
 /-- Physical graph-elliptic estimate. -/
 def toGraphEllipticEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (identity : green.ScalarRemainderEnergyIdentityData period hPeriod) :=
-  (identity.toExactEnergyGardingIdentityData green)
-    |>.toGraphEllipticEstimate green
+  (identity.toExactEnergyGardingIdentityData period hPeriod green)
+    |>.toGraphEllipticEstimate period hPeriod green
 
 /-- Direct scalar-remainder Gårding estimate. -/
 theorem componentEnergy_le_euler_pairing
@@ -127,7 +132,7 @@ theorem componentEnergy_le_euler_pairing
       add_le_add (le_abs_self _) (le_abs_self _)
     _ = |pairing| + |identity.zerothCoefficient| *
         ‖green.core.inclusion field‖ ^ 2 := by
-      rw [hSign, abs_mul, abs_of_nonneg (sq_nonneg _)]
+      rw [hSign, abs_mul, abs_sq]
 
 /-- Scalar-remainder energy certificate. -/
 theorem certificate
@@ -147,12 +152,12 @@ theorem certificate
             |identity.zerothCoefficient| *
               ‖green.core.inclusion field‖ ^ 2) :=
   ⟨identity.energy_identity,
-    identity.componentEnergy_le_euler_pairing green⟩
+    identity.componentEnergy_le_euler_pairing period hPeriod green⟩
 
 end ScalarRemainderEnergyIdentityData
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

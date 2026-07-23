@@ -99,10 +99,10 @@ instance : Add (CanonicalLatitudeSmoothPeriodicValueCore period) where
       contMDiff_toFun := first.contMDiff_toFun.add second.contMDiff_toFun
       deck_periodic := by
         intro base
-        rw [show first (base.1, base.2 + period) = first base from
-          first.deck_periodic base]
-        rw [show second (base.1, base.2 + period) = second base from
-          second.deck_periodic base]
+        change first (canonicalLatitudeBaseDeck period base) +
+          second (canonicalLatitudeBaseDeck period base) =
+            first base + second base
+        rw [first.deck_periodic base, second.deck_periodic base]
       memLp_toFun := first.memLp_toFun.add second.memLp_toFun }
 
 instance : Neg (CanonicalLatitudeSmoothPeriodicValueCore period) where
@@ -111,8 +111,8 @@ instance : Neg (CanonicalLatitudeSmoothPeriodicValueCore period) where
       contMDiff_toFun := value.contMDiff_toFun.neg
       deck_periodic := by
         intro base
-        rw [show value (base.1, base.2 + period) = value base from
-          value.deck_periodic base]
+        change -value (canonicalLatitudeBaseDeck period base) = -value base
+        rw [value.deck_periodic base]
       memLp_toFun := value.memLp_toFun.neg }
 
 instance : AddCommGroup (CanonicalLatitudeSmoothPeriodicValueCore period) where
@@ -131,8 +131,9 @@ instance : SMul Real (CanonicalLatitudeSmoothPeriodicValueCore period) where
       contMDiff_toFun := contMDiff_const.mul value.contMDiff_toFun
       deck_periodic := by
         intro base
-        rw [show value (base.1, base.2 + period) = value base from
-          value.deck_periodic base]
+        change scalar * value (canonicalLatitudeBaseDeck period base) =
+          scalar * value base
+        rw [value.deck_periodic base]
       memLp_toFun := value.memLp_toFun.const_smul scalar }
 
 instance : Module Real (CanonicalLatitudeSmoothPeriodicValueCore period) where
@@ -149,7 +150,7 @@ instance : Zero (CanonicalLatitudeSmoothAntiperiodicNormalCore period) where
       contMDiff_toFun := contMDiff_const
       deck_antiperiodic := by
         intro base
-        rfl
+        simp
       memLp_toFun := MemLp.zero }
 
 instance : Add (CanonicalLatitudeSmoothAntiperiodicNormalCore period) where
@@ -158,9 +159,10 @@ instance : Add (CanonicalLatitudeSmoothAntiperiodicNormalCore period) where
       contMDiff_toFun := first.contMDiff_toFun.add second.contMDiff_toFun
       deck_antiperiodic := by
         intro base
-        rw [show first (base.1, base.2 + period) = -first base from
-          first.deck_antiperiodic base]
-        rw [show second (base.1, base.2 + period) = -second base from
+        change first (canonicalLatitudeBaseDeck period base) +
+          second (canonicalLatitudeBaseDeck period base) =
+            -(first base + second base)
+        rw [first.deck_antiperiodic base,
           second.deck_antiperiodic base]
         ring
       memLp_toFun := first.memLp_toFun.add second.memLp_toFun }
@@ -171,9 +173,9 @@ instance : Neg (CanonicalLatitudeSmoothAntiperiodicNormalCore period) where
       contMDiff_toFun := normal.contMDiff_toFun.neg
       deck_antiperiodic := by
         intro base
-        rw [show normal (base.1, base.2 + period) = -normal base from
-          normal.deck_antiperiodic base]
-        ring
+        change -normal (canonicalLatitudeBaseDeck period base) =
+          -(-normal base)
+        rw [normal.deck_antiperiodic base]
       memLp_toFun := normal.memLp_toFun.neg }
 
 instance : AddCommGroup (CanonicalLatitudeSmoothAntiperiodicNormalCore period) where
@@ -192,8 +194,9 @@ instance : SMul Real (CanonicalLatitudeSmoothAntiperiodicNormalCore period) wher
       contMDiff_toFun := contMDiff_const.mul normal.contMDiff_toFun
       deck_antiperiodic := by
         intro base
-        rw [show normal (base.1, base.2 + period) = -normal base from
-          normal.deck_antiperiodic base]
+        change scalar * normal (canonicalLatitudeBaseDeck period base) =
+          -(scalar * normal base)
+        rw [normal.deck_antiperiodic base]
         ring
       memLp_toFun := normal.memLp_toFun.const_smul scalar }
 
@@ -220,6 +223,7 @@ def canonicalLatitudeSmoothPeriodicValueEmbedding :
         (first.memLp_toFun.toLp first.toFun)
         (second.memLp_toFun.toLp second.toFun)]
       with base hSum hFirst hSecond hAdd
+    simp only [Pi.add_apply] at hAdd
     rw [hSum, hAdd, hFirst, hSecond]
     rfl
   map_smul' scalar value := by
@@ -229,7 +233,10 @@ def canonicalLatitudeSmoothPeriodicValueEmbedding :
        value.memLp_toFun.coeFn_toLp,
        Lp.coeFn_smul scalar (value.memLp_toFun.toLp value.toFun)]
       with base hScaled hValue hSmul
-    rw [hScaled, hSmul, hValue]
+    simp only [Pi.smul_apply, smul_eq_mul] at hSmul
+    rw [hScaled]
+    simp only [RingHom.id_apply]
+    rw [hSmul, hValue]
     rfl
 
 /-- Canonical `L²` embedding of the antiperiodic normal core. -/
@@ -247,6 +254,7 @@ def canonicalLatitudeSmoothAntiperiodicNormalEmbedding :
         (first.memLp_toFun.toLp first.toFun)
         (second.memLp_toFun.toLp second.toFun)]
       with base hSum hFirst hSecond hAdd
+    simp only [Pi.add_apply] at hAdd
     rw [hSum, hAdd, hFirst, hSecond]
     rfl
   map_smul' scalar normal := by
@@ -256,7 +264,10 @@ def canonicalLatitudeSmoothAntiperiodicNormalEmbedding :
        normal.memLp_toFun.coeFn_toLp,
        Lp.coeFn_smul scalar (normal.memLp_toFun.toLp normal.toFun)]
       with base hScaled hNormal hSmul
-    rw [hScaled, hSmul, hNormal]
+    simp only [Pi.smul_apply, smul_eq_mul] at hSmul
+    rw [hScaled]
+    simp only [RingHom.id_apply]
+    rw [hSmul, hNormal]
     rfl
 
 /-- Almost-everywhere realization of the value embedding. -/

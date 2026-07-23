@@ -25,6 +25,7 @@ namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerDenseParametrization
 set_option autoImplicit false
 noncomputable section
 
+open scoped Manifold ContDiff
 open Set Topology MeasureTheory
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
@@ -36,6 +37,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerFullSupportReduction4D
 universe u
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
@@ -80,12 +82,12 @@ def physicalMeasureOpenPositive
       period hPeriod).IsOpenPosMeasure := by
   let openParameterization : OpenPositiveDenseParametrization
       (sourceMeasure := sourceMeasure)
-      (targetMeasure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod) where
-    map := parameterization.parameterization
-    continuous := parameterization.continuous
-    denseRange := parameterization.denseRange
-    measurePreserving := parameterization.measurePreserving
-    sourceOpenPositive := parameterization.sourceOpenPositive
+      (targetMeasure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+    { map := parameterization.parameterization
+      continuous := parameterization.continuous
+      denseRange := parameterization.denseRange
+      measurePreserving := parameterization.measurePreserving
+      sourceOpenPositive := parameterization.sourceOpenPositive }
   exact openParameterization.targetOpenPositive
 
 /-- Compatibility-only Euler data become the complete faithful Euler package. -/
@@ -97,7 +99,8 @@ def toEulerCompatibilityData
       period hPeriod Source sourceMeasure)
     (euler : CanonicalPhysicalScalarEulerCompatibilityOnlyData
       period hPeriod massSquared) :=
-  euler.toCompatibilityData parameterization.physicalMeasureOpenPositive
+  euler.toCompatibilityData period hPeriod
+    (parameterization.physicalMeasureOpenPositive period hPeriod)
 
 /-- Genuine physical bulk operator. -/
 def toBulkL2LinearMap
@@ -108,7 +111,8 @@ def toBulkL2LinearMap
       period hPeriod Source sourceMeasure)
     (euler : CanonicalPhysicalScalarEulerCompatibilityOnlyData
       period hPeriod massSquared) :=
-  (parameterization.toEulerCompatibilityData euler).toBulkL2LinearMap
+  (parameterization.toEulerCompatibilityData period hPeriod euler)
+    |>.toBulkL2LinearMap
 
 /-- Dense-parametrization Euler certificate. -/
 theorem certificate
@@ -127,9 +131,10 @@ theorem certificate
               intrinsicCanonicalLorentzVolumeMeasure period hPeriod] 0 →
           P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerAtlas4D.canonicalPhysicalScalarEulerGlobalResidual
             period hPeriod massSquared field = 0) :=
-  ⟨parameterization.physicalMeasureOpenPositive,
+  ⟨parameterization.physicalMeasureOpenPositive period hPeriod,
     euler.residual_eq_zero_of_ae_eq_zero
-      parameterization.physicalMeasureOpenPositive⟩
+      period hPeriod
+      (parameterization.physicalMeasureOpenPositive period hPeriod)⟩
 
 end CanonicalPhysicalScalarEulerDenseParametrizationData
 

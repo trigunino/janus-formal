@@ -35,6 +35,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 local instance canonicalLorentzVolumeFinite :
     MeasureTheory.IsFiniteMeasure
@@ -65,6 +66,33 @@ theorem smoothToCanonicalPhysicalScalarH1_norm_sq_le_componentEnergy
   smoothToH1Graph_norm_sq_le_componentEnergy period hPeriod Real
     (finiteSmoothTangentFrame period hPeriod)
     (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) field
+
+end
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
+
+namespace P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
+
+set_option autoImplicit false
+noncomputable section
+
+open Set Topology
+open P0EFTJanusMappingTorusSmoothFieldDescent4D
+open P0EFTJanusMappingTorusH1GraphTrace4D
+open P0EFTJanusMappingTorusH1GraphComponentEnergy4D
+open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
+open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarEnergyGarding4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
+
+variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
+
+local instance canonicalLorentzVolumeFinite :
+    MeasureTheory.IsFiniteMeasure
+      (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+  intrinsicCanonicalLorentzVolumeMeasure_isFinite period hPeriod
 
 namespace CanonicalPhysicalScalarFirstSheetGreenCoreData
 
@@ -106,8 +134,8 @@ def toEnergyGardingData
           canonicalPhysicalScalarFirstJetComponentEnergy
             period hPeriod field := by
         exact le_add_of_nonneg_left (sq_nonneg _)
-  zerothConstant := energy.zerothConstant
-  zerothConstant_nonnegative := energy.zerothConstant_nonnegative
+  zerothOrderConstant := energy.zerothConstant
+  zerothOrderConstant_nonnegative := energy.zerothConstant_nonnegative
   energy_le_euler_pairing := energy.componentEnergy_le_euler_pairing
 
 /-- Physical squared Gårding estimate. -/
@@ -115,14 +143,16 @@ def toSquaredGardingEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (energy : green.AutomaticEnergyGardingData period hPeriod) :=
-  (energy.toEnergyGardingData green).toSquaredGardingEstimate green
+  (energy.toEnergyGardingData period hPeriod green)
+    |>.toSquaredGardingEstimate period hPeriod green
 
 /-- Physical graph-elliptic estimate. -/
 def toGraphEllipticEstimate
     (green : CanonicalPhysicalScalarFirstSheetGreenCoreData
       period hPeriod massSquared)
     (energy : green.AutomaticEnergyGardingData period hPeriod) :=
-  (energy.toEnergyGardingData green).toGraphEllipticEstimate green
+  (energy.toEnergyGardingData period hPeriod green)
+    |>.toGraphEllipticEstimate period hPeriod green
 
 /-- Automatic first-jet Gårding certificate. -/
 theorem certificate
@@ -134,17 +164,17 @@ theorem certificate
         canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field) ∧
       (∀ field : SmoothQuotientField period hPeriod Real,
         ‖smoothToCanonicalPhysicalScalarH1 period hPeriod field‖ ^ 2 ≤
-          (energy.toSquaredGardingEstimate green).constant *
+          (energy.toSquaredGardingEstimate period hPeriod green).constant *
             (‖green.core.inclusion field‖ ^ 2 +
               ‖green.core.operator field‖ ^ 2)) :=
   ⟨smoothToCanonicalPhysicalScalarH1_norm_sq_le_componentEnergy
       period hPeriod,
-    (energy.toSquaredGardingEstimate green).bound_sq⟩
+    (energy.toSquaredGardingEstimate period hPeriod green).bound_sq⟩
 
 end AutomaticEnergyGardingData
 
 end CanonicalPhysicalScalarFirstSheetGreenCoreData
 
 end
-end P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
+end P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 end JanusFormal

@@ -75,7 +75,8 @@ theorem canonicalLatitudeCoverTubularBand_isOpen :
 /-- A total cover-level tubular parameter map, regular at every point of the
 open non-polar band.  Its arbitrary values outside the band are irrelevant. -/
 structure CanonicalLatitudeTubularCoverInverseRegularityData where
-  parameter : EffectiveCover period hPeriod → CanonicalLatitudeTubularCollar
+  parameter : EffectiveCover period hPeriod →
+    CanonicalLatitudeTubularCollar period
   base_contMDiffAt : ∀ point : EffectiveCover period hPeriod,
     point ∈ canonicalLatitudeCoverTubularBand period hPeriod →
       ContMDiffAt coverModelWithCorners
@@ -123,35 +124,50 @@ def localInverseAtRepresentative
       (mappingTorusMk (sphereData period hPeriod) point) := by
   let projection := mappingTorusMk (sphereData period hPeriod)
   have hProjection : IsLocalDiffeomorph coverModelWithCorners
-      coverModelWithCorners ∞ projection :=
+      coverModelWithCorners ω projection :=
     reflectedSphere_projection_isLocalDiffeomorph period hPeriod
-  let local := hProjection point
-  let section := local.localInverse
+  let localDiffeomorph := hProjection point
+  let inverseSection := localDiffeomorph.localInverse
   have hBand : point ∈ canonicalLatitudeCoverTubularBand period hPeriod :=
-    inverseData.representative_mem_band point hPoint
+    inverseData.representative_mem_band period hPeriod point hPoint
+  have hSectionPoint : inverseSection (projection point) = point :=
+    localDiffeomorph.localInverse_left_inv
+      localDiffeomorph.localInverse_mem_target
   have hSectionSmooth : ContMDiffAt coverModelWithCorners
-      coverModelWithCorners ∞ section (projection point) :=
-    local.localInverse_contMDiffAt.of_le (by simp)
+      coverModelWithCorners ∞ inverseSection (projection point) :=
+    localDiffeomorph.localInverse_contMDiffAt.of_le (by simp)
   have hSectionBand : ∀ᶠ nearby in 𝓝 (projection point),
-      section nearby ∈ canonicalLatitudeCoverTubularBand period hPeriod := by
+      inverseSection nearby ∈ canonicalLatitudeCoverTubularBand period hPeriod := by
     apply hSectionSmooth.continuousAt.preimage_mem_nhds
+    rw [hSectionPoint]
     exact (canonicalLatitudeCoverTubularBand_isOpen period hPeriod).mem_nhds hBand
   refine
-    { parameter := fun nearby => inverseData.parameter (section nearby)
+    { parameter := fun nearby => inverseData.parameter (inverseSection nearby)
       base_contMDiffAt := ?_
       normal_contMDiffAt := ?_
       right_inverse := ?_ }
-  · exact (inverseData.base_contMDiffAt point hBand).comp
-      (projection point) hSectionSmooth
-  · exact (inverseData.normal_contMDiffAt point hBand).comp
-      (projection point) hSectionSmooth
-  · filter_upwards [hSectionBand, local.localInverse_eventuallyEq_right]
+  · have hBase : ContMDiffAt coverModelWithCorners
+        canonicalLatitudeBaseModelWithCorners ∞
+        (fun nearby => (inverseData.parameter nearby).1)
+        (inverseSection (projection point)) := by
+      rw [hSectionPoint]
+      exact inverseData.base_contMDiffAt point hBand
+    exact hBase.comp (projection point) hSectionSmooth
+  · have hNormal : ContMDiffAt coverModelWithCorners
+        𝓘(Real, Real) ∞
+        (fun nearby => (inverseData.parameter nearby).2.1)
+        (inverseSection (projection point)) := by
+      rw [hSectionPoint]
+      exact inverseData.normal_contMDiffAt point hBand
+    exact hNormal.comp (projection point) hSectionSmooth
+  · filter_upwards [hSectionBand,
+      localDiffeomorph.localInverse_eventuallyEq_right]
       with nearby hNearbyBand hRight
     calc
       canonicalLatitudeTubularPhysicalMap period hPeriod
-          (inverseData.parameter (section nearby)) =
-        projection (section nearby) :=
-          inverseData.reconstruct (section nearby) hNearbyBand
+          (inverseData.parameter (inverseSection nearby)) =
+        projection (inverseSection nearby) :=
+          inverseData.reconstruct (inverseSection nearby) hNearbyBand
       _ = nearby := by simpa [Function.comp_def] using hRight
 
 /-- The cover inverse constructs local inverses at every physical tubular point. -/
@@ -161,9 +177,13 @@ def toPhysicalLocalInverseData
     CanonicalLatitudeTubularPhysicalLocalInverseData period hPeriod where
   localInverseAt := by
     intro quotientPoint hQuotientPoint
-    obtain ⟨coverPoint, rfl⟩ :=
-      mappingTorusMk_surjective (sphereData period hPeriod) quotientPoint
-    exact inverseData.localInverseAtRepresentative coverPoint hQuotientPoint
+    let coverPoint := Classical.choose
+      (mappingTorusMk_surjective (sphereData period hPeriod) quotientPoint)
+    have hCoverPoint := Classical.choose_spec
+      (mappingTorusMk_surjective (sphereData period hPeriod) quotientPoint)
+    rw [← hCoverPoint] at hQuotientPoint ⊢
+    exact inverseData.localInverseAtRepresentative period hPeriod
+      coverPoint hQuotientPoint
 
 /-- Cover regularity and smooth boundary cores install the complete smooth
 candidate extension. -/
@@ -176,7 +196,8 @@ def toCandidateExtensionData
     (smoothCore :
       P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetTubularChartReduction4D.CanonicalPhysicalScalarSmoothCauchyJetBoundaryCoreData
         period ValueCore NormalCore) :=
-  inverseData.toPhysicalLocalInverseData.toCandidateExtensionData smoothCore
+  (inverseData.toPhysicalLocalInverseData period hPeriod)
+    |>.toCandidateExtensionData period hPeriod smoothCore
 
 /-- Cover-inverse reduction certificate. -/
 theorem certificate
@@ -190,11 +211,12 @@ theorem certificate
         period ValueCore NormalCore) :
     (∀ data : ValueCore × NormalCore,
       ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
-        (smoothCore.core.candidate hPeriod data)) ∧
+        (smoothCore.core.candidate period hPeriod data)) ∧
       DenseRange
         (P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
           period hPeriod) :=
-  inverseData.toPhysicalLocalInverseData.certificate smoothCore
+  (inverseData.toPhysicalLocalInverseData period hPeriod)
+    |>.certificate period hPeriod smoothCore
 
 end CanonicalLatitudeTubularCoverInverseRegularityData
 

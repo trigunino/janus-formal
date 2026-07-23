@@ -23,7 +23,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalGreen4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTransportedNormalFinalClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerCanonicalL2Operators4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFiniteCoordinateRellich4D
 open P0EFTJanusMappingTorusScalarHilbertBoundarySymplectic4D
 open P0EFTJanusMappingTorusScalarAbstractLagrangianBoundary4D
@@ -32,6 +32,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleExternalPositiveShiftedF
 universe e
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Energy : Type e}
   [NormedAddCommGroup Energy] [NormedSpace Real Energy]
 
@@ -48,7 +49,7 @@ structure CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalFinalData
   geometric :
     CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalGreenData
       period hPeriod massSquared
-  energyIdentity : geometric.greenCore.ScalarRemainderEnergyIdentityData
+  energyIdentity : (geometric.greenCore period hPeriod).ScalarRemainderEnergyIdentityData
     period hPeriod
   eulerCoefficientOperators :
     geometric.toCanonicalNormalGreenData.toNormalTangentialGreenData.toIntrinsicWaveLocalGreenData.toCanonicalLocalDivergenceData.toCanonicalWaveCauchyJetData.toCanonicalCauchyJetCompatibilityData.toCompatibilityData.toCauchyJetGeometricData.CauchyJetEulerSixCanonicalL2OperatorData
@@ -58,7 +59,7 @@ structure CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalFinalData
   referenceParameter : Real
   shiftedPositiveDecomposition :
     (P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D.assembleCanonicalPhysicalScalarBoundaryData
-      period hPeriod geometric.toCanonicalNormalGreenData energyIdentity
+      period hPeriod (geometric.toCanonicalNormalGreenData period hPeriod) energyIdentity
         eulerCoefficientOperators).triple
       |>.LagrangianShiftedExternalPositiveDecompositionData
         condition referenceParameter Energy
@@ -73,7 +74,7 @@ def toTransportedNormalFinalData
       period hPeriod massSquared Energy) :
     CanonicalPhysicalScalarIntrinsicWaveTransportedNormalFinalData
       period hPeriod massSquared Energy where
-  geometric := data.geometric.toTransportedNormalGreenData
+  geometric := data.geometric.toTransportedNormalGreenData period hPeriod
   energyIdentity := data.energyIdentity
   eulerCoefficientOperators := data.eulerCoefficientOperators
   condition := data.condition
@@ -122,7 +123,20 @@ theorem sourceSolution_equation
 theorem sourceSolution_unique_minimizer
     (data : CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalFinalData
       period hPeriod massSquared Energy)
-    (source : BulkL2 period hPeriod) :=
+    (source : BulkL2 period hPeriod) :
+    (∀ field : data.triple.lagrangianDomainSubmodule data.condition,
+      data.triple.lagrangianSourceAction
+          data.condition data.referenceParameter source
+          (data.sourceSolution period hPeriod source) ≤
+        data.triple.lagrangianSourceAction
+          data.condition data.referenceParameter source field) ∧
+      (∀ field : data.triple.lagrangianDomainSubmodule data.condition,
+        data.triple.lagrangianSourceAction
+            data.condition data.referenceParameter source field =
+          data.triple.lagrangianSourceAction
+            data.condition data.referenceParameter source
+            (data.sourceSolution period hPeriod source) →
+        field = data.sourceSolution period hPeriod source) :=
   data.toTransportedNormalFinalData.sourceSolution_unique_minimizer
     period hPeriod source
 
@@ -189,15 +203,9 @@ theorem certificate
           data.triple.LagrangianHasEigenvalue
               data.condition spectralParameter ∨
             data.triple.LagrangianResolventPoint
-              data.condition spectralParameter) :=
-  ⟨data.geometric.measureTransport.map_measure,
-    data.toTransportedNormalFinalData.toFinalObligationsData.boundaryData.toCanonicalNormalRieszScalarEnergyPDEData.toNormalTangentialRieszScalarEnergyPDEData.toNormalTangentialRieszPDEData.rieszBoundaryData.boundedSmoothExtension
-      |>.rieszBoundaryTrace_surjective,
-    data.actualAdjointDomain_eq period hPeriod,
-    data.sourceSolution_equation period hPeriod source,
-    (data.sourceSolution_unique_minimizer period hPeriod source).1,
-    (data.gaussian_certificate period hPeriod source).2,
-    data.fredholmAlternative period hPeriod⟩
+              data.condition spectralParameter) := by
+  refine ⟨(data.geometric.certificate period hPeriod).1, ?_⟩
+  exact (data.toTransportedNormalFinalData.certificate period hPeriod source).2
 
 end CanonicalPhysicalScalarIntrinsicWaveMeasureTransportedNormalFinalData
 

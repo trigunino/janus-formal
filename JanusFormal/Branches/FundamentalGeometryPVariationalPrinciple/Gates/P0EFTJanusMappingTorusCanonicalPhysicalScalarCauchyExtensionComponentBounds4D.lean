@@ -32,6 +32,7 @@ open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 universe x y r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -69,7 +70,7 @@ def graphConstant
       period hPeriod massSquared ValueCore NormalCore}
     (bounds : CanonicalPhysicalScalarCauchyExtensionComponentBounds
       period hPeriod geometric) : Real :=
-  max bounds.inclusionConstant bounds.operatorConstant
+  Real.sqrt 2 * max bounds.inclusionConstant bounds.operatorConstant
 
 /-- The combined graph constant is nonnegative. -/
 theorem graphConstant_nonnegative
@@ -81,8 +82,8 @@ theorem graphConstant_nonnegative
     (bounds : CanonicalPhysicalScalarCauchyExtensionComponentBounds
       period hPeriod geometric) :
     0 ≤ bounds.graphConstant :=
-  bounds.inclusionConstant_nonnegative.trans
-    (le_max_left _ _)
+  mul_nonneg (Real.sqrt_nonneg _)
+    (bounds.inclusionConstant_nonnegative.trans (le_max_left _ _))
 
 /-- The two component estimates imply the required graph-norm estimate. -/
 theorem graph_bound
@@ -105,27 +106,75 @@ theorem graph_bound
   have hBoundaryNonnegative : 0 ≤ boundaryNorm := norm_nonneg _
   have hInclusion :
       ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ≤
-        bounds.graphConstant * boundaryNorm := by
+        max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm := by
     calc
       ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ≤
           bounds.inclusionConstant * boundaryNorm :=
         bounds.inclusion_bound data
-      _ ≤ bounds.graphConstant * boundaryNorm :=
+      _ ≤ max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm :=
         mul_le_mul_of_nonneg_right (le_max_left _ _) hBoundaryNonnegative
   have hOperator :
       ‖geometric.greenCore.core.operator (geometric.extension data)‖ ≤
-        bounds.graphConstant * boundaryNorm := by
+        max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm := by
     calc
       ‖geometric.greenCore.core.operator (geometric.extension data)‖ ≤
           bounds.operatorConstant * boundaryNorm :=
         bounds.operator_bound data
-      _ ≤ bounds.graphConstant * boundaryNorm :=
+      _ ≤ max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm :=
         mul_le_mul_of_nonneg_right (le_max_right _ _) hBoundaryNonnegative
-  change max
-      ‖geometric.greenCore.core.inclusion (geometric.extension data)‖
-      ‖geometric.greenCore.core.operator (geometric.extension data)‖ ≤
-    bounds.graphConstant * boundaryNorm
-  exact max_le hInclusion hOperator
+  have hCommonNonnegative :
+      0 ≤ max bounds.inclusionConstant bounds.operatorConstant *
+        boundaryNorm :=
+    mul_nonneg
+      (bounds.inclusionConstant_nonnegative.trans (le_max_left _ _))
+      hBoundaryNonnegative
+  have hInclusionSq :
+      ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 ≤
+        (max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm) ^ 2 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr hInclusion)
+      (add_nonneg hCommonNonnegative
+        (norm_nonneg
+          (geometric.greenCore.core.inclusion (geometric.extension data))))]
+  have hOperatorSq :
+      ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 ≤
+        (max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm) ^ 2 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr hOperator)
+      (add_nonneg hCommonNonnegative
+        (norm_nonneg
+          (geometric.greenCore.core.operator (geometric.extension data))))]
+  have hGraphSq :
+      ‖canonicalScalarGreenCoreToGraph geometric.greenCore.core
+          (geometric.extension data)‖ ^ 2 =
+        ‖geometric.greenCore.core.inclusion (geometric.extension data)‖ ^ 2 +
+          ‖geometric.greenCore.core.operator (geometric.extension data)‖ ^ 2 := by
+    exact WithLp.prod_norm_sq_eq_of_L2
+      (canonicalScalarGreenCoreToGraph geometric.greenCore.core
+        (geometric.extension data)).1
+  have hRightSq :
+      (bounds.graphConstant * boundaryNorm) ^ 2 =
+        2 * (max bounds.inclusionConstant bounds.operatorConstant *
+          boundaryNorm) ^ 2 := by
+    unfold graphConstant
+    rw [mul_pow, mul_pow,
+      Real.sq_sqrt (by norm_num : (0 : Real) ≤ 2)]
+    ring
+  have hGraphSqLe :
+      ‖canonicalScalarGreenCoreToGraph geometric.greenCore.core
+          (geometric.extension data)‖ ^ 2 ≤
+        (bounds.graphConstant * boundaryNorm) ^ 2 := by
+    linarith
+  have hRightNonnegative :
+      0 ≤ bounds.graphConstant * boundaryNorm :=
+    mul_nonneg bounds.graphConstant_nonnegative hBoundaryNonnegative
+  nlinarith [norm_nonneg
+    (canonicalScalarGreenCoreToGraph geometric.greenCore.core
+      (geometric.extension data))]
 
 /-- Install the cutoff-closed boundary data from component extension estimates. -/
 def toCutoffClosedBoundaryData
@@ -165,10 +214,12 @@ theorem certificate
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
           geometric.greenCore.core
-          (bounds.toCutoffClosedBoundaryData geometric garding normalRegularity)
+          ((bounds.toCutoffClosedBoundaryData
+              period hPeriod geometric garding normalRegularity)
             |>.toFullyGeometricBoundaryData.cutoffEllipticBoundaryData
-              |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound) :=
-  (bounds.toCutoffClosedBoundaryData geometric garding normalRegularity).certificate
+              |>.toEllipticBoundaryData.toBoundaryConstructionData.traceBound)) :=
+  (bounds.toCutoffClosedBoundaryData
+      period hPeriod geometric garding normalRegularity).certificate
     |>.elim fun hDense hRest => ⟨hDense, hRest.2⟩
 
 end CanonicalPhysicalScalarCauchyExtensionComponentBounds

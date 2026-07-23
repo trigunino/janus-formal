@@ -19,6 +19,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarCutoffClosedAnalyticClosure4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 
 /-- Preferred current frontier. -/
 abbrev CutoffClosedAnalyticFrontier

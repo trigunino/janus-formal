@@ -25,10 +25,27 @@ noncomputable section
 
 open scoped Manifold ContDiff ENNReal
 open MeasureTheory Set Topology Filter
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalLatitudeInteriorSeedPeriodization4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+
+local instance canonicalLatitudeSphereFinrank :
+    Fact (Module.finrank Real EuclideanR3 = 2 + 1) := ⟨by simp⟩
+
+local instance canonicalLatitudeSphereChartedSpace :
+    ChartedSpace (EuclideanSpace Real (Fin 2))
+      (Metric.sphere (0 : EuclideanR3) 1) := inferInstance
+
+local instance canonicalLatitudeBaseChartedSpace :
+    ChartedSpace CanonicalLatitudeBaseModel CanonicalLatitudeBase :=
+  inferInstance
+
+local instance canonicalLatitudeBaseIsManifold :
+    IsManifold canonicalLatitudeBaseModelWithCorners ω CanonicalLatitudeBase :=
+  inferInstance
 
 /-- Midpoint of the canonical fundamental time interval. -/
 def canonicalLatitudeFundamentalTimeMidpoint : Real :=
@@ -39,10 +56,11 @@ def canonicalLatitudeFundamentalTimeHalfLength : Real :=
   |period| / 2
 
 /-- The half-length is positive. -/
-theorem canonicalLatitudeFundamentalTimeHalfLength_pos :
+theorem canonicalLatitudeFundamentalTimeHalfLength_pos
+    (hPeriod : period ≠ 0) :
     0 < canonicalLatitudeFundamentalTimeHalfLength period := by
   unfold canonicalLatitudeFundamentalTimeHalfLength
-  positivity
+  exact div_pos (abs_pos.mpr hPeriod) (by norm_num)
 
 /-- Shrinking transition width of the `n`th time cutoff. -/
 def canonicalLatitudeFundamentalTimeTransitionWidth
@@ -57,20 +75,24 @@ def canonicalLatitudeFundamentalTimeInnerRadius
 
 /-- Transition width is positive. -/
 theorem canonicalLatitudeFundamentalTimeTransitionWidth_pos
+    (hPeriod : period ≠ 0)
     (index : Nat) :
     0 < canonicalLatitudeFundamentalTimeTransitionWidth period index := by
   unfold canonicalLatitudeFundamentalTimeTransitionWidth
-  positivity
+  exact div_pos (canonicalLatitudeFundamentalTimeHalfLength_pos period hPeriod)
+    (by positivity)
 
 /-- The inner radius is positive. -/
 theorem canonicalLatitudeFundamentalTimeInnerRadius_pos
+    (hPeriod : period ≠ 0)
     (index : Nat) :
     0 < canonicalLatitudeFundamentalTimeInnerRadius period index := by
   let halfLength := canonicalLatitudeFundamentalTimeHalfLength period
   have hHalfLength : 0 < halfLength :=
     canonicalLatitudeFundamentalTimeHalfLength_pos period hPeriod
   have hDenominator : 1 < (index + 2 : Real) := by
-    norm_num
+    have hIndex : (0 : Real) ≤ index := by positivity
+    linarith
   have hDivision : halfLength / (index + 2 : Real) < halfLength := by
     exact (div_lt_iff₀ (by positivity : (0 : Real) < index + 2)).2
       (by nlinarith)
@@ -80,20 +102,22 @@ theorem canonicalLatitudeFundamentalTimeInnerRadius_pos
 
 /-- The inner radius is strictly below the outer radius. -/
 theorem canonicalLatitudeFundamentalTimeInnerRadius_lt_halfLength
+    (hPeriod : period ≠ 0)
     (index : Nat) :
     canonicalLatitudeFundamentalTimeInnerRadius period index <
       canonicalLatitudeFundamentalTimeHalfLength period := by
   unfold canonicalLatitudeFundamentalTimeInnerRadius
-  linarith [canonicalLatitudeFundamentalTimeTransitionWidth_pos period index]
+  linarith [canonicalLatitudeFundamentalTimeTransitionWidth_pos period hPeriod index]
 
 /-- The canonical expanding smooth time cutoff. -/
 def canonicalLatitudeInteriorTimeCutoff
+    (hPeriod : period ≠ 0)
     (index : Nat) :
     ContDiffBump (canonicalLatitudeFundamentalTimeMidpoint period) :=
   ⟨canonicalLatitudeFundamentalTimeInnerRadius period index,
     canonicalLatitudeFundamentalTimeHalfLength period,
     canonicalLatitudeFundamentalTimeInnerRadius_pos period hPeriod index,
-    canonicalLatitudeFundamentalTimeInnerRadius_lt_halfLength period index⟩
+    canonicalLatitudeFundamentalTimeInnerRadius_lt_halfLength period hPeriod index⟩
 
 /-- Smoothness of every time cutoff. -/
 theorem canonicalLatitudeInteriorTimeCutoff_contDiff
@@ -102,7 +126,8 @@ theorem canonicalLatitudeInteriorTimeCutoff_contDiff
   ContDiffBump.contDiff _
 
 /-- Midpoint minus half-length is the left endpoint. -/
-theorem canonicalLatitudeFundamentalTimeMidpoint_sub_halfLength :
+theorem canonicalLatitudeFundamentalTimeMidpoint_sub_halfLength
+    (hPeriod : period ≠ 0) :
     canonicalLatitudeFundamentalTimeMidpoint period -
         canonicalLatitudeFundamentalTimeHalfLength period =
       min 0 period := by
@@ -119,7 +144,8 @@ theorem canonicalLatitudeFundamentalTimeMidpoint_sub_halfLength :
     ring
 
 /-- Midpoint plus half-length is the right endpoint. -/
-theorem canonicalLatitudeFundamentalTimeMidpoint_add_halfLength :
+theorem canonicalLatitudeFundamentalTimeMidpoint_add_halfLength
+    (hPeriod : period ≠ 0) :
     canonicalLatitudeFundamentalTimeMidpoint period +
         canonicalLatitudeFundamentalTimeHalfLength period =
       max 0 period := by
@@ -138,6 +164,7 @@ theorem canonicalLatitudeFundamentalTimeMidpoint_add_halfLength :
 /-- Distance from the midpoint is below the half-length exactly on the open
 fundamental interval. -/
 theorem dist_midpoint_lt_halfLength_iff
+    (hPeriod : period ≠ 0)
     (time : Real) :
     dist time (canonicalLatitudeFundamentalTimeMidpoint period) <
         canonicalLatitudeFundamentalTimeHalfLength period ↔
@@ -156,6 +183,7 @@ theorem dist_midpoint_lt_halfLength_iff
         period hPeriod,
       ← canonicalLatitudeFundamentalTimeMidpoint_add_halfLength
         period hPeriod] at hTime
+    rcases hTime with ⟨hLeft, hRight⟩
     constructor <;> linarith
 
 /-- The time cutoff is nonnegative. -/
@@ -191,15 +219,16 @@ theorem canonicalLatitudeFundamentalTimeTransitionWidth_tendsto_zero :
       atTop (𝓝 0) := by
   have hDenominator : Tendsto
       (fun index : Nat => (index + 2 : Real)) atTop atTop :=
-    tendsto_natCast_atTop_atTop.comp (tendsto_add_atTop_nat 2)
+    tendsto_atTop_add_const_right atTop 2 tendsto_natCast_atTop_atTop
   have hInverse : Tendsto
       (fun index : Nat => ((index + 2 : Real))⁻¹)
       atTop (𝓝 0) :=
     tendsto_inv_atTop_zero.comp hDenominator
-  simpa [canonicalLatitudeFundamentalTimeTransitionWidth,
-    div_eq_mul_inv] using
-    hInverse.const_mul
-      (canonicalLatitudeFundamentalTimeHalfLength period)
+  change Tendsto
+    (fun index : Nat => canonicalLatitudeFundamentalTimeHalfLength period *
+      ((index + 2 : Real))⁻¹) atTop (𝓝 0)
+  simpa only [mul_zero] using hInverse.const_mul
+    (canonicalLatitudeFundamentalTimeHalfLength period)
 
 /-- Inner radii converge to the whole half-length. -/
 theorem canonicalLatitudeFundamentalTimeInnerRadius_tendsto_halfLength :
@@ -207,9 +236,16 @@ theorem canonicalLatitudeFundamentalTimeInnerRadius_tendsto_halfLength :
       (canonicalLatitudeFundamentalTimeInnerRadius period)
       atTop
       (𝓝 (canonicalLatitudeFundamentalTimeHalfLength period)) := by
-  simpa [canonicalLatitudeFundamentalTimeInnerRadius] using
-    tendsto_const_nhds.sub
-      (canonicalLatitudeFundamentalTimeTransitionWidth_tendsto_zero period)
+  change Tendsto
+    (fun index : Nat => canonicalLatitudeFundamentalTimeHalfLength period -
+      canonicalLatitudeFundamentalTimeTransitionWidth period index)
+    atTop (𝓝 (canonicalLatitudeFundamentalTimeHalfLength period))
+  have hConstant : Tendsto
+      (fun _ : Nat => canonicalLatitudeFundamentalTimeHalfLength period)
+      atTop (𝓝 (canonicalLatitudeFundamentalTimeHalfLength period)) :=
+    tendsto_const_nhds
+  simpa only [sub_zero] using hConstant.sub
+    (canonicalLatitudeFundamentalTimeTransitionWidth_tendsto_zero period)
 
 /-- At every interior time, the cutoff is eventually exactly one. -/
 theorem canonicalLatitudeInteriorTimeCutoff_eventuallyEq_one
@@ -226,7 +262,7 @@ theorem canonicalLatitudeInteriorTimeCutoff_eventuallyEq_one
       dist time (canonicalLatitudeFundamentalTimeMidpoint period) <
         canonicalLatitudeFundamentalTimeInnerRadius period index :=
     (canonicalLatitudeFundamentalTimeInnerRadius_tendsto_halfLength period)
-      (Set.Ioi_mem_nhds hDistance)
+      (Ioi_mem_nhds hDistance)
   filter_upwards [hEventually] with index hIndex
   exact ContDiffBump.one_of_mem_closedBall
     (canonicalLatitudeInteriorTimeCutoff period hPeriod index)
@@ -245,6 +281,7 @@ theorem canonicalLatitudeInteriorTimeCutoff_tendsto_one
 
 /-- Base-level cutoff depending only on time. -/
 def canonicalLatitudeInteriorBaseCutoff
+    (hPeriod : period ≠ 0)
     (index : Nat) (base : CanonicalLatitudeBase) : Real :=
   canonicalLatitudeInteriorTimeCutoff period hPeriod index base.2
 
@@ -277,7 +314,7 @@ theorem ae_canonicalLatitudeInteriorBaseCutoff_tendsto_one :
           canonicalLatitudeInteriorBaseCutoff period hPeriod index base)
         atTop (𝓝 1) := by
   filter_upwards
-    [ae_canonicalLatitudeBase_time_mem_openFundamentalTime period hPeriod]
+    [ae_canonicalLatitudeBase_time_mem_openFundamentalTime period]
     with base hTime
   exact canonicalLatitudeInteriorTimeCutoff_tendsto_one
     period hPeriod base.2 hTime

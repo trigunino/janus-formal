@@ -18,6 +18,9 @@ independent field.
 
 namespace JanusFormal
 namespace P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointSequentialClosure4D
+end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointSequentialClosure4D
+
+namespace P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 set_option autoImplicit false
 noncomputable section
@@ -136,9 +139,17 @@ theorem adjointGraphApproximationField_inclusion_tendsto
         (triple.adjointGraphApproximationPair_tendsto
           condition regularity candidate adjointValue hPair)
   have hFst := continuous_fst.continuousAt.tendsto.comp hPairTendsto
-  simpa only [Function.comp_apply,
-    ← canonicalScalarGreenCoreGraphLinearMap_adjointGraphApproximationField]
-    using hFst
+  apply hFst.congr
+  intro index
+  change
+    (WithLp.ofLp
+      (triple.adjointGraphApproximationPair condition regularity
+        candidate adjointValue hPair index)).1 =
+      core.inclusion
+        (triple.adjointGraphApproximationField condition regularity
+          candidate adjointValue hPair index)
+  rw [← canonicalScalarGreenCoreGraphLinearMap_adjointGraphApproximationField]
+  rfl
 
 /-- The Euler images of the chosen smooth fields converge to the adjoint value. -/
 theorem adjointGraphApproximationField_operator_tendsto
@@ -162,9 +173,17 @@ theorem adjointGraphApproximationField_operator_tendsto
         (triple.adjointGraphApproximationPair_tendsto
           condition regularity candidate adjointValue hPair)
   have hSnd := continuous_snd.continuousAt.tendsto.comp hPairTendsto
-  simpa only [Function.comp_apply,
-    ← canonicalScalarGreenCoreGraphLinearMap_adjointGraphApproximationField]
-    using hSnd
+  apply hSnd.congr
+  intro index
+  change
+    (WithLp.ofLp
+      (triple.adjointGraphApproximationPair condition regularity
+        candidate adjointValue hPair index)).2 =
+      core.operator
+        (triple.adjointGraphApproximationField condition regularity
+          candidate adjointValue hPair index)
+  rw [← canonicalScalarGreenCoreGraphLinearMap_adjointGraphApproximationField]
+  rfl
 
 /-- Graph regularity automatically constructs the sequential approximation
 package. -/
@@ -193,7 +212,7 @@ theorem adjointPairGraphRegularity_iff_smoothApproximation
     exact approximation.graphRegularity triple condition
 
 /-- Sequential-closure certificate. -/
-theorem certificate
+theorem sequentialClosure_certificate
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
     (regularity : triple.AdjointPairGraphRegularity condition) :
@@ -212,5 +231,5 @@ theorem certificate
 end CanonicalScalarCompletedBoundaryTripleData
 
 end
-end P0EFTJanusMappingTorusScalarCompletedBoundaryTripleAdjointSequentialClosure4D
+end P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 end JanusFormal

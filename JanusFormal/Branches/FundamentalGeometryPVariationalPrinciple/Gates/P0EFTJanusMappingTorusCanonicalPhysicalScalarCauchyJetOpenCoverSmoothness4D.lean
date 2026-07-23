@@ -105,7 +105,7 @@ def candidate
     (data : ValueCore × NormalCore) :
     EffectiveQuotient period hPeriod → Real :=
   canonicalLatitudeCauchyJetGlobalCandidate period hPeriod
-    (coreData.deckData data)
+    (coreData.deckData period data)
 
 end CanonicalPhysicalScalarCauchyJetBoundaryCoreData
 
@@ -128,9 +128,9 @@ structure CanonicalPhysicalScalarCauchyJetOpenCoverData
     (point : EffectiveQuotient period hPeriod),
     point ∈ tubularRegion →
       ContMDiffAt coverModelWithCorners 𝓘(Real, Real) ∞
-        (core.candidate hPeriod data) point
+        (core.candidate period hPeriod data) point
   zero_on : ∀ data : ValueCore × NormalCore,
-    Set.EqOn (core.candidate hPeriod data) (fun _ => 0) zeroRegion
+    Set.EqOn (core.candidate period hPeriod data) (fun _ => 0) zeroRegion
 
 namespace CanonicalPhysicalScalarCauchyJetOpenCoverData
 
@@ -145,7 +145,7 @@ theorem candidate_eventuallyEq_zero
     (data : ValueCore × NormalCore)
     (point : EffectiveQuotient period hPeriod)
     (hPoint : point ∈ openCover.zeroRegion) :
-    openCover.core.candidate hPeriod data =ᶠ[𝓝 point]
+    openCover.core.candidate period hPeriod data =ᶠ[𝓝 point]
       fun _ : EffectiveQuotient period hPeriod => 0 := by
   filter_upwards [openCover.zeroRegion_open.mem_nhds hPoint]
     with nearby hNearby
@@ -160,7 +160,7 @@ theorem candidate_contMDiff
       period hPeriod ValueCore NormalCore)
     (data : ValueCore × NormalCore) :
     ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
-      (openCover.core.candidate hPeriod data) := by
+      (openCover.core.candidate period hPeriod data) := by
   intro point
   have hCovered : point ∈ openCover.tubularRegion ∪ openCover.zeroRegion := by
     rw [openCover.cover]
@@ -171,7 +171,7 @@ theorem candidate_contMDiff
         (fun _ : EffectiveQuotient period hPeriod => (0 : Real)) point :=
       contMDiffAt_const
     exact hConstant.congr_of_eventuallyEq
-      (openCover.candidate_eventuallyEq_zero data point hZero)
+      (openCover.candidate_eventuallyEq_zero period hPeriod data point hZero)
 
 /-- Install the complete smooth candidate-extension package. -/
 def toCandidateExtensionData
@@ -192,7 +192,7 @@ def toCandidateExtensionData
   normalDense := openCover.core.normalDense
   valueEmbedding_ae := openCover.core.valueEmbedding_ae
   normalEmbedding_ae := openCover.core.normalEmbedding_ae
-  candidate_contMDiff := openCover.candidate_contMDiff
+  candidate_contMDiff := openCover.candidate_contMDiff period hPeriod
 
 /-- Open-cover smoothness immediately gives the exact smooth Cauchy extension and
 dense boundary trace. -/
@@ -204,12 +204,13 @@ theorem certificate
       period hPeriod ValueCore NormalCore) :
     (∀ data : ValueCore × NormalCore,
       ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
-        (openCover.core.candidate hPeriod data)) ∧
+        (openCover.core.candidate period hPeriod data)) ∧
       DenseRange
         (P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetHilbertTrace4D.smoothCanonicalPhysicalScalarFirstSheetCauchyTrace
           period hPeriod) :=
-  ⟨openCover.candidate_contMDiff,
-    openCover.toCandidateExtensionData.boundaryTrace_denseRange⟩
+  ⟨openCover.candidate_contMDiff period hPeriod,
+    (openCover.toCandidateExtensionData period hPeriod).boundaryTrace_denseRange
+      period hPeriod⟩
 
 end CanonicalPhysicalScalarCauchyJetOpenCoverData
 

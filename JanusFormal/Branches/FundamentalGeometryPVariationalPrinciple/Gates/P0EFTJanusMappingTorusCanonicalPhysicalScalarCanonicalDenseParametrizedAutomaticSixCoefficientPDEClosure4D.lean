@@ -31,13 +31,14 @@ open P0EFTJanusMappingTorusCanonicalLatitudeSmoothBoundaryCores4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarAutomaticGardingEnergy4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarNormalEllipticRegularity4D
-open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetEulerSixCoefficientClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarCauchyJetGeometricGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarCanonicalAutomaticSixCoefficientPDEClosure4D
 open P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D
 
 universe u r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -52,13 +53,17 @@ structure CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficie
   geometric :
     CanonicalPhysicalScalarCanonicalDenseParametrizedCauchyJetData
       period hPeriod Source sourceMeasure massSquared
-  energy : geometric.greenCore.AutomaticEnergyGardingData period hPeriod
-  normalRegularity : geometric.greenCore.NormalEllipticRegularityData
+  energy : (geometric.greenCore period hPeriod).AutomaticEnergyGardingData period hPeriod
+  normalRegularity : (geometric.greenCore period hPeriod).NormalEllipticRegularityData
     period hPeriod (Regularity := Regularity)
   eulerCoefficients :
-    geometric.toCanonicalCauchyJetCompatibilityData.toCompatibilityData.toCauchyJetGeometricData.CauchyJetEulerSixCoefficientData
+    ((((geometric.toCanonicalCauchyJetCompatibilityData period hPeriod)
+      |>.toCompatibilityData period hPeriod).toCauchyJetGeometricData
+      period hPeriod)).CauchyJetEulerSixCoefficientData
       period hPeriod
-      geometric.toCanonicalCauchyJetCompatibilityData.toCompatibilityData.toCauchyJetGeometricData.canonicalEulerProductRealization
+      (((((geometric.toCanonicalCauchyJetCompatibilityData period hPeriod)
+        |>.toCompatibilityData period hPeriod).toCauchyJetGeometricData
+        period hPeriod)).canonicalEulerProductRealization period hPeriod)
 
 namespace CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEData
 
@@ -73,7 +78,7 @@ def toCanonicalAutomaticSixCoefficientPDEData
         (Regularity := Regularity)) :
     CanonicalPhysicalScalarCanonicalAutomaticSixCoefficientPDEData
       period hPeriod massSquared (Regularity := Regularity) where
-  geometric := data.geometric.toCanonicalCauchyJetCompatibilityData
+  geometric := data.geometric.toCanonicalCauchyJetCompatibilityData period hPeriod
   energy := data.energy
   normalRegularity := data.normalRegularity
   eulerCoefficients := data.eulerCoefficients
@@ -87,7 +92,7 @@ def triple
       CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEData
         period hPeriod Source sourceMeasure massSquared
         (Regularity := Regularity)) :=
-  data.toCanonicalAutomaticSixCoefficientPDEData.triple
+  (data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).triple period hPeriod
 
 /-- Completed physical boundary inputs. -/
 def completedInputs
@@ -98,7 +103,8 @@ def completedInputs
       CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEData
         period hPeriod Source sourceMeasure massSquared
         (Regularity := Regularity)) :=
-  data.toCanonicalAutomaticSixCoefficientPDEData.completedInputs
+  (data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).completedInputs
+    period hPeriod
 
 /-- Bounded right inverse of the completed Cauchy trace. -/
 def completedExtension
@@ -109,7 +115,8 @@ def completedExtension
       CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEData
         period hPeriod Source sourceMeasure massSquared
         (Regularity := Regularity)) :=
-  data.toCanonicalAutomaticSixCoefficientPDEData.completedExtension
+  (data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).completedExtension
+    period hPeriod
 
 /-- Physical graph-elliptic estimate generated from the single component-energy
 pairing estimate. -/
@@ -121,7 +128,8 @@ def graphEllipticEstimate
       CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEData
         period hPeriod Source sourceMeasure massSquared
         (Regularity := Regularity)) :=
-  data.toCanonicalAutomaticSixCoefficientPDEData.graphEllipticEstimate
+  (data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).graphEllipticEstimate
+    period hPeriod
 
 /-- Dense-parametrized minimal PDE certificate. -/
 theorem certificate
@@ -141,21 +149,27 @@ theorem certificate
           canonicalPhysicalScalarFirstJetComponentEnergy period hPeriod field) ∧
       Function.Injective
         (canonicalScalarGreenCoreGraphInclusion
-          data.geometric.greenCore.core) ∧
+          (data.geometric.greenCore period hPeriod).core) ∧
       Function.Surjective
         (canonicalScalarGreenCoreCompletedBoundaryTrace
-          data.geometric.greenCore.core
-          (data.completedInputs.traceBound data.geometric.greenCore)) ∧
+          (data.geometric.greenCore period hPeriod).core
+          ((data.completedInputs period hPeriod).traceBound period hPeriod
+            (data.geometric.greenCore period hPeriod))) ∧
       (∀ boundary,
         canonicalScalarGreenCoreCompletedBoundaryTrace
-            data.geometric.greenCore.core
-            (data.completedInputs.traceBound data.geometric.greenCore)
-            (data.completedExtension boundary) = boundary) :=
+            (data.geometric.greenCore period hPeriod).core
+            ((data.completedInputs period hPeriod).traceBound period hPeriod
+              (data.geometric.greenCore period hPeriod))
+            (data.completedExtension period hPeriod boundary) = boundary) :=
   ⟨data.geometric.physicalMeasureOpenPositive,
-    data.toCanonicalAutomaticSixCoefficientPDEData.certificate.1,
-    data.toCanonicalAutomaticSixCoefficientPDEData.certificate.2.1,
-    data.toCanonicalAutomaticSixCoefficientPDEData.certificate.2.2.1,
-    data.toCanonicalAutomaticSixCoefficientPDEData.certificate.2.2.2⟩
+    ((data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).certificate
+      period hPeriod).1,
+    ((data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).certificate
+      period hPeriod).2.1,
+    ((data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).certificate
+      period hPeriod).2.2.1,
+    ((data.toCanonicalAutomaticSixCoefficientPDEData period hPeriod).certificate
+      period hPeriod).2.2.2⟩
 
 end CanonicalPhysicalScalarCanonicalDenseParametrizedAutomaticSixCoefficientPDEData
 

@@ -47,10 +47,13 @@ theorem canonicalLatitudeCauchyJetNormalMeasure_le_restrictVolume :
       volume.restrict
         (Set.Ioo (-(Real.pi / 2)) (Real.pi / 2)) := by
   unfold canonicalLatitudeCauchyJetNormalMeasure
-  rw [← withDensity_one]
-  apply withDensity_mono
-  filter_upwards [] with latitude
-  exact realLatitudeWeight_le_one latitude
+  calc
+    _ ≤ (volume.restrict
+        (Set.Ioo (-(Real.pi / 2)) (Real.pi / 2))).withDensity 1 := by
+      apply withDensity_mono
+      filter_upwards [] with latitude
+      exact realLatitudeWeight_le_one latitude
+    _ = _ := withDensity_one
 
 /-- Restricted Lebesgue measure on the latitude band is finite. -/
 local instance latitudeBandFinite : IsFiniteMeasure
@@ -100,7 +103,7 @@ theorem canonicalLatitudeCauchyNormalProfile_sq_le_one (normal : Real) :
       canonicalLatitudeCauchyValueProfile_sq_le_one normal
     unfold canonicalLatitudeCauchyNormalProfile
     rw [mul_pow]
-    exact mul_le_one₀ (sq_nonneg normal) hNormalSq
+    exact mul_le_one₀ hNormalSq
       (sq_nonneg (canonicalLatitudeCauchyValueProfile normal)) hCutoffSq
 
 /-- Integrability of the value-profile square. -/
@@ -108,12 +111,12 @@ theorem canonicalLatitudeCauchyValueProfile_sq_integrable :
     Integrable
       (fun normal => canonicalLatitudeCauchyValueProfile normal ^ 2)
       canonicalLatitudeCauchyJetNormalMeasure := by
-  apply Integrable.of_bound
-    (canonicalLatitudeCauchyValueProfile_contDiff.continuous.pow 2)
-      |>.aestronglyMeasurable
-    1
+  refine Integrable.of_bound
+    (canonicalLatitudeCauchyValueProfile_contDiff.continuous.pow 2).aestronglyMeasurable
+    1 ?_
   exact Filter.Eventually.of_forall fun normal => by
-    rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+    rw [Real.norm_eq_abs, abs_of_nonneg
+      (sq_nonneg (canonicalLatitudeCauchyValueProfile normal))]
     exact canonicalLatitudeCauchyValueProfile_sq_le_one normal
 
 /-- Integrability of the normal-profile square. -/
@@ -121,12 +124,12 @@ theorem canonicalLatitudeCauchyNormalProfile_sq_integrable :
     Integrable
       (fun normal => canonicalLatitudeCauchyNormalProfile normal ^ 2)
       canonicalLatitudeCauchyJetNormalMeasure := by
-  apply Integrable.of_bound
-    (canonicalLatitudeCauchyNormalProfile_contDiff.continuous.pow 2)
-      |>.aestronglyMeasurable
-    1
+  refine Integrable.of_bound
+    (canonicalLatitudeCauchyNormalProfile_contDiff.continuous.pow 2).aestronglyMeasurable
+    1 ?_
   exact Filter.Eventually.of_forall fun normal => by
-    rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+    rw [Real.norm_eq_abs, abs_of_nonneg
+      (sq_nonneg (canonicalLatitudeCauchyNormalProfile normal))]
     exact canonicalLatitudeCauchyNormalProfile_sq_le_one normal
 
 /-- Canonical profile-integrability package. -/

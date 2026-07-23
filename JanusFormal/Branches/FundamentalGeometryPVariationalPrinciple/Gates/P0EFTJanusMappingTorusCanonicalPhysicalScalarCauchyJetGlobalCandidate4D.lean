@@ -34,88 +34,85 @@ variable (period : Real) (hPeriod : period ≠ 0)
 private abbrev sphereData := reflectedSphereData period hPeriod
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
 
-namespace CanonicalLatitudeDeckCauchyData
-
 /-- Restriction of the local Cauchy expression to the genuine tubular band. -/
-def tubularLocalExtension
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularLocalExtension
     (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) : Real :=
+    (parameter : CanonicalLatitudeTubularCollar period) : Real :=
   data.localExtension (parameter.1, parameter.2.1)
 
 /-- Generator invariance on the tubular band. -/
-theorem tubularLocalExtension_deck
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularLocalExtension_deck
     (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
-    data.tubularLocalExtension
+    (parameter : CanonicalLatitudeTubularCollar period) :
+    data.tubularLocalExtension period
         (canonicalLatitudeTubularDeckEquiv period parameter) =
-      data.tubularLocalExtension parameter := by
+      data.tubularLocalExtension period parameter := by
   rcases parameter with ⟨base, normal⟩
-  unfold tubularLocalExtension canonicalLatitudeTubularDeckEquiv
+  unfold CanonicalLatitudeDeckCauchyData.tubularLocalExtension
+    canonicalLatitudeTubularDeckEquiv
   simp only [Equiv.coe_fn_mk, canonicalLatitudeTubularNormalNeg]
   exact canonicalLatitudeLocalCauchyExtension_deck
     period data.value data.normal data.value_periodic
       data.normal_antiperiodic (base, normal.1)
 
 /-- Inverse-generator invariance on the tubular band. -/
-theorem tubularLocalExtension_deck_inv
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularLocalExtension_deck_inv
     (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
-    data.tubularLocalExtension
+    (parameter : CanonicalLatitudeTubularCollar period) :
+    data.tubularLocalExtension period
         ((canonicalLatitudeTubularDeckEquiv period).symm parameter) =
-      data.tubularLocalExtension parameter := by
-  have hForward := data.tubularLocalExtension_deck
+      data.tubularLocalExtension period parameter := by
+  have hForward := data.tubularLocalExtension_deck period
     ((canonicalLatitudeTubularDeckEquiv period).symm parameter)
   rw [(canonicalLatitudeTubularDeckEquiv period).apply_symm_apply] at hForward
   exact hForward.symm
 
 /-- All-winding invariance on the tubular band. -/
-theorem tubularLocalExtension_vadd
+theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularLocalExtension_vadd
     (data : CanonicalLatitudeDeckCauchyData period)
-    (winding : Int) (parameter : CanonicalLatitudeTubularCollar) :
-    data.tubularLocalExtension (winding +ᵥ parameter) =
-      data.tubularLocalExtension parameter := by
-  change data.tubularLocalExtension
+    (winding : Int) (parameter : CanonicalLatitudeTubularCollar period) :
+    data.tubularLocalExtension period (winding +ᵥ parameter) =
+      data.tubularLocalExtension period parameter := by
+  change data.tubularLocalExtension period
       ((canonicalLatitudeTubularDeckEquiv period ^ winding) parameter) = _
-  induction winding using Int.induction_on with
+  induction winding using Int.induction_on generalizing parameter with
   | zero =>
       simp
   | succ winding ih =>
       rw [zpow_add_one]
-      change data.tubularLocalExtension
-          ((canonicalLatitudeTubularDeckEquiv period ^ winding)
+      change data.tubularLocalExtension period
+          ((canonicalLatitudeTubularDeckEquiv period ^ (winding : Int))
             (canonicalLatitudeTubularDeckEquiv period parameter)) = _
       rw [ih (canonicalLatitudeTubularDeckEquiv period parameter)]
-      exact data.tubularLocalExtension_deck parameter
+      exact data.tubularLocalExtension_deck period parameter
   | pred winding ih =>
       rw [zpow_sub_one]
-      change data.tubularLocalExtension
+      change data.tubularLocalExtension period
           ((canonicalLatitudeTubularDeckEquiv period ^ (-(winding : Int)))
             ((canonicalLatitudeTubularDeckEquiv period).symm parameter)) = _
       rw [ih ((canonicalLatitudeTubularDeckEquiv period).symm parameter)]
-      exact data.tubularLocalExtension_deck_inv parameter
+      exact data.tubularLocalExtension_deck_inv period parameter
 
 /-- Descent to the genuine tubular collar quotient. -/
-def tubularDescend
+def _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularDescend
     (data : CanonicalLatitudeDeckCauchyData period) :
     CanonicalLatitudeTubularCollarQuotient period → Real :=
-  Quotient.lift data.tubularLocalExtension
+  Quotient.lift (data.tubularLocalExtension period)
     (fun first second hOrbit => by
-      change AddAction.orbitRel Int CanonicalLatitudeTubularCollar
+      change AddAction.orbitRel Int (CanonicalLatitudeTubularCollar period)
         first second at hOrbit
       rw [AddAction.orbitRel_apply, AddAction.mem_orbit_iff] at hOrbit
       rcases hOrbit with ⟨winding, hWinding⟩
       rw [← hWinding]
-      exact data.tubularLocalExtension_vadd winding second)
+      exact data.tubularLocalExtension_vadd period winding second)
 
-@[simp] theorem tubularDescend_mk
+@[simp] theorem _root_.JanusFormal.P0EFTJanusMappingTorusCanonicalLatitudeCauchyJetCollarQuotient4D.CanonicalLatitudeDeckCauchyData.tubularDescend_mk
     (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
-    data.tubularDescend
+    (parameter : CanonicalLatitudeTubularCollar period) :
+    data.tubularDescend period
         (canonicalLatitudeTubularCollarMk period parameter) =
-      data.tubularLocalExtension parameter :=
+      data.tubularLocalExtension period parameter :=
   rfl
-
-end CanonicalLatitudeDeckCauchyData
 
 /-- Physical tubular image. -/
 def canonicalLatitudeTubularBulkSet : Set (EffectiveQuotient period hPeriod) :=
@@ -130,13 +127,13 @@ def canonicalLatitudeTubularCollarEquivBulkSet :
 
 /-- Physical image point represented by one tubular parameter. -/
 def canonicalLatitudeTubularBulkPoint
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularBulkSet period hPeriod :=
   canonicalLatitudeTubularCollarEquivBulkSet period hPeriod
     (canonicalLatitudeTubularCollarMk period parameter)
 
 @[simp] theorem canonicalLatitudeTubularBulkPoint_val
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     (canonicalLatitudeTubularBulkPoint period hPeriod parameter :
       EffectiveQuotient period hPeriod) =
       canonicalLatitudeTubularPhysicalMap period hPeriod parameter :=
@@ -146,15 +143,15 @@ def canonicalLatitudeTubularBulkPoint
 def canonicalLatitudeTubularBulkField
     (data : CanonicalLatitudeDeckCauchyData period)
     (point : canonicalLatitudeTubularBulkSet period hPeriod) : Real :=
-  data.tubularDescend
+  data.tubularDescend period
     ((canonicalLatitudeTubularCollarEquivBulkSet period hPeriod).symm point)
 
 @[simp] theorem canonicalLatitudeTubularBulkField_point
     (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeTubularBulkField period hPeriod data
         (canonicalLatitudeTubularBulkPoint period hPeriod parameter) =
-      data.tubularLocalExtension parameter := by
+      data.tubularLocalExtension period parameter := by
   unfold canonicalLatitudeTubularBulkField canonicalLatitudeTubularBulkPoint
   rw [(canonicalLatitudeTubularCollarEquivBulkSet
     period hPeriod).symm_apply_apply]
@@ -164,19 +161,20 @@ def canonicalLatitudeTubularBulkField
 elsewhere. -/
 def canonicalLatitudeCauchyJetGlobalCandidate
     (data : CanonicalLatitudeDeckCauchyData period)
-    (point : EffectiveQuotient period hPeriod) : Real :=
-  if hPoint : point ∈ canonicalLatitudeTubularBulkSet period hPeriod then
-    canonicalLatitudeTubularBulkField period hPeriod data ⟨point, hPoint⟩
-  else 0
+    (point : EffectiveQuotient period hPeriod) : Real := by
+  classical
+  exact if hPoint : point ∈ canonicalLatitudeTubularBulkSet period hPeriod then
+      canonicalLatitudeTubularBulkField period hPeriod data ⟨point, hPoint⟩
+    else 0
 
 /-- On every tubular representative, the global candidate is the exact local
 Cauchy expression. -/
 theorem canonicalLatitudeCauchyJetGlobalCandidate_tubular
     (data : CanonicalLatitudeDeckCauchyData period)
-    (parameter : CanonicalLatitudeTubularCollar) :
+    (parameter : CanonicalLatitudeTubularCollar period) :
     canonicalLatitudeCauchyJetGlobalCandidate period hPeriod data
         (canonicalLatitudeTubularPhysicalMap period hPeriod parameter) =
-      data.tubularLocalExtension parameter := by
+      data.tubularLocalExtension period parameter := by
   let quotientPoint := canonicalLatitudeTubularCollarMk period parameter
   have hMem : canonicalLatitudeTubularPhysicalMap period hPeriod parameter ∈
       canonicalLatitudeTubularBulkSet period hPeriod := by
@@ -206,7 +204,7 @@ theorem canonicalLatitudeCauchyJetGlobalCandidate_slice_eventuallyEq
       Set.Ioo (-(Real.pi / 2)) (Real.pi / 2) := by
     constructor <;> nlinarith [Real.pi_pos]
   filter_upwards [isOpen_Ioo.mem_nhds hZero] with normal hNormal
-  let parameter : CanonicalLatitudeTubularCollar :=
+  let parameter : CanonicalLatitudeTubularCollar period :=
     (base, ⟨normal, hNormal⟩)
   have hCandidate := canonicalLatitudeCauchyJetGlobalCandidate_tubular
     period hPeriod data parameter
@@ -225,8 +223,8 @@ theorem canonicalLatitudeCauchyJetGlobalCandidate_slice_eventuallyEq
         (quotientNormalLatitude period hPeriod
           (canonicalLatitudeAnchor period hPeriod base) 0) =
       data.value base := by
-  have hLocal := data |> canonicalLatitudeCauchyJetGlobalCandidate_slice_eventuallyEq
-    period hPeriod base
+  have hLocal := canonicalLatitudeCauchyJetGlobalCandidate_slice_eventuallyEq
+    period hPeriod data base
   rw [hLocal.eq_of_nhds]
   exact canonicalLatitudeLocalCauchyExtensionSlice_zero
     (data.value, data.normal) base

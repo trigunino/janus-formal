@@ -37,6 +37,7 @@ open P0EFTJanusMappingTorusScalarCompletedBoundaryTripleShiftedForm4D
 universe u r
 
 variable (period : Real) (hPeriod : period ≠ 0)
+variable {massSquared : Real}
 variable {Regularity : Type r}
   [NormedAddCommGroup Regularity] [NormedSpace Real Regularity]
   [CompleteSpace Regularity]
@@ -79,6 +80,7 @@ def toCanonicalAutomaticSixCoefficientAnalyticData
     CanonicalPhysicalScalarCanonicalAutomaticSixCoefficientAnalyticData
       period hPeriod massSquared (Regularity := Regularity) where
   boundary := analytic.boundary.toCanonicalAutomaticSixCoefficientPDEData
+    period hPeriod
   condition := analytic.condition
   adjointApproximation := analytic.adjointApproximation
   referenceParameter := analytic.referenceParameter
@@ -176,9 +178,10 @@ theorem certificate
         period hPeriod).IsOpenPosMeasure ∧
       Function.Surjective
         (P0EFTJanusMappingTorusScalarHilbertGreenCoreCompletion4D.canonicalScalarGreenCoreCompletedBoundaryTrace
-          analytic.boundary.geometric.greenCore.core
-          (analytic.boundary.completedInputs.traceBound
-            analytic.boundary.geometric.greenCore)) ∧
+          (analytic.boundary.geometric.greenCore period hPeriod).core
+          ((analytic.boundary.completedInputs period hPeriod).traceBound
+            period hPeriod
+            (analytic.boundary.geometric.greenCore period hPeriod))) ∧
       analytic.boundary.triple.actualAdjointDomain analytic.condition =
         analytic.boundary.triple.realizationDomain analytic.condition ∧
       (∀ spectralParameter : Real,
@@ -197,7 +200,8 @@ theorem certificate
             analytic.condition eigenvalue →
           analytic.referenceParameter ≤ eigenvalue) :=
   ⟨analytic.boundary.geometric.physicalMeasureOpenPositive,
-    analytic.toCanonicalAutomaticSixCoefficientAnalyticData.certificate.1,
+    (analytic.toCanonicalAutomaticSixCoefficientAnalyticData period hPeriod
+      |>.certificate period hPeriod).1,
     analytic.actualAdjointDomain_eq period hPeriod,
     analytic.fredholmAlternative period hPeriod,
     analytic.finiteDimensional_operatorEigenspace period hPeriod,

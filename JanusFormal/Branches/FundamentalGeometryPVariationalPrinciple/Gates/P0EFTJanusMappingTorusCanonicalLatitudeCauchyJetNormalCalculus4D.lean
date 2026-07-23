@@ -103,16 +103,20 @@ theorem deriv_canonicalLatitudeLocalCauchyExtensionSlice
     (base : CanonicalLatitudeBase) (normal : Real) :
     deriv (canonicalLatitudeLocalCauchyExtensionSlice data base) normal =
       canonicalLatitudeLocalCauchyExtensionNormalDeriv data base normal := by
-  unfold canonicalLatitudeLocalCauchyExtensionSlice
-    canonicalLatitudeLocalCauchyExtension
-    canonicalLatitudeLocalCauchyExtensionNormalDeriv
-    canonicalLatitudeCauchyValueProfileDeriv
-    canonicalLatitudeCauchyNormalProfileDeriv
-  have hValue :=
-    canonicalLatitudeCauchyValueProfile_contDiff.differentiable.differentiableAt
+  change deriv (fun value : Real =>
+      canonicalLatitudeCauchyValueProfile value * data.1 base +
+        canonicalLatitudeCauchyNormalProfile value * data.2 base) normal =
+    deriv canonicalLatitudeCauchyValueProfile normal * data.1 base +
+      deriv canonicalLatitudeCauchyNormalProfile normal * data.2 base
+  have hValue : HasDerivAt canonicalLatitudeCauchyValueProfile
+      (deriv canonicalLatitudeCauchyValueProfile normal) normal :=
+    (canonicalLatitudeCauchyValueProfile_contDiff.differentiable (by simp))
+      |>.differentiableAt
       |>.hasDerivAt
-  have hNormal :=
-    canonicalLatitudeCauchyNormalProfile_contDiff.differentiable.differentiableAt
+  have hNormal : HasDerivAt canonicalLatitudeCauchyNormalProfile
+      (deriv canonicalLatitudeCauchyNormalProfile normal) normal :=
+    (canonicalLatitudeCauchyNormalProfile_contDiff.differentiable (by simp))
+      |>.differentiableAt
       |>.hasDerivAt
   exact ((hValue.mul_const (data.1 base)).add
     (hNormal.mul_const (data.2 base))).deriv
@@ -125,15 +129,18 @@ theorem deriv_canonicalLatitudeLocalCauchyExtensionNormalDeriv
     deriv (canonicalLatitudeLocalCauchyExtensionNormalDeriv data base) normal =
       canonicalLatitudeLocalCauchyExtensionNormalSecondDeriv
         data base normal := by
-  unfold canonicalLatitudeLocalCauchyExtensionNormalDeriv
-    canonicalLatitudeLocalCauchyExtensionNormalSecondDeriv
-    canonicalLatitudeCauchyValueProfileSecondDeriv
-    canonicalLatitudeCauchyNormalProfileSecondDeriv
-  have hValue :=
-    canonicalLatitudeCauchyValueProfileDeriv_contDiff.differentiable
+  change deriv (fun value : Real =>
+      canonicalLatitudeCauchyValueProfileDeriv value * data.1 base +
+        canonicalLatitudeCauchyNormalProfileDeriv value * data.2 base) normal =
+    deriv canonicalLatitudeCauchyValueProfileDeriv normal * data.1 base +
+      deriv canonicalLatitudeCauchyNormalProfileDeriv normal * data.2 base
+  have hValue : HasDerivAt canonicalLatitudeCauchyValueProfileDeriv
+      (deriv canonicalLatitudeCauchyValueProfileDeriv normal) normal :=
+    (canonicalLatitudeCauchyValueProfileDeriv_contDiff.differentiable (by simp))
       |>.differentiableAt.hasDerivAt
-  have hNormal :=
-    canonicalLatitudeCauchyNormalProfileDeriv_contDiff.differentiable
+  have hNormal : HasDerivAt canonicalLatitudeCauchyNormalProfileDeriv
+      (deriv canonicalLatitudeCauchyNormalProfileDeriv normal) normal :=
+    (canonicalLatitudeCauchyNormalProfileDeriv_contDiff.differentiable (by simp))
       |>.differentiableAt.hasDerivAt
   exact ((hValue.mul_const (data.1 base)).add
     (hNormal.mul_const (data.2 base))).deriv
