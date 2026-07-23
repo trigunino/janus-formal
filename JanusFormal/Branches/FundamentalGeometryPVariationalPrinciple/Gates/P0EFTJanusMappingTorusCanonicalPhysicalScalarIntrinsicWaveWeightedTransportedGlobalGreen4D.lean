@@ -8,9 +8,13 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Intrinsic Green data from the canonical local-divergence identity
 
 The factor-two transport and all integrability statements are constructive.
-The sole remaining Stokes input is stated directly as the integral identity
-between the canonical local divergence and the cut-bulk divergence measure.
-The weighted global cancellation is then derived.
+This module retains the unrestricted off-shell Stokes identity between the
+canonical local divergence and the cut-bulk divergence measure as an explicit
+interface.  The weighted global cancellation is then derived from that input.
+
+Program P does not require this all-smooth-fields interface: its homogeneous
+Dirichlet on-shell specialization is theorem-generated in
+`P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBoundaryTangentGreenStokes4D`.
 -/
 
 namespace JanusFormal
@@ -53,7 +57,7 @@ structure CanonicalPhysicalScalarIntrinsicWaveGlobalGreenStokesData
       cutBulkGlobalOrientedScalarCurrentIntegral
         period hPeriod field test
 
-/-- Intrinsic wave plus the sole remaining canonical Stokes identity. -/
+/-- Intrinsic wave plus the unrestricted off-shell canonical Stokes identity. -/
 structure CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreenData
     (massSquared : Real) where
   intrinsicWave : CanonicalPhysicalScalarIntrinsicWaveData period hPeriod
@@ -388,8 +392,8 @@ theorem global_cancellation
       period hPeriod (massSquared := massSquared) field test]
   ring
 
-/-- Build the weighted global Green package from the canonical local-divergence
-identity. This exposes that identity as the sole remaining geometric input. -/
+/-- Build the weighted global Green package from the unrestricted off-shell
+canonical local-divergence identity. -/
 def ofLocalDivergenceIntegral
     (intrinsicWave : CanonicalPhysicalScalarIntrinsicWaveData period hPeriod)
     (localDivergence_integral_eq_cutBulk :
@@ -422,8 +426,8 @@ def ofCanonicalIntrinsicWave
     (CanonicalPhysicalScalarIntrinsicWaveData.canonical period hPeriod)
     localDivergence_integral_eq_cutBulk
 
-/-- Since intrinsic wave naturality is canonical, inhabiting the weighted
-package is exactly the remaining local-divergence/cut-bulk identity. -/
+/-- Since intrinsic wave naturality is canonical, inhabiting this unrestricted
+off-shell package is equivalent to its local-divergence/cut-bulk identity. -/
 theorem nonempty_iff_localDivergence_integral_eq_cutBulk :
     Nonempty
         (CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreenData
