@@ -1,0 +1,64 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBPreferredClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarRemainingAnalyticInputs4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarCoerciveBoundaryProblem4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarInterfaceGluing4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarTwoSectorAnalyticClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphFiniteCoerciveBoundaryTripleFamily4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphBoundaryQuantumEffectiveAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphBoundaryGalerkin4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphFiniteInterfaceDeterminant4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphRobinRelativeDeterminant4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphBoundaryMaslovMorseIndex4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarGraphRobinResolventComparison4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianSpectralZeta4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianCourantFischer4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianPitchforkBifurcation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarPitchforkPotential4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianBirmanSchwingerNeumannSeries4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianFiniteModeHeatDynamics4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianFiniteModeWaveDynamics4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarLagrangianGaussianGeneratingFunctional4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarTwoSectorLagrangianVariationalProblem4D
+
+/-!
+# Full scalar analytic architecture for Program P
+
+This head imports the complete post-Green--Stokes scalar architecture developed
+on `dev-branch`, including the corrected Program P-B physical closure:
+
+* physical Euler residual on the canonical total atlas;
+* concrete value and normal traces on the oriented cut boundary;
+* first-sheet L2 Hilbert Cauchy trace and exact Green pairing;
+* dense smooth Green core rather than impossible smooth L2 surjectivity;
+* graph completion with a surjective completed trace;
+* closed Dirichlet, Neumann, scalar Robin and operator-valued Robin domains;
+* actual Hilbert self-adjointness from maximal regularity;
+* compact resolvent, Fredholm alternative and finite eigenvalue multiplicity;
+* Dirichlet resolvent, Poisson, Weyl/DtN and Calderon constructions;
+* Schur complements, Krein formulas and relative Robin resolvents;
+* one- and two-bulk reduced boundary actions and coercive minimization;
+* Rayleigh, Courant--Fischer, Morse and Maslov formulations;
+* spectral zeta, Fredholm determinant and one-loop interfaces;
+* PT symmetry, two-sector exchange and quadratic diagonalization;
+* heat and wave evolution on finite spectral packets;
+* bounded perturbations, Birman--Schwinger and Neumann series;
+* Lyapunov--Schmidt reduction and pitchfork normal form.
+
+The file deliberately adds no new axiom and no global instance.  Its purpose is
+to provide one eventual build target and one import boundary for downstream
+physical instantiation.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusMappingTorusScalarProgramPFullAnalyticArchitecture4D
+
+set_option autoImplicit false
+noncomputable section
+
+/-- Marker theorem for the aggregate import head. -/
+theorem scalarProgramPFullAnalyticArchitecture_available : True :=
+  trivial
+
+end
+end P0EFTJanusMappingTorusScalarProgramPFullAnalyticArchitecture4D
+end JanusFormal

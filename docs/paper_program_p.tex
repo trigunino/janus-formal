@@ -1,0 +1,465 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sact}{\mathcal{S}}
+\newcommand{\Inv}{\mathcal{I}}
+\newcommand{\Pair}{\mathcal{B}}
+
+\title{Machine-Checked Variational Reconstruction and\\
+Non-Uniqueness Certificates for Janus-Type Models}
+\author{}
+\date{Working draft -- \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We isolate and formally verify four elementary but consequential steps in the
+variational analysis of Janus-type geometric models. First, fixed metric or
+symplectic data on a moduli proxy do not select a potential or Hamiltonian.
+Second, a two-component linear source is the Hessian of a quadratic potential
+if and only if its coefficient matrix is symmetric; the remaining affine
+ambiguity is removed by a critical-point condition and one normalization.
+Third, exact elimination of a scalar bulk mode from a finite-rank quadratic
+parent action produces a symmetric Schur-complement kernel and hence a
+formally self-adjoint reduced operator. Fourth, invariant pairing families are
+closed under multiplication by invariant scalar functions, so pointwise
+multiplicity one does not imply a single constant global coupling. These
+statements are formalized in Lean 4 and compile against Mathlib. Their purpose
+is diagnostic: they separate action selection, inverse variationality,
+reduction and global coupling classification. No full Janus field equation,
+renormalized action or cosmological prediction is derived here.
+\end{abstract}
+
+\section{Introduction}
+
+The passage from geometry to dynamics contains several logically distinct
+problems. A metric on a parameter space can define gradients once a functional
+is known, but it does not normally choose that functional. A symmetric field
+equation can be compatible with a variational principle without fixing its
+normalization or boundary completion. Eliminating auxiliary or bulk variables
+can preserve reciprocity, yet this says nothing about whether the parent
+theory was physically selected. Finally, a unique invariant tensor at one
+background need not imply a unique coupling over the full background space.
+
+These distinctions are relevant to bimetric cosmology and, in particular, to
+Janus-type models in which two metric sectors and their interaction must be
+specified variationally \cite{PetitDAgostini2015,PetitMargnatZejli2024}. The
+present paper does not propose a replacement action. It asks a narrower
+question: which finite-dimensional statements can be made exact, checked by a
+small trusted kernel, and used as acceptance or rejection tests for later
+field-theoretic constructions?
+
+The inverse problem of the calculus of variations is classically described by
+Helmholtz conditions and, in local field theory, by the variational bicomplex
+\cite{Anderson1992,Olver1993}. Natural differential operators are likewise
+organized by finite jets, equivariance and invariant theory
+\cite{KolarMichorSlovak1993}. Our contribution is not a new general theorem in
+those subjects. It is a machine-checked decomposition of four failure modes
+that recur when one tries to infer a physical action from geometric data.
+
+The formalization uses Lean 4 \cite{DeMouraUllrich2021} and Mathlib
+\cite{Mathlib2020}. All statements reported as verified are theorem objects in
+the accompanying repository. The finite models are deliberately simple: this
+makes the logical conclusions transparent, while preventing them from being
+mistaken for a completed continuum theory.
+
+\section{Scope and formal method}
+
+The results are certificates about implications between explicitly declared
+data. They do not certify that the corresponding Janus manifold, bundles,
+boundary conditions or quantum fields have been constructed.
+
+We distinguish three levels:
+\begin{enumerate}
+  \item \emph{algebraic certificate}: a theorem proved in Lean for a finite or
+        abstract model;
+  \item \emph{field-theoretic interpretation}: the continuum statement that
+        motivates the certificate;
+  \item \emph{physical specialization}: a construction using the actual
+        fields, geometry and boundary data of a Janus model.
+\end{enumerate}
+Only the first level is claimed in this paper. The second is discussed as an
+interpretation, and the third remains future work.
+
+The checked source is organized as four independent Lean modules. Every module
+imports Mathlib, disables implicit variables, states its data structures and
+proves the advertised result without axioms added by this manuscript. The
+repository build command is given in Section~\ref{sec:reproducibility}.
+
+\section{Geometry does not select a potential}
+\label{sec:moduli}
+
+Consider a one-dimensional parameter $q\in\R$ equipped with the positive
+metric
+\begin{equation}
+  g_w = w\,dq^2, \qquad w>0.
+\end{equation}
+For every $a\in\R$, define
+\begin{equation}
+  V_a(q)=\frac{a}{2}q^2,
+  \qquad
+  \operatorname{grad}_{g_w}V_a(q)=\frac{a}{w}q.
+\end{equation}
+The metric is unchanged when $a$ changes. At $q=1$, the choices $a=1$ and
+$a=2$ give distinct potential values and distinct gradients.
+
+Likewise, let a non-degenerate constant two-form be represented by a scale
+$s\ne0$. A Hamiltonian with coefficient $a$ produces the proxy slope
+\begin{equation}
+  X_a(q)=\frac{a}{s}q.
+\end{equation}
+The same symplectic scale supports distinct Hamiltonian slopes.
+
+\begin{proposition}[Moduli-geometry non-selection]
+A fixed positive metric does not determine a unique potential or gradient, and
+a fixed non-degenerate symplectic scale does not determine a unique
+Hamiltonian, even in the one-dimensional proxies above.
+\end{proposition}
+
+\begin{proof}
+At $q=1$, one has $V_1(1)=1/2\ne1=V_2(1)$. Since $w>0$,
+$1/w\ne2/w$. The symplectic statement follows similarly from $s\ne0$.
+These inequalities are proved in Lean as
+\path{same_metric_supports_distinct_potentials},
+\path{same_metric_supports_distinct_gradients}, and
+\path{same_symplectic_form_supports_distinct_hamiltonians}.
+\end{proof}
+
+The result is intentionally modest. It does not say that geometry is
+irrelevant. Geometry restricts admissible functionals and turns a selected
+functional into a flow. It says only that the map
+\begin{equation}
+  (\text{metric},\text{symplectic form},\text{complex structure})
+  \longmapsto \text{one action}
+\end{equation}
+requires additional selection data.
+
+\section{Quadratic inverse variational problem}
+\label{sec:helmholtz}
+
+Let a linear two-component source be represented by
+\begin{equation}
+  H=
+  \begin{pmatrix}
+    h_{xx} & h_{xy}\\
+    h_{yx} & h_{yy}
+  \end{pmatrix}.
+\end{equation}
+We ask whether $H$ is the Hessian of a quadratic potential
+\begin{equation}
+  V(x,y)=\frac{a}{2}x^2+bxy+\frac{c}{2}y^2+\ell_xx+\ell_yy+k.
+  \label{eq:quadratic-potential}
+\end{equation}
+
+\begin{theorem}[Finite Helmholtz criterion]
+There exists a potential of the form \eqref{eq:quadratic-potential} whose
+Hessian is $H$ if and only if
+\begin{equation}
+  h_{xy}=h_{yx}.
+  \label{eq:self-adjoint}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Necessity follows because mixed second derivatives of
+\eqref{eq:quadratic-potential} are both $b$. Conversely, if
+\eqref{eq:self-adjoint} holds, choose
+\begin{equation}
+  a=h_{xx},\qquad b=h_{xy},\qquad c=h_{yy},
+  \qquad \ell_x=\ell_y=k=0.
+\end{equation}
+The resulting Hessian equals $H$. Lean proves the equivalence as
+\path{helmholtz_realizability_iff} and the obstruction for a non-symmetric
+operator as \path{nonsymmetric_operator_is_not_variational}.
+\end{proof}
+
+The Hessian does not determine the affine part. If two quadratic potentials
+have the same Hessian, their difference is
+\begin{equation}
+  \Delta V(x,y)=\Delta\ell_x x+\Delta\ell_y y+\Delta k.
+  \label{eq:affine-ambiguity}
+\end{equation}
+This is checked by \path{equal_hessian_difference_affine}.
+
+\begin{corollary}[Normalized uniqueness]
+Assume \eqref{eq:self-adjoint}. Among potentials with zero linear terms and
+$V(0,0)=0$, there exists exactly one potential with Hessian $H$.
+\end{corollary}
+
+\begin{proof}
+Equation~\eqref{eq:affine-ambiguity} shows that the zero-linear and zero-value
+conditions remove the complete affine ambiguity. The Lean theorem is
+\path{pt_normalized_reconstruction_unique_existence}. In the formal module,
+``PT-even'' is used only for the coefficient condition
+$\ell_x=\ell_y=0$; no continuum PT transformation is inferred from it.
+\end{proof}
+
+In a field theory, formal self-adjointness is the local linear shadow of the
+Helmholtz conditions. It is generally insufficient for a global action:
+boundary terms, gauge identities, regularity and variational cohomology must
+also be controlled \cite{Anderson1992,Olver1993}.
+
+\section{Parent reduction and the Schur complement}
+\label{sec:schur}
+
+Let $I$ be a finite nonempty index set, let $X\in\R$ be a scalar bulk
+variable, and let $q=(q_i)_{i\in I}$ be boundary variables. Consider
+\begin{equation}
+  \Sact(X,q)
+  =\frac{a}{2}X^2+X\sum_i c_iq_i
+   +\frac12\sum_{i,j}q_iB_{ij}q_j,
+  \label{eq:parent-action}
+\end{equation}
+where $a\ne0$ and $B_{ij}=B_{ji}$.
+
+The bulk Euler equation is
+\begin{equation}
+  \frac{\partial\Sact}{\partial X}=aX+\sum_i c_iq_i=0,
+\end{equation}
+with unique solution
+\begin{equation}
+  X_*(q)=-\frac{1}{a}\sum_i c_iq_i.
+\end{equation}
+Substitution into \eqref{eq:parent-action} yields
+\begin{equation}
+  \Sact_{\mathrm{red}}(q)
+  =\frac12\sum_{i,j}q_i
+  \left(B_{ij}-\frac{c_ic_j}{a}\right)q_j.
+  \label{eq:reduced-action}
+\end{equation}
+
+\begin{theorem}[Schur-reduction certificate]
+For the parent action \eqref{eq:parent-action}:
+\begin{enumerate}
+  \item the stationary bulk value $X_*(q)$ exists and is unique;
+  \item the reduced kernel
+  \begin{equation}
+    H^{\mathrm{red}}_{ij}=B_{ij}-\frac{c_ic_j}{a}
+  \end{equation}
+  is symmetric;
+  \item the associated finite-dimensional reduced operator is formally
+        self-adjoint in the standard pairing;
+  \item Equation~\eqref{eq:reduced-action} is the exact on-shell action.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first statement is division by $a\ne0$. Symmetry follows from symmetry of
+$B$ and of $c_ic_j$. Reindexing the finite double sum proves formal
+self-adjointness. Completing the square gives
+\begin{equation}
+  \Sact(X,q)-\Sact_{\mathrm{red}}(q)
+  =\frac{a}{2}\bigl(X-X_*(q)\bigr)^2,
+\end{equation}
+which proves the on-shell identity. The corresponding Lean results are:
+\begin{itemize}
+  \item \path{stationary_bulk_actual_exists_unique};
+  \item \path{reduced_boundary_hessian_symmetric};
+  \item \path{reduced_hessian_formally_self_adjoint};
+  \item \path{parent_action_on_shell};
+  \item \path{parent_action_sub_reduced_action_eq_square}.
+\end{itemize}
+\end{proof}
+
+For $a>0$, the square identity also makes $X_*(q)$ the unique global minimizer
+at fixed $q$; for $a<0$, it is the unique global maximizer. These statements
+are checked separately in the formal source. The result explains why
+reciprocity survives exact quadratic elimination. It does not select the
+parent coefficients $a,c_i,B_{ij}$ and does not construct a bulk PDE or its
+boundary functional.
+
+\section{Pointwise pairings versus global couplings}
+\label{sec:pairings}
+
+Let a symmetry act on a background space $\mathcal{B}$ and a field space
+$E$. An invariant scalar is a function $f:\mathcal{B}\to\R$ constant on
+symmetry orbits. An invariant pairing family is a map
+\begin{equation}
+  \beta:\mathcal{B}\times E\times E\longrightarrow\R
+\end{equation}
+that is unchanged when the background and both field arguments are transformed
+simultaneously.
+
+\begin{theorem}[Invariant-coefficient module]
+If $f$ is an invariant scalar and $\beta$ is an invariant pairing family, then
+\begin{equation}
+  (f\beta)_b(u,v)=f(b)\beta_b(u,v)
+\end{equation}
+is an invariant pairing family.
+\end{theorem}
+
+\begin{proof}
+For a symmetry element $g$, invariance gives $f(gb)=f(b)$ and
+$\beta_{gb}(gu,gv)=\beta_b(u,v)$. Multiplication gives the result. This is
+\path{scale_pairing_preserves_invariance} in Lean.
+\end{proof}
+
+Thus the global pairing space $\Pair$ is naturally a module over the algebra
+$\Inv$ of invariant scalar functions. It need not be a one-dimensional vector
+space over constant scalars.
+
+The formal counterexample takes $\mathcal{B}=\{0,1\}$ with trivial symmetry,
+$E=\R$, and
+\begin{equation}
+  \beta_b(u,v)=uv,
+  \qquad
+  f(0)=0,\quad f(1)=1,
+  \qquad
+  \gamma=f\beta.
+\end{equation}
+Both $\beta$ and $\gamma$ are invariant and have the same pointwise pairing
+shape. If $\gamma=c\beta$ for one constant $c$, evaluation at $b=0$, $u=v=1$
+forces $c=0$, whereas evaluation at $b=1$ forces $c=1$.
+
+\begin{corollary}[Failure of constant global uniqueness]
+Pointwise multiplicity one of the pairing shape does not imply that every
+global invariant pairing is one constant multiple of a chosen pairing.
+\end{corollary}
+
+The contradiction is checked by
+\path{varying_pairing_is_not_one_constant_multiple} and packaged by
+\path{pointwise_shape_does_not_force_global_constant_scale}. In a geometric
+application, possible invariant coefficients include scalar contractions of
+curvature, second fundamental forms or gauge curvature. Their actual existence
+and smooth extension across isotropy strata must be proved in the physical
+category.
+
+\section{What the certificates imply -- and what they do not}
+
+The four results form a logical sequence, but not a derivation of a Janus
+action:
+\begin{equation}
+\begin{aligned}
+\text{geometric data}
+&\not\Rightarrow \text{selected functional},\\
+\text{symmetric linear source}
+&\Rightarrow \text{quadratic primitive up to affine terms},\\
+\text{specified quadratic parent}
+&\Rightarrow \text{reciprocal reduced action},\\
+\text{pointwise invariant shape}
+&\not\Rightarrow \text{one constant global coupling}.
+\end{aligned}
+\end{equation}
+
+For our view of the physical world, the cautious interpretation is useful.
+Symmetry and geometry may strongly restrict laws without uniquely choosing
+them. Apparent constants can only be promoted to universal constants after
+background-dependent invariant coefficients have been excluded or fixed.
+Likewise, a well-behaved reduced theory can inherit its consistency from a
+parent action, while the physical origin of that parent remains an independent
+question.
+
+Nothing here establishes two metric sectors in nature, negative masses, a
+specific interaction tensor, anomaly cancellation, stability of the full
+field space, or an absolute cosmological scale. Those claims require concrete
+geometric and analytic constructions followed by observational tests.
+
+\section{Reproducibility}
+\label{sec:reproducibility}
+
+The formal statements are contained in the following modules:
+\begin{itemize}
+  \item \path{P0EFTJanusModuliGeometryNoGo.lean};
+  \item \path{P0EFTJanusUniversalActionProperty.lean};
+  \item \path{P0EFTJanusHessianHelmholtzReconstruction.lean};
+  \item \path{P0EFTJanusFiniteRankParentSchurHelmholtz.lean};
+  \item \path{P0EFTJanusInvariantCoefficientModule.lean}.
+\end{itemize}
+They are imported by focused Program P heads in the accompanying repository.
+The principal target is
+\begin{quote}\small
+\path{JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple}.
+\end{quote}
+The invariant-coefficient module is checked through the focused target
+\begin{quote}\small
+\path{JanusFormal.Branches.FundamentalGeometryPEInvariantPairings}.
+\end{quote}
+Both targets build successfully. This draft uses repository commit
+\texttt{f4f5e77e}, Lean~4.31.0 and Mathlib revision \texttt{fabf563a}. The
+release archive will retain the corresponding full commit identifiers.
+
+\section{Conclusion}
+
+We have given machine-checked finite-dimensional certificates for four
+separate issues in variational reconstruction: non-selection of a functional
+by moduli geometry, the symmetric-Hessian criterion and its affine ambiguity,
+exact Schur reduction of a quadratic parent action, and the module structure
+of global invariant pairings. The results are elementary by design. Their
+scientific value lies in preventing distinct questions from being conflated
+when a geometric model is promoted to a dynamical theory.
+
+The next mathematically substantive step is not to enlarge these proxies, but
+to instantiate them on a concrete Janus field bundle with an explicit local
+Euler source, admissible boundary data and a proved global descent theorem.
+Only then can Helmholtz, Noether, anomaly and normalization conditions test a
+physical action rather than its finite-dimensional shadow.
+
+\begin{thebibliography}{9}
+\small
+\setlength{\itemsep}{0.35em}
+\vspace{0.5em}
+
+\bibitem{Anderson1992}
+I.~M. Anderson,
+``Introduction to the variational bicomplex,''
+in \emph{Mathematical Aspects of Classical Field Theory},
+Contemporary Mathematics \textbf{132}, 51--73 (1992).
+\href{https://doi.org/10.1090/conm/132/1188434}{doi:10.1090/conm/132/1188434}.
+
+\bibitem{Olver1993}
+P.~J. Olver,
+\emph{Applications of Lie Groups to Differential Equations}, 2nd ed.,
+Springer, New York (1993).
+
+\bibitem{KolarMichorSlovak1993}
+I. Kol\'a\v{r}, P.~W. Michor and J. Slov\'ak,
+\emph{Natural Operations in Differential Geometry},
+Springer, Berlin (1993).
+
+\bibitem{PetitDAgostini2015}
+J.-P. Petit and G. D'Agostini,
+``Lagrangian derivation of the two coupled field equations in the Janus
+cosmological model,''
+\emph{Astrophysics and Space Science} \textbf{357}, 67 (2015).
+\href{https://doi.org/10.1007/s10509-015-2250-6}{doi:10.1007/s10509-015-2250-6}.
+
+\bibitem{PetitMargnatZejli2024}
+J.-P. Petit, F. Margnat and H. Zejli,
+``A bimetric cosmological model based on Andre\"i Sakharov's twin universe
+approach,''
+\emph{European Physical Journal C} \textbf{84}, 1226 (2024).
+\href{https://doi.org/10.1140/epjc/s10052-024-13569-w}{doi:10.1140/epjc/s10052-024-13569-w}.
+
+\bibitem{DeMouraUllrich2021}
+L. de Moura and S. Ullrich,
+``The Lean 4 theorem prover and programming language,''
+in \emph{Automated Deduction -- CADE 28}, LNCS \textbf{12699},
+625--635 (2021).
+\href{https://doi.org/10.1007/978-3-030-79876-5_37}{doi:10.1007/978-3-030-79876-5\_37}.
+
+\bibitem{Mathlib2020}
+The Mathlib Community,
+``The Lean mathematical library,''
+in \emph{Proceedings of CPP 2020}, 367--381 (2020).
+\href{https://doi.org/10.1145/3372885.3373824}{doi:10.1145/3372885.3373824}.
+
+\end{thebibliography}
+
+\end{document}

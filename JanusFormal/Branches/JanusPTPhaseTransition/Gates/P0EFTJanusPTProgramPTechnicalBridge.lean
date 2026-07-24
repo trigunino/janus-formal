@@ -3,6 +3,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCandidateAFunctionalVariation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceSecondDerivative
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarScalarRemainderEnergyIdentity4D
 
 namespace JanusFormal
 namespace P0EFTJanusPTProgramPTechnicalBridge
@@ -32,6 +33,12 @@ itself the renormalized Janus order-parameter potential. -/
 def circle_heat_trace_second_variation_is_nonnegative :=
   P0EFTJanusCircleHeatNuclearTraceSecondDerivative.circleHeatNuclearTraceRealSecondDerivative_nonnegative
 
+/-- The scalar remainder data produce an exact energy identity and its
+coercive estimate. This controls the analytic remainder without selecting a
+thermal vacuum or a critical temperature. -/
+def scalar_remainder_energy_identity_certificate :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData.ScalarRemainderEnergyIdentityData.certificate
+
 /-- On the smooth global D8 metric curve, P identifies the actual derivative
 of the integrated Candidate-A action under its explicit domination contract. -/
 def candidate_a_global_action_has_first_variation :=
@@ -58,6 +65,7 @@ structure PTBridgeBoundary where
   generalLorentzScalarVariationClosed : Prop
   scalarQuadraticRemainderClosed : Prop
   spectralHeatTraceConvexityClosed : Prop
+  scalarRemainderEnergyIdentityClosed : Prop
   renormalizedEffectivePotentialOpen : Prop
   physicalTemperatureLawOpen : Prop
   absoluteNormalizationOpen : Prop

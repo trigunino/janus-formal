@@ -173,6 +173,16 @@ with trivial kernel and index zero, and a square-zero smooth ultralocal BV
 model. It also supplies a periodic shifted-Sobolev coefficient model, a
 positive pullback Hessian and a physical quotient with the zero mode removed.
 `P0EFTJanusProgramPQuantumLLBridge.lean` imports these facts into A.
+Since the July 23 update, the bridge also imports the unconditional measured
+and metric Green--Stokes certificates on the actual physical on-shell boundary-
+tangent domain. P's full scalar compact-resolvent, spectral-zeta and determinant
+architecture is recorded as available, but remains conditional on supplying
+the elliptic/coercive realization and matching it to the physical LL Hessian.
+The bridge isolates that instantiation exactly into five obligations: LL
+Hessian/scalar-realization matching, graph elliptic estimate, six boundary
+`L²` residual operators, shifted coercivity and finite-coordinate Rellich.
+P explicitly treats these as independent of its Lorentzian principal symbol;
+claiming them without new analytic input would be incorrect.
 They do not yet identify the physical Sobolev fluctuation operator, compact
 resolvent, primed determinant, gauge fermion or derivative-dependent BV
 completion; consequently `beta_LL` and `gamma_LL` remain undetermined.

@@ -203,6 +203,7 @@ def smoothHolonomicFrameChart4OfLocalDiffeomorph
     SmoothHolonomicFrameChart4 period hPeriod where
   coordinateMap := coordinateMap
   coordinateMap_contMDiff := hMap.contMDiff
+  coordinateMap_isLocalDiffeomorph := hMap
   frame := coordinateFrame period hPeriod coordinateMap hMap
   frame_eq_coordinateDerivative :=
     coordinateFrame_eq_mfderiv period hPeriod coordinateMap hMap

@@ -3,6 +3,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeometricNormalJunction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarDirichletOrientedGreenStokesClosure4D
 
 namespace JanusFormal
 namespace P0EFTJanusCOProgramPTechnicalBridge
@@ -32,6 +33,12 @@ metric on the effective throat. -/
 def intrinsic_compact_object_throat_metric_is_nondegenerate :=
   P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D.intrinsicGeneralLorentzMetricThroatTrace_nondegenerate
 
+/-- The canonical scalar Dirichlet sector has a complete oriented and metric
+Green--Stokes certificate on the cut bulk. It supplies a rigorous scalar
+boundary condition, not a compact-object exterior solution. -/
+def scalar_dirichlet_green_stokes_closure :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarDirichletOrientedGreenStokesClosure4D.canonicalPhysicalScalarDirichletOrientedGreenStokesClosure_certificate
+
 /-- P now constructs an unconditional finite smooth spanning tangent family on
 the compact effective D8 quotient. -/
 theorem compact_object_d8_tangent_frame_exists
@@ -58,6 +65,7 @@ structure COBridgeBoundary where
   geometricNormalWeakBalanceClosed : Prop
   geometricRobinWeakBalanceClosed : Prop
   intrinsicThroatMetricNondegenerateClosed : Prop
+  scalarDirichletGreenStokesClosed : Prop
   staticEulerEquationsOpen : Prop
   signedMatterStressOpen : Prop
   junctionAndConversionLawOpen : Prop
