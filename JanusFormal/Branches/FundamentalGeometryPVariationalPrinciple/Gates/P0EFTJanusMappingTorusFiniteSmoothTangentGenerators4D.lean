@@ -225,6 +225,12 @@ theorem finiteTangentGeneratorWeight_continuous
     Continuous (finiteTangentGeneratorWeight period hPeriod patch) :=
   (tangentPartition period hPeriod patch).contMDiff.continuous
 
+theorem finiteTangentGeneratorWeight_contMDiff
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
+      (finiteTangentGeneratorWeight period hPeriod patch) :=
+  (tangentPartition period hPeriod patch).contMDiff
+
 theorem finiteTangentGeneratorWeight_sum_eq_one
     (point : EffectiveQuotient period hPeriod) :
     ∑ patch : FiniteTangentGeneratorPatch period hPeriod,

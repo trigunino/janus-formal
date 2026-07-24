@@ -76,6 +76,9 @@ structure ProgramStatus where
   llGhostOperatorDerived : Prop
   llBetaUnderdeterminationProved : Prop
   programPClassicalFredholmBVBridgeImported : Prop
+  programPOnShellGreenStokesBridgeImported : Prop
+  programPConditionalSpectralArchitectureImported : Prop
+  programPPhysicalEllipticObligationsIsolated : Prop
   llPrimedDeterminantInterfaceDerived : Prop
   pureSexticLoopOrderDerived : Prop
   gaugeSexticVertexBasisThroughSixDerived : Prop
@@ -151,6 +154,9 @@ def mathematicalQuantumProgramClosed (s : ProgramStatus) : Prop :=
   s.llGhostOperatorDerived /\
   s.llBetaUnderdeterminationProved /\
   s.programPClassicalFredholmBVBridgeImported /\
+  s.programPOnShellGreenStokesBridgeImported /\
+  s.programPConditionalSpectralArchitectureImported /\
+  s.programPPhysicalEllipticObligationsIsolated /\
   s.llPrimedDeterminantInterfaceDerived /\
   s.pureSexticLoopOrderDerived /\
   s.gaugeSexticVertexBasisThroughSixDerived /\
@@ -224,6 +230,9 @@ def honestQuantumFrontier (s : ProgramStatus) : Prop :=
   s.abelianGhostSymbolDerived /\
   s.llBetaUnderdeterminationProved /\
   s.programPClassicalFredholmBVBridgeImported /\
+  s.programPOnShellGreenStokesBridgeImported /\
+  s.programPConditionalSpectralArchitectureImported /\
+  s.programPPhysicalEllipticObligationsIsolated /\
   s.llPrimedDeterminantInterfaceDerived /\
   s.pureSexticLoopOrderDerived /\
   s.gaugeSexticVertexBasisThroughSixDerived /\

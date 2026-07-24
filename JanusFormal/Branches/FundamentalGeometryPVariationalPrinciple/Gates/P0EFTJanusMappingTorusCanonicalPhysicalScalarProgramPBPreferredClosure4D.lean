@@ -22,6 +22,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveFinalClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveStandardBoundaryFinalClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarStaticCoerciveVariationalClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1CoerciveVariationalClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFinitePatchRellichReduction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothRellichTransport4D
 
 /-!
 # Preferred physical scalar Program P-B closure
@@ -39,12 +43,25 @@ cut-bulk divergence vanishes by the proved Dirichlet boundary theorem.
 Therefore the exact local-divergence/cut-bulk identity is now unconditional on
 the physical on-shell domain. No new Stokes or boundary axiom is introduced.
 
-Compact resolvent, semibounded spectrum, variational minimization and Gaussian
-positivity remain available only through the explicitly conditional auxiliary
-elliptic/coercive package in
-`P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D`.
-Those conclusions are no longer advertised as consequences of the Lorentzian
-wave operator.
+Coercivity, source inversion, unique variational minimization, Gaussian
+positivity, self-adjointness and Fredholm index zero are unconditional in the
+positive time-static sector derived from the unchanged scalar action.
+Compact resolvent is also unconditional at every finite smooth-mode Galerkin
+cutoff.
+
+Independently, the canonical Hilbert renorming of the full physical graph
+`H¹` gives an unconditional coercive graph-energy problem for every bulk `L²`
+source, with a unique minimizer and positive self-adjoint bulk response.  This
+is an intrinsic elliptic regulator, not a replacement for the Lorentzian
+action Hessian.
+
+Physical Rellich compactness on the full graph `H¹ → L²` space is now
+unconditional: finite smooth localization, canonical/Lebesgue volume
+comparison, Euclidean Rellich, extension, and exact partition reconstruction
+are all proved. Consequently the intrinsic coercive bulk response is compact.
+Lorentzian compact-resolvent conclusions still require the relevant
+operator-specific elliptic/coercive realization; Rellich itself is no longer
+an external obligation.
 -/
 
 namespace JanusFormal
@@ -62,6 +79,13 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarEulerCanonicalProductLocalDive
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreen4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarDirichletOrientedGreenStokesClosure4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBoundaryTangentGreenStokes4D
+open P0EFTJanusMappingTorusGlobalHolonomicScalarWeakJacobiRiesz4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarStaticCoerciveVariationalClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1CoerciveVariationalClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarFinitePatchRellichReduction4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothRellichTransport4D
 
 /-- Compatibility marker for the conditional elliptic completed-boundary route. -/
 theorem canonicalPhysicalScalarProgramPBPreferredPDEClosure_available : True :=
@@ -70,6 +94,64 @@ theorem canonicalPhysicalScalarProgramPBPreferredPDEClosure_available : True :=
 /-- Marker for the conditional auxiliary elliptic obligations package. -/
 theorem canonicalPhysicalScalarProgramPBFinalObligations_available : True :=
   P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPFinalObligations4D.canonicalPhysicalScalarProgramPFinalObligations_available
+
+/-- Unconditional coercive and variational closure on the positive static
+sector of the unchanged scalar action. -/
+def canonicalPhysicalScalarProgramPBStaticCoerciveVariational_certificate
+    (period : Real) (hPeriod : period ≠ 0)
+    (data : PositiveStaticGlobalScalarData period hPeriod)
+    (source : StaticScalarEnergyH1 period hPeriod data) :=
+  completed_static_scalar_coercive_variational_closure
+    period hPeriod data source
+
+/-- Unconditional compact-resolvent closure at every finite smooth static
+Galerkin cutoff. -/
+def canonicalPhysicalScalarProgramPBStaticGalerkinCompactResolvent_certificate
+    (period : Real) (hPeriod : period ≠ 0)
+    (data : PositiveStaticGlobalScalarData period hPeriod)
+    {modeCount : Nat}
+    (modes : Fin modeCount →
+      StaticGlobalScalarTest period hPeriod data) :=
+  static_scalar_galerkin_compact_resolvent_closure
+    period hPeriod data modes
+
+/-- Unconditional coercive closure of the canonical full-H1 graph energy for
+every physical bulk-L2 source. -/
+def canonicalPhysicalScalarProgramPBIntrinsicH1CoerciveVariational_certificate
+    (period : Real) (hPeriod : period ≠ 0)
+    (source : CanonicalPhysicalBulkL2 period hPeriod) :=
+  canonicalPhysicalScalarIntrinsicH1CoerciveVariational_certificate
+    period hPeriod source
+
+/-- Unconditional physical Rellich compactness from finite smooth chart
+transport and exact partition reconstruction. -/
+def canonicalPhysicalScalarProgramPBRellich_certificate
+    (period : Real) (hPeriod : period ≠ 0) :=
+  canonicalPhysicalScalarRellich period hPeriod
+
+/-- The full-bulk intrinsic graph-energy response is compact without an
+external Rellich hypothesis. -/
+def canonicalPhysicalScalarProgramPBIntrinsicH1CompactResponse_certificate
+    (period : Real) (hPeriod : period ≠ 0) :=
+  canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact
+    period hPeriod (canonicalPhysicalScalarRellich period hPeriod)
+
+/-- The local Euclidean compactness part of Rellich is proved; exact
+chart-measure transport and partition reconstruction imply the global result. -/
+def canonicalPhysicalScalarProgramPBEuclideanRellichTransport_certificate
+    (period : Real) (hPeriod : period ≠ 0)
+    (transport :
+      CanonicalPhysicalScalarEuclideanRellichTransportData period hPeriod) :=
+  transport.certificate period hPeriod
+
+/-- Exact Euclidean chart transport makes the unconditional graph-energy
+bulk response compact. -/
+def canonicalPhysicalScalarProgramPBIntrinsicH1CompactResponse_of_transport
+    (period : Real) (hPeriod : period ≠ 0)
+    (transport :
+      CanonicalPhysicalScalarEuclideanRellichTransportData period hPeriod) :=
+  canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact
+    period hPeriod (transport.rellich period hPeriod)
 
 /-- Marker for the preferred conditional Lorentzian Green/boundary interface. -/
 theorem canonicalPhysicalScalarProgramPBPreferredLorentzianBoundaryClosure_available :
