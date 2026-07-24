@@ -4,6 +4,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricDifferentialLLStrongEquation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatNuclearHeatTraceSmooth4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalScalarStressConservation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreen4D
 
 namespace JanusFormal
 namespace P0EFTJanusTHProgramPTechnicalBridge
@@ -26,6 +27,12 @@ global equation and covariant scalar-stress conservation. The Euler equations
 remain an explicit premise, so this is not a microscopic state law. -/
 def local_scalar_euler_implies_global_stress_conservation :=
   P0EFTJanusMappingTorusGlobalScalarStressConservation4D.global_scalar_stress_conservation4D_closure
+
+/-- The weighted transported intrinsic-wave data give a global Green
+certificate, including integrability and the exact bulk/boundary factor. This
+is an energy-flux identity, not yet entropy production. -/
+def intrinsic_wave_weighted_global_green_certificate :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreen4D.CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedGlobalGreenData.certificate
 
 /-- On the canonical throat and under the explicit integration-by-parts
 contract, LL stationarity is equivalent to the strong PT-symmetric equation
@@ -62,6 +69,7 @@ structure THBridgeBoundary where
   canonicalLLStrongEquationBridgeClosed : Prop
   productThroatHeatTraceRegularityClosed : Prop
   conditionalGlobalScalarStressConservationClosed : Prop
+  intrinsicWaveGlobalGreenClosed : Prop
   physicalEnergyCurrentsOpen : Prop
   transportCoefficientsOpen : Prop
   quantumStateLawOpen : Prop

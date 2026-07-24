@@ -9,6 +9,7 @@
 - `PT-BP03` ferme (passe 3) : action scalaire holonome reguliere sur metrique lorentzienne generale et premiere variation effective.
 - `PT-BP04` ferme (passe 4) : developpement exact le long d'une droite avec reste quadratique controle pour la fonctionnelle scalaire generale.
 - `PT-BP05` ferme (passe 5) : seconde derivee non negative de la trace thermique nucleaire du cercle aux temps positifs.
+- `PT-BP06` ferme (mise a jour P 23/07) : identite d'energie exacte et estimation coercive pour le reste scalaire.
 - Reprise P : extraire un parametre d'ordre scalaire et son potentiel effectif renormalise. Ce pont ne ferme pas `PT-P01/PT-P03` et ne fournit pas encore de temperature critique.
 
 `PT01-PT03` ferment un noyau de Landau **conditionnel T/X**. Ils établissent ce

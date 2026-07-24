@@ -135,11 +135,23 @@ private def finiteGeneratorModelBasis :
     Module.Basis FiniteTangentGeneratorBasisIndex Real CoverCoordinates :=
   Module.finBasis Real CoverCoordinates
 
+/-- Public basis underlying the fixed tangent-generator model vectors. -/
+def finiteGeneratorModelBasisBasis :
+    Module.Basis FiniteTangentGeneratorBasisIndex Real CoverCoordinates :=
+  finiteGeneratorModelBasis
+
 /-- The model vector used by one member of the finite tangent-generator
 basis. -/
 def finiteGeneratorModelBasisVector
     (basisIndex : FiniteTangentGeneratorBasisIndex) : CoverCoordinates :=
   finiteGeneratorModelBasis basisIndex
+
+@[simp]
+theorem finiteGeneratorModelBasisBasis_apply
+    (basisIndex : FiniteTangentGeneratorBasisIndex) :
+    finiteGeneratorModelBasisBasis basisIndex =
+      finiteGeneratorModelBasisVector basisIndex :=
+  rfl
 
 /-- The open patch used by one finite generator is exactly the source of the
 quotient chart at its fixed anchor. -/

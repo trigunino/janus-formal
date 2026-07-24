@@ -10,6 +10,7 @@
 - `GW-BP04` ferme (passe 3) : echange PT involutif sur les champs lisses des deux secteurs du quotient D8.
 - `GW-BP05` ferme (passe 4) : pullback PT lisse et involutif des tenseurs covariants symetriques generaux sur D8.
 - `GW-BP06` ferme (passe 5) : certificat inconditionnel de covariance du stress scalaire et d'echange des deux secteurs.
+- `GW-BP07` ferme (mise a jour P 23/07) : identite metrique Green--Stokes pour les composantes scalaires des tangentes de bord on-shell.
 - Reprise P : seconde variation tensorielle complete, fond FLRW physique et couplage a la matiere visible. `GW-P01/GW-P03/GW-P07/GW-P08` restent ouverts.
 
 `GW01-Minkowski-TT` est fermé au niveau **T/C**. L'interface algébrique
