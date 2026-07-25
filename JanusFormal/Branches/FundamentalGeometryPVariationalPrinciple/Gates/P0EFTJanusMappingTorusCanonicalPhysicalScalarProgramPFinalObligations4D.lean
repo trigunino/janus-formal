@@ -7,10 +7,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 This module packages an auxiliary positive elliptic realization.  It is not the
 safe endpoint for the physical Lorentzian wave operator.
 
-Its graph estimate, six continuous boundary `L² → L²` residual operators,
-shifted coercivity and Rellich approximation are independent assumptions.  No
-theorem here derives them from the Lorentzian principal symbol.  Once a separate
-elliptic realization supplies those assumptions, the downstream
+Its graph estimate, six continuous boundary `L² → L²` residual operators and
+shifted coercivity are independent assumptions.  Rellich compactness is now
+derived globally from smooth finite-chart transport.  No theorem here derives
+the remaining inputs from the Lorentzian principal symbol.  Once a separate
+elliptic realization supplies them, the downstream
 self-adjointness, compact-resolvent, variational and Gaussian conclusions follow.
 
 The non-elliptic physical route, conditional on the canonical
@@ -85,8 +86,6 @@ structure CanonicalPhysicalScalarProgramPGraphDirectCoerciveFinalObligationsData
     (assembleCanonicalPhysicalScalarGraphBoundaryData period hPeriod
       geometric eulerCoefficientOperators).triple
       |>.LagrangianShiftedFormCoerciveData condition referenceParameter
-  finiteCoordinateRellich : CanonicalPhysicalScalarFiniteCoordinateRellichData
-    period hPeriod
 
 /-- Explicit name for the auxiliary elliptic/coercive frontier.  The older
 `GraphDirectCoercive` name is retained for source compatibility. -/
@@ -117,7 +116,6 @@ def analyticData
   condition := data.condition
   referenceParameter := data.referenceParameter
   shiftedFormCoercive := data.shiftedFormCoercive
-  finiteCoordinateRellich := data.finiteCoordinateRellich
 
 /-- Riesz-generated completed trace. -/
 def completedBoundaryTrace
@@ -312,7 +310,6 @@ def toGraphDirectCoerciveFinalObligationsData
   condition := data.condition
   referenceParameter := data.referenceParameter
   shiftedFormCoercive := data.shiftedFormCoercive
-  finiteCoordinateRellich := data.finiteCoordinateRellich
 
 /-- Direct-coercive minimal analytic package. -/
 def analyticData

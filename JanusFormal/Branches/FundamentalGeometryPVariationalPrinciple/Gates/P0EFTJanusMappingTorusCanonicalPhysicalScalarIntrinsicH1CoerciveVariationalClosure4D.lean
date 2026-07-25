@@ -2,6 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetRellichCompactness4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1HilbertRenorming4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothApproximation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothRellichTransport4D
 
 /-!
 # Intrinsic coercive variational closure on canonical physical H1
@@ -29,6 +30,7 @@ open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1HilbertRenorming4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothApproximation4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothRellichTransport4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 
@@ -462,6 +464,14 @@ theorem canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact
         period hPeriod))
   exact hHilbertInclusion.comp_clm
     (canonicalPhysicalScalarIntrinsicH1SourceRepresenter period hPeriod)
+
+/-- The canonical intrinsic graph-energy response is compact without any
+external analytic input. -/
+theorem canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact_unconditional :
+    IsCompactOperator
+      (canonicalPhysicalScalarIntrinsicH1BulkResponse period hPeriod) :=
+  canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact
+    period hPeriod (canonicalPhysicalScalarRellich period hPeriod)
 
 end
 end P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1CoerciveVariationalClosure4D

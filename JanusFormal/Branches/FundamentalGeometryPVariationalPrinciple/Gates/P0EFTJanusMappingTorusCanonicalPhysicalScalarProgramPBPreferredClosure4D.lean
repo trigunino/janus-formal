@@ -23,7 +23,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveFinalClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicWaveTangentialTimePrimitiveStandardBoundaryFinalClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarStaticCoerciveVariationalClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarStaticPhysicalActionBridge4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1CoerciveVariationalClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1EllipticOperator4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1EllipticVariationalAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarFinitePatchRellichReduction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothRellichTransport4D
 
@@ -58,7 +61,11 @@ action Hessian.
 Physical Rellich compactness on the full graph `H¹ → L²` space is now
 unconditional: finite smooth localization, canonical/Lebesgue volume
 comparison, Euclidean Rellich, extension, and exact partition reconstruction
-are all proved. Consequently the intrinsic coercive bulk response is compact.
+are all proved. Consequently the intrinsic coercive bulk response is compact,
+and its inverse on its dense range is a positive self-adjoint closed elliptic
+operator with compact zero-resolvent. Its canonical sourced quadratic action
+has the operator as Euler derivative, a symmetric Hessian, and the compact
+response as unique global minimizer.
 Lorentzian compact-resolvent conclusions still require the relevant
 operator-specific elliptic/coercive realization; Rellich itself is no longer
 an external obligation.
@@ -81,9 +88,12 @@ open P0EFTJanusMappingTorusCanonicalPhysicalScalarDirichletOrientedGreenStokesCl
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBoundaryTangentGreenStokes4D
 open P0EFTJanusMappingTorusGlobalHolonomicScalarWeakJacobiRiesz4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarStaticCoerciveVariationalClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarStaticPhysicalActionBridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalBulkL2H1Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFirstSheetGreenCore4D.CanonicalPhysicalScalarFirstSheetGreenCoreData
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1CoerciveVariationalClosure4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1EllipticOperator4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarIntrinsicH1EllipticVariationalAction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarFinitePatchRellichReduction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothRellichTransport4D
 
@@ -102,6 +112,15 @@ def canonicalPhysicalScalarProgramPBStaticCoerciveVariational_certificate
     (data : PositiveStaticGlobalScalarData period hPeriod)
     (source : StaticScalarEnergyH1 period hPeriod data) :=
   completed_static_scalar_coercive_variational_closure
+    period hPeriod data source
+
+/-- Exact identification of the completed static source action and Riesz
+operator with the unchanged physical scalar action and its actual Hessian. -/
+def canonicalPhysicalScalarProgramPBStaticPhysicalAction_certificate
+    (period : Real) (hPeriod : period ≠ 0)
+    (data : PositiveStaticGlobalScalarData period hPeriod)
+    (source : StaticGlobalScalarTest period hPeriod data) :=
+  canonicalPhysicalScalarStaticPhysicalActionBridge_certificate
     period hPeriod data source
 
 /-- Unconditional compact-resolvent closure at every finite smooth static
@@ -133,8 +152,23 @@ def canonicalPhysicalScalarProgramPBRellich_certificate
 external Rellich hypothesis. -/
 def canonicalPhysicalScalarProgramPBIntrinsicH1CompactResponse_certificate
     (period : Real) (hPeriod : period ≠ 0) :=
-  canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact
-    period hPeriod (canonicalPhysicalScalarRellich period hPeriod)
+  canonicalPhysicalScalarIntrinsicH1BulkResponse_isCompact_unconditional
+    period hPeriod
+
+/-- Unconditional densely defined positive self-adjoint elliptic realization
+whose compact inverse is the canonical graph-energy bulk response. -/
+def canonicalPhysicalScalarProgramPBIntrinsicH1EllipticOperator_certificate
+    (period : Real) (hPeriod : period ≠ 0) :=
+  canonicalPhysicalScalarIntrinsicH1EllipticOperator_certificate
+    period hPeriod
+
+/-- Unconditional action, Euler equation, Hessian and unique-minimizer
+certificate of the intrinsic elliptic scalar sector. -/
+def canonicalPhysicalScalarProgramPBIntrinsicH1EllipticVariationalAction_certificate
+    (period : Real) (hPeriod : period ≠ 0)
+    (source : CanonicalPhysicalBulkL2 period hPeriod) :=
+  canonicalPhysicalScalarIntrinsicH1EllipticVariationalAction_certificate
+    period hPeriod source
 
 /-- The local Euclidean compactness part of Rellich is proved; exact
 chart-measure transport and partition reconstruction imply the global result. -/

@@ -225,6 +225,7 @@ structure ProgramPD10Mode4D (data : ProductThroatSpectralData) where
   separatedMode : ProductDiracMode
   sphereMultiplicityIndex :
     Fin (sphereMultiplicity data separatedMode.sphereLevel)
+  deriving DecidableEq
 
 /-- The finite regulator mode embedded without dropping its degeneracy
 label. -/

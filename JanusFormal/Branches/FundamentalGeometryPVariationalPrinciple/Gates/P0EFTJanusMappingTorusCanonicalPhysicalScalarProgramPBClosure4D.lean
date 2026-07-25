@@ -152,8 +152,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 This historical aggregate exposes both the Lorentzian Green construction and
 the conditional elliptic/coercive analytic hierarchy.  The latter requires
-independent graph estimates, boundary residual operators, coercivity and
-Rellich data; it is not a consequence of the Lorentzian wave principal symbol.
+independent graph estimates, boundary residual operators and coercivity;
+Rellich is now derived globally.  This hierarchy is not a consequence of the
+Lorentzian wave principal symbol.
 
 The preferred physical endpoint and the explicit regime separation are in
 `P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBPreferredClosure4D`.
