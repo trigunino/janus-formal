@@ -61,8 +61,6 @@ structure CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedNormalGraphDire
       (geometric.toCanonicalNormalGreenData period hPeriod)
       eulerCoefficientOperators).triple
       |>.LagrangianShiftedFormCoerciveData condition referenceParameter
-  finiteCoordinateRellich : CanonicalPhysicalScalarFiniteCoordinateRellichData
-    period hPeriod
 
 namespace CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedNormalGraphDirectCoerciveFinalData
 
@@ -79,7 +77,6 @@ def toGraphDirectCoerciveFinalObligationsData
   condition := data.condition
   referenceParameter := data.referenceParameter
   shiftedFormCoercive := data.shiftedFormCoercive
-  finiteCoordinateRellich := data.finiteCoordinateRellich
 
 /-- Riesz-generated completed boundary trace. -/
 def completedBoundaryTrace

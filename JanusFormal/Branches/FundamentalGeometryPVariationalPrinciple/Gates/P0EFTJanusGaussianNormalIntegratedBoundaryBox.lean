@@ -229,6 +229,46 @@ theorem integrated_EH_add_exact_GHY_eq_zero
   rw [einsteinHilbert_add_exactGHYDirichletDerivative_eq_zero,
     mul_zero]
 
+/-- The pointwise Gaussian-normal cancellation integrates over an arbitrary
+measured boundary parametrization with position-dependent geometry and
+Dirichlet jet. -/
+theorem integral_EH_add_exact_GHY_eq_zero
+    {Boundary : Type*} [MeasurableSpace Boundary]
+    (measure : Measure Boundary)
+    (einsteinScale : Boundary → ℝ)
+    (data : Boundary → NonNullBoundaryPointData)
+    (jet : Boundary → GaussianNormalDirichletJet)
+    (hEH : Integrable
+      (fun point =>
+        einsteinHilbertDirichletBoundaryFlux (einsteinScale point)
+          (data point) (jet point)) measure)
+    (hGHY : Integrable
+      (fun point =>
+        nonNullGHYFirstVariation (einsteinScale point) (data point)
+          (metricFirstJetVariation (data point)
+            (gaussianDirichletBoundaryVariation (jet point)))) measure) :
+    (∫ point,
+        einsteinHilbertDirichletBoundaryFlux (einsteinScale point)
+          (data point) (jet point) ∂measure) +
+      ∫ point,
+        nonNullGHYFirstVariation (einsteinScale point) (data point)
+          (metricFirstJetVariation (data point)
+            (gaussianDirichletBoundaryVariation (jet point))) ∂measure = 0 := by
+  rw [← integral_add hEH hGHY]
+  have hDensity :
+      (fun point =>
+        einsteinHilbertDirichletBoundaryFlux (einsteinScale point)
+            (data point) (jet point) +
+          nonNullGHYFirstVariation (einsteinScale point) (data point)
+            (metricFirstJetVariation (data point)
+              (gaussianDirichletBoundaryVariation (jet point)))) =
+        fun _ => 0 := by
+    funext point
+    exact einsteinHilbert_add_exactGHYDirichletDerivative_eq_zero
+      (einsteinScale point) (data point) (jet point)
+  rw [hDensity]
+  exact integral_zero Boundary ℝ
+
 /-- The integrated theorem explicitly covers each admissible normal
 orientation carried by the boundary data. -/
 theorem integrated_cancellation_orientation_cases

@@ -824,13 +824,13 @@ private theorem throatCoverTimeTranslationCurve_contMDiff
   exact ((throatCoverJointTimeTranslation_contMDiff period hPeriod).comp
     (contMDiff_id.prodMk contMDiff_const)).congr (fun _ => rfl)
 
-private def throatCoverTimeTranslationValue
+def throatCoverTimeTranslationValue
     (point : EffectiveThroatCover period hPeriod) :
     TangentSpace throatCoverModelWithCorners point :=
   mfderiv 𝓘(Real, Real) throatCoverModelWithCorners
     (throatCoverTimeTranslationCurve period hPeriod point) 0 1
 
-private theorem throatProjection_mfderiv_time
+theorem throatProjection_mfderiv_time
     (point : EffectiveThroatCover period hPeriod) :
     mfderiv throatCoverModelWithCorners throatCoverModelWithCorners
         (mappingTorusMk (throatData period hPeriod)) point
@@ -866,7 +866,7 @@ private theorem throatProjection_mfderiv_time
           (mappingTorusMk (throatData period hPeriod) point)) 0 1 := by
       congr 2
 
-private theorem throatCoverRadialMap_mfderiv_time
+theorem throatCoverRadialMap_mfderiv_time
     (point : EffectiveThroatCover period hPeriod) :
     mfderiv throatCoverModelWithCorners 𝓘(Real, EuclideanR3)
         (throatCoverRadialMap period hPeriod) point
@@ -914,7 +914,7 @@ private theorem throatCoverRadialMap_mfderiv_time
       rw [hMap, mfderiv_eq_fderiv]
       exact hDerivative.deriv
 
-private def canonicalRotationVelocity
+def canonicalRotationVelocity
     (axis : Fin 3) (point : EuclideanR3) : EuclideanR3 :=
   (EuclideanSpace.equiv (Fin 3) Real).symm <|
     match axis with
@@ -925,7 +925,7 @@ private def canonicalRotationVelocity
     | 2 => ![-(EuclideanSpace.equiv (Fin 3) Real point) 1,
         (EuclideanSpace.equiv (Fin 3) Real point) 0, 0]
 
-private theorem canonicalRotationVelocity_smul
+theorem canonicalRotationVelocity_smul
     (axis : Fin 3) (scalar : Real) (point : EuclideanR3) :
     canonicalRotationVelocity axis (scalar • point) =
       scalar • canonicalRotationVelocity axis point := by
@@ -1122,7 +1122,7 @@ private theorem throatCoverSpatialRotationValue_eq_canonicalCurve_mfderiv
   exact throatCoverSpatialRotationValue_eq_curve_mfderiv
     period hPeriod axis point
 
-private theorem throatCoverRadialMap_mfderiv_rotation
+theorem throatCoverRadialMap_mfderiv_rotation
     (axis : Fin 3) (point : EffectiveThroatCover period hPeriod) :
     mfderiv throatCoverModelWithCorners 𝓘(Real, EuclideanR3)
         (throatCoverRadialMap period hPeriod) point
@@ -1278,14 +1278,14 @@ private theorem canonicalThroatProjectionDerivativeEquiv_coe
     (fixedThroat_projection_isLocalDiffeomorph period hPeriod)
       (by simp) point
 
-private def canonicalThroatRadialDerivativeEquiv
+def canonicalThroatRadialDerivativeEquiv
     (point : EffectiveThroatCover period hPeriod) :
     TangentSpace throatCoverModelWithCorners point ≃L[Real] EuclideanR3 :=
   (throatCoverRadialMap_isLocalDiffeomorph period hPeriod)
     |>.mfderivToContinuousLinearEquiv (by simp) point
 
 @[simp]
-private theorem canonicalThroatRadialDerivativeEquiv_coe
+theorem canonicalThroatRadialDerivativeEquiv_coe
     (point : EffectiveThroatCover period hPeriod) :
     (canonicalThroatRadialDerivativeEquiv period hPeriod point :
       TangentSpace throatCoverModelWithCorners point →L[Real] EuclideanR3) =

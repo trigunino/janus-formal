@@ -54,8 +54,6 @@ structure CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedNormalGraphSepa
         (canonicalPhysicalScalarSeparatedCondition
           period a b hNondegenerate)
         referenceParameter
-  finiteCoordinateRellich : CanonicalPhysicalScalarFiniteCoordinateRellichData
-    period hPeriod
 
 namespace CanonicalPhysicalScalarIntrinsicWaveWeightedTransportedNormalGraphSeparatedFinalData
 
@@ -74,7 +72,6 @@ def toFinalData
     period a b hNondegenerate
   referenceParameter := data.referenceParameter
   shiftedFormCoercive := data.shiftedFormCoercive
-  finiteCoordinateRellich := data.finiteCoordinateRellich
 
 /-- Membership is exactly the separated completed Riesz constraint. -/
 theorem mem_lagrangianDomainSubmodule_iff
