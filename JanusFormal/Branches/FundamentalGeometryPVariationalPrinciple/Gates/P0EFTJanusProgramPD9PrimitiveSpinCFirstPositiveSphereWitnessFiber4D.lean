@@ -30,6 +30,8 @@ noncomputable section
 
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledGlobalDeckCliffordAction4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
@@ -114,7 +116,8 @@ theorem d9PrimitiveSpinCGammaOne_imaginary_gammaTwo
         d9PrimitiveSpinCImaginaryAction
           (-d9DoubledMatterFiberCliffordGammaCLM 2
             (d9DoubledMatterFiberCliffordGammaCLM 1 matter)) := by
-      rw [d9DoubledMatterFiberCliffordGammaCLM_anticommute 1 2 (by decide)]
+      simp only [d9DoubledMatterFiberCliffordGammaCLM_apply]
+      rw [d9DoubledMatterFiberCliffordGamma_anticommute 1 2 (by decide)]
     _ =
         d9PrimitiveSpinCImaginaryAction
           (-d9DoubledMatterFiberCliffordGammaCLM 2
@@ -130,7 +133,8 @@ theorem d9PrimitiveSpinCGammaOne_imaginary_gammaTwo
     _ =
         d9PrimitiveSpinCImaginaryAction
           (-d9PrimitiveSpinCImaginaryAction (-matter)) := by
-      rw [d9DoubledMatterFiberCliffordGammaCLM_sq]
+      simp only [d9DoubledMatterFiberCliffordGammaCLM_apply]
+      rw [d9DoubledMatterFiberCliffordGamma_sq]
     _ = -matter := by
       simp only [map_neg, d9PrimitiveSpinCImaginaryAction_sq, neg_neg]
 
@@ -157,8 +161,9 @@ theorem primitiveSpinCHopfAntipodalWitnessFiber_negative_imaginary_gammaTwo
           (primitiveSpinCHopfAntipodalWitnessFiber sector matter)) =
       (2 : Real) • matter := by
   rw [primitiveSpinCHopfAntipodalWitnessFiber_eq, map_smul,
-    ← d9PrimitiveSpinCImaginaryAction_clifford,
-    d9DoubledMatterFiberCliffordGammaCLM_sq, map_smul,
+    ← d9PrimitiveSpinCImaginaryAction_clifford]
+  simp only [d9DoubledMatterFiberCliffordGammaCLM_apply]
+  rw [d9DoubledMatterFiberCliffordGamma_sq, map_smul,
     d9PrimitiveSpinCImaginaryAction_sq]
   module
 
