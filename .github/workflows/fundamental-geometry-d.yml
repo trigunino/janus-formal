@@ -93,6 +93,10 @@ on:
       - ".github/workflows/fundamental-geometry-d.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   lean-head:
     name: Lean — ${{ matrix.label }}
