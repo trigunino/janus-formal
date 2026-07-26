@@ -10,9 +10,8 @@ values and transports the opposite tangential Clifford relations along the
 normal-root Fourier motion.
 
 No fixed-time simplification is used: the full quarter-twisted normal phase is
-retained.  These moving fiber identities are the stable geometric input for a
-later identification of finite Fourier coordinates with actual local
-observables of the smooth-section synthesis.
+retained.  These identities are the stable geometric input for identifying
+finite Fourier coordinates with actual local observables.
 -/
 
 namespace JanusFormal
@@ -27,8 +26,10 @@ open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalWitness4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereWitnessFiber4D
+open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -62,8 +63,8 @@ theorem primitiveSpinCHopfMovingPhaseWitnessValue_eq_two_smul
         primitiveSpinCNormalModeDoubledLift
           period hPeriod sector mode
           (primitiveSpinCGeometricZeroModeWitnessCover
-            period hPeriod time) := by
-  exact primitiveSpinCHopfPositiveWitnessFiber_eq_two_smul sector
+            period hPeriod time) :=
+  primitiveSpinCHopfPositiveWitnessFiber_eq_two_smul sector
     (primitiveSpinCNormalModeDoubledLift
       period hPeriod sector mode
       (primitiveSpinCGeometricZeroModeWitnessCover
@@ -80,8 +81,8 @@ theorem primitiveSpinCHopfMovingAntipodalWitnessValue_eq
             (primitiveSpinCNormalModeDoubledLift
               period hPeriod sector mode
               (primitiveSpinCHopfAntipodalWitnessCover
-                period hPeriod time))) := by
-  exact primitiveSpinCHopfAntipodalWitnessFiber_eq sector
+                period hPeriod time))) :=
+  primitiveSpinCHopfAntipodalWitnessFiber_eq sector
     (primitiveSpinCNormalModeDoubledLift
       period hPeriod sector mode
       (primitiveSpinCHopfAntipodalWitnessCover
@@ -118,8 +119,8 @@ theorem primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_movingAntipod
         (primitiveSpinCHopfZeroModeSection
           period hPeriod sector mode) =
       primitiveSpinCHopfMovingAntipodalWitnessValue
-        period hPeriod sector mode time := by
-  exact primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_antipodal
+        period hPeriod sector mode time :=
+  primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_antipodal
     period hPeriod sector mode time
 
 /-- The moving equal-phase witness preserves the positive tangential complex
@@ -132,8 +133,8 @@ theorem primitiveSpinCHopfMovingPhaseWitness_tangential
       d9PrimitiveSpinCImaginaryAction
         (d9DoubledMatterFiberCliffordGammaCLM 2
           (primitiveSpinCHopfMovingPhaseWitnessValue
-            period hPeriod sector mode time)) := by
-  exact primitiveSpinCHopfPositiveWitnessFiber_tangential sector
+            period hPeriod sector mode time)) :=
+  primitiveSpinCHopfPositiveWitnessFiber_tangential sector
     (primitiveSpinCNormalModeDoubledLift
       period hPeriod sector mode
       (primitiveSpinCGeometricZeroModeWitnessCover
@@ -153,8 +154,8 @@ theorem primitiveSpinCHopfMovingAntipodalWitness_tangential
       -d9PrimitiveSpinCImaginaryAction
         (d9DoubledMatterFiberCliffordGammaCLM 2
           (primitiveSpinCHopfMovingAntipodalWitnessValue
-            period hPeriod sector mode time)) := by
-  exact primitiveSpinCHopfAntipodalWitnessFiber_tangential sector
+            period hPeriod sector mode time)) :=
+  primitiveSpinCHopfAntipodalWitnessFiber_tangential sector
     (primitiveSpinCNormalModeDoubledLift
       period hPeriod sector mode
       (primitiveSpinCHopfAntipodalWitnessCover
@@ -164,75 +165,30 @@ theorem primitiveSpinCHopfMovingAntipodalWitness_tangential
       (primitiveSpinCHopfAntipodalWitnessCover
         period hPeriod time))
 
-/-- The same opposite tangential relations hold directly on the local
-coordinates of the genuine global Hopf zero section. -/
-theorem primitiveSpinCHopfMovingLocalCoordinate_tangential_closed
-    (sector : NormalRootChoice) (mode : Int) (time : Real) :
-    d9DoubledMatterFiberCliffordGammaCLM 1
-        (primitiveSpinCGeometricSectionLocalCoordinate
-          period hPeriod
-          (primitiveSpinCGeometricZeroModeWitnessIndex
-            period hPeriod time)
-          (primitiveSpinCGeometricZeroModeWitnessBase
-            period hPeriod time)
-          (primitiveSpinCHopfZeroModeSection
-            period hPeriod sector mode)) =
-      d9PrimitiveSpinCImaginaryAction
-        (d9DoubledMatterFiberCliffordGammaCLM 2
-          (primitiveSpinCGeometricSectionLocalCoordinate
-            period hPeriod
-            (primitiveSpinCGeometricZeroModeWitnessIndex
-              period hPeriod time)
-            (primitiveSpinCGeometricZeroModeWitnessBase
-              period hPeriod time)
-            (primitiveSpinCHopfZeroModeSection
-              period hPeriod sector mode))) ∧
-    d9DoubledMatterFiberCliffordGammaCLM 1
-        (primitiveSpinCGeometricSectionLocalCoordinate
-          period hPeriod
-          (primitiveSpinCHopfAntipodalWitnessIndex
-            period hPeriod time)
-          (primitiveSpinCHopfAntipodalWitnessBase
-            period hPeriod time)
-          (primitiveSpinCHopfZeroModeSection
-            period hPeriod sector mode)) =
-      -d9PrimitiveSpinCImaginaryAction
-        (d9DoubledMatterFiberCliffordGammaCLM 2
-          (primitiveSpinCGeometricSectionLocalCoordinate
-            period hPeriod
-            (primitiveSpinCHopfAntipodalWitnessIndex
-              period hPeriod time)
-            (primitiveSpinCHopfAntipodalWitnessBase
-              period hPeriod time)
-            (primitiveSpinCHopfZeroModeSection
-              period hPeriod sector mode))) := by
-  rw [primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_movingPhase,
-    primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_movingAntipodal]
-  exact
-    ⟨primitiveSpinCHopfMovingPhaseWitness_tangential
-        period hPeriod sector mode time,
-      primitiveSpinCHopfMovingAntipodalWitness_tangential
-        period hPeriod sector mode time⟩
-
-/-- Consolidated moving-witness package. -/
+/-- Consolidated moving-witness package, including its realization by actual
+local coordinates of the global smooth Hopf zero section. -/
 theorem primitiveSpinCHopfFirstSphereMovingWitnessLocal_closed
     (sector : NormalRootChoice) (mode : Int) (time : Real) :
-    primitiveSpinCHopfMovingPhaseWitnessValue
-        period hPeriod sector mode time =
-      (2 : Real) •
-        primitiveSpinCNormalModeDoubledLift
-          period hPeriod sector mode
-          (primitiveSpinCGeometricZeroModeWitnessCover
-            period hPeriod time) ∧
-    primitiveSpinCHopfMovingAntipodalWitnessValue
-        period hPeriod sector mode time =
-      (-2 : Real) •
-        d9PrimitiveSpinCImaginaryAction
-          (d9DoubledMatterFiberCliffordGammaCLM 2
-            (primitiveSpinCNormalModeDoubledLift
-              period hPeriod sector mode
-              (primitiveSpinCHopfAntipodalWitnessCover
-                period hPeriod time))) ∧
+    primitiveSpinCGeometricSectionLocalCoordinate
+        period hPeriod
+        (primitiveSpinCGeometricZeroModeWitnessIndex
+          period hPeriod time)
+        (primitiveSpinCGeometricZeroModeWitnessBase
+          period hPeriod time)
+        (primitiveSpinCHopfZeroModeSection
+          period hPeriod sector mode) =
+      primitiveSpinCHopfMovingPhaseWitnessValue
+        period hPeriod sector mode time ∧
+    primitiveSpinCGeometricSectionLocalCoordinate
+        period hPeriod
+        (primitiveSpinCHopfAntipodalWitnessIndex
+          period hPeriod time)
+        (primitiveSpinCHopfAntipodalWitnessBase
+          period hPeriod time)
+        (primitiveSpinCHopfZeroModeSection
+          period hPeriod sector mode) =
+      primitiveSpinCHopfMovingAntipodalWitnessValue
+        period hPeriod sector mode time ∧
     d9DoubledMatterFiberCliffordGammaCLM 1
         (primitiveSpinCHopfMovingPhaseWitnessValue
           period hPeriod sector mode time) =
@@ -247,9 +203,9 @@ theorem primitiveSpinCHopfFirstSphereMovingWitnessLocal_closed
         (d9DoubledMatterFiberCliffordGammaCLM 2
           (primitiveSpinCHopfMovingAntipodalWitnessValue
             period hPeriod sector mode time)) :=
-  ⟨primitiveSpinCHopfMovingPhaseWitnessValue_eq_two_smul
+  ⟨primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_movingPhase
       period hPeriod sector mode time,
-    primitiveSpinCHopfMovingAntipodalWitnessValue_eq
+    primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_movingAntipodal
       period hPeriod sector mode time,
     primitiveSpinCHopfMovingPhaseWitness_tangential
       period hPeriod sector mode time,
