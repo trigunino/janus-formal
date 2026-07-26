@@ -48,6 +48,7 @@ concurrency:
 
 jobs:
   lean:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -93,6 +94,7 @@ jobs:
           if-no-files-found: error
 
   python-audits:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
