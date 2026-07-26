@@ -86,6 +86,26 @@ def d9DoubledMatterSpinorCliffordGamma
     D9DoubledMatterSpinor →ₗ[Complex] D9DoubledMatterSpinor :=
   ![d9DoubledGammaZero, d9DoubledGammaOne, d9DoubledGammaTwo] direction
 
+@[simp] theorem d9DoubledMatterSpinorCliffordGamma_zero
+    (spinor : D9DoubledMatterSpinor) :
+    d9DoubledMatterSpinorCliffordGamma 0 spinor =
+      (![spinor.1 1, -spinor.1 0], ![spinor.2 1, -spinor.2 0]) := by
+  rfl
+
+@[simp] theorem d9DoubledMatterSpinorCliffordGamma_one
+    (spinor : D9DoubledMatterSpinor) :
+    d9DoubledMatterSpinorCliffordGamma 1 spinor =
+      (![spinor.2 1, spinor.2 0], ![-spinor.1 1, -spinor.1 0]) := by
+  apply Prod.ext <;> funext index <;> fin_cases index <;>
+    simp [d9DoubledMatterSpinorCliffordGamma, d9DoubledGammaOne, halfK]
+
+@[simp] theorem d9DoubledMatterSpinorCliffordGamma_two
+    (spinor : D9DoubledMatterSpinor) :
+    d9DoubledMatterSpinorCliffordGamma 2 spinor =
+      (![spinor.2 0, -spinor.2 1], ![-spinor.1 0, spinor.1 1]) := by
+  apply Prod.ext <;> funext index <;> fin_cases index <;>
+    simp [d9DoubledMatterSpinorCliffordGamma, d9DoubledGammaTwo, halfL]
+
 theorem d9DoubledMatterSpinorCliffordGamma_sq
     (direction : Fin 3) (spinor : D9DoubledMatterSpinor) :
     d9DoubledMatterSpinorCliffordGamma direction

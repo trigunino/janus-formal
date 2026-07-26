@@ -251,6 +251,17 @@ private def ambientUnitFactors :
       else
         normalizedAmbientUnitVector vector hVector :: ambientUnitFactors rest
 
+private theorem ambientUnitFactors_length_le :
+    ∀ vectors : List AmbientHilbert,
+      (ambientUnitFactors vectors).length ≤ vectors.length
+  | [] => by simp [ambientUnitFactors]
+  | vector :: rest => by
+      by_cases hVector : vector = 0
+      · simp [ambientUnitFactors, hVector,
+          Nat.le_succ_of_le (ambientUnitFactors_length_le rest)]
+      · simpa [ambientUnitFactors, hVector] using
+          Nat.succ_le_succ (ambientUnitFactors_length_le rest)
+
 private theorem ambientUnitFactors_reflectionProduct :
     ∀ vectors : List AmbientHilbert,
       ((ambientUnitFactors vectors).map
@@ -372,13 +383,14 @@ private theorem linearIsometryListProd_toLinearEquiv
       rw [← inductionHypothesis]
       rfl
 
-/-- Cartan--Dieudonné gives a finite unit-reflection factorization for every
-ambient orthogonal isometry, with no determinant or orientation restriction. -/
-theorem ambientO4HasUnitReflectionFactorization
+/-- Cartan--Dieudonné gives a unit-reflection factorization with the actual
+four-dimensional length bound retained. -/
+theorem ambientO4HasUnitReflectionFactorizationLeFour
     (target : ambientCoverEuclideanQuadraticForm.IsometryEquiv
       ambientCoverEuclideanQuadraticForm) :
-    Nonempty (AmbientO4UnitReflectionFactorization target) := by
-  obtain ⟨vectors, _, hReflections⟩ :=
+    ∃ factorization : AmbientO4UnitReflectionFactorization target,
+      factorization.factors.length ≤ 4 := by
+  obtain ⟨vectors, hLength, hReflections⟩ :=
     (ambientHilbertLinearIsometryEquiv target).reflections_generate_dim
   let unitVectors := ambientUnitFactors vectors
   have hHilbertProduct :
@@ -411,22 +423,46 @@ theorem ambientO4HasUnitReflectionFactorization
       (unitVectors.map AmbientUnitVector.reflectionEquiv).prod =
         target.toLinearEquiv :=
     (ambientUnitFactors_reflectionProduct vectors).trans hOrthogonalProduct
+  let factors := unitVectors.map AmbientUnitVector.toReflectionFactor
+  have hFactorization :
+      ambientReflectionProductOfUnitFactors factors =
+        target.toLinearEquiv := by
+    change ambientReflectionProductOfUnitFactors
+        (unitVectors.map AmbientUnitVector.toReflectionFactor) =
+      target.toLinearEquiv
+    rw [ambientReflectionProductOfUnitFactors, List.map_map]
+    have hMap :
+        unitVectors.map
+            (AmbientUnitReflectionFactor.reflectionEquiv ∘
+              AmbientUnitVector.toReflectionFactor) =
+          unitVectors.map AmbientUnitVector.reflectionEquiv := by
+      apply List.map_congr_left
+      intro unitVector _
+      apply LinearEquiv.ext
+      intro tangent
+      rfl
+    rw [hMap]
+    exact hUnitProduct
   refine ⟨{
-    factors := unitVectors.map AmbientUnitVector.toReflectionFactor
-    factorization := ?_ }⟩
-  rw [ambientReflectionProductOfUnitFactors, List.map_map]
-  have hMap :
-      unitVectors.map
-          (AmbientUnitReflectionFactor.reflectionEquiv ∘
-            AmbientUnitVector.toReflectionFactor) =
-        unitVectors.map AmbientUnitVector.reflectionEquiv := by
-    apply List.map_congr_left
-    intro unitVector _
-    apply LinearEquiv.ext
-    intro tangent
-    rfl
-  rw [hMap]
-  exact hUnitProduct
+    factors := factors
+    factorization := hFactorization }, ?_⟩
+  change (unitVectors.map AmbientUnitVector.toReflectionFactor).length ≤ 4
+  rw [List.length_map]
+  apply (ambientUnitFactors_length_le vectors).trans
+  calc
+    vectors.length ≤ Module.finrank Real AmbientHilbert := hLength
+    _ = Module.finrank Real CoverCoordinates :=
+      (WithLp.linearEquiv 2 Real CoverCoordinates).finrank_eq
+    _ = 4 := by norm_num [CoverCoordinates]
+
+/-- Unbounded compatibility wrapper for existing downstream users. -/
+theorem ambientO4HasUnitReflectionFactorization
+    (target : ambientCoverEuclideanQuadraticForm.IsometryEquiv
+      ambientCoverEuclideanQuadraticForm) :
+    Nonempty (AmbientO4UnitReflectionFactorization target) := by
+  rcases ambientO4HasUnitReflectionFactorizationLeFour target with
+    ⟨factorization, -⟩
+  exact ⟨factorization⟩
 
 /-- Cartan--Dieudonne and determinant parity supply the exact finite input
 required by the explicit even-reflection Clifford lift. -/

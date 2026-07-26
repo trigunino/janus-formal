@@ -71,6 +71,41 @@ theorem d9PrimitiveSpinCBaseUnitRadialCoordinate_mk
         period hPeriod direction point :=
   rfl
 
+/-- Flat central connection of the rotating normal spin frame. -/
+def d9PrimitiveSpinCNormalFrameConnectionCoefficient
+    (direction : Fin 3) (base : ThroatBase period hPeriod) : Real :=
+  -(Real.pi / (2 * period)) *
+    d9PrimitiveSpinCBaseUnitRadialCoordinate
+      period hPeriod direction base
+
+/-- Total charge-one connection: monopole plus normal spin-frame term. -/
+def d9PrimitiveSpinCTotalConnectionFrameCoefficient
+    (chart : MonopoleChart) (direction : Fin 3)
+    (base : ThroatBase period hPeriod) : Real :=
+  d9PrimitiveMonopoleConnectionFrameCoefficient
+      period hPeriod 1 chart direction base +
+    d9PrimitiveSpinCNormalFrameConnectionCoefficient
+      period hPeriod direction base
+
+theorem d9PrimitiveSpinCTotalConnectionFrameCoefficient_gauge_difference
+    (direction : Fin 3) (base : ThroatBase period hPeriod)
+    (hNorth :
+      base ∈ d9PrimitiveMonopoleChartDomain period hPeriod .north)
+    (hSouth :
+      base ∈ d9PrimitiveMonopoleChartDomain period hPeriod .south) :
+    d9PrimitiveSpinCTotalConnectionFrameCoefficient
+          period hPeriod .north direction base -
+        d9PrimitiveSpinCTotalConnectionFrameCoefficient
+          period hPeriod .south direction base =
+      d9PrimitiveMonopoleAngularFrameCoefficient
+        period hPeriod direction base := by
+  have hDifference :=
+    d9PrimitiveMonopoleConnectionFrameCoefficient_gauge_difference
+      period hPeriod 1 direction base hNorth hSouth
+  norm_num at hDifference
+  unfold d9PrimitiveSpinCTotalConnectionFrameCoefficient
+  linarith
+
 /-- Radial Levi--Civita spin correction on a local quotient gauge. -/
 def d9PrimitiveSpinCBaseLeviCivitaSpinCorrection
     (direction : Fin 3) (base : ThroatBase period hPeriod)
@@ -144,8 +179,8 @@ def d9PrimitiveSpinCLocalGeometricDirac
     D9DoubledMatterFiber :=
   d9PrimitiveSpinCLocalDirac
     (fun direction =>
-      d9PrimitiveMonopoleConnectionFrameCoefficient
-        period hPeriod 1 index.2 direction base)
+      d9PrimitiveSpinCTotalConnectionFrameCoefficient
+        period hPeriod index.2 direction base)
     (fun direction =>
       d9PrimitiveSpinCLocalLeviCivitaFrameDerivative
         period hPeriod choice family index direction base)
@@ -162,8 +197,8 @@ theorem d9PrimitiveSpinCLocalGeometricDirac_principal_increment
     (increment : Fin 3 → D9DoubledMatterFiber) :
     d9PrimitiveSpinCLocalDirac
         (fun direction =>
-          d9PrimitiveMonopoleConnectionFrameCoefficient
-            period hPeriod 1 index.2 direction base)
+          d9PrimitiveSpinCTotalConnectionFrameCoefficient
+            period hPeriod index.2 direction base)
         (fun direction =>
           d9PrimitiveSpinCLocalLeviCivitaFrameDerivative
               period hPeriod choice family index direction base +
@@ -176,8 +211,8 @@ theorem d9PrimitiveSpinCLocalGeometricDirac_principal_increment
             (increment direction) := by
   exact d9PrimitiveSpinCLocalDirac_partial_add
     (fun direction =>
-      d9PrimitiveMonopoleConnectionFrameCoefficient
-        period hPeriod 1 index.2 direction base)
+      d9PrimitiveSpinCTotalConnectionFrameCoefficient
+        period hPeriod index.2 direction base)
     (fun direction =>
       d9PrimitiveSpinCLocalLeviCivitaFrameDerivative
         period hPeriod choice family index direction base)
@@ -332,9 +367,8 @@ theorem d9PrimitiveSpinCLocalGeometricDirac_north_south
   apply d9PrimitiveSpinCLocalDirac_gauge
   intro direction
   have hDifference :=
-    d9PrimitiveMonopoleConnectionFrameCoefficient_gauge_difference
-      period hPeriod 1 direction base hNorth hSouth
-  norm_num at hDifference
+    d9PrimitiveSpinCTotalConnectionFrameCoefficient_gauge_difference
+      period hPeriod direction base hNorth hSouth
   linarith
 
 end

@@ -5,13 +5,13 @@
 This document describes the long-form scalar analytic development on
 `dev-branch` after the global cut-bulk Green--Stokes theorem.
 
-The new leaves are intentionally **not yet build-validated**.  They were added
-while local Lean builds were unavailable.  The declarations therefore form a
-large proposed architecture that must be compiled and repaired in dependency
-order before it can be merged into the trusted main head.
+Validation on 2026-07-26 is green: the focused aggregate below builds
+successfully (`9317` jobs), the Program P facade build is green (`9863` jobs),
+and `scripts/audit_janus_program_p.py` passes with `0/14` terminal gates.
 
-No Codex task, Codex CLI session or manually triggered GitHub Actions workflow
-was used to create this development.
+Compilation validates the import graph and every checked Lean declaration. It
+does not turn the aggregate marker theorem into an inhabitance proof for the
+conditional physical interfaces described below.
 
 ## Implemented architecture
 
@@ -156,106 +156,60 @@ The branch now names the remaining analytic interfaces for:
 - Maslov index;
 - Morse-index change.
 
-## Exact remaining physical inputs
+## Current physical frontier
 
-The generic architecture does not itself prove that the current concrete Janus
-scalar Euler operator satisfies the required analysis.  The principal remaining
-results are the following.
+The aggregate imports both generic analytic interfaces and concrete physical
+facades. It must not be read as an inhabitance theorem for every abstract input.
+In particular,
+`scalarProgramPFullAnalyticArchitecture_available : True` is only an aggregate
+import marker.
 
-### 1. Identify the concrete physical operator
+### Closed concretely
 
-Construct the exact physical scalar Euler/Jacobi operator as a linear map on the
-smooth quotient-field core and prove that its bulk pairing defect is the global
-Green boundary form already formalized.
+The canonical scalar development now proves, without an additional physical
+axiom:
 
-### 2. Construct the concrete normal trace
+- spherical coarea, the physical value trace and its continuous extension;
+- smooth physical `L²` density and shrinking zero-Cauchy collar cutoffs;
+- the smooth cut bulk with boundary and the exact oriented measured
+  Green--Stokes identity;
+- Green--Stokes closure on the physical Dirichlet, PT-fixed and PT-projected
+  sectors, while retaining the generally nonzero unrestricted boundary flux;
+- coercivity, source inversion, the unique minimizer, Gaussian positivity,
+  self-adjointness and Fredholm index zero in the positive time-static sector;
+- compact resolvent at every finite smooth-mode Galerkin cutoff;
+- the canonical full graph-`H¹` coercive regulator, physical Rellich compactness
+  `H¹ → L²`, its compact response and the associated positive self-adjoint
+  elliptic operator/action with compact zero-resolvent.
 
-Define the physical normal derivative in the canonical throat `L²` space and
-prove that its Hilbert symplectic pairing is exactly the oriented global boundary
-current.
+The intrinsic graph-`H¹` regulator is a proved elliptic realization. It is not
+identified with the unrestricted Lorentzian action Hessian.
 
-### 3. Paired trace graph estimate
+### Still conditional for the general Lorentzian realization
 
-Prove a bound of the form
+The remaining scalar work is operator-specific:
 
-```text
-‖(γ₀u, γ₁u)‖ ≤ C ‖(u, Au)‖graph.
-```
+1. instantiate the unrestricted off-shell local-divergence/Green package for
+   the exact Lorentzian Euler/Jacobi operator and its completed Cauchy trace;
+2. prove the required graph/Gårding and higher normal-regularity estimates for
+   that operator, sufficient for its closed domain and Hilbert adjoint;
+3. realize the Dirichlet condition already derived from Program P boundary
+   tangency as a closed Lagrangian operator domain (or justify another physical
+   domain), then prove one positive/coercive real shift or an equivalent
+   resolvent theorem;
+4. construct the continuous physical Poisson solution operator and prove
+   uniqueness at the selected parameter; this is the concrete input still
+   exposed by the Poisson/DtN facade;
+5. derive Lorentzian compact-resolvent and infinite-dimensional spectral
+   asymptotics, determinant and parameter-regularity results from that actual
+   realization;
+6. derive the nonlinear Euler remainder and reduced bifurcation coefficients
+   from the full parent bulk/junction action.
 
-This extends the paired trace to the completed graph.
-
-### 4. Closability and closedness
-
-Prove that the first projection of the completed graph is injective, equivalently
-that the concrete smooth operator is closable in the physical bulk `L²` space.
-
-### 5. Intrinsic Sobolev identification
-
-Relate the current physical graph-`H¹` completion to an intrinsic Sobolev space
-on the mapping torus/cut bulk.  The present graph space is operational but not
-yet identified with the expected intrinsic geometric space.
-
-### 6. Density of boundary domains
-
-For the chosen Dirichlet, Neumann, Robin or general Lagrangian condition, prove
-that its actual closed operator domain is dense in the bulk Hilbert space.
-
-### 7. Actual Hilbert adjoint characterization
-
-Prove that the domain of the genuine unbounded Hilbert adjoint is exactly the
-boundary-adjoint test supplied by the Green identity.  Lagrangian maximality
-then gives self-adjointness automatically.
-
-### 8. Dirichlet coercivity and surjectivity
-
-At at least one real spectral parameter, prove the lower graph-norm estimate and
-surjectivity of the completed Dirichlet shifted operator.  This constructs the
-Dirichlet resolvent and therefore the Poisson, Weyl and Calderon objects.
-
-### 9. Schur coercivity or Fredholm alternative
-
-For a selected Robin/junction operator, prove either:
-
-- coercivity plus surjectivity of the Schur operator; or
-- a Fredholm theorem with a controlled kernel/cokernel.
-
-This produces the Krein resolvent and unique reduced-action minimizer away from
-crossings.
-
-### 10. Compact embedding / compact resolvent
-
-Prove compactness of the relevant closed-domain inclusion into physical bulk
-`L²`, or directly prove compactness of one bounded resolvent.
-
-### 11. Semibounded quadratic form
-
-Establish an explicit lower bound for the physical Jacobi quadratic form.  A
-strictly positive bound gives zero-resolvent invertibility and the Gaussian
-source solution.
-
-### 12. Spectral asymptotics
-
-Construct an eigenvalue enumeration, prove Weyl/counting estimates, heat-trace
-summability and the analytic continuation needed for the zeta determinant.
-
-### 13. Infinite-dimensional Fredholm determinant
-
-Construct a trace-class or relative determinant for the physical boundary Schur
-family and prove the zero/kernel correspondence required by the one-loop and
-spectral-flow interfaces.
-
-### 14. Parameter regularity
-
-Prove continuity/differentiability/analyticity in the spectral and geometric
-parameters for Dirichlet resolvents, Poisson maps, Weyl functions and Schur
-operators.  This is needed for crossing forms, spectral flow and perturbation
-expansions.
-
-### 15. Concrete nonlinear remainder
-
-Derive the actual nonlinear Euler map from the parent bulk/junction action,
-identify its linearization, construct the Lyapunov--Schmidt complement solver and
-compute the reduced cubic/quartic coefficients.
+Rellich compactness itself is no longer an external obligation. The static and
+intrinsic elliptic closures above also show that Program P is not blocked on a
+new axiom; the unresolved statements require the indicated operator and domain
+estimates.
 
 ## Remaining beyond the scalar sector
 
@@ -275,26 +229,26 @@ parallel analytic closure for:
 The existing finite D9 gauge--ghost packet work supplies algebraic models for
 some of these steps, but not yet the physical infinite-dimensional realization.
 
-## Future validation order
+## Validation
 
-When local builds resume, validate in the following order rather than compiling
-the aggregate head immediately:
-
-1. `ScalarCompletedBoundaryDomains4D`;
-2. `ScalarClosedGraphRealization4D`;
-3. `ScalarClosedSeparatedRealization4D`;
-4. `ScalarClosedResolvent4D`;
-5. `ScalarAbstractLagrangianBoundary4D`;
-6. compact spectral and variational leaves;
-7. graph Poisson/DtN/Calderon/Krein leaves;
-8. physical bridge/facade leaves;
-9. two-sector and interface leaves;
-10. determinant, zeta, perturbation and nonlinear leaves;
-11. `ScalarProgramPFullAnalyticArchitecture4D` last.
-
-The aggregate target is:
+The focused aggregate target is:
 
 ```text
 JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.
 P0EFTJanusMappingTorusScalarProgramPFullAnalyticArchitecture4D
 ```
+
+Result on 2026-07-26: `Build completed successfully (9317 jobs)`.
+
+The Program P facade and integrity audit were also validated:
+
+```text
+lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple
+python scripts/audit_janus_program_p.py
+```
+
+Results: facade build successful (`9863` jobs); integrity audit successful,
+terminal gates `0/14`.
+
+The canonical active backlog and its terminal-gate semantics are maintained in
+[`program_p_operational_todo.md`](program_p_operational_todo.md).

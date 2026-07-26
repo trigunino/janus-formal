@@ -5,9 +5,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Geometric Fourier frontier for the primitive D9 SpinC bundle
 
 The primitive bundle, its smooth section core and the complete coefficient
-spectrum are now constructed.  The zero-sphere tower is realized
-geometrically in
-`P0EFTJanusProgramPD9PrimitiveSpinCZeroModeDiagonalRealization4D`.
+spectrum are now constructed.  The zero-sphere tower is realized by actual
+global smooth Hopf eigenspinors, with first-order Dirac and squared-Hilbert
+intertwining, in
+`P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D`.
 What remains here is the positive-sphere eigenspinor tower, Fourier
 completeness on the whole smooth core and the identification of the full
 geometric squared Dirac operator with the maximal diagonal realization.

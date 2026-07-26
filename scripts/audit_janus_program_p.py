@@ -13452,6 +13452,40 @@ PROGRAM_P_GATES = {
             "theorem nonlinearHessianWitness_nonzero",
         ),
     ),
+    "P0EFTJanusProgramPPrimitiveSpinCSignedSpectralCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem primitiveSpinCSignedHilbertBasis_dense_span",
+            "theorem primitiveSpinCSignedH1_dense",
+            "theorem primitiveSpinCSignedUnboundedDirac_isSelfAdjoint",
+            "theorem primitiveSpinCSignedUnboundedDirac_quarter_fredholm",
+            "theorem primitiveSpinCSignedUnboundedDirac_quarter_index_zero",
+            "theorem programPPrimitiveSpinCSignedSpectralCompletionCertificate4D_nonempty",
+        ),
+    ),
+    "P0EFTJanusMappingTorusAmbientPinMinusRealNormalRestrictionGauge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem ambientPinMinusHalfAngleGauge_intertwines_zpow",
+            "theorem ambientPinMinusHalfAngleGauge_continuousOn",
+            "theorem canonicalAmbientRealNormalRestrictionGauge_realizes",
+            "theorem ambientPinMinusRealNormalRestrictionVertexGaugeExists_of_normalContinuous",
+        ),
+    ),
+    "P0EFTJanusMappingTorusLLGeneratingFrameElementaryFlows4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem llFrameAnisotropicExponentialCurve_hasVelocity",
+            "theorem llFrameShearCurve_hasVelocity",
+        ),
+    ),
+    "P0EFTJanusProgramPConcreteMatterLineC2CriterionCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalFixedFrameComponentContinuity",
+            "theorem concreteMatterLine_contDiff_two_of_pointwiseCompletion",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

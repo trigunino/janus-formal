@@ -96,7 +96,9 @@ theorem d9PrimitiveSpinCPhaseAction_one
     (matter : D9DoubledMatterFiber) :
     d9PrimitiveSpinCPhaseActionCLM 1 matter = matter := by
   apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
-  simp
+  rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_phaseAction]
+  exact one_smul Complex
+    (d9DoubledMatterFiberHalfSpinorLinearEquiv matter)
 
 theorem d9PrimitiveSpinCPhaseAction_mul
     (first second : Circle) (matter : D9DoubledMatterFiber) :
@@ -104,7 +106,11 @@ theorem d9PrimitiveSpinCPhaseAction_mul
       d9PrimitiveSpinCPhaseActionCLM first
         (d9PrimitiveSpinCPhaseActionCLM second matter) := by
   apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
-  simp [mul_smul]
+  rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_phaseAction,
+    d9DoubledMatterFiberHalfSpinorLinearEquiv_phaseAction,
+    d9DoubledMatterFiberHalfSpinorLinearEquiv_phaseAction]
+  exact mul_smul (first : Complex) (second : Complex)
+    (d9DoubledMatterFiberHalfSpinorLinearEquiv matter)
 
 theorem d9PrimitiveSpinCComplexAction_mul
     (first second : Complex) (matter : D9DoubledMatterFiber) :
@@ -112,14 +118,20 @@ theorem d9PrimitiveSpinCComplexAction_mul
       d9PrimitiveSpinCComplexActionCLM first
         (d9PrimitiveSpinCComplexActionCLM second matter) := by
   apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
-  simp [mul_smul]
+  rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_complexAction,
+    d9DoubledMatterFiberHalfSpinorLinearEquiv_complexAction,
+    d9DoubledMatterFiberHalfSpinorLinearEquiv_complexAction]
+  exact mul_smul first second
+    (d9DoubledMatterFiberHalfSpinorLinearEquiv matter)
 
 @[simp]
 theorem d9PrimitiveSpinCComplexAction_one
     (matter : D9DoubledMatterFiber) :
     d9PrimitiveSpinCComplexActionCLM 1 matter = matter := by
   apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
-  simp
+  rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_complexAction]
+  exact one_smul Complex
+    (d9DoubledMatterFiberHalfSpinorLinearEquiv matter)
 
 theorem d9PrimitiveSpinCPhaseActionCLM_continuous :
     Continuous

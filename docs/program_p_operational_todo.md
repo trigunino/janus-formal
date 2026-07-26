@@ -1,17 +1,13 @@
-# Programme P — TODO opérationnelle distribuable aux LLM
+# Programme P — registre opérationnel canonique
 
-Date de référence : 2026-07-19.
+Date de référence : 2026-07-26.
 
 ## 1. Rôle de ce document
 
-Ce fichier est la file de travail courte de Programme P. Le registre détaillé
-`docs/program_p_exhaustive_todo.md` reste le journal historique des preuves et
-des sous-résultats.
-
-État vérifié du registre historique : **1132/1238**, soit **91,44 %**, avec
-**106 cases ouvertes**. Ce pourcentage n'est plus utilisé comme mesure de
-fermeture globale : le nombre de cases ouvertes n'a pas diminué pendant
-l'ajout de centaines de microlemmes.
+Ce fichier est l'unique file de travail active de Programme P. L'ancien
+registre exhaustif à cases a été supprimé : ses compteurs étaient obsolètes et
+mesuraient surtout l'accumulation de microlemmes. Son historique reste
+consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
 de la section 7. État actuel : **0/14**. Une preuve locale, pointwise,
@@ -20,7 +16,13 @@ finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
-## 2. Consigne à donner à chaque LLM
+Les champs `Limite` des cartes `DONE` décrivent la frontière historique au
+jour de leur validation. Ils ne constituent plus une tâche active lorsqu'une
+carte ultérieure les ferme. L'arriéré actif est formé uniquement des cartes
+dont l'état n'est pas `DONE`, des verrous globaux de la section 6 et des portes
+terminales de la section 7.
+
+## 2. Protocole de travail
 
 Copier ce bloc avec l'identifiant d'une seule carte :
 
@@ -37,19 +39,9 @@ Copier ce bloc avec l'identifiant d'une seule carte :
 > prouvé, portée, fichiers modifiés, commandes/tests, et porte terminale fermée
 > — ou écris explicitement « aucune ».
 
-Coordination dans un workspace partagé :
-
-- plusieurs agents peuvent travailler en parallèle sur des gates distincts ;
-- un seul intégrateur à la fois modifie la façade, l'audit et les deux TODO ;
-- un agent ne coche jamais une carte qu'il n'a pas lui-même compilée ;
-- les lemmes intermédiaires sont inscrits comme preuves d'appui sous la carte,
-  sans créer de nouvelle unité de progression.
-
-Première vague possible pour dix LLM : attribuer les dix cartes de la section
-4, une par agent. Chaque agent construit et compile uniquement son gate ; un
-coordinateur intègre ensuite les gates verts, un par un, dans la façade et
-l'audit. Les cartes de la section 5 viennent seulement après cette vague ou
-après satisfaction de leur dépendance explicite.
+Dans un workspace partagé, un seul intégrateur modifie la façade, l'audit et
+ce registre. Une carte n'est déclarée fermée qu'après compilation directe de
+son gate et de la façade.
 
 ## 3. Portées et validation
 
@@ -78,7 +70,7 @@ lake env lean JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean
 C:\Users\alzie\AppData\Local\Programs\Python\Python314\python.exe scripts/audit_janus_program_p.py
 ```
 
-## 4. Cartes petites et parallélisables
+## 4. Registre des cartes intermédiaires
 
 Ces cartes produisent des ponts utiles, mais ne ferment une porte terminale
 que si leur critère le dit explicitement.
@@ -2115,11 +2107,176 @@ que si leur critère le dit explicitement.
 - Porte terminale : aucune ; fournit le premier terme d'action D9 authentiquement
   porté par les sections spinorielles globales.
 
+### `P9-SPINC-GEOMETRIC-ZERO-MODE` — Mode zéro géométrique primitif
+
+- État : `DONE` (2026-07-25). Portée : `GÉOMÉTRIQUE/PARTIELLE`.
+- Gates : `P0EFTJanusProgramPPrimitiveMonopoleZeroModeSection4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeDiracEquation4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D`.
+- Résultat : les représentants lisses du mode monopolaire de Hopf et leur
+  section SpinC globale sont construits dans les deux secteurs de racine. Le
+  Dirac géométrique satisfait la règle de Leibniz locale, la section de Hopf
+  satisfait son équation propre, et la synthèse finie du bloc zéro entrelace
+  exactement le Dirac géométrique avec l'opérateur diagonal des fréquences
+  normales corrigées.
+- Limite : ce résultat réalise le bloc géométrique de valeur propre zéro, pas
+  la tour géométrique complète ni son exhaustivité spectrale.
+- Porte terminale : aucune ; avance `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-FIRST-POSITIVE` — Premier niveau positif géométrique signé
+
+- État : `DONE` (2026-07-25). Portée : `GÉOMÉTRIQUE/PARTIELLE`.
+- Gates : `P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereExhaustion4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedBridge4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D`.
+- Résultat : trois sections propres réelles linéairement indépendantes sont
+  construites pour chacun des signes, non nulles, avec dégénérescence construite
+  `3`; leur somme directe épuise exactement le bloc géométrique engendré de
+  dimension `6`, et les équations propres de Dirac et de Dirac carré sont
+  démontrées. Les six sections réalisent exactement les deux branches internes
+  du spectre signé au premier niveau, indépendamment du secteur de racine.
+  Leur synthèse à six coordonnées est injective et entrelace le vrai Dirac
+  différentiel avec la diagonale signée, y compris après mise au carré.
+- Limite : l'exhaustivité de l'espace propre, les niveaux positifs arbitraires et
+  la complétude spectrale restent ouverts.
+- Porte terminale : aucune ; avance `DIRAC-GLOBAL-01` et `REGULATOR-GLOBAL-01`.
+
+### `P9-SPINC-SIGNED-ABSTRACT-SPECTRUM` — Deux branches internes signées
+
+- État : `DONE` (2026-07-26). Portée : `ANALYTIQUE/ABSTRAITE`.
+- Gates : `P0EFTJanusProgramPPrimitiveSpinCSignedSpectrum4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedBridge4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCSignedSpectralCompletion4D`.
+- Résultat : le signe spectral interne `±` est séparé du fold PT; les carrés
+  coïncident avec le spectre abstrait antérieur et les branches non nulles sont
+  distinctes, sans doubler la tour zéro. Le spectre corrigé possède désormais
+  une base de Hilbert complète, un domaine maximal dense, un opérateur
+  auto-adjoint fermé et, dans le secteur quart-tordu physique, un gap `1/4`,
+  une bijectivité, la propriété de Fredholm et l'indice nul.
+- Limite : l'identification de cette base abstraite avec une famille complète
+  de sections propres géométriques lisses reste le théorème de Fourier
+  géométrique; seule sa réalisation aux niveaux zéro et premier est fermée.
+- Porte terminale : aucune ; corrige la portée de `DIRAC-GLOBAL-01`.
+
+### `P-T01-AMBIENT-PINMINUS-LOCAL-SECTIONS-REDUCTION` — Fermeture du revêtement
+
+- État : `DONE` (2026-07-25). Portée : `TOPOLOGIQUE`.
+- Gates : `P0EFTJanusMappingTorusAmbientPinMinusProjectionKernel4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusCompactness4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusLocalSectionsClosure4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusLocalSectionsPropagation4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusCechCoherenceClosure4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusRealNormalRestrictionGauge4D`.
+- Résultat : Cartan–Dieudonné est borné à quatre réflexions, le groupe Pin
+  concret est compact, le noyau de la projection est exactement `{±1}`, et la
+  projection est un revêtement possédant les sections locales requises. Le
+  cocycle Čech ambiant canonique est normalisé, inverse-cohérent, strictement
+  cohérent sur les triples overlaps et définit le vrai bundle principal. Le
+  normal réel possède également son cocycle Čech exact et cohérent. La
+  zéro-cochaîne requise est maintenant construite explicitement par le vecteur
+  de Clifford demi-angle normalisé `e+n`; elle entrelace tous les windings,
+  réalise exactement la restriction et coïncide sur les overlaps sans choix
+  de chemin. Sa continuité est prouvée pour tout champ normal horizontal,
+  continu et non nul.
+- Frontière exacte : `canonicalLatitudeNormalLift_contMDiff` et
+  `canonicalLatitudeNormalCoordinate_contMDiffOn` donnent déjà la régularité
+  `C∞` intrinsèque et ses coordonnées de trivialisation. Il ne reste, pour
+  cette présentation particulière, que l'égalité de changement de coordonnées
+  avec la représentation cover-produit `canonicalLatitudeSectionNormal`.
+  Ce pont de représentation est rattaché à `GEO-GLOBAL-01`; ce n'est plus une
+  carte analytique autonome.
+- Porte terminale : aucune ; réduction exacte d'un sous-verrou de `T01`.
+
+### `P-LL-WEAK-JACOBI-SCOPE` — Hessien LL simultané et obstruction flux-only
+
+- État : `DONE` (2026-07-25). Portée : `ANALYTIQUE/PARTIELLE`.
+- Gates : `P0EFTJanusMappingTorusLLWeakJacobiGaugeComplex4D`,
+  `P0EFTJanusMappingTorusLLFullWeakJacobiGaugeComplex4D`,
+  `P0EFTJanusMappingTorusLLGeneratingFrameVariation4D`,
+  `P0EFTJanusMappingTorusLLGeneratingFrameFullHessian4D`,
+  `P0EFTJanusMappingTorusLLGeneratingFrameElementaryFlows4D`.
+- Résultat : le Hessien réel des trois slots typés (métrique auxiliaire, mesure,
+  flux) donne un opérateur de Jacobi bilinéaire; une variation typée du repère,
+  sa courbe exponentielle, son Hessien radial et le générateur diagonal à quatre
+  slots sont construits. Le secteur radial possède maintenant une vraie courbe
+  simultanée non gelée, son Hessien quatre slots avec termes croisés, sa
+  symétrie, son Jacobi et son critère exact de noyau. Les taux exponentiels
+  indépendants de chaque générateur et les cisaillements par un coefficient
+  scalaire lisse donnent maintenant des courbes globales supplémentaires de
+  vrais repères, avec vitesses exactes. Dans le secteur flux-only strictement
+  positif, `J ∘ R = 0` équivaut à `R = 0`.
+- Frontière exacte : le dépôt possède déjà la famille génératrice lisse, ses
+  coefficients locaux et la reconstruction locale de tout tangent. Réaliser
+  simultanément un tangent arbitraire exige seulement leur assemblage en une
+  droite inverse lisse globale, puis un flot matriciel inversible; ce pont est
+  rattaché à `KJ-GLOBAL-02`/`HESSIAN-GLOBAL-01`, pas à une nouvelle carte LL.
+  La direction de jauge générale n'est radiale que sous le critère affiché, et
+  aucune dégénérescence injustifiée n'est affirmée.
+- Porte terminale : aucune ; avance `KJ-GLOBAL-02` et `HESSIAN-GLOBAL-01`.
+
+### `P-FULL-ACTION-FRECHET-LINE-BRIDGE` — Pont Fréchet concret maximal
+
+- État : `DONE` (2026-07-25). Portée : `ACTION/ANALYTIQUE-PARTIELLE`.
+- Gates : `P0EFTJanusProgramPConcreteFullActionFrechetBridge4D`,
+  `P0EFTJanusProgramPConcreteFullActionFrechetC2Closure4D`,
+  `P0EFTJanusProgramPConcreteCandidateALineC2Closure4D`,
+  `P0EFTJanusProgramPConcreteMatterLineC2Closure4D`,
+  `P0EFTJanusProgramPConcreteMatterLineC2CriterionRealization4D`,
+  `P0EFTJanusProgramPConcreteMatterLineC2CriterionCompletion4D`,
+  `P0EFTJanusMappingTorusConcreteEinsteinMaxwellLineC2Closure4D`,
+  `P0EFTJanusMappingTorusConcreteEinsteinMaxwellGeneralMeasureC2Closure4D`,
+  `P0EFTJanusMappingTorusConcreteEinsteinMaxwellGeneralMeasureC2Realization4D`,
+  `P0EFTJanusProgramPConcreteFullActionFrechetDiracAssembly4D`,
+  `P0EFTJanusProgramPConcreteFullActionFrechetGeneralMeasureAssembly4D`.
+- Résultat : Robin + LL + BV intégré instancient inconditionnellement le contrat
+  Fréchet `C²` sur leur ligne commune; le pont neuf blocs est réduit exactement
+  à six régularités `C²`. Candidate A est `C²` pour toute mesure finie; le slot
+  matière est équivalent à la continuité de son Hessien sous les deux identités
+  de dérivation exactes; EH `±` et Maxwell `±` sont `C²` pour une mesure de
+  Dirac concrète et pour toute mesure finie sous leur critère de continuité
+  jointe. Le bridge neuf blocs complet est construit sur mesure de Dirac, sous
+  le seul critère matière affiché; il est aussi construit pour toute mesure
+  finie sous les critères matière et Einstein–Maxwell exacts. Le critère matière
+  est désormais construit depuis les contrats translatés, la continuité jointe
+  et la densité diagonale de second ordre; le Hessien intégré et sa continuité
+  sont alors démontrés.
+- Limite : le contrat de base ne fournit pas la finitude de mesure, les cinq
+  continuités conjointes ni la règle de chaîne diagonale. Surtout,
+  `GlobalFixedFrameComponentContinuity` n'est pas une conséquence de la
+  lissité intrinsèque : les quatre vecteurs modèles fixes ne sont pas des
+  sections tangentes globales continues d'un atlas quotient arbitraire. Pour
+  EH/Maxwell, la lissité séparée en chaque point ne fournit pas la continuité
+  jointe paramètre–point. La fermeture générale exige donc un espace de champs
+  intrinsèque muni d'une topologie `C∞/Sobolev` et une action écrite dans des
+  repères locaux recollés; ce sont `FIELD-GLOBAL-01` et `GEO-GLOBAL-01`, pas un
+  résidu technique autonome. Ce n'est pas encore une fermeture de
+  `ACTION-GLOBAL-01`.
+- Porte terminale : aucune ; avance `T03`–`T05`, `T11` et `T12`.
+
+### Classement final des anciens résidus immédiats — 26 juillet 2026
+
+Il ne reste aucune carte autonome dans cette ancienne liste :
+
+- le spectre SpinC signé abstrait est fermé; la tour de Fourier géométrique
+  complète appartient à `DIRAC-GLOBAL-01`;
+- la normale intrinsèque et ses coordonnées locales sont déjà `C∞`; la seule
+  comparaison avec `canonicalLatitudeSectionNormal` appartient à
+  `GEO-GLOBAL-01`;
+- les générateurs LL, coefficients locaux, directions radiales/anisotropes et
+  cisaillements sont construits; l'assemblage global d'un tangent arbitraire
+  appartient à `KJ-GLOBAL-02`/`HESSIAN-GLOBAL-01`;
+- les critères et assemblages `C²` maximaux sont fermés; leur transport vers
+  les vrais champs appartient à `FIELD-GLOBAL-01`/`ACTION-GLOBAL-01`.
+
 ## 6. Verrous globaux — ne pas distribuer comme petites cartes
 
-Ces paquets exigent d'abord les ponts précédents. Un agent peut proposer un
-lemme intermédiaire, mais ne doit pas annoncer leur fermeture partielle comme
-fermeture globale.
+Ces paquets absorbent tous les ponts restants. Aucun lemme intermédiaire ne
+doit être annoncé comme fermeture globale.
 
 | ID | Résultat global exigé | Dépendances principales |
 |---|---|---|
@@ -2200,5 +2357,6 @@ dénominateur `14`, affiche le décompte terminal `0/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
-contrat `ProgramStatus`. L'audit complet est vert le 2026-07-19. Aucune porte
+contrat `ProgramStatus`. L'audit complet a été revérifié vert le 2026-07-26.
+Aucune porte
 terminale n'est fermée.
