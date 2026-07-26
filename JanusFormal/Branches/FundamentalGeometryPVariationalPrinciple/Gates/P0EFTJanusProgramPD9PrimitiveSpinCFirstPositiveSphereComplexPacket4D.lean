@@ -35,18 +35,19 @@ internal Dirac sign. -/
 abbrev PrimitiveSpinCFirstSphereComplexCoefficients :=
   Fin 3 → Complex
 
-/-- The actual geometric Dirac operator distributes over every finite sum of
-genuine smooth sections. -/
+/-- The actual positive-quarter geometric Dirac operator distributes over
+every finite sum of genuine smooth sections. -/
 theorem d9PrimitiveSpinCGeometricDiracOperator_finset_sum
     {ι : Type} [DecidableEq ι]
-    (choice : NormalRootChoice)
-    (states : ι → D9PrimitiveSpinCSmoothSection period hPeriod choice)
+    (states : ι →
+      D9PrimitiveSpinCSmoothSection period hPeriod .positiveQuarter)
     (indices : Finset ι) :
     d9PrimitiveSpinCGeometricDiracOperator
-        period hPeriod choice (∑ index in indices, states index) =
+        period hPeriod .positiveQuarter
+        (∑ index in indices, states index) =
       ∑ index in indices,
         d9PrimitiveSpinCGeometricDiracOperator
-          period hPeriod choice (states index) := by
+          period hPeriod .positiveQuarter (states index) := by
   induction indices using Finset.induction_on with
   | empty =>
       simp only [Finset.sum_empty,
