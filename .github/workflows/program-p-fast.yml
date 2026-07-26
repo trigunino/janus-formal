@@ -20,6 +20,12 @@ on:
       - "lake-manifest.json"
       - ".github/workflows/program-p-fast.yml"
   workflow_dispatch:
+    inputs:
+      full:
+        description: "Build the complete Program P facade instead of the active SpinC frontier"
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: program-p-fast-${{ github.head_ref || github.ref_name }}
@@ -41,19 +47,28 @@ jobs:
           lint: false
           use-mathlib-cache: true
 
-      - name: Build Program P
+      - name: Build active Program P frontier
         id: build
         shell: bash
         run: |
           set +e
-          lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple \
-            > program-p-fast.log 2>&1
+
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedBridge4D"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ inputs.full }}" = "true" ]; then
+            target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple"
+          fi
+
+          echo "Building Lean target: $target"
+          lake build "$target" > program-p-fast.log 2>&1
           status=$?
 
           cat program-p-fast.log
 
           {
             echo "## Program P Lean diagnostics"
+            echo
+            echo "Target: \`$target\`"
             echo
             if [ "$status" -eq 0 ]; then
               echo "Build succeeded."
