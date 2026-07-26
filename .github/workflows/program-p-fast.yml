@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingWitnessLocal4D"
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeMovingLocal4D"
           echo "Building active Lean leaf: $target"
           lake build "$target" > program-p-leaf.log 2>&1
           status=$?
