@@ -56,6 +56,35 @@ jobs:
           restore-keys: |
             program-p-build-${{ runner.os }}-
 
+      - name: Build active Program P leaf
+        id: leaf
+        shell: bash
+        run: |
+          set +e
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingWitnessLocal4D"
+          echo "Building active Lean leaf: $target"
+          lake build "$target" > program-p-leaf.log 2>&1
+          status=$?
+          cat program-p-leaf.log
+
+          {
+            echo "## Active Program P leaf diagnostics"
+            echo
+            echo "Target: \`$target\`"
+            echo
+            if [ "$status" -eq 0 ]; then
+              echo "Leaf build succeeded."
+            else
+              echo '```text'
+              grep -n -B 3 -A 12 -E '^error:|^[^ ]+\.lean:[0-9]+:[0-9]+: error:' \
+                program-p-leaf.log | tail -n 240 || \
+                tail -n 240 program-p-leaf.log
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$status"
+
       - name: Build active Program P frontier
         id: build
         shell: bash
@@ -75,12 +104,12 @@ jobs:
           cat program-p-fast.log
 
           {
-            echo "## Program P Lean diagnostics"
+            echo "## Program P frontier diagnostics"
             echo
             echo "Target: \`$target\`"
             echo
             if [ "$status" -eq 0 ]; then
-              echo "Build succeeded."
+              echo "Frontier build succeeded."
             else
               echo '```text'
               grep -n -B 3 -A 12 -E '^error:|^[^ ]+\.lean:[0-9]+:[0-9]+: error:' \
@@ -99,10 +128,12 @@ jobs:
           path: .lake/build
           key: ${{ steps.project-cache.outputs.cache-primary-key }}
 
-      - name: Upload Program P Lean log
+      - name: Upload Program P Lean logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: program-p-fast-log
-          path: program-p-fast.log
-          if-no-files-found: error
+          path: |
+            program-p-leaf.log
+            program-p-fast.log
+          if-no-files-found: warn
