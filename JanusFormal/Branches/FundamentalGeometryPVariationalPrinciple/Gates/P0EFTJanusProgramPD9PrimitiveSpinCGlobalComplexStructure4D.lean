@@ -23,11 +23,15 @@ namespace P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
 set_option autoImplicit false
 noncomputable section
 
+open Bundle
+open scoped Manifold ContDiff Bundle
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
+open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
@@ -98,14 +102,16 @@ def d9PrimitiveSpinCImaginarySectionLinearMap
       D9PrimitiveSpinCSmoothSection period hPeriod choice where
   toFun := d9PrimitiveSpinCImaginarySection period hPeriod choice
   map_add' first second := by
-    ext base
+    apply ContMDiffSection.ext
+    intro base
     change
       d9PrimitiveSpinCImaginaryAction (first base + second base) =
         d9PrimitiveSpinCImaginaryAction (first base) +
           d9PrimitiveSpinCImaginaryAction (second base)
     exact map_add d9PrimitiveSpinCImaginaryAction _ _
   map_smul' scalar state := by
-    ext base
+    apply ContMDiffSection.ext
+    intro base
     change
       d9PrimitiveSpinCImaginaryAction (scalar • state base) =
         scalar • d9PrimitiveSpinCImaginaryAction (state base)
@@ -136,7 +142,8 @@ theorem d9PrimitiveSpinCImaginarySection_sq
         (d9PrimitiveSpinCImaginarySection
           period hPeriod choice state) =
       -state := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   change
     d9PrimitiveSpinCImaginaryAction
         (d9PrimitiveSpinCImaginaryAction (state base)) =
@@ -179,7 +186,8 @@ theorem d9PrimitiveSpinCGeometricDiracOperator_imaginary
           period hPeriod choice state =
         imaginaryFamily.toSmoothSection period hPeriod choice by rfl]
   rw [d9PrimitiveSpinCGeometricDiracOperator_toSmoothSection]
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   let core := d9PrimitiveSpinCVectorBundleCore period hPeriod choice
   have hBase :
       base ∈ d9PrimitiveSpinCBaseSet
@@ -250,16 +258,14 @@ theorem d9PrimitiveSpinCComplexLineLinearMap_injective
   let delta : Complex := first - second
   let imaginaryState :=
     d9PrimitiveSpinCImaginarySection period hPeriod choice state
+  have hMapZero :
+      d9PrimitiveSpinCComplexLineLinearMap
+          period hPeriod choice state delta = 0 := by
+    rw [show delta = first - second by rfl, map_sub, hEqual, sub_self]
   have hZero :
       delta.re • state + delta.im • imaginaryState = 0 := by
-    have hDifference :
-        d9PrimitiveSpinCComplexLineLinearMap
-            period hPeriod choice state delta = 0 := by
-      dsimp [delta]
-      rw [map_sub, hEqual, sub_self]
-    change delta.re • state + delta.im • imaginaryState = 0
-      at hDifference
-    exact hDifference
+    simpa [d9PrimitiveSpinCComplexLineLinearMap_apply, imaginaryState]
+      using hMapZero
   have hImaginarySq :
       d9PrimitiveSpinCImaginarySection
           period hPeriod choice imaginaryState =
@@ -270,17 +276,17 @@ theorem d9PrimitiveSpinCComplexLineLinearMap_injective
   have hApplied := congrArg
     (d9PrimitiveSpinCImaginarySectionLinearMap
       period hPeriod choice) hZero
+  have hRotatedRaw :
+      delta.re • imaginaryState +
+          delta.im •
+            d9PrimitiveSpinCImaginarySection
+              period hPeriod choice imaginaryState = 0 := by
+    simpa only [map_add, map_smul, map_zero,
+      d9PrimitiveSpinCImaginarySectionLinearMap_apply] using hApplied
   have hRotated :
       delta.re • imaginaryState - delta.im • state = 0 := by
-    change
-      d9PrimitiveSpinCImaginarySection
-          period hPeriod choice
-          (delta.re • state + delta.im • imaginaryState) =
-        d9PrimitiveSpinCImaginarySection period hPeriod choice 0
-      at hApplied
-    rw [map_add, map_smul, map_smul,
-      d9PrimitiveSpinCImaginarySection_zero, hImaginarySq] at hApplied
-    simpa only [smul_neg, sub_eq_add_neg] using hApplied
+    rw [hImaginarySq] at hRotatedRaw
+    simpa only [smul_neg, sub_eq_add_neg] using hRotatedRaw
   have hNormScaled :
       (delta.re ^ 2 + delta.im ^ 2) • state = 0 := by
     calc
@@ -301,37 +307,41 @@ theorem d9PrimitiveSpinCComplexLineLinearMap_injective
     apply Complex.ext
     · exact hReal
     · exact hImaginary
-  exact sub_eq_zero.mp (by simpa [delta] using hDelta)
+  have hDifference : first - second = 0 := by
+    simpa [delta] using hDelta
+  exact sub_eq_zero.mp hDifference
 
-/-- If a genuine section is a real Dirac eigensection, its entire faithful
-complex line has the same eigenvalue. -/
+/-- If a positive-quarter genuine section is a real Dirac eigensection, its
+entire faithful complex line has the same eigenvalue.  This is the geometric
+root sector used by the primitive Hopf construction; the external normal-root
+label remains an independent mode label. -/
 theorem d9PrimitiveSpinCComplexLineLinearMap_eigen
-    (choice : NormalRootChoice)
-    (state : D9PrimitiveSpinCSmoothSection period hPeriod choice)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod .positiveQuarter)
     (eigenvalue : Real)
     (hEigen :
       d9PrimitiveSpinCGeometricDiracOperator
-          period hPeriod choice state = eigenvalue • state)
+          period hPeriod .positiveQuarter state = eigenvalue • state)
     (coefficient : Complex) :
     d9PrimitiveSpinCGeometricDiracOperator
-        period hPeriod choice
+        period hPeriod .positiveQuarter
         (d9PrimitiveSpinCComplexLineLinearMap
-          period hPeriod choice state coefficient) =
+          period hPeriod .positiveQuarter state coefficient) =
       eigenvalue •
         d9PrimitiveSpinCComplexLineLinearMap
-          period hPeriod choice state coefficient := by
+          period hPeriod .positiveQuarter state coefficient := by
   have hImaginaryEigen :
       d9PrimitiveSpinCGeometricDiracOperator
-          period hPeriod choice
+          period hPeriod .positiveQuarter
           (d9PrimitiveSpinCImaginarySection
-            period hPeriod choice state) =
+            period hPeriod .positiveQuarter state) =
         eigenvalue •
           d9PrimitiveSpinCImaginarySection
-            period hPeriod choice state := by
+            period hPeriod .positiveQuarter state := by
     rw [d9PrimitiveSpinCGeometricDiracOperator_imaginary, hEigen]
     exact map_smul
       (d9PrimitiveSpinCImaginarySectionLinearMap
-        period hPeriod choice) eigenvalue state
+        period hPeriod .positiveQuarter) eigenvalue state
   rw [d9PrimitiveSpinCComplexLineLinearMap_apply,
     d9PrimitiveSpinCGeometricDiracOperator_add,
     d9PrimitiveSpinCGeometricDiracOperator_real_smul,
@@ -458,7 +468,7 @@ theorem primitiveSpinCHopfFirstSpherePositiveComplexCoefficientLinearMap_eigen
         primitiveSpinCHopfFirstSpherePositiveComplexCoefficientLinearMap
           period hPeriod coordinate sector mode coefficient :=
   d9PrimitiveSpinCComplexLineLinearMap_eigen
-    period hPeriod .positiveQuarter
+    period hPeriod
     (primitiveSpinCHopfFirstSpherePositiveSection
       period hPeriod coordinate sector mode)
     (primitiveSpinCHopfFirstSphereDiracFrequency period sector mode)
@@ -479,7 +489,7 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexCoefficientLinearMap_eigen
         primitiveSpinCHopfFirstSphereNegativeComplexCoefficientLinearMap
           period hPeriod coordinate sector mode coefficient :=
   d9PrimitiveSpinCComplexLineLinearMap_eigen
-    period hPeriod .positiveQuarter
+    period hPeriod
     (primitiveSpinCHopfFirstSphereNegativeSection
       period hPeriod coordinate sector mode)
     (-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode)
