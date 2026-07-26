@@ -47,6 +47,15 @@ jobs:
           lint: false
           use-mathlib-cache: true
 
+      - name: Restore incremental project build cache
+        id: project-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .lake/build
+          key: program-p-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+
       - name: Build active Program P frontier
         id: build
         shell: bash
@@ -82,6 +91,13 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
           exit "$status"
+
+      - name: Save incremental project build cache
+        if: always() && steps.project-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .lake/build
+          key: ${{ steps.project-cache.outputs.cache-primary-key }}
 
       - name: Upload Program P Lean log
         if: always()
