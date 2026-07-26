@@ -1,19 +1,21 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexLinearity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereWitnessFiber4D
 import Mathlib.Tactic
 
 /-!
 # Two-witness algebra for complex first-sphere multiplicity
 
 The existing equatorial witness sees the two tangential complex coefficients
-through one combination `c₁ + i c₂`.  An antipodal witness is expected to see
-`c₁ - i c₂`.  Together with the already available radial coefficient `c₀`,
-these three observables form an injective complex-linear transform
+through one combination `c₁ + i c₂`.  The opposite Hopf fiber constructed in
+the imported geometric gate carries the reversed Clifford sign and therefore
+selects `c₁ - i c₂`.  Together with the already available radial coefficient
+`c₀`, these three observables form an injective complex-linear transform
 
 `(c₀,c₁,c₂) ↦ (c₀,c₁+i c₂,c₁-i c₂)`.
 
 This gate isolates and proves that finite-dimensional algebra.  The remaining
-geometric task is therefore only to construct the antipodal local evaluation
-and identify it with the third displayed observable.
+geometric task is to identify the antipodal quotient evaluation with the
+opposite Hopf fiber already constructed at the fiber level.
 -/
 
 namespace JanusFormal
