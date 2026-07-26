@@ -11,7 +11,7 @@ the genuine smooth-section core.
 The resulting real-linear endomorphisms form a unital ring representation of
 `ℂ`; real scalars recover the pre-existing real module structure, `i` recovers
 the global complex structure, and every scalar endomorphism commutes with the
-actual differential Dirac operator.
+actual differential Dirac operator on the positive-quarter geometric core.
 -/
 
 namespace JanusFormal
@@ -20,11 +20,18 @@ namespace P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 set_option autoImplicit false
 noncomputable section
 
+open Bundle
+open scoped Manifold ContDiff Bundle
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPAmbientHalfSpinorD9Bridge4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
+open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
+open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
@@ -95,7 +102,8 @@ def d9PrimitiveSpinCComplexScalarSectionLinearMap
     d9PrimitiveSpinCComplexScalarSection
       period hPeriod choice scalar
   map_add' first second := by
-    ext base
+    apply ContMDiffSection.ext
+    intro base
     change
       d9PrimitiveSpinCComplexActionCLM scalar
           (first base + second base) =
@@ -103,7 +111,8 @@ def d9PrimitiveSpinCComplexScalarSectionLinearMap
           d9PrimitiveSpinCComplexActionCLM scalar (second base)
     exact map_add (d9PrimitiveSpinCComplexActionCLM scalar) _ _
   map_smul' real state := by
-    ext base
+    apply ContMDiffSection.ext
+    intro base
     change
       d9PrimitiveSpinCComplexActionCLM scalar
           (real • state base) =
@@ -146,7 +155,8 @@ theorem d9PrimitiveSpinCComplexScalarSection_zero_scalar
     (state : D9PrimitiveSpinCSmoothSection period hPeriod choice) :
     d9PrimitiveSpinCComplexScalarSection
         period hPeriod choice 0 state = 0 := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   exact d9PrimitiveSpinCComplexAction_zero (state base)
 
 /-- One complex scalar gives the original smooth section. -/
@@ -156,7 +166,8 @@ theorem d9PrimitiveSpinCComplexScalarSection_one
     (state : D9PrimitiveSpinCSmoothSection period hPeriod choice) :
     d9PrimitiveSpinCComplexScalarSection
         period hPeriod choice 1 state = state := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   change d9PrimitiveSpinCComplexActionCLM 1 (state base) = state base
   exact d9PrimitiveSpinCComplexAction_one (state base)
 
@@ -171,7 +182,8 @@ theorem d9PrimitiveSpinCComplexScalarSection_add_scalar
           period hPeriod choice first state +
         d9PrimitiveSpinCComplexScalarSection
           period hPeriod choice second state := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   exact d9PrimitiveSpinCComplexAction_add first second (state base)
 
 /-- Multiplication of complex scalars is composition of the corresponding
@@ -185,7 +197,8 @@ theorem d9PrimitiveSpinCComplexScalarSection_mul
         period hPeriod choice first
         (d9PrimitiveSpinCComplexScalarSection
           period hPeriod choice second state) := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   change
     d9PrimitiveSpinCComplexActionCLM (first * second) (state base) =
       d9PrimitiveSpinCComplexActionCLM first
@@ -200,7 +213,8 @@ theorem d9PrimitiveSpinCComplexScalarSection_ofReal
     d9PrimitiveSpinCComplexScalarSection
         period hPeriod choice (real : Complex) state =
       real • state := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
   rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_complexAction, map_smul]
   simp only [Complex.real_smul]
@@ -214,7 +228,8 @@ theorem d9PrimitiveSpinCComplexScalarSection_I
         period hPeriod choice Complex.I state =
       d9PrimitiveSpinCImaginarySection
         period hPeriod choice state := by
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   change
     d9PrimitiveSpinCComplexActionCLM Complex.I (state base) =
       d9PrimitiveSpinCImaginaryAction (state base)
@@ -260,28 +275,53 @@ theorem d9PrimitiveSpinCComplexScalarRepresentation_apply
         period hPeriod choice scalar state :=
   rfl
 
-/-- Real-linear packaging of the actual differential geometric Dirac
-operator. -/
-def d9PrimitiveSpinCGeometricDiracRealLinearMap
+/-- Generic algebraic closure of the descended complex scalar representation. -/
+theorem d9PrimitiveSpinCGlobalComplexScalarRepresentation_closed
     (choice : NormalRootChoice) :
-    D9PrimitiveSpinCSmoothSection period hPeriod choice →ₗ[Real]
-      D9PrimitiveSpinCSmoothSection period hPeriod choice where
-  toFun := d9PrimitiveSpinCGeometricDiracOperator period hPeriod choice
+    (∀ scalar state,
+      d9PrimitiveSpinCComplexScalarRepresentation
+          period hPeriod choice scalar state =
+        d9PrimitiveSpinCComplexScalarSection
+          period hPeriod choice scalar state) ∧
+      (∀ real state,
+        d9PrimitiveSpinCComplexScalarSection
+            period hPeriod choice (real : Complex) state =
+          real • state) ∧
+      (∀ state,
+        d9PrimitiveSpinCComplexScalarSection
+            period hPeriod choice Complex.I state =
+          d9PrimitiveSpinCImaginarySection
+            period hPeriod choice state) :=
+  ⟨d9PrimitiveSpinCComplexScalarRepresentation_apply
+      period hPeriod choice,
+    d9PrimitiveSpinCComplexScalarSection_ofReal
+      period hPeriod choice,
+    d9PrimitiveSpinCComplexScalarSection_I
+      period hPeriod choice⟩
+
+/-- Real-linear packaging of the actual differential geometric Dirac operator
+on the positive-quarter core used by the geometric Hopf construction. -/
+def d9PrimitiveSpinCGeometricDiracRealLinearMap :
+    D9PrimitiveSpinCSmoothSection period hPeriod .positiveQuarter →ₗ[Real]
+      D9PrimitiveSpinCSmoothSection period hPeriod .positiveQuarter where
+  toFun :=
+    d9PrimitiveSpinCGeometricDiracOperator
+      period hPeriod .positiveQuarter
   map_add' first second :=
     d9PrimitiveSpinCGeometricDiracOperator_add
       period hPeriod first second
   map_smul' scalar state :=
     d9PrimitiveSpinCGeometricDiracOperator_real_smul
-      period hPeriod choice scalar state
+      period hPeriod .positiveQuarter scalar state
 
 @[simp]
 theorem d9PrimitiveSpinCGeometricDiracRealLinearMap_apply
-    (choice : NormalRootChoice)
-    (state : D9PrimitiveSpinCSmoothSection period hPeriod choice) :
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod .positiveQuarter) :
     d9PrimitiveSpinCGeometricDiracRealLinearMap
-        period hPeriod choice state =
+        period hPeriod state =
       d9PrimitiveSpinCGeometricDiracOperator
-        period hPeriod choice state :=
+        period hPeriod .positiveQuarter state :=
   rfl
 
 /-- Every global complex scalar endomorphism commutes with the actual
@@ -308,7 +348,8 @@ theorem d9PrimitiveSpinCGeometricDiracOperator_complexScalar
           period hPeriod choice scalar state =
         complexFamily.toSmoothSection period hPeriod choice by rfl]
   rw [d9PrimitiveSpinCGeometricDiracOperator_toSmoothSection]
-  ext base
+  apply ContMDiffSection.ext
+  intro base
   let core := d9PrimitiveSpinCVectorBundleCore period hPeriod choice
   have hBase :
       base ∈ d9PrimitiveSpinCBaseSet
@@ -325,57 +366,56 @@ theorem d9PrimitiveSpinCGeometricDiracOperator_complexScalar
   exact d9PrimitiveSpinCLocalGeometricDirac_complexAction
     period hPeriod choice scalar family (core.indexAt base) base hBase
 
-/-- Endomorphism-level commutation relation for the full complex scalar
-representation. -/
+/-- Endomorphism-level commutation relation on the geometric
+positive-quarter core. -/
 theorem d9PrimitiveSpinCGeometricDiracOperator_commutes_complexRepresentation
-    (choice : NormalRootChoice) (scalar : Complex) :
+    (scalar : Complex) :
     (d9PrimitiveSpinCGeometricDiracRealLinearMap
-        period hPeriod choice).comp
+        period hPeriod).comp
         (d9PrimitiveSpinCComplexScalarRepresentation
-          period hPeriod choice scalar) =
+          period hPeriod .positiveQuarter scalar) =
       (d9PrimitiveSpinCComplexScalarRepresentation
-          period hPeriod choice scalar).comp
+          period hPeriod .positiveQuarter scalar).comp
         (d9PrimitiveSpinCGeometricDiracRealLinearMap
-          period hPeriod choice) := by
+          period hPeriod) := by
   apply LinearMap.ext
   intro state
   exact d9PrimitiveSpinCGeometricDiracOperator_complexScalar
-    period hPeriod choice scalar state
+    period hPeriod .positiveQuarter scalar state
 
-/-- Consolidated global complex-scalar closure. -/
-theorem d9PrimitiveSpinCGlobalComplexScalarAction_closed
-    (choice : NormalRootChoice) :
+/-- Consolidated global complex-scalar closure on the geometric core. -/
+theorem d9PrimitiveSpinCGlobalComplexScalarAction_closed :
     (∀ scalar state,
       d9PrimitiveSpinCComplexScalarRepresentation
-          period hPeriod choice scalar state =
+          period hPeriod .positiveQuarter scalar state =
         d9PrimitiveSpinCComplexScalarSection
-          period hPeriod choice scalar state) ∧
+          period hPeriod .positiveQuarter scalar state) ∧
       (∀ real state,
         d9PrimitiveSpinCComplexScalarSection
-            period hPeriod choice (real : Complex) state =
+            period hPeriod .positiveQuarter (real : Complex) state =
           real • state) ∧
       (∀ state,
         d9PrimitiveSpinCComplexScalarSection
-            period hPeriod choice Complex.I state =
+            period hPeriod .positiveQuarter Complex.I state =
           d9PrimitiveSpinCImaginarySection
-            period hPeriod choice state) ∧
+            period hPeriod .positiveQuarter state) ∧
       (∀ scalar,
         (d9PrimitiveSpinCGeometricDiracRealLinearMap
-            period hPeriod choice).comp
+            period hPeriod).comp
             (d9PrimitiveSpinCComplexScalarRepresentation
-              period hPeriod choice scalar) =
+              period hPeriod .positiveQuarter scalar) =
           (d9PrimitiveSpinCComplexScalarRepresentation
-              period hPeriod choice scalar).comp
+              period hPeriod .positiveQuarter scalar).comp
             (d9PrimitiveSpinCGeometricDiracRealLinearMap
-              period hPeriod choice)) :=
+              period hPeriod)) :=
   ⟨d9PrimitiveSpinCComplexScalarRepresentation_apply
-      period hPeriod choice,
+      period hPeriod .positiveQuarter,
     d9PrimitiveSpinCComplexScalarSection_ofReal
-      period hPeriod choice,
+      period hPeriod .positiveQuarter,
     d9PrimitiveSpinCComplexScalarSection_I
-      period hPeriod choice,
+      period hPeriod .positiveQuarter,
     d9PrimitiveSpinCGeometricDiracOperator_commutes_complexRepresentation
-      period hPeriod choice⟩
+      period hPeriod⟩
 
 end
 end P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
