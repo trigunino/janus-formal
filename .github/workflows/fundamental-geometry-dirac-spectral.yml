@@ -30,6 +30,10 @@ on:
       - ".github/workflows/fundamental-geometry-dirac-spectral.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   lean:
     runs-on: ubuntu-latest
