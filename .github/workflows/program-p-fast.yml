@@ -1,0 +1,69 @@
+name: Program P fast Lean gate
+
+on:
+  push:
+    branches:
+      - dev-branch
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+      - ".github/workflows/program-p-fast.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: program-p-fast-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  program-p:
+    name: Lean — Program P fast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
+      - name: Build Program P
+        id: build
+        shell: bash
+        run: |
+          set +e
+          lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple \
+            > program-p-fast.log 2>&1
+          status=$?
+
+          cat program-p-fast.log
+
+          {
+            echo "## Program P Lean diagnostics"
+            echo
+            if [ "$status" -eq 0 ]; then
+              echo "Build succeeded."
+            else
+              echo '```text'
+              grep -n -B 3 -A 12 -E '^error:|^[^ ]+\.lean:[0-9]+:[0-9]+: error:' \
+                program-p-fast.log | tail -n 240 || \
+                tail -n 240 program-p-fast.log
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$status"
+
+      - name: Upload Program P Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: program-p-fast-log
+          path: program-p-fast.log
+          if-no-files-found: error
