@@ -179,7 +179,7 @@ theorem primitiveSpinCGeometricSectionLocalCoordinate_intertwines_imaginary
         period hPeriod index base).comp
         (d9PrimitiveSpinCImaginarySectionLinearMap
           period hPeriod .positiveQuarter) =
-      d9PrimitiveSpinCImaginaryAction.comp
+      d9PrimitiveSpinCImaginaryAction.toLinearMap.comp
         (primitiveSpinCGeometricSectionLocalCoordinate
           period hPeriod index base) := by
   apply LinearMap.ext
