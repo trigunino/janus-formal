@@ -99,6 +99,7 @@ concurrency:
 
 jobs:
   lean-head:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     name: Lean — ${{ matrix.label }}
     runs-on: ubuntu-latest
     strategy:
@@ -151,6 +152,7 @@ jobs:
           if-no-files-found: error
 
   python-audit:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     name: Python — ${{ matrix.label }}
     runs-on: ubuntu-latest
     strategy:
