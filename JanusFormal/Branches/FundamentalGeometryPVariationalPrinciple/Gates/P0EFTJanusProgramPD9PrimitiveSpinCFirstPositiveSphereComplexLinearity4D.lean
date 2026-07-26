@@ -4,18 +4,16 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 /-!
 # Complex linearity of the geometric first-sphere packet
 
-The smooth primitive SpinC core is currently packaged as a real module.  The
-global scalar representation constructed in the preceding gate nevertheless
-realizes the full action of `ℂ` on genuine sections.
+The smooth primitive SpinC core is packaged as a real module, while the
+preceding gate supplies its intrinsic global `ℂ`-scalar representation.
+This gate identifies the previously constructed complex-line coordinates
+with that action and proves that the positive, negative and signed
+first-sphere packet syntheses respect arbitrary complex scalars.
 
-This gate identifies the previously constructed real-linear complex-line map
-with that global scalar action.  It then proves that the positive, negative
-and signed first-sphere packet syntheses respect multiplication by arbitrary
-complex scalars.  Consequently their actual geometric ranges are invariant
-under the global complex action, and the genuine differential Dirac operator
-commutes with that action on those ranges.
-
-No joint injectivity of the three complex multiplicities is used or claimed.
+Consequently the actual geometric packet range is invariant under the global
+complex action, and the genuine differential Dirac operator commutes with
+that action on the range.  No joint injectivity of the three complex
+multiplicities is used or claimed.
 -/
 
 namespace JanusFormal
@@ -28,6 +26,7 @@ open scoped BigOperators
 
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
+open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
@@ -35,58 +34,8 @@ open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-/-- Every complex number is its real part plus `i` times its imaginary part,
-in the precise orientation used by the global scalar action. -/
-theorem complex_eq_re_add_im_mul_I (scalar : Complex) :
-    scalar = (scalar.re : Complex) + (scalar.im : Complex) * Complex.I := by
-  apply Complex.ext <;> simp
-
-/-- The descended global complex action has the expected real/imaginary
-formula on genuine smooth sections. -/
-theorem d9PrimitiveSpinCComplexScalarSection_eq_re_add_im
-    (choice : NormalRootChoice) (scalar : Complex)
-    (state : D9PrimitiveSpinCSmoothSection period hPeriod choice) :
-    d9PrimitiveSpinCComplexScalarSection
-        period hPeriod choice scalar state =
-      scalar.re • state +
-        scalar.im •
-          d9PrimitiveSpinCImaginarySection
-            period hPeriod choice state := by
-  calc
-    d9PrimitiveSpinCComplexScalarSection
-          period hPeriod choice scalar state =
-        d9PrimitiveSpinCComplexScalarSection
-          period hPeriod choice
-          ((scalar.re : Complex) +
-            (scalar.im : Complex) * Complex.I) state := by
-      rw [← complex_eq_re_add_im_mul_I scalar]
-    _ =
-        d9PrimitiveSpinCComplexScalarSection
-            period hPeriod choice (scalar.re : Complex) state +
-          d9PrimitiveSpinCComplexScalarSection
-            period hPeriod choice
-            ((scalar.im : Complex) * Complex.I) state :=
-      d9PrimitiveSpinCComplexScalarSection_add_scalar
-        period hPeriod choice (scalar.re : Complex)
-          ((scalar.im : Complex) * Complex.I) state
-    _ =
-        scalar.re • state +
-          d9PrimitiveSpinCComplexScalarSection
-            period hPeriod choice (scalar.im : Complex)
-            (d9PrimitiveSpinCComplexScalarSection
-              period hPeriod choice Complex.I state) := by
-      rw [d9PrimitiveSpinCComplexScalarSection_ofReal,
-        d9PrimitiveSpinCComplexScalarSection_mul]
-    _ =
-        scalar.re • state +
-          scalar.im •
-            d9PrimitiveSpinCImaginarySection
-              period hPeriod choice state := by
-      rw [d9PrimitiveSpinCComplexScalarSection_I,
-        d9PrimitiveSpinCComplexScalarSection_ofReal]
-
-/-- The earlier complex-line coordinate map is exactly the global complex
-scalar action on its real generator. -/
+/-- The earlier real-linear complex-line coordinate map is definitionally the
+intrinsic global complex scalar action on its real generator. -/
 theorem d9PrimitiveSpinCComplexLineLinearMap_eq_complexScalarSection
     (choice : NormalRootChoice)
     (state : D9PrimitiveSpinCSmoothSection period hPeriod choice)
@@ -94,9 +43,8 @@ theorem d9PrimitiveSpinCComplexLineLinearMap_eq_complexScalarSection
     d9PrimitiveSpinCComplexLineLinearMap
         period hPeriod choice state coefficient =
       d9PrimitiveSpinCComplexScalarSection
-        period hPeriod choice coefficient state := by
-  rw [d9PrimitiveSpinCComplexLineLinearMap_apply,
-    d9PrimitiveSpinCComplexScalarSection_eq_re_add_im]
+        period hPeriod choice coefficient state :=
+  rfl
 
 /-- Multiplication of complex coefficients is composition of the corresponding
 geometric scalar actions on one complex eigenspinor line. -/
@@ -134,9 +82,7 @@ theorem d9PrimitiveSpinCComplexScalarSection_finset_sum
       ∑ index in indices,
         d9PrimitiveSpinCComplexScalarSectionLinearMap
           period hPeriod choice scalar (states index)
-  exact map_sum
-    (d9PrimitiveSpinCComplexScalarSectionLinearMap
-      period hPeriod choice scalar) states indices
+  rw [map_sum]
 
 /-- The positive first-sphere synthesis respects arbitrary complex scalar
 multiplication on all three coefficient coordinates simultaneously. -/
@@ -248,7 +194,8 @@ theorem primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator_complex_sm
           period sector mode coefficients := by
   apply Prod.ext <;> funext coordinate <;> dsimp
   · change
-      (primitiveSpinCHopfFirstSphereDiracFrequency period sector mode : Complex) *
+      (primitiveSpinCHopfFirstSphereDiracFrequency
+          period sector mode : Complex) *
           (scalar * coefficients.1 coordinate) =
         scalar *
           ((primitiveSpinCHopfFirstSphereDiracFrequency
@@ -295,25 +242,29 @@ theorem primitiveSpinCHopfFirstSphereSignedComplexSpan_dirac_complexScalar
         (d9PrimitiveSpinCGeometricDiracOperator
           period hPeriod .positiveQuarter state.1) :=
   d9PrimitiveSpinCGeometricDiracOperator_complexScalar
-    period hPeriod .positiveQuarter scalar state.1
+    period hPeriod scalar state.1
 
 /-- Consolidated complex-linearity result for the geometric signed packet. -/
 theorem primitiveSpinCHopfFirstSphereSignedComplexLinearity_closed
     (sector : NormalRootChoice) (mode : Int) :
-    (∀ scalar coefficients,
+    (∀ (scalar : Complex)
+        (coefficients : PrimitiveSpinCFirstSphereSignedComplexCoefficients),
       primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis
           period hPeriod sector mode (scalar • coefficients) =
         d9PrimitiveSpinCComplexScalarSection
           period hPeriod .positiveQuarter scalar
           (primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis
             period hPeriod sector mode coefficients)) ∧
-      (∀ scalar coefficients,
+      (∀ (scalar : Complex)
+          (coefficients : PrimitiveSpinCFirstSphereSignedComplexCoefficients),
         primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
             period sector mode (scalar • coefficients) =
           scalar •
             primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
               period sector mode coefficients) ∧
-      (∀ scalar state,
+      (∀ (scalar : Complex)
+          (state : PrimitiveSpinCHopfFirstSphereSignedComplexSpan
+            period hPeriod sector mode),
         d9PrimitiveSpinCComplexScalarSection
             period hPeriod .positiveQuarter scalar state.1 ∈
           PrimitiveSpinCHopfFirstSphereSignedComplexSpan
