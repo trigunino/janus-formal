@@ -11,10 +11,18 @@ on:
       - "lakefile.lean"
       - "lake-manifest.json"
       - ".github/workflows/program-p-fast.yml"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+      - ".github/workflows/program-p-fast.yml"
   workflow_dispatch:
 
 concurrency:
-  group: program-p-fast-${{ github.ref }}
+  group: program-p-fast-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
