@@ -47,16 +47,15 @@ Program P-E was advanced again and merged into `main` through PR 10 on
 
 ## 2. Validation
 
-The current `main` head is
+The currently checked-out branch is `dev-branch`, at
 
 ```text
-96e60eb4df1db049f8488858c5a6b1fdb717b224.
+d054ec7f013908d55b8c37cfb0b6c58932d16f6d.
 ```
 
-The theorem commits below the PR 6 merge were validated by its focused Lean
-and Python workflows. The PR 10 theorem head was validated locally before
-merge; this document does not claim an independent post-merge CI run for
-`96e60eb4`.
+The local worktree contains the later Program-P gates described below. On
+26 July 2026, the complete Program-P façade compiled `9863/9863` jobs and
+`scripts/audit_janus_program_p.py` passed with terminal count `0/14`.
 
 ## Program M foundation checkpoint — 19 July 2026
 
@@ -347,110 +346,67 @@ four lifted loops          +1
 ```
 
 Thus `Z4` remains a lift/holonomy phenomenon: the two root lines are explicit
-additional global choices, not a canonical functor of the real line. The
-ambient Clifford gate now constructs an actual Spin element for every pair of
-unit reflections, proves that its projection is their exact product, and
-extends this construction to every finite list of pairs. Full surjectivity is
-now unconditional: Mathlib's finite-dimensional reflection-generation theorem
-supplies Cartan--Dieudonné and determinant parity, yielding both
-`Spin(4) → SO(4)` surjectivity and a lifting function. The ambient determinant
-descent is now proved empty: the mapping torus is nonorientable, so no honest
-continuous oriented Spin or SpinC Čech realization exists. Purely algebraic
-Spin Čech data remain conditional. The full twisted `Pin⁻(4)` projection,
-central order-four reflection generator and normal character are now
-unconditional; the ambient extension is reduced exactly to one continuous
-normalized normal-compatible Čech choice, whose existence remains open. The
-reference generator is now identified with the explicit `O(4)` flip and its
-orientation character is proved on all four `ZMod 4` phases. A corrected
-overlap-only normal interface now has the canonical ambient Čech winding built
-from the genuine covering local sections, with normalization, cocycle and local
-constancy. On an honest open chart refinement, the throat local section is
-natural under the fixed-throat inclusion, the induced coordinate lies in the
-real ambient transition source, and the ambient winding equals the throat
-`localTransitionWinding`. This closes the winding and local-section naturality
-only. The smooth orthonormal refinement is now closed independently by the
-Whitney/Gram--Schmidt construction. The Jacobian-parity comparison, exact
-`O(4)` reduction law and ambient `Pin⁻` lift remain open. A new exact chart
-gauge no-go shows why the winding cannot determine the raw Jacobian sign by
-itself: reversing one chart leaves the winding fixed and flips the determinant
-and its `ZMod 2` parity. Independently, the central orthonormal-frame gauge
-`-id` preserves the Euclidean form while changing every reduced transition.
-Compatible chart orientations and a local frame gauge are both required. At
-the pointwise level the latter is now solved exactly and uniquely by
-`actual⁻¹ ∘ expected`. Its exact conjugation-twisted Čech law and converse are
-proved algebraically; only a smooth, normal-compatible realization remains.
-For genuine chart-frame gauges, the induced vertex-gauge formula is now exact,
-preserves the strict cocycle automatically, and has unique local propagation
-from a fixed target gauge. Global smooth propagation and normal compatibility
-remain the geometric obstruction.
-On every common-root (star) subatlas, an explicit propagated vertex gauge now
-realizes all target transitions. The unclosed part is global path independence
-across the atlas, together with smoothness and the prescribed normal values.
-The global path-independence obstruction is now exact: a loop closes precisely
-when the root gauge intertwines the actual and target holonomies. This criterion
-still has to be discharged for the genuine mapping-torus atlas.
-For its cyclic fundamental holonomy, one generator equality is now proved to
-propagate to every integer winding and to close every propagated loop. The
-remaining atlas statement is the geometric identification of the actual
-orthogonal generator with the chosen reference generator up to root gauge.
-That last equality is now proved for every orthogonal frame aligning the true
-normal axis with the reference axis, including all integer windings. The
-remaining geometric construction is a smooth aligned frame on the genuine
-atlas with the required throat restriction.
-Pointwise existence is now unconditional: the ambient orthogonal group is
-proved transitive on every quadratic level set, hence every unit normal admits
-an aligning frame and the complete all-winding gauge. Only smooth choice and
-atlas/throat compatibility remain.
-The choice itself is no longer a smoothness obstruction: quaternionic left
-multiplication gives a canonical orthogonal frame for every unit normal, sends
-the reference axis to that normal, and is jointly polynomial (`C∞`) in normal
-and tangent. It remains to feed it the genuine normalized atlas normal and
-prove the required overlap/throat identities.
-The preceding construction now accepts any smooth nonvanishing normal field:
-Euclidean normalization is proved unit and `C∞`, and its quaternionic frame
-application is jointly `C∞`. Supplying the genuine atlas-coordinate normal
-with its deck/overlap laws is the remaining input.
-The unavoidable one-sided sign change is handled exactly: normalization is
-odd and the quaternionic frame changes by the central `-id` gauge under
-`n ↦ -n`. Thus no forbidden global normal trivialization is assumed.
-This is proved for every integer winding with the actual
-`normalSignRepresentation`; the normalized quaternionic frames therefore carry
-the same signed cocycle as the constructed normal line.
-Although the frames themselves differ by `-id`, their conjugated aligned
-reflection is proved identical. Hence the reflection datum descends across the
-nontrivial normal sign cocycle without choosing a forbidden global normal.
-The normalized aligned reflection is now packaged directly from any nonzero
-local normal and proved invariant under the full integer normal-sign cocycle.
-The corresponding Clifford construction is also explicit: every unit normal
-defines a genuine `Pin⁻(4)` generator, normal reversal multiplies it by the
-nontrivial central sign, and after normalization both the lift cocycle and its
-projected all-winding descent are proved. The genuine atlas normal field and
-its equality with the actual reduced transitions remain open.
-The generated integer family `w ↦ g(n)^w` now obeys the strict additive
-cocycle law, and its projection is exactly the corresponding integer power of
-the local orthogonal reflection.
-The Clifford projection is also proved equal, not merely analogous, to the
-independently constructed quaternionic aligned reflection; the equality holds
-for every integer power.
-This construction is now instantiated on the actual canonical latitude normal
-of the throat cover, whose product-coordinate representative is proved
-nonzero. Its cyclic lift and projected aligned reflection are therefore
-unconditional on every genuine cover chart.
-The complete two-winding gauge law is exact: the overlap winding controls the
-local normal sign, the lifted winding controls the cyclic phase, and an odd
-overlap contributes precisely the matching power of the central Pin sign.
-On the genuine throat cover, every integer change of anchor preserves the raw
-product normal, its generator, and every cyclic lift. Thus the unavoidable
-minus sign is correctly assigned to the quotient-chart transition itself.
-Evaluating this normal on the genuine local covering sections now produces an
-actual throat-atlas algebraic `Pin⁻(4)` transition lift. It is normalized,
-satisfies the strict triple-overlap Cech cocycle from the real local winding,
-and projects to the corresponding power of the aligned reflection. Continuity
-and equality with the full ambient reduced transition remain open. Reverse
-overlaps are exact inverses, and the genuine one-loop lift squares to the
-nontrivial central sign.
+global choices, not a canonical functor of the real normal line. The ambient
+Clifford development is now complete at the topological bundle level.
+Cartan--Dieudonné and determinant parity give `Spin(4) → SO(4)` surjectivity,
+while nonorientability proves that an honest oriented Spin/SpinC Čech
+realization on the mapping torus is impossible.
+
+The appropriate twisted construction is no longer open. The concrete
+`Pin⁻(4)` projection has kernel `{±1}`, is a covering with local sections, and
+its continuous canonical Čech cocycle defines the ambient principal bundle.
+The reference order-four generator projects to the explicit `O(4)` reflection.
+The winding, inverse and triple-overlap laws are exact on the genuine chart
+refinement, and the ambient winding equals the throat
+`localTransitionWinding`.
+
+The real-normal restriction is also explicit. The canonical latitude normal
+lift is jointly `C∞`; its coordinates in genuine tangent trivializations are
+`C∞` and nonzero. The normalized half-angle Clifford vector `e+n` supplies a
+zero-cochain that intertwines every integer winding, is pointwise independent
+of chart and path, and is continuous for every continuous nonzero horizontal
+normal field. The one-sided sign is carried by the central `-1`, reverse
+overlaps are exact inverses, and one loop squares to that central sign.
+
+The subsequent `PinC(4)` quotient, determinant character and line, winding
+twist, complex spinor representation, ambient spinor bundle, Hermitian
+pairing, D9 half-spinor bundle and its smooth section/connection interfaces
+are all constructed in the Program-P façade. This does not contradict the
+oriented SpinC no-go: these are twisted `PinC` bundles built from the genuine
+`Pin⁻` cocycle.
+
+One coordinate-comparison lemma remains useful but is not a missing normal
+field: the already smooth atlas coordinate
+`canonicalLatitudeNormalCoordinate` has not yet been identified explicitly
+with the cover-product representative `canonicalLatitudeSectionNormal` used
+by the newest half-angle restriction gate. It belongs to the global geometry
+integration package rather than to a separate Pin/Čech existence TODO.
 
 ## 5. Program P
+
+### Checkpoint d'intégration — 26 juillet 2026
+
+- Façade Lean : build vert `9863/9863`.
+- Agrégat analytique scalaire : build focalisé vert `9317/9317`; son théorème
+  marque la fermeture des imports, pas l'instanciation des interfaces physiques.
+- Audit d'intégrité : vert, compteur terminal inchangé `0/14`.
+- Nouveaux résultats : spectre SpinC signé abstrait réalisé sur une base de
+  Hilbert complète avec domaine maximal dense, auto-adjonction, gap quart,
+  Fredholm et indice nul; jauge Pin⁻ demi-angle explicite et entrelacement de
+  tous les windings; courbes LL anisotropes et cisaillements lisses de vrais
+  repères générateurs; assemblages `C²` neuf secteurs et critères concrets pour
+  Candidate A, matière, Robin/LL/BV et Einstein--Maxwell, y compris toute mesure
+  finie sous les hypothèses de continuité jointe affichées.
+- Aucun résidu immédiat autonome ne subsiste. Les interfaces restantes sont :
+  comparaison des deux représentations déjà lisses de la normale; Fourier
+  SpinC géométrique de tous les niveaux; assemblage global des coefficients
+  locaux déjà construits du repère LL; identification du modèle Sobolev à
+  neuf secteurs avec les vrais bundles Janus. Elles sont absorbées par les
+  paquets `GEO/FIELD/ANALYSIS/DIRAC-GLOBAL`.
+- Aucune nouvelle hypothèse physique ni axiome métier; axiomes transitifs
+  constatés : `propext`, `Classical.choice`, `Quot.sound`.
+- La liste exhaustive canonique des 24 paquets globaux et 14 portes reste
+  [`program_p_operational_todo.md`](program_p_operational_todo.md).
 
 The explicit nonabelian `so(3)` ghost triple and the corrected Koszul
 differential are now closed for the entire currently implemented field/BV
@@ -459,8 +415,8 @@ bulk and throat antifields, master actions, PT covariance, and boundary trace.
 Derivative kernels, completed spaces, and arbitrary functionals remain a
 strictly stronger open refinement.
 
-The exhaustive remaining-work checklist is
-[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
+The canonical remaining-work register is
+[`program_p_operational_todo.md`](program_p_operational_todo.md).
 
 ### P0, P-A, P-B and P-C
 
@@ -487,8 +443,9 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   remain one explicit contract. That contract now carries concrete extension,
   linearity, isometry, modal-density, derivative, spectral-pairing and domain
   equalities rather than unconstrained `Prop` readiness flags.
-  The integrated-invariance limitation in the preceding snapshot is now
-  superseded: for `SmoothGeneralLorentzMetric`, coherent PT transport of the
+  The integrated-invariance and canonical scalar Euler--flux limitations in
+  the preceding snapshot are now superseded; nonlinear BV remains open. For
+  `SmoothGeneralLorentzMetric`, coherent PT transport of the
   scalar and tangent family gives exact density covariance, iff transport of
   integrability and invariance of the action against the canonical quotient
   Lorentz measure. The tangent family remains supplied, and this reference
@@ -570,11 +527,12 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   endpoint flux is exactly the proved interval-IPP boundary functional,
   fiberwise and after base integration. Euler fields with endpoint-Dirichlet
   test variations therefore have zero collar first variation. An exact
-  specialization predicate and adapter connect this result to a supplied
-  global interface. Under one explicit four-dimensional Green--Stokes
-  contract, the global boundary functional is now exactly the concrete tangent
-  normal flux and homogeneous Dirichlet data close the weak-Euler and
-  stationarity corollaries. The Green--Stokes contract itself remains open.
+  specialization predicate and adapter connect this result to the global
+  interface. The former four-dimensional Green--Stokes contract is now
+  discharged on the canonical cut bulk: the global boundary functional is the
+  concrete oriented tangent-normal flux. Dirichlet, PT-fixed and PT-projected
+  sectors close it; the general formula retains the possibly nonzero oriented
+  period explicitly.
   On the canonical latitude collar, the antisymmetric scalar
   Green--Wronskian current is now explicit. Its derivative is exactly the
   antisymmetric pairing of the equal-mass Euler residuals; it is pointwise and
@@ -621,6 +579,16 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   orthogonal decomposition; that kernel is continuously linearly equivalent
   to the original graph-Dirichlet space. This does not identify an intrinsic
   Sobolev space.
+  The scalar analytic architecture must be read in two layers. Its aggregate
+  import head validates the abstract closed-graph, Lagrangian-boundary,
+  resolvent, Poisson/DtN, spectral and variational interfaces; its marker
+  theorem does not instantiate their physical hypotheses. On the concrete
+  canonical scalar side, coarea/value trace, smooth density and zero-Cauchy
+  cutoffs, cut-bulk Green--Stokes with Dirichlet/PT closures, positive static
+  coercivity/Fredholm theory, full graph-`H¹` Rellich compactness and the
+  intrinsic coercive elliptic operator/action are unconditional. The general
+  off-shell Lorentzian realization, its operator-specific coercive shift and
+  its physical Poisson uniqueness remain conditional.
   PT/exchange additionally acts on the complete current independent-field
   package and all its componentwise smooth throat boundary data, with exact
   trace equivariance and preservation of the full Dirichlet condition.
@@ -946,22 +914,26 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   period, exact PT pairing and the existing heat regulator. A genuine
   smooth section of the D8 normal line now fills the D9 normal slot in every
   valid local bundle chart; one-loop transition is `-1` and equals the square
-  of either `Z4` multiplier. No canonical global scalar normal coordinate is
-  claimed. The genuine smooth tangent diffeomorphism ghost now fills its D9
+  of either `Z4` multiplier. The intrinsic latitude normal lift and its local
+  tangent-trivialization coordinates are `C∞`; the remaining comparison is
+  only with the older cover-product coordinate presentation, while a single
+  untwisted global scalar coordinate is excluded by the twisted normal
+  topology. The genuine smooth tangent diffeomorphism ghost now fills its D9
   component in the same local package. A canonical real rank-four coordinate
   equivalence now fills its matter slot in the D11 squared-spinor coordinate
-  specialization, closing that residual record at coefficient level. It does
-  not identify a geometric SpinC bundle. Global SpinC realization, a global
-  action tangent producing the full symmetric metric slot, and
-  action/Hessian/domain agreement remain explicit contracts.
+  specialization, closing that particular residual record at coefficient
+  level. Separately, Program P now constructs the ambient twisted `PinC(4)`
+  principal/spinor bundles, the D9 smooth spinor bundle and section spaces, and
+  the primitive SpinC geometric zero and first signed levels. What remains is
+  the complete geometric Fourier tower, a global action tangent producing the
+  full symmetric metric slot, and action/Hessian/domain agreement.
   The global LL action now has an exact simultaneous measure/flux cubic
   expansion and integrated derivative for every finite measure. Its algebraic
   Euler system is equivalent to the zero-flux branch. PT pullback is an exact
   involution and preserves its density, action, variation, Euler coefficients
-  and stationarity for PT-invariant measures. The auxiliary LL metric
-  has identically zero response in this selected action, so a genuine
-  differential LL PDE still requires a richer action.
-  For the differential PT-symmetric LL functional, the canonical throat
+  and stationarity for PT-invariant measures. The auxiliary LL metric has
+  identically zero response in this selected algebraic action. Separately, for
+  the differential PT-symmetric LL functional, the canonical throat
   volume is now unconditionally positive on nonempty opens and therefore has
   full support. A pointwise frame-divergence Euler field, weak/strong
   equivalence and stationary/strong equivalence are proved conditionally on
@@ -1155,11 +1127,19 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   nonnegative for `m² ≥ 0`. It is exactly twice the general scalar stress
   component `T_nn` evaluated on the normal-projected collar jet, and `T_nn` is
   locally constant under the collar Euler equation. This remains only a local
-  collar stress-energy result. The finite stratified boundary ledger is exactly
-  zero and yields the LL weak/strong equivalence under the explicit continuous
-  IPP plus flux-realization contract. A global manifold Stokes theorem without
-  that contract, extension to a covariant four-dimensional Noether current and
-  a global canonical metric normal remain open;
+  collar stress-energy result. Globally, the canonical cut bulk is now a
+  `C∞` manifold with boundary, with smooth descended Green current, intrinsic
+  Lorentz metric/volume, genuine normal divergence and the exact oriented
+  measured Green--Stokes formula. Under the full Euler equations its only
+  residual is the two-sheet oriented flux period. That period vanishes, and
+  Stokes closes, in the proved Dirichlet, PT-fixed and PT-projected sectors; a
+  universal zero-flux statement outside those sectors is false, as witnessed
+  by the formalized massless Wronskian counterexample. The finite stratified LL
+  boundary ledger is exactly zero and yields weak/strong equivalence under the
+  explicit continuous IPP plus flux-realization contract. Extension to a
+  covariant four-dimensional Noether current and a global unit normal for every
+  admitted general metric remain open; the intrinsic canonical latitude normal
+  itself is already constructed;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
@@ -1182,8 +1162,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   Identification with global Sobolev bundle sections, Fourier-series
   differentiation, global PDE and boundary exactness remain open;
 - **T/C/N** typed non-null, null and joint gravitational slots are explicit;
-  the compact-throat LL action and zero branch are actual integrals, while LL
-  PDEs, full stratification and physical bulk-flux cancellation remain open;
+  the compact-throat algebraic and differential LL actions are actual
+  integrals, with canonical-frame weak/strong equations, IPP, Hessian/Jacobi
+  and Fredholm realization. The canonical scalar cut-bulk flux formula and its
+  Dirichlet/PT closures are proved. General-metric stratification, stratified
+  LL Stokes, the covariant parent and gravitational bulk-flux cancellation
+  remain open;
 - **T/C** for every supplied finite null-generator family, one actual action
   now sums the integrated inaffinity density, the continuously extended
   expansion counterterm and the endpoint joints. Finite rescaling of the
@@ -1377,8 +1361,10 @@ either slot; hence it annihilates `im R` when `J ∘ R = 0`. These are abstract
 Fréchet statements. For every source submodule contained in `ker J`, this
 critical Hessian descends uniquely and symmetrically to the algebraic module
 quotient. Continuity of the descended form and any normed, topological or
-smooth quotient structure are not proved. No concrete Janus compatibility map
-or complex is constructed; the global variational primitive remains open.
+smooth quotient structure are not proved. Concrete finite Gram/Saint--Venant
+and completed lattice `K/J` models now exist, but no global intrinsic Janus
+compatibility complex on the physical field bundle is constructed; the global
+variational primitive remains open.
 
 ## 6. Current supported chain
 

@@ -366,11 +366,11 @@ vector/principal bundles, higher jets or extension across isotropy strata.
 | Peetre–Slovák for actual Janus category | analytic interface; specialization open |
 | Euclidean Koszul connection from a positive metric | proved constructively in Lean |
 | projected-seed varying normal atlas | proved in Lean with smooth overlap laws |
-| one-chart rank-two SpinC bundle/connection | proved in Lean; nontrivial global sectors open |
+| one-chart rank-two SpinC bundle/connection | proved in Lean; concrete global Program-P PinC/spinor bundles also exist, but are not yet integrated into this structured-jet quotient |
 | valid-chart low-order residual/SpinC action groupoid | instantiated in Lean |
 | actual valid-chart overlap arrows | proved with identity and Cech composition in the low-order Euclidean model |
 | low-order invariant-observable descent | unique chart-independent values; globally smooth under a smooth coefficient realization |
-| multi-chart SpinC Cech transition presentation | conditional pointwise theorem from supplied cocycles, lifts, phases and matching defects; continuity and total space open |
+| multi-chart SpinC Cech transition presentation | conditional inside this P-E jet model; the Program-P geometry has a concrete continuous Čech principal/spinor bundle, while jet-level matching remains open |
 | abelian connection overlap curvature descent | conditional global smooth curvature with actual cyclic Bianchi derivative from supplied local potentials and flat additive shifts |
 | effective D8 deck category/groupoid | proved, with componentwise étale source and target |
 | D8 smooth invariant-map descent | unique and smooth on the actual quotient |

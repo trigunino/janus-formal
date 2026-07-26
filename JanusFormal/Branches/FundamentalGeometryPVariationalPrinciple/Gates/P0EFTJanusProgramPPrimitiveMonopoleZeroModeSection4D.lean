@@ -477,6 +477,198 @@ def primitiveMonopoleZeroComplementLocalScalarFamily :
   coordChange_localValue :=
     primitiveMonopoleZeroComplement_coordChange
 
+theorem monopoleSphereXY_mul_star
+    (point : MonopoleSphere) :
+    monopoleSphereXY point * star (monopoleSphereXY point) =
+      Complex.ofReal
+        ((1 - monopoleSphereCoordinate point 2) *
+          (1 + monopoleSphereCoordinate point 2)) := by
+  apply Complex.ext
+  · simp [monopoleSphereXY]
+    nlinarith [monopoleSphereCoordinate_sq_sum point]
+  · simp [monopoleSphereXY]
+    ring
+
+private theorem sqrt_eq_mul_inv_sqrt
+    {value : Real} (hValue : 0 < value) :
+    Real.sqrt value = value * (Real.sqrt value)⁻¹ := by
+  have hSqrt : Real.sqrt value ≠ 0 :=
+    Real.sqrt_ne_zero'.mpr hValue
+  field_simp
+  nlinarith [Real.sq_sqrt (le_of_lt hValue)]
+
+theorem primitiveMonopoleHopfNorth_star_mul_first
+    (point : MonopoleSphere)
+    (hPoint : point ∈ monopoleChartDomain .north) :
+    star (monopoleSphereXY point) *
+        primitiveMonopoleZeroNorthValue point =
+      Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+        primitiveMonopoleZeroComplementNorthValue point := by
+  have hFactor :=
+    sqrt_eq_mul_inv_sqrt
+      (one_add_monopoleSphereCoordinate_two_pos_of_mem_north
+        point hPoint)
+  have hComplexFactor :
+      Complex.ofReal
+          (Real.sqrt (1 + monopoleSphereCoordinate point 2)) =
+        Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹ := by
+    simpa using congrArg Complex.ofReal hFactor
+  unfold primitiveMonopoleZeroNorthValue
+    primitiveMonopoleZeroComplementNorthValue
+  rw [Complex.real_smul]
+  push_cast
+  calc
+    star (monopoleSphereXY point) *
+        Complex.ofReal
+          (Real.sqrt (1 + monopoleSphereCoordinate point 2)) =
+      star (monopoleSphereXY point) *
+        (Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹) :=
+      congrArg (fun scalar => star (monopoleSphereXY point) * scalar)
+        hComplexFactor
+    _ = _ := by
+      push_cast
+      ring
+
+theorem primitiveMonopoleHopfNorth_xy_mul_complement
+    (point : MonopoleSphere)
+    (hPoint : point ∈ monopoleChartDomain .north) :
+    monopoleSphereXY point *
+        primitiveMonopoleZeroComplementNorthValue point =
+      Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+        primitiveMonopoleZeroNorthValue point := by
+  have hFactor :=
+    sqrt_eq_mul_inv_sqrt
+      (one_add_monopoleSphereCoordinate_two_pos_of_mem_north
+        point hPoint)
+  have hComplexFactor :
+      Complex.ofReal
+          (Real.sqrt (1 + monopoleSphereCoordinate point 2)) =
+        Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹ := by
+    simpa using congrArg Complex.ofReal hFactor
+  unfold primitiveMonopoleZeroNorthValue
+    primitiveMonopoleZeroComplementNorthValue
+  rw [Complex.real_smul]
+  push_cast
+  calc
+    monopoleSphereXY point *
+        ((Complex.ofReal
+          (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹ *
+            star (monopoleSphereXY point)) =
+      (Complex.ofReal
+        (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹ *
+          (monopoleSphereXY point * star (monopoleSphereXY point)) := by
+      ring
+    _ = (Complex.ofReal
+          (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹ *
+        Complex.ofReal
+          ((1 - monopoleSphereCoordinate point 2) *
+            (1 + monopoleSphereCoordinate point 2)) := by
+      rw [monopoleSphereXY_mul_star]
+    _ = Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+        (Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 + monopoleSphereCoordinate point 2)))⁻¹) := by
+      push_cast
+      ring
+    _ = _ := by
+      simpa using
+        congrArg
+          (fun scalar =>
+            Complex.ofReal (1 - monopoleSphereCoordinate point 2) * scalar)
+          hComplexFactor.symm
+
+theorem primitiveMonopoleHopfSouth_xy_mul_second
+    (point : MonopoleSphere)
+    (hPoint : point ∈ monopoleChartDomain .south) :
+    monopoleSphereXY point *
+        primitiveMonopoleZeroComplementSouthValue point =
+      Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+        primitiveMonopoleZeroSouthValue point := by
+  have hFactor :=
+    sqrt_eq_mul_inv_sqrt
+      (one_sub_monopoleSphereCoordinate_two_pos_of_mem_south
+        point hPoint)
+  have hComplexFactor :
+      Complex.ofReal
+          (Real.sqrt (1 - monopoleSphereCoordinate point 2)) =
+        Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹ := by
+    simpa using congrArg Complex.ofReal hFactor
+  unfold primitiveMonopoleZeroSouthValue
+    primitiveMonopoleZeroComplementSouthValue
+  rw [Complex.real_smul]
+  push_cast
+  calc
+    monopoleSphereXY point *
+        Complex.ofReal
+          (Real.sqrt (1 - monopoleSphereCoordinate point 2)) =
+      monopoleSphereXY point *
+        (Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹) :=
+      congrArg (fun scalar => monopoleSphereXY point * scalar)
+        hComplexFactor
+    _ = _ := by
+      push_cast
+      ring
+
+theorem primitiveMonopoleHopfSouth_star_mul_first
+    (point : MonopoleSphere)
+    (hPoint : point ∈ monopoleChartDomain .south) :
+    star (monopoleSphereXY point) *
+        primitiveMonopoleZeroSouthValue point =
+      Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+        primitiveMonopoleZeroComplementSouthValue point := by
+  have hFactor :=
+    sqrt_eq_mul_inv_sqrt
+      (one_sub_monopoleSphereCoordinate_two_pos_of_mem_south
+        point hPoint)
+  have hComplexFactor :
+      Complex.ofReal
+          (Real.sqrt (1 - monopoleSphereCoordinate point 2)) =
+        Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹ := by
+    simpa using congrArg Complex.ofReal hFactor
+  unfold primitiveMonopoleZeroSouthValue
+    primitiveMonopoleZeroComplementSouthValue
+  rw [Complex.real_smul]
+  push_cast
+  calc
+    star (monopoleSphereXY point) *
+        ((Complex.ofReal
+          (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹ *
+            monopoleSphereXY point) =
+      (Complex.ofReal
+        (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹ *
+          (monopoleSphereXY point * star (monopoleSphereXY point)) := by
+      ring
+    _ = (Complex.ofReal
+          (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹ *
+        Complex.ofReal
+          ((1 - monopoleSphereCoordinate point 2) *
+            (1 + monopoleSphereCoordinate point 2)) := by
+      rw [monopoleSphereXY_mul_star]
+    _ = Complex.ofReal (1 + monopoleSphereCoordinate point 2) *
+        (Complex.ofReal (1 - monopoleSphereCoordinate point 2) *
+          (Complex.ofReal
+            (Real.sqrt (1 - monopoleSphereCoordinate point 2)))⁻¹) := by
+      push_cast
+      ring
+    _ = _ := by
+      simpa using
+        congrArg
+          (fun scalar =>
+            Complex.ofReal (1 + monopoleSphereCoordinate point 2) * scalar)
+          hComplexFactor.symm
+
 end
 end P0EFTJanusProgramPPrimitiveMonopoleZeroModeSection4D
 end JanusFormal

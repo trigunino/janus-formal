@@ -157,7 +157,9 @@ fermionic Z4
   -> A=L.
 ```
 
-Its next stage is no longer additional algebra. It is the analytic construction
-of the global SpinC/Pin Dirac operator, its complete spectrum, zeta determinant
-and eta invariant. Even if that stage succeeds, a separate quantum or
-gravitational law is still required to fix `L` in physical units.
+Its next stage is no longer bundle-existence algebra: Program P now constructs
+the global PinC/spinor geometry, geometric zero and first signed Dirac levels,
+and an abstract complete self-adjoint Fredholm signed operator. The remaining
+analytic stage is the complete geometric Fourier identification, zeta
+determinant and eta invariant. Even if that stage succeeds, a separate quantum
+or gravitational law is still required to fix `L` in physical units.

@@ -50,7 +50,10 @@ theorem d9DoubledMatterFiberCliffordGamma_sq
         (d9DoubledMatterFiberCliffordGamma direction matter) =
       -matter := by
   apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
-  simp [d9DoubledMatterSpinorCliffordGamma_sq]
+  rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_gamma,
+    d9DoubledMatterFiberHalfSpinorLinearEquiv_gamma, map_neg]
+  exact d9DoubledMatterSpinorCliffordGamma_sq direction
+    (d9DoubledMatterFiberHalfSpinorLinearEquiv matter)
 
 theorem d9DoubledMatterFiberCliffordGamma_anticommute
     (first second : Fin 3) (hDistinct : first ≠ second)

@@ -448,8 +448,8 @@ theorem d9PrimitiveSpinCLocalGeometricDirac_normal_exact
   exact d9PrimitiveSpinCLocalDirac_monodromy
     choice winding
     (fun direction =>
-      d9PrimitiveMonopoleConnectionFrameCoefficient
-        period hPeriod 1 chart direction base)
+      d9PrimitiveSpinCTotalConnectionFrameCoefficient
+        period hPeriod chart direction base)
     (fun direction =>
       d9PrimitiveSpinCLocalLeviCivitaFrameDerivative
         period hPeriod choice family
@@ -691,6 +691,33 @@ theorem d9PrimitiveMonopoleConnectionFrameCoefficient_contMDiffOn
       apply hBase
       linarith
 
+/-- The flat normal spin-frame coefficient is globally smooth. -/
+theorem d9PrimitiveSpinCNormalFrameConnectionCoefficient_contMDiff
+    (direction : Fin 3) :
+    ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞
+      (d9PrimitiveSpinCNormalFrameConnectionCoefficient
+        period hPeriod direction) := by
+  unfold d9PrimitiveSpinCNormalFrameConnectionCoefficient
+    d9PrimitiveSpinCBaseUnitRadialCoordinate
+  exact
+    contMDiff_const.mul
+      (d9PrimitiveMonopoleBaseCoordinate_contMDiff
+        period hPeriod direction)
+
+/-- The total monopole/normal connection is smooth on each chart. -/
+theorem d9PrimitiveSpinCTotalConnectionFrameCoefficient_contMDiffOn
+    (chart : MonopoleChart) (direction : Fin 3) :
+    ContMDiffOn throatCoverModelWithCorners 𝓘(Real, Real) ∞
+      (d9PrimitiveSpinCTotalConnectionFrameCoefficient
+        period hPeriod chart direction)
+      (d9PrimitiveMonopoleChartDomain period hPeriod chart) := by
+  unfold d9PrimitiveSpinCTotalConnectionFrameCoefficient
+  exact
+    (d9PrimitiveMonopoleConnectionFrameCoefficient_contMDiffOn
+      period hPeriod 1 chart direction).add
+      (d9PrimitiveSpinCNormalFrameConnectionCoefficient_contMDiff
+        period hPeriod direction).contMDiffOn
+
 /-- The local radial Levi--Civita correction is smooth on every joint chart. -/
 theorem d9PrimitiveSpinCBaseLeviCivitaSpinCorrection_contMDiffOn
     (choice : NormalRootChoice)
@@ -764,11 +791,11 @@ theorem d9PrimitiveSpinCLocalGeometricDirac_contMDiffOn
       period hPeriod choice family index direction
   have hConnection :
       ContMDiffOn throatCoverModelWithCorners 𝓘(Real, Real) ∞
-        (d9PrimitiveMonopoleConnectionFrameCoefficient
-          period hPeriod 1 index.2 direction)
+        (d9PrimitiveSpinCTotalConnectionFrameCoefficient
+          period hPeriod index.2 direction)
         (d9PrimitiveSpinCBaseSet period hPeriod index) :=
-    (d9PrimitiveMonopoleConnectionFrameCoefficient_contMDiffOn
-      period hPeriod 1 index.2 direction).mono (by
+    (d9PrimitiveSpinCTotalConnectionFrameCoefficient_contMDiffOn
+      period hPeriod index.2 direction).mono (by
         intro base hBase
         exact hBase.2)
   have hImaginary :

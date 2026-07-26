@@ -104,13 +104,13 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   It is exactly twice the normal-normal component of the general scalar stress
   on the normal-projected collar jet; this component has zero derivative and
   is locally constant under the collar Euler equation. This is a local collar
-  stress-energy identity only. Geometrically
-  discharging global Stokes/IPP and the physical flux, lifting the proved
-  smooth local Levi-Civita and `C∞` scalar-jet/divergence data on supplied holonomic
-  patches to a genuine global connection and jet, including generic patch
-  construction, real chart-transition jet agreements and gluing, to obtain a four-dimensional covariant
-  stress divergence, then extending the collar current to a
-  covariant four-dimensional Noether current with enough test ghosts, remains open;
+  stress-energy identity only. Separately, the total holonomic atlas glues the
+  scalar stress divergence globally and proves its vanishing under Euler, while
+  the canonical cut bulk carries the exact oriented measured Green--Stokes
+  formula. Its residual is precisely the two-sheet flux period, closed in the
+  Dirichlet, PT-fixed and PT-projected sectors and provably nonzero in general.
+  Extending these results to a covariant four-dimensional Noether current with
+  enough test ghosts and arbitrary admitted metrics remains open;
 - **T/C** the compact throat carries an actual finite-measure LL worldvolume action, a nonempty zero branch and exact PT covariance of its action/variation/Euler data; the null counterterm has the explicit open admissible variation domain `Theta ≠ 0`.
 
 Candidate:
@@ -212,14 +212,25 @@ Current results:
 - **T/C** the Clifford `spinGroup` now acts faithfully on ambient vectors and
   gives a multiplicative quadratic-preserving projection `Spin(Q) →* GL(4)`;
   finite-dimensional reflection generation and determinant parity now prove
-  unconditional `Spin(4) → SO(4)` surjectivity and provide a lifting function.
-  The twisted Pin extension is isolated exactly, while coherent smooth atlas
-  transition lifts and their Čech cocycle remain open;
+  unconditional `Spin(4) → SO(4)` surjectivity and provide a lifting function;
+- **T** the twisted `Pin⁻(4)` projection has kernel `{±1}`, is a covering with
+  local sections, and the canonical continuous Čech cocycle constructs the
+  genuine ambient principal bundle;
+- **T** the real-normal half-angle gauge, all-winding laws, inverse/triple
+  cocycle, pointwise path independence and continuity for continuous nonzero
+  horizontal normals are exact; the intrinsic normal lift and its genuine
+  tangent-trivialization coordinates are jointly `C∞`;
+- **T** the twisted `PinC(4)` principal/spinor bundles, determinant line,
+  Hermitian pairing and D9 smooth spinor bundle/sections/connections are
+  constructed; the oriented SpinC descent remains impossible by
+  nonorientability;
 - **C** a P-independent topology ledger separates Spin/PinC existence, lift classification, cocycle, monodromy and lifted boundary conditions;
 - **N** a real codimension-one line does not itself carry a literal quarter-turn;
 - **N** a square-root line or `Z4` lift is extra global structure, not a canonical functor of the underlying line;
-- **O** construct atlas-specific Spin/Pin transition lifts and their Čech
-  cocycle, compare them with the normal lift, then extend to SpinC.
+- **O** identify explicitly the already smooth intrinsic normal coordinates
+  with the older cover-product representative used by the latest restriction
+  gate, then integrate these bundles into the common global field/action
+  package.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
@@ -246,7 +257,9 @@ Current results:
 - **T/N** correction: `1/(2*sqrt(2))` is a compact-circle/sphere ratio, not `alpha/L_sphere`;
 - **C** primitive compatibility can give `A=L_sphere` under the declared LL/bimetric inputs;
 - **N** a common metric scale orbit survives;
-- **O** construct the actual self-adjoint global operator, prove the spectrum/eta analytically and compute the full determinant.
+- **O** complete the positive geometric SpinC Fourier tower, identify it with
+  the proved abstract signed self-adjoint Fredholm operator, then compute the
+  actual eta invariant and full determinant.
 
 Last focused CI: **green**.
 
@@ -340,9 +353,11 @@ remain open.
 
 # Program P
 
-Exhaustive closure checklist:
-[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
-Mechanical count: **518 closed / 636 total; 118 open**.
+Canonical closure register:
+[`program_p_operational_todo.md`](program_p_operational_todo.md).
+Global status: **0/14 terminal gates**.
+Validation on 2026-07-26: Program P facade build `9863/9863`, focused scalar
+analytic aggregate build `9317/9317`, integrity audit green.
 
 ## P0 — Moduli-geometry no-go
 
@@ -416,6 +431,11 @@ Mechanical count: **518 closed / 636 total; 118 open**.
   covariant/ADM derivation and Boulware--Deser exclusion remain open;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
+- **T/C** the abstract nine-sector Sobolev action has a complete sectorial
+  `C²` assembly. Candidate A, matter, Robin, LL, BV and Einstein--Maxwell lines
+  instantiate the exact second-derivative criteria, including all-finite-measure
+  variants under visible joint-continuity hypotheses. Identifying these
+  fixed-frame models with one intrinsic Janus field topology remains open;
 - **O** derive one actual Janus parent bulk/junction action.
 
 ## P-B — Anomaly filter
@@ -667,9 +687,10 @@ New controlled subgates are now checked:
   plus the divergence of an explicit boundary flux. Under explicit
   integrability and `IntegratedScalarFluxVanishes`, integration gives the weak
   Euler pairing and rewrites any already-justified action derivative with that
-  coefficient. Discharging the contract and deriving the vanishing integrated
-  flux from actual boundary conditions,
-  curved-manifold covariance, PDE and conservation remain open;
+  coefficient. This flat-chart contract remains conditional. On the canonical
+  quotient, however, curved scalar covariance, the global Euler stress identity
+  and the cut-bulk Green--Stokes formula are now proved below; a general
+  covariant parent action and its coupled PDE system remain open;
 - **T/C** on the compact smooth D8 quotient, the fixed-frame scalar action
   uses the same scalar for value and genuine manifold differential and the
   same positive diagonal metric for inverse contraction and volume. Its
@@ -699,18 +720,23 @@ New controlled subgates are now checked:
   conservation at every patch coordinate. On two supplied overlap
   representatives, agreement of the metric first jet and scalar second jet
   now forces equality of Christoffels, covariant jet, Euler residual, raised
-  gradient and stress divergence. Generic patch construction, the actual
-  chart-transition proof of these jet agreements, gluing the local data and
-  global `div_g T = 0` remain open.
+  gradient and stress divergence. The true quotient transitions are now
+  analytic, a field-independent covering holonomic atlas is constructed, and
+  these local data glue with
+  `div_g T = EulerResidual · raisedGradient`; hence `div_g T = 0` follows from
+  the scalar Euler equations on the canonical quotient. This does not yet
+  construct the full coupled covariant parent theory.
   The concrete normal
   throat flux vanishes pointwise and integrally for homogeneous Dirichlet
   variations. Genuine interval-integral IPP closes the canonical latitude
   collar and identifies its normal `mvfderiv` boundary term. The intrinsic
   gradient-normal pairing equals that derivative and realizes an exact
   oriented collar divergence/boundary interface, including measured
-  Dirichlet stationarity. A conditional adapter records specialization of a
-  supplied global interface; it proves neither global Stokes nor a global
-  one-sided normal. The associated
+  Dirichlet stationarity. The canonical cut bulk now realizes the former
+  adapter by an exact global Green--Stokes theorem: its boundary functional is
+  the concrete oriented tangent-normal flux. Dirichlet, PT-fixed and
+  PT-projected sectors close the flux; the unrestricted formula correctly
+  retains a possibly nonzero oriented period. The associated
   scalar Green--Wronskian current has the exact antisymmetric Euler-residual
   derivative, is pointwise and measured constant for equal-mass Euler
   solutions, has the expected antisymmetric endpoint jump and vanishes for
@@ -724,10 +750,16 @@ New controlled subgates are now checked:
   `m² ≥ 0`. It is exactly twice the general scalar stress component `T_nn`
   on the normal-projected collar jet, and `T_nn` is locally constant under the
   collar Euler equation. This remains only a local collar stress-energy result.
-  Global geometric Stokes/IPP discharge, identification with the abstract bulk
-  boundary functional, globalization of the jet identity to smooth covariant stress divergence,
-  extension to a covariant four-dimensional Noether current and a global
-  canonical metric normal remain open;
+  The canonical cut bulk is nevertheless a global `C∞` manifold with boundary:
+  its descended Green current, intrinsic Lorentz metric/volume, normal
+  divergence and oriented measured Green--Stokes formula are constructed.
+  Under Euler, the exact residual is the two-sheet oriented flux period; it
+  vanishes in the proved Dirichlet, PT-fixed and PT-projected sectors, while a
+  formalized Wronskian counterexample rules out universal zero flux. Agreement
+  with the full abstract bulk-boundary functional, globalization to a smooth
+  covariant stress divergence and Noether current, and a unit normal for every
+  admitted general metric remain open; the intrinsic canonical latitude normal
+  itself is already constructed;
 - **T/C/N** for that same global scalar action, weak Euler `K` and symmetric
   Jacobi `J` are defined on all smooth fields under one explicit integrability
   contract and equal its first/second variations. The negative Lorentz time
@@ -828,13 +860,14 @@ New controlled subgates are now checked:
   it is the self-adjoint Fredholm operator `(k_+ + k_-) Id`, with closed range
   and index zero when the coefficient is nonzero. Under a PT-invariant measure,
   traces, fluxes, action, variations, Hessian and the `L²` operator intertwine
-  exactly with sector/coupling exchange; geometric normal derivatives and
-  Israel/null conditions remain open;
+  exactly with sector/coupling exchange; extension of the proved canonical
+  normal derivative to general-metric Israel/null conditions remains open;
 - **T/C** the genuine bulk differential `dφ` now evaluates on a representative
   of the differential normal quotient, transforms with the one-loop normal
   sign, pairs globally with a twisted normal section, and yields an action and
-  weak stationary balance. Its splitting is algebraic pointwise; a smooth
-  unit normal, Israel jump and null rigging remain open;
+  weak stationary balance. Its splitting is algebraic pointwise; the canonical
+  latitude unit normal is smooth, while arbitrary-metric unit normals, Israel
+  jumps and null riggings remain open;
 - **T/C** the completed first-jet graph `H¹` has dense smooth fields and a
   continuous `L²` projection; under `HasH1TraceBound`, smooth throat trace
   extends continuously and uniquely. In the static scalar sector a pointwise
@@ -878,10 +911,11 @@ fixed-frame diagonal-field subgates. General Lorentz tensor metric variation,
 and the finite null-generator action now has actual inaffinity,
 expansion-counterterm and endpoint-joint contributions with exact finite
 reparametrization invariance. Its ambient area/generator geometry and
-`NullFaceIntervalIntegrability` remain supplied. General geometric boundary
-flux cancellation and covariant
-Bianchi/constraints, full stability, anomalies, normalization and finite
-counterterms remain open. The scoped ledger is
+`NullFaceIntervalIntegrability` remain supplied. The canonical scalar cut-bulk
+Green--Stokes formula and its Dirichlet/PT closures are proved; general
+gravitational boundary-flux cancellation, covariant Bianchi/constraints, full
+stability, anomalies, normalization and finite counterterms remain open. The
+scoped ledger is
 `docs/program_p_explicit_covariant_candidate.md`.
 
 ## P-D — Invariant pairings and global coefficient modules
@@ -1061,9 +1095,10 @@ compatibility map K
   smooth quotient are not proved;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
-- **O** construct the actual Janus compatibility map/jet complex, target
-  pairing and global action primitive; no concrete compatibility object is
-  supplied by these Fréchet theorems.
+- **O** globalize the existing finite Gram/Saint--Venant and completed lattice
+  `K/J` models to the intrinsic Janus field bundle, then construct the physical
+  target pairing and global action primitive; none is supplied by the abstract
+  Fréchet theorems alone.
 
 # Programs A/B/C and absolute scale
 
@@ -1080,9 +1115,9 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | Entry | Status |
 | --- | --- |
 | `FundamentalGeometryDiracSpectral` | focused CI green |
-| `FundamentalGeometryPEJetUniversality` | PR 10 merged; active follow-on adds smooth low-order observable descent and conditional multi-chart SpinC/connection Cech gates |
+| `FundamentalGeometryPEJetUniversality` | PR 10 merged; effective-deck jet head green, while Program P separately carries the actual twisted PinC/spinor bundles |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
-| `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused CI green on consolidated main/active branch |
+| `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused heads green; Program-P façade locally verified on `dev-branch` |
 | D9 | supported symbol/linear-BRST head; global Fredholm realization open |
 | D11 | supported naturality/finite-jet head; global Fredholm realization open |
 
@@ -1093,8 +1128,9 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
 ```text
 1. construct the actual decorated Janus category and field space;
 2. choose induced/auxiliary/bulk metric formulation without double counting;
-3. package local adapted frames and overlap cocycles in manifold bundles;
-4. identify Clifford Spin covers and construct the global SpinC lift;
+3. integrate the existing twisted Pin/PinC/spinor bundles into that one field
+   space and identify the two smooth normal-coordinate representations;
+4. complete the geometric SpinC Fourier tower and its common Dirac domain;
 5. prove characteristic-class matching and attach the determinant connection;
 6. construct the structured SpinC/PT/Z4/BRST jet groupoid and descent data;
 7. prove the higher-order structured jet-normal-form/integrability theorem;
