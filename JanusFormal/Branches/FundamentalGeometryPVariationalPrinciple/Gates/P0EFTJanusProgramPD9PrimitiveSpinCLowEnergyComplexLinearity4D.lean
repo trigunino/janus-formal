@@ -22,18 +22,35 @@ noncomputable section
 
 open Bundle
 open scoped Manifold ContDiff Bundle
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
+open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexLinearity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
+open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexAutomorphism4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexCoefficientRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+
+private abbrev ThroatData := fixedEquatorData period hPeriod
+private abbrev ThroatBase := MappingTorus (ThroatData period hPeriod)
+
+local instance throatBaseChartedSpace :
+    ChartedSpace ThroatCoverModel (ThroatBase period hPeriod) :=
+  fixedThroatQuotientChartedSpace period hPeriod
+
+local instance throatBaseIsManifold :
+    IsManifold throatCoverModelWithCorners ω
+      (ThroatBase period hPeriod) :=
+  fixedThroatQuotient_isManifold period hPeriod
 
 /-- One Hopf zero-mode coefficient respects multiplication by any constant
 complex scalar through the global SpinC scalar action. -/
@@ -159,7 +176,7 @@ theorem primitiveSpinCHopfLowEnergyComplexSpan_dirac_complexScalar
         (d9PrimitiveSpinCGeometricDiracOperator
           period hPeriod .positiveQuarter state.1) :=
   d9PrimitiveSpinCGeometricDiracOperator_complexScalar
-    period hPeriod .positiveQuarter scalar state.1
+    period hPeriod scalar state.1
 
 /-- Consolidated complex-linearity theorem for the faithful seven-coordinate
 low-energy block. -/
