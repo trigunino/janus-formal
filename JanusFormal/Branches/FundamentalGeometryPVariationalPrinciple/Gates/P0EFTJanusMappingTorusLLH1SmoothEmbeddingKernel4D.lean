@@ -38,7 +38,7 @@ theorem llH1SmoothEmbedding_eq_zero_consequences (data : PositiveLLH1Data period
     (h : llH1SmoothEmbedding period hPeriod data direction = 0) :
     direction.toTest = 0 ∧ ‖direction‖ = 0 ∧
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) data.fields
+        data.frame data.fields
         direction.toTest direction.toTest data.mu = 0 := by
   have hdirection := (llH1SmoothEmbedding_eq_zero_iff period hPeriod data direction).mp h
   subst direction

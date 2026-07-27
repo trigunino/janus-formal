@@ -2191,8 +2191,64 @@ que si leur critère le dit explicitement.
 - Limite : l'identification de cette base abstraite avec une famille complète
   de sections propres géométriques lisses reste le théorème de Fourier
   géométrique. Le segment à support fini des niveaux zéro et premier signés est
-  maintenant fermé, mais les niveaux arbitraires et la complétion restent ouverts.
+  maintenant fermé; seuls les niveaux géométriques arbitraires restent ouverts,
+  la complétion étant désormais automatique dès qu'une réalisation existe.
 - Porte terminale : aucune ; corrige la portée de `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-COEFFICIENT-DOMAIN-UNITARY` — Domaine maximal SpinC/D10 étendu
+
+- État : `DONE` (2026-07-27). Portée : `ANALYTIQUE/COEFFICIENTS`.
+- Gate : `P0EFTJanusProgramPPrimitiveSpinCGeometricDomainUnitary4D`.
+- Résultat : l’isométrie `L²` entre la tour SpinC complète et la somme du
+  secteur sphérique zéro avec les modes D10 positifs transporte exactement le
+  domaine maximal de `D²`. Elle conjugue les deux opérateurs non bornés et
+  conserve leur énergie de graphe. Les poids des deux sommants sont identifiés
+  respectivement au cercle quart-tordu et au spectre D10.
+- Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
+- Limite : ce résultat ferme le transport unitaire du domaine de
+  **coefficients**. Il ne construit pas les eigenspinors géométriques lisses
+  de niveau arbitraire; l’extension unitaire de leur analyse Fourier est fermée
+  par la gate suivante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-FOURIER-COMPLETION` — Complétion canonique de l’analyse
+
+- État : `DONE` (2026-07-27). Portée : `ANALYTIQUE/GÉOMÉTRIQUE`.
+- Gate : `P0EFTJanusProgramPD9PrimitiveSpinCGeometricFourierCompletion4D`.
+- Résultat : toute réalisation Fourier géométrique SpinC tous niveaux s’étend
+  canoniquement en une équivalence isométrique réelle entre la complétion de
+  son image lisse et le `L²` complet des coefficients. Le cœur lisse reste
+  dense et injectif; le domaine maximal `H²`, l’opérateur `D²`, son accord sur
+  le cœur et l’énergie de graphe sont transportés exactement. Le carré complété
+  est en outre coercif et bijectif.
+- Hypothèses : aucune au-delà de la réalisation géométrique déjà isolée; aucun
+  axiome métier supplémentaire.
+- Limite : cette gate ne construit pas la réalisation elle-même. Il reste
+  uniquement les eigenspinors géométriques lisses positifs de niveau arbitraire
+  et leur complétude.
+- Porte terminale : aucune ; retire la complétion des résidus de
+  `DIRAC-GLOBAL-01`.
+
+### `P9-D10-CONTINUUM-HEAT-REGULATOR` — Régulateur thermique D10 tous niveaux
+
+- État : `DONE` (2026-07-27). Portée : `ANALYTIQUE/SPECTRALE`.
+- Gates : `P0EFTJanusProgramPD10ContinuumHeatRegulator4D`,
+  `P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D`.
+- Résultat : le mode D10 complet est réindexé exactement par les deux racines,
+  tous les niveaux sphériques avec leur multiplicité et tous les modes du
+  cercle. À tout temps strictement positif, le poids thermique et le terme
+  chiral sont sommables. La permutation PT conserve le spectre carré, inverse
+  la chiralité, annule la trace infinie et tout filet cofinal de coupures finies
+  converge vers zéro. La restriction aux modes tronqués est exactement
+  l’ancien régulateur D10 fini. Sur le véritable espace de Hilbert D10, le
+  régulateur est aussi un opérateur compact, somme nucléaire en norme
+  d’opérateur de projecteurs de rang un; ses troncatures spectrales finies
+  convergent en norme.
+- Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
+- Limite : cela ferme le secteur spectral D10, pas encore le régulateur commun
+  des blocs non spectraux matière–métrique–Maxwell–ghost–bord ni son identité
+  avec la Hessienne complète.
+- Porte terminale : aucune ; réduit `REGULATOR-GLOBAL-01`.
 
 ### `P-T01-AMBIENT-PINMINUS-LOCAL-SECTIONS-REDUCTION` — Fermeture du revêtement
 
@@ -2295,9 +2351,11 @@ que si leur critère le dit explicitement.
 
 Il ne reste aucune carte autonome dans cette ancienne liste :
 
-- le spectre SpinC signé abstrait et le pont Fourier géométrique fini du bloc
-  bas-énergie sont fermés; leur extension à la tour complète et au domaine
-  commun appartient à `DIRAC-GLOBAL-01`;
+- le spectre SpinC signé abstrait, le pont Fourier géométrique fini du bloc
+  bas-énergie et le transport unitaire du domaine maximal de coefficients
+  sont fermés; l’extension complétée de toute réalisation géométrique est
+  également fermée. Seule la synthèse géométrique tous niveaux et sa
+  complétude appartiennent encore à `DIRAC-GLOBAL-01`;
 - la normale intrinsèque et ses coordonnées locales sont déjà `C∞`; la seule
   comparaison avec `canonicalLatitudeSectionNormal` est un contrôle de
   présentation `Pin⁻/T01`, distinct de la géométrie Candidate A;
@@ -2330,12 +2388,12 @@ doit être annoncé comme fermeture globale.
 | `VARCOH-GLOBAL-01` | **DONE (2026-07-26, portée fonctionnelle globale)** — Obstruction fonctionnelle exacte nulle, fonctionnelles variationnellement nulles constantes, noyau nul du classificateur naturel fini, ambiguïtés de contre-termes constantes et résidu physique de bord nul. | `P0EFTJanusProgramPGlobalVariationalCohomology4D` |
 | `ADM-GLOBAL-01` | **FRONTIER (2026-07-27, portée FLRW réduite)** — La Legendre de l’action Candidate-A FLRW donne exactement `N₊C₊+N₋C₋`; les primaires sont ses dérivées de lapse, leur crochet canonique est la secondaire, la préservation la force, et un ouvert non vide garde le rang trois. Un témoin poussière positif fixe aussi le rapport des lapses. Il manque la réduction covariante avec shifts/dérivées spatiales, l’algèbre fonctionnelle, le rang global et l’exclusion BD. | `P0EFTJanusProgramPGlobalADMFrontier4D` |
 | `STABILITY-GLOBAL-01` | **FRONTIER (2026-07-27, portée réduite)** — Le cône proportionnel sûr a une énergie non négative. Sur le témoin poussière, le noyau tangent contraint est exactement unidimensionnel; une courbe contrainte non triviale garde le Hamiltonien nul, donc la Hessienne ambiante négative n’est pas une instabilité contrainte mais le vide n’est pas strictement isolé. Il manque quotient ADM/BD, tous les modes, matière/bord, limite faible et PPN. | `P0EFTJanusProgramPGlobalStabilityFrontier4D`, `ADM-GLOBAL-01` |
-| `DIRAC-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Dirac D9 intrinsèque lisse/elliptique; tour de coefficients SpinC tous niveaux (zéro compris, deux racines) dense, auto-adjointe, Fredholm d’indice nul; accord D10 positif; entrelacement géométrique zéro/premier niveau et famille séparée `C³`. Il manque uniquement la synthèse Fourier **géométrique** complète de tous les eigenspinors et son identification unitaire au domaine commun. | `P0EFTJanusProgramPGlobalDiracFrontier4D`, `P0EFTJanusProgramPPrimitiveSpinCGeometricSpectralCompletion4D` |
+| `DIRAC-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Dirac D9 intrinsèque lisse/elliptique; tour de coefficients SpinC tous niveaux (zéro compris, deux racines) dense, auto-adjointe, Fredholm d’indice nul; accord D10 positif; entrelacement géométrique zéro/premier niveau et famille séparée `C³`. Le domaine maximal de coefficients est unitairement la tour zéro plus le domaine D10 positif. Toute réalisation Fourier géométrique s’étend désormais canoniquement au `L²` complété et transporte exactement domaine maximal, opérateur et énergie de graphe. Il manque uniquement la synthèse Fourier **géométrique** complète des eigenspinors positifs de niveau arbitraire et sa complétude. | `P0EFTJanusProgramPGlobalDiracFrontier4D`, `P0EFTJanusProgramPPrimitiveSpinCGeometricDomainUnitary4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricFourierCompletion4D` |
 | `BRST-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — BRST `U(1)²` nilpotent et invariant pour l’action; Jacobi du ghost extérieur; dérivation graduée extérieure scalaire et carré à deux ghosts nuls; BRST difféomorphe linéarisé; complexe linéaire corrigé de tous les champs/LL; doublet BV métrique nilpotent et stable au bord. Le ghost commutatif non linéaire est exclu. Il manque une dérivation extérieure non linéaire unique sur **tous** les champs, antifields et composantes de bord de l’action assemblée. | `P0EFTJanusProgramPGlobalBRSTFrontier4D` |
-| `HESSIAN-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Hessienne vraie, symétrique, quotient `U(1)²` exact. Le produit Hilbert bulk-Dirichlet/SpinC/D10/LL possède un cœur opérateur concret dense et injectif; les blocs SpinC coefficients et D10 sont Fredholm et le cœur Riesz LL est dense sans noyau. Chaque paquet fini D9 jauge–ghost possède une réalisation Hilbert euclidienne exactement conjuguée au symbole algébrique. Cette famille s’étend maintenant à un vrai Hilbert complet `ℓ²` pour un type arbitraire de modes : sous le contrat explicite « symbole borné, aucun mode nul, inverse uniformément borné », l’opérateur est auto-adjoint, bijectif, à image fermée, noyau/cokernel finis et indice nul, avec compatibilité finie exacte. La lacune D9 est donc réduite à la preuve du gap uniforme pour les données physiques et à l’identification avec la Hessienne effective. Toute symétrie linéaire exacte se combine avec `U(1)²`; la spécialisation aux vrais ghosts difféomorphes construit automatiquement le sous-module total et l’annulation bilatérale. Le contrat opérateur final exige exactement auto-adjonction, image fermée, noyau/cokernel finis et accord de pairing. Restent : (1) le vrai pont tangent global → carte, (2) la synthèse géométrique SpinC tous niveaux, (3) l’invariance difféomorphe des neuf blocs, (4) l’identification elliptique/Fredholm métrique–Maxwell–matière–ghost–bord. Cette dernière est impossible à déduire pour des couplages arbitraires : un no-go formel exclut toute réalisation Fredholm d’une Hessienne nulle en dimension infinie. | `P0EFTJanusGaugeGhostBlockD9FinitePacketHilbertFredholm4D`, `P0EFTJanusGaugeGhostBlockD9L2UniformFredholm4D`, `P0EFTJanusProgramPCompleteVariationConstructedCore4D`, `P0EFTJanusProgramPGlobalAnalyticSpine4D`, `P0EFTJanusProgramPGlobalHessianFrontier4D` |
-| `REGULATOR-GLOBAL-01` | **FRONTIER (2026-07-26)** — Blocs de chaleur D7 compacts, déterminant `Z4`, régulateur D10 fini à temps commun avec multiplicités/statistiques et annulation PT; le pont vers la Hessienne est exact sous le contrat de domaine. Il manque la limite commune de tous les secteurs/ghosts. | `P0EFTJanusProgramPGlobalRegulatorFrontier4D` |
+| `HESSIAN-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Hessienne vraie, symétrique, quotient `U(1)²` exact. D9 possède son multiplicateur maximal non borné et Fredholm modulo un ensemble caractéristique fini. Le bloc matière est maintenant le vrai spectre de premier ordre signé : période géométrique, deux racines normales, branches `±`, identité exacte avec `D²` après carré et propreté spectrale démontrée. Le calcul mixte exact de l’action `Re⟨ψ,Dψ⟩ + m²/2⟨ψ,ψ⟩` fixe le poids hessien à `2D + couplings.matterMassSquared`, auto-adjoint/Fredholm pour toute masse; les résonances éventuelles forment un noyau fini et aucune hypothèse de non-résonance n’est ajoutée. Le nouvel opérateur physique réel assemble D9, deux copies sectorielles de `2D+m²`, D10 et l’identité de Riesz LL sur la complétion d’énergie positive. Le repère LL est exactement le repère canonique sans divergence de l’action globale, et le pairing lisse est son vrai Hessien mixte. Densité, fermeture, auto-adjonction, image fermée et noyau/conoyau finis sont construits; l’égalité entre pairing réel natif et partie réelle du pairing complexe est démontrée, sans hypothèse de cohérence supplémentaire. L’ancien assemblage SpinC carré reste un contrôle elliptique, pas le Hessien matière. Le contrat terminal `LinearPMap` ne demande plus que le cœur quotient lisse dense et l’accord restant hors LL. Restent : (1) le vrai pont tangent global → carte, (2) la synthèse géométrique SpinC tous niveaux, (3) l’invariance difféomorphe des neuf blocs, (4) l’identification de la vraie Hessienne bulk/métrique–Maxwell–matière–ghost–bord hors facteur LL désormais fermé, y compris ses secteurs non spectraux, avec cet opérateur. Le no-go de Hessienne nulle interdit toujours une fermeture universelle pour des couplages arbitraires. | `P0EFTJanusComplexDiagonalNativeRealSelfAdjoint4D`, `P0EFTJanusComplexDiagonalProperShiftFredholm4D`, `P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D`, `P0EFTJanusProgramPGlobalPhysicalLLHessianFredholm4D`, `P0EFTJanusProgramPGlobalHessianUnboundedRealization4D` |
+| `REGULATOR-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Blocs de chaleur D7 compacts et déterminant `Z4`. Le régulateur D10 complet, avec tous niveaux, multiplicités et deux racines, est sommable à temps positif; PT annule sa trace chirale infinie et tout filet de coupures finies converge vers zéro. Sur le Hilbert D10 complet, c’est un opérateur compact donné par une série nucléaire de rang un, limite en norme de ses troncatures finies. Sa restriction redonne exactement le régulateur tronqué. Le pont vers la Hessienne est exact sous le contrat de domaine. Il reste le régulateur commun des secteurs non spectraux/ghosts et son identification avec la Hessienne assemblée. | `P0EFTJanusProgramPGlobalRegulatorFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D`, `P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D` |
 | `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
-| `ANOMALY-GLOBAL-01` | **FRONTIER (2026-07-26)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D` |
+| `ANOMALY-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Le certificat inclut désormais la trace chirale D10 tous niveaux, absolument sommable, nulle par PT, avec convergence de tout filet de cutoffs finis. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D` |
 | `SCHEME-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-26)** — Des témoins distincts satisfont platitude et annulation PT; une ligne de Quillen fixée ne fixe pas l’action scalaire renormalisée. Les parties finies et la normalisation doivent venir d’une loi microscopique. | `P0EFTJanusProgramPGlobalSchemeFrontier4D`, `MICRO-GLOBAL-01` |
 | `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT, mais deux parents admissibles donnent des mixages réduits différents. La sélection discrète de `α` et du sextique est exacte seulement après fourniture de `β`, du niveau, du verrou et de l’ancrage UV. Il manque donc la loi microscopique Janus sélectionnant le parent et ses parties finies. | `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
 | `VACUUM-GLOBAL-01` | **FRONTIER (2026-07-27; dépendance physique bloquante)** — L’interaction PT-plate proportionnelle a un minimum positif unique en `c=1` et une Hessienne réduite positive, mais les contraintes FLRW du vide y perdent leur rang et la branche poussière possède une direction contrainte isoénergétique. Le vide global exige encore l’action effective renormalisée, le quotient stable, la trivialisation d’anomalie et les parties finies microscopiques. | `P0EFTJanusProgramPGlobalVacuumFrontier4D`, `STABILITY/ANOMALY/SCHEME/MICRO-GLOBAL-01` |
@@ -2384,12 +2442,16 @@ Portée exacte des fermetures et frontières globales :
   canoniquement; D10 est déjà un facteur direct scindé du tangent global. Le
   produit Hilbert bulk/SpinC/D10/LL et son cœur opérateur dense injectif sont
   construits. La tour SpinC de **coefficients** tous niveaux et le bloc D10
-  sont Fredholm; le cœur Riesz LL est dense et injectif.
+  sont Fredholm; son domaine maximal est unitairement identifié à la tour
+  zéro plus le domaine D10 positif, avec conjugaison exacte et énergie de
+  graphe préservée. L’identité de Riesz LL est maintenant un facteur exact du
+  même opérateur Fredholm, avec le repère canonique de l’action et l’accord
+  démontré de son pairing de Hessienne.
   Pour toute symétrie physique `U(1)²` chartwise certifiée, la descente de la
   Hessienne vraie est exacte, symétrique et canonique. Une symétrie
   difféomorphe exacte fournie se combine désormais automatiquement et donne
   le sous-module total. Les résidus sont séparés : vrai pont tangent-carte,
-  Fourier **géométrique** SpinC tous niveaux, invariance difféomorphe des neuf
+  Fourier **géométrique** SpinC tous niveaux (l’extension complétée est fermée), invariance difféomorphe des neuf
   blocs et égalité au Fredholm elliptique global. Le no-go Hessien nul impose
   des hypothèses de couplage non dégénérées.
 - `NOETHER` est inconditionnel pour les ghosts lisses appariés du secteur

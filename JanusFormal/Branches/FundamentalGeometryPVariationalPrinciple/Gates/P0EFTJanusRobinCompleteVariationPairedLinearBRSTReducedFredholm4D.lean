@@ -118,7 +118,7 @@ theorem robinCompleteHessian_reducedPairedLinearBRST_BRST_eq_fredholmPairing
     (state : CommonPairedD9LinearBRSTBlock period hPeriod)
     (test : ProgramPRobinCompleteVariation4D period hPeriod) :
     robinCompleteMatterTrueLLHessian period hPeriod matterData kPlus kMinus
-        robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        robinMeasure llData.frame
         llData.mu llData.fields
         (reducedRobinLLSector period hPeriod
           (robinCompleteVariationPairedLinearBRSTGhosts period hPeriod

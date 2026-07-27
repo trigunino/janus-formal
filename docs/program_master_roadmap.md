@@ -324,7 +324,14 @@ zero-mode cohomology and nonlinear BV closure remain explicit obligations.
 - **T/C** the explicit P--D7--D10 bridge combines compact fixed-level heat
   blocks, the convergent physical-`Z4` spectral determinant, equality of the PT
   renormalized logarithms and modewise opposite-inflow cancellation;
-- **I/O** the finite-mode line and spectral bridge are not the global unbounded
+- **T/C** the complete multiplicity-aware D10 Gaussian is summable at every
+  positive time; physical PT is an isospectral chirality-reversing
+  permutation, so the infinite chiral trace vanishes and arbitrary finite
+  cutoff nets converge to zero. On the complete D10 Hilbert space it is a
+  compact operator with a summable rank-one nuclear expansion, and finite
+  spectral truncations converge to it in operator norm;
+- **I/O** this closed D10 spectral regulator is not yet a regulator for every
+  nonspectral field/ghost block, nor is the determinant line the global unbounded
   Janus Fredholm family, eta holonomy or Quillen partition section; construct
   those objects with the common regulator, physical Hessian and complete
   field/ghost content.
@@ -1133,20 +1140,39 @@ compatibility map K
   For every certified chartwise paired `U(1)²` symmetry, the exact Noether
   identity now gives two-sided Hessian degeneracy and a canonical symmetric
   quotient. The bulk/SpinC/D10/LL Hilbert product and its dense operator core
-  are concrete; the complete SpinC coefficient tower, D10 Fredholm block and
-  LL Riesz core are integrated. Finite D9 gauge–ghost packets now additionally
-  have a self-adjoint, closed-range Hilbert realization with finite kernel and
-  cokernel and index zero, exactly conjugate to the algebraic packet symbol.
-  They extend to a complete `ℓ²` operator for arbitrary modes under explicit
-  bounded-symbol, nonzero-mode and bounded-inverse hypotheses; that operator
-  is self-adjoint, bijective Fredholm and finite-packet compatible. Exact
-  linear symmetries, including a supplied smooth-diffeomorphism symmetry,
-  combine automatically with `U(1)²`.
+  are concrete; the complete SpinC coefficient tower now has both signed
+  first-order branches at the actual period. Its square recovers the old
+  geometric `D²` weights, and properness proves that `2D + m²` is Fredholm for
+  every mass coefficient, allowing a finite resonant kernel. The maximal
+  squared SpinC domain is now unitarily the zero tower plus the positive D10
+  domain, with exact unbounded-operator conjugacy and graph-energy
+  preservation. D10 is integrated. The LL Riesz identity is now appended on its positive-energy
+  completion using exactly the canonical divergence-free frame of the global
+  action; its smooth pairing is the actual LL mixed Hessian. Equality between
+  the native real `ℓ²` pairing and the real part of the complex pairing proves
+  self-adjointness of the enlarged physical operator without an extra
+  coherence hypothesis. The D9 gauge–ghost symbol defines its maximal,
+  generally unbounded `ℓ²` multiplier without an upper symbol bound. A
+  positive gap away from finitely many characteristic modes gives a dense
+  self-adjoint closed operator whose maximal-domain realization itself has
+  closed range and finite kernel and cokernel. The physical combined
+  D9/two-sector signed-SpinC/D10/LL operator has the same properties. The
+  terminal contract is a real densely defined `LinearPMap` using
+  `couplings.matterMassSquared`; all analytic Fredholm fields are discharged,
+  leaving only the smooth quotient core and the remaining non-LL
+  action-Hessian pairing.
+  Exact linear symmetries, including a supplied smooth-diffeomorphism
+  symmetry, combine automatically with `U(1)²`.
   What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map,
-  all-level **geometric** SpinC synthesis, nine-block diffeomorphism
-  invariance and equality of the gauge-fixed Hessian with a nondegenerate
-  elliptic Fredholm operator. A formal zero-Hessian obstruction shows that
-  this last result does not follow for arbitrary couplings.
+  all-level **geometric** SpinC synthesis (its completed Fourier extension is
+  now a theorem for every such realization),
+  nine-block diffeomorphism
+  invariance and identification of the actual bulk/metric–Maxwell–matter–
+  ghost–boundary Hessian, excluding the closed LL factor but including its
+  remaining nonspectral sectors, with the constructed elliptic Fredholm
+  operator. A formal zero-Hessian
+  obstruction shows that this last result does not follow for arbitrary
+  couplings.
 
 # Programs A/B/C and absolute scale
 
@@ -1182,10 +1208,10 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
 2. extend the chartwise Euler/physical `U(1)²` Noether closure to the raw-field
    atlas and one nonlinear exterior BRST/BV derivation with boundary descent;
 3. extend the proved finite low-energy geometric SpinC Fourier bridge to every
-   sphere level and its common completed Dirac domain, then identify the
+   sphere level, use its now-canonical completed Dirac extension, then identify the
    symmetric action Hessian with that gauge-fixed Fredholm family;
-4. extend the finite/common D7/D10 regulator to every physical and ghost
-   sector of that family;
+4. extend the proved all-level D10 continuum regulator to every remaining
+   nonspectral physical and ghost sector of that family;
 5. lift the proved circle determinant metric/flat connection and PT/inflow
    cancellation to the full family, including local/global anomaly and
    equivariant trivialization;

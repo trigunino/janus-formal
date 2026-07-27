@@ -75,16 +75,16 @@ theorem fullMatterRobinTrueLLCurve_robinLL_exact_taylor_reducedFredholm
     (junction robin : SmoothThroatField period hPeriod Real)
     (ll : LLH1Smooth period hPeriod llData) (t : Real) :
     fullMatterRobinTrueLLCurve period hPeriod matterData kPlus kMinus bulkPlus
-        bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        bulkMinus robinMeasure llData.frame
         llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t =
       fullMatterRobinTrueLLAction period hPeriod matterData kPlus kMinus bulkPlus
-          bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+          bulkMinus robinMeasure llData.frame
           llData.mu llData.fields junction +
         t * (robinFirstVariation period hPeriod kPlus kMinus bulkPlus bulkMinus
             junction robin robinMeasure +
           globalPTFullLLFirstVariation period hPeriod
-            (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+            llData.frame llData.fields
             (fullRobinLLDirection period hPeriod robin ll.toTest) llData.mu) +
         (t ^ 2 / 2) * reducedBosonicNaturalHessian period hPeriod scalarData
           kPlus kMinus robinMeasure llData
@@ -95,17 +95,17 @@ theorem fullMatterRobinTrueLLCurve_robinLL_exact_taylor_reducedFredholm
             smoothThroatFieldToL2 period hPeriod robinMeasure robin,
             llH1SmoothEmbedding period hPeriod llData ll) +
         t ^ 3 * globalPTFullLLTaylorCubic period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+          llData.frame llData.fields 0
           (fullDirectionLLVariation period hPeriod
             (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu +
         t ^ 4 * globalPTFullLLTaylorQuartic period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+          llData.frame llData.fields 0
           (fullDirectionLLVariation period hPeriod
             (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu := by
   unfold fullMatterRobinTrueLLCurve
   rw [fullMatterRobinTrueLLAction_exact_taylor period hPeriod matterData kPlus
       kMinus bulkPlus bulkMinus robinMeasure
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+      llData.frame llData.mu llData.fields junction
       (fullRobinLLDirection period hPeriod robin ll.toTest) t,
     globalMatterRobinFullLLHessian_eq_reducedNatural_robinLL_block period hPeriod
       matterData scalarData kPlus kMinus robinMeasure llData robin robin ll ll]
@@ -128,7 +128,7 @@ theorem fullMatterRobinTrueLLCurve_robinLL_second_iteratedDeriv
     (ll : LLH1Smooth period hPeriod llData) :
     iteratedDeriv 2 (fun t : Real =>
       fullMatterRobinTrueLLCurve period hPeriod matterData kPlus kMinus bulkPlus
-        bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        bulkMinus robinMeasure llData.frame
         llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 =
       reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus
@@ -141,16 +141,16 @@ theorem fullMatterRobinTrueLLCurve_robinLL_second_iteratedDeriv
           llH1SmoothEmbedding period hPeriod llData ll) := by
   have hCurve : (fun t : Real =>
       fullMatterRobinTrueLLCurve period hPeriod matterData kPlus kMinus bulkPlus
-        bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        bulkMinus robinMeasure llData.frame
         llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t) = fun t =>
       fullMatterRobinTrueLLAction period hPeriod matterData kPlus kMinus bulkPlus
-          bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+          bulkMinus robinMeasure llData.frame
           llData.mu llData.fields junction +
         t * (robinFirstVariation period hPeriod kPlus kMinus bulkPlus bulkMinus
             junction robin robinMeasure +
           globalPTFullLLFirstVariation period hPeriod
-            (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+            llData.frame llData.fields
             (fullRobinLLDirection period hPeriod robin ll.toTest) llData.mu) +
         (t ^ 2 / 2) * reducedBosonicNaturalHessian period hPeriod scalarData
           kPlus kMinus robinMeasure llData
@@ -161,11 +161,11 @@ theorem fullMatterRobinTrueLLCurve_robinLL_second_iteratedDeriv
             smoothThroatFieldToL2 period hPeriod robinMeasure robin,
             llH1SmoothEmbedding period hPeriod llData ll) +
         t ^ 3 * globalPTFullLLTaylorCubic period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+          llData.frame llData.fields 0
           (fullDirectionLLVariation period hPeriod
             (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu +
         t ^ 4 * globalPTFullLLTaylorQuartic period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+          llData.frame llData.fields 0
           (fullDirectionLLVariation period hPeriod
             (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu := by
     funext t
@@ -191,17 +191,17 @@ theorem fullMatterRobinTrueLLCurve_robinLL_third_iteratedDeriv
     (ll : LLH1Smooth period hPeriod llData) :
     iteratedDeriv 3 (fun t : Real =>
       fullMatterRobinTrueLLCurve period hPeriod matterData kPlus kMinus bulkPlus
-        bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        bulkMinus robinMeasure llData.frame
         llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 =
       6 * globalPTFullLLTaylorCubic period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+        llData.frame llData.fields 0
         (fullDirectionLLVariation period hPeriod
           (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu := by
   simpa only [fullRobinLLDirection] using
     fullMatterRobinTrueLLCurve_third_iteratedDeriv period hPeriod matterData
       kPlus kMinus bulkPlus bulkMinus robinMeasure
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+      llData.frame llData.mu llData.fields
       junction (fullRobinLLDirection period hPeriod robin ll.toTest)
 
 /-- The fourth derivative of the same reduced-scope true curve is exclusively
@@ -217,17 +217,17 @@ theorem fullMatterRobinTrueLLCurve_robinLL_fourth_iteratedDeriv
     (ll : LLH1Smooth period hPeriod llData) :
     iteratedDeriv 4 (fun t : Real =>
       fullMatterRobinTrueLLCurve period hPeriod matterData kPlus kMinus bulkPlus
-        bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        bulkMinus robinMeasure llData.frame
         llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 =
       24 * globalPTFullLLTaylorQuartic period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+        llData.frame llData.fields 0
         (fullDirectionLLVariation period hPeriod
           (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu := by
   simpa only [fullRobinLLDirection] using
     fullMatterRobinTrueLLCurve_fourth_iteratedDeriv period hPeriod matterData
       kPlus kMinus bulkPlus bulkMinus robinMeasure
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+      llData.frame llData.mu llData.fields
       junction (fullRobinLLDirection period hPeriod robin ll.toTest)
 
 end

@@ -1,17 +1,22 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD7CircleHeatRegulatorBridge
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompleteVariationFiniteD10AnomalyRegulatorBridge4D
 
 /-!
 # Exact frontier of the common regulator problem
 
 The D7 fixed-sphere-level heat blocks are compact, the physical quarter
-determinant exists, and every finite D10 PT pair cancels at one common heat
-time, including multiplicity and statistics signs.
+determinant exists, and the complete multiplicity-aware D10 heat series is
+summable at every positive time.  Its physical PT involution makes the
+continuum chiral trace and its finite-cutoff limit vanish, including
+multiplicity and statistics signs.  On the complete D10 Hilbert space the heat
+operator is moreover the operator-norm sum of a summable family of rank-one
+operators, hence compact.
 
 This is not `REGULATOR-GLOBAL-01`: the identification with the full assembled
-action Hessian and the continuum cutoff limit still depend on the explicit
-Program-P/D7/D9/D10 domain-agreement contract.
+action Hessian and a common regulator for the remaining nonspectral sectors
+still depend on the explicit Program-P/D7/D9/D10 domain-agreement contract.
 -/
 
 namespace JanusFormal
@@ -30,6 +35,8 @@ open P0EFTJanusGlobalSeparatedDiracModel
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPCommonGeometricDomain4D
 open P0EFTJanusProgramPD7CircleHeatRegulatorBridge
+open P0EFTJanusProgramPD10ContinuumHeatRegulator4D
+open P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D
 open P0EFTJanusQuarterDeterminantConvergence
 
 /-- Unconditional operator-level and finite-mode regulator frontier. -/
@@ -58,6 +65,20 @@ theorem global_regulator_frontier_gate
         truncated_d10_signed_chiral_trace_cancels
           data chirality sphereCutoff circleCutoff multiplicity statistics
           regulatorTime⟩
+
+/-- The all-level D10 heat regulator and its continuum PT cancellation are
+unconditional on the exact multiplicity-aware mode space. -/
+theorem global_regulator_d10_continuum_gate
+    (data : ProductThroatSpectralData) :
+    Nonempty (ProgramPD10ContinuumHeatRegulatorCertificate4D data) :=
+  ⟨programPD10ContinuumHeatRegulatorCertificate4D data⟩
+
+/-- The all-level D10 Gaussian is an actual compact nuclear operator, obtained
+as the operator-norm limit of finite-rank spectral truncations. -/
+theorem global_regulator_d10_nuclear_operator_gate
+    (data : ProductThroatSpectralData) (time : HeatTime) :
+    Nonempty (ProgramPD10HeatNuclearCertificate4D data time) :=
+  ⟨programPD10HeatNuclearCertificate4D data time⟩
 
 /-- Once the already-typed domain agreement is supplied, the finite D10
 regulator is literally the action Hessian on the corresponding complete

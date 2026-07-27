@@ -72,7 +72,7 @@ theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_reducedJacobi_pairing
     (robinFirst robinSecond : SmoothThroatField period hPeriod Real)
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     fullMatterRobinTrueLLMixedTaylorCoefficient period hPeriod matterData kPlus
-        kMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        kMinus robinMeasure llData.frame
         llData.mu llData.fields
         (fullRobinLLDirection period hPeriod robinFirst llFirst.toTest)
         (fullRobinLLDirection period hPeriod robinSecond llSecond.toTest) =
@@ -98,7 +98,7 @@ theorem quotientHessian_fullRobinLL_eq_reducedJacobi_pairing
     (robinFirst robinSecond : SmoothThroatField period hPeriod Real)
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     quotientHessian period hPeriod matterData kPlus kMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod robinFirst llFirst.toTest⟧
         ⟦fullRobinLLDirection period hPeriod robinSecond llSecond.toTest⟧ =
       reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus
@@ -130,7 +130,7 @@ theorem fullMatterRobinTrueLLMixedTaylorCoefficient_eq_zero_of_reducedJacobi_ker
           smoothThroatFieldToL2 period hPeriod robinMeasure robinKernel,
           llH1SmoothEmbedding period hPeriod llData llKernel) = 0) :
     fullMatterRobinTrueLLMixedTaylorCoefficient period hPeriod matterData kPlus
-        kMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        kMinus robinMeasure llData.frame
         llData.mu llData.fields
         (fullRobinLLDirection period hPeriod robinKernel llKernel.toTest)
         (fullRobinLLDirection period hPeriod robinTest llTest.toTest) = 0 := by
@@ -159,7 +159,7 @@ theorem quotientHessian_fullRobinLL_eq_zero_of_reducedJacobi_kernel
           smoothThroatFieldToL2 period hPeriod robinMeasure robinKernel,
           llH1SmoothEmbedding period hPeriod llData llKernel) = 0) :
     quotientHessian period hPeriod matterData kPlus kMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod robinKernel llKernel.toTest⟧
         ⟦fullRobinLLDirection period hPeriod robinTest llTest.toTest⟧ = 0 := by
   rw [← fullMatterRobinTrueLLMixedTaylorCoefficient_eq_quotientHessian]
