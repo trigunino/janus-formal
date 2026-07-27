@@ -1127,9 +1127,17 @@ compatibility map K
   D7/D9 tangent core and boundary pullback are unconditional, while the D10
   Hilbert coordinate is a split direct factor of the global tangent. The
   former whole-tangent-to-`ℓ²` equivalence is therefore not a target.
-  Constructing the dense smooth-to-chart analysis, all positive SpinC Fourier
-  modes, curved Calabi/Fredholm identification and BRST descent remains the
-  task of `HESSIAN-GLOBAL-01`; none follows from the abstract Fréchet theorems.
+  For every certified chartwise paired `U(1)²` symmetry, the exact Noether
+  identity now gives two-sided Hessian degeneracy and a canonical symmetric
+  quotient. The bulk/SpinC/D10/LL Hilbert product and its dense operator core
+  are concrete; the complete SpinC coefficient tower, D10 Fredholm block and
+  LL Riesz core are integrated. Exact linear symmetries, including a supplied
+  smooth-diffeomorphism symmetry, combine automatically with `U(1)²`.
+  What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map,
+  all-level **geometric** SpinC synthesis, nine-block diffeomorphism
+  invariance and equality of the gauge-fixed Hessian with a nondegenerate
+  elliptic Fredholm operator. A formal zero-Hessian obstruction shows that
+  this last result does not follow for arbitrary couplings.
 
 # Programs A/B/C and absolute scale
 

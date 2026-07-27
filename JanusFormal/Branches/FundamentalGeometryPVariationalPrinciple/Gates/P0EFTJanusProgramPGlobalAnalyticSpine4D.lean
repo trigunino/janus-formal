@@ -10,11 +10,17 @@ The global tangent already contains the D10 Hilbert coordinate as a direct
 factor.  Consequently its D10 projection has a canonical linear section; no
 equivalence between all smooth fields and one spectral sector is needed.
 
-The remaining Hessian problem is split into two honest inputs:
+The constructed bulk, sectorwise SpinC, D10 and LL factors now form one
+concrete Hilbert product with a dense injective operator core.  The complete
+all-level SpinC coefficient certificate, D10 Fredholm certificate and LL
+Riesz core are integrated.
+
+The remaining Hessian problem is split into two honest geometric inputs:
 
 * a dense injective analysis of the genuine smooth global tangent into a
   regular variational chart;
-* the geometric Fourier realization of the primitive SpinC smooth core.
+* the all-level geometric Fourier realization of the primitive SpinC smooth
+  bundle core.
 -/
 
 namespace JanusFormal
@@ -35,9 +41,11 @@ open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPCompleteVariationConstructedCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricFourierBridge4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSpectralCompletion4D
 open P0EFTJanusProgramPMultiplicityAwareD10Galerkin4D
 open P0EFTJanusProgramPCommonGeometricDomain4D
 open P0EFTJanusD9D10ExactFieldContentBridge4D
+open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -121,6 +129,192 @@ theorem globalFieldTangentD10Section_injective
       period hPeriod (configuration := configuration)) h
   simpa only [globalFieldTangentD10Coordinate_section] using hCoordinates
 
+/-- Concrete Hilbert target already shared by the constructed analytic
+sectors.  The primitive SpinC factor occurs once per physical sector. -/
+abbrev ProgramPGlobalAnalysisHilbert4D
+    (configuration : GlobalFieldConfiguration period hPeriod)
+    (data : GlobalAnalysisData period hPeriod configuration) :=
+  GlobalBulkDirichletHilbertH1 period hPeriod ×
+    ((Sector → PrimitiveSpinCGeometricL2) ×
+      (ProgramPD10ModeHilbert4D
+          (d10SpectralData period hPeriod configuration.d10Completion) ×
+        LLH1Space period hPeriod (data.llH1Data period hPeriod)))
+
+/-- Dense operator core of the constructed bulk, SpinC, D10 and physical LL
+blocks.  This is an actual product type, not a monolithic spectral
+identification of the global tangent. -/
+abbrev ProgramPGlobalDenseOperatorCore4D
+    (configuration : GlobalFieldConfiguration period hPeriod)
+    (data : GlobalAnalysisData period hPeriod configuration) :=
+  GlobalBulkDirichletHilbertH1 period hPeriod ×
+    ((Sector → PrimitiveSpinCGeometricH2 period hPeriod) ×
+      (programPD10FredholmModeDomainSubmodule4D
+          (d10SpectralData period hPeriod configuration.d10Completion) ×
+        LLH1Smooth period hPeriod (data.llH1Data period hPeriod)))
+
+/-- Canonical inclusion of the common operator core into the concrete global
+Hilbert product. -/
+def programPGlobalDenseOperatorCoreInclusion
+    (configuration : GlobalFieldConfiguration period hPeriod)
+    (data : GlobalAnalysisData period hPeriod configuration) :
+    ProgramPGlobalDenseOperatorCore4D period hPeriod configuration data →ₗ[Real]
+      ProgramPGlobalAnalysisHilbert4D period hPeriod configuration data where
+  toFun := fun state =>
+    (state.1,
+      ((fun sector => (state.2.1 sector).1),
+        (state.2.2.1.1,
+          llH1SmoothEmbedding period hPeriod
+            (data.llH1Data period hPeriod) state.2.2.2)))
+  map_add' := by
+    intro first second
+    apply Prod.ext
+    · rfl
+    · apply Prod.ext
+      · funext sector
+        apply Subtype.ext
+        rfl
+      · apply Prod.ext
+        · apply Subtype.ext
+          rfl
+        · exact map_add
+            (llH1SmoothEmbedding period hPeriod
+              (data.llH1Data period hPeriod)) _ _
+  map_smul' := by
+    intro scalar state
+    apply Prod.ext
+    · simp
+    · apply Prod.ext
+      · funext sector
+        apply Subtype.ext
+        simp
+      · apply Prod.ext
+        · apply Subtype.ext
+          simp
+        · simpa using map_smul
+            (llH1SmoothEmbedding period hPeriod
+              (data.llH1Data period hPeriod)) scalar state.2.2.2
+
+theorem programPGlobalDenseOperatorCoreInclusion_injective
+    (configuration : GlobalFieldConfiguration period hPeriod)
+    (data : GlobalAnalysisData period hPeriod configuration) :
+    Function.Injective
+      (programPGlobalDenseOperatorCoreInclusion
+        period hPeriod configuration data) := by
+  intro first second hEqual
+  apply Prod.ext
+  · exact congrArg
+      (fun state :
+        ProgramPGlobalAnalysisHilbert4D
+          period hPeriod configuration data => state.1) hEqual
+  · apply Prod.ext
+    · funext sector
+      apply Subtype.ext
+      exact congrFun (congrArg (fun state => state.2.1) hEqual) sector
+    · apply Prod.ext
+      · apply Subtype.ext
+        exact congrArg (fun state => state.2.2.1) hEqual
+      · apply UniformSpace.Completion.coe_injective
+        exact congrArg (fun state => state.2.2.2) hEqual
+
+theorem programPGlobalDenseOperatorCoreInclusion_denseRange
+    (configuration : GlobalFieldConfiguration period hPeriod)
+    (data : GlobalAnalysisData period hPeriod configuration) :
+    DenseRange
+      (programPGlobalDenseOperatorCoreInclusion
+        period hPeriod configuration data) := by
+  have hBulk :
+      DenseRange
+        (fun state : GlobalBulkDirichletHilbertH1 period hPeriod => state) :=
+    denseRange_id
+  have hSpinCOne :
+      DenseRange
+        (fun state : PrimitiveSpinCGeometricH2 period hPeriod =>
+          (state.1 : PrimitiveSpinCGeometricL2)) := by
+    change Dense
+      (Set.range
+        (fun state : PrimitiveSpinCGeometricH2 period hPeriod =>
+          (state.1 : PrimitiveSpinCGeometricL2)))
+    rw [show
+      Set.range
+          (fun state : PrimitiveSpinCGeometricH2 period hPeriod =>
+            (state.1 : PrimitiveSpinCGeometricL2)) =
+        (PrimitiveSpinCGeometricH2 period hPeriod :
+          Set PrimitiveSpinCGeometricL2) by
+      ext state
+      constructor
+      · rintro ⟨source, rfl⟩
+        exact source.2
+      · intro hState
+        exact ⟨⟨state, hState⟩, rfl⟩]
+    exact primitiveSpinCGeometricH2_dense period hPeriod
+  have hSpinC :
+      DenseRange
+        (Pi.map fun _ : Sector =>
+          (fun state : PrimitiveSpinCGeometricH2 period hPeriod =>
+            (state.1 : PrimitiveSpinCGeometricL2))) :=
+    DenseRange.piMap fun _ => hSpinCOne
+  have hD10 :
+      DenseRange
+        (fun state :
+            programPD10FredholmModeDomainSubmodule4D
+              (d10SpectralData period hPeriod configuration.d10Completion) =>
+          state.1) := by
+    change Dense
+      (Set.range
+        (fun state :
+            programPD10FredholmModeDomainSubmodule4D
+              (d10SpectralData period hPeriod configuration.d10Completion) =>
+          state.1))
+    rw [show
+      Set.range
+          (fun state :
+              programPD10FredholmModeDomainSubmodule4D
+                (d10SpectralData period hPeriod
+                  configuration.d10Completion) =>
+            state.1) =
+        programPD10FredholmModeDomain4D
+          (d10SpectralData period hPeriod configuration.d10Completion) by
+      ext state
+      constructor
+      · rintro ⟨source, rfl⟩
+        exact source.2
+      · intro hState
+        exact ⟨⟨state, hState⟩, rfl⟩]
+    exact programPD10FredholmModeDomain4D_dense
+      (d10SpectralData period hPeriod configuration.d10Completion)
+  have hLL :
+      DenseRange
+        (llH1SmoothEmbedding period hPeriod
+          (data.llH1Data period hPeriod)) :=
+    llH1SmoothEmbedding_denseRange period hPeriod
+      (data.llH1Data period hPeriod)
+  have hProduct :=
+    hBulk.prodMap (hSpinC.prodMap (hD10.prodMap hLL))
+  have hFunction :
+      (programPGlobalDenseOperatorCoreInclusion
+          period hPeriod configuration data :
+        ProgramPGlobalDenseOperatorCore4D
+            period hPeriod configuration data →
+          ProgramPGlobalAnalysisHilbert4D
+            period hPeriod configuration data) =
+        Prod.map (fun state => state)
+          (Prod.map
+            (Pi.map fun _ : Sector =>
+              (fun state : PrimitiveSpinCGeometricH2 period hPeriod =>
+                (state.1 : PrimitiveSpinCGeometricL2)))
+            (Prod.map
+              (fun state :
+                  programPD10FredholmModeDomainSubmodule4D
+                    (d10SpectralData period hPeriod
+                      configuration.d10Completion) =>
+                state.1)
+              (llH1SmoothEmbedding period hPeriod
+                (data.llH1Data period hPeriod)))) := by
+    funext state
+    rfl
+  rw [hFunction]
+  exact hProduct
+
 /-- All already constructed, unconditional pieces of the global analytic
 spine. -/
 structure ProgramPGlobalAnalyticSpineCertificate4D
@@ -137,6 +331,31 @@ structure ProgramPGlobalAnalyticSpineCertificate4D
     Function.Injective
       (globalFieldTangentD10SectionLinearMap
         period hPeriod (configuration := configuration))
+  commonHilbertCore :
+    ∀ data : GlobalAnalysisData period hPeriod configuration,
+      Function.Injective
+        (programPGlobalDenseOperatorCoreInclusion
+          period hPeriod configuration data) ∧
+      DenseRange
+        (programPGlobalDenseOperatorCoreInclusion
+          period hPeriod configuration data)
+  allLevelSpinCCoefficientTower :
+    Nonempty
+      (ProgramPPrimitiveSpinCGeometricSpectralCertificate4D
+        period hPeriod)
+  d10Fredholm :
+    ∀ data : GlobalAnalysisData period hPeriod configuration,
+      ProgramPD10FredholmCertificate4D
+        (d10SpectralData period hPeriod configuration.d10Completion)
+  llRieszCore :
+    ∀ data : GlobalAnalysisData period hPeriod configuration,
+      DenseRange
+          (strongLLJacobiH1Operator period hPeriod
+            (data.llH1Data period hPeriod)) ∧
+        ∀ direction,
+          strongLLJacobiH1Operator period hPeriod
+              (data.llH1Data period hPeriod) direction = 0 ↔
+            direction = 0
   commonClosedDomainInhabited :
     ∀ data : GlobalAnalysisData period hPeriod configuration,
       Nonempty (GlobalCommonClosedDomain period hPeriod data)
@@ -153,6 +372,22 @@ theorem programPGlobalAnalyticSpineCertificate4D
     globalFieldTangentD10Coordinate_surjective period hPeriod
   d10SectionInjective :=
     globalFieldTangentD10Section_injective period hPeriod
+  commonHilbertCore := fun data =>
+    ⟨programPGlobalDenseOperatorCoreInclusion_injective
+        period hPeriod configuration data,
+      programPGlobalDenseOperatorCoreInclusion_denseRange
+        period hPeriod configuration data⟩
+  allLevelSpinCCoefficientTower :=
+    ⟨programPPrimitiveSpinCGeometricSpectralCertificate4D
+      period hPeriod⟩
+  d10Fredholm := fun _ =>
+    programPD10FredholmCertificate4D
+      (d10SpectralData period hPeriod configuration.d10Completion)
+  llRieszCore := fun data =>
+    ⟨strongLLJacobiH1Operator_denseDomain period hPeriod
+        (data.llH1Data period hPeriod),
+      strongLLJacobiH1Operator_kernel period hPeriod
+        (data.llH1Data period hPeriod)⟩
   commonClosedDomainInhabited :=
     globalCommonClosedDomain_nonempty period hPeriod
 

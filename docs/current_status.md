@@ -1431,10 +1431,31 @@ independent-field retraction, local field assembly and boundary pullback are
 now packaged in an unconditional certificate. On the genuine global tangent,
 the D10 Hilbert coordinate is a split direct factor (surjective projection
 with injective linear section), rather than an equivalence between every
-smooth field and one spectral sector. The remaining analytic spine is split
-explicitly into the dense smooth-to-chart analysis, the positive-level
-geometric SpinC Fourier tower, the gauge-fixed block Fredholm identification
-and the BRST descent. The intrinsic/spectral Dirac, nonlinear-BRST layers,
+smooth field and one spectral sector. For every certified chartwise paired
+`U(1)²` symmetry, differentiating the exact Noether identity now proves that
+the genuine Hessian kills its gauge directions in both arguments without a
+critical-point hypothesis; its algebraic quotient is exact, symmetric and
+unique. A concrete product Hilbert target and dense injective operator core
+are constructed for the bulk Dirichlet, sectorwise SpinC, D10 and LL blocks.
+The complete all-level SpinC **coefficient** tower is dense, self-adjoint and
+Fredholm; D10 is bijective Fredholm and the LL Riesz core is dense with
+trivial kernel. The exact linear-gauge interface now combines `U(1)²` with a
+genuine smooth-diffeomorphism symmetry certificate and automatically gives
+the total quotient and two-sided Hessian degeneracy. The BRST frontier also
+contains the exterior scalar graded derivation, its two-ghost cancellation,
+the linearized diffeomorphism differential, the corrected full linear/LL
+complex and the general-metric BV doublet.
+
+The irreducible Hessian frontier is therefore narrower: construct the actual
+global-tangent-to-variational-chart map; realize every positive SpinC
+coefficient by complete geometric eigenspinors; prove invariance of all nine
+action blocks under the same smooth diffeomorphisms; and identify the
+gauge-fixed action Hessian with one global elliptic Fredholm operator.
+Arbitrary couplings cannot imply the last statement: the repository now
+proves that a zero Hessian has no such Fredholm realization on an
+infinite-dimensional completion. Nondegenerate elliptic coupling hypotheses
+must be derived or stated explicitly. The intrinsic/spectral Dirac,
+nonlinear-BRST layers,
 D7/D10 regulator, circle Quillen geometry and PT/inflow anomaly cancellation
 remain explicitly scoped frontiers. Scheme independence is separately blocked by a proved
 finite-part/normalization no-go, not by a missing algebraic manipulation.
