@@ -112,11 +112,11 @@ theorem canonical_reducedJacobi_kernel_quotientHessian_eq_zeroClass
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     quotientHessian period hPeriod matterData kPlus kMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod robin ll.toTest⟧ other =
       quotientHessian period hPeriod matterData kPlus kMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod 0 0⟧ other := by
   rw [canonical_reducedJacobi_kernel_activeQuotient_eq_zero period hPeriod
     scalarData kPlus kMinus hCoupling llData robin ll hKernel]
@@ -135,11 +135,11 @@ theorem canonical_reducedJacobi_kernel_quotientEuler_eq_zeroClass
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     quotientEuler period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         ⟦fullRobinLLDirection period hPeriod robin ll.toTest⟧ =
       quotientEuler period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         ⟦fullRobinLLDirection period hPeriod 0 0⟧ := by
   rw [canonical_reducedJacobi_kernel_activeQuotient_eq_zero period hPeriod
     scalarData kPlus kMinus hCoupling llData robin ll hKernel]
@@ -150,7 +150,7 @@ theorem zeroRobinLLClass_quotientHessian_eq_zero
     (other : ActiveQuotient period hPeriod) :
     quotientHessian period hPeriod matterData kPlus kMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod 0 0⟧ other = 0 := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   induction other using Quotient.inductionOn with
@@ -167,7 +167,7 @@ theorem zeroRobinLLClass_quotientEuler_eq_zero
     (junction : SmoothThroatField period hPeriod Real) :
     quotientEuler period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         ⟦fullRobinLLDirection period hPeriod 0 0⟧ = 0 := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   rw [quotientEuler_mk]
@@ -187,7 +187,7 @@ theorem canonical_reducedJacobi_kernel_quotientHessian_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     quotientHessian period hPeriod matterData kPlus kMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod robin ll.toTest⟧ other = 0 := by
   rw [canonical_reducedJacobi_kernel_quotientHessian_eq_zeroClass period hPeriod
     matterData scalarData kPlus kMinus hCoupling llData robin ll other hKernel]
@@ -208,7 +208,7 @@ theorem canonical_reducedJacobi_kernel_quotientEuler_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     quotientEuler period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         ⟦fullRobinLLDirection period hPeriod robin ll.toTest⟧ = 0 := by
   rw [canonical_reducedJacobi_kernel_quotientEuler_eq_zeroClass period hPeriod
     matterData scalarData kPlus kMinus hCoupling bulkPlus bulkMinus llData junction
@@ -230,7 +230,7 @@ theorem canonical_reducedJacobi_kernel_enrichedD9ActiveHessian_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     enrichedD9ActiveHessian period hPeriod matterData kPlus kMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         (globalMatterEnrichedD9Projection period hPeriod llData.fields
           (fullRobinLLDirection period hPeriod robin ll.toTest) sector column point) other = 0 := by
   rw [← quotientHessian_enrichedD9_classes]
@@ -260,7 +260,7 @@ theorem canonical_reducedJacobi_kernel_enrichedD9ActiveEuler_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     enrichedD9ActiveEuler period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         (globalMatterEnrichedD9Projection period hPeriod llData.fields
           (fullRobinLLDirection period hPeriod robin ll.toTest) sector column point) = 0 := by
   rw [← quotientEuler_enrichedD9_class]
@@ -289,7 +289,7 @@ theorem canonical_reducedJacobi_kernel_TaylorC1_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     fullMatterRobinTrueLLTaylorC1 period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+      llData.frame llData.mu llData.fields junction
       (fullRobinLLDirection period hPeriod robin ll.toTest) = 0 := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   rw [fullMatterRobinTrueLLTaylorC1_eq_trueActionEuler]
@@ -309,7 +309,7 @@ theorem canonical_reducedJacobi_kernel_TaylorC2_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     fullMatterRobinTrueLLTaylorC2 period hPeriod matterData kPlus kMinus
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+      llData.frame llData.mu llData.fields
       (fullRobinLLDirection period hPeriod robin ll.toTest) = 0 := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   rw [fullMatterRobinTrueLLTaylorC2_eq_half_trueActionHessian]
@@ -333,7 +333,7 @@ theorem canonical_reducedJacobi_kernel_trueCurve_hasDerivAt_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     HasDerivAt (fun t : Real => fullMatterRobinTrueLLCurve period hPeriod matterData
       kPlus kMinus bulkPlus bulkMinus (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+      llData.frame llData.mu llData.fields junction
       (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 0 := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   have hEuler := canonical_reducedJacobi_kernel_quotientEuler_eq_zero period hPeriod
@@ -343,7 +343,7 @@ theorem canonical_reducedJacobi_kernel_trueCurve_hasDerivAt_zero
   simpa only [P0EFTJanusFullMatterRobinTrueLLHigherDerivatives4D.fullMatterRobinTrueLLCurve,
     hEuler] using fullMatterRobinTrueLLAction_hasDerivAt period hPeriod matterData
     kPlus kMinus bulkPlus bulkMinus (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-    (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+    llData.frame llData.mu llData.fields junction
     (fullRobinLLDirection period hPeriod robin ll.toTest)
 
 theorem canonical_reducedJacobi_kernel_trueCurve_second_iteratedDeriv_eq_zero
@@ -360,7 +360,7 @@ theorem canonical_reducedJacobi_kernel_trueCurve_second_iteratedDeriv_eq_zero
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     iteratedDeriv 2 (fun t : Real => fullMatterRobinTrueLLCurve period hPeriod matterData
       kPlus kMinus bulkPlus bulkMinus (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+      llData.frame llData.mu llData.fields junction
       (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 = 0 := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   rw [fullMatterRobinTrueLLCurve_robinLL_second_iteratedDeriv period hPeriod matterData
@@ -371,7 +371,7 @@ theorem canonical_reducedJacobi_kernel_trueCurve_second_iteratedDeriv_eq_zero
     (⟦fullRobinLLDirection period hPeriod robin ll.toTest⟧ : ActiveQuotient period hPeriod) hKernel
   change quotientHessian period hPeriod matterData kPlus kMinus
     (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-    (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+    llData.frame llData.mu llData.fields
     (robinLLActiveQuotientDirection period hPeriod robin ll.toTest)
     (robinLLActiveQuotientDirection period hPeriod robin ll.toTest) = 0 at h
   rw [quotientHessian_robinLL_eq_reducedJacobi_pairing] at h
@@ -390,30 +390,30 @@ theorem canonical_reducedJacobi_kernel_higherLL_and_curve_constant
       (reducedRobinLLInclusion period hPeriod scalarData
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod) llData robin ll) = 0) :
     globalPTFullLLTaylorCubic period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+        llData.frame llData.fields
         (fullRobinLLDirection period hPeriod robin ll.toTest).llAuxMetric
         (fullDirectionLLVariation period hPeriod
           (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu = 0 ∧
       globalPTFullLLTaylorQuartic period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+        llData.frame llData.fields
         (fullRobinLLDirection period hPeriod robin ll.toTest).llAuxMetric
         (fullDirectionLLVariation period hPeriod
           (fullRobinLLDirection period hPeriod robin ll.toTest)) llData.mu = 0 ∧
       iteratedDeriv 3 (fun t : Real => fullMatterRobinTrueLLCurve period hPeriod matterData
         kPlus kMinus bulkPlus bulkMinus (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 = 0 ∧
       iteratedDeriv 4 (fun t : Real => fullMatterRobinTrueLLCurve period hPeriod matterData
         kPlus kMinus bulkPlus bulkMinus (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t) 0 = 0 ∧
       ∀ t : Real, fullMatterRobinTrueLLCurve period hPeriod matterData kPlus kMinus
         bulkPlus bulkMinus (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction
+        llData.frame llData.mu llData.fields junction
         (fullRobinLLDirection period hPeriod robin ll.toTest) t =
           fullMatterRobinTrueLLAction period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
             (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-            (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields junction := by
+            llData.frame llData.mu llData.fields junction := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   have hComponents := reducedJacobi_canonical_shared_inclusion_kernel_components
     period hPeriod scalarData kPlus kMinus hCoupling llData robin ll hKernel
@@ -424,23 +424,23 @@ theorem canonical_reducedJacobi_kernel_higherLL_and_curve_constant
   rw [LLH1Smooth.toTest_zero]
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · change globalPTFullLLTaylorCubic period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+      llData.frame llData.fields 0
       (zeroLLVariation period hPeriod) llData.mu = 0
     exact globalPTFullLLTaylorCubic_zero period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields llData.mu
+      llData.frame llData.fields llData.mu
   · change globalPTFullLLTaylorQuartic period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+      llData.frame llData.fields 0
       (zeroLLVariation period hPeriod) llData.mu = 0
     exact globalPTFullLLTaylorQuartic_zero period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields llData.mu
+      llData.frame llData.fields llData.mu
   · rw [fullMatterRobinTrueLLCurve_third_iteratedDeriv]
     change 6 * globalPTFullLLTaylorCubic period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+      llData.frame llData.fields 0
       (zeroLLVariation period hPeriod) llData.mu = 0
     rw [globalPTFullLLTaylorCubic_zero, mul_zero]
   · rw [fullMatterRobinTrueLLCurve_fourth_iteratedDeriv]
     change 24 * globalPTFullLLTaylorQuartic period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields 0
+      llData.frame llData.fields 0
       (zeroLLVariation period hPeriod) llData.mu = 0
     rw [globalPTFullLLTaylorQuartic_zero, mul_zero]
   · intro t
@@ -1069,7 +1069,7 @@ theorem canonicalSmoothRobinLL_quotientHessian_eq_operatorPairing
     (first second : SmoothThroatField period hPeriod Real × LLH1Smooth period hPeriod llData) :
     quotientHessian period hPeriod matterData kPlus kMinus
         (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         ⟦fullRobinLLDirection period hPeriod first.1 first.2.toTest⟧
         ⟦fullRobinLLDirection period hPeriod second.1 second.2.toTest⟧ =
       reducedBosonicJacobiOperatorBlockPairing period hPeriod scalarData kPlus kMinus
@@ -1079,7 +1079,7 @@ theorem canonicalSmoothRobinLL_quotientHessian_eq_operatorPairing
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   change quotientHessian period hPeriod matterData kPlus kMinus
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+      llData.frame llData.mu llData.fields
       (robinLLActiveQuotientDirection period hPeriod first.1 first.2.toTest)
       (robinLLActiveQuotientDirection period hPeriod second.1 second.2.toTest) = _
   rw [quotientHessian_robinLL_eq_reducedJacobi_pairing]

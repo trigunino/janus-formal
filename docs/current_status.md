@@ -194,8 +194,15 @@ and its positive-time family is `C∞` in operator norm. At every derivative
 order, its explicit degeneracy-resolved diagonal sum equals the nuclear trace
 derivative and obeys PT. These facts close the
 trace-class properties required by Program P despite the absence of a general
-Mathlib trace-class API. The full Fredholm/Quillen family and the
-field/ghost-weighted anomaly problem remain separate and open.
+Mathlib trace-class API. The complete multiplicity-aware D10 Gaussian is now
+also summable at every positive time. Its physical PT permutation preserves
+the squared spectrum, reverses root chirality, makes the infinite chiral trace
+zero and sends the net of arbitrary finite spectral cutoffs to zero. This
+Gaussian is now also realized on the complete D10 Hilbert space as a compact
+operator with a summable rank-one nuclear expansion; finite spectral
+truncations converge to it in operator norm. This closes the D10 continuum
+regulator itself. The full Fredholm/Quillen family
+and the regulator for remaining nonspectral field/ghost blocks remain open.
 
 D10 now also contains a concrete symmetric finite Fourier family: its matrix
 entries depend holomorphically on complex holonomy, every cutoff is
@@ -412,8 +419,11 @@ Pin/Čech existence theorem.
   globale. Les blocs `DIRAC/BRST/HESSIAN/REGULATOR/QUILLEN/ANOMALY` ont
   maintenant chacun un certificat de frontier intégré : Dirac géométrique et
   spectral signés raccordés en basse énergie, BRST abélien/extérieur/BV,
-  Hessienne de Fréchet symétrique, régulateurs D7/D10, ligne de Quillen cercle
-  et annulations PT/inflow. Ils ne sont pas marqués `DONE` : l'identification
+  Hessienne de Fréchet symétrique, régulateur D10 tous niveaux compact et
+  nucléaire avec convergence en norme et annulation PT/cutoff continuum,
+  ligne de Quillen cercle
+  et annulations PT/inflow, y compris la trace chirale D10 infinie. Ils ne sont
+  pas marqués `DONE` : l'identification
   de la famille Fredholm géométrique complète, son domaine commun et la
   trivialisation d'anomalie restent à construire. `SCHEME-GLOBAL-01` est
   formellement bloqué par deux témoins de liberté de schéma et requiert une
@@ -469,7 +479,7 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   Its common closed domain contains the bulk Dirichlet `H¹`, SpinC graph,
   D10 maximal graph and LL completion. The regular Candidate-A action and its
   complete chartwise Euler map are now assembled on the same configuration.
-  Its actual symmetric Frechet Hessian, finite/common spectral regulator
+  Its actual symmetric Frechet Hessian, complete D10 spectral regulator
   layers and geometric/spectral Dirac frontiers are integrated; equality with
   one full gauge-fixed geometric Fredholm family remains work for
   `HESSIAN/REGULATOR/DIRAC-GLOBAL-01`.
@@ -1437,18 +1447,33 @@ the genuine Hessian kills its gauge directions in both arguments without a
 critical-point hypothesis; its algebraic quotient is exact, symmetric and
 unique. A concrete product Hilbert target and dense injective operator core
 are constructed for the bulk Dirichlet, sectorwise SpinC, D10 and LL blocks.
-The complete all-level SpinC **coefficient** tower is dense, self-adjoint and
-Fredholm; D10 is bijective Fredholm and the LL Riesz core is dense with
-trivial kernel. Every finite D9 gauge–ghost packet also has a genuine
-Euclidean Hilbert realization exactly conjugate to its algebraic symbol; this
-operator is self-adjoint, has closed range, finite kernel and cokernel, and
-index zero. This finite family now extends to a genuine complete `ℓ²` D9
-operator for an arbitrary mode type. Under the explicit uniform-ellipticity
-contract—bounded symbol, no zero mode and bounded reciprocal—it is
-self-adjoint, bijective, closed-range Fredholm of index zero and restricts
-exactly to every finite Euclidean packet. The uniform gap and the
-identification with the actual gauge-fixed action Hessian remain inputs; they
-are not inferred from arbitrary couplings. The exact linear-gauge interface
+The complete all-level SpinC **coefficient** tower now carries the actual
+period, both normal roots and both signed first-order branches. Its square is
+exactly the previous geometric `D²` spectrum. Its first-order weight is
+proved proper, so every action-Hessian shift `2D + m²` has only finitely many resonant
+zero modes and defines a dense self-adjoint Fredholm maximal operator over
+both `Complex` and its underlying `Real` Hilbert space. The complete squared
+SpinC maximal domain is now unitarily reindexed as the missing zero tower plus
+the positive D10 domain; this conjugates the unbounded operators exactly and
+preserves graph energy. D10 remains bijective Fredholm. The LL Riesz identity
+is now appended on the completed positive
+energy space with the same canonical divergence-free frame as the unchanged
+global LL action; its smooth pairing is exactly that action's mixed Hessian.
+The native real `ℓ²` inner product is proved equal to the real part of the
+complex pairing, so the enlarged operator is densely defined, self-adjoint
+and Fredholm without an instance-coherence assumption. The D9
+gauge–ghost symbol defines its maximal, generally unbounded `ℓ²` multiplier
+with no upper symbol bound. A positive lower gap away from finitely many
+characteristic modes proves density, self-adjointness and closedness; the
+maximal-domain operator itself has closed range and finite kernel and
+cokernel. The physical combined operator now assembles D9, two sector copies
+of signed `2D + couplings.matterMassSquared`, and multiplicity-aware D10. The
+older squared SpinC assembly remains only an elliptic-control operator. The
+corrected global terminal contract uses this physical first-order-plus-LL
+densely defined `LinearPMap`; its analytic density, self-adjointness, closed
+range and finite kernel/cokernel are constructed rather than requested. Only
+its smooth quotient core and the remaining non-LL pairing with the action
+Hessian remain in the promotion contract. The exact linear-gauge interface
 now combines `U(1)²` with a genuine smooth-diffeomorphism symmetry certificate
 and automatically gives the total quotient and two-sided Hessian degeneracy.
 The BRST frontier also contains the exterior scalar graded derivation, its
@@ -1458,15 +1483,21 @@ corrected full linear/LL complex and the general-metric BV doublet.
 The irreducible Hessian frontier is therefore narrower: construct the actual
 global-tangent-to-variational-chart map; realize every positive SpinC
 coefficient by complete geometric eigenspinors; prove invariance of all nine
-action blocks under the same smooth diffeomorphisms; and identify the
-gauge-fixed action Hessian with one global elliptic Fredholm operator.
+action blocks under the same smooth diffeomorphisms; and identify the actual
+bulk/metric–Maxwell–matter–ghost–boundary Hessian, excluding the now-closed
+LL factor but including all remaining nonspectral sectors, with the
+constructed global elliptic Fredholm operator.
+For any such all-level geometric Fourier realization, the completion is now
+automatic: the completed smooth range is unitarily equivalent to coefficient
+`L²`, the maximal `H²` domain and squared operator are conjugate, and graph
+energy is preserved.
 Arbitrary couplings cannot imply the last statement: the repository now
 proves that a zero Hessian has no such Fredholm realization on an
 infinite-dimensional completion. Nondegenerate elliptic coupling hypotheses
 must be derived or stated explicitly. The intrinsic/spectral Dirac,
 nonlinear-BRST layers,
-D7/D10 regulator, circle Quillen geometry and PT/inflow anomaly cancellation
-remain explicitly scoped frontiers. Scheme independence is separately blocked by a proved
+D10 nonspectral/all-sector regulator, circle Quillen geometry and PT/inflow
+anomaly cancellation remain explicitly scoped frontiers. Scheme independence is separately blocked by a proved
 finite-part/normalization no-go, not by a missing algebraic manipulation.
 Parent-action selection is likewise non-unique in the current admissible
 family, and all available geometric, spectral, heat and charge laws retain a

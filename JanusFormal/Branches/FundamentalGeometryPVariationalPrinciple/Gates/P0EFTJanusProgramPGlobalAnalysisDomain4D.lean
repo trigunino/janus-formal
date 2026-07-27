@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalFieldSpace4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalH1HilbertDirichlet4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusEffectiveD8SmoothTensorVectorContraction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPMultiplicityAwareD10Galerkin4D
@@ -34,6 +35,7 @@ open P0EFTJanusMappingTorusCanonicalPhysicalH1HilbertDirichlet4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusH1GraphTrace4D
 open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
 open P0EFTJanusEffectiveD8BackgroundCategory4D
 open P0EFTJanusEffectiveD8SmoothVectorFieldFunctor4D
 open P0EFTJanusEffectiveD8SmoothTensorVectorContraction4D
@@ -190,6 +192,7 @@ def GlobalAnalysisData.llH1Data
     {configuration : GlobalFieldConfiguration period hPeriod}
     (data : GlobalAnalysisData period hPeriod configuration) :
     PositiveLLH1Data period hPeriod where
+  frame := canonicalDivergenceFreeLLFrame period hPeriod
   fields :=
     diagonalScaffold period hPeriod configuration.coefficientFields
   mu := intrinsicCanonicalThroatVolumeMeasure period hPeriod

@@ -157,7 +157,7 @@ theorem reducedBosonicNaturalHessian_smooth_eq
         robinHessian period hPeriod kPlus kMinus robinFirst robinSecond
           robinMeasure +
         globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+          llData.frame llData.fields
           llFirst.toTest llSecond.toTest llData.mu := by
   unfold reducedBosonicNaturalHessian
   rw [completedStaticScalarJacobiOperator_smooth_pairing,

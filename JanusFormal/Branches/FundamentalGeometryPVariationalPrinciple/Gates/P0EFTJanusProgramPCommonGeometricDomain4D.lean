@@ -35,6 +35,7 @@ open P0EFTJanusMappingTorusSmoothDiagonalLorentzFields4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusInducedFieldVariation4D
 open P0EFTJanusMappingTorusIndependentPTBoundaryAction4D
+open P0EFTJanusMappingTorusDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusGlobalDiagonalLorentzRoot4D
@@ -609,6 +610,7 @@ theorem canonicalPositiveOperatorFields_llMeasure
 
 /-- Canonical operator-domain data on the same compact effective throat. -/
 def canonicalPositiveLLH1Data : PositiveLLH1Data period hPeriod where
+  frame := finiteSmoothThroatGeneratingFrame period hPeriod
   fields := canonicalPositiveOperatorFields period hPeriod
   mu := intrinsicCanonicalThroatVolumeMeasure period hPeriod
   finiteMeasure :=

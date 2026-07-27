@@ -113,7 +113,7 @@ theorem commonMatterRobinLLHessian_eq_reducedNatural_robinLL_block
     (robinFirst robinSecond : SmoothThroatField period hPeriod Real)
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     commonMatterRobinLLHessian period hPeriod matterData kPlus kMinus
-        robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        robinMeasure llData.frame
         llData.mu llData.fields
         (commonRobinLLDirection period hPeriod robinFirst llFirst.toTest)
         (commonRobinLLDirection period hPeriod robinSecond llSecond.toTest) =
@@ -131,7 +131,7 @@ theorem commonMatterRobinLLHessian_eq_reducedNatural_robinLL_block
       robinHessian period hPeriod kPlus kMinus robinFirst robinSecond
         robinMeasure +
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+        llData.frame llData.fields
         llFirst.toTest llSecond.toTest llData.mu = _
   rw [globalMatterMultipletHessian_zero_zero,
     staticScalarJacobiForm_zero_zero]
