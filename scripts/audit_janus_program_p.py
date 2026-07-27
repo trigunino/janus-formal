@@ -9060,6 +9060,22 @@ PROGRAM_P_GATES = {
             "def d9GaugeGhostFinitePacketHilbertFredholmCertificate",
         ),
     ),
+    "P0EFTJanusGaugeGhostBlockD9L2UniformFredholm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure D9GaugeGhostL2UniformEllipticity",
+            "def d9GaugeGhostL2Operator",
+            "def d9GaugeGhostL2Inverse",
+            "theorem d9GaugeGhostL2Operator_bijective",
+            "theorem d9GaugeGhostL2Operator_isSelfAdjoint",
+            "theorem d9GaugeGhostL2Operator_range_isClosed",
+            "theorem d9GaugeGhostL2Operator_kernel_finite",
+            "theorem d9GaugeGhostL2Operator_cokernel_finite",
+            "theorem d9GaugeGhostL2Operator_index_zero",
+            "theorem d9GaugeGhostL2Operator_finiteCompatibility",
+            "def d9GaugeGhostL2UniformFredholmCertificate",
+        ),
+    ),
     "P0EFTJanusGaugeGhostBlockD9FinitePacketReindex4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
