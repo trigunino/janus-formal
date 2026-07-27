@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 
 /-!
 # Radial coefficients for complex first-sphere witness arguments
@@ -19,6 +20,7 @@ noncomputable section
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
+open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 
 /-- Exact positive-branch radial scalar observed at the phase-zero witness. -/
 def primitiveSpinCHopfFirstSpherePositiveRadialCoefficient

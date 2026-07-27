@@ -1,5 +1,10 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalWitness4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveMonopolePullbackBundle4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPThroatMatterSpinorSectionSpace4D
 import Mathlib.Tactic
 
 /-!
@@ -31,20 +36,25 @@ open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPAmbientHalfSpinorD9Bridge4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
+open P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
+open P0EFTJanusProgramPD9PrimitiveMonopolePullbackBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalWitness4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereWitnessFiber4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 open P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D
+open P0EFTJanusProgramPThroatMatterSpinorSectionSpace4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -178,13 +188,17 @@ theorem primitiveSpinCHopfAntipodalNormalMode_ne_zero
   have hHalf := congrArg
     d9DoubledMatterFiberHalfSpinorLinearEquiv hZero
   rw [primitiveSpinCHopfAntipodalNormalMode_halfSpinor] at hHalf
-  cases sector <;>
-    have hCoordinate := congrArg
-      (fun pair : AmbientHalfSpinor2 × AmbientHalfSpinor2 =>
-        match sector with
-        | .positiveQuarter => pair.1 0
-        | .negativeQuarter => pair.2 0) hHalf <;>
-    simp [ambientHalfGammaPositiveEigenvector] at hCoordinate
+  cases sector with
+  | positiveQuarter =>
+      have hCoordinate := congrArg
+        (fun pair : AmbientHalfSpinor2 × AmbientHalfSpinor2 => pair.1 0)
+        hHalf
+      simp [ambientHalfGammaPositiveEigenvector] at hCoordinate
+  | negativeQuarter =>
+      have hCoordinate := congrArg
+        (fun pair : AmbientHalfSpinor2 × AmbientHalfSpinor2 => pair.2 0)
+        hHalf
+      simp [ambientHalfGammaPositiveEigenvector] at hCoordinate
 
 /-- Clifford multiplication by `Γ₂` preserves nonvanishing. -/
 theorem primitiveSpinCHopfAntipodalNormalMode_gammaTwo_ne_zero

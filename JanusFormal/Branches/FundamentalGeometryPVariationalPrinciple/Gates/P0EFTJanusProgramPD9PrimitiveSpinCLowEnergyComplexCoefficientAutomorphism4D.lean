@@ -40,8 +40,25 @@ def primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse
           period sector mode coefficients.2)
   map_add' first second := by
     apply Prod.ext
-    · rw [Prod.fst_add, smul_add]
-    · rw [Prod.snd_add, map_add, smul_add]
+    · change
+        (-normalRootLeviCivitaCorrectedFrequency period sector mode)⁻¹ •
+            (first.1 + second.1) =
+          (-normalRootLeviCivitaCorrectedFrequency period sector mode)⁻¹ •
+              first.1 +
+            (-normalRootLeviCivitaCorrectedFrequency period sector mode)⁻¹ •
+              second.1
+      rw [smul_add]
+    · change
+        (normalRootLeviCivitaCorrectedFrequency period sector mode ^ 2 + 2)⁻¹ •
+            primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+              period sector mode (first.2 + second.2) =
+          (normalRootLeviCivitaCorrectedFrequency period sector mode ^ 2 + 2)⁻¹ •
+              primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+                period sector mode first.2 +
+            (normalRootLeviCivitaCorrectedFrequency period sector mode ^ 2 + 2)⁻¹ •
+              primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+                period sector mode second.2
+      rw [map_add, smul_add]
   map_smul' scalar coefficients := by
     apply Prod.ext
     · change
@@ -75,6 +92,8 @@ theorem primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_apply
             period sector mode coefficients.2) :=
   rfl
 
+include hPeriod
+
 /-- The explicit coefficient inverse is a left inverse. -/
 theorem primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_left
     (sector : NormalRootChoice) (mode : Int)
@@ -97,8 +116,7 @@ theorem primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_left
       (-normalRootLeviCivitaCorrectedFrequency period sector mode)⁻¹ •
           ((-normalRootLeviCivitaCorrectedFrequency period sector mode) •
             coefficients.1) = coefficients.1
-    rw [← mul_smul]
-    simp [hZero]
+    exact inv_smul_smul₀ hZero coefficients.1
   · change
       (normalRootLeviCivitaCorrectedFrequency period sector mode ^ 2 + 2)⁻¹ •
           primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
@@ -132,8 +150,7 @@ theorem primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_right
       (-normalRootLeviCivitaCorrectedFrequency period sector mode) •
           ((-normalRootLeviCivitaCorrectedFrequency period sector mode)⁻¹ •
             coefficients.1) = coefficients.1
-    rw [← mul_smul]
-    simp [hZero]
+    exact smul_inv_smul₀ hZero coefficients.1
   · change
       primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
           period sector mode

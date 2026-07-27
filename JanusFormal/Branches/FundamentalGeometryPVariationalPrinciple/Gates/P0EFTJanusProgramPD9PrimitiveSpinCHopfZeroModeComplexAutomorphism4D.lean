@@ -25,6 +25,8 @@ open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
+include hPeriod
+
 /-- The Levi--Civita-corrected quarter-twisted normal frequency never
 vanishes. -/
 theorem normalRootLeviCivitaCorrectedFrequency_ne_zero
@@ -142,12 +144,10 @@ theorem primitiveSpinCHopfZeroModeComplexActualDiracInverse_left
   rw [primitiveSpinCHopfZeroModeComplexActualDiracInverse_apply,
     primitiveSpinCHopfZeroModeComplexActualDirac_eq_smul,
     ← mul_smul]
-  have hEigenvalue :
-      -normalRootLeviCivitaCorrectedFrequency period sector mode ≠ 0 :=
-    neg_ne_zero.mpr
-      (normalRootLeviCivitaCorrectedFrequency_ne_zero
-        period hPeriod sector mode)
-  simp [hEigenvalue]
+  have hFrequency :=
+    normalRootLeviCivitaCorrectedFrequency_ne_zero
+      period hPeriod sector mode
+  simp [hFrequency]
 
 /-- The explicit scalar inverse is also a right inverse. -/
 theorem primitiveSpinCHopfZeroModeComplexActualDiracInverse_right
@@ -163,12 +163,10 @@ theorem primitiveSpinCHopfZeroModeComplexActualDiracInverse_right
     map_smul,
     primitiveSpinCHopfZeroModeComplexActualDirac_eq_smul,
     ← mul_smul]
-  have hEigenvalue :
-      -normalRootLeviCivitaCorrectedFrequency period sector mode ≠ 0 :=
-    neg_ne_zero.mpr
-      (normalRootLeviCivitaCorrectedFrequency_ne_zero
-        period hPeriod sector mode)
-  simp [hEigenvalue]
+  have hFrequency :=
+    normalRootLeviCivitaCorrectedFrequency_ne_zero
+      period hPeriod sector mode
+  simp [hFrequency]
 
 /-- Exact linear equivalence induced by the actual differential Dirac operator
 on one Hopf zero-mode complex line. -/

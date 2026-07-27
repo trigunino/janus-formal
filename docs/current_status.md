@@ -50,11 +50,11 @@ Program P-E was advanced again and merged into `main` through PR 10 on
 The currently checked-out branch is `dev-branch`, at
 
 ```text
-d054ec7f013908d55b8c37cfb0b6c58932d16f6d.
+9b4074340527882589c5601dbf7ef48cf6b683bb.
 ```
 
 The local worktree contains the later Program-P gates described below. On
-26 July 2026, the complete Program-P façade compiled `9863/9863` jobs and
+27 July 2026, the complete Program-P façade compiled `10002/10002` jobs and
 `scripts/audit_janus_program_p.py` passed with terminal count `0/14`.
 
 ## Program M foundation checkpoint — 19 July 2026
@@ -379,14 +379,15 @@ One coordinate-comparison lemma remains useful but is not a missing normal
 field: the already smooth atlas coordinate
 `canonicalLatitudeNormalCoordinate` has not yet been identified explicitly
 with the cover-product representative `canonicalLatitudeSectionNormal` used
-by the newest half-angle restriction gate. It belongs to the global geometry
-integration package rather than to a separate Pin/Čech existence TODO.
+by the newest half-angle restriction gate. It is tracked as the `T01`
+Pin⁻/presentation comparison, not as a missing Candidate-A geometry or
+Pin/Čech existence theorem.
 
 ## 5. Program P
 
-### Checkpoint d'intégration — 26 juillet 2026
+### Checkpoint d'intégration — 27 juillet 2026
 
-- Façade Lean : build vert `9863/9863`.
+- Façade Lean : build vert `10002/10002`.
 - Agrégat analytique scalaire : build focalisé vert `9317/9317`; son théorème
   marque la fermeture des imports, pas l'instanciation des interfaces physiques.
 - Audit d'intégrité : vert, compteur terminal inchangé `0/14`.
@@ -396,13 +397,39 @@ integration package rather than to a separate Pin/Čech existence TODO.
   tous les windings; courbes LL anisotropes et cisaillements lisses de vrais
   repères générateurs; assemblages `C²` neuf secteurs et critères concrets pour
   Candidate A, matière, Robin/LL/BV et Einstein--Maxwell, y compris toute mesure
-  finie sous les hypothèses de continuité jointe affichées.
-- Aucun résidu immédiat autonome ne subsiste. Les interfaces restantes sont :
-  comparaison des deux représentations déjà lisses de la normale; Fourier
-  SpinC géométrique de tous les niveaux; assemblage global des coefficients
-  locaux déjà construits du repère LL; identification du modèle Sobolev à
-  neuf secteurs avec les vrais bundles Janus. Elles sont absorbées par les
-  paquets `GEO/FIELD/ANALYSIS/DIRAC-GLOBAL`.
+  finie sous les hypothèses de continuité jointe affichées. Dans chaque secteur
+  de racine fixé, la synthèse SpinC géométrique du bloc bas-énergie
+  zéro/premier signé est désormais injective pour tout paquet fini de modes
+  du cercle et entrelace le vrai Dirac.
+- Les paquets
+  `GEO/FIELD/ANALYSIS/BOUNDARY/KJ-01/KJ-02/NATURAL/ACTION/EULER/NOETHER/`
+  `HELMHOLTZ/VARCOH-GLOBAL-01` sont
+  fermés : géométrie Candidate A sur le domaine global admissible de la
+  racine, configuration et tangent uniques, produit `H¹`/trace/domaines
+  fermés, bord canonique, complexe covariant physique, cohomologie de jauge
+  `H⁰`, classification naturelle finie, action régulière assemblée, Euler et
+  Helmholtz chartwise, Noether physique `U(1)²` et cohomologie fonctionnelle
+  globale. Les blocs `DIRAC/BRST/HESSIAN/REGULATOR/QUILLEN/ANOMALY` ont
+  maintenant chacun un certificat de frontier intégré : Dirac géométrique et
+  spectral signés raccordés en basse énergie, BRST abélien/extérieur/BV,
+  Hessienne de Fréchet symétrique, régulateurs D7/D10, ligne de Quillen cercle
+  et annulations PT/inflow. Ils ne sont pas marqués `DONE` : l'identification
+  de la famille Fredholm géométrique complète, son domaine commun et la
+  trivialisation d'anomalie restent à construire. `SCHEME-GLOBAL-01` est
+  formellement bloqué par deux témoins de liberté de schéma et requiert une
+  donnée microscopique.
+- `ADM/STABILITY/VACUUM-GLOBAL-01` ont maintenant des frontières intégrées :
+  chaîne Legendre/contraintes/rang exacte en FLRW, noyau contraint et courbe
+  isoénergétique exacts, minimum proportionnel unique et no-go de rang du vide.
+  Aucun n'est marqué `DONE` : shifts et crochet fonctionnel, exclusion BD,
+  stabilité du quotient et action effective microscopiquement fixée manquent.
+- `MICRO-GLOBAL-01` et `SCALE-GLOBAL-01` ont maintenant des certificats de
+  no-go intégrés :
+  deux parents admissibles produisent des mixages réduits différents, tandis
+  que géométrie, Dirac/LL, chaleur et charges gardent une orbite commune de
+  redimensionnement. Il faut encore une loi microscopique sélectionnante, ses
+  parties finies et un ancrage dimensionné indépendant; aucun rayon observé
+  n'est injecté.
 - Aucune nouvelle hypothèse physique ni axiome métier; axiomes transitifs
   constatés : `propext`, `Classical.choice`, `Quot.sound`.
 - La liste exhaustive canonique des 24 paquets globaux et 14 portes reste
@@ -435,14 +462,17 @@ The canonical remaining-work register is
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Joint `C∞` latitude regularity proves `CanonicalLatitudeNormalLiftContinuous`, and the radial--polar Euclidean calculation now proves the coarea inequality. The canonical physical trace bound, continuous operator, smooth agreement and existence theorem are therefore unconditional. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General covariant tensors now have an exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Tangent and nested Hom-bundle coordinates discharge `AnalyticPTTensorPullbackLocalSmoothness` unconditionally, yielding an involutive smooth pullback on the smooth Lorentz domain. The attached musical equivalence now pulls back with the same tensor, giving an involutive PT action and sector exchange on `SmoothGeneralLorentzMetric`; the holonomic scalar density is pointwise PT-covariant with coherently transported field and frame. Integrated spacetime PT invariance, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
-  A nonempty scoped common-domain package now forces one configuration to feed
-  the induced diagonal metrics/root, `LLH1`, the smooth boundary trace and typed
-  D7/D9/D10 accessors. It does not yet identify the action tangent, Hessian,
-  D10 diagonalization, regulator or Fredholm/boundary domains; these residuals
-  remain one explicit contract. That contract now carries concrete extension,
-  linearity, isometry, modal-density, derivative, spectral-pairing and domain
-  equalities rather than unconstrained `Prop` readiness flags.
+configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Joint `C∞` latitude regularity proves `CanonicalLatitudeNormalLiftContinuous`, and the radial--polar Euclidean calculation now proves the coarea inequality. The canonical physical trace bound, continuous operator, smooth agreement and existence theorem are therefore unconditional. `P0EFTJanusProgramPGlobalAnalysisDomain4D` now connects the true tensor/scalar tangent coordinates to a finite product `H¹`, its continuous throat trace, closed Dirichlet kernel and common SpinC/D10/LL domains; the earlier coefficient-only Sobolev TODO is closed. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General covariant tensors now have an exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Tangent and nested Hom-bundle coordinates discharge `AnalyticPTTensorPullbackLocalSmoothness` unconditionally, yielding an involutive smooth pullback on the smooth Lorentz domain. The attached musical equivalence now pulls back with the same tensor, giving an involutive PT action and sector exchange on `SmoothGeneralLorentzMetric`; the holonomic scalar density is pointwise PT-covariant with coherently transported field and frame. Integrated spacetime PT invariance, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  The global field/domain package forces one root-admissible configuration to
+  feed both general Lorentz metrics, the doubled genuine SpinC matter, D9/D10,
+  the derived throat trace and a tangent without a duplicate metric slot.
+  Its common closed domain contains the bulk Dirichlet `H¹`, SpinC graph,
+  D10 maximal graph and LL completion. The regular Candidate-A action and its
+  complete chartwise Euler map are now assembled on the same configuration.
+  Its actual symmetric Frechet Hessian, finite/common spectral regulator
+  layers and geometric/spectral Dirac frontiers are integrated; equality with
+  one full gauge-fixed geometric Fredholm family remains work for
+  `HESSIAN/REGULATOR/DIRAC-GLOBAL-01`.
   The integrated-invariance and canonical scalar Euler--flux limitations in
   the preceding snapshot are now superseded; nonlinear BV remains open. For
   `SmoothGeneralLorentzMetric`, coherent PT transport of the
@@ -554,8 +584,10 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   collar stress-energy identity. The finite box, stratified and null-action
   boundary residuals now assemble into a canonical zero ledger. Under the two
   canonical divergence-free spanning frame, the continuous IPP is now proved
-  directly and its zero boundary flux realizes that ledger; LL weak/strong and
-  stationary/strong equivalences follow for this frame. Extending the collar
+  directly and its zero boundary flux realizes that ledger. The global
+  boundary package derives the required strong regularity from the smooth
+  canonical frame, so LL weak/strong and stationary/strong equivalences carry
+  no extra regularity assumption. Extending the collar
   current to a covariant four-dimensional Noether current remains open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
@@ -924,9 +956,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   specialization, closing that particular residual record at coefficient
   level. Separately, Program P now constructs the ambient twisted `PinC(4)`
   principal/spinor bundles, the D9 smooth spinor bundle and section spaces, and
-  the primitive SpinC geometric zero and first signed levels. What remains is
-  the complete geometric Fourier tower, a global action tangent producing the
-  full symmetric metric slot, and action/Hessian/domain agreement.
+  the primitive SpinC geometric zero and first signed levels. Their
+  finite-circle-mode low-energy synthesis is geometrically injective in each
+  fixed normal-root sector and intertwines the actual Dirac operator. What
+  remains is its extension to arbitrary sphere levels and the completed common
+  domain, a global action tangent producing the full symmetric metric slot, and
+  action/Hessian/domain agreement.
   The global LL action now has an exact simultaneous measure/flux cubic
   expansion and integrated derivative for every finite measure. Its algebraic
   Euler system is equivalent to the zero-flux branch. PT pullback is an exact
@@ -973,7 +1008,7 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   `E_bulk + E_induced ∘ D(induced)`; an exact diagonal counterexample proves
   that imposing both slot equations separately can overconstrain the system.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The quotient geometry now supplies one concrete nontrivial complete analytic time flow, but not the arbitrary-ghost/full-field gauge group or PDE identity; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The exact Candidate-A action now instantiates this chain on every regular common `C²` variational chart: actual Euler derivative, symmetric Jacobian, normalized radial reconstruction, paired physical `U(1)²` Noether orbit and global functional null-classification. A normed atlas for every raw global tangent, the componentwise local PDE/diffeomorphism system and the full local jet variational bicomplex remain stronger open targets.
   The set quotient by complete-flow orbits is constructed. For any target,
   functions on this quotient are equivalent to configuration-space functions
   invariant under the flow; the real-valued specialization gives the same
@@ -1134,9 +1169,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   residual is the two-sheet oriented flux period. That period vanishes, and
   Stokes closes, in the proved Dirichlet, PT-fixed and PT-projected sectors; a
   universal zero-flux statement outside those sectors is false, as witnessed
-  by the formalized massless Wronskian counterexample. The finite stratified LL
-  boundary ledger is exactly zero and yields weak/strong equivalence under the
-  explicit continuous IPP plus flux-realization contract. Extension to a
+  by the formalized massless Wronskian counterexample. The global boundary
+  package identifies every non-null face with the true Gaussian throat,
+  includes finite explicit null faces/joints and proves the EH, scalar and LL
+  residual sum to zero on the PT-fixed or Dirichlet physical sector. Its
+  canonical divergence-free frame discharges LL regularity, IPP and
+  flux realization, hence weak/strong equivalence. Extension to a
   covariant four-dimensional Noether current and a global unit normal for every
   admitted general metric remain open; the intrinsic canonical latitude normal
   itself is already constructed;
@@ -1164,10 +1202,12 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
 - **T/C/N** typed non-null, null and joint gravitational slots are explicit;
   the compact-throat algebraic and differential LL actions are actual
   integrals, with canonical-frame weak/strong equations, IPP, Hessian/Jacobi
-  and Fredholm realization. The canonical scalar cut-bulk flux formula and its
-  Dirichlet/PT closures are proved. General-metric stratification, stratified
-  LL Stokes, the covariant parent and gravitational bulk-flux cancellation
-  remain open;
+  and Fredholm realization. The global boundary completion ties non-null faces
+  to the true Gaussian throat, admits finite explicit null faces/joints and
+  closes EH, scalar and LL residuals on the PT/Dirichlet physical sector.
+  Arbitrary general-metric/null ambient stratification and the gravitational
+  bulk Euler equations remain open; the finite regular covariant action
+  assembly itself is now constructed;
 - **T/C** for every supplied finite null-generator family, one actual action
   now sums the integrated inaffinity density, the continuously extended
   expansion counterterm and the endpoint joints. Finite rescaling of the
@@ -1361,10 +1401,47 @@ either slot; hence it annihilates `im R` when `J ∘ R = 0`. These are abstract
 Fréchet statements. For every source submodule contained in `ker J`, this
 critical Hessian descends uniquely and symmetrically to the algebraic module
 quotient. Continuity of the descended form and any normed, topological or
-smooth quotient structure are not proved. Concrete finite Gram/Saint--Venant
-and completed lattice `K/J` models now exist, but no global intrinsic Janus
-compatibility complex on the physical field bundle is constructed; the global
-variational primitive remains open.
+smooth quotient structure are not proved by those abstract lemmas alone.
+`KJ-GLOBAL-01/02` are now closed on their stated physical scope. `K_Gram`,
+`DK_Gram`, `R` and abelian `B_Noether` live on the actual quotient;
+`K_SV` is the true Levi--Civita curvature on the total holonomic atlas and
+`B_Bianchi` its covariant cyclic derivative, including curvature/connection
+terms and satisfying `B_Bianchi ∘ K_SV = 0` at every physical point. The
+actual `U(1)²` differential is faithfully embedded in canonical physical
+`L²`; its kernel is exactly the global constants `H⁰ ≃ ℝ²`, its quotient is
+linearly equivalent to the exact range, and the range closure is complete.
+The paired gauge sector used by the common global field package has the same
+result componentwise, with kernel linearly equivalent to
+`GaugeLieAlgebra × GaugeLieAlgebra`.
+The completed `ℤ⁴` Saint--Venant model remains an explicitly separate
+principal-symbol certificate. No global curved Calabi exactness
+`ker B = im K` is claimed; that stronger linearized elliptic/Fredholm question
+belongs to `HESSIAN-GLOBAL-01`.
+
+The global naturality block is closed: the effective-D8 category, descended
+holonomic jets, genuine `Pin⁻`/`PinC` bundles and exact finite six-invariant
+EFT coefficient classifier are assembled without new hypotheses. The regular
+Candidate-A action is also assembled from two Einstein--Hilbert terms,
+interaction, doubled SpinC Dirac-plus-mass matter, two Maxwell sectors, LL,
+GHY, finite null faces/counterterms and joints. Its chartwise actual Euler,
+nonlinear Helmholtz reconstruction, paired physical `U(1)²` Noether identity
+and global functional variational cohomology are now closed. The actual
+chartwise Hessian is symmetric. Its D7/D9 tangent algebra,
+independent-field retraction, local field assembly and boundary pullback are
+now packaged in an unconditional certificate. On the genuine global tangent,
+the D10 Hilbert coordinate is a split direct factor (surjective projection
+with injective linear section), rather than an equivalence between every
+smooth field and one spectral sector. The remaining analytic spine is split
+explicitly into the dense smooth-to-chart analysis, the positive-level
+geometric SpinC Fourier tower, the gauge-fixed block Fredholm identification
+and the BRST descent. The intrinsic/spectral Dirac, nonlinear-BRST layers,
+D7/D10 regulator, circle Quillen geometry and PT/inflow anomaly cancellation
+remain explicitly scoped frontiers. Scheme independence is separately blocked by a proved
+finite-part/normalization no-go, not by a missing algebraic manipulation.
+Parent-action selection is likewise non-unique in the current admissible
+family, and all available geometric, spectral, heat and charge laws retain a
+common rescaling orbit. Thus neither microscopic selection nor absolute scale
+follows from the current assumptions.
 
 ## 6. Current supported chain
 
@@ -1389,4 +1466,8 @@ actual decorated Janus data
   -> stable vacuum and absolute scale
 ```
 
-The repository does **not** yet contain the full differentiable Janus structured-jet groupoid, a global Janus SpinC principal bundle, the geometric higher-order jet-isomorphism theorem, the concrete nonlinear Janus Euler family, a selected microscopic action, a unique vacuum or an absolute no-fit scale.
+The repository does **not** yet contain the full differentiable Janus
+structured-jet groupoid, the geometric higher-order jet-isomorphism theorem,
+the raw-field normed atlas and componentwise local Euler/diffeomorphism
+system, a selected microscopic action, a unique vacuum or an absolute no-fit
+scale.

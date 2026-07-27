@@ -336,7 +336,7 @@ of the dimensionful bulk/boundary charge units.
 | **D4** | Pin obstruction pattern | oriented no-go and concrete Pin⁻/PinC geometric bundles proved in the Program-P facade |
 | **D5** | spectral modulus and alpha-ratio candidate | **conditional theorem proved** |
 | **D6** | global Pin-lifted `Z4` | global lift/bundles proved; physical fermion-parity/action identification open |
-| **D7** | geometry-derived QFT | geometric zero/first Dirac levels and abstract signed Fredholm completion proved; full geometric Fourier/action identification open |
+| **D7** | geometry-derived QFT | geometric zero/first Dirac levels, their injective finite-circle-mode synthesis and abstract signed Fredholm completion proved; arbitrary-level completed Fourier/action identification open |
 | **D8** | geometry-derived bimetric junction | open research theorem |
 | **D9** | absolute alpha | requires D7, D8 and charge normalization |
 

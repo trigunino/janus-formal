@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereWitnessFiber4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
 
 /-!
 # Geometric antipodal Hopf witness
@@ -32,6 +33,7 @@ open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusMappingTorusSmoothQuotient
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPAmbientHalfSpinorD9Bridge4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveMonopolePullbackBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
@@ -128,7 +130,9 @@ theorem primitiveMonopoleZeroComplementLocalValue_antipodal :
         (monopoleEquator Real.pi) = -1 := by
   simp [primitiveMonopoleZeroComplementLocalValue,
     primitiveMonopoleZeroComplementNorthValue, monopoleEquator,
-    monopoleSphereCoordinate, monopoleSphereXY, Complex.real_smul]
+    monopoleSphereCoordinate, monopoleSphereXY]
+  rw [starRingEnd_apply, Complex.star_def]
+  rfl
 
 /-- The antipodal quotient point lies in the selected joint chart. -/
 theorem primitiveSpinCHopfAntipodalWitnessBase_mem
@@ -319,7 +323,7 @@ theorem primitiveSpinCHopfAntipodalWitness_closed
   ⟨primitiveSpinCHopfZeroModeLocalGaugeFamily_antipodal
       period hPeriod sector mode time,
     primitiveSpinCGeometricSectionLocalCoordinate_hopfZeroMode_antipodal_tangential
-      period hPeriod sector mode time⟩
+      (period := period) (hPeriod := hPeriod) sector mode time⟩
 
 end
 end P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalWitness4D

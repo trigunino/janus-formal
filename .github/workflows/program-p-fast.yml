@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeMovingLocal4D"
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeGeometricFourier4D"
           echo "Building active Lean leaf: $target"
           lake build "$target" > program-p-leaf.log 2>&1
           status=$?
@@ -120,6 +120,12 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
           exit "$status"
+
+      - name: Build global Program P frontier
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCompatibilityComplex4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCovariantAction4D
 
       - name: Save incremental project build cache
         if: always() && steps.project-cache.outputs.cache-hit != 'true'

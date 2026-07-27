@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexLocalCoordinate4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 
 /-!
 # Intrinsic and transported complex actions on the SpinC fiber
@@ -34,6 +35,7 @@ open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexFiberAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexLocalCoordinate4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
@@ -76,8 +78,17 @@ theorem d9PrimitiveSpinCComplexAction_eq_re_add_im
       scalar =
         (scalar.re : Complex) + (scalar.im : Complex) * Complex.I := by
     apply Complex.ext <;> simp
-  rw [hScalar]
-  module
+  calc
+    scalar • d9DoubledMatterFiberHalfSpinorLinearEquiv matter =
+        ((scalar.re : Complex) +
+          (scalar.im : Complex) * Complex.I) •
+            d9DoubledMatterFiberHalfSpinorLinearEquiv matter := by
+      exact congrArg
+        (fun current : Complex =>
+          current • d9DoubledMatterFiberHalfSpinorLinearEquiv matter)
+        hScalar
+    _ = _ := by
+      rw [add_smul, mul_smul]
 
 /-- Local coordinates of a global intrinsic complex scalar are exactly the
 transported complex action on the local fiber coordinate. -/
@@ -151,15 +162,17 @@ theorem d9PrimitiveSpinCComplexAction_eq_zero_iff
     (scalar : Complex) (matter : D9DoubledMatterFiber)
     (hMatter : matter ≠ 0) :
     d9PrimitiveSpinCComplexActionCLM scalar matter = 0 ↔ scalar = 0 := by
+  have hActionZero :
+      d9PrimitiveSpinCComplexActionCLM 0 matter = 0 := by
+    rw [d9PrimitiveSpinCComplexAction_eq_re_add_im]
+    simp
   constructor
   · intro hZero
     apply d9PrimitiveSpinCComplexAction_scalar_injective matter hMatter
-    simpa using hZero
+    exact hZero.trans hActionZero.symm
   · intro hScalar
-    rw [hScalar]
-    apply d9DoubledMatterFiberHalfSpinorLinearEquiv.injective
-    rw [d9DoubledMatterFiberHalfSpinorLinearEquiv_complexAction]
-    simp
+    subst scalar
+    exact hActionZero
 
 /-- The transported complex action is additive in its scalar argument. -/
 theorem d9PrimitiveSpinCComplexAction_add_scalar

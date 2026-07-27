@@ -1,5 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeComplexAutomorphism4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexAutomorphism4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 
 /-!
 # Geometric low-energy complex Dirac automorphism
@@ -27,8 +29,10 @@ noncomputable section
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexAutomorphism4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
+open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeComplexAutomorphism4D
+open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 
@@ -58,6 +62,11 @@ theorem primitiveSpinCHopfZeroModeComplexSpan_dirac_sq
         period hPeriod sector mode => current.1)
     (primitiveSpinCHopfZeroModeComplexActualDirac_eq_smul
       period hPeriod sector mode state)
+  change
+    d9PrimitiveSpinCGeometricDiracOperator
+        period hPeriod .positiveQuarter state.1 =
+      (-normalRootLeviCivitaCorrectedFrequency
+        period sector mode) • state.1 at hDirac
   calc
     d9PrimitiveSpinCGeometricDiracOperator
           period hPeriod .positiveQuarter
@@ -185,7 +194,13 @@ theorem primitiveSpinCHopfLowEnergyComplexAddition_injective
         (second.2.1 : D9PrimitiveSpinCSmoothSection
           period hPeriod .positiveQuarter) - first.2.1 := by
     change first.1.1 + first.2.1 = second.1.1 + second.2.1 at hEqual
-    module
+    calc
+      first.1.1 - second.1.1 =
+          (first.1.1 + first.2.1) -
+            (second.1.1 + first.2.1) := by abel
+      _ = (second.1.1 + second.2.1) -
+            (second.1.1 + first.2.1) := by rw [hEqual]
+      _ = second.2.1 - first.2.1 := by abel
   have hZeroMem :
       (first.1.1 : D9PrimitiveSpinCSmoothSection
           period hPeriod .positiveQuarter) - second.1.1 ∈
@@ -362,7 +377,7 @@ theorem primitiveSpinCHopfLowEnergyComplexActualDirac_eq_linearEquiv
   rcases (primitiveSpinCHopfLowEnergyComplexAdditionEquiv
     period hPeriod sector mode).surjective state with ⟨blocks, rfl⟩
   rw [primitiveSpinCHopfLowEnergyComplexActualDirac_additionEquiv]
-  rfl
+  simp [primitiveSpinCHopfLowEnergyComplexActualDiracLinearEquiv]
 
 /-- The genuine differential Dirac restriction on the combined low-energy
 complex span is bijective. -/

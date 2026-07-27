@@ -1,4 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 
 /-!
 # Complex signed packet for the first positive sphere level
@@ -26,6 +28,8 @@ open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
+open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
+open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -44,8 +48,8 @@ theorem d9PrimitiveSpinCGeometricDiracOperator_finset_sum
     (indices : Finset ι) :
     d9PrimitiveSpinCGeometricDiracOperator
         period hPeriod .positiveQuarter
-        (∑ index in indices, states index) =
-      ∑ index in indices,
+        (∑ index ∈ indices, states index) =
+      ∑ index ∈ indices,
         d9PrimitiveSpinCGeometricDiracOperator
           period hPeriod .positiveQuarter (states index) := by
   induction indices using Finset.induction_on with
@@ -70,7 +74,7 @@ def primitiveSpinCHopfFirstSpherePositiveComplexPacketSynthesis
   map_add' first second := by
     simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
   map_smul' scalar coefficients := by
-    simp only [Pi.smul_apply, map_smul, Finset.smul_sum]
+    simp only [Pi.smul_apply, map_smul, Finset.smul_sum, RingHom.id_apply]
 
 @[simp]
 theorem primitiveSpinCHopfFirstSpherePositiveComplexPacketSynthesis_apply
@@ -96,7 +100,7 @@ def primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
   map_add' first second := by
     simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
   map_smul' scalar coefficients := by
-    simp only [Pi.smul_apply, map_smul, Finset.smul_sum]
+    simp only [Pi.smul_apply, map_smul, Finset.smul_sum, RingHom.id_apply]
 
 @[simp]
 theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_apply
@@ -200,9 +204,39 @@ def primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
       (-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode) •
         coefficients.2)
   map_add' first second := by
-    ext coordinate <;> dsimp <;> module
+    apply Prod.ext
+    · change
+        primitiveSpinCHopfFirstSphereDiracFrequency period sector mode •
+            (first.1 + second.1) =
+          primitiveSpinCHopfFirstSphereDiracFrequency period sector mode •
+              first.1 +
+            primitiveSpinCHopfFirstSphereDiracFrequency period sector mode •
+              second.1
+      exact smul_add _ _ _
+    · change
+        (-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode) •
+            (first.2 + second.2) =
+          (-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode) •
+              first.2 +
+            (-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode) •
+              second.2
+      exact smul_add _ _ _
   map_smul' scalar coefficients := by
-    ext coordinate <;> dsimp <;> module
+    apply Prod.ext
+    · change
+        primitiveSpinCHopfFirstSphereDiracFrequency period sector mode •
+            (scalar • coefficients.1) =
+          scalar •
+            (primitiveSpinCHopfFirstSphereDiracFrequency period sector mode •
+              coefficients.1)
+      rw [smul_smul, smul_smul, mul_comm]
+    · change
+        (-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode) •
+            (scalar • coefficients.2) =
+          scalar •
+            ((-primitiveSpinCHopfFirstSphereDiracFrequency period sector mode) •
+              coefficients.2)
+      rw [smul_smul, smul_smul, mul_comm]
 
 @[simp]
 theorem primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator_apply
@@ -260,8 +294,7 @@ theorem primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator_sq
       (normalRootLeviCivitaCorrectedFrequency
         period sector mode ^ 2 + 2) • coefficients.1
     rw [smul_smul]
-    change (frequency ^ 2) • coefficients.1 = _
-    rw [hFrequencySq]
+    rw [← pow_two, hFrequencySq]
   · change (-frequency) • ((-frequency) • coefficients.2) =
       (normalRootLeviCivitaCorrectedFrequency
         period sector mode ^ 2 + 2) • coefficients.2

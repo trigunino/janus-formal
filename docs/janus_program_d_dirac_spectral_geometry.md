@@ -74,11 +74,14 @@ Primary spectral/index anchors:
 The original D2 branch proves the finite arithmetic consequences of the
 spectral formula. The Program-P facade now additionally constructs the actual
 ambient PinC and D9 spinor bundles, local geometric Dirac data, geometric zero
-and first positive signed levels, and an abstract complete signed Hilbert model
-whose maximal Dirac operator is self-adjoint, closed and Fredholm of index zero
-in the physical quarter-twisted sector. The missing operator theorem is the
-identification of that abstract basis with a complete geometric Fourier tower;
-compact resolvent is not asserted here.
+and first positive signed levels, proves injectivity of their genuine geometric
+synthesis for every finite packet of circle modes in each fixed root sector,
+and constructs an abstract complete signed Hilbert model whose maximal Dirac
+operator is self-adjoint, closed and Fredholm of index zero in the physical
+quarter-twisted sector. The missing operator theorem is the extension of this
+finite low-energy bridge to arbitrary sphere levels and a common completed
+domain, followed by identification with the abstract basis; compact resolvent
+is not asserted here.
 
 ## 2. Product with the compact circle
 
@@ -367,8 +370,8 @@ P0EFTJanusDiracScaleOrbitNoGo.lean
 | PT-paired half-level anomaly cancellation | proved arithmetically |
 | absolute metric scale | open |
 | full determinant vacuum uniqueness | open |
-| actual PinC/SpinC bundle and primitive geometric Dirac data | proved through the zero and first positive signed levels |
-| complete geometric Fourier realization of the signed operator | open |
+| actual PinC/SpinC bundle and primitive geometric Dirac data | proved through the zero and first positive signed levels, including injective finite circle-mode synthesis |
+| arbitrary-level completed geometric Fourier realization of the signed operator | open |
 
 ## 10. Next deepest targets
 

@@ -22,13 +22,14 @@ set_option autoImplicit false
 noncomputable section
 
 open Complex
+open scoped ComplexConjugate Interval
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexCoefficientRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 
-variable (period : Real) (hPeriod : period ≠ 0)
+variable (period : Real)
 
 /-- Projection to the Hopf zero-mode complex coordinate. -/
 def primitiveSpinCLowEnergyZeroCoordinate :
@@ -100,6 +101,7 @@ theorem primitiveSpinCLowEnergyFiniteModeCoordinateFourierAnalysis_apply
 
 /-- The Fourier period pairing recovers the selected coordinate of any mode. -/
 theorem primitiveSpinCLowEnergyFiniteModeCoordinateFourierAnalysis_coefficient
+    (hPeriod : period ≠ 0)
     (sector : NormalRootChoice)
     (coordinate :
       PrimitiveSpinCLowEnergyGeometricComplexCoefficients →ₗ[Real] Complex)
@@ -214,6 +216,7 @@ theorem primitiveSpinCLowEnergyFiniteModeFourierAnalysis_negative_apply
 /-- Equality of all seven time-dependent Fourier analysis functions forces
 equality of the original finite coefficient packets. -/
 theorem primitiveSpinCLowEnergyFiniteModeFourierAnalysis_separates
+    (hPeriod : period ≠ 0)
     (sector : NormalRootChoice)
     (first second : PrimitiveSpinCLowEnergyFiniteModeComplexCoefficients)
     (hAnalysis : ∀ time : Real,
@@ -348,6 +351,7 @@ theorem primitiveSpinCLowEnergyFiniteModeFourierAnalysis_separates
 /-- In particular, the componentwise finite Fourier analysis has trivial
 kernel. -/
 theorem primitiveSpinCLowEnergyFiniteModeFourierAnalysis_zero_kernel
+    (hPeriod : period ≠ 0)
     (sector : NormalRootChoice)
     (coefficients : PrimitiveSpinCLowEnergyFiniteModeComplexCoefficients)
     (hAnalysis : ∀ time : Real,

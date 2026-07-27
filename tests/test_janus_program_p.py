@@ -209,6 +209,19 @@ def test_program_p_d10_circle_topological_determinant_bundle_is_integrated() -> 
 def test_program_p_d10_circle_fourier_quillen_model_is_integrated() -> None:
     assert_program_p_gate_integrity()
 
+
+def test_program_p_global_dirac_through_scheme_frontiers_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_adm_stability_vacuum_frontiers_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_micro_scale_frontiers_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
 def test_program_p_effective_d8_l2_trace_and_global_fields_are_integrated() -> None:
     assert_program_p_gate_integrity()
 
@@ -334,4 +347,36 @@ def test_program_p_circle_heat_nuclear_trace_derivative_is_integrated() -> None:
 
 
 def test_program_p_circle_determinant_section_crossings_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_candidate_a_geometry_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_field_space_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_analysis_domain_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_boundary_completion_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_compatibility_operators_are_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_compatibility_complex_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_natural_classification_is_integrated() -> None:
+    assert_program_p_gate_integrity()
+
+
+def test_program_p_global_covariant_action_is_integrated() -> None:
     assert_program_p_gate_integrity()

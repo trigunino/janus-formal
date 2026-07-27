@@ -71,15 +71,15 @@ theorem d9PrimitiveSpinCComplexScalarSection_finset_sum
     (indices : Finset ι) :
     d9PrimitiveSpinCComplexScalarSection
         period hPeriod choice scalar
-        (∑ index in indices, states index) =
-      ∑ index in indices,
+        (∑ index ∈ indices, states index) =
+      ∑ index ∈ indices,
         d9PrimitiveSpinCComplexScalarSection
           period hPeriod choice scalar (states index) := by
   change
     d9PrimitiveSpinCComplexScalarSectionLinearMap
         period hPeriod choice scalar
-        (∑ index in indices, states index) =
-      ∑ index in indices,
+        (∑ index ∈ indices, states index) =
+      ∑ index ∈ indices,
         d9PrimitiveSpinCComplexScalarSectionLinearMap
           period hPeriod choice scalar (states index)
   rw [map_sum]
@@ -169,7 +169,19 @@ theorem primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis_complex_smul
         (primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis
           period hPeriod sector mode coefficients) := by
   rw [primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis_apply,
-    primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis_apply,
+    primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis_apply]
+  change
+    primitiveSpinCHopfFirstSpherePositiveComplexPacketSynthesis
+          period hPeriod sector mode (scalar • coefficients.1) +
+        primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
+          period hPeriod sector mode (scalar • coefficients.2) =
+      d9PrimitiveSpinCComplexScalarSection
+        period hPeriod .positiveQuarter scalar
+        (primitiveSpinCHopfFirstSpherePositiveComplexPacketSynthesis
+            period hPeriod sector mode coefficients.1 +
+          primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
+            period hPeriod sector mode coefficients.2)
+  rw [
     primitiveSpinCHopfFirstSpherePositiveComplexPacketSynthesis_complex_smul,
     primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_complex_smul]
   exact

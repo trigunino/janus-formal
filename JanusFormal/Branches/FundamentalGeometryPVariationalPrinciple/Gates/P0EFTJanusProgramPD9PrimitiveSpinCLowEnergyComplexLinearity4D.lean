@@ -1,5 +1,8 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexCoefficientRealization4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexLinearity4D
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexFiberAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 
 /-!
 # Complex linearity of the faithful low-energy SpinC coordinates
@@ -26,16 +29,19 @@ open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexLinearity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexFiberAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexAutomorphism4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexCoefficientRealization4D
+open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -67,7 +73,9 @@ theorem primitiveSpinCHopfZeroModeCoefficientLinearMap_complex_smul
   intro base
   rw [primitiveSpinCHopfZeroModeCoefficientLinearMap_eq_complexSection,
     primitiveSpinCHopfZeroModeCoefficientLinearMap_eq_complexSection,
-    d9PrimitiveSpinCComplexScalarSection_apply]
+    d9PrimitiveSpinCComplexScalarSection_apply,
+    ← d9PrimitiveSpinCComplexAction_eq_re_add_im]
+  unfold primitiveSpinCHopfZeroModeComplexSection
   change
     d9PrimitiveSpinCComplexActionCLM (scalar * coefficient)
         ((primitiveSpinCHopfZeroModeLocalGaugeFamily
@@ -155,10 +163,19 @@ theorem primitiveSpinCHopfLowEnergyComplexSpan_complexScalar_mem
         period hPeriod sector mode := by
   rcases (primitiveSpinCHopfLowEnergyComplexCoefficientSynthesisEquiv
     period hPeriod sector mode).surjective state with ⟨coefficients, rfl⟩
-  refine ⟨scalar • coefficients, ?_⟩
+  refine ⟨
+    primitiveSpinCHopfLowEnergyComplexCoefficientBlockEquiv
+      period hPeriod sector mode (scalar • coefficients), ?_⟩
+  change
+    primitiveSpinCHopfLowEnergyComplexCoefficientSynthesis
+        period hPeriod sector mode (scalar • coefficients) =
+      d9PrimitiveSpinCComplexScalarSection
+        period hPeriod .positiveQuarter scalar
+        (primitiveSpinCHopfLowEnergyComplexCoefficientSynthesis
+          period hPeriod sector mode coefficients)
   exact
     (primitiveSpinCHopfLowEnergyComplexCoefficientSynthesis_complex_smul
-      period hPeriod sector mode scalar coefficients).symm
+      period hPeriod sector mode scalar coefficients)
 
 /-- On the actual low-energy geometric range, the genuine differential Dirac
 operator commutes with every constant complex scalar action. -/

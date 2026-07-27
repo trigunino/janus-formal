@@ -24,7 +24,9 @@ open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
+open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
+open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalWitness4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalLocal4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
@@ -98,13 +100,15 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_positive
             period hPeriod 2 sector mode) := by
   rw [primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_apply,
     map_sum]
-  simp_rw [primitiveSpinCGeometricSectionLocalCoordinate_complexLine_eq_action
+  simp_rw [primitiveSpinCHopfFirstSphereNegativeComplexCoefficientLinearMap,
+    primitiveSpinCGeometricSectionLocalCoordinate_complexLine_eq_action
     period hPeriod
     (primitiveSpinCHopfPositiveWitnessIndex period hPeriod)
     (primitiveSpinCHopfPositiveWitnessBase period hPeriod)
     (primitiveSpinCGeometricZeroModeWitnessBase_mem period hPeriod 0)]
   simp [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
     Fin.sum_univ_succ]
+  abel
 
 /-- Local antipodal value of the complete negative complex packet. -/
 theorem primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_antipodal
@@ -127,13 +131,15 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_antipodal
             period hPeriod 2 sector mode) := by
   rw [primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_apply,
     map_sum]
-  simp_rw [primitiveSpinCGeometricSectionLocalCoordinate_complexLine_eq_action
+  simp_rw [primitiveSpinCHopfFirstSphereNegativeComplexCoefficientLinearMap,
+    primitiveSpinCGeometricSectionLocalCoordinate_complexLine_eq_action
     period hPeriod
     (primitiveSpinCHopfAntipodalZeroIndex period hPeriod)
     (primitiveSpinCHopfAntipodalZeroBase period hPeriod)
     (primitiveSpinCHopfAntipodalWitnessBase_mem period hPeriod 0)]
   simp [primitiveSpinCHopfFirstSphereNegativeAntipodalLocal,
     Fin.sum_univ_succ]
+  abel
 
 /-- The original witness identifies the first negative tangential local value
 with multiplication by `i` of the second. -/
@@ -173,11 +179,11 @@ theorem primitiveSpinCHopfFirstSphereNegativeWitnessLocal_two_ne_zero
     (sector : NormalRootChoice) (mode : Int) :
     primitiveSpinCHopfFirstSphereNegativeWitnessLocal
         period hPeriod 2 sector mode ≠ 0 := by
-  simpa [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
+  rw [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
     primitiveSpinCHopfPositiveWitnessIndex,
-    primitiveSpinCHopfPositiveWitnessBase] using
-    (firstSphereNegativeLocalCoordinate_two_ne_zero
-      period hPeriod sector mode)
+    primitiveSpinCHopfPositiveWitnessBase,
+    firstSphereNegativeLocalCoordinate_two]
+  exact clifford_witnessMode_ne_zero period hPeriod 2 sector mode
 
 /-- The second negative tangential local value at the antipodal witness is
 nonzero. -/
@@ -190,14 +196,25 @@ theorem primitiveSpinCHopfFirstSphereNegativeAntipodalLocal_two_ne_zero
   exact primitiveSpinCHopfAntipodalValue_gammaTwo_ne_zero
     period hPeriod sector mode
 
-/-- Vanishing of the negative complex packet forces every complex
-multiplicity coefficient to vanish. -/
-theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_eq_zero_coefficients
+/-- Vanishing at the phase and antipodal local witnesses already separates
+all three negative complex multiplicity coefficients. -/
+theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketLocal_eq_zero_coefficients
     (sector : NormalRootChoice) (mode : Int)
     (coefficients : PrimitiveSpinCFirstSphereComplexCoefficients)
-    (hSynthesis :
-      primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
-        period hPeriod sector mode coefficients = 0) :
+    (hPositiveEvaluation :
+      primitiveSpinCGeometricSectionLocalCoordinate
+          period hPeriod
+          (primitiveSpinCHopfPositiveWitnessIndex period hPeriod)
+          (primitiveSpinCHopfPositiveWitnessBase period hPeriod)
+          (primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
+            period hPeriod sector mode coefficients) = 0)
+    (hAntipodalEvaluation :
+      primitiveSpinCGeometricSectionLocalCoordinate
+          period hPeriod
+          (primitiveSpinCHopfAntipodalZeroIndex period hPeriod)
+          (primitiveSpinCHopfAntipodalZeroBase period hPeriod)
+          (primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
+            period hPeriod sector mode coefficients) = 0) :
     coefficients = 0 := by
   have hPositiveLocal :
       d9PrimitiveSpinCComplexActionCLM (coefficients 0)
@@ -209,26 +226,54 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_eq_zero_coef
         d9PrimitiveSpinCComplexActionCLM (coefficients 2)
           (primitiveSpinCHopfFirstSphereNegativeWitnessLocal
             period hPeriod 2 sector mode) = 0 := by
-    have hEvaluated := congrArg
-      (primitiveSpinCGeometricSectionLocalCoordinate
-        period hPeriod
-        (primitiveSpinCHopfPositiveWitnessIndex period hPeriod)
-        (primitiveSpinCHopfPositiveWitnessBase period hPeriod)) hSynthesis
-    rw [primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_positive,
-      map_zero] at hEvaluated
-    exact hEvaluated
+    simpa only [
+      primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_positive]
+      using hPositiveEvaluation
   have hSector := congrArg
     (primitiveSpinCGeometricZeroModeSectorFiberCoefficientLinearMap sector)
     hPositiveLocal
   simp only [map_add, map_zero,
     primitiveSpinCGeometricZeroModeSectorFiberCoefficient_complexAction]
     at hSector
+  have hRadialValue :
+      primitiveSpinCGeometricZeroModeSectorFiberCoefficientLinearMap sector
+          (primitiveSpinCHopfFirstSphereNegativeWitnessLocal
+            period hPeriod 0 sector mode) =
+        (primitiveSpinCHopfFirstSphereNegativeRadialCoefficient
+          period sector mode : Complex) := by
+    rw [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
+      primitiveSpinCHopfPositiveWitnessIndex,
+      primitiveSpinCHopfPositiveWitnessBase,
+      firstSphereNegativeLocalCoordinate_zero,
+      map_smul, map_smul, witnessMode_sectorCoefficient]
+    norm_num [primitiveSpinCHopfFirstSphereNegativeRadialCoefficient]
+    ring
+  have hOneValue :
+      primitiveSpinCGeometricZeroModeSectorFiberCoefficientLinearMap sector
+          (primitiveSpinCHopfFirstSphereNegativeWitnessLocal
+            period hPeriod 1 sector mode) = 0 := by
+    rw [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
+      primitiveSpinCHopfPositiveWitnessIndex,
+      primitiveSpinCHopfPositiveWitnessBase,
+      firstSphereNegativeLocalCoordinate_one,
+      map_smul, map_smul, witnessMode_gamma_one_sectorCoefficient]
+    simp
+  have hTwoValue :
+      primitiveSpinCGeometricZeroModeSectorFiberCoefficientLinearMap sector
+          (primitiveSpinCHopfFirstSphereNegativeWitnessLocal
+            period hPeriod 2 sector mode) = 0 := by
+    rw [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
+      primitiveSpinCHopfPositiveWitnessIndex,
+      primitiveSpinCHopfPositiveWitnessBase,
+      firstSphereNegativeLocalCoordinate_two,
+      map_smul, map_smul, witnessMode_gamma_two_sectorCoefficient]
+    simp
   have hRadialProduct :
       coefficients 0 *
           (primitiveSpinCHopfFirstSphereNegativeRadialCoefficient
             period sector mode : Complex) = 0 := by
-    simpa [primitiveSpinCHopfFirstSphereNegativeWitnessLocal,
-      primitiveSpinCHopfFirstSphereNegativeRadialCoefficient] using hSector
+    rw [hRadialValue, hOneValue, hTwoValue] at hSector
+    simpa using hSector
   have hRadialNonzero :
       (primitiveSpinCHopfFirstSphereNegativeRadialCoefficient
         period sector mode : Complex) ≠ 0 := by
@@ -261,7 +306,8 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_eq_zero_coef
     calc
       coefficients 1 - Complex.I * coefficients 2 =
           (-Complex.I) *
-            (coefficients 1 * Complex.I + coefficients 2) := by ring
+            (coefficients 1 * Complex.I + coefficients 2) := by
+        ring_nf <;> simp [Complex.I_sq]
       _ = 0 := by rw [hPositiveScalar]; ring
   have hAntipodalLocal :
       d9PrimitiveSpinCComplexActionCLM (coefficients 0)
@@ -273,14 +319,9 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_eq_zero_coef
         d9PrimitiveSpinCComplexActionCLM (coefficients 2)
           (primitiveSpinCHopfFirstSphereNegativeAntipodalLocal
             period hPeriod 2 sector mode) = 0 := by
-    have hEvaluated := congrArg
-      (primitiveSpinCGeometricSectionLocalCoordinate
-        period hPeriod
-        (primitiveSpinCHopfAntipodalZeroIndex period hPeriod)
-        (primitiveSpinCHopfAntipodalZeroBase period hPeriod)) hSynthesis
-    rw [primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_antipodal,
-      map_zero] at hEvaluated
-    exact hEvaluated
+    simpa only [
+      primitiveSpinCHopfFirstSphereNegativeComplexPacket_local_antipodal]
+      using hAntipodalEvaluation
   have hAntipodalTangential :
       d9PrimitiveSpinCComplexActionCLM (coefficients 1)
           (primitiveSpinCHopfFirstSphereNegativeAntipodalLocal
@@ -305,10 +346,26 @@ theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_eq_zero_coef
     calc
       coefficients 1 + Complex.I * coefficients 2 =
           Complex.I *
-            (coefficients 1 * (-Complex.I) + coefficients 2) := by ring
+            (coefficients 1 * (-Complex.I) + coefficients 2) := by
+        ring_nf <;> simp [Complex.I_sq]
       _ = 0 := by rw [hAntipodalScalar]; ring
   exact primitiveSpinCFirstSphereTwoWitness_vanishing
     coefficients hZero hPlus hMinus
+
+/-- Vanishing of the negative complex packet forces every complex
+multiplicity coefficient to vanish. -/
+theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_eq_zero_coefficients
+    (sector : NormalRootChoice) (mode : Int)
+    (coefficients : PrimitiveSpinCFirstSphereComplexCoefficients)
+    (hSynthesis :
+      primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis
+        period hPeriod sector mode coefficients = 0) :
+    coefficients = 0 := by
+  apply
+    primitiveSpinCHopfFirstSphereNegativeComplexPacketLocal_eq_zero_coefficients
+      period hPeriod sector mode coefficients
+  · rw [hSynthesis, map_zero]
+  · rw [hSynthesis, map_zero]
 
 /-- The complete negative first-sphere complex synthesis is injective. -/
 theorem primitiveSpinCHopfFirstSphereNegativeComplexPacketSynthesis_injective

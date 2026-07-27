@@ -408,6 +408,15 @@ The concrete Janus action requires more than finite formal self-adjointness:
 7. normalization and finite counterterm law;
 8. globalization over the actual field space.
 
+The repository now closes items 1--5 at the **global functional/chartwise**
+level for the exact nine-block Candidate-A action: actual Fréchet Euler form
+in every regular common `C²` chart, paired physical `U(1)²` Noether plus
+curved Bianchi, nonlinear Helmholtz reconstruction, functional obstruction
+vanishing, null functionals and boundary ambiguities. This does not yet supply
+a normed atlas for every raw tangent, componentwise local metric/matter PDEs,
+nonlinear diffeomorphism BRST/BV, or the full horizontal jet variational
+bicomplex.
+
 ### P-C verdict
 
 P-C is the strongest inverse route. It reconstructs an action class from a compatible Euler family; it does not choose the Euler family or the surviving finite data.
@@ -1013,13 +1022,25 @@ identification with the historical raw holonomic density remains open. Its
 independent variation also projects to the D9 slots
 actually supplied by the diagonal package, while a literal finite D10
 product-mode truncation uses the same period and exact PT-regulator pairing.
-A nonempty scoped common-domain package now makes the same independent
-configuration feed the induced metrics/root, `LLH1`, its exact boundary trace
-and typed D7/D9/D10 accessors. Agreement with the action tangent, Hessian,
-full D10 diagonalization, regulator and Fredholm/boundary domains remains one
-explicit residual contract. It now requires concrete linear/isometric modal
-coordinates, density, action derivatives, Hessian spectral pairing and exact
-domain equalities, with no unconstrained readiness propositions.
+The global field/domain package now makes one root-admissible intrinsic
+configuration feed both general Lorentz metrics, doubled genuine SpinC
+matter, the derived throat trace and typed D9/D10 data without a duplicate
+metric slot. Its tangent coordinates construct a finite-product `H¹`,
+continuous trace, closed Dirichlet kernel and common bulk/SpinC/D10/LL domain.
+The regular Candidate-A action is assembled on that configuration; its Euler
+map and symmetric chartwise Frechet Hessian are now actual derivatives.
+The intrinsic/spectral Dirac, BRST/BV, D7/D10 regulator, circle Quillen and
+PT/inflow anomaly layers are integrated as scoped global frontiers. Their
+remaining common obligation is one all-level geometric Fourier/domain bridge
+identifying the gauge-fixed action Hessian with the smooth Fredholm family.
+Scheme independence is impossible from the present assumptions alone: a
+formal no-go leaves normalization and finite local terms free.
+The available parent bulk reduces exactly and is Helmholtz/PT compatible,
+but two admissible parents induce different reduced mixings, so no
+microscopic parent is selected. Independently, geometry, Dirac/LL spectra,
+the local heat action and compatible charge units preserve a common
+rescaling orbit; an absolute length therefore needs an independent
+dimensionful microscopic anchor.
 For the general tensor density, the subsequent frame-covariance gate closes
 pointwise frame independence and true D8-diffeomorphism naturality; smooth
 density packaging, finite-measure integrability, the global scalar action and
@@ -1081,10 +1102,12 @@ tensor, the total atlas now selects a compatible holonomic chart automatically
 at every true throat point; its six `ContDiff` chart coefficients reproduce the
 D9 metric slot exactly. This bridge still does not produce a global Program-P
 action tangent. The primitive geometric Dirac is realized at zero and first
-positive signed levels and its complete signed diagonal Hilbert operator is
-self-adjoint and Fredholm. The full positive geometric Fourier tower,
-nonlinear diffeomorphism-BRST, general-metric integration and the full
-action--Hessian--domain identification remain explicit. The global LL action
+positive signed levels; in each fixed root sector their genuine synthesis is
+injective for every finite circle-mode packet. Its complete signed diagonal
+Hilbert operator is self-adjoint and Fredholm. Extension to arbitrary sphere
+levels and the common completed domain, nonlinear diffeomorphism-BRST,
+general-metric integration and the full action--Hessian--domain identification
+remain explicit. The global LL action
 also has its exact finite-measure measure/flux derivative and algebraic
 zero-flux Euler branch. PT covariance is exact for fields, variations, action,
 Euler coefficients and stationarity under PT-invariant measures. A second LL
@@ -1378,33 +1401,56 @@ closure list is
 24 global packages feed 14 fixed terminal gates. In particular, the already
 constructed normal regularity, Pin/PinC bundles, LL local coefficients,
 coefficient Sobolev model and signed abstract SpinC spectrum must not be
-relisted as missing objects. Their remaining work is limited to the explicit
-cross-representation/global identifications recorded respectively under
-`GEO-GLOBAL-01`, `KJ-GLOBAL-02`, `FIELD/ANALYSIS-GLOBAL-01` and
-`DIRAC-GLOBAL-01`.
+relisted as missing objects. The common Candidate-A geometry, field/tangent
+space, intrinsic Sobolev/trace domain, controlled boundary completion,
+physical covariant K/J complex, gauge `H⁰`/quotient/completion, finite natural
+classification, regular covariant action assembly, chartwise Euler/Helmholtz,
+paired physical `U(1)²` Noether and functional variational cohomology are now
+closed by
+`GEO/FIELD/ANALYSIS/BOUNDARY/KJ-01/KJ-02/NATURAL/ACTION/EULER/NOETHER/`
+`HELMHOLTZ/VARCOH-GLOBAL-01`.
+The `ℤ⁴` Fourier complex remains a separate symbol certificate and is never
+identified with the physical mapping torus. Curved linearized Calabi
+exactness/Fredholm realization belongs to `HESSIAN-GLOBAL-01`. The
+unconditional D7/D9 module/assembly/boundary certificate and the split D10
+projection/section are now explicit; no equivalence of the entire smooth
+tangent with the D10 `ℓ²` sector is required. The remaining Hessian inputs are
+the dense tangent-to-chart analysis, the complete positive SpinC Fourier
+tower, the block Fredholm equality and BRST descent. Scoped
+certificates now also record the exact reduced ADM chain, the constrained
+stability audit, the proportional-vacuum frontier, the intrinsic/spectral
+Dirac layers, nonlinear BRST layers, finite/common regulator, circle Quillen
+geometry, PT/inflow anomaly cancellation, scheme no-go, microscopic-parent
+nonselection and the common-scale orbit no-go. The ADM result is
+FLRW rather than a continuum functional Dirac algebra; the stability witness
+has a nontrivial constrained isoenergetic curve; and the vacuum minimum is
+only proportional and one-dimensional. Their common geometric-family bridge
+remains under `DIRAC/BRST/HESSIAN/REGULATOR/QUILLEN/ANOMALY-GLOBAL-01`;
+`SCHEME-GLOBAL-01` and `MICRO-GLOBAL-01` additionally require a selecting
+microscopic law and finite-part data, while `SCALE-GLOBAL-01` requires an independent
+dimensionful anchor and a selected stable vacuum.
+Other cross-representation work is recorded under `T01` and the stronger
+local forms of `T03`–`T06`.
 
 ## 13. Honest conclusion
 
 Program P has substantially reduced the logical freedom, but it has not selected the physical Janus action.
 
-The current gates now state exact acceptance tests for nonlinear cross-source
-integrability, admissible boundary completion, induced-field variation and
-diagonal gauge balance. Candidate A supplies explicit cross densities and an
-exact spectral Euler model plus a separate independent-coordinate metric-
-coupled scalar first-jet variation, a finite periodic holonomic scalar Euler
-model, its positive one-dimensional metric/measure refinement, and nonlinear
-canonical second-jet Jacobi. They cannot yet be applied in the general
-tensorial sector until the full Lorentz field domain, metric/matter PDE
-variations, global spacetime gauge generator and physical geometric boundary
-functional are constructed.
-
-The candidate point chart now passes an actual nonlinear Helmholtz test with
-independent matter blocks. This does not discharge the covariant Janus PDE
-Helmholtz, Bianchi, constraint or variational-cohomology obligations.
+The exact regular covariant Candidate-A action is constructed on the common
+domain. On every regular common `C²` variational chart it has its actual
+Fréchet Euler form, symmetric nonlinear Helmholtz Jacobian and exact
+normalized radial reconstruction. Arbitrary paired smooth `U(1)²` ghosts
+give constant Maxwell gauge orbits, the intrinsic curved Bianchi identity is
+attached, and the global functional null/boundary ambiguity is classified.
+The stronger componentwise local metric/matter PDE, diffeomorphism BRST/BV,
+raw-field atlas, horizontal jet bicomplex and constrained Hessian/Fredholm
+system remain open.
 
 Likewise, the Jordan family and continuous two-dimensional Cayley--Hamilton
-chart, including its bijective Sylvester inverse and derivative identity, do
-not construct the unique global Lorentz root branch.  The
+chart do not imply a universal real Lorentz root. The global Candidate-A
+geometry therefore uses the honest root-admissible domain and proves the
+conformal subdomain inhabited; the spectral obstruction outside that domain
+is retained. The
 self-adjoint circle Dirac operator, its basiswise `D^2` trace bridge and the
 strongly continuous contractive diagonal heat semigroup, including its exact
 maximal `D²` generator domain, do not yet construct the full Janus Dirac
@@ -1416,7 +1462,10 @@ property for the circle, but no global Janus trace-class family or anomaly is
 computed, and it does not determine the global determinant or normalization.
 
 What is established is a theorem/no-go architecture explaining exactly which
-inputs are needed and which proposed shortcuts fail. The decisive missing
-object is the global covariant realization of Candidate A, including its
-admissible square-root domain, boundary/worldvolume problem, constrained Euler
-system and one regulated microscopic normalization scheme.
+inputs are needed and which proposed shortcuts fail. Candidate A now has a
+global admissible square-root geometry, one field/tangent space, common
+analytic domains, a boundary/worldvolume completion without uncontrolled
+flux, the exact regular action and its chartwise functional variational
+closure. The decisive missing objects are now the local/raw-field and
+constrained Hessian/Fredholm upgrades, followed by a regulated microscopic
+selection and normalization scheme.

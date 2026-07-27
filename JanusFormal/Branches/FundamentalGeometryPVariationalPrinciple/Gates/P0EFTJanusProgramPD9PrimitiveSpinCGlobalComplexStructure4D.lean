@@ -1,4 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 
 /-!
 # Global complex structure on genuine primitive SpinC sections
@@ -35,7 +37,9 @@ open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeDiracEquation4D
+open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
@@ -92,8 +96,6 @@ theorem d9PrimitiveSpinCImaginarySection_apply
             period hPeriod choice).indexAt base) base) =
       d9PrimitiveSpinCImaginaryAction (state base)
   congr 1
-  simpa only [SmoothPrimitiveSpinCLocalGaugeFamily.toSmoothSection_apply]
-    using hAt
 
 /-- Real-linear global complex structure on the genuine smooth section core. -/
 def d9PrimitiveSpinCImaginarySectionLinearMap
@@ -105,16 +107,33 @@ def d9PrimitiveSpinCImaginarySectionLinearMap
     apply ContMDiffSection.ext
     intro base
     change
-      d9PrimitiveSpinCImaginaryAction (first base + second base) =
-        d9PrimitiveSpinCImaginaryAction (first base) +
-          d9PrimitiveSpinCImaginaryAction (second base)
+      d9PrimitiveSpinCImaginarySection
+          period hPeriod choice (first + second) base =
+        d9PrimitiveSpinCImaginarySection period hPeriod choice first base +
+          d9PrimitiveSpinCImaginarySection
+            period hPeriod choice second base
+    rw [d9PrimitiveSpinCImaginarySection_apply
+        period hPeriod choice (first + second) base,
+      d9PrimitiveSpinCImaginarySection_apply
+        period hPeriod choice first base,
+      d9PrimitiveSpinCImaginarySection_apply
+        period hPeriod choice second base]
+    rw [show (first + second) base = first base + second base by rfl]
     exact map_add d9PrimitiveSpinCImaginaryAction _ _
   map_smul' scalar state := by
     apply ContMDiffSection.ext
     intro base
     change
-      d9PrimitiveSpinCImaginaryAction (scalar • state base) =
-        scalar • d9PrimitiveSpinCImaginaryAction (state base)
+      d9PrimitiveSpinCImaginarySection
+          period hPeriod choice (scalar • state) base =
+        scalar •
+          d9PrimitiveSpinCImaginarySection
+            period hPeriod choice state base
+    rw [d9PrimitiveSpinCImaginarySection_apply
+        period hPeriod choice (scalar • state) base,
+      d9PrimitiveSpinCImaginarySection_apply
+        period hPeriod choice state base]
+    rw [show (scalar • state) base = scalar • state base by rfl]
     exact map_smul d9PrimitiveSpinCImaginaryAction scalar (state base)
 
 @[simp]
@@ -144,11 +163,13 @@ theorem d9PrimitiveSpinCImaginarySection_sq
       -state := by
   apply ContMDiffSection.ext
   intro base
-  change
-    d9PrimitiveSpinCImaginaryAction
-        (d9PrimitiveSpinCImaginaryAction (state base)) =
-      -state base
-  exact d9PrimitiveSpinCImaginaryAction_sq (state base)
+  rw [d9PrimitiveSpinCImaginarySection_apply
+    period hPeriod choice
+      (d9PrimitiveSpinCImaginarySection period hPeriod choice state) base]
+  rw [d9PrimitiveSpinCImaginarySection_apply
+    period hPeriod choice state base]
+  rw [d9PrimitiveSpinCImaginaryAction_sq]
+  rfl
 
 /-- Multiplication by `i` is injective on genuine smooth sections. -/
 theorem d9PrimitiveSpinCImaginarySection_injective
@@ -162,6 +183,7 @@ theorem d9PrimitiveSpinCImaginarySection_injective
     d9PrimitiveSpinCImaginarySection_sq] at hApplied
   exact neg_injective hApplied
 
+set_option maxHeartbeats 2000000 in
 /-- The actual descended differential Dirac operator is complex linear on the
 entire genuine smooth primitive SpinC section core. -/
 theorem d9PrimitiveSpinCGeometricDiracOperator_imaginary
@@ -175,32 +197,35 @@ theorem d9PrimitiveSpinCGeometricDiracOperator_imaginary
         period hPeriod choice
         (d9PrimitiveSpinCGeometricDiracOperator
           period hPeriod choice state) := by
+  apply ContMDiffSection.ext
+  intro base
   let family :=
     d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
       period hPeriod choice state
   let imaginaryFamily :=
     d9PrimitiveSpinCImaginaryLocalGaugeFamily
       period hPeriod choice family
-  rw [show
+  have hState :
+      family.toSmoothSection period hPeriod choice = state :=
+    d9PrimitiveSpinCSmoothSectionLocalGaugeFamily_toSmoothSection
+      period hPeriod choice state
+  have hImaginary :
       d9PrimitiveSpinCImaginarySection
           period hPeriod choice state =
-        imaginaryFamily.toSmoothSection period hPeriod choice by rfl]
-  rw [d9PrimitiveSpinCGeometricDiracOperator_toSmoothSection]
-  apply ContMDiffSection.ext
-  intro base
+        imaginaryFamily.toSmoothSection period hPeriod choice := by
+    rfl
   let core := d9PrimitiveSpinCVectorBundleCore period hPeriod choice
   have hBase :
       base ∈ d9PrimitiveSpinCBaseSet
         period hPeriod (core.indexAt base) :=
     core.mem_baseSet_at base
-  rw [d9PrimitiveSpinCGeometricDiracSection_apply,
-    d9PrimitiveSpinCImaginarySection_apply]
-  change
-    d9PrimitiveSpinCLocalGeometricDirac
-        period hPeriod choice imaginaryFamily (core.indexAt base) base =
-      d9PrimitiveSpinCImaginaryAction
-        (d9PrimitiveSpinCLocalGeometricDirac
-          period hPeriod choice family (core.indexAt base) base)
+  rw [hImaginary,
+    d9PrimitiveSpinCGeometricDiracOperator_toSmoothSection,
+    d9PrimitiveSpinCGeometricDiracSection_apply,
+    d9PrimitiveSpinCImaginarySection_apply,
+    ← hState,
+    d9PrimitiveSpinCGeometricDiracOperator_toSmoothSection,
+    d9PrimitiveSpinCGeometricDiracSection_apply]
   exact d9PrimitiveSpinCLocalGeometricDirac_imaginary
     period hPeriod choice family (core.indexAt base) base hBase
 

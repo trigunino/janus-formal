@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 
 /-!
 # One-point obstruction for complex first-sphere multiplicity
@@ -39,6 +40,7 @@ open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -73,9 +75,7 @@ theorem firstSphereComplexWitnessMode_halfSpinor
       match sector with
       | .positiveQuarter => (ambientHalfGammaPositiveEigenvector, 0)
       | .negativeQuarter => (0, ambientHalfGammaPositiveEigenvector) := by
-  simpa [firstSphereComplexWitnessMode,
-    firstSphereComplexWitnessCover] using
-    (witnessMode_halfSpinor period hPeriod sector mode)
+  exact witnessMode_halfSpinor period hPeriod sector mode
 
 /-- At the one-point witness the two tangential Clifford directions are
 exactly complex collinear. -/
