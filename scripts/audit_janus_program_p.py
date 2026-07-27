@@ -9048,6 +9048,18 @@ PROGRAM_P_GATES = {
             "theorem d9GaugeGhostFinitePacketCokernelEquiv_certificate",
         ),
     ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketHilbertFredholm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9GaugeGhostFinitePacketEquivHilbert",
+            "def d9GaugeGhostFinitePacketHilbertOperator",
+            "theorem d9GaugeGhostFinitePacketHilbertOperator_conjugates",
+            "theorem d9GaugeGhostFinitePacketHilbertOperator_isSelfAdjoint",
+            "theorem d9GaugeGhostFinitePacketHilbertOperator_range_isClosed",
+            "theorem d9GaugeGhostFinitePacketHilbertOperator_index_zero",
+            "def d9GaugeGhostFinitePacketHilbertFredholmCertificate",
+        ),
+    ),
     "P0EFTJanusGaugeGhostBlockD9FinitePacketReindex4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

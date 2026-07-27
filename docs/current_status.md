@@ -1439,12 +1439,16 @@ unique. A concrete product Hilbert target and dense injective operator core
 are constructed for the bulk Dirichlet, sectorwise SpinC, D10 and LL blocks.
 The complete all-level SpinC **coefficient** tower is dense, self-adjoint and
 Fredholm; D10 is bijective Fredholm and the LL Riesz core is dense with
-trivial kernel. The exact linear-gauge interface now combines `U(1)²` with a
-genuine smooth-diffeomorphism symmetry certificate and automatically gives
-the total quotient and two-sided Hessian degeneracy. The BRST frontier also
-contains the exterior scalar graded derivation, its two-ghost cancellation,
-the linearized diffeomorphism differential, the corrected full linear/LL
-complex and the general-metric BV doublet.
+trivial kernel. Every finite D9 gauge–ghost packet also has a genuine
+Euclidean Hilbert realization exactly conjugate to its algebraic symbol; this
+operator is self-adjoint, has closed range, finite kernel and cokernel, and
+index zero. This is a finite Galerkin result, not yet the global gauge-fixed
+Hessian. The exact linear-gauge interface now combines `U(1)²` with a genuine
+smooth-diffeomorphism symmetry certificate and automatically gives the total
+quotient and two-sided Hessian degeneracy. The BRST frontier also contains the
+exterior scalar graded derivation, its two-ghost cancellation, the linearized
+diffeomorphism differential, the corrected full linear/LL complex and the
+general-metric BV doublet.
 
 The irreducible Hessian frontier is therefore narrower: construct the actual
 global-tangent-to-variational-chart map; realize every positive SpinC
