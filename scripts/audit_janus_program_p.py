@@ -8978,6 +8978,132 @@ PROGRAM_P_GATES = {
             "theorem combined_pointwise_short_exact_product_certificate",
         ),
     ),
+    "P0EFTJanusGaugeGhostBlockD9FiniteZeroModePacket4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9GaugeGhostZeroCokernelPacket",
+            "def d9GaugeGhostZeroCokernelPacketEquiv",
+            "theorem d9GaugeGhostZeroCokernelPacket_finrank_additive",
+            "theorem d9GaugeGhostFiniteZeroModePacket_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FiniteCokernelSupport4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9GaugeGhostFiniteCokernelFinrank",
+            "def d9ZeroCovectorMultiplicity",
+            "theorem d9GaugeGhostFiniteCokernelFinrank_eq_zeroMultiplicity_mul",
+            "theorem d9GaugeGhostFiniteCokernelSupport_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketOperator4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9GaugeGhostFinitePacket",
+            "def d9GaugeGhostFinitePacketSymbol",
+            "theorem d9GaugeGhostFinitePacketSymbol_ker_eq_zeroSupported",
+            "theorem d9GaugeGhostFinitePacketSymbol_range_eq_zeroVanishing",
+            "def d9GaugeGhostFinitePacketSymbolEquivOfNonzero",
+            "theorem d9GaugeGhostFinitePacketOperator_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketFredholmIndex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9GaugeGhostFinitePacketCokernel",
+            "def d9GaugeGhostFinitePacketOperatorIndex",
+            "theorem d9GaugeGhostFinitePacketKernel_finrank_eq_cokernel_finrank",
+            "theorem d9GaugeGhostFinitePacketOperatorIndex_zero",
+            "theorem d9GaugeGhostFinitePacketFredholm_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketGeneralizedInverse4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9GaugeGhostFinitePacketGeneralizedInverse",
+            "def d9GaugeGhostFinitePacketZeroProjection",
+            "def d9GaugeGhostFinitePacketRegularProjection",
+            "theorem d9GaugeGhostFinitePacketSymbol_generalizedInverse_symbol",
+            "theorem d9GaugeGhostFinitePacketGeneralizedInverse_symbol_generalizedInverse",
+            "theorem d9GaugeGhostFinitePacketGeneralizedInverse_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketHodgeDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev D9GaugeGhostPacketRegularData",
+            "def d9GaugeGhostFinitePacketHodgeEquiv",
+            "def d9GaugeGhostFinitePacketRegularSymbolEquiv",
+            "theorem d9GaugeGhostFinitePacketHodgeEquiv_symbol",
+            "theorem d9GaugeGhostFinitePacketHodge_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketCokernelEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9GaugeGhostFinitePacketCokernelEquivZeroModeData",
+            "def d9GaugeGhostFinitePacketKernelEquivCokernel",
+            "def d9GaugeGhostFinitePacketCokernelCanonicalRepresentative",
+            "theorem d9GaugeGhostFinitePacket_shortExact_middle",
+            "theorem d9GaugeGhostFinitePacketCokernelEquiv_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketReindex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def packetReindexLinearEquiv",
+            "theorem d9GaugeGhostZeroCokernelPacketEquiv_reindex_naturality",
+            "theorem d9GaugeGhostFiniteCokernelSupport_map_equiv",
+            "theorem d9GaugeGhostFinitePacketReindex_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketDisjointSum4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def packetDisjointSumLinearEquiv",
+            "def d9GaugeGhostZeroCokernelPacketDisjointSumEquiv",
+            "theorem d9GaugeGhostZeroCokernelPacket_finrank_disjointSum",
+            "theorem d9GaugeGhostFinitePacketDisjointSum_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketSumAssociativity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9PacketSumAssocEquiv",
+            "theorem packetDisjointSumAssocLinearEquiv_split_naturality",
+            "theorem d9GaugeGhostZeroCokernelPacketEquiv_assoc_naturality",
+            "theorem d9GaugeGhostFinitePacketSumAssociativity_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketSumSymmetry4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9PacketSumSwapEquiv",
+            "theorem packetDisjointSumSwapLinearEquiv_involutive",
+            "theorem d9GaugeGhostZeroCokernelPacketEquiv_swap_naturality",
+            "theorem d9GaugeGhostFinitePacketSumSymmetry_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketPentagonCoherence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9PacketSumPentagon_coherence",
+            "theorem packetDisjointSumPentagon_coherence",
+            "theorem d9GaugeGhostZeroCokernelPacket_pentagon",
+            "theorem d9GaugeGhostFinitePacketPentagonCoherence_certificate",
+        ),
+    ),
+    "P0EFTJanusGaugeGhostBlockD9FinitePacketHexagonCoherence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9PacketSumHexagonLeft_coherence",
+            "theorem d9PacketSumHexagonRight_coherence",
+            "theorem d9GaugeGhostZeroCokernelPacket_hexagonLeft",
+            "theorem d9GaugeGhostZeroCokernelPacket_hexagonRight",
+            "theorem d9GaugeGhostFinitePacketHexagonLeft_certificate",
+            "theorem d9GaugeGhostFinitePacketHexagonRight_certificate",
+        ),
+    ),
     "P0EFTJanusMatrixZeroOverZeroUniversalExtensionNoGo4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
