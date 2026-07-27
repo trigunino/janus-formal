@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCSignedSpectralCompletion4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCGeometricSpectralCompletion4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatHolonomyC3FredholmCertificate4D
 
@@ -8,10 +9,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 This module consolidates the strongest unconditional Dirac results without
 identifying distinct models.  The actual doubled D9 bundle has an intrinsic
-smooth elliptic first-order operator.  The corrected signed spectral model
-has a complete self-adjoint Fredholm realization.  Their geometric
-intertwining is proved on the zero/first-sphere packet, while the separated
-product model supplies a `C³` common-domain Fredholm family.
+smooth elliptic first-order operator.  The complete all-level coefficient
+tower, including the zero sphere mode and both normal-root sectors, has a
+dense self-adjoint Fredholm realization.  Its geometric intertwining is
+proved on the zero/first-sphere packet, while the separated product model
+supplies a `C³` common-domain Fredholm family.
 
 `DIRAC-GLOBAL-01` still requires one geometric Fourier/unitary identification
 covering every sphere level and the completed common domain.  No such bridge
@@ -32,6 +34,7 @@ open P0EFTJanusProductThroatHolonomyC3FredholmCertificate4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSpectralCompletion4D
 open P0EFTJanusProgramPPrimitiveSpinCSignedSpectralCompletion4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -43,6 +46,8 @@ structure ProgramPGlobalDiracFrontierCertificate4D where
       period hPeriod
   signedSpectral :
     ProgramPPrimitiveSpinCSignedSpectralCompletionCertificate4D
+  allLevelGeometricCoefficients :
+    ProgramPPrimitiveSpinCGeometricSpectralCertificate4D period hPeriod
   lowEnergyGeometric : ∀ sector circleMode,
     Function.Injective
         (primitiveSpinCHopfLowEnergySignedSynthesis
@@ -75,6 +80,8 @@ def programPGlobalDiracFrontierCertificate4D :
       period hPeriod
   signedSpectral :=
     programPPrimitiveSpinCSignedSpectralCompletionCertificate4D
+  allLevelGeometricCoefficients :=
+    programPPrimitiveSpinCGeometricSpectralCertificate4D period hPeriod
   lowEnergyGeometric :=
     primitiveSpinCHopfLowEnergySignedGeometricRealization_closed
       period hPeriod

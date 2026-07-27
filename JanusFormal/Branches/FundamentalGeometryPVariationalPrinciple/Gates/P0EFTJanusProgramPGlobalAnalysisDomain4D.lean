@@ -200,13 +200,14 @@ def GlobalAnalysisData.llH1Data
   llMeasure_pos := data.llMeasure_pos
 
 /-- One common closed/operator domain containing every analytic sector:
-bulk Dirichlet `H¹`, complete primitive SpinC graph domain, multiplicity-aware
-D10 graph domain and the positive LL Hilbert completion. -/
+bulk Dirichlet `H¹`, one complete primitive SpinC graph domain for each
+physical sector, the multiplicity-aware D10 graph domain and the positive LL
+Hilbert completion. -/
 structure GlobalCommonClosedDomain
     {configuration : GlobalFieldConfiguration period hPeriod}
-    (data : GlobalAnalysisData period hPeriod configuration) where
+  (data : GlobalAnalysisData period hPeriod configuration) where
   bulk : GlobalBulkDirichletHilbertH1 period hPeriod
-  spinC : PrimitiveSpinCGeometricH2 period hPeriod
+  spinC : Sector → PrimitiveSpinCGeometricH2 period hPeriod
   d10 : programPD10FredholmModeDomainSubmodule4D
     (d10SpectralData period hPeriod configuration.d10Completion)
   ll : LLH1Space period hPeriod (data.llH1Data period hPeriod)

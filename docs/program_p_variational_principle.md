@@ -1415,8 +1415,20 @@ exactness/Fredholm realization belongs to `HESSIAN-GLOBAL-01`. The
 unconditional D7/D9 module/assembly/boundary certificate and the split D10
 projection/section are now explicit; no equivalence of the entire smooth
 tangent with the D10 `ℓ²` sector is required. The remaining Hessian inputs are
-the dense tangent-to-chart analysis, the complete positive SpinC Fourier
-tower, the block Fredholm equality and BRST descent. Scoped
+reduced further: for every certified chartwise paired `U(1)²` symmetry, the
+exact Noether identity makes the true Hessian vanish in both gauge slots and
+descend uniquely and symmetrically.
+The constructed bulk-Dirichlet/SpinC/D10/LL Hilbert product now has a dense
+injective operator core. The all-level SpinC coefficient tower and D10 block
+are Fredholm, while the LL Riesz core is dense with trivial kernel. A supplied
+exact smooth-diffeomorphism symmetry combines canonically with `U(1)²`, and
+the exterior scalar, linearized-diffeomorphism, full-linear/LL and
+general-metric BV square-zero layers are integrated.
+Still missing are the actual global-tangent-to-chart map, complete
+**geometric** SpinC synthesis, invariance of all nine action blocks under the
+same diffeomorphisms and the full elliptic Hessian/Fredholm equality. The
+formal zero-Hessian no-go proves that arbitrary couplings cannot supply the
+last result; nondegenerate elliptic input is necessary. Scoped
 certificates now also record the exact reduced ADM chain, the constrained
 stability audit, the proportional-vacuum frontier, the intrinsic/spectral
 Dirac layers, nonlinear BRST layers, finite/common regulator, circle Quillen

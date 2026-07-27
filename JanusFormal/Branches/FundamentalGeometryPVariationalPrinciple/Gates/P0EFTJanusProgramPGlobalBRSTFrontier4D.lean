@@ -1,15 +1,22 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalNoether4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompleteVariationGeneralMetricBVBRSTBoundary4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostThroatBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusExteriorDiffeomorphismGhostBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusExteriorScalarBRSTDerivation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D
 
 /-!
 # Exact frontier of the global BRST/BV problem
 
-The physical abelian gauge differential is nilpotent, the genuinely odd
-exterior-valued diffeomorphism ghost satisfies its cubic Jacobi closure, and
-the existing general-metric BV doublet is nilpotent and preserves the current
-Program-P boundary domain.  The exact `U(1)²` action orbit is stationary.
+The physical abelian gauge differential is nilpotent.  The genuinely odd
+exterior-valued diffeomorphism ghost satisfies its cubic Jacobi closure and
+acts by a square-zero graded derivation on the genuine smooth scalar algebra;
+its two-ghost scalar square cancels exactly.  The linearized diffeomorphism
+differential is square-zero.  The corrected linear full-field differential
+(including all three LL throat blocks) is square-zero, and the existing
+general-metric BV doublet is nilpotent and preserves the current Program-P
+boundary domain.  The exact `U(1)²` action orbit is stationary.
 
 This is not `BRST-GLOBAL-01`: the nonlinear exterior ghost has not yet been
 extended to one derivation on every field, antifield and boundary component
@@ -28,7 +35,11 @@ open scoped Manifold ContDiff
 open MeasureTheory
 open P0EFTJanusCompleteVariationGeneralMetricBVBRSTBoundary4D
 open P0EFTJanusMappingTorusAbelianGaugeBRST4D
+open P0EFTJanusMappingTorusD8NonabelianGhostLinearFullFieldBRST4D
+open P0EFTJanusMappingTorusD8NonabelianGhostThroatBRST4D
 open P0EFTJanusMappingTorusExteriorDiffeomorphismGhostBRST4D
+open P0EFTJanusMappingTorusExteriorScalarBRSTDerivation4D
+open P0EFTJanusMappingTorusGradedScalarGhostAction4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricBVFirstLevel4D
 open P0EFTJanusMappingTorusInducedFieldVariation4D
 open P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
@@ -37,6 +48,7 @@ open P0EFTJanusMappingTorusPhysicalGaugeSobolevComplex4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothDiffeomorphismGhostLieBracket4D
+open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPCommonGeometricDomain4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -73,6 +85,31 @@ structure ProgramPGlobalBRSTFrontierCertificate4D where
   exteriorGhostJacobi : ∀ i j k first second third,
     cubicGhostBRSTJacobiObstruction period hPeriod i j k
         first second third = 0
+  scalarGradedDerivationSquareZero :
+    ∀ (ghost : CInfinityDiffeomorphismGhost period hPeriod)
+      (element : OneGhostScalarSuperalgebra period hPeriod),
+      (oneGhostScalarBRSTDifferential period hPeriod ghost).toLinearMap
+          ((oneGhostScalarBRSTDifferential
+            period hPeriod ghost).toLinearMap element) =
+        0
+  exteriorScalarSquareZero :
+    ∀ (first second : CInfinityDiffeomorphismGhost period hPeriod)
+      (scalar : CInfinityScalarField period hPeriod),
+      twoGhostScalarBRSTSquare period hPeriod first second scalar = 0
+  linearizedDiffeomorphismSquareZero :
+    ∀ (background : SmoothQuotientField period hPeriod Real)
+      (state : LinearizedDiffeomorphismBRSTState period hPeriod),
+      linearizedBRSTDifferential period hPeriod background
+          (linearizedBRSTDifferential period hPeriod background state) =
+        zeroLinearizedBRSTState period hPeriod
+  linearFullFieldSquareZero :
+    ∀ fields : LinearFullFieldBRST period hPeriod,
+      correctedLinearFullFieldBRST period hPeriod
+          (unconditionalLLThroatRotationBRSTCompletion period hPeriod)
+          (correctedLinearFullFieldBRST period hPeriod
+            (unconditionalLLThroatRotationBRSTCompletion period hPeriod)
+            fields) =
+        0
   metricBVSquareZero : ∀ phase : SmoothGeneralMetricBVField period hPeriod,
     smoothGeneralMetricBVBRST period hPeriod
         (smoothGeneralMetricBVBRST period hPeriod phase) =
@@ -100,6 +137,15 @@ def programPGlobalBRSTFrontierCertificate4D :
     exact
       (exterior_diffeomorphism_ghost_brst4D_closure
         period hPeriod).2.2.2 i j k first second third
+  scalarGradedDerivationSquareZero := fun ghost =>
+    (oneGhostScalarBRSTDifferential period hPeriod ghost).square_zero
+  exteriorScalarSquareZero :=
+    twoGhostScalarBRSTSquare_zero period hPeriod
+  linearizedDiffeomorphismSquareZero :=
+    linearizedBRSTDifferential_square_zero period hPeriod
+  linearFullFieldSquareZero :=
+    correctedLinearFullFieldBRST_square_zero period hPeriod
+      (unconditionalLLThroatRotationBRSTCompletion period hPeriod)
   metricBVSquareZero :=
     smoothGeneralMetricBVBRST_square_zero period hPeriod
   metricBVBoundaryStable :=
