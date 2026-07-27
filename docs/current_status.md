@@ -1442,13 +1442,18 @@ Fredholm; D10 is bijective Fredholm and the LL Riesz core is dense with
 trivial kernel. Every finite D9 gauge–ghost packet also has a genuine
 Euclidean Hilbert realization exactly conjugate to its algebraic symbol; this
 operator is self-adjoint, has closed range, finite kernel and cokernel, and
-index zero. This is a finite Galerkin result, not yet the global gauge-fixed
-Hessian. The exact linear-gauge interface now combines `U(1)²` with a genuine
-smooth-diffeomorphism symmetry certificate and automatically gives the total
-quotient and two-sided Hessian degeneracy. The BRST frontier also contains the
-exterior scalar graded derivation, its two-ghost cancellation, the linearized
-diffeomorphism differential, the corrected full linear/LL complex and the
-general-metric BV doublet.
+index zero. This finite family now extends to a genuine complete `ℓ²` D9
+operator for an arbitrary mode type. Under the explicit uniform-ellipticity
+contract—bounded symbol, no zero mode and bounded reciprocal—it is
+self-adjoint, bijective, closed-range Fredholm of index zero and restricts
+exactly to every finite Euclidean packet. The uniform gap and the
+identification with the actual gauge-fixed action Hessian remain inputs; they
+are not inferred from arbitrary couplings. The exact linear-gauge interface
+now combines `U(1)²` with a genuine smooth-diffeomorphism symmetry certificate
+and automatically gives the total quotient and two-sided Hessian degeneracy.
+The BRST frontier also contains the exterior scalar graded derivation, its
+two-ghost cancellation, the linearized diffeomorphism differential, the
+corrected full linear/LL complex and the general-metric BV doublet.
 
 The irreducible Hessian frontier is therefore narrower: construct the actual
 global-tangent-to-variational-chart map; realize every positive SpinC

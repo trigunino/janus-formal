@@ -1137,8 +1137,11 @@ compatibility map K
   LL Riesz core are integrated. Finite D9 gauge–ghost packets now additionally
   have a self-adjoint, closed-range Hilbert realization with finite kernel and
   cokernel and index zero, exactly conjugate to the algebraic packet symbol.
-  Exact linear symmetries, including a supplied smooth-diffeomorphism
-  symmetry, combine automatically with `U(1)²`.
+  They extend to a complete `ℓ²` operator for arbitrary modes under explicit
+  bounded-symbol, nonzero-mode and bounded-inverse hypotheses; that operator
+  is self-adjoint, bijective Fredholm and finite-packet compatible. Exact
+  linear symmetries, including a supplied smooth-diffeomorphism symmetry,
+  combine automatically with `U(1)²`.
   What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map,
   all-level **geometric** SpinC synthesis, nine-block diffeomorphism
   invariance and equality of the gauge-fixed Hessian with a nondegenerate
@@ -1167,7 +1170,7 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | `FundamentalGeometryPEJetUniversality` | PR 10 merged; effective-deck jet head green, while Program P separately carries the actual twisted PinC/spinor bundles |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
 | `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused heads green; Program-P physical K/J, global naturality and regular action assemblies are integrated |
-| D9 | finite packet Hilbert–Fredholm realization proved; global gauge-fixed Fredholm realization open |
+| D9 | complete `ℓ²` Hilbert–Fredholm realization proved under uniform ellipticity; identification with the global gauge-fixed Hessian remains open |
 | D11 | supported naturality/finite-jet head; global Fredholm realization open |
 
 See `current_status.md` and `janus_branch_registry.md` for the exact operational status.
