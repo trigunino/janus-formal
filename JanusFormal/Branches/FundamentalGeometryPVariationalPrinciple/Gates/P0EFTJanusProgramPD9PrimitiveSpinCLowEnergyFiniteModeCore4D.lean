@@ -21,6 +21,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusNormalPinLiftBoundaryConditions
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexCoefficientAutomorphism4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyComplexCoefficientRealization4D
@@ -90,8 +91,9 @@ theorem primitiveSpinCHopfLowEnergyFiniteModeCoefficientOperator_single
       Finsupp.single mode
         (primitiveSpinCHopfLowEnergyComplexCoefficientOperator
           period sector mode coefficients) := by
-  simp [primitiveSpinCHopfLowEnergyFiniteModeCoefficientOperator,
-    primitiveSpinCHopfLowEnergyFiniteModeCoefficientBlock]
+  rw [primitiveSpinCHopfLowEnergyFiniteModeCoefficientOperator,
+    Finsupp.lsum_single]
+  rfl
 
 /-- One inverse coefficient block inserted back into finite support. -/
 def primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverseBlock
@@ -120,8 +122,11 @@ theorem primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse_single
       Finsupp.single mode
         (primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse
           period sector mode coefficients) := by
-  simp [primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse,
-    primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverseBlock]
+  rw [primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse,
+    Finsupp.lsum_single]
+  rfl
+
+include hPeriod
 
 /-- The finite modewise inverse is a left inverse of the finite coefficient
 Dirac diagonal. -/
@@ -137,7 +142,8 @@ theorem primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse_left
   rw [LinearMap.comp_apply,
     primitiveSpinCHopfLowEnergyFiniteModeCoefficientOperator_single,
     primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse_single,
-    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_left]
+    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_left
+      (hPeriod := hPeriod)]
   rfl
 
 /-- The finite modewise inverse is also a right inverse. -/
@@ -153,7 +159,8 @@ theorem primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse_right
   rw [LinearMap.comp_apply,
     primitiveSpinCHopfLowEnergyFiniteModeCoefficientInverse_single,
     primitiveSpinCHopfLowEnergyFiniteModeCoefficientOperator_single,
-    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_right]
+    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_right
+      (hPeriod := hPeriod)]
   rfl
 
 /-- The finite coefficient Dirac diagonal is an exact real-linear

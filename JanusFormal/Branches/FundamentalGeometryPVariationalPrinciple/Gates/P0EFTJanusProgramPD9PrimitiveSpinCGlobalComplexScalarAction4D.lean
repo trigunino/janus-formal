@@ -1,4 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 
 /-!
 # Full global complex scalar action on genuine primitive SpinC sections
@@ -30,9 +32,12 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexStructure4D
+open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
+open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 
@@ -67,14 +72,16 @@ theorem d9PrimitiveSpinCComplexScalarSection_apply
     (base : ThroatBase period hPeriod) :
     d9PrimitiveSpinCComplexScalarSection
         period hPeriod choice scalar state base =
-      scalar.re • state base +
-        scalar.im • d9PrimitiveSpinCImaginaryAction (state base) := by
+      scalar.re • (show D9DoubledMatterFiber from state base) +
+        scalar.im • d9PrimitiveSpinCImaginaryAction
+          (show D9DoubledMatterFiber from state base) := by
   change
     scalar.re • state base +
         scalar.im •
           d9PrimitiveSpinCImaginarySection
             period hPeriod choice state base = _
   rw [d9PrimitiveSpinCImaginarySection_apply]
+  rfl
 
 /-- Section-level real/imaginary formula, exposed for later complex-linear
 packet constructions. -/
@@ -314,7 +321,7 @@ theorem d9PrimitiveSpinCGlobalComplexScalarRepresentation_closed
           period hPeriod choice scalar state =
         d9PrimitiveSpinCComplexScalarSection
           period hPeriod choice scalar state) ∧
-      (∀ real state,
+      (∀ (real : Real) state,
         d9PrimitiveSpinCComplexScalarSection
             period hPeriod choice (real : Complex) state =
           real • state) ∧
@@ -413,7 +420,7 @@ theorem d9PrimitiveSpinCGlobalComplexScalarAction_closed :
           period hPeriod .positiveQuarter scalar state =
         d9PrimitiveSpinCComplexScalarSection
           period hPeriod .positiveQuarter scalar state) ∧
-      (∀ real state,
+      (∀ (real : Real) state,
         d9PrimitiveSpinCComplexScalarSection
             period hPeriod .positiveQuarter (real : Complex) state =
           real • state) ∧

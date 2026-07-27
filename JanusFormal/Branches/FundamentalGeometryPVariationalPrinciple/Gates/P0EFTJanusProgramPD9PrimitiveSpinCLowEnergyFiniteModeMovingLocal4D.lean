@@ -1,3 +1,4 @@
+import JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusMappingTorusSmoothQuotientManifold
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingAntipodalLocal4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeCore4D
 
@@ -28,6 +29,7 @@ open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
+open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereAntipodalWitness4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
@@ -99,7 +101,9 @@ theorem primitiveSpinCHopfLowEnergyFiniteModeMovingPhaseLocal_single
           period hPeriod time)
         (primitiveSpinCHopfLowEnergyComplexCoefficientSynthesis
           period hPeriod sector mode coefficients) := by
-  simp [primitiveSpinCHopfLowEnergyFiniteModeMovingPhaseLocal]
+  rw [primitiveSpinCHopfLowEnergyFiniteModeMovingPhaseLocal,
+    LinearMap.comp_apply,
+    primitiveSpinCHopfLowEnergyFiniteModeSynthesis_single]
 
 /-- The same single-label identity at the moving antipodal witness. -/
 @[simp]
@@ -116,7 +120,9 @@ theorem primitiveSpinCHopfLowEnergyFiniteModeMovingAntipodalLocal_single
           period hPeriod time)
         (primitiveSpinCHopfLowEnergyComplexCoefficientSynthesis
           period hPeriod sector mode coefficients) := by
-  simp [primitiveSpinCHopfLowEnergyFiniteModeMovingAntipodalLocal]
+  rw [primitiveSpinCHopfLowEnergyFiniteModeMovingAntipodalLocal,
+    LinearMap.comp_apply,
+    primitiveSpinCHopfLowEnergyFiniteModeSynthesis_single]
 
 /-- Exact zero-plus-first-sphere decomposition of one moving phase local
  observation. -/

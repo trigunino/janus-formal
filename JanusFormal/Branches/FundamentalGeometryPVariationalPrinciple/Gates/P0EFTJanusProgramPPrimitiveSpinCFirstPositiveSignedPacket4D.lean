@@ -508,7 +508,9 @@ theorem primitiveSpinCHopfLowEnergySignedSynthesis_injective
   have hDelta :
       primitiveSpinCHopfLowEnergySignedSynthesis
           period hPeriod sector circleMode delta = 0 := by
-    dsimp [delta]
+    change
+      primitiveSpinCHopfLowEnergySignedSynthesis
+          period hPeriod sector circleMode (first - second) = 0
     rw [map_sub, hEqual, sub_self]
   have hDirac :
       primitiveSpinCHopfLowEnergySignedSynthesis

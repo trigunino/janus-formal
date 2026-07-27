@@ -93,7 +93,8 @@ theorem primitiveSpinCHopfLowEnergyComplexActualDiracCoefficientInverse_left
     period hPeriod sector mode).surjective state with ⟨coefficients, rfl⟩
   rw [primitiveSpinCHopfLowEnergyComplexActualDirac_synthesisEquiv,
     primitiveSpinCHopfLowEnergyComplexActualDiracCoefficientInverse_synthesisEquiv,
-    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_left]
+    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_left
+      (hPeriod := hPeriod)]
 
 /-- The explicit geometric inverse is a right inverse of the actual Dirac. -/
 theorem primitiveSpinCHopfLowEnergyComplexActualDiracCoefficientInverse_right
@@ -109,7 +110,8 @@ theorem primitiveSpinCHopfLowEnergyComplexActualDiracCoefficientInverse_right
     period hPeriod sector mode).surjective state with ⟨coefficients, rfl⟩
   rw [primitiveSpinCHopfLowEnergyComplexActualDiracCoefficientInverse_synthesisEquiv,
     primitiveSpinCHopfLowEnergyComplexActualDirac_synthesisEquiv,
-    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_right]
+    primitiveSpinCHopfLowEnergyComplexCoefficientOperatorInverse_right
+      (hPeriod := hPeriod)]
 
 /-- Consolidated exact inverse theorem for the actual low-energy geometric
 Dirac restriction. -/

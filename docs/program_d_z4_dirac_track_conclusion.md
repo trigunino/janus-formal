@@ -159,7 +159,9 @@ fermionic Z4
 
 Its next stage is no longer bundle-existence algebra: Program P now constructs
 the global PinC/spinor geometry, geometric zero and first signed Dirac levels,
-and an abstract complete self-adjoint Fredholm signed operator. The remaining
-analytic stage is the complete geometric Fourier identification, zeta
-determinant and eta invariant. Even if that stage succeeds, a separate quantum
-or gravitational law is still required to fix `L` in physical units.
+their injective genuine synthesis for finite circle-mode packets in each fixed
+root sector, and an abstract complete self-adjoint Fredholm signed operator.
+The remaining analytic stage is extension to arbitrary sphere levels and the
+common completed domain, then the zeta determinant and eta invariant. Even if
+that stage succeeds, a separate quantum or gravitational law is still required
+to fix `L` in physical units.

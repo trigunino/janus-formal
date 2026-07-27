@@ -142,7 +142,13 @@ theorem primitiveSpinCHopfFirstSphereSignedComplexPacketSynthesis_injective
       secondNegative - firstNegative := by
     change firstPositive + firstNegative = secondPositive + secondNegative
       at hEqual
-    module
+    calc
+      firstPositive - secondPositive =
+          (firstPositive + firstNegative) -
+            (secondPositive + firstNegative) := by abel
+      _ = (secondPositive + secondNegative) -
+            (secondPositive + firstNegative) := by rw [hEqual]
+      _ = secondNegative - firstNegative := by abel
   have hPositiveMem : firstPositive - secondPositive ∈
       PrimitiveSpinCHopfFirstSpherePositiveComplexSpan
         period hPeriod sector mode := by

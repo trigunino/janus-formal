@@ -188,7 +188,16 @@ def primitiveSpinCHopfLowEnergyComplexCoefficientOperator
             (-normalRootLeviCivitaCorrectedFrequency period sector mode) •
               second.1
       rw [smul_add]
-    · rw [map_add]
+    · change
+        primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+            period sector mode (first.2 + second.2) =
+          primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+              period sector mode first.2 +
+            primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+              period sector mode second.2
+      exact map_add
+        (primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+          period sector mode) first.2 second.2
   map_smul' scalar coefficients := by
     apply Prod.ext
     · change
@@ -198,7 +207,15 @@ def primitiveSpinCHopfLowEnergyComplexCoefficientOperator
             ((-normalRootLeviCivitaCorrectedFrequency period sector mode) •
               coefficients.1)
       module
-    · rw [map_smul]
+    · change
+        primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+            period sector mode (scalar • coefficients.2) =
+          scalar •
+            primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+              period sector mode coefficients.2
+      exact map_smul
+        (primitiveSpinCHopfFirstSphereSignedComplexCoefficientOperator
+          period sector mode) scalar coefficients.2
 
 @[simp]
 theorem primitiveSpinCHopfLowEnergyComplexCoefficientOperator_apply

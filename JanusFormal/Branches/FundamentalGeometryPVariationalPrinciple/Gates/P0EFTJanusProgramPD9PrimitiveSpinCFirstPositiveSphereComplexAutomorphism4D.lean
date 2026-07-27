@@ -1,4 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 
 /-!
 # Dirac automorphism on the geometric complex first-sphere packet
@@ -25,6 +27,8 @@ noncomputable section
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereComplexPacket4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 

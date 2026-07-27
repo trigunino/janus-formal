@@ -1,4 +1,9 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingPhaseLocal4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 
 /-!
 # First-sphere local formulas along the moving antipodal witness
@@ -28,8 +33,11 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9MatterSpinorLeviCivitaConnection4D
+open P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
 open P0EFTJanusProgramPD9PrimitiveMonopolePullbackBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
@@ -38,10 +46,13 @@ open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingPhaseLocal4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingWitnessLocal4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
+open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 open P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D
 open P0EFTJanusProgramPPrimitiveMonopoleZeroModeSection4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
@@ -135,6 +146,22 @@ theorem primitiveSpinCHopfMovingAntipodalWitness_gamma_zero
       .north
       (primitiveSpinCHopfMovingAntipodalCover_mem_north
         period hPeriod time)
+  change
+    d9UnitRadialClifford period hPeriod
+        (primitiveSpinCHopfAntipodalWitnessCover period hPeriod time)
+        ((primitiveSpinCHopfZeroModeLocalGaugeFamily
+          period hPeriod sector mode).localValue
+            (primitiveSpinCHopfAntipodalWitnessIndex
+              period hPeriod time)
+            (primitiveSpinCHopfAntipodalWitnessBase
+              period hPeriod time)) =
+      d9PrimitiveSpinCImaginaryAction
+        ((primitiveSpinCHopfZeroModeLocalGaugeFamily
+          period hPeriod sector mode).localValue
+            (primitiveSpinCHopfAntipodalWitnessIndex
+              period hPeriod time)
+            (primitiveSpinCHopfAntipodalWitnessBase
+              period hPeriod time)) at hRadial
   rw [primitiveSpinCHopfZeroModeLocalGaugeFamily_antipodal] at hRadial
   change
     d9UnitRadialClifford period hPeriod
@@ -284,7 +311,7 @@ theorem primitiveSpinCHopfFirstSphereTangentialLocalCoordinate_movingAntipodal
           period hPeriod time) hMem
     _ = _ := by
       rw [primitiveSpinCHopfFirstSphereTangentialLocalGaugeFamily_localValue,
-        hZero]
+        hZero, d9PrimitiveSpinCBaseUnitRadialCoordinate]
 
 /-- Positive first-sphere local-coordinate formula at every antipodal normal
 time. -/

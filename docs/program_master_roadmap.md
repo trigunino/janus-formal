@@ -244,6 +244,9 @@ Current results:
 
 - **T/C/X** monopole-spectrum arithmetic and product pairing;
 - **T/C** an explicit separated product-mode model gives a positive spectral gap and PT invariance of the squared spectrum;
+- **T/C** in each fixed normal-root sector, finite circle-mode packets of the
+  concrete geometric SpinC zero and first signed sphere blocks synthesize
+  injectively into genuine smooth sections and intertwine the actual Dirac;
 - **T/C** finite Hilbert truncations now have a proved symmetric diagonal Dirac action, nonnegative square and explicit two-sided resolvent away from the finite spectrum;
 - **T/C** the separated modes now generate an actual complete real `l2` Hilbert space; the maximal weighted diagonal operator is densely defined, linear, formally symmetric and closed, while its finite-mode span is dense and contained in every weighted domain;
 - **T/C** after complexification, both `(D-i)^{-1}` and `(D+i)^{-1}` are explicit mode multipliers; dense domain, formal symmetry and surjectivity of both non-real shifts are assembled into a concrete von Neumann self-adjointness certificate;
@@ -257,9 +260,10 @@ Current results:
 - **T/N** correction: `1/(2*sqrt(2))` is a compact-circle/sphere ratio, not `alpha/L_sphere`;
 - **C** primitive compatibility can give `A=L_sphere` under the declared LL/bimetric inputs;
 - **N** a common metric scale orbit survives;
-- **O** complete the positive geometric SpinC Fourier tower, identify it with
-  the proved abstract signed self-adjoint Fredholm operator, then compute the
-  actual eta invariant and full determinant.
+- **O** extend the proved finite low-energy geometric SpinC Fourier bridge to
+  arbitrary sphere levels and a common completed domain, identify it with the
+  proved abstract signed self-adjoint Fredholm operator, then compute the actual
+  eta invariant and full determinant.
 
 Last focused CI: **green**.
 
@@ -356,7 +360,7 @@ remain open.
 Canonical closure register:
 [`program_p_operational_todo.md`](program_p_operational_todo.md).
 Global status: **0/14 terminal gates**.
-Validation on 2026-07-26: Program P facade build `9863/9863`, focused scalar
+Validation on 2026-07-26: Program P facade build `9900/9900`, focused scalar
 analytic aggregate build `9317/9317`, integrity audit green.
 
 ## P0 — Moduli-geometry no-go
@@ -427,7 +431,9 @@ analytic aggregate build `9317/9317`, integrity audit green.
 - **T/C** on the supplied reduced Candidate-A FLRW dust branch, the exact
   `3 x 3` constraint minor stays nonzero on a nonempty open parameter locus of
   an explicit affine family, so the three constraint covectors are independent
-  there and on a neighbourhood of the witness. Generic phase-space rank,
+  there and on a neighbourhood of the witness. Its exact nonlinear constraint
+  curve contains distinct equal-energy points, so this reduced witness is not
+  a strict isolated vacuum. Generic phase-space rank,
   covariant/ADM derivation and Boulware--Deser exclusion remain open;
 - **T/N** different parent problems can preserve the reduced diagonal terms while changing the same-parity mixing;
 - **N** changing the parent action, boundary conditions or normalization changes the reduced action;
@@ -515,6 +521,11 @@ analytic aggregate build `9317/9317`, integrity audit green.
 - **T/C/N** for a supplied field-dependent diagonal generator `K(q)`, genuine
   infinitesimal action invariance is equivalent to `E(q) ∘ K(q) = 0`; the
   identity is stable under parameter maps but need not split between sectors;
+- **T/C** the exact nine-block Candidate-A action now has its actual Fréchet
+  Euler form on every regular common `C²` chart; its Jacobian satisfies
+  nonlinear Helmholtz, the normalized radial primitive reconstructs the same
+  action, arbitrary paired smooth `U(1)²` ghosts have constant physical gauge
+  orbits, and global functional null actions/boundary ambiguities are constants;
 - **N** a Hessian at one background does not determine a global nonlinear action;
 - **T/C** the concrete D8 time flow has a jointly analytic action map,
   restricts analytically to the throat and
@@ -524,10 +535,9 @@ analytic aggregate build `9317/9317`, integrity audit green.
   distinct half-period pullback, so the full-package representation is
   nontrivial. Its set-theoretic orbit quotient on the
   complete package has the exact invariant-function equivalence;
-- **O** integrate
-  arbitrary ghosts into the gauge group, and derive the complete Euler source,
-  PDE Noether identities, nonlinear Helmholtz conditions, variational
-  cohomology and boundary/null terms.
+- **O** construct a normed atlas covering every raw global tangent, derive the
+  componentwise local Euler/stress equations and diffeomorphism BRST/BV
+  identities, and build the full horizontal local variational bicomplex.
 
 ### Candidate A implementation checkpoint
 
@@ -539,9 +549,11 @@ New controlled subgates are now checked:
   on completed weighted `ell^2` Hilbert spaces. The reconstruction is bounded,
   the order-one symbol is defined on its maximal domain, its compatible
   zero-free image is closed, and the zero-mode obstruction remains in the same
-  weighted space. No identification with global Sobolev sections,
-  differentiated-series convergence, global PDE or boundary solvability is
-  proved;
+  weighted space. This Fourier-coefficient model remains deliberately
+  separate from the physical mapping torus. The latter now has its own
+  covariant curvature--Bianchi complex and faithful gauge `L²` complex with
+  exact `H⁰`, quotient and closed-range completion; no Fourier identification
+  is used;
 - **T/C** an invertible Sylvester derivative at a supplied real `4 x 4` root
   produces a genuine local differentiable matrix-root branch, with a concrete
   identity-base instance; no global/principal Lorentz-causal or smooth-field
@@ -552,6 +564,19 @@ New controlled subgates are now checked:
   inverse-metric contribution, and its square is the relative metric on an
   actual neighbourhood. This does not select a global, principal or causal
   branch;
+- **T** on the explicit global root-admissible domain, two intrinsic general
+  Lorentz metrics on the same tangent bundle now carry a smooth relative root
+  whose square is exact and whose matrix coefficients/densities agree with
+  Candidate A. The conformal positive branch proves the domain nonempty; no
+  universal real root outside that domain is asserted;
+- **T** one global configuration/tangent now combines these metrics, genuine
+  SpinC matter, `U(1)^2`, ghosts, auxiliaries, LL and D9/D10 without a duplicate
+  metric slot. Its finite-product `H¹`, throat trace, closed Dirichlet kernel
+  and common bulk/SpinC/D10/LL domains are constructed;
+- **T/C** the global boundary completion uses the true Gaussian throat,
+  finite explicit null faces/joints, the same Palatini flux and the canonical
+  divergence-free LL frame. Its total residual vanishes on the PT-fixed or
+  Dirichlet scalar sector; unrestricted scalar flux is intentionally retained;
 - **T/C** along a supplied continuous square-root lift, pointwise Sylvester
   equivalences identify each lift germ with its local IFT branch and force the
   inverse-Sylvester derivative; existence of that continuous lift and its
@@ -1095,12 +1120,22 @@ compatibility map K
   smooth quotient are not proved;
 - **N** Gauss–Codazzi–Ricci–Bianchi compatibility alone does not imply Helmholtz;
 - **N** off a target critical point, nonlinear second variation has an additional gradient-times-second-jet term;
-- **O** globalize the existing finite Gram/Saint--Venant and completed lattice
-  `K/J` models to the intrinsic Janus field bundle, then construct the physical
-  target pairing and global action primitive; none is supplied by the abstract
-  Fréchet theorems alone.
+- **T/C** the physical `K/J` operators and gauge Sobolev/cohomology are now
+  constructed on the intrinsic Janus field/domain package, and the regular
+  global action is assembled separately. Its actual chartwise Hessian is now
+  the symmetric Frechet derivative of the exact Euler map. The complete
+  D7/D9 tangent core and boundary pullback are unconditional, while the D10
+  Hilbert coordinate is a split direct factor of the global tangent. The
+  former whole-tangent-to-`ℓ²` equivalence is therefore not a target.
+  Constructing the dense smooth-to-chart analysis, all positive SpinC Fourier
+  modes, curved Calabi/Fredholm identification and BRST descent remains the
+  task of `HESSIAN-GLOBAL-01`; none follows from the abstract Fréchet theorems.
 
 # Programs A/B/C and absolute scale
+
+The integrated scale no-go proves that the available geometry, Dirac/LL,
+local heat and charge laws preserve a common rescaling orbit. Any successful
+input must break that orbit rather than merely reparameterize it.
 
 The strongest existing conditional chains transport dimensionless ratios and charge normalizations. The final absolute-scale prediction still requires all of:
 
@@ -1117,7 +1152,7 @@ The strongest existing conditional chains transport dimensionless ratios and cha
 | `FundamentalGeometryDiracSpectral` | focused CI green |
 | `FundamentalGeometryPEJetUniversality` | PR 10 merged; effective-deck jet head green, while Program P separately carries the actual twisted PinC/spinor bundles |
 | `FundamentalGeometryPEInvariantPairings` | focused CI green |
-| `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused heads green; Program-P façade locally verified on `dev-branch` |
+| `FundamentalGeometryD`, `D7`, `D8`, `D9`, `D10`, `P`, `P-F` | focused heads green; Program-P physical K/J, global naturality and regular action assemblies are integrated |
 | D9 | supported symbol/linear-BRST head; global Fredholm realization open |
 | D11 | supported naturality/finite-jet head; global Fredholm realization open |
 
@@ -1126,19 +1161,25 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
 # Shortest honest research path
 
 ```text
-1. construct the actual decorated Janus category and field space;
-2. choose induced/auxiliary/bulk metric formulation without double counting;
-3. integrate the existing twisted Pin/PinC/spinor bundles into that one field
-   space and identify the two smooth normal-coordinate representations;
-4. complete the geometric SpinC Fourier tower and its common Dirac domain;
-5. prove characteristic-class matching and attach the determinant connection;
+1. identify the two smooth normal-coordinate representations (`T01`);
+2. extend the chartwise Euler/physical `U(1)²` Noether closure to the raw-field
+   atlas and one nonlinear exterior BRST/BV derivation with boundary descent;
+3. extend the proved finite low-energy geometric SpinC Fourier bridge to every
+   sphere level and its common completed Dirac domain, then identify the
+   symmetric action Hessian with that gauge-fixed Fredholm family;
+4. extend the finite/common D7/D10 regulator to every physical and ghost
+   sector of that family;
+5. lift the proved circle determinant metric/flat connection and PT/inflow
+   cancellation to the full family, including local/global anomaly and
+   equivariant trivialization;
 6. construct the structured SpinC/PT/Z4/BRST jet groupoid and descent data;
 7. prove the higher-order structured jet-normal-form/integrability theorem;
-8. classify invariant scalar functions, global pairing modules and smooth equivariant evaluators;
-9. derive one concrete compatible Euler family from a parent or microscopic law;
-10. prove nonlinear Helmholtz, Noether and variational-cohomology closure;
-11. compute anomalies in the same regulator and field content;
-12. fix action normalization and finite counterterms microscopically;
-13. compute the renormalized effective action and prove one stable vacuum;
-14. close charge compatibility and the absolute scale.
+8. extend the proved finite six-invariant natural classification to the full
+   elliptic operator class;
+9. extend the proved nonlinear Helmholtz/global functional closure to the
+   full local horizontal jet variational bicomplex;
+10. supply a microscopic normalization and finite-part law; the current
+   hypotheses provably cannot close scheme independence by themselves;
+11. compute the renormalized effective action and prove one stable vacuum;
+12. close charge compatibility and the absolute scale.
 ```

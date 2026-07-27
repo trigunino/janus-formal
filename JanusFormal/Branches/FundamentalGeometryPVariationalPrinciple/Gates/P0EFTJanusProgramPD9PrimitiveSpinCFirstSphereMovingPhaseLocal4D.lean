@@ -1,5 +1,10 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingWitnessLocal4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 
 /-!
 # First-sphere local formulas along the moving phase witness
@@ -29,17 +34,23 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothNormalVectorBundle
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordFrame4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
+open P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
 open P0EFTJanusProgramPD9PrimitiveMonopolePullbackBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D
 open P0EFTJanusProgramPD9PrimitiveSpinCFirstSphereMovingWitnessLocal4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
+open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D
 open P0EFTJanusProgramPD9PrimitiveSpinCNormalModeSection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCZeroModeFourierSynthesis4D
 open P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D
 open P0EFTJanusProgramPPrimitiveMonopoleZeroModeSection4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
@@ -248,7 +259,7 @@ theorem primitiveSpinCHopfFirstSphereTangentialLocalCoordinate_movingPhase
           period hPeriod time) hMem
     _ = _ := by
       rw [primitiveSpinCHopfFirstSphereTangentialLocalGaugeFamily_localValue,
-        hZero]
+        hZero, d9PrimitiveSpinCBaseUnitRadialCoordinate]
 
 /-- Positive first-sphere local-coordinate formula at every normal time. -/
 theorem primitiveSpinCHopfFirstSpherePositiveLocalCoordinate_movingPhase
@@ -332,8 +343,9 @@ theorem primitiveSpinCHopfFirstSpherePositiveLocalCoordinate_movingPhase_zero
         primitiveSpinCHopfMovingPhaseWitnessValue
           period hPeriod sector mode time := by
   rw [primitiveSpinCHopfFirstSpherePositiveLocalCoordinate_movingPhase,
-    primitiveSpinCHopfMovingPhaseCoordinate_zero, one_smul,
-    primitiveSpinCHopfMovingPhaseWitness_gamma_zero, sub_self, add_zero]
+    primitiveSpinCHopfMovingPhaseCoordinate_zero,
+    primitiveSpinCHopfMovingPhaseWitness_gamma_zero]
+  simp
 
 @[simp]
 theorem primitiveSpinCHopfFirstSphereNegativeLocalCoordinate_movingPhase_zero
@@ -351,8 +363,9 @@ theorem primitiveSpinCHopfFirstSphereNegativeLocalCoordinate_movingPhase_zero
         primitiveSpinCHopfMovingPhaseWitnessValue
           period hPeriod sector mode time := by
   rw [primitiveSpinCHopfFirstSphereNegativeLocalCoordinate_movingPhase,
-    primitiveSpinCHopfMovingPhaseCoordinate_zero, one_smul,
-    primitiveSpinCHopfMovingPhaseWitness_gamma_zero, sub_self, add_zero]
+    primitiveSpinCHopfMovingPhaseCoordinate_zero,
+    primitiveSpinCHopfMovingPhaseWitness_gamma_zero]
+  simp
 
 @[simp]
 theorem primitiveSpinCHopfFirstSpherePositiveLocalCoordinate_movingPhase_one

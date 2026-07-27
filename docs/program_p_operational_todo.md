@@ -1385,8 +1385,10 @@ que si leur critère le dit explicitement.
   canonique, PT, le throat lisse et le bundle principal ambiant `Pin⁻(4)`.
 - Gate : `P0EFTJanusCanonicalEffectiveDecoratedMappingTorus4D`.
 - Acceptation : objets réellement typés sur la même base, sans champs de statut.
-- Limite : matière, `U(1)^2`, `PinC`, seconde métrique Candidate A générale et
-  action complète non incluses ; `GEO-GLOBAL-01` reste ouvert.
+- Limite historique : matière, `U(1)^2`, `PinC`, seconde métrique Candidate A
+  et action complète n'étaient pas incluses. La géométrie globale est désormais
+  portée par le domaine de racine admissible et l'action régulière est
+  désormais fermée par `ACTION-GLOBAL-01`.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1398,7 +1400,9 @@ que si leur critère le dit explicitement.
   racine intrinsèque et la densité Candidate A sur le même tangent.
 - Gate : `P0EFTJanusCanonicalDecoratedConformalCandidateA4D`.
 - Acceptation : carré exact et accord matriciel isotrope dans toute frame.
-- Limite : aucune paire générale non conforme ; `GEO-GLOBAL-01` reste ouvert.
+- Limite : cette gate ne construit que le sous-domaine conforme. La gate
+  globale accepte toute paire munie d'une racine réelle lisse; elle n'affirme
+  pas la fausse existence universelle hors de ce domaine admissible.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1461,8 +1465,10 @@ que si leur critère le dit explicitement.
 - Gate : `P0EFTJanusCanonicalDecoratedProgramPFieldDomain4D`.
 - Acceptation : configuration réelle PT-fixe, carré de racine, trace de bord
   et inclusion linéaire injective des variations, sans statut supposé.
-- Limite : l'accord avec action, Hessien et domaine Fredholm reste ouvert ;
-  `FIELD-GLOBAL-01` n'est pas fermé.
+- Limite historique : l'espace global unique, l'action, l'Euler et la
+  Hessienne chartwise sont maintenant fermés. L'identification de cette
+  Hessienne au domaine Fredholm géométrique reste séparée sous
+  `HESSIAN/DIRAC-GLOBAL-01`.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1475,8 +1481,9 @@ que si leur critère le dit explicitement.
 - Gate : `P0EFTJanusCanonicalDecoratedGeneralLorentzFieldPacket4D`.
 - Acceptation : mêmes champs matière/jauge/ghosts/auxiliaires/LL, métriques du
   noyau décoré, paquet et trace de bord PT-fixes.
-- Limite : les deux métriques canoniques sont égales ; paire générale distincte,
-  racine et accord opératoriel encore ouverts. `FIELD-GLOBAL-01` reste ouvert.
+- Limite historique : les deux métriques de cette ancienne gate sont égales.
+  Elle est désormais subsumée par la configuration globale à paire générale
+  racine-admissible.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1489,8 +1496,9 @@ que si leur critère le dit explicitement.
 - Gate : `P0EFTJanusCanonicalPTPairedConformalGeneralLorentzFieldPacket4D`.
 - Acceptation : naturalité PT de la métrique conforme, racine opératorielle,
   mêmes champs non métriques, paquet et trace de bord PT-fixes.
-- Limite : paire conforme seulement ; la paire non conforme générale et sa
-  racine restent ouvertes. `GEO-GLOBAL-01` et `FIELD-GLOBAL-01` restent ouverts.
+- Limite : paire conforme seulement; elle fournit un constructeur concret du
+  domaine global racine-admissible, sans prétendre couvrir les paires frappées
+  par l'obstruction spectrale réelle.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1504,8 +1512,8 @@ que si leur critère le dit explicitement.
 - Acceptation : mode sinus lisse descendu au quotient, facteur `2 + sin`
   strictement positif et non PT-fixe, injectivité du redimensionnement conforme,
   puis inégalité des deux métriques du paquet canonique explicite.
-- Limite : le secteur non conforme général reste ouvert ; `GEO-GLOBAL-01` et
-  `FIELD-GLOBAL-01` restent ouverts.
+- Limite : témoin conforme explicite seulement; le domaine global autorise les
+  autres paires exactement lorsqu'une racine réelle lisse est fournie.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -2062,7 +2070,9 @@ que si leur critère le dit explicitement.
   canonique sur le nouveau tangent spinoriel; les coordonnées normales et gauge
   restent celles du tangent historique sans matière, tandis que le spinor vient
   explicitement de la section équivariante.
-- Limite : la coordonnée modale D10 et l'action/Hessien restent sur l'ancien type.
+- Limite historique : la coordonnée modale D10 et l'action/Hessien restaient
+  sur l'ancien type. L'action globale consomme désormais le doublet SpinC;
+  Hessien et famille D10 restent séparés.
 - Porte terminale : aucune ; migre le point d'entrée central du domaine D9.
 
 ### `P-T01-D9-SPINOR-PAIRING-SMOOTH` — Pairing lisse des sections D9
@@ -2145,6 +2155,26 @@ que si leur critère le dit explicitement.
   la complétude spectrale restent ouverts.
 - Porte terminale : aucune ; avance `DIRAC-GLOBAL-01` et `REGULATOR-GLOBAL-01`.
 
+### `P9-SPINC-LOW-ENERGY-FINITE-GEOMETRIC-FOURIER` — Pont Fourier géométrique fini
+
+- État : `DONE` (2026-07-26). Portée : `GÉOMÉTRIQUE/MODES-FINIS`.
+- Gates : `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeCore4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeFourierCoordinates4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeMovingLocal4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeGeometricFourier4D`.
+- Résultat : dans chaque secteur de racine fixé, tout paquet à support fini en
+  modes du cercle du bloc zéro plus les deux blocs signés de première sphère
+  possède une synthèse en vraies sections lisses qui est injective. Les deux
+  témoins locaux mobiles et les quatre coordonnées complexes de fibre ramènent
+  la séparation inter-modes au théorème Fourier fini existant; le vrai Dirac et
+  son carré séparent ensuite les trois blocs, puis les témoins locaux existants
+  récupèrent les sept coefficients complexes de chaque mode.
+- Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
+- Limite : ce pont porte sur le bloc bas-énergie à support fini, pas sur les
+  niveaux sphériques arbitraires, la complétion Hilbert/Sobolev, le domaine
+  non borné commun ni l'exhaustivité spectrale.
+- Porte terminale : aucune ; avance `DIRAC-GLOBAL-01`.
+
 ### `P9-SPINC-SIGNED-ABSTRACT-SPECTRUM` — Deux branches internes signées
 
 - État : `DONE` (2026-07-26). Portée : `ANALYTIQUE/ABSTRAITE`.
@@ -2160,7 +2190,8 @@ que si leur critère le dit explicitement.
   une bijectivité, la propriété de Fredholm et l'indice nul.
 - Limite : l'identification de cette base abstraite avec une famille complète
   de sections propres géométriques lisses reste le théorème de Fourier
-  géométrique; seule sa réalisation aux niveaux zéro et premier est fermée.
+  géométrique. Le segment à support fini des niveaux zéro et premier signés est
+  maintenant fermé, mais les niveaux arbitraires et la complétion restent ouverts.
 - Porte terminale : aucune ; corrige la portée de `DIRAC-GLOBAL-01`.
 
 ### `P-T01-AMBIENT-PINMINUS-LOCAL-SECTIONS-REDUCTION` — Fermeture du revêtement
@@ -2188,8 +2219,9 @@ que si leur critère le dit explicitement.
   `C∞` intrinsèque et ses coordonnées de trivialisation. Il ne reste, pour
   cette présentation particulière, que l'égalité de changement de coordonnées
   avec la représentation cover-produit `canonicalLatitudeSectionNormal`.
-  Ce pont de représentation est rattaché à `GEO-GLOBAL-01`; ce n'est plus une
-  carte analytique autonome.
+  Ce pont de représentation est un contrôle de présentation `Pin⁻/T01`, pas
+  une condition de la géométrie Candidate A désormais fermée; ce n'est toujours
+  pas une carte analytique autonome.
 - Porte terminale : aucune ; réduction exacte d'un sous-verrou de `T01`.
 
 ### `P-LL-WEAK-JACOBI-SCOPE` — Hessien LL simultané et obstruction flux-only
@@ -2214,10 +2246,10 @@ que si leur critère le dit explicitement.
   coefficients locaux et la reconstruction locale de tout tangent. Réaliser
   simultanément un tangent arbitraire exige seulement leur assemblage en une
   droite inverse lisse globale, puis un flot matriciel inversible; ce pont est
-  rattaché à `KJ-GLOBAL-02`/`HESSIAN-GLOBAL-01`, pas à une nouvelle carte LL.
+  rattaché à `HESSIAN-GLOBAL-01`, pas à une nouvelle carte LL.
   La direction de jauge générale n'est radiale que sous le critère affiché, et
   aucune dégénérescence injustifiée n'est affirmée.
-- Porte terminale : aucune ; avance `KJ-GLOBAL-02` et `HESSIAN-GLOBAL-01`.
+- Porte terminale : aucune ; avance `HESSIAN-GLOBAL-01`.
 
 ### `P-FULL-ACTION-FRECHET-LINE-BRIDGE` — Pont Fréchet concret maximal
 
@@ -2251,27 +2283,31 @@ que si leur critère le dit explicitement.
   lissité intrinsèque : les quatre vecteurs modèles fixes ne sont pas des
   sections tangentes globales continues d'un atlas quotient arbitraire. Pour
   EH/Maxwell, la lissité séparée en chaque point ne fournit pas la continuité
-  jointe paramètre–point. La fermeture générale exige donc un espace de champs
-  intrinsèque muni d'une topologie `C∞/Sobolev` et une action écrite dans des
-  repères locaux recollés; ce sont `FIELD-GLOBAL-01` et `GEO-GLOBAL-01`, pas un
-  résidu technique autonome. Ce n'est pas encore une fermeture de
-  `ACTION-GLOBAL-01`.
+  jointe paramètre–point. L'espace de champs intrinsèque, ses repères recollés,
+  son produit `H¹`, sa trace et ses domaines fermés sont maintenant construits.
+  Le transport vers l'action globale régulière est maintenant effectué.
+  La variation complète et la Hessienne chartwise sont maintenant intégrées;
+  leur identification au Fredholm gauge-fixé relève de
+  `HESSIAN-GLOBAL-01`, pas d'un résidu technique autonome.
 - Porte terminale : aucune ; avance `T03`–`T05`, `T11` et `T12`.
 
 ### Classement final des anciens résidus immédiats — 26 juillet 2026
 
 Il ne reste aucune carte autonome dans cette ancienne liste :
 
-- le spectre SpinC signé abstrait est fermé; la tour de Fourier géométrique
-  complète appartient à `DIRAC-GLOBAL-01`;
+- le spectre SpinC signé abstrait et le pont Fourier géométrique fini du bloc
+  bas-énergie sont fermés; leur extension à la tour complète et au domaine
+  commun appartient à `DIRAC-GLOBAL-01`;
 - la normale intrinsèque et ses coordonnées locales sont déjà `C∞`; la seule
-  comparaison avec `canonicalLatitudeSectionNormal` appartient à
-  `GEO-GLOBAL-01`;
+  comparaison avec `canonicalLatitudeSectionNormal` est un contrôle de
+  présentation `Pin⁻/T01`, distinct de la géométrie Candidate A;
 - les générateurs LL, coefficients locaux, directions radiales/anisotropes et
   cisaillements sont construits; l'assemblage global d'un tangent arbitraire
-  appartient à `KJ-GLOBAL-02`/`HESSIAN-GLOBAL-01`;
-- les critères et assemblages `C²` maximaux sont fermés; leur transport vers
-  les vrais champs appartient à `FIELD-GLOBAL-01`/`ACTION-GLOBAL-01`.
+  appartient à `HESSIAN-GLOBAL-01`;
+- les critères et assemblages `C²` maximaux sont fermés; l'espace des vrais
+  champs et l'action régulière assemblée sont maintenant fixés. L'Euler
+  chartwise est fermé; Hessien et famille de Fredholm restent dans leurs
+  blocs globaux dédiés.
 
 ## 6. Verrous globaux — ne pas distribuer comme petites cartes
 
@@ -2280,30 +2316,111 @@ doit être annoncé comme fermeture globale.
 
 | ID | Résultat global exigé | Dépendances principales |
 |---|---|---|
-| `GEO-GLOBAL-01` | Deux métriques Candidate A comme sections intrinsèques du même `T*⊗T*`, avec racine et densités identifiées aux modèles de coefficients. | `P-INTRINSIC-ROOT-01`, atlas tensoriel |
-| `FIELD-GLOBAL-01` | Un espace de configurations/tangents unique pour métriques générales, matière, `U(1)^2`, ghosts, auxiliaires, LL, D9/D10 et bord. | `P-CV-MODULE-01`, `PE-PIN-CANONICAL-BUNDLE` |
-| `ANALYSIS-GLOBAL-01` | Sobolev intrinsèque, trace du throat et domaines fermés communs. | cartes H¹ et Stokes |
-| `BOUNDARY-GLOBAL-01` | EH+GHY+faces nulles+joints+LL sur la vraie géométrie, variation sans flux incontrôlé. | métriques intrinsèques, Stokes |
-| `KJ-GLOBAL-01` | Opérateurs distincts `K_Gram`, `DK_Gram`, `K_SV`, `R`, `B_Noether`, `B_Bianchi` sur les vrais bundles. | champ/domaines communs |
-| `KJ-GLOBAL-02` | Complexe global, identités, conditions au bord, cohomologie et quotient Sobolev. | `KJ-GLOBAL-01`, analyse globale |
-| `NATURAL-GLOBAL-01` | Catégorie Janus, jets holonomes, bundles `Pin⁻`/`PinC` et classification naturelle finie des pairings/termes locaux. | bundle Pin réel, champs communs |
-| `ACTION-GLOBAL-01` | Une action Candidate A covariante complète : EH, interaction, matière, Maxwell, LL et tous termes de bord. | géométrie, bord, classification naturelle |
-| `EULER-GLOBAL-01` | Euler complet de cette action exacte sur toutes ses variables. | `ACTION-GLOBAL-01` |
-| `NOETHER-GLOBAL-01` | Identités locales Noether/Bianchi pour ghosts arbitraires sur la même action. | Euler, `KJ-GLOBAL-01` |
-| `HELMHOLTZ-GLOBAL-01` | Helmholtz non linéaire et reconstruction de cette même classe d'action. | Euler, Noether, complexe global |
-| `VARCOH-GLOBAL-01` | Cohomologie variationnelle, lagrangiens nuls et ambiguïtés de bord classifiés. | classification naturelle, Helmholtz |
-| `ADM-GLOBAL-01` | ADM dérivée, moments, contraintes primaires/secondaires, rang et crochet fonctionnel. | action/variation de bord |
-| `STABILITY-GLOBAL-01` | Fermeture des contraintes, absence du mode BD ou rejet, stabilité du quotient, limite faible et PPN. | `ADM-GLOBAL-01` |
-| `DIRAC-GLOBAL-01` | Vrai Dirac géométrique Janus signé, domaine global commun et famille Fredholm lisse. | champs/bundles/domaines communs |
-| `BRST-GLOBAL-01` | Complexe BRST/BV non linéaire complet sur la même action et les mêmes conditions au bord. | champs, Noether, domaines |
-| `HESSIAN-GLOBAL-01` | Seconde variation de la même action = opérateur Fredholm naturel gauge-fixé ; dégénérescence avant quotient et descente après quotient. | action, BRST, Sobolev, Fredholm |
-| `REGULATOR-GLOBAL-01` | Régulateur commun, vrais spectres, multiplicités et statistiques de tous les secteurs/ghosts. | Dirac, Hessien, BRST |
-| `QUILLEN-GLOBAL-01` | Indice familial et ligne/gerbe avec géométrie Quillen/Bismut–Freed naturelle. | famille Fredholm, régulateur |
-| `ANOMALY-GLOBAL-01` | Anomalies locale/globale, eta analytique, APS/inflow et annulation PT pour le contenu complet. | Quillen, régulateur commun |
-| `SCHEME-GLOBAL-01` | Contre-termes covariants, parties finies microscopiques et indépendance de schéma. | classification locale, anomalie globale, principe microscopique |
-| `MICRO-GLOBAL-01` | Parent bulk/junction ou principe microscopique sélectionnant Candidate A. | entrée physique absente du dépôt actuel |
-| `VACUUM-GLOBAL-01` | Action effective complète, branches stationnaires, vide unique et stabilité contrainte. | action, anomalies, schéma, sélection |
-| `SCALE-GLOBAL-01` | Normalisation, unités et échelle absolue sans ajustement à un rayon observé. | principe microscopique, vide |
+| `GEO-GLOBAL-01` | **DONE (2026-07-26)** — Deux métriques Candidate A comme sections intrinsèques du même `T*⊗T*`, avec racine et densités identifiées aux modèles de coefficients. | `P0EFTJanusProgramPGlobalCandidateAGeometry4D` |
+| `FIELD-GLOBAL-01` | **DONE (2026-07-26)** — Un espace de configurations/tangents unique pour métriques générales, matière SpinC doublée (racines opposées), `U(1)^2`, ghosts, auxiliaires, LL, D9/D10 et bord dérivé. | `P0EFTJanusProgramPGlobalFieldSpace4D` |
+| `ANALYSIS-GLOBAL-01` | **DONE (2026-07-26)** — Sobolev intrinsèque, trace du throat et domaines fermés communs. | `P0EFTJanusProgramPGlobalAnalysisDomain4D` |
+| `BOUNDARY-GLOBAL-01` | **DONE (2026-07-26)** — EH+GHY, faces nulles/joints finis et LL sur la vraie gorge; flux scalaire conservé en général puis fermé sur le domaine PT/Dirichlet. | `P0EFTJanusProgramPGlobalBoundaryCompletion4D` |
+| `KJ-GLOBAL-01` | **DONE (2026-07-26)** — `K_Gram`, `DK_Gram`, `R` et `B_Noether` sont intrinsèques; `K_SV` est la courbure de la vraie connexion de Levi-Civita sur l'atlas holonome total et `B_Bianchi` sa dérivée cyclique covariante. La connexion satisfait sa loi de transition et `B_Bianchi ∘ K_SV = 0` en tout point physique. Les opérateurs plats `Fin 4` sont séparés par le suffixe `_symbol`. | `P0EFTJanusMappingTorusIntrinsicLeviCivitaBianchi4D`, `P0EFTJanusProgramPGlobalCompatibilityOperators4D` |
+| `KJ-GLOBAL-02` | **DONE (2026-07-26)** — Le complexe physique assemble le Bianchi covariant, le vrai différentiel de jauge `U(1)^2` dans le `L²` canonique, son noyau exact `H⁰ ≃ ℝ²`, quotient et complétion fermée, ainsi que la version appariée du package global avec noyau `GaugeLieAlgebra × GaugeLieAlgebra` et le domaine Dirichlet commun. Le complexe `ℤ⁴` reste explicitement un certificat de symbole auxiliaire. | `P0EFTJanusMappingTorusPhysicalGaugeSobolevComplex4D`, `P0EFTJanusProgramPGlobalCompatibilityComplex4D` |
+| `NATURAL-GLOBAL-01` | **DONE (2026-07-26)** — Catégorie Janus, jets holonomes descendus, vrais bundles `Pin⁻`/`PinC`, classificateur local fini fidèle et unicité exacte des coefficients dans la troncature EFT à six invariants. | `P0EFTJanusProgramPGlobalNaturalClassification4D` |
+| `ACTION-GLOBAL-01` | **DONE (2026-07-26)** — Action Candidate A sur son domaine régulier commun : deux EH, interaction, matière SpinC doublée `Re⟨ψ,Dψ⟩+m²⟨ψ,ψ⟩`, deux Maxwell, LL, GHY, faces nulles, contre-termes et joints. | `P0EFTJanusProgramPGlobalCovariantAction4D` |
+| `EULER-GLOBAL-01` | **DONE (2026-07-26, portée chartwise)** — Les neuf blocs de l'action exacte sont identifiés, `C²` sur toute carte variationnelle régulière commune, et leur véritable dérivée de Fréchet définit l'Euler dans toute direction de cette carte. | `P0EFTJanusProgramPGlobalEulerLagrange4D` |
+| `NOETHER-GLOBAL-01` | **DONE (2026-07-26, portée physique `U(1)²`)** — L'Euler annule tout générateur d'une symétrie terme par terme; indépendamment, l'orbite de jauge des deux Maxwell est constante pour toute paire de ghosts lisses et se combine au Bianchi courbe intrinsèque. | `P0EFTJanusProgramPGlobalNoether4D` |
+| `HELMHOLTZ-GLOBAL-01` | **DONE (2026-07-26, portée chartwise)** — Le Jacobien du véritable Euler est symétrique; la primitive radiale normalisée reconstruit exactement la même action, et deux représentants de même Euler diffèrent d'une constante. | `P0EFTJanusProgramPGlobalHelmholtzReconstruction4D` |
+| `VARCOH-GLOBAL-01` | **DONE (2026-07-26, portée fonctionnelle globale)** — Obstruction fonctionnelle exacte nulle, fonctionnelles variationnellement nulles constantes, noyau nul du classificateur naturel fini, ambiguïtés de contre-termes constantes et résidu physique de bord nul. | `P0EFTJanusProgramPGlobalVariationalCohomology4D` |
+| `ADM-GLOBAL-01` | **FRONTIER (2026-07-27, portée FLRW réduite)** — La Legendre de l’action Candidate-A FLRW donne exactement `N₊C₊+N₋C₋`; les primaires sont ses dérivées de lapse, leur crochet canonique est la secondaire, la préservation la force, et un ouvert non vide garde le rang trois. Un témoin poussière positif fixe aussi le rapport des lapses. Il manque la réduction covariante avec shifts/dérivées spatiales, l’algèbre fonctionnelle, le rang global et l’exclusion BD. | `P0EFTJanusProgramPGlobalADMFrontier4D` |
+| `STABILITY-GLOBAL-01` | **FRONTIER (2026-07-27, portée réduite)** — Le cône proportionnel sûr a une énergie non négative. Sur le témoin poussière, le noyau tangent contraint est exactement unidimensionnel; une courbe contrainte non triviale garde le Hamiltonien nul, donc la Hessienne ambiante négative n’est pas une instabilité contrainte mais le vide n’est pas strictement isolé. Il manque quotient ADM/BD, tous les modes, matière/bord, limite faible et PPN. | `P0EFTJanusProgramPGlobalStabilityFrontier4D`, `ADM-GLOBAL-01` |
+| `DIRAC-GLOBAL-01` | **FRONTIER (2026-07-26)** — Dirac D9 intrinsèque lisse/elliptique, réalisation spectrale signée complète auto-adjointe Fredholm, entrelacement géométrique zéro/premier niveau et famille séparée `C³`. Il manque l’identification Fourier unitaire géométrique de tous les niveaux sur le domaine complété commun. | `P0EFTJanusProgramPGlobalDiracFrontier4D` |
+| `BRST-GLOBAL-01` | **FRONTIER (2026-07-26)** — BRST `U(1)²` nilpotent et invariant pour l’action, Jacobi du ghost extérieur, doublet BV métrique nilpotent et stable au bord; le contournement par ghost ordinaire est exclu. Il manque une dérivation extérieure non linéaire unique sur tous les champs, antifields et composantes de bord. | `P0EFTJanusProgramPGlobalBRSTFrontier4D` |
+| `HESSIAN-GLOBAL-01` | **FRONTIER (2026-07-27)** — La Hessienne est la vraie dérivée de Fréchet de l’Euler assemblé et elle est symétrique sur chaque carte régulière. Le noyau D7/D9 (module tangent, inclusion/rétraction, coordonnées, bord et assemblage local) est maintenant certifié sans hypothèse; la coordonnée D10 du vrai tangent global est un facteur direct avec projection surjective et section linéaire injective. Une analyse dense du tangent lisse vers la carte est typée, et sa fourniture donne une Hessienne symétrique sur le cœur lisse. Il reste à construire cette analyse dense, la tour Fourier SpinC positive complète, l’identification au Fredholm gauge-fixé et la descente BRST. | `P0EFTJanusProgramPCompleteVariationConstructedCore4D`, `P0EFTJanusProgramPGlobalAnalyticSpine4D`, `P0EFTJanusProgramPGlobalHessianFrontier4D` |
+| `REGULATOR-GLOBAL-01` | **FRONTIER (2026-07-26)** — Blocs de chaleur D7 compacts, déterminant `Z4`, régulateur D10 fini à temps commun avec multiplicités/statistiques et annulation PT; le pont vers la Hessienne est exact sous le contrat de domaine. Il manque la limite commune de tous les secteurs/ghosts. | `P0EFTJanusProgramPGlobalRegulatorFrontier4D` |
+| `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
+| `ANOMALY-GLOBAL-01` | **FRONTIER (2026-07-26)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D` |
+| `SCHEME-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-26)** — Des témoins distincts satisfont platitude et annulation PT; une ligne de Quillen fixée ne fixe pas l’action scalaire renormalisée. Les parties finies et la normalisation doivent venir d’une loi microscopique. | `P0EFTJanusProgramPGlobalSchemeFrontier4D`, `MICRO-GLOBAL-01` |
+| `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT, mais deux parents admissibles donnent des mixages réduits différents. La sélection discrète de `α` et du sextique est exacte seulement après fourniture de `β`, du niveau, du verrou et de l’ancrage UV. Il manque donc la loi microscopique Janus sélectionnant le parent et ses parties finies. | `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
+| `VACUUM-GLOBAL-01` | **FRONTIER (2026-07-27; dépendance physique bloquante)** — L’interaction PT-plate proportionnelle a un minimum positif unique en `c=1` et une Hessienne réduite positive, mais les contraintes FLRW du vide y perdent leur rang et la branche poussière possède une direction contrainte isoénergétique. Le vide global exige encore l’action effective renormalisée, le quotient stable, la trivialisation d’anomalie et les parties finies microscopiques. | `P0EFTJanusProgramPGlobalVacuumFrontier4D`, `STABILITY/ANOMALY/SCHEME/MICRO-GLOBAL-01` |
+| `SCALE-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Géométrie, gap de Dirac, flux LL, action locale de chaleur et compatibilité des charges conservent une orbite commune de redimensionnement; les hypothèses actuelles ne sélectionnent donc aucune longueur positive unique. Il faut un ancrage microscopique dimensionné indépendant et un vide effectif stable sélectionné, sans injecter un rayon observé. | `P0EFTJanusProgramPGlobalScaleFrontier4D`, `MICRO-GLOBAL-01`, `VACUUM-GLOBAL-01` |
+
+Portée exacte des fermetures et frontières globales :
+
+- `GEO` travaille sur le domaine maximal honnête des paires munies d'une
+  racine réelle lisse. Le constructeur conforme prouve que ce domaine est
+  habité; aucune racine universelle incompatible avec l'obstruction spectrale
+  n'est postulée.
+- `FIELD` retire l'ancien tangent métrique diagonal en doublon et conserve une
+  seule perturbation tensorielle générale; matière SpinC, projection D9,
+  coordonnées D10 et trace de bord proviennent du même objet.
+- `ANALYSIS` extrait les coefficients du vrai tenseur par la famille
+  génératrice lisse intrinsèque, les complète dans le produit physique `H¹`,
+  construit la trace continue et son noyau Dirichlet fermé, puis agrège les
+  domaines SpinC, D10 et LL.
+- `BOUNDARY` identifie la gorge canonique à la donnée non nulle
+  gaussienne, relie son flux EH au même vecteur de Palatini que le bulk,
+  assemble GHY/null/joints, et utilise le repère LL préservant la mesure. La
+  formule scalaire universelle garde son flux orienté; son annulation est un
+  théorème du secteur PT-fixe ou Dirichlet, jamais un axiome.
+- `KJ-01/02` ne reposent sur aucun renommage du modèle de Fourier. Sur le vrai
+  mapping-torus, la connexion de Levi-Civita, sa courbure et la dérivée de
+  Bianchi incluent les termes de connexion/courbure; l'identité est couverte
+  par l'atlas total. Le secteur linéaire de jauge possède son vrai modèle
+  `L²`, son `H⁰`, son quotient et sa complétion fermée. Le modèle spectral
+  `ℤ⁴` reste auxiliaire. Aucune exactitude globale de type Calabi
+  `ker B = im K` pour une métrique courbe arbitraire n'est affirmée : cette
+  question de linéarisation elliptique/Fredholm appartient à
+  `HESSIAN-GLOBAL-01`, pas à la fermeture du complexe covariant.
+- `NATURAL` est fermé à la portée annoncée : classification exacte des termes
+  locaux dans la troncature EFT finie à six invariants. Elle classe les
+  coefficients libres; elle ne les sélectionne pas physiquement.
+- `ACTION` est fermée sur le domaine régulier explicitement typé. Le terme
+  cinétique de matière est le vrai Dirac Levi-Civita doublé de la gorge
+  canonique, pas un substitut scalaire.
+- `EULER/HELMHOLTZ` travaillent sur toute carte normée commune dont les neuf
+  blocs physiques exacts sont `C²`. Ils utilisent la vraie dérivée de
+  Fréchet de l'action assemblée, prouvent la symétrie de son Jacobien et
+  reconstruisent exactement l'action normalisée. Ils ne construisent pas
+  encore un atlas normé couvrant chaque valeur brute de `GlobalFieldTangent`.
+- `HESSIAN` ne dépend plus du contrat monolithique qui identifiait à tort tout
+  tangent lisse au `ℓ²` D10. D7/D9 et le domaine de bord sont certifiés
+  canoniquement; D10 est déjà un facteur direct scindé du tangent global.
+  Les résidus sont séparés : analyse dense vers une carte normée, Fourier
+  géométrique SpinC à tous les niveaux, opérateur Fredholm par blocs et
+  descente gauge/BRST.
+- `NOETHER` est inconditionnel pour les ghosts lisses appariés du secteur
+  physique `U(1)²` et pour le Bianchi de Levi-Civita. Le BRST/BV non linéaire
+  des difféomorphismes reste dans `BRST-GLOBAL-01`.
+- `VARCOH` ferme la cohomologie **fonctionnelle globale** sur ces cartes et
+  le noyau de la troncature naturelle finie. Il ne prétend pas construire le
+  bicomplexe variationnel horizontal local complet des densités de jets.
+- `ADM` ferme toute la chaîne réellement dérivée dans la réduction FLRW :
+  Legendre, primaires, crochet secondaire, préservation et rang local ouvert.
+  Le compte `7` degrés de liberté reste la cible arithmétique conditionnelle;
+  aucun shift ni crochet fonctionnel de champs n’est caché dans ce certificat.
+- `STABILITY` sépare formellement la Hessienne ambiante de la variation
+  contrainte. La courbe poussière exacte donne des configurations distinctes
+  de même énergie : elle interdit une lecture de minimum strict isolé dans ce
+  secteur, sans prouver une instabilité globale.
+- `VACUUM` rassemble le minimum proportionnel 1D, le no-go de rang du vide
+  FLRW, la direction contrainte sourcée et la liberté de schéma. Ces résultats
+  sont compatibles mais ne sélectionnent pas un vide physique global.
+- `MICRO` rassemble la réduction exacte du parent disponible, sa réciprocité
+  de Helmholtz et la sélection discrète conditionnelle. Le contre-exemple à
+  deux parents prouve que les hypothèses actuelles ne sélectionnent ni
+  l'action réduite ni ses parties finies.
+- `SCALE` combine les no-go géométrique, spectral, chaleur et charge : toutes
+  les lois disponibles sont covariantes sous une même dilatation. Une longueur
+  absolue exige donc une donnée dimensionnée indépendante, puis un vide stable.
+- `DIRAC/BRST/HESSIAN/REGULATOR/QUILLEN/ANOMALY` possèdent désormais des
+  certificats de frontier intégrés et sans nouvel axiome. Chacun expose dans
+  son type la partie construite et conserve séparément le pont global manquant;
+  aucun de ces six IDs n’est donc marqué `DONE`.
+- `SCHEME` est plus qu’un TODO technique : le no-go construit deux libertés
+  de schéma effectives. Sans donnée microscopique supplémentaire,
+  `SCHEME-GLOBAL-01` est impossible à déduire des hypothèses actuelles.
+
+Ces distinctions expliquent pourquoi les portes terminales plus fortes
+`T03`–`T06` restent décochées ci-dessous : elles exigent encore l'atlas
+physique brut, le système local par composantes et le bicomplexe local, pas
+seulement leur fermeture fonctionnelle chartwise.
 
 `MICRO-GLOBAL-01` et `SCALE-GLOBAL-01` sont actuellement
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
