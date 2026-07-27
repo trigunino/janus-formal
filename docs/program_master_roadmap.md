@@ -983,6 +983,7 @@ Focused head:
 
 ```text
 lake build JanusFormal.Branches.FundamentalGeometryPEJetUniversality
+lake build JanusFormal.Branches.FundamentalGeometryPELemmaAudit
 ```
 
 Operator-by-operator statement:
@@ -1023,6 +1024,8 @@ regular local operator
 
 Current theorem evidence:
 
+- **I/T** the Peetre–Slovák/Whitney reduction now has a complete written analytic proof, while its Lean-kernel formalization remains explicitly open;
+- **T** the corrected five-lemma abstract/local audit is assembled in Lean, including the constructive Lemma 2 equivalence and finite Lemma 3/4 fragments;
 - **I** Peetre–Slovák supplies local finite-order factorization only under regularity/locality hypotheses;
 - **T** naturality/equivariance equivalence and evaluator uniqueness in the formal action model;
 - **T** holonomic factorization of composite evaluators;
