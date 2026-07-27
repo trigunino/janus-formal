@@ -1,6 +1,7 @@
 # Program P.E-J — Finite-Jet Universality and Categorical Scope
 
 > Master project map: [`program_master_roadmap.md`](program_master_roadmap.md)  
+> Analytic Lemma 1: [`program_pe_lemma1_locality_finite_jet.md`](program_pe_lemma1_locality_finite_jet.md)
 > Precise Lemma 2: [`program_pe_lemma2_naturality_equivariance.md`](program_pe_lemma2_naturality_equivariance.md)  
 > Corrected category theorem: [`program_pe_categorical_jet_equivalence.md`](program_pe_categorical_jet_equivalence.md)
 
@@ -356,6 +357,8 @@ vector/principal bundles, higher jets or extension across isotropy strata.
 
 | Claim | Status |
 | --- | --- |
+| local finite-jet reduction from locality and regularity | complete written Peetre–Slovák/Whitney proof; Lean-kernel formalization remains open |
+| corrected five-lemma abstract/local audit | assembled and checked in `FundamentalGeometryPELemmaAudit.lean` |
 | finite-jet naturality/equivariance equivalence | proved in Lean action model |
 | evaluator uniqueness under jet surjectivity | proved in Lean action model |
 | composite factors through higher jet under holonomic compatibility | proved in Lean abstract model |
