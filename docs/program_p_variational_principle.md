@@ -1451,7 +1451,28 @@ including their pairings. The integrated geometric tensor pairing now gives
 a canonical linear morphism from smooth two-metric antifields to that
 algebraic dual. Its coadjoint equivariance is now exactly equivalent to
 integrated skew-adjointness of the tensorial Lie action; this identity and
-nondegeneracy remain open. The
+nondegeneracy remain open. The genuine fixed-throat tensor pair is now a
+bundled real module, and its canonical integrated intrinsic pairing gives a
+second linear geometric-to-algebraic antifield morphism. Injectivity is now
+equivalent to separation by this pairing and follows from diagonal
+definiteness; equivariance is equivalent to integrated skew-adjointness for
+any supplied throat representation. These analytic identities remain open.
+The constructed realization and both criteria are now exposed by the unified
+nonlinear BRST certificate and `GlobalBRSTFrontier`.
+The latter now also aggregates the complete nonlinear certificate, the bulk
+metric geometric dual and the conditional tensorial coadjoint closure for
+every supplied Maxwell/metric Lie representation.
+For genuine throat tensors, bilinear separation and integrated
+skew-adjointness now construct the faithful geometric coadjoint bridge
+directly through a global frontier gate. An explicit nonzero symmetric
+Lorentzian tensor has nilpotent raised endomorphism and zero quadratic trace,
+so diagonal definiteness is not a valid generic proof strategy. The same
+model proves bilinear separation for every symmetric covariant tensor. Its
+global throat promotion now reduces to smooth tensor-test localization and
+the existing full-support canonical measure.
+The available Maxwell
+curvature pairing is gauge-degenerate and is therefore not claimed as a
+one-form antifield dual. The
 nine-block obligation is now an
 exact reduction: the existing termwise symmetry interface implies assembled
 action invariance, the Euler/Noether identity, nonlinear nilpotence and

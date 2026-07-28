@@ -155,7 +155,7 @@ private def primitiveSpinCZeroModeGammaPairingMatrix
       else if second = 1 then Complex.I * n 0
       else 1
 
-private def primitiveSpinCZeroModeTangentialPairingMatrix
+def primitiveSpinCZeroModeTangentialPairingMatrix
     (base : ThroatBase period hPeriod) : Fin 3 → Fin 3 → Complex :=
   let n : Fin 3 → Real :=
     fun coordinate =>

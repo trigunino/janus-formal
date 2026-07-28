@@ -7,6 +7,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusThroatScalarCoadjointBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPTensorialCoadjointAntifieldBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGeneralMetricGeometricAntifieldDual4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPThroatMetricGeometricAntifieldDual4D
 
 /-!
 # Unified nonlinear BRST/BV packet
@@ -44,6 +45,7 @@ open P0EFTJanusMappingTorusMeasuredDensityBRST4D
 open P0EFTJanusMappingTorusThroatScalarCoadjointBRST4D
 open P0EFTJanusProgramPTensorialCoadjointAntifieldBRST4D
 open P0EFTJanusProgramPGeneralMetricGeometricAntifieldDual4D
+open P0EFTJanusProgramPThroatMetricGeometricAntifieldDual4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -208,6 +210,8 @@ structure ProgramPNonlinearBRSTCertificate4D : Prop where
     ThroatScalarCoadjointBRSTCertificate4D period hPeriod
   metricGeometricAntifieldDual :
     GeneralMetricGeometricAntifieldDualCertificate4D period hPeriod
+  throatMetricGeometricAntifieldDual :
+    ThroatMetricGeometricAntifieldDualCertificate4D period hPeriod
 
 def programPNonlinearBRSTCertificate4D :
     ProgramPNonlinearBRSTCertificate4D period hPeriod where
@@ -229,6 +233,8 @@ def programPNonlinearBRSTCertificate4D :
     throatScalarCoadjointBRSTCertificate4D period hPeriod
   metricGeometricAntifieldDual :=
     generalMetricGeometricAntifieldDualCertificate4D period hPeriod
+  throatMetricGeometricAntifieldDual :=
+    throatMetricGeometricAntifieldDualCertificate4D period hPeriod
 
 /-- Any genuine Maxwell/metric Lie-action datum canonically closes both
 tensorial algebraic antifield sectors. -/

@@ -10,6 +10,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusMeasuredDensityBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusThroatScalarCoadjointBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateABRSTInvarianceReduction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPThroatMetricGeometricAntifieldDual4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPTensorialCoadjointAntifieldBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGeneralMetricGeometricAntifieldDual4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPThroatMetricDiagonalDefinitenessNoGo4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPThroatMetricPositiveDualizer4D
 
 /-!
 # Exact frontier of the global BRST/BV problem
@@ -65,6 +70,14 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalNoether4D
 open P0EFTJanusProgramPNonlinearGlobalBRST4D
 open P0EFTJanusProgramPCandidateABRSTInvarianceReduction4D
+open P0EFTJanusProgramPThroatMetricGeometricAntifieldDual4D
+open P0EFTJanusProgramPTensorialCoadjointAntifieldBRST4D
+open P0EFTJanusProgramPGeneralMetricGeometricAntifieldDual4D
+open P0EFTJanusMappingTorusTensorialDiffeomorphismRepresentation4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricBVThroatBoundary4D
+open P0EFTJanusMappingTorusIntrinsicMetricBVThroatIntegrated4D
+open P0EFTJanusProgramPThroatMetricDiagonalDefinitenessNoGo4D
+open P0EFTJanusProgramPThroatMetricPositiveDualizer4D
 open P0EFTJanusMappingTorusGlobalMatterArbitraryDiffeomorphismNoether4D
 open P0EFTJanusMappingTorusGlobalMatterMultipletDiagonalDiffeomorphismNoether4D
 open P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
@@ -152,10 +165,22 @@ structure ProgramPGlobalBRSTFrontierCertificate4D where
       BoundaryCompatible period hPeriod packet →
         BoundaryCompatible period hPeriod
           (programPNonlinearBRST period hPeriod packet)
+  nonlinearClosure :
+    ProgramPNonlinearBRSTCertificate4D period hPeriod
   measuredDensityClosure :
     MeasuredDensityBRSTCertificate4D period hPeriod
   throatScalarCoadjointClosure :
     ThroatScalarCoadjointBRSTCertificate4D period hPeriod
+  throatMetricGeometricAntifieldDual :
+    ThroatMetricGeometricAntifieldDualCertificate4D period hPeriod
+  metricGeometricAntifieldDual :
+    GeneralMetricGeometricAntifieldDualCertificate4D period hPeriod
+  tensorialCoadjointClosure :
+    ∀ actions : TensorialInfinitesimalLieActionData period hPeriod,
+      TensorialCoadjointAntifieldBRSTCertificate4D
+        period hPeriod actions
+  throatLorentzPairingAlgebraicAudit :
+    ThroatMetricDiagonalDefinitenessNoGoCertificate4D
   scalarMatterArbitraryDiffeomorphismInvariant :
     ∀ (configuration :
         GlobalGeneralLorentzMatterConfiguration period hPeriod)
@@ -193,10 +218,20 @@ def programPGlobalBRSTFrontierCertificate4D :
     programPNonlinearBRST_square_zero period hPeriod
   nonlinearBoundaryStable :=
     programPNonlinearBRST_boundary_stable period hPeriod
+  nonlinearClosure :=
+    programPNonlinearBRSTCertificate4D period hPeriod
   measuredDensityClosure :=
     measuredDensityBRSTCertificate4D period hPeriod
   throatScalarCoadjointClosure :=
     throatScalarCoadjointBRSTCertificate4D period hPeriod
+  throatMetricGeometricAntifieldDual :=
+    throatMetricGeometricAntifieldDualCertificate4D period hPeriod
+  metricGeometricAntifieldDual :=
+    generalMetricGeometricAntifieldDualCertificate4D period hPeriod
+  tensorialCoadjointClosure :=
+    programP_tensorial_coadjoint_antifield_gate period hPeriod
+  throatLorentzPairingAlgebraicAudit :=
+    throatMetricDiagonalDefinitenessNoGoCertificate4D
   scalarMatterArbitraryDiffeomorphismInvariant :=
     arbitraryDiffeomorphismMatterActionOrbit_hasDerivAt_zero period hPeriod
 
@@ -238,6 +273,69 @@ theorem global_candidateA_nonlinear_brst_reduction_gate
       period hPeriod chart symmetry :=
   candidateANonlinearBRSTInvarianceReduction4D
     period hPeriod chart symmetry
+
+/-- Exact analytic completion gate for the faithful geometric throat-metric
+coadjoint sector. -/
+theorem global_throat_metric_geometric_coadjoint_gate
+    (representation :
+      SmoothGhostLieRepresentation period hPeriod
+        (SmoothThroatGeneralMetricTensorPair period hPeriod))
+    (hDiagonal :
+      ∀ antifield : SmoothThroatGeneralMetricTensorPair period hPeriod,
+        canonicalIntrinsicThroatTensorPairPairing
+            period hPeriod antifield antifield = 0 →
+          antifield = 0)
+    (hSkew :
+      ∀ ghost antifield field,
+        canonicalIntrinsicThroatTensorPairPairing period hPeriod
+            (representation.action ghost antifield) field +
+          canonicalIntrinsicThroatTensorPairPairing period hPeriod
+            antifield (representation.action ghost field) = 0) :
+    ThroatMetricGeometricCoadjointBridgeData
+      period hPeriod representation :=
+  throatMetricGeometricCoadjointBridgeData_of_diagonal_skew
+    period hPeriod representation hDiagonal hSkew
+
+/-- Exact Lorentz-compatible completion gate using bilinear separation,
+rather than the generally false diagonal-definiteness route. -/
+theorem global_throat_metric_geometric_coadjoint_separation_gate
+    (representation :
+      SmoothGhostLieRepresentation period hPeriod
+        (SmoothThroatGeneralMetricTensorPair period hPeriod))
+    (hSeparates :
+      ∀ antifield : SmoothThroatGeneralMetricTensorPair period hPeriod,
+        (∀ field,
+          canonicalIntrinsicThroatTensorPairPairing
+            period hPeriod antifield field = 0) →
+        antifield = 0)
+    (hSkew :
+      ∀ ghost antifield field,
+        canonicalIntrinsicThroatTensorPairPairing period hPeriod
+            (representation.action ghost antifield) field +
+          canonicalIntrinsicThroatTensorPairPairing period hPeriod
+            antifield (representation.action ghost field) = 0) :
+    ThroatMetricGeometricCoadjointBridgeData
+      period hPeriod representation :=
+  throatMetricGeometricCoadjointBridgeData_of_separation_skew
+    period hPeriod representation hSeparates hSkew
+
+/-- Canonical full-support globalization gate: a positive smooth dualizer
+discharges integrated separation, leaving only skew-adjointness. -/
+theorem global_throat_metric_geometric_coadjoint_positiveDualizer_gate
+    (representation :
+      SmoothGhostLieRepresentation period hPeriod
+        (SmoothThroatGeneralMetricTensorPair period hPeriod))
+    (data : ThroatMetricSmoothPositiveDualizerData period hPeriod)
+    (hSkew :
+      ∀ ghost antifield field,
+        canonicalIntrinsicThroatTensorPairPairing period hPeriod
+            (representation.action ghost antifield) field +
+          canonicalIntrinsicThroatTensorPairPairing period hPeriod
+            antifield (representation.action ghost field) = 0) :
+    ThroatMetricGeometricCoadjointBridgeData
+      period hPeriod representation :=
+  throatMetricGeometricCoadjointBridgeData_of_positiveDualizer_skew
+    period hPeriod representation data hSkew
 
 end
 end P0EFTJanusProgramPGlobalBRSTFrontier4D

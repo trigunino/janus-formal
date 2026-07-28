@@ -105,7 +105,26 @@ that count.
    algebraic tensorial coadjoint sectors. The integrated geometric metric
    pairing now realizes smooth metric antifields in the algebraic dual;
    injectivity remains open, while equivariance is reduced exactly to the
-   integrated skew-adjointness identity for the metric Lie action.
+   integrated skew-adjointness identity for the metric Lie action. The actual
+   fixed-throat tensor pair is now a real module and its intrinsic integrated
+   pairing supplies the corresponding algebraic-dual morphism. Injectivity is
+   exactly pairing separation (implied by diagonal definiteness), and
+   equivariance is exactly integrated skew-adjointness for a supplied throat
+   representation; both analytic identities remain open. The unconditional
+   realization and both exact criteria are integrated into the nonlinear and
+   global BRST frontier certificates. The global frontier also aggregates
+   the complete nonlinear certificate, the bulk metric geometric dual and
+   tensorial coadjoint closure for every supplied Maxwell/metric Lie action.
+   On genuine throat tensors, bilinear separation and integrated
+   skew-adjointness now construct the faithful geometric coadjoint bridge
+   directly through a global frontier gate. An explicit nonzero symmetric
+   Lorentzian tensor with nilpotent raised endomorphism and zero quadratic
+   trace rules out diagonal definiteness as the generic proof route. The same
+   model proves bilinear separation on all symmetric tensors; smooth test
+   localization with the existing full-support measure is the remaining
+   global throat step.
+   The curvature-based Maxwell pairing is
+   gauge-degenerate and is not used as a potential-antifield dual.
    Once the existing termwise nine-block symmetry interface is inhabited,
    action invariance, Noether, nilpotence and boundary stability follow
    together.

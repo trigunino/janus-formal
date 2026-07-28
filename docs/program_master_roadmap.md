@@ -868,7 +868,28 @@ New controlled subgates are now checked:
   supplies a linear realization of every smooth metric antifield in that
   algebraic dual. Coadjoint equivariance is now equivalent to the explicit
   integrated skew-adjointness identity for the metric Lie action; proving
-  that identity and injectivity/nondegeneracy remains open. The exact
+  that identity and injectivity/nondegeneracy remains open. On the actual
+  fixed throat, the pre-existing tensor operations are now bundled as a real
+  module and the intrinsic integrated pairing likewise defines a canonical
+  linear realization in the algebraic dual. Its injectivity is equivalent to
+  separation by the pairing (and follows from diagonal definiteness), while
+  coadjoint equivariance is equivalent to integrated skew-adjointness for any
+  supplied throat representation. Those two analytic identities remain open.
+  The unconditional throat realization and these criteria are integrated in
+  both the nonlinear BRST certificate and the global BRST frontier.
+  The global frontier additionally carries the complete nonlinear
+  certificate, the bulk geometric metric dual and the functorial tensorial
+  coadjoint closure for every supplied Maxwell/metric Lie action.
+  On genuine throat tensors, bilinear separation and integrated
+  skew-adjointness now construct the faithful geometric coadjoint bridge
+  directly through a global frontier gate. A nonzero symmetric Lorentzian
+  tensor with nilpotent raised endomorphism and zero quadratic trace formally
+  rules out diagonal definiteness as the generic proof route. The same model
+  proves bilinear separation on all symmetric tensors; the remaining throat
+  step is smooth localization plus the already available full-support
+  canonical measure.
+  The Maxwell curvature pairing was audited and is gauge-degenerate, so it is
+  not used as a one-form antifield dual. The exact
   termwise nine-block diffeomorphism-symmetry contract now also implies
   assembled-action invariance, the Euler/Noether identity, nonlinear
   square-zero and boundary stability in one certificate; constructing that
