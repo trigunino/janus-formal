@@ -387,6 +387,42 @@ PROGRAM_P_GATES = {
             "def generalMetricGeometricAntifieldDualCertificate4D",
         ),
     ),
+    "P0EFTJanusProgramPThroatMetricTensorModule4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "instance : AddCommGroup (ThroatTensor period hPeriod)",
+            "instance : Module Real (ThroatTensor period hPeriod)",
+            "theorem smoothThroatGeneralMetricTensorPair_add_eq",
+            "theorem smoothThroatGeneralMetricTensorPair_smul_eq",
+        ),
+    ),
+    "P0EFTJanusProgramPThroatMetricGeometricAntifieldDual4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatMetricGeometricAntifieldFunctional",
+            "def throatMetricGeometricAntifieldToAlgebraicDual",
+            "theorem throatMetricGeometricAntifieldToAlgebraicDual_apply",
+            "theorem throatMetricGeometricAntifieldToAlgebraicDual_injective_iff",
+            "theorem throatMetricGeometricAntifieldToAlgebraicDual_injective_of_diagonal",
+            "theorem throatMetricGeometricAntifield_coadjointIntertwining_iff",
+            "structure ThroatMetricGeometricCoadjointBridgeData",
+            "def throatMetricGeometricCoadjointBridgeData_of_separation_skew",
+            "def throatMetricGeometricCoadjointBridgeData_of_diagonal_skew",
+            "structure ThroatMetricGeometricDualNondegeneracy",
+            "def throatMetricGeometricAntifieldDualCertificate4D",
+        ),
+    ),
+    "P0EFTJanusProgramPThroatMetricDiagonalDefinitenessNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def lorentzNullCovariantTensor",
+            "theorem lorentzNullCovariantTensor_symmetric",
+            "theorem lorentzNullCovariantTensor_ne_zero",
+            "theorem lorentzNullCovariantTensor_trace_square_zero",
+            "theorem lorentzSymmetricTracePairing_separates",
+            "def throatMetricDiagonalDefinitenessNoGoCertificate4D",
+        ),
+    ),
     "P0EFTJanusProgramPCoadjointAntifieldBRST4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -405,6 +441,7 @@ PROGRAM_P_GATES = {
             "theorem programPNonlinearBRST_square_zero",
             "theorem programPNonlinearBRST_boundary_stable",
             "structure AssembledActionBRSTInvarianceContract",
+            "throatMetricGeometricAntifieldDual :",
             "def programPNonlinearBRSTCertificate4D",
             "theorem programP_tensorial_coadjoint_antifield_gate",
         ),
@@ -413,10 +450,17 @@ PROGRAM_P_GATES = {
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "structure ProgramPGlobalBRSTFrontierCertificate4D",
+            "nonlinearClosure :",
+            "throatMetricGeometricAntifieldDual :",
+            "metricGeometricAntifieldDual :",
+            "tensorialCoadjointClosure :",
+            "throatLorentzPairingAlgebraicAudit :",
             "def programPGlobalBRSTFrontierCertificate4D",
             "theorem global_physical_u1_brst_action_gate",
             "theorem global_brst_frontier_gate",
             "theorem global_candidateA_nonlinear_brst_reduction_gate",
+            "theorem global_throat_metric_geometric_coadjoint_gate",
+            "theorem global_throat_metric_geometric_coadjoint_separation_gate",
         ),
     ),
     "P0EFTJanusProgramPGlobalHessianFrontier4D.lean": (

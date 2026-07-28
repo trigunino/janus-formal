@@ -1611,6 +1611,29 @@ nonlinear-BRST layers,
 D10 nonspectral/all-sector regulator, circle Quillen geometry and PT/inflow
 anomaly cancellation remain explicitly scoped frontiers. Scheme independence is separately blocked by a proved
 finite-part/normalization no-go, not by a missing algebraic manipulation.
+The fixed-throat metric tensors are now bundled as a real module, and their
+canonical integrated intrinsic pairing defines a linear morphism from smooth
+geometric antifields to the algebraic BRST dual. Its injectivity is now
+equivalent to separation by the pairing and follows from diagonal
+definiteness; its coadjoint equivariance is equivalent to integrated
+skew-adjointness for any supplied throat representation. These analytic
+identities remain open. The unconditional realization and both exact
+criteria are now fields of the nonlinear BRST certificate and of
+`GlobalBRSTFrontier`. The global frontier now also embeds the complete
+nonlinear certificate, the bulk geometric metric dual, and the conditional
+Maxwell/two-metric coadjoint closure for every supplied tensorial Lie action.
+For genuine throat tensors, bilinear separation and integrated
+skew-adjointness now construct the faithful geometric coadjoint bridge
+directly through a `GlobalBRSTFrontier` gate. An explicit nonzero symmetric
+Lorentzian tensor with nilpotent raised endomorphism has zero quadratic trace,
+so diagonal definiteness is formally ruled out as a generic route; it remains
+only a stronger conditional lemma. The same explicit Lorentz model now proves
+that the bilinear trace pairing nevertheless separates every symmetric
+covariant tensor. This algebraic audit is embedded in `GlobalBRSTFrontier`;
+only its globalization by smooth localized tests and full-support measure
+remains for the genuine throat.
+The curvature-based Maxwell pairing is
+gauge-degenerate and is not substituted for a potential-antifield dual.
 Parent-action selection is likewise non-unique in the current admissible
 family, and all available geometric, spectral, heat and charge laws retain a
 common rescaling orbit. Thus neither microscopic selection nor absolute scale

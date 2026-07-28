@@ -2934,7 +2934,27 @@ Portée exacte des fermetures et frontières globales :
   antifields lisses vers ce dual algébrique. Son injectivité/non-dégénérescence
   reste ouverte; son entrelacement coadjoint est désormais exactement
   équivalent à l’identité intégrée
-  `B(L_c α,h)+B(α,L_c h)=0`.
+  `B(L_c α,h)+B(α,L_c h)=0`. La paire tensorielle de la gorge fixe est
+  désormais un vrai module réel et son pairing intrinsèque intégré fournit
+  aussi un morphisme linéaire vers le dual algébrique. Son injectivité est
+  exactement réduite à la séparation par le pairing (la définitude diagonale
+  suffit), et son équivariance à la skew-adjonction intégrée pour toute
+  représentation de gorge fournie. Ces deux identités analytiques restent
+  ouvertes. La réalisation inconditionnelle et ces deux critères sont
+  désormais intégrés aux certificats nonlinear BRST et
+  `GlobalBRSTFrontier`. Cette frontière globale agrège aussi le certificat
+  nonlinear complet, le dual géométrique métrique de bulk et la fermeture
+  coadjointe tensorielle pour toute représentation Lie Maxwell/métrique
+  fournie. Sur les tenseurs réels de gorge, la séparation bilinéaire et la
+  skew-adjonction intégrée construisent directement le pont coadjoint
+  géométrique fidèle via une porte globale. Un tenseur lorentzien symétrique
+  non nul à endomorphisme relevé nilpotent et trace quadratique nulle exclut
+  formellement la définitude diagonale comme voie générique. Le même modèle
+  prouve toutefois la séparation bilinéaire de tous les tenseurs symétriques;
+  il reste à la globaliser par tests tensoriels lisses localisés et support
+  plein de la mesure canonique déjà disponible. Le pairing Maxwell disponible,
+  construit sur la courbure,
+  est gauge-dégénéré et n’est pas utilisé comme dual des potentiels.
 - `VARCOH` ferme la cohomologie **fonctionnelle globale** sur ces cartes et
   le noyau de la troncature naturelle finie. Il ne prétend pas construire le
   bicomplexe variationnel horizontal local complet des densités de jets.
