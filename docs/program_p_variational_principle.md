@@ -1433,7 +1433,29 @@ certificates now also record the exact reduced ADM chain, the constrained
 stability audit, the proportional-vacuum frontier, the intrinsic/spectral
 Dirac layers, nonlinear BRST layers, finite/common regulator, circle Quillen
 geometry, PT/inflow anomaly cancellation, scheme no-go, microscopic-parent
-nonselection and the common-scale orbit no-go. The ADM result is
+nonselection and the common-scale orbit no-go. The nonlinear BRST layer now
+includes functorial intrinsic pullbacks for Maxwell one-forms and covariant
+two-tensors, a genuine fiber derivative and smooth flow-to-ghost realization
+for Maxwell parallel to the existing metric contract, and the canonical
+coadjoint action on algebraic antifields. Measured scalar densities now reuse
+the established coefficient-plus-pulled-measure convention: finite
+functoriality, infinitesimal square-zero and integrated covariance are
+certified without a competing weight-one carrier. The existing fixed-throat
+scalar bracket now additionally closes the coadjoint algebraic scalar
+antifields and their canonical boundary pairing. Full closure still requires
+the Maxwell/metric bracket identity, tensorial geometric dual identification
+and common invariance of the nine Candidate-A blocks. The Maxwell/metric
+bracket datum, once supplied, now canonically closes the
+algebraic coadjoint antifields of the Maxwell field and two-metric product,
+including their pairings. The integrated geometric tensor pairing now gives
+a canonical linear morphism from smooth two-metric antifields to that
+algebraic dual. Its coadjoint equivariance is now exactly equivalent to
+integrated skew-adjointness of the tensorial Lie action; this identity and
+nondegeneracy remain open. The
+nine-block obligation is now an
+exact reduction: the existing termwise symmetry interface implies assembled
+action invariance, the Euler/Noether identity, nonlinear nilpotence and
+boundary stability without further analytic input. The ADM result is
 FLRW rather than a continuum functional Dirac algebra; the stability witness
 has a nontrivial constrained isoenergetic curve; and the vacuum minimum is
 only proportional and one-dimensional. Their common geometric-family bridge

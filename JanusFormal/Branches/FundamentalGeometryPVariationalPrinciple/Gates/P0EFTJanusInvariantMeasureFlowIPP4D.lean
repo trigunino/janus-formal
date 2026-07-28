@@ -63,6 +63,61 @@ theorem integral_derivative_eq_zero_of_invariant
     exact hasDerivAt_const 0 _
   exact hDifferentiate.unique hZeroDerivative
 
+theorem integral_derivative_eq_zero_of_invariant_vector
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
+    [SecondCountableTopology E]
+    (mu : Measure X) [IsFiniteMeasure mu]
+    (F F' : Real → X → E)
+    (hF : Continuous (fun input : Real × X ↦ F input.1 input.2))
+    (hF' : Continuous (fun input : Real × X ↦ F' input.1 input.2))
+    (hDerivative : ∀ parameter point,
+      HasDerivAt (fun t ↦ F t point) (F' parameter point) parameter)
+    (hInvariant : ∀ parameter,
+      (∫ point, F parameter point ∂mu) = ∫ point, F 0 point ∂mu) :
+    (∫ point, F' 0 point ∂mu) = 0 := by
+  have hCompact : IsCompact
+      (Set.Icc (-1 : Real) 1 ×ˢ (Set.univ : Set X)) :=
+    isCompact_Icc.prod isCompact_univ
+  obtain ⟨bound, hBound⟩ := hCompact.bddAbove_image hF'.norm.continuousOn
+  have hSection (parameter : Real) : Continuous (F parameter) :=
+    hF.comp (continuous_const.prodMk continuous_id)
+  have hSection' (parameter : Real) : Continuous (F' parameter) :=
+    hF'.comp (continuous_const.prodMk continuous_id)
+  have hMeasurable : ∀ᶠ parameter in nhds (0 : Real),
+      AEStronglyMeasurable (F parameter) mu := by
+    filter_upwards with parameter
+    exact (hSection parameter).aestronglyMeasurable
+  have hIntegrable : Integrable (F 0) mu :=
+    (hSection 0).integrable_of_hasCompactSupport
+      (HasCompactSupport.of_compactSpace _)
+  have hDerivativeMeasurable : AEStronglyMeasurable (F' 0) mu :=
+    (hSection' 0).aestronglyMeasurable
+  have hDominated : ∀ᵐ point ∂mu, ∀ parameter ∈ Set.Icc (-1 : Real) 1,
+      ‖F' parameter point‖ ≤ bound := by
+    filter_upwards with point
+    intro parameter hParameter
+    exact hBound (Set.mem_image_of_mem _
+      (Set.mk_mem_prod hParameter (Set.mem_univ point)))
+  have hDifferentiate :=
+    (hasDerivAt_integral_of_dominated_loc_of_deriv_le
+      (Icc_mem_nhds (by norm_num : (-1 : Real) < 0)
+        (by norm_num : (0 : Real) < 1))
+      hMeasurable hIntegrable hDerivativeMeasurable hDominated
+      (integrable_const bound)
+      (by
+        filter_upwards with point
+        intro parameter _
+        exact hDerivative parameter point)).2
+  have hIntegralFunction :
+      (fun parameter ↦ ∫ point, F parameter point ∂mu) =
+        fun _ ↦ ∫ point, F 0 point ∂mu :=
+    funext hInvariant
+  have hZeroDerivative : HasDerivAt
+      (fun parameter ↦ ∫ point, F parameter point ∂mu) 0 0 := by
+    rw [hIntegralFunction]
+    exact hasDerivAt_const 0 _
+  exact hDifferentiate.unique hZeroDerivative
+
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 theorem integral_inner_derivative_eq_neg

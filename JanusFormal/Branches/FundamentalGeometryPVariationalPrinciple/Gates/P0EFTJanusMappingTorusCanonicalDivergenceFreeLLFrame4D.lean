@@ -184,6 +184,56 @@ theorem standardSphereRotation_continuous (axis : Fin 3) (angle : Real) :
   ((euclideanRotationLinearIsometryEquiv axis angle).continuous.comp
     continuous_subtype_val).subtype_mk _
 
+theorem standardSphereJointRotation_continuous (axis : Fin 3) :
+    Continuous (fun input : Real × StandardSphere =>
+      standardSphereRotation axis input.1 input.2) := by
+  apply Continuous.subtype_mk
+  change Continuous (fun input : Real × StandardSphere =>
+    euclideanRotation axis input.1 input.2.1)
+  apply (EuclideanSpace.equiv (Fin 3) Real).symm.continuous.comp
+  apply continuous_pi
+  intro coordinate
+  fin_cases axis <;> fin_cases coordinate <;>
+    fun_prop
+
+@[simp]
+theorem standardSphereRotation_zero
+    (axis : Fin 3) (point : StandardSphere) :
+    standardSphereRotation axis 0 point = point := by
+  apply Subtype.ext
+  change euclideanRotation axis 0 point.1 = point.1
+  apply (EuclideanSpace.equiv (Fin 3) Real).injective
+  funext coordinate
+  fin_cases axis <;> fin_cases coordinate <;>
+    simp [euclideanRotation]
+
+theorem standardSphereRotation_add
+    (axis : Fin 3) (first second : Real) (point : StandardSphere) :
+    standardSphereRotation axis (first + second) point =
+      standardSphereRotation axis first
+        (standardSphereRotation axis second point) := by
+  apply Subtype.ext
+  exact euclideanRotation_angle_add axis first second point.1
+
+private def standardSphereRotationHomeomorph
+    (axis : Fin 3) (angle : Real) :
+    StandardSphere ≃ₜ StandardSphere where
+  toFun := standardSphereRotation axis angle
+  invFun := standardSphereRotation axis (-angle)
+  left_inv point := by
+    rw [← standardSphereRotation_add]
+    simp
+  right_inv point := by
+    rw [← standardSphereRotation_add]
+    simp
+  continuous_toFun := standardSphereRotation_continuous axis angle
+  continuous_invFun := standardSphereRotation_continuous axis (-angle)
+
+theorem standardSphereRotation_measurableEmbedding
+    (axis : Fin 3) (angle : Real) :
+    MeasurableEmbedding (standardSphereRotation axis angle) :=
+  (standardSphereRotationHomeomorph axis angle).measurableEmbedding
+
 private theorem standardSphereRotation_cone_preimage
     (axis : Fin 3) (angle : Real) (s : Set StandardSphere) :
     (euclideanRotationLinearIsometryEquiv axis angle) ⁻¹'
@@ -925,6 +975,16 @@ def canonicalRotationVelocity
     | 2 => ![-(EuclideanSpace.equiv (Fin 3) Real point) 1,
         (EuclideanSpace.equiv (Fin 3) Real point) 0, 0]
 
+theorem canonicalRotationVelocity_add
+    (axis : Fin 3) (first second : EuclideanR3) :
+    canonicalRotationVelocity axis (first + second) =
+      canonicalRotationVelocity axis first +
+        canonicalRotationVelocity axis second := by
+  apply (EuclideanSpace.equiv (Fin 3) Real).injective
+  funext index
+  fin_cases axis <;> fin_cases index <;>
+    simp [canonicalRotationVelocity] <;> abel
+
 theorem canonicalRotationVelocity_smul
     (axis : Fin 3) (scalar : Real) (point : EuclideanR3) :
     canonicalRotationVelocity axis (scalar • point) =
@@ -933,6 +993,20 @@ theorem canonicalRotationVelocity_smul
   funext index
   fin_cases axis <;> fin_cases index <;>
     simp [canonicalRotationVelocity]
+
+noncomputable def canonicalRotationVelocityCLM
+    (axis : Fin 3) : EuclideanR3 →L[Real] EuclideanR3 :=
+  LinearMap.toContinuousLinearMap
+    { toFun := canonicalRotationVelocity axis
+      map_add' := canonicalRotationVelocity_add axis
+      map_smul' := canonicalRotationVelocity_smul axis }
+
+@[simp]
+theorem canonicalRotationVelocityCLM_apply
+    (axis : Fin 3) (point : EuclideanR3) :
+    canonicalRotationVelocityCLM axis point =
+      canonicalRotationVelocity axis point :=
+  rfl
 
 private theorem euclideanRotation_hasDerivAt_zero
     (axis : Fin 3) (point : EuclideanR3) :
@@ -1002,6 +1076,46 @@ private theorem euclideanRotation_hasDerivAt_zero
     · simpa [euclideanRotation, canonicalRotationVelocity] using
         (hasDerivAt_const (x := (0 : Real))
           (c := (EuclideanSpace.equiv (Fin 3) Real point) 2))
+
+theorem standardSphereRotation_coe_hasDerivAt
+    (axis : Fin 3) (point : StandardSphere) (parameter : Real) :
+    HasDerivAt
+      (fun angle : Real =>
+        (standardSphereRotation axis angle point : EuclideanR3))
+      (canonicalRotationVelocity axis
+        (standardSphereRotation axis parameter point : EuclideanR3))
+      parameter := by
+  change HasDerivAt
+    (fun angle : Real => euclideanRotation axis angle point.1)
+    (canonicalRotationVelocity axis
+      (euclideanRotation axis parameter point.1)) parameter
+  have hShift :
+      HasDerivAt (fun angle : Real => angle - parameter) 1 parameter := by
+    simpa using (hasDerivAt_id parameter).sub_const parameter
+  have hOuter : HasDerivAt
+      (fun angle : Real =>
+        euclideanRotation axis angle
+          (euclideanRotation axis parameter point.1))
+      (canonicalRotationVelocity axis
+        (euclideanRotation axis parameter point.1))
+      (parameter - parameter) := by
+    simpa using euclideanRotation_hasDerivAt_zero axis
+      (euclideanRotation axis parameter point.1)
+  have hDerivative : HasDerivAt
+      (fun angle : Real =>
+        euclideanRotation axis (angle - parameter)
+          (euclideanRotation axis parameter point.1))
+      (canonicalRotationVelocity axis
+        (euclideanRotation axis parameter point.1)) parameter :=
+    by
+      simpa [Function.comp_def] using
+        hOuter.scomp (h := fun angle : Real => angle - parameter)
+          parameter hShift
+  apply hDerivative.congr_of_eventuallyEq
+  filter_upwards with angle
+  rw [← euclideanRotation_angle_add]
+  congr 2
+  ring
 
 private theorem equatorial_rotation_to_euclidean
     (axis : Fin 3) (angle : Real) (point : EquatorialTwoSphere) :

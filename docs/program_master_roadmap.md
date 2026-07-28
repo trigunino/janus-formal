@@ -850,7 +850,29 @@ New controlled subgates are now checked:
   antifields have a genuine smooth throat trace; its square-zero boundary BRST
   commutes with restriction, PT/exchange matching transports the complete
   metric-BV Dirichlet packet, and packet-level pointwise odd-bracket covariance
-  persists. The retained PT-fixed nondegenerate intrinsic throat metric now has
+  persists. The nonlinear global bridge now also reuses the existing smooth
+  metric flow-to-ghost contract and supplies its missing Maxwell analogue:
+  one-form and two-tensor pullbacks are functorial, and the Maxwell
+  infinitesimal generator is a genuine fiber derivative with a smooth global
+  realization. A generic Lie-representation interface and its coadjoint
+  antifield action reduce nilpotence to `[L_c,L_d]=L_[c,d]`; this identity is
+  unconditional for scalars. The existing coefficient-plus-pulled-measure
+  density convention now has finite functoriality, a square-zero two-ghost
+  action and unconditional integrated scalar covariance. The fixed-throat
+  scalar bracket also now supplies a coadjoint algebraic antifield action,
+  square-zero obstruction and invariant field-antifield pairing. The bracket
+  identity remains the next proof for Maxwell/metric fields. The exact
+  tensorial action datum now automatically produces algebraic coadjoint
+  antifields for Maxwell and the two-metric product, with square-zero and
+  invariant pairings. The existing integrated geometric metric pairing now
+  supplies a linear realization of every smooth metric antifield in that
+  algebraic dual. Coadjoint equivariance is now equivalent to the explicit
+  integrated skew-adjointness identity for the metric Lie action; proving
+  that identity and injectivity/nondegeneracy remains open. The exact
+  termwise nine-block diffeomorphism-symmetry contract now also implies
+  assembled-action invariance, the Euler/Noether identity, nonlinear
+  square-zero and boundary stability in one certificate; constructing that
+  contract is the remaining action obligation. The retained PT-fixed nondegenerate intrinsic throat metric now has
   an actual pointwise inverse; the resulting traced pairing and graded-skew odd
   bracket are PT/exchange covariant and compatible with the bulk-gradient
   traces. The pairing is bilinear, and its ultralocal `1/2 ⟨h⁺,h⁺⟩` action has
@@ -1163,9 +1185,69 @@ compatibility map K
   action-Hessian pairing.
   Exact linear symmetries, including a supplied smooth-diffeomorphism
   symmetry, combine automatically with `U(1)²`.
-  What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map,
-  all-level **geometric** SpinC synthesis (its completed Fourier extension is
-  now a theorem for every such realization),
+  What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map
+  and the exact Parseval/unitary comparison between two now-constructed
+  Hilbert spaces: the independent integral geometric `L²` completion of the
+  whole smooth SpinC core and the completed spectral norm. This comparison is
+  already exact inside every finite level/sector/circle multiplicity block;
+  exact fundamental-domain Fourier cancellation additionally proves
+  orthogonality for distinct circle modes in each fixed sector, uniformly
+  across levels. The two opposite sectors are pointwise and integrally
+  orthogonal for arbitrary levels and modes. The rotation Casimir and
+  invariant round-sphere measure also prove exact orthogonality across levels
+  at fixed sector/mode. These axes now assemble into a canonical Hilbert-sum
+  linear isometry whose image is exactly the joint closed block span. Dense
+  range is equivalent to surjectivity and already yields the conditional
+  unitary. Each individual signed branch now also has exact first-order
+  Parseval coordinates and closed completed image; each complete two-sign
+  block has Parseval and exact `D²`. Radial Clifford parity now proves linear
+  independence of each signed raw family, hence finrank `2p+1` per sign and
+  `2(2p+1)` for the full block. The integrated gradient/Casimir identity now
+  proves exact orthogonality of the two signs inside every fixed spectral
+  block. Distinct signed sector/circle/level labels, and the zero tower versus
+  every positive signed block, are now orthogonal too. They assemble into one
+  signed Hilbert-sum isometry with exact closed range and an unconditional
+  unitary onto that signed spectral range. Exhaustion of the whole geometric
+  SpinC completion is now precisely the remaining density statement.
+  Its single null-curve construction gives the
+  exact `2p+1` multiplicity, linear independence, ambient harmonicity and
+  spherical energy `p(p+1)` for every `p`; no `p ≥ 4` level-by-level
+  expansion remains. The corresponding null powers are genuine smooth
+  quotient-bundle sections. Their uniform Dirac recurrence proves the exact
+  geometric `D²` equation and generates the signed seeds. Every positive and
+  negative label at every positive level is now tied to its genuine smooth
+  first-order eigensection; the undoubled zero tower is likewise realized
+  for either orientation of the period by the exact PT mode reindexing. The
+  two signed branch spans are disjoint and exhaust each scalar/gradient seed
+  block. Strict growth of
+  `p(p+1)` separates the squared-Dirac eigenspaces, making the
+  finite-support synthesis jointly injective across every positive level at
+  fixed sector/circle mode, with exact diagonal `D²` intertwining. Smooth
+  restriction, the all-level Lichnerowicz input, within-level multiplicity
+  and inter-level linear separation are therefore closed. At every arbitrary
+  fixed positive level, doubling cover time additionally identifies the two
+  normal-root sectors with odd/even integer Fourier modes and proves joint
+  injectivity across both sectors, every circle mode and every multiplicity.
+  These two axes are now combined in one finite-support synthesis over every
+  positive level, both sectors, every circle mode and every multiplicity. It
+  is injective and exactly intertwines geometric `D²` with its diagonal
+  coefficient operator.
+  The Hopf zero tower is now adjoined in that same canonically indexed
+  synthesis, which remains injective and `D²`-diagonal over the complete
+  coefficient mode set. Every complete label has real and
+  intrinsic-imaginary smooth representatives; `p = 1,2,3` are compatibility
+  checks. The actual finite smooth eigensection span now has an injective
+  dense coefficient analysis; its coefficient-induced Hilbert completion is
+  canonically unitary to the full coefficient `L²`, and its maximal `H²`
+  squared Dirac is exactly conjugate, coercive and bijective.
+  Independently, the descended doubled Hermitian fiber pairing is smooth,
+  integrable and positive definite against the canonical throat volume on
+  every smooth primitive SpinC section. Its geometric Hilbert completion has
+  dense smooth core without using spectral coefficients. Geometric
+  Gram--Schmidt supplies an exact Euclidean Parseval isometry in every fixed
+  multiplicity block and preserves the intrinsic `D²` eigenvalue.
+  First-order SpinC
+  diagonalization and completed Fourier extension are theorems,
   nine-block diffeomorphism
   invariance and identification of the actual bulk/metric–Maxwell–matter–
   ghost–boundary Hessian, excluding the closed LL factor but including its
@@ -1207,9 +1289,13 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
 1. identify the two smooth normal-coordinate representations (`T01`);
 2. extend the chartwise Euler/physical `U(1)²` Noether closure to the raw-field
    atlas and one nonlinear exterior BRST/BV derivation with boundary descent;
-3. extend the proved finite low-energy geometric SpinC Fourier bridge to every
-   sphere level, use its now-canonical completed Dirac extension, then identify the
-   symmetric action Hessian with that gauge-fixed Fredholm family;
+3. prove that the completed global signed Hilbert-sum isometry has dense
+   range (its exact finranks, all signed inter-block orthogonality, zero-tower
+   assembly, exact closed range and unitary onto that range are closed);
+   identify the spectral
+   completion unitarily with the independently constructed geometric `L²`
+   completion, then identify the symmetric action Hessian with that
+   gauge-fixed Fredholm family;
 4. extend the proved all-level D10 continuum regulator to every remaining
    nonspectral physical and ghost sector of that family;
 5. lift the proved circle determinant metric/flat connection and PT/inflow
