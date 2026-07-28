@@ -50,11 +50,11 @@ Program P-E was advanced again and merged into `main` through PR 10 on
 The currently checked-out branch is `dev-branch`, at
 
 ```text
-9b4074340527882589c5601dbf7ef48cf6b683bb.
+9a8b540d01d339c756d69202033a22ed49a38334.
 ```
 
 The local worktree contains the later Program-P gates described below. On
-27 July 2026, the complete Program-P façade compiled `10002/10002` jobs and
+28 July 2026, the complete Program-P façade compiled `10039/10039` jobs and
 `scripts/audit_janus_program_p.py` passed with terminal count `0/14`.
 
 ## Program M foundation checkpoint — 19 July 2026
@@ -392,9 +392,9 @@ Pin/Čech existence theorem.
 
 ## 5. Program P
 
-### Checkpoint d'intégration — 27 juillet 2026
+### Checkpoint d'intégration — 28 juillet 2026
 
-- Façade Lean : build vert `10002/10002`.
+- Façade Lean : build vert `10039/10039`.
 - Agrégat analytique scalaire : build focalisé vert `9317/9317`; son théorème
   marque la fermeture des imports, pas l'instanciation des interfaces physiques.
 - Audit d'intégrité : vert, compteur terminal inchangé `0/14`.
@@ -449,6 +449,35 @@ The explicit nonabelian `so(3)` ghost triple and the corrected Koszul
 differential are now closed for the entire currently implemented field/BV
 package: linear matter/gauge/auxiliary sectors, positive diagonal metrics,
 bulk and throat antifields, master actions, PT covariance, and boundary trace.
+The nonlinear frontier also has one unified square-zero field/ghost/BV/boundary
+packet, functorial intrinsic pullbacks on Maxwell one-forms and covariant
+two-tensors, and a canonical coadjoint antifield representation. The Maxwell
+pullback now has the same genuine fiber derivative, smooth global realization,
+and linear flow-to-ghost contract already available for metric tensors. The
+measured-density convention is now explicit: scalar coefficients form a
+finite pullback representation, their two-ghost BRST square vanishes, and the
+existing integrated scalar action is covariant when its measure is pulled
+back simultaneously. On the fixed throat, the already proved scalar bracket
+identity now also induces a coadjoint action on algebraic scalar antifields,
+with square-zero obstruction and invariant boundary pairing. The remaining
+tensorial step is the global bracket identity `[L_c,L_d]=L_[c,d]` for
+Maxwell/metric fields, not another coordinatewise BRST model.
+Once that datum is supplied, the Maxwell and two-metric product
+representations now canonically generate their algebraic coadjoint antifields,
+square-zero obstructions, and invariant pairings. Identification of these
+algebraic duals with geometry has advanced: the existing integrated metric
+pairing now defines a genuine linear morphism from smooth two-metric
+antifields to the algebraic dual. Injectivity/nondegeneracy and coadjoint
+equivariance remain the precise separate obligations. Equivariance is now
+reduced exactly to the integrated skew-adjointness identity
+`B(L_c α,h)+B(α,L_c h)=0`; no additional functional-BV assumption is hidden.
+The existing termwise nine-block diffeomorphism-symmetry interface is now
+joined to this packet: any inhabitant yields assembled-action invariance, the
+true Euler/Noether identity, nonlinear nilpotence, and boundary stability.
+Thus the remaining action problem is exactly construction of that inhabitant.
+The already-proved arbitrary-path diffeomorphism invariance of the historical
+eight-scalar matter action is now imported by the global BRST certificate;
+this scoped result does not yet cover the Candidate-A SpinC matter block.
 Derivative kernels, completed spaces, and arbitrary functionals remain a
 strictly stronger open refinement.
 
@@ -1481,16 +1510,99 @@ two-ghost cancellation, the linearized diffeomorphism differential, the
 corrected full linear/LL complex and the general-metric BV doublet.
 
 The irreducible Hessian frontier is therefore narrower: construct the actual
-global-tangent-to-variational-chart map; realize every positive SpinC
-coefficient by complete geometric eigenspinors; prove invariance of all nine
-action blocks under the same smooth diffeomorphisms; and identify the actual
+global-tangent-to-variational-chart map and prove the exact Parseval/unitary
+identification between the independent geometric and spectral SpinC
+completions below. Finite multiplicity blocks are already isometric and
+distinct circle modes in one sector are orthogonal across all levels, so the
+two opposite sectors are also orthogonal for arbitrary levels and modes.
+The rotation Casimir and invariant round-sphere measure now prove exact
+orthogonality between distinct sphere levels at fixed sector and mode. The
+normalized blocks along all three axes now assemble into one canonical
+Hilbert-sum linear isometry. Its range is proved equal to the closed span of
+the explicit blocks, and density is proved equivalent to surjectivity. The
+remaining comparison is therefore exactly this joint-density problem. A single
+null-curve construction gives, for every `p`, exactly `2p+1` complex
+homogeneous polynomials, proves their linear independence, ambient
+harmonicity and positive spherical energy `p(p+1)`; no further level-by-level
+construction from `p ≥ 4` is needed. Its null powers are now realized
+directly as genuine smooth sections of the quotient SpinC bundle. The
+uniform Dirac recurrence proves their exact geometric `D²` equation and
+generates both signed first-order branches. These branches are now tied
+directly to every positive/negative coefficient label at every positive
+level, with the exact first-order eigenvalue. The undoubled zero tower is
+also realized at first order for either sign of the period through the
+orientation-correct PT mode reindexing. Thus every complete signed
+coefficient label has a genuine smooth geometric eigensection. At each
+positive block the two branch spans are disjoint and their sum is exactly
+the scalar/Clifford-gradient seed block. Each complex branch span now also
+has a canonical finite-dimensional geometric `L²` orthonormal basis, exact
+Parseval isometry, closed image in the independent completion and exact
+first-order Dirac intertwining. Their algebraic sum has its own orthonormal
+Parseval isometry, closed completed image and exact `D²` intertwining.
+Radial Clifford parity separates the scalar and gradient components of every
+raw signed relation. It proves linear independence of each signed family,
+hence the exact geometric finrank `2p+1` per sign and `2(2p+1)` for the full
+block. Rotation integration by parts, the exact tangential Hopf pairing and
+the null-power Casimir identity additionally prove that the gradient pairing
+is exactly `p(p+1)` times the scalar pairing. The two opposite first-order
+signs are therefore orthogonal in every fixed level/sector/circle block.
+Strict growth of the spherical energy separates the `D²` eigenspaces, so all
+positive levels at fixed
+sector/circle mode are jointly complex-linearly independent. Their
+finite-support synthesis is injective and satisfies the exact diagonal law
+`D² S = S Λ`. Thus smooth restriction, the all-level Lichnerowicz input,
+within-level multiplicity and inter-level linear separation are closed. Both
+normal-root sectors and all circle modes are also jointly separated at
+every arbitrary fixed positive level: doubling cover time reindexes the two
+sectors as the odd/even integer Fourier modes. The two separation axes and
+the Hopf zero tower are now combined: one canonically indexed finite-support
+synthesis simultaneously ranges over every nonnegative sphere level, both
+sectors, every circle mode and every multiplicity; it is injective and
+exactly intertwines geometric `D²` with the complete diagonal coefficient
+operator. Every complete coefficient label therefore has real and
+intrinsic-imaginary smooth geometric representatives. Their actual finite
+smooth span now carries the coefficient-induced Hilbert norm. Its analysis
+is injective and dense in coefficient `L²`; its completion is canonically
+unitary to that `L²`, and the transported maximal `H²` squared Dirac is
+exactly conjugate, coercive and bijective. Thus spectral Hilbert
+orthogonality/completeness and the finite analysis-map identification are
+closed. Independently, the canonical throat volume and the descended doubled
+Hermitian pairing now define a smooth, integrable, positive-definite complex
+`L²` product on the whole primitive SpinC smooth core. This gives its own
+Hilbert completion with dense smooth embedding, without coefficient
+definitions or additional physical axioms. Inside every fixed
+level/sector/circle block, geometric Gram--Schmidt now preserves the raw
+null-power span and exact `D²` eigenvalue while giving a genuine Euclidean
+linear isometry and Parseval identity. Reduction to the canonical
+round-sphere/time fundamental domain and exact Fourier cancellation now prove
+orthogonality between distinct circle modes in either fixed normal-root
+sector, uniformly across sphere levels and multiplicities. The explicit Hopf
+half-spinor planes also give pointwise and integrated orthogonality between
+opposite sectors for arbitrary levels and modes. Rotation integration by
+parts and the exact Casimir eigenvalue additionally prove orthogonality
+between distinct sphere levels, for raw blocks, their spans and normalized
+syntheses. Their completed Hilbert sum is now isometrically embedded with
+closed range exactly equal to their joint closed span. The opposite signed
+blocks at each fixed spectral label are exactly orthogonal by the global
+gradient/Casimir identity. Signed packets carrying distinct
+sector/circle/level labels are now orthogonal as well, including the
+zero-versus-positive separation. The zero tower and every complete two-sign
+positive block therefore assemble into one canonical signed Hilbert-sum
+isometry. Its range is exactly the closed signed spectral span and is
+unconditionally unitarily equivalent to the global coefficient space. The
+only remaining step toward a unitary onto the entire independently defined
+geometric completion is density of this explicit signed range; this density
+is not inferred from scalar harmonic completeness alone. The
+`p = 1,2,3` packets remain concrete compatibility checks
+of this generic construction. One must
+also prove invariance of all nine action blocks under the same
+smooth diffeomorphisms and identify the actual
 bulk/metric–Maxwell–matter–ghost–boundary Hessian, excluding the now-closed
 LL factor but including all remaining nonspectral sectors, with the
 constructed global elliptic Fredholm operator.
-For any such all-level geometric Fourier realization, the completion is now
-automatic: the completed smooth range is unitarily equivalent to coefficient
-`L²`, the maximal `H²` domain and squared operator are conjugate, and graph
-energy is preserved.
+The earlier abstract all-smooth realization theorem remains useful for
+transporting the maximal domain and squared operator once this unitary
+identification is supplied.
 Arbitrary couplings cannot imply the last statement: the repository now
 proves that a zero Hessian has no such Fredholm realization on an
 infinite-dimensional completion. Nondegenerate elliptic coupling hypotheses

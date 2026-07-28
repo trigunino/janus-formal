@@ -234,6 +234,34 @@ def d9PrimitiveSpinCScalarCliffordGradientAt
             period hPeriod direction base)) •
         family.localValue index base)
 
+/-- Clifford contraction by one scalar differential is pointwise linear in a
+second scalar multiplier of the spinor. -/
+theorem d9PrimitiveSpinCScalarCliffordGradientAt_realScalarMul
+    (choice : NormalRootChoice)
+    (scalar multiplier : ThroatBase period hPeriod → Real)
+    (hMultiplier :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ multiplier)
+    (family :
+      SmoothPrimitiveSpinCLocalGaugeFamily period hPeriod choice)
+    (index : D9PrimitiveSpinCIndex period hPeriod)
+    (base : ThroatBase period hPeriod) :
+    d9PrimitiveSpinCScalarCliffordGradientAt
+        period hPeriod choice scalar
+        (d9PrimitiveSpinCRealScalarMulLocalGaugeFamily
+          period hPeriod choice multiplier hMultiplier family)
+        index base =
+      multiplier base •
+        d9PrimitiveSpinCScalarCliffordGradientAt
+          period hPeriod choice scalar family index base := by
+  unfold d9PrimitiveSpinCScalarCliffordGradientAt
+  rw [Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro direction _
+  rw [d9PrimitiveSpinCRealScalarMulLocalGaugeFamily_localValue,
+    smul_smul]
+  simp_rw [map_smul]
+  module
+
 /-- Exact local first-order Leibniz rule for the complete coupled geometric
 Dirac operator. -/
 theorem d9PrimitiveSpinCLocalGeometricDirac_realScalarMul
@@ -265,6 +293,305 @@ theorem d9PrimitiveSpinCLocalGeometricDirac_realScalarMul
     d9PrimitiveSpinCLocalDirac_partial_add,
     d9PrimitiveSpinCLocalDirac_real_smul]
   rfl
+
+/-- Genuine global smooth section obtained by multiplying an arbitrary
+primitive SpinC section by a globally smooth real scalar. -/
+def d9PrimitiveSpinCRealScalarMulSection
+    (choice : NormalRootChoice)
+    (scalar : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice) :
+    D9PrimitiveSpinCSmoothSection period hPeriod choice :=
+  (d9PrimitiveSpinCRealScalarMulLocalGaugeFamily
+    period hPeriod choice scalar hScalar
+    (d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
+      period hPeriod choice state)).toSmoothSection
+        period hPeriod choice
+
+/-- At the preferred index, recovering local gauges from a genuine section
+returns its actual fiber value. -/
+theorem d9PrimitiveSpinCSmoothSectionLocalGaugeFamily_indexAt
+    (choice : NormalRootChoice)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice)
+    (base : ThroatBase period hPeriod) :
+    (d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
+        period hPeriod choice state).localValue
+          ((d9PrimitiveSpinCVectorBundleCore
+            period hPeriod choice).indexAt base) base =
+      state base := by
+  let family :=
+    d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
+      period hPeriod choice state
+  have hRecover :
+      family.toSmoothSection period hPeriod choice = state :=
+    d9PrimitiveSpinCSmoothSectionLocalGaugeFamily_toSmoothSection
+      period hPeriod choice state
+  exact congrArg
+    (fun current : D9PrimitiveSpinCSmoothSection period hPeriod choice =>
+      current base) hRecover
+
+@[simp]
+theorem d9PrimitiveSpinCRealScalarMulSection_apply
+    (choice : NormalRootChoice)
+    (scalar : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice)
+    (base : ThroatBase period hPeriod) :
+    d9PrimitiveSpinCRealScalarMulSection
+        period hPeriod choice scalar hScalar state base =
+      scalar base • state base := by
+  let family :=
+    d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
+      period hPeriod choice state
+  change scalar base • family.localValue
+      ((d9PrimitiveSpinCVectorBundleCore
+        period hPeriod choice).indexAt base) base =
+    scalar base • state base
+  rw [← d9PrimitiveSpinCSmoothSectionLocalGaugeFamily_toSmoothSection
+    period hPeriod choice state]
+  rfl
+
+/-- Multiplication by a smooth scalar commutes with a constant real
+coefficient on genuine smooth sections. -/
+theorem d9PrimitiveSpinCRealScalarMulSection_real_smul
+    (choice : NormalRootChoice)
+    (scalar : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (coefficient : Real)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice) :
+    d9PrimitiveSpinCRealScalarMulSection
+        period hPeriod choice scalar hScalar (coefficient • state) =
+      coefficient •
+        d9PrimitiveSpinCRealScalarMulSection
+          period hPeriod choice scalar hScalar state := by
+  ext base
+  rw [d9PrimitiveSpinCRealScalarMulSection_apply]
+  have hStateSmul :
+      (coefficient • state) base = coefficient • state base :=
+    rfl
+  have hResultSmul :
+      (coefficient •
+          d9PrimitiveSpinCRealScalarMulSection
+            period hPeriod choice scalar hScalar state) base =
+        coefficient •
+          d9PrimitiveSpinCRealScalarMulSection
+            period hPeriod choice scalar hScalar state base :=
+    rfl
+  rw [hStateSmul, hResultSmul,
+    d9PrimitiveSpinCRealScalarMulSection_apply]
+  module
+
+/-- Global Clifford-gradient remainder in the scalar Leibniz rule.  It is
+defined as a difference of genuine smooth sections, hence carries no local
+gluing assumption. -/
+def d9PrimitiveSpinCScalarCliffordGradientSection
+    (choice : NormalRootChoice)
+    (scalar : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice) :
+    D9PrimitiveSpinCSmoothSection period hPeriod choice :=
+  d9PrimitiveSpinCGeometricDiracOperator
+      period hPeriod choice
+      (d9PrimitiveSpinCRealScalarMulSection
+        period hPeriod choice scalar hScalar state) -
+    d9PrimitiveSpinCRealScalarMulSection
+      period hPeriod choice scalar hScalar
+      (d9PrimitiveSpinCGeometricDiracOperator
+        period hPeriod choice state)
+
+/-- Exact global smooth-section Leibniz rule. -/
+theorem d9PrimitiveSpinCGeometricDiracOperator_realScalarMul
+    (choice : NormalRootChoice)
+    (scalar : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice) :
+    d9PrimitiveSpinCGeometricDiracOperator
+        period hPeriod choice
+        (d9PrimitiveSpinCRealScalarMulSection
+          period hPeriod choice scalar hScalar state) =
+      d9PrimitiveSpinCRealScalarMulSection
+          period hPeriod choice scalar hScalar
+          (d9PrimitiveSpinCGeometricDiracOperator
+            period hPeriod choice state) +
+        d9PrimitiveSpinCScalarCliffordGradientSection
+          period hPeriod choice scalar hScalar state := by
+  unfold d9PrimitiveSpinCScalarCliffordGradientSection
+  module
+
+/-- The globally packaged remainder is exactly the local Clifford contraction
+of the scalar differential in the preferred gauge. -/
+theorem d9PrimitiveSpinCScalarCliffordGradientSection_apply
+    (choice : NormalRootChoice)
+    (scalar : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice)
+    (base : ThroatBase period hPeriod) :
+    (d9PrimitiveSpinCScalarCliffordGradientSection
+        period hPeriod choice scalar hScalar state base :
+      D9DoubledMatterFiber) =
+      d9PrimitiveSpinCScalarCliffordGradientAt
+        period hPeriod choice scalar
+        (d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
+          period hPeriod choice state)
+        ((d9PrimitiveSpinCVectorBundleCore
+          period hPeriod choice).indexAt base) base := by
+  let family :=
+    d9PrimitiveSpinCSmoothSectionLocalGaugeFamily
+      period hPeriod choice state
+  let multiplied :=
+    d9PrimitiveSpinCRealScalarMulLocalGaugeFamily
+      period hPeriod choice scalar hScalar family
+  let index :=
+    (d9PrimitiveSpinCVectorBundleCore
+      period hPeriod choice).indexAt base
+  let gradientValue :
+      D9PrimitiveSpinCFiber period hPeriod choice base :=
+    d9PrimitiveSpinCScalarCliffordGradientSection
+      period hPeriod choice scalar hScalar state base
+  let remainderValue :
+      D9PrimitiveSpinCFiber period hPeriod choice base :=
+    d9PrimitiveSpinCScalarCliffordGradientAt
+      period hPeriod choice scalar family index base
+  let multipliedDiracValue :
+      D9PrimitiveSpinCFiber period hPeriod choice base :=
+    d9PrimitiveSpinCLocalGeometricDirac
+      period hPeriod choice multiplied index base
+  let scaledDiracValue :
+      D9PrimitiveSpinCFiber period hPeriod choice base :=
+    scalar base •
+      d9PrimitiveSpinCLocalGeometricDirac
+        period hPeriod choice family index base
+  change
+    gradientValue = remainderValue
+  have hBase :
+      base ∈ d9PrimitiveSpinCBaseSet period hPeriod index :=
+    (d9PrimitiveSpinCVectorBundleCore
+      period hPeriod choice).mem_baseSet_at base
+  have hDiracMultiplied :=
+    congrArg
+      (fun smoothSection :
+        D9PrimitiveSpinCSmoothSection period hPeriod choice =>
+        smoothSection base)
+      (d9PrimitiveSpinCGeometricDiracOperator_toSmoothSection
+        period hPeriod choice multiplied)
+  have hLeibniz :=
+    d9PrimitiveSpinCLocalGeometricDirac_realScalarMul
+      period hPeriod choice scalar hScalar family index base hBase
+  have hGlobal :=
+    congrArg
+      (fun smoothSection :
+        D9PrimitiveSpinCSmoothSection period hPeriod choice =>
+        smoothSection base)
+      (d9PrimitiveSpinCGeometricDiracOperator_realScalarMul
+        period hPeriod choice scalar hScalar state)
+  change
+    d9PrimitiveSpinCGeometricDiracOperator
+          period hPeriod choice
+          (multiplied.toSmoothSection period hPeriod choice) base =
+      d9PrimitiveSpinCRealScalarMulSection
+              period hPeriod choice scalar hScalar
+              (d9PrimitiveSpinCGeometricDiracOperator
+                period hPeriod choice state) base +
+        d9PrimitiveSpinCScalarCliffordGradientSection
+          period hPeriod choice scalar hScalar state base at hGlobal
+  rw [hDiracMultiplied,
+    d9PrimitiveSpinCGeometricDiracSection_apply,
+    d9PrimitiveSpinCRealScalarMulSection_apply] at hGlobal
+  change
+    multipliedDiracValue = scaledDiracValue + gradientValue at hGlobal
+  have hLeibnizFiber :
+      multipliedDiracValue = scaledDiracValue + remainderValue :=
+    hLeibniz
+  rw [hLeibnizFiber] at hGlobal
+  exact (add_left_cancel hGlobal).symm
+
+/-- Clifford multiplication by the differential of one scalar is pointwise
+linear in a second smooth real scalar multiplier. -/
+theorem d9PrimitiveSpinCScalarCliffordGradientSection_realScalarMul
+    (choice : NormalRootChoice)
+    (scalar multiplier : ThroatBase period hPeriod → Real)
+    (hScalar :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ scalar)
+    (hMultiplier :
+      ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞ multiplier)
+    (state :
+      D9PrimitiveSpinCSmoothSection period hPeriod choice) :
+    d9PrimitiveSpinCScalarCliffordGradientSection
+        period hPeriod choice scalar hScalar
+        (d9PrimitiveSpinCRealScalarMulSection
+          period hPeriod choice multiplier hMultiplier state) =
+      d9PrimitiveSpinCRealScalarMulSection
+        period hPeriod choice multiplier hMultiplier
+        (d9PrimitiveSpinCScalarCliffordGradientSection
+          period hPeriod choice scalar hScalar state) := by
+  ext base
+  rw [d9PrimitiveSpinCRealScalarMulSection_apply]
+  change
+    (d9PrimitiveSpinCScalarCliffordGradientSection
+        period hPeriod choice scalar hScalar
+        (d9PrimitiveSpinCRealScalarMulSection
+          period hPeriod choice multiplier hMultiplier state) base :
+      D9DoubledMatterFiber) =
+    multiplier base •
+      (d9PrimitiveSpinCScalarCliffordGradientSection
+        period hPeriod choice scalar hScalar state base :
+      D9DoubledMatterFiber)
+  rw [d9PrimitiveSpinCScalarCliffordGradientSection_apply,
+    d9PrimitiveSpinCScalarCliffordGradientSection_apply]
+  unfold d9PrimitiveSpinCScalarCliffordGradientAt
+  simp_rw [d9PrimitiveSpinCSmoothSectionLocalGaugeFamily_indexAt,
+    d9PrimitiveSpinCRealScalarMulSection_apply]
+  let matter : D9DoubledMatterFiber := state base
+  change
+    (∑ direction : Fin 3,
+      d9DoubledMatterFiberCliffordGammaCLM direction
+        (mvfderiv throatCoverModelWithCorners scalar base
+            (d9IntrinsicThroatFrame period hPeriod direction base) •
+          (multiplier base • matter))) =
+      multiplier base •
+        ∑ direction : Fin 3,
+          d9DoubledMatterFiberCliffordGammaCLM direction
+            (mvfderiv throatCoverModelWithCorners scalar base
+                (d9IntrinsicThroatFrame
+                  period hPeriod direction base) •
+              matter)
+  calc
+    _ = ∑ direction : Fin 3,
+        multiplier base •
+          d9DoubledMatterFiberCliffordGammaCLM direction
+            (mvfderiv throatCoverModelWithCorners scalar base
+                (d9IntrinsicThroatFrame
+                  period hPeriod direction base) •
+              matter) := by
+      apply Finset.sum_congr rfl
+      intro direction _
+      rw [
+        (d9DoubledMatterFiberCliffordGammaCLM direction).map_smul,
+        (d9DoubledMatterFiberCliffordGammaCLM direction).map_smul,
+        (d9DoubledMatterFiberCliffordGammaCLM direction).map_smul]
+      simp only [smul_smul, mul_comm]
+    _ = _ := by
+      exact (Finset.smul_sum (r := multiplier base)
+        (f := fun direction : Fin 3 =>
+          d9DoubledMatterFiberCliffordGammaCLM direction
+            (mvfderiv throatCoverModelWithCorners scalar base
+                (d9IntrinsicThroatFrame
+                  period hPeriod direction base) •
+              matter))
+        (s := Finset.univ)).symm
 
 /-- Global form of the tangential-projector formula for a pulled-back sphere
 coordinate. -/

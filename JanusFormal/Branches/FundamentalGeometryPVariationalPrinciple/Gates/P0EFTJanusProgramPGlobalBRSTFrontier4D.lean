@@ -5,6 +5,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusExteriorScalarBRSTDerivation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNonlinearGlobalBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGlobalMatterArbitraryDiffeomorphismNoether4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusMeasuredDensityBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusThroatScalarCoadjointBRST4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateABRSTInvarianceReduction4D
 
 /-!
 # Exact frontier of the global BRST/BV problem
@@ -18,10 +23,11 @@ differential is square-zero.  The corrected linear full-field differential
 general-metric BV doublet is nilpotent and preserves the current Program-P
 boundary domain.  The exact `U(1)²` action orbit is stationary.
 
-This is not `BRST-GLOBAL-01`: the nonlinear exterior ghost has not yet been
-extended to one derivation on every field, antifield and boundary component
-of the assembled action.  The ordinary commuting-ghost construction is
-proved trivial, so that missing exterior extension cannot be bypassed.
+The exterior complex, fields, metric antifields and boundary variables now
+form one square-zero packet whose differential commutes with the throat
+trace.  This is not yet full `BRST-GLOBAL-01`: invariance of all nine
+Candidate-A blocks under this same nonlinear diffeomorphism differential
+remains an explicit contract.
 -/
 
 namespace JanusFormal
@@ -43,6 +49,8 @@ open P0EFTJanusMappingTorusGradedScalarGhostAction4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricBVFirstLevel4D
 open P0EFTJanusMappingTorusInducedFieldVariation4D
 open P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
+open P0EFTJanusMappingTorusMeasuredDensityBRST4D
+open P0EFTJanusMappingTorusThroatScalarCoadjointBRST4D
 open P0EFTJanusMappingTorusOrdinaryGhostNonlinearBRSTNoGo4D
 open P0EFTJanusMappingTorusPhysicalGaugeSobolevComplex4D
 open P0EFTJanusMappingTorusQuotient
@@ -52,8 +60,14 @@ open P0EFTJanusMappingTorusSmoothFieldDescent4D
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPCommonGeometricDomain4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalNoether4D
+open P0EFTJanusProgramPNonlinearGlobalBRST4D
+open P0EFTJanusProgramPCandidateABRSTInvarianceReduction4D
+open P0EFTJanusMappingTorusGlobalMatterArbitraryDiffeomorphismNoether4D
+open P0EFTJanusMappingTorusGlobalMatterMultipletDiagonalDiffeomorphismNoether4D
+open P0EFTJanusMappingTorusDiagonalDiffeomorphismAction4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -128,6 +142,28 @@ structure ProgramPGlobalBRSTFrontierCertificate4D where
       ordinaryQuadraticGhostBRST period hPeriod ghost = 0) ∧
       ¬ ∃ ghost,
         ordinaryQuadraticGhostBRST period hPeriod ghost ≠ 0
+  nonlinearUnifiedSquareZero :
+    ∀ packet : ProgramPNonlinearBRSTPacket period hPeriod,
+      programPNonlinearBRST period hPeriod
+          (programPNonlinearBRST period hPeriod packet) =
+        programPNonlinearBRSTZero period hPeriod
+  nonlinearBoundaryStable :
+    ∀ packet : ProgramPNonlinearBRSTPacket period hPeriod,
+      BoundaryCompatible period hPeriod packet →
+        BoundaryCompatible period hPeriod
+          (programPNonlinearBRST period hPeriod packet)
+  measuredDensityClosure :
+    MeasuredDensityBRSTCertificate4D period hPeriod
+  throatScalarCoadjointClosure :
+    ThroatScalarCoadjointBRSTCertificate4D period hPeriod
+  scalarMatterArbitraryDiffeomorphismInvariant :
+    ∀ (configuration :
+        GlobalGeneralLorentzMatterConfiguration period hPeriod)
+      (curve : Real → SpacetimeDiffeomorphism period hPeriod)
+      (parameter : Real),
+      HasDerivAt
+        (arbitraryDiffeomorphismMatterActionOrbit period hPeriod
+          configuration curve) 0 parameter
 
 def programPGlobalBRSTFrontierCertificate4D :
     ProgramPGlobalBRSTFrontierCertificate4D period hPeriod where
@@ -153,6 +189,16 @@ def programPGlobalBRSTFrontierCertificate4D :
       period hPeriod
   ordinaryGhostNoGo :=
     ordinary_ghost_nonlinear_brst_noGo period hPeriod
+  nonlinearUnifiedSquareZero :=
+    programPNonlinearBRST_square_zero period hPeriod
+  nonlinearBoundaryStable :=
+    programPNonlinearBRST_boundary_stable period hPeriod
+  measuredDensityClosure :=
+    measuredDensityBRSTCertificate4D period hPeriod
+  throatScalarCoadjointClosure :=
+    throatScalarCoadjointBRSTCertificate4D period hPeriod
+  scalarMatterArbitraryDiffeomorphismInvariant :=
+    arbitraryDiffeomorphismMatterActionOrbit_hasDerivAt_zero period hPeriod
 
 /-- The exact assembled action is stationary along every paired smooth
 abelian BRST ghost orbit. -/
@@ -174,6 +220,24 @@ theorem global_physical_u1_brst_action_gate
 theorem global_brst_frontier_gate :
     Nonempty (ProgramPGlobalBRSTFrontierCertificate4D period hPeriod) :=
   ⟨programPGlobalBRSTFrontierCertificate4D period hPeriod⟩
+
+/-- Exact final reduction: a termwise nine-block diffeomorphism symmetry
+simultaneously yields action invariance, Noether, nilpotence and boundary
+stability. -/
+theorem global_candidateA_nonlinear_brst_reduction_gate
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (chart : GlobalCandidateAVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (symmetry :
+      GlobalCandidateADiffeomorphismGaugeSymmetry
+        period hPeriod chart) :
+    CandidateANonlinearBRSTInvarianceReduction4D
+      period hPeriod chart symmetry :=
+  candidateANonlinearBRSTInvarianceReduction4D
+    period hPeriod chart symmetry
 
 end
 end P0EFTJanusProgramPGlobalBRSTFrontier4D

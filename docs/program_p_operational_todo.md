@@ -2191,8 +2191,20 @@ que si leur critère le dit explicitement.
 - Limite : l'identification de cette base abstraite avec une famille complète
   de sections propres géométriques lisses reste le théorème de Fourier
   géométrique. Le segment à support fini des niveaux zéro et premier signés est
-  maintenant fermé; seuls les niveaux géométriques arbitraires restent ouverts,
-  la complétion étant désormais automatique dès qu'une réalisation existe.
+  maintenant fermé et la diagonalisation SpinC uniforme est traitée par la
+  gate tous niveaux ci-dessous. Les niveaux `p=1`, `p=2` et `p=3` sont
+  concrets; les deux derniers fournissent respectivement cinq quadratiques et
+  sept cubiques sans trace linéairement indépendantes, avec leurs identités
+  `D²` et leurs graines Dirac signées. Le paquet complexe est désormais
+  construit uniformément à tout degré puis réalisé par de vraies sections
+  lisses null-harmoniques. Sa récurrence donne `D²`, les graines signées,
+  l’indépendance complexe exacte et une synthèse finie injective, désormais
+  conjointement sur tous les niveaux positifs à secteur/mode fixé, avec
+  entrelacement diagonal de `D²`. Les synthèses totales ci-dessous ferment
+  aussi simultanément secteurs, modes, multiplicités et tour zéro. La
+  complétion spectrale et l’analyse dense sont depuis fermées par
+  `P9-SPINC-ALL-LEVEL-FINITE-HILBERT-COMPLETION`; reste l’égalité avec le
+  produit géométrique intégral sur tout le cœur lisse.
 - Porte terminale : aucune ; corrige la portée de `DIRAC-GLOBAL-01`.
 
 ### `P9-SPINC-COEFFICIENT-DOMAIN-UNITARY` — Domaine maximal SpinC/D10 étendu
@@ -2206,9 +2218,10 @@ que si leur critère le dit explicitement.
   respectivement au cercle quart-tordu et au spectre D10.
 - Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
 - Limite : ce résultat ferme le transport unitaire du domaine de
-  **coefficients**. Il ne construit pas les eigenspinors géométriques lisses
-  de niveau arbitraire; l’extension unitaire de leur analyse Fourier est fermée
-  par la gate suivante.
+  **coefficients**. Les eigenspinors géométriques lisses signés de niveau
+  arbitraire sont désormais construits par
+  `P9-SPINC-ALL-LEVEL-SIGNED-GEOMETRIC-REALIZATION`; leur comparaison
+  hilbertienne intégrale reste séparée.
 - Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01`.
 
 ### `P9-SPINC-GEOMETRIC-FOURIER-COMPLETION` — Complétion canonique de l’analyse
@@ -2223,11 +2236,461 @@ que si leur critère le dit explicitement.
   est en outre coercif et bijectif.
 - Hypothèses : aucune au-delà de la réalisation géométrique déjà isolée; aucun
   axiome métier supplémentaire.
-- Limite : cette gate ne construit pas la réalisation elle-même. Il reste
-  uniquement les eigenspinors géométriques lisses positifs de niveau arbitraire
-  et leur complétude.
+- Limite : cette gate ne construit pas la réalisation elle-même. Le paquet
+  lisse tous degrés, son identité géométrique `D²`, son indépendance complexe
+  inter-niveaux à secteur/mode fixé et sa synthèse finie diagonale injective
+  sont maintenant construits. La séparation conjointe et la complétion
+  spectrale sont depuis fermées; reste l’identification avec le produit
+  géométrique intégral sur tout le cœur lisse.
 - Porte terminale : aucune ; retire la complétion des résidus de
   `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-ALL-LEVEL-HARMONIC-DIAGONALIZATION` — Diagonalisation géométrique uniforme
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelHarmonicDiagonalization4D`.
+- Résultat : pour tout niveau sphérique positif, les sections scalaire et
+  gradient d’un germe harmonique forment un bloc Dirac exact `2×2`. Ses deux
+  combinaisons canoniques sont des eigensections lisses de fréquences opposées;
+  `D²`, le sous-espace engendré et l’accord exact avec le spectre D9/D10 complet
+  sont démontrés. À multiplicité arbitraire, les blocs propres `±` sont
+  disjoints et leur somme épuise exactement le paquet scalaire/gradient. Le
+  bloc entier est en outre reconstruit à partir d’une seule section propre de
+  `D²`; les deux équations du premier ordre ne sont donc pas des obligations
+  indépendantes. L’action complexe intrinsèque fournit automatiquement les
+  compagnons imaginaires et conserve la valeur propre sur toute la ligne
+  complexe (fidèle dès que le générateur est non nul). Le niveau `p=1` redonne
+  littéralement les eigensections déjà construites et habite aussi cette
+  interface réduite. En outre, la multiplication globale d’une vraie section
+  lisse par un scalaire lisse, son reste de Clifford-gradient et la règle de
+  Leibniz sont maintenant construits. Appliqués au mode zéro de Hopf, ils
+  démontrent sans hypothèse la première équation du bloc. Une tour de scalaires
+  munie de la seule identité de Lichnerowicz/`D²` produit automatiquement la
+  tour `D²`, la tour Dirac signée et ses paquets; les coordonnées `p=1`, les
+  cinq quadratiques sans trace indépendantes de `p=2` et les sept cubiques
+  sans trace indépendantes de `p=3` réalisent concrètement cette interface.
+- Hypothèses : aucun axiome métier. La récurrence null-harmonique construit
+  désormais elle-même l’identité géométrique de second ordre et les deux
+  équations du premier ordre.
+- Limite : le paquet complexe homogène est réalisé uniformément, pour tout
+  `p`, par des sections lisses du fibré quotient. La croissance stricte de
+  `p(p+1)` sépare les espaces propres de `D²` : l’indépendance et la synthèse
+  finie diagonale sont donc fermées conjointement sur tous les niveaux
+  positifs à secteur/mode fixé. La séparation conjointe et l’analyse dense
+  complétée sont depuis fermées. Le raccord exact de ces branches aux labels
+  signés complets est fermé par la gate suivante. Parseval et la complétion
+  sont aussi fermés séparément sur chaque branche et chaque bloc signé.
+  Restent leurs multiplicités attendues, leur orthogonalité inter-blocs,
+  l’assemblage hilbertien conjoint et la densité.
+  Les niveaux
+  `p=1`, `p=2` et `p=3` ne sont plus des obligations distinctes.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` à la complétude
+  analytique globale.
+
+### `P9-SPINC-ALL-LEVEL-SIGNED-GEOMETRIC-REALIZATION` — Spectre signé géométrique complet
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSignedGeometricRealization4D`.
+- Résultat : pour chaque niveau positif, secteur normal, mode cercle,
+  multiplicité et branche interne `±`, la tour null-harmonique fournit une
+  vraie section lisse du fibré SpinC quotient. Elle vérifie exactement
+  l’équation de Dirac de premier ordre avec la valeur propre du modèle
+  Fredholm signé. Les deux spans de branches d’un bloc sont disjoints et leur
+  somme est exactement le bloc scalaire/Clifford-gradient. La tour sphérique
+  zéro non doublée est également réalisée pour tout `period ≠ 0`; lorsque le
+  period est positif, l’involution PT secteur/mode corrige exactement le signe
+  orienté, et lorsque le period est négatif l’identité convient. Ainsi chaque
+  label signé complet possède un représentant géométrique lisse exact.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier, aucune hypothèse
+  de complétude ni choix d’orientation supplémentaire.
+- Limite : chaque branche et chaque bloc signé possède ses coordonnées de
+  Parseval, sa complétion fermée et son finrank physique exact. Les deux
+  signes d’un label fixé et tous les labels signés distincts sont désormais
+  orthogonaux; la somme jointe globale est construite. Reste seulement sa
+  densité dans toute la complétion géométrique.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-SECOND-POSITIVE-SPHERE` — Paquet quadratique `p=2`
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCSecondPositiveSphereDirac4D`.
+- Résultat : les produits `nᵢnⱼψ` et leurs partenaires tangentiels satisfont
+  un système Dirac exact. L’anticommutation Clifford donne la correction de
+  trace `-2δᵢⱼψ`; elle s’annule sur cinq combinaisons quadratiques sans trace,
+  qui vérifient `D²=(k²+6)`. Les cinq scalaires lisses associés et les cinq
+  véritables sections propres lisses sont linéairement indépendants; le
+  transfert aux sections utilise cinq valeurs locales non nulles du mode de
+  Hopf et la même matrice d’évaluation rationnelle explicite. Leur cardinal
+  vaut la dégénérescence `2p+1=5`, et chacun produit les deux branches propres
+  signées via l’interface Lichnerowicz.
+- Hypothèses : aucun axiome métier ni identité spectrale ajoutée.
+- Limite : ce jalon est conservé comme contrôle réel explicite de `p=2`; la
+  construction null-harmonique générique ferme maintenant tous les degrés
+  géométriquement.
+
+### `P9-SPINC-THIRD-POSITIVE-SPHERE` — Paquet cubique `p=3`
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCThirdPositiveSphereDirac4D`.
+- Résultat : le bloc cubique brut et son partenaire tangentiel satisfont les
+  deux équations de Dirac récursives. La correction de trace s’annule sur sept
+  cubiques harmoniques réels sans trace, donnant sept véritables eigensections
+  lisses avec `D²=(k²+12)`. Les scalaires et les sections sont linéairement
+  indépendants par une matrice d’évaluation rationnelle à sept témoins locaux
+  non nuls. Leur cardinal vaut `2p+1=7` et chacun engendre les deux graines
+  Dirac signées.
+- Hypothèses : aucun axiome métier ni identité spectrale ajoutée.
+- Limite : ce jalon est conservé comme contrôle réel explicite de `p=3`; la
+  construction null-harmonique générique ferme maintenant tous les degrés
+  géométriquement. La complétude inter-niveaux reste globale.
+
+### `P9-SPINC-ALL-LEVEL-SOLID-HARMONIC-PACKET` — Paquet uniforme tout degré
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/ALGÉBRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSolidHarmonicPacket4D`.
+- Résultat : la courbe nulle complexe
+  `(1-t², I(1+t²), 2t)` engendre à tout degré `p` un paquet de cardinal
+  physique exact `2p+1`. Chaque membre est homogène, son Laplacien ambiant
+  est nul et l’opérateur sphérique algébrique `E(E+1)-r²Δ` donne exactement
+  l’énergie `p(p+1)`. Une évaluation sur la même courbe réduit
+  l’indépendance linéaire à une matrice de Vandermonde; elle est démontrée
+  uniformément, sans développer `p=4`, `p=5`, etc.
+- Hypothèses : aucun axiome métier ni identité spectrale ajoutée.
+- Limite : la réalisation lisse complexe et son identification à `D²` sont
+  fermées par la gate suivante. Une base réelle canonique n’est pas nécessaire
+  pour la multiplicité complexe physique. La complétude globale reste ouverte.
+- Porte terminale : aucune ; remplace tous les futurs paquets
+  niveau-par-niveau par un unique pont géométrique.
+
+### `P9-SPINC-ALL-LEVEL-NULL-HARMONIC-DIRAC` — Réalisation lisse uniforme
+
+- État : `DONE` (2026-07-28). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelNullHarmonicDirac4D`.
+- Résultat : les puissances de la forme linéaire nulle agissent directement
+  sur le mode de Hopf dans le véritable fibré SpinC quotient. Une unique
+  récurrence en `p` démontre les équations de premier ordre et l’identité
+  géométrique `D²` à tout niveau, puis engendre les deux branches signées.
+  L’évaluation locale et le paquet de Vandermonde prouvent que les `2p+1`
+  sections sont complexes-linéairement indépendantes. La croissance stricte
+  de l’énergie sphérique sépare les espaces propres de `D²`, donc ces paquets
+  sont conjointement indépendants sur tous les niveaux positifs à
+  secteur/mode fixé. Leur synthèse à support fini est injective et vérifie
+  exactement `D² S = S Λ` pour l’opérateur diagonal explicite des
+  coefficients. Avec la tour de Hopf zéro, chaque étiquette du spectre carré
+  complet possède des représentants lisses réel et imaginaire intrinsèque.
+- Hypothèses : aucun axiome métier et aucune hypothèse de Lichnerowicz ou de
+  niveau supplémentaire.
+- Limite : cette carte ferme l’axe inter-niveaux à secteur/mode fixé. La carte
+  suivante ferme l’axe secteurs/modes à niveau fixé, puis la carte
+  `P9-SPINC-ALL-POSITIVE-JOINT-SPECTRAL` combine les deux axes, puis la carte
+  complète suivante ajoute la tour zéro. La carte de complétion finie ferme
+  ensuite l’analyse dense et la complétion spectrale. Le raccord géométrique
+  de premier ordre à tous les labels signés est désormais fermé; restent son
+  orthogonalisation/intégration par blocs et la densité globale.
+
+### `P9-SPINC-FIXED-LEVEL-JOINT-FOURIER` — Séparation conjointe à tout niveau fixé
+
+- État : `DONE` (2026-07-28). Portée : `DIRAC/GÉOMÉTRIQUE/SUPPORT-FINI`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelJointFourierSynthesis4D`.
+- Résultat : le doublement du temps de revêtement identifie les secteurs
+  `positiveQuarter` et `negativeQuarter` aux indices Fourier impairs et pairs.
+  L’index conjoint secteur–mode s’injecte donc dans `ℤ`. Pour tout niveau
+  positif arbitraire `p`, l’évaluation locale mobile sépare simultanément les
+  deux secteurs et tous les modes du cercle; la relation polynomiale
+  null-harmonique annule ensuite les `2p+1` multiplicités. La synthèse complexe
+  à support fini sur
+  `(secteur × mode du cercle) × multiplicité` est injective, et la famille
+  correspondante est complexe-linéairement indépendante.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier, aucune nouvelle
+  condition physique et aucun développement niveau par niveau.
+- Limite : le niveau est arbitraire mais fixé dans cette carte. La synthèse
+  simultanée tous niveaux positifs est fermée par la carte suivante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-ALL-POSITIVE-JOINT-SPECTRAL` — Synthèse spectrale positive totale
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/SUPPORT-FINI`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelJointSpectralSynthesis4D`.
+- Résultat : une seule famille lisse est indexée simultanément par les deux
+  secteurs, tous les modes du cercle, tous les niveaux sphériques positifs et
+  leurs `2p+1` multiplicités. La séparation par espaces propres de `D²`
+  réduit chaque collision spectrale à un paquet à niveaux assignés, où le
+  réindexage Fourier et le paquet null-harmonique donnent l’indépendance.
+  La famille totale est donc complexe-linéairement indépendante, sa synthèse
+  à support fini est injective et vérifie exactement `D² S = S Λ`.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni choix physique
+  supplémentaire.
+- Limite : cette carte porte seulement les niveaux positifs. La carte
+  suivante ajoute la tour zéro. La carte de complétion finie ferme ensuite
+  l’analyse dense et la complétion spectrale; reste l’égalité avec la norme
+  géométrique intégrale globale.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-ALL-LEVEL-FULL-SPECTRAL` — Synthèse géométrique complète
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/SUPPORT-FINI`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelFullSpectralSynthesis4D`.
+- Résultat : le paquet à niveaux assignés est étendu à tout niveau
+  sphérique non négatif. La séparation des collisions de `D²` donne alors
+  l’indépendance complexe simultanée de la tour de Hopf zéro, de tous les
+  niveaux positifs, des deux secteurs, de tous les modes du cercle et de
+  toutes les multiplicités. Sur l’index canonique
+  `PrimitiveSpinCGeometricFullMode`, la synthèse à support fini est injective
+  et vérifie exactement `D² S = S Λ` pour le diagonal spectral complet déjà
+  utilisé par la complétion.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni choix physique
+  supplémentaire.
+- Limite : l’indépendance algébrique et l’entrelacement sur le cœur fini sont
+  fermés. La carte suivante ferme aussi sa complétion dans la norme spectrale.
+  Le produit `L²` géométrique indépendant, Parseval par bloc et l’isométrie
+  jointe vers son span fermé sont désormais construits pour la famille
+  scalaire. Les branches signées/gradient possèdent aussi leur réalisation
+  hilbertienne finie bloc par bloc, leurs finranks exacts, toute
+  l’orthogonalité inter-labels et leur somme jointe globale. Reste leur
+  densité dans tout le cœur SpinC complété.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-ALL-LEVEL-FINITE-HILBERT-COMPLETION` — Complétion du cœur spectral géométrique
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelFiniteHilbertCompletion4D`.
+- Résultat : la synthèse injective identifie les coefficients à support fini
+  avec leur véritable span de sections SpinC lisses. L’analyse canonique de
+  ce span est injective et dense dans le `L²` complet des coefficients. La
+  norme induite en fait un cœur préhilbertien dont la complétion est
+  canoniquement unitaire au `L²`. Le domaine maximal `H²` et `D²` sont
+  transportés exactement; l’opérateur complété prolonge le vrai `D²`
+  différentiel sur le cœur, est coercif et bijectif.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni choix physique
+  supplémentaire.
+- Limite : la norme utilisée est induite par les coefficients. Le produit
+  géométrique indépendant, sa complétion et Parseval sur chaque bloc de
+  multiplicité sont désormais construits. Les modes cercle distincts d’un
+  même secteur, les secteurs opposés et les niveaux distincts à secteur/mode
+  fixé sont orthogonaux et leur somme hilbertienne est une isométrie à image
+  fermée exactement décrite pour les blocs scalaires. Les finranks, toute
+  l’orthogonalité et l’assemblage signés sont également fermés, avec un
+  unitaire inconditionnel sur leur image spectrale fermée. Reste la densité
+  de cette image dans la complétion géométrique entière.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-PAIRING-COMPLETION` — Produit et complétion `L²` géométriques
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D`.
+- Résultat : le produit hermitien doublé descend à travers toutes les
+  transitions du véritable fibré SpinC primitif. Son évaluation sur deux
+  sections lisses est lisse et intégrable contre le volume canonique de la
+  gorge. L’intégrale est sesquilinéaire, hermitienne et définie positive; elle
+  induit une norme complexe et une complétion hilbertienne dans laquelle le
+  cœur lisse est dense.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni définition par
+  coefficients spectraux.
+- Limite : Parseval est exact dans chaque bloc fini et entre modes cercle
+  distincts d’un même secteur; les secteurs opposés sont également
+  orthogonaux, ainsi que les niveaux distincts à secteur/mode fixé. Restent la
+  densité spectrale dans cette complétion et l’équivalence unitaire globale.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-SIGNED-BRANCH-COMPLETION` — Complétion géométrique des blocs signés
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedBranchCompletion4D`.
+- Résultat : à niveau positif, secteur et mode fixés, chaque branche signée
+  engendre un sous-espace fini du véritable cœur SpinC. Sa base orthonormale
+  canonique fournit Parseval, une isométrie vers la complétion géométrique,
+  une image fermée et l’entrelacement exact avec le Dirac de premier ordre.
+  Les branches `+` et `-` sont disjointes comme espaces propres de valeurs
+  propres distinctes. Leur bloc total possède à son tour Parseval, une image
+  complétée fermée et l’entrelacement exact avec `D²`.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni orthogonalité
+  postulée.
+- Limite : les bases sont indexées par le `finrank` géométrique démontré; son
+  égalité à la multiplicité physique attendue est établie par la gate suivante.
+  Les gates gradient/Casimir et jointe signée ferment l’orthogonalité dans
+  chaque bloc, entre tous labels distincts et l’assemblage global. Reste la
+  densité de son image fermée dans la complétion géométrique entière.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-SIGNED-MULTIPLICITY` — Multiplicités géométriques signées exactes
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedMultiplicity4D`.
+- Résultat : l’action radiale de Clifford sépare algébriquement la partie
+  scalaire (`+i`) de la partie gradient (`-i`) dans toute relation signée.
+  Comme le coefficient radial signé ne s’annule jamais et que le paquet
+  scalaire nul est déjà indépendant, chaque famille signée brute est
+  complexe-linéairement indépendante. Chaque signe a donc exactement le
+  finrank physique `2p+1`, et le bloc deux signes exactement `2(2p+1)`.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier.
+- Limite : la séparation radiale et la disjonction des espaces propres sont
+  algébriques; l’orthogonalité intégrale des deux signes dans un bloc fixé est
+  désormais fermée par la gate gradient/Casimir. Restent les labels spectraux
+  distincts, la somme hilbertienne jointe et son exhaustion.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-BLOCK-ORTHONORMALIZATION` — Parseval géométrique par bloc
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2BlockOrthonormalization4D`.
+- Résultat : pour chaque triplet niveau sphérique/secteur racine/mode cercle,
+  Gram–Schmidt est appliqué au paquet nul canonique dans le véritable produit
+  `L²` intégral. La famille obtenue est orthonormale, engendre exactement le
+  même sous-espace lisse et chaque vecteur conserve la même équation
+  géométrique `D²`. Sa synthèse depuis l’espace euclidien fini est une
+  isométrie linéaire avec identité de Parseval et entrelacement exact.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni orthogonalité
+  artificiellement postulée.
+- Limite : l’orthogonalité pour des modes cercle distincts dans un même
+  secteur, entre secteurs opposés et entre niveaux distincts à secteur/mode
+  fixé est désormais fermée. Leur somme hilbertienne est construite par la
+  gate jointe ci-dessous. Les blocs signés sont orthonormalisés séparément et
+  leurs finranks sont exacts; les signes opposés d’un même label et tous les
+  labels spectraux distincts sont orthogonaux. Leur somme jointe globale et
+  son unitaire sur l’image fermée sont construits; reste la densité ambiante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-FOURIER-ORTHOGONALITY` — Orthogonalité Fourier géométrique
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2FourierOrthogonality4D`.
+- Résultat : le produit quotient intégral est réduit exactement au domaine
+  fondamental sphère ronde × intervalle temporel canonique. Dans les deux
+  cartes monopôle, chaque paquet nul possède le même facteur Fourier mobile.
+  L’intégrale temporelle annule donc exactement deux modes cercle distincts
+  d’un même secteur, quels que soient niveaux et multiplicités. Le résultat
+  vaut pour les familles brutes, leurs spans et les synthèses orthonormales
+  de blocs. Les deux plans demi-spinoriels Hopf sont en outre orthogonaux :
+  les secteurs racine opposés s’annulent point par point puis dans `L²`, pour
+  tous niveaux, modes et multiplicités.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni hypothèse
+  d’orthogonalité ajoutée.
+- Limite : l’axe niveau est fermé par la gate Casimir dédiée ci-dessous.
+  L’assemblage scalaire est fermé par la gate d’isométrie jointe. Les
+  isométries finies signées, leur orthogonalité complète et leur assemblage
+  global sont fermés. L’unitaire sur l’image spectrale fermée est
+  inconditionnel; seule sa densité ambiante reste ouverte.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-LEVEL-ORTHOGONALITY` — Orthogonalité géométrique inter-niveaux
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2LevelOrthogonality4D`.
+- Résultat : les rotations standards de la sphère sont reliées à leur
+  champ infinitésimal et à la mesure ronde invariante. L’intégration par
+  parties rend le Casimir de rotation symétrique. Les puissances nulles de
+  degré `p` ont exactement la valeur propre `p(p+1)`; deux degrés distincts
+  sont donc orthogonaux sans hypothèse ajoutée. Le calcul local du germe Hopf
+  donne le facteur de norme exact `8`, puis Fubini transporte l’annulation aux
+  vraies sections SpinC, aux blocs bruts, à leurs spans et aux synthèses
+  normalisées.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier, aucune
+  orthogonalité ni complétude postulée.
+- Limite : les trois axes de séparation (secteur, mode cercle, niveau
+  sphérique) sont fermés. Leur assemblage hilbertien et la description exacte
+  de son image fermée sont fermés par la gate suivante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-GRADIENT-CASIMIR` — Orthogonalité exacte des deux signes
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D`.
+- Résultat : les identités Clifford/tangentielles du germe Hopf donnent la
+  paire pointwise exacte des gradients reconstruits. L’intégration par
+  parties annule le terme ambient–angulaire; le terme de Dirichlet est
+  exactement le Casimir `p(p+1)` fois la paire scalaire. Après Fubini sur le
+  vrai domaine sphère × temps, la paire `L²` des gradients vaut donc
+  `p(p+1)` fois la paire scalaire. Le produit des coefficients scalaires des
+  branches `+` et `-` vaut son opposé, d’où l’orthogonalité exacte des deux
+  familles brutes puis de leurs spans complets dans chaque bloc fixé.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni orthogonalité
+  postulée.
+- Limite : l’orthogonalité des paquets signés portant des labels
+  secteur/mode/niveau distincts et leur isométrie jointe sont fermées par la
+  gate suivante. Reste l’exhaustion de toute la complétion géométrique.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-JOINT-ISOMETRY` — Isométrie hilbertienne jointe
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2JointIsometry4D`.
+- Résultat : les blocs euclidiens normalisés, indexés simultanément par niveau
+  sphérique, secteur racine et mode cercle, forment une famille orthogonale
+  d’isométries dans la complétion `L²` géométrique indépendante. Leur somme
+  hilbertienne `ℓ²` définit une isométrie linéaire canonique. Son image est
+  exactement la fermeture du span de tous les blocs explicites. La densité de
+  cette image est équivalente à sa surjectivité et fournit alors
+  canoniquement l’équivalence unitaire globale.
+- Hypothèses : seulement `period ≠ 0`; aucune complétude spectrale ni densité
+  postulée.
+- Limite : la surjectivité scalaire n’est pas démontrée. La gate suivante
+  ferme toutefois toute l’orthogonalité et l’isométrie jointe de la famille
+  signée complète, tour zéro comprise.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-SIGNED-JOINT-ISOMETRY` — Isométrie signée globale
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL-SIGNÉ`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D`.
+- Résultat : les paquets signés sont orthogonaux dès qu’un label
+  niveau/secteur/mode diffère. La tour zéro est orthogonale à tous les blocs
+  positifs signés. Tous ces blocs Parseval s’assemblent donc en une isométrie
+  canonique sur leur somme hilbertienne `ℓ²`. Son image est exactement la
+  fermeture de leur span, et une équivalence unitaire inconditionnelle entre
+  les coefficients globaux et cette image spectrale fermée est construite.
+  La densité dans toute la complétion géométrique est équivalente à la
+  surjectivité et fournit alors l’unitaire ambiant.
+- Hypothèses : seulement `period ≠ 0`; aucune complétude spectrale, densité
+  ou orthogonalité postulée.
+- Limite : la densité de la famille signée explicite dans la complétion de
+  toutes les sections lisses reste à démontrer. Aucun axiome ne la masque.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
 
 ### `P9-D10-CONTINUUM-HEAT-REGULATOR` — Régulateur thermique D10 tous niveaux
 
@@ -2351,11 +2814,13 @@ que si leur critère le dit explicitement.
 
 Il ne reste aucune carte autonome dans cette ancienne liste :
 
-- le spectre SpinC signé abstrait, le pont Fourier géométrique fini du bloc
-  bas-énergie et le transport unitaire du domaine maximal de coefficients
-  sont fermés; l’extension complétée de toute réalisation géométrique est
-  également fermée. Seule la synthèse géométrique tous niveaux et sa
-  complétude appartiennent encore à `DIRAC-GLOBAL-01`;
+- le spectre SpinC signé abstrait, la synthèse géométrique à support fini
+  conjointement injective sur tous les niveaux positifs, secteurs, modes et
+  multiplicités, et le transport unitaire du domaine maximal de coefficients
+  sont fermés; la tour zéro est incluse dans la même synthèse canonique. Son
+  véritable span lisse a désormais une analyse dense et une complétion
+  spectrale unitaire. Seule l’égalité avec le produit géométrique intégral sur
+  tout le cœur lisse appartient encore à `DIRAC-GLOBAL-01`;
 - la normale intrinsèque et ses coordonnées locales sont déjà `C∞`; la seule
   comparaison avec `canonicalLatitudeSectionNormal` est un contrôle de
   présentation `Pin⁻/T01`, distinct de la géométrie Candidate A;
@@ -2388,9 +2853,9 @@ doit être annoncé comme fermeture globale.
 | `VARCOH-GLOBAL-01` | **DONE (2026-07-26, portée fonctionnelle globale)** — Obstruction fonctionnelle exacte nulle, fonctionnelles variationnellement nulles constantes, noyau nul du classificateur naturel fini, ambiguïtés de contre-termes constantes et résidu physique de bord nul. | `P0EFTJanusProgramPGlobalVariationalCohomology4D` |
 | `ADM-GLOBAL-01` | **FRONTIER (2026-07-27, portée FLRW réduite)** — La Legendre de l’action Candidate-A FLRW donne exactement `N₊C₊+N₋C₋`; les primaires sont ses dérivées de lapse, leur crochet canonique est la secondaire, la préservation la force, et un ouvert non vide garde le rang trois. Un témoin poussière positif fixe aussi le rapport des lapses. Il manque la réduction covariante avec shifts/dérivées spatiales, l’algèbre fonctionnelle, le rang global et l’exclusion BD. | `P0EFTJanusProgramPGlobalADMFrontier4D` |
 | `STABILITY-GLOBAL-01` | **FRONTIER (2026-07-27, portée réduite)** — Le cône proportionnel sûr a une énergie non négative. Sur le témoin poussière, le noyau tangent contraint est exactement unidimensionnel; une courbe contrainte non triviale garde le Hamiltonien nul, donc la Hessienne ambiante négative n’est pas une instabilité contrainte mais le vide n’est pas strictement isolé. Il manque quotient ADM/BD, tous les modes, matière/bord, limite faible et PPN. | `P0EFTJanusProgramPGlobalStabilityFrontier4D`, `ADM-GLOBAL-01` |
-| `DIRAC-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Dirac D9 intrinsèque lisse/elliptique; tour de coefficients SpinC tous niveaux (zéro compris, deux racines) dense, auto-adjointe, Fredholm d’indice nul; accord D10 positif; entrelacement géométrique zéro/premier niveau et famille séparée `C³`. Le domaine maximal de coefficients est unitairement la tour zéro plus le domaine D10 positif. Toute réalisation Fourier géométrique s’étend désormais canoniquement au `L²` complété et transporte exactement domaine maximal, opérateur et énergie de graphe. Il manque uniquement la synthèse Fourier **géométrique** complète des eigenspinors positifs de niveau arbitraire et sa complétude. | `P0EFTJanusProgramPGlobalDiracFrontier4D`, `P0EFTJanusProgramPPrimitiveSpinCGeometricDomainUnitary4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricFourierCompletion4D` |
-| `BRST-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — BRST `U(1)²` nilpotent et invariant pour l’action; Jacobi du ghost extérieur; dérivation graduée extérieure scalaire et carré à deux ghosts nuls; BRST difféomorphe linéarisé; complexe linéaire corrigé de tous les champs/LL; doublet BV métrique nilpotent et stable au bord. Le ghost commutatif non linéaire est exclu. Il manque une dérivation extérieure non linéaire unique sur **tous** les champs, antifields et composantes de bord de l’action assemblée. | `P0EFTJanusProgramPGlobalBRSTFrontier4D` |
-| `HESSIAN-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Hessienne vraie, symétrique, quotient `U(1)²` exact. D9 possède son multiplicateur maximal non borné et Fredholm modulo un ensemble caractéristique fini. Le bloc matière est maintenant le vrai spectre de premier ordre signé : période géométrique, deux racines normales, branches `±`, identité exacte avec `D²` après carré et propreté spectrale démontrée. Le calcul mixte exact de l’action `Re⟨ψ,Dψ⟩ + m²/2⟨ψ,ψ⟩` fixe le poids hessien à `2D + couplings.matterMassSquared`, auto-adjoint/Fredholm pour toute masse; les résonances éventuelles forment un noyau fini et aucune hypothèse de non-résonance n’est ajoutée. Le nouvel opérateur physique réel assemble D9, deux copies sectorielles de `2D+m²`, D10 et l’identité de Riesz LL sur la complétion d’énergie positive. Le repère LL est exactement le repère canonique sans divergence de l’action globale, et le pairing lisse est son vrai Hessien mixte. Densité, fermeture, auto-adjonction, image fermée et noyau/conoyau finis sont construits; l’égalité entre pairing réel natif et partie réelle du pairing complexe est démontrée, sans hypothèse de cohérence supplémentaire. L’ancien assemblage SpinC carré reste un contrôle elliptique, pas le Hessien matière. Le contrat terminal `LinearPMap` ne demande plus que le cœur quotient lisse dense et l’accord restant hors LL. Restent : (1) le vrai pont tangent global → carte, (2) la synthèse géométrique SpinC tous niveaux, (3) l’invariance difféomorphe des neuf blocs, (4) l’identification de la vraie Hessienne bulk/métrique–Maxwell–matière–ghost–bord hors facteur LL désormais fermé, y compris ses secteurs non spectraux, avec cet opérateur. Le no-go de Hessienne nulle interdit toujours une fermeture universelle pour des couplages arbitraires. | `P0EFTJanusComplexDiagonalNativeRealSelfAdjoint4D`, `P0EFTJanusComplexDiagonalProperShiftFredholm4D`, `P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D`, `P0EFTJanusProgramPGlobalPhysicalLLHessianFredholm4D`, `P0EFTJanusProgramPGlobalHessianUnboundedRealization4D` |
+| `DIRAC-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-28)** — Dirac D9 intrinsèque lisse/elliptique; tour de coefficients SpinC tous niveaux (zéro compris, deux racines) dense, auto-adjointe, Fredholm d’indice nul; accord D10 positif et domaine maximal unitairement égal à la tour zéro plus D10 positif. Pour tout `p`, la courbe nulle fournit exactement `2p+1` sections lisses complexes du véritable fibré quotient. Leur récurrence démontre directement le vrai `D²`. Chaque label signé complet possède une vraie eigensection lisse du Dirac de premier ordre, y compris la tour zéro corrigée selon l’orientation du period; les branches `±` sont disjointes et épuisent chaque bloc scalaire/gradient. Chaque branche possède une isométrie de Parseval géométrique à image complétée fermée et entrelace le vrai Dirac; le bloc deux signes possède la même réalisation pour `D²`. La séparation radiale prouve les finranks exacts `2p+1` par signe et `2(2p+1)` par bloc. Le produit hermitien intégral sur tout le cœur lisse est défini positif et possède sa propre complétion hilbertienne dense. Tous les blocs signés sont orthogonaux selon secteur/mode/niveau, la tour zéro est orthogonale aux blocs positifs, et leur somme `ℓ²` est une isométrie globale dont l’image fermée exacte est unitairement équivalente aux coefficients. Reste seulement à prouver la densité de cette image signée dans toute la complétion géométrique pour obtenir l’unitaire ambiant. | `P0EFTJanusProgramPGlobalDiracFrontier4D`, `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSignedGeometricRealization4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedBranchCompletion4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedMultiplicity4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D` |
+| `BRST-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-28)** — Un paquet unique regroupe les coordonnées de champs/ghosts extérieurs, le doublet métrique champs–antifields et les variables de bord. Son différentiel commun contient `s c = -1/2[c,c]`, vérifie `s²=0` sur les trois blocs et commute avec la vraie trace de gorge. Les pullbacks intrinsèques des 1-formes Maxwell et 2-tenseurs sont fonctoriels. Le générateur infinitésimal Maxwell est maintenant une vraie dérivée fibrée, avec réalisation globale lisse et contrat flot→ghost linéaire, exactement parallèle aux briques métriques préexistantes `SmoothMetricPairPullbackFlow`/`MetricPairFlowToGhostContract`. Une interface commune réduit le carré BRST à `[L_c,L_d]=L_[c,d]`, déjà instanciée pour les scalaires. Toute représentation produit canoniquement son action coadjointe sur les antifields, avec carré nul et invariance du couplage champ–antifield. La convention de densité scalaire mesurée existante (coefficient + mesure tirée en arrière) possède désormais composition finie, carré BRST à deux ghosts nul et covariance intégrée inconditionnelle. Sur la gorge fixe, l’identité de crochet scalaire préexistante induit maintenant aussi l’action coadjointe des antifields scalaires algébriques, son obstruction BRST nulle et l’invariance du pairing de bord. La preuve préexistante d’invariance sous tout chemin difféomorphe du bloc matière historique à huit scalaires est intégrée au certificat global; elle ne vaut pas encore pour la matière SpinC Candidate-A. Il manque l’identité de crochet pour les réalisations globales Maxwell/métrique, l’identification des antifields tensoriels géométriques avec les duaux et l’invariance commune des neuf blocs Candidate-A. | `P0EFTJanusMappingTorusGaugePotentialDiffeomorphismGenerator4D`, `P0EFTJanusMappingTorusTensorialDiffeomorphismRepresentation4D`, `P0EFTJanusMappingTorusMeasuredDensityBRST4D`, `P0EFTJanusMappingTorusThroatScalarCoadjointBRST4D`, `P0EFTJanusProgramPCoadjointAntifieldBRST4D`, `P0EFTJanusProgramPNonlinearGlobalBRST4D`, `P0EFTJanusProgramPGlobalBRSTFrontier4D` |
+| `HESSIAN-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-28)** — Hessienne vraie, symétrique, quotient `U(1)²` exact. D9 possède son multiplicateur maximal non borné et Fredholm modulo un ensemble caractéristique fini. Le bloc matière est le vrai spectre de premier ordre signé et chaque label de ce spectre a une eigensection géométrique lisse exacte. Chaque branche et chaque bloc signé a sa réalisation hilbertienne géométrique finie, avec Parseval, image fermée, finrank physique exact et entrelacement respectif avec `D` ou `D²`. Le calcul mixte de l’action fixe le poids `2D + couplings.matterMassSquared`, auto-adjoint/Fredholm pour toute masse avec noyau résonant fini. L’opérateur physique réel assemble D9, deux copies sectorielles, D10 et l’identité de Riesz LL, exactement égale au vrai Hessien mixte LL. Tous les blocs signés sont désormais orthogonaux entre labels distincts et assemblés avec la tour zéro dans une isométrie globale, à image fermée exactement décrite et unitairement équivalente aux coefficients. Restent : (1) le vrai pont tangent global → carte, (2) la densité de l’image spectrale signée dans toute la complétion géométrique, (3) l’invariance difféomorphe des neuf blocs, (4) l’identification de la vraie Hessienne bulk/métrique–Maxwell–matière–ghost–bord hors facteur LL, y compris ses secteurs non spectraux, avec cet opérateur. Le no-go de Hessienne nulle interdit toujours une fermeture universelle pour des couplages arbitraires. | `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedMultiplicity4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D`, `P0EFTJanusProgramPGlobalPhysicalLLHessianFredholm4D` |
 | `REGULATOR-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Blocs de chaleur D7 compacts et déterminant `Z4`. Le régulateur D10 complet, avec tous niveaux, multiplicités et deux racines, est sommable à temps positif; PT annule sa trace chirale infinie et tout filet de coupures finies converge vers zéro. Sur le Hilbert D10 complet, c’est un opérateur compact donné par une série nucléaire de rang un, limite en norme de ses troncatures finies. Sa restriction redonne exactement le régulateur tronqué. Le pont vers la Hessienne est exact sous le contrat de domaine. Il reste le régulateur commun des secteurs non spectraux/ghosts et son identification avec la Hessienne assemblée. | `P0EFTJanusProgramPGlobalRegulatorFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D`, `P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D` |
 | `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
 | `ANOMALY-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Le certificat inclut désormais la trace chirale D10 tous niveaux, absolument sommable, nulle par PT, avec convergence de tout filet de cutoffs finis. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D` |
@@ -2451,14 +2916,25 @@ Portée exacte des fermetures et frontières globales :
   Hessienne vraie est exacte, symétrique et canonique. Une symétrie
   difféomorphe exacte fournie se combine désormais automatiquement et donne
   le sous-module total. Les résidus sont séparés : vrai pont tangent-carte,
-  Fourier **géométrique** SpinC tous niveaux (l’extension complétée est fermée), invariance difféomorphe des neuf
+  orthogonalité/complétude et analyse **géométrique** SpinC tous niveaux
+  (les paquets finis et l’extension complétée sont fermés), invariance difféomorphe des neuf
   blocs et égalité au Fredholm elliptique global. Le no-go Hessien nul impose
   des hypothèses de couplage non dégénérées.
 - `NOETHER` est inconditionnel pour les ghosts lisses appariés du secteur
   physique `U(1)²` et pour le Bianchi de Levi-Civita. Pour toute symétrie
   difféomorphe exacte des neuf blocs, l’identité d’Euler et la dégénérescence
-  Hessienne sont automatiques. La preuve de cette invariance globale et le
-  BRST/BV extérieur non linéaire complet restent dans `BRST/HESSIAN-GLOBAL-01`.
+  Hessienne sont automatiques. Cette même hypothèse produit désormais un
+  certificat unique réunissant invariance de l’action, identité Euler/Noether,
+  carré BRST nul et stabilité du bord. La construction de l’habitant de
+  symétrie neuf-blocs reste dans `BRST/HESSIAN-GLOBAL-01`.
+- `BRST` spécialise désormais toute représentation de Lie Maxwell/métrique
+  fournie en représentations coadjointes algébriques pour Maxwell et la paire
+  de métriques, avec carré nul et pairings invariants. Le pairing tensoriel
+  métrique intégré définit maintenant un morphisme linéaire canonique des
+  antifields lisses vers ce dual algébrique. Son injectivité/non-dégénérescence
+  reste ouverte; son entrelacement coadjoint est désormais exactement
+  équivalent à l’identité intégrée
+  `B(L_c α,h)+B(α,L_c h)=0`.
 - `VARCOH` ferme la cohomologie **fonctionnelle globale** sur ces cartes et
   le noyau de la troncature naturelle finie. Il ne prétend pas construire le
   bicomplexe variationnel horizontal local complet des densités de jets.
