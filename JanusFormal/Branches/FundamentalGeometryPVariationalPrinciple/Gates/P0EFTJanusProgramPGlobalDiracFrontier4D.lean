@@ -21,6 +21,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2LevelOrthogonality4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2JointIsometry4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCFourierMonopoleCoreCompleteness4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatHolonomyC3FredholmCertificate4D
 
@@ -85,10 +86,11 @@ two-sign block has dimension `2(2p+1)`. This gives real and
 intrinsic-imaginary smooth `D²` eigensections for every complete coefficient
 label. The gradient/Casimir identity now also proves that the two opposite
 first-order signs are exactly orthogonal inside every fixed spectral block.
-The remaining analytic identification is to prove signed orthogonality
-between distinct spectral labels, assemble the signed joint isometry, and
-prove its density in the independently constructed geometric completion.
-Neither Hilbert completion is an assumption.
+Signed orthogonality between distinct labels and the joint isometry are now
+proved. Polynomial monopole approximation and temporal Fourier completeness
+show that its closed range contains the dense smooth core. The synthesis is
+therefore surjective and gives an unconditional unitary onto the independently
+constructed geometric completion.
 -/
 
 namespace JanusFormal
@@ -126,6 +128,9 @@ open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2FourierOrthogonality4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2LevelOrthogonality4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2JointIsometry4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2FourierMonopoleDensity4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D
+open P0EFTJanusProgramPD9PrimitiveSpinCFourierMonopoleCoreCompleteness4D
 open P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D
 open P0EFTJanusProgramPPrimitiveSpinCGeometricDomainUnitary4D
 open P0EFTJanusProgramPPrimitiveSpinCGeometricSpectralCompletion4D
@@ -264,6 +269,18 @@ structure ProgramPGlobalDiracFrontierCertificate4D where
   geometricL2JointIsometry :
     ProgramPD9PrimitiveSpinCGeometricL2JointIsometryCertificate4D
       period hPeriod
+  geometricL2SignedJointIsometry :
+    ProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometryCertificate4D
+      period hPeriod
+  geometricL2FourierMonopoleCoreComplete :
+    PrimitiveSpinCFourierMonopoleCoreComplete period hPeriod
+  geometricL2SignedGlobalDensity :
+    PrimitiveSpinCGeometricL2SignedGlobalDensity period hPeriod
+  geometricL2SignedGlobalUnitary :
+    PrimitiveSpinCGeometricL2SignedGlobalJointCoefficients
+        period hPeriod ≃ₗᵢ[Complex]
+      D9PrimitiveSpinCGeometricL2Completion
+        period hPeriod .positiveQuarter
   allModeNullHarmonicSquaredSections :
     ∀ mode : PrimitiveSpinCGeometricFullMode,
       d9PrimitiveSpinCGeometricDiracOperator
@@ -393,6 +410,17 @@ def programPGlobalDiracFrontierCertificate4D :
   geometricL2JointIsometry :=
     programPD9PrimitiveSpinCGeometricL2JointIsometryCertificate4D
       period hPeriod
+  geometricL2SignedJointIsometry :=
+    programPD9PrimitiveSpinCGeometricL2SignedJointIsometryCertificate4D
+      period hPeriod
+  geometricL2FourierMonopoleCoreComplete :=
+    primitiveSpinCFourierMonopoleCoreComplete_proved period hPeriod
+  geometricL2SignedGlobalDensity :=
+    primitiveSpinCGeometricL2SignedGlobalDensity_fourierMonopole
+      period hPeriod
+  geometricL2SignedGlobalUnitary :=
+    primitiveSpinCGeometricL2SignedFourierMonopoleUnitary_proved
+      period hPeriod
   allModeNullHarmonicSquaredSections := fun mode =>
     ⟨primitiveSpinCAllModeNullHarmonicRealSection_dirac_sq
         period hPeriod mode,
@@ -412,6 +440,10 @@ def programPGlobalDiracFrontierCertificate4D :
 theorem global_dirac_frontier_gate :
     Nonempty (ProgramPGlobalDiracFrontierCertificate4D period hPeriod) :=
   ⟨programPGlobalDiracFrontierCertificate4D period hPeriod⟩
+
+theorem global_dirac_closed_gate :
+    Nonempty (ProgramPGlobalDiracFrontierCertificate4D period hPeriod) :=
+  global_dirac_frontier_gate period hPeriod
 
 theorem global_dirac_all_level_harmonic_diagonalization_gate :
     Nonempty
@@ -684,6 +716,35 @@ theorem global_dirac_geometric_l2_joint_isometry_gate :
       (ProgramPD9PrimitiveSpinCGeometricL2JointIsometryCertificate4D
         period hPeriod) :=
   primitiveSpinCGeometricL2JointIsometry_gate period hPeriod
+
+/-- The zero tower and all positive signed blocks form one orthogonal global
+Hilbert-sum isometry. -/
+theorem global_dirac_geometric_l2_signed_joint_isometry_gate :
+    Nonempty
+      (ProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometryCertificate4D
+        period hPeriod) :=
+  primitiveSpinCGeometricL2SignedJointIsometry_gate period hPeriod
+
+/-- Fourier--monopole packets approximate every genuine smooth SpinC section
+in the independent geometric norm. -/
+theorem global_dirac_fourier_monopole_core_complete_gate :
+    PrimitiveSpinCFourierMonopoleCoreComplete period hPeriod :=
+  primitiveSpinCFourierMonopoleCoreComplete_proved period hPeriod
+
+/-- The signed spectral range is dense in the full geometric completion. -/
+theorem global_dirac_geometric_l2_signed_density_gate :
+    PrimitiveSpinCGeometricL2SignedGlobalDensity period hPeriod :=
+  primitiveSpinCGeometricL2SignedGlobalDensity_fourierMonopole
+    period hPeriod
+
+/-- Global geometric DIRAC unitary from signed spectral coefficients. -/
+def globalDiracGeometricL2SignedUnitary :
+    PrimitiveSpinCGeometricL2SignedGlobalJointCoefficients
+        period hPeriod ≃ₗᵢ[Complex]
+      D9PrimitiveSpinCGeometricL2Completion
+        period hPeriod .positiveQuarter :=
+  primitiveSpinCGeometricL2SignedFourierMonopoleUnitary_proved
+    period hPeriod
 
 /-- Every label of the complete squared coefficient tower now has genuine
 real and intrinsic-imaginary smooth geometric representatives. -/

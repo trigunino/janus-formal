@@ -47,6 +47,13 @@ local instance effectiveQuotientIsManifold :
     IsManifold coverModelWithCorners ω (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotient_isManifold period hPeriod
 
+local instance effectiveTangentFiniteDimensional
+    (point : EffectiveQuotient period hPeriod) :
+    FiniteDimensional Real
+      (TangentSpace coverModelWithCorners point) := by
+  change FiniteDimensional Real CoverCoordinates
+  infer_instance
+
 abbrev GeneralMetricTangentFiber
     (point : EffectiveQuotient period hPeriod) :=
   TangentSpace coverModelWithCorners point
@@ -223,6 +230,104 @@ def generalMetricTensorPairingAt
     ((raisedGeneralMetricTensorAt period hPeriod metric first point).toLinearMap *
       (raisedGeneralMetricTensorAt period hPeriod metric second point).toLinearMap)
 
+/-- Pairing with a symmetrized metric rank-one tensor reads the original
+tensor on its two generating vectors. -/
+theorem generalMetricTensorPairingAt_symmetricMetricRankOne
+    (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (tensor rankOne : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (first second : GeneralMetricTangentFiber period hPeriod point)
+    (hRankOne : ∀ left right,
+      rankOne.tensor point left right =
+        (1 / 2 : Real) *
+            (metric.tensor.tensor point first left *
+              metric.tensor.tensor point second right) +
+          (1 / 2 : Real) *
+            (metric.tensor.tensor point second left *
+              metric.tensor.tensor point first right)) :
+    generalMetricTensorPairingAt
+        period hPeriod metric tensor rankOne point =
+      tensor.tensor point first second := by
+  have hMusicalApply :
+      ∀ left right : GeneralMetricTangentFiber period hPeriod point,
+        metric.musical point left right =
+          metric.tensor.tensor point left right := by
+    intro left right
+    exact DFunLike.congr_fun
+      (DFunLike.congr_fun (metric.musical_eq_tensor point) left) right
+  have hMusicalSymmetric :
+      ∀ left right : GeneralMetricTangentFiber period hPeriod point,
+        metric.musical point left right =
+          metric.musical point right left := by
+    intro left right
+    rw [hMusicalApply, hMusicalApply]
+    exact metric.tensor.symmetric point left right
+  have hRaised :
+      raisedGeneralMetricTensorAt period hPeriod metric rankOne point =
+        (1 / 2 : Real) •
+            (metric.musical point first).smulRight second +
+          (1 / 2 : Real) •
+            (metric.musical point second).smulRight first := by
+    apply ContinuousLinearMap.ext
+    intro left
+    apply (metric.musical point).injective
+    apply ContinuousLinearMap.ext
+    intro right
+    simp only [raisedGeneralMetricTensorAt,
+      ContinuousLinearMap.comp_apply, map_add, map_smul,
+      add_apply, smul_apply,
+      ContinuousLinearMap.smulRight_apply, smul_eq_mul]
+    calc
+      metric.musical point
+          ((metric.musical point).symm (rankOne.tensor point left)) right =
+          rankOne.tensor point left right := by
+        exact DFunLike.congr_fun
+          ((metric.musical point).apply_symm_apply
+            (rankOne.tensor point left)) right
+      _ = _ := by
+        rw [hRankOne, ← hMusicalApply first left,
+          ← hMusicalApply second right,
+          ← hMusicalApply second left,
+          ← hMusicalApply first right]
+  unfold generalMetricTensorPairingAt
+  rw [hRaised]
+  simp [mul_add, map_add, map_smul]
+  have hTrace :
+      ∀ (left right : GeneralMetricTangentFiber period hPeriod point),
+        LinearMap.trace Real
+          (GeneralMetricTangentFiber period hPeriod point)
+          ((raisedGeneralMetricTensorAt
+              period hPeriod metric tensor point).toLinearMap *
+            (metric.musical point left).toLinearMap.smulRight right) =
+          tensor.tensor point right left := by
+    intro left right
+    have hComposition :
+        (raisedGeneralMetricTensorAt
+            period hPeriod metric tensor point).toLinearMap *
+            (metric.musical point left).toLinearMap.smulRight right =
+          (metric.musical point left).toLinearMap.smulRight
+            ((metric.musical point).symm
+              (tensor.tensor point right)) := by
+      apply LinearMap.ext
+      intro vector
+      simp [raisedGeneralMetricTensorAt]
+    rw [hComposition, LinearMap.trace_smulRight]
+    calc
+      metric.musical point left
+          ((metric.musical point).symm
+            (tensor.tensor point right)) =
+        metric.musical point
+          ((metric.musical point).symm
+            (tensor.tensor point right)) left :=
+        hMusicalSymmetric left _
+      _ = tensor.tensor point right left := by
+        exact DFunLike.congr_fun
+          ((metric.musical point).apply_symm_apply
+            (tensor.tensor point right)) left
+  rw [hTrace first second, hTrace second first,
+    tensor.symmetric point second first]
+  ring
+
 theorem generalMetricTensorPairingAt_symmetric
     (metric : SmoothGeneralLorentzMetric period hPeriod)
     (first second : SmoothSymmetricCovariantTwoTensor period hPeriod)
@@ -230,6 +335,23 @@ theorem generalMetricTensorPairingAt_symmetric
     generalMetricTensorPairingAt period hPeriod metric first second point =
       generalMetricTensorPairingAt period hPeriod metric second first point := by
   exact LinearMap.trace_mul_comm Real _ _
+
+theorem generalMetricTensorPairingAt_congr_right_at
+    (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (first second third :
+      SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (hValue : second.tensor point = third.tensor point) :
+    generalMetricTensorPairingAt period hPeriod metric first second point =
+      generalMetricTensorPairingAt
+        period hPeriod metric first third point := by
+  have hRaised :
+      raisedGeneralMetricTensorAt period hPeriod metric second point =
+        raisedGeneralMetricTensorAt period hPeriod metric third point := by
+    unfold raisedGeneralMetricTensorAt
+    rw [hValue]
+  unfold generalMetricTensorPairingAt
+  rw [hRaised]
 
 /-- Sum of the canonical pointwise pairings in both metric sectors. -/
 def generalMetricTensorPairPairingAt

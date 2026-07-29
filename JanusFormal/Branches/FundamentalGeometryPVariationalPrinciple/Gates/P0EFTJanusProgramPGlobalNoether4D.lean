@@ -132,9 +132,10 @@ structure GlobalCandidateALinearGaugeSymmetry
       (globalCandidateAActionBlocks period hPeriod chart.family measure)
       (globalLinearGaugeAffineTransform period hPeriod chart generator)
 
-/-- Exact full-action diffeomorphism symmetry contract, specialized to the
-genuine global smooth tangent-vector ghosts.  An inhabitant must still prove
-invariance of all nine physical action blocks. -/
+/-- Abstract full-action diffeomorphism symmetry contract, specialized to the
+global smooth tangent-vector ghost space.  An inhabitant must still prove
+invariance of all nine physical action blocks and separately identify its
+chart generator with the geometric diffeomorphism action. -/
 abbrev GlobalCandidateADiffeomorphismGaugeSymmetry
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}

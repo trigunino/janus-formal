@@ -264,6 +264,79 @@ def globalCandidateANullBoundaryAction
       NonNullFace NullFace) : Real :=
   ∑ face : NullFace, finiteNullFaceAction (data.nullActionFaces face)
 
+/-- The two density-integrability hypotheses not already carried by the
+global oriented-null-face boundary data. -/
+structure GlobalCandidateANullBoundaryReparametrizationIntegrability
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace) : Prop where
+  inaffinity : ∀ face,
+    IntervalIntegrable
+      (inaffinityFaceDensity (data.nullActionFaces face))
+      MeasureTheory.volume
+      (data.nullActionFaces face).interval.initialParameter
+      (data.nullActionFaces face).interval.finalParameter
+  expansionCounterterm : ∀ face,
+    IntervalIntegrable
+      (expansionCountertermFaceDensity (data.nullActionFaces face))
+      MeasureTheory.volume
+      (data.nullActionFaces face).interval.initialParameter
+      (data.nullActionFaces face).interval.finalParameter
+
+/-- The global boundary datum supplies the reparametrization-shift
+integrability, so the reduced contract completes the existing local one. -/
+def GlobalCandidateANullBoundaryReparametrizationIntegrability.toInterval
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace}
+    (contract :
+      GlobalCandidateANullBoundaryReparametrizationIntegrability
+        period hPeriod data)
+    (face : NullFace) :
+    NullFaceIntervalIntegrability (data.nullActionFaces face) where
+  inaffinity := contract.inaffinity face
+  expansionCounterterm := contract.expansionCounterterm face
+  reparametrizationShift := by
+    rw [data.nullActionGenerator_eq face, data.nullActionInterval_eq face]
+    exact (data.boundary.nullFaces face).faceShiftIntervalIntegrable
+
+/-- The same global finite-null-boundary block after rescaling every null
+generator. -/
+def globalCandidateAReparametrizedNullBoundaryAction
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace) : Real :=
+  totalReparametrizedFiniteNullBoundaryAction data.nullActionFaces
+
+/-- Exact scoped invariance of the global finite null-face/counterterm/joint
+block under generator reparametrization. -/
+theorem globalCandidateAReparametrizedNullBoundaryAction_eq
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (contract :
+      GlobalCandidateANullBoundaryReparametrizationIntegrability
+        period hPeriod data) :
+    globalCandidateAReparametrizedNullBoundaryAction
+        period hPeriod data =
+      globalCandidateANullBoundaryAction period hPeriod data := by
+  change totalReparametrizedFiniteNullBoundaryAction data.nullActionFaces =
+    totalFiniteNullBoundaryAction data.nullActionFaces
+  exact totalReparametrizedFiniteNullBoundaryAction_eq
+    data.nullActionFaces (contract.toInterval period hPeriod)
+
 /-- Sum of every currently constructed covariant Candidate-A action block. -/
 def globalCandidateACovariantAction
     {configuration : GlobalFieldConfiguration period hPeriod}

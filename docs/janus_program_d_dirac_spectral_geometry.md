@@ -73,15 +73,15 @@ Primary spectral/index anchors:
 
 The original D2 branch proves the finite arithmetic consequences of the
 spectral formula. The Program-P facade now additionally constructs the actual
-ambient PinC and D9 spinor bundles, local geometric Dirac data, geometric zero
-and first positive signed levels, proves injectivity of their genuine geometric
-synthesis for every finite packet of circle modes in each fixed root sector,
-and constructs an abstract complete signed Hilbert model whose maximal Dirac
-operator is self-adjoint, closed and Fredholm of index zero in the physical
-quarter-twisted sector. The missing operator theorem is the extension of this
-finite low-energy bridge to arbitrary sphere levels and a common completed
-domain, followed by identification with the abstract basis; compact resolvent
-is not asserted here.
+ambient PinC and D9 spinor bundles, local geometric Dirac data and every signed
+sphere/Fourier eigensection. Exact multiplicities, all inter-label
+orthogonality and Fourier--monopole completeness promote their synthesis to a
+unitary onto the independent geometric completion. After the
+orientation-correct PT permutation of the zero tower, this unitary also
+identifies the genuine smooth `2D+m²` core with its maximal self-adjoint
+Fredholm coefficient multiplier. The remaining family theorem is its
+extension to variable metric/gauge-coupled backgrounds; the full determinant
+and geometric eta invariant are not asserted here.
 
 ## 2. Product with the compact circle
 
@@ -370,18 +370,15 @@ P0EFTJanusDiracScaleOrbitNoGo.lean
 | PT-paired half-level anomaly cancellation | proved arithmetically |
 | absolute metric scale | open |
 | full determinant vacuum uniqueness | open |
-| actual PinC/SpinC bundle and primitive geometric Dirac data | proved through the zero and first positive signed levels, including injective finite circle-mode synthesis |
-| arbitrary-level completed geometric Fourier realization of the signed operator | open |
+| actual PinC/SpinC bundle and primitive geometric Dirac data | proved for every signed level, sector, circle mode and multiplicity |
+| arbitrary-level completed geometric Fourier realization of the signed operator | proved unitarily, including the exact `2D+m²` finite-core intertwining |
 
 ## 10. Next deepest targets
 
-1. Construct all positive geometric eigenspinor levels and the smooth Fourier
-   analysis/synthesis maps.
-2. Identify that geometric tower with the proved abstract signed Hilbert basis,
-   maximal self-adjoint operator and Fredholm sector.
-3. Prove compact-resolvent and product-operator statements only after that
-   identification, then derive the eta reduction from the actual operator.
-4. Compute the complete zeta determinant, including nonzero modes and local
+1. Lift the fixed-background geometric unitary and Hessian core to the
+   variable metric/gauge-coupled Janus family.
+2. Derive the geometric eta reduction from that family operator.
+3. Compute the complete zeta determinant, including nonzero modes and local
    counterterms.
 5. Derive the one-eighth LL normalization from the operator/auxiliary metric,
    rather than importing it as an interface law.

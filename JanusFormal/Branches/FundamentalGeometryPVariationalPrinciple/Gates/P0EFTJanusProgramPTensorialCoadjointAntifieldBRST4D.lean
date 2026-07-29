@@ -161,8 +161,8 @@ theorem metricPairFieldAntifieldPairing_brst_invariant
       actions.metric actions.metric)
     ghost antifield field
 
-/-- Exact tensorial antifield closure conditional only on the still-open
-Maxwell/metric infinitesimal Lie-action datum. -/
+/-- Exact tensorial antifield closure from Maxwell/metric infinitesimal
+Lie-action data; the canonical geometric data are supplied downstream. -/
 structure TensorialCoadjointAntifieldBRSTCertificate4D
     (actions : TensorialInfinitesimalLieActionData period hPeriod) : Prop where
   gaugeSquareZero :

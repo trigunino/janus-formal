@@ -1512,6 +1512,38 @@ private theorem smoothThroatField_hasDerivAt_along_curve_zero
   simp only [ContinuousLinearMap.comp_apply]
   rfl
 
+/-- Chain rule at angle zero for any smooth field on the genuine throat along
+one of the three canonical spatial-rotation flows.  This is a composition
+result for `field ∘ rotation`; it does not differentiate tensor pullback
+factors. -/
+theorem smoothThroatField_spatialRotation_hasDerivAt_zero
+    {Fiber : Type*} [NormedAddCommGroup Fiber] [NormedSpace Real Fiber]
+    [ContinuousSMul Real Fiber]
+    (field : SmoothThroatField period hPeriod Fiber)
+    (axis : Fin 3) (point : EffectiveThroat period hPeriod) :
+    HasDerivAt
+      (fun angle =>
+        field (throatSpatialRotationFlow period hPeriod axis angle point))
+      (mvfderiv throatCoverModelWithCorners field.toFun point
+        (throatSpatialRotationGhost period hPeriod axis point)) 0 := by
+  have h := smoothThroatField_hasDerivAt_along_curve_zero
+    period hPeriod field
+      (throatSpatialRotationCurve period hPeriod axis point)
+      (throatSpatialRotationCurve_contMDiff period hPeriod axis point)
+  have hCurveZero :
+      throatSpatialRotationCurve period hPeriod axis point 0 = point :=
+    throatSpatialRotationFlow_zero period hPeriod axis point
+  have hVelocity := throatSpatialRotationGhost_eq_curve_mfderiv
+    period hPeriod axis point
+  rw [hCurveZero] at h
+  rw [hCurveZero] at hVelocity
+  rw [← hVelocity] at h
+  change HasDerivAt
+    (fun angle =>
+      field (throatSpatialRotationFlow period hPeriod axis angle point))
+    _ 0 at h
+  exact h
+
 private def canonicalThroatGeneratorAt
     (point : EffectiveThroat period hPeriod) :
     Fin 4 → TangentSpace throatCoverModelWithCorners point :=
@@ -1698,23 +1730,8 @@ private theorem smoothThroatField_rotationFlow_hasDerivAt_zero
       (Fin.castSucc axis) = _
     exact canonicalThroatGeneratorAt_castSucc period hPeriod point axis
   rw [hVector]
-  have h := smoothThroatField_hasDerivAt_along_curve_zero
-    period hPeriod field
-      (throatSpatialRotationCurve period hPeriod axis point)
-      (throatSpatialRotationCurve_contMDiff period hPeriod axis point)
-  have hCurveZero :
-      throatSpatialRotationCurve period hPeriod axis point 0 = point :=
-    throatSpatialRotationFlow_zero period hPeriod axis point
-  have hVelocity := throatSpatialRotationGhost_eq_curve_mfderiv
-    period hPeriod axis point
-  rw [hCurveZero] at h
-  rw [hCurveZero] at hVelocity
-  rw [← hVelocity] at h
-  change HasDerivAt
-    (fun parameter => field
-      (throatSpatialRotationFlow period hPeriod axis parameter point))
-    _ 0 at h
-  exact h
+  exact smoothThroatField_spatialRotation_hasDerivAt_zero
+    period hPeriod field axis point
 
 private theorem smoothThroatField_timeFlow_hasDerivAt
     (field : SmoothThroatField period hPeriod LLFieldFiber)
@@ -1776,7 +1793,8 @@ private theorem smoothThroatField_rotationFlow_hasDerivAt
   exact (hComp.congr_of_eventuallyEq hEventually).congr_deriv
     (one_smul Real _)
 
-private theorem canonicalTimeGenerator_integral_inner_derivative_eq_neg
+/-- Integration by parts for the genuine quotient-time generator. -/
+theorem canonicalTimeGenerator_integral_inner_derivative_eq_neg
     (first second : SmoothThroatField period hPeriod LLFieldFiber) :
     (∫ point, inner Real (first point)
       (throatFrameDerivative period hPeriod LLFieldFiber
@@ -1819,7 +1837,8 @@ private theorem canonicalTimeGenerator_integral_inner_derivative_eq_neg
   · exact smoothThroatField_timeFlow_hasDerivAt period hPeriod first
   · exact smoothThroatField_timeFlow_hasDerivAt period hPeriod second
 
-private theorem canonicalRotationGenerator_integral_inner_derivative_eq_neg
+/-- Integration by parts for each genuine round-sphere rotation generator. -/
+theorem canonicalRotationGenerator_integral_inner_derivative_eq_neg
     (axis : Fin 3)
     (first second : SmoothThroatField period hPeriod LLFieldFiber) :
     (∫ point, inner Real (first point)
@@ -1866,7 +1885,9 @@ private theorem canonicalRotationGenerator_integral_inner_derivative_eq_neg
   · exact smoothThroatField_rotationFlow_hasDerivAt
       period hPeriod second axis
 
-private theorem canonicalGenerator_integral_inner_derivative_eq_neg
+/-- Integration by parts for every member of the canonical divergence-free
+time-plus-rotations frame. -/
+theorem canonicalGenerator_integral_inner_derivative_eq_neg
     (index : Fin 4)
     (first second : SmoothThroatField period hPeriod LLFieldFiber) :
     (∫ point, inner Real (first point)
@@ -1883,6 +1904,24 @@ private theorem canonicalGenerator_integral_inner_derivative_eq_neg
       period hPeriod first second
   · exact canonicalRotationGenerator_integral_inner_derivative_eq_neg
       period hPeriod axis first second
+
+/-- Skew-adjoint form of canonical-frame integration by parts on the
+coefficient-valued throat fields. -/
+theorem canonicalGenerator_integral_inner_derivative_add_eq_zero
+    (index : Fin 4)
+    (first second : SmoothThroatField period hPeriod LLFieldFiber) :
+    (∫ point, inner Real
+        (throatFrameDerivative period hPeriod LLFieldFiber
+          (canonicalDivergenceFreeLLFrame period hPeriod) first point index)
+        (second point)
+      ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) +
+      ∫ point, inner Real (first point)
+        (throatFrameDerivative period hPeriod LLFieldFiber
+          (canonicalDivergenceFreeLLFrame period hPeriod) second point index)
+        ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) = 0 := by
+  rw [canonicalGenerator_integral_inner_derivative_eq_neg
+    period hPeriod index first second]
+  ring
 
 /-- Raw global integration by parts for the canonical divergence-free frame. -/
 theorem canonicalDivergenceFreeLLFrame_rawGlobalIPP
