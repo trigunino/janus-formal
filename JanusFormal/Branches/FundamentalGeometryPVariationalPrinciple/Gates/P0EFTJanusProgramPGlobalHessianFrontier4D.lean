@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalBRSTFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHelmholtzReconstruction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalAnalyticSpine4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFrechetPullbackQuotientHessian
 
 /-!
@@ -14,13 +15,14 @@ global smooth tangent.
 The historical monolithic D7/D9/D10 contract is retained only as a legacy
 compatibility type.  It is not the current analytic target: the D10 Hilbert
 coordinate is already a split direct factor, while the genuine remaining
-inputs are the dense variational-chart core, primitive SpinC Fourier
-realization and block-operator identification.  Exact linear symmetries now
-combine with the physical `U(1)²` symmetry, including a specialization to
-genuine smooth diffeomorphism ghosts; supplying nine-block diffeomorphism
-invariance automatically gives the total quotient and two-sided Hessian
-degeneracy.  A zero-Hessian no-go records why arbitrary couplings cannot
-imply the final infinite-dimensional Fredholm realization.
+inputs are the dense variational-chart core, nine-block diffeomorphism
+invariance and the non-SpinC block-operator identification.  The primitive
+SpinC Fourier sector is now unconditionally unitary and intertwines the
+genuine smooth action Hessian `2D + m²` with its maximal self-adjoint
+Fredholm multiplier.  Exact linear symmetries combine with the physical
+`U(1)²` symmetry, including a specialization to genuine smooth
+diffeomorphism ghosts.  A zero-Hessian no-go records why arbitrary couplings
+cannot imply the final infinite-dimensional Fredholm realization.
 -/
 
 namespace JanusFormal
@@ -32,6 +34,8 @@ noncomputable section
 
 open scoped Manifold ContDiff
 open MeasureTheory
+open P0EFTJanusComplexDiagonalGraphFredholm4D
+open P0EFTJanusComplexDiagonalMaximalOperator4D
 open P0EFTJanusConvexHelmholtzReconstruction
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
@@ -43,6 +47,9 @@ open P0EFTJanusProgramPGlobalHelmholtzReconstruction4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalAnalyticSpine4D
 open P0EFTJanusProgramPGlobalNoether4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusFrechetPullbackQuotientHessian
 open P0EFTJanusMappingTorusPhysicalGaugeSobolevComplex4D
 
@@ -898,9 +905,87 @@ abbrev GlobalHessianVariationalCoreContract4D
   ProgramPGlobalVariationalChartCoreBridge4D
     period hPeriod configuration chart
 
-/-- Current independent SpinC Fourier residual. -/
-abbrev GlobalHessianSpinCGeometricFourierContract4D :=
+/-- Historical SpinC Fourier contract, retained for compatibility.  The
+unconditional construction below supersedes it. -/
+abbrev LegacyGlobalHessianSpinCGeometricFourierContract4D :=
   ProgramPGlobalSpinCGeometricFourierContract4D period hPeriod
+
+/-- Fredholm conclusion for the exact primitive SpinC action Hessian. -/
+abbrev GlobalHessianSpinCGeometricFredholm4D
+    (massSquared : Real) :=
+  IsClosed
+      (LinearMap.range
+        (primitiveSpinCGeometricSignedActionHessianOperator
+          period hPeriod massSquared).toFun :
+        Set (ComplexDiagonalHilbert
+          PrimitiveSpinCGeometricSignedMode)) ∧
+    FiniteDimensional Complex
+      (LinearMap.ker
+        (primitiveSpinCGeometricSignedActionHessianOperator
+          period hPeriod massSquared).toFun) ∧
+    FiniteDimensional Complex
+      (ComplexDiagonalOperatorCokernel
+        PrimitiveSpinCGeometricSignedMode
+        (fun mode =>
+          primitiveSpinCGeometricSignedKineticHessianWeight
+            period hPeriod mode + massSquared))
+
+/-- Unconditional geometric closure of the complete primitive SpinC sector
+of the Program-P Hessian. -/
+structure GlobalHessianSpinCGeometricClosure4D
+    (massSquared : Real) where
+  exactUnitary :
+    ComplexDiagonalHilbert PrimitiveSpinCGeometricSignedMode ≃ₗᵢ[Complex]
+      D9PrimitiveSpinCGeometricL2Completion
+        period hPeriod .positiveQuarter
+  exactUnitary_on_single :
+    ∀ mode coefficient,
+      exactUnitary (lp.single 2 mode coefficient) =
+        coefficient •
+          primitiveSpinCGeometricSignedDiracModeVector
+            period hPeriod mode
+  finiteCoreIntertwining :
+    ∀ coefficients : PrimitiveSpinCGeometricSignedFiniteCoefficients,
+      primitiveSpinCGeometricSignedActionHessianSmoothCore
+          period hPeriod massSquared
+          (primitiveSpinCGeometricSignedDiracFiniteSynthesis
+            period hPeriod coefficients) =
+        primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
+          (primitiveSpinCGeometricSignedFiniteActionHessian
+            period hPeriod massSquared coefficients)
+  coefficientSelfAdjoint :
+    IsSelfAdjoint
+      (primitiveSpinCGeometricSignedActionHessianOperator
+        period hPeriod massSquared)
+  coefficientFredholm :
+    GlobalHessianSpinCGeometricFredholm4D
+      period hPeriod massSquared
+
+def globalHessianSpinCGeometricClosure4D
+    (massSquared : Real) :
+    GlobalHessianSpinCGeometricClosure4D
+      period hPeriod massSquared where
+  exactUnitary :=
+    primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod
+  exactUnitary_on_single :=
+    primitiveSpinCGeometricSignedDiracModeUnitary_single period hPeriod
+  finiteCoreIntertwining :=
+    primitiveSpinCGeometricSignedDiracFiniteSynthesis_intertwines_hessian
+      period hPeriod massSquared
+  coefficientSelfAdjoint :=
+    primitiveSpinCGeometricSignedActionHessianOperator_selfAdjoint
+      period hPeriod massSquared
+  coefficientFredholm :=
+    primitiveSpinCGeometricSignedActionHessianOperator_fredholm
+      period hPeriod massSquared
+
+theorem global_hessian_spinc_geometric_gate
+    (massSquared : Real) :
+    Nonempty
+      (GlobalHessianSpinCGeometricClosure4D
+        period hPeriod massSquared) :=
+  ⟨globalHessianSpinCGeometricClosure4D
+    period hPeriod massSquared⟩
 
 /-- Historical over-strong aggregate, retained for downstream compatibility.
 New proofs should use the split contracts above and the constructed analytic

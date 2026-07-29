@@ -157,11 +157,11 @@ fermionic Z4
   -> A=L.
 ```
 
-Its next stage is no longer bundle-existence algebra: Program P now constructs
-the global PinC/spinor geometry, geometric zero and first signed Dirac levels,
-their injective genuine synthesis for finite circle-mode packets in each fixed
-root sector, and an abstract complete self-adjoint Fredholm signed operator.
-The remaining analytic stage is extension to arbitrary sphere levels and the
-common completed domain, then the zeta determinant and eta invariant. Even if
-that stage succeeds, a separate quantum or gravitational law is still required
-to fix `L` in physical units.
+Its next stage is no longer bundle-existence or fixed-background spectral
+completion: Program P constructs the global PinC/spinor geometry, every signed
+smooth Dirac level, exact multiplicities and orthogonality, the
+Fourier--monopole unitary and the exact smooth `2D+m²` Hessian-core
+intertwining with a maximal self-adjoint Fredholm multiplier. The remaining
+analytic stage is the variable metric/gauge-coupled family, then the zeta
+determinant and eta invariant. Even if that stage succeeds, a separate quantum
+or gravitational law is still required to fix `L` in physical units.

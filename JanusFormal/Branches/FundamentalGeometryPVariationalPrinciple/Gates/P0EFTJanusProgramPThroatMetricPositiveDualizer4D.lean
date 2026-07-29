@@ -10,7 +10,8 @@ single separating test.  Continuity, compactness and the canonical
 full-support throat measure then promote vanishing of the integrated pairing
 to pointwise vanishing.
 
-Constructing the dualizer from the smooth inverse metric remains geometric.
+The concrete finite-frame smooth dualizer is supplied by the downstream
+frame-covector gate; this file isolates the globalization interface.
 -/
 
 namespace JanusFormal

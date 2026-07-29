@@ -4,11 +4,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 /-!
 # Exact Candidate-A nonlinear BRST invariance reduction
 
-The global Noether gate already exposes termwise diffeomorphism invariance of
-the nine exact Candidate-A blocks.  This gate joins that precise contract to
-the unified nonlinear BRST packet.  Once the termwise symmetry is supplied,
-exact action invariance, the Euler/Noether identity, square-zero, and boundary
-stability are simultaneous theorems.
+The global Noether gate exposes a supplied affine termwise diffeomorphism
+symmetry of the nine exact Candidate-A blocks.  This gate records its action
+and Euler/Noether consequences alongside the independently proved square-zero
+and boundary-stability theorems for the nonlinear BRST packet.  It does not
+identify that packet differential with the chart generator or action.
 -/
 
 namespace JanusFormal
@@ -50,9 +50,11 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-/-- Exact reduction certificate: the only nonconstructed datum is the
-termwise nine-block diffeomorphism symmetry already isolated by the global
-Noether layer. -/
+/-- Exact reduction certificate over a supplied variational chart.  Its action
+and Noether fields use the supplied affine nine-block symmetry; its square-zero
+and boundary fields record independent nonlinear-packet theorems.  No concrete
+Candidate-A chart inhabitant or identification of the two differentials is
+asserted here. -/
 structure CandidateANonlinearBRSTInvarianceReduction4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -84,8 +86,9 @@ structure CandidateANonlinearBRSTInvarianceReduction4D
         BoundaryCompatible period hPeriod
           (programPNonlinearBRST period hPeriod packet)
 
-/-- The exact nine-block symmetry contract discharges the complete reduction
-certificate without any additional analytic assumption. -/
+/-- Packages the affine-symmetry consequences with the independent nonlinear
+BRST packet closure; this does not prove Candidate-A action invariance under
+`programPNonlinearBRST`. -/
 def candidateANonlinearBRSTInvarianceReduction4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}

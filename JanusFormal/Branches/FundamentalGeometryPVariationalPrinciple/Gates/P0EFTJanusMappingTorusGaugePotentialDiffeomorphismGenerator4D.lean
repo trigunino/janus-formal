@@ -16,6 +16,7 @@ namespace JanusFormal
 namespace P0EFTJanusMappingTorusGaugePotentialDiffeomorphismGenerator4D
 
 set_option autoImplicit false
+set_option synthInstance.maxHeartbeats 300000
 
 noncomputable section
 
@@ -28,6 +29,7 @@ open P0EFTJanusMappingTorusAbelianGaugeBRST4D
 open P0EFTJanusMappingTorusLinearizedDiffeomorphismBRST4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
 open P0EFTJanusMappingTorusMetricMatterGaugeNoetherOperator4D
+open P0EFTJanusMappingTorusTensorialDiffeomorphismRepresentation4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -46,6 +48,18 @@ private abbrev GaugeCovectorFiber
     (point : EffectiveQuotient period hPeriod) :=
   TangentSpace coverModelWithCorners point →L[Real] Real
 
+private instance gaugeCovectorFiberNormedAddCommGroup
+    (point : EffectiveQuotient period hPeriod) :
+    NormedAddCommGroup (GaugeCovectorFiber period hPeriod point) :=
+  inferInstanceAs (NormedAddCommGroup
+    (CoverCoordinates →L[Real] Real))
+
+private instance gaugeCovectorFiberNormedSpace
+    (point : EffectiveQuotient period hPeriod) :
+    NormedSpace Real (GaugeCovectorFiber period hPeriod point) :=
+  inferInstanceAs (NormedSpace Real
+    (CoverCoordinates →L[Real] Real))
+
 /-- Pullback orbit of one gauge component at one quotient point. -/
 def gaugePotentialPullbackCurveValue
     (curve : Real → SpacetimeDiffeomorphism period hPeriod)
@@ -56,6 +70,39 @@ def gaugePotentialPullbackCurveValue
   fun parameter =>
     (pullbackGaugePotential period hPeriod (curve parameter) potential).toFun
       component point
+
+/-- Maxwell pullback curves are additive in the potential slot. -/
+theorem gaugePotentialPullbackCurveValue_add
+    (curve : Real → SpacetimeDiffeomorphism period hPeriod)
+    (first second : SmoothAbelianGaugePotential period hPeriod)
+    (component : Fin 2)
+    (point : EffectiveQuotient period hPeriod) :
+    gaugePotentialPullbackCurveValue period hPeriod curve
+        (first + second) component point =
+      gaugePotentialPullbackCurveValue period hPeriod curve first component point +
+        gaugePotentialPullbackCurveValue
+          period hPeriod curve second component point := by
+  funext parameter
+  rw [gaugePotentialPullbackCurveValue,
+    pullbackGaugePotential_add]
+  rfl
+
+/-- Maxwell pullback curves are homogeneous in the potential slot. -/
+theorem gaugePotentialPullbackCurveValue_smul
+    (curve : Real → SpacetimeDiffeomorphism period hPeriod)
+    (coefficient : Real)
+    (potential : SmoothAbelianGaugePotential period hPeriod)
+    (component : Fin 2)
+    (point : EffectiveQuotient period hPeriod) :
+    gaugePotentialPullbackCurveValue period hPeriod curve
+        (coefficient • potential) component point =
+      coefficient •
+        gaugePotentialPullbackCurveValue period hPeriod curve
+          potential component point := by
+  funext parameter
+  rw [gaugePotentialPullbackCurveValue,
+    pullbackGaugePotential_smul]
+  rfl
 
 /-- Genuine fiber-valued derivative of the Maxwell pullback orbit. -/
 def gaugePotentialDiffeomorphismGeneratorAt
@@ -99,6 +146,81 @@ theorem gaugePotentialDiffeomorphismGeneratorAt_apply_of_hasFDerivAt
       derivative 1 tangent := by
   rw [gaugePotentialDiffeomorphismGeneratorAt_eq_of_hasFDerivAt
     period hPeriod curve potential component point derivative hDerivative]
+
+/-- The infinitesimal Maxwell generator is additive whenever both pullback
+orbits are differentiable at the identity. -/
+theorem gaugePotentialDiffeomorphismGeneratorAt_add
+    (curve : Real → SpacetimeDiffeomorphism period hPeriod)
+    (first second : SmoothAbelianGaugePotential period hPeriod)
+    (component : Fin 2)
+    (point : EffectiveQuotient period hPeriod)
+    (hFirst : DifferentiableAt Real
+      (gaugePotentialPullbackCurveValue period hPeriod
+        curve first component point) 0)
+    (hSecond : DifferentiableAt Real
+      (gaugePotentialPullbackCurveValue period hPeriod
+        curve second component point) 0) :
+    gaugePotentialDiffeomorphismGeneratorAt period hPeriod curve
+        (first + second) component point =
+      gaugePotentialDiffeomorphismGeneratorAt period hPeriod curve
+          first component point +
+        gaugePotentialDiffeomorphismGeneratorAt period hPeriod curve
+          second component point := by
+  simpa only [gaugePotentialDiffeomorphismGeneratorAt,
+    gaugePotentialPullbackCurveValue_add] using
+      (deriv_add (𝕜 := Real) hFirst hSecond)
+
+/-- The infinitesimal Maxwell generator is unconditionally homogeneous in
+the potential slot. -/
+theorem gaugePotentialDiffeomorphismGeneratorAt_smul
+    (curve : Real → SpacetimeDiffeomorphism period hPeriod)
+    (coefficient : Real)
+    (potential : SmoothAbelianGaugePotential period hPeriod)
+    (component : Fin 2)
+    (point : EffectiveQuotient period hPeriod) :
+    gaugePotentialDiffeomorphismGeneratorAt period hPeriod curve
+        (coefficient • potential) component point =
+      coefficient •
+        gaugePotentialDiffeomorphismGeneratorAt period hPeriod curve
+          potential component point := by
+  simpa only [gaugePotentialDiffeomorphismGeneratorAt,
+    gaugePotentialPullbackCurveValue_smul] using
+      (deriv_const_smul_field (𝕜 := Real) coefficient
+        (gaugePotentialPullbackCurveValue period hPeriod
+          curve potential component point)
+        (x := 0))
+
+/-- Exact regularity needed to bundle one Maxwell pullback curve as an action
+linear in the potential. -/
+structure GaugePotentialPullbackCurveDifferentiability
+    (curve : Real → SpacetimeDiffeomorphism period hPeriod) : Prop where
+  differentiableAt :
+    ∀ potential component point,
+      DifferentiableAt Real
+        (gaugePotentialPullbackCurveValue period hPeriod
+          curve potential component point) 0
+
+/-- For one differentiable diffeomorphism curve, the fiber Maxwell generator
+is a genuine linear map in the potential. -/
+def gaugePotentialDiffeomorphismGeneratorLinearAt
+    (curve : Real → SpacetimeDiffeomorphism period hPeriod)
+    (regularity :
+      GaugePotentialPullbackCurveDifferentiability period hPeriod curve)
+    (component : Fin 2)
+    (point : EffectiveQuotient period hPeriod) :
+    SmoothAbelianGaugePotential period hPeriod →ₗ[Real]
+      GaugeCovectorFiber period hPeriod point where
+  toFun := fun potential =>
+    gaugePotentialDiffeomorphismGeneratorAt
+      period hPeriod curve potential component point
+  map_add' := fun first second =>
+    gaugePotentialDiffeomorphismGeneratorAt_add
+      period hPeriod curve first second component point
+      (regularity.differentiableAt first component point)
+      (regularity.differentiableAt second component point)
+  map_smul' := fun coefficient potential =>
+    gaugePotentialDiffeomorphismGeneratorAt_smul
+      period hPeriod curve coefficient potential component point
 
 /-- A supplied diffeomorphism flow whose one-form derivative is realized by
 a genuine smooth global Maxwell variation. -/

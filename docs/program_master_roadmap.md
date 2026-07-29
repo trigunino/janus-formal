@@ -77,9 +77,23 @@ The ordering is logical, not chronological. P-B and P-C are independent filters;
   invariance. At fixed metric, the affine scalar line has exact pointwise and
   integrated quadratic expansion and action derivative under the explicit
   three-coefficient integrability contract; its first variation is PT-covariant
-  pointwise and after integration, with iff integrability transport. A tangent
-  family is still supplied explicitly and this reference measure is not
-  identified with every general metric's volume. For arbitrary smooth D8
+  pointwise and after integration, with iff integrability transport. The
+  tangent family remains supplied explicitly. Separately, every
+  `SmoothGeneralLorentzMetric` now has a statically constructed finite nonzero
+  relative volume measure. `P0EFTJanusMetricVolumeDensityHessian4D` proves the
+  genuine pointwise mixed second variation of `sqrt |det g|` along
+  fixed-determinant-sign affine matrix curves as
+  `sqrt |det g| * (1/4 tr(g⁻¹h) tr(g⁻¹k) -
+  1/2 tr(g⁻¹h g⁻¹k))`, symmetric in `h,k`; it is
+  globalized by
+  `P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolumeHessian4D` through
+  `globalMetricVolumeRatio` and `generalMetricTensorPairingAt` to a frame-free
+  continuous/integrable density and symmetric integral. This does not
+  establish `C²`/Fréchet dependence on
+  a metric-section space: no section chart/topology or general Lorentzian
+  metric curve is constructed. Arbitrary-diffeomorphism covariance of the
+  fixed reference, Candidate-A Maxwell/interaction and its frame-free
+  chart/core remain open. For arbitrary smooth D8
   self-diffeomorphisms, simultaneous metric/scalar/tangent-family and
   inverse-pushforward measure transport gives finite action covariance, iff
   integrability and sector exchange. The smooth tensor pullback, transported
@@ -260,10 +274,14 @@ Current results:
 - **T/N** correction: `1/(2*sqrt(2))` is a compact-circle/sphere ratio, not `alpha/L_sphere`;
 - **C** primitive compatibility can give `A=L_sphere` under the declared LL/bimetric inputs;
 - **N** a common metric scale orbit survives;
-- **O** extend the proved finite low-energy geometric SpinC Fourier bridge to
-  arbitrary sphere levels and a common completed domain, identify it with the
-  proved abstract signed self-adjoint Fredholm operator, then compute the actual
-  eta invariant and full determinant.
+- **T/C** the Program-P facade now realizes every signed sphere/Fourier label
+  geometrically, proves Fourier--monopole completeness and obtains the exact
+  global unitary; after the orientation-correct zero-mode permutation, the
+  geometric `2D + m²` Hessian model intertwines with its self-adjoint
+  Fredholm maximal multiplier on the finite core;
+- **O** lift this fixed-background result to the variable
+  metric/gauge-coupled family, then compute the actual eta invariant and full
+  determinant.
 
 Last focused CI: **green**.
 
@@ -542,6 +560,32 @@ analytic aggregate build `9317/9317`, integrity audit green.
   distinct half-period pullback, so the full-package representation is
   nontrivial. Its set-theoretic orbit quotient on the
   complete package has the exact invariant-function equivalence;
+- **T/C** Candidate-A change of variables for its five measured action blocks
+  is reduced to seven supplied density pullback identities. The
+  interaction identity is reduced to plus-metric musical pullback, root
+  conjugation and regular-basis transport; the canonical time-flow measure
+  equality gives the corresponding fixed-measure reduction. A concrete
+  conformal `GlobalFieldConfiguration` time orbit now has exact zero/add laws,
+  but it is not lifted to action data or a chart. The canonical-throat GHY
+  block vanishes identically, while SpinC matter, LL and finite-BV ambient
+  covariance remain. The fixed holonomic Christoffel germ has now been
+  differentiated and antisymmetrized on arbitrary vectors; cancellation of
+  the symmetric `D²`/`D³` transition jets proves
+  `J (R₁(u,v)z) = R₂(Ju,Jv)(Jz)` and its endomorphism corollary. Ricci/scalar
+  contraction now proves chart independence of scalar curvature, and the
+  unconditional total holonomic cover glues it to a genuine smooth global
+  scalar. This fills the scalar-curvature slot of every legacy
+  Einstein--Hilbert metric. A standalone frame-free scalar-curvature action
+  consumes any supplied finite nonzero action measure. For every
+  `SmoothGeneralLorentzMetric`, a positive smooth chart-independent ratio
+  against the explicit intrinsic reference defines a finite nonzero relative
+  Lorentz-volume measure and recovers the canonical measure at the intrinsic
+  metric. This closes only the static volume construction;
+  arbitrary-diffeomorphism covariance of the fixed reference, `C²`/Fréchet
+  metric dependence, and Candidate-A Maxwell/interaction remain open. At a critical configuration,
+  the span of every supplied differentiable nonlinear diffeomorphism-flow
+  generator is now an exact two-sided Hessian kernel; the Hessian descends
+  both by this span and by its sum with the physical `U(1)²` directions;
 - **O** construct a normed atlas covering every raw global tangent, derive the
   componentwise local Euler/stress equations and diffeomorphism BRST/BV
   identities, and build the full horizontal local variational bicomplex.
@@ -860,40 +904,148 @@ New controlled subgates are now checked:
   density convention now has finite functoriality, a square-zero two-ghost
   action and unconditional integrated scalar covariance. The fixed-throat
   scalar bracket also now supplies a coadjoint algebraic antifield action,
-  square-zero obstruction and invariant field-antifield pairing. The bracket
-  identity remains the next proof for Maxwell/metric fields. The exact
-  tensorial action datum now automatically produces algebraic coadjoint
-  antifields for Maxwell and the two-metric product, with square-zero and
-  invariant pairings. The existing integrated geometric metric pairing now
+  square-zero obstruction and invariant field-antifield pairing. For
+  Maxwell/metric fields the bracket identity is a consequence of Cartan
+  evaluation. The Maxwell action is now globally smooth and bilinear, and its
+  representation/bracket are closed. Its field and algebraic
+  coadjoint-antifield obstructions and evaluation pairing are BRST closed,
+  without a geometric/integrated Maxwell dual. Their Cartan residuals are genuine fiber covector/tensor
+  objects (the metric one symmetric and tensorial in both test fields). The
+  finite-frame assembly now gives the global smooth bilinear metric action,
+  its Lie representation and exact bracket law. The concrete combined
+  Maxwell/metric Cartan datum now produces algebraic coadjoint antifields for
+  Maxwell and the two-metric product, with square-zero and invariant
+  pairings. The existing integrated geometric metric pairing now
   supplies a linear realization of every smooth metric antifield in that
   algebraic dual. Coadjoint equivariance is now equivalent to the explicit
-  integrated skew-adjointness identity for the metric Lie action; proving
-  that identity and injectivity/nondegeneracy remains open. On the actual
+  integrated skew-adjointness identity for the metric Lie action. The finite
+  smooth bulk tangent frame now assembles a smooth covariant dualizer with
+  pointwise pairing `Σᵢⱼ h(vᵢ,vⱼ)²`; canonical full support proves integrated
+  separation and bulk injectivity. Only the bulk skew identity remains. On the actual
   fixed throat, the pre-existing tensor operations are now bundled as a real
   module and the intrinsic integrated pairing likewise defines a canonical
   linear realization in the algebraic dual. Its injectivity is equivalent to
-  separation by the pairing (and follows from diagonal definiteness), while
-  coadjoint equivariance is equivalent to integrated skew-adjointness for any
-  supplied throat representation. Those two analytic identities remain open.
+  separation by the pairing and is now proved by the concrete finite-frame
+  smooth positive dualizer, without diagonal definiteness. Coadjoint
+  equivariance remains equivalent to integrated skew-adjointness for any
+  supplied throat representation.
   The unconditional throat realization and these criteria are integrated in
   both the nonlinear BRST certificate and the global BRST frontier.
-  The global frontier additionally carries the complete nonlinear
-  certificate, the bulk geometric metric dual and the functorial tensorial
-  coadjoint closure for every supplied Maxwell/metric Lie action.
+   The global frontier additionally carries the complete nonlinear
+   certificate, the bulk geometric metric dual and the functorial tensorial
+   algebraic coadjoint closure for the canonical Maxwell action and every
+   supplied metric Lie action.
+   A separate canonical tensorial packet now instantiates this closure with
+   the concrete Maxwell and metric Cartan representations.
+   The bulk geometric bridge is scoped to one supplied representation and its
+   integrated skew identity.
   On genuine throat tensors, bilinear separation and integrated
   skew-adjointness now construct the faithful geometric coadjoint bridge
   directly through a global frontier gate. A nonzero symmetric Lorentzian
   tensor with nilpotent raised endomorphism and zero quadratic trace formally
   rules out diagonal definiteness as the generic proof route. The same model
-  proves bilinear separation on all symmetric tensors; the remaining throat
-  step is smooth localization plus the already available full-support
-  canonical measure.
+  proves bilinear separation on all symmetric tensors. A new positive
+  smooth-dualizer gate discharges localization and full-support promotion
+  completely: it implies integrated separation and dual injectivity, and
+  yields the coadjoint bridge only with a supplied integrated skew identity.
+  The existing finite smooth generating frame now defines
+  the positive energy `Σᵢⱼ h(vᵢ,vⱼ)²`, proved to separate tensor pairs without
+  a global basis. The finite covariant rank-one dualizer and its exact
+  sum-of-squares trace identity are now proved abstractly. The remaining
+  bundlewise contraction theorem now proves all frame coefficients and both
+  sector energies smooth, so continuity is discharged automatically by a
+  stronger global BRST gate.
+  Frame contractions are now genuine smooth covector sections, their outer
+  and symmetric products are genuine smooth tensors, and smooth scalar
+  multiplication is available. The finite weighted symmetric sum is assembled
+  and specialized to both intrinsic throat sectors. Its exact pointwise
+  trace-pairing identity is proved through an intrinsic rank-one contraction
+  lemma, avoiding transport across the local tangent-space wrappers. Thus only
+  integrated skew-adjointness remains in this global coadjoint gate.
+  The tensor and Maxwell pullback generators are additive on differentiable
+  orbits and homogeneous in the field slot, yielding field-linear maps under
+  an explicit orbit-differentiability contract. The canonical intrinsic metric
+  has zero generator along the complete time-translation subgroup, registered
+  by the global BRST frontier; realization of the unrestricted action by
+  concrete flows remains open. In
+  the Maxwell sector, bilinear smooth
+  contractions separate potentials through the finite tangent frame, and a
+  bilinear action satisfying Cartan evaluation now yields the bracket
+  representation automatically. The generic residual is tensorial in its
+  second field, produces a cotangent-fiber map via `TensorialAt.mkHom`, and is
+  specialized to each component of the actual smooth D8 potential. Their
+  Hom-bundle regularity is proved uniformly; the resulting global action is
+  smooth and bilinear, packaged as `GaugePotentialCartanActionData`, and
+  upgraded to the canonical Lie representation with its bracket theorem. The
+  induced algebraic coadjoint antifield has zero obstruction and its
+  evaluation pairing is BRST invariant; no geometric/integrated Maxwell dual
+  is claimed.
+  Reusing the existing
+  smooth tensor/two-vector contraction gives
+  the metric analogue: finite-frame evaluation separates tensors and Cartan
+  evaluation forces the metric bracket law. Its finite local formulas are now
+  assembled into a global smooth bilinear action, packaged as
+  `symmetricTensorCartanActionData` and upgraded to the canonical metric Lie
+  representation with its bracket theorem. Together with the Maxwell datum,
+  this gives the concrete tensorial representation and closes its algebraic
+  Maxwell/two-metric coadjoint BRST certificate. No geometric or integrated
+  tensorial dual is inferred. Canonical time/rotation invariant-measure IPP
+  is now public and yields exact integrated skew on LL coefficient fields.
+  It does not prove the intrinsic tensor-pair identity for arbitrary ghosts;
+  fixed-background skew needs Killing and measure-preserving scope, or
+  simultaneous transport of the background.
+  The time-translation bulk ghost and all three canonical bulk rotation
+   ghosts now restrict exactly to their throat ghosts by the derivative of the
+   canonical inclusion. This does not imply tensor skew. The rotation pullback
+   orbit is concrete, and the intrinsic raised pairing and two-sector pairing
+   are pointwise natural under pullback. Its canonical-measure integral is
+   invariant under every finite rotation, and its scalar derivative at angle
+   zero vanishes by constancy. A public generic chain rule differentiates every
+   fixed-fiber `SmoothThroatField` composed with the rotation as its `mvfderiv`
+   along the throat ghost. It does not derive tensor pullback. Tensor-pullback
+   angle differentiability, the pairing chain rule and an independent
+   generator/action identification remain before skew or coadjoint transport;
+   the throat tensor orbit for time is not yet bundled.
+  Each finite throat rotation is now a genuine smooth diffeomorphism with a
+   smooth pullback on symmetric throat tensors and exact zero-angle identity;
+   the ambient Minkowski form and intrinsic cover Lorentz tensor are exactly
+   rotation invariant. Pointwise quotient/throat pairing naturality and finite
+   integrated invariance are closed, as is the zero derivative of the
+   integrated scalar curve. The fixed-fiber field chain rule is public but
+   does not differentiate tensor pullback. Tensor-pullback angle
+   differentiability, the pairing chain rule and the generator/action bridge
+   remain before skew or coadjoint transport.
+  On the bulk metric pair, the genuine time-flow orbits,
+  intrinsic-background fixity, preserved canonical integral and zero
+  derivative of the invariant scalar pairing orbit are explicit. Pairing
+  pullback naturality follows from conjugation and trace invariance. The
+  pointwise generator/action bridge and differentiation through the
+  integrated pairing remain before skew.
   The Maxwell curvature pairing was audited and is gauge-degenerate, so it is
   not used as a one-form antifield dual. The exact
-  termwise nine-block diffeomorphism-symmetry contract now also implies
-  assembled-action invariance, the Euler/Noether identity, nonlinear
-  square-zero and boundary stability in one certificate; constructing that
-  contract is the remaining action obligation. The retained PT-fixed nondegenerate intrinsic throat metric now has
+  supplied affine nine-block diffeomorphism-symmetry contract implies
+  assembled-action invariance and the Euler/Noether identity. The same
+  certificate separately records nonlinear-packet square-zero and boundary
+  stability, without identifying its differential with the action. Constructing
+  the affine contract remains an action obligation. A complementary nonlinear
+  complete-flow interface now handles field-dependent diffeomorphism
+  generators and derives exact action invariance plus Euler horizontality
+  from termwise invariance. Transported-measure covariance now reduces
+  exactly to the fixed-measure nine-block contract under measure preservation,
+  with a scalar-action instantiation for every measure-preserving
+  diffeomorphism using its canonical metric pullback. The geometric chart
+  flow and all nine exact Candidate-A
+  block covariances remain open. Linearized nonlinear Noether gives
+  `H(v,G)+E(DG·v)=0`, and therefore a two-sided Hessian kernel at critical
+  configurations, including through any supplied dense global-tangent/chart
+  bridge. The span of the differentiable nonlinear-flow generators is now a
+  two-sided kernel submodule, with exact flow-only and combined `U(1)²`
+  Hessian quotients.
+  The native finite
+  null-generator reparametrization theorem is now connected exactly to the
+  ninth `finiteBV` block, with only the two density-integrability hypotheses
+  left explicit; it is not yet the affine fixed-measure ghost action required
+  by the nine-block contract. The retained PT-fixed nondegenerate intrinsic throat metric now has
   an actual pointwise inverse; the resulting traced pairing and graded-skew odd
   bracket are PT/exchange covariant and compatible with the bulk-gradient
   traces. The pairing is bilinear, and its ultralocal `1/2 ⟨h⁺,h⁺⟩` action has
@@ -1206,11 +1358,18 @@ compatibility map K
   action-Hessian pairing.
   Exact linear symmetries, including a supplied smooth-diffeomorphism
   symmetry, combine automatically with `U(1)²`.
-  What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map
-  and the exact Parseval/unitary comparison between two now-constructed
-  Hilbert spaces: the independent integral geometric `L²` completion of the
-  whole smooth SpinC core and the completed spectral norm. This comparison is
-  already exact inside every finite level/sector/circle multiplicity block;
+  For a supplied differentiable nonlinear flow, the exact linearized Noether
+  identity now retains the field-dependent `E(DG·v)` term and reduces to
+  left/right Hessian degeneracy precisely at critical configurations. The
+  span of all pointwise generators and its sum with the physical `U(1)²`
+  directions now carry exact symmetric Hessian quotients.
+  What remains under `HESSIAN-GLOBAL-01` is the actual tangent-to-chart map,
+  nine-block diffeomorphism invariance, identification of the geometric SpinC
+  model with the chartwise matter Hessian and identification of the remaining
+  action Hessian with the global Fredholm operator. The exact
+  Parseval/unitary comparison between the independent integral geometric `L²`
+  completion of the whole smooth SpinC core and the completed spectral norm
+  is now closed. It is exact inside every finite level/sector/circle block;
   exact fundamental-domain Fourier cancellation additionally proves
   orthogonality for distinct circle modes in each fixed sector, uniformly
   across levels. The two opposite sectors are pointwise and integrally
@@ -1227,9 +1386,15 @@ compatibility map K
   proves exact orthogonality of the two signs inside every fixed spectral
   block. Distinct signed sector/circle/level labels, and the zero tower versus
   every positive signed block, are now orthogonal too. They assemble into one
-  signed Hilbert-sum isometry with exact closed range and an unconditional
-  unitary onto that signed spectral range. Exhaustion of the whole geometric
-  SpinC completion is now precisely the remaining density statement.
+  signed Hilbert-sum isometry with exact closed range. Polynomial monopole
+  approximation and temporal Fourier completeness reconstruct the signed Hopf
+  frame uniformly, so the range contains the dense smooth core and therefore
+  equals the whole geometric SpinC completion. This gives the unconditional
+  ambient geometric unitary. The exact Hessian-label refinement is also
+  closed: a PT involution corrects only the undoubled zero tower, the resulting
+  unitary sends every coordinate vector to a true smooth first-order Dirac
+  eigensection, and finite packets intertwine the genuine differential
+  expression `2D + m²` with its self-adjoint Fredholm maximal multiplier.
   Its single null-curve construction gives the
   exact `2p+1` multiplicity, linear independence, ambient harmonicity and
   spherical energy `p(p+1)` for every `p`; no `p ≥ 4` level-by-level

@@ -193,22 +193,21 @@ theorem generalMetricPair_coadjointIntertwining_iff
 coadjoint tensorial antifield representation. -/
 structure GeneralMetricGeometricCoadjointBridgeData
     (metrics : SmoothGeneralLorentzMetric period hPeriod ×
-      SmoothGeneralLorentzMetric period hPeriod) : Prop where
+      SmoothGeneralLorentzMetric period hPeriod)
+    (representation :
+      SmoothGhostLieRepresentation period hPeriod
+        (MetricPair period hPeriod)) : Prop where
   pairingNondegenerate :
     Function.Injective
       (generalMetricGeometricAntifieldToAlgebraicDual
         period hPeriod metrics)
   coadjointIntertwining :
-    ∀ (actions :
-        TensorialInfinitesimalLieActionData period hPeriod)
-      ghost antifield,
+    ∀ ghost antifield,
       generalMetricGeometricAntifieldToAlgebraicDual
           period hPeriod metrics
-          ((smoothGhostLieRepresentationProd period hPeriod
-            actions.metric actions.metric).action ghost antifield) =
+          (representation.action ghost antifield) =
         coadjointGhostAction period hPeriod
-          (smoothGhostLieRepresentationProd period hPeriod
-            actions.metric actions.metric)
+          representation
           ghost
           (generalMetricGeometricAntifieldToAlgebraicDual
             period hPeriod metrics antifield)

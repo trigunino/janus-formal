@@ -1041,12 +1041,15 @@ tangent-trivialization coordinates are now `C∞`; the absence of a single
 untwisted global scalar coordinate is the expected topology of the normal
 line, not a regularity gap. The `Z4` factors come from actual global root lines,
 and Program P constructs the ambient PinC principal/spinor bundles and D9
-spinor sections/connections. The low-energy zero/first-signed block now has an
-injective genuine synthesis for every finite circle-mode packet in each fixed
-root sector. Arbitrary sphere levels, the completed common Dirac domain, the
-general metric sector and action--Hessian--mode--boundary-domain agreement
-remain explicit inputs for the complete variation/Hessian, not for the
-regular finite action assembly now constructed.
+spinor sections/connections. Every signed sphere/Fourier label now has a
+genuine smooth eigensection; exact multiplicities, orthogonality and
+Fourier--monopole completeness produce the global geometric unitary. Its
+orientation-correct Hessian-label refinement intertwines the true smooth
+`2D+m²` core with the maximal self-adjoint Fredholm multiplier. The general
+metric family, nine-block diffeomorphism symmetry and
+action--Hessian--boundary-domain agreement for the non-SpinC blocks remain
+explicit inputs for the complete variation/Hessian, not for the regular
+finite action assembly now constructed.
 
 The algebraic global LL action has an exact simultaneous measure/flux cubic
 expansion and integrated derivative for every finite measure; its pointwise
@@ -1066,7 +1069,7 @@ closed, while its componentwise local PDE and the coupled Hessian remain open.
 | 3. Bulk/boundary/worldvolume | EH/GHY cancellation, physical throat, finite null faces/counterterms/joints, LL weak/strong equations, one regular global action and its actual chartwise Euler | arbitrary ambient null stratification, componentwise local Euler PDE and Hessian/Fredholm realization of that same action |
 | 4. Concrete `K/J` | actual quotient `K_Gram`, `DK_Gram`, `R`, abelian `B_Noether`; genuine Levi-Civita curvature `K_SV`, covariant `B_Bianchi` and `B∘K=0` over the total physical atlas; faithful physical gauge `L²` differential with exact `H⁰ ≃ ℝ²`, quotient and closed completion, plus the paired global gauge package and common Dirichlet domain; complete `ℤ⁴` Fourier–Sobolev Saint–Venant complex retained separately as a symbol certificate | no residual in the stated K/J scope; curved linearized Calabi exactness and Fredholm realization belong to the Hessian block |
 | 5. Euler/Helmholtz/Noether | the exact nine-block Candidate-A action has its actual Euler derivative on every regular common `C²` chart, symmetric Euler Jacobian, exact normalized radial reconstruction and uniqueness up to constants; arbitrary paired smooth `U(1)²` ghosts give constant Maxwell gauge orbits and combine with the intrinsic curved Bianchi identity; global functional null actions, the finite natural-basis kernel and boundary ambiguities are classified | raw-field normed atlas, componentwise nonlinear metric/matter Euler PDEs, local diffeomorphism Noether/BRST-BV, full horizontal jet variational bicomplex, covariant stress/charge, actual constraint second jets and continuum ADM/Hessian closure |
-| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain and which has a summable rank-one nuclear expansion at positive time, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching; concrete primitive geometric zero/first signed SpinC levels with injective finite-circle-mode synthesis and an abstract complete signed self-adjoint Fredholm operator of index zero | physical quotient stability, PPN, covariant counterterms, arbitrary-level completed geometric identification of the signed Fourier tower, general trace-class API, full Janus Quillen family, local/global anomalies and microscopic normalization/finite-part law |
+| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain and which has a summable rank-one nuclear expansion at positive time, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching; complete signed geometric SpinC tower, Fourier--monopole unitary and exact smooth `2D+m²` core identification with a maximal self-adjoint Fredholm operator | physical quotient stability, PPN, covariant counterterms, variable-background Dirac/Hessian family, general trace-class API, full Janus Quillen family, local/global anomalies and microscopic normalization/finite-part law |
 
 Current-scope refinement: lock 1 closes causal compatibility on its stated
 regular root domain; locks 2 and 3 include the intrinsic common field domain,
