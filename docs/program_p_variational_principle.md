@@ -722,9 +722,13 @@ On the real normal restriction, the normalized half-angle vector `e+n`
 provides the explicit zero-cochain. It intertwines every winding, removes path
 choices and is continuous for every continuous nonzero horizontal normal.
 The canonical intrinsic normal lift and its genuine tangent-trivialization
-coordinates are already jointly `C∞`. Only an explicit equality between those
-coordinates and the older cover-product term
-`canonicalLatitudeSectionNormal` remains useful for that one presentation.
+coordinates are jointly `C∞`.
+`P0EFTJanusMappingTorusCanonicalLatitudeNormalPresentationComparison4D`
+now defines the explicit cover-product-to-quotient-tangent coordinate map and
+proves `canonicalLatitudeNormal_presentations_compare` and the throat equality
+`canonicalLatitudeNormalCoordinate_eq_sectionPresentation`. This closes that
+presentation sub-lock, not the terminal typed `T01` foundation/pairing
+certificate.
 
 The `PinC(4)` quotient, determinant and winding twists, spinor
 representation, ambient/D9 spinor bundles, Hermitian pairings, smooth section
@@ -826,11 +830,48 @@ curves as
 globalized by
 `P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolumeHessian4D` via
 `globalMetricVolumeRatio` and `generalMetricTensorPairingAt` to a frame-free
-continuous/integrable density with symmetric integral. This does
-not yet give `C²`/Fréchet metric-section dependence: no section chart/topology
-or general Lorentzian metric curve is constructed. Arbitrary-diffeomorphism
-covariance of the fixed reference, Candidate-A Maxwell/interaction and the
-frame-free chart/core remain open. Coherent
+continuous/integrable density with symmetric integral.
+`P0EFTJanusMappingTorusConformalRelativeLorentzVolumeHessian4D` constructs the
+positive exponential conformal line `scale(t)=baseScale*exp(t*u)`. The relative
+ratio is exactly `rho=scale²`, with derivatives `2*u*rho` and `4*u²*rho`; the
+second is exactly the frame-free Hessian on the velocity plus the first
+variation on the acceleration, `2*u²*rho + 2*u²*rho`. For each fixed smooth
+scalar integrand, the varying-volume action is `C²`, through the shared compact
+finite-measure helper `P0EFTJanusCompactParametricIntegralC2`. This is not
+general `C²`/Fréchet metric-section dependence: it covers only the explicit
+one-parameter conformal line, with no section chart/topology or general metric
+variation. With the scalar integrand fixed, that gate alone is not the general
+Einstein--Hilbert curvature variation.
+`P0EFTJanusMappingTorusHomotheticEinsteinHilbertHessian4D` closes the genuine
+curvature variation on the positive constant-homothety slice of the intrinsic
+metric. Christoffel and Ricci are invariant, `R(scale*g0)=scale⁻¹*R0`, and the
+volume ratio is `scale²`; consequently the true Einstein--Hilbert action equals
+its reduced affine-scale polynomial and has a symmetric Hessian. Along the
+positive exponential metric curve, the action is `C∞` (hence `C²`), with
+second derivative equal to the affine Hessian on the velocity plus the first
+variation on the acceleration and value
+`u²/(2κ) * (Rtot - 8*Λ*Vol)` at `t=0`. Spatially varying conformal
+factors, the general metric-space Fréchet Hessian and the nine-block Jacobi
+operator remain open.
+`P0EFTJanusMappingTorusConformalFrameFreeMaxwellHessian4D` separately
+globalizes, for every `SmoothGeneralLorentzMetric`, the Maxwell pairing of two
+arbitrary smooth abelian potentials, hence its diagonal density and action.
+The transition laws `F₁=JᵀF₂J` and `g₁=Jᵀg₂J` make the fields frame-free,
+smooth and integrable. In four dimensions `scale⁻²` cancels the
+relative-volume factor `scale²`, so the fixed-potential conformal action is
+`C∞`, constant and has zero symmetric conformal Hessian.
+`P0EFTJanusMappingTorusFrameFreeMaxwellGaugeOrbitHessian4D` adds global
+exact-gauge invariance in either pairing slot and for the action. Its
+exact-gauge-orbit pullback Hessian is zero. Differentiating first along an
+exact gauge orbit and then along an arbitrary potential variation certifies
+the zero kernel; differentiating first in a logarithmic-conformal metric
+direction and then along an arbitrary potential variation gives another zero
+mixed block. `P0EFTJanusMappingTorusFrameFreeMaxwellPotentialHessian4D`
+closes the fixed-metric arbitrary-potential Hessian as an integrable symmetric
+bilinear form, proves the exact quadratic line and mixed derivative
+identifications, and places exact gauge directions in both kernels.
+Arbitrary-metric--potential mixing, general Fréchet dependence, Candidate-A
+interaction/chart/core/Jacobi/Fredholm identification remain open. Coherent
 PT transport of a `SmoothGeneralLorentzMetric`, scalar and tangent family
 gives exact density covariance, iff integrability transport and invariance of
 the action against the canonical quotient Lorentz measure. The tangent family
@@ -1047,10 +1088,11 @@ metric slot. Its tangent coordinates construct a finite-product `H¹`,
 continuous trace, closed Dirichlet kernel and common bulk/SpinC/D10/LL domain.
 The regular Candidate-A action is assembled on that configuration; its Euler
 map and symmetric chartwise Frechet Hessian are now actual derivatives.
-The intrinsic/spectral Dirac, BRST/BV, D7/D10 regulator, circle Quillen and
-PT/inflow anomaly layers are integrated as scoped global frontiers. Their
-remaining common obligation is one all-level geometric Fourier/domain bridge
-identifying the gauge-fixed action Hessian with the smooth Fredholm family.
+The intrinsic/spectral Dirac and the common nuclear reference regulator are
+closed at their declared scopes. BRST/BV, the physical Hessian, circle
+Quillen and PT/inflow anomaly layers remain scoped global frontiers. Their
+remaining common obligation is the geometric domain bridge identifying the
+gauge-fixed action Hessian with the smooth Fredholm family.
 Scheme independence is impossible from the present assumptions alone: a
 formal no-go leaves normalization and finite local terms free.
 The available parent bulk reduces exactly and is Helmholtz/PT compatible,
@@ -1436,22 +1478,48 @@ tangent with the D10 `ℓ²` sector is required. The remaining Hessian inputs ar
 reduced further: for every certified chartwise paired `U(1)²` symmetry, the
 exact Noether identity makes the true Hessian vanish in both gauge slots and
 descend uniquely and symmetrically.
-The constructed bulk-Dirichlet/SpinC/D10/LL Hilbert product now has a dense
-injective operator core. The all-level SpinC coefficient tower and D10 block
-are Fredholm, while the LL Riesz core is dense with trivial kernel. A supplied
+The 30 July closure audit proves that the stronger global Fredholm
+identification remains structurally blocked, but the field-content choice is
+now explicit. The physical tangent, common domain and corrected spectral
+target are D10-free; the historical D10 extension is regulator/determinant
+data and remains excluded by the zero-Hessian no-go. Candidate-A matter now
+uses primitive SpinC sections directly. Its smooth and graph actions agree on
+the finite spectral core, and the graph second Fréchet derivative is exactly
+the Fredholm `2D+m²` operator. Typed D9 gauge fermions also provide distinct
+`c/c̄/B`, nilpotent BRST, exact `sΨ` Hessians and the expected FP symbols.
+Thus `HESSIAN-GLOBAL-01` remains `BLOQUÉ-STRUCTUREL` only on the missing total
+construction: global `C²` gauge-fixed chart, Lorenz/de Donder calculus,
+general metric/normal/mixed-Maxwell/full-LL/boundary Hessians, correct modal
+multiplicities and their same-action Fredholm sum.
+The constructed physical bulk-Dirichlet/SpinC/LL domain and extended
+bulk-Dirichlet/SpinC/D10/LL regulator product have dense cores. The all-level
+SpinC coefficient tower and D10 regulator block are Fredholm, while the LL
+Riesz core is dense with trivial kernel on its proved `llField` slice. A supplied
 exact smooth-diffeomorphism symmetry combines canonically with `U(1)²`, and
 the exterior scalar, linearized-diffeomorphism, full-linear/LL and
 general-metric BV square-zero layers are integrated.
+The same exact ambient product now carries, at every positive time, one
+basis-dependent reference regulator that is compact, injective and nuclear.
+Its bulk factor retains the compact Dirichlet inclusion/Gram and a zero-trace
+adjoint lift; the SpinC and D10 factors retain their exact physical nuclear
+heat certificates. Exact D9 continuum heat is nuclear under its explicit
+summability hypothesis, with unconditional finite packets. This closes
+`REGULATOR-GLOBAL-01` only as a reference regularization: neither equality
+with the global Hessian heat nor strong convergence to the identity is
+claimed, and the exact LL Hessian heat remains noncompact outside finite
+dimension. Physical agreement therefore stays in `HESSIAN-GLOBAL-01`.
 Fourier--monopole completeness now makes the signed SpinC synthesis unitary
 onto the entire independent geometric completion. The orientation-correct PT
 permutation of the undoubled zero tower refines this unitary to the exact
 signed Hessian labels. Every basis vector is a true smooth first-order Dirac
 eigenvector, and the genuine differential expression `2D + m²` intertwines on
 the finite Fourier--monopole core with its maximal self-adjoint Fredholm
-multiplier. Still missing are the actual global-tangent-to-chart map,
-invariance of all nine action blocks under the same diffeomorphisms,
-identification of this geometric model with the chartwise matter Hessian and
-the elliptic Hessian/Fredholm equality for the remaining nonspectral blocks.
+multiplier. The action matter type is now that same primitive SpinC section
+space, and its quadratic smooth/graph actions agree on the finite core.
+Independently missing are the actual global gauge-fixed tangent-to-chart map,
+invariance of all action blocks under the same diffeomorphisms, and the
+remaining global same-action blocks. These are constructions, not
+consequences of the spectral unitary.
 The formal zero-Hessian no-go proves that arbitrary
 couplings cannot supply the last result; nondegenerate elliptic input is
 necessary. Scoped
@@ -1643,12 +1711,45 @@ determinant sign as
 1/2 tr(g⁻¹h g⁻¹k))`, symmetric in `h,k`.
 `P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolumeHessian4D` globalizes it,
 via `globalMetricVolumeRatio` and `generalMetricTensorPairingAt`, to a
-frame-free continuous and integrable density with symmetric integral. This
-does not yet construct `C²`/Fréchet dependence on the metric-section space:
-there is no section chart/topology or general Lorentzian metric curve.
-Arbitrary-diffeomorphism covariance of the fixed reference remains open.
-Candidate-A still needs frame-free Maxwell/interaction data and its dense
-tangent-to-chart core.
+frame-free continuous and integrable density with symmetric integral.
+`P0EFTJanusMappingTorusConformalRelativeLorentzVolumeHessian4D` adds the
+positive exponential conformal line `scale(t)=baseScale*exp(t*u)`, with exact
+ratio `rho=scale²`, derivatives `2*u*rho` and `4*u²*rho`, and exact
+velocity-Hessian plus acceleration-first-variation decomposition
+`4*u²*rho = 2*u²*rho + 2*u²*rho`. Against every fixed smooth scalar integrand,
+the varying-volume action is `C²`, via
+`P0EFTJanusCompactParametricIntegralC2`. This is not a full section
+chart/topology or general `C²`/Fréchet metric variation, and fixing the
+integrand means that gate alone is not the general Einstein--Hilbert curvature
+variation.
+`P0EFTJanusMappingTorusHomotheticEinsteinHilbertHessian4D` now closes the
+genuine curvature variation on the positive constant-homothety slice of the
+intrinsic metric: Christoffel and Ricci are invariant,
+`R(scale*g0)=scale⁻¹*R0`, and the volume ratio is `scale²`. The actual
+Einstein--Hilbert action equals its reduced affine-scale polynomial and its
+affine Hessian is symmetric. Along the positive exponential metric curve the
+action is `C∞`/`C²`; its second derivative is Hessian-on-velocity plus
+first-variation-on-acceleration and at `t=0` equals
+`u²/(2κ) * (Rtot - 8*Λ*Vol)`. This supplies neither a spatially varying
+conformal factor, a general metric-space Fréchet Hessian nor the nine-block
+Jacobi operator.
+`P0EFTJanusMappingTorusConformalFrameFreeMaxwellHessian4D` globalizes, for
+every `SmoothGeneralLorentzMetric`, the Maxwell pairing of two arbitrary smooth
+abelian potentials, hence its diagonal density and action. The overlap laws
+`F₁=JᵀF₂J` and `g₁=Jᵀg₂J` give smooth integrable frame-free fields. In four
+dimensions `scale⁻²` cancels the volume ratio `scale²`, so the fixed-potential
+conformal action is `C∞`, constant and has zero symmetric conformal Hessian.
+`P0EFTJanusMappingTorusFrameFreeMaxwellGaugeOrbitHessian4D` proves global
+exact-gauge invariance in either pairing slot and for the action, with zero
+pulled-back gauge-orbit Hessian. The certified derivative orders exact-gauge
+then arbitrary-potential and log-conformal then arbitrary-potential give zero
+mixed blocks. `P0EFTJanusMappingTorusFrameFreeMaxwellPotentialHessian4D`
+closes the fixed-metric arbitrary-potential Hessian as an integrable symmetric
+bilinear form, with exact affine-line and mixed derivative certificates plus
+a two-sided exact-gauge kernel. Arbitrary-metric--potential mixing, general
+Fréchet dependence, Candidate-A interaction/chart/core/Jacobi/Fredholm
+identification and arbitrary-diffeomorphism covariance of the fixed reference
+remain open.
 The earlier affine symmetry contract is recovered exactly by the
 constant-translation complete flow. Differentiating nonlinear Noether gives
 `H(v,G)+E(DG·v)=0`; hence at a critical configuration the differentiable
@@ -1666,7 +1767,7 @@ The ADM result is
 FLRW rather than a continuum functional Dirac algebra; the stability witness
 has a nontrivial constrained isoenergetic curve; and the vacuum minimum is
 only proportional and one-dimensional. Their common geometric-family bridge
-remains under `DIRAC/BRST/HESSIAN/REGULATOR/QUILLEN/ANOMALY-GLOBAL-01`;
+remains under `DIRAC/BRST/HESSIAN/QUILLEN/ANOMALY-GLOBAL-01`;
 `SCHEME-GLOBAL-01` and `MICRO-GLOBAL-01` additionally require a selecting
 microscopic law and finite-part data, while `SCALE-GLOBAL-01` requires an independent
 dimensionful anchor and a selected stable vacuum.
@@ -1691,16 +1792,15 @@ Likewise, the Jordan family and continuous two-dimensional Cayley--Hamilton
 chart do not imply a universal real Lorentz root. The global Candidate-A
 geometry therefore uses the honest root-admissible domain and proves the
 conformal subdomain inhabited; the spectral obstruction outside that domain
-is retained. The
-self-adjoint circle Dirac operator, its basiswise `D^2` trace bridge and the
-strongly continuous contractive diagonal heat semigroup, including its exact
-maximal `D²` generator domain, do not yet construct the full Janus Dirac
-operator or a corresponding global functional calculus. On the circle, the
-independent pure-point calculus now identifies its Gaussian exponential
-exactly with the heat semigroup. Its
-positive-time nuclear rank-one expansion supplies the concrete trace-class
-property for the circle, but no global Janus trace-class family or anomaly is
-computed, and it does not determine the global determinant or normalization.
+is retained. The self-adjoint circle Dirac operator, its basiswise `D²` trace
+bridge and the strongly continuous contractive diagonal heat semigroup now
+sit inside the proved global signed SpinC Dirac synthesis. On the circle, the
+independent pure-point calculus identifies its Gaussian exponential exactly
+with the heat semigroup and supplies a positive-time nuclear rank-one
+expansion. Separately, one basis-dependent compact injective nuclear reference
+family now covers the completed bulk, SpinC, D10 and LL ambient product. It is
+not identified with the physical global Hessian heat; no global physical
+anomaly, determinant or normalization follows from it.
 
 What is established is a theorem/no-go architecture explaining exactly which
 inputs are needed and which proposed shortcuts fail. Candidate A now has a
@@ -1710,3 +1810,36 @@ flux, the exact regular action and its chartwise functional variational
 closure. The decisive missing objects are now the local/raw-field and
 constrained Hessian/Fredholm upgrades, followed by a regulated microscopic
 selection and normalization scheme.
+
+### Global scalar-wave prerequisite
+
+`P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` reuses the canonical Euler
+atlas and local wave-linearity lemmas to construct a global smooth,
+real-linear scalar-wave operator with finite-measure integrability.
+`P0EFTJanusMappingTorusGlobalSmoothScalarProduct4D` adds the global smooth
+pointwise product and local gradient Leibniz law. Its covariant Hessian/wave
+product jet and exact algebraic wave-contraction rule are closed. Identifying
+that jet with the actual second derivative of the global product is now
+proved. The induced global smooth gradient pairing agrees with its local
+inverse-metric contraction and yields the pointwise global wave-product rule.
+The spatial conformal Einstein--Hilbert Hessian and raw curvature
+bridge through scalar curvature are closed. The existing abstract Maxwell metric--potential C2 contracts do
+not replace a concrete arbitrary metric-section chart.
+`P0EFTJanusMappingTorusSpatialConformalMetricJet4D` reuses the existing
+positive smooth conformal Lorentz metric and closes its local coefficient,
+matrix and first-derivative laws. Inverse, Christoffel and curvature
+transformation laws remain.
+## Spatial conformal Einstein--Hilbert Hessian
+
+The standard four-dimensional conformal-density curve along
+`g(t) = exp(2 t u) g₀` now has certified first and second integrated
+derivatives. Polarization gives a symmetric bilinear Hessian whose diagonal is
+the second derivative at the origin. The local conformal metric, curvature,
+Palatini and quadratic-algebra gates now derive the standard scalar-curvature
+formula from the raw coordinate Ricci construction. The exponential
+specialization is proved locally and globally:
+`R(g_t) = exp(-2tu) (R(g₀) - 6t □u - 6t² ⟨du,du⟩)`.
+Together with the exact conformal volume ratio `exp(4tu)`, this identifies the
+genuine frame-free metric-volume Einstein--Hilbert action with the
+differentiated curve. Hence the certified symmetric bilinear form is the
+actual spatial conformal EH second variation.

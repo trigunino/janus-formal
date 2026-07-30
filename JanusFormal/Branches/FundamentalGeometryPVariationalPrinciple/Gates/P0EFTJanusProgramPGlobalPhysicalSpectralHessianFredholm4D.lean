@@ -3,13 +3,18 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPMultiplicityAwareD10Galerkin4D
 
 /-!
-# Physical first-order global spectral Hessian
+# Legacy D10-extended first-order spectral target
 
 This replaces the former squared SpinC control block by the signed,
 geometrically scaled action Hessian `2D + m²`.  It is
 assembled with the D9 gauge--ghost and D10 blocks on one maximal domain.
 Finite D9 characteristic modes and possible finite mass resonances are
 retained rather than excluded.
+
+The D10 coordinate is not varied by the Candidate-A action.  Consequently
+this D10-extended operator is retained for regulator/backward compatibility,
+not as the physical action Hessian.  The D10-free target is constructed in
+`P0EFTJanusProgramPGlobalGaugeFixedSpectralHessianFredholm4D`.
 -/
 
 namespace JanusFormal

@@ -1,7 +1,15 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCommonSpinTwoPairingBridge4D
 import JanusFormal.Branches.FundamentalGeometryPEInvariantPairings.Gates.P0EFTJanusSectorQuantumNumbers
 
-/-! # Common-domain ghost pairing selection -/
+/-!
+# Legacy two-column ghost-label pairing
+
+`GhostFiber = ℝ²` is the Lie algebra of the installed `U(1)²` sector.  Its
+two coordinates are therefore not a ghost/antighost pair.  The declarations
+below retain the older quantum-number relabeling for compatibility only; they
+must not be used as the nonminimal BRST field content of a gauge-fixed action.
+The latter has distinct typed ghost, antighost and Nakanishi--Lautrup fields.
+-/
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPCommonGhostPairingBridge4D
@@ -20,7 +28,8 @@ variable (period : Real) (hPeriod : period ≠ 0)
 private abbrev EffectiveThroat :=
   MappingTorus (fixedEquatorData period hPeriod)
 
-/-- Column zero is the U(1) ghost and column one its antighost. -/
+/-- Historical auxiliary label assignment.  This is not an identification of
+the two actual `GhostFiber` coordinates with ghost and antighost fields. -/
 def u1GhostColumnLabel (column : Fin 2) : SectorLabel :=
   if column = 0 then u1Ghost else u1Antighost
 
@@ -63,8 +72,8 @@ theorem u1GhostPairing_selection_classification
   · simpa [selectedU1GhostPairing] using
       hSelection 1 1 (by native_decide)
 
-/-- Bilinear value on the two actual U(1) ghost columns of complete global
-variations at a point of the true throat. -/
+/-- Bilinear value after applying the historical labels to the two genuine
+`U(1)²` ghost coordinates of complete global variations. -/
 def completeVariationU1GhostPairingAt
     (pairing : GhostBilinear2)
     (first second : ProgramPCompleteVariation4D period hPeriod)

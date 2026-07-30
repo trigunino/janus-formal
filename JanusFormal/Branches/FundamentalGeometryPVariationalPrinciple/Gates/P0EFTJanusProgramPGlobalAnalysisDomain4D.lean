@@ -12,8 +12,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 The genuine smooth global tangent is sent to a finite product of intrinsic
 physical `H¹` spaces.  The throat trace acts coordinatewise and its
-homogeneous kernel is closed.  SpinC, D10 and LL retain their already proved
-geometric graph/completion domains in the same aggregate.
+homogeneous kernel is closed.  The physical closed aggregate contains bulk,
+SpinC and LL.  A separate legacy extension adds the D10 graph used by
+regulator and determinant constructions.
 -/
 
 namespace JanusFormal
@@ -116,21 +117,21 @@ def GlobalFieldTangent.bulkSmoothCoordinate
   | .inl (sector, first, second) =>
       effectiveD8SmoothTensorVectorContraction
         (globalEffectiveD8Background period hPeriod)
-        (variation.completeVariation.legacy.fullMetricPerturbation sector)
+        (variation.completeVariation.fullMetricPerturbation sector)
         (finiteGlobalFrameVector period hPeriod first)
         (finiteGlobalFrameVector period hPeriod second)
   | .inr (.inl (sector, index)) =>
       smoothEuclideanCoordinate period hPeriod
         (selectSector sector
-          variation.completeVariation.legacy.independent.gauge) index
+          variation.completeVariation.independent.gauge) index
   | .inr (.inr (.inl (sector, index))) =>
       smoothEuclideanCoordinate period hPeriod
         (selectSector sector
-          variation.completeVariation.legacy.independent.ghosts) index
+          variation.completeVariation.independent.ghosts) index
   | .inr (.inr (.inr (sector, index))) =>
       smoothEuclideanCoordinate period hPeriod
         (selectSector sector
-          variation.completeVariation.legacy.independent.auxiliaries) index
+          variation.completeVariation.independent.auxiliaries) index
 
 /-- Finite product of intrinsic physical scalar `H¹` completions. -/
 abbrev GlobalBulkHilbertH1 :=
@@ -202,10 +203,25 @@ def GlobalAnalysisData.llH1Data
     intrinsicCanonicalThroatVolumeMeasure_isOpenPosMeasure period hPeriod
   llMeasure_pos := data.llMeasure_pos
 
-/-- One common closed/operator domain containing every analytic sector:
-bulk Dirichlet `H¹`, one complete primitive SpinC graph domain for each
-physical sector, the multiplicity-aware D10 graph domain and the positive LL
-Hilbert completion. -/
+/-- The common closed/operator domain of the physical field content:
+bulk Dirichlet `H¹`, one primitive SpinC graph domain per outer sector and the
+positive LL Hilbert completion.  D10 is not a physical field direction. -/
+structure GlobalPhysicalCommonClosedDomain
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (data : GlobalAnalysisData period hPeriod configuration) where
+  bulk : GlobalBulkDirichletHilbertH1 period hPeriod
+  spinC : Sector → PrimitiveSpinCGeometricH2 period hPeriod
+  ll : LLH1Space period hPeriod (data.llH1Data period hPeriod)
+
+theorem globalPhysicalCommonClosedDomain_nonempty
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (data : GlobalAnalysisData period hPeriod configuration) :
+    Nonempty (GlobalPhysicalCommonClosedDomain period hPeriod data) :=
+  ⟨⟨0, 0, 0⟩⟩
+
+/-- Legacy extended analytic aggregate.  It adds the multiplicity-aware D10
+graph used by the spectral-regulator and determinant packages to the physical
+common domain above. -/
 structure GlobalCommonClosedDomain
     {configuration : GlobalFieldConfiguration period hPeriod}
   (data : GlobalAnalysisData period hPeriod configuration) where
@@ -220,6 +236,16 @@ theorem globalCommonClosedDomain_nonempty
     (data : GlobalAnalysisData period hPeriod configuration) :
     Nonempty (GlobalCommonClosedDomain period hPeriod data) :=
   ⟨⟨0, 0, 0, 0⟩⟩
+
+/-- Forget the background D10 graph coordinate of the extended aggregate. -/
+def GlobalCommonClosedDomain.physical
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {data : GlobalAnalysisData period hPeriod configuration}
+    (domain : GlobalCommonClosedDomain period hPeriod data) :
+    GlobalPhysicalCommonClosedDomain period hPeriod data where
+  bulk := domain.bulk
+  spinC := domain.spinC
+  ll := domain.ll
 
 /-- Concrete closure certificate for the common aggregate. -/
 structure GlobalAnalysisCertificate
@@ -237,6 +263,30 @@ structure GlobalAnalysisCertificate
         (d10SpectralData period hPeriod configuration.d10Completion))
   commonDomainInhabited :
     Nonempty (GlobalCommonClosedDomain period hPeriod data)
+
+/-- Closure certificate restricted to the physical, D10-free aggregate. -/
+structure GlobalPhysicalAnalysisCertificate
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (data : GlobalAnalysisData period hPeriod configuration) : Prop where
+  bulkDirichletClosed :
+    IsClosed
+      (GlobalBulkDirichletHilbertH1 period hPeriod :
+        Set (GlobalBulkHilbertH1 period hPeriod))
+  spinCGraphClosed :
+    (primitiveSpinCGeometricUnboundedSquared period hPeriod).IsClosed
+  commonDomainInhabited :
+    Nonempty (GlobalPhysicalCommonClosedDomain period hPeriod data)
+
+theorem globalPhysicalAnalysisCertificate
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (data : GlobalAnalysisData period hPeriod configuration) :
+    GlobalPhysicalAnalysisCertificate period hPeriod data where
+  bulkDirichletClosed :=
+    globalBulkDirichletHilbertH1_isClosed period hPeriod
+  spinCGraphClosed :=
+    primitiveSpinCGeometricUnboundedSquared_isClosed period hPeriod
+  commonDomainInhabited :=
+    globalPhysicalCommonClosedDomain_nonempty period hPeriod data
 
 theorem globalAnalysisCertificate
     {configuration : GlobalFieldConfiguration period hPeriod}
