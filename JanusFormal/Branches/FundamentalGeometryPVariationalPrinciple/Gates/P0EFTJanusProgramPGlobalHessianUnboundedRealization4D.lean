@@ -1,14 +1,16 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianFrontier4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalPhysicalLLHessianFredholm4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalGaugeFixedLLHessianFredholm4D
 
 /-!
 # Unbounded global Hessian realization
 
 A differential Hessian is naturally a densely defined closed operator, not
-a bounded endomorphism of the whole ambient Hilbert space.  This gate states
-the terminal Program-P realization directly with Mathlib's `LinearPMap`.
-The smooth gauge quotient maps into its genuine operator domain, and the
-Hessian pairing is tested against the ambient inclusion of that domain.
+a bounded endomorphism of the whole ambient Hilbert space.  This gate promotes
+the corrected D10-free gauge/ghost + primitive SpinC + LL analytic target
+directly through Mathlib's `LinearPMap`.  The smooth gauge quotient maps into
+its genuine operator domain, and the Hessian pairing is tested against the
+ambient inclusion of that domain.  The remaining core-agreement datum is not
+claimed here for the still-missing global gauge-fixed action blocks.
 -/
 
 namespace JanusFormal
@@ -27,7 +29,7 @@ open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalNoether4D
 open P0EFTJanusProgramPGlobalHessianFrontier4D
-open P0EFTJanusProgramPGlobalPhysicalLLHessianFredholm4D
+open P0EFTJanusProgramPGlobalGaugeFixedLLHessianFredholm4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 open P0EFTJanusGaugeGhostBlockD9UnboundedFredholm4D
@@ -60,13 +62,13 @@ attribute [local instance]
   GlobalCandidateAVariationalChart.normedAddCommGroup
   GlobalCandidateAVariationalChart.normedSpace
 
-local instance programPGlobalPhysicalLLHessianHilbertRealLinearPMapStar
-    (ι : Type*) (data : ProductThroatSpectralData)
+local instance programPGlobalGaugeFixedLLHessianHilbertRealLinearPMapStar
+    (ι : Type*)
     (llData : PositiveLLH1Data period hPeriod) :
-    Star (ProgramPGlobalPhysicalLLHessianHilbert
-        period hPeriod ι data llData →ₗ.[Real]
-      ProgramPGlobalPhysicalLLHessianHilbert
-        period hPeriod ι data llData) :=
+    Star (ProgramPGlobalGaugeFixedLLHessianHilbert
+        period hPeriod ι llData →ₗ.[Real]
+      ProgramPGlobalGaugeFixedLLHessianHilbert
+        period hPeriod ι llData) :=
   LinearPMap.instStar
 
 /-- Honest terminal analytic realization of the gauge-reduced Hessian.
@@ -141,9 +143,93 @@ theorem
     realization.operator.IsClosed :=
   realization.operator_selfAdjoint.isClosed
 
-/-- The only remaining datum after choosing an exact additional gauge
-symmetry and the constructed real spectral Fredholm operator is the dense
-smooth quotient core together with the exact Hessian pairing identity. -/
+/-- A zero quotient Hessian is incompatible with the advertised unbounded
+Fredholm realization on an infinite-dimensional Hilbert completion. -/
+theorem
+    no_globalHessianUnboundedFredholmRealization_of_zero_quotientHessian
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    {chart : GlobalCandidateAVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure}
+    {physical : GlobalCandidateAGhostSymmetry period hPeriod chart}
+    {configuration : chart.Configuration}
+    {Analysis : Type*}
+    [NormedAddCommGroup Analysis]
+    [InnerProductSpace Real Analysis]
+    [CompleteSpace Analysis]
+    (hInfinite : ¬ FiniteDimensional Real Analysis)
+    (realization :
+      ProgramPGlobalHessianUnboundedFredholmRealization4D
+        period hPeriod chart physical configuration Analysis)
+    (hZero : ∀ first second,
+      quotientHessian
+          (globalCandidateAHessianLinear
+            period hPeriod chart configuration)
+          realization.totalGaugeDirections
+          realization.hessianGaugeLeft realization.hessianGaugeRight
+          first second =
+        0) :
+    False := by
+  have hOperatorCore :
+      ∀ state, realization.operator (realization.smoothCore state) = 0 := by
+    intro state
+    apply realization.smoothCore_denseRange.eq_zero_of_inner_left
+      (𝕜 := Real)
+    intro test
+    rw [realization.pairing_agreement, hZero]
+  have hFormalAdjoint :
+      realization.operator.IsFormalAdjoint realization.operator := by
+    have hAdjoint :=
+      LinearPMap.adjoint_isFormalAdjoint
+        realization.operator_selfAdjoint.dense_domain
+    rw [LinearPMap.isSelfAdjoint_def.mp
+      realization.operator_selfAdjoint] at hAdjoint
+    exact hAdjoint
+  have hOperatorDomain :
+      ∀ state : realization.operator.domain,
+        realization.operator state = 0 := by
+    intro state
+    apply realization.smoothCore_denseRange.eq_zero_of_inner_left
+      (𝕜 := Real)
+    intro test
+    rw [hFormalAdjoint state (realization.smoothCore test),
+      hOperatorCore, inner_zero_right]
+  have hKernelTop :
+      LinearMap.ker realization.operator.toFun =
+        (⊤ : Submodule Real realization.operator.domain) := by
+    ext state
+    simp only [LinearMap.mem_ker, Submodule.mem_top, iff_true]
+    exact hOperatorDomain state
+  letI : FiniteDimensional Real
+      (⊤ : Submodule Real realization.operator.domain) := by
+    rw [← hKernelTop]
+    exact realization.operator_kernel_finite
+  letI : FiniteDimensional Real realization.operator.domain :=
+    (Submodule.topEquiv :
+      (⊤ : Submodule Real realization.operator.domain) ≃ₗ[Real]
+        realization.operator.domain).finiteDimensional
+  have hDomainTop :
+      realization.operator.domain = (⊤ : Submodule Real Analysis) := by
+    exact
+      realization.operator.domain.closed_of_finiteDimensional
+        |>.submodule_topologicalClosure_eq.symm.trans
+          (Submodule.dense_iff_topologicalClosure_eq_top.mp
+            realization.operator_domain_dense)
+  letI : FiniteDimensional Real (⊤ : Submodule Real Analysis) := by
+    rw [← hDomainTop]
+    infer_instance
+  apply hInfinite
+  exact
+    (Submodule.topEquiv :
+      (⊤ : Submodule Real Analysis) ≃ₗ[Real] Analysis).finiteDimensional
+
+/-- Residual agreement datum after choosing an exact additional gauge
+symmetry and the constructed D10-free real Fredholm operator.  It still
+requires a dense smooth quotient core and the exact Hessian pairing identity;
+the structure does not assert that the current action supplies the global
+Lorenz/de Donder, typed nonminimal, or other omitted physical blocks. -/
 structure ProgramPGlobalHessianCombinedGaugeSpectralCoreAgreement4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace GaugeParameter : Type*}
@@ -162,34 +248,33 @@ structure ProgramPGlobalHessianCombinedGaugeSpectralCoreAgreement4D
     {ι : Type*} [DecidableEq ι]
     {covector : ι → TangentVector3}
     (d9Ellipticity :
-      D9GaugeGhostFiniteCharacteristicEllipticity covector)
-    (data : ProductThroatSpectralData) where
+      D9GaugeGhostFiniteCharacteristicEllipticity covector) where
   smoothCore :
     (chart.Configuration ⧸
       globalCandidateACombinedGaugeDirectionSubmodule
         period hPeriod chart physical additional) →ₗ[Real]
-      (programPGlobalPhysicalLLHessianOperator period hPeriod covector data
+      (programPGlobalGaugeFixedLLHessianOperator period hPeriod covector
         couplings.matterMassSquared
         (analysisData.llH1Data period hPeriod)).domain
   smoothCore_injective : Function.Injective smoothCore
   smoothCore_denseRange :
     DenseRange (fun state =>
       ((smoothCore state :
-        (programPGlobalPhysicalLLHessianOperator period hPeriod covector data
+        (programPGlobalGaugeFixedLLHessianOperator period hPeriod covector
           couplings.matterMassSquared
           (analysisData.llH1Data period hPeriod)).domain) :
-        ProgramPGlobalPhysicalLLHessianHilbert period hPeriod ι data
+        ProgramPGlobalGaugeFixedLLHessianHilbert period hPeriod ι
           (analysisData.llH1Data period hPeriod)))
   pairing_agreement : ∀ first second,
     inner Real
-        (programPGlobalPhysicalLLHessianOperator period hPeriod covector data
+        (programPGlobalGaugeFixedLLHessianOperator period hPeriod covector
           couplings.matterMassSquared
           (analysisData.llH1Data period hPeriod) (smoothCore first))
         ((smoothCore second :
-          (programPGlobalPhysicalLLHessianOperator period hPeriod covector data
+          (programPGlobalGaugeFixedLLHessianOperator period hPeriod covector
             couplings.matterMassSquared
             (analysisData.llH1Data period hPeriod)).domain) :
-          ProgramPGlobalPhysicalLLHessianHilbert period hPeriod ι data
+          ProgramPGlobalGaugeFixedLLHessianHilbert period hPeriod ι
             (analysisData.llH1Data period hPeriod)) =
       quotientHessian
         (globalCandidateAHessianLinear period hPeriod chart configuration)
@@ -228,14 +313,13 @@ def ProgramPGlobalHessianCombinedGaugeSpectralCoreAgreement4D.toRealization
     {covector : ι → TangentVector3}
     {d9Ellipticity :
       D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    {data : ProductThroatSpectralData}
     (agreement :
       ProgramPGlobalHessianCombinedGaugeSpectralCoreAgreement4D
         period hPeriod chart physical additional configuration analysisData
-        d9Ellipticity data) :
+        d9Ellipticity) :
     ProgramPGlobalHessianUnboundedFredholmRealization4D
       period hPeriod chart physical configuration
-        (ProgramPGlobalPhysicalLLHessianHilbert period hPeriod ι data
+        (ProgramPGlobalGaugeFixedLLHessianHilbert period hPeriod ι
           (analysisData.llH1Data period hPeriod)) where
   totalGaugeDirections :=
     globalCandidateACombinedGaugeDirectionSubmodule
@@ -256,27 +340,27 @@ def ProgramPGlobalHessianCombinedGaugeSpectralCoreAgreement4D.toRealization
           period hPeriod physical additional)
         configuration
   operator :=
-    programPGlobalPhysicalLLHessianOperator period hPeriod covector data
+    programPGlobalGaugeFixedLLHessianOperator period hPeriod covector
       couplings.matterMassSquared (analysisData.llH1Data period hPeriod)
   operator_domain_dense :=
-    programPGlobalPhysicalLLHessian_domain_dense period hPeriod covector data
+    programPGlobalGaugeFixedLLHessian_domain_dense period hPeriod covector
       couplings.matterMassSquared (analysisData.llH1Data period hPeriod)
   operator_selfAdjoint :=
-    programPGlobalPhysicalLLHessian_selfAdjoint period hPeriod covector data
+    programPGlobalGaugeFixedLLHessian_selfAdjoint period hPeriod covector
       couplings.matterMassSquared (analysisData.llH1Data period hPeriod)
   operator_range_closed :=
-    (programPGlobalPhysicalLLHessian_fredholm
-      period hPeriod d9Ellipticity data
+    (programPGlobalGaugeFixedLLHessian_fredholm
+      period hPeriod d9Ellipticity
         couplings.matterMassSquared
         (analysisData.llH1Data period hPeriod)).1
   operator_kernel_finite :=
-    (programPGlobalPhysicalLLHessian_fredholm
-      period hPeriod d9Ellipticity data
+    (programPGlobalGaugeFixedLLHessian_fredholm
+      period hPeriod d9Ellipticity
         couplings.matterMassSquared
         (analysisData.llH1Data period hPeriod)).2.1
   operator_cokernel_finite :=
-    (programPGlobalPhysicalLLHessian_fredholm
-      period hPeriod d9Ellipticity data
+    (programPGlobalGaugeFixedLLHessian_fredholm
+      period hPeriod d9Ellipticity
         couplings.matterMassSquared
         (analysisData.llH1Data period hPeriod)).2.2
   smoothCore := agreement.smoothCore
@@ -304,11 +388,10 @@ abbrev ProgramPGlobalHessianDiffeomorphismSpectralCoreAgreement4D
     {ι : Type*} [DecidableEq ι]
     {covector : ι → TangentVector3}
     (d9Ellipticity :
-      D9GaugeGhostFiniteCharacteristicEllipticity covector)
-    (data : ProductThroatSpectralData) :=
+      D9GaugeGhostFiniteCharacteristicEllipticity covector) :=
   ProgramPGlobalHessianCombinedGaugeSpectralCoreAgreement4D
     period hPeriod chart physical diffeomorphism configuration analysisData
-      d9Ellipticity data
+      d9Ellipticity
 
 /-- The former bounded realization remains a special case target only.
 Every genuinely differential realization should use the unbounded structure

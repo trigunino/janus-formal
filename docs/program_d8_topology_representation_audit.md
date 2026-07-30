@@ -144,14 +144,14 @@ effective quotients.
 
 The throat inclusion is now a global Mathlib `IsSmoothEmbedding`.
 
-Current Program-P update (2026-07-26): the intrinsic latitude normal lift and
+Current Program-P update (2026-07-30): the intrinsic latitude normal lift and
 its tangent-trivialization coordinates are `C∞`, and the canonical differential
 normal has an unconditional causal stratification. The ambient Pin⁻ projection,
 its Čech principal bundle, the half-angle restriction gauge, and the associated
-PinC/spinor bundles are also constructed. The remaining normal item is the
-explicit change-of-coordinates equality with the older cover-product
-presentation `canonicalLatitudeSectionNormal`; general-metric boundary strata
-remain part of the global geometry program.
+PinC/spinor bundles are also constructed. The explicit
+cover-product-to-quotient-tangent coordinate map now compares the two canonical
+normal presentations. This closes that presentation sub-lock; general-metric
+boundary strata and the terminal typed `T01` certificate remain open.
 
 Lean theorems:
 
@@ -191,6 +191,9 @@ fixedThroatNormalFiber_isContMDiffVectorBundle
 fixedThroatNormalFiber_equiv_differentialNormal
 localTransitionWinding_one_loop
 one_loop_coordChange_eq_neg_id
+coverProductToQuotientTangentCoordinates_apply
+canonicalLatitudeNormal_presentations_compare
+canonicalLatitudeNormalCoordinate_eq_sectionPresentation
 ```
 
 ## 3. What the two-to-one ratio means
@@ -366,8 +369,8 @@ and document the Euclidean/Lorentzian dictionary rather than infer a `Pin+` or
    smooth and unconditional;
 4. the `S3 -> J -> S1` fibration and `pi1(J)=Z` still require a direct Lean
    proof;
-5. the two smooth normal-coordinate presentations still require their explicit
-   change-of-coordinates identification.
+5. the two smooth normal-coordinate presentations now have their explicit
+   change-of-coordinates comparison.
 
 This is the preferred continuation of the current geometry.
 
@@ -391,21 +394,19 @@ group extension whose representations supply the field multiplet.  This route
 must state why the internal group exists and why its rank/representation is
 selected.
 
-## 10. Current theorem queue — 2026-07-26
+## 10. Current theorem queue — 2026-07-30
 
 The former Pin/SpinC, smooth-normal and canonical-stratification TODOs are
 retired: Program P now contains their concrete implementations. The remaining
 D8-facing obligations are:
 
 1. prove the mapping-torus fibration and `pi1(J)=Z` directly in Lean;
-2. identify the intrinsic smooth normal coordinates with the older
-   cover-product presentation;
-3. extend the canonical causal/boundary analysis to arbitrary admitted metrics;
-4. formalize the finite-dimensional complex irreducible cyclic-representation
+2. extend the canonical causal/boundary analysis to arbitrary admitted metrics;
+3. formalize the finite-dimensional complex irreducible cyclic-representation
    classification;
-5. derive any rank-five flavor/internal bundle from independent geometry or
+4. derive any rank-five flavor/internal bundle from independent geometry or
    dynamics;
-6. connect the completed geometric Dirac tower and regulator to the full D7/D10
+5. connect the completed geometric Dirac tower and regulator to the full D7/D10
    determinant problem.
 
 ## Final conclusion

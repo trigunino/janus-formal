@@ -1,5 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusAmbientCanonicalLatitudePinMinusLift4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalLatitudeScalarNormalCurrent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionTransportBridge4D
 
 /-!
 # Canonical latitude normal: comparison of the two presentations
@@ -28,7 +30,9 @@ open P0EFTJanusMappingTorusIntrinsicCoverLorentzTensor4D
 open P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionAlgebraic4D
 open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusMappingTorusCanonicalNormalLiftContinuityReduction4D
+open P0EFTJanusMappingTorusCanonicalLatitudeScalarNormalCurrent4D
 open P0EFTJanusMappingTorusIntrinsicCanonicalLatitudeNormalImage4D
+open P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionTransportBridge4D
 open P0EFTJanusMappingTorusAmbientCanonicalLatitudePinMinusLift4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -39,6 +43,12 @@ private abbrev EffectiveCover := MappingTorusCover (sphereData period hPeriod)
 private abbrev EffectiveQuotient := MappingTorus (sphereData period hPeriod)
 private abbrev EffectiveThroatCover :=
   MappingTorusCover (throatData period hPeriod)
+
+private abbrev throatProjectionLocalHomeomorph :
+    IsLocalHomeomorph
+      (mappingTorusMk (throatData period hPeriod)) :=
+  (mappingTorusMk_isCoveringMap
+    (throatData period hPeriod)).isLocalHomeomorph
 
 private local instance effectiveCoverChartedSpace :
     ChartedSpace CoverModel (EffectiveCover period hPeriod) :=
@@ -118,6 +128,63 @@ theorem canonicalLatitudeNormal_presentations_compare
   exact coverProductToQuotientTangentCoordinates_apply
     period hPeriod chart (fixedThroatCoverInclusion period hPeriod anchor)
       (coverLatitudeNormalVector period hPeriod anchor)
+
+/-- At the throat (`normal = 0`), the intrinsic normal-coordinate
+presentation is exactly the transported cover-section presentation. -/
+theorem canonicalLatitudeNormalCoordinate_eq_sectionPresentation
+    (chart : EffectiveQuotient period hPeriod)
+    (base : CanonicalLatitudeBase) :
+    canonicalLatitudeNormalCoordinate period hPeriod chart (base, 0) =
+      coverProductToQuotientTangentCoordinates period hPeriod chart
+        (fixedThroatCoverInclusion period hPeriod
+          (canonicalLatitudeAnchor period hPeriod base))
+        (canonicalLatitudeSectionNormal period hPeriod
+          (canonicalLatitudeAnchor period hPeriod base)
+          (canonicalLatitudeThroatMap period hPeriod base)) := by
+  let anchor := canonicalLatitudeAnchor period hPeriod base
+  have hInverse :
+      (throatProjectionLocalHomeomorph period hPeriod).localInverseAt
+          anchor (canonicalLatitudeThroatMap period hPeriod base) =
+        anchor := by
+    unfold canonicalLatitudeThroatMap
+    exact (throatProjectionLocalHomeomorph period hPeriod)
+      |>.localInverseAt_apply_self
+  have hSection :
+      canonicalLatitudeSectionNormal period hPeriod anchor
+          (canonicalLatitudeThroatMap period hPeriod base) =
+        canonicalLatitudeNormalCoordinates period hPeriod anchor := by
+    unfold canonicalLatitudeSectionNormal
+    rw [hInverse]
+  rw [show canonicalLatitudeAnchor period hPeriod base = anchor from rfl,
+    hSection, canonicalLatitudeNormal_presentations_compare]
+  unfold canonicalLatitudeNormalCoordinate
+  change
+    ((trivializationAt CoverCoordinates
+        (QuotientTangentFiber period hPeriod) chart)
+      (canonicalLatitudeNormalLift period hPeriod (base, 0))).2 = _
+  apply congrArg (fun tangent =>
+    ((trivializationAt CoverCoordinates
+      (QuotientTangentFiber period hPeriod) chart) tangent).2)
+  have hCoverPair :
+      (⟨normalLatitudeCover period hPeriod anchor 0,
+          mfderiv 𝓘(Real, Real) coverModelWithCorners
+            (normalLatitudeCover period hPeriod anchor) 0 1⟩ :
+        TangentBundle coverModelWithCorners
+          (EffectiveCover period hPeriod)) =
+        ⟨fixedThroatCoverInclusion period hPeriod anchor,
+          coverLatitudeNormalVector period hPeriod anchor⟩ := by
+    apply Bundle.TotalSpace.ext
+    · exact normalLatitudeCover_zero period hPeriod anchor
+    · exact
+        (coverLatitudeNormalVector_heq_rawDerivative
+          period hPeriod anchor).symm
+  have hProjected := congrArg
+    (tangentMap coverModelWithCorners coverModelWithCorners
+      (mappingTorusMk (sphereData period hPeriod))) hCoverPair
+  unfold canonicalLatitudeNormalLift quotientPointOfCover
+    quotientNormalLatitude
+  rw [canonicalLatitudeNormalVector_eq_projectionDerivative]
+  simpa only [Prod.fst, Prod.snd, tangentMap] using hProjected
 
 end
 

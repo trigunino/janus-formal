@@ -2,8 +2,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalBoundaryCompletion4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicEinsteinHilbertAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusIntrinsicAbelianMaxwellAction4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorMassAction4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9MatterSpinorDoubledDiracAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusDifferentialLLFullCurveActionDecomposition4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteNullFaceAction
 
@@ -16,9 +15,9 @@ both Einstein--Hilbert metrics, both intrinsic abelian potentials, the smooth
 Candidate-A interaction density and every boundary stratum to that same
 configuration.
 
-The matter block is the genuine canonically measured doubled D9 SpinC
-Dirac-plus-mass action.  Its two halves are the chosen and opposite normal
-roots carried by the same global configuration.
+The matter block is the genuine primitive monopole SpinC Dirac-plus-mass
+action.  Its two outer sectors are sections of the same geometric bundle used
+by the signed spectral Dirac operator.
 -/
 
 namespace JanusFormal
@@ -43,10 +42,8 @@ open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 open P0EFTJanusMappingTorusPTSymmetricDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusIntrinsicEinsteinHilbertAction4D
 open P0EFTJanusMappingTorusIntrinsicAbelianMaxwellAction4D
-open P0EFTJanusProgramPD9MatterSpinorMassAction4D
-open P0EFTJanusProgramPThroatMatterSpinorSectionSpace4D
-open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothSectionDescent4D
-open P0EFTJanusProgramPD9MatterSpinorDoubledDiracAction4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
+open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusDifferentialLLFullCurveActionDecomposition4D
 open P0EFTJanusFiniteStratifiedBoundaryVariation
 open P0EFTJanusFiniteNullFaceAction
@@ -170,50 +167,50 @@ def globalCandidateAInteractionAction
     (measure : Measure (EffectiveQuotient period hPeriod)) : Real :=
   ∫ point, data.interactionDensity point ∂measure
 
-/-- The selected physical sector as one chosen/opposite-root doubled field. -/
-def globalDoubledSpinorialMatter
-    (configuration : GlobalFieldConfiguration period hPeriod)
-    (sector : Sector) :
-    SmoothThroatDoubledMatterSpinorLift period hPeriod
-      configuration.normalRootChoice where
-  first := selectSector sector configuration.spinorialMatter
-  second := selectSector sector configuration.spinorialMatterOpposite
-
-/-- Canonically measured doubled SpinC kinetic action in both sectors. -/
+/-- Primitive SpinC kinetic action in both physical outer sectors. -/
 def globalCandidateAMatterKineticAction
     (configuration : GlobalFieldConfiguration period hPeriod) : Real :=
-  d9DoubledMatterDiracAction period hPeriod
-      configuration.normalRootChoice
-      (globalDoubledSpinorialMatter period hPeriod configuration .plus) +
-    d9DoubledMatterDiracAction period hPeriod
-      configuration.normalRootChoice
-      (globalDoubledSpinorialMatter period hPeriod configuration .minus)
+  programPPrimitiveSpinCMatterSmoothAction
+    period hPeriod 0 configuration.spinCMatter
 
-/-- Canonically measured SpinC mass action for both roots and sectors. -/
+/-- Primitive SpinC mass term with the normalization whose Hessian is
+`matterMassSquared`. -/
 def globalCandidateAMatterMassAction
     (configuration : GlobalFieldConfiguration period hPeriod)
     (couplings : GlobalCandidateAActionCouplings) : Real :=
-  d9SpinorialMatterMassAction period hPeriod
-      configuration.normalRootChoice couplings.matterMassSquared
-      configuration.spinorialMatter .plus +
-    d9SpinorialMatterMassAction period hPeriod
-      configuration.normalRootChoice couplings.matterMassSquared
-      configuration.spinorialMatter .minus +
-    d9SpinorialMatterMassAction period hPeriod
-      (oppositeRoot configuration.normalRootChoice)
-      couplings.matterMassSquared
-      configuration.spinorialMatterOpposite .plus +
-    d9SpinorialMatterMassAction period hPeriod
-      (oppositeRoot configuration.normalRootChoice)
-      couplings.matterMassSquared
-      configuration.spinorialMatterOpposite .minus
+  (couplings.matterMassSquared / 2) *
+    ∑ sector : Sector,
+      (d9PrimitiveSpinCGeometricL2Pairing
+        period hPeriod .positiveQuarter
+        (configuration.spinCMatter sector)
+        (configuration.spinCMatter sector)).re
 
-/-- Complete doubled SpinC matter action. -/
+/-- Complete primitive SpinC matter action on both outer sectors. -/
 def globalCandidateAMatterAction
     (configuration : GlobalFieldConfiguration period hPeriod)
     (couplings : GlobalCandidateAActionCouplings) : Real :=
-  globalCandidateAMatterKineticAction period hPeriod configuration +
-    globalCandidateAMatterMassAction period hPeriod configuration couplings
+  programPPrimitiveSpinCMatterSmoothAction
+    period hPeriod couplings.matterMassSquared configuration.spinCMatter
+
+/-- On the whole finite signed SpinC core, the matter summand of the global
+Candidate-A action is exactly the independently closed graph action. -/
+theorem globalCandidateAMatterAction_finite_eq_graphAction
+    (configuration : GlobalFieldConfiguration period hPeriod)
+    (couplings : GlobalCandidateAActionCouplings)
+    (coefficients : ProgramPPrimitiveSpinCMatterFiniteCoefficients) :
+    globalCandidateAMatterAction period hPeriod
+        { configuration with
+          spinCMatter :=
+            programPPrimitiveSpinCMatterSmoothFiniteSynthesis
+              period hPeriod coefficients }
+        couplings =
+      programPPrimitiveSpinCMatterGraphAction
+        period hPeriod couplings.matterMassSquared
+        (programPPrimitiveSpinCMatterGraphFinite
+          period hPeriod couplings.matterMassSquared coefficients) := by
+  simpa [globalCandidateAMatterAction] using
+    programPPrimitiveSpinCMatterSmoothAction_finite_eq_graphAction
+      period hPeriod couplings.matterMassSquared coefficients
 
 /-- Both intrinsic Maxwell terms, with independent overall normalizations. -/
 def globalCandidateAMaxwellAction

@@ -5,12 +5,16 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusReducedBosonicActualActionHessian4D
 
 /-!
-# Physical global Hessian with the exact LL energy block
+# Legacy D10-extended spectral target with the exact LL energy block
 
 The first-order D9/matter/D10 Fredholm operator is enlarged by the identity
 Riesz representative on the completed LL energy space.  The LL frame is part
 of the positive H1 data, so the global data can select the same canonical
 divergence-free frame as the unchanged action.
+
+Only the LL summand is identified here with the unchanged action Hessian.
+Because D10 is not an action field, this extended operator remains a
+regulator-compatible target rather than the physical global Hessian.
 -/
 
 namespace JanusFormal

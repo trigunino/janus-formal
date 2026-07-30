@@ -196,6 +196,84 @@ def conformalLorentzMetricCurve
     (positiveConformalScaleCurve_pos
       period hPeriod baseScale direction hBaseScale parameter)
 
+@[simp]
+theorem conformalLorentzMetricCurve_localMetricMatrix_apply
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) (parameter : Real)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : Coord4) (first second : Fin 4) :
+    localMetricMatrix period hPeriod
+        (conformalLorentzMetricCurve period hPeriod baseScale direction
+          hBaseScale parameter) patch coordinate first second =
+      positiveConformalScaleCurve period hPeriod baseScale direction parameter
+          (patch.coordinateMap coordinate) *
+        localMetricMatrix period hPeriod
+          (intrinsicSmoothGeneralLorentzMetric period hPeriod)
+          patch coordinate first second := by
+  unfold conformalLorentzMetricCurve
+  rw [localMetricMatrix_conformal]
+  rfl
+
+/-- Every local metric coefficient has the expected conformal velocity. -/
+theorem conformalLorentzMetricCurve_localMetricMatrix_hasDerivAt
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) (parameter : Real)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : Coord4) (first second : Fin 4) :
+    HasDerivAt
+      (fun varied => localMetricMatrix period hPeriod
+        (conformalLorentzMetricCurve period hPeriod baseScale direction
+          hBaseScale varied) patch coordinate first second)
+      (direction (patch.coordinateMap coordinate) *
+        localMetricMatrix period hPeriod
+          (conformalLorentzMetricCurve period hPeriod baseScale direction
+            hBaseScale parameter) patch coordinate first second)
+      parameter := by
+  have hScale := positiveConformalScaleCurve_hasDerivAt
+    period hPeriod baseScale direction parameter
+      (patch.coordinateMap coordinate)
+  have hEntry := hScale.mul_const
+    (localMetricMatrix period hPeriod
+      (intrinsicSmoothGeneralLorentzMetric period hPeriod)
+      patch coordinate first second)
+  have hEntry' : HasDerivAt
+      (fun varied =>
+        positiveConformalScaleCurve period hPeriod baseScale direction varied
+            (patch.coordinateMap coordinate) *
+          localMetricMatrix period hPeriod
+            (intrinsicSmoothGeneralLorentzMetric period hPeriod)
+            patch coordinate first second)
+      (direction (patch.coordinateMap coordinate) *
+        (positiveConformalScaleCurve period hPeriod baseScale direction parameter
+            (patch.coordinateMap coordinate) *
+          localMetricMatrix period hPeriod
+            (intrinsicSmoothGeneralLorentzMetric period hPeriod)
+            patch coordinate first second))
+      parameter := hEntry.congr_deriv (by ring)
+  simpa only [conformalLorentzMetricCurve_localMetricMatrix_apply] using hEntry'
+
+/-- The local coefficient velocity differentiates to the expected conformal
+acceleration. -/
+theorem conformalLorentzMetricCurve_localMetricMatrix_velocity_hasDerivAt
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) (parameter : Real)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : Coord4) (first second : Fin 4) :
+    HasDerivAt
+      (fun varied => direction (patch.coordinateMap coordinate) *
+        localMetricMatrix period hPeriod
+          (conformalLorentzMetricCurve period hPeriod baseScale direction
+            hBaseScale varied) patch coordinate first second)
+      (direction (patch.coordinateMap coordinate) *
+        (direction (patch.coordinateMap coordinate) *
+          localMetricMatrix period hPeriod
+            (conformalLorentzMetricCurve period hPeriod baseScale direction
+              hBaseScale parameter) patch coordinate first second))
+      parameter := by
+  exact (conformalLorentzMetricCurve_localMetricMatrix_hasDerivAt
+    period hPeriod baseScale direction hBaseScale parameter patch coordinate
+      first second).const_mul (direction (patch.coordinateMap coordinate))
+
 /-- Frame-free relative volume along the genuine conformal metric line. -/
 def conformalRelativeVolumeRatioCurve
     (baseScale direction : SmoothScalarField period hPeriod)
@@ -383,6 +461,29 @@ theorem conformalMetricVelocity_trace
   rw [generalMetricTensorPairingAt_metric_self]
   ring
 
+theorem conformalRelativeVolumeFirstDerivative_eq_firstVariationDensity_velocity
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) (point : EffectiveQuotient period hPeriod) :
+    conformalRelativeVolumeFirstDerivative
+        period hPeriod baseScale direction hBaseScale parameter point =
+      globalRelativeMetricVolumeFirstVariationDensity period hPeriod
+        (conformalLorentzMetricCurve
+          period hPeriod baseScale direction hBaseScale parameter)
+        (conformalMetricVelocityTensor
+          period hPeriod baseScale direction hBaseScale parameter)
+        point := by
+  unfold globalRelativeMetricVolumeFirstVariationDensity
+  rw [conformalMetricVelocity_trace]
+  change
+    2 * direction point *
+        conformalRelativeVolumeRatioCurve
+          period hPeriod baseScale direction hBaseScale parameter point =
+      conformalRelativeVolumeRatioCurve
+          period hPeriod baseScale direction hBaseScale parameter point *
+        ((1 / 2 : Real) * (4 * direction point))
+  ring
+
 theorem conformalMetricVelocity_pairing_self
     (baseScale direction : SmoothScalarField period hPeriod)
     (hBaseScale : ∀ point, 0 < baseScale point)
@@ -504,6 +605,350 @@ theorem conformalRelativeVolumeSecondDerivative_eq_hessian_add_acceleration
     globalRelativeMetricVolumeFirstVariationDensity_conformal_acceleration]
   unfold conformalRelativeVolumeSecondDerivative
   ring
+
+/-! ## Integrated fixed-integrand action -/
+
+/-- Reference-measure density of a fixed scalar integrand along the conformal
+metric line. -/
+def conformalRelativeVolumeActionDensity
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) (point : EffectiveQuotient period hPeriod) : Real :=
+  conformalRelativeVolumeRatioCurve
+      period hPeriod baseScale direction hBaseScale parameter point *
+    integrand point
+
+def conformalRelativeVolumeActionFirstDerivativeDensity
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) (point : EffectiveQuotient period hPeriod) : Real :=
+  conformalRelativeVolumeFirstDerivative
+      period hPeriod baseScale direction hBaseScale parameter point *
+    integrand point
+
+def conformalRelativeVolumeActionSecondDerivativeDensity
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) (point : EffectiveQuotient period hPeriod) : Real :=
+  conformalRelativeVolumeSecondDerivative
+      period hPeriod baseScale direction hBaseScale parameter point *
+    integrand point
+
+/-- The actual fixed-integrand action against the varying Lorentz-volume
+measure. -/
+def conformalRelativeVolumeActionCurve
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) : Real :=
+  ∫ point, integrand point
+    ∂generalLorentzVolumeMeasure period hPeriod
+      (conformalLorentzMetricCurve
+        period hPeriod baseScale direction hBaseScale parameter)
+
+def conformalRelativeVolumeActionFirstDerivativeCurve
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) : Real :=
+  ∫ point,
+    conformalRelativeVolumeActionFirstDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale parameter point
+    ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod
+
+def conformalRelativeVolumeActionSecondDerivativeCurve
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) : Real :=
+  ∫ point,
+    conformalRelativeVolumeActionSecondDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale parameter point
+    ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod
+
+theorem conformalRelativeVolumeActionCurve_eq_reference
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) :
+    conformalRelativeVolumeActionCurve
+        period hPeriod integrand baseScale direction hBaseScale parameter =
+      ∫ point,
+        conformalRelativeVolumeActionDensity
+          period hPeriod integrand baseScale direction hBaseScale
+            parameter point
+        ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod := by
+  exact integral_generalLorentzVolumeMeasure_eq_reference period hPeriod
+    (conformalLorentzMetricCurve
+      period hPeriod baseScale direction hBaseScale parameter)
+    integrand
+
+theorem positiveConformalScaleCurve_uncurry_continuous
+    (baseScale direction : SmoothScalarField period hPeriod) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        positiveConformalScaleCurve
+          period hPeriod baseScale direction input.1 input.2) := by
+  exact
+    (baseScale.contMDiff_toFun.continuous.comp continuous_snd).mul
+      (Real.continuous_exp.comp
+        (continuous_fst.mul
+          (direction.contMDiff_toFun.continuous.comp continuous_snd)))
+
+theorem conformalRelativeVolumeRatioCurve_uncurry_continuous
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        conformalRelativeVolumeRatioCurve
+          period hPeriod baseScale direction hBaseScale input.1 input.2) := by
+  rw [show
+    (fun input : Real × EffectiveQuotient period hPeriod =>
+      conformalRelativeVolumeRatioCurve
+        period hPeriod baseScale direction hBaseScale input.1 input.2) =
+      fun input =>
+        positiveConformalScaleCurve
+          period hPeriod baseScale direction input.1 input.2 ^ 2 by
+    funext input
+    exact conformalRelativeVolumeRatioCurve_eq
+      period hPeriod baseScale direction hBaseScale input.1 input.2]
+  exact
+    (positiveConformalScaleCurve_uncurry_continuous
+      period hPeriod baseScale direction).pow 2
+
+theorem conformalRelativeVolumeFirstDerivative_uncurry_continuous
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        conformalRelativeVolumeFirstDerivative
+          period hPeriod baseScale direction hBaseScale input.1 input.2) := by
+  unfold conformalRelativeVolumeFirstDerivative
+  exact
+    (continuous_const.mul
+      (direction.contMDiff_toFun.continuous.comp continuous_snd)).mul
+      (conformalRelativeVolumeRatioCurve_uncurry_continuous
+        period hPeriod baseScale direction hBaseScale)
+
+theorem conformalRelativeVolumeSecondDerivative_uncurry_continuous
+    (baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        conformalRelativeVolumeSecondDerivative
+          period hPeriod baseScale direction hBaseScale input.1 input.2) := by
+  unfold conformalRelativeVolumeSecondDerivative
+  exact
+    (continuous_const.mul
+      ((direction.contMDiff_toFun.continuous.comp continuous_snd).pow 2)).mul
+      (conformalRelativeVolumeRatioCurve_uncurry_continuous
+        period hPeriod baseScale direction hBaseScale)
+
+theorem conformalRelativeVolumeActionDensity_uncurry_continuous
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        conformalRelativeVolumeActionDensity
+          period hPeriod integrand baseScale direction hBaseScale
+            input.1 input.2) := by
+  exact
+    (conformalRelativeVolumeRatioCurve_uncurry_continuous
+      period hPeriod baseScale direction hBaseScale).mul
+      (integrand.contMDiff_toFun.continuous.comp continuous_snd)
+
+theorem conformalRelativeVolumeActionFirstDerivativeDensity_uncurry_continuous
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        conformalRelativeVolumeActionFirstDerivativeDensity
+          period hPeriod integrand baseScale direction hBaseScale
+            input.1 input.2) := by
+  exact
+    (conformalRelativeVolumeFirstDerivative_uncurry_continuous
+      period hPeriod baseScale direction hBaseScale).mul
+      (integrand.contMDiff_toFun.continuous.comp continuous_snd)
+
+theorem conformalRelativeVolumeActionSecondDerivativeDensity_uncurry_continuous
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    Continuous
+      (fun input : Real × EffectiveQuotient period hPeriod =>
+        conformalRelativeVolumeActionSecondDerivativeDensity
+          period hPeriod integrand baseScale direction hBaseScale
+            input.1 input.2) := by
+  exact
+    (conformalRelativeVolumeSecondDerivative_uncurry_continuous
+      period hPeriod baseScale direction hBaseScale).mul
+      (integrand.contMDiff_toFun.continuous.comp continuous_snd)
+
+theorem conformalRelativeVolumeActionDensity_hasDerivAt
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) (point : EffectiveQuotient period hPeriod) :
+    HasDerivAt
+      (fun varied =>
+        conformalRelativeVolumeActionDensity
+          period hPeriod integrand baseScale direction hBaseScale
+            varied point)
+      (conformalRelativeVolumeActionFirstDerivativeDensity
+        period hPeriod integrand baseScale direction hBaseScale
+          parameter point)
+      parameter := by
+  exact
+    (conformalRelativeVolumeRatioCurve_hasDerivAt
+      period hPeriod baseScale direction hBaseScale parameter point).mul_const
+      (integrand point)
+
+theorem conformalRelativeVolumeActionFirstDerivativeDensity_hasDerivAt
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) (point : EffectiveQuotient period hPeriod) :
+    HasDerivAt
+      (fun varied =>
+        conformalRelativeVolumeActionFirstDerivativeDensity
+          period hPeriod integrand baseScale direction hBaseScale
+            varied point)
+      (conformalRelativeVolumeActionSecondDerivativeDensity
+        period hPeriod integrand baseScale direction hBaseScale
+          parameter point)
+      parameter := by
+  exact
+    (conformalRelativeVolumeFirstDerivative_hasDerivAt
+      period hPeriod baseScale direction hBaseScale parameter point).mul_const
+      (integrand point)
+
+theorem conformalRelativeVolumeActionCurve_hasDerivAt
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) :
+    HasDerivAt
+      (conformalRelativeVolumeActionCurve
+        period hPeriod integrand baseScale direction hBaseScale)
+      (conformalRelativeVolumeActionFirstDerivativeCurve
+        period hPeriod integrand baseScale direction hBaseScale parameter)
+      parameter := by
+  letI :=
+    intrinsicCanonicalLorentzVolumeMeasure_isFinite period hPeriod
+  rw [show
+    conformalRelativeVolumeActionCurve
+        period hPeriod integrand baseScale direction hBaseScale =
+      fun varied =>
+        ∫ point,
+          conformalRelativeVolumeActionDensity
+            period hPeriod integrand baseScale direction hBaseScale
+              varied point
+          ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod by
+    funext varied
+    exact conformalRelativeVolumeActionCurve_eq_reference
+      period hPeriod integrand baseScale direction hBaseScale varied]
+  exact hasDerivAt_integral_of_jointContinuous_compact
+    (measure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+    (density := conformalRelativeVolumeActionDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (derivative := conformalRelativeVolumeActionFirstDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionFirstDerivativeDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionDensity_hasDerivAt
+      period hPeriod integrand baseScale direction hBaseScale)
+    parameter
+
+theorem conformalRelativeVolumeActionFirstDerivativeCurve_hasDerivAt
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) :
+    HasDerivAt
+      (conformalRelativeVolumeActionFirstDerivativeCurve
+        period hPeriod integrand baseScale direction hBaseScale)
+      (conformalRelativeVolumeActionSecondDerivativeCurve
+        period hPeriod integrand baseScale direction hBaseScale parameter)
+      parameter := by
+  letI :=
+    intrinsicCanonicalLorentzVolumeMeasure_isFinite period hPeriod
+  exact hasDerivAt_integral_of_jointContinuous_compact
+    (measure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+    (density := conformalRelativeVolumeActionFirstDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (derivative := conformalRelativeVolumeActionSecondDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionFirstDerivativeDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionSecondDerivativeDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionFirstDerivativeDensity_hasDerivAt
+      period hPeriod integrand baseScale direction hBaseScale)
+    parameter
+
+/-- The exact integrated second derivative is the integral of the frame-free
+volume Hessian plus the acceleration correction. -/
+theorem conformalRelativeVolumeActionSecondDerivativeCurve_eq_hessian_add_acceleration
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point)
+    (parameter : Real) :
+    conformalRelativeVolumeActionSecondDerivativeCurve
+        period hPeriod integrand baseScale direction hBaseScale parameter =
+      ∫ point,
+        (globalRelativeMetricVolumeHessianDensity period hPeriod
+            (conformalLorentzMetricCurve
+              period hPeriod baseScale direction hBaseScale parameter)
+            (conformalMetricVelocityTensor
+              period hPeriod baseScale direction hBaseScale parameter)
+            (conformalMetricVelocityTensor
+              period hPeriod baseScale direction hBaseScale parameter)
+            point +
+          globalRelativeMetricVolumeFirstVariationDensity period hPeriod
+            (conformalLorentzMetricCurve
+              period hPeriod baseScale direction hBaseScale parameter)
+            (conformalMetricAccelerationTensor
+              period hPeriod baseScale direction hBaseScale parameter)
+            point) *
+          integrand point
+        ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod := by
+  unfold conformalRelativeVolumeActionSecondDerivativeCurve
+    conformalRelativeVolumeActionSecondDerivativeDensity
+  apply integral_congr_ae
+  filter_upwards [] with point
+  rw [conformalRelativeVolumeSecondDerivative_eq_hessian_add_acceleration]
+
+theorem conformalRelativeVolumeActionCurve_contDiff_two
+    (integrand baseScale direction : SmoothScalarField period hPeriod)
+    (hBaseScale : ∀ point, 0 < baseScale point) :
+    ContDiff Real 2
+      (conformalRelativeVolumeActionCurve
+        period hPeriod integrand baseScale direction hBaseScale) := by
+  letI :=
+    intrinsicCanonicalLorentzVolumeMeasure_isFinite period hPeriod
+  have hIntegrated := integral_contDiff_two_of_jointContinuous_compact
+    (measure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod)
+    (density := conformalRelativeVolumeActionDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (firstDerivative := conformalRelativeVolumeActionFirstDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (secondDerivative := conformalRelativeVolumeActionSecondDerivativeDensity
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionFirstDerivativeDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionSecondDerivativeDensity_uncurry_continuous
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionDensity_hasDerivAt
+      period hPeriod integrand baseScale direction hBaseScale)
+    (conformalRelativeVolumeActionFirstDerivativeDensity_hasDerivAt
+      period hPeriod integrand baseScale direction hBaseScale)
+  rw [show
+    conformalRelativeVolumeActionCurve
+        period hPeriod integrand baseScale direction hBaseScale =
+      fun parameter =>
+        ∫ point,
+          conformalRelativeVolumeActionDensity
+            period hPeriod integrand baseScale direction hBaseScale
+              parameter point
+          ∂intrinsicCanonicalLorentzVolumeMeasure period hPeriod by
+    funext parameter
+    exact conformalRelativeVolumeActionCurve_eq_reference
+      period hPeriod integrand baseScale direction hBaseScale parameter]
+  exact hIntegrated
 
 end
 
