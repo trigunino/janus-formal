@@ -906,6 +906,25 @@ theorem programPPrimitiveSpinCMatterGraph_pairing_eq_sameActionHessian
   rw [programPPrimitiveSpinCMatterGraphAction_second_fderiv,
     programPPrimitiveSpinCMatterGraphForm_apply]
 
+theorem programPPrimitiveSpinCMatterGraphAction_contDiff
+    (massSquared : Real) :
+    ContDiff Real ⊤
+      (programPPrimitiveSpinCMatterGraphAction
+        period hPeriod massSquared) := by
+  unfold programPPrimitiveSpinCMatterGraphAction
+  exact contDiff_const.mul
+    ((programPPrimitiveSpinCMatterGraphForm
+        period hPeriod massSquared).contDiff
+      |>.clm_apply contDiff_id)
+
+theorem programPPrimitiveSpinCMatterGraphAction_contDiff_two
+    (massSquared : Real) :
+    ContDiff Real 2
+      (programPPrimitiveSpinCMatterGraphAction
+        period hPeriod massSquared) :=
+  (programPPrimitiveSpinCMatterGraphAction_contDiff
+    period hPeriod massSquared).of_le (by simp)
+
 /-- Finite-zero-gap datum for the two physical copies of `2D + m²`. -/
 def programPPrimitiveSpinCMatterHessianFiniteZeroGap
     (massSquared : Real) :

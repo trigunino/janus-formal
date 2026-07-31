@@ -39,25 +39,53 @@ The field-content choice is now explicit rather than hidden:
   Maxwell potentials and nonminimal fields. The state is a real module; the
   mixed action is bilinear, and differentiating
   `t ↦ sΨ(state + t direction)` twice gives its symmetric polarization.
-  The physical metric rule `sg`
-  still awaits complete de Donder and the gauge-fixed chart.
+  The complete smooth de Donder one-form is now available and is bundled as
+  a real-linear operator on genuine smooth symmetric perturbations. Raising
+  two outputs with the supplied metric gives a smooth inverse-metric pairing;
+  its integral against the existing finite general-metric volume is a
+  symmetric bilinear form and exactly polarizes the associated quadratic
+  functional. The already constructed finite tangent frame and canonical
+  scalar `L²` injection give a faithful refined de Donder Hilbert graph:
+  raw tensor coordinates are injective, its smooth core is dense, and the
+  true and raised de Donder feature projections are bounded. Their symmetrized
+  cross pairing extends the Lorentzian form exactly, without identifying it
+  with the positive graph inner product. The resulting graph action is `C∞`;
+  its constant second Fréchet derivative is this bounded symmetric Hessian and
+  restricts to the original integrated pairing.
+- the intrinsic paired Maxwell potentials now enter the corrected minimal
+  physical tangent through a linear injective map obtained from the actual
+  Candidate-A regular frames. This fixes the coefficient/intrinsic mismatch
+  without asserting a nonexistent smooth inverse coframe.
+- the supplied-metric Lorenz feature now has an injective dense smooth graph
+  completion. Its bounded nonnegative Riesz representative is symmetric, has
+  kernel exactly equal to the Lorenz kernel, and agrees on the smooth core
+  with the reduced on-shell polarization of the unchanged global BRST
+  gauge-fixing action.
+- the two refined metric graphs and the Lorenz graph now form one physical
+  metric-plus-Abelian gauge Hilbert subchart. Its quadratic action is `C∞`,
+  with exact direct-sum second Fréchet derivative on the common smooth core.
+  Metric and intrinsic potential directions enter the corrected typed
+  gauge-fixed tangent linearly and injectively, while all typed nonminimal
+  coordinates remain zero. This is deliberately not the total chart.
 
-This removes the old D10 and matter-bundle mismatches without adding an axiom.
-It does not close the total Hessian. The D10-free spectral target still covers
+This removes the old D10 and matter-bundle mismatches and closes the physical
+metric-plus-Abelian gauge subchart without adding an axiom. It does not close
+the total Hessian. The D10-free spectral target still covers
 only D9 gauge `3` plus the historical five ghost coordinates and SpinC matter;
 it omits the two metric tensors, normal displacement, the newly typed
-antighost/Nakanishi--Lautrup fields, LL auxiliary
-metric/measure and boundary blocks. The LL Fredholm enlargement covers only
-the `llField` slice. The `llAuxMetric × llMeasure` directions now have an
-exact symmetric Hessian derived from the global LL action, an injective dense
-embedding into a Hilbert graph completion and a bounded Riesz representative
-which agrees with that same Hessian on the smooth core. This construction also
-exposes the honest obstruction: every pure `llMeasure` direction lies in the
-Riesz kernel. The closed pure-measure radical and its Hilbert quotient are now
-constructed; the descended operator is injective exactly when that radical
-equals the full weighted-feature kernel. This equality can fail when the
-actual LL energy weights vanish, and closed range still needs a coercive
-estimate, so no Fredholm claim follows.
+antighost/Nakanishi--Lautrup fields, LL auxiliary metric/measure and boundary
+blocks. The old LL Fredholm enlargement covers only the `llField` slice, but
+the same-action form no longer does: the complete
+`llAuxMetric × llMeasure × llField` smooth core now embeds injectively and
+densely into one Hilbert graph completion. Its bounded symmetric Riesz
+representative agrees exactly with the unchanged full three-slot LL Hessian,
+including both cross blocks, and its kernel is characterized by the actual
+feature equations. The same graph now carries a genuine `C∞` quadratic action
+whose constant second Fréchet derivative is that exact same-action form.
+This construction deliberately assumes neither
+nonvanishing weights nor coercivity. Every pure `llMeasure` direction remains
+in the auxiliary/measure subblock kernel, and closed range for the complete
+operator still needs an estimate, so no full-LL Fredholm claim follows.
 
 The normal displacement is not a missing field type: the D10-free physical
 tangent already contains the genuine sign-clutched smooth normal-line
@@ -92,13 +120,15 @@ independent directions.
 zero-quotient-Hessian no-go still forbid reusing the historical D10-extended
 operator as the action Hessian. The unbounded promotion gate itself now uses
 the corrected D10-free LL target, but honestly leaves its dense global
-same-action core as residual data. Closing the ticket requires construction,
-not a new postulate: a faithful `C²` global gauge-fixed chart with the typed
-nonminimal fields; the de Donder operator and pairings; promotion of the
-existing linewise general metric/mixed-Maxwell derivatives to one bilinear
-chart Hessian; the normal, full LL and general null-boundary blocks; then a
-dense synthesis with the correct, nonduplicated multiplicities and a
-same-action Fredholm direct sum.
+  same-action core as residual data. Closing the ticket requires construction,
+  not a new postulate: attach the already analytic matter and complete-LL
+  graphs faithfully to the typed total tangent, and extend the proved physical
+  gauge subchart by analytic charts and same-action Hessians for the typed
+  nonminimal, normal and boundary directions; promote the existing linewise
+  general metric/mixed-Maxwell derivatives to one bilinear chart Hessian;
+  prove a coercive or quotiented Fredholm realization of the complete LL graph;
+  then synthesize the dense cores with the correct, nonduplicated
+  multiplicities into a same-action Fredholm direct sum.
 
 The Abelian smooth differential operator is now constructed. The local raised
 potential and its Levi-Civita divergence obey the true transition law, hence
@@ -108,19 +138,34 @@ Lorenz codifferential
 Faddeev--Popov composite is `δ_g d` and agrees chartwise with the covariant
 scalar wave. The earlier canonical operator is exactly the intrinsic-metric
 specialization and satisfies `δ(d c)=+□c`. What remains for this block is its integrated Green identity
-and `L²` adjoint: the available Green cores still carry an
-`integral_eq_divergence` hypothesis, so claiming the adjoint before a genuine
-Stokes/volume theorem would add a new assumption. For the metric block there
+and differential `L²` adjoint formula: the available Green cores still carry
+an `integral_eq_divergence` hypothesis, so claiming that formula before a
+genuine Stokes/volume theorem would add a new assumption. Independently, the
+Lorenz graph completion gives the honest bounded adjoint of its continuous
+feature projection and the same-action Riesz operator described above. It now
+also carries an explicit smooth quadratic action whose first derivative is the
+Lorenz form and whose constant second Fréchet derivative is that Riesz
+pairing. On the dense smooth core it is exactly the reduced on-shell BRST
+polarization, while the same core injects jointly into this Hilbert chart and
+the corrected minimal tangent. This does not identify the bounded adjoint with
+a differential codifferential. For the metric block there
 is now a chart-independent smooth trace `tr_g h`, its differential and the
 `-1/2 d(tr_g h)` part of de Donder on
-`SmoothSymmetricCovariantTwoTensor`. The induced Levi-Civita derivative is now
-constructed in every general-metric presentation, is smooth and symmetric,
-satisfies `∇g = 0`, and obeys the full rank-three overlap law. The remaining
-step is to descend that law into an actual smooth `T*⊗Sym²T*` section, contract
-with `g⁻¹` to obtain `div_g h`, and prove the integrated adjoint. Existing
-complete de Donder occurrences are D9 principal symbols only. Replacing the
-remaining operator by that symbol or by a nonlocal `H¹` adjoint would be the
-unsupported plaster excluded by this audit.
+`SmoothSymmetricCovariantTwoTensor`. The induced Levi-Civita derivative is
+smooth, symmetric, satisfies `∇g = 0`, and obeys the full rank-three overlap
+law. Its genuine contraction now gives a transition-independent local
+covector, which is glued through the canonical atlas into the smooth global
+one-form `div_g h`. Adding the existing trace differential closes the complete
+smooth de Donder operator with its expected formula in every holonomic chart.
+Its inverse-metric quadratic pairing is now smooth, integrable and bundled as
+a symmetric bilinear form. A faithful Hilbert graph core and bounded de Donder
+  and raised-feature projections are also available. Their bounded
+  symmetrized cross form extends the direct Lorentzian pairing exactly and is
+  the constant second Fréchet derivative of a `C∞` graph action. Two such
+  metric graphs are assembled with the Lorenz graph in the physical gauge
+  subchart described above. This does not prove a differential adjoint or
+  Green identity; those still require genuine multiplier, Stokes/domain and
+  total-chart layers.
 
 ## Closed tensor sector
 

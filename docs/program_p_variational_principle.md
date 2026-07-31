@@ -1487,10 +1487,40 @@ uses primitive SpinC sections directly. Its smooth and graph actions agree on
 the finite spectral core, and the graph second Fréchet derivative is exactly
 the Fredholm `2D+m²` operator. Typed D9 gauge fermions also provide distinct
 `c/c̄/B`, nilpotent BRST, exact `sΨ` Hessians and the expected FP symbols.
-Thus `HESSIAN-GLOBAL-01` remains `BLOQUÉ-STRUCTUREL` only on the missing total
-construction: global `C²` gauge-fixed chart, Lorenz/de Donder calculus,
-general metric/normal/mixed-Maxwell/full-LL/boundary Hessians, correct modal
-multiplicities and their same-action Fredholm sum.
+The smooth Lorenz differential and complete smooth de Donder one-form are now
+constructed without new axioms. De Donder is also bundled as a linear map;
+its smooth inverse-metric contraction integrates to a symmetric bilinear form
+with exact quadratic polarization. Its finite-frame tensor/one-form
+coordinates now form a faithful Hilbert graph core: the smooth insertion is
+dense and injective and the de Donder feature projection is bounded. The
+Lorentzian pairing extends exactly to a bounded symmetric graph Hessian, with
+a global `C∞` quadratic action whose second Fréchet derivative is that constant
+pairing. The actual intrinsic paired potentials
+embed injectively into the corrected minimal tangent. Their Lorenz graph
+completion is dense and injective, with a bounded symmetric Riesz
+representative equal on the smooth core to the reduced on-shell BRST Hessian.
+This graph is now a global linear Hilbert chart with an explicit `C∞`
+quadratic action (therefore `C²`), exact first derivative, and constant second
+Fréchet derivative equal to the same Riesz form. Its smooth core injects
+jointly into the chart and the corrected minimal tangent.
+The two metric de Donder graph copies and the paired Lorenz graph are now
+assembled into one physical gauge `C²` subchart. Its common smooth core embeds
+injectively in the corrected typed gauge-fixed tangent, with every nonminimal
+coordinate fixed to zero. This subchart is deliberately not the total chart.
+Likewise, the complete `llAuxMetric × llMeasure × llField` smooth core has one
+dense injective graph completion and a symmetric Riesz representative equal
+to the full unchanged LL Hessian, including both cross blocks. Its quadratic
+graph action is `C∞` and has that form as its constant second Fréchet
+derivative. Thus
+`HESSIAN-GLOBAL-01` remains `BLOQUÉ-STRUCTUREL` only on the missing total
+construction: a typed attachment of the existing matter/LL graphs and a total
+global `C²` gauge-fixed chart adjoining analytic completions and same-action
+blocks for the typed nonminimal, normal and boundary sectors to the closed
+physical gauge subchart;
+differential Green/adjoint
+and domain identifications, general
+metric/normal/mixed-Maxwell/boundary Hessians, full-LL coercivity/Fredholm
+control, correct modal multiplicities and their same-action Fredholm sum.
 The constructed physical bulk-Dirichlet/SpinC/LL domain and extended
 bulk-Dirichlet/SpinC/D10/LL regulator product have dense cores. The all-level
 SpinC coefficient tower and D10 regulator block are Fredholm, while the LL
