@@ -1,5 +1,6 @@
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.ProdL2
+import Mathlib.Analysis.Calculus.FDeriv.CompCLM
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalLLAuxMeasureGraphRiesz4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalAnalysisDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFullLLSameActionFredholmRestriction4D
@@ -22,7 +23,7 @@ namespace P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 2000000
-set_option synthInstance.maxHeartbeats 200000
+set_option synthInstance.maxHeartbeats 800000
 noncomputable section
 
 open Set
@@ -1863,6 +1864,520 @@ theorem globalCandidateAFullLLGraphRieszOperator_isSymmetric
     data analysis]
   exact globalCandidateAFullLLGraphRieszOperator_symmetric period hPeriod
     data analysis first second
+
+/-! ## Genuine quadratic action on the complete LL graph -/
+
+local instance globalFullLLC2GraphNormedSpace
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    NormedSpace Real
+      (GlobalFullLLGraphHilbert period hPeriod data analysis) :=
+  (globalFullLLGraphInnerProductSpace period hPeriod data analysis).toNormedSpace
+
+local instance globalFullLLC2GraphDualNormedAddCommGroup
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    NormedAddCommGroup
+      (GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+        Real) :=
+  @ContinuousLinearMap.toNormedAddCommGroup
+    Real Real
+    (GlobalFullLLGraphHilbert period hPeriod data analysis)
+    Real
+    inferInstance inferInstance inferInstance inferInstance
+    (globalFullLLC2GraphNormedSpace period hPeriod data analysis)
+    inferInstance
+    (RingHom.id Real) inferInstance
+
+local instance globalFullLLC2GraphDualNormedSpace
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    NormedSpace Real
+      (GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+        Real) :=
+  @ContinuousLinearMap.toNormedSpace
+    Real Real
+    (GlobalFullLLGraphHilbert period hPeriod data analysis)
+    Real
+    inferInstance inferInstance inferInstance inferInstance
+    (globalFullLLC2GraphNormedSpace period hPeriod data analysis)
+    inferInstance
+    (RingHom.id Real) inferInstance
+    Real inferInstance inferInstance inferInstance
+
+private def globalCandidateAFullLLAuxFormProjection
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      GlobalLLAuxMeasureGraphHilbert period hPeriod data where
+  toFun := globalCandidateAFullLLAuxProjection
+    period hPeriod data analysis
+  map_add' first second :=
+    (globalCandidateAFullLLAuxProjection
+      period hPeriod data analysis).map_add first second
+  map_smul' scalar state :=
+    (globalCandidateAFullLLAuxProjection
+      period hPeriod data analysis).map_smul scalar state
+  cont := (globalCandidateAFullLLAuxProjection
+    period hPeriod data analysis).continuous
+
+private def globalCandidateAFullLLFieldFormProjection
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      LLH1Space period hPeriod (analysis.llH1Data period hPeriod) where
+  toFun := globalCandidateAFullLLFieldProjection
+    period hPeriod data analysis
+  map_add' first second :=
+    (globalCandidateAFullLLFieldProjection
+      period hPeriod data analysis).map_add first second
+  map_smul' scalar state :=
+    (globalCandidateAFullLLFieldProjection
+      period hPeriod data analysis).map_smul scalar state
+  cont := (globalCandidateAFullLLFieldProjection
+    period hPeriod data analysis).continuous
+
+private def globalCandidateAFullLLAuxGraphForm
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real] Real :=
+  (innerSL Real :
+      Lp GlobalLLAuxMeasureFeatureFiber (2 : ENNReal)
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod) →L[Real]
+        Lp GlobalLLAuxMeasureFeatureFiber (2 : ENNReal)
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod) →L[Real]
+          Real).bilinearComp
+      (E' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (F' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      ((globalCandidateALLAuxMeasureFeatureProjection
+        period hPeriod data).comp
+          (globalCandidateAFullLLAuxFormProjection
+            period hPeriod data analysis))
+      ((globalCandidateALLAuxMeasureFeatureProjection
+        period hPeriod data).comp
+          (globalCandidateAFullLLAuxFormProjection
+            period hPeriod data analysis))
+
+private def globalCandidateAFullLLFieldGraphForm
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real] Real :=
+  (innerSL Real :
+      LLH1Space period hPeriod
+          (analysis.llH1Data period hPeriod) →L[Real]
+        LLH1Space period hPeriod
+            (analysis.llH1Data period hPeriod) →L[Real] Real).bilinearComp
+      (E' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (F' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (globalCandidateAFullLLFieldFormProjection
+        period hPeriod data analysis)
+      (globalCandidateAFullLLFieldFormProjection
+        period hPeriod data analysis)
+
+section CrossGraphForms
+
+local instance (priority := 10000) globalFullLLCrossL2Module :
+    Module Real
+      (Lp GlobalFullLLCrossFiber (2 : ENNReal)
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod)) :=
+  (inferInstance : InnerProductSpace Real
+    (Lp GlobalFullLLCrossFiber (2 : ENNReal)
+      (intrinsicCanonicalThroatVolumeMeasure period hPeriod))
+    ).toNormedSpace.toModule
+
+private def globalCandidateAFullLLCrossUFormProjection
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      Lp GlobalFullLLCrossFiber (2 : ENNReal)
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) where
+  toFun := globalCandidateAFullLLCrossUProjection
+    period hPeriod data analysis
+  map_add' first second :=
+    (globalCandidateAFullLLCrossUProjection
+      period hPeriod data analysis).map_add first second
+  map_smul' scalar state :=
+    (globalCandidateAFullLLCrossUProjection
+      period hPeriod data analysis).map_smul scalar state
+  cont := (globalCandidateAFullLLCrossUProjection
+    period hPeriod data analysis).continuous
+
+private def globalCandidateAFullLLCrossVFormProjection
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      Lp GlobalFullLLCrossFiber (2 : ENNReal)
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) where
+  toFun := globalCandidateAFullLLCrossVProjection
+    period hPeriod data analysis
+  map_add' first second :=
+    (globalCandidateAFullLLCrossVProjection
+      period hPeriod data analysis).map_add first second
+  map_smul' scalar state :=
+    (globalCandidateAFullLLCrossVProjection
+      period hPeriod data analysis).map_smul scalar state
+  cont := (globalCandidateAFullLLCrossVProjection
+    period hPeriod data analysis).continuous
+
+private def globalCandidateAFullLLCrossUVGraphForm
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real] Real :=
+  (innerSL Real :
+      Lp GlobalFullLLCrossFiber (2 : ENNReal)
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod) →L[Real]
+        Lp GlobalFullLLCrossFiber (2 : ENNReal)
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod) →L[Real]
+          Real).bilinearComp
+      (E' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (F' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (globalCandidateAFullLLCrossUFormProjection
+        period hPeriod data analysis)
+      (globalCandidateAFullLLCrossVFormProjection
+        period hPeriod data analysis)
+
+private def globalCandidateAFullLLCrossVUGraphForm
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real] Real :=
+  (innerSL Real :
+      Lp GlobalFullLLCrossFiber (2 : ENNReal)
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod) →L[Real]
+        Lp GlobalFullLLCrossFiber (2 : ENNReal)
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod) →L[Real]
+          Real).bilinearComp
+      (E' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (F' := GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (globalCandidateAFullLLCrossVFormProjection
+        period hPeriod data analysis)
+      (globalCandidateAFullLLCrossUFormProjection
+        period hPeriod data analysis)
+
+end CrossGraphForms
+
+/-- Calculus-facing bounded bilinear form represented by the complete LL
+graph Riesz operator. -/
+def globalCandidateAFullLLGraphForm
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real] Real :=
+  globalCandidateAFullLLAuxGraphForm period hPeriod data analysis +
+    globalCandidateAFullLLFieldGraphForm period hPeriod data analysis +
+    globalCandidateAFullLLCrossUVGraphForm period hPeriod data analysis +
+    globalCandidateAFullLLCrossVUGraphForm period hPeriod data analysis
+
+@[simp]
+theorem globalCandidateAFullLLGraphForm_apply
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (first second : GlobalFullLLGraphHilbert period hPeriod data analysis) :
+    globalCandidateAFullLLGraphForm period hPeriod data analysis first second =
+      globalCandidateAFullLLContinuousHessian period hPeriod
+        data analysis first second := by
+  change
+    inner Real
+          (globalCandidateALLAuxMeasureFeatureProjection period hPeriod data
+            (globalCandidateAFullLLAuxProjection period hPeriod
+              data analysis first))
+          (globalCandidateALLAuxMeasureFeatureProjection period hPeriod data
+            (globalCandidateAFullLLAuxProjection period hPeriod
+              data analysis second)) +
+        inner Real
+          (globalCandidateAFullLLFieldProjection period hPeriod
+            data analysis first)
+          (globalCandidateAFullLLFieldProjection period hPeriod
+            data analysis second) +
+        inner Real
+          (globalCandidateAFullLLCrossUProjection period hPeriod
+            data analysis first)
+          (globalCandidateAFullLLCrossVProjection period hPeriod
+            data analysis second) +
+        inner Real
+          (globalCandidateAFullLLCrossVProjection period hPeriod
+            data analysis first)
+          (globalCandidateAFullLLCrossUProjection period hPeriod
+            data analysis second) =
+      inner Real
+          (globalCandidateALLAuxMeasureGraphRieszOperator period hPeriod data
+            (globalCandidateAFullLLAuxProjection period hPeriod
+              data analysis first))
+          (globalCandidateAFullLLAuxProjection period hPeriod
+            data analysis second) +
+        inner Real
+          (globalCandidateAFullLLFieldProjection period hPeriod
+            data analysis first)
+          (globalCandidateAFullLLFieldProjection period hPeriod
+            data analysis second) +
+        inner Real
+          (globalCandidateAFullLLCrossUProjection period hPeriod
+            data analysis first)
+          (globalCandidateAFullLLCrossVProjection period hPeriod
+            data analysis second) +
+        inner Real
+          (globalCandidateAFullLLCrossVProjection period hPeriod
+            data analysis first)
+          (globalCandidateAFullLLCrossUProjection period hPeriod
+            data analysis second)
+  rw [globalCandidateALLAuxMeasureGraphRieszOperator_pairing
+    period hPeriod data
+    (globalCandidateAFullLLAuxProjection period hPeriod data analysis first)
+    (globalCandidateAFullLLAuxProjection period hPeriod data analysis second)]
+
+theorem globalCandidateAFullLLGraphForm_comm
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (first second : GlobalFullLLGraphHilbert period hPeriod data analysis) :
+    globalCandidateAFullLLGraphForm period hPeriod data analysis first second =
+      globalCandidateAFullLLGraphForm
+        period hPeriod data analysis second first := by
+  rw [globalCandidateAFullLLGraphForm_apply,
+    globalCandidateAFullLLGraphForm_apply]
+  exact globalCandidateAFullLLGraphRieszOperator_symmetric
+    period hPeriod data analysis first second
+
+/-- Genuine quadratic action on the complete three-slot LL graph. -/
+def globalCandidateAFullLLGraphAction
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (state : GlobalFullLLGraphHilbert period hPeriod data analysis) : Real :=
+  (1 / 2 : Real) *
+    globalCandidateAFullLLGraphForm period hPeriod data analysis state state
+
+private theorem symmetricQuadratic_hasFDerivAt
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
+    (bilinear : E →L[Real] E →L[Real] Real)
+    (hSymmetric : ∀ first second,
+      bilinear first second = bilinear second first)
+    (point : E) :
+    HasFDerivAt (fun state => (1 / 2 : Real) * bilinear state state)
+      (bilinear point) point := by
+  have hDiagonal :=
+    (bilinear.hasFDerivAt (x := point)).clm_apply
+      (hasFDerivAt_id (𝕜 := Real) point)
+  have hHalf := hDiagonal.const_mul (1 / 2 : Real)
+  apply hHalf.congr_fderiv
+  ext direction
+  change (1 / 2 : Real) *
+      (bilinear point direction + bilinear direction point) =
+    bilinear point direction
+  rw [hSymmetric direction point]
+  ring
+
+private theorem symmetricQuadratic_contDiff
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
+    (bilinear : E →L[Real] E →L[Real] Real) :
+    ContDiff Real ⊤ (fun state => (1 / 2 : Real) * bilinear state state) :=
+  contDiff_const.mul (bilinear.contDiff.clm_apply contDiff_id)
+
+theorem globalCandidateAFullLLGraphAction_hasFDerivAt
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (state : GlobalFullLLGraphHilbert period hPeriod data analysis) :
+    HasFDerivAt
+      (globalCandidateAFullLLGraphAction period hPeriod data analysis)
+      (globalCandidateAFullLLGraphForm period hPeriod data analysis state)
+      state := by
+  change HasFDerivAt
+    (fun point => (1 / 2 : Real) *
+      globalCandidateAFullLLGraphForm period hPeriod data analysis point point)
+    (globalCandidateAFullLLGraphForm period hPeriod data analysis state)
+    state
+  exact @symmetricQuadratic_hasFDerivAt
+    (GlobalFullLLGraphHilbert period hPeriod data analysis)
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).normedAddCommGroup
+    (globalFullLLC2GraphNormedSpace period hPeriod data analysis)
+    (globalCandidateAFullLLGraphForm period hPeriod data analysis)
+    (globalCandidateAFullLLGraphForm_comm period hPeriod data analysis)
+    state
+
+theorem globalCandidateAFullLLGraphAction_fderiv
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (state : GlobalFullLLGraphHilbert period hPeriod data analysis) :
+    fderiv Real
+        (globalCandidateAFullLLGraphAction period hPeriod data analysis)
+        state =
+      globalCandidateAFullLLGraphForm period hPeriod data analysis state :=
+  (globalCandidateAFullLLGraphAction_hasFDerivAt
+    period hPeriod data analysis state).fderiv
+
+theorem globalCandidateAFullLLGraphAction_second_fderiv
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (base : GlobalFullLLGraphHilbert period hPeriod data analysis) :
+    fderiv Real
+        (fun state => fderiv Real
+          (globalCandidateAFullLLGraphAction period hPeriod data analysis)
+          state)
+        base =
+      globalCandidateAFullLLGraphForm period hPeriod data analysis := by
+  rw [show
+      (fun state => fderiv Real
+        (globalCandidateAFullLLGraphAction period hPeriod data analysis)
+        state) =
+      (fun state =>
+        globalCandidateAFullLLGraphForm
+          period hPeriod data analysis state) from by
+    funext state
+    exact globalCandidateAFullLLGraphAction_fderiv
+      period hPeriod data analysis state]
+  exact ContinuousLinearMap.fderiv
+    (globalCandidateAFullLLGraphForm period hPeriod data analysis)
+
+theorem globalCandidateAFullLLGraphAction_contDiff
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    ContDiff Real ⊤
+      (globalCandidateAFullLLGraphAction period hPeriod data analysis) := by
+  change ContDiff Real ⊤
+    (fun state => (1 / 2 : Real) *
+      globalCandidateAFullLLGraphForm period hPeriod data analysis state state)
+  exact @symmetricQuadratic_contDiff
+    (GlobalFullLLGraphHilbert period hPeriod data analysis)
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).normedAddCommGroup
+    (globalFullLLC2GraphNormedSpace period hPeriod data analysis)
+    (globalCandidateAFullLLGraphForm period hPeriod data analysis)
+
+theorem globalCandidateAFullLLGraphAction_contDiff_two
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    ContDiff Real 2
+      (globalCandidateAFullLLGraphAction period hPeriod data analysis) :=
+  (globalCandidateAFullLLGraphAction_contDiff
+    period hPeriod data analysis).of_le (by simp)
+
+/-- The graph action has exactly the unchanged full LL Hessian on the dense
+smooth core. -/
+theorem globalCandidateAFullLLGraphAction_second_fderiv_smooth
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (base : GlobalFullLLGraphHilbert period hPeriod data analysis)
+    (first second : GlobalFullLLSmooth period hPeriod analysis) :
+    (fderiv Real
+        (fun state => fderiv Real
+          (globalCandidateAFullLLGraphAction period hPeriod data analysis)
+          state)
+        base)
+        (globalCandidateAFullLLSmoothEmbedding period hPeriod
+          data analysis first)
+        (globalCandidateAFullLLSmoothEmbedding period hPeriod
+          data analysis second) =
+      globalCandidateAFullLLSameActionHessian period hPeriod
+        data first second := by
+  rw [globalCandidateAFullLLGraphAction_second_fderiv,
+    globalCandidateAFullLLGraphForm_apply]
+  exact globalCandidateAFullLLContinuousHessian_smooth
+    period hPeriod data analysis first second
 
 end
 end P0EFTJanusProgramPGlobalFullLLGraphRiesz4D

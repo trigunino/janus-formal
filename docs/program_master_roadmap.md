@@ -1443,16 +1443,41 @@ compatibility map K
   explicit as well. The global smooth Lorenz
   codifferential exists for every supplied general metric, its actual
   Faddeev--Popov composite is `δ_g d`, and the canonical specialization has
-  exact `δ(d c)=+□c`; only its Green/adjoint layer
-  awaits a genuine Stokes theorem. The trace half of de Donder and the true induced
-  Levi-Civita derivative are constructed with the complete rank-three overlap
-  law, smoothness, symmetry and `∇g = 0`; rank-three section descent and
-  contraction to `div_g h` remain. The unbounded
+  exact `δ(d c)=+□c`. Intrinsic paired potentials now inject linearly into the
+  corrected minimal physical tangent. Their Lorenz feature has a dense
+  injective graph completion whose bounded symmetric Riesz representative has
+  the exact Lorenz kernel and agrees with the reduced on-shell BRST Hessian;
+  the graph is now a global linear Hilbert chart with an explicit `C∞`
+  quadratic action and exact constant second Fréchet derivative. Its common
+  smooth core injects jointly into that chart and the minimal tangent. Only
+  the differential Green/adjoint formula still awaits a genuine Stokes
+  theorem. The induced Levi-Civita derivative has its
+  complete rank-three overlap law, and its direct chartwise contraction now
+  glues to the smooth global divergence. Together with the existing trace
+  differential this closes the complete smooth de Donder one-form and its
+  local formula. The resulting operator is now bundled linearly; its smooth
+  inverse-metric contraction integrates to a symmetric bilinear form with
+  exact quadratic polarization. Finite-frame `L²` coordinates and the raised
+  feature give it a faithful refined Hilbert graph with dense injective smooth
+  range. A bounded symmetric cross-form extends the Lorentzian pairing exactly
+  to this graph, and the associated quadratic action is `C∞` with that constant
+  second Fréchet derivative. Two metric copies and the Lorenz graph now form a
+  physical metric-plus-Abelian gauge `C²` subchart; its common smooth core
+  injects into the corrected typed tangent with nonminimal coordinates fixed
+  at zero. The unbounded
   zero-quotient-Hessian no-go still rules
-  out the historical D10-extended realization. Closure now requires the
-  actual global `C²` gauge-fixed chart, Lorenz Green/adjoint and complete de Donder
-  calculus, general metric/normal/mixed-Maxwell/full-LL/null-boundary
-  realizations, correct
+  out the historical D10-extended realization. The complete
+  `llAuxMetric × llMeasure × llField` core now has an injective dense graph
+  completion and a bounded symmetric Riesz representative equal to the full
+  unchanged LL action Hessian, cross terms included. Its quadratic graph
+  action is `C∞` with that constant second Fréchet derivative;
+  coercivity/closed range remains unproved. Closure now requires attaching
+  the analytic matter/LL graphs to the typed total tangent and extending this
+  physical subchart to a total global `C²` gauge-fixed chart with analytic
+  completions and same-action Hessians for the typed nonminimal, normal and
+  boundary sectors, together with differential Green-adjoint
+  and domain identifications, general metric/normal/mixed-Maxwell/null-boundary
+  realizations, LL Fredholm control, correct
   nonduplicated multiplicities and their same-action Fredholm sum. The exact
   Parseval/unitary comparison between the independent integral geometric `L²`
   completion of the whole smooth SpinC core and the completed spectral norm
@@ -1562,15 +1587,21 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
 0. complete the chosen D10-free gauge-fixed model: physical tangent/domain
    and target already exclude D10, matter is directly primitive SpinC, typed
    global nonminimal modules and the actual paired Abelian gauge-fixed action
-   are available, LL auxiliary/measure has an exact
-   Riesz realization with an exposed measure kernel, and GHY is closed;
-1. construct the genuine injective dense map from the global smooth tangent
-   into each regular variational chart;
+   are available, intrinsic metric and paired-potential directions inject into
+   the typed tangent, and the two exact de Donder graph actions plus Lorenz are
+   assembled in a common physical gauge `C²` subchart. The full three-slot LL
+   graph separately has a `C∞` quadratic action with exact same-action Riesz
+   Hessian and exposed kernel, and GHY is closed;
+1. attach the existing matter/LL analytic graphs to the typed tangent, then
+   extend the physical gauge subchart by genuine injective dense maps for the
+   typed nonminimal, normal and boundary directions to obtain the total
+   regular variational chart;
 2. extend the chartwise Euler/physical `U(1)²` Noether closure to the raw-field
    atlas and one nonlinear exterior BRST/BV derivation with boundary descent;
 3. extend the finite-core primitive SpinC same-action identity through the
-   final chart, then identify the remaining nonspectral action-Hessian blocks
-   with the gauge-fixed Fredholm family;
+   final chart, then identify the remaining metric/normal/mixed-Maxwell/
+   null-boundary blocks and prove full-LL coercivity in the gauge-fixed
+   Fredholm family;
 4. if physical heat agreement is required, prove D9 high-energy summability
    and an elliptic LL compact-resolvent/heat trace, then identify the closed
    nuclear reference regulator with the global Hessian after the action and

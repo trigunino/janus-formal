@@ -384,7 +384,7 @@ theorem generalMetricTensorTrace_apply
       generalMetricTensorTraceAt period hPeriod metric tensor point :=
   rfl
 
-private def effectiveBackground : EffectiveD8Background where
+private abbrev effectiveBackground : EffectiveD8Background where
   period := period
   period_ne_zero := hPeriod
 

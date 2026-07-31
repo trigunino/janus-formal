@@ -435,10 +435,34 @@ foundation/pairing certificate.
   le second Fréchet est exactement `2D+m²`, Fredholm, avec accord sur le cœur
   spectral fini. Les gauge fermions D9 abélienne/difféomorphisme ont de vrais
   types distincts `c/c̄/B`, un BRST nilpotent, `sΨ`, un Hessien symétrique et
-  les symboles FP attendus. Manquent encore leur globalisation `C²`, les blocs
-  métrique/normal/Maxwell mixte/LL complet/bord, les multiplicités fidèles et
-  leur assemblage Fredholm same-action. Le no-go interdit toujours de
-  réutiliser silencieusement l’ancienne cible D10-étendue.
+  les symboles FP attendus. La divergence métrique et le de Donder complet
+  sont maintenant de vraies 1-formes globales lisses, sans postulat nouveau.
+  Le de Donder est en outre une application linéaire. Sa contraction
+  métrique intégrée est une forme bilinéaire symétrique qui polarise exactement
+  la fonctionnelle quadratique associée; le frame tangent fini fournit
+  maintenant la caractéristique relevée qui étend exactement ce pairing à un
+  graphe Hilbert raffiné. Le Hessien borné symétrique ainsi obtenu est le
+  pairing lorentzien original sur le cœur lisse, et l'action quadratique du
+  graphe est `C∞` avec ce second Fréchet constant. Les potentiels intrinsèques
+  Candidate-A s'injectent désormais fidèlement dans le tangent physique
+  minimal. Le Lorenz possède une complétion graphe dense et injective, un
+  Riesz borné symétrique de noyau exact, et son pairing est le vrai Hessien
+  BRST réduit on-shell. Le cœur LL complet
+  `llAuxMetric × llMeasure × llField` possède lui aussi une complétion graphe
+  dense et injective et un Riesz symétrique égal au Hessien same-action, termes
+  croisés compris. Il porte maintenant une action quadratique `C∞` dont le
+  second Fréchet constant est exactement ce Hessien. Les deux graphes de Donder métriques et le graphe Lorenz
+  sont aussi assemblés dans un sous-chart physique commun
+  métrique-plus-Abelien : son action est `C∞`, son second Fréchet est la somme
+  exacte des deux pairings de Donder et du Hessien BRST Lorenz, et son cœur
+  lisse s'injecte dans le tangent gauge-fixed typé en gardant les coordonnées
+  non minimales nulles. Ce sous-chart n'est pas le chart total. Manquent encore
+  l'adjoint différentiel/Green, l'attachement des graphes matière/LL au tangent
+  total typé, les complétions et vrais blocs same-action des secteurs non
+  minimaux typés, normal et bord, les blocs métrique
+  général/Maxwell mixte, la coercivité Fredholm LL, les multiplicités fidèles
+  et leur assemblage Fredholm same-action. Le no-go interdit toujours de
+  réutiliser silencieusement l'ancienne cible D10-étendue.
 - `ADM/STABILITY/VACUUM-GLOBAL-01` ont maintenant des frontières intégrées :
   chaîne Legendre/contraintes/rang exacte en FLRW, noyau contraint et courbe
   isoénergétique exacts, minimum proportionnel unique et no-go de rang du vide.
@@ -634,9 +658,21 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   Abelian one is now global and attached to the actual Candidate-A action.
   The old
   D10-extended realization remains excluded by the zero-Hessian no-go.
-  `HESSIAN-GLOBAL-01` is still `BLOQUÉ-STRUCTUREL` on the missing global
-  gauge-fixed chart and the omitted metric/normal/auxiliary/LL/boundary
-  same-action blocks.
+  `HESSIAN-GLOBAL-01` is still `BLOQUÉ-STRUCTUREL` on the missing total
+  gauge-fixed chart, the typed attachment of the existing matter/LL graphs,
+  the typed nonminimal/normal/boundary analytic completions and same-action
+  blocks, the general metric/mixed-Maxwell blocks,
+  full-LL coercivity and the final faithful Fredholm sum.
+  The intrinsic paired potentials now inject into the corrected minimal
+  tangent. The refined de Donder graph now extends the exact Lorentzian pairing
+  and carries a genuine `C∞` quadratic action. Its two metric copies and the
+  Lorenz graph form a common physical gauge `C²` subchart whose smooth core
+  injects into the typed gauge-fixed tangent with nonminimal coordinates fixed
+  at zero. The complete three-slot LL sector separately has a dense injective
+  graph completion and a `C∞` quadratic action with exact constant same-action
+  Riesz Hessian, but
+  these results do not supply the remaining sectors or the required Fredholm
+  estimates.
   The integrated-invariance and canonical scalar Euler--flux limitations in
   the preceding snapshot are now superseded; nonlinear BV remains open. For
   `SmoothGeneralLorentzMetric`, coherent PT transport of the
@@ -1724,28 +1760,47 @@ The corrected gauge-fixed tangent holds the legacy coefficient ghost and
 auxiliary directions fixed, preventing a duplicate nonminimal multiplicity;
 the paired physical rule `sA = -dc` is now global and square-zero. Its
 finite-measure `sΨ` uses the true `δ_g d` and is attached to the actual
-Candidate-A metrics, Maxwell potentials and typed nonminimal fields. Their
-faithful gauge-fixed chart and `sg` still depend on the remaining de Donder
-construction. The global smooth Abelian Lorenz codifferential is
+  Candidate-A metrics, Maxwell potentials and typed nonminimal fields. The
+  physical metric-plus-Abelian gauge subchart now consumes the completed de
+  Donder and Lorenz features and embeds in the typed tangent with the
+  nonminimal coordinates fixed. The full typed chart and the diffeomorphism
+  rule `sg` remain separate. The global smooth Abelian Lorenz codifferential is
 now linear and transition-independent for every supplied general metric; its
 actual Faddeev--Popov composite is `δ_g d` and is the chartwise covariant wave.
-The canonical specialization has exact `δ(d c)=+□c`; its
-Green/`L²` adjoint layer still awaits a genuine global Stokes theorem. The LL
-auxiliary/measure
-Hessian now has an injective dense Hilbert graph realization and an exact
-bounded Riesz representative. Its closed pure-measure radical has an
-action-faithful Hilbert quotient, but injectivity is equivalent to that
-radical exhausting the full weighted kernel and closed range still needs
+The canonical specialization has exact `δ(d c)=+□c`; its differential
+Green/`L²` adjoint formula still awaits a genuine global Stokes theorem.
+The actual intrinsic potentials inject into the corrected minimal tangent.
+Their Lorenz feature has a dense injective graph completion, and that Hilbert
+graph now carries a displayed `C∞` quadratic action (hence `C²`) whose exact
+second Fréchet derivative is its same-action symmetric Riesz form. On the
+common smooth core this derivative is the reduced on-shell BRST polarization,
+and the core injects simultaneously into the graph chart and the corrected
+minimal tangent. The complete
+`llAuxMetric × llMeasure × llField` Hessian has an analogous dense injective
+graph realization and exact bounded symmetric Riesz representative, including
+the two cross blocks. Its kernel is explicit, but closed range still needs
 coercivity. The canonical GHY summand has its genuine zero same-action Hessian,
 and the finite null-face action has zero second derivative along exact
 generator reparametrizations.
-For de Donder, `tr_g h` and the induced Levi-Civita derivative are constructed
-with the full rank-three overlap law, smoothness, symmetry and `∇g = 0`; the
-rank-three section descent and divergence remain. What remains is the actual
-global `C²` gauge-fixed chart, common diffeomorphism invariance, Lorenz
-Green/adjoint, complete de Donder, general metric/normal/mixed
-Maxwell/full-LL/null-boundary Hessians, correct modal multiplicities and their
-same-action Fredholm direct sum. The exact Parseval/unitary
+For de Donder, `tr_g h`, the induced Levi-Civita derivative and its contracted
+divergence are constructed with the full overlap laws. The divergence glues
+through the canonical atlas to a smooth global one-form, and its sum with
+`-1/2 d(tr_g h)` closes the complete smooth de Donder operator. It is now
+  bundled as a linear map, and its smooth inverse-metric contraction gives an
+  integrable symmetric bilinear form with exact quadratic polarization. Its
+  finite-frame tensor, one-form and raised one-form coordinates define a
+  faithful refined Hilbert graph with dense injective smooth range. The
+  resulting bounded symmetric Hessian equals the original Lorentzian pairing
+  on that core, and its quadratic action is `C∞`. Two metric copies and the
+  closed Lorenz graph now assemble into a common physical gauge `C²` subchart;
+  its exact second Fréchet derivative is their direct sum, and the same core
+  injects into the corrected typed tangent with nonminimal coordinates zero.
+  What remains is to extend this construction to the other typed sectors in
+  the total global `C²` gauge-fixed chart,
+common diffeomorphism invariance, differential Green/domain and elliptic
+Fredholm identifications, general metric/normal/mixed Maxwell/null-boundary
+Hessians, LL coercivity, correct modal multiplicities and their same-action
+Fredholm direct sum. The exact Parseval/unitary
 identification between the independent geometric and spectral SpinC
 completions is now closed. Finite multiplicity blocks are isometric and
 distinct circle modes in one sector are orthogonal across all levels, so the

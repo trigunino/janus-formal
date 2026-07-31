@@ -315,7 +315,7 @@ private theorem localInverseDerivativeCoordinates_eq_frameCoordinates
             (patch.coordinateMap anchorCoordinate)).symm current vector)
 
 /-- The effective background underlying the global divergence field. -/
-def generalMetricDivergenceBackground : EffectiveD8Background where
+abbrev generalMetricDivergenceBackground : EffectiveD8Background where
   period := period
   period_ne_zero := hPeriod
 
