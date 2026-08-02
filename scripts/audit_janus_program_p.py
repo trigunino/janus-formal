@@ -31,6 +31,51 @@ class TerminalGateEvidence:
     expected_type_fragment: str
 
 
+def contains_lean_proof_placeholder(source: str) -> bool:
+    """Detect proof placeholders in Lean code, ignoring comments and strings."""
+    code: list[str] = []
+    index = 0
+    block_depth = 0
+    in_line_comment = False
+    in_string = False
+    while index < len(source):
+        pair = source[index : index + 2]
+        char = source[index]
+        if in_line_comment:
+            if char == "\n":
+                in_line_comment = False
+                code.append(char)
+            index += 1
+        elif block_depth:
+            if pair == "/-":
+                block_depth += 1
+                index += 2
+            elif pair == "-/":
+                block_depth -= 1
+                index += 2
+            else:
+                index += 1
+        elif in_string:
+            if char == "\\":
+                index += 2
+            else:
+                in_string = char != '"'
+                index += 1
+        elif pair == "--":
+            in_line_comment = True
+            index += 2
+        elif pair == "/-":
+            block_depth = 1
+            index += 2
+        elif char == '"':
+            in_string = True
+            index += 1
+        else:
+            code.append(char)
+            index += 1
+    return re.search(r"\b(?:sorry|admit|axiom)\b", "".join(code)) is not None
+
+
 # A checked terminal gate must first receive concrete evidence here.  Empty is
 # intentional while T01--T14 are all open.
 TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {}
@@ -943,6 +988,46 @@ PROGRAM_P_GATES = {
             "theorem global_hessian_spinc_geometric_gate",
             "abbrev LegacyGlobalHessianFredholmAgreementContract4D",
             "theorem global_hessian_frontier_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalLocalVariationalChart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FullCoupledC2WithinAt",
+            "theorem fullCoupledAction_contDiffWithinAt",
+            "structure GlobalCandidateALocalActionFamily",
+            "def GlobalCandidateALocalActionFamily.datumAtTotal",
+            "structure GlobalCandidateALocalVariationalChart",
+            "def globalCandidateALocalActionPullback",
+            "theorem globalCandidateALocalActionPullback_eq_covariant_of_mem",
+            "theorem globalCandidateALocalActionPullback_contDiffWithinAt_two",
+            "theorem globalCandidateALocalActionPullback_contDiffAt_two",
+            "def globalCandidateALocalEulerLagrangeOperator",
+            "def globalCandidateALocalHessian",
+            "theorem globalCandidateALocalHessian_hasFDerivAt",
+            "theorem globalCandidateALocalHessian_symmetric",
+            "def globalCandidateAVariationalChartToLocal",
+            "theorem globalCandidateAVariationalChart_toLocal_hessian_eq",
+            "theorem global_candidateA_local_hessian_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPGlobalLocalVariationalChartCoreBridge4D",
+            "def globalCandidateALocalHessianOnSmoothGlobalCore",
+            "theorem globalCandidateALocalHessianOnSmoothGlobalCore_symmetric",
+            "def programPGlobalVariationalChartCoreBridge4DToLocal",
+            "theorem globalCandidateALocalHessianOnSmoothGlobalCore_toLocal_eq",
+            "def diagonalExtendedBulkLocalCovariantHessianOnCore",
+            "theorem diagonalExtendedBulkLocalCovariantHessianOnCore_comm",
+            "def diagonalExtendedBulkLocalGaugeFixedCovariantHessianOnCore",
+            "def diagonalExtendedBulkLocalPhysicalHessianResidualOnCore",
+            "theorem diagonalExtendedBulkLocalPhysicalHessianResidualOnCore_comm",
+            "theorem diagonalExtendedBulkLocalGaugeFixedCovariantHessian_decomposition",
+            "theorem diagonalExtendedBulkLocalGaugeFixedCovariantHessian_eq_graph_iff",
+            "theorem diagonalExtendedBulkLocalCovariantHessianOnCore_toLocal_eq",
+            "theorem diagonalExtendedBulkLocalPhysicalHessianResidualOnCore_toLocal_eq",
         ),
     ),
     "P0EFTJanusProgramPCandidateADiffeomorphismHessianBridge4D.lean": (
@@ -1934,6 +2019,18 @@ PROGRAM_P_GATES = {
             "theorem zeroExpansionDifferenceQuotient_tendsto_atBot",
             "theorem zeroExtendedExpansionCountertermFactor_not_hasDerivAt_zero",
             "theorem zeroExtendedExpansionCountertermFactor_not_differentiableAt_zero",
+        ),
+    ),
+    "P0EFTJanusNullExpansionCountertermRegularStratumHessian.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem expansionCountertermDerivativeCoefficient_hasDerivAt",
+            "def expansionCountertermRegularHessian",
+            "theorem expansionCountertermRegularHessian_comm",
+            "theorem expansionCountertermFirstVariation_hasDerivAt",
+            "def declaredNullCountertermRegularHessian",
+            "theorem declaredNullCountertermRegularHessian_comm",
+            "theorem declaredNullCountertermFirstVariation_hasDerivAt",
         ),
     ),
     "P0EFTJanusNullJointReparametrizationCancellation.lean": (
@@ -3903,6 +4000,282 @@ PROGRAM_P_GATES = {
             "theorem positiveRawLocalRootBranches_eq_on_overlap",
         ),
     ),
+    "P0EFTJanusPositiveRawSplitCharpolyContDiffLocalRootBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalMatrixSquare",
+            "def canonicalSylvesterOperator",
+            "theorem canonicalMatrixSquare_contDiff_two",
+            "def canonicalSylvesterEquivOfBijective",
+            "def canonicalC2LocalSquareChartAt",
+            "def canonicalC2LocalRootBranchAt",
+            "theorem canonicalC2LocalRootBranchAt_contDiffAt",
+            "theorem continuousRegularRootLift_eventuallyEq_canonicalC2LocalTargetLift",
+            "theorem continuousRegularRootLift_contDiffAt_two",
+            "theorem continuousRegularRootLift_contDiff_two",
+            "def sylvesterRegularRootSet",
+            "theorem sylvesterRegularRootSet_isOpen",
+            "def positiveRawCanonicalSylvesterEquiv",
+            "def positiveRawC2BaseSquareChart",
+            "def positiveRawContDiffLocalRootTarget",
+            "theorem positiveRawContDiffLocalRootTarget_isOpen",
+            "def positiveRawContDiffLocalRootBranch",
+            "theorem positiveRawContDiffLocalRootBranch_square",
+            "theorem positiveRawContDiffLocalRootBranch_contDiffOn",
+            "def positiveRawRootPerturbationDomain",
+            "theorem positiveRawRootPerturbationDomain_isOpen",
+            "theorem zero_mem_positiveRawRootPerturbationDomain",
+            "def positiveRawRootPerturbationBranch",
+            "theorem positiveRawRootPerturbationBranch_contDiffOn",
+            "theorem positive_raw_contDiff_local_root_gate",
+        ),
+    ),
+    "P0EFTJanusContinuousMatrixFieldContDiffLocalRootBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pointwiseSylvesterUnit",
+            "def pointwiseInverseSylvesterField",
+            "def continuousMatrixFieldInverseSylvesterOperator",
+            "def continuousMatrixFieldSylvesterEquiv",
+            "theorem continuousMatrixFieldSquare_contDiff_two",
+            "theorem continuousMatrixFieldSylvesterRegularRootSet_isOpen",
+            "def continuousMatrixFieldContDiffLocalRootBranch",
+            "theorem continuousMatrixFieldContDiffLocalRootBranch_contDiffOn",
+            "theorem continuousMatrixFieldRootPerturbationDomain_isOpen",
+            "theorem zero_mem_continuousMatrixFieldRootPerturbationDomain",
+            "theorem continuous_matrix_field_contDiff_local_root_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0Space4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalPhysicalStrongH1C0Compatibility",
+            "abbrev CanonicalPhysicalScalarStrongH1C0",
+            "theorem canonicalPhysicalScalarStrongH1C0_isClosed",
+            "def canonicalPhysicalScalarStrongH1C0CompleteSpace",
+            "def canonicalPhysicalScalarStrongH1C0ToContinuous",
+            "def canonicalPhysicalScalarStrongH1C0ToHilbertH1",
+            "theorem canonicalPhysicalScalarStrongH1C0_l2_compatibility",
+            "def smoothToCanonicalPhysicalScalarStrongH1C0",
+            "theorem canonical_physical_scalar_strong_h1_c0_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0CoreClosure4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalPhysicalScalarStrongH1C0CoreSubmodule",
+            "abbrev CanonicalPhysicalScalarStrongH1C0Core",
+            "theorem canonicalPhysicalScalarStrongH1C0Core_isClosed",
+            "def canonicalPhysicalScalarStrongH1C0CoreCompleteSpace",
+            "def smoothToCanonicalPhysicalScalarStrongH1C0Core",
+            "theorem smoothToCanonicalPhysicalScalarStrongH1C0Core_denseRange",
+            "def canonicalPhysicalScalarStrongH1C0CoreToStrong",
+            "theorem canonicalPhysicalScalarStrongH1C0CoreToStrong_injective",
+            "theorem canonical_physical_scalar_strong_h1_c0_core_closure_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0SmoothLeibniz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem frameDerivative_mul",
+            "def scalarFirstJetMul",
+            "theorem smoothFirstJet_mul",
+            "def smoothStrongH1C0CoreProduct",
+            "def smoothStrongH1C0CoreProductBilinear",
+            "theorem smoothStrongH1C0CoreProduct_continuous_projection",
+            "theorem canonical_physical_strong_h1_c0_smooth_leibniz_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0ProductExtension4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def continuousScalarToLInfinity",
+            "def graphJetTailL2",
+            "theorem smoothFirstJetToL2_mul_decomposition",
+            "theorem smoothStrongH1C0CoreProduct_norm_le",
+            "def smoothStrongH1C0CoreProductRightExtension",
+            "def smoothStrongH1C0CoreProductLeftLinear",
+            "def canonicalPhysicalScalarStrongH1C0CoreProduct",
+            "theorem canonicalPhysicalScalarStrongH1C0CoreProduct_smooth",
+            "theorem canonicalPhysicalScalarStrongH1C0CoreProduct_norm_le",
+            "theorem canonical_physical_strong_h1_c0_product_extension_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0MatrixProduct4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def scalarStrongProductBilinear",
+            "def scalarStrongProduct",
+            "theorem scalarStrongProduct_toContinuous",
+            "def strongMatrixProductBilinear",
+            "def strongMatrixProduct",
+            "theorem strongMatrixProduct_smooth",
+            "def strongMatrixToContinuous",
+            "theorem strongMatrixProduct_toContinuous",
+            "def strongMatrixSquare",
+            "def strongMatrixSylvester",
+            "theorem strongMatrixSquare_hasFDerivAt",
+            "theorem strongMatrixSquare_contDiff",
+            "theorem canonical_physical_strong_h1_c0_matrix_product_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0FiniteMatrixProduct4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev StrongFiniteMatrix",
+            "def strongFiniteMatrixProduct",
+            "theorem strongFiniteMatrixProduct_smooth",
+            "theorem strongFiniteMatrixProduct_toContinuous",
+            "theorem strongFiniteMatrixProduct_assoc",
+            "def strongFiniteMatrixSquare",
+            "def strongFiniteMatrixSylvester",
+            "theorem strongFiniteMatrixSquare_hasFDerivAt",
+            "theorem canonical_physical_strong_h1_c0_finite_matrix_product_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0FiniteMatrixLinearEquivLift4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def strongFiniteMatrixOperatorEquiv",
+            "theorem strongFiniteMatrixOperatorEquiv_forward_eq",
+            "theorem strong_finite_matrix_linear_equiv_lift_gate",
+        ),
+    ),
+    "P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0LocalRootBranch4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem pointwiseInverseSylvesterField_contMDiff",
+            "def inverseSylvesterCoefficient",
+            "def strongInverseSylvesterOperator",
+            "theorem strongInverseSylvesterOperator_left",
+            "theorem strongInverseSylvesterOperator_right",
+            "def strongMatrixSylvesterEquiv",
+            "def strongMatrixC2LocalSquareChart",
+            "def strongMatrixRootPerturbationDomain",
+            "def strongMatrixRootPerturbationBranch",
+            "theorem canonical_physical_strong_h1_c0_local_root_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFiniteFrameRootBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def generalMetricFiniteFrameOperator",
+            "theorem generalMetricFiniteFrameOperator_injective",
+            "def generalMetricFiniteFrameSolve",
+            "def generalMetricFiniteFrameCoefficient",
+            "theorem generalMetricFiniteFrame_reconstructs",
+            "def finiteFrameEndomorphismMatrixAt",
+            "theorem finiteFrameEndomorphismMatrixAt_comp",
+            "theorem finiteFrameEndomorphismMatrixAt_injective",
+            "def finiteFrameProjectorMatrix",
+            "def canonicalGlobalCandidateARootMatrix",
+            "theorem canonical_global_candidate_a_finite_frame_root_bridge",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCorner4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def strongFiniteFrameProjector",
+            "def strongGlobalCandidateAFiniteFrameRoot",
+            "theorem strongFiniteFrameProjector_idempotent",
+            "theorem strongGlobalCandidateAFiniteFrameRoot_corner",
+            "def strongFiniteFrameCornerProjection",
+            "def strongFiniteFrameCornerSubmodule",
+            "theorem strongFiniteFrameCornerSubmodule_isClosed",
+            "def strongFiniteFrameCornerCompleteSpace",
+            "theorem global_candidate_a_strong_finite_frame_corner_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCornerAlgebra4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def strongFiniteFrameCornerProduct",
+            "def strongFiniteFrameCornerSquare",
+            "def strongFiniteFrameCornerSylvester",
+            "theorem strongFiniteFrameCornerSquare_hasFDerivAt",
+            "theorem strongFiniteFrameCornerSquare_contDiff",
+            "def strongGlobalCandidateAFiniteFrameRootCorner",
+            "theorem global_candidate_a_strong_finite_frame_corner_algebra_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCornerLocalRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure LocalC2InverseGerm",
+            "structure LocalC2InverseOpenBranch",
+            "def localC2InverseGerm",
+            "def regularLocalC2InverseOpenBranch",
+            "def strongFiniteFrameCornerSylvesterEquivOfBijective",
+            "def strongFiniteFrameCornerSylvesterRegularRootSet",
+            "theorem strongFiniteFrameCornerSylvesterRegularRootSet_isOpen",
+            "def strongFiniteFrameCornerLocalRootGerm",
+            "theorem strong_finite_frame_corner_local_root_gate",
+            "theorem strong_finite_frame_corner_contDiff_local_root_gate",
+            "theorem global_candidate_a_strong_finite_frame_corner_local_root_gate",
+            "theorem global_candidate_a_strong_finite_frame_corner_contDiff_local_root_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterRegularity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicCandidateASylvesterAt",
+            "def globalCandidateAFiniteFrameExtendedSylvesterField",
+            "def strongFiniteFrameExtendedSylvesterEquiv",
+            "theorem globalCandidateAFiniteFrameExtendedSylvesterField_bijective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterLocalRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem strongFiniteFrameCornerProjection_smooth",
+            "theorem strongFiniteMatrixOperator_eq_extendedSylvester",
+            "theorem strongFiniteFrameExtendedSylvesterEquiv_forward_eq",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterCornerLocalRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem strongFiniteFrameCornerSylvester_value",
+            "theorem strongFiniteFrameExtendedSylvester_corner",
+            "theorem strongFiniteFrameExtendedSylvester_commutes_cornerProjection",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterRegularStratumLocalRoot4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def IsGlobalCandidateASylvesterRegular",
+            "abbrev GlobalCandidateASylvesterRegularGeometry",
+            "def IsGlobalCandidateALocalVariationalChartSylvesterRegular",
+            "theorem strongFiniteFrameCornerSylvester_bijective_of_intrinsic",
+            "theorem global_candidate_a_strong_finite_frame_sylvester_local_root_gate",
+            "theorem global_candidate_a_strong_finite_frame_sylvester_contDiff_local_root_gate",
+            "theorem global_candidate_a_sylvester_regular_geometry_local_root_gate",
+            "theorem global_candidate_a_sylvester_regular_local_variational_chart_root_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalStrongH1C0AnalysisDomain4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalBulkContinuousC0",
+            "abbrev GlobalBulkPhysicalL2",
+            "abbrev GlobalBulkStrongH1C0",
+            "abbrev GlobalBulkSmoothScalarFamily",
+            "abbrev GlobalBulkStrongH1C0Core",
+            "def globalBulkStrongH1C0CompleteSpace",
+            "def globalBulkStrongH1C0CoreCompleteSpace",
+            "def globalBulkSmoothToStrongH1C0Core",
+            "theorem globalBulkSmoothToStrongH1C0Core_denseRange",
+            "def globalBulkStrongH1C0CoreToStrong",
+            "def globalBulkStrongH1C0ToContinuous",
+            "def globalBulkStrongH1C0ToHilbertH1",
+            "def globalBulkStrongH1C0ToBulkL2FromContinuous",
+            "def globalBulkStrongH1C0ToBulkL2FromHilbertH1",
+            "theorem globalBulkStrongH1C0_l2_compatibility",
+            "def GlobalFieldTangent.bulkStrongH1C0",
+            "def GlobalFieldTangent.bulkStrongH1C0Core",
+            "theorem global_bulk_strong_h1_c0_analysis_domain_gate",
+        ),
+    ),
     "P0EFTJanusPositiveJordanCollisionZeroFrontier4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -5018,20 +5391,218 @@ PROGRAM_P_GATES = {
             "theorem globalCandidateALorenzPhysicalCoreLinearMap_injective",
         ),
     ),
+    "P0EFTJanusProgramPGlobalAbelianBRSTOffShellGraphC2Chart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalPairedGaugeLieL2LinearMap",
+            "theorem globalPairedGaugeLieL2LinearMap_injective",
+            "def globalPairedAbelianFPL2LinearMap",
+            "abbrev GlobalPairedAbelianOffShellGraphHilbert",
+            "def globalPairedAbelianOffShellSmoothEmbedding",
+            "theorem globalPairedAbelianOffShellSmoothEmbedding_injective",
+            "theorem globalPairedAbelianOffShellSmoothEmbedding_denseRange",
+            "def globalPairedAbelianOffShellHessian",
+            "theorem globalPairedAbelianOffShellHessian_comm",
+            "def globalPairedAbelianOffShellRieszOperator",
+            "theorem globalPairedAbelianOffShellRieszOperator_pairing",
+            "theorem globalPairedAbelianOffShellRieszOperator_symmetric",
+            "theorem globalPairedAbelianOffShellHessian_smooth_eq_BRST",
+            "def globalPairedAbelianOffShellGraphAction",
+            "theorem globalPairedAbelianOffShellGraphAction_smooth_eq_BRST",
+            "theorem globalPairedAbelianOffShellGraphAction_second_fderiv",
+            "theorem globalPairedAbelianOffShellGraphAction_contDiff_two",
+            "def globalPairedAbelianBRSTStateGaugeFixedTangentLinearMap",
+            "theorem globalPairedAbelianBRSTStateGaugeFixedTangent_injective",
+            "def globalPairedAbelianOffShellGraphTypedCoreLinearMap",
+            "theorem globalPairedAbelianOffShellGraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalAbelianFaddeevPopovScalarBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def canonicalMassZeroEulerCompatibilityOnlyData",
+            "def canonicalMassZeroEulerOperatorData",
+            "theorem intrinsicAbelianFaddeevPopov_component_eq_scalarResidual",
+            "theorem intrinsicAbelianFaddeevPopov_component_l2_eq_scalarOperator",
+            "theorem intrinsicAbelianFaddeevPopov_component_pairingDefect_eq_integral",
+            "theorem intrinsicAbelianFaddeevPopov_component_symmetric_iff_skewIntegral_zero",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalAbelianFaddeevPopovGreenStokes4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem intrinsicAbelianFaddeevPopov_component_pairingDefect_eq_orientedBoundary",
+            "theorem intrinsicAbelianFaddeevPopov_component_symmetric_of_greenBoundaryCondition",
+            "theorem intrinsicAbelianFaddeevPopov_symmetric_of_greenBoundaryCondition",
+            "theorem intrinsicAbelianFaddeevPopov_component_symmetric_of_dirichlet",
+            "def intrinsicAbelianFaddeevPopovScalarGreenCore",
+            "theorem intrinsicAbelianFaddeevPopovScalarGreenCore_operator_eq_component",
+            "theorem intrinsicAbelianFaddeevPopovScalarGreenCore_minimalDense",
+            "theorem intrinsicAbelianFaddeevPopovScalarGreenCore_closable_certificate",
+            "abbrev GlobalPairedIntrinsicAbelianFPGraphSpace",
+            "def globalPairedIntrinsicAbelianFPSmoothToGraph",
+            "theorem globalPairedIntrinsicAbelianFPSmoothToGraph_denseRange",
+            "theorem globalPairedIntrinsicAbelianFPGraphInclusion_injective",
+            "def GlobalPairedIntrinsicAbelianFPRealizationDomain",
+            "def globalPairedIntrinsicAbelianFPRealizationOperator",
+            "theorem globalPairedIntrinsicAbelianFPRealizationOperator_smooth",
+            "theorem globalPairedIntrinsicAbelianFPRealization_certificate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalAbelianFaddeevPopovLagrangianSelfAdjoint4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def intrinsicAbelianFPScalarCompletedTriple",
+            "theorem intrinsicAbelianFPScalarLagrangianInclusion_denseRange",
+            "theorem intrinsicAbelianFPScalar_actualAdjointDomain_eq",
+            "abbrev GlobalPairedIntrinsicAbelianFPLagrangianDomain",
+            "def globalPairedIntrinsicAbelianFPLagrangianInclusion",
+            "def globalPairedIntrinsicAbelianFPLagrangianOperator",
+            "theorem globalPairedIntrinsicAbelianFPLagrangianInclusion_injective",
+            "theorem globalPairedIntrinsicAbelianFPLagrangianInclusion_denseRange",
+            "def GlobalPairedIntrinsicAbelianFPSmoothLagrangianCore",
+            "theorem globalPairedIntrinsicAbelianFPLagrangianInclusion_smooth",
+            "theorem globalPairedIntrinsicAbelianFPLagrangianOperator_smooth",
+            "theorem globalPairedIntrinsicAbelianFP_componentwise_actualAdjointDomain_eq",
+            "theorem globalPairedIntrinsicAbelianFPLagrangian_certificate",
+            "theorem globalPairedIntrinsicAbelianFPLagrangian_certificate_of_directAnalytic",
+            "def intrinsicAbelianFPGraphMinimalGreen",
+            "theorem intrinsicAbelianFPGraphMinimalGreen_scalarCore_eq",
+            "theorem intrinsicAbelianFPGraphMinimal_coreOperator_eq_component",
+            "theorem intrinsicAbelianFPGraphMinimal_lagrangianOperator_smooth",
+            "theorem intrinsicAbelianFPGraphMinimal_selfAdjoint_certificate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalGeneralMetricDiffeomorphismFaddeevPopov4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalGeneralMetricDiffeomorphismGaugeGeneratorLinearMap",
+            "theorem globalGeneralMetricDiffeomorphismGaugeGeneratorLinearMap_apply",
+            "def globalGeneralMetricDiffeomorphismFaddeevPopovLinearMap",
+            "theorem globalGeneralMetricDiffeomorphismFaddeevPopovLinearMap_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalDiffeomorphismBRSTOffShellGraphC2Chart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalDiffeomorphismBRSTState",
+            "theorem globalDiffeomorphismBRST_square_zero",
+            "theorem globalDiffeomorphismGaugeCondition_BRST",
+            "theorem globalDiffeomorphismGaugeFermionBRSTVariation_formula",
+            "def GlobalDiffeomorphismOffShellGraphHilbert",
+            "def globalDiffeomorphismOffShellSmoothEmbedding",
+            "theorem globalDiffeomorphismOffShellSmoothEmbedding_injective",
+            "theorem globalDiffeomorphismOffShellSmoothEmbedding_denseRange",
+            "def globalDiffeomorphismOffShellHessian",
+            "theorem globalDiffeomorphismOffShellHessian_comm",
+            "def globalDiffeomorphismOffShellRieszOperator",
+            "theorem globalDiffeomorphismOffShellRieszOperator_pairing",
+            "theorem globalDiffeomorphismOffShellHessian_smooth_eq_BRST",
+            "def globalDiffeomorphismOffShellGraphAction",
+            "theorem globalDiffeomorphismOffShellGraphAction_hasFDerivAt",
+            "theorem globalDiffeomorphismOffShellGraphAction_contDiff_two",
+            "def globalDiffeomorphismNonminimalTypedInclusionLinearMap",
+            "theorem globalDiffeomorphismNonminimalTypedInclusion_BRST",
+            "def globalDiffeomorphismOffShellGraphTypedCoreLinearMap",
+            "theorem globalDiffeomorphismOffShellGraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPCandidateADiagonalDiffeomorphismGaugeProjectionNoGo4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem no_singleWeightedSquare_eq_sumOfTwoSquares",
+        ),
+    ),
+    "P0EFTJanusProgramPCandidateADiagonalDiffeomorphismKineticAdjointBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def einsteinHilbertKineticWeight",
+            "theorem einsteinDeWitt_pureGauge_adjoint",
+            "theorem candidateADiagonalKineticPairing_adjoint",
+            "theorem candidateADiagonalKineticWeights_unique",
+            "def globalCandidateADiagonalDiffeomorphismGaugeGeneratorLinearMap",
+            "def globalCandidateADiagonalKineticGaugeConditionLinearMap",
+            "def globalCandidateADiagonalKineticFaddeevPopovLinearMap",
+            "theorem globalCandidateADiagonalKineticFaddeevPopovLinearMap_apply",
+            "theorem candidateADiagonalKineticFaddeevPopovSpatialSymbol_eq",
+            "theorem candidateADiagonalKineticFaddeevPopovSpatialSymbol_eq_zero_of_totalWeight_eq_zero",
+            "theorem candidateADiagonalKineticFaddeevPopovSpatialSymbol_kernel_trivial",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalDiffeomorphismBRSTOffShellGraphC2Chart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalCandidateADiagonalDiffeomorphismBRSTState",
+            "theorem globalCandidateADiagonalDiffeomorphismBRST_square_zero",
+            "theorem globalCandidateADiagonalKineticGaugeCondition_BRST",
+            "def GlobalCandidateADiagonalDiffeomorphismOffShellGraphHilbert",
+            "def globalCandidateADiagonalDiffeomorphismOffShellSmoothEmbedding",
+            "theorem globalCandidateADiagonalDiffeomorphismOffShellSmoothEmbedding_injective",
+            "theorem globalCandidateADiagonalDiffeomorphismOffShellSmoothEmbedding_denseRange",
+            "def globalCandidateADiagonalDiffeomorphismOffShellHessian",
+            "theorem globalCandidateADiagonalDiffeomorphismOffShellHessian_smooth_eq_BRST",
+            "def globalCandidateADiagonalDiffeomorphismOffShellRieszOperator",
+            "theorem globalCandidateADiagonalDiffeomorphismOffShellRieszOperator_pairing",
+            "def globalCandidateADiagonalDiffeomorphismOffShellGraphAction",
+            "theorem globalCandidateADiagonalDiffeomorphismOffShellGraphAction_contDiff_two",
+            "def globalCandidateADiagonalDiffeomorphismOffShellGraphTypedCoreLinearMap",
+            "theorem globalCandidateADiagonalDiffeomorphismOffShellGraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def normalCoordinateLift",
+            "theorem normalCoordinateLift_oneLoop",
+            "def normalGraphCoordinate",
+            "theorem normalGraphCoordinate_hasDerivAt_zero",
+            "theorem normalGraphCoordinate_secondDeriv_zero",
+            "def normalGraphCoverMap",
+            "theorem normalGraphCoverMap_vadd",
+            "def normalGraph",
+            "theorem normalGraphCoverMap_injective",
+            "theorem normalGraph_injective",
+            "theorem normalGraph_zero",
+            "theorem normalGraph_mk_curve_contMDiff",
+            "theorem normalGraph_curve_contMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalNormalDisplacementCollarJointSmooth4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem normalCoordinateLift_contMDiff",
+            "theorem normalGraphCoordinateValue_joint_contMDiff",
+            "theorem normalGraphCoverQuotientMap_joint_contMDiff",
+            "def normalGraphInvariantMap",
+            "theorem normalGraphInvariantMap_vadd",
+            "theorem normalGraph_joint_contMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalNormalDisplacementCollarOrthogonalLiftBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def normalGraphDifferentialClass",
+            "theorem canonicalGlobalOrthogonalNormalLift_normalGraphDifferentialClass",
+            "theorem normalGraph_mk_mfderiv_zero_eq_canonicalGlobalOrthogonalNormalLift",
+        ),
+    ),
     "P0EFTJanusProgramPGlobalCandidateAGaugeGraphC2Chart4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "abbrev GlobalPairedGeneralMetricDeDonderGraphHilbert",
             "theorem globalPairedGeneralMetricDeDonderSmoothEmbedding_injective",
+            "theorem globalPairedGeneralMetricDeDonderSmoothEmbedding_denseRange",
             "def globalPairedGeneralMetricDeDonderGraphHessian",
             "theorem globalPairedGeneralMetricDeDonderGraphHessian_smooth",
             "abbrev GlobalCandidateAGaugeGraphHilbert",
             "def globalCandidateAGaugeGraphHessian",
+            "def globalCandidateAGaugeGraphHessianPullback",
             "theorem globalCandidateAGaugeGraphHessian_smooth",
             "def globalCandidateAGaugeGraphAction",
             "theorem globalCandidateAGaugeGraphAction_second_fderiv",
             "theorem globalCandidateAGaugeGraphAction_contDiff_two",
             "theorem globalCandidateAGaugeGraphAction_second_fderiv_smooth",
+            "theorem globalCandidateAGaugeSmoothEmbedding_denseRange",
             "def globalCandidateAGaugeGraphTypedCoreLinearMap",
             "globalCandidateAGaugeGraphTypedCoreLinearMap_injective",
         ),
@@ -5042,9 +5613,143 @@ PROGRAM_P_GATES = {
             "abbrev GlobalCandidateABulkGraphHilbert",
             "def globalCandidateABulkGraphHessian",
             "theorem globalCandidateABulkGraphHessian_apply",
+            "theorem globalCandidateABulkGraphHessian_comm",
             "def globalCandidateABulkGraphAction",
+            "theorem globalCandidateABulkGraphAction_eq_sectorActions",
+            "theorem globalCandidateABulkGraphAction_hasFDerivAt",
             "theorem globalCandidateABulkGraphAction_second_fderiv",
+            "theorem globalCandidateABulkGraphAction_contDiff",
             "theorem globalCandidateABulkGraphAction_contDiff_two",
+            "abbrev GlobalCandidateABulkSmoothCore",
+            "def globalCandidateABulkSmoothEmbedding",
+            "theorem globalCandidateABulkSmoothEmbedding_injective",
+            "theorem globalCandidateABulkSmoothEmbedding_denseRange",
+            "def globalCandidateABulkGaugePhysicalTangentLinearMap",
+            "def globalCandidateABulkMatterPhysicalTangentLinearMap",
+            "def globalCandidateABulkSmoothCorePhysicalTangentLinearMap",
+            "def globalCandidateABulkGraphTypedCoreLinearMap",
+            "theorem globalCandidateABulkGraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAAbelianExtendedBulkGraphC2Chart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalCandidateAAbelianExtendedBulkGraphHilbert",
+            "def extendedBulkSmoothEmbedding",
+            "theorem extendedBulkSmoothEmbedding_injective",
+            "theorem extendedBulkSmoothEmbedding_denseRange",
+            "def extendedBulkHessianCLM",
+            "theorem extendedBulkHessianCLM_apply",
+            "theorem extendedBulkHessianCLM_comm",
+            "def extendedBulkAction",
+            "theorem extendedBulkAction_second_fderiv",
+            "theorem extendedBulkAction_smooth_eq_BRSTAndSectorActions",
+            "theorem extendedBulkAction_contDiff_two",
+            "def extendedBulkGaugeFixedTangentLinearMap",
+            "def extendedBulkGraphTypedCoreLinearMap",
+            "theorem extendedBulkGraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalCandidateADiagonalExtendedBulkGraphHilbert",
+            "def diagonalExtendedBulkSmoothEmbedding",
+            "theorem diagonalExtendedBulkSmoothEmbedding_injective",
+            "theorem diagonalExtendedBulkSmoothEmbedding_denseRange",
+            "def diagonalExtendedBulkHessian",
+            "theorem diagonalExtendedBulkHessian_apply",
+            "theorem diagonalExtendedBulkHessian_comm",
+            "def diagonalExtendedBulkAction",
+            "theorem diagonalExtendedBulkAction_fderiv",
+            "theorem diagonalExtendedBulkAction_fderiv_hasFDerivAt",
+            "theorem diagonalExtendedBulkAction_contDiff_two",
+            "theorem diagonalExtendedBulkAction_smooth_eq_BRSTAndSectorActions",
+            "def diagonalExtendedBulkGaugeFixedTangentLinearMap",
+            "def diagonalExtendedBulkGraphTypedCoreLinearMap",
+            "theorem diagonalExtendedBulkGraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalCandidateADiagonalExtendedBulkL2Hilbert",
+            "def diagonalExtendedBulkL2Equiv",
+            "def diagonalExtendedBulkL2SmoothEmbedding",
+            "theorem diagonalExtendedBulkL2SmoothEmbedding_injective",
+            "theorem diagonalExtendedBulkL2SmoothEmbedding_denseRange",
+            "def diagonalExtendedBulkL2Hessian",
+            "theorem diagonalExtendedBulkL2Hessian_apply",
+            "theorem diagonalExtendedBulkL2Hessian_comm",
+            "def diagonalExtendedBulkL2Action",
+            "theorem diagonalExtendedBulkL2Action_eq_legacy",
+            "theorem diagonalExtendedBulkL2Action_hasFDerivAt",
+            "theorem diagonalExtendedBulkL2Action_hasSecondFDerivAt",
+            "theorem diagonalExtendedBulkL2Action_contDiff_two",
+            "theorem diagonalExtendedBulkL2Action_smooth_eq_BRSTAndSectorActions",
+            "def diagonalExtendedBulkL2RieszOperator",
+            "theorem diagonalExtendedBulkL2RieszOperator_pairing",
+            "theorem diagonalExtendedBulkL2RieszOperator_isSelfAdjoint",
+            "def diagonalExtendedBulkL2GraphTypedCoreLinearMap",
+            "theorem diagonalExtendedBulkL2GraphTypedCoreLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def GlobalCandidateAMatterFiniteGraphCore",
+            "def globalCandidateAMatterFiniteGraphInclusion",
+            "def globalCandidateAMatterFiniteGraphCoreEquiv",
+            "def globalCandidateAMatterFiniteGraphConfiguration",
+            "def globalCandidateAMatterFiniteGraphDataAt",
+            "def globalCandidateAMatterFiniteGraphActionFamily",
+            "theorem globalCandidateAMatterFiniteGraph_matterAction_eq",
+            "theorem globalCandidateAMatterFiniteGraph_covariantAction_eq",
+            "def globalCandidateAMatterFiniteGraphHessian",
+            "def globalCandidateAMatterFiniteGraphVariationalChart",
+            "theorem globalCandidateAMatterFiniteGraph_actionPullback_eq",
+            "theorem globalCandidateAMatterFiniteGraph_hessian_eq",
+            "theorem globalCandidateAMatterFiniteGraph_sameActionHessian",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def diagonalExtendedBulkLegacyTangentLinearMap",
+            "theorem diagonalExtendedBulkLegacyTangentLinearMap_d10_eq_zero",
+            "def diagonalExtendedBulkCovariantHessianOnCore",
+            "theorem diagonalExtendedBulkCovariantHessianOnCore_comm",
+            "def diagonalExtendedBulkGaugeFixingHessianOnCore",
+            "def diagonalExtendedBulkGaugeFixedCovariantHessianOnCore",
+            "theorem diagonalExtendedBulkGaugeFixedCovariantHessianOnCore_comm",
+            "def diagonalExtendedBulkGraphHessianOnCore",
+            "theorem diagonalExtendedBulkGraphHessianOnCore_comm",
+            "def diagonalExtendedBulkMatterLLHessianOnCore",
+            "theorem diagonalExtendedBulkMatterLLHessianOnCore_comm",
+            "def diagonalExtendedBulkPhysicalHessianResidualOnCore",
+            "theorem diagonalExtendedBulkPhysicalHessianResidualOnCore_comm",
+            "theorem diagonalExtendedBulkGaugeFixedCovariantHessian_decomposition",
+            "theorem diagonalExtendedBulkGaugeFixedCovariantHessian_eq_graph_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAAbelianExtendedBulkL2Riesz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalCandidateAAbelianExtendedBulkL2Hilbert",
+            "def extendedBulkL2Equiv",
+            "def extendedBulkL2SmoothEmbedding",
+            "theorem extendedBulkL2SmoothEmbedding_injective",
+            "theorem extendedBulkL2SmoothEmbedding_denseRange",
+            "def extendedBulkL2Hessian",
+            "theorem extendedBulkL2Hessian_comm",
+            "def extendedBulkL2Action",
+            "theorem extendedBulkL2Action_eq_legacy",
+            "theorem extendedBulkL2Action_hasFDerivAt",
+            "theorem extendedBulkL2Action_hasSecondFDerivAt",
+            "theorem extendedBulkL2Action_contDiff_two",
+            "def extendedBulkL2RieszOperator",
+            "theorem extendedBulkL2RieszOperator_pairing",
+            "theorem extendedBulkL2RieszOperator_isSelfAdjoint",
         ),
     ),
     "P0EFTJanusMappingTorusGlobalSmoothScalarWave4D.lean": (
@@ -5187,6 +5892,16 @@ PROGRAM_P_GATES = {
             "theorem spatialConformalEHHessian_symmetric",
             "theorem spatialConformalEHActionSecondDerivative_zero_eq_hessian",
             "theorem spatialConformalEHActionFirstDerivative_hasSecondDerivAt_zero",
+        ),
+    ),
+    "P0EFTJanusMappingTorusSpatialConformalEinsteinMaxwellCoreHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def spatialConformalEHHessianBilinForm",
+            "def spatialConformalEinsteinMaxwellCoreHessian",
+            "theorem spatialConformalEinsteinMaxwellCoreHessian_symmetric",
+            "theorem spatialConformalEinsteinMaxwellCoreHessian_metric_potential_eq_mixed",
+            "theorem spatialConformalEinsteinMaxwellCoreHessian_metric_potential",
         ),
     ),
     "P0EFTJanusMappingTorusSpatialConformalEinsteinHilbertClosure4D.lean": (
@@ -10733,7 +11448,13 @@ PROGRAM_P_GATES = {
             "def programPPrimitiveSpinCMatterHessianWeight",
             "def programPPrimitiveSpinCMatterGraphAction",
             "def programPPrimitiveSpinCMatterSmoothFiniteSynthesis",
+            "def programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap",
+            "def programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap",
             "def programPPrimitiveSpinCMatterGraphFinite",
+            "def programPPrimitiveSpinCMatterGraphFiniteLinearMap",
+            "def programPPrimitiveSpinCMatterGraphFiniteRealLinearMap",
+            "theorem programPPrimitiveSpinCMatterGraphFiniteLinearMap_injective",
+            "theorem programPPrimitiveSpinCMatterGraphFiniteLinearMap_denseRange",
             "theorem programPPrimitiveSpinCMatterGraphForm_comm",
             "theorem programPPrimitiveSpinCMatterSmoothAction_single_eq_graphAction",
             "theorem programPPrimitiveSpinCMatterSmoothAction_finite_eq_graphAction",
@@ -11275,10 +11996,33 @@ PROGRAM_P_GATES = {
             "theorem globalCandidateAFullLLEulerAlong_hasDerivAt",
             "theorem globalCandidateAFullLLGraphRieszOperator_isSymmetric",
             "def globalCandidateAFullLLGraphForm",
+            "def globalCandidateAFullLLGraphFormPullback",
             "def globalCandidateAFullLLGraphAction",
             "theorem globalCandidateAFullLLGraphAction_second_fderiv",
             "theorem globalCandidateAFullLLGraphAction_contDiff_two",
             "globalCandidateAFullLLGraphAction_second_fderiv_smooth",
+            "def fullLLSmoothIndependentLinearMap",
+            "def fullLLSmoothCompleteLinearMap",
+            "def fullLLSmoothMatterFreeLinearMap",
+            "def fullLLSmoothGeneralMetricLinearMap",
+            "def fullLLSmoothPhysicalTangentLinearMap",
+            "theorem fullLLSmoothPhysicalTangentLinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalFullLLOnShellFredholmReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem llField_eq_zero_of_stationary",
+            "theorem globalCandidateAFullLLContinuousHessian_zeroFlux",
+            "theorem globalCandidateAFullLLGraphRieszOperator_zeroFlux",
+            "def globalCandidateAFullLLFieldQuotientEquiv",
+            "def globalCandidateAFullLLFieldQuotientRieszOperator",
+            "theorem globalCandidateAFullLLFieldQuotientRieszOperator_mkQL",
+            "theorem globalCandidateAFullLLFieldQuotientRieszOperator_eq_id",
+            "globalCandidateAFullLLFieldQuotientRieszOperator_fredholm_criterion",
+            "theorem globalCandidateAFullLLFieldQuotientRieszIndex_zero",
+            "globalCandidateAFullLLFieldQuotientRieszOperator_fredholm_criterion_of_stationary",
+            "theorem globalCandidateAFullLLFieldQuotientRieszIndex_zero_of_stationary",
         ),
     ),
     "P0EFTJanusProgramPGlobalGHYSameActionHessian4D.lean": (
@@ -11305,6 +12049,50 @@ PROGRAM_P_GATES = {
             "theorem globalCandidateANullBoundaryReparametrizationActionCurve_contDiff",
             "theorem globalCandidateANullBoundaryReparametrizationActionCurve_deriv",
             "theorem globalCandidateANullBoundaryReparametrizationActionCurve_secondDeriv",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalBoundaryReparametrizationHilbertHessian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev GlobalCandidateABoundaryReparametrizationHilbert",
+            "def globalCandidateABoundaryReparametrizationAction",
+            "theorem globalCandidateABoundaryReparametrizationAction_const_eq",
+            "theorem globalCandidateABoundaryReparametrizationAction_eq",
+            "theorem globalCandidateABoundaryReparametrizationAction_contDiff",
+            "theorem globalCandidateABoundaryReparametrizationAction_hasFDerivAt",
+            "def globalCandidateABoundaryReparametrizationHessian",
+            "theorem globalCandidateABoundaryReparametrizationHessian_eq_zero",
+            "theorem globalCandidateABoundaryReparametrizationAction_hasSecondFDerivAt",
+            "theorem globalCandidateABoundaryReparametrizationHessian_symmetric",
+            "def globalCandidateABoundaryReparametrizationRieszOperator",
+            "theorem globalCandidateABoundaryReparametrizationRieszOperator_pairing",
+            "theorem globalCandidateABoundaryReparametrizationRieszOperator_isSelfAdjoint",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateABoundaryReparametrizationVariationalChart4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def scaledGlobalNullFaceDatum",
+            "def globalCandidateABoundaryReparametrizationBoundaryDataAt",
+            "def globalCandidateABoundaryReparametrizationDataAt",
+            "theorem globalCandidateABoundaryReparametrization_nullAction_eq",
+            "def globalCandidateABoundaryReparametrizationActionFamily",
+            "theorem globalCandidateABoundaryReparametrizationActionFamily_configurationAt",
+            "theorem globalCandidateABoundaryReparametrization_covariantAction_eq",
+            "def globalCandidateABoundaryReparametrizationVariationalChart",
+            "theorem globalCandidateABoundaryReparametrization_actionPullback_eq",
+            "theorem globalCandidateABoundaryReparametrization_hessian_eq_zero",
+            "def globalCandidateABoundaryReparametrizationExtendActionFamily",
+            "def globalCandidateABoundaryReparametrizationExtendVariationalChart",
+            "theorem globalCandidateABoundaryReparametrizationExtend_actionPullback_eq",
+            "def globalCandidateABoundaryReparametrizationFirstProjection",
+            "theorem globalCandidateABoundaryReparametrizationExtend_hessian_apply",
+            "theorem globalCandidateABoundaryReparametrizationExtend_hessian_eq",
+            "theorem globalCandidateABoundaryReparametrizationExtend_hessian_boundary_right",
+            "theorem globalCandidateABoundaryReparametrizationExtend_hessian_boundary_left",
+            "def globalCandidateAMatterBoundaryReparametrizationVariationalChart",
+            "theorem globalCandidateAMatterBoundaryReparametrization_actionPullback_eq",
+            "theorem globalCandidateAMatterBoundaryReparametrization_sameActionHessian",
         ),
     ),
     "P0EFTJanusProgramPGlobalHessianUnboundedRealization4D.lean": (
@@ -16445,7 +17233,7 @@ def assert_terminal_gate_registry(repo_root: Path = REPO_ROOT) -> tuple[int, int
             raise AssertionError(
                 f"terminal gate {identifier} is only a ProgramStatus contract"
             )
-        if re.search(r"\b(?:sorry|admit|axiom)\b", module_source):
+        if contains_lean_proof_placeholder(module_source):
             raise AssertionError(f"proof placeholder in terminal gate {identifier}")
 
         facade_source = (repo_root / evidence.facade).read_text(encoding="utf-8")
@@ -16469,7 +17257,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             raise AssertionError(
                 f"missing Program P structured-jet declaration: {declaration}"
             )
-    if re.search(r"\b(?:sorry|admit|axiom)\b", structured_jet_groupoid):
+    if contains_lean_proof_placeholder(structured_jet_groupoid):
         raise AssertionError("proof placeholder found in structured-jet groupoid gate")
 
     ambient_pointwise_reduction = (
@@ -16480,7 +17268,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             raise AssertionError(
                 f"missing ambient pointwise reduction declaration: {declaration}"
             )
-    if re.search(r"\b(?:sorry|admit|axiom)\b", ambient_pointwise_reduction):
+    if contains_lean_proof_placeholder(ambient_pointwise_reduction):
         raise AssertionError(
             "proof placeholder found in ambient pointwise orthonormal reduction gate"
         )
@@ -16493,7 +17281,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             raise AssertionError(
                 f"missing ambient smooth reduction declaration: {declaration}"
             )
-    if re.search(r"\b(?:sorry|admit|axiom)\b", ambient_smooth_reduction):
+    if contains_lean_proof_placeholder(ambient_smooth_reduction):
         raise AssertionError(
             "proof placeholder found in ambient smooth orthonormal reduction gate"
         )
@@ -16503,7 +17291,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         for declaration in declarations:
             if declaration not in source:
                 raise AssertionError(f"missing Program P declaration: {declaration}")
-        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+        if contains_lean_proof_placeholder(source):
             raise AssertionError(f"proof placeholder found in {filename}")
 
         facade = facades.setdefault(
@@ -16519,7 +17307,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         for declaration in declarations:
             if declaration not in source:
                 raise AssertionError(f"missing Program P/D10 declaration: {declaration}")
-        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+        if contains_lean_proof_placeholder(source):
             raise AssertionError(f"proof placeholder found in {filename}")
 
         facade = facades.setdefault(
@@ -16539,7 +17327,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         for declaration in declarations:
             if declaration not in source:
                 raise AssertionError(f"missing finite-mode D10 declaration: {declaration}")
-        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+        if contains_lean_proof_placeholder(source):
             raise AssertionError(f"proof placeholder found in {filename}")
 
         facade = facades.setdefault(
@@ -16559,7 +17347,7 @@ def assert_program_p_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
         for declaration in declarations:
             if declaration not in source:
                 raise AssertionError(f"missing infinite-circle D10 declaration: {declaration}")
-        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+        if contains_lean_proof_placeholder(source):
             raise AssertionError(f"proof placeholder found in {filename}")
 
         facade = facades.setdefault(
