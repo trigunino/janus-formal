@@ -36,6 +36,8 @@ open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
+open P0EFTJanusMappingTorusCandidateAFunctionalVariation4D
+open P0EFTJanusMappingTorusInducedFieldVariation4D
 open P0EFTJanusMappingTorusDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusPTSymmetricDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusPTSymmetricLLWeakEulerJacobiOperator4D
@@ -56,7 +58,14 @@ open P0EFTJanusFullLLVariationalAPI4D
 open P0EFTJanusFullLLHessianExplicitAdditivity4D
 open P0EFTJanusFullLLHessianExplicitPolarization4D
 open P0EFTJanusFullLLSameActionFredholmRestriction4D
+open P0EFTJanusProgramPCommonGeometricDomain4D
+open P0EFTJanusProgramPCommonLLActionVariation4D
+open P0EFTJanusD9D10ExactFieldContentBridge4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPSpinorialCompleteVariation4D
+open P0EFTJanusCompleteVariationModuleCore4D
+open P0EFTJanusIndependentFieldVariationLinearSpace4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPGlobalBoundaryCompletion4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
@@ -1357,6 +1366,166 @@ theorem globalCandidateAFullLLDirection_eq_addDirection
           (analysis.llH1Data period hPeriod) direction.2) :=
   rfl
 
+/-! ## Faithful smooth-core attachment to the typed physical tangent -/
+
+/-- The three LL smooth slots inserted in the existing independent variation
+record, with every non-LL direction held at zero. -/
+def fullLLSmoothIndependentLinearMap
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLSmooth period hPeriod analysis →ₗ[Real]
+      IndependentFieldVariation period hPeriod where
+  toFun := fun direction =>
+    { metrics := zeroSmoothDiagonalMetricVariation period hPeriod
+      matter := 0
+      gauge := 0
+      ghosts := 0
+      auxiliaries := 0
+      llAuxMetric := direction.1.1
+      llMeasure := direction.1.2
+      llField := direction.2.toTest }
+  map_add' first second := by
+    apply IndependentFieldVariation.ext
+    case hMetrics =>
+      change zeroSmoothDiagonalMetricVariation period hPeriod =
+        zeroSmoothDiagonalMetricVariation period hPeriod +
+          zeroSmoothDiagonalMetricVariation period hPeriod
+      have hZero :
+          zeroSmoothDiagonalMetricVariation period hPeriod =
+            (0 : SmoothDiagonalMetricVariation period hPeriod) := by
+        apply SmoothDiagonalMetricVariation.ext <;> rfl
+      rw [hZero]
+      exact (add_zero 0).symm
+    case hMatter =>
+      change (0 : _) = 0 + 0
+      exact (zero_add 0).symm
+    case hGauge =>
+      change (0 : _) = 0 + 0
+      exact (zero_add 0).symm
+    case hGhosts =>
+      change (0 : _) = 0 + 0
+      exact (zero_add 0).symm
+    case hAuxiliaries =>
+      change (0 : _) = 0 + 0
+      exact (zero_add 0).symm
+    case hLLAuxMetric =>
+      change first.1.1 + second.1.1 = first.1.1 + second.1.1
+      rfl
+    case hLLMeasure =>
+      change first.1.2 + second.1.2 = first.1.2 + second.1.2
+      rfl
+    case hLLField =>
+      change first.2.toTest + second.2.toTest =
+        first.2.toTest + second.2.toTest
+      rfl
+  map_smul' scalar direction := by
+    apply IndependentFieldVariation.ext
+    case hMetrics =>
+      change zeroSmoothDiagonalMetricVariation period hPeriod =
+        scalar • zeroSmoothDiagonalMetricVariation period hPeriod
+      have hZero :
+          zeroSmoothDiagonalMetricVariation period hPeriod =
+            (0 : SmoothDiagonalMetricVariation period hPeriod) := by
+        apply SmoothDiagonalMetricVariation.ext <;> rfl
+      rw [hZero]
+      exact (smul_zero scalar).symm
+    case hMatter =>
+      change (0 : _) = scalar • 0
+      exact (smul_zero scalar).symm
+    case hGauge =>
+      change (0 : _) = scalar • 0
+      exact (smul_zero scalar).symm
+    case hGhosts =>
+      change (0 : _) = scalar • 0
+      exact (smul_zero scalar).symm
+    case hAuxiliaries =>
+      change (0 : _) = scalar • 0
+      exact (smul_zero scalar).symm
+    case hLLAuxMetric =>
+      change scalar • direction.1.1 = scalar • direction.1.1
+      rfl
+    case hLLMeasure =>
+      change scalar • direction.1.2 = scalar • direction.1.2
+      rfl
+    case hLLField =>
+      change scalar • direction.2.toTest = scalar • direction.2.toTest
+      rfl
+
+def fullLLSmoothCompleteLinearMap
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLSmooth period hPeriod analysis →ₗ[Real]
+      ProgramPCompleteVariation4D period hPeriod :=
+  (independentCompleteVariationLinearMap period hPeriod).comp
+    (fullLLSmoothIndependentLinearMap period hPeriod analysis)
+
+def fullLLSmoothMatterFreeLinearMap
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLSmooth period hPeriod analysis →ₗ[Real]
+      MatterFreeCompleteVariation period hPeriod where
+  toFun := fun direction =>
+    ⟨fullLLSmoothCompleteLinearMap period hPeriod analysis direction, rfl⟩
+  map_add' first second := by
+    apply Subtype.ext
+    exact (fullLLSmoothCompleteLinearMap
+      period hPeriod analysis).map_add first second
+  map_smul' scalar direction := by
+    apply Subtype.ext
+    exact (fullLLSmoothCompleteLinearMap
+      period hPeriod analysis).map_smul scalar direction
+
+def fullLLSmoothGeneralMetricLinearMap
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLSmooth period hPeriod analysis →ₗ[Real]
+      GeneralMetricMatterFreeVariation period hPeriod where
+  toFun := fun direction =>
+    ⟨fullLLSmoothMatterFreeLinearMap period hPeriod analysis direction, rfl⟩
+  map_add' first second := by
+    apply Subtype.ext
+    exact (fullLLSmoothMatterFreeLinearMap
+      period hPeriod analysis).map_add first second
+  map_smul' scalar direction := by
+    apply Subtype.ext
+    exact (fullLLSmoothMatterFreeLinearMap
+      period hPeriod analysis).map_smul scalar direction
+
+/-- Honest attachment of the full LL smooth core to the D10-free physical
+tangent.  This deliberately does not extend to arbitrary graph-completion
+vectors. -/
+def fullLLSmoothPhysicalTangentLinearMap
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLSmooth period hPeriod analysis →ₗ[Real]
+      GlobalPhysicalFieldTangent period hPeriod configuration :=
+  (LinearMap.inl Real
+      (GeneralMetricMatterFreeVariation period hPeriod)
+      (Sector →
+        D9PrimitiveSpinCSmoothSection period hPeriod .positiveQuarter)).comp
+    (fullLLSmoothGeneralMetricLinearMap period hPeriod analysis)
+
+theorem fullLLSmoothPhysicalTangentLinearMap_injective
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    Function.Injective
+      (fullLLSmoothPhysicalTangentLinearMap period hPeriod analysis) := by
+  intro first second hEqual
+  have hAux := congrArg
+    (fun tangent : GlobalPhysicalFieldTangent period hPeriod configuration =>
+      tangent.completeVariation.independent.llAuxMetric) hEqual
+  have hMeasure := congrArg
+    (fun tangent : GlobalPhysicalFieldTangent period hPeriod configuration =>
+      tangent.completeVariation.independent.llMeasure) hEqual
+  have hField := congrArg
+    (fun tangent : GlobalPhysicalFieldTangent period hPeriod configuration =>
+      tangent.completeVariation.independent.llField) hEqual
+  change first.1.1 = second.1.1 at hAux
+  change first.1.2 = second.1.2 at hMeasure
+  change first.2.toTest = second.2.toTest at hField
+  exact Prod.ext (Prod.ext hAux hMeasure)
+    (LLH1Smooth.ext period hPeriod hField)
+
 @[simp]
 theorem globalCandidateAFullLLAuxProjection_smooth
     {configuration : GlobalFieldConfiguration period hPeriod}
@@ -1879,6 +2048,18 @@ local instance globalFullLLC2GraphNormedSpace
       (GlobalFullLLGraphHilbert period hPeriod data analysis) :=
   (globalFullLLGraphInnerProductSpace period hPeriod data analysis).toNormedSpace
 
+local instance (priority := 10000) globalFullLLC2GraphModule
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    Module Real
+      (GlobalFullLLGraphHilbert period hPeriod data analysis) :=
+  (globalFullLLC2GraphNormedSpace period hPeriod data analysis).toModule
+
 local instance globalFullLLC2GraphDualNormedAddCommGroup
     {configuration : GlobalFieldConfiguration period hPeriod}
     {couplings : GlobalCandidateAActionCouplings}
@@ -2209,6 +2390,38 @@ theorem globalCandidateAFullLLGraphForm_comm
     globalCandidateAFullLLGraphForm_apply]
   exact globalCandidateAFullLLGraphRieszOperator_symmetric
     period hPeriod data analysis first second
+
+/-- Pull the complete LL graph form back along a bounded linear chart map.
+The complete graph's calculus structures remain internal to this gate. -/
+def globalCandidateAFullLLGraphFormPullback
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace E : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    [domainGroup : NormedAddCommGroup E]
+    [domainNorm : NormedSpace Real E]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (projection : E →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis) :
+    E →L[Real] E →L[Real] Real :=
+  @ContinuousLinearMap.bilinearComp
+    Real Real Real
+    (GlobalFullLLGraphHilbert period hPeriod data analysis)
+    (GlobalFullLLGraphHilbert period hPeriod data analysis) Real
+    inferInstance inferInstance inferInstance
+    inferInstance inferInstance inferInstance
+    (globalFullLLC2GraphNormedSpace period hPeriod data analysis)
+    (globalFullLLC2GraphNormedSpace period hPeriod data analysis) inferInstance
+    (RingHom.id Real) (RingHom.id Real)
+    E E inferInstance inferInstance
+    Real Real inferInstance inferInstance inferInstance inferInstance
+    (RingHom.id Real) (RingHom.id Real)
+    (RingHom.id Real) (RingHom.id Real)
+    inferInstance inferInstance inferInstance inferInstance inferInstance
+    (globalCandidateAFullLLGraphForm period hPeriod data analysis)
+    projection projection
 
 /-- Genuine quadratic action on the complete three-slot LL graph. -/
 def globalCandidateAFullLLGraphAction

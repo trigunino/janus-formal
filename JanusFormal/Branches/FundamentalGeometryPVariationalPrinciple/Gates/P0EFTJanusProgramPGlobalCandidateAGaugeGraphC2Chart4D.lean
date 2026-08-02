@@ -251,6 +251,29 @@ theorem globalPairedGeneralMetricDeDonderSmoothEmbedding_injective
         period hPeriod (metric .minus)
       exact congrArg Prod.snd hEqual
 
+theorem globalPairedGeneralMetricDeDonderSmoothEmbedding_denseRange
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
+    DenseRange
+      (globalPairedGeneralMetricDeDonderSmoothEmbedding
+        period hPeriod metric) := by
+  have hProduct :
+      DenseRange
+        (Prod.map
+          (globalGeneralMetricDeDonderPairingSmoothEmbedding
+            period hPeriod (metric .plus))
+          (globalGeneralMetricDeDonderPairingSmoothEmbedding
+            period hPeriod (metric .minus))) :=
+    (globalGeneralMetricDeDonderPairingSmoothEmbedding_denseRange
+      period hPeriod (metric .plus)).prodMap
+      (globalGeneralMetricDeDonderPairingSmoothEmbedding_denseRange
+        period hPeriod (metric .minus))
+  apply Dense.mono _ hProduct
+  rintro _ ⟨⟨plus, minus⟩, rfl⟩
+  refine ⟨fun
+    | .plus => plus
+    | .minus => minus, ?_⟩
+  rfl
+
 private def globalPairedGeneralMetricDeDonderPlusFeature
     (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
     GlobalPairedGeneralMetricDeDonderGraphHilbert
@@ -640,6 +663,20 @@ theorem globalCandidateAGaugeSmoothEmbedding_injective
       period hPeriod metric
     exact congrArg (fun value => value.2) hEqual
 
+theorem globalCandidateAGaugeSmoothEmbedding_denseRange
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
+    DenseRange
+      (globalCandidateAGaugeSmoothEmbedding
+        period hPeriod metric) := by
+  have hProduct :=
+    (globalPairedGeneralMetricDeDonderSmoothEmbedding_denseRange
+      period hPeriod metric).prodMap
+      (globalPairedAbelianLorenzSmoothEmbedding_denseRange
+        period hPeriod metric)
+  apply Dense.mono _ hProduct
+  rintro _ ⟨⟨metricCore, lorenzCore⟩, rfl⟩
+  exact ⟨(metricCore, lorenzCore), rfl⟩
+
 private def globalCandidateAGaugeDeDonderPlusFeature
     (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
     GlobalCandidateAGaugeGraphHilbert
@@ -853,6 +890,33 @@ theorem globalCandidateAGaugeGraphHessian_comm
     globalCandidateAGaugeGraphHessian_apply,
     globalPairedGeneralMetricDeDonderGraphHessian_comm,
     globalPairedAbelianLorenzGraphHessian_comm]
+
+/-- Pull the gauge Hessian back along a bounded linear chart map.  This keeps
+the chart's chosen calculus structures encapsulated for downstream products. -/
+def globalCandidateAGaugeGraphHessianPullback
+    {E : Type*}
+    [domainGroup : NormedAddCommGroup E]
+    [domainNorm : NormedSpace Real E]
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod)
+    (projection : E →L[Real]
+      GlobalCandidateAGaugeGraphHilbert period hPeriod metric) :
+    E →L[Real] E →L[Real] Real :=
+  @ContinuousLinearMap.bilinearComp
+    Real Real Real
+    (GlobalCandidateAGaugeGraphHilbert period hPeriod metric)
+    (GlobalCandidateAGaugeGraphHilbert period hPeriod metric) Real
+    inferInstance inferInstance inferInstance
+    inferInstance inferInstance inferInstance
+    (candidateGaugeGraphNormedSpace period hPeriod metric)
+    (candidateGaugeGraphNormedSpace period hPeriod metric) inferInstance
+    (RingHom.id Real) (RingHom.id Real)
+    E E inferInstance inferInstance
+    Real Real inferInstance inferInstance inferInstance inferInstance
+    (RingHom.id Real) (RingHom.id Real)
+    (RingHom.id Real) (RingHom.id Real)
+    inferInstance inferInstance inferInstance inferInstance inferInstance
+    (globalCandidateAGaugeGraphHessian period hPeriod metric)
+    projection projection
 
 /-- On the common smooth core, this is exactly the sum of the two physical
 de Donder pairings and the unchanged reduced Abelian BRST polarization. -/

@@ -30,6 +30,7 @@ open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPCommonGeometricDomain4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusD9D10ExactFieldContentBridge4D
@@ -279,6 +280,70 @@ theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesis_apply
       primitiveSpinCGeometricSignedDiracFiniteSynthesis
         period hPeriod (coefficients.curry sector) :=
   rfl
+
+/-- Finite signed coefficients synthesized linearly into the genuine smooth
+two-sector SpinC tangent. -/
+def programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap :
+    ProgramPPrimitiveSpinCMatterFiniteCoefficients →ₗ[Complex]
+      ProgramPPrimitiveSpinCMatterSmoothField period hPeriod where
+  toFun := programPPrimitiveSpinCMatterSmoothFiniteSynthesis
+    period hPeriod
+  map_add' first second := by
+    funext sector
+    have hCurry :
+        (first + second).curry sector =
+          first.curry sector + second.curry sector := by
+      ext mode
+      rfl
+    change
+      primitiveSpinCGeometricSignedDiracFiniteSynthesis
+          period hPeriod ((first + second).curry sector) =
+        primitiveSpinCGeometricSignedDiracFiniteSynthesis
+            period hPeriod (first.curry sector) +
+          primitiveSpinCGeometricSignedDiracFiniteSynthesis
+            period hPeriod (second.curry sector)
+    rw [hCurry, map_add]
+  map_smul' scalar coefficients := by
+    funext sector
+    have hCurry :
+        (scalar • coefficients).curry sector =
+          scalar • coefficients.curry sector := by
+      ext mode
+      rfl
+    change
+      primitiveSpinCGeometricSignedDiracFiniteSynthesis
+          period hPeriod ((scalar • coefficients).curry sector) =
+        scalar • primitiveSpinCGeometricSignedDiracFiniteSynthesis
+          period hPeriod (coefficients.curry sector)
+    rw [hCurry, map_smul]
+
+/-- Real-linear restriction of the finite smooth matter synthesis. -/
+def programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap :
+    ProgramPPrimitiveSpinCMatterFiniteCoefficients →ₗ[Real]
+      ProgramPPrimitiveSpinCMatterSmoothField period hPeriod where
+  toFun := programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap
+    period hPeriod
+  map_add' first second := by
+    exact map_add
+      (programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap
+        period hPeriod) first second
+  map_smul' real coefficients := by
+    have hCoefficients :
+        real • coefficients = (real : Complex) • coefficients := by
+      ext mode
+      rfl
+    rw [hCoefficients, map_smul]
+    funext sector
+    change
+      d9PrimitiveSpinCComplexScalarSection
+          period hPeriod .positiveQuarter (real : Complex)
+          ((programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap
+            period hPeriod) coefficients sector) =
+        real •
+          (programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap
+            period hPeriod) coefficients sector
+    exact d9PrimitiveSpinCComplexScalarSection_ofReal
+      period hPeriod .positiveQuarter real _
 
 private theorem primitiveSpinCGeometricSignedFiniteSynthesis_embedding
     (coefficients : PrimitiveSpinCGeometricSignedFiniteCoefficients) :
@@ -575,9 +640,129 @@ theorem programPPrimitiveSpinCMatterGraphFinite_snd
     (programPPrimitiveSpinCMatterGraphFinite
       period hPeriod massSquared coefficients).1.2 =
       programPPrimitiveSpinCMatterFiniteHilbertEmbedding
-        (programPPrimitiveSpinCMatterFiniteHessian
+      (programPPrimitiveSpinCMatterFiniteHessian
           period hPeriod massSquared coefficients) :=
   rfl
+
+/-- Linear finite-core inclusion into the exact matter graph. -/
+def programPPrimitiveSpinCMatterGraphFiniteLinearMap
+    (massSquared : Real) :
+    ProgramPPrimitiveSpinCMatterFiniteCoefficients →ₗ[Complex]
+      ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod massSquared where
+  toFun := programPPrimitiveSpinCMatterGraphFinite period hPeriod massSquared
+  map_add' first second := by
+    apply Subtype.ext
+    apply Prod.ext
+    · simp
+    · simp
+  map_smul' scalar coefficients := by
+    apply Subtype.ext
+    apply Prod.ext
+    · simp
+    · simp
+
+/-- Real-linear restriction of the finite-core inclusion into the graph. -/
+def programPPrimitiveSpinCMatterGraphFiniteRealLinearMap
+    (massSquared : Real) :
+    ProgramPPrimitiveSpinCMatterFiniteCoefficients →ₗ[Real]
+      ProgramPPrimitiveSpinCMatterGraphDomain
+        period hPeriod massSquared where
+  toFun :=
+    programPPrimitiveSpinCMatterGraphFiniteLinearMap
+      period hPeriod massSquared
+  map_add' first second :=
+    (programPPrimitiveSpinCMatterGraphFiniteLinearMap
+      period hPeriod massSquared).map_add first second
+  map_smul' scalar coefficients := by
+    have hCoefficients :
+        scalar • coefficients = (scalar : Complex) • coefficients := by
+      ext mode
+      rfl
+    rw [hCoefficients, map_smul]
+    exact (RCLike.real_smul_eq_coe_smul
+      (K := Complex) scalar
+        (programPPrimitiveSpinCMatterGraphFiniteLinearMap
+          period hPeriod massSquared coefficients)).symm
+
+theorem programPPrimitiveSpinCMatterGraphFiniteLinearMap_injective
+    (massSquared : Real) :
+    Function.Injective
+      (programPPrimitiveSpinCMatterGraphFiniteLinearMap
+        period hPeriod massSquared) := by
+  intro first second hEqual
+  have hFirst := congrArg (fun state => state.1.1) hEqual
+  ext mode
+  have hMode := congrArg
+    (fun state : ProgramPPrimitiveSpinCMatterHilbert => state mode) hFirst
+  simpa [programPPrimitiveSpinCMatterGraphFiniteLinearMap] using hMode
+
+/-- Finite signed matter modes are dense for the actual graph norm, not only
+for the ambient coefficient Hilbert norm. -/
+theorem programPPrimitiveSpinCMatterGraphFiniteLinearMap_denseRange
+    (massSquared : Real) :
+    DenseRange
+      (programPPrimitiveSpinCMatterGraphFiniteLinearMap
+        period hPeriod massSquared) := by
+  rw [denseRange_iff_closure_range]
+  apply Set.eq_univ_of_forall
+  intro state
+  let closedRange :=
+    (LinearMap.range
+      (programPPrimitiveSpinCMatterGraphFiniteLinearMap
+        period hPeriod massSquared)).topologicalClosure
+  change state ∈ closedRange
+  let term := fun mode : ProgramPPrimitiveSpinCMatterMode =>
+    programPPrimitiveSpinCMatterGraphFiniteLinearMap
+      period hPeriod massSquared
+      (Finsupp.single mode (state.1.1 mode))
+  have hTermFst :
+      (fun mode => (term mode).1.1) =
+        (fun mode => lp.single 2 mode (state.1.1 mode)) := by
+    funext mode
+    ext other
+    dsimp [term, programPPrimitiveSpinCMatterGraphFiniteLinearMap]
+    rw [programPPrimitiveSpinCMatterFiniteHilbertEmbedding_apply]
+    change (Finsupp.single mode (state.1.1 mode)) other =
+      (lp.single 2 mode (state.1.1 mode) :
+        ProgramPPrimitiveSpinCMatterHilbert) other
+    by_cases hOther : other = mode
+    · subst other
+      simp
+    · rw [Finsupp.single_eq_of_ne hOther]
+      simp [hOther]
+  have hFst : HasSum (fun mode => (term mode).1.1) state.1.1 := by
+    rw [hTermFst]
+    exact lp.hasSum_single ENNReal.ofNat_ne_top state.1.1
+  have hTermSnd :
+      (fun mode => (term mode).1.2) =
+        (fun mode => lp.single 2 mode (state.1.2 mode)) := by
+    funext mode
+    ext other
+    rw [complexDiagonalGraphDomain_relation
+      ProgramPPrimitiveSpinCMatterMode
+      (programPPrimitiveSpinCMatterHessianWeight
+        period hPeriod massSquared) (term mode) other]
+    rw [show (term mode).1.1 = lp.single 2 mode (state.1.1 mode) from
+      congrFun hTermFst mode]
+    by_cases hOther : other = mode
+    · subst other
+      rw [complexDiagonalGraphDomain_relation
+        ProgramPPrimitiveSpinCMatterMode
+        (programPPrimitiveSpinCMatterHessianWeight
+          period hPeriod massSquared) state mode]
+      simp
+    · simp [lp.single_apply, hOther]
+  have hSnd : HasSum (fun mode => (term mode).1.2) state.1.2 := by
+    rw [hTermSnd]
+    exact lp.hasSum_single ENNReal.ofNat_ne_top state.1.2
+  have hGraph : HasSum term state := by
+    rw [HasSum, tendsto_subtype_rng]
+    simpa [HasSum, term] using hFst.prodMk hSnd
+  apply (Submodule.isClosed_topologicalClosure _).mem_of_tendsto hGraph
+  filter_upwards with modes
+  apply Submodule.le_topologicalClosure
+  refine ⟨∑ mode ∈ modes, Finsupp.single mode (state.1.1 mode), ?_⟩
+  simp [term]
 
 /-- Inclusion of the graph domain into the ambient Hilbert space, over the
 real scalars of the variational action. -/
