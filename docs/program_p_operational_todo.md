@@ -3068,11 +3068,11 @@ Mise à jour `HESSIAN-GLOBAL-01` (2026-08-01) : la gate
 réduit le raccord au vrai second
 Fréchet est désormais réduit exactement à un seul résidu physique sur le cœur
 diagonal. Pour tout pont de carte existant fourni,
-`H_covariant_gauge-fixed = H_graphe + R_physique`, et l'égalité cherchée est
-équivalente à `R_physique = 0`. BRST, matière et LL sont déjà soustraits. La
-chaîne restante est donc : construire l'habitant du pont de carte, annuler ce
-résidu par les blocs Einstein--Maxwell métrique général et normal/bord général,
-puis seulement traiter domaines/adjoints et somme Fredholm. Aucun nouvel
+`H_covariant_gauge-fixed = H_graphe + R_ancien`. La gate
+`P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D` établit
+maintenant `R_ancien = H_physique + défaut_même_action(matière--LL)`. La cible
+correcte conserve donc `H_physique` et n'annule que ce défaut; annuler tout
+`R_ancien` supprimerait la dynamique Einstein--Maxwell/bord. Aucun nouvel
 axiome n'est ajouté par ce raccord.
 
 La gate
@@ -3093,6 +3093,10 @@ Hessien est le pullback par la première projection, donc les blocs purs et
 mixtes de normalisation sont nuls. L'instance matière-plus-normalisation garde
 exactement le Hessien `2D+m²`.
 
+Registre autoritatif : [carte de fermeture
+`HESSIAN-GLOBAL-01`](hessian_global_01_closure_map.md). Les listes historiques
+de cette page ne créent aucune obligation supplémentaire.
+
 Mise à jour `HESSIAN-GLOBAL-01` (2026-08-02) :
 `P0EFTJanusProgramPGlobalLocalVariationalChart4D` ferme l’obstacle
 d’interface. Une carte peut désormais porter ses données physiques seulement
@@ -3101,15 +3105,17 @@ neuf propriétés `ContDiffWithinAt` dans `U`. L’ouverture donne le vrai Euler
 le Hessien de Fréchet ambiants sur tout l’espace tangent; le Hessien est
 symétrique. Les cartes historiques sont retrouvées par `U = univ` avec action,
 Euler et Hessien identiques. Le ticket devient `FRONTIER` : l'habitant
-intrinsèque est maintenant encodé dans son coin fort; il reste à prouver sa
-bijectivité Sylvester forte et à annuler le résidu.
+intrinsèque est encodé dans son coin fort et la sélection positive ferme sa
+bijectivité Sylvester; restent la famille jointe et les blocs physiques à
+identifier sans annuler leur dynamique.
 
 `P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D`
 raccorde désormais cette API au cœur lisse diagonal dense et injectif. Pour
 tout point admissible, le Hessien covariant gauge-fixé est exactement le
-Hessien graphe plus l’unique résidu physique déjà nommé, et l’égalité au
-graphe équivaut à l’annulation de ce résidu. Les blocs BRST, matière et LL sont
-réutilisés sans duplication; `U = univ` redonne exactement l’ancien pont.
+graphe augmenté par les sept blocs physiques, plus le seul défaut same-action
+matière--LL. L’accord équivaut à l’annulation de ce défaut, pas de la Hessienne
+physique. Les blocs BRST, matière et LL sont réutilisés sans duplication;
+`U = univ` redonne exactement l’ancien pont.
 La racine ponctuelle générale possède maintenant son propre domaine de
 perturbations ouvert centré en `0`, une branche `C²` sur tout le domaine et
 l’identité carrée exacte, via
@@ -3170,9 +3176,41 @@ jauge et fantômes forment un produit complet, compatible dans `L²`, avec
   branche locale `C²` sur tout un ouvert. La portée est la strate régulière; le type
   `GlobalCandidateAGeometry` non qualifié admet encore des racines singulières.
   Le sous-type régulier explicite et le prédicat correspondant sur les cartes
-  locales sont maintenant construits. Pour une affirmation non qualifiée,
-  restent donc la régularité intrinsèque de la géométrie physique choisie, la régularité jointe
-  paramètre–point d'espace-temps et les neuf blocs d'action.
+  locales sont maintenant construits. La gate
+  `P0EFTJanusProgramPGlobalCandidateAPositiveSelectedRootSylvester4D` prouve que
+  la racine stockée, lorsqu’elle est exactement le sélecteur spectral positif
+  physique existant, est intrinsèquement Sylvester-régulière et active la
+  branche locale forte sans nouvel axiome.
+  `P0EFTJanusProgramPGlobalCandidateALocalRootJointRegularity4D` ferme ensuite
+  le passage fonctionnel : toute cible forte `C²` fournit un domaine paramètre
+  ouvert, une racine sélectionnée `C²`, le carré exact et des coefficients
+  conjointement continus en paramètre et point d'espace-temps.
+  La couche d'ordre deux est désormais effective : le cœur scalaire C²
+  valeur/premier jet/second jet est complet, son produit satisfait le Leibniz
+  exact et il se projette continûment dans le cœur fort. Les matrices finies C²
+  ont un produit associatif, un carré `C∞`, le Sylvester exact et une branche
+  locale C² sur un ouvert; la gate jointe contrôle en plus tous les jets des
+  coefficients en paramètre et espace-temps. Les gates
+  `P0EFTJanusProgramPGlobalCandidateAC2FiniteFrameCorner4D`,
+  `...CornerAlgebra4D` et `...SylvesterLocalRoot4D` transportent enfin la
+  sélection intrinsèque dans le coin C² complet et activent sa branche locale
+  par la régularité Sylvester déjà prouvée. Aucun nouvel axiome n'est utilisé.
+  Restent la vraie application métrique générale vers ce cœur C² et les neuf
+  blocs d'action.
+
+Mise à jour supplémentaire `HESSIAN-GLOBAL-01` (2026-08-02) : le pont
+`P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D` formule
+maintenant le vrai Hessien local et son split directement sur le tangent
+physique minimal D10-free; l’ancien pont étendu se factorise à D10 nul. Le
+graphe LL complet possède son Riesz off-shell borné auto-adjoint et son radical
+exact. Seuls la fermeture d’image et le Fredholm LL restent ouverts off shell;
+sur la branche stationnaire, le quotient Fredholm d’indice zéro est déjà fermé.
+
+Mise à jour P1 (2026-08-02) :
+`P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D` ferme H05. Sa gate
+terminale prouve l'appartenance du point physique à l'ouvert métrique général,
+la dépendance `C²` de l'action et son égalité exacte avec
+`intrinsicEinsteinHilbertAction`. La chaîne active commence désormais à P2.
 
 | ID | Résultat global exigé | Dépendances principales |
 |---|---|---|
@@ -3192,7 +3230,7 @@ jauge et fantômes forment un produit complet, compatible dans `L²`, avec
 | `STABILITY-GLOBAL-01` | **FRONTIER (2026-07-27, portée réduite)** — Le cône proportionnel sûr a une énergie non négative. Sur le témoin poussière, le noyau tangent contraint est exactement unidimensionnel; une courbe contrainte non triviale garde le Hamiltonien nul, donc la Hessienne ambiante négative n’est pas une instabilité contrainte mais le vide n’est pas strictement isolé. Il manque quotient ADM/BD, tous les modes, matière/bord, limite faible et PPN. | `P0EFTJanusProgramPGlobalStabilityFrontier4D`, `ADM-GLOBAL-01` |
 | `DIRAC-GLOBAL-01` | **DONE (2026-07-28)** — Dirac D9 intrinsèque lisse/elliptique; tour de coefficients SpinC tous niveaux (zéro compris, deux racines) dense, auto-adjointe, Fredholm d’indice nul; accord D10 positif et domaine maximal unitairement égal à la tour zéro plus D10 positif. Pour tout `p`, la courbe nulle fournit exactement `2p+1` sections lisses complexes du véritable fibré quotient. Leur récurrence démontre directement le vrai `D²`. Chaque label signé complet possède une vraie eigensection lisse du Dirac de premier ordre, y compris la tour zéro corrigée selon l’orientation du period; les branches `±` sont disjointes et épuisent chaque bloc scalaire/gradient. Chaque branche possède une isométrie de Parseval géométrique à image complétée fermée et entrelace le vrai Dirac; le bloc deux signes possède la même réalisation pour `D²`. La séparation radiale prouve les finranks exacts `2p+1` par signe et `2(2p+1)` par bloc. Tous les blocs signés sont orthogonaux selon secteur/mode/niveau et s’assemblent avec la tour zéro dans une isométrie globale à image fermée. La complétude Fourier temporelle, l’approximation polynomiale monopôle et la reconstruction exacte du repère de Hopf signé prouvent que cette image contient le cœur lisse dense. Elle est donc toute la complétion géométrique et la synthèse fournit l’unitaire géométrique DIRAC global. | `P0EFTJanusProgramPGlobalDiracFrontier4D`, `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSignedGeometricRealization4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedBranchCompletion4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedMultiplicity4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D`, `P0EFTJanusProgramPD9PrimitiveSpinCFourierMonopoleCoreCompleteness4D` |
 | `BRST-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-29)** — Le paquet commun champs/ghosts extérieurs, métrique–antifields et bord vérifie `s²=0`; `U(1)²`, scalaire, densité mesurée et antifield scalaire de gorge sont fermés. Les actions Cartan Maxwell et métrique globales sont maintenant lisses et bilinéaires; leurs données Cartan, représentations de Lie et crochets sont fermés. Elles forment le paquet tensoriel concret `canonicalTensorialCartanActionData`, dont les obstructions coadjointes BRST algébriques Maxwell/deux-métriques sont nulles et les pairings canoniques sont invariants; aucun dual tensoriel géométrique ou intégré n’est revendiqué. Le ghost bulk de translation temporelle et les trois ghosts bulk de rotation se restreignent exactement à leurs ghosts de gorge par la dérivée de l’inclusion, sans conclure de skew. Pour les rotations de gorge, le pullback tensoriel, l’isométrie intrinsèque, la naturalité ponctuelle du pairing relevé/deux-secteurs et l’invariance finie de son intégrale contre la mesure canonique sont fermés; la courbe scalaire intégrée correspondante a une dérivée nulle à angle zéro par constance. La chain rule publique pour tout `SmoothThroatField` à fibre fixe donne son `mvfderiv` le long du ghost, sans dériver le pullback tensoriel. Restent la différentiabilité tensorielle en angle, la chain rule du pairing et le pont générateur/action avant toute skew ou conclusion coadjointe. Pour le pairing métrique bulk, le vrai flot temporel, la mesure préservée, la naturalité par conjugaison/trace et la dérivée scalaire nulle de l’orbite du pairing sont fermés; restent le pont pointwise générateur/action et la différentiation à travers le pairing intégré avant toute skew. L’IPP canonique ferme aussi la skew des coefficients LL. Les dualiseurs lisses finis ferment séparation/injectivité métrique de gorge et de bulk. `finiteBV` est relié à sa vraie reparamétrisation nulle. Enfin, la nouvelle interface de flots complets non linéaires Candidate-A transforme l’invariance terme par terme des neuf blocs en invariance exacte de l’action et horizontalité Euler pour le générateur dépendant du champ. Restent les duals géométriques/intégrés et leur skew/coadjoint, les ponts flow/action concrets et le flot Candidate-A neuf-blocs à mesure fixe. | `P0EFTJanusMappingTorusGaugePotentialCartanFiber4D`, `P0EFTJanusMappingTorusGaugePotentialCartanFiberBridge4D`, `P0EFTJanusMappingTorusGaugePotentialCartanSmoothBundle4D`, `P0EFTJanusMappingTorusGaugePotentialCartanGlobalAction4D`, `P0EFTJanusMappingTorusGaugePotentialCartanRepresentation4D`, `P0EFTJanusProgramPMaxwellCartanCoadjointAntifieldBRST4D`, `P0EFTJanusMappingTorusMetricCartanFiberCore4D`, `P0EFTJanusMappingTorusMetricCartanFiber4D`, `P0EFTJanusMappingTorusMetricCartanGlobalAction4D`, `P0EFTJanusProgramPCanonicalTensorialCartanBRST4D`, `P0EFTJanusMappingTorusTensorialDiffeomorphismRepresentation4D`, `P0EFTJanusMappingTorusSpatialRotationAmbientLorentzIsometry4D`, `P0EFTJanusMappingTorusIntrinsicLorentzMetricSpatialRotationIsometry4D`, `P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D`, `P0EFTJanusMappingTorusCanonicalTimeTranslationMetricMatterGaugeNoether4D`, `P0EFTJanusProgramPGeneralMetricPositiveDualizer4D`, `P0EFTJanusProgramPGeneralMetricTimeTranslationSkew4D`, `P0EFTJanusProgramPGeneralMetricTimeTranslationPairingNaturality4D`, `P0EFTJanusProgramPThroatMetricRestrictedGhostSkew4D`, `P0EFTJanusProgramPD8RotationGhostThroatRestriction4D`, `P0EFTJanusProgramPThroatMetricRotationPullback4D`, `P0EFTJanusProgramPThroatMetricRotationPairingNaturality4D`, `P0EFTJanusProgramPGlobalBRSTFrontier4D` |
-| `HESSIAN-GLOBAL-01` | **FRONTIER (2026-08-02; carte locale et transport Sylvester fort fermés sur la strate régulière)** — Les données physiques vivent sur un ouvert admissible `U`, `0 ∈ U`, et le Hessien ambiant agit sur tout le tangent. La racine Candidate-A intrinsèque est encodée dans le coin fermé complet `P M_N P`. La bijectivité intrinsèque ponctuelle de Sylvester est maintenant transportée en une équivalence forte du coin, puis active la branche IFT locale : domaine ouvert contenant zéro, branche `C²` sur tout ce domaine et carré exact. Le sous-type régulier et son prédicat de carte locale rendent la restriction de strate explicite, sans repère global ni nouvel axiome physique. `GlobalCandidateAGeometry` autorise toutefois des racines singulières : pour une affirmation non qualifiée, il reste à prouver la régularité intrinsèque de la géométrie physique choisie, puis à annuler le résidu covariant, fermer les blocs normal/bord et Einstein--Maxwell métrique général, les domaines/adjoints, LL off-shell, multiplicités et somme Fredholm. D10 reste réservé au régulateur. | `P0EFTJanusProgramPGlobalLocalVariationalChart4D`, `P0EFTJanusProgramPGlobalCandidateAFiniteFrameRootBridge4D`, `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCorner4D`, `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCornerAlgebra4D`, `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCornerLocalRoot4D`, `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterRegularity4D`, `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterCornerLocalRoot4D`, `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameSylvesterRegularStratumLocalRoot4D`, `P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D` |
+| `HESSIAN-GLOBAL-01` | **FRONTIER ANALYTIQUE (2026-08-02; P1 fermé)** — Les données physiques vivent sur un ouvert admissible `U`, `0 ∈ U`, et le Hessien ambiant agit sur tout le tangent. La sélection positive et la branche locale C² sont fermées. Les familles générales Maxwell et Einstein--Hilbert sont construites; H05/P1 prouve l'accord exact de l'action EH physique avec l'action intrinsèque. Le split minimal D10-free conserve les sept blocs physiques et n’isole que le défaut same-action matière--LL. Le quotient LL stationnaire est Fredholm d’indice zéro. Restent P2 (normal/bord), P3 (domaine commun, Green, adjoints, fermetures) et P4 (défaut matière--LL, multiplicités fidèles, somme Fredholm totale). D10 reste réservé au régulateur. | `P0EFTJanusProgramPGlobalLocalVariationalChart4D`, `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D`, `P0EFTJanusProgramPRegularGeneralMetricC2Maxwell4D`, `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D`, `P0EFTJanusProgramPGlobalFullLLOnShellFredholmReduction4D` |
 | `REGULATOR-GLOBAL-01` | **DONE (2026-07-30, portée régulateur nucléaire de référence)** — À tout temps positif, un opérateur unique sur le produit Hilbert ambiant exact — slots bulk `L²` métrique/jauge/ghost/auxiliaire, coefficients SpinC signés des deux secteurs, D10 tous niveaux et flux LL `L²` — est inconditionnellement compact, injectif et muni d’une expansion rang-un absolument sommable. Le bulk conserve en plus son inclusion Dirichlet compacte, son Gram compact positif auto-adjoint et le lift adjoint à trace nulle. Les blocs SpinC et D10 gardent leurs chaleurs physiques exactes nucléaires. La chaleur D9 continuum exacte est nucléaire sous son hypothèse explicite de sommabilité, et chaque paquet fini l’est sans hypothèse. La chaleur exacte de la Hessienne LL reste compacte ssi son espace d’énergie est de dimension finie. Le régulateur global est un régulateur de référence dépendant d’une base : ni son accord avec la Hessienne globale, ni une convergence forte vers l’identité n’est affirmé; cet accord appartient à `HESSIAN-GLOBAL-01`. | `P0EFTJanusProgramPGlobalReferenceNuclearRegulator4D`, `P0EFTJanusProgramPGlobalBulkReferenceNuclearRegulator4D`, `P0EFTJanusProgramPGlobalBulkDirichletCompactRegulator4D`, `P0EFTJanusProgramPSpinCMatterContinuumHeatRegulator4D`, `P0EFTJanusD9GaugeGhostContinuumHeatRegulator4D`, `P0EFTJanusProgramPLL2SeparableReferenceNuclearRegulator4D`, `P0EFTJanusProgramPGlobalPhysicalLLHessianHeatRegulator4D`, `P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D` |
 | `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
 | `ANOMALY-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Le certificat inclut désormais la trace chirale D10 tous niveaux, absolument sommable, nulle par PT, avec convergence de tout filet de cutoffs finis. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D` |
@@ -3569,9 +3607,10 @@ Portée exacte des fermetures et frontières globales :
   l’égalité « radical mesure = noyau pondéré total », qui peut échouer lorsque
   les poids d’énergie LL s’annulent; une coercivité reste ensuite nécessaire
   pour l’image fermée. Aucun Fredholm n’est donc ajouté artificiellement.
-  `P0EFTJanusProgramPGlobalGHYSameActionHessian4D` ferme séparément le bloc
-  GHY non nul canonique : l’action exacte est identiquement nulle sur toute
-  donnée Candidate-A, donc ses deux dérivées de Fréchet sont nulles. Le bloc
+  `P0EFTJanusProgramPGlobalGHYSameActionHessian4D` ferme séparément le contrôle
+  GHY canonique fixe : sous l'hypothèse explicite que la famille sélectionne
+  cette branche, l’action exacte et ses deux dérivées de Fréchet sont nulles.
+  Le datum mobile reste dans le même sommant Robin et n'est pas annulé. Le bloc
   faces nulles/contre-termes/joints possède aussi son vrai Hessien nul le long
   de toute mise à l’échelle des normalisations de générateurs, par la
   transgression exacte face--joint existante. Ses variations géométriques et
@@ -3753,9 +3792,26 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le même cœur possède un raccord linéaire injectif vers les slots typés
   existants, sans seconde copie Lorenz ni second triplet difféomorphe ;
 - `HESSIAN-GLOBAL-01` reste ouvert uniquement au-delà de cette insertion :
-  identification à l'action covariante complète, blocs normal/bord et
-  Einstein--Maxwell métrique général, domaines/adjoints, contrôle LL off-shell,
-  multiplicités et somme Fredholm finale.
+  identification à l'action covariante complète, chart métrique d'ordre
+  supérieur, blocs normal/bord et Einstein--Maxwell métrique général,
+  domaines/adjoints, portée fermée et radical fini LL off-shell, puis somme
+  Fredholm fidèle finale. Le cœur typé est déjà fidèle; la cible spectrale
+  historique `ι × Fin 8` ne l'est pas comme contenu total.
+
+### Réductions fortes Einstein--Maxwell et LL — fermées (2026-08-02)
+
+- l'intégrale sur toute mesure finie est une application linéaire continue du
+  cœur scalaire fort; des lifts forts `C²` du volume/courbure ou du
+  volume/pairing suffisent donc aux vraies lignes Einstein--Hilbert/Maxwell ;
+- le cœur C² ferme désormais produit, racine et jets spatiaux d'ordre deux;
+  reste à construire la vraie application métrique générale vers ce cœur pour
+  le volume, la courbure scalaire et le pairing Maxwell ;
+- tout opérateur borné auto-adjoint à portée fermée et noyau fini a conoyau
+  fini; appliqué au Riesz LL complet, ceci réduit le Fredholm off-shell aux
+  deux seules estimées portée fermée/radical fini ;
+- les no-go Hessien nul interdisent de déduire le Fredholm de la seule
+  régularité `C²`; une strate elliptique non dégénérée et son domaine de bord
+  doivent être construits explicitement, sans les cacher dans un nouvel axiome.
 
 ### Bloc bord par reparamétrisation finie — fermé (2026-08-01)
 

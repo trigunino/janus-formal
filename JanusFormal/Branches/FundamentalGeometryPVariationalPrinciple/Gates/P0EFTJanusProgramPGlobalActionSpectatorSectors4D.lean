@@ -116,6 +116,7 @@ def actionDataWithD10Completion
   interactionDensity_eq := data.interactionDensity_eq
   boundary :=
     boundaryDataWithD10Completion period hPeriod data.boundary completion
+  nonNullBoundary := data.nonNullBoundary
   nullActionFaces := data.nullActionFaces
   nullActionGenerator_eq := data.nullActionGenerator_eq
   nullActionInterval_eq := data.nullActionInterval_eq
@@ -235,6 +236,7 @@ def actionDataWithGhostAuxiliaryFields
   boundary :=
     boundaryDataWithGhostAuxiliaryFields period hPeriod data.boundary
       ghosts auxiliaries
+  nonNullBoundary := data.nonNullBoundary
   nullActionFaces := data.nullActionFaces
   nullActionGenerator_eq := data.nullActionGenerator_eq
   nullActionInterval_eq := data.nullActionInterval_eq

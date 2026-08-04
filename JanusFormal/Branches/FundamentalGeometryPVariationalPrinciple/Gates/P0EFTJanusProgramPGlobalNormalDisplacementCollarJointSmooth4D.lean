@@ -258,7 +258,7 @@ theorem normalGraphInvariantMap_vadd
   exact (mappingTorusMk_isAddQuotientCoveringMap
     (sphereData period hPeriod)).map_vadd winding
 
-private def throatPartialDiffeomorphSmooth
+def throatPartialDiffeomorphSmooth
     (Φ : PartialDiffeomorph throatCoverModelWithCorners
       throatCoverModelWithCorners (ThroatCover period hPeriod)
       (EffectiveThroat period hPeriod) ω) :
@@ -271,7 +271,7 @@ private def throatPartialDiffeomorphSmooth
   contMDiffOn_toFun := Φ.contMDiffOn_toFun.of_le (by simp)
   contMDiffOn_invFun := Φ.contMDiffOn_invFun.of_le (by simp)
 
-private theorem fixedThroat_projection_isLocalDiffeomorph_smooth :
+theorem fixedThroat_projection_isLocalDiffeomorph_smooth :
     IsLocalDiffeomorph throatCoverModelWithCorners
       throatCoverModelWithCorners ∞
       (mappingTorusMk (throatData period hPeriod)) := by

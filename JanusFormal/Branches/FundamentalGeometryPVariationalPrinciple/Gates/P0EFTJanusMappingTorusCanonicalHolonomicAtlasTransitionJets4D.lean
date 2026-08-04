@@ -156,7 +156,7 @@ private theorem matrixEntryContinuousLinearMap_apply
     matrixEntryContinuousLinearMap first second matrix =
       matrix first second := rfl
 
-private theorem fderiv_matrix_entry_apply
+theorem fderiv_matrix_entry_apply
     {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
     (matrix : E → Matrix4) (point direction : E)
     (hMatrix : DifferentiableAt Real matrix point)

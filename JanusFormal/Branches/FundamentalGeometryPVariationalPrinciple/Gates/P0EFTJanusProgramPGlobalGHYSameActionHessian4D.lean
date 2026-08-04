@@ -2,13 +2,12 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalEulerLagrange4D
 
 /-!
-# Global Candidate-A GHY same-action Hessian
+# Global Candidate-A fixed-GHY Hessian control
 
-The canonical-throat GHY summand of the exact Candidate-A action vanishes for
-every supplied global datum.  Its pullback to any regular variational chart is
-therefore genuinely constant, and its first and second Fréchet derivatives
-vanish.  This closes only the non-null GHY block; it says nothing about the
-finite null-face/counterterm/joint summand.
+For a family explicitly selecting the historical canonical-throat fixed
+source, the exact GHY summand is constant and its first and second Fréchet
+derivatives vanish.  The mobile source is intentionally excluded from this
+control and is handled by the normal-boundary chart.
 -/
 
 namespace JanusFormal
@@ -71,11 +70,15 @@ theorem globalCandidateAGHYPullback_eq_zero
     [Fintype NonNullFace] [Fintype NullFace]
     {measure : Measure (EffectiveQuotient period hPeriod)}
     (chart : GlobalCandidateAVariationalChart period hPeriod couplings
-      NonNullFace NullFace measure) :
+      NonNullFace NullFace measure)
+    (hFixed : ∀ configuration,
+      (chart.family.dataAt configuration).nonNullBoundary =
+        .fixed ((chart.family.dataAt configuration).boundary.nonNullFaces
+          period hPeriod)) :
     globalCandidateAGHYPullback period hPeriod chart = 0 := by
   funext configuration
   exact globalCandidateAGHYAction_eq_zero period hPeriod
-    (chart.family.dataAt configuration)
+    (chart.family.dataAt configuration) (hFixed configuration)
 
 theorem globalCandidateAGHYPullback_contDiff
     {couplings : GlobalCandidateAActionCouplings}
@@ -83,10 +86,14 @@ theorem globalCandidateAGHYPullback_contDiff
     [Fintype NonNullFace] [Fintype NullFace]
     {measure : Measure (EffectiveQuotient period hPeriod)}
     (chart : GlobalCandidateAVariationalChart period hPeriod couplings
-      NonNullFace NullFace measure) :
+      NonNullFace NullFace measure)
+    (hFixed : ∀ configuration,
+      (chart.family.dataAt configuration).nonNullBoundary =
+        .fixed ((chart.family.dataAt configuration).boundary.nonNullFaces
+          period hPeriod)) :
     ContDiff Real ∞
       (globalCandidateAGHYPullback period hPeriod chart) := by
-  rw [globalCandidateAGHYPullback_eq_zero period hPeriod chart]
+  rw [globalCandidateAGHYPullback_eq_zero period hPeriod chart hFixed]
   exact contDiff_const
 
 theorem globalCandidateAGHYPullback_fderiv_eq_zero
@@ -96,12 +103,16 @@ theorem globalCandidateAGHYPullback_fderiv_eq_zero
     {measure : Measure (EffectiveQuotient period hPeriod)}
     (chart : GlobalCandidateAVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
+    (hFixed : ∀ current,
+      (chart.family.dataAt current).nonNullBoundary =
+        .fixed ((chart.family.dataAt current).boundary.nonNullFaces
+          period hPeriod))
     (configuration : chart.Configuration) :
     fderiv Real
         (globalCandidateAGHYPullback period hPeriod chart)
         configuration =
       0 := by
-  rw [globalCandidateAGHYPullback_eq_zero period hPeriod chart]
+  rw [globalCandidateAGHYPullback_eq_zero period hPeriod chart hFixed]
   simp
 
 /-- The actual second Fréchet derivative of the exact Candidate-A GHY
@@ -126,11 +137,15 @@ theorem globalCandidateAGHYSameActionHessian_eq_zero
     {measure : Measure (EffectiveQuotient period hPeriod)}
     (chart : GlobalCandidateAVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
+    (hFixed : ∀ current,
+      (chart.family.dataAt current).nonNullBoundary =
+        .fixed ((chart.family.dataAt current).boundary.nonNullFaces
+          period hPeriod))
     (configuration : chart.Configuration) :
     globalCandidateAGHYSameActionHessian period hPeriod chart configuration =
       0 := by
   unfold globalCandidateAGHYSameActionHessian
-  rw [globalCandidateAGHYPullback_eq_zero period hPeriod chart]
+  rw [globalCandidateAGHYPullback_eq_zero period hPeriod chart hFixed]
   simp
 
 theorem globalCandidateAGHYSameActionHessian_symmetric
@@ -140,13 +155,17 @@ theorem globalCandidateAGHYSameActionHessian_symmetric
     {measure : Measure (MappingTorus (reflectedSphereData period hPeriod))}
     (chart : GlobalCandidateAVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
+    (hFixed : ∀ current,
+      (chart.family.dataAt current).nonNullBoundary =
+        .fixed ((chart.family.dataAt current).boundary.nonNullFaces
+          period hPeriod))
     (configuration first second : chart.Configuration) :
     globalCandidateAGHYSameActionHessian period hPeriod chart configuration
         first second =
       globalCandidateAGHYSameActionHessian period hPeriod chart configuration
         second first := by
   rw [globalCandidateAGHYSameActionHessian_eq_zero
-    period hPeriod chart configuration]
+    period hPeriod chart hFixed configuration]
   rfl
 
 end

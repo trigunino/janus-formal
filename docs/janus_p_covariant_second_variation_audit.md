@@ -2,14 +2,25 @@
 
 Status: sectoral bulk, Abelian and mono-metric diffeomorphism off-shell
 completions constructed; the Abelian extended bulk has an equivalent genuine
-`L²` Hilbert chart with self-adjoint same-action Riesz representative; LL
-Fredholm reduction is closed directly from stationarity and the normal-collar
-derivative is the canonical orthogonal lift; no total-chart `1001` input.
+`L²` Hilbert chart with self-adjoint same-action Riesz representative; the LL
+stationary Fredholm reduction and the exact off-shell self-adjoint reduction
+are closed, and the normal-collar derivative is the canonical orthogonal lift;
+no total-chart `1001` input.
 
 ## Global closure obstruction
 
+The authoritative obligation ledger is
+[`HESSIAN-GLOBAL-01` closure map](hessian_global_01_closure_map.md). Historical
+residual lists in this audit do not override that ledger.
+
 `HESSIAN-GLOBAL-01` is not closed by the existing sectoral operators.
 The field-content choice is now explicit rather than hidden:
+
+- H05/P1 is closed by
+  `regular_general_metric_c2_einstein_hilbert_gate`: the unrestricted
+  general-metric Einstein--Hilbert family is `C²` on its admissible open chart
+  and agrees exactly with the intrinsic action at the physical point. The
+  remaining authoritative packages are P2--P4.
 
 - `GlobalPhysicalFieldTangent` excludes D10; the legacy extended tangent and
   common analytic aggregate retain it only for regulator/determinant work.
@@ -140,7 +151,12 @@ whose constant second Fréchet derivative is that exact same-action form.
 This construction deliberately assumes neither
 nonvanishing weights nor coercivity. Every pure `llMeasure` direction remains
 in the auxiliary/measure subblock kernel. Off shell, closed range for the
-complete operator still needs an estimate. On the stationary branch,
+complete operator still needs an estimate. The complete Riesz operator is now
+proved self-adjoint. The generic bounded self-adjoint reduction proves that
+closed range plus finite-dimensional kernel automatically gives a
+finite-dimensional cokernel, and its LL specialization records the full
+Fredholm criterion. Thus the only independent off-shell LL estimates left are
+closed range and finite-dimensional radical. On the stationary branch,
 stationarity forces `llField = 0`; the Fredholm criterion and index-zero
 corollary now take stationarity directly and derive this zero-flux fact
 internally. The Riesz operator then factors through the field projection, its
@@ -198,6 +214,18 @@ one-dimensional same-action result, but its configuration space is `Real`;
 it is not the missing normed raw-field chart or a Fredholm operator on all
 independent directions.
 
+`P0EFTJanusProgramPGlobalCandidateAStrongEinsteinMaxwellC2Closure4D` removes
+the integration sub-obstruction. For every finite measure, integration is a
+continuous linear map on the canonical strong scalar core. Consequently a
+`C²` strong lift of the actual volume and scalar curvature makes the genuine
+Einstein--Hilbert action line `C²`; the analogous volume/pairing lifts do the
+same for the genuine varying-metric Maxwell line, globally or on an open
+domain. Separate domination and parameter--spacetime continuity hypotheses
+are no longer needed after such lifts are available. The gate does not
+construct those lifts. The complete C² jet/root core is now available, but the
+actual general-metric map into it for volume, scalar curvature and Maxwell
+pairing remains necessary.
+
 `P0EFTJanusProgramPGlobalActionSpectatorSectors4D` and the unbounded
 zero-quotient-Hessian no-go still forbid reusing the historical D10-extended
 operator as the action Hessian. The unbounded promotion gate itself now uses
@@ -211,10 +239,16 @@ covariant second Fréchet derivative and proves the exact decomposition
 
 `gauge-fixed covariant Hessian = completed graph Hessian + physical residual`.
 
-The desired equality is equivalent to vanishing of this single residual.
-The diagonal BRST, Abelian BRST, primitive matter and complete LL graph blocks
-are already removed from it and cannot return as separate obligations. No
-inhabitant of the chart bridge and no residual vanishing theorem is introduced.
+`P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D` shows that
+this former residual must not vanish: it is the physical seven-block Hessian
+plus the matter--LL same-action mismatch. The corrected comparison augments
+the graph by the retained physical Hessian, and equality is equivalent only
+to vanishing of the matter--LL mismatch. This prevents an accidental removal
+of Einstein--Maxwell and boundary dynamics.
+`P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D`
+states the same exact comparison directly on the nonduplicated D10-free
+physical tangent. The historical D10-extended bridge remains only a proved
+zero-D10 factorization for compatibility.
 `P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D`
 now supplies the first genuine nonconstant subchart of that comparison. It
 keeps every non-matter datum fixed, puts the inherited closed-graph norm on the
@@ -247,8 +281,8 @@ global chart, including equality of action pullback, Euler form and Hessian.
 now pulls that local Hessian back through a dense injective smooth-core map at
 any admissible base point. It reuses the existing diagonal BRST, matter and LL
 forms and proves the exact gauge-fixed covariant = graph + physical-residual
-decomposition, together with the residual-zero iff criterion. For `U = univ`,
-both the covariant core Hessian and residual are exactly the former ones.
+decomposition. For `U = univ`, both the covariant core Hessian and residual are
+exactly the former ones; the corrected physical split applies to both APIs.
 The pointwise root input is now genuinely `C²` on an open perturbation domain:
 `P0EFTJanusPositiveRawSplitCharpolyContDiffLocalRootBranch4D` works around
 every positive-real-split raw target, contains zero in translated coordinates,
@@ -320,17 +354,48 @@ ghost coefficients form a complete product with exact smooth-tangent lift.
   The general intrinsic encoding, strong corner algebra, regularity transport
   and local chart interface are therefore concrete on the intrinsic
   Sylvester-regular stratum. `GlobalCandidateAGeometry` itself does not exclude
-  singular roots. The explicit stratum restriction is now formalized; an
-  unqualified global statement still requires a theorem that the selected
-  physical Candidate-A root is intrinsically regular. Joint
-  parameter--spacetime-point
-  regularity and the jointly `C²` action data remain downstream.
-  Closing the ticket therefore has a strict dependency order: establish the
-  selected physical root's intrinsic regularity and joint regularity; prove the
-residual zero using the arbitrary-general-metric
-Einstein--Maxwell and general normal/boundary same-action blocks; only then
-promote domains, off-shell closed range, faithful multiplicities and the total
-same-action Fredholm sum.
+  singular roots. The explicit stratum restriction is now formalized, and
+  `P0EFTJanusProgramPGlobalCandidateAPositiveSelectedRootSylvester4D` proves
+  that the stored root is intrinsically regular whenever it is exactly the
+  existing positive spectral selector; no Sylvester hypothesis is inserted in
+  that certificate. The local-root joint-regularity gate now proves that every
+  strong `C²` target family pulls the branch back to an open parameter domain
+  with jointly continuous parameter--spacetime coefficients and the exact
+  square identity.
+  The genuine order-two field layer is now available as well. The canonical
+  scalar C² jet core is complete, has the exact second-order Leibniz product
+  and maps continuously to the strong `C⁰ ∩ H¹` core. Finite C² matrices have
+  associative multiplication, a smooth square and the exact Sylvester
+  derivative; the canonical local root branch is C² on an open domain, and
+  every coefficient's value, first derivatives and ordered second derivatives
+  are jointly continuous in parameter and spacetime. The intrinsic redundant
+  finite-frame projector defines a complete C² corner containing the selected
+  root. Intrinsic Sylvester regularity restricts to a bounded equivalence on
+  that corner and activates its open-domain C² root branch, with no new axiom.
+  Thus higher-order local-root regularity is closed. The actual general-metric
+  map into this C² core and the jointly C² nine-block action data remain
+  downstream.
+  Closing the ticket therefore has a strict dependency order: construct the
+  actual general-metric C² target and its curvature/pairing lifts; realize the arbitrary-general-metric
+  Einstein--Maxwell and general normal/boundary same-action blocks while
+  closing only the matter--LL mismatch; only then promote common domains,
+  prove off-shell LL closed range and finite radical, and construct the total
+  same-action Fredholm sum.
+
+The multiplicity audit also separates two facts. The diagonal graph core and
+its `WithLp 2` realization already have a dense injective smooth core and a
+faithful typed raccord. The historical spectral target still uses
+`ι × Fin 8` for D9 and is therefore a valid reduced Fredholm model, not the
+faithful total field content. No theorem currently identifies it with the
+complete typed action Hessian.
+
+Finally, the existing zero-Hessian and zero-quotient-Hessian no-go theorems
+show that chartwise `C²` regularity cannot imply an infinite-dimensional
+Fredholm realization for unrestricted couplings. Terminal closure therefore
+requires an explicitly constructed nondegenerate elliptic analytic stratum
+(gauge/continuation, boundary realization and common domain), not a new
+physical axiom hidden in a chart field. Until that choice is made and proved
+compatible with the unchanged action, `HESSIAN-GLOBAL-01` remains a frontier.
 
 The former obstruction to the total diffeomorphism assembly is now resolved.
 Candidate A has two canonical mono-metric FP maps, but the typed field space

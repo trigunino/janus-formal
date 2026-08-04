@@ -49,6 +49,7 @@ open P0EFTJanusFiniteStratifiedBoundaryVariation
 open P0EFTJanusFiniteNullFaceAction
 open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
+open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
 open P0EFTJanusProgramPGlobalCandidateAGeometry4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalBoundaryCompletion4D
@@ -102,6 +103,48 @@ def regularMetricBasisAt
   (Pi.basisFun Real (Fin 4)).map
     (metric.frameEquiv point).toLinearEquiv
 
+/-- Geometric sources accepted by the unique Candidate-A non-null boundary
+summand.  Besides the historical finite control, the canonical latitude
+constructor is the exact continuum ledger on the two oriented throat sheets.
+No free scalar boundary action is stored. -/
+inductive GlobalCandidateANonNullBoundaryDatum
+    (period : Real) (hPeriod : period ≠ 0)
+    (NonNullFace : Type*) [Fintype NonNullFace] where
+  | fixed (faces : NonNullFace → NonNullFaceDatum)
+  | canonicalLatitudeTwoSheet
+      (faces : Fin 2 → CanonicalLatitudeBase → NonNullFaceDatum)
+
+/-- Evaluation of the unique sourced non-null boundary summand. -/
+def globalCandidateANonNullBoundaryAction
+    {NonNullFace : Type*} [Fintype NonNullFace]
+    (datum : GlobalCandidateANonNullBoundaryDatum period hPeriod NonNullFace) :
+    Real :=
+  match datum with
+  | .fixed faces => totalNonNullGHYCurve faces 0
+  | .canonicalLatitudeTwoSheet faces =>
+      ∑ sheet : Fin 2, ∫ base, nonNullGHYCurve (faces sheet base) 0
+        ∂canonicalLatitudeBaseMeasure period
+
+@[simp]
+theorem globalCandidateANonNullBoundaryAction_fixed
+    {NonNullFace : Type*} [Fintype NonNullFace]
+    (faces : NonNullFace → NonNullFaceDatum) :
+    globalCandidateANonNullBoundaryAction period hPeriod
+        (.fixed faces) =
+      totalNonNullGHYCurve faces 0 :=
+  rfl
+
+@[simp]
+theorem globalCandidateANonNullBoundaryAction_canonicalLatitudeTwoSheet
+    {NonNullFace : Type*} [Fintype NonNullFace]
+    (faces : Fin 2 → CanonicalLatitudeBase → NonNullFaceDatum) :
+    globalCandidateANonNullBoundaryAction period hPeriod
+        (.canonicalLatitudeTwoSheet faces :
+          GlobalCandidateANonNullBoundaryDatum period hPeriod NonNullFace) =
+      ∑ sheet : Fin 2, ∫ base, nonNullGHYCurve (faces sheet base) 0
+        ∂canonicalLatitudeBaseMeasure period :=
+  rfl
+
 /-- Maximal regular domain on which all currently geometric action summands
 are finite expressions attached to one global configuration. -/
 structure GlobalCandidateAActionData
@@ -136,6 +179,8 @@ structure GlobalCandidateAActionData
   boundary :
     GlobalBoundaryVariationData period hPeriod configuration
       NonNullFace NullFace
+  nonNullBoundary :
+    GlobalCandidateANonNullBoundaryDatum period hPeriod NonNullFace
   nullActionFaces : NullFace → FiniteNullFaceActionDatum
   nullActionGenerator_eq : ∀ face,
     (nullActionFaces face).generator = (boundary.nullFaces face).generator
@@ -241,7 +286,9 @@ def globalCandidateALLAction
     (data.boundary.llFields period hPeriod)
     (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
 
-/-- Exact non-null GHY action on the supplied finite face family. -/
+/-- Exact non-null GHY action selected by its geometric source.  The source
+is either the historical fixed finite ledger or the genuine mobile normal
+graph; no free scalar boundary action is stored in Candidate A. -/
 def globalCandidateAGHYAction
     {configuration : GlobalFieldConfiguration period hPeriod}
     {couplings : GlobalCandidateAActionCouplings}
@@ -249,7 +296,7 @@ def globalCandidateAGHYAction
     [Fintype NonNullFace] [Fintype NullFace]
     (data : GlobalCandidateAActionData period hPeriod configuration couplings
       NonNullFace NullFace) : Real :=
-  totalNonNullGHYCurve data.boundary.nonNullFaces 0
+  globalCandidateANonNullBoundaryAction period hPeriod data.nonNullBoundary
 
 /-- Finite null-face, expansion-counterterm and endpoint-joint action. -/
 def globalCandidateANullBoundaryAction
