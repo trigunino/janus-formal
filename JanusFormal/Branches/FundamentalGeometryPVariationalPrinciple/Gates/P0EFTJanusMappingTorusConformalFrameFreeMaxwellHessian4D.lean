@@ -217,7 +217,8 @@ private theorem updateVectorPair_one
   funext index
   fin_cases index <;> simp [Function.update]
 
-private def alternatingTwoFormToBilin
+/-- A two-form viewed as its underlying bilinear form. -/
+def alternatingTwoFormToBilin
     (form : Vector4 [⋀^Fin 2]→L[Real] Real) :
     LinearMap.BilinForm Real Vector4 :=
   LinearMap.mk₂ Real
@@ -244,13 +245,13 @@ private def alternatingTwoFormToBilin
       simpa only [updateVectorPair_one, smul_eq_mul] using h)
 
 @[simp]
-private theorem alternatingTwoFormToBilin_apply
+theorem alternatingTwoFormToBilin_apply
     (form : Vector4 [⋀^Fin 2]→L[Real] Real)
     (first second : Vector4) :
     alternatingTwoFormToBilin form first second = form ![first, second] :=
   rfl
 
-private theorem localGaugeCurvatureMatrix_eq_toMatrix
+theorem localGaugeCurvatureMatrix_eq_toMatrix
     (potential : SmoothAbelianGaugePotential period hPeriod)
     (component : Fin 2)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
@@ -338,7 +339,8 @@ theorem localGaugeCurvatureMatrix_transition
     at hCongruence
   exact hCongruence
 
-private def matrixMaxwellContraction
+/-- Algebraic inverse-metric contraction of two covariant two-tensors. -/
+def matrixMaxwellContraction
     (inverseMetric first second : Matrix4) : Real :=
   ∑ μ : Index4, ∑ ν : Index4, ∑ ρ : Index4, ∑ σ : Index4,
     inverseMetric μ ρ * inverseMetric ν σ *
@@ -393,7 +395,9 @@ private theorem matrixMaxwellContraction_eq_trace
   intro μ _
   ring
 
-private theorem matrixMaxwellContraction_congruence
+/-- The matrix Maxwell contraction is invariant under an invertible change
+of basis. -/
+theorem matrixMaxwellContraction_congruence
     (transition metric first second : Matrix4)
     (hTransition : IsUnit transition) :
     matrixMaxwellContraction

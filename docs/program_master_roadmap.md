@@ -1417,9 +1417,13 @@ compatibility map K
   core. The pure-measure radical is closed and its action-faithful Hilbert
   quotient is explicit. The descended operator is injective exactly when
   this radical is the full weighted kernel; vanishing LL energy weights can
-  obstruct that equality, and closed range still needs coercivity. The
-  canonical GHY summand is identically zero and therefore has its exact zero
-  same-action Hessian.
+  obstruct that equality, and closed range still needs coercivity. The full
+  graph Riesz operator is now proved bounded self-adjoint. A generic Hilbert
+  reduction and its LL specialization show that closed range plus
+  finite-dimensional radical automatically imply finite-dimensional
+  cokernel; these are the only two independent off-shell LL estimates left. The
+  fixed canonical GHY control is identically zero and therefore has its exact
+  zero same-action Hessian; the mobile sourced Robin summand is retained.
   Exact linear symmetries, including a supplied smooth-diffeomorphism
   symmetry, combine automatically with `U(1)²`.
   For a supplied differentiable nonlinear flow, the exact linearized Noether
@@ -1427,8 +1431,17 @@ compatibility map K
   left/right Hessian degeneracy precisely at critical configurations. The
   span of all pointwise generators and its sum with the physical `U(1)²`
   directions now carry exact symmetric Hessian quotients.
-  `HESSIAN-GLOBAL-01` is now an open `FRONTIER`, not structurally blocked.
-  The open-domain local-chart API is available; two earlier model mismatches
+  The authoritative obligation ledger is the
+  [`HESSIAN-GLOBAL-01` closure map](hessian_global_01_closure_map.md); lists in
+  this roadmap are dependency history only.
+  H05/P1 is now closed by
+  `regular_general_metric_c2_einstein_hilbert_gate`: the unrestricted local
+  general-metric family is `C²` and its physical value is exactly the existing
+  intrinsic Einstein--Hilbert action. The live dependency chain starts at P2.
+  `HESSIAN-GLOBAL-01` remains an open analytic `FRONTIER`. The local-chart
+  interface is no longer structurally blocked, but the existing zero-Hessian
+  no-go forbids deriving the terminal Fredholm realization from `C²`
+  regularity alone. The open-domain local-chart API is available; two earlier model mismatches
   are also removed: D10 was deleted from the physical target and
   matter was migrated directly to primitive SpinC. Typed abelian and
   diffeomorphism gauge fermions also provide distinct `c/c̄/B`, nilpotent
@@ -1516,11 +1529,12 @@ compatibility map K
   makes the central comparison a theorem on this
   same smooth core: after projecting the corrected typed tangent into the
   legacy tangent with D10 exactly zero, any supplied existing variational-chart
-  bridge gives
-  `gauge-fixed covariant Hessian = diagonal graph Hessian + physical residual`.
-  Equality with the graph is equivalent to vanishing of that one residual.
-  The closed BRST, matter and LL blocks have been subtracted from it; no chart
-  bridge inhabitant or residual vanishing is assumed. A concrete matter-only
+  bridge gives the former graph-plus-residual comparison. The exact split in
+  `P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D` proves that
+  this residual is the physical seven-block Hessian plus the matter--LL
+  same-action mismatch. The correct graph is therefore augmented by the
+  retained physical Hessian, and equality is equivalent only to the
+  matter--LL identification. A concrete matter-only
   covariant subchart is now available:
   `P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D`
   equips the finite SpinC range with its inherited graph norm, proves the nine
@@ -1548,10 +1562,9 @@ compatibility map K
   `P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D`
   now connects this interface to the completed diagonal smooth core at any
   admissible base point. It reuses the closed BRST/matter/LL blocks and proves
-  the same exact graph-plus-one-residual decomposition; `U = univ` recovers
-  the former core Hessian and residual exactly. The bridge structure is ready;
-  its strong Sylvester implication and full residual-zero action inhabitant
-  are not yet constructed.
+  the exact local comparison; `U = univ` recovers the former core Hessian and
+  residual exactly. The physical/matter--LL split prevents the erroneous
+  cancellation of Einstein--Maxwell and boundary dynamics.
   The reused positive-split raw spectral and Sylvester bricks now also give a
   `C²` root branch on an open zero-centered perturbation domain around every
   admissible raw target, with the exact square identity. This removes the
@@ -1611,10 +1624,30 @@ compatibility map K
   strong-corner bijectivity and activates the full open-domain `C²` root branch. This is
   a regular-stratum theorem, since `GlobalCandidateAGeometry` does not itself
   rule out singular roots. The explicit regular-geometry subtype and its local
-  chart predicate are now constructed. An unqualified theorem still needs
-  intrinsic regularity for the selected physical geometry; joint
-  parameter--spacetime-point regularity and the jointly `C²` nine-block action
-  family remain.
+  chart predicate are now constructed. The positive physical-selection gate
+  proves intrinsic Sylvester regularity of the stored selected root and
+  activates the local branch without a new regularity axiom. The local-root
+  joint-regularity gate further proves that a strong `C²` target family gives
+  an open pullback domain, a `C²` selected root, exact squaring and jointly
+  continuous parameter--spacetime coefficients.
+  The uniform order-two layer is now concrete: the complete scalar C² jet
+  core has exact second-order Leibniz multiplication and a continuous map to
+  the strong core; finite C² matrices have associative multiplication, smooth
+  squaring and the exact Sylvester derivative. The canonical matrix branch is
+  C² on an open domain and its complete coefficient jets are jointly continuous.
+  The intrinsic finite-frame projector also defines a complete C² corner
+  containing the selected root, and intrinsic Sylvester regularity gives the
+  bounded corner equivalence and open-domain C² branch. This closes the
+  higher-order local-root problem without a new axiom. The strong
+  Einstein--Maxwell closure gate also makes finite-measure integration a
+  continuous linear functional: strong `C²` lifts of the actual
+  volume/curvature and volume/pairing now imply `C²` for the genuine
+  Einstein--Hilbert and Maxwell action lines. Constructing the actual
+  general-metric map into the C² core, its curvature/pairing lifts and the
+  jointly `C²` nine-block action family remains.
+  The dense diagonal graph core and typed raccord are already faithful. The
+  historical spectral D9 packet `ι × Fin 8` remains only a reduced Fredholm
+  model and must not be counted as the complete action-field multiplicity.
   Standalone scalar-FP closure is now additionally reduced to existing data:
   supplied completed-boundary
   inputs, a Lagrangian condition and the existing analytic-closure package
@@ -1640,12 +1673,14 @@ compatibility map K
   exact linearized `sΨ`, a
   symmetric Riesz/Hessian, `C∞`/`C²` action and injective typed nonminimal
   attachment. Closure
-  now follows one dependency chain: construct the existing dense
-  variational-chart bridge inhabitant, prove the named physical residual zero
-  from arbitrary-general-metric Einstein--Maxwell and general normal/boundary
-  same-action blocks, then establish differential Green-adjoint/domain data,
-  off-shell LL Fredholm control, correct nonduplicated multiplicities and the
-  same-action Fredholm sum. The exact
+  now follows one dependency chain: construct the actual general-metric map
+  into the C² variational chart and its curvature/pairing lifts, retain and realize the
+  arbitrary-general-metric Einstein--Maxwell and general normal/boundary
+  Hessians while closing only the matter--LL mismatch, then establish
+  differential Green-adjoint/domain data,
+  off-shell LL closed range and finite radical, correct nonduplicated
+  multiplicities and the same-action Fredholm sum on an explicitly
+  constructed nondegenerate elliptic realization. The exact
   generic null-boundary chart with an independent, uncancelled `Theta`
   coordinate must be built on regular `Theta ≠ 0` strata: the existing no-go
   excludes even `C¹` across `Theta = 0`. It does not exclude constrained
@@ -1792,8 +1827,9 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
    diagonal triplet; the shared off-shell graph and its insertion into the
    total bulk graph are constructed. LL is Fredholm of index zero after the proved stationary
    zero-flux quotient reduction, not off-shell;
-1. extend the assembled diagonal bulk graph/typed smooth-core bridge to the
-   completed full covariant chart, identify its quadratic action with the
+1. extend the assembled diagonal bulk graph/typed smooth-core bridge through
+   the constructed C² jet/root core by building the actual general-metric map,
+   identify its quadratic action with the
    nonlinear action, then add same-action blocks for the normal and general
    boundary directions; the finite null-reparametrization Hilbert block is
    already closed, and the normal collar itself is
@@ -1802,8 +1838,9 @@ See `current_status.md` and `janus_branch_registry.md` for the exact operational
    atlas and one nonlinear exterior BRST/BV derivation with boundary descent;
 3. extend the finite-core primitive SpinC same-action identity through the
    final chart, then identify the remaining metric/normal/mixed-Maxwell/
-   null-boundary blocks and prove full-LL coercivity off-shell in the gauge-fixed
-   Fredholm family;
+   null-boundary blocks and prove full-LL closed range plus finite radical
+   off-shell. Construct explicitly the nondegenerate elliptic continuation,
+   boundary realization and common domain required by the Fredholm no-go;
 4. if physical heat agreement is required, prove D9 high-energy summability
    and an elliptic LL compact-resolvent/heat trace, then identify the closed
    nuclear reference regulator with the global Hessian after the action and

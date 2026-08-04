@@ -137,6 +137,7 @@ def globalCandidateABoundaryReparametrizationDataAt
   interactionDensity_eq := data.interactionDensity_eq
   boundary := globalCandidateABoundaryReparametrizationBoundaryDataAt
     period hPeriod data parameters
+  nonNullBoundary := data.nonNullBoundary
   nullActionFaces := fun face => scaledFiniteNullFaceActionDatum
     (parameters face) (data.nullActionFaces face)
   nullActionGenerator_eq := by

@@ -2,6 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.ProdL2
 import Mathlib.Analysis.Calculus.FDeriv.CompCLM
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalLLAuxMeasureGraphRiesz4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBoundedSelfAdjointFredholmReduction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalAnalysisDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFullLLSameActionFredholmRestriction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusLLH1SmoothEmbeddingKernel4D
@@ -2033,6 +2034,73 @@ theorem globalCandidateAFullLLGraphRieszOperator_isSymmetric
     data analysis]
   exact globalCandidateAFullLLGraphRieszOperator_symmetric period hPeriod
     data analysis first second
+
+/-- The complete off-shell three-slot LL Hessian is a bounded self-adjoint
+operator on its genuine graph Hilbert completion. -/
+theorem globalCandidateAFullLLGraphRieszOperator_isSelfAdjoint
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    @IsSelfAdjoint
+      (GlobalFullLLGraphHilbert period hPeriod data analysis →L[Real]
+        GlobalFullLLGraphHilbert period hPeriod data analysis)
+      (@ContinuousLinearMap.instStarId
+        Real
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        inferInstance inferInstance
+        (globalFullLLGraphInnerProductSpace period hPeriod data analysis)
+        (globalCandidateAFullLLGraphCompleteSpace period hPeriod
+          data analysis))
+      (globalCandidateAFullLLGraphRieszOperator period hPeriod
+        data analysis) := by
+  apply (@ContinuousLinearMap.isSelfAdjoint_iff_isSymmetric
+    Real
+    (GlobalFullLLGraphHilbert period hPeriod data analysis)
+    inferInstance inferInstance
+    (globalFullLLGraphInnerProductSpace period hPeriod data analysis)
+    (globalCandidateAFullLLGraphCompleteSpace period hPeriod data analysis)
+    (globalCandidateAFullLLGraphRieszOperator period hPeriod
+      data analysis)).2
+  exact globalCandidateAFullLLGraphRieszOperator_isSymmetric
+    period hPeriod data analysis
+
+/-- For the full off-shell LL block, self-adjointness reduces the remaining
+Fredholm proof to closed range and finite-dimensional radical. -/
+theorem globalCandidateAFullLLGraphRieszOperator_fredholm_of_closedRange_finiteKernel
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (hClosed : IsClosed
+      ((globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis).range :
+        Set (GlobalFullLLGraphHilbert period hPeriod data analysis)))
+    (hKernel : FiniteDimensional Real
+      (globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis).ker) :
+    IsClosed
+        ((globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis).range :
+          Set (GlobalFullLLGraphHilbert period hPeriod data analysis)) ∧
+      FiniteDimensional Real
+        (globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis).ker ∧
+      FiniteDimensional Real
+        (GlobalFullLLGraphHilbert period hPeriod data analysis ⧸
+          (globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis).range) := by
+  exact
+    @_root_.JanusFormal.P0EFTJanusBoundedSelfAdjointFredholmReduction4D.boundedSelfAdjoint_fredholm_of_closedRange_finiteKernel
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        inferInstance
+        (globalFullLLGraphInnerProductSpace period hPeriod data analysis)
+        (globalCandidateAFullLLGraphCompleteSpace period hPeriod data analysis)
+        (globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis)
+        (globalCandidateAFullLLGraphRieszOperator_isSelfAdjoint
+          period hPeriod data analysis)
+        hClosed hKernel
 
 /-! ## Genuine quadratic action on the complete LL graph -/
 

@@ -1,12 +1,12 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCovariantAction4D
 
 /-!
-# Candidate-A GHY diffeomorphism covariance
+# Candidate-A fixed-GHY control and covariance interface
 
-The Candidate-A non-null faces use the canonical throat, whose extrinsic
-curvature is identically zero.  Since the GHY block evaluates its exact curve
-at the base parameter, every face contribution vanishes.  Its covariance is
-therefore unconditional and does not need a separate transformation input.
+The historical fixed Candidate-A faces use the canonical throat, whose
+extrinsic curvature is identically zero.  Their contribution vanishes.  The
+mobile normal-graph source is not reduced to this control: covariance of a
+general family must preserve its sourced Robin datum.
 -/
 
 namespace JanusFormal
@@ -41,18 +41,21 @@ local instance effectiveQuotientIsManifold :
       (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotient_isManifold period hPeriod
 
-/-- The canonical-throat Candidate-A GHY block vanishes for every action
-datum. -/
+/-- The canonical-throat fixed control has zero GHY action. -/
 theorem globalCandidateAGHYAction_eq_zero
     {configuration : GlobalFieldConfiguration period hPeriod}
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
     (data : GlobalCandidateAActionData period hPeriod configuration couplings
-      NonNullFace NullFace) :
+      NonNullFace NullFace)
+    (hFixed : data.nonNullBoundary =
+      .fixed (data.boundary.nonNullFaces period hPeriod)) :
     globalCandidateAGHYAction period hPeriod data = 0 := by
   classical
-  unfold globalCandidateAGHYAction totalNonNullGHYCurve
+  rw [globalCandidateAGHYAction, hFixed,
+    globalCandidateANonNullBoundaryAction_fixed]
+  unfold totalNonNullGHYCurve
   apply Finset.sum_eq_zero
   intro face _
   have hExtrinsic :
@@ -69,9 +72,8 @@ theorem globalCandidateAGHYAction_eq_zero
   simp only [nonNullGHYCurve, nonNullGHYExactInverseCurve_zero, hDensity,
     mul_zero]
 
-/-- Any two Candidate-A GHY blocks agree; in particular the genuine
-time-translation or diffeomorphism action needs no additional GHY
-hypothesis. -/
+/-- A transformation preserving the sourced non-null datum preserves its
+Candidate-A GHY value. -/
 theorem globalCandidateAGHYAction_configuration_independent
     {sourceConfiguration targetConfiguration :
       GlobalFieldConfiguration period hPeriod}
@@ -83,11 +85,12 @@ theorem globalCandidateAGHYAction_configuration_independent
         NonNullFace NullFace)
     (target :
       GlobalCandidateAActionData period hPeriod targetConfiguration couplings
-        NonNullFace NullFace) :
+        NonNullFace NullFace)
+    (hDatum : target.nonNullBoundary = source.nonNullBoundary) :
     globalCandidateAGHYAction period hPeriod target =
       globalCandidateAGHYAction period hPeriod source := by
-  rw [globalCandidateAGHYAction_eq_zero period hPeriod target,
-    globalCandidateAGHYAction_eq_zero period hPeriod source]
+  unfold globalCandidateAGHYAction
+  rw [hDatum]
 
 end
 end P0EFTJanusProgramPCandidateAGHYDiffeomorphismCovariance4D

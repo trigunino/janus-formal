@@ -77,7 +77,7 @@ private theorem fderiv_continuousLinearMap_apply_const
   simpa only [evaluation, ContinuousLinearMap.comp_apply,
     ContinuousLinearMap.apply_apply] using applied
 
-private theorem localLeviCivitaChristoffelApply_differentiableAt
+theorem localLeviCivitaChristoffelApply_differentiableAt
     {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
     (metric : SmoothGeneralLorentzMetric period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
@@ -110,7 +110,7 @@ private theorem localLeviCivitaChristoffelApply_differentiableAt
     (((differentiableAt_pi.mp hFirstVector) first).mul hChristoffel).mul
       ((differentiableAt_pi.mp hSecondVector) second)
 
-private theorem fderiv_localLeviCivitaChristoffelApply_dynamic
+theorem fderiv_localLeviCivitaChristoffelApply_dynamic
     {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
     (metric : SmoothGeneralLorentzMetric period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)

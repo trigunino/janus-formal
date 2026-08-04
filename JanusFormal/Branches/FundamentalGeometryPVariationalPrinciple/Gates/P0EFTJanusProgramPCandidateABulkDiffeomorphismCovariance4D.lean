@@ -261,8 +261,8 @@ structure GlobalCandidateABulkDensityDiffeomorphismTransport
       pullbackSmoothField period hPeriod Real (diffeomorphism symmetry)
         (chart.family.dataAt configuration).minusMaxwell.basePairing
 
-/-- The three non-bulk-density covariance obligations not discharged by the
-generic change-of-variables argument or canonical GHY vanishing. -/
+/-- The four non-bulk-density covariance obligations not discharged by the
+generic change-of-variables argument. -/
 structure GlobalCandidateARemainingDiffeomorphismCovariance
     {Transformation : Type*}
     {couplings : GlobalCandidateAActionCouplings}
@@ -284,14 +284,19 @@ structure GlobalCandidateARemainingDiffeomorphismCovariance
         (chart.family.dataAt (transform symmetry configuration)) =
       globalCandidateALLAction period hPeriod
         (chart.family.dataAt configuration)
+  robin : ∀ symmetry configuration,
+    globalCandidateAGHYAction period hPeriod
+        (chart.family.dataAt (transform symmetry configuration)) =
+      globalCandidateAGHYAction period hPeriod
+        (chart.family.dataAt configuration)
   finiteBV : ∀ symmetry configuration,
     globalCandidateANullBoundaryAction period hPeriod
         (chart.family.dataAt (transform symmetry configuration)) =
       globalCandidateANullBoundaryAction period hPeriod
         (chart.family.dataAt configuration)
 
-/-- The seven density pullback identities above, canonical GHY vanishing, and
-the three remaining block equalities construct the existing exact nine-block
+/-- The seven density pullback identities above and the four remaining block
+equalities construct the existing exact nine-block
 transported-measure covariance contract. -/
 def globalCandidateAActionBlocks_transportedMeasureCovariant
     {Transformation : Type*}
@@ -328,9 +333,7 @@ def globalCandidateAActionBlocks_transportedMeasureCovariant
   matter := remaining.matter
   robin := by
     intro symmetry configuration
-    exact globalCandidateAGHYAction_configuration_independent period hPeriod
-      (chart.family.dataAt configuration)
-      (chart.family.dataAt (transform symmetry configuration))
+    exact remaining.robin symmetry configuration
   ll := remaining.ll
   einsteinHilbertPlus := by
     intro symmetry configuration

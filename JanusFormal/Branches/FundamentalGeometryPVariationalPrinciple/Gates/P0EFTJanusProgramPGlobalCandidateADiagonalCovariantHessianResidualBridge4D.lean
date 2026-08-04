@@ -68,6 +68,24 @@ attribute [local instance]
   GlobalCandidateAVariationalChart.normedAddCommGroup
   GlobalCandidateAVariationalChart.normedSpace
 
+/-- Forget the typed nonminimal directions while staying in the corrected
+D10-free, nonduplicated physical tangent. -/
+def diagonalExtendedBulkMinimalPhysicalTangentLinearMap
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod analysis
+      →ₗ[Real] GlobalMinimalPhysicalFieldTangent
+        period hPeriod configuration.physical :=
+  (globalGaugeFixedPhysicalTangentPhysicalProjectionLinearMap
+      period hPeriod configuration).comp
+    (diagonalExtendedBulkGaugeFixedTangentLinearMap
+      period hPeriod configuration data analysis)
+
 /-- Forget the typed nonminimal directions and include the corrected
 D10-free physical direction in the legacy tangent with zero D10 entry. -/
 def diagonalExtendedBulkLegacyTangentLinearMap
@@ -84,10 +102,25 @@ def diagonalExtendedBulkLegacyTangentLinearMap
       period hPeriod).comp
     ((globalMinimalPhysicalTangentInclusionLinearMap
         period hPeriod configuration.physical).comp
-      ((globalGaugeFixedPhysicalTangentPhysicalProjectionLinearMap
-          period hPeriod configuration).comp
-        (diagonalExtendedBulkGaugeFixedTangentLinearMap
-          period hPeriod configuration data analysis)))
+      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap
+        period hPeriod configuration data analysis))
+
+theorem diagonalExtendedBulkLegacyTangentLinearMap_eq_zeroD10_minimal
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    diagonalExtendedBulkLegacyTangentLinearMap period hPeriod
+        configuration data analysis =
+      (globalPhysicalFieldTangentZeroD10InclusionLinearMap period hPeriod).comp
+        ((globalMinimalPhysicalTangentInclusionLinearMap
+            period hPeriod configuration.physical).comp
+          (diagonalExtendedBulkMinimalPhysicalTangentLinearMap
+            period hPeriod configuration data analysis)) :=
+  rfl
 
 @[simp]
 theorem diagonalExtendedBulkLegacyTangentLinearMap_d10_eq_zero

@@ -1558,7 +1558,11 @@ background the independent measure equation forces `llField = 0`; after
 quotienting by the resulting field-projection kernel, the Riesz operator is
 exactly the identity, has closed full range and zero kernel/cokernel, and is
 Fredholm of index zero. This is an on-shell quotient theorem, not coercivity
-or Fredholm control of the full off-shell LL graph.
+or Fredholm control of the full off-shell LL graph. Off shell, that full Riesz
+operator is now proved bounded self-adjoint. The generic self-adjoint reduction
+and its direct LL specialization show that closed range plus
+finite-dimensional radical automatically imply finite-dimensional cokernel;
+these are the only two independent LL estimates still open.
 
 A genuine smooth normal section also defines a family of injective
 fixed-parameter normal-displacement `arctan` graphs; the full map is jointly
@@ -1637,10 +1641,13 @@ proved-equal Euler form and Hessian. This is an interface closure, not yet a
 complete general-metric nine-block action-chart inhabitant.
 `P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D`
 connects the local ambient Hessian at any admissible base point to the existing
-dense injective diagonal smooth core. Without duplicating BRST, matter or LL,
-it proves the exact gauge-fixed covariant = graph + physical-residual identity
-and its residual-zero iff form. The `U = univ` conversion preserves the former
-core Hessian and residual exactly.
+dense injective diagonal smooth core. The follow-up
+`P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D` proves that
+the former residual is the physical seven-block Hessian plus the matter--LL
+same-action mismatch. The physically correct target retains that Hessian and
+augments the BRST/matter/LL graph with it; equality is equivalent only to
+closing the matter--LL mismatch. The `U = univ` conversion preserves the
+former core comparison exactly.
 The pre-existing positive-split spectral root and Sylvester bijectivity now
 feed `P0EFTJanusPositiveRawSplitCharpolyContDiffLocalRootBranch4D`: around
 every admissible raw target it gives an open zero-centered perturbation domain,
@@ -1703,16 +1710,44 @@ is complete, `L²`-compatible and contains the exact smooth global tangent. The
   bijectivity and activates the full open-domain `C²` root branch. This is deliberately a
   theorem on the regular stratum; its explicit geometry subtype and local-chart
   predicate are now available at every admissible parameter.
-  `GlobalCandidateAGeometry` alone does not exclude singular roots. An
-  unqualified physical statement therefore still needs intrinsic regularity
-  of the selected root, followed by joint parameter--spacetime-point regularity and
-  the nine exact Candidate-A action-data blocks.
-  `HESSIAN-GLOBAL-01` therefore remains open in one dependency chain: establish
-  selected-root intrinsic and joint regularity, close the
-arbitrary-general-metric Einstein--Maxwell and general
-normal/boundary same-action contributions needed to annul the residual, then
-prove unified Green/adjoint/domain control, off-shell LL Fredholm control,
-correct modal multiplicities and the total same-action Fredholm sum.
+  `GlobalCandidateAGeometry` alone does not exclude singular roots. The positive
+  physical-selection certificate now proves intrinsic Sylvester regularity of
+  the stored selected root, without adding it as an axiom. The local-root
+  joint-regularity bridge proves that every strong `C²` target family induces
+  an open parameter domain, a `C²` selected root, the exact square identity and
+  jointly continuous parameter--spacetime coefficients.
+  The uniform order-two construction is now complete at root level. The
+  canonical scalar C² jet core is complete, carries the exact second-order
+  Leibniz product and maps continuously to the strong core. Its finite matrix
+  algebra is associative, has a C∞ square and exact Sylvester derivative; the
+  local root is C² on an open domain and all coefficient jets through order two
+  are jointly continuous. The intrinsic redundant finite-frame projector
+  defines a complete C² corner containing the selected root, and the already
+  proved intrinsic Sylvester regularity yields its bounded equivalence and
+  open-domain root branch. No physical axiom or global frame is added. The
+  general-metric map, inverse, volume and Maxwell action lifts are now
+  instantiated. H05/P1 further constructs the regular-frame curvature through
+  order two and proves exact agreement of the resulting Einstein--Hilbert
+  action with the intrinsic action at the physical point.
+  The strong Einstein--Maxwell closure gate now removes the integration
+  sub-obstruction: on every finite measure, integration is continuous linear
+  on the canonical strong scalar core. Strong `C²` lifts of the actual
+  volume/scalar curvature and volume/Maxwell pairing therefore make the
+  genuine action lines `C²`, including on open domains. The required
+  general-metric C² lifts are instantiated for both scalar curvature and the
+  Maxwell pairing.
+  The authoritative dependency chain is the
+  [`HESSIAN-GLOBAL-01` closure map](hessian_global_01_closure_map.md).
+  `HESSIAN-GLOBAL-01` therefore remains open through P2--P4: realize the
+  general normal/boundary physical Hessian, prove unified
+  Green/adjoint/domain control, then close the matter--LL same-action
+  identification, correct modal multiplicities and the total same-action
+  Fredholm sum. The dense diagonal graph/typed core is already faithful, but
+the historical spectral D9 packet `ι × Fin 8` is only a reduced Fredholm model,
+not the total field content. Existing zero-Hessian no-go theorems prevent
+deducing the terminal Fredholm result from `C²` alone: a nondegenerate elliptic
+gauge/continuation, boundary realization and common domain must be constructed
+explicitly rather than added as a hidden physical axiom.
 The constructed physical bulk-Dirichlet/SpinC/LL domain and extended
 bulk-Dirichlet/SpinC/D10/LL regulator product have dense cores. The all-level
 SpinC coefficient tower and D10 regulator block are Fredholm, while the LL
@@ -1910,9 +1945,10 @@ the smooth-density identity. With the canonical measure, the installed time
 flow specializes this reduction without a separate measure premise. This
 now coexists with a concrete conformal `ℝ → GlobalFieldConfiguration` orbit,
 whose zero/add laws are exact, but that orbit does not construct a
-`GlobalCandidateAActionData` family or chart. The canonical-throat GHY action
-is identically zero, hence unconditionally covariant; the three
-SpinC-matter/LL/finite-BV ambient covariances and the full global field
+`GlobalCandidateAActionData` family or chart. The canonical-throat fixed GHY
+control is identically zero; the mobile normal-graph datum is now the sourced
+Robin summand of the same central action and must be transported explicitly.
+The four SpinC-matter/LL/Robin/finite-BV ambient covariances and the full global field
 pullback remain. Independently, the fixed holonomic Christoffel germ is now
 extended to arbitrary vectors, differentiated and antisymmetrized. The
 symmetric second and third transition jets cancel, proving the unconditional

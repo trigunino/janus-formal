@@ -268,6 +268,7 @@ def globalCandidateAMatterFiniteGraphDataAt
   interactionDensity_eq := data.interactionDensity_eq
   boundary := matterFiniteGraphBoundaryData
     period hPeriod massSquared data core
+  nonNullBoundary := data.nonNullBoundary
   nullActionFaces := data.nullActionFaces
   nullActionGenerator_eq := data.nullActionGenerator_eq
   nullActionInterval_eq := data.nullActionInterval_eq

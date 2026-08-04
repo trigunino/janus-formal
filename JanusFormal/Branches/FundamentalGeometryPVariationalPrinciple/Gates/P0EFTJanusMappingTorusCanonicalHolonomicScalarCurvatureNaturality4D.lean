@@ -800,7 +800,7 @@ theorem localRicciCurvatureMatrix_transition_congruence
       rw [hSecondMatrix]
       rfl
 
-private def matrixEntryContraction (first second : Matrix4) : Real :=
+def matrixEntryContraction (first second : Matrix4) : Real :=
   ∑ i : Index4, ∑ j : Index4, first i j * second i j
 
 private theorem matrixEntryContraction_eq_trace
@@ -812,7 +812,7 @@ private theorem matrixEntryContraction_eq_trace
 
 /-- Inverse-metric contraction is invariant when the metric and an arbitrary
 covariant matrix transform by the same invertible congruence. -/
-private theorem matrixEntryContraction_congruence
+theorem matrixEntryContraction_congruence
     (transition metric covariant : Matrix4)
     (hTransition : IsUnit transition) :
     matrixEntryContraction
