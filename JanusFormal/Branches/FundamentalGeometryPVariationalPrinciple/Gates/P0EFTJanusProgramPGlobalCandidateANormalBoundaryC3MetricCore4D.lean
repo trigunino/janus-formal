@@ -33,6 +33,7 @@ open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
 open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarC2JetCore4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarC2ToStrongH1C0Bridge4D
 open P0EFTJanusMappingTorusCanonicalPhysicalC2FiniteMatrixProduct4D
 open P0EFTJanusProgramPGeneralMetricC2RelativeEndomorphism4D
 open P0EFTJanusProgramPGeneralMetricC2OpenDomain4D
@@ -45,6 +46,9 @@ private abbrev EffectiveQuotient :=
 
 private abbrev C2Scalar :=
   CanonicalPhysicalScalarC2JetCore period hPeriod
+
+abbrev BoundaryMetricJetIndex :=
+  Fin (finiteSmoothTangentFrame period hPeriod).count
 
 local instance effectiveQuotientChartedSpace :
     ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
@@ -125,18 +129,12 @@ theorem generalMetricFrameThirdDerivative_smul
     frameDerivativeComponentField_smul, frameDerivative_smul]
   rfl
 
-private abbrev RegularMetricFrameIndex
+abbrev RegularMetricThirdJetFiber
     (metric : RegularGeneralLorentzMetric period hPeriod) :=
-  Fin (regularGeneralLorentzMetricSmoothD8Frame
-    period hPeriod metric).count
-
-private abbrev RegularMetricThirdJetFiber
-    (metric : RegularGeneralLorentzMetric period hPeriod) :=
-  RegularMetricFrameIndex period hPeriod metric →
-    RegularMetricFrameIndex period hPeriod metric →
-      RegularMetricFrameIndex period hPeriod metric →
-        RegularMetricFrameIndex period hPeriod metric →
-          RegularMetricFrameIndex period hPeriod metric → Real
+  Fin 4 → Fin 4 →
+    BoundaryMetricJetIndex period hPeriod →
+      BoundaryMetricJetIndex period hPeriod →
+        BoundaryMetricJetIndex period hPeriod → Real
 
 /-- Third frame jet of the same relative metric endomorphism used by the
 bulk C² chart. -/
@@ -147,7 +145,7 @@ def smoothRegularGeneralMetricRelativeThirdJet
     RegularMetricThirdJetFiber period hPeriod metric :=
   fun row column outer middle inner =>
     generalMetricFrameThirdDerivative period hPeriod
-      (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+      (finiteSmoothTangentFrame period hPeriod)
       (smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
         (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
         metric.metric tensor row column)
@@ -171,7 +169,7 @@ theorem smoothRegularGeneralMetricRelativeThirdJet_contMDiff
   rw [contMDiff_pi_space]
   intro inner
   have hThird := generalMetricFrameThirdDerivative_contMDiff period hPeriod
-    (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+    (finiteSmoothTangentFrame period hPeriod)
     (smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
       (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
       metric.metric tensor row column)
@@ -196,7 +194,7 @@ theorem smoothRegularGeneralMetricRelativeThirdJet_add
   rw [hEntry]
   exact congrFun (congrFun (congrFun (congrFun
     (generalMetricFrameThirdDerivative_add period hPeriod
-      (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+      (finiteSmoothTangentFrame period hPeriod)
       (smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
         (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
         metric.metric first row column)
@@ -221,12 +219,12 @@ theorem smoothRegularGeneralMetricRelativeThirdJet_smul
   rw [hEntry]
   exact congrFun (congrFun (congrFun (congrFun
     (generalMetricFrameThirdDerivative_smul period hPeriod
-      (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric) scalar
+      (finiteSmoothTangentFrame period hPeriod) scalar
       (smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
         (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
         metric.metric tensor row column)) point) outer) middle) inner
 
-private abbrev RegularMetricThirdJetAmbient
+abbrev RegularMetricThirdJetAmbient
     (metric : RegularGeneralLorentzMetric period hPeriod) :=
   C(EffectiveQuotient period hPeriod,
     RegularMetricThirdJetFiber period hPeriod metric)
@@ -415,6 +413,280 @@ def regularGeneralMetricBoundaryC3CoreToThirdJet
     (RegularMetricThirdJetAmbient period hPeriod metric)).comp
       (regularGeneralMetricBoundaryC3CoreToAmbient period hPeriod metric)
 
+/-! ## Reuse of the existing metric chart and scalar-jet evaluators -/
+
+/-- The admissible metric set is exactly the preimage of the existing bulk
+`C²` domain.  The extra boundary jet does not impose a second notion of
+metric admissibility. -/
+def regularGeneralMetricBoundaryC3Domain
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    Set (RegularGeneralMetricBoundaryC3Core period hPeriod metric) :=
+  regularGeneralMetricBoundaryC3CoreToC2 period hPeriod metric ⁻¹'
+    regularGeneralMetricC2Domain period hPeriod metric
+
+theorem regularGeneralMetricBoundaryC3Domain_isOpen
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    IsOpen (regularGeneralMetricBoundaryC3Domain period hPeriod metric) :=
+  (regularGeneralMetricC2Domain_isOpen period hPeriod metric).preimage
+    (regularGeneralMetricBoundaryC3CoreToC2
+      period hPeriod metric).continuous
+
+theorem zero_mem_regularGeneralMetricBoundaryC3Domain
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    (0 : RegularGeneralMetricBoundaryC3Core period hPeriod metric) ∈
+      regularGeneralMetricBoundaryC3Domain period hPeriod metric := by
+  change regularGeneralMetricBoundaryC3CoreToC2 period hPeriod metric 0 ∈
+    regularGeneralMetricC2Domain period hPeriod metric
+  rw [map_zero]
+  exact zero_mem_regularGeneralMetricC2Domain period hPeriod metric
+
+/-- Continuous reuse of the relative-metric matrix stored by the bulk chart. -/
+def regularGeneralMetricBoundaryC3CoreToRelativeMatrix
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real]
+      C2FiniteMatrix period hPeriod 4 :=
+  (generalMetricRelativeC2CoreToMatrix period hPeriod
+    (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+    metric.metric).comp
+      (regularGeneralMetricBoundaryC3CoreToC2 period hPeriod metric)
+
+/-- One relative-metric coefficient, still carrying its complete scalar
+`C²` jet. -/
+def regularGeneralMetricBoundaryC3RelativeEntry
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real]
+      C2Scalar period hPeriod :=
+  (ContinuousLinearMap.proj column).comp
+    ((ContinuousLinearMap.proj row).comp
+      (regularGeneralMetricBoundaryC3CoreToRelativeMatrix
+        period hPeriod metric))
+
+private def boundaryMetricScalarJetFirstCoordinate
+    (index : BoundaryMetricJetIndex period hPeriod) :
+    ScalarFrameJet2 (BoundaryMetricJetIndex period hPeriod) →L[Real] Real :=
+  (ContinuousLinearMap.proj index).comp
+    ((ContinuousLinearMap.fst Real
+      (BoundaryMetricJetIndex period hPeriod → Real)
+      (BoundaryMetricJetIndex period hPeriod →
+        BoundaryMetricJetIndex period hPeriod → Real)).comp
+    (ContinuousLinearMap.snd Real Real
+      ((BoundaryMetricJetIndex period hPeriod → Real) ×
+        (BoundaryMetricJetIndex period hPeriod →
+          BoundaryMetricJetIndex period hPeriod → Real))))
+
+private def boundaryMetricScalarJetSecondCoordinate
+    (outer inner : BoundaryMetricJetIndex period hPeriod) :
+    ScalarFrameJet2 (BoundaryMetricJetIndex period hPeriod) →L[Real] Real :=
+  (ContinuousLinearMap.proj inner).comp
+    ((ContinuousLinearMap.proj outer).comp
+      ((ContinuousLinearMap.snd Real
+        (BoundaryMetricJetIndex period hPeriod → Real)
+        (BoundaryMetricJetIndex period hPeriod →
+          BoundaryMetricJetIndex period hPeriod → Real)).comp
+      (ContinuousLinearMap.snd Real Real
+        ((BoundaryMetricJetIndex period hPeriod → Real) ×
+          (BoundaryMetricJetIndex period hPeriod →
+            BoundaryMetricJetIndex period hPeriod → Real)))))
+
+/-- Continuous first frame derivative of one completed relative-metric
+coefficient. -/
+def regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (index : BoundaryMetricJetIndex period hPeriod) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real]
+      C(EffectiveQuotient period hPeriod, Real) :=
+  ((boundaryMetricScalarJetFirstCoordinate period hPeriod index)
+      |>.compLeftContinuous Real (EffectiveQuotient period hPeriod)).comp
+    ((canonicalPhysicalScalarC2JetCoreToAmbient period hPeriod).comp
+      (regularGeneralMetricBoundaryC3RelativeEntry period hPeriod metric
+        row column))
+
+/-- Continuous ordered second frame derivative of one completed
+relative-metric coefficient. -/
+def regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (outer inner : BoundaryMetricJetIndex period hPeriod) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real]
+      C(EffectiveQuotient period hPeriod, Real) :=
+  ((boundaryMetricScalarJetSecondCoordinate period hPeriod outer inner)
+      |>.compLeftContinuous Real (EffectiveQuotient period hPeriod)).comp
+    ((canonicalPhysicalScalarC2JetCoreToAmbient period hPeriod).comp
+      (regularGeneralMetricBoundaryC3RelativeEntry period hPeriod metric
+        row column))
+
+@[simp]
+theorem regularGeneralMetricBoundaryC3RelativeFirstEntry_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (row column : Fin 4)
+    (index : BoundaryMetricJetIndex period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous period hPeriod
+        metric row column index
+        (smoothToRegularGeneralMetricBoundaryC3Core period hPeriod metric
+          tensor) point =
+      frameDerivative period hPeriod Real
+        (finiteSmoothTangentFrame period hPeriod)
+        (smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
+          (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+          metric.metric tensor row column) point index :=
+  rfl
+
+@[simp]
+theorem regularGeneralMetricBoundaryC3RelativeSecondEntry_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (row column : Fin 4)
+    (outer inner : BoundaryMetricJetIndex period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous period hPeriod
+        metric row column outer inner
+        (smoothToRegularGeneralMetricBoundaryC3Core period hPeriod metric
+          tensor) point =
+      frameSecondDerivative period hPeriod
+        (finiteSmoothTangentFrame period hPeriod)
+        (smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
+          (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+          metric.metric tensor row column) point outer inner :=
+  rfl
+
+/-- Continuous value field of one completed relative-metric coefficient. -/
+def regularGeneralMetricBoundaryC3RelativeEntryToContinuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real]
+      C(EffectiveQuotient period hPeriod, Real) :=
+  (canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod).comp
+    (regularGeneralMetricBoundaryC3RelativeEntry period hPeriod metric
+      row column)
+
+/-- Point evaluation of one completed relative-metric coefficient. -/
+private def regularGeneralMetricBoundaryC3ContinuousValueAt
+    (point : EffectiveQuotient period hPeriod) :
+    C(EffectiveQuotient period hPeriod, Real) →L[Real] Real :=
+  LinearMap.mkContinuous
+    { toFun := fun field => field point
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+    1 (fun field => by
+      change ‖field point‖ ≤ 1 * ‖field‖
+      simpa only [one_mul] using
+        (ContinuousMap.norm_coe_le_norm field point))
+
+def regularGeneralMetricBoundaryC3RelativeEntryAt
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4) (point : EffectiveQuotient period hPeriod) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real] Real :=
+  (regularGeneralMetricBoundaryC3ContinuousValueAt
+    period hPeriod point).comp
+      (regularGeneralMetricBoundaryC3RelativeEntryToContinuous
+        period hPeriod metric row column)
+
+@[simp]
+theorem regularGeneralMetricBoundaryC3RelativeEntryAt_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (row column : Fin 4) (point : EffectiveQuotient period hPeriod) :
+    regularGeneralMetricBoundaryC3RelativeEntryAt period hPeriod metric
+        row column point
+        (smoothToRegularGeneralMetricBoundaryC3Core period hPeriod metric
+          tensor) =
+      smoothGeneralMetricRelativeEndomorphismMatrix period hPeriod
+        (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+        metric.metric tensor row column point :=
+  rfl
+
+/-- Joint continuity of coefficient evaluation in the completed metric and
+the moving ambient point. -/
+theorem regularGeneralMetricBoundaryC3RelativeEntry_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4) :
+    Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3RelativeEntryToContinuous
+        period hPeriod metric row column current.1 current.2) :=
+  ((regularGeneralMetricBoundaryC3RelativeEntryToContinuous
+    period hPeriod metric row column).continuous.comp continuous_fst).eval
+      continuous_snd
+
+theorem regularGeneralMetricBoundaryC3RelativeFirstEntry_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (index : BoundaryMetricJetIndex period hPeriod) :
+    Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous
+        period hPeriod metric row column index current.1 current.2) :=
+  ((regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous
+    period hPeriod metric row column index).continuous.comp continuous_fst).eval
+      continuous_snd
+
+theorem regularGeneralMetricBoundaryC3RelativeSecondEntry_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (outer inner : BoundaryMetricJetIndex period hPeriod) :
+    Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous
+        period hPeriod metric row column outer inner current.1 current.2) :=
+  ((regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous
+    period hPeriod metric row column outer inner).continuous.comp
+      continuous_fst).eval continuous_snd
+
+/-- Continuous evaluation of the additional ordered third jet. -/
+private def regularGeneralMetricBoundaryC3ContinuousThirdJetAt
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    RegularMetricThirdJetAmbient period hPeriod metric →L[Real]
+      RegularMetricThirdJetFiber period hPeriod metric :=
+  LinearMap.mkContinuous
+    { toFun := fun field => field point
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+    1 (fun field => by
+      change ‖field point‖ ≤ 1 * ‖field‖
+      simpa only [one_mul] using
+        (ContinuousMap.norm_coe_le_norm field point))
+
+def regularGeneralMetricBoundaryC3ThirdJetAt
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric →L[Real]
+      RegularMetricThirdJetFiber period hPeriod metric :=
+  (regularGeneralMetricBoundaryC3ContinuousThirdJetAt
+    period hPeriod metric point).comp
+    (regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric)
+
+@[simp]
+theorem regularGeneralMetricBoundaryC3ThirdJetAt_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (point : EffectiveQuotient period hPeriod) :
+    regularGeneralMetricBoundaryC3ThirdJetAt period hPeriod metric point
+        (smoothToRegularGeneralMetricBoundaryC3Core period hPeriod metric
+          tensor) =
+      smoothRegularGeneralMetricRelativeThirdJet period hPeriod metric tensor
+        point :=
+  rfl
+
+/-- Joint continuity of the extra third jet in the completed metric and the
+evaluation point. -/
+theorem regularGeneralMetricBoundaryC3ThirdJet_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric
+        current.1 current.2) :=
+  ((regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric).continuous
+    |>.comp continuous_fst).eval continuous_snd
+
 @[simp]
 theorem regularGeneralMetricBoundaryC3CoreToC2_smooth
     (metric : RegularGeneralLorentzMetric period hPeriod)
@@ -457,6 +729,32 @@ theorem regular_general_metric_boundary_c3_core_gate
       period hPeriod metric).continuous,
     (regularGeneralMetricBoundaryC3CoreToThirdJet
       period hPeriod metric).continuous⟩
+
+/-- Local-chart certificate inherited without alteration from the bulk `C²`
+domain, together with the moving-point evaluators used by P2. -/
+theorem regular_general_metric_boundary_c3_chart_gate
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    IsOpen (regularGeneralMetricBoundaryC3Domain period hPeriod metric) ∧
+      (0 : RegularGeneralMetricBoundaryC3Core period hPeriod metric) ∈
+        regularGeneralMetricBoundaryC3Domain period hPeriod metric ∧
+      (∀ row column : Fin 4,
+        Continuous (fun current :
+          RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+            EffectiveQuotient period hPeriod =>
+          regularGeneralMetricBoundaryC3RelativeEntryToContinuous
+            period hPeriod metric row column current.1 current.2)) ∧
+      Continuous (fun current :
+        RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+          EffectiveQuotient period hPeriod =>
+        regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric
+          current.1 current.2) := by
+  exact ⟨regularGeneralMetricBoundaryC3Domain_isOpen period hPeriod metric,
+    zero_mem_regularGeneralMetricBoundaryC3Domain period hPeriod metric,
+    fun row column =>
+      regularGeneralMetricBoundaryC3RelativeEntry_joint_continuous
+        period hPeriod metric row column,
+    regularGeneralMetricBoundaryC3ThirdJet_joint_continuous
+      period hPeriod metric⟩
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D

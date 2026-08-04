@@ -31,7 +31,7 @@ maintenir une seconde liste des résidus.
 | H07 | Neuf champs non minimaux typés, sans D10 ni duplication | `DONE` | `globalTypedNonminimalBRST_square_zero`, `globalMinimalPhysicalTangentInclusion_injective`, dans `P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D` |
 | H08 | Graphes BRST diagonal/Abelian et cœur total typé fidèle | `DONE` | `diagonalExtendedBulkGraphTypedCoreLinearMap_injective`, dans `P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D` |
 | H09 | LL complet same-action ; quotient stationnaire Fredholm d'indice zéro | `DONE/ON-SHELL` | `globalCandidateAFullLLFieldQuotientRieszOperator_fredholm_criterion_of_stationary`, `globalCandidateAFullLLFieldQuotientRieszIndex_zero_of_stationary` |
-| H10 | Déplacement normal et géométrie générale de bord : famille induite, second Fréchet et accord same-action | `OPEN/P2` (géométrie holonome Levi–Civita, cœur normal complet `C²`, normale métrique globale lisse/deck-impaire et représentant physique jointement lisse point–paramètre compilés ; forme de Gauss, covariance source, invariance de la trace et accord Gauss sur un voisinage admissible compilés ; action mobile à deux feuillets et égalité exacte au ledger compilées ; datum mobile promu dans l'unique sommant GHY de Candidate-A par une interface géométriquement sourcée ; extension jointe `C²` sur le domaine fonctionnel renforcé et second Fréchet restent) | responsable unique : `P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D` |
+| H10 | Déplacement normal et géométrie générale de bord : famille induite, second Fréchet et accord same-action | `OPEN/P2` (géométrie holonome Levi–Civita, cœur normal complet `C²`, normale métrique globale lisse/deck-impaire et représentant physique jointement lisse point–paramètre compilés ; forme de Gauss, covariance source, invariance de la trace et accord Gauss sur un voisinage admissible compilés ; action mobile à deux feuillets et égalité exacte au ledger compilées ; datum mobile promu dans l'unique sommant GHY de Candidate-A ; cœur métrique de bord `C³`, cœur fonctionnel conjoint, reconstruction canonique et algèbre déterminant/trace du repère redondant, ainsi que substitutions de jets fibrés `C²`, compilés ; valeur, premières dérivées spatiales, déterminant et inverse de la métrique ambiante évaluée sont désormais `C²` sur l'ouvert métrique existant, sans métrique `C⁴` ; l'assemblage métrique induite/seconde forme, puis intégrande/action et l'identification du second Fréchet same-action restent) | responsable unique : `P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D` ; helpers analytiques : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D`, `P0EFTJanusProgramPThroatFiniteFrameReconstruction4D`, `P0EFTJanusBoundedFiberJetSubstitutionC2`, `P0EFTJanusBoundedFiberJet2SubstitutionC2`, `P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D` |
 | H11 | Mesure et domaine communs : Green, adjoints, closabilité et réalisation fermée du Hessien **augmenté** | `WAIT H10/H13, P3` (le graphe BRST–SpinC–LL existant est fermé ; il faut réaliser sur ce même domaine les sept blocs physiques retenus) | responsable unique : `P0EFTJanusProgramPGlobalCandidateACommonAnalyticDomainClosure4D` |
 | H12 | Multiplicités typées fidèles, somme Fredholm totale et indice | `WAIT H11, P4` (les multiplicités et la sous-somme SpinC×LL sont compilées ; le Riesz actuel ne porte que le graphe BRST–SpinC–LL et n'est donc pas encore l'opérateur total) | responsable unique : `P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D` |
 | H13 | Résidu matière–LL nul sur la même action et identification du vrai Hessien covariant au Hessien augmenté, sans supprimer les sept blocs physiques | `WAIT H10, P4` | critère existant `diagonalExtendedBulkMinimalPhysicalLocalGaugeFixed_eq_augmented_iff`, dans `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D` |
@@ -292,17 +292,144 @@ le même datum. L'ancien théorème d'annulation exige désormais explicitement
 la branche fixe, et la covariance générale porte le vrai bloc Robin au lieu
 de le supprimer.
 
-Reste pour `H10` : étendre la dépendance `C²` aux cœurs métrique et normal,
-puis identifier son second Fréchet à celui de cette même action. L'audit de
-régularité a isolé une perte réelle : sur un voisinage de graphes mobiles, la
-seconde dérivée normale de l'évaluation de `∂g` demande une trace métrique
-d'ordre trois. Le cœur métrique bulk `C²` suffit au Hessien au point de base,
-mais pas à une affirmation `C²` sur tout l'ouvert mobile. La prochaine brique
-doit donc être soit un cœur métrique à trace de bord `C³` injecté continûment
-dans le cœur bulk `C²`, soit une preuve de cancellation de cette dérivée dans
-le bloc total EH+GHY. C'est un raffinement analytique du domaine, pas un nouvel
-axiome physique. Les branches historiques de reparamétrisation nulle restent
-des contrôles, pas un substitut au bord général.
+La perte de dérivée est désormais traitée sans axiome physique. Le helper
+`P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D` construit le
+cœur métrique de bord `C³`, avec inclusion lisse exacte des métriques générales,
+image dense et injective, projection continue vers le cœur bulk `C²` et trace
+d'ordre trois. Le gate compilé est
+`regular_general_metric_boundary_c3_core_gate`. Le fichier responsable assemble
+ce cœur avec le cœur normal `C²` dans un espace de Banach conjoint ; injectivité,
+densité et complétude sont enregistrées par
+`normal_boundary_functional_core_gate`. Tous les blocs bulk continuent donc de
+voir exactement la projection `C²` existante.
+
+Les évaluations nécessaires sur le même graphe complété sont compilées.
+`candidateANormalBoundaryRelativeMetricEntryAtGraph`,
+`candidateANormalBoundaryRelativeMetricFirstEntryAtGraph`,
+`candidateANormalBoundaryRelativeMetricSecondEntryAtGraph` et
+`candidateANormalBoundaryRelativeMetricThirdJetAtGraph` exposent les jets
+métriques d'ordres zéro à trois et sont jointement continus en métrique,
+déplacement, paramètre et point de bord. Leurs théorèmes `_smooth` se réduisent
+aux évaluations lisses déjà certifiées par le helper `C³`, sans dupliquer les
+matrices physiques.
+
+L'audit du repère a aussi éliminé une fausse piste. Le dualiseur positif de
+gorge déjà présent sépare les covecteurs, mais ne fournit pas à lui seul leur
+reconstruction continue. La brique 4D
+`P0EFTJanusProgramPGlobalCandidateAFiniteFrameRootBridge4D` contenait en
+revanche l'algèbre exacte à spécialiser. Le helper compilé
+`P0EFTJanusProgramPThroatFiniteFrameReconstruction4D` construit, avec la seule
+métrique intrinsèque non dégénérée déjà prouvée, l'opérateur du repère fini
+redondant, son inverse lisse et les coefficients lisses qui reconstruisent
+exactement toute section tangente. Il ne choisit aucune base globale et
+n'ajoute aucune donnée géométrique.
+
+Ce même helper contient maintenant l'algèbre globale nécessaire au GHY. Les
+applications canoniques d'analyse et de synthèse vérifient exactement
+`synthesis ∘ analysis = id`. L'encodage d'un endomorphisme respecte donc la
+composition malgré la redondance. Son relèvement `I - P + M(A)` agit comme
+l'identité sur le complément du projecteur et vérifie, sans choix de base
+globale, `det(I - P + M(A)) = det(A)` et `trace(M(A)) = trace(A)`. La preuve du
+déterminant réutilise l'identité de Weinstein–Aronszajn de Mathlib ; la gate
+publique est `intrinsic_throat_finite_frame_matrix_algebra_gate`. Cette brique
+permettra d'inverser la métrique induite et de contracter la seconde forme
+fondamentale dans un champ matriciel global, sans nouvelle géométrie.
+
+Cette reconstruction est consommée par
+`normalBoundaryC2JetCoreDifferentialAt` : les lectures de première dérivée du
+cœur normal deviennent un covecteur tangent intrinsèque. Le théorème
+`normalBoundaryC2JetCoreDifferentialAt_smooth` prouve qu'il s'agit exactement
+du différentiel de variété du déplacement scalaire issu de la vraie section
+normale sur le cœur dense, et non d'un nouveau champ indépendant.
+
+Le dernier obstacle analytique générique de l'évaluation sur un graphe mobile
+est également compilé dans `P0EFTJanusBoundedFiberJetSubstitutionC2`. Ce helper
+ne contient aucune donnée géométrique : il évalue un champ borné muni de ses
+trois dérivées fibrées compatibles sur un graphe continu borné. Les restes de
+Taylor uniformes donnent les premier et second Fréchet exacts, la continuité du
+second et `boundedFiberJet3Evaluation_contDiff_two`; la gate publique est
+`bounded_fiber_jet_substitution_c2_gate`. Il s'agit de la brique analytique
+manquante, pas d'une troisième représentation de l'action.
+
+Son instanciation sur le déplacement normal est maintenant compilée dans
+`P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D`.
+L'opérateur ponctuel `arctan` est `C²` sur les graphes continus bornés ; le
+graphe de latitude obtenu depuis le cœur normal complété est donc `C²` et
+`normalBoundaryLatitudeFiberPoint_graph` l'identifie exactement au
+`normalBoundaryC2Graph` déjà utilisé par l'action. La sélection locale de la
+structure normée canonique du sous-espace supprime seulement un diamant
+d'instances Lean ; elle ne change ni le cœur, ni sa topologie, ni la physique.
+
+Le même helper réutilise désormais `finiteSmoothTangentFrame` et le dualiseur
+métrique déjà prouvé dans
+`P0EFTJanusProgramPGlobalCandidateAFiniteFrameRootBridge4D`. L'inverse du
+dualiseur est exposé comme endomorphisme de fibré lisse, puis le véritable
+relèvement tangent de latitude est décomposé en coefficients `C∞`. Ces
+coefficients et leurs deux premières dérivées de latitude descendent
+exactement par l'invariance du double d'orientation. Leurs versions en
+coordonnée brute sont bornées par restriction à l'intervalle
+compact canonique `[-π/2, π/2]` atteint par `arctan`, via
+`boundedArctanCompactPullbackCLM`. Il n'y a donc ni hypothèse de périodicité,
+ni prolongement arbitraire, ni nouveau choix de repère.
+
+La contraction des jets métriques `C³` est maintenant compilée. Les quatre
+composantes de latitude coïncident sur le cœur lisse dense avec les dérivées
+géométriques d'ordre zéro à trois. Le jet brut obtenu après `arctan` appartient
+à `boundedFiberJet3Submodule`; `boundedFiberJet3Submodule_isClosed` et la
+densité de `smoothToRegularGeneralMetricBoundaryC3Core` étendent cette
+compatibilité à toute la complétion. L'application linéaire continue résultante
+est `normalBoundaryRelativeMetricRawJet3CLM`.
+
+La gate générique est donc réellement instanciée :
+`candidateANormalBoundaryRelativeMetricFiberEvaluation_contDiff_two` donne la
+régularité `C²` sur le cœur métrique-normal complété, et
+`candidateANormalBoundaryRelativeMetricFiberEvaluation_apply` l'identifie
+exactement à `candidateANormalBoundaryRelativeMetricEntryAtGraph` sur le graphe
+physique déjà utilisé. Le certificat public est
+`candidate_a_normal_boundary_relative_metric_fiber_c2_gate`.
+
+La dérivée spatiale première requise par la connexion de Levi–Civita ne peut
+pas être envoyée dans ce même jet d'ordre trois : cela demanderait à tort une
+métrique `C⁴`. Le compagnon analytique
+`P0EFTJanusBoundedFiberJet2SubstitutionC2` prouve directement la substitution
+`C²` d'un jet valeur–première–seconde dont le composant supérieur est
+uniformément continu. Cette continuité vient ici du pullback de la bande
+compacte par `arctan`; elle n'est pas une hypothèse physique. Les identités de
+dérivation sont étendues du cœur lisse à la complétion par la fermeture de
+`jet2DerivativeSubmodule`. L'instanciation physique
+`candidate_a_normal_boundary_relative_metric_spatial_first_fiber_c2_gate`
+identifie alors, pour chaque générateur spatial déjà présent, l'évaluation
+`C²` exacte à `candidateANormalBoundaryRelativeMetricFirstEntryAtGraph`. Le
+GHY dispose donc de la métrique mobile et de ses premières dérivées avec la
+régularité optimale `C³`, sans dérivée d'ordre quatre.
+
+Ces gates scalaires sont maintenant assemblées, sans nouvelle représentation,
+dans le champ matriciel borné
+`candidateANormalBoundaryTotalRelativeMetricMatrixFiberEvaluation` et dans ses
+matrices de premières dérivées spatiales. Toutes ces applications sont `C²`.
+Le déterminant de l'endomorphisme relatif ambiant est le vrai polynôme de
+Leibniz dans cette algèbre de champs ; il est `C²` et son évaluation ponctuelle
+est exactement le déterminant de la matrice physique déjà stockée. Le
+certificat commun est `candidate_a_normal_boundary_metric_matrix_fiber_c2_gate`.
+
+L'inversion ne crée pas une nouvelle représentation. L'évaluation sur le
+graphe est prouvée multiplicative et transporte les deux identités de
+`generalMetricRelativeC2InverseMatrix`. Elle montre que la matrice évaluée est
+une unité exactement sur la préimage du domaine métrique déjà existant. Son
+inverse est ensuite écrit par la formule standard déterminant–adjugée :
+l'adjugée est polynomiale, et l'inversion du déterminant est `C²` dans
+l'algèbre de Banach des champs bornés. Le résultat est `C²` sur cet ouvert et
+est égal au témoin C2 antérieur ; le certificat est
+`candidate_a_normal_boundary_inverse_metric_matrix_fiber_c2_gate`. Aucun
+axiome de non-dégénérescence ni domaine supplémentaire n'est introduit.
+
+Reste pour `H10` : assembler la métrique induite et la seconde forme dans le
+repère de gorge reconstruit, puis l'intégrande et l'action GHY sur l'ouvert
+admissible, et identifier son second Fréchet au bloc normal de la même action
+Candidate-A.
+Les branches
+historiques de reparamétrisation nulle restent des contrôles, pas un substitut
+au bord général.
 
 Audit de l'action existante : `GlobalBoundaryVariationData.nonNullFaces`
 reconstruit toujours le contrôle fixe avec `canonicalThroatNonNullFaceDatum`,
