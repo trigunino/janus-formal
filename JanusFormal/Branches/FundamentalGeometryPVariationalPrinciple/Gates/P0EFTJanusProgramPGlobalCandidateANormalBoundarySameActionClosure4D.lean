@@ -16,6 +16,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteStratifiedBoundaryVariation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCovariantAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPThroatFiniteFrameReconstruction4D
 import Mathlib.MeasureTheory.Function.L1Space.HasFiniteIntegral
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 
@@ -96,6 +97,13 @@ open P0EFTJanusMappingTorusIntrinsicCanonicalNormalProjectionWinding4D
 open P0EFTJanusMappingTorusEquivariantSmoothDescent4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D
+open P0EFTJanusProgramPThroatFiniteFrameReconstruction4D
+open P0EFTJanusProgramPGeneralMetricC2RelativeEndomorphism4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarC2ToStrongH1C0Bridge4D
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarC2JetCore4D
+open P0EFTJanusMappingTorusH1GraphTrace4D
+open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+open P0EFTJanusProgramPRegularGeneralMetricC2Chart4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -8296,6 +8304,76 @@ theorem normalBoundaryC2JetCoreFirstAt_smooth
         (normalDisplacementOrientationSmoothField period hPeriod displacement)
         point := by
   rfl
+
+/-- Intrinsic differential reconstructed from the completed redundant first
+jet.  The inverse frame operator is the canonical one supplied by the already
+proved intrinsic nondegenerate throat metric. -/
+def normalBoundaryC2JetCoreDifferentialAt
+    (normal : NormalBoundaryC2JetCore period hPeriod)
+    (point : OrientationBoundary period hPeriod) :
+    TangentSpace throatCoverModelWithCorners point →L[Real] Real :=
+  ∑ index : Fin (OrientationNormalFrame period hPeriod).count,
+    (normalBoundaryC2JetCoreFirstAt period hPeriod point normal index) •
+      intrinsicThroatFiniteFrameCoefficientAt
+        (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+        (OrientationNormalFrame period hPeriod) point index
+
+/-- On the dense genuine-smooth core, the reconstructed differential is the
+actual manifold differential of the original normal scalar. -/
+theorem normalBoundaryC2JetCoreDifferentialAt_smooth
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (point : OrientationBoundary period hPeriod) :
+    normalBoundaryC2JetCoreDifferentialAt period hPeriod
+        (smoothNormalDisplacementToBoundaryC2JetCore
+          period hPeriod displacement) point =
+      mvfderiv throatCoverModelWithCorners
+        (normalDisplacementOrientationSmoothField
+          period hPeriod displacement).toFun point := by
+  classical
+  apply ContinuousLinearMap.ext
+  intro vector
+  let field := normalDisplacementOrientationSmoothField
+    period hPeriod displacement
+  let derivative := mvfderiv throatCoverModelWithCorners field.toFun point
+  have hReconstruct :=
+    intrinsicThroatFiniteFrameCoefficientAt_reconstructs
+      (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+      (OrientationNormalFrame period hPeriod) point vector
+  calc
+    normalBoundaryC2JetCoreDifferentialAt period hPeriod
+        (smoothNormalDisplacementToBoundaryC2JetCore
+          period hPeriod displacement) point vector =
+      ∑ index : Fin (OrientationNormalFrame period hPeriod).count,
+        derivative
+            ((OrientationNormalFrame period hPeriod).vectorAt point index) *
+          intrinsicThroatFiniteFrameCoefficientAt
+            (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+            (OrientationNormalFrame period hPeriod) point index vector := by
+      unfold normalBoundaryC2JetCoreDifferentialAt
+      rw [_root_.sum_apply]
+      apply Finset.sum_congr rfl
+      intro index _
+      rw [normalBoundaryC2JetCoreFirstAt_smooth,
+        throatFrameDerivative_eq_mvfderiv]
+      rfl
+    _ = derivative
+        (∑ index : Fin (OrientationNormalFrame period hPeriod).count,
+          intrinsicThroatFiniteFrameCoefficientAt
+              (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+              (OrientationNormalFrame period hPeriod) point index vector •
+            (OrientationNormalFrame period hPeriod).vectorAt point index) := by
+      rw [map_sum]
+      apply Finset.sum_congr rfl
+      intro index _
+      rw [map_smul]
+      simpa only [smul_eq_mul] using
+        (mul_comm
+          (derivative
+            ((OrientationNormalFrame period hPeriod).vectorAt point index))
+          (intrinsicThroatFiniteFrameCoefficientAt
+            (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+            (OrientationNormalFrame period hPeriod) point index vector))
+    _ = derivative vector := by rw [← hReconstruct]
 
 @[simp]
 theorem normalBoundaryC2JetCoreSecondAt_smooth
@@ -16949,6 +17027,304 @@ theorem smoothToCandidateANormalBoundaryFunctionalCore_denseRange
     period hPeriod metric).prodMap
     (smoothNormalDisplacementToBoundaryC2JetCore_denseRange
       period hPeriod)
+
+/-! ### The existing metric jets evaluated on the completed moving graph -/
+
+/-- The joint chart retains exactly the existing admissible metric domain;
+the completed normal direction adds no independent metric condition. -/
+def candidateANormalBoundaryMetricDomain
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    Set (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+  Prod.fst ⁻¹'
+    regularGeneralMetricBoundaryC3Domain period hPeriod metric
+
+theorem candidateANormalBoundaryMetricDomain_isOpen
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    IsOpen (candidateANormalBoundaryMetricDomain period hPeriod metric) :=
+  (regularGeneralMetricBoundaryC3Domain_isOpen period hPeriod metric).preimage
+    continuous_fst
+
+theorem zero_mem_candidateANormalBoundaryMetricDomain
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    (0 : CandidateANormalBoundaryFunctionalCore period hPeriod metric) ∈
+      candidateANormalBoundaryMetricDomain period hPeriod metric :=
+  zero_mem_regularGeneralMetricBoundaryC3Domain period hPeriod metric
+
+private def candidateANormalBoundaryMetricGraphInput
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod) :
+    RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+      EffectiveQuotient period hPeriod :=
+  (current.1.1.1,
+    normalBoundaryC2Graph period hPeriod current.1.1.2 current.1.2 current.2)
+
+private theorem candidateANormalBoundaryMetricGraphInput_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    Continuous (candidateANormalBoundaryMetricGraphInput
+      period hPeriod metric) := by
+  have hMetric : Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod => current.1.1.1) :=
+    continuous_fst.comp (continuous_fst.comp continuous_fst)
+  have hNormal : Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod => current.1.1.2) :=
+    continuous_snd.comp (continuous_fst.comp continuous_fst)
+  have hParameter : Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod => current.1.2) :=
+    continuous_snd.comp continuous_fst
+  have hBoundary : Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod => current.2) :=
+    continuous_snd
+  have hGraph :=
+    (normalBoundaryC2Graph_joint_continuous period hPeriod).comp
+      ((hNormal.prodMk hParameter).prodMk hBoundary)
+  exact hMetric.prodMk hGraph
+
+/-- One completed relative-metric coefficient evaluated at the same completed
+normal graph used by the physical boundary. -/
+def candidateANormalBoundaryRelativeMetricEntryAtGraph
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (variation : CandidateANormalBoundaryFunctionalCore period hPeriod metric)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) : Real :=
+  regularGeneralMetricBoundaryC3RelativeEntryToContinuous period hPeriod
+    metric row column variation.1
+      (normalBoundaryC2Graph period hPeriod variation.2 parameter boundary)
+
+theorem candidateANormalBoundaryRelativeMetricEntryAtGraph_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4) :
+    Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod =>
+      candidateANormalBoundaryRelativeMetricEntryAtGraph period hPeriod metric
+        row column current.1.1 current.1.2 current.2) := by
+  have hOuter : Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3RelativeEntryToContinuous period hPeriod
+        metric row column current.1 current.2) :=
+    regularGeneralMetricBoundaryC3RelativeEntry_joint_continuous period
+      hPeriod metric row column
+  have hComposed := hOuter.comp
+    (candidateANormalBoundaryMetricGraphInput_continuous
+      period hPeriod metric)
+  apply hComposed.congr
+  intro current
+  rfl
+
+@[simp]
+theorem candidateANormalBoundaryRelativeMetricEntryAtGraph_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (row column : Fin 4) (parameter : Real)
+    (boundary : OrientationBoundary period hPeriod) :
+    candidateANormalBoundaryRelativeMetricEntryAtGraph period hPeriod metric
+        row column
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement)) parameter boundary =
+      regularGeneralMetricBoundaryC3RelativeEntryToContinuous period hPeriod
+        metric row column
+        (smoothToRegularGeneralMetricBoundaryC3Core
+          period hPeriod metric tensor)
+        (normalGraphOrientationDouble period hPeriod displacement
+          (boundary, parameter)) := by
+  unfold candidateANormalBoundaryRelativeMetricEntryAtGraph
+    smoothToCandidateANormalBoundaryFunctionalCore
+  change regularGeneralMetricBoundaryC3RelativeEntryToContinuous period hPeriod
+      metric row column
+      (smoothToRegularGeneralMetricBoundaryC3Core
+        period hPeriod metric tensor)
+      (normalBoundaryC2Graph period hPeriod
+        (smoothNormalDisplacementToBoundaryC2JetCore
+          period hPeriod displacement) parameter boundary) = _
+  rw [normalBoundaryC2Graph_smooth]
+
+/-- First physical-frame derivative of the same coefficient, evaluated on
+the same completed graph. -/
+def candidateANormalBoundaryRelativeMetricFirstEntryAtGraph
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (index : BoundaryMetricJetIndex period hPeriod)
+    (variation : CandidateANormalBoundaryFunctionalCore period hPeriod metric)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) : Real :=
+  regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous period hPeriod
+    metric row column index variation.1
+      (normalBoundaryC2Graph period hPeriod variation.2 parameter boundary)
+
+theorem candidateANormalBoundaryRelativeMetricFirstEntryAtGraph_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (index : BoundaryMetricJetIndex period hPeriod) :
+    Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod =>
+      candidateANormalBoundaryRelativeMetricFirstEntryAtGraph period hPeriod
+        metric row column index current.1.1 current.1.2 current.2) := by
+  have hOuter : Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous period
+        hPeriod metric row column index current.1 current.2) :=
+    regularGeneralMetricBoundaryC3RelativeFirstEntry_joint_continuous period
+      hPeriod metric row column index
+  have hComposed := hOuter.comp
+    (candidateANormalBoundaryMetricGraphInput_continuous
+      period hPeriod metric)
+  apply hComposed.congr
+  intro current
+  rfl
+
+@[simp]
+theorem candidateANormalBoundaryRelativeMetricFirstEntryAtGraph_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (row column : Fin 4)
+    (index : BoundaryMetricJetIndex period hPeriod)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) :
+    candidateANormalBoundaryRelativeMetricFirstEntryAtGraph period hPeriod
+        metric row column index
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement)) parameter boundary =
+      regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous period
+        hPeriod metric row column index
+        (smoothToRegularGeneralMetricBoundaryC3Core
+          period hPeriod metric tensor)
+        (normalGraphOrientationDouble period hPeriod displacement
+          (boundary, parameter)) := by
+  unfold candidateANormalBoundaryRelativeMetricFirstEntryAtGraph
+    smoothToCandidateANormalBoundaryFunctionalCore
+  change regularGeneralMetricBoundaryC3RelativeFirstEntryToContinuous period
+      hPeriod metric row column index
+      (smoothToRegularGeneralMetricBoundaryC3Core
+        period hPeriod metric tensor)
+      (normalBoundaryC2Graph period hPeriod
+        (smoothNormalDisplacementToBoundaryC2JetCore
+          period hPeriod displacement) parameter boundary) = _
+  rw [normalBoundaryC2Graph_smooth]
+
+/-- Ordered second physical-frame derivative on the completed graph. -/
+def candidateANormalBoundaryRelativeMetricSecondEntryAtGraph
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (outer inner : BoundaryMetricJetIndex period hPeriod)
+    (variation : CandidateANormalBoundaryFunctionalCore period hPeriod metric)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) : Real :=
+  regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous period hPeriod
+    metric row column outer inner variation.1
+      (normalBoundaryC2Graph period hPeriod variation.2 parameter boundary)
+
+theorem candidateANormalBoundaryRelativeMetricSecondEntryAtGraph_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (row column : Fin 4)
+    (outer inner : BoundaryMetricJetIndex period hPeriod) :
+    Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod =>
+      candidateANormalBoundaryRelativeMetricSecondEntryAtGraph period hPeriod
+        metric row column outer inner current.1.1 current.1.2 current.2) := by
+  have hOuter : Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous period
+        hPeriod metric row column outer inner current.1 current.2) :=
+    regularGeneralMetricBoundaryC3RelativeSecondEntry_joint_continuous period
+      hPeriod metric row column outer inner
+  have hComposed := hOuter.comp
+    (candidateANormalBoundaryMetricGraphInput_continuous
+      period hPeriod metric)
+  apply hComposed.congr
+  intro current
+  rfl
+
+@[simp]
+theorem candidateANormalBoundaryRelativeMetricSecondEntryAtGraph_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (row column : Fin 4)
+    (outer inner : BoundaryMetricJetIndex period hPeriod)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) :
+    candidateANormalBoundaryRelativeMetricSecondEntryAtGraph period hPeriod
+        metric row column outer inner
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement)) parameter boundary =
+      regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous period
+        hPeriod metric row column outer inner
+        (smoothToRegularGeneralMetricBoundaryC3Core
+          period hPeriod metric tensor)
+        (normalGraphOrientationDouble period hPeriod displacement
+          (boundary, parameter)) := by
+  unfold candidateANormalBoundaryRelativeMetricSecondEntryAtGraph
+    smoothToCandidateANormalBoundaryFunctionalCore
+  change regularGeneralMetricBoundaryC3RelativeSecondEntryToContinuous period
+      hPeriod metric row column outer inner
+      (smoothToRegularGeneralMetricBoundaryC3Core
+        period hPeriod metric tensor)
+      (normalBoundaryC2Graph period hPeriod
+        (smoothNormalDisplacementToBoundaryC2JetCore
+          period hPeriod displacement) parameter boundary) = _
+  rw [normalBoundaryC2Graph_smooth]
+
+/-- The additional third relative-metric jet evaluated on the completed graph. -/
+def candidateANormalBoundaryRelativeMetricThirdJetAtGraph
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variation : CandidateANormalBoundaryFunctionalCore period hPeriod metric)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) :
+    RegularMetricThirdJetFiber period hPeriod metric :=
+  regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric variation.1
+    (normalBoundaryC2Graph period hPeriod variation.2 parameter boundary)
+
+theorem candidateANormalBoundaryRelativeMetricThirdJetAtGraph_joint_continuous
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    Continuous (fun current :
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric × Real) ×
+        OrientationBoundary period hPeriod =>
+      candidateANormalBoundaryRelativeMetricThirdJetAtGraph period hPeriod
+        metric current.1.1 current.1.2 current.2) := by
+  have hOuter : Continuous (fun current :
+      RegularGeneralMetricBoundaryC3Core period hPeriod metric ×
+        EffectiveQuotient period hPeriod =>
+      regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric
+        current.1 current.2) :=
+    regularGeneralMetricBoundaryC3ThirdJet_joint_continuous period hPeriod
+      metric
+  have hComposed := hOuter.comp
+    (candidateANormalBoundaryMetricGraphInput_continuous
+      period hPeriod metric)
+  apply hComposed.congr
+  intro current
+  rfl
+
+@[simp]
+theorem candidateANormalBoundaryRelativeMetricThirdJetAtGraph_smooth
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real) (boundary : OrientationBoundary period hPeriod) :
+    candidateANormalBoundaryRelativeMetricThirdJetAtGraph period hPeriod metric
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement)) parameter boundary =
+      smoothRegularGeneralMetricRelativeThirdJet period hPeriod metric tensor
+        (normalGraphOrientationDouble period hPeriod displacement
+          (boundary, parameter)) := by
+  unfold candidateANormalBoundaryRelativeMetricThirdJetAtGraph
+    smoothToCandidateANormalBoundaryFunctionalCore
+  change regularGeneralMetricBoundaryC3CoreToThirdJet period hPeriod metric
+      (smoothToRegularGeneralMetricBoundaryC3Core
+        period hPeriod metric tensor)
+      (normalBoundaryC2Graph period hPeriod
+        (smoothNormalDisplacementToBoundaryC2JetCore
+          period hPeriod displacement) parameter boundary) = _
+  rw [normalBoundaryC2Graph_smooth]
+  rfl
 
 /-- P2 analytic-domain certificate: the joint core is faithful and dense,
 and its strengthened metric component continuously reuses the bulk `C²`

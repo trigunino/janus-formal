@@ -450,6 +450,87 @@ private theorem inverseFiniteFrameCoordinates_apply_eq
     exact ContinuousLinearMap.inverse_equiv _]
   rfl
 
+/-- Smooth inverse of the canonical finite-frame operator.  This packages the
+inverse already used by `generalMetricFiniteFrameSolve` as a reusable bundle
+endomorphism; it adds no frame choice. -/
+def generalMetricFiniteFrameInverseOperator
+    (frame : SmoothD8Frame period hPeriod)
+    (metric : SmoothGeneralLorentzMetric period hPeriod) :
+    SmoothEndomorphismSection period hPeriod where
+  toFun := fun point =>
+    (generalMetricFiniteFrameOperator
+      period hPeriod frame metric point).inverse
+  contMDiff_toFun := by
+    intro anchor
+    rw [contMDiffAt_hom_bundle]
+    refine ⟨contMDiffAt_id, ?_⟩
+    have hOperator := endomorphismCoordinates_contMDiffAt
+      period hPeriod
+      (generalMetricFiniteFrameOperator period hPeriod frame metric) anchor
+    have hInverse :=
+      (finiteFrameOperatorCoordinates_isInvertible
+        period hPeriod frame metric anchor
+        |>.contDiffAt_map_inverse (n := ∞)).comp_contMDiffAt hOperator
+    apply hInverse.congr_of_eventuallyEq
+    have hCurrent : ∀ᶠ current in 𝓝 anchor,
+        current ∈
+          (trivializationAt ModelTangent
+            (TangentFiber period hPeriod) anchor).baseSet :=
+      (trivializationAt ModelTangent
+        (TangentFiber period hPeriod) anchor).open_baseSet.mem_nhds
+          (mem_baseSet_trivializationAt ModelTangent
+            (TangentFiber period hPeriod) anchor)
+    filter_upwards [hCurrent] with current hCurrent'
+    unfold endomorphismCoordinates
+    rw [ContinuousLinearMap.inCoordinates_eq hCurrent' hCurrent']
+    symm
+    simp only [Function.comp_apply]
+    rw [ContinuousLinearMap.inCoordinates_eq hCurrent' hCurrent']
+    change
+      (((trivializationAt ModelTangent
+            (TangentFiber period hPeriod) anchor).continuousLinearEquivAt
+          Real current hCurrent').toContinuousLinearMap.comp
+        ((generalMetricFiniteFrameOperatorEquiv
+          period hPeriod frame metric current).toContinuousLinearMap.comp
+          ((trivializationAt ModelTangent
+              (TangentFiber period hPeriod) anchor).continuousLinearEquivAt
+            Real current hCurrent').symm.toContinuousLinearMap)).inverse = _
+    rw [ContinuousLinearMap.inverse_equiv_comp,
+      ContinuousLinearMap.inverse_comp_equiv]
+    change _ =
+      ((trivializationAt ModelTangent
+          (TangentFiber period hPeriod) anchor).continuousLinearEquivAt
+        Real current hCurrent').toContinuousLinearMap.comp
+        ((generalMetricFiniteFrameOperator
+          period hPeriod frame metric current).inverse.comp
+          ((trivializationAt ModelTangent
+              (TangentFiber period hPeriod) anchor).continuousLinearEquivAt
+            Real current hCurrent').symm.toContinuousLinearMap)
+    rw [show
+      (generalMetricFiniteFrameOperator
+        period hPeriod frame metric current).inverse =
+          (generalMetricFiniteFrameOperatorEquiv
+            period hPeriod frame metric current).symm.toContinuousLinearMap by
+      change
+        ((generalMetricFiniteFrameOperatorEquiv
+          period hPeriod frame metric current).toContinuousLinearMap).inverse = _
+      exact ContinuousLinearMap.inverse_equiv _]
+    simp only [ContinuousLinearMap.inverse_equiv,
+      ContinuousLinearEquiv.symm_symm]
+    exact ContinuousLinearMap.comp_assoc _ _ _
+
+@[simp]
+theorem generalMetricFiniteFrameInverseOperator_apply
+    (frame : SmoothD8Frame period hPeriod)
+    (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (vector : TangentFiber period hPeriod point) :
+    generalMetricFiniteFrameInverseOperator
+        period hPeriod frame metric point vector =
+      (generalMetricFiniteFrameOperator
+        period hPeriod frame metric point).inverse vector :=
+  rfl
+
 /-- Solve the finite-frame reconstruction equation smoothly for any smooth
 tangent section. -/
 def generalMetricFiniteFrameSolve
