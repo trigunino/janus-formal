@@ -6,6 +6,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D
 import Mathlib.Geometry.Manifold.Metrizable
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Determinant
 
 /-!
 # Fiber substitution bridge for the mobile Candidate-A boundary
@@ -24,6 +25,7 @@ set_option maxHeartbeats 1200000
 noncomputable section
 
 open scoped BoundedContinuousFunction ContDiff Manifold Topology
+open Bundle
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
@@ -63,6 +65,9 @@ open P0EFTJanusProgramPRegularGeneralMetricC2Maxwell4D
 open P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D
 open P0EFTJanusProgramPGlobalCandidateAFiniteFrameRootBridge4D
 open P0EFTJanusProgramPRegularFrameMetricInverse4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
+open P0EFTJanusProgramPRegularFrameMaxwellCurvatureBridge4D
+open P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D
 open P0EFTJanusProgramPThroatFiniteFrameReconstruction4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
@@ -9495,6 +9500,135 @@ theorem candidateANormalBoundaryInducedMetricDomain_isOpen
     (candidateANormalBoundaryInducedRelativeLiftDeterminantFiberEvaluation_contDiff_two
       period hPeriod metric).continuous
 
+theorem
+    candidateANormalBoundaryInducedRelativeLiftDeterminant_ne_zero_of_mem
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (current : Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) Real)
+    (hCurrent : current ∈
+      candidateANormalBoundaryInducedMetricDomain period hPeriod metric)
+    (boundary : OrientationBoundary period hPeriod) :
+    candidateANormalBoundaryInducedRelativeLiftDeterminantFiberEvaluation
+        period hPeriod metric current boundary ≠ 0 := by
+  change IsUnit
+    (candidateANormalBoundaryInducedRelativeLiftDeterminantFiberEvaluation
+      period hPeriod metric current) at hCurrent
+  rcases hCurrent with ⟨unit, hUnit⟩
+  intro hZero
+  have hValueZero : (unit : BoundedContinuousFunction
+      (OrientationBoundary period hPeriod) Real) boundary = 0 := by
+    rw [hUnit]
+    exact hZero
+  have hInverse := congrArg
+    (fun function : BoundedContinuousFunction
+      (OrientationBoundary period hPeriod) Real => function boundary)
+    unit.val_inv
+  change (unit : BoundedContinuousFunction
+      (OrientationBoundary period hPeriod) Real) boundary *
+        (↑unit⁻¹ : BoundedContinuousFunction
+          (OrientationBoundary period hPeriod) Real) boundary = 1 at hInverse
+  rw [hValueZero, zero_mul] at hInverse
+  exact zero_ne_one hInverse
+
+theorem normalBoundaryRealMatrix_mulVec_injective_of_det_ne_zero
+    (matrix : Matrix (NormalBoundaryTangentIndex period hPeriod)
+      (NormalBoundaryTangentIndex period hPeriod) Real)
+    (hDet : Matrix.det matrix ≠ 0) :
+    Function.Injective matrix.mulVec := by
+  apply Matrix.mulVec_injective_iff_isUnit.mpr
+  exact matrix.isUnit_iff_isUnit_det.mpr (isUnit_iff_ne_zero.mpr hDet)
+
+theorem normalGraphRelativeDeterminant_ne_zero_of_candidate_mem
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (hVaried : variedMetric.tensor = metric.metric.tensor + tensor)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hCurrent :
+      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) ∈
+        candidateANormalBoundaryInducedMetricDomain period hPeriod metric)
+    (boundary : OrientationBoundary period hPeriod) :
+    normalGraphRelativeDeterminant period hPeriod variedMetric displacement
+        parameter (orientationDoubleToThroat period hPeriod boundary) ≠ 0 := by
+  rw [← candidateANormalBoundaryInducedRelativeLiftDeterminantFiberEvaluation_smooth_eq_historical
+    period hPeriod metric tensor variedMetric hVaried displacement parameter
+      boundary]
+  exact
+    candidateANormalBoundaryInducedRelativeLiftDeterminant_ne_zero_of_mem
+      period hPeriod metric _ hCurrent boundary
+
+local instance candidateAEffectiveThroatTangentFiniteDimensional
+    (point : MappingTorus (fixedEquatorData period hPeriod)) :
+    FiniteDimensional Real
+      (TangentSpace throatCoverModelWithCorners point) := by
+  change FiniteDimensional Real ThroatCoverCoordinates
+  infer_instance
+
+theorem normalGraphRelativeEndomorphism_injective_of_det_ne_zero
+    (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (point : MappingTorus (fixedEquatorData period hPeriod))
+    (hDet : normalGraphRelativeDeterminant period hPeriod metric displacement
+      parameter point ≠ 0) :
+    Function.Injective
+      (normalGraphRelativeEndomorphism period hPeriod metric displacement
+        parameter point) := by
+  have hUnit : IsUnit
+      (normalGraphRelativeEndomorphism period hPeriod metric displacement
+        parameter point).toLinearMap := by
+    apply (LinearMap.isUnit_iff_isUnit_det _).2
+    exact isUnit_iff_ne_zero.2 (by
+      simpa only [normalGraphRelativeDeterminant] using hDet)
+  have hKer := (LinearMap.isUnit_iff_ker_eq_bot _).1 hUnit
+  rw [LinearMap.ker_eq_bot] at hKer
+  exact hKer
+
+theorem normalGraphInducedMetricValue_injective_of_relativeDet_ne_zero
+    (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (point : MappingTorus (fixedEquatorData period hPeriod))
+    (hDet : normalGraphRelativeDeterminant period hPeriod metric displacement
+      parameter point ≠ 0) :
+    Function.Injective
+      (normalGraphInducedMetricValue period hPeriod metric displacement
+        parameter point) := by
+  intro first second hEqual
+  apply normalGraphRelativeEndomorphism_injective_of_det_ne_zero
+    period hPeriod metric displacement parameter point hDet
+  change intrinsicThroatInverseMusical period hPeriod point
+      (normalGraphInducedMetricValue period hPeriod metric displacement
+        parameter point first) =
+    intrinsicThroatInverseMusical period hPeriod point
+      (normalGraphInducedMetricValue period hPeriod metric displacement
+        parameter point second)
+  rw [hEqual]
+
+theorem normalGraphNonNullAt_of_candidate_inducedMetric_mem
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (hVaried : variedMetric.tensor = metric.metric.tensor + tensor)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hCurrent :
+      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) ∈
+        candidateANormalBoundaryInducedMetricDomain period hPeriod metric) :
+    NormalGraphNonNullAt period hPeriod variedMetric displacement parameter := by
+  intro point
+  rcases orientationDoubleToThroat_surjective period hPeriod point with
+    ⟨boundary, hBoundary⟩
+  have hDet := normalGraphRelativeDeterminant_ne_zero_of_candidate_mem
+    period hPeriod metric tensor variedMetric hVaried displacement parameter
+      hCurrent boundary
+  rw [hBoundary] at hDet
+  exact normalGraphInducedMetricValue_injective_of_relativeDet_ne_zero
+    period hPeriod variedMetric displacement parameter point hDet
+
 /-- Inverse determinant in the existing scalar Banach algebra. -/
 def candidateANormalBoundaryInducedRelativeLiftDeterminantInverseFiberEvaluation
     (metric : RegularGeneralLorentzMetric period hPeriod)
@@ -12744,6 +12878,22 @@ theorem zero_mem_candidateANormalBoundaryGHYDomain
     exact candidateANormalBoundaryScalarFieldOne_mem_localRootTarget
       period hPeriod
 
+theorem normalGraphNonNullAt_of_candidate_GHY_mem
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (hVaried : variedMetric.tensor = metric.metric.tensor + tensor)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hCurrent :
+      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) ∈
+        candidateANormalBoundaryGHYDomain period hPeriod metric) :
+    NormalGraphNonNullAt period hPeriod variedMetric displacement parameter := by
+  apply normalGraphNonNullAt_of_candidate_inducedMetric_mem period hPeriod
+    metric tensor variedMetric hVaried displacement parameter
+  exact hCurrent.1.1.2
+
 /-- Selected local square root of the normalized induced determinant. -/
 def candidateANormalBoundaryInducedRelativeVolumeRootFiberEvaluation
     (metric : RegularGeneralLorentzMetric period hPeriod)
@@ -14023,6 +14173,46 @@ theorem candidateANormalBoundaryMetricUnitGaussRaw_smooth_eq_vector
   simp only [map_smul, ContinuousLinearMap.smul_apply, smul_eq_mul]
   ring
 
+theorem candidateANormalBoundaryMetricUnitGauss_smooth_eq_vector
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (hVaried : variedMetric.tensor = metric.metric.tensor + tensor)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (outer inner : NormalBoundaryTangentIndex period hPeriod)
+    (boundary : CutThroatBoundary period hPeriod) :
+    candidateANormalBoundaryMetricUnitGaussExtrinsicCurvatureFiberEvaluation
+        period hPeriod metric outer inner
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) boundary =
+      (1 / 2 : Real) *
+        (-variedMetric.tensor.tensor
+            (normalGraphOrientationDouble period hPeriod displacement
+              (boundary, parameter))
+            (candidateANormalBoundaryMetricUnitNormalVector_smooth period
+              hPeriod metric tensor displacement parameter boundary)
+            (candidateANormalBoundaryGraphCovariantAccelerationVector_smooth
+              period hPeriod metric tensor displacement parameter outer inner
+                boundary) +
+          -variedMetric.tensor.tensor
+            (normalGraphOrientationDouble period hPeriod displacement
+              (boundary, parameter))
+            (candidateANormalBoundaryMetricUnitNormalVector_smooth period
+              hPeriod metric tensor displacement parameter boundary)
+            (candidateANormalBoundaryGraphCovariantAccelerationVector_smooth
+              period hPeriod metric tensor displacement parameter inner outer
+                boundary)) := by
+  unfold candidateANormalBoundaryMetricUnitGaussExtrinsicCurvatureFiberEvaluation
+  simp only [BoundedContinuousFunction.smul_apply, smul_eq_mul,
+    BoundedContinuousFunction.add_apply]
+  rw [candidateANormalBoundaryMetricUnitGaussRaw_smooth_eq_vector
+      period hPeriod metric tensor variedMetric hVaried displacement parameter
+        outer inner boundary,
+    candidateANormalBoundaryMetricUnitGaussRaw_smooth_eq_vector
+      period hPeriod metric tensor variedMetric hVaried displacement parameter
+        inner outer boundary]
+
 /-- Completed first-sheet GHY integrand relative to the installed canonical
 latitude measure. -/
 def candidateANormalBoundaryGHYIntegrandFiberEvaluation
@@ -14161,6 +14351,17 @@ def candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation
   2 * candidateANormalBoundaryFirstSheetGHYActionFiberEvaluation
     period hPeriod einsteinScale metric current
 
+@[simp] theorem candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_apply
+    (einsteinScale : Real)
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (current : Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) Real) :
+    candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation
+        period hPeriod einsteinScale metric current =
+      2 * candidateANormalBoundaryFirstSheetGHYActionFiberEvaluation
+        period hPeriod einsteinScale metric current := by
+  rfl
+
 theorem candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_contDiffOn_two
     (einsteinScale : Real)
     (metric : RegularGeneralLorentzMetric period hPeriod)
@@ -14241,6 +14442,286 @@ theorem candidate_a_normal_boundary_ghy_second_frechet_gate
       period hPeriod einsteinScale metric hTransverse,
     candidateANormalBoundaryTwoSheetGHYActionHessian_symmetric
       period hPeriod einsteinScale metric hTransverse⟩
+
+/-! ### Production normal-germ bridge: regular-frame coefficient -/
+
+def candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (row : Fin 4) (boundary : CutThroatBoundary period hPeriod) : Real :=
+  normalBoundaryRegularFrameCoefficient period hPeriod metric
+    (fun current : CutThroatBoundary period hPeriod × Real =>
+      normalGraphCanonicalMetricUnitNormalLift period hPeriod variedMetric
+        displacement parameter hNonNull current.1)
+    row (boundary, 0)
+
+theorem candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient_contMDiff
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (row : Fin 4) :
+    ContMDiff throatCoverModelWithCorners (modelWithCornersSelf Real Real) ∞
+      (candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient
+        period hPeriod metric variedMetric displacement parameter hNonNull row) := by
+  have hLift : ContMDiff
+      (throatCoverModelWithCorners.prod (modelWithCornersSelf Real Real))
+      coverModelWithCorners.tangent ∞
+      (fun current : CutThroatBoundary period hPeriod × Real =>
+        normalGraphCanonicalMetricUnitNormalLift period hPeriod variedMetric
+          displacement parameter hNonNull current.1) :=
+    (normalGraphCanonicalMetricUnitNormalLift_contMDiff period hPeriod
+      variedMetric displacement parameter hNonNull).comp contMDiff_fst
+  have hCoefficient := normalBoundaryRegularFrameCoefficient_contMDiff
+    period hPeriod metric _ hLift row
+  exact hCoefficient.comp (contMDiff_id.prodMk contMDiff_const)
+
+theorem candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient_reconstructs
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (boundary : CutThroatBoundary period hPeriod) :
+    (∑ row : Fin 4,
+      candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient
+          period hPeriod metric variedMetric displacement parameter hNonNull
+            row boundary •
+        metric.frame row
+          (normalGraphOrientationDouble period hPeriod displacement
+            (boundary, parameter))) =
+      normalGraphCanonicalMetricUnitNormal period hPeriod variedMetric
+        displacement parameter hNonNull boundary := by
+  symm
+  exact generalMetricFiniteFrameCoefficientAt_reconstructs period hPeriod
+    (regularGeneralLorentzMetricSmoothD8Frame period hPeriod metric)
+    metric.metric
+    (normalGraphOrientationDouble period hPeriod displacement
+      (boundary, parameter))
+    (normalGraphCanonicalMetricUnitNormal period hPeriod variedMetric
+      displacement parameter hNonNull boundary)
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Directional derivatives of boundary coefficients commute with the already
+installed local orientation section. -/
+theorem candidateANormalBoundarySmoothCoefficient_localSection_mfderiv
+    (coefficient : CutThroatBoundary period hPeriod → Real)
+    (hCoefficient : ContMDiff throatCoverModelWithCorners
+      (modelWithCornersSelf Real Real) ∞ coefficient)
+    (boundary : CutThroatBoundary period hPeriod)
+    (vector : TangentSpace throatCoverModelWithCorners boundary) :
+    mfderiv throatCoverModelWithCorners (modelWithCornersSelf Real Real)
+        coefficient boundary vector =
+      mfderiv throatCoverModelWithCorners (modelWithCornersSelf Real Real)
+        (coefficient ∘ normalGraphOrientationLocalSection period hPeriod boundary)
+        (orientationDoubleToThroat period hPeriod boundary)
+        (normalBoundaryOrientationTangentEquiv period hPeriod boundary vector) := by
+  have hSection : MDifferentiableAt throatCoverModelWithCorners
+      throatCoverModelWithCorners
+      (normalGraphOrientationLocalSection period hPeriod boundary)
+      (orientationDoubleToThroat period hPeriod boundary) :=
+    (normalGraphOrientationLocalSection_contMDiffAt period hPeriod boundary)
+      |>.mdifferentiableAt (by simp)
+  have hBase :
+      normalGraphOrientationLocalSection period hPeriod boundary
+        (orientationDoubleToThroat period hPeriod boundary) = boundary :=
+    normalGraphOrientationLocalSection_base period hPeriod boundary
+  have hCoefficientAt : MDifferentiableAt throatCoverModelWithCorners
+      (modelWithCornersSelf Real Real) coefficient
+        (normalGraphOrientationLocalSection period hPeriod boundary
+          (orientationDoubleToThroat period hPeriod boundary)) := by
+    rw [hBase]
+    exact hCoefficient.mdifferentiableAt (by simp)
+  have hChain := mfderiv_comp_apply
+    (orientationDoubleToThroat period hPeriod boundary)
+    hCoefficientAt hSection
+    (normalBoundaryOrientationTangentEquiv period hPeriod boundary vector)
+  rw [normalGraphOrientationLocalSection_mfderiv_tangentEquiv] at hChain
+  rw [hBase] at hChain
+  exact hChain.symm
+
+local instance (priority := 30000) hessianHistoricalOrientationBoundaryChartedSpace :
+    ChartedSpace ThroatCoverModel (CutThroatBoundary period hPeriod) :=
+  P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryChartedSpace
+    period hPeriod
+
+local instance (priority := 30000) hessianHistoricalOrientationBoundaryIsManifold :
+    IsManifold throatCoverModelWithCorners ω (CutThroatBoundary period hPeriod) :=
+  P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryIsManifold
+    period hPeriod
+
+local instance (priority := 30000) hessianHistoricalEffectiveThroatChartedSpace :
+    ChartedSpace ThroatCoverModel
+      (MappingTorus (fixedEquatorData period hPeriod)) :=
+  P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.effectiveThroatChartedSpace
+    period hPeriod
+
+local instance (priority := 30000) hessianHistoricalEffectiveThroatIsManifold :
+    IsManifold throatCoverModelWithCorners ω
+      (MappingTorus (fixedEquatorData period hPeriod)) :=
+  P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.effectiveThroatIsManifold
+    period hPeriod
+
+def candidateANormalBoundaryGraphTangentCoordinates_historical
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (index : NormalBoundaryTangentIndex period hPeriod)
+    (current : Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) Real)
+    (boundary : CutThroatBoundary period hPeriod)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4) :
+    TangentSpace
+      (modelWithCornersSelf Real
+        P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D.Vector4)
+      coordinate :=
+  ∑ row : Fin 4,
+      candidateANormalBoundaryGraphTangentRegularFrameCoefficientFiberEvaluation
+        period hPeriod metric index row current boundary •
+      pulledRegularFrameVector period hPeriod metric patch row coordinate
+
+@[simp] theorem candidateANormalBoundaryGraphTangentCoordinates_historical_apply
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (index : NormalBoundaryTangentIndex period hPeriod)
+    (current : Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) Real)
+    (boundary : CutThroatBoundary period hPeriod)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4) :
+    candidateANormalBoundaryGraphTangentCoordinates_historical period hPeriod
+      metric index current boundary patch coordinate =
+      ∑ row : Fin 4,
+        candidateANormalBoundaryGraphTangentRegularFrameCoefficientFiberEvaluation
+          period hPeriod metric index row current boundary •
+        pulledRegularFrameVector period hPeriod metric patch row coordinate := by
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+theorem candidateANormalBoundaryGraphTangentCoordinates_historical_eq_source
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (boundary : CutThroatBoundary period hPeriod)
+    (index : NormalBoundaryTangentIndex period hPeriod)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
+    (hAt : patch.coordinateMap coordinate =
+      normalGraphOrientationDouble period hPeriod displacement
+        (boundary, parameter)) :
+    let sourceVector : TangentSpace throatCoverModelWithCorners boundary :=
+      (finiteSmoothThroatGeneratingFrame
+        (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)).vectorAt
+          boundary index
+    let targetVector : TangentSpace throatCoverModelWithCorners
+        (orientationDoubleToThroat period hPeriod boundary) :=
+      normalBoundaryOrientationTangentEquiv period hPeriod boundary sourceVector
+    let base : MappingTorus (fixedEquatorData period hPeriod) × Real :=
+      (orientationDoubleToThroat period hPeriod boundary, parameter)
+    candidateANormalBoundaryGraphTangentCoordinates_historical period hPeriod
+        metric index
+          (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+            (tensor, displacement), parameter)
+          boundary patch coordinate =
+      normalGraphHolonomicSourceFirstDerivativeCoordinatesAt period hPeriod
+        displacement base patch coordinate targetVector := by
+  dsimp only
+  classical
+  let sourceVector : TangentSpace throatCoverModelWithCorners boundary :=
+    (finiteSmoothThroatGeneratingFrame
+      (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)).vectorAt
+        boundary index
+  let targetVector : TangentSpace throatCoverModelWithCorners
+      (orientationDoubleToThroat period hPeriod boundary) :=
+    normalBoundaryOrientationTangentEquiv period hPeriod boundary sourceVector
+  let base : MappingTorus (fixedEquatorData period hPeriod) × Real :=
+    (orientationDoubleToThroat period hPeriod boundary, parameter)
+  let derivativeEquiv :=
+    (patch.coordinateMap_isLocalDiffeomorph coordinate)
+      |>.mfderivToContinuousLinearEquiv (by simp)
+  apply derivativeEquiv.injective
+  change derivativeEquiv.toContinuousLinearMap _ =
+    derivativeEquiv.toContinuousLinearMap _
+  rw [show derivativeEquiv.toContinuousLinearMap =
+      mfderiv (modelWithCornersSelf Real
+          P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D.Vector4)
+        coverModelWithCorners patch.coordinateMap coordinate by
+    exact (patch.coordinateMap_isLocalDiffeomorph coordinate)
+      |>.mfderivToContinuousLinearEquiv_coe (by simp)]
+  unfold candidateANormalBoundaryGraphTangentCoordinates_historical
+  rw [map_sum]
+  simp_rw [map_smul, coordinateMap_mfderiv_pulledRegularFrameVector]
+  have hCandidate :=
+    candidateANormalBoundaryGraphTangent_smooth_reconstructs period hPeriod
+      metric tensor displacement parameter boundary index
+  have hComp := normalGraphOrientationDouble_mfderiv_eq_comp period hPeriod
+    displacement parameter boundary sourceVector
+  have hTarget : targetVector =
+      mfderiv throatCoverModelWithCorners throatCoverModelWithCorners
+        (orientationDoubleToThroat period hPeriod) boundary sourceVector := by
+    simpa only [targetVector] using
+      (normalBoundaryOrientationTangentEquiv_apply period hPeriod boundary
+        sourceVector)
+  have hChart : base.1 ∈
+      (chartAt ThroatCoverModel base.1).source :=
+    mem_chart_source ThroatCoverModel base.1
+  have hTrivialized :
+      (trivializationAt ThroatCoverCoordinates
+          (ThroatTangentFiber period hPeriod) base.1).symm base.1 targetVector =
+        targetVector := by
+    change
+      (trivializationAt ThroatCoverCoordinates
+          (ThroatTangentFiber period hPeriod) base.1).symmL Real base.1
+            targetVector = targetVector
+    rw [TangentBundle.symmL_trivializationAt hChart,
+      mfderivWithin_range_extChartAt_symm]
+    rfl
+  have hGraph : patch.coordinateMap coordinate =
+      normalGraph period hPeriod displacement base.2 base.1 := by
+    simpa only [base, normalGraphOrientationDouble] using hAt
+  rw [normalGraphHolonomicSourceFirstDerivativeCoordinatesAt_eq_family period
+    hPeriod displacement base patch coordinate hGraph]
+  rw [normalGraphHolonomicFamilyDerivativeCoordinates_reconstructs period
+    hPeriod displacement base patch coordinate hGraph]
+  rw [hTrivialized]
+  dsimp only [base]
+  rw [hAt, hTarget, ← hComp]
+  simpa only [sourceVector] using hCandidate
+
+/-- Transport of a smooth variation from the regular-frame interface to the
+canonical Gauss/GHY interface.  The metric projection is the metric already
+stored inside `RegularGeneralLorentzMetric`; no new choice is introduced. -/
+def candidateANormalBoundaryCanonicalTransport
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variation : SmoothSymmetricCovariantTwoTensor period hPeriod ×
+      SmoothNormalDisplacement period hPeriod)
+    (parameter : Real) :
+    SmoothGeneralLorentzMetric period hPeriod ×
+      SmoothNormalDisplacement period hPeriod × Real :=
+  (metric.metric, variation.2, parameter)
+
+@[simp] theorem candidateANormalBoundaryCanonicalTransport_apply
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variation : SmoothSymmetricCovariantTwoTensor period hPeriod ×
+      SmoothNormalDisplacement period hPeriod)
+    (parameter : Real) :
+    candidateANormalBoundaryCanonicalTransport period hPeriod metric variation
+      parameter = (metric.metric, variation.2, parameter) := by
+  rfl
+
+theorem candidateANormalBoundaryCanonicalTransport_zero_nonNull
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (hTransverse : HasNoTangentialRadical period hPeriod metric.metric) :
+    NormalGraphNonNullAt period hPeriod metric.metric displacement 0 := by
+  exact zero_mem_normalGraphNonNullDomain period hPeriod metric.metric
+    displacement hTransverse
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
