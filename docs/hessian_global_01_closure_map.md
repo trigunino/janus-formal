@@ -556,6 +556,12 @@ au bord général.
 
 Checkpoint d'arrêt propre (2026-08-04) : l'audit n'a pas créé une nouvelle
 géométrie. Dans le banc de preuve non importé
+La premiÃ¨re sous-brique est maintenant promue dans le module de production :
+`candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient`, sa
+rÃ©gularitÃ© `ContMDiff` et sa reconstruction dans le repÃ¨re sont compilÃ©es.
+Le transport de dÃ©rivÃ©e par la section locale est aussi maintenant promu sous
+`candidateANormalBoundarySmoothCoefficient_localSection_mfderiv`.
+Le raccord de germe complet reste validÃ© dans le banc de preuve non importÃ©
 `ScratchHessianHistorical.lean`,
 `historicalCandidateANormalBoundaryMetricUnitNormalField_eventuallyEq`
 réutilise les germes de section d'orientation et de carte holonome existants
@@ -678,3 +684,48 @@ Le ticket passe à `DONE` seulement si :
 4. `P0EFTJanusProgramPGlobalHessianClosure4D` compile depuis la façade ;
 5. l'audit vérifie les déclarations terminales de P1–P4 et H14 ;
 6. les documentations de statut renvoient ici sans liste contradictoire.
+
+## Checkpoint 2026-08-05
+
+La forme de Gauss unitÃ© symÃ©trisÃ©e est maintenant raccordÃ©e au vecteur
+historique par `candidateANormalBoundaryMetricUnitGauss_smooth_eq_vector`.
+
+Le pont de domaine demandÃ© est maintenant fermÃ© :
+`normalGraphNonNullAt_of_candidate_GHY_mem` dÃ©duit `NormalGraphNonNullAt`
+de l'appartenance du relÃ¨vement lisse au domaine GHY Candidate-A.
+
+L'instance tangentielle finie est maintenant installÃ©e localement et
+`normalGraphRelativeEndomorphism_injective_of_det_ne_zero` convertit le
+dÃ©terminant historique non nul en injectivitÃ© de l'endomorphisme relatif.
+
+Le raccord lisse du domaine au dÃ©terminant historique est compilÃ© dans
+`normalGraphRelativeDeterminant_ne_zero_of_candidate_mem`.
+
+Le transfert algÃ©brique `det â‰  0 â†’ Function.Injective matrix.mulVec` est
+maintenant compilÃ© dans
+`normalBoundaryRealMatrix_mulVec_injective_of_det_ne_zero`.
+
+Le domaine inverse-mÃ©trique fournit maintenant explicitement la non-annulation
+pointwise du dÃ©terminant via
+`candidateANormalBoundaryInducedRelativeLiftDeterminant_ne_zero_of_mem`.
+
+Le cas de base du domaine canonique est maintenant transportÃ© par
+`candidateANormalBoundaryCanonicalTransport_zero_nonNull`, via le lemme
+existant `zero_mem_normalGraphNonNullDomain`.
+
+Le transport minimal `candidateANormalBoundaryCanonicalTransport` est maintenant
+construit : il projette le champ `metric.metric` dÃ©jÃ  contenu dans l'interface
+regular et transporte le dÃ©placement et le paramÃ¨tre. Il n'ajoute aucun choix.
+
+La rÃƒÂ¨gle de rÃƒÂ©ÃƒÂ©criture `candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_apply`
+est ajoutÃƒÂ©e ; elle expose explicitement la multiplicitÃƒÂ© deux dÃƒÂ©jÃƒÂ validÃƒÂ©e.
+
+Interface ajoutÃ©e : `candidateANormalBoundaryGraphTangentCoordinates_historical_apply`
+permet de rÃ©Ã©crire directement la somme du repÃ¨re rÃ©gulier.
+
+La deuxiÃ¨me brique locale est maintenant promue dans la cible de production :
+`candidateANormalBoundaryGraphTangentCoordinates_historical` reconstruit le
+tangent du graphe en coordonnÃ©es holonomes, et
+`candidateANormalBoundaryGraphTangentCoordinates_historical_eq_source` le
+relie au premier dÃ©rivÃ© holonome existant. La cible compile ; H10 reste ouvert
+pour les dÃ©veloppements de Christoffel/Gauss et les paquets analytiques.
