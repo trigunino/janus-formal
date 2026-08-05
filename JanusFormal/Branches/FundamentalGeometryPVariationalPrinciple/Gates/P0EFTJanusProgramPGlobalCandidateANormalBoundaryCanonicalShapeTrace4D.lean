@@ -6,7 +6,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 This gate removes the trace half of the last H10 finite-frame witness.  The
 intrinsic shape operator is the already installed inverse induced metric
 composed with the already installed smooth local-section second fundamental
-form.  Its basis-independent linear trace is therefore exactly the existing
+form, transported through the proved orientation-double tangent equivalence.
+Its basis-independent linear trace is therefore exactly the existing
 holonomic local mean curvature.
 
 After this construction the residual H10 statement is only that the
@@ -95,9 +96,29 @@ local instance canonicalShapeTraceTangentFiniteDimensional
   change FiniteDimensional Real ThroatCoverCoordinates
   infer_instance
 
-/-- Intrinsic shape operator `h⁻¹K` of the canonical moving boundary.  Both
-factors are the smooth local-section objects already used to prove the
-chart-free Gauss action. -/
+/-- Target-side intrinsic shape operator `h⁻¹K` in the smooth local section
+of the effective throat. -/
+def normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (boundary : CutThroatBoundary period hPeriod)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4) :
+    TangentSpace throatCoverModelWithCorners
+        (orientationDoubleToThroat period hPeriod boundary) →ₗ[Real]
+      TangentSpace throatCoverModelWithCorners
+        (orientationDoubleToThroat period hPeriod boundary) :=
+  let base : EffectiveThroat period hPeriod × Real :=
+    (orientationDoubleToThroat period hPeriod boundary, parameter)
+  (normalGraphInducedMetricInverseCoordinates period hPeriod variedMetric
+      displacement base base).toLinearMap.comp
+    (normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
+      period hPeriod variedMetric displacement boundary parameter patch
+        coordinate base).toLinearMap
+
+/-- Source-side canonical shape operator.  It is the target operator pulled
+back through the already proved orientation-double tangent equivalence. -/
 def normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
     (displacement : SmoothNormalDisplacement period hPeriod)
@@ -112,16 +133,12 @@ def normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
         (boundary, parameter)) :
     TangentSpace throatCoverModelWithCorners boundary →ₗ[Real]
       TangentSpace throatCoverModelWithCorners boundary :=
-  let base : EffectiveThroat period hPeriod × Real :=
-    (orientationDoubleToThroat period hPeriod boundary, parameter)
-  (normalGraphInducedMetricInverseCoordinates period hPeriod variedMetric
-      displacement base base).toLinearMap.comp
-    (normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
-      period hPeriod variedMetric displacement boundary parameter patch
-        coordinate base).toLinearMap
+  (normalBoundaryOrientationTangentEquiv period hPeriod boundary).symm.toLinearEquiv.conj
+    (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period hPeriod
+      variedMetric displacement parameter boundary patch coordinate)
 
 set_option backward.isDefEq.respectTransparency false in
-/-- The intrinsic trace of the canonical shape operator is exactly the
+/-- The intrinsic trace of the canonical source shape is exactly the
 holonomic local mean curvature already used by the chart-free Gauss action. -/
 theorem normalGraphCanonicalHolonomicGaussShapeEndomorphismAt_trace
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
@@ -149,24 +166,33 @@ theorem normalGraphCanonicalHolonomicGaussShapeEndomorphismAt_trace
       normalGraphCanonicalHolonomicLocalMeanCurvatureFamily period hPeriod
         variedMetric displacement base patch coordinate ambient base := by
   dsimp only
-  unfold normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
   let base : EffectiveThroat period hPeriod × Real :=
     (orientationDoubleToThroat period hPeriod boundary, parameter)
   let ambient :=
     normalGraphCanonicalHolonomicMetricUnitNormalCoordinatesAt period hPeriod
       variedMetric displacement parameter hNonNull boundary patch coordinate hAt
-  change LinearMap.trace Real ThroatCoverCoordinates
-      ((normalGraphInducedMetricInverseCoordinates period hPeriod variedMetric
-          displacement base base).toLinearMap.comp
-        (normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
-          period hPeriod variedMetric displacement boundary parameter patch
-            coordinate base).toLinearMap) =
-      normalGraphCanonicalHolonomicLocalMeanCurvatureFamily period hPeriod
-        variedMetric displacement base patch coordinate ambient base
+  let targetShape :=
+    normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period hPeriod
+      variedMetric displacement parameter boundary patch coordinate
   calc
+    LinearMap.trace Real
+        (TangentSpace throatCoverModelWithCorners boundary)
+        (normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
+          variedMetric displacement parameter hNonNull boundary patch
+            coordinate hAt) =
+      LinearMap.trace Real
+        (TangentSpace throatCoverModelWithCorners
+          (orientationDoubleToThroat period hPeriod boundary))
+        targetShape := by
+      unfold normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
+      simpa [targetShape] using
+        (LinearMap.trace_conj' targetShape
+          (normalBoundaryOrientationTangentEquiv period hPeriod
+            boundary).symm.toLinearEquiv)
     _ = normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily period
         hPeriod variedMetric displacement boundary parameter patch coordinate
           base := by
+      unfold targetShape
       exact
         (normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily_eq_trace
           period hPeriod variedMetric displacement boundary parameter patch
