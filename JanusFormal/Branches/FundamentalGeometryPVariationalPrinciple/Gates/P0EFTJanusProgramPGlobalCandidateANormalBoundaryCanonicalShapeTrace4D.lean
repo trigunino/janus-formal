@@ -4,9 +4,10 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Canonical shape trace for the completed Candidate-A boundary
 
 This gate removes the trace half of the last H10 finite-frame witness.  The
-intrinsic shape operator is defined from the already installed holonomic
-matrix `h⁻¹ K`.  Its basis-independent linear trace is therefore exactly the
-existing holonomic local mean curvature.
+intrinsic shape operator is the already installed inverse induced metric
+composed with the already installed smooth local-section second fundamental
+form.  Its basis-independent linear trace is therefore exactly the existing
+holonomic local mean curvature.
 
 After this construction the residual H10 statement is only that the
 historical redundant-frame matrix encodes the relative induced metric
@@ -94,23 +95,9 @@ local instance canonicalShapeTraceTangentFiniteDimensional
   change FiniteDimensional Real ThroatCoverCoordinates
   infer_instance
 
-/-- A fixed three-dimensional basis of the throat tangent model.  It is used
-only to turn the already existing holonomic `h⁻¹K` matrix into the intrinsic
-shape endomorphism; the resulting trace is basis independent. -/
-def candidateANormalBoundaryCanonicalTangentBasis
-    (boundary : CutThroatBoundary period hPeriod) :
-    Basis (Fin 3) Real
-      (TangentSpace throatCoverModelWithCorners boundary) := by
-  let basis := Module.finBasis Real
-    (TangentSpace throatCoverModelWithCorners boundary)
-  have hDimension : Module.finrank Real
-      (TangentSpace throatCoverModelWithCorners boundary) = 3 := by
-    change Module.finrank Real ThroatCoverCoordinates = 3
-    simp [ThroatCoverCoordinates]
-  simpa [hDimension] using basis
-
-/-- Intrinsic shape operator represented in a holonomic throat chart by the
-already installed matrix product `h⁻¹K`. -/
+/-- Intrinsic shape operator `h⁻¹K` of the canonical moving boundary.  Both
+factors are the smooth local-section objects already used to prove the
+chart-free Gauss action. -/
 def normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
     (displacement : SmoothNormalDisplacement period hPeriod)
@@ -125,14 +112,13 @@ def normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
         (boundary, parameter)) :
     TangentSpace throatCoverModelWithCorners boundary →ₗ[Real]
       TangentSpace throatCoverModelWithCorners boundary :=
-  Matrix.toLin
-    (candidateANormalBoundaryCanonicalTangentBasis period hPeriod boundary)
-    (candidateANormalBoundaryCanonicalTangentBasis period hPeriod boundary)
-    (normalGraphInducedInverseMatrix period hPeriod variedMetric displacement
-        (orientationDoubleToThroat period hPeriod boundary, parameter) *
-      normalGraphCanonicalHolonomicGaussExtrinsicCurvatureMatrixAt
-        period hPeriod variedMetric displacement parameter hNonNull boundary
-          patch coordinate hAt)
+  let base : EffectiveThroat period hPeriod × Real :=
+    (orientationDoubleToThroat period hPeriod boundary, parameter)
+  (normalGraphInducedMetricInverseCoordinates period hPeriod variedMetric
+      displacement base base).toLinearMap.comp
+    (normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
+      period hPeriod variedMetric displacement boundary parameter patch
+        coordinate base).toLinearMap
 
 set_option backward.isDefEq.respectTransparency false in
 /-- The intrinsic trace of the canonical shape operator is exactly the
@@ -164,16 +150,39 @@ theorem normalGraphCanonicalHolonomicGaussShapeEndomorphismAt_trace
         variedMetric displacement base patch coordinate ambient base := by
   dsimp only
   unfold normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
-    normalGraphCanonicalHolonomicLocalMeanCurvatureFamily
-  rw [normalGraphInducedInverseMatrixFamily_base,
-    normalGraphCanonicalHolonomicWeingartenMatrix_base_eq_gauss]
-  exact Matrix.trace_toLin_eq
-    (normalGraphInducedInverseMatrix period hPeriod variedMetric displacement
-        (orientationDoubleToThroat period hPeriod boundary, parameter) *
-      normalGraphCanonicalHolonomicGaussExtrinsicCurvatureMatrixAt
-        period hPeriod variedMetric displacement parameter hNonNull boundary
-          patch coordinate hAt)
-    (candidateANormalBoundaryCanonicalTangentBasis period hPeriod boundary)
+  let base : EffectiveThroat period hPeriod × Real :=
+    (orientationDoubleToThroat period hPeriod boundary, parameter)
+  let ambient :=
+    normalGraphCanonicalHolonomicMetricUnitNormalCoordinatesAt period hPeriod
+      variedMetric displacement parameter hNonNull boundary patch coordinate hAt
+  change LinearMap.trace Real ThroatCoverCoordinates
+      ((normalGraphInducedMetricInverseCoordinates period hPeriod variedMetric
+          displacement base base).toLinearMap.comp
+        (normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
+          period hPeriod variedMetric displacement boundary parameter patch
+            coordinate base).toLinearMap) =
+      normalGraphCanonicalHolonomicLocalMeanCurvatureFamily period hPeriod
+        variedMetric displacement base patch coordinate ambient base
+  calc
+    _ = normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily period
+        hPeriod variedMetric displacement boundary parameter patch coordinate
+          base := by
+      exact
+        (normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily_eq_trace
+          period hPeriod variedMetric displacement boundary parameter patch
+            coordinate base).symm
+    _ = normalGraphCanonicalGaussMeanCurvature period hPeriod variedMetric
+        displacement parameter hNonNull boundary := by
+      exact
+        normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily_base_eq_gauss
+          period hPeriod variedMetric displacement parameter hNonNull boundary
+            patch coordinate hAt
+    _ = normalGraphCanonicalHolonomicLocalMeanCurvatureFamily period hPeriod
+        variedMetric displacement base patch coordinate ambient base := by
+      exact
+        (normalGraphCanonicalHolonomicLocalMeanCurvatureFamily_base_eq_gauss
+          period hPeriod variedMetric displacement parameter hNonNull boundary
+            patch coordinate hAt).symm
 
 /-- Residual H10 encoding statement after the canonical shape and its trace
 have been constructed.  It asks only that the historical redundant matrix is
