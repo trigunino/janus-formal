@@ -31,7 +31,7 @@ maintenir une seconde liste des résidus.
 | H07 | Neuf champs non minimaux typés, sans D10 ni duplication | `DONE` | `globalTypedNonminimalBRST_square_zero`, `globalMinimalPhysicalTangentInclusion_injective`, dans `P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D` |
 | H08 | Graphes BRST diagonal/Abelian et cœur total typé fidèle | `DONE` | `diagonalExtendedBulkGraphTypedCoreLinearMap_injective`, dans `P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D` |
 | H09 | LL complet same-action ; quotient stationnaire Fredholm d'indice zéro | `DONE/ON-SHELL` | `globalCandidateAFullLLFieldQuotientRieszOperator_fredholm_criterion_of_stationary`, `globalCandidateAFullLLFieldQuotientRieszIndex_zero_of_stationary` |
-| H10 | Déplacement normal et géométrie générale de bord : famille induite, second Fréchet et accord same-action | `OPEN/P2` (géométrie holonome Levi–Civita, cœur normal complet `C²`, normale métrique globale lisse/deck-impaire et représentant physique jointement lisse point–paramètre compilés ; forme de Gauss, covariance source, invariance de la trace et accord Gauss sur un voisinage admissible compilés ; action mobile à deux feuillets et égalité exacte au ledger compilées ; datum mobile promu dans l'unique sommant GHY de Candidate-A ; cœur métrique de bord `C³`, cœur fonctionnel conjoint, reconstruction canonique et algèbre déterminant/trace du repère redondant, ainsi que substitutions de jets fibrés `C²`, compilés ; valeur, premières dérivées spatiales, déterminant et inverse de la métrique ambiante évaluée sont désormais `C²` sur l'ouvert métrique existant, sans métrique `C⁴` ; l'assemblage métrique induite/seconde forme, puis intégrande/action et l'identification du second Fréchet same-action restent) | responsable unique : `P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D` ; helpers analytiques : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D`, `P0EFTJanusProgramPThroatFiniteFrameReconstruction4D`, `P0EFTJanusBoundedFiberJetSubstitutionC2`, `P0EFTJanusBoundedFiberJet2SubstitutionC2`, `P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D` |
+| H10 | Déplacement normal et géométrie générale de bord : famille induite, second Fréchet et accord same-action | `OPEN/P2` (fondation holonome, cœur conjoint, métrique/inverse induites, connexion et accord physique à la base compilés ; normalisation unitaire, carré causal, seconde forme symétrique, trace fidèle, densité induite, intégrande, action deux-feuilles et second Fréchet symétrique compilés sur un ouvert GHY contenant zéro ; reste uniquement l'identification de germe avec l'unique action mobile Candidate-A déjà reliée au ledger) | responsable unique : `P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D` ; helpers analytiques : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC3MetricCore4D`, `P0EFTJanusProgramPThroatFiniteFrameReconstruction4D`, `P0EFTJanusBoundedFiberJetSubstitutionC2`, `P0EFTJanusBoundedFiberJet2SubstitutionC2`, `P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D` |
 | H11 | Mesure et domaine communs : Green, adjoints, closabilité et réalisation fermée du Hessien **augmenté** | `WAIT H10/H13, P3` (le graphe BRST–SpinC–LL existant est fermé ; il faut réaliser sur ce même domaine les sept blocs physiques retenus) | responsable unique : `P0EFTJanusProgramPGlobalCandidateACommonAnalyticDomainClosure4D` |
 | H12 | Multiplicités typées fidèles, somme Fredholm totale et indice | `WAIT H11, P4` (les multiplicités et la sous-somme SpinC×LL sont compilées ; le Riesz actuel ne porte que le graphe BRST–SpinC–LL et n'est donc pas encore l'opérateur total) | responsable unique : `P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D` |
 | H13 | Résidu matière–LL nul sur la même action et identification du vrai Hessien covariant au Hessien augmenté, sans supprimer les sept blocs physiques | `WAIT H10, P4` | critère existant `diagonalExtendedBulkMinimalPhysicalLocalGaugeFixed_eq_augmented_iff`, dans `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D` |
@@ -423,13 +423,155 @@ est égal au témoin C2 antérieur ; le certificat est
 `candidate_a_normal_boundary_inverse_metric_matrix_fiber_c2_gate`. Aucun
 axiome de non-dégénérescence ni domaine supplémentaire n'est introduit.
 
-Reste pour `H10` : assembler la métrique induite et la seconde forme dans le
-repère de gorge reconstruit, puis l'intégrande et l'action GHY sur l'ouvert
-admissible, et identifier son second Fréchet au bloc normal de la même action
-Candidate-A.
-Les branches
+Les coefficients lisses fixes déjà présents dans le collier, le repère et la
+géométrie de base utilisent désormais exactement le même mécanisme. Le jet
+brut `normalBoundarySmoothFieldRawJet3` est construit depuis leurs trois
+dérivées de latitude existantes, et
+`candidate_a_normal_boundary_smooth_field_fiber_c2_gate` prouve leur
+évaluation `C²` exacte sur `normalBoundaryC2Graph`. Ce n'est ni un nouveau
+champ dynamique, ni une nouvelle représentation : cette gate sert seulement
+à assembler les coefficients fixes avec la métrique mobile déjà complétée.
+
+La métrique relative n'est plus laissée comme substitut de la métrique
+physique. `candidateANormalBoundaryActualMetricMatrixFiberEvaluation` la
+compose avec la matrice lisse de la métrique de fond déjà présente et réalise
+exactement la carte installée `g₀ (1 + g₀⁻¹h)`. Son inverse utilise l'ordre
+installé `(1 + g₀⁻¹h)⁻¹ g₀⁻¹` sur le même ouvert métrique. Le certificat
+`candidate_a_normal_boundary_actual_metric_matrix_fiber_c2_gate` donne la
+régularité `C²` des deux matrices ; aucune troisième représentation ni nouvel
+axiome de non-dégénérescence n'est ajouté.
+
+La différentielle du graphe est maintenant assemblée dans ce même repère.
+Elle réutilise les dérivées spatiales stockées du cœur normal, les lifts
+horizontal et vertical du collier, et l'unique facteur de chaîne
+`1 / (1 + r²)` de `arctan`. La contraction finie
+`T_i^a g_ab T_j^b` définit la matrice induite complétée et est `C²`; la gate
+publique est `candidate_a_normal_boundary_induced_metric_fiber_c2_gate`.
+
+L'inversion induite réutilise maintenant l'algèbre fidèle du repère fini
+redondant. L'endomorphisme relatif à la métrique intrinsèque est prolongé
+par la formule canonique `I-P+M(A)` sur le complément de reconstruction. Son
+domaine est l'ouvert où son déterminant est une unité. Comme pour la métrique ambiante,
+l'inverse est la formule déterminant–adjugée déjà utilisée, donc `C²`, avec
+identités inverse gauche et droite. La gate publique est
+`candidate_a_normal_boundary_induced_metric_inverse_fiber_c2_gate`. Aucun
+axiome de non-dégénérescence ni nouvelle représentation n'est ajouté.
+
+L'identification physique de ce prolongement est maintenant fermée. Le pont
+réutilise la composition fidèle du repère redondant et prouve que le lift à
+zéro est exactement `intrinsicThroatFiniteFrameLiftAt` de l'endomorphisme
+relatif de la trace lorentzienne générale. Son déterminant est donc le
+déterminant intrinsèque déjà non nul par `HasNoTangentialRadical`. La
+compacité transforme la non-annulation ponctuelle en unité de l'algèbre des
+fonctions continues bornées. Les certificats publics sont
+`zero_mem_candidateANormalBoundaryInducedMetricDomain` et
+`candidate_a_normal_boundary_induced_metric_physical_base_gate`. Aucun nouvel
+axiome de non-dégénérescence n'est ajouté.
+
+La connexion nécessaire à la seconde forme est maintenant raccordée sans
+nouvelle représentation. La dérivée spatiale des coefficients du tangent de
+graphe utilise les lifts horizontal/vertical et le deux-jet normal déjà
+stockés. La dérivée de la métrique réelle est identifiée à
+`regularGeneralMetricC0MetricFirstDerivative`; les coefficients de Koszul et
+de Christoffel obtenus sont ensuite identifiés exactement à
+`regularGeneralMetricC0KoszulLower` et
+`regularGeneralMetricC0Christoffel` sur l'ouvert métrique existant. Le
+certificat public
+`candidate_a_normal_boundary_graph_connection_fiber_c2_gate` regroupe la
+régularité `C²` et cet accord exact avec la même carte métrique.
+
+La normalisation et l'action complétées sont maintenant compilées. La racine
+locale déjà construite dans l'algèbre des champs bornés normalise le carré de
+la normale sans nouveau choix de coorientation ; le carré unitaire obtenu est
+exactement le signe causal de la base. La seconde forme symétrique est le
+simple redimensionnement de la forme de Gauss existante. Sa contraction
+réutilise le dual de référence, l'inverse induit fidèle et la trace du repère
+redondant. Le déterminant induit, normalisé à `1` à la base, réutilise la même
+carte de racine pour produire la densité de volume `C²`. L'ouvert commun est
+`candidateANormalBoundaryGHYDomain`, ouvert et contenant zéro par la seule
+transversalité déjà installée. L'intégrande et l'action deux-feuilles sont
+`C²`; `candidate_a_normal_boundary_ghy_second_frechet_gate` expose leur vrai
+second Fréchet et sa symétrie. L'intégration passe par la mesure de première
+feuille, poussée depuis `canonicalLatitudeBaseMeasure`; le facteur deux est le
+facteur déjà prouvé pour les deux feuilles.
+
+Reste pour `H10` : identifier sur un germe de variations lisses cette action
+complétée avec `normalGraphCanonicalTwoSheetGaussGHYAction`, donc avec
+`globalCandidateANonNullBoundaryAction` via le pont ledger déjà compilé. Cette
+égalité de germe identifiera automatiquement le second Fréchet au bloc normal
+de la même action Candidate-A.
+Le raccord lisse de la métrique ambiante est maintenant exact : la matrice
+complétée reconstruit `g₀ + h`, puis le tenseur de toute métrique lorentzienne
+admissible fournie avec cette égalité. Le lift canonique de latitude est aussi
+identifié au lift utilisé par la substitution pour tout le graphe lisse, et non
+plus seulement au paramètre zéro. Les lifts horizontal et vertical sont les
+vraies dérivées partielles du même collier joint, et les coefficients du repère
+fini reconstruisent exactement le tangent du graphe. Enfin,
+`candidateANormalBoundaryInducedMetricMatrixFiberEvaluation_smooth_eq_normalGraph`
+identifie la métrique induite complétée au tenseur de toute métrique lisse
+admissible appliqué aux vrais tangents, tandis que
+`candidateANormalBoundaryInducedMetricMatrixFiberEvaluation_smooth_eq_historical`
+la réidentifie à `normalGraphInducedMetricValue` après le seul pullback par la
+double orientation. Le raccord de la métrique induite générale est donc fermé,
+et pas seulement sa spécialisation en zéro. Le dual intrinsèque et le lift
+fidèle déjà présents transportent ensuite cette égalité jusqu'à
+`candidateANormalBoundaryInducedRelativeLiftDeterminantFiberEvaluation_smooth_apply` :
+le déterminant complété est exactement celui de l'endomorphisme historique
+tiré sur la double orientation. L'isométrie intrinsèque de cette présentation
+de période doublée avec la gorge historique est désormais prouvée par
+`intrinsicSmoothNondegenerateThroatMetric_orientationDouble_natural`.
+Elle conjugue exactement les deux endomorphismes relatifs dans
+`normalBoundarySmoothGraphRelativeEndomorphism_intertwines`; l'invariance du
+déterminant par conjugaison donne
+`candidateANormalBoundaryInducedRelativeLiftDeterminantFiberEvaluation_smooth_eq_historical`.
+La branche locale sélectionnée vaut `1` à la base et reste ponctuellement
+positive sur un vrai voisinage uniforme
+(`candidateANormalBoundaryInducedRelativeVolumeRoot_eventually_pos`). Ainsi
+`candidateANormalBoundaryInducedVolumeDensity_smooth_eq_historical` identifie
+la densité complétée à `normalGraphRelativeVolumeDensity` sur ce germe, sans
+nouvel axiome ni choix de signe. Le contrôle analogue de la normale est
+également fermé :
+`candidateANormalBoundaryMetricNormalRelativeRoot_eventually_pos` conserve la
+branche positive sur un voisinage uniforme et
+`candidateANormalBoundaryMetricNormalMagnitude_eq_sqrt_abs` l'identifie à la
+racine carrée usuelle de la valeur absolue du carré normal. Enfin,
+`candidateANormalBoundaryVertical_smooth_reconstructs` reconstruit le vecteur
+vertical canonique directement à partir du lift global déjà présent, sans
+nouvelle présentation de couverture. La projection tangentielle générale est
+maintenant identifiée au projecteur historique par
+`candidateANormalBoundaryTangentialProjectionVector_smooth_eq_historical` et
+sa reconstruction ambiante par
+`candidateANormalBoundaryTangentialProjectionAmbientVector_smooth_eq_historical`.
+Les contractions finies donnent ensuite exactement la normale métrique et son
+carré historiques (`candidateANormalBoundaryMetricNormalVector_smooth_eq_historical`,
+`candidateANormalBoundaryMetricNormalSquare_smooth_eq_historical`). Enfin,
+l'inverse de la magnitude sélectionnée puis la synthèse du vecteur unitaire
+sont identifiés à la normalisation intrinsèque existante par
+`candidateANormalBoundaryMetricNormalMagnitudeInverseFiberEvaluation_eq_historical`
+et `candidateANormalBoundaryMetricUnitNormalVector_smooth_eq_historical`.
+Restent pour `H10` la géométrie de Gauss, l'intégrande et l'action sur le même
+germe admissible. Les branches
 historiques de reparamétrisation nulle restent des contrôles, pas un substitut
 au bord général.
+
+Checkpoint d'arrêt propre (2026-08-04) : l'audit n'a pas créé une nouvelle
+géométrie. Dans le banc de preuve non importé
+`ScratchHessianHistorical.lean`,
+`historicalCandidateANormalBoundaryMetricUnitNormalField_eventuallyEq`
+réutilise les germes de section d'orientation et de carte holonome existants
+pour identifier, sur un voisinage, la normale reconstruite dans le repère
+régulier à la normale locale historique. Le théorème compilé
+`historicalCandidateANormalBoundaryMetricUnitNormalField_mfderiv` transporte
+alors exactement cette égalité à la dérivée spatiale. Ce checkpoint ne compte
+pas encore comme fermeture de production : aucun fichier de `JanusFormal`
+n'importe un module `Scratch*`. La prochaine et seule sous-obligation de Gauss
+est l'expansion de cette dérivée dans le repère régulier, puis son appariement
+avec les briques Christoffel et tangent déjà compilées. Aucune ébauche de cette
+étape suivante n'est conservée dans le checkpoint.
+À cet arrêt, l'audit `scripts/audit_janus_program_p.py` passe et la compilation
+directe de `P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D.lean`
+réussit ; les avertissements restants sont des avertissements de linter, pas
+des erreurs Lean.
 
 Audit de l'action existante : `GlobalBoundaryVariationData.nonNullFaces`
 reconstruit toujours le contrôle fixe avec `canonicalThroatNonNullFaceDatum`,

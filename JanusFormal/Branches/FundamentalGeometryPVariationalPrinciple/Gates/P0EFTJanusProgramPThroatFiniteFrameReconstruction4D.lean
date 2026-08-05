@@ -49,6 +49,53 @@ def redundantFiniteFrameLift
   1 - redundantFiniteFrameEncoding analysis synthesis LinearMap.id +
     redundantFiniteFrameEncoding analysis synthesis endomorphism
 
+/-- Acting with an encoded endomorphism on redundant coefficients is exactly
+analysis after intrinsic synthesis and application. -/
+theorem redundantFiniteFrameEncoding_mulVec
+    (analysis : E →ₗ[Real] (Fin dimension → Real))
+    (synthesis : (Fin dimension → Real) →ₗ[Real] E)
+    (endomorphism : E →ₗ[Real] E)
+    (coefficients : Fin dimension → Real) :
+    (redundantFiniteFrameEncoding analysis synthesis endomorphism).mulVec
+        coefficients =
+      analysis (endomorphism (synthesis coefficients)) := by
+  simpa [redundantFiniteFrameEncoding] using
+    (LinearMap.toMatrix_mulVec_repr
+      (Pi.basisFun Real (Fin dimension))
+      (Pi.basisFun Real (Fin dimension))
+      (analysis.comp (endomorphism.comp synthesis)) coefficients)
+
+/-- The identity extension is faithful after synthesis, including on
+coefficient vectors outside the analysis range. -/
+theorem redundantFiniteFrameSynthesis_lift_mulVec
+    (analysis : E →ₗ[Real] (Fin dimension → Real))
+    (synthesis : (Fin dimension → Real) →ₗ[Real] E)
+    (hReconstruct : synthesis.comp analysis = LinearMap.id)
+    (endomorphism : E →ₗ[Real] E)
+    (coefficients : Fin dimension → Real) :
+    synthesis
+        ((redundantFiniteFrameLift analysis synthesis endomorphism).mulVec
+          coefficients) =
+      endomorphism (synthesis coefficients) := by
+  change synthesis
+    ((1 - redundantFiniteFrameEncoding analysis synthesis LinearMap.id +
+      redundantFiniteFrameEncoding analysis synthesis endomorphism).mulVec
+        coefficients) = _
+  rw [Matrix.add_mulVec, Matrix.sub_mulVec, Matrix.one_mulVec,
+    redundantFiniteFrameEncoding_mulVec,
+    redundantFiniteFrameEncoding_mulVec]
+  simp only [map_add, map_sub, LinearMap.id_apply]
+  have hFirst :
+      synthesis (analysis (synthesis coefficients)) = synthesis coefficients := by
+    simpa using LinearMap.congr_fun hReconstruct (synthesis coefficients)
+  have hSecond :
+      synthesis (analysis (endomorphism (synthesis coefficients))) =
+        endomorphism (synthesis coefficients) := by
+    simpa using LinearMap.congr_fun hReconstruct
+      (endomorphism (synthesis coefficients))
+  rw [hFirst, hSecond]
+  abel
+
 /-- Exact reconstruction makes redundant matrices preserve composition. -/
 theorem redundantFiniteFrameEncoding_comp
     (analysis : E →ₗ[Real] (Fin dimension → Real))
@@ -260,6 +307,7 @@ open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
+open P0EFTJanusMappingTorusIntrinsicMetricBVThroatBracket4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -740,6 +788,22 @@ theorem intrinsicThroatFiniteFrameCoefficientAt_apply
           period hPeriod frame point).inverse vector) :=
   rfl
 
+/-- A canonical coefficient evaluated after the frame operator recovers the
+corresponding intrinsic metric component. -/
+theorem intrinsicThroatFiniteFrameCoefficientAt_operator
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (index : Fin frame.count)
+    (vector : TangentFiber period hPeriod point) :
+    intrinsicThroatFiniteFrameCoefficientAt period hPeriod frame point index
+        (intrinsicThroatFiniteFrameOperator period hPeriod frame point
+          vector) =
+      (intrinsicSmoothNondegenerateThroatMetric period hPeriod).1.tensor
+        point (frame.vectorAt point index) vector := by
+  rw [intrinsicThroatFiniteFrameCoefficientAt_apply,
+    (intrinsicThroatFiniteFrameOperator_isInvertible
+      period hPeriod frame point).inverse_apply_self]
+
 /-- Smooth canonical coefficient of a smooth tangent section. -/
 def intrinsicThroatFiniteFrameCoefficient
     (frame : SmoothThroatGeneratingFrame period hPeriod)
@@ -836,6 +900,17 @@ def intrinsicThroatFiniteFrameSynthesisAt
     simp only [Pi.smul_apply, smul_eq_mul, Finset.smul_sum, smul_smul,
       RingHom.id_apply]
 
+@[simp]
+theorem intrinsicThroatFiniteFrameSynthesisAt_apply
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (coefficients : Fin frame.count → Real) :
+    intrinsicThroatFiniteFrameSynthesisAt period hPeriod frame point
+        coefficients =
+      ∑ index : Fin frame.count,
+        coefficients index • frame.vectorAt point index :=
+  rfl
+
 /-- Canonical analysis map supplied by the intrinsic throat metric. -/
 def intrinsicThroatFiniteFrameAnalysisAt
     (frame : SmoothThroatGeneratingFrame period hPeriod)
@@ -897,6 +972,76 @@ theorem intrinsicThroatFiniteFrameEndomorphismMatrixAt_apply
     redundantFiniteFrameEncoding, intrinsicThroatFiniteFrameSynthesisAt,
     intrinsicThroatFiniteFrameAnalysisAt]
 
+/-- The encoded inverse reference operator sends the readings of a genuine
+covector to the canonical analysis coefficients of its raised vector. -/
+theorem
+    intrinsicThroatFiniteFrameEndomorphismMatrixAt_inverseOperator_mulVec
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (covector : TangentFiber period hPeriod point →L[Real] Real) :
+    (intrinsicThroatFiniteFrameEndomorphismMatrixAt
+        period hPeriod frame point
+        ((intrinsicThroatFiniteFrameOperator period hPeriod frame point)
+          |>.inverse.toLinearMap)).mulVec
+        (fun index => covector (frame.vectorAt point index)) =
+      intrinsicThroatFiniteFrameAnalysisAt period hPeriod frame point
+        (intrinsicThroatInverseMusical period hPeriod point covector) := by
+  unfold intrinsicThroatFiniteFrameEndomorphismMatrixAt
+  rw [redundantFiniteFrameEncoding_mulVec]
+  have hSynthesis :
+      intrinsicThroatFiniteFrameSynthesisAt period hPeriod frame point
+          (fun index => covector (frame.vectorAt point index)) =
+        intrinsicThroatFiniteFrameOperator period hPeriod frame point
+          (intrinsicThroatInverseMusical period hPeriod point covector) := by
+    rw [intrinsicThroatFiniteFrameOperator_apply]
+    change (∑ index : Fin frame.count,
+      covector (frame.vectorAt point index) • frame.vectorAt point index) = _
+    apply Finset.sum_congr rfl
+    intro index _
+    rw [intrinsicThroatMetric_apply_inverseMusical]
+  rw [hSynthesis]
+  apply congrArg
+    (intrinsicThroatFiniteFrameAnalysisAt period hPeriod frame point)
+  exact (intrinsicThroatFiniteFrameOperator_isInvertible
+    period hPeriod frame point).inverse_apply_self _
+
+/-- Encoding the frame operator followed by an endomorphism reads exactly the
+intrinsic metric matrix of that endomorphism. -/
+theorem intrinsicThroatFiniteFrameEndomorphismMatrixAt_operator_comp_apply
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (endomorphism : TangentFiber period hPeriod point →ₗ[Real]
+      TangentFiber period hPeriod point)
+    (row column : Fin frame.count) :
+    intrinsicThroatFiniteFrameEndomorphismMatrixAt period hPeriod frame point
+        ((intrinsicThroatFiniteFrameOperator period hPeriod frame point
+          |>.toLinearMap).comp endomorphism) row column =
+      (intrinsicSmoothNondegenerateThroatMetric period hPeriod).1.tensor point
+        (frame.vectorAt point row) (endomorphism (frame.vectorAt point column)) := by
+  rw [intrinsicThroatFiniteFrameEndomorphismMatrixAt_apply,
+    LinearMap.comp_apply]
+  exact intrinsicThroatFiniteFrameCoefficientAt_operator
+    period hPeriod frame point row _
+
+/-- The faithful matrix of a bilinear form relative to the intrinsic metric
+is obtained by composing its musical map with the intrinsic inverse musical. -/
+theorem intrinsicThroatFiniteFrameEndomorphismMatrixAt_relativeMusical_apply
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (bilinear : TangentFiber period hPeriod point →L[Real]
+      (TangentFiber period hPeriod point →L[Real] Real))
+    (row column : Fin frame.count) :
+    intrinsicThroatFiniteFrameEndomorphismMatrixAt period hPeriod frame point
+        ((intrinsicThroatFiniteFrameOperator period hPeriod frame point
+            |>.toLinearMap).comp
+          (((intrinsicThroatInverseMusical period hPeriod point
+              |>.toContinuousLinearMap).comp bilinear).toLinearMap))
+        row column =
+      bilinear (frame.vectorAt point column) (frame.vectorAt point row) := by
+  rw [intrinsicThroatFiniteFrameEndomorphismMatrixAt_operator_comp_apply]
+  exact intrinsicThroatMetric_apply_inverseMusical
+    period hPeriod point _ _
+
 /-- Projector recording the redundancy of the finite generating family. -/
 def intrinsicThroatFiniteFrameProjectorMatrixAt
     (frame : SmoothThroatGeneratingFrame period hPeriod)
@@ -918,6 +1063,26 @@ def intrinsicThroatFiniteFrameLiftAt
     (intrinsicThroatFiniteFrameSynthesisAt period hPeriod frame point)
     endomorphism
 
+/-- The faithful intrinsic lift has the advertised action after synthesis. -/
+theorem intrinsicThroatFiniteFrameSynthesisAt_liftAt_mulVec
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (endomorphism : TangentFiber period hPeriod point →ₗ[Real]
+      TangentFiber period hPeriod point)
+    (coefficients : Fin frame.count → Real) :
+    intrinsicThroatFiniteFrameSynthesisAt period hPeriod frame point
+        ((intrinsicThroatFiniteFrameLiftAt period hPeriod frame point
+          endomorphism).mulVec coefficients) =
+      endomorphism
+        (intrinsicThroatFiniteFrameSynthesisAt period hPeriod frame point
+          coefficients) := by
+  exact redundantFiniteFrameSynthesis_lift_mulVec
+    (intrinsicThroatFiniteFrameAnalysisAt period hPeriod frame point)
+    (intrinsicThroatFiniteFrameSynthesisAt period hPeriod frame point)
+    (intrinsicThroatFiniteFrameSynthesisAt_comp_analysisAt
+      period hPeriod frame point)
+    endomorphism coefficients
+
 theorem intrinsicThroatFiniteFrameEndomorphismMatrixAt_comp
     (frame : SmoothThroatGeneratingFrame period hPeriod)
     (point : EffectiveThroat period hPeriod)
@@ -932,6 +1097,28 @@ theorem intrinsicThroatFiniteFrameEndomorphismMatrixAt_comp
   redundantFiniteFrameEncoding_comp _ _
     (intrinsicThroatFiniteFrameSynthesisAt_comp_analysisAt
       period hPeriod frame point) first second
+
+/-- The encoded inverse frame operator cancels the encoded frame operator
+before any intrinsic endomorphism. -/
+theorem intrinsicThroatFiniteFrameEncoding_inverse_mul_operator_comp
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (endomorphism : TangentFiber period hPeriod point →ₗ[Real]
+      TangentFiber period hPeriod point) :
+    intrinsicThroatFiniteFrameEndomorphismMatrixAt period hPeriod frame point
+        (intrinsicThroatFiniteFrameOperator period hPeriod frame point
+          |>.inverse.toLinearMap) *
+      intrinsicThroatFiniteFrameEndomorphismMatrixAt period hPeriod frame point
+        ((intrinsicThroatFiniteFrameOperator period hPeriod frame point
+          |>.toLinearMap).comp endomorphism) =
+      intrinsicThroatFiniteFrameEndomorphismMatrixAt period hPeriod frame point
+        endomorphism := by
+  rw [← intrinsicThroatFiniteFrameEndomorphismMatrixAt_comp]
+  congr 1
+  apply LinearMap.ext
+  intro vector
+  exact (intrinsicThroatFiniteFrameOperator_isInvertible
+    period hPeriod frame point).inverse_apply_self (endomorphism vector)
 
 theorem intrinsicThroatFiniteFrameLiftAt_det
     (frame : SmoothThroatGeneratingFrame period hPeriod)

@@ -278,6 +278,32 @@ theorem regularFrameC2FirstDerivative_contDiff
       period hPeriod index).contDiff
 
 @[simp]
+theorem regularFrameC2FirstDerivative_add
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (regular : Fin 4) (first second : C2Scalar period hPeriod) :
+    regularFrameC2FirstDerivative period hPeriod metric regular
+        (first + second) =
+      regularFrameC2FirstDerivative period hPeriod metric regular first +
+        regularFrameC2FirstDerivative period hPeriod metric regular second := by
+  unfold regularFrameC2FirstDerivative
+  simp only [map_add, mul_add, Finset.sum_add_distrib]
+
+theorem regularFrameC2FirstDerivative_sum
+    {indexType : Type*} [Fintype indexType]
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (regular : Fin 4) (jet : indexType → C2Scalar period hPeriod) :
+    regularFrameC2FirstDerivative period hPeriod metric regular
+        (∑ index, jet index) =
+      ∑ index, regularFrameC2FirstDerivative period hPeriod metric regular
+        (jet index) := by
+  apply ContinuousMap.ext
+  intro point
+  unfold regularFrameC2FirstDerivative
+  simp only [map_sum, ContinuousMap.sum_apply, ContinuousMap.mul_apply]
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+
+@[simp]
 theorem regularFrameC2FirstDerivative_smooth
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (regular : Fin 4) (field : SmoothScalarField period hPeriod)
@@ -304,6 +330,73 @@ theorem regularFrameC2FirstDerivative_smooth
   rw [map_smul]
   rw [frameDerivative_eq_mfderiv]
   rfl
+
+@[simp]
+theorem regularFrameC2FirstDerivative_constant
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (regular : Fin 4) (value : Real) :
+    regularFrameC2FirstDerivative period hPeriod metric regular
+        (smoothToCanonicalPhysicalScalarC2JetCore period hPeriod
+          (P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.constantSmoothField
+            period hPeriod Real value)) = 0 := by
+  apply ContinuousMap.ext
+  intro point
+  rw [regularFrameC2FirstDerivative_smooth,
+    frameDerivative_eq_mfderiv]
+  simp [mvfderiv,
+    P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.constantSmoothField,
+    mfderiv_const]
+  exact map_zero (NormedSpace.fromTangentSpace value)
+
+@[simp]
+theorem regularFrameC2FirstDerivative_identity_entry
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (regular : Fin 4) (dimension : Nat) (row column : Fin dimension) :
+    regularFrameC2FirstDerivative period hPeriod metric regular
+        (c2FiniteMatrixIdentity period hPeriod dimension row column) = 0 := by
+  change regularFrameC2FirstDerivative period hPeriod metric regular
+      (smoothToCanonicalPhysicalScalarC2JetCore period hPeriod
+        (P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.constantSmoothField
+          period hPeriod Real (if row = column then 1 else 0))) = 0
+  exact regularFrameC2FirstDerivative_constant period hPeriod metric regular _
+
+/-- The completed regular-frame derivative obeys the exact Leibniz rule of
+the canonical physical C2 jet product. -/
+theorem regularFrameC2FirstDerivative_product
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (regular : Fin 4) (first second : C2Scalar period hPeriod) :
+    regularFrameC2FirstDerivative period hPeriod metric regular
+        (canonicalPhysicalScalarC2JetCoreProduct
+          period hPeriod first second) =
+      canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod first *
+          regularFrameC2FirstDerivative
+            period hPeriod metric regular second +
+        regularFrameC2FirstDerivative period hPeriod metric regular first *
+          canonicalPhysicalScalarC2JetCoreToContinuous
+            period hPeriod second := by
+  apply ContinuousMap.ext
+  intro point
+  unfold regularFrameC2FirstDerivative
+  simp only [ContinuousMap.sum_apply, ContinuousMap.mul_apply,
+    ContinuousMap.add_apply]
+  change
+    (∑ index : PhysicalIndex period hPeriod,
+      regularFrameFromPhysicalCoefficientContinuous period hPeriod metric
+          regular index point *
+        ((first.1 point).1 * (second.1 point).2.1 index +
+          (second.1 point).1 * (first.1 point).2.1 index)) =
+      (first.1 point).1 *
+          ∑ index : PhysicalIndex period hPeriod,
+            regularFrameFromPhysicalCoefficientContinuous period hPeriod metric
+                regular index point * (second.1 point).2.1 index +
+        (∑ index : PhysicalIndex period hPeriod,
+            regularFrameFromPhysicalCoefficientContinuous period hPeriod metric
+                regular index point * (first.1 point).2.1 index) *
+          (second.1 point).1
+  rw [Finset.mul_sum, Finset.sum_mul]
+  simp_rw [mul_add]
+  rw [Finset.sum_add_distrib]
+  congr 1 <;> apply Finset.sum_congr rfl <;> intro index _ <;> ring
 
 /-! ## Second regular-frame derivative on the same completed core -/
 
@@ -508,6 +601,62 @@ theorem regularGeneralMetricC0MetricCoefficient_contDiff
       ((c2FiniteMatrixEntry_contDiff period hPeriod row column).comp
         (regularGeneralMetricC2MetricMatrix_contDiff period hPeriod metric))
 
+/-- Entrywise value expansion of the installed regular metric chart. -/
+theorem regularGeneralMetricC0MetricCoefficient_apply_expansion
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variation : RegularGeneralMetricC2Core period hPeriod metric)
+    (row column : Fin 4) (point : EffectiveQuotient period hPeriod) :
+    regularGeneralMetricC0MetricCoefficient period hPeriod metric variation
+        row column point =
+      ∑ middle : Fin 4,
+        regularFrameMetricMatrix period hPeriod metric row middle point *
+          ((1 : Matrix (Fin 4) (Fin 4) Real) middle column +
+            canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod
+              (variation.1 middle column) point) := by
+  unfold regularGeneralMetricC0MetricCoefficient
+    regularGeneralMetricC2MetricMatrix
+  rw [c2FiniteMatrixProduct_apply, map_sum]
+  simp only [ContinuousMap.sum_apply]
+  apply Finset.sum_congr rfl
+  intro middle _
+  change
+    canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod
+          (regularFrameMetricC2Matrix period hPeriod metric row middle) point *
+        canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod
+          (generalMetricRelativeC2ExtendedMatrix period hPeriod
+            (RegularFrame period hPeriod metric) metric.metric variation
+              middle column) point = _
+  have hBaseJet :
+      regularFrameMetricC2Matrix period hPeriod metric row middle =
+        smoothToCanonicalPhysicalScalarC2JetCore period hPeriod
+          (regularFrameMetricMatrix period hPeriod metric row middle) :=
+    rfl
+  have hBaseValue :
+      smoothToCanonicalPhysicalContinuousScalar period hPeriod
+          (regularFrameMetricMatrix period hPeriod metric row middle) point =
+        regularFrameMetricMatrix period hPeriod metric row middle point :=
+    rfl
+  rw [hBaseJet, canonicalPhysicalScalarC2JetCoreToContinuous_smooth,
+    hBaseValue]
+  unfold generalMetricRelativeC2ExtendedMatrix
+  rw [Pi.add_apply, Pi.add_apply, map_add]
+  simp only [ContinuousMap.add_apply]
+  have hIdentityValue :
+      canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod
+          (c2FiniteMatrixIdentity period hPeriod
+            (RegularFrame period hPeriod metric).count middle column) point =
+        (1 : Matrix (Fin 4) (Fin 4) Real) middle column := by
+    rw [show c2FiniteMatrixIdentity period hPeriod
+          (RegularFrame period hPeriod metric).count middle column =
+        smoothToCanonicalPhysicalScalarC2JetCore period hPeriod
+          (smoothFiniteMatrixIdentity period hPeriod
+            (RegularFrame period hPeriod metric).count middle column) from rfl,
+      canonicalPhysicalScalarC2JetCoreToContinuous_smooth]
+    simp [smoothFiniteMatrixIdentity, Matrix.one_apply,
+      P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0Space4D.smoothToCanonicalPhysicalContinuousScalar,
+      P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.constantSmoothField]
+  rw [hIdentityValue]
+
 theorem regularGeneralMetricC0MetricCoefficient_zero
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (row column : Fin 4) :
@@ -539,6 +688,69 @@ theorem regularGeneralMetricC0MetricFirstDerivative_contDiff
   (regularFrameC2FirstDerivative_contDiff period hPeriod metric derivative).comp
     ((c2FiniteMatrixEntry_contDiff period hPeriod row column).comp
       (regularGeneralMetricC2MetricMatrix_contDiff period hPeriod metric))
+
+/-- Entrywise Leibniz expansion of the first derivative of the installed
+regular metric chart. -/
+theorem regularGeneralMetricC0MetricFirstDerivative_apply_expansion
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (variation : RegularGeneralMetricC2Core period hPeriod metric)
+    (derivative row column : Fin 4)
+    (point : EffectiveQuotient period hPeriod) :
+    regularGeneralMetricC0MetricFirstDerivative period hPeriod metric
+        variation derivative row column point =
+      ∑ middle : Fin 4,
+        (frameDerivative period hPeriod Real
+              (RegularFrame period hPeriod metric)
+              (regularFrameMetricMatrix period hPeriod metric row middle)
+              point derivative *
+            ((1 : Matrix (Fin 4) (Fin 4) Real) middle column +
+              canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod
+                (variation.1 middle column) point) +
+          regularFrameMetricMatrix period hPeriod metric row middle point *
+            regularFrameC2FirstDerivative period hPeriod metric derivative
+              (variation.1 middle column) point) := by
+  unfold regularGeneralMetricC0MetricFirstDerivative
+    regularGeneralMetricC2MetricMatrix
+  rw [c2FiniteMatrixProduct_apply,
+    regularFrameC2FirstDerivative_sum]
+  simp only [ContinuousMap.sum_apply]
+  apply Finset.sum_congr rfl
+  intro middle _
+  rw [regularFrameC2FirstDerivative_product]
+  simp only [ContinuousMap.add_apply, ContinuousMap.mul_apply]
+  have hBaseJet :
+      regularFrameMetricC2Matrix period hPeriod metric row middle =
+        smoothToCanonicalPhysicalScalarC2JetCore period hPeriod
+          (regularFrameMetricMatrix period hPeriod metric row middle) :=
+    rfl
+  have hBaseValue :
+      smoothToCanonicalPhysicalContinuousScalar period hPeriod
+          (regularFrameMetricMatrix period hPeriod metric row middle) point =
+        regularFrameMetricMatrix period hPeriod metric row middle point :=
+    rfl
+  rw [hBaseJet, regularFrameC2FirstDerivative_smooth,
+    canonicalPhysicalScalarC2JetCoreToContinuous_smooth]
+  unfold generalMetricRelativeC2ExtendedMatrix
+  rw [Pi.add_apply, Pi.add_apply,
+    regularFrameC2FirstDerivative_add,
+    regularFrameC2FirstDerivative_identity_entry, map_add]
+  simp only [ContinuousMap.zero_apply, zero_add, ContinuousMap.add_apply]
+  have hIdentityValue :
+      canonicalPhysicalScalarC2JetCoreToContinuous period hPeriod
+          (c2FiniteMatrixIdentity period hPeriod
+            (RegularFrame period hPeriod metric).count middle column) point =
+        (1 : Matrix (Fin 4) (Fin 4) Real) middle column := by
+    rw [show c2FiniteMatrixIdentity period hPeriod
+          (RegularFrame period hPeriod metric).count middle column =
+        smoothToCanonicalPhysicalScalarC2JetCore period hPeriod
+          (smoothFiniteMatrixIdentity period hPeriod
+            (RegularFrame period hPeriod metric).count middle column) from rfl,
+      canonicalPhysicalScalarC2JetCoreToContinuous_smooth]
+    simp [smoothFiniteMatrixIdentity, Matrix.one_apply,
+      P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0Space4D.smoothToCanonicalPhysicalContinuousScalar,
+      P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.constantSmoothField]
+  rw [hIdentityValue, hBaseValue]
+  ring
 
 theorem regularGeneralMetricC0MetricFirstDerivative_zero
     (metric : RegularGeneralLorentzMetric period hPeriod)
