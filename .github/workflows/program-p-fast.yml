@@ -126,6 +126,7 @@ jobs:
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCompatibilityComplex4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCovariantAction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalNormalGerm4D
 
       - name: Save incremental project build cache
         if: always() && steps.project-cache.outputs.cache-hit != 'true'
