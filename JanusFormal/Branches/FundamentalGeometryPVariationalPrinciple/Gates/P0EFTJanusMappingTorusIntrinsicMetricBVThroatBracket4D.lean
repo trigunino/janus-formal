@@ -135,6 +135,20 @@ theorem intrinsicThroatInverseMusical_apply_musical
         (intrinsicThroatMusical period hPeriod point vector) = vector :=
   (intrinsicThroatMusical period hPeriod point).symm_apply_apply vector
 
+/-- Contracting the intrinsic metric with a raised covector recovers that
+covector, with the metric argument order used by finite-frame matrices. -/
+theorem intrinsicThroatMetric_apply_inverseMusical
+    (point : EffectiveThroat period hPeriod)
+    (vector : ThroatTangentFiber period hPeriod point)
+    (covector : ThroatCotangentFiber period hPeriod point) :
+    (intrinsicSmoothNondegenerateThroatMetric period hPeriod).1.tensor point
+        vector (intrinsicThroatInverseMusical period hPeriod point covector) =
+      covector vector := by
+  rw [(intrinsicSmoothNondegenerateThroatMetric
+    period hPeriod).1.symmetric point]
+  rw [← intrinsicThroatMusical_apply,
+    intrinsicThroatMusical_inverse_apply]
+
 /-- The intrinsic throat metric is pointwise invariant under the true throat
 PT differential. -/
 theorem intrinsicThroatMetric_pt_natural

@@ -1,0 +1,15 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
+
+namespace JanusFormal
+open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
+set_option pp.all true in
+#check normalGraphMetricNormal_orthogonal
+set_option pp.all true in
+#check normalGraphOrientationDouble_mfderiv_eq_comp
+#check mvfderiv_sum
+#check mvfderiv_finset_sum
+#check mfderiv_sum
+#check mfderiv_finset_sum
+#check mvfderiv_mul
+#check Filter.EventuallyEq.mvfderiv_eq
+end JanusFormal

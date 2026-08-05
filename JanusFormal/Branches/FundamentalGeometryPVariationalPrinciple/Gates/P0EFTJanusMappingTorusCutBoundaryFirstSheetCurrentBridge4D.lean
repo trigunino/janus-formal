@@ -37,6 +37,19 @@ def canonicalLatitudeCutBoundaryFirstLift
   mappingTorusMk (orientationDoubleData period hPeriod)
     ⟨equatorialTwoSphereHomeomorph.symm base.1, base.2⟩
 
+/-- The installed first-sheet parametrization is continuous. -/
+theorem continuous_canonicalLatitudeCutBoundaryFirstLift :
+    Continuous (canonicalLatitudeCutBoundaryFirstLift period hPeriod) := by
+  have hCover : Continuous
+      (fun base : CanonicalLatitudeBase ↦
+        (⟨equatorialTwoSphereHomeomorph.symm base.1, base.2⟩ :
+          MappingTorusCover (orientationDoubleData period hPeriod))) := by
+    have hProduct := equatorialTwoSphereHomeomorph.symm.continuous.prodMap
+      (continuous_id : Continuous (id : Real → Real))
+    exact ((coverHomeomorphProd (orientationDoubleData period hPeriod)).symm
+      |>.continuous.comp hProduct).congr fun _ ↦ rfl
+  exact continuous_quotient_mk'.comp hCover
+
 theorem cutBoundaryScalarCurrent_firstLift
     (field test : SmoothQuotientField period hPeriod Real)
     (base : CanonicalLatitudeBase) :
