@@ -59,6 +59,7 @@ jobs:
       - name: Build H10 historical Gauss bridge
         run: >-
           lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaussWeingartenFiniteAlgebra4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalGaussPairing4D
 
       - name: Build active Program P leaf
