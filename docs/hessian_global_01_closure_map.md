@@ -687,6 +687,17 @@ Le ticket passe à `DONE` seulement si :
 
 ## Checkpoint 2026-08-05
 
+Le transport autonome du produit matriciel est compilÃ© dans
+`candidateANormalBoundaryMatrixFieldEvaluationRingHom_mapMatrix_mul`, avec
+`normalBoundaryRealMatrixMul` pour lever toute ambiguÃ¯tÃ© de multiplication.
+
+Le morphisme d'Ã©valuation dispose maintenant du lemme pointwise compilÃ©
+`candidateANormalBoundaryMatrixFieldEvaluationRingHom_mapMatrix_apply`.
+
+L'Ã©valuation de la courbure moyenne commute maintenant avec la trace
+matricielle via
+`candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation_apply`.
+
 La forme de Gauss unitÃ© symÃ©trisÃ©e est maintenant raccordÃ©e au vecteur
 historique par `candidateANormalBoundaryMetricUnitGauss_smooth_eq_vector`.
 
@@ -729,3 +740,16 @@ tangent du graphe en coordonnÃ©es holonomes, et
 `candidateANormalBoundaryGraphTangentCoordinates_historical_eq_source` le
 relie au premier dÃ©rivÃ© holonome existant. La cible compile ; H10 reste ouvert
 pour les dÃ©veloppements de Christoffel/Gauss et les paquets analytiques.
+
+### Checkpoint trace GHY lisse (2026-08-05)
+
+L'API de frontiere du module de substitution expose maintenant publiquement
+`OrientationBoundary`, la multiplication matricielle reelle et deux wrappers
+sur `CutThroatBoundary`. Le module leger
+`P0EFTJanusProgramPGlobalCandidateANormalBoundaryGHYSmoothTraceBridge4D`
+compile et prouve
+`candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation_apply_mul` :
+la courbure moyenne Candidate-A est la trace du produit des deux matrices
+evaluees. Aucun axiome physique n'est ajoute. H10 reste ouvert pour identifier
+ce produit avec la courbure historique, puis remonter aux integrandes, actions
+et Hessiennes.

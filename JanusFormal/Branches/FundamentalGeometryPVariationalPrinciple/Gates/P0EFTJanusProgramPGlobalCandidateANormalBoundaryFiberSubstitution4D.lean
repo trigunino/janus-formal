@@ -82,7 +82,9 @@ private abbrev RealHasDerivAt
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-private abbrev OrientationBoundary :=
+/-- Public shorthand for the oriented cut-throat boundary used by the
+Candidate-A fiber API. -/
+abbrev OrientationBoundary :=
   CutThroatBoundary period hPeriod
 
 private abbrev OrientationBoundaryCover :=
@@ -6031,6 +6033,15 @@ private def candidateANormalBoundaryMatrixFieldEvaluationRingHom
   map_zero' := rfl
   map_add' _ _ := rfl
 
+@[simp] theorem candidateANormalBoundaryMatrixFieldEvaluationRingHom_mapMatrix_apply
+    (boundary : OrientationBoundary period hPeriod)
+    (matrix : CandidateANormalBoundaryInducedMetricMatrixField period hPeriod)
+    (row column : NormalBoundaryTangentIndex period hPeriod) :
+    ((candidateANormalBoundaryMatrixFieldEvaluationRingHom
+        period hPeriod boundary).mapMatrix matrix) row column =
+      matrix row column boundary := by
+  rfl
+
 @[simp]
 theorem
     candidateANormalBoundaryTotalRelativeMetricDeterminantFiberEvaluation_apply
@@ -8975,16 +8986,38 @@ theorem candidateANormalBoundaryInducedMetricMatrixFiberEvaluation_zero_eq_encod
       (normalBoundaryBaseInducedMetricMusical period hPeriod metric boundary)
       row column).symm
 
-attribute [-instance] orientationBoundaryMetricSpace
-    orientationBoundaryChartedSpace in
 /-- Ordinary finite matrix multiplication, disambiguated from pointwise
 multiplication of the underlying function type. -/
-private def normalBoundaryRealMatrixMul
+def normalBoundaryRealMatrixMul
     (first second : Matrix (NormalBoundaryTangentIndex period hPeriod)
       (NormalBoundaryTangentIndex period hPeriod) Real) :
     Matrix (NormalBoundaryTangentIndex period hPeriod)
       (NormalBoundaryTangentIndex period hPeriod) Real :=
   @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid first second
+
+theorem candidateANormalBoundaryMatrixFieldEvaluationRingHom_mapMatrix_mul
+    (boundary : OrientationBoundary period hPeriod)
+    (first second : CandidateANormalBoundaryInducedMetricMatrixField
+      period hPeriod) :
+    (candidateANormalBoundaryMatrixFieldEvaluationRingHom
+        period hPeriod boundary).mapMatrix (first * second) =
+      normalBoundaryRealMatrixMul period hPeriod
+        (fun row column => first row column boundary)
+        (fun row column => second row column boundary) := by
+  rw [map_mul]
+  rfl
+
+theorem candidateANormalBoundaryMatrixFieldEvaluationRingHom_mapMatrix_mul_cut
+    (boundary : CutThroatBoundary period hPeriod)
+    (first second : CandidateANormalBoundaryInducedMetricMatrixField
+      period hPeriod) :
+    (candidateANormalBoundaryMatrixFieldEvaluationRingHom
+        period hPeriod boundary).mapMatrix (first * second) =
+      normalBoundaryRealMatrixMul period hPeriod
+        (fun row column => first row column boundary)
+        (fun row column => second row column boundary) :=
+  candidateANormalBoundaryMatrixFieldEvaluationRingHom_mapMatrix_mul
+    period hPeriod boundary first second
 
 attribute [-instance] orientationBoundaryMetricSpace
     orientationBoundaryChartedSpace in
@@ -12779,6 +12812,38 @@ def candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation
         period hPeriod metric current *
       candidateANormalBoundaryMetricUnitGaussRelativeEndomorphismMatrixFiberEvaluation
         period hPeriod metric current)
+
+theorem candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation_apply
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (current : Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) Real)
+    (boundary : OrientationBoundary period hPeriod) :
+    candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation
+        period hPeriod metric current boundary =
+      Matrix.trace (fun row column =>
+        (candidateANormalBoundaryInducedRelativeLiftInverseFiberEvaluation
+            period hPeriod metric current *
+          candidateANormalBoundaryMetricUnitGaussRelativeEndomorphismMatrixFiberEvaluation
+            period hPeriod metric current) row column boundary) := by
+  unfold candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation
+  exact AddMonoidHom.map_trace
+    (candidateANormalBoundaryMatrixFieldEvaluationRingHom
+      period hPeriod boundary).toAddMonoidHom _
+
+theorem candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation_apply_cut
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (current : Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) Real)
+    (boundary : CutThroatBoundary period hPeriod) :
+    candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation
+        period hPeriod metric current boundary =
+      Matrix.trace (fun row column =>
+        (candidateANormalBoundaryInducedRelativeLiftInverseFiberEvaluation
+            period hPeriod metric current *
+          candidateANormalBoundaryMetricUnitGaussRelativeEndomorphismMatrixFiberEvaluation
+            period hPeriod metric current) row column boundary) :=
+  candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation_apply
+    period hPeriod metric current boundary
 
 theorem candidateANormalBoundaryMetricUnitGaussMeanCurvatureFiberEvaluation_contDiffOn_two
     (metric : RegularGeneralLorentzMetric period hPeriod)
