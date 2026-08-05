@@ -1,4 +1,4 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedGaussWeingartenClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedHistoricalGHYBridge4D
 
 /-!
 # H10 mobile-boundary action-source bridge
