@@ -393,6 +393,7 @@ theorem candidateANormalBoundaryGHYIntegrandFiberEvaluation_eq_historicalWeingar
   rw [candidateANormalBoundaryMetricUnitGaussMeanCurvature_eq_historicalWeingarten
     period hPeriod metric hTransverse tensor variedMetric hVaried displacement
       parameter hNonNull hCurrent hRootNonneg boundary patch coordinate hAt]
+  ring
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Equality of the completed first-sheet action with the historical
