@@ -56,6 +56,11 @@ jobs:
           restore-keys: |
             program-p-build-${{ runner.os }}-
 
+      - name: Build H10 historical normal germ
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalNormalGerm4D
+
       - name: Build active Program P leaf
         id: leaf
         shell: bash
@@ -126,7 +131,6 @@ jobs:
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCompatibilityComplex4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCovariantAction4D
-          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalNormalGerm4D
 
       - name: Save incremental project build cache
         if: always() && steps.project-cache.outputs.cache-hit != 'true'
