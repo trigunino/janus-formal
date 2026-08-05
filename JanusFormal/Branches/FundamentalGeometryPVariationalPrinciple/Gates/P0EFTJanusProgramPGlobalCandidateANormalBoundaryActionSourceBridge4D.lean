@@ -1,4 +1,4 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedHistoricalGHYBridge4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalGaussActionIdentification4D
 
 /-!
 # H10 mobile-boundary action-source bridge
@@ -13,6 +13,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionSourceBridge4D
 
 set_option autoImplicit false
+set_option maxHeartbeats 2400000
+set_option synthInstance.maxHeartbeats 600000
 
 noncomputable section
 
@@ -22,6 +24,7 @@ open P0EFTJanusFiniteStratifiedBoundaryVariation
 open P0EFTJanusProgramPGlobalBoundaryCompletion4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -73,6 +76,59 @@ theorem globalCandidateAGHYAction_normalGraph_eq
   rw [hSource]
   exact globalCandidateANonNullBoundaryAction_normalGraph_eq period hPeriod
     einsteinScale metric displacement parameter hNonNull
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Smooth-core H10 source identification.  Once the residual redundant-frame
+trace theorem is supplied, the completed `C²` two-sheet action is literally
+the GHY summand of the unique central Candidate-A action datum. -/
+theorem candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_globalCandidateA
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (einsteinScale : Real)
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (hTransverse : HasNoTangentialRadical period hPeriod metric.metric)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (hVaried : variedMetric.tensor = metric.metric.tensor + tensor)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (hCurrent :
+      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) ∈
+        candidateANormalBoundaryGHYDomain period hPeriod metric)
+    (hNormalRootNonneg : ∀ point : CutThroatBoundary period hPeriod, 0 ≤
+      candidateANormalBoundaryMetricNormalRelativeRootFiberEvaluation
+        period hPeriod metric
+          (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+            (tensor, displacement), parameter) point)
+    (hVolumeRootNonneg : ∀ point : CutThroatBoundary period hPeriod, 0 ≤
+      candidateANormalBoundaryInducedRelativeVolumeRootFiberEvaluation
+        period hPeriod metric
+          (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+            (tensor, displacement), parameter) point)
+    (hTrace : CandidateANormalBoundaryHistoricalGaussTraceAgreement period
+      hPeriod metric tensor variedMetric displacement parameter hNonNull)
+    (hSource : data.nonNullBoundary =
+      normalGraphCanonicalCandidateANonNullBoundaryDatum period hPeriod
+        (NonNullFace := NonNullFace) einsteinScale variedMetric displacement
+          parameter hNonNull) :
+    candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
+        einsteinScale metric
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) =
+      globalCandidateAGHYAction period hPeriod data := by
+  rw [candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_gauss
+    period hPeriod einsteinScale metric hTransverse tensor variedMetric hVaried
+      displacement parameter hNonNull hCurrent hNormalRootNonneg
+        hVolumeRootNonneg hTrace]
+  exact (globalCandidateAGHYAction_normalGraph_eq period hPeriod data
+    einsteinScale variedMetric displacement parameter hNonNull hSource).symm
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionSourceBridge4D
