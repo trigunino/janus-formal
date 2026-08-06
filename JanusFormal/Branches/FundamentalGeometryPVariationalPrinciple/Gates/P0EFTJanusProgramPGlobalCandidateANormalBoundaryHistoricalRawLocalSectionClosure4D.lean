@@ -36,53 +36,53 @@ private abbrev CoordinateVector :=
 private abbrev EffectiveThroat :=
   MappingTorus (fixedEquatorData period hPeriod)
 
-local instance historicalCovariantClosureCandidateANormalBoundaryFunctionalCoreNormedAddCommGroup
+local instance historicalRawClosureCandidateANormalBoundaryFunctionalCoreNormedAddCommGroup
     (metric : RegularGeneralLorentzMetric period hPeriod) :
     NormedAddCommGroup
       (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
   candidateANormalBoundaryFunctionalCoreNormedAddCommGroup period hPeriod metric
 
-local instance historicalCovariantClosureCandidateANormalBoundaryFunctionalCoreNormedSpace
+local instance historicalRawClosureCandidateANormalBoundaryFunctionalCoreNormedSpace
     (metric : RegularGeneralLorentzMetric period hPeriod) :
     NormedSpace Real
       (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
   candidateANormalBoundaryFunctionalCoreNormedSpace period hPeriod metric
 
 local instance (priority := 30000)
-    historicalCovariantClosureOrientationBoundaryChartedSpace :
+    historicalRawClosureOrientationBoundaryChartedSpace :
     ChartedSpace ThroatCoverModel (CutThroatBoundary period hPeriod) :=
   P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryChartedSpace
     period hPeriod
 
 local instance (priority := 30000)
-    historicalCovariantClosureOrientationBoundaryIsManifold :
+    historicalRawClosureOrientationBoundaryIsManifold :
     IsManifold throatCoverModelWithCorners ω
       (CutThroatBoundary period hPeriod) :=
   P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryIsManifold
     period hPeriod
 
 local instance (priority := 30000)
-    historicalCovariantClosureEffectiveThroatChartedSpace :
+    historicalRawClosureEffectiveThroatChartedSpace :
     ChartedSpace ThroatCoverModel (EffectiveThroat period hPeriod) :=
   P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.effectiveThroatChartedSpace
     period hPeriod
 
 local instance (priority := 30000)
-    historicalCovariantClosureEffectiveThroatIsManifold :
+    historicalRawClosureEffectiveThroatIsManifold :
     IsManifold throatCoverModelWithCorners ω
       (EffectiveThroat period hPeriod) :=
   P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.effectiveThroatIsManifold
     period hPeriod
 
 local instance (priority := 30000)
-    historicalCovariantClosureEffectiveQuotientChartedSpace :
+    historicalRawClosureEffectiveQuotientChartedSpace :
     ChartedSpace CoverModel
       (MappingTorus (reflectedSphereData period hPeriod)) :=
   P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D.effectiveQuotientChartedSpace
     period hPeriod
 
 local instance (priority := 30000)
-    historicalCovariantClosureEffectiveQuotientIsManifold :
+    historicalRawClosureEffectiveQuotientIsManifold :
     IsManifold coverModelWithCorners ω
       (MappingTorus (reflectedSphereData period hPeriod)) :=
   reflectedSphereQuotient_isManifold period hPeriod
