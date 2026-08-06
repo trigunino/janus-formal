@@ -17,8 +17,8 @@ permissions:
   issues: write
 
 concurrency:
-  group: h10-diagnostic-${{ github.ref_name }}-${{ github.sha }}
-  cancel-in-progress: false
+  group: h10-diagnostic-${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   h10-diagnostic:
@@ -26,6 +26,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Announce focused run to issue 46
+        uses: actions/github-script@v7
+        env:
+          H10_RUN_ID: ${{ github.run_id }}
+          H10_SHA: ${{ github.sha }}
+        with:
+          script: |
+            const body = [
+              '## Focused H10 build: STARTED',
+              '',
+              `- Commit: \`${process.env.H10_SHA}\``,
+              `- Run ID: \`${process.env.H10_RUN_ID}\``
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 46,
+              body
+            });
 
       - name: Set up Lean and Mathlib cache
         uses: leanprover/lean-action@v1
