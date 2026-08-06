@@ -28,8 +28,8 @@ on:
         type: boolean
 
 concurrency:
-  group: program-p-fast-${{ github.head_ref || github.ref_name }}
-  cancel-in-progress: true
+  group: program-p-fast-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
 
 jobs:
   program-p:
@@ -51,7 +51,7 @@ jobs:
         id: project-cache
         uses: actions/cache/restore@v4
         with:
-          path: .lake/build
+          path: .b
           key: program-p-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
           restore-keys: |
             program-p-build-${{ runner.os }}-
@@ -73,6 +73,9 @@ jobs:
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedGaussRawLocalSectionReduction4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalCovariantNormalGerm4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalNormalLeibniz4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalCovariantNormalClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalRawLocalSectionClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalTerminalActionClosure4D
 
       - name: Build active Program P leaf
         id: leaf
@@ -149,7 +152,7 @@ jobs:
         if: always() && steps.project-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          path: .lake/build
+          path: .b
           key: ${{ steps.project-cache.outputs.cache-primary-key }}
 
       - name: Upload Program P Lean logs
