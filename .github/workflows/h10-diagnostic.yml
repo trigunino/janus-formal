@@ -10,6 +10,13 @@ on:
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - ".github/workflows/h10-diagnostic.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
   workflow_dispatch:
 
 permissions:
@@ -17,7 +24,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: h10-diagnostic-${{ github.ref_name }}
+  group: h10-diagnostic-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
