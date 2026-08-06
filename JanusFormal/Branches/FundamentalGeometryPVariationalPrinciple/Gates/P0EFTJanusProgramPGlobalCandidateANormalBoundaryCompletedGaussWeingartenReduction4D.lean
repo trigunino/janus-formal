@@ -334,7 +334,7 @@ theorem
   simp only [BoundedContinuousFunction.add_apply,
     BoundedContinuousFunction.sum_apply, BoundedContinuousFunction.mul_apply,
     ContinuousMap.add_apply, ContinuousMap.sum_apply, ContinuousMap.mul_apply]
-  exact hAlgebra
+  simpa only [current] using hAlgebra
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
