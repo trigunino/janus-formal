@@ -16,7 +16,7 @@ namespace P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 
 export P0EFTJanusMappingTorusCutThroatBoundaryDoubleCover4D
   (CutThroatBoundary)
-export P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
+export P0EFTJanusProgramPGlobalFieldSpace4D
   (GlobalFieldConfiguration)
 export P0EFTJanusMappingTorusGeneralLorentzTensor4D
   (SmoothSymmetricCovariantTwoTensor)
@@ -32,7 +32,7 @@ export P0EFTJanusMappingTorusDifferentialLLWeakEquation4D
   (finiteSmoothThroatGeneratingFrame)
 export P0EFTJanusD8NormalBundleD9DisplacementBridge4D
   (SmoothNormalDisplacement)
-export P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D
+export P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
   (NormalGraphNonNullAt)
 
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
