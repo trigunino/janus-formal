@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySmoothKoszulChristoffel4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryNamespaceFacade4D
 
 /-!
 # Completed regular-frame metric compatibility for Candidate A
