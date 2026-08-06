@@ -172,13 +172,15 @@ theorem
     candidateANormalBoundaryGraphTangentCoordinates_historical
   dsimp only [current]
   rw [map_sum]
-  simp only [LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+  simp only [ContinuousLinearMap.sum_apply, map_smul,
+    ContinuousLinearMap.smul_apply, smul_eq_mul]
   apply Eq.symm
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro row _
   rw [map_sum]
-  simp only [map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+  simp only [map_smul, ContinuousLinearMap.sum_apply,
+    ContinuousLinearMap.smul_apply, smul_eq_mul]
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro column _
