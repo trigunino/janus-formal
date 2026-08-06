@@ -85,11 +85,11 @@ theorem
     let hFirstNonNull :=
       normalGraphNonNullAt_of_candidate_GHY_mem period hPeriod metric
         firstTensor firstMetric hFirstVaried firstDisplacement firstParameter
-          hSame.1
+          (hFirstCurrent ▸ hSame.1)
     let hSecondNonNull :=
       normalGraphNonNullAt_of_candidate_GHY_mem period hPeriod metric
         secondTensor secondMetric hSecondVaried secondDisplacement
-          secondParameter hSame.1
+          secondParameter (hSecondCurrent ▸ hSame.1)
     globalCandidateAGHYAction period hPeriod
         (normalGraphCanonicalCandidateAActionData period hPeriod data
           einsteinScale firstMetric firstDisplacement firstParameter
@@ -146,11 +146,11 @@ structure CandidateANormalBoundarySmoothSourceFactorizationAtCurrent
       let hFirstNonNull :=
         normalGraphNonNullAt_of_candidate_GHY_mem period hPeriod metric
           firstTensor firstMetric hFirstVaried firstDisplacement firstParameter
-            domain
+            (hFirstCurrent ▸ domain)
       let hSecondNonNull :=
         normalGraphNonNullAt_of_candidate_GHY_mem period hPeriod metric
           secondTensor secondMetric hSecondVaried secondDisplacement
-            secondParameter domain
+            secondParameter (hSecondCurrent ▸ domain)
       globalCandidateAGHYAction period hPeriod
           (normalGraphCanonicalCandidateAActionData period hPeriod data
             einsteinScale firstMetric firstDisplacement firstParameter
