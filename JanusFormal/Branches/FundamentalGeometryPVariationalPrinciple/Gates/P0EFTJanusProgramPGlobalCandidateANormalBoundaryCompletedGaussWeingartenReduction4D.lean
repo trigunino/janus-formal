@@ -251,9 +251,13 @@ theorem
           candidateANormalBoundaryActualMetricMatrixFiberEvaluation
             period hPeriod metric current column row boundary := by
     intro row column
-    rw [candidateANormalBoundaryActualMetricMatrixFiberEvaluation_eq_variedMetric
-      period hPeriod metric tensor variedMetric hVaried displacement parameter
-        boundary]
+    rw [
+      candidateANormalBoundaryActualMetricMatrixFiberEvaluation_eq_variedMetric
+        period hPeriod metric tensor variedMetric hVaried displacement parameter
+          boundary row column,
+      candidateANormalBoundaryActualMetricMatrixFiberEvaluation_eq_variedMetric
+        period hPeriod metric tensor variedMetric hVaried displacement parameter
+          boundary column row]
     exact variedMetric.tensor.symmetric _ _ _
   have hZero :
       (∑ row : Fin 4, ∑ column : Fin 4,
@@ -335,9 +339,9 @@ theorem
   unfold
     candidateANormalBoundaryGraphCovariantAccelerationRegularFrameCoefficientFiberEvaluation
   simp only [BoundedContinuousFunction.add_apply,
-    BoundedContinuousFunction.sum_apply, BoundedContinuousFunction.mul_apply,
-    ContinuousMap.add_apply, ContinuousMap.sum_apply, ContinuousMap.mul_apply]
-  simpa only [current] using hAlgebra
+    BoundedContinuousFunction.sum_apply, BoundedContinuousFunction.mul_apply]
+  dsimp only [current] at hAlgebra
+  exact hAlgebra
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
