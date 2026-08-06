@@ -32,6 +32,25 @@ open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
+local instance sameActionHessianCandidateANormalBoundaryFunctionalCoreNormedAddCommGroup
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    NormedAddCommGroup
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+  candidateANormalBoundaryFunctionalCoreNormedAddCommGroup
+    period hPeriod metric
+
+local instance sameActionHessianCandidateANormalBoundaryFunctionalCoreNormedSpace
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    NormedSpace Real
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+  candidateANormalBoundaryFunctionalCoreNormedSpace period hPeriod metric
+
+local instance sameActionHessianCandidateANormalBoundaryFunctionalCoreCompleteSpace
+    (metric : RegularGeneralLorentzMetric period hPeriod) :
+    CompleteSpace
+      (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+  candidateANormalBoundaryFunctionalCoreCompleteSpace period hPeriod metric
+
 /-- Replace only the unique non-null boundary source of an existing central
 Candidate-A datum by the already constructed canonical mobile normal graph. -/
 def normalGraphCanonicalCandidateAActionData
