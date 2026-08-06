@@ -124,7 +124,7 @@ def CandidateANormalBoundarySameActionAtSmoothCurrent
         candidateANormalBoundaryGHYDomain period hPeriod metric),
       let hNonNull :=
         normalGraphNonNullAt_of_candidate_GHY_mem period hPeriod metric tensor
-          variedMetric hVaried displacement parameter hCurrent
+          variedMetric hVaried displacement parameter (hCurrentEq ▸ hCurrent)
       candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
           einsteinScale metric current =
         globalCandidateAGHYAction period hPeriod
