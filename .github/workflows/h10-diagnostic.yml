@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionGermHessian4D"
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionSmoothFactorization4D"
           lake build "$target" > h10-diagnostic.log 2>&1
           status=$?
           cat h10-diagnostic.log
