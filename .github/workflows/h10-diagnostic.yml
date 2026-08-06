@@ -1,3 +1,4 @@
+# Pull-request validation probe; mathematical target unchanged.
 name: Temporary H10 same-action diagnostic
 
 on:
