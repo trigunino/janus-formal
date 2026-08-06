@@ -95,7 +95,7 @@ private theorem finiteBasisConnectionReconstruction
   classical
   apply basis.repr.injective
   ext row
-  simp only [map_sum, map_smul, Finsupp.sum_apply_index, Finsupp.smul_apply]
+  simp only [map_sum, map_smul, Finsupp.smul_apply]
   simp
   ring
 
