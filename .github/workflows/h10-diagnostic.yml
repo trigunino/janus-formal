@@ -1,0 +1,103 @@
+name: Temporary H10 same-action diagnostic
+
+on:
+  push:
+    branches:
+      - dev-branch
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - ".github/workflows/h10-diagnostic.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: h10-diagnostic-${{ github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  h10-diagnostic:
+    name: Lean — focused H10 diagnostic
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
+      - name: Restore incremental project build cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: h10-diagnostic-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            h10-diagnostic-${{ runner.os }}-
+
+      - name: Build focused H10 target
+        id: build
+        shell: bash
+        run: |
+          set +e
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionGermHessian4D"
+          lake build "$target" > h10-diagnostic.log 2>&1
+          status=$?
+          cat h10-diagnostic.log
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Report focused result to issue 46
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          H10_STATUS: ${{ steps.build.outputs.status }}
+          H10_RUN_ID: ${{ github.run_id }}
+          H10_SHA: ${{ github.sha }}
+        with:
+          script: |
+            const fs = require('fs');
+            const status = process.env.H10_STATUS || 'missing';
+            const result = status === '0' ? 'SUCCESS' : 'FAILURE';
+            let log = '';
+            try {
+              log = fs.readFileSync('h10-diagnostic.log', 'utf8');
+            } catch (error) {
+              log = `Unable to read h10-diagnostic.log: ${error}`;
+            }
+            const lines = log.split(/\r?\n/);
+            const tail = lines.slice(-220).join('\n').slice(-60000);
+            const body = [
+              `## Focused H10 build: ${result}`,
+              '',
+              `- Commit: \`${process.env.H10_SHA}\``,
+              `- Run ID: \`${process.env.H10_RUN_ID}\``,
+              `- Exit status: \`${status}\``,
+              '',
+              '<details><summary>Tail of Lean log</summary>',
+              '',
+              '```text',
+              tail,
+              '```',
+              '</details>'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 46,
+              body
+            });
+
+      - name: Fail when Lean failed
+        if: steps.build.outputs.status != '0'
+        run: exit 1
