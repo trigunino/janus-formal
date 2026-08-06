@@ -78,7 +78,7 @@ theorem
       normalGraphOrientationDouble period hPeriod displacement
         (boundary, parameter))
     (first second : ThroatCoverCoordinates) :
-    let base : EffectiveThroat period hPeriod × Real :=
+    let base :=
       (orientationDoubleToThroat period hPeriod boundary, parameter)
     normalGraphHolonomicInducedMetricCoordinates period hPeriod variedMetric
         displacement base patch coordinate base
@@ -90,7 +90,7 @@ theorem
         period hPeriod variedMetric displacement boundary parameter patch
           coordinate base first second := by
   dsimp only
-  let base : EffectiveThroat period hPeriod × Real :=
+  let base :=
     (orientationDoubleToThroat period hPeriod boundary, parameter)
   have hGraph : patch.coordinateMap coordinate =
       normalGraph period hPeriod displacement base.2 base.1 := by
