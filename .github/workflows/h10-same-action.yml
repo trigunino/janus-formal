@@ -1,0 +1,72 @@
+name: H10 same-action germ Lean gate
+
+on:
+  push:
+    branches:
+      - dev-branch
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - ".github/workflows/h10-same-action.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - ".github/workflows/h10-same-action.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+concurrency:
+  group: h10-same-action-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  h10-same-action:
+    name: Lean — H10 same-action germ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
+      - name: Restore incremental project build cache
+        id: project-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: h10-same-action-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            h10-same-action-${{ runner.os }}-
+            program-p-build-${{ runner.os }}-
+
+      - name: Build H10 same-action germ and Hessian certificate
+        shell: bash
+        run: |
+          set -o pipefail
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionGermHessian4D"
+          lake build "$target" 2>&1 | tee h10-same-action.log
+
+      - name: Save incremental project build cache
+        if: always() && steps.project-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .b
+          key: ${{ steps.project-cache.outputs.cache-primary-key }}
+
+      - name: Upload H10 Lean log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h10-same-action-log
+          path: h10-same-action.log
+          if-no-files-found: warn
