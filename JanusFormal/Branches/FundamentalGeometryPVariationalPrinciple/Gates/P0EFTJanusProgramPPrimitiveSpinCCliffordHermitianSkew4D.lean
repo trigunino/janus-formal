@@ -63,9 +63,7 @@ theorem d9DoubledHalfSpinorHermitianPairing_gamma
     simp [d9DoubledHalfSpinorHermitianPairing,
       ambientHalfSpinorHermitianPairing,
       ambientPinCSpinorHermitianPairing, ambientHalfSpinorEmbed,
-      d9DoubledMatterSpinorCliffordGamma,
-      d9DoubledGammaZero, d9DoubledGammaOne, d9DoubledGammaTwo,
-      halfJ, halfK, halfL, Fin.sum_univ_succ] <;>
+      Fin.sum_univ_succ] <;>
     ring
 
 /-- Skew-Hermitian Clifford action on the actual doubled D9 matter fiber. -/
