@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """Static audit of the constructive H10--H14 Hessian frontier.
 
-This audit is deliberately weaker than Lean kernel validation.  It verifies the
-repository architecture that must be present before the focused builds can be
-trusted:
+This audit is deliberately weaker than Lean kernel validation. It verifies the
+repository architecture expected by the three-input terminal route:
 
-* every constructive module exists;
-* the public declarations expected by the terminal route are present;
-* no new `sorry`, `admit`, `axiom` or `unsafe` declaration is introduced;
-* the terminal façade imports the narrow H10, H11 and H12 routes;
-* the preferred workflow mentions the terminal façade.
+* the concrete H10 certificate is present and is not a terminal input;
+* the six-block local family and canonical H11 extensions are present;
+* the self-adjoint anti-Lipschitz range theorem and Candidate-A H12 adapter are
+  present;
+* no audited module introduces `sorry`, `admit`, a new `axiom`, or an `unsafe`
+  declaration;
+* the terminal façade imports the narrow H10, H11 and H12 routes and is built by
+  a focused workflow.
 
 Exit status is non-zero on any violation.
 """
@@ -20,7 +22,6 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 import sys
-from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 GATES = (
@@ -47,21 +48,6 @@ MODULES: tuple[RequiredModule, ...] = (
         ),
     ),
     RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateANormalBoundaryIntegrandGermClosure4D.lean",
-        (
-            "SameRealIntegrandGermAt",
-            "candidate_a_normal_boundary_integrand_germ_closure_gate",
-        ),
-    ),
-    RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaussFormGerm4D.lean",
-        (
-            "SameCovariantAccelerationGermAt",
-            "SameGaussSecondFormGermAt",
-            "candidate_a_normal_boundary_gauss_form_germ_gate",
-        ),
-    ),
-    RequiredModule(
         "P0EFTJanusProgramPGlobalCandidateANormalBoundaryEventuallyEqGerms4D.lean",
         (
             "NormalBoundaryEventuallyEqGermData",
@@ -69,8 +55,11 @@ MODULES: tuple[RequiredModule, ...] = (
         ),
     ),
     RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateANormalBoundaryRobinFromGerm4D.lean",
-        ("candidate_a_normal_boundary_robin_from_germ_gate",),
+        "P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D.lean",
+        (
+            "GlobalCandidateAH10ClosureCertificate4D",
+            "global_candidateA_h10_closure_gate",
+        ),
     ),
     RequiredModule(
         "P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D.lean",
@@ -87,19 +76,31 @@ MODULES: tuple[RequiredModule, ...] = (
         ),
     ),
     RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointComplement4D.lean",
+        "P0EFTJanusProgramPSelfAdjointAntilipschitzSurjective4D.lean",
         (
-            "GlobalCandidateAFaithfulAugmentedSelfAdjointComplement4D",
-            "global_candidateA_h12_complement_of_selfAdjoint_obstruction",
+            "selfAdjoint_denseRange_of_injective",
+            "selfAdjoint_surjective_of_antilipschitz",
+            "self_adjoint_antilipschitz_surjective_gate",
         ),
     ),
     RequiredModule(
-        "P0EFTJanusProgramPGlobalHessianH10RobinSelfAdjointClosure4D.lean",
-        ("global_candidateA_hessian_h10Robin_selfAdjoint_closure_gate",),
+        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D.lean",
+        (
+            "GlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D",
+            "globalCandidateAAugmentedShiftedOperator_surjective_of_antilipschitz",
+            "global_candidateA_h12_fredholm_gate_of_selfAdjointAntilipschitzShift",
+        ),
+    ),
+    RequiredModule(
+        "P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D.lean",
+        ("global_candidateA_hessian_h10Robin_antilipschitz_closure_gate",),
     ),
     RequiredModule(
         "P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D.lean",
         (
+            "GlobalHessianTerminalLocalFamilyInput",
+            "GlobalHessianTerminalPhysicalExtensionsInput",
+            "GlobalHessianTerminalAntilipschitzShiftInput",
             "global_candidateA_hessian_terminal_constructive_closure_gate",
             "global_candidateA_hessian_terminal_constructive_frontier_gate",
         ),
@@ -114,11 +115,11 @@ FORBIDDEN_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 )
 
 TERMINAL_IMPORTS = (
-    "P0EFTJanusProgramPGlobalCandidateANormalBoundaryEventuallyEqGerms4D",
+    "P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D",
     "P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinAdapters4D",
     "P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D",
-    "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointComplement4D",
-    "P0EFTJanusProgramPGlobalHessianH10RobinSelfAdjointClosure4D",
+    "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D",
+    "P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D",
 )
 
 WORKFLOWS = (
@@ -129,7 +130,8 @@ WORKFLOWS = (
 
 def declaration_present(text: str, name: str) -> bool:
     pattern = re.compile(
-        rf"(?m)^\s*(?:private\s+)?(?:structure|def|abbrev|theorem|lemma|inductive)\s+{re.escape(name)}\b"
+        rf"(?m)^\s*(?:noncomputable\s+)?(?:private\s+)?"
+        rf"(?:structure|def|abbrev|theorem|lemma|inductive)\s+{re.escape(name)}\b"
     )
     return bool(pattern.search(text))
 
@@ -168,27 +170,44 @@ def audit_terminal_imports() -> list[str]:
             )
 
     alias_pattern = re.compile(
-        r"(?s)def\s+global_candidateA_hessian_terminal_constructive_closure_gate\s*:=\s*\n?\s*@global_candidateA_hessian_h10Robin_selfAdjoint_closure_gate"
+        r"(?s)def\s+global_candidateA_hessian_terminal_constructive_closure_gate"
+        r"\s*:=\s*\n?\s*@global_candidateA_hessian_h10Robin_antilipschitz_closure_gate"
     )
     if not alias_pattern.search(text):
-        errors.append("terminal façade is not attached to the self-adjoint H14 gate")
+        errors.append(
+            "terminal façade is not attached to the anti-Lipschitz H14 gate"
+        )
+
+    if "GlobalHessianTerminalNormalBoundaryInput" in text:
+        errors.append("H10 still appears as a residual terminal input")
+
+    frontier_pattern = re.compile(
+        r"Nonempty\s*\(Unit\s*×\s*Unit\s*×\s*Unit\)"
+    )
+    if not frontier_pattern.search(text):
+        errors.append("terminal façade does not expose exactly three inputs")
 
     return errors
 
 
 def audit_workflows() -> list[str]:
     errors: list[str] = []
-    terminal_target = "P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D"
-    found = False
+    targets = (
+        "P0EFTJanusProgramPSelfAdjointAntilipschitzSurjective4D",
+        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D",
+        "P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D",
+        "P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D",
+    )
+    combined = ""
     for path in WORKFLOWS:
         if not path.is_file():
             errors.append(f"missing workflow: {path.relative_to(ROOT)}")
             continue
-        text = path.read_text(encoding="utf-8")
-        if terminal_target in text:
-            found = True
-    if not found:
-        errors.append("no focused workflow builds the terminal constructive façade")
+        combined += "\n" + path.read_text(encoding="utf-8")
+
+    for target in targets:
+        if target not in combined:
+            errors.append(f"no focused workflow builds {target}")
     return errors
 
 
@@ -207,7 +226,8 @@ def main() -> int:
 
     print("Constructive Hessian audit: OK")
     print(f"- modules checked: {len(MODULES)}")
-    print("- terminal route: H10 eventual germs -> H10 Robin family -> canonical H11 -> self-adjoint H12 -> H14")
+    print("- terminal route: closed H10 -> six-block family -> canonical H11 -> self-adjoint anti-Lipschitz H12 -> H14")
+    print("- residual terminal inputs: 3")
     print("- forbidden placeholders: none")
     return 0
 
