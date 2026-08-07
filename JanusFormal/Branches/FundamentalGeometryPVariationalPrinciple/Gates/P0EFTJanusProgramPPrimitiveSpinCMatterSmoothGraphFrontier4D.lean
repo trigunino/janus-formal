@@ -4,23 +4,28 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterFiniteDiracGreen4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterFirstOrderGraphCoreDensity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D
 
 /-!
 # Smooth primitive SpinC maximal-graph frontier
 
-This façade records all exact reductions of the smooth matter graph problem.
-The preferred route is now mass-independent:
+The preferred route is now unconditional.  The implemented throat geometry
+provides:
 
-1. finite signed Fourier packets are an exact Green core;
-2. the packets are dense simultaneously for `ψ` and the first-order `Dψ`;
-3. bounded linear combination gives graph-core density for every `2D + m²`;
-4. the finite Green identity extends to the full smooth core;
-5. coefficient intertwining, maximal-domain membership, operator restriction,
-   Parseval and same-action compatibility follow canonically.
+1. explicit skew-Hermitian Clifford generators;
+2. Hermitian compatibility of the primitive SpinC connection;
+3. decomposition of the intrinsic Dirac frame into measure-invariant time and
+   rotation generators;
+4. the exact frame divergence defect;
+5. intrinsic-frame integration by parts;
+6. the global Dirac Green current and its pointwise cancellation;
+7. formal symmetry of the genuine descended Dirac operator;
+8. maximal-domain membership, exact operator restriction, Parseval and the
+   same-action matter graph for every real mass.
 
-The older weighted-coefficient, supplied maximal-domain and supplied Green
-routes remain as compatibility adapters.  No independent coefficient choice,
-action, boundary condition or D10 direction is introduced.
+The weighted-coefficient, supplied maximal-domain, supplied Green and
+spectral-core-density routes remain as compatibility adapters.  No independent
+SpinC analytic input, action, boundary condition or D10 direction remains.
 -/
 
 namespace JanusFormal
@@ -34,6 +39,7 @@ open P0EFTJanusProgramPPrimitiveSpinCMatterSmoothMaximalDomain4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterFiniteDiracGreen4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterFirstOrderGraphCoreDensity4D
+open P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D
 
 /-- Legacy coefficient-side weighted-decay route. -/
 def primitive_spinC_smooth_graph_of_weighted_decay :=
@@ -51,15 +57,19 @@ def primitive_spinC_smooth_graph_of_dirac_formal_symmetry :=
 def primitive_spinC_smooth_graph_of_graph_core_density :=
   @programPPrimitiveSpinCMatterSmoothGraphRealization_of_graphCoreDensity
 
-/-- Preferred route from one mass-independent first-order Dirac graph-core
-density theorem. -/
+/-- Route from a mass-independent first-order Dirac graph-core density theorem. -/
 def primitive_spinC_smooth_graph_of_first_order_graph_core_density :=
   @programPPrimitiveSpinCMatterSmoothGraphRealization_of_firstOrderGraphCoreDensity
 
-/-- All five exact smooth-graph routes are available. -/
+/-- Preferred unconditional route from the implemented geometric Green
+identity. -/
+def primitive_spinC_smooth_graph_of_geometric_green :=
+  @programPPrimitiveSpinCMatterSmoothGraphRealization_of_geometricGreen
+
+/-- All six exact smooth-graph routes are available. -/
 theorem primitive_spinC_smooth_graph_frontier_gate :
-    Nonempty (Unit × Unit × Unit × Unit × Unit) :=
-  ⟨((), (), (), (), ())⟩
+    Nonempty (Unit × Unit × Unit × Unit × Unit × Unit) :=
+  ⟨((), (), (), (), (), ())⟩
 
 end
 end P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
