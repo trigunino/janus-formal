@@ -5,15 +5,15 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # H11 from six continuous physical extensions and the H10 Robin Hessian
 
 The earlier H11 reductions asked either for one aggregate product estimate or
-for seven separate estimates.  Once H10 is closed, the Robin block has a
+for seven separate estimates. Once H10 is closed, the Robin block has a
 canonical continuous bilinear realization already: the genuine second
-Fréchet derivative of the completed two-sheet GHY action.  A bounded linear
+Fréchet derivative of the completed two-sheet GHY action. A bounded linear
 projection from the common Hilbert space to the completed metric-normal chart
 pulls that Hessian back to the unchanged D10-free common domain.
 
 This file therefore leaves only six continuous extensions to construct:
 Candidate-A interaction, Einstein--Hilbert on both sheets, Maxwell on both
-sheets, and finite/null-BV.  Exact dense-core agreement reconstructs the true
+sheets, and finite/null-BV. Exact dense-core agreement reconstructs the true
 seven-block local Hessian, so no arbitrary bounded perturbation can be inserted.
 No second Hilbert completion and no replacement boundary action is introduced.
 -/
@@ -88,14 +88,6 @@ private abbrev CommonHilbert
   GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
-
-private abbrev BoundaryParameter
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (data : GlobalCandidateAActionData period hPeriod
-      (GlobalFieldConfiguration := by exact sorry) couplings
-      NonNullFace NullFace) := Unit
 
 local instance (priority := 30000) commonHilbertNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
@@ -241,8 +233,8 @@ theorem globalCandidateAH10RobinCommonDomainForm_symmetric
     einsteinScale data.plusGravity.metric hTransverse
       (projection first) (projection second)
 
-/-- H11 input after consuming H10.  Only six genuinely new continuous block
-extensions remain.  The `reconstruct` equality is on the actual dense core and
+/-- H11 input after consuming H10. Only six genuinely new continuous block
+extensions remain. The `reconstruct` equality is on the actual dense core and
 includes the H10 Robin form, so the sum is definitionally tied to the local
 Candidate-A Hessian retained by H13. -/
 structure GlobalCandidateASixPhysicalContinuousExtensions4D
@@ -327,7 +319,6 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_sixContinuous
     rw [globalCandidateAH10RobinCommonDomainForm_symmetric period hPeriod
       configuration data analysis einsteinScale hTransverse
         extensions.robinProjection first second]
-    apply congrArg
     apply Finset.sum_congr rfl
     intro block _
     exact extensions.symmetric block first second
@@ -335,8 +326,19 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_sixContinuous
     intro first second
     simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.sum_apply]
     rw [← extensions.robin_core_agreement first second]
-    simp_rw [← extensions.core_agreement]
-    rw [← extensions.reconstruct first second]
+    have hSum :
+        (∑ block : GlobalCandidateANonRobinPhysicalBlock,
+          extensions.form block
+            (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis first)
+            (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis second)) =
+        ∑ block : GlobalCandidateANonRobinPhysicalBlock,
+          extensions.coreForm block first second := by
+      apply Finset.sum_congr rfl
+      intro block _
+      exact (extensions.core_agreement block first second).symm
+    rw [hSum, ← extensions.reconstruct first second]
     exact globalCandidateASevenPhysicalCoreLinearForm_apply period hPeriod
       configuration data analysis chart sameAction first second
 
