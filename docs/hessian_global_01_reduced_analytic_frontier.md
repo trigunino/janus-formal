@@ -1,12 +1,12 @@
-# HESSIAN-GLOBAL-01 — frontière analytique réduite
+# HESSIAN-GLOBAL-01 — frontière analytique constructive réduite
 
 Date du lot : **7 août 2026**.
 
-Ce document décrit l’état d’implémentation de la route constructive H10–H14.
-Les nouveaux modules ont été écrits conformément à la décision du projet de
-poursuivre sans attendre une validation Lean complète ; les déclarations
-ci-dessous ne doivent donc pas être présentées comme certifiées par le noyau
-tant que le workflow ciblé n’a pas réussi.
+Ce document décrit la route constructive H10–H14 de la branche
+`agent/hessian-spinc-maximal-domain`. Les modules ont été écrits selon la
+décision du projet de poursuivre l’implémentation sans attendre la validation
+Lean complète. Aucun résultat nouveau de ce lot ne doit être présenté comme
+certifié par le noyau avant le passage du workflow focalisé.
 
 ## Résultat structurel
 
@@ -16,224 +16,254 @@ Le certificat terminal reste :
 global_candidateA_hessian_closure_gate
 ```
 
-La route constructive privilégiée est maintenant :
-
-```lean
-global_candidateA_hessian_diracGreen_bounded_closure_gate
-```
-
-et la façade publique :
+La façade publique est :
 
 ```text
 P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D
 ```
 
-Le paquet d’entrée terminal n’a plus que trois champs analytiques :
+La route actuellement privilégiée est :
 
 ```lean
-family
-physicalBound
-parametrix
+global_candidateA_hessian_preferred_analytic_closure_gate
 ```
 
-Il ne stocke plus aucun témoin SpinC.
+Elle consomme trois paquets naturels :
+
+```text
+famille Candidate-A à six blocs C² + Robin fourni par H10
+sept extensions bilinéaires continues des blocs physiques
+inverse sur les compléments finis du noyau et du conoyau
+```
+
+Elle reconstruit automatiquement les anciens paquets `family`,
+`physicalBound`, `parametrix`, puis le certificat H14.
 
 ## SpinC : fermeture géométrique implémentée
 
-La partie SpinC n’est plus un paquet analytique ouvert. Les modules suivants
-construisent la chaîne complète :
-
-```text
-P0EFTJanusProgramPPrimitiveSpinCCliffordHermitianSkew4D
-P0EFTJanusProgramPPrimitiveSpinCConnectionHermitian4D
-P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameDecomposition4D
-P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameCoordinateDerivatives4D
-P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameIPP4D
-P0EFTJanusProgramPPrimitiveSpinCCliffordSection4D
-P0EFTJanusProgramPPrimitiveSpinCDiracGreenCurrent4D
-P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D
-```
-
-### 1. Signes Clifford
-
-Les trois générateurs Clifford explicites sont prouvés anti-hermitiens pour le
-pairing positif réellement intégré :
-
-```text
-⟨γᵢψ,φ⟩ = -⟨ψ,γᵢφ⟩.
-```
-
-Cette identité est transportée des coordonnées demi-spinorielles au vrai fibré
-D9 doublé.
-
-### 2. Connexion primitive hermitienne
-
-La dérivée plate satisfait le Leibniz hermitien. Les corrections restantes
-s’annulent dans la dérivée du pairing :
-
-- la correction Levi–Civita est une combinaison réelle de `γᵢγⱼ` avec
-  `i ≠ j` ;
-- le potentiel monopôle et la connexion du repère normal sont des multiples
-  réels de l’action infinitésimale `U(1)`.
-
-Le certificat public est :
-
-```lean
-ProgramPPrimitiveSpinCConnectionHermitianCertificate4D
-```
-
-### 3. Même géométrie pour le repère Dirac et les flots invariants
-
-Le repère orthonormal radial utilisé par le Dirac est décomposé exactement en
-translation temporelle et rotations de la sphère :
-
-```text
-eᵢ = nᵢ T + Σₐ (n × eᵢ)ₐ Rₐ.
-```
-
-Les quatre générateurs `T, R₀, R₁, R₂` préservent la mesure canonique de gorge.
-Les dérivées des coefficients donnent :
-
-```text
-T(nᵢ) + Σₐ Rₐ((n × eᵢ)ₐ) = -2 nᵢ.
-```
-
-Il en résulte une vraie intégration par parties, sans contrat de Stokes :
-
-```text
-∫ eᵢ(f) = 2 ∫ nᵢ f.
-```
-
-### 4. Courant global et identité de Green
-
-Le courant
-
-```text
-Jᵢ(ψ,φ) = ⟨γᵢψ,φ⟩
-```
-
-est construit comme champ scalaire complexe global sur le vrai fibré
-primitif. Le résidu ponctuel de l’opérateur implémenté est :
-
-```text
-⟨ψ,Dφ⟩ - ⟨Dψ,φ⟩
-  = -Σᵢ eᵢ Jᵢ + 2 ⟨γ(n)ψ,φ⟩.
-```
-
-L’intégration par parties transforme le premier terme en
-`-2 ∫⟨γ(n)ψ,φ⟩`, qui annule exactement la correction Levi–Civita. Le théorème
-terminal SpinC est :
-
-```lean
-d9PrimitiveSpinCGeometricDirac_pairing_symm
-```
-
-Il construit sans entrée supplémentaire :
-
-```lean
-ProgramPPrimitiveSpinCSmoothDiracFormalSymmetryData4D
-```
-
-puis, pour tout `m² ∈ ℝ` :
-
-- la symétrie de `2D + m²` ;
-- la relation multiplicateur des coefficients signés ;
-- l’appartenance de toute section lisse au domaine maximal ;
-- l’accord de l’opérateur maximal avec l’expression différentielle ;
-- le vecteur Fourier pondéré ;
-- Parseval ;
-- l’accord same-action ;
-- la réalisation exacte du graphe matière.
-
-La façade SpinC privilégiée est :
+La partie SpinC n’est plus une entrée analytique du terminal. La chaîne
+Clifford–connexion–repère invariant–IPP–courant de Green construit la
+réalisation maximale same-action pour toute masse réelle. La façade privilégiée
+reste :
 
 ```lean
 primitive_spinC_smooth_graph_of_geometric_green
 ```
 
-Les anciennes routes par décroissance Fourier, domaine maximal fourni,
-symétrie fournie ou densité de cœur restent disponibles uniquement comme
-adaptateurs.
+Les anciennes voies par décroissance Fourier, témoin de domaine maximal,
+symétrie fournie ou densité de cœur restent seulement des adaptateurs.
 
-## Les trois paquets analytiques encore ouverts
+## H10 : chaîne de germe désormais algébrique
 
-### A. Famille locale Candidate-A
-
-```lean
-ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D
-```
-
-Le chart est fixé au vrai :
-
-```lean
-GlobalMinimalPhysicalFieldTangent
-```
-
-Il est D10-free. Le paquet doit fournir l’ouvert admissible, la famille
-Candidate-A `C²`, les identités d’action matière/LL et les deux bornes de norme
-de graphe correspondantes.
-
-### B. Borne commune des sept blocs physiques
-
-```lean
-GlobalCandidateASevenPhysicalCoreBound4D
-```
-
-Il reste une seule estimation bilinéaire sur le cœur diagonal dense :
+Les nouveaux modules sont :
 
 ```text
-‖Bphys(x,y)‖ ≤ C ‖ι(x)‖ ‖ι(y)‖.
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionGermCalculus4D
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryIntegrandGermClosure4D
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryGHYFactorGerm4D
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryMeanCurvatureGerm4D
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaussFormGerm4D
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryComponentwiseTerminalClosure4D
 ```
 
-`P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D` étend alors
-canoniquement la forme avec `LinearMap.extendOfNorm`, prouve l’accord dense et
-construit H11 sur l’unique complétion existante.
+Ils prouvent la chaîne suivante sans nouvelle hypothèse d’action ou de
+Hessien :
 
-### C. Paramétrix augmenté à défaut fini
+```text
+égalité de T, ∂T et Γ
+  → égalité de ∇T = ∂T + ΓTT
+  → égalité de n · g · ∇T
+  → égalité de K
+  → égalité de tr(g_ind⁻¹ K)
+  → égalité de orientation × densité × courbure moyenne
+  → égalité ponctuelle des intégrandes
+  → égalité des intégrales à deux feuilles
+  → égalité des premiers et seconds Fréchet sur le germe.
+```
+
+Le gate générique terminal est :
 
 ```lean
-GlobalCandidateAFaithfulAugmentedFiniteDefectParametrix4D
+candidate_a_normal_boundary_componentwise_terminal_closure_gate
 ```
 
-Il porte :
+### Résidu physique exact de H10
+
+Il reste à instancier ce gate avec les coefficients Candidate-A déjà construits
+et à fournir, sur **un même ouvert admissible**, les égalités composante par
+composante :
+
+1. tangent du graphe dans le repère régulier ;
+2. dérivée spatiale du tangent ;
+3. coefficients de Christoffel ;
+4. normale métrique unitaire ;
+5. métrique ambiante ;
+6. inverse de la métrique induite ;
+7. signe de coorientation ;
+8. densité induite.
+
+Les contractions finies, la courbure moyenne, l’intégrande, l’action et le
+Hessien ne sont plus des obligations séparées.
+
+## Paquet A : famille locale, Robin supprimé des hypothèses
+
+Le module :
 
 ```text
-QH = I - K,
-HQ = I - C,
-CH = 0,
-range(K) et range(C) de dimension finie,
-stationnarité LL.
+P0EFTJanusProgramPGlobalCandidateANormalBoundaryRobinC2Transfer4D
 ```
 
-Les gates en déduisent :
+prouve qu’une égalité d’action sur un ouvert transporte automatiquement la
+régularité `C²` et le second Fréchet du bloc complété vers le bloc Robin
+historique.
 
-```text
-range(H) = ker(C),
+Le paquet préféré est donc :
+
+```lean
+ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
 ```
 
-puis l’image fermée, le noyau fini, le cokernel fini, le caractère Fredholm et
-l’indice zéro.
-
-## Chaîne terminale actuelle
+Il ne demande des preuves `C²` que pour six blocs :
 
 ```text
-famille locale Candidate-A
-  → chart minimal H13
-  → mismatch matière–LL = 0
-  → borne des sept blocs
-  → extension H11
-  → paramétrix H12
-  → Fredholm + indice zéro
+Candidate-A central
+Einstein–Hilbert +
+Einstein–Hilbert −
+Maxwell +
+Maxwell −
+BV fini
+```
+
+Le septième bloc, Robin/GHY, est construit depuis H10. Matière et LL sont déjà
+reconstruits depuis leurs actions quadratiques sur les graphes fermés. Le gate
+H13 correspondant est :
+
+```lean
+global_candidateA_h13_minimalPhysical_h10RobinFamily_gate
+```
+
+## Paquet B : H11 depuis sept extensions continues
+
+Le paquet intermédiaire par estimations séparées reste :
+
+```lean
+GlobalCandidateASevenPhysicalBlockCoreBounds4D
+```
+
+La voie préférée est maintenant :
+
+```lean
+GlobalCandidateASevenPhysicalContinuousBlockExtensions4D
+```
+
+Pour chaque bloc, elle stocke :
+
+- une forme bilinéaire continue sur l’unique espace de Hilbert commun ;
+- son accord exact avec le vrai bloc du Hessien sur le cœur lisse dense.
+
+L’estimation
+
+```text
+‖B_j(x,y)‖ ≤ ‖B_j‖ ‖ιx‖ ‖ιy‖
+```
+
+est déduite deux fois de l’inégalité de norme d’opérateur. La constante commune
+est ensuite la somme finie des sept normes. Aucun choix séparé de constante ou
+de forme agrégée n’est nécessaire.
+
+Gate :
+
+```lean
+global_candidateA_h11_common_augmented_domain_gate_of_continuousExtensions
+```
+
+### Résidu physique exact de H11
+
+Construire les sept extensions continues et prouver leur accord dense. Les
+estimations de produit et leur sommation sont désormais formelles.
+
+## Paquet C : H12 depuis les compléments finis
+
+La route par inverse généralisé :
+
+```lean
+GlobalCandidateAFaithfulAugmentedGeneralizedInverse4D
+```
+
+est maintenant elle-même produite par :
+
+```lean
+GlobalCandidateAFaithfulAugmentedComplementInverse4D
+```
+
+Les données naturelles sont :
+
+```text
+QH = I - Pker
+HQ = I - Pcoker
+Pcoker H = 0
+range(Pker) finie
+range(Pcoker) finie
+stationnarité LL
+```
+
+La gate prouve alors :
+
+```text
+HQH = H
+I - QH = Pker
+I - HQ = Pcoker
+```
+
+puis construit le paramétrix à défaut fini, l’image fermée, le noyau et le
+conoyau finis, la propriété Fredholm et l’indice zéro.
+
+Gate :
+
+```lean
+global_candidateA_h12_faithful_augmented_fredholm_gate_of_complement
+```
+
+### Résidu physique exact de H12
+
+Construire l’inverse borné sur le complément elliptique et les deux projections
+finies. Les défauts et les conclusions Fredholm ne sont plus fournis à la main.
+
+## Route terminale préférée
+
+Les modules d’assemblage sont :
+
+```text
+P0EFTJanusProgramPGlobalHessianH10RobinAnalyticClosure4D
+P0EFTJanusProgramPGlobalHessianH10RobinContinuousClosure4D
+P0EFTJanusProgramPGlobalHessianH10RobinComplementClosure4D
+```
+
+La chaîne est :
+
+```text
+composantes géométriques H10
+  → même germe GHY et Robin C²
+  → famille locale à six blocs C²
+  → mismatch matière–LL nul (H13)
+  → sept extensions continues
+  → domaine commun augmenté (H11)
+  → inverse sur compléments finis
+  → Fredholm, indice zéro (H12)
   → certificat H14.
 ```
 
-La partie SpinC est injectée automatiquement avant H13 par le théorème de Green
-géométrique. Aucune étape H15 n’est prévue.
+Aucune étape H15 n’est prévue.
 
 ## État de confiance
 
-- **SpinC structurel :** fermé dans l’implémentation.
-- **Frontière résiduelle :** trois paquets analytiques.
-- **Validation Lean des nouveaux modules :** non garantie à ce stade.
-- **Ticket terminal :** ne doit être marqué `DONE` qu’après construction de
-  `family`, `physicalBound`, `parametrix` et compilation de la façade.
+- **SpinC structurel :** fermé dans l’implémentation, non recertifié dans ce lot.
+- **H10 formel :** contractions, intégration et calcul de germes fermés ;
+  instanciation géométrique exacte encore à raccorder.
+- **Famille :** Robin, matière et LL retirés des hypothèses indépendantes.
+- **H11 :** bornes retirées des hypothèses dès que les extensions existent.
+- **H12 :** paramétrix retiré des hypothèses dès que l’inverse sur complément
+  existe.
+- **Validation Lean des nouveaux modules :** non garantie.
+- **Ticket terminal :** ne doit être marqué `DONE` qu’après instanciation des
+  données physiques et compilation de la façade et de l’audit.
