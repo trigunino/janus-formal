@@ -7,7 +7,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Hermitian compatibility of the primitive SpinC connection
 
 The flat doubled derivative already satisfies the exact Hermitian Leibniz
-identity.  The remaining connection terms are algebraic:
+identity. The remaining connection terms are algebraic:
 
 * the Levi--Civita spin correction is a real linear combination of products
   `γᵢγⱼ`, `i ≠ j`;
@@ -15,7 +15,7 @@ identity.  The remaining connection terms are algebraic:
   action.
 
 The explicit Clifford skew-adjointness proves both corrections are
-skew-Hermitian, so they cancel in the derivative of the fiber pairing.  This
+skew-Hermitian, so they cancel in the derivative of the fiber pairing. This
 file packages that cancellation for the full local primitive SpinC connection.
 No Stokes theorem, boundary condition, spectral assumption or D10 direction is
 used here.
@@ -32,6 +32,8 @@ open scoped Manifold ContDiff BigOperators
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
+open P0EFTJanusProgramPAmbientHalfSpinorD9Bridge4D
+open P0EFTJanusProgramPAmbientPinCSpinorHermitianBundle4D
 open P0EFTJanusProgramPD9MatterSpinorHermitianPairing4D
 open P0EFTJanusProgramPD9MatterSpinorPairingSmooth4D
 open P0EFTJanusProgramPD9MatterSpinorFlatCoverConnection4D
@@ -45,6 +47,7 @@ open P0EFTJanusProgramPD9MatterSpinorLeviCivitaConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
+open P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D
 open P0EFTJanusProgramPPrimitiveSpinCCliffordHermitianSkew4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 
@@ -132,7 +135,11 @@ theorem d9DoubledMatterSpinorHermitianPairing_gamma_comp
     d9DoubledMatterSpinorHermitianPairing_gamma]
   rw [d9DoubledMatterFiberCliffordGamma_anticommute
     secondDirection firstDirection (Ne.symm hDistinct)]
-  simp
+  simpa using
+    (d9DoubledMatterSpinorHermitianPairing_real_smul_right
+      (-1) first
+      (d9DoubledMatterFiberCliffordGamma firstDirection
+        (d9DoubledMatterFiberCliffordGamma secondDirection second)))
 
 /-- The full radial Levi--Civita spin correction in one frame direction is
 skew-Hermitian. -/
@@ -247,8 +254,9 @@ theorem d9DoubledMatterSpinorFlatCoverDerivative_pairing_compatible
             (first.first anchor) (second.first anchor)) +
           (fun anchor => d9MatterSpinorHermitianPairing
             (first.second anchor) (second.second anchor))) point tangent = _
-  rw [mfderiv_add hPlusDiff hMinusDiff,
-    d9MatterSpinorFlatCoverDerivative_pairing_compatible period hPeriod choice,
+  rw [mfderiv_add hPlusDiff hMinusDiff]
+  simp only [add_apply]
+  rw [d9MatterSpinorFlatCoverDerivative_pairing_compatible period hPeriod choice,
     d9MatterSpinorFlatCoverDerivative_pairing_compatible period hPeriod
       (oppositeRoot choice)]
   rw [d9DoubledMatterSpinorFlatCoverDerivative_fst,
@@ -276,6 +284,10 @@ theorem d9LeviCivitaSpinFrameDerivative_pairing_compatible
           (d9LeviCivitaSpinFrameDerivative period hPeriod choice first
             direction point) (second point) := by
   rw [d9DoubledMatterSpinorFlatCoverDerivative_pairing_compatible]
+  rw [← d9IntrinsicDoubledMatterFlatFrameDerivative_eq_flatCoverDerivative
+      period hPeriod choice second direction point,
+    ← d9IntrinsicDoubledMatterFlatFrameDerivative_eq_flatCoverDerivative
+      period hPeriod choice first direction point]
   unfold d9LeviCivitaSpinFrameDerivative
   rw [d9DoubledMatterSpinorHermitianPairing_add_right,
     d9DoubledMatterSpinorHermitianPairing_add_left,
