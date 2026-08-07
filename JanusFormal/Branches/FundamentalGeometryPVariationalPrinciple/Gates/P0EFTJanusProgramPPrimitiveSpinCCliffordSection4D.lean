@@ -10,7 +10,7 @@ They therefore act on genuine smooth sections of the actual primitive bundle,
 not only on local coordinates or the cover model.
 
 This gate constructs that global section action and records its exact local
-value.  It introduces no new bundle, trivialization or field.
+value. It introduces no new bundle, trivialization or field.
 -/
 
 namespace JanusFormal
@@ -26,9 +26,12 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledGlobalDeckCliffordAction4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothBundle4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
 open P0EFTJanusProgramPPrimitiveSpinCCliffordHermitianSkew4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
@@ -106,28 +109,12 @@ theorem d9PrimitiveSpinCCliffordSection_localValue
   let transformed :=
     d9PrimitiveSpinCCliffordLocalGaugeFamily period hPeriod choice direction
       family
-  have hRecover :
-      d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod choice
-          (transformed.toSmoothSection period hPeriod choice) =
-        transformed := by
-    apply SmoothPrimitiveSpinCLocalGaugeFamily.ext
-    intro currentIndex currentBase
-    by_cases hCurrent :
-        currentBase ∈ d9PrimitiveSpinCBaseSet period hPeriod currentIndex
-    · have hCoord :=
-        transformed.coordChange_localValue
-          ((d9PrimitiveSpinCVectorBundleCore period hPeriod choice).indexAt
-            currentBase) currentIndex currentBase
-          ⟨(d9PrimitiveSpinCVectorBundleCore period hPeriod choice).mem_baseSet_at
-              currentBase,
-            hCurrent⟩
-      exact hCoord.symm
-    · exact Subsingleton.elim _ _
   change
-    (d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod choice
-      (transformed.toSmoothSection period hPeriod choice)).localValue index base =
+    ((d9PrimitiveSpinCVectorBundleCore period hPeriod choice).localTriv index
+      (primitiveSpinCBundleSection period hPeriod choice transformed base)).2 =
       transformed.localValue index base
-  rw [hRecover]
+  exact primitiveSpinCBundleSection_localTriv
+    period hPeriod choice transformed index base hBase
 
 @[simp]
 theorem d9PrimitiveSpinCCliffordSection_apply
@@ -140,8 +127,6 @@ theorem d9PrimitiveSpinCCliffordSection_apply
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).indexAt base
   have hBase : base ∈ d9PrimitiveSpinCBaseSet period hPeriod index :=
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).mem_baseSet_at base
-  have hLocal := d9PrimitiveSpinCCliffordSection_localValue period hPeriod
-    choice direction state index base hBase
   change
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).coordChange
         index index base
