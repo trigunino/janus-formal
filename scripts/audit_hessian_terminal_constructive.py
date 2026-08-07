@@ -2,18 +2,15 @@
 """Static audit of the constructive H10--H14 Hessian frontier.
 
 This audit is deliberately weaker than Lean kernel validation. It verifies the
-repository architecture expected by the three-input terminal route:
+repository architecture required by the preferred terminal route:
 
-* the concrete H10 certificate is present and is not a terminal input;
-* the six-block local family and canonical H11 extensions are present;
-* the self-adjoint anti-Lipschitz range theorem and Candidate-A H12 adapter are
-  present;
-* no audited module introduces `sorry`, `admit`, a new `axiom`, or an `unsafe`
-  declaration;
-* the terminal façade imports the narrow H10, H11 and H12 routes and is built by
-  a focused workflow.
-
-Exit status is non-zero on any violation.
+* the concrete H10 certificate exists and is not a terminal input;
+* the six-block family and canonical seven-block extensions are present;
+* the self-adjoint lower-bound shift route is present;
+* the terminal façade is attached to the three-input lower-bound H14 gate;
+* no new `sorry`, `admit`, `axiom` or `unsafe` declaration appears in the
+  audited modules;
+* a focused workflow builds the terminal façade.
 """
 
 from __future__ import annotations
@@ -41,20 +38,6 @@ class RequiredModule:
 
 MODULES: tuple[RequiredModule, ...] = (
     RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionGermCalculus4D.lean",
-        (
-            "SameRealActionGermAt",
-            "candidate_a_normal_boundary_same_action_germ_calculus_gate",
-        ),
-    ),
-    RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateANormalBoundaryEventuallyEqGerms4D.lean",
-        (
-            "NormalBoundaryEventuallyEqGermData",
-            "candidate_a_normal_boundary_eventuallyEq_terminal_gate",
-        ),
-    ),
-    RequiredModule(
         "P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D.lean",
         (
             "GlobalCandidateAH10ClosureCertificate4D",
@@ -78,29 +61,35 @@ MODULES: tuple[RequiredModule, ...] = (
     RequiredModule(
         "P0EFTJanusProgramPSelfAdjointAntilipschitzSurjective4D.lean",
         (
-            "selfAdjoint_denseRange_of_injective",
+            "selfAdjoint_bijective_of_antilipschitz",
             "selfAdjoint_surjective_of_antilipschitz",
-            "self_adjoint_antilipschitz_surjective_gate",
         ),
     ),
     RequiredModule(
-        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D.lean",
+        "P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D.lean",
         (
-            "GlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D",
-            "globalCandidateAAugmentedShiftedOperator_surjective_of_antilipschitz",
-            "global_candidateA_h12_fredholm_gate_of_selfAdjointAntilipschitzShift",
+            "continuousLinearMap_antilipschitz_of_globalLowerBound",
+            "selfAdjoint_surjective_of_globalLowerBound",
         ),
     ),
     RequiredModule(
-        "P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D.lean",
-        ("global_candidateA_hessian_h10Robin_antilipschitz_closure_gate",),
+        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D.lean",
+        (
+            "GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D",
+            "globalCandidateAAugmentedShiftedOperator_surjective_of_lowerBound",
+            "global_candidateA_h12_fredholm_gate_of_selfAdjointLowerBoundShift",
+        ),
+    ),
+    RequiredModule(
+        "P0EFTJanusProgramPGlobalHessianH10RobinLowerBoundClosure4D.lean",
+        ("global_candidateA_hessian_h10Robin_lowerBound_closure_gate",),
     ),
     RequiredModule(
         "P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D.lean",
         (
             "GlobalHessianTerminalLocalFamilyInput",
             "GlobalHessianTerminalPhysicalExtensionsInput",
-            "GlobalHessianTerminalAntilipschitzShiftInput",
+            "GlobalHessianTerminalLowerBoundShiftInput",
             "global_candidateA_hessian_terminal_constructive_closure_gate",
             "global_candidateA_hessian_terminal_constructive_frontier_gate",
         ),
@@ -118,8 +107,8 @@ TERMINAL_IMPORTS = (
     "P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D",
     "P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinAdapters4D",
     "P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D",
-    "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D",
-    "P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D",
+    "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D",
+    "P0EFTJanusProgramPGlobalHessianH10RobinLowerBoundClosure4D",
 )
 
 WORKFLOWS = (
@@ -130,8 +119,7 @@ WORKFLOWS = (
 
 def declaration_present(text: str, name: str) -> bool:
     pattern = re.compile(
-        rf"(?m)^\s*(?:noncomputable\s+)?(?:private\s+)?"
-        rf"(?:structure|def|abbrev|theorem|lemma|inductive)\s+{re.escape(name)}\b"
+        rf"(?m)^\s*(?:private\s+)?(?:structure|def|abbrev|theorem|lemma|inductive)\s+{re.escape(name)}\b"
     )
     return bool(pattern.search(text))
 
@@ -170,16 +158,13 @@ def audit_terminal_imports() -> list[str]:
             )
 
     alias_pattern = re.compile(
-        r"(?s)def\s+global_candidateA_hessian_terminal_constructive_closure_gate"
-        r"\s*:=\s*\n?\s*@global_candidateA_hessian_h10Robin_antilipschitz_closure_gate"
+        r"(?s)def\s+global_candidateA_hessian_terminal_constructive_closure_gate\s*:=\s*\n?\s*@global_candidateA_hessian_h10Robin_lowerBound_closure_gate"
     )
     if not alias_pattern.search(text):
-        errors.append(
-            "terminal façade is not attached to the anti-Lipschitz H14 gate"
-        )
+        errors.append("terminal façade is not attached to the lower-bound H14 gate")
 
     if "GlobalHessianTerminalNormalBoundaryInput" in text:
-        errors.append("H10 still appears as a residual terminal input")
+        errors.append("H10 is still exposed as a residual terminal input")
 
     frontier_pattern = re.compile(
         r"Nonempty\s*\(Unit\s*×\s*Unit\s*×\s*Unit\)"
@@ -193,9 +178,9 @@ def audit_terminal_imports() -> list[str]:
 def audit_workflows() -> list[str]:
     errors: list[str] = []
     targets = (
-        "P0EFTJanusProgramPSelfAdjointAntilipschitzSurjective4D",
-        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D",
-        "P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D",
+        "P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D",
+        "P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D",
+        "P0EFTJanusProgramPGlobalHessianH10RobinLowerBoundClosure4D",
         "P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D",
     )
     combined = ""
@@ -204,7 +189,6 @@ def audit_workflows() -> list[str]:
             errors.append(f"missing workflow: {path.relative_to(ROOT)}")
             continue
         combined += "\n" + path.read_text(encoding="utf-8")
-
     for target in targets:
         if target not in combined:
             errors.append(f"no focused workflow builds {target}")
@@ -226,8 +210,8 @@ def main() -> int:
 
     print("Constructive Hessian audit: OK")
     print(f"- modules checked: {len(MODULES)}")
-    print("- terminal route: closed H10 -> six-block family -> canonical H11 -> self-adjoint anti-Lipschitz H12 -> H14")
-    print("- residual terminal inputs: 3")
+    print("- terminal route: H10 theorem -> six-block family -> canonical H11 -> self-adjoint lower bound H12 -> H14")
+    print("- terminal analytic inputs: 3")
     print("- forbidden placeholders: none")
     return 0
 
