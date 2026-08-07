@@ -2,7 +2,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianMinimalPhysicalBoundedClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianMaximalDomainBoundedClosure4D
 
 /-!
 # Reduced analytic frontier of `HESSIAN-GLOBAL-01`
@@ -10,7 +10,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 All aggregate H10--H14 interfaces have now been reduced to the following
 analytic work packets:
 
-* smooth primitive SpinC maximal-domain/same-action data;
+* smooth primitive SpinC maximal-domain and same-action data;
 * an open `C²` Candidate-A family on the actual D10-free minimal tangent,
   together with the two matter/LL graph-norm estimates and action identities;
 * one product estimate for the seven physical Hessian blocks on the existing
@@ -33,11 +33,15 @@ open P0EFTJanusProgramPPrimitiveSpinCMatterSmoothMaximalDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D
-open P0EFTJanusProgramPGlobalHessianMinimalPhysicalBoundedClosure4D
+open P0EFTJanusProgramPGlobalHessianMaximalDomainBoundedClosure4D
 
 /-- Canonical name of the smooth SpinC maximal-domain input. -/
-def GlobalHessianSpinCInput :=
+def GlobalHessianSpinCDomainInput :=
   ProgramPPrimitiveSpinCSmoothMaximalDomainData4D
+
+/-- Canonical name of its genuine completion same-action input. -/
+def GlobalHessianSpinCSameActionInput :=
+  ProgramPPrimitiveSpinCMatterSmoothMaximalSameActionData4D
 
 /-- Canonical name of the reduced local minimal-physical family input. -/
 def GlobalHessianLocalFamilyInput :=
@@ -53,12 +57,12 @@ def GlobalHessianParametrixInput :=
 
 /-- Preferred terminal gate from the reduced analytic frontier. -/
 def global_candidateA_hessian_reduced_analytic_closure_gate :=
-  @global_candidateA_hessian_minimalPhysical_bounded_closure_gate
+  @global_candidateA_hessian_maximalDomain_bounded_closure_gate
 
-/-- The four reduced work packets are all exposed by this façade. -/
+/-- The reduced work packets are all exposed by this façade. -/
 theorem global_candidateA_hessian_reduced_analytic_frontier_gate :
-    Nonempty (Unit × Unit × Unit × Unit) :=
-  ⟨((), (), (), ())⟩
+    Nonempty (Unit × Unit × Unit × Unit × Unit) :=
+  ⟨((), (), (), (), ())⟩
 
 end
 end P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D
