@@ -5,13 +5,8 @@ on:
     branches:
       - dev-branch
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalFourierGraph4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalWeightedDecay4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterSmoothMaximalDomain4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianMaximalDomainBoundedClosure4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinC*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D.lean"
@@ -21,10 +16,8 @@ on:
       - "lake-manifest.json"
   pull_request:
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianMaximalDomainBoundedClosure4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinC*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
       - ".github/workflows/program-p-reduced-hessian-frontier.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -63,12 +56,26 @@ jobs:
             program-p-build-${{ runner.os }}-
             program-p-reduced-hessian-${{ runner.os }}-
 
-      - name: Build SpinC Green-to-maximal-domain reduction
+      - name: Build algebraic Clifford and connection layers
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCCliffordHermitianSkew4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCConnectionHermitian4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCCliffordSection4D
+
+      - name: Build invariant-frame geometry and IPP
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameDecomposition4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameCoordinateDerivatives4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameIPP4D
+
+      - name: Build global SpinC Green closure
         id: spinc
         continue-on-error: true
         shell: bash
         run: |
-          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D"
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D"
           lake build "$target" > spinc-green-build.log 2>&1
           status=$?
           cat spinc-green-build.log
@@ -83,19 +90,19 @@ jobs:
           if-no-files-found: error
           retention-days: 3
 
-      - name: Fail when the SpinC reduction failed
+      - name: Fail when the SpinC closure failed
         if: steps.spinc.outcome == 'failure'
         run: exit 1
 
-      - name: Build smooth SpinC maximal-graph frontier
+      - name: Build smooth SpinC graph façade
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
 
-      - name: Build maximal-domain H14 closure route
+      - name: Build three-input H14 closure route
         run: >-
           lake build
-          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianMaximalDomainBoundedClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 
       - name: Build reduced global Hessian analytic frontier
         run: >-
