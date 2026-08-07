@@ -31,6 +31,10 @@ on:
       - "lake-manifest.json"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 concurrency:
   group: program-p-reduced-hessian-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
   cancel-in-progress: false
@@ -61,9 +65,72 @@ jobs:
             program-p-reduced-hessian-${{ runner.os }}-
 
       - name: Build SpinC Green-to-maximal-domain reduction
-        run: >-
-          lake build
-          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D
+        id: spinc
+        shell: bash
+        run: |
+          set +e
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D"
+          lake build "$target" > spinc-green-build.log 2>&1
+          status=$?
+          cat spinc-green-build.log
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Report SpinC elaboration failure on the PR
+        if: always() && github.event_name == 'pull_request' && steps.spinc.outputs.status != '0'
+        uses: actions/github-script@v7
+        env:
+          SPINC_STATUS: ${{ steps.spinc.outputs.status }}
+          SPINC_SHA: ${{ github.sha }}
+          SPINC_RUN_ID: ${{ github.run_id }}
+        with:
+          script: |
+            const fs = require('fs');
+            const log = fs.readFileSync('spinc-green-build.log', 'utf8');
+            const tail = log.split(/\r?\n/).slice(-260).join('\n').slice(-60000);
+            const marker = '<!-- reduced-hessian-spinc-diagnostic -->';
+            const body = [
+              marker,
+              '## Reduced Hessian SpinC diagnostic',
+              '',
+              `- Commit: \`${process.env.SPINC_SHA}\``,
+              `- Run ID: \`${process.env.SPINC_RUN_ID}\``,
+              `- Exit status: \`${process.env.SPINC_STATUS}\``,
+              '',
+              '<details open><summary>Tail of Lean log</summary>',
+              '',
+              '```text',
+              tail,
+              '```',
+              '</details>'
+            ].join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100
+            });
+            const previous = comments.reverse().find(comment =>
+              comment.user.type === 'Bot' && comment.body.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: previous.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body
+              });
+            }
+
+      - name: Fail when the SpinC reduction failed
+        if: steps.spinc.outputs.status != '0'
+        run: exit 1
 
       - name: Build smooth SpinC maximal-graph frontier
         run: >-
