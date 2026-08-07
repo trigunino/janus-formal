@@ -7,9 +7,9 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinC*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
       - ".github/workflows/program-p-reduced-hessian-frontier.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -18,6 +18,9 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinC*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
       - ".github/workflows/program-p-reduced-hessian-frontier.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -82,12 +85,12 @@ jobs:
           exit "$status"
 
       - name: Upload focused SpinC build log
-        if: always()
+        if: always() && steps.spinc.outcome != 'skipped'
         uses: actions/upload-artifact@v4
         with:
           name: reduced-hessian-spinc-log
           path: spinc-green-build.log
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 3
 
       - name: Fail when the SpinC closure failed
@@ -98,6 +101,14 @@ jobs:
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
+
+      - name: Build decomposed analytic packets
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Reduction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
 
       - name: Build three-input H14 closure route
         run: >-
