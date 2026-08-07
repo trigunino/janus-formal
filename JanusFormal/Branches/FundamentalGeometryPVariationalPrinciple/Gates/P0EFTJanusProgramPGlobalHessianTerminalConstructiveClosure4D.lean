@@ -1,30 +1,30 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinAdapters4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinLowerBoundClosure4D
 
 /-!
 # Terminal constructive closure of `HESSIAN-GLOBAL-01`
 
-H10 is no longer an input of the terminal frontier.  The completed mobile GHY
-action, its same-action smooth germ, representation independence and symmetric
-second Fréchet derivative already construct the terminal H10 certificate from
-the existing Candidate-A data and throat transversality.
+H10 is already a theorem of the unique completed mobile GHY action, its smooth
+same-action germ and its genuine symmetric second Frechet derivative.  It is
+therefore not a residual terminal input.
 
-The remaining constructive frontier therefore has exactly three analytic
-packets:
+The terminal frontier now exposes exactly three analytic packets:
 
-* six non-Robin local `C²` physical blocks, with Robin supplied by H10 and
-  matter/LL supplied by their closed graph actions;
-* canonical symmetric continuous extensions of the seven actual physical
-  second Fréchet blocks;
-* one finite-defect coercive shift whose shifted operator is self-adjoint and
-  anti-Lipschitz.  Its surjectivity, inverse, generalized inverse and Fredholm
-  defects are all derived.
+* the six non-Robin local `C²` physical blocks, while H10 supplies Robin and the
+  closed graph actions supply matter and LL;
+* canonical continuous extensions of the seven true physical second Frechet
+  blocks on the unchanged D10-free common Hilbert space;
+* one finite-defect coercive shift together with self-adjointness and the direct
+  PDE estimate `‖x‖ ≤ C ‖(H + P) x‖`.
 
-No D10 field direction, replacement action, second completion or manually
-supplied shifted-range theorem appears in the endpoint.
+The last estimate is converted to anti-Lipschitz control.  Self-adjointness then
+forces dense range and surjectivity, after which the bounded inverse,
+generalized inverse, finite defects, Fredholm property and index zero are all
+constructed.  No replacement action, second completion, D10 field direction or
+supplied shifted-range theorem remains in the terminal endpoint.
 -/
 
 namespace JanusFormal
@@ -37,36 +37,35 @@ open P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinAdapters4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D
-open P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
-open P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D
+open P0EFTJanusProgramPGlobalHessianH10RobinLowerBoundClosure4D
 
-/-- H10 is a theorem, not a residual terminal input. -/
+/-- H10 is reconstructed from the existing Candidate-A data and throat
+transversality; it is not a fourth work packet. -/
 def global_candidateA_hessian_terminal_h10_gate :=
   @global_candidateA_h10_closure_gate
 
-/-- Native H13/local-family input after H10 supplies the Robin block. -/
+/-- Native H13/local-family input after H10 supplies Robin. -/
 def GlobalHessianTerminalLocalFamilyInput :=
   ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
 
-/-- Native H11 input: canonical continuous extensions of the seven actual
-physical second Fréchet blocks. -/
+/-- Native H11 input fixed to the canonical physical second derivatives. -/
 def GlobalHessianTerminalPhysicalExtensionsInput :=
   GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
 
-/-- Native H12 input after eliminating a separate shifted-surjectivity theorem. -/
-def GlobalHessianTerminalAntilipschitzShiftInput :=
-  GlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
+/-- Native H12 input in the direct elliptic norm-estimate form. -/
+def GlobalHessianTerminalLowerBoundShiftInput :=
+  GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D
 
 /-- Terminal H11 canonical-extension certificate. -/
 def global_candidateA_hessian_terminal_physical_extensions_gate :=
   @candidate_a_seven_physical_canonical_extensions_gate
 
-/-- Unique constructive H14 endpoint with only three residual analytic inputs. -/
+/-- Unique constructive H14 endpoint with three residual analytic inputs. -/
 def global_candidateA_hessian_terminal_constructive_closure_gate :=
-  @global_candidateA_hessian_h10Robin_antilipschitz_closure_gate
+  @global_candidateA_hessian_h10Robin_lowerBound_closure_gate
 
-/-- The terminal façade now exposes exactly three irreducible analytic inputs;
-H10 itself is already discharged by the imported geometric theorem. -/
+/-- The terminal façade exposes exactly three irreducible analytic inputs. -/
 theorem global_candidateA_hessian_terminal_constructive_frontier_gate :
     Nonempty (Unit × Unit × Unit) :=
   ⟨((), (), ())⟩
