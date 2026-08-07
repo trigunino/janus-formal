@@ -66,21 +66,19 @@ jobs:
 
       - name: Build SpinC Green-to-maximal-domain reduction
         id: spinc
+        continue-on-error: true
         shell: bash
         run: |
-          set +e
           target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D"
           lake build "$target" > spinc-green-build.log 2>&1
           status=$?
           cat spinc-green-build.log
-          echo "status=$status" >> "$GITHUB_OUTPUT"
-          exit 0
+          exit "$status"
 
       - name: Report SpinC elaboration failure on the PR
-        if: always() && github.event_name == 'pull_request' && steps.spinc.outputs.status != '0'
+        if: always() && github.event_name == 'pull_request' && steps.spinc.outcome == 'failure'
         uses: actions/github-script@v7
         env:
-          SPINC_STATUS: ${{ steps.spinc.outputs.status }}
           SPINC_SHA: ${{ github.sha }}
           SPINC_RUN_ID: ${{ github.run_id }}
         with:
@@ -95,7 +93,6 @@ jobs:
               '',
               `- Commit: \`${process.env.SPINC_SHA}\``,
               `- Run ID: \`${process.env.SPINC_RUN_ID}\``,
-              `- Exit status: \`${process.env.SPINC_STATUS}\``,
               '',
               '<details open><summary>Tail of Lean log</summary>',
               '',
@@ -129,7 +126,7 @@ jobs:
             }
 
       - name: Fail when the SpinC reduction failed
-        if: steps.spinc.outputs.status != '0'
+        if: steps.spinc.outcome == 'failure'
         run: exit 1
 
       - name: Build smooth SpinC maximal-graph frontier
