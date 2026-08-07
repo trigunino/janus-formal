@@ -18,7 +18,7 @@ global_candidateA_hessian_closure_gate
 La route constructive privilégiée est désormais :
 
 ```lean
-global_candidateA_hessian_minimalPhysical_bounded_closure_gate
+global_candidateA_hessian_maximalDomain_bounded_closure_gate
 ```
 
 exposée par :
@@ -30,13 +30,16 @@ P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D
 Cette route ne demande plus directement :
 
 - une égalité de Hessien matière–LL fournie comme champ ;
+- un paquet de coefficients SpinC pondérés choisi séparément ;
+- une hypothèse d'appartenance au domaine maximal SpinC ;
+- un témoin same-action SpinC distinct ;
 - une forme bornée arbitraire représentant les sept blocs physiques ;
 - une hypothèse Fredholm globale ;
 - une équivalence supposée entre deux complétions concurrentes.
 
 ## Les quatre paquets analytiques restants
 
-### A. SpinC lisse dans le graphe maximal
+### A. Une identité de Green pour le Dirac SpinC lisse
 
 Façade :
 
@@ -44,32 +47,42 @@ Façade :
 P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
 ```
 
-Les coefficients Fourier non pondérés sont maintenant canoniques : ils sont
-obtenus, secteur par secteur, par l'inverse de
-`primitiveSpinCGeometricSignedDiracModeUnitary`, puis assemblés sur
-`Sector × PrimitiveSpinCGeometricSignedMode`.
-
-Les compatibilités avec tout le cœur Fourier fini et l'injectivité sont
-dérivées. La voie géométrique restante porte sur :
+Le seul témoin SpinC conservé par la frontière terminale est maintenant :
 
 ```lean
-ProgramPPrimitiveSpinCSmoothMaximalDomainData4D
+ProgramPPrimitiveSpinCSmoothDiracFormalSymmetryData4D
 ```
 
-c'est-à-dire :
+Il exprime, sur le véritable cœur des sections lisses du fibré SpinC primitif,
+l'identité formelle d'adjonction du Dirac premier ordre :
 
-1. toute section primitive lisse appartient au domaine maximal de `2D + m²` ;
-2. l'opérateur maximal appliqué à cette section redonne l'inclusion L² de la
-   véritable expression différentielle lisse.
+```text
+⟨ψ, Dφ⟩ = ⟨Dψ, φ⟩.
+```
 
-Il reste ensuite l'identité same-action de la paire complétée, portée par :
+Ce témoin est indépendant du paramètre de masse. Les gates en déduisent
+mécaniquement :
+
+1. la symétrie de `2D + m²` pour tout `m² ∈ ℝ` ;
+2. l'identification de chaque coefficient Fourier canonique avec le pairing
+   contre l'eigensection lisse normalisée correspondante ;
+3. la relation multiplicateur exacte sur tous les modes signés ;
+4. l'appartenance de toute section lisse au domaine maximal ;
+5. l'accord de l'opérateur maximal avec la véritable expression
+   différentielle lisse ;
+6. le vecteur de coefficients pondérés dans `ℓ²` ;
+7. l'identité de Parseval à deux secteurs ;
+8. l'accord same-action entre l'action lisse intégrée et l'action quadratique
+   du graphe maximal.
+
+La voie préférée est exposée sous :
 
 ```lean
-ProgramPPrimitiveSpinCMatterSmoothMaximalSameActionData4D
+primitive_spinC_smooth_graph_of_dirac_formal_symmetry
 ```
 
-Ces deux objets construisent automatiquement la réalisation lisse dans le
-graphe maximal.
+Les anciennes voies par coefficients pondérés ou domaine maximal déjà
+construit restent disponibles comme adaptateurs de compatibilité.
 
 ### B. Famille Candidate-A locale sur le vrai tangent physique minimal
 
@@ -126,8 +139,8 @@ P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 ```
 
 utilise `LinearMap.extendOfNorm` dans les deux variables et construit
-canoniquement l'unique forme bilinéaire continue sur la complétion Hilbert
-commune. L'accord avec le cœur lisse dense et la symétrie sont dérivés.
+canoniquement la forme bilinéaire continue sur la complétion Hilbert commune.
+L'accord avec le cœur lisse dense et la symétrie sont dérivés.
 
 ### D. Paramétrix augmenté à défaut fini
 
@@ -162,7 +175,9 @@ l'indice zéro sont ensuite dérivés des gates auto-adjointes existantes.
 Une fois A, B, C et D fournis, la chaîne est mécanique :
 
 ```text
-SpinC maximal graph
+Green Dirac SpinC
+  → symétrie de 2D + m²
+  → coefficients signés + domaine maximal + same-action
   → chart minimal H13
   → mismatch matière–LL = 0
   → extension H11 des sept blocs
@@ -176,7 +191,7 @@ Aucune étape H15 n'est prévue.
 
 ## État de confiance
 
-- **Implémentation structurelle :** poussée sur `dev-branch`.
+- **Implémentation structurelle :** préparée sur la branche de contribution.
 - **Réduction des résidus :** effectuée jusqu'aux quatre paquets ci-dessus.
 - **Validation Lean des nouveaux fichiers :** non effectuée / non garantie.
 - **Ticket mathématique terminal :** pas encore `DONE`, car les quatre témoins
