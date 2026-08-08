@@ -36,6 +36,18 @@ REQUIRED = {
         "finiteModeContinuousSchur_operatorRange_closed",
         "finite_mode_continuous_schur_block_gate",
     ),
+    "P0EFTJanusProgramPFiniteModeSchurNondegenerate4D.lean": (
+        "FiniteModeSchurNondegenerateData",
+        "finiteModeSchur_operator_bijective",
+        "finiteModeSchurFullGreen",
+        "finite_mode_schur_nondegenerate_gate",
+    ),
+    "P0EFTJanusProgramPFiniteModeSchurDeterminant4D.lean": (
+        "FiniteModeSchurDeterminantData",
+        "finiteModeSchurMatrix",
+        "finiteModeSchurBlockOperator_bijective_of_det_ne_zero",
+        "finite_mode_schur_determinant_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D.lean": (
         "GlobalCandidateAActualSchurZeroModeData4D",
         "GlobalCandidateAActualSchurZeroModeData4D.toActualZeroModeGap",
@@ -53,6 +65,15 @@ REQUIRED = {
         "GlobalCandidateAActualBoundedSchurBlockData4D",
         "global_candidateA_actual_bounded_schur_block_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateAActualSchurNondegenerate4D.lean": (
+        "GlobalCandidateAActualBoundedSchurNondegenerateData4D",
+        "globalCandidateAActualFullGreen",
+        "global_candidateA_actual_schur_nondegenerate_gate",
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAActualSchurDeterminant4D.lean": (
+        "GlobalCandidateAActualSchurDeterminantData4D",
+        "global_candidateA_actual_schur_determinant_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianSchurZeroModeFrontier4D.lean": (
         "global_candidateA_hessian_schur_zeroMode_frontier_gate",
         "global_candidateA_hessian_schur_zeroMode_stability_gate",
@@ -64,6 +85,15 @@ REQUIRED = {
     "P0EFTJanusProgramPGlobalHessianBoundedSchurFrontier4D.lean": (
         "global_candidateA_hessian_bounded_schur_frontier_gate",
         "global_candidateA_hessian_bounded_schur_stability_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianNondegenerateSchurFrontier4D.lean": (
+        "global_candidateA_hessian_nondegenerate_schur_frontier_gate",
+        "global_candidateA_hessian_nondegenerate_zero_modes",
+    ),
+    "P0EFTJanusProgramPGlobalHessianSchurDeterminantFrontier4D.lean": (
+        "global_candidateA_hessian_schur_determinant_frontier_gate",
+        "globalCandidateAHessianFiniteSchurDeterminant",
+        "globalCandidateAHessianFiniteSchurDeterminant_ne_zero",
     ),
 }
 
@@ -125,8 +155,9 @@ def main() -> int:
     print("- finite Schur kernel equivalence")
     print("- algebraic and bounded four-block Gaussian elimination")
     print("- closed range from automatically constructed coordinates")
-    print("- Candidate-A actual zero-mode and gap adapter")
-    print("- terminal H10--H14 Green/resolvent/stability façade")
+    print("- finite determinant nondegeneracy criterion")
+    print("- full Candidate-A Green on the zero-mode-free stratum")
+    print("- terminal H10--H14 Green/resolvent/stability façades")
     return 0
 
 
