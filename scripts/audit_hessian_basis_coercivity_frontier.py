@@ -18,6 +18,13 @@ REQUIRED = {
         "SelfAdjointKernelBasisCoercivityData.toGapData",
         "self_adjoint_kernel_basis_coercivity_gate",
     ),
+    "P0EFTJanusProgramPFiniteKernelNamedModeCoercivity4D.lean": (
+        "FiniteKernelNamedModeFamily",
+        "FiniteKernelNamedModeFamily.basis",
+        "FiniteKernelNamedModeFamily.ambientSynthesis_range",
+        "SelfAdjointNamedKernelCoercivityData",
+        "self_adjoint_named_kernel_coercivity_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualKernelBasisCoercivity4D.lean": (
         "GlobalCandidateAActualKernelBasisCoercivity4D",
         "globalCandidateAActualKernelGap_of_basisCoercivity",
@@ -34,6 +41,12 @@ REQUIRED = {
         "global_candidateA_hessian_canonicalSix_basisCoercivity_frontier_gate",
         "global_candidateA_hessian_canonicalSix_basisCoercivity_zeroMode_count",
         "global_candidateA_hessian_canonicalSix_basisCoercivity_two_inputs",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixNamedModeFrontier4D.lean": (
+        "GlobalCandidateAActualNamedKernelCoercivity4D",
+        "global_candidateA_hessian_canonicalSix_namedMode_frontier_gate",
+        "global_candidateA_hessian_namedMode_kernel_synthesis",
+        "global_candidateA_hessian_canonicalSix_namedMode_two_inputs",
     ),
 }
 
@@ -94,7 +107,7 @@ def main() -> int:
     print("Hessian basis/coercivity audit: OK")
     print("- H10 completed projection derived from the chart-core bound")
     print("- six non-Robin Hessians fixed by the Candidate-A action")
-    print("- finite basis of the actual kernel")
+    print("- named ambient zero modes synthesize exactly the actual kernel")
     print("- quadratic coercivity converted to the operator gap")
     print("- exact zero-mode count and terminal H10--H14 facade")
     return 0
