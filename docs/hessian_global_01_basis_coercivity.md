@@ -1,4 +1,4 @@
-# HESSIAN-GLOBAL-01 — frontière base du noyau et coercivité
+# HESSIAN-GLOBAL-01 — frontière zéro-modes nommés et coercivité
 
 Date : **9 août 2026**.
 
@@ -43,7 +43,7 @@ Les six blocs non-Robin sont les véritables seconds Fréchet de :
 Leur borne commune est déduite de la même estimation cœur-vers-chart. Le
 septième bloc est le Hessien Robin de l’action GHY H10.
 
-## 3. Base du vrai noyau
+## 3. Base et coercivité du vrai noyau
 
 Le paquet
 
@@ -72,21 +72,49 @@ La dimension du noyau est exactement :
 \dim\ker H=\#\mathrm{ZeroMode}.
 \]
 
-## 4. Terminal
+## 4. Vecteurs physiques nommés
 
-Le point d’entrée est :
+La façade la plus explicite utilise :
+
+```lean
+FiniteKernelNamedModeFamily H ZeroMode
+```
+
+Elle conserve :
+
+- un vecteur ambiant pour chaque label physique ;
+- la preuve que chaque vecteur est annulé par `H` ;
+- une synthèse linéaire bijective
+  `(ZeroMode → ℝ) ≃ₗ ker H` ;
+- l’identité entre chaque vecteur de coordonnée et le mode ambiant nommé.
+
+La base de `ker H` n’est alors plus fournie séparément : elle est l’image de la
+base standard de `ZeroMode → ℝ` par la synthèse. Les vecteurs nommés engendrent
+exactement le noyau et leurs coefficients sont uniques.
+
+## 5. Terminaux
+
+Le terminal à base explicite est :
 
 ```lean
 global_candidateA_hessian_canonicalSix_basisCoercivity_frontier_gate
 ```
 
+Le terminal préféré, qui conserve les vecteurs physiques, est :
+
+```lean
+global_candidateA_hessian_canonicalSix_namedMode_frontier_gate
+```
+
 Après les données géométriques et la famille locale, il ne demande que :
 
 1. la borne du morphisme cœur lisse vers le chart physique D10-free ;
-2. la base du vrai noyau et la coercivité quadratique sur son orthogonal.
+2. les zéro-modes ambiants nommés, leur synthèse exacte vers `ker H`, et la
+   coercivité quadratique sur leur orthogonal.
 
 Il reconstruit la projection H10 complétée, l’extension physique H11, le gap
-H12, puis les certificats H10--H14, le Green réduit et la résolvante réelle.
+H12, puis les certificats H10--H14, le comptage exact des zéro-modes, le Green
+réduit et la résolvante réelle.
 
 La chaîne reste en brouillon tant que le build Lean complet de la PR n’est pas
 vert ; aucun nouvel axiome, `sorry`, projecteur artificiel ou paramétrix fourni
