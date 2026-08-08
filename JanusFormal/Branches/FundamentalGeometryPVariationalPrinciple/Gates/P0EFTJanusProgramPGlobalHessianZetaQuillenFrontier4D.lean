@@ -1,23 +1,18 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenFinalFrontier4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenMellinFrontier4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartSchemeIndependence4D
 
 /-!
 # Public zeta/Quillen frontier after the reduced global Hessian
 
-The constructive chain now contains both the circle realization and the
-general multi-chart determinant-line atlas.  The preferred terminal input
-requires these presentations, together with the finite-part metric family, to
-refer to one and the same Candidate-A zeta determinant.
+The preferred terminal route now starts with an honest parameter-uniform
+Mellin continuation of the intrinsic relative heat trace.  It constructs the
+zeta family, its finite-part metric comparison and its unitary phase before
+assembling the circle bridge and the general determinant-line atlas.
 
-The older scalar-only zeta determinant gate remains exported as a compatibility
-checkpoint, but the public frontier now points to the coherent certificate
-which simultaneously contains:
-
-* the conditional global Quillen closure;
-* the local zeta transition cocycle and line atlas;
-* the finite-part metric variation;
-* the unitary phase;
-* the physical basepoint identification.
+The older scalar-only zeta determinant and abstract coherent-frontier gates
+remain exported as compatibility checkpoints.  The public gate, however, no
+longer accepts an unrelated complex germ merely having the desired derivative
+at zero.
 -/
 
 namespace JanusFormal
@@ -29,12 +24,15 @@ noncomputable section
 open P0EFTJanusProgramPGlobalCandidateAAugmentedReducedIntrinsicRelativeTrace4D
 open P0EFTJanusProgramPGlobalHessianFinitePartDeterminant4D
 open P0EFTJanusProgramPGlobalHessianQuillenFinalFrontier4D
+open P0EFTJanusProgramPGlobalHessianQuillenMellinFrontier4D
 open P0EFTJanusProgramPGlobalHessianZetaDeterminant4D
 open P0EFTJanusProgramPGlobalHessianZetaDeterminantAtlas4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
 open P0EFTJanusProgramPRelativeHeatFinitePartSchemeIndependence4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaComparison4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 
@@ -46,29 +44,34 @@ def GlobalHessianIntrinsicRelativeTraceInput :=
 def GlobalHessianFinitePartRenormalizationInput :=
   RelativeHeatFinitePartData
 
-/-- Parameter-uniform finite-part metric input. -/
-def GlobalHessianFinitePartFamilyInput :=
-  RelativeHeatFinitePartFamilyData
+/-- Honest pointwise heat-Mellin continuation. -/
+def GlobalHessianMellinZetaContinuationInput :=
+  RelativeHeatMellinZetaContinuationData
 
-/-- Pointwise Mellin/zeta comparison input. -/
-def GlobalHessianRelativeZetaInput :=
-  RelativeZetaComparisonData
-
-/-- Family comparison of zeta norm, finite-part metric and unitary phase. -/
-def GlobalHessianZetaMetricFamilyInput :=
-  RelativeZetaFinitePartFamilyComparisonData
+/-- Parameter-uniform Mellin continuation, finite-part metric and zeta phase. -/
+def GlobalHessianMellinZetaFamilyInput :=
+  RelativeHeatMellinZetaFamilyData
 
 /-- General-cover local zeta atlas anchored at the Candidate-A determinant. -/
 def GlobalHessianZetaAtlasInput :=
   GlobalCandidateAHessianZetaDeterminantAtlasData4D
 
-/-- Coherent terminal input tying the circle bridge, atlas and metric family to
-one Candidate-A zeta determinant. -/
+/-- Preferred terminal input: one Mellin family, one circle bridge and one
+atlas whose selected chart is that family. -/
+def GlobalHessianQuillenMellinInput :=
+  GlobalCandidateAHessianQuillenMellinFrontierData4D
+
+/-- Compatibility input for callers already holding the abstract coherent
+circle/atlas/metric packet. -/
 def GlobalHessianQuillenFinalInput :=
   GlobalCandidateAHessianQuillenFinalFrontierData4D
 
-/-- Preferred public terminal gate. -/
+/-- Preferred public terminal gate generated from the heat Mellin family. -/
 def global_candidateA_hessian_zeta_quillen_frontier_gate :=
+  @global_candidateA_hessian_quillen_mellin_frontier_gate
+
+/-- Compatibility checkpoint for the abstract coherent final packet. -/
+def global_candidateA_hessian_zeta_quillen_coherent_gate :=
   @global_candidateA_hessian_quillen_final_frontier_gate
 
 /-- Compatibility checkpoint returning only the complex determinant. -/
@@ -80,8 +83,8 @@ def global_candidateA_hessian_finitePart_scheme_independence_gate :=
   @relative_heat_finite_part_scheme_independence_gate
 
 /-- Four genuinely analytic constructions remain beyond the concrete H10--H14
-operator: intrinsic trace uniqueness, uniform heat renormalization, zeta
-continuation in the family, and the Bismut--Freed/atlas coherence data. -/
+operator: intrinsic trace uniqueness, uniform heat renormalization, Mellin
+continuation in the family, and the Bismut--Freed/circle-atlas coherence data. -/
 theorem global_candidateA_hessian_zeta_quillen_frontier_four_inputs :
     Nonempty (Unit × Unit × Unit × Unit) :=
   ⟨((), (), (), ())⟩
