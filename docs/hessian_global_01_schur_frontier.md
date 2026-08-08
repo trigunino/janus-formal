@@ -3,15 +3,15 @@
 Date : **8 août 2026**.
 
 Cette note prolonge `hessian_global_01_actual_kernel_frontier.md`. La fermeture
-H10–H14 utilise désormais le noyau réel du Hessien augmenté et peut calculer ce
-noyau par élimination de Schur, sans demander directement une base dans
-l’espace de Hilbert complet.
+H10–H14 utilise désormais le noyau réel du Hessien augmenté et calcule ce noyau
+par élimination de Schur, sans demander directement une base dans l’espace de
+Hilbert complet.
 
 La chaîne reste à certifier par un build Lean complet.
 
 ## 1. Décomposition finie/complement
 
-On choisit une décomposition linéaire
+On choisit une décomposition continue
 
 \[
 \mathcal H \simeq F\oplus G,
@@ -24,14 +24,19 @@ Hessien augmenté est écrit
 H=\begin{pmatrix}A&B\\C&D\end{pmatrix}.
 \]
 
-Le paquet
+Le paquet terminal
 
 ```lean
-FiniteModeSchurBlockData H Mode Complement
+FiniteModeContinuousSchurBlockData H Mode Complement
 ```
 
-contient les quatre blocs et une équivalence linéaire représentant l’inverse du
-bloc complémentaire `D`.
+contient :
+
+- la décomposition linéaire continue ;
+- les quatre blocs bornés `A`, `B`, `C`, `D` ;
+- une équivalence linéaire continue représentant l’inverse du bloc
+  complémentaire `D` ;
+- l’identité affirmant que ces quatre blocs sont exactement ceux de `H`.
 
 ## 2. Élimination gaussienne
 
@@ -95,21 +100,21 @@ finiteModeSchurKernelModel
 utilise une base du noyau de l’opérateur fini `S`, et non une base choisie
 directement dans le noyau de l’opérateur infini.
 
-## 4. Image fermée sans hypothèse séparée
+## 4. Image fermée construite automatiquement
 
-La coordonnée réduite continue est
+À partir des blocs bornés, le module
+
+```text
+P0EFTJanusProgramPFiniteModeContinuousSchurBlock4D
+```
+
+construit lui-même la coordonnée réduite continue
 
 \[
 \Phi=L\circ\mathrm{decomposition}.
 \]
 
-Le module
-
-```text
-P0EFTJanusProgramPFiniteModeSchurClosedRange4D
-```
-
-prouve :
+Le module de fermeture de l’image démontre ensuite :
 
 \[
 \operatorname{Ran}H
@@ -118,13 +123,15 @@ prouve :
 \]
 
 Comme `S` agit en dimension finie, son image est fermée. La continuité de
-`Φ` donne donc automatiquement la fermeture de l’image de `H`.
+`Φ` donne automatiquement la fermeture de l’image de `H`.
 
-Ainsi, le paquet Schur terminal ne demande plus séparément :
+Le paquet terminal ne demande donc plus séparément :
 
 ```text
+une coordonnée réduite Φ
 range H is closed
 kernel H is finite-dimensional
+une base du noyau complet
 ```
 
 ## 5. Spécialisation Candidate-A
@@ -135,6 +142,7 @@ Les modules
 P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
 P0EFTJanusProgramPGlobalCandidateAActualSchurClosedRange4D
 P0EFTJanusProgramPGlobalCandidateAActualContinuousSchurBlock4D
+P0EFTJanusProgramPGlobalCandidateAActualBoundedSchurBlock4D
 ```
 
 transportent la construction vers le véritable opérateur augmenté Candidate-A.
@@ -147,44 +155,49 @@ Ils produisent automatiquement :
 - le Green réduit ;
 - la résolvante réelle dans le gap.
 
-## 6. Façade terminale
+## 6. Façade terminale préférée
 
-Le point d’entrée préféré est :
+Le point d’entrée le plus réduit est :
 
 ```lean
-global_candidateA_hessian_continuous_schur_frontier_gate
+global_candidateA_hessian_bounded_schur_frontier_gate
 ```
 
 Il consomme trois paquets analytiques :
 
 1. la famille locale H10-réduite ;
 2. la réalisation H11 dans le véritable chart physique ;
-3. la décomposition continue en quatre blocs `A,B,C,D` avec `D` inversible.
+3. la décomposition **bornée** en quatre blocs `A,B,C,D`, avec `D` inversible.
 
 Il retourne la fermeture H10–H14, le comptage des zéro-modes par `ker S`, le
 Green réduit et la résolvante. Le gate
 
 ```lean
-global_candidateA_hessian_continuous_schur_stability_gate
+global_candidateA_hessian_bounded_schur_stability_gate
 ```
 
 ajoute la stabilité quantitative sous petite perturbation auto-adjointe.
 
+Les façades antérieures acceptant une factorisation ou une coordonnée réduite
+déjà construites restent disponibles comme adaptateurs.
+
 ## 7. Travail analytique restant
 
 La classification globale du noyau est maintenant remplacée par les tâches
-plus naturelles :
+naturelles suivantes :
 
 ```text
 1. choisir les modes de référence F ;
-2. calculer les quatre blocs réels du Hessien Candidate-A ;
+2. calculer les quatre blocs bornés réels du Hessien Candidate-A ;
 3. démontrer l’inversibilité du bloc complémentaire D ;
-4. calculer le noyau de la matrice/opérateur fini S = A - B D⁻¹ C ;
-5. construire la coordonnée réduite continue Φ.
+4. calculer le noyau de la matrice/opérateur fini S = A - B D⁻¹ C.
 ```
+
+La coordonnée réduite, l’image fermée, la finitude du noyau, le gap, le Green et
+la résolvante ne sont plus des obligations indépendantes.
 
 Cette route est compatible avec les symétries physiques : les modes candidats
 peuvent être choisis parmi les directions de stabilisateur, les modes
 harmoniques, les paramètres de module et les éventuels zéro-modes de bord. Le
 calcul final est fini-dimensional, tandis que toute l’analyse elliptique
-infinie est concentrée dans l’inversibilité de `D`.
+infinie est concentrée dans l’inversibilité du bloc `D`.
