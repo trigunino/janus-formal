@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeDeterminantPhase4D
 
 /-!
 # Independence of the finite-part subtraction scheme
@@ -19,6 +20,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeDeterminantPhase4D
 
 /-- Equality of the renormalized short-time contributions of two subtraction
 schemes. -/
@@ -87,12 +89,10 @@ theorem RelativeHeatFinitePartSchemeAgreement.complexDeterminant_eq
     {heatTrace : P0EFTJanusCircleDiracHeatTraceCancellation.HeatTime → Real}
     {first second : RelativeHeatFinitePartData heatTrace}
     (agreement : RelativeHeatFinitePartSchemeAgreement first second)
-    (phase : P0EFTJanusProgramPRelativeDeterminantPhase4D.RelativeDeterminantPhaseData) :
-    P0EFTJanusProgramPRelativeDeterminantPhase4D.relativeHeatComplexDeterminant
-        first phase =
-      P0EFTJanusProgramPRelativeDeterminantPhase4D.relativeHeatComplexDeterminant
-        second phase := by
-  unfold P0EFTJanusProgramPRelativeDeterminantPhase4D.relativeHeatComplexDeterminant
+    (phase : RelativeDeterminantPhaseData) :
+    relativeHeatComplexDeterminant first phase =
+      relativeHeatComplexDeterminant second phase := by
+  unfold relativeHeatComplexDeterminant
   rw [agreement.determinant_eq]
 
 /-- Public subtraction-scheme checkpoint. -/
