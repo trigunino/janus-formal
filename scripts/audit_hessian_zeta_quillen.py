@@ -50,6 +50,11 @@ REQUIRED = {
         "relativeZetaDeterminant",
         "relative_zeta_comparison_gate",
     ),
+    "P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D.lean": (
+        "RelativeHeatMellinZetaContinuationData",
+        "relativeHeatMellinZetaCandidate",
+        "relative_heat_mellin_zeta_continuation_gate",
+    ),
     "P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.lean": (
         "RelativeZetaDeterminantFamilyData",
         "relativeZetaDeterminantCoordinate_parallel",
@@ -59,6 +64,11 @@ REQUIRED = {
         "RelativeZetaFinitePartFamilyComparisonData",
         "relativeZetaFinitePartPhase",
         "relative_zeta_finite_part_family_gate",
+    ),
+    "P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.lean": (
+        "RelativeHeatMellinZetaFamilyData",
+        "relativeHeatMellinZetaFamilyDeterminant",
+        "relative_heat_mellin_zeta_family_gate",
     ),
     "P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D.lean": (
         "RelativeZetaLocalFamilyAtlasData",
@@ -105,6 +115,10 @@ REQUIRED = {
         "GlobalCandidateAHessianQuillenFinalFrontierData4D",
         "GlobalCandidateAHessianQuillenFinalFrontierCertificate4D",
         "global_candidateA_hessian_quillen_final_frontier_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianQuillenMellinFrontier4D.lean": (
+        "GlobalCandidateAHessianQuillenMellinFrontierData4D",
+        "global_candidateA_hessian_quillen_mellin_frontier_gate",
     ),
     "P0EFTJanusProgramPGlobalHessianZetaQuillenFrontier4D.lean": (
         "global_candidateA_hessian_zeta_quillen_frontier_gate",
@@ -166,11 +180,12 @@ def main() -> int:
     print("Hessian zeta/Quillen audit: OK")
     print("- intrinsic relative trace")
     print("- finite-part determinant, family metric and scheme independence")
+    print("- heat-Mellin representation and parameter-uniform continuation")
     print("- complex zeta determinant and unitary phase")
     print("- transition cocycle and determinant-line atlas")
     print("- Candidate-A atlas and periodic metric anchor")
     print("- Quillen parallel section and global closure")
-    print("- coherent final atlas/metric/connection frontier")
+    print("- Mellin-generated coherent final frontier")
     return 0
 
 
