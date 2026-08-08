@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static audit of the reduced Candidate-A Hessian/Green chain."""
+"""Static audit of the reduced Candidate-A Hessian, Green and resolvent chain."""
 
 from __future__ import annotations
 
@@ -30,6 +30,18 @@ REQUIRED = {
         "finiteDefectReducedInverse_opNorm_le",
         "finite_defect_reduced_inverse_gate",
     ),
+    "P0EFTJanusProgramPFiniteDefectReducedResolvent4D.lean": (
+        "finiteDefectReducedOperator_isSelfAdjoint",
+        "finiteDefectReducedShiftedOperator",
+        "finiteDefectReducedRealResolvent",
+        "finiteDefectReducedRealResolvent_opNorm_le",
+        "finite_defect_reduced_real_resolvent_gate",
+    ),
+    "P0EFTJanusProgramPFiniteDefectReducedResolventIdentity4D.lean": (
+        "finiteDefectReducedRealResolvent_identity",
+        "finiteDefectReducedRealResolvent_sub_opNorm_le",
+        "finite_defect_reduced_real_resolvent_identity_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAAugmentedReducedOperator4D.lean": (
         "globalCandidateAAugmentedReducedOperator",
         "global_candidateA_augmented_reduced_operator_gate",
@@ -38,12 +50,29 @@ REQUIRED = {
         "globalCandidateAAugmentedReducedInverse",
         "global_candidateA_augmented_reduced_inverse_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateAAugmentedReducedResolvent4D.lean": (
+        "globalCandidateAAugmentedReducedRealResolvent",
+        "global_candidateA_augmented_reduced_resolvent_gate",
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAAugmentedReducedResolventIdentity4D.lean": (
+        "globalCandidateAAugmentedReducedRealResolvent_identity",
+        "globalCandidateAAugmentedReducedRealResolvent_sub_opNorm_le",
+        "global_candidateA_augmented_reduced_resolvent_identity_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianReducedGreenCertificate4D.lean": (
         "GlobalCandidateAHessianReducedGreenCertificate4D",
         "global_candidateA_hessian_reducedGreen_certificate_gate",
     ),
     "P0EFTJanusProgramPGlobalHessianReducedGreenFrontier4D.lean": (
         "global_candidateA_hessian_reducedGreen_frontier_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianReducedResolventCertificate4D.lean": (
+        "globalCandidateAHessianReducedResolventInterval",
+        "GlobalCandidateAHessianReducedResolventCertificate4D",
+        "global_candidateA_hessian_reducedResolvent_certificate_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianReducedResolventFrontier4D.lean": (
+        "global_candidateA_hessian_reducedResolvent_frontier_gate",
     ),
     "P0EFTJanusProgramPSelfAdjointSmallPerturbation4D.lean": (
         "SelfAdjointSmallPerturbationData",
@@ -65,7 +94,7 @@ WORKFLOW = ROOT / ".github" / "workflows" / \
 
 def has_decl(text: str, name: str) -> bool:
     return bool(re.search(
-        rf"(?m)^\s*(?:private\s+)?(?:structure|def|abbrev|theorem|lemma)\s+{re.escape(name)}\b",
+        rf"(?m)^\s*(?:private\s+)?(?:noncomputable\s+)?(?:structure|def|abbrev|theorem|lemma)\s+{re.escape(name)}\b",
         text,
     ))
 
@@ -95,16 +124,19 @@ def main() -> int:
                 errors.append(f"workflow does not build {stem}")
 
     if errors:
-        print("Reduced Hessian/Green audit: FAILED", file=sys.stderr)
+        print("Reduced Hessian/Green/resolvent audit: FAILED", file=sys.stderr)
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
 
-    print("Reduced Hessian/Green audit: OK")
+    print("Reduced Hessian/Green/resolvent audit: OK")
     print("- exact zero modes and range complement")
     print("- bijective reduced Hessian")
     print("- continuous reduced Green operator")
     print("- explicit inverse norm bound")
+    print("- open real resolvent interval")
+    print("- first resolvent identity")
+    print("- quantitative operator-norm continuity")
     print("- small self-adjoint perturbation gap")
     return 0
 
