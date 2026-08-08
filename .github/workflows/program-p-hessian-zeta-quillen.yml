@@ -86,7 +86,7 @@ jobs:
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedReducedIntrinsicRelativeTrace4D
 
   finite-part:
-    name: Lean — finite-part determinant
+    name: Lean — finite-part determinant and metric family
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,16 +104,17 @@ jobs:
           restore-keys: |
             program-p-build-${{ runner.os }}-
             reduced-green-${{ runner.os }}-
-      - name: Build finite-part and phase chain
+      - name: Build finite-part, phase and family chain
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeDeterminantPhase4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartSchemeIndependence4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianFinitePartDeterminant4D
 
-  zeta:
-    name: Lean — complex zeta determinant
+  zeta-atlas:
+    name: Lean — zeta determinant, metric comparison and line atlas
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -127,19 +128,23 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: .b
-          key: hessian-zeta-complex-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          key: hessian-zeta-atlas-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
           restore-keys: |
             program-p-build-${{ runner.os }}-
             reduced-green-${{ runner.os }}-
-      - name: Build zeta determinant and variation formula
+      - name: Build zeta determinant, variation and atlas chain
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaComparison4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZetaDeterminant4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZetaDeterminantAtlas4D
 
   quillen:
-    name: Lean — Quillen metric and family bridge
+    name: Lean — coherent Quillen closure and final frontier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -157,7 +162,7 @@ jobs:
           restore-keys: |
             program-p-build-${{ runner.os }}-
             reduced-green-${{ runner.os }}-
-      - name: Build Quillen anchor, parallel section and certificate
+      - name: Build Quillen anchor, bridge, closure and final façade
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenMetricAnchor4D
@@ -165,4 +170,6 @@ jobs:
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaCircleConnectionBridge4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenFamilyBridge4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenCertificate4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianQuillenFinalFrontier4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZetaQuillenFrontier4D
