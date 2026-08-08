@@ -35,6 +35,11 @@ REQUIRED = {
         "RelativeHeatFinitePartSchemeAgreement",
         "relative_heat_finite_part_scheme_independence_gate",
     ),
+    "P0EFTJanusProgramPRelativeHeatFinitePartFamily4D.lean": (
+        "RelativeHeatFinitePartFamilyData",
+        "relativeHeatFinitePartMetricWeight",
+        "relative_heat_finite_part_family_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianFinitePartDeterminant4D.lean": (
         "GlobalCandidateAHessianFinitePartDeterminantData4D",
         "globalCandidateAHessianFinitePartDeterminant",
@@ -49,6 +54,20 @@ REQUIRED = {
         "RelativeZetaDeterminantFamilyData",
         "relativeZetaDeterminantCoordinate_parallel",
         "relative_zeta_determinant_connection_gate",
+    ),
+    "P0EFTJanusProgramPRelativeZetaFinitePartFamily4D.lean": (
+        "RelativeZetaFinitePartFamilyComparisonData",
+        "relativeZetaFinitePartPhase",
+        "relative_zeta_finite_part_family_gate",
+    ),
+    "P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D.lean": (
+        "RelativeZetaLocalFamilyAtlasData",
+        "relativeZetaTransition_cocycle",
+        "relative_zeta_determinant_cocycle_gate",
+    ),
+    "P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D.lean": (
+        "RelativeZetaDeterminantLineAtlasCertificate",
+        "relative_zeta_determinant_line_atlas_gate",
     ),
     "P0EFTJanusProgramPRelativeZetaCircleConnectionBridge4D.lean": (
         "RelativeZetaCircleConnectionBridgeData",
@@ -66,6 +85,10 @@ REQUIRED = {
         "GlobalCandidateAHessianZetaDeterminantData4D",
         "global_candidateA_hessian_zeta_determinant_gate",
     ),
+    "P0EFTJanusProgramPGlobalHessianZetaDeterminantAtlas4D.lean": (
+        "GlobalCandidateAHessianZetaDeterminantAtlasData4D",
+        "global_candidateA_hessian_zeta_determinant_atlas_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianQuillenFamilyBridge4D.lean": (
         "GlobalCandidateAHessianQuillenFamilyBridgeData4D",
         "global_candidateA_hessian_quillen_family_bridge_gate",
@@ -73,6 +96,10 @@ REQUIRED = {
     "P0EFTJanusProgramPGlobalHessianQuillenCertificate4D.lean": (
         "GlobalCandidateAHessianQuillenCertificate4D",
         "global_candidateA_hessian_quillen_certificate_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianQuillenClosure4D.lean": (
+        "GlobalCandidateAHessianQuillenClosureCertificate4D",
+        "global_candidateA_hessian_quillen_global_closure_gate",
     ),
     "P0EFTJanusProgramPGlobalHessianZetaQuillenFrontier4D.lean": (
         "global_candidateA_hessian_zeta_quillen_frontier_gate",
@@ -133,10 +160,11 @@ def main() -> int:
 
     print("Hessian zeta/Quillen audit: OK")
     print("- intrinsic relative trace")
-    print("- finite-part determinant and scheme independence")
+    print("- finite-part determinant, family metric and scheme independence")
     print("- complex zeta determinant and unitary phase")
+    print("- transition cocycle and determinant-line atlas")
     print("- Quillen metric anchor and parallel section")
-    print("- conditional family connection/clutching certificate")
+    print("- conditional family connection/clutching closure")
     return 0
 
 
