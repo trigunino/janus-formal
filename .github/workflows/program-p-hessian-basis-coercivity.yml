@@ -7,9 +7,11 @@ on:
       - agent/hessian-spinc-maximal-domain
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjointKernelBasisCoercivity4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteKernelNamedModeCoercivity4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualKernelBasisCoercivity4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixBasisCoercivityFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixNamedModeFrontier4D.lean"
       - "scripts/audit_hessian_basis_coercivity_frontier.py"
       - "docs/hessian_global_01_basis_coercivity.md"
       - ".github/workflows/program-p-hessian-basis-coercivity.yml"
@@ -19,9 +21,11 @@ on:
   pull_request:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjointKernelBasisCoercivity4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteKernelNamedModeCoercivity4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualKernelBasisCoercivity4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixBasisCoercivityFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixNamedModeFrontier4D.lean"
       - "scripts/audit_hessian_basis_coercivity_frontier.py"
       - "docs/hessian_global_01_basis_coercivity.md"
       - ".github/workflows/program-p-hessian-basis-coercivity.yml"
@@ -49,7 +53,7 @@ jobs:
       - run: python scripts/audit_hessian_basis_coercivity_frontier.py
 
   generic:
-    name: Lean — self-adjoint kernel basis coercivity
+    name: Lean — self-adjoint kernel basis and named modes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -70,9 +74,10 @@ jobs:
       - run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointKernelBasisCoercivity4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteKernelNamedModeCoercivity4D
 
   candidate:
-    name: Lean — Candidate-A basis/coercivity terminal
+    name: Lean — Candidate-A named-mode coercivity terminal
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -95,3 +100,4 @@ jobs:
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualKernelBasisCoercivity4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixBasisCoercivityFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixNamedModeFrontier4D
