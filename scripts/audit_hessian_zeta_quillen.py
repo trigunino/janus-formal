@@ -101,6 +101,11 @@ REQUIRED = {
         "GlobalCandidateAHessianQuillenClosureCertificate4D",
         "global_candidateA_hessian_quillen_global_closure_gate",
     ),
+    "P0EFTJanusProgramPGlobalHessianQuillenFinalFrontier4D.lean": (
+        "GlobalCandidateAHessianQuillenFinalFrontierData4D",
+        "GlobalCandidateAHessianQuillenFinalFrontierCertificate4D",
+        "global_candidateA_hessian_quillen_final_frontier_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianZetaQuillenFrontier4D.lean": (
         "global_candidateA_hessian_zeta_quillen_frontier_gate",
     ),
@@ -163,8 +168,9 @@ def main() -> int:
     print("- finite-part determinant, family metric and scheme independence")
     print("- complex zeta determinant and unitary phase")
     print("- transition cocycle and determinant-line atlas")
-    print("- Quillen metric anchor and parallel section")
-    print("- conditional family connection/clutching closure")
+    print("- Candidate-A atlas and periodic metric anchor")
+    print("- Quillen parallel section and global closure")
+    print("- coherent final atlas/metric/connection frontier")
     return 0
 
 
