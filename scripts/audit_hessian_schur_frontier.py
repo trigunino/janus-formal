@@ -30,6 +30,12 @@ REQUIRED = {
         "finiteModeSchur_operatorRange_closed",
         "finite_mode_schur_closed_range_gate",
     ),
+    "P0EFTJanusProgramPFiniteModeContinuousSchurBlock4D.lean": (
+        "FiniteModeContinuousSchurBlockData",
+        "finiteModeContinuousSchurRangeCoordinates",
+        "finiteModeContinuousSchur_operatorRange_closed",
+        "finite_mode_continuous_schur_block_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D.lean": (
         "GlobalCandidateAActualSchurZeroModeData4D",
         "GlobalCandidateAActualSchurZeroModeData4D.toActualZeroModeGap",
@@ -43,6 +49,10 @@ REQUIRED = {
         "GlobalCandidateAActualContinuousSchurBlockData4D",
         "global_candidateA_actual_continuous_schur_block_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateAActualBoundedSchurBlock4D.lean": (
+        "GlobalCandidateAActualBoundedSchurBlockData4D",
+        "global_candidateA_actual_bounded_schur_block_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianSchurZeroModeFrontier4D.lean": (
         "global_candidateA_hessian_schur_zeroMode_frontier_gate",
         "global_candidateA_hessian_schur_zeroMode_stability_gate",
@@ -50,6 +60,10 @@ REQUIRED = {
     "P0EFTJanusProgramPGlobalHessianContinuousSchurFrontier4D.lean": (
         "global_candidateA_hessian_continuous_schur_frontier_gate",
         "global_candidateA_hessian_continuous_schur_stability_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianBoundedSchurFrontier4D.lean": (
+        "global_candidateA_hessian_bounded_schur_frontier_gate",
+        "global_candidateA_hessian_bounded_schur_stability_gate",
     ),
 }
 
@@ -109,8 +123,8 @@ def main() -> int:
 
     print("Hessian Schur frontier audit: OK")
     print("- finite Schur kernel equivalence")
-    print("- four-block Gaussian elimination")
-    print("- closed range from continuous reduced coordinates")
+    print("- algebraic and bounded four-block Gaussian elimination")
+    print("- closed range from automatically constructed coordinates")
     print("- Candidate-A actual zero-mode and gap adapter")
     print("- terminal H10--H14 Green/resolvent/stability façade")
     return 0
