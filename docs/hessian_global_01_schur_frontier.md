@@ -155,9 +155,9 @@ Ils produisent automatiquement :
 - le Green réduit ;
 - la résolvante réelle dans le gap.
 
-## 6. Façade terminale préférée
+## 6. Façade terminale générale
 
-Le point d’entrée le plus réduit est :
+Le point d’entrée général est :
 
 ```lean
 global_candidateA_hessian_bounded_schur_frontier_gate
@@ -178,10 +178,62 @@ global_candidateA_hessian_bounded_schur_stability_gate
 
 ajoute la stabilité quantitative sous petite perturbation auto-adjointe.
 
-Les façades antérieures acceptant une factorisation ou une coordonnée réduite
-déjà construites restent disponibles comme adaptateurs.
+## 7. Strate non dégénérée et déterminant fini
 
-## 7. Travail analytique restant
+Le module
+
+```text
+P0EFTJanusProgramPFiniteModeSchurDeterminant4D
+```
+
+associe à `S` sa matrice dans la base standard de `Mode → ℝ` :
+
+\[
+M_S=\operatorname{Mat}(S).
+\]
+
+La condition finie
+
+\[
+\Delta_{\mathrm{Schur}}=\det M_S\neq0
+\]
+
+construit l’inverse matriciel, donc la bijectivité de `S`. L’identité
+`LHR = diag(S,D)` donne alors :
+
+\[
+H\text{ bijectif},
+\qquad
+\ker H=0,
+\qquad
+\dim\ker H=0.
+\]
+
+Le Green n’est plus seulement défini sur `(ker H)ᗮ` : il devient l’inverse
+borné du Hessien sur tout l’espace de Hilbert commun.
+
+La façade Candidate-A correspondante est :
+
+```lean
+global_candidateA_hessian_schur_determinant_frontier_gate
+```
+
+et le scalaire public est :
+
+```lean
+globalCandidateAHessianFiniteSchurDeterminant
+```
+
+Le module intermédiaire
+
+```text
+P0EFTJanusProgramPGlobalHessianNondegenerateSchurFrontier4D
+```
+
+reste disponible lorsque la bijectivité de `S` est connue autrement qu’au
+moyen de son déterminant.
+
+## 8. Travail analytique restant
 
 La classification globale du noyau est maintenant remplacée par les tâches
 naturelles suivantes :
@@ -190,7 +242,9 @@ naturelles suivantes :
 1. choisir les modes de référence F ;
 2. calculer les quatre blocs bornés réels du Hessien Candidate-A ;
 3. démontrer l’inversibilité du bloc complémentaire D ;
-4. calculer le noyau de la matrice/opérateur fini S = A - B D⁻¹ C.
+4. calculer le noyau du Schur fini S = A - B D⁻¹ C ;
+5. sur la strate sans zéro-mode, calculer et montrer non nul
+   Δ_Schur = det(Mat(S)).
 ```
 
 La coordonnée réduite, l’image fermée, la finitude du noyau, le gap, le Green et
