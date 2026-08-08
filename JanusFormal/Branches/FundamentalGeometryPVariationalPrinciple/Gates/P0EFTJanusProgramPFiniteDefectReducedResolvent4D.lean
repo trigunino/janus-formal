@@ -265,22 +265,20 @@ theorem finiteDefectReducedRealResolvent_opNorm_le
     data spectralParameter hSpectral vector
 
 /-- At spectral parameter zero the real resolvent is the reduced Green
-operator. -/
+operator built from the same full shifted-surjectivity proof. -/
 theorem finiteDefectReducedRealResolvent_zero
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : FiniteDefectCoerciveShiftData operator)
+    (hShiftSurjective : Function.Surjective
+      (finiteDefectShiftedOperator operator data))
     (hZero : |(0 : Real)| < data.coercivityConstant) :
     finiteDefectReducedRealResolvent operator hSelfAdjoint data 0 hZero =
-      finiteDefectReducedInverse operator data
-        (finiteDefectReducedRealShiftCertificate operator hSelfAdjoint data
-          0 hZero).surjective := by
+      finiteDefectReducedInverse operator data hShiftSurjective := by
   apply ContinuousLinearMap.ext
   intro vector
   apply finiteDefectReducedOperator_injective operator data
-  rw [finiteDefectReducedOperator_inverse operator data
-      (finiteDefectReducedRealShiftCertificate operator hSelfAdjoint data
-        0 hZero).surjective]
+  rw [finiteDefectReducedOperator_inverse operator data hShiftSurjective]
   simpa using finiteDefectReducedShiftedOperator_resolvent operator hSelfAdjoint
     data 0 hZero vector
 
