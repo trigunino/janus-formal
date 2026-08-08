@@ -4,8 +4,9 @@ Date : **8 août 2026**.
 
 Ce document prolonge `hessian_global_01_reduced_green.md`. Le même Hessien
 Candidate-A réduit possède maintenant une chaîne explicite allant de la chaleur
-relative à un élément non nul de la ligne de déterminant, puis à une section
-parallèle du modèle de Quillen sur le cercle.
+relative à un élément non nul de la ligne de déterminant, à un atlas local de
+zêta, puis à une section compatible avec la métrique et la connexion de
+Quillen du modèle cercle.
 
 La certification Lean complète reste nécessaire avant de déclarer cette chaîne
 formellement fermée.
@@ -25,12 +26,8 @@ introduit le certificat exact :
 IntrinsicNuclearTraceData operator
 ```
 
-Il contient :
-
-1. une décomposition rang-un sommable ;
-2. la preuve que toute autre décomposition certifiée produit la même trace.
-
-La valeur canonique est :
+Il contient une décomposition rang-un sommable et la preuve que toute autre
+décomposition certifiée produit la même trace. La valeur canonique est :
 
 ```lean
 intrinsicNuclearTrace
@@ -59,7 +56,7 @@ Le module
 P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 ```
 
-étend la trace à la demi-droite réelle et demande exactement :
+demande exactement :
 
 - un contre-terme de petit temps ;
 - sa partie finie intégrée ;
@@ -81,46 +78,47 @@ Le résultat est :
 relativeHeatFinitePartDeterminant
 ```
 
-avec :
-
-```text
-0 < determinant
-determinant ≠ 0
-log determinant = partie finie logarithmique
-```
-
-La spécialisation Candidate-A est :
+avec un déterminant réel strictement positif et non nul. La spécialisation
+Candidate-A est :
 
 ```text
 P0EFTJanusProgramPGlobalHessianFinitePartDeterminant4D
 ```
 
-et le gate :
+avec le gate :
 
 ```lean
 global_candidateA_hessian_finitePart_determinant_gate
 ```
 
-## 3. Indépendance du schéma de soustraction
+## 3. Schéma de soustraction et familles réelles
 
-Deux contre-termes définissent le même déterminant lorsque leurs parties finies
-renormalisées de petit temps coïncident. Cette équivalence est isolée dans :
+Le module
 
 ```text
 P0EFTJanusProgramPRelativeHeatFinitePartSchemeIndependence4D
 ```
 
-avec :
+prouve que deux contre-termes ayant la même partie finie renormalisée donnent
+le même logarithme et le même déterminant.
 
-```lean
-RelativeHeatFinitePartSchemeAgreement
-relative_heat_finite_part_scheme_independence_gate
+La version paramétrée est :
+
+```text
+P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
 ```
 
-Elle donne l'égalité des logarithmes, des déterminants positifs et des
-déterminants complexes à phase fixée.
+Elle construit automatiquement :
 
-## 4. Comparaison zêta
+```text
+dérivée du déterminant positif
+dérivée de sa norme carrée
+positivité de la métrique déterminantielle
+```
+
+à partir de la dérivée du logarithme renormalisé.
+
+## 4. Comparaison zêta et phase
 
 Le module
 
@@ -148,55 +146,22 @@ det_zeta ≠ 0
 ‖det_zeta‖ = det_finitePart
 ```
 
-La partie imaginaire de `zeta'(0)` produit automatiquement une phase unitaire.
-La spécialisation globale est :
+La partie imaginaire de `zeta'(0)` fournit la phase unitaire. La version
+familiale :
 
 ```text
-P0EFTJanusProgramPGlobalHessianZetaDeterminant4D
+P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 ```
 
-avec :
-
-```lean
-global_candidateA_hessian_zeta_determinant_gate
-```
-
-## 5. Ancrage dans la ligne de Quillen
-
-Le module
+identifie point par point :
 
 ```text
-P0EFTJanusProgramPGlobalHessianQuillenMetricAnchor4D
+norme du déterminant zêta = déterminant de partie finie
+Re(connexion zêta) = - dérivée logarithmique de la métrique
+phase normalisée de norme un
 ```
 
-place le déterminant complexe dans la fibre périodique réelle du modèle de
-ligne de déterminant déjà construit :
-
-```lean
-globalCandidateAHessianQuillenMetricAnchor
-```
-
-Il prouve :
-
-```text
-ancrage ≠ 0
-norme²_Quillen(ancrage) = det_finitePart²
-```
-
-Le module
-
-```text
-P0EFTJanusProgramPGlobalHessianQuillenParallelSection4D
-```
-
-transporte ensuite cet ancrage par la connexion plate du modèle cercle. La
-section obtenue :
-
-- garde la même norme de Quillen ;
-- commence au déterminant Candidate-A ;
-- acquiert exactement l'holonomie fermée unitaire au clutching terminal.
-
-## 6. Formule de connexion du déterminant zêta
+## 5. Connexion zêta
 
 Pour une famille à un paramètre, le module
 
@@ -209,14 +174,8 @@ formalise :
 \[
 D(a)=\exp(-\zeta'_a(0)),
 \qquad
-D'(a)+\partial_a\zeta'_a(0)\,D(a)=0.
+D'(a)+\partial_a\zeta'_a(0)D(a)=0.
 \]
-
-Le coefficient de connexion est donc :
-
-```lean
-relativeZetaConnectionCoefficient
-```
 
 Le raccord au coefficient de la connexion de Quillen du cercle est isolé dans :
 
@@ -224,51 +183,140 @@ Le raccord au coefficient de la connexion de Quillen du cercle est isolé dans :
 P0EFTJanusProgramPRelativeZetaCircleConnectionBridge4D
 ```
 
-Une égalité de 1-formes et le clutching terminal suffisent alors à obtenir :
+Une égalité de coefficients et le clutching terminal suffisent alors à obtenir
+le parallélisme, la compatibilité métrique au premier ordre et le recollement
+des extrémités.
+
+## 6. Cocycle et atlas général
+
+Le modèle cercle ne suffit pas à traiter une famille nécessitant plusieurs
+coupures spectrales ou plusieurs branches de zêta. Les modules
 
 ```text
-section parallèle
-variation première de la métrique nulle
-compatibilité de clutching
+P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
+P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
 ```
 
-## 7. Certificat Quillen global conditionnel
+construisent automatiquement, à partir des déterminants locaux non nuls :
 
-Les modules terminaux sont :
+```text
+g_ij = D_j / D_i
+g_ii = 1
+g_jk g_ij = g_ik
+g'_ij + A_j g_ij = g_ij A_i
+```
+
+Les sections locales sont parallèles et se recollent exactement par ce
+cocycle. La spécialisation ancrée au déterminant Candidate-A est :
+
+```text
+P0EFTJanusProgramPGlobalHessianZetaDeterminantAtlas4D
+```
+
+avec :
+
+```lean
+global_candidateA_hessian_zeta_determinant_atlas_gate
+```
+
+## 7. Ancrage et section du modèle cercle
+
+Le module
+
+```text
+P0EFTJanusProgramPGlobalHessianQuillenMetricAnchor4D
+```
+
+place le déterminant complexe dans la fibre périodique réelle du modèle de
+ligne de déterminant. Il prouve :
+
+```text
+ancrage ≠ 0
+norme²_Quillen(ancrage) = det_finitePart²
+```
+
+Le module
+
+```text
+P0EFTJanusProgramPGlobalHessianQuillenParallelSection4D
+```
+
+transporte cet ancrage par la connexion plate existante. La section garde sa
+norme, commence au déterminant Candidate-A et acquiert exactement l'holonomie
+fermée unitaire au clutching terminal.
+
+## 8. Fermeture Quillen conditionnelle
+
+Les modules
 
 ```text
 P0EFTJanusProgramPGlobalHessianQuillenFamilyBridge4D
 P0EFTJanusProgramPGlobalHessianQuillenCertificate4D
-P0EFTJanusProgramPGlobalHessianZetaQuillenFrontier4D
+P0EFTJanusProgramPGlobalHessianQuillenClosure4D
 ```
 
-Le gate final conditionnel est :
+assemblent la géométrie topologique du modèle cercle et la section analytique
+Candidate-A. Le gate conditionnel est :
 
 ```lean
-global_candidateA_hessian_quillen_certificate_gate
+global_candidateA_hessian_quillen_global_closure_gate
 ```
 
-Sa sortie contient :
+Sa sortie contient la ligne de rang un, la métrique, la connexion plate,
+l'holonomie unitaire, la section analytique non nulle et son clutching.
 
-- un déterminant zêta global non nul au point physique ;
-- une section partout non nulle de la ligne clutched ;
-- l'équation de parallélisme ;
-- la variation métrique nulle ;
-- le clutching exact aux extrémités.
+## 9. Façade finale cohérente
 
-## 8. Frontière analytique réelle
-
-Au-delà du certificat H10--H14 concret, trois paquets déterminantiels restent à
-construire pour la géométrie Janus effective :
+La façade
 
 ```text
-1. unicité intrinsèque de la trace nucléaire relative à tout temps positif ;
-2. asymptotique petit temps et partie finie, uniforme dans la famille ;
-3. continuation de Mellin/zêta et identification de sa 1-forme avec
-   Bismut--Freed.
+P0EFTJanusProgramPGlobalHessianQuillenFinalFrontier4D
 ```
 
-Le premier est un théorème de trace nucléaire. Le deuxième est un calcul local
-de coefficients de chaleur. Le troisième est le théorème de famille qui
-transforme le modèle cercle déjà construit en véritable ligne de Quillen du
-Hessien global Candidate-A.
+interdit que le bridge cercle, l'atlas multi-charts et la famille de métrique
+proviennent de déterminants zêta indépendants. Son entrée :
+
+```lean
+GlobalCandidateAHessianQuillenFinalFrontierData4D
+```
+
+contient des égalités explicites identifiant :
+
+```text
+le déterminant de l'atlas au déterminant du bridge
+la famille zêta de la métrique à la famille zêta du bridge
+```
+
+Le gate terminal est :
+
+```lean
+global_candidateA_hessian_quillen_final_frontier_gate
+```
+
+Il fournit simultanément :
+
+- la fermeture Quillen du modèle cercle ;
+- le certificat d'atlas de ligne ;
+- l'égalité de norme au point physique ;
+- la variation de la métrique par la partie réelle de la connexion ;
+- la phase unitaire à tout paramètre.
+
+## 10. Frontière analytique réelle
+
+Au-delà du certificat H10--H14 concret, les résultats encore substantiels pour
+la géométrie Janus effective sont maintenant précisément :
+
+```text
+1. prouver l'unicité intrinsèque de la trace nucléaire relative pour la
+   véritable famille d'opérateurs ;
+2. construire les coefficients de chaleur et la partie finie uniformément en
+   paramètre ;
+3. produire la continuation de Mellin/zêta et sa différentiabilité familiale ;
+4. identifier la 1-forme analytique obtenue avec la connexion de
+   Bismut--Freed, puis vérifier les égalités de cohérence exigées par la façade
+   finale.
+```
+
+Les cocycles, l'atlas, les lois de jauge, la métrique, la phase, le clutching et
+l'assemblage terminal ne sont plus des tâches séparées : ils sont produits par
+les gates dès que ces entrées analytiques sont construites.
