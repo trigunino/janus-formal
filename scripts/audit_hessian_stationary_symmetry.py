@@ -27,6 +27,11 @@ REQUIRED = {
         "global_candidateA_hessian_canonicalSix_stationarySymmetry_frontier_gate",
         "global_candidateA_hessian_canonicalSix_stationarySymmetry_exact_count",
     ),
+    "P0EFTJanusProgramPGlobalHessianNoetherZeroModeFrontier4D.lean": (
+        "global_candidateA_hessian_noether_zeroMode_frontier_gate",
+        "global_candidateA_hessian_noether_curve_frontier_gate",
+        "global_candidateA_hessian_noether_action_frontier_gate",
+    ),
 }
 
 FORBIDDEN = (
@@ -83,6 +88,7 @@ def main() -> int:
     print("- Candidate-A base stationarity")
     print("- actual Riesz kernel and no-hidden-mode Garding")
     print("- canonical-six H10-H14 terminal closure")
+    print("- public Noether zero-mode facade")
     return 0
 
 
