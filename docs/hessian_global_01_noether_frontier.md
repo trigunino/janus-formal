@@ -1,4 +1,4 @@
-# HESSIAN-GLOBAL-01 — frontière de Noether des zéro-modes
+# HESSIAN-GLOBAL-01 — frontière d’invariance de l’action
 
 Date : **9 août 2026**.
 
@@ -53,12 +53,8 @@ D\mathcal S(x)[v]=0
 et démontre :
 
 \[
-D^2\mathcal S(x_0)[w,v]=0
-\]
-
-pour toute direction `w`. Si le Hessien est symétrique, alors également :
-
-\[
+D^2\mathcal S(x_0)[w,v]=0,
+\qquad
 D^2\mathcal S(x_0)[v,w]=0.
 \]
 
@@ -96,7 +92,7 @@ Sa seconde dérivée est exactement :
 globalCandidateACommonAugmentedHessian
 ```
 
-et son représentant de Riesz est exactement l’opérateur H12 affiché :
+et son représentant de Riesz est l’opérateur H12 affiché :
 
 ```lean
 globalCandidateAActualKernelOperator
@@ -112,23 +108,10 @@ contient seulement les vecteurs et leurs identités d’invariance de l’action
 L’équation `H v = 0` est construite par différentiation ; elle n’est plus un
 champ indépendant du paquet analytique.
 
-La route plus générale fondée directement sur la première variation reste
-exportée par :
-
-```text
-P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D
-```
-
 ## 3. Orthogonalité et absence de modes cachés
 
-Les modes physiques peuvent être présentés comme des vecteurs non nuls et deux
-à deux orthogonaux. Le module
-
-```text
-P0EFTJanusProgramPGlobalCandidateAActualNoetherOrthogonalGarding4D
-```
-
-utilise cette orthogonalité pour dériver leur indépendance linéaire.
+Les modes physiques sont présentés comme des vecteurs non nuls et deux à deux
+orthogonaux. Cette orthogonalité dérive leur indépendance linéaire.
 
 Le sous-espace engendré est fini-dimensional ; sa projection orthogonale est
 donc construite automatiquement. Une estimation de Gårding avec défaut porté
@@ -141,15 +124,15 @@ orthogonal à leur span. Il en résulte :
 \dim\ker H=\#\{i\}.
 \]
 
-Il n’est donc plus nécessaire de fournir :
+Il n’est plus nécessaire de fournir :
 
 ```text
 une équivalence choisie avec ker H
 une projection de défaut
-une preuve séparée qu’il n’existe pas de mode caché
+une preuve séparée d’absence de mode caché
 ```
 
-## 4. Gårding du Hessien total héritée de l’opérateur principal
+## 4. Gårding du Hessien total héritée du principal
 
 L’opérateur Candidate-A possède la décomposition canonique :
 
@@ -163,19 +146,16 @@ Le module
 P0EFTJanusProgramPGlobalCandidateAActionTranslationStablePhysicalForm4D
 ```
 
-ne demande pas une estimation de Gårding indépendante pour `H`. Il utilise :
+utilise :
 
-1. une estimation de Gårding pour l’opérateur principal `A` ;
-2. la petite norme de la véritable forme physique H11 :
-   \[
-   \|B_{\mathrm{phys}}\|<c;
-   \]
-3. la borne de Riesz déjà démontrée :
+1. une estimation de Gårding pour le principal `A` ;
+2. la petite norme de la véritable forme physique H11 ;
+3. la borne de Riesz
    \[
    \|K_{\mathrm{phys}}\|\leq\|B_{\mathrm{phys}}\|.
    \]
 
-La borne inférieure universelle d’une perturbation bornée donne alors :
+Il en déduit :
 
 \[
 (c-\|K_{\mathrm{phys}}\|)\|x\|^2
@@ -184,40 +164,90 @@ La borne inférieure universelle d’une perturbation bornée donne alors :
 C\sum_i\langle x,v_i\rangle^2.
 \]
 
-Le coefficient de gauche est strictement positif. Les modes n’ont pas besoin
-d’être annulés séparément par `A` et `K` : leur invariance concerne directement
-l’action totale et fournit `H v_i=0`.
+Les modes n’ont pas besoin d’être annulés séparément par `A` et `K` : leur
+invariance concerne l’action totale et fournit directement `H v_i=0`.
 
-## 5. Façades terminales
+## 5. Petite norme H11 calculée sur le cœur dense
 
-Plusieurs niveaux compatibles sont exportés.
+L’extension H11 est construite canoniquement depuis une estimation bilinéaire
+sur le cœur lisse dense. Le module
 
-### Identité directionnelle de Noether
+```text
+P0EFTJanusProgramPDenseBilinearOpNorm4D
+```
+
+démontre le principe général : si
+
+\[
+|B(\iota x,\iota y)|
+\leq C\|\iota x\|\|\iota y\|
+\]
+
+sur une image dense, alors la forme bilinéaire continue complétée vérifie :
+
+\[
+\|B\|\leq C.
+\]
+
+La spécialisation Candidate-A est :
+
+```text
+P0EFTJanusProgramPGlobalCandidateASevenPhysicalExtensionNorm4D
+```
+
+La constante canonique
+
+```lean
+globalCandidateACanonicalSevenPhysicalConstant
+```
+
+est celle du vrai Hessien physique à sept blocs. Elle est calculée à partir :
+
+```text
+borne cœur → chart
+normes des six Hessiennes locales canoniques
+projection de bord construite depuis la même borne
+norme du Hessien Robin H10
+```
+
+Le module
+
+```text
+P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalSmallness4D
+```
+
+remplace donc l’hypothèse abstraite
+
+```text
+‖physical.form‖ < c
+```
+
+par l’inégalité scalaire explicite
+
+```text
+globalCandidateACanonicalSevenPhysicalConstant ... < c.
+```
+
+L’ancienne inégalité sur la forme complétée est une conséquence.
+
+## 6. Façades terminales
+
+Les routes intermédiaires restent exportées :
 
 ```lean
 global_candidateA_hessian_canonicalSix_noether_frontier_gate
-```
-
-### Noether + orthogonalité
-
-```lean
 global_candidateA_hessian_canonicalSix_noetherOrthogonal_frontier_gate
-```
-
-### Noether + Gårding du principal + petite forme physique
-
-```lean
 global_candidateA_hessian_canonicalSix_noetherStable_frontier_gate
-```
-
-### Invariance de l’action + Gårding du principal + petite forme physique
-
-```lean
 global_candidateA_hessian_canonicalSix_actionSymmetryStable_frontier_gate
 ```
 
-Le dernier gate est la route préférée. Après la famille locale H10-réduite, il
-ne demande que deux paquets analytiques :
+La route préférée est maintenant :
+
+```lean
+global_candidateA_hessian_canonicalSix_actionSymmetryExplicitSmallness_frontier_gate
+```
+
+Après la famille locale H10-réduite, elle ne demande que deux paquets :
 
 ```text
 1. la borne du cœur lisse vers le véritable chart physique ;
@@ -225,11 +255,11 @@ ne demande que deux paquets analytiques :
    - les translations qui préservent l’action augmentée ;
    - leur non-annulation et leur orthogonalité ;
    - Gårding pour le principal BRST–SpinC–LL ;
-   - ‖physical.form‖ < constante de Gårding ;
+   - constante physique dense-core < constante de Gårding ;
    - la stationnarité LL.
 ```
 
-Il construit ensuite :
+Elle construit :
 
 ```text
 H10 same-action Robin
@@ -243,22 +273,22 @@ résolvante réelle et stabilité quantitative
 H14 certificat terminal
 ```
 
-## 6. Travail physique restant
+## 7. Travail physique restant
 
 La frontière analytique est désormais ramenée à :
 
 ```text
 1. écrire les transformations infinitésimales physiques dans le Hilbert commun ;
-2. démontrer S(x+t·v)=S(x) sur le germe admissible pour chacune d’elles ;
+2. démontrer S(x+t·v)=S(x) sur le germe admissible ;
 3. vérifier qu’elles sont non nulles et orthogonales par secteur ;
-4. prouver Gårding pour l’opérateur principal BRST–SpinC–LL ;
-5. démontrer que la norme de la forme physique H11 est plus petite que la
-   constante coercive du principal ;
+4. prouver Gårding pour le principal BRST–SpinC–LL ;
+5. calculer la constante dense-core des sept blocs et montrer qu’elle est
+   strictement plus petite que la constante coercive du principal ;
 6. établir la borne du cœur lisse vers le chart physique.
 ```
 
 La preuve `H v = 0`, l’indépendance, la projection finie, l’absence de modes
-cachés, la Gårding du total, le gap et les conclusions Fredholm ne sont plus des
-obligations indépendantes.
+cachés, la Gårding du total, la norme de l’extension H11, le gap et les
+conclusions Fredholm ne sont plus des obligations indépendantes.
 
 La chaîne reste à certifier par un build Lean complet.
