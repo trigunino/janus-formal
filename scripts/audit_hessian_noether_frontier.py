@@ -70,6 +70,17 @@ REQUIRED = {
         "GlobalCandidateAActionTranslationCanonicalSmallnessData4D",
         "global_candidateA_canonical_physical_smallness_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateASectorActionTranslationCanonicalSmallness4D.lean": (
+        "GlobalCandidateASectorActionTranslationCanonicalSmallnessData4D",
+        "GlobalCandidateASectorActionTranslationCanonicalSmallnessData4D.toGlobal",
+        "GlobalCandidateASectorActionTranslationCanonicalSmallnessData4D.kernel_finrank_eq_sector_sum",
+        "global_candidateA_sector_action_translation_canonical_smallness_gate",
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAProfileActionTranslationCanonicalSmallness4D.lean": (
+        "GlobalCandidateAProfileActionTranslationCanonicalSmallnessData4D",
+        "GlobalCandidateAProfileActionTranslationCanonicalSmallnessData4D.kernel_finrank_eq_profile_sum",
+        "global_candidateA_profile_action_translation_canonical_smallness_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_noether_frontier_gate",
     ),
@@ -84,6 +95,14 @@ REQUIRED = {
     ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryExplicitSmallnessFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_actionSymmetryExplicitSmallness_frontier_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixSectorActionSymmetryExplicitSmallnessFrontier4D.lean": (
+        "global_candidateA_hessian_canonicalSix_sectorActionSymmetryExplicitSmallness_frontier_gate",
+        "global_candidateA_hessian_canonicalSix_sectorActionSymmetryExplicitSmallness_exact_count",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixProfileActionSymmetryExplicitSmallnessFrontier4D.lean": (
+        "global_candidateA_hessian_canonicalSix_profileActionSymmetryExplicitSmallness_frontier_gate",
+        "global_candidateA_hessian_canonicalSix_profileActionSymmetryExplicitSmallness_exact_count",
     ),
 }
 
@@ -147,7 +166,9 @@ def main() -> int:
     print("- Garding excludes hidden zero modes")
     print("- dense-core constants bound the completed H11 form")
     print("- principal Garding plus explicit H11 smallness")
-    print("- terminal H10--H14 action-symmetry frontier")
+    print("- five D10-free sector multiplicities")
+    print("- numerical-profile exact kernel count")
+    print("- terminal H10--H14 action-symmetry frontiers")
     return 0
 
 
