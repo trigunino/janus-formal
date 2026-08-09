@@ -7,8 +7,11 @@ on:
       - agent/hessian-spinc-maximal-domain
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNoetherHessianKernel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualNoether*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActionTranslation*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixNoether*Frontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryStableFrontier4D.lean"
       - "scripts/audit_hessian_noether_frontier.py"
       - "docs/hessian_global_01_noether_frontier.md"
       - ".github/workflows/program-p-hessian-noether-frontier.yml"
@@ -18,8 +21,11 @@ on:
   pull_request:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNoetherHessianKernel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualNoether*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActionTranslation*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixNoether*Frontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryStableFrontier4D.lean"
       - "scripts/audit_hessian_noether_frontier.py"
       - "docs/hessian_global_01_noether_frontier.md"
       - ".github/workflows/program-p-hessian-noether-frontier.yml"
@@ -37,7 +43,7 @@ concurrency:
 
 jobs:
   audit:
-    name: Audit — Noether Hessian architecture
+    name: Audit — action symmetry and Noether Hessian architecture
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +54,7 @@ jobs:
         run: python scripts/audit_hessian_noether_frontier.py
 
   generic-noether:
-    name: Lean — generic Noether Hessian kernel
+    name: Lean — generic action symmetry and Noether kernel
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -70,9 +76,10 @@ jobs:
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNoetherHessianKernel4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D
 
   candidate-noether:
-    name: Lean — Candidate-A Noether modes and Garding
+    name: Lean — Candidate-A action symmetries and stable Garding
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -94,12 +101,14 @@ jobs:
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualNoetherGarding4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualNoetherOrthogonalGarding4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualNoetherStablePhysicalForm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActionTranslationStablePhysicalForm4D
 
   terminal:
-    name: Lean — terminal canonical-six Noether frontiers
+    name: Lean — terminal canonical-six action-symmetry frontiers
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -117,9 +126,10 @@ jobs:
           restore-keys: |
             program-p-build-${{ runner.os }}-
             hessian-noether-candidate-${{ runner.os }}-
-      - name: Build terminal Noether façades
+      - name: Build terminal action-symmetry façades
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherFrontier4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherOrthogonalFrontier4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherStableFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryStableFrontier4D
