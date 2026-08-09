@@ -17,51 +17,61 @@ preuve séparée de l’équation opératorielle
 H v=0.
 \]
 
-La nouvelle route dérive cette équation de l’action elle-même.
+La nouvelle route dérive cette équation de l’invariance de l’action elle-même.
 
-## 1. Identité de Noether sur un germe
+## 1. Invariance de l’action et identité de Noether
 
-Pour une action scalaire `C²`
-
-\[
-\mathcal S:E\to\mathbb R
-\]
-
-et une direction constante `v`, on suppose que la première variation dans la
-direction `v` s’annule sur un voisinage du point de base :
+La prémisse physique la plus primitive utilisée ici est l’invariance locale de
+l’action scalaire `C²` sous la translation engendrée par un mode `v` :
 
 \[
-D\mathcal S(x)[v]=0.
+\mathcal S(x+t v)=\mathcal S(x)
 \]
+
+pour les paramètres `t` suffisamment petits et les configurations `x` dans un
+germe autour du point de base.
 
 Le module
+
+```text
+P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D
+```
+
+différentie d’abord cette identité et obtient l’invariance de la première
+variation le long de l’orbite affine. Le module
 
 ```text
 P0EFTJanusProgramPNoetherHessianKernel4D
 ```
 
-différentie cette identité et démontre :
+différentie ensuite l’identité directionnelle
+
+\[
+D\mathcal S(x)[v]=0
+\]
+
+et démontre :
 
 \[
 D^2\mathcal S(x_0)[w,v]=0
 \]
 
-pour toute direction `w`. Si le Hessien est symétrique, alors aussi :
+pour toute direction `w`. Si le Hessien est symétrique, alors également :
 
 \[
 D^2\mathcal S(x_0)[v,w]=0.
 \]
 
-Par représentation de Riesz, le mode appartient au noyau de l’opérateur du
-Hessien :
+Par représentation de Riesz :
 
 \[
 H v=0.
 \]
 
-Le gate générique est :
+Les gates génériques sont :
 
 ```lean
+action_translation_symmetry_hessian_kernel_gate
 noether_hessian_kernel_gate
 ```
 
@@ -70,10 +80,10 @@ noether_hessian_kernel_gate
 Le module
 
 ```text
-P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D
+P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 ```
 
-utilise l’action quadratique augmentée déjà construite sur l’unique complétion
+applique cette chaîne à l’unique action augmentée Candidate-A sur la complétion
 D10-free :
 
 ```lean
@@ -92,37 +102,38 @@ et son représentant de Riesz est exactement l’opérateur H12 affiché :
 globalCandidateAActualKernelOperator
 ```
 
-Une famille finie
+Une famille
 
 ```lean
-GlobalCandidateAActualNoetherModeFamily4D
+GlobalCandidateAActionTranslationSymmetryModes4D
 ```
 
-ne contient donc plus de champ `operator (vector mode) = 0`. Elle contient les
-vecteurs et leurs identités de Noether au niveau de la première variation.
-L’annulation par le Hessien est un théorème.
+contient seulement les vecteurs et leurs identités d’invariance de l’action.
+L’équation `H v = 0` est construite par différentiation ; elle n’est plus un
+champ indépendant du paquet analytique.
+
+La route plus générale fondée directement sur la première variation reste
+exportée par :
+
+```text
+P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D
+```
 
 ## 3. Orthogonalité et absence de modes cachés
 
-Le module
+Les modes physiques peuvent être présentés comme des vecteurs non nuls et deux
+à deux orthogonaux. Le module
 
 ```text
 P0EFTJanusProgramPGlobalCandidateAActualNoetherOrthogonalGarding4D
 ```
 
-ajoute seulement :
+utilise cette orthogonalité pour dériver leur indépendance linéaire.
 
-```text
-modes non nuls
-modes deux à deux orthogonaux
-une estimation de Gårding globale
-stationnarité LL
-```
-
-L’orthogonalité donne l’indépendance linéaire. La projection orthogonale sur le
-sous-espace engendré par les modes est construite automatiquement. L’estimation
-de Gårding annule tout vecteur du noyau orthogonal à ce sous-espace. On obtient
-ainsi :
+Le sous-espace engendré est fini-dimensional ; sa projection orthogonale est
+donc construite automatiquement. Une estimation de Gårding avec défaut porté
+par les coefficients de ces modes force ensuite à zéro tout élément du noyau
+orthogonal à leur span. Il en résulte :
 
 \[
 \ker H=\operatorname{span}\{v_i\},
@@ -130,11 +141,15 @@ ainsi :
 \dim\ker H=\#\{i\}.
 \]
 
-La finitude du noyau, le gap sur son orthogonal, l’image fermée, Fredholm,
-l’indice zéro, le Green réduit et la résolvante sont ensuite dérivés par les
-gates déjà installés.
+Il n’est donc plus nécessaire de fournir :
 
-## 4. Gårding du total héritée du principal
+```text
+une équivalence choisie avec ker H
+une projection de défaut
+une preuve séparée qu’il n’existe pas de mode caché
+```
+
+## 4. Gårding du Hessien total héritée de l’opérateur principal
 
 L’opérateur Candidate-A possède la décomposition canonique :
 
@@ -145,13 +160,13 @@ H=A_{\mathrm{BRST-SpinC-LL}}+K_{\mathrm{phys}}.
 Le module
 
 ```text
-P0EFTJanusProgramPGlobalCandidateAActualNoetherStablePhysicalForm4D
+P0EFTJanusProgramPGlobalCandidateAActionTranslationStablePhysicalForm4D
 ```
 
 ne demande pas une estimation de Gårding indépendante pour `H`. Il utilise :
 
 1. une estimation de Gårding pour l’opérateur principal `A` ;
-2. la petite norme de la forme physique H11 :
+2. la petite norme de la véritable forme physique H11 :
    \[
    \|B_{\mathrm{phys}}\|<c;
    \]
@@ -160,7 +175,7 @@ ne demande pas une estimation de Gårding indépendante pour `H`. Il utilise :
    \|K_{\mathrm{phys}}\|\leq\|B_{\mathrm{phys}}\|.
    \]
 
-Il en déduit :
+La borne inférieure universelle d’une perturbation bornée donne alors :
 
 \[
 (c-\|K_{\mathrm{phys}}\|)\|x\|^2
@@ -169,15 +184,15 @@ Il en déduit :
 C\sum_i\langle x,v_i\rangle^2.
 \]
 
-Le coefficient restant est strictement positif. Les modes n’ont pas besoin
-d’être annulés séparément par `A` et `K` : leur identité de Noether concerne
-directement l’action totale et fournit `H v_i=0`.
+Le coefficient de gauche est strictement positif. Les modes n’ont pas besoin
+d’être annulés séparément par `A` et `K` : leur invariance concerne directement
+l’action totale et fournit `H v_i=0`.
 
 ## 5. Façades terminales
 
-Trois niveaux sont exportés.
+Plusieurs niveaux compatibles sont exportés.
 
-### Noether + indépendance
+### Identité directionnelle de Noether
 
 ```lean
 global_candidateA_hessian_canonicalSix_noether_frontier_gate
@@ -195,36 +210,55 @@ global_candidateA_hessian_canonicalSix_noetherOrthogonal_frontier_gate
 global_candidateA_hessian_canonicalSix_noetherStable_frontier_gate
 ```
 
-Le dernier gate est la route préférée. Après la famille locale H10-réduite, il
-ne demande que :
+### Invariance de l’action + Gårding du principal + petite forme physique
 
-```text
-1. la borne du cœur lisse vers le chart physique ;
-2. les modes de Noether orthogonaux ;
-3. Gårding pour le principal ;
-4. ‖physical.form‖ < constante de Gårding ;
-5. la stationnarité LL.
+```lean
+global_candidateA_hessian_canonicalSix_actionSymmetryStable_frontier_gate
 ```
 
-Il retourne la fermeture H10–H14, le noyau exact, son nombre de modes, le gap,
-Fredholm, l’indice zéro, le Green et la résolvante.
+Le dernier gate est la route préférée. Après la famille locale H10-réduite, il
+ne demande que deux paquets analytiques :
+
+```text
+1. la borne du cœur lisse vers le véritable chart physique ;
+2. un paquet contenant :
+   - les translations qui préservent l’action augmentée ;
+   - leur non-annulation et leur orthogonalité ;
+   - Gårding pour le principal BRST–SpinC–LL ;
+   - ‖physical.form‖ < constante de Gårding ;
+   - la stationnarité LL.
+```
+
+Il construit ensuite :
+
+```text
+H10 same-action Robin
+H13 vrai Hessien Candidate-A
+H11 extension canonique des sept blocs
+noyau exact et nombre de zéro-modes
+H12 Fredholm et indice zéro
+gap sur (ker H)ᗮ
+Green réduit
+résolvante réelle et stabilité quantitative
+H14 certificat terminal
+```
 
 ## 6. Travail physique restant
 
-Cette réduction isole désormais les tâches suivantes :
+La frontière analytique est désormais ramenée à :
 
 ```text
 1. écrire les transformations infinitésimales physiques dans le Hilbert commun ;
-2. démontrer l’invariance de première variation de l’action augmentée le long
-   de ces directions ;
-3. vérifier leur non-annulation et leur orthogonalité par secteur ;
+2. démontrer S(x+t·v)=S(x) sur le germe admissible pour chacune d’elles ;
+3. vérifier qu’elles sont non nulles et orthogonales par secteur ;
 4. prouver Gårding pour l’opérateur principal BRST–SpinC–LL ;
 5. démontrer que la norme de la forme physique H11 est plus petite que la
-   constante coercive du principal.
+   constante coercive du principal ;
+6. établir la borne du cœur lisse vers le chart physique.
 ```
 
 La preuve `H v = 0`, l’indépendance, la projection finie, l’absence de modes
-cachés, le gap et les conclusions Fredholm ne sont plus des obligations
-indépendantes.
+cachés, la Gårding du total, le gap et les conclusions Fredholm ne sont plus des
+obligations indépendantes.
 
 La chaîne reste à certifier par un build Lean complet.
