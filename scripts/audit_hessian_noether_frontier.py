@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static audit of the Candidate-A Noether/action-symmetry Hessian frontier."""
+"""Static audit of the Candidate-A action-symmetry Hessian frontier."""
 
 from __future__ import annotations
 
@@ -23,6 +23,10 @@ REQUIRED = {
         "gradientOrbitInvariant_of_actionTranslationInvariant",
         "action_translation_symmetry_hessian_kernel_gate",
     ),
+    "P0EFTJanusProgramPDenseBilinearOpNorm4D.lean": (
+        "continuousBilinear_opNorm_le_of_dense",
+        "dense_bilinear_opNorm_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D.lean": (
         "GlobalCandidateAActualNoetherModeAt",
         "GlobalCandidateAActualNoetherModeFamily4D",
@@ -44,6 +48,10 @@ REQUIRED = {
         "GlobalCandidateAActualNoetherOrthogonalGardingData4D.toOrthogonalGarding",
         "global_candidateA_actual_noether_orthogonal_garding_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateASevenPhysicalExtensionNorm4D.lean": (
+        "globalCandidateASevenPhysicalExtension_form_opNorm_le",
+        "global_candidateA_seven_physical_extension_norm_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualNoetherStablePhysicalForm4D.lean": (
         "GlobalCandidateAActualNoetherStablePhysicalFormData4D",
         "GlobalCandidateAActualNoetherStablePhysicalFormData4D.physical_operator_small",
@@ -56,6 +64,12 @@ REQUIRED = {
         "GlobalCandidateAActionTranslationStablePhysicalFormData4D.toOrthogonalGarding",
         "global_candidateA_action_translation_stable_physical_form_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalSmallness4D.lean": (
+        "globalCandidateACanonicalSevenPhysicalConstant",
+        "globalCandidateACanonicalSixPhysicalExtension_form_opNorm_le",
+        "GlobalCandidateAActionTranslationCanonicalSmallnessData4D",
+        "global_candidateA_canonical_physical_smallness_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_noether_frontier_gate",
     ),
@@ -67,6 +81,9 @@ REQUIRED = {
     ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryStableFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_actionSymmetryStable_frontier_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryExplicitSmallnessFrontier4D.lean": (
+        "global_candidateA_hessian_canonicalSix_actionSymmetryExplicitSmallness_frontier_gate",
     ),
 }
 
@@ -119,19 +136,18 @@ def main() -> int:
         errors.append(f"missing documentation: {DOC.relative_to(ROOT)}")
 
     if errors:
-        print("Hessian Noether frontier audit: FAILED", file=sys.stderr)
+        print("Hessian action-symmetry frontier audit: FAILED", file=sys.stderr)
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
 
-    print("Hessian Noether frontier audit: OK")
-    print("- germ-level Noether identity implies Hessian kernel")
-    print("- exact action translation symmetry implies Noether identity")
-    print("- actual Candidate-A Riesz operator annihilation")
-    print("- automatic finite-span splitting and no-hidden-mode closure")
-    print("- orthogonality-derived independence")
-    print("- principal Garding plus small H11 form")
-    print("- terminal canonical-six action-symmetry frontier")
+    print("Hessian action-symmetry frontier audit: OK")
+    print("- action invariance implies the actual Hessian kernel equation")
+    print("- orthogonality supplies linear independence")
+    print("- Garding excludes hidden zero modes")
+    print("- dense-core constants bound the completed H11 form")
+    print("- principal Garding plus explicit H11 smallness")
+    print("- terminal H10--H14 action-symmetry frontier")
     return 0
 
 
