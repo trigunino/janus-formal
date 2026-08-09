@@ -62,7 +62,7 @@ Après conjugaison du véritable Hessien augmenté par la décomposition
 orthogonale, les quatre blocs
 
 \[
-A, B, C, D
+A,\ B,\ C,\ D
 \]
 
 sont extraits automatiquement. La seule hypothèse analytique infinie restante
@@ -93,7 +93,96 @@ Le point d’entrée général est :
 global_candidateA_hessian_canonicalSix_orthogonalSchurNamedVectors_frontier_gate
 ```
 
-## 4. Strate sans zéro-mode
+## 4. Zéro-modes nommés calculés dans `ker S`
+
+L’équivalence
+
+\[
+\ker H\simeq\ker S
+\]
+
+ne doit pas conduire à choisir ensuite une base indépendante dans l’espace de
+Hilbert complet. Le module
+
+```text
+P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D
+```
+
+prend une base physique finie
+
+```lean
+basis : Basis ZeroMode ℝ (ker S)
+```
+
+et la transporte par l’inverse exact de l’élimination de Schur. Il produit :
+
+```lean
+FiniteKernelNamedModeFamily H ZeroMode
+```
+
+avec :
+
+- un vrai vecteur ambiant pour chaque label `ZeroMode` ;
+- la preuve que chaque vecteur est annulé par `H` ;
+- une synthèse exacte `(ZeroMode → ℝ) ≃ₗ ker H` ;
+- l’analyse inverse et l’unicité des coefficients ;
+- les égalités
+  \[
+  \dim\ker H=\#ZeroMode\leq\#Mode.
+  \]
+
+La spécialisation Candidate-A et son terminal H10–H14 sont :
+
+```text
+P0EFTJanusProgramPGlobalCandidateAActualSchurNamedZeroMode4D
+P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedKernel4D
+P0EFTJanusProgramPGlobalHessianCanonicalSixSchurNamedZeroModeFrontier4D
+```
+
+Gate :
+
+```lean
+global_candidateA_hessian_canonicalSix_schurNamedZeroMode_frontier_gate
+```
+
+La famille de modes de référence et la famille des zéro-modes peuvent avoir des
+cardinaux différents : le noyau de `S` sélectionne exactement les combinaisons
+qui restent nulles après couplage au complément infini.
+
+## 5. Classification physique du noyau
+
+Les zéro-modes reconstruits peuvent être classés dans les cinq secteurs
+D10-free :
+
+```text
+metric/diffeomorphism
+paired Abelian gauge
+primitive SpinC matter
+longitudinal LL
+boundary/finite-BV
+```
+
+sans supposer que le Hessien complet soit diagonal par secteurs. Le module
+
+```text
+P0EFTJanusProgramPGlobalHessianCanonicalSixSchurSectorModesFrontier4D
+```
+
+démontre :
+
+\[
+\dim\ker H
+=
+\sum_{s}\operatorname{multiplicité}(s).
+\]
+
+Gate :
+
+```lean
+global_candidateA_hessian_canonicalSix_schurSectorModes_frontier_gate
+```
+
+## 6. Strate sans zéro-mode
 
 Le Schur fini possède une matrice dans la base standard de `Mode → ℝ`. Le
 scalaire public est :
@@ -120,7 +209,7 @@ Le Green agit alors sur tout l’espace de Hilbert commun. Le gate terminal est 
 global_candidateA_hessian_canonicalSix_namedOrthogonalSchurDeterminant_frontier_gate
 ```
 
-## 5. Frontière mathématique
+## 7. Frontière mathématique
 
 Hors corrections Lean, les travaux concrets sont maintenant :
 
@@ -129,8 +218,10 @@ Hors corrections Lean, les travaux concrets sont maintenant :
 3. choisir et écrire les vecteurs physiques de référence ;
 4. prouver leur indépendance linéaire ;
 5. démontrer l’inversibilité de `D` sur leur orthogonal ;
-6. calculer le Schur fini et son noyau, ou son déterminant sur la strate
-   non dégénérée.
+6. calculer une base physique de `ker S` et, si utile, classer ses vecteurs par
+   secteur ;
+7. sur la strate non dégénérée, calculer le déterminant fini de `S` et montrer
+   qu’il est non nul.
 
 Il n’est plus nécessaire de fournir :
 
@@ -142,7 +233,7 @@ Il n’est plus nécessaire de fournir :
 - l’image fermée ;
 - un gap spectral abstrait.
 
-## 6. Validation
+## 8. Validation
 
 Audit statique :
 
