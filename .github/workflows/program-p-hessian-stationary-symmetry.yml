@@ -9,6 +9,7 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPStationarySymmetryCurveHessianKernel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAStationarySymmetryZeroModes4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixStationarySymmetryFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianNoetherZeroModeFrontier4D.lean"
       - "scripts/audit_hessian_stationary_symmetry.py"
       - ".github/workflows/program-p-hessian-stationary-symmetry.yml"
       - "lean-toolchain"
@@ -19,6 +20,7 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPStationarySymmetryCurveHessianKernel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAStationarySymmetryZeroModes4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixStationarySymmetryFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianNoetherZeroModeFrontier4D.lean"
       - "scripts/audit_hessian_stationary_symmetry.py"
       - ".github/workflows/program-p-hessian-stationary-symmetry.yml"
       - "lean-toolchain"
@@ -112,7 +114,8 @@ jobs:
           restore-keys: |
             program-p-build-${{ runner.os }}-
             hessian-stationary-candidate-${{ runner.os }}-
-      - name: Build terminal stationary frontier
+      - name: Build terminal stationary and public Noether frontiers
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixStationarySymmetryFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianNoetherZeroModeFrontier4D
