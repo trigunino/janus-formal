@@ -6,11 +6,15 @@ on:
       - dev-branch
       - agent/hessian-spinc-maximal-domain
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPRieszBilinearNorm4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNamedModeKernelStablePerturbation4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNamedModeKernelStablePerturbationBound4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualKernelStablePerturbation4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalFormStablePerturbation4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixStablePerturbationFrontier4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixPhysicalPerturbationFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixPhysicalFormFrontier4D.lean"
       - "scripts/audit_hessian_stable_physical_perturbation.py"
       - "docs/hessian_global_01_stable_physical_perturbation.md"
       - ".github/workflows/program-p-hessian-stable-physical-perturbation.yml"
@@ -19,11 +23,15 @@ on:
       - "lake-manifest.json"
   pull_request:
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPRieszBilinearNorm4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNamedModeKernelStablePerturbation4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNamedModeKernelStablePerturbationBound4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualKernelStablePerturbation4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalFormStablePerturbation4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixStablePerturbationFrontier4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixPhysicalPerturbationFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixPhysicalFormFrontier4D.lean"
       - "scripts/audit_hessian_stable_physical_perturbation.py"
       - "docs/hessian_global_01_stable_physical_perturbation.md"
       - ".github/workflows/program-p-hessian-stable-physical-perturbation.yml"
@@ -51,7 +59,7 @@ jobs:
       - run: python scripts/audit_hessian_stable_physical_perturbation.py
 
   generic:
-    name: Lean — stable named-kernel perturbation
+    name: Lean — Riesz norm and stable named-kernel perturbation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -71,7 +79,9 @@ jobs:
             program-p-reduced-hessian-${{ runner.os }}-
       - run: >-
           lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRieszBilinearNorm4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNamedModeKernelStablePerturbation4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNamedModeKernelStablePerturbationBound4D
 
   candidate:
     name: Lean — Candidate-A canonical stable perturbation
@@ -96,9 +106,10 @@ jobs:
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualKernelStablePerturbation4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalFormStablePerturbation4D
 
   terminal:
-    name: Lean — canonical physical-perturbation H10-H14 terminal
+    name: Lean — canonical physical-form H10-H14 terminal
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -120,3 +131,4 @@ jobs:
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixStablePerturbationFrontier4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixPhysicalPerturbationFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixPhysicalFormFrontier4D
