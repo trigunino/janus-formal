@@ -18,6 +18,12 @@ REQUIRED = {
         "CandidateASectorOrthogonalModeFamily.global_orthogonal",
         "candidateA_sector_mode_assembly_gate",
     ),
+    "P0EFTJanusProgramPCandidateASectorSubspaceAssembly4D.lean": (
+        "CandidateASectorOrthogonalSubspaces",
+        "CandidateASectorSubspaceModeFamily",
+        "CandidateASectorSubspaceModeFamily.toOrthogonalModeFamily",
+        "candidateA_sector_subspace_mode_gate",
+    ),
     "P0EFTJanusProgramPCandidateASectorModeMultiplicity4D.lean": (
         "candidateASectorClassificationFiberEquiv",
         "candidateASectorMultiplicity_eq_card",
@@ -33,6 +39,11 @@ REQUIRED = {
         "GlobalCandidateASectorActionTranslationStablePhysicalFormData4D.toStable",
         "global_candidateA_sector_action_translation_stable_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateASectorSubspaceActionTranslationStablePhysicalForm4D.lean": (
+        "GlobalCandidateASectorSubspaceActionTranslationStablePhysicalFormData4D",
+        "GlobalCandidateASectorSubspaceActionTranslationStablePhysicalFormData4D.toSectorStable",
+        "global_candidateA_sector_subspace_action_translation_stable_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateASectorStableMultiplicity4D.lean": (
         "GlobalCandidateASectorActionTranslationStablePhysicalFormData4D.kernel_finrank_eq_explicit_sector_cards",
         "global_candidateA_sector_stable_explicit_multiplicity_gate",
@@ -45,6 +56,9 @@ REQUIRED = {
     "P0EFTJanusProgramPGlobalHessianCanonicalSixSectorActionSymmetryStableFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_sectorActionSymmetryStable_frontier_gate",
         "global_candidateA_hessian_canonicalSix_sectorActionSymmetryStable_exact_count",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixSectorSubspaceActionSymmetryStableFrontier4D.lean": (
+        "global_candidateA_hessian_canonicalSix_sectorSubspaceActionSymmetryStable_frontier_gate",
     ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixProfileActionSymmetryStableFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_profileActionSymmetryStable_frontier_gate",
@@ -108,10 +122,11 @@ def main() -> int:
 
     print("Hessian sector-mode audit: OK")
     print("- dependent sum of five D10-free mode sectors")
+    print("- orthogonal physical subspaces and inherited cross pairings")
     print("- global nonzero and orthogonality assembly")
     print("- exact classification-fiber cardinalities")
     print("- numerical five-sector multiplicity profile")
-    print("- stable action-symmetry Candidate-A adapter")
+    print("- stable action-symmetry Candidate-A adapters")
     print("- terminal H10-H14 sector-counting facades")
     return 0
 
