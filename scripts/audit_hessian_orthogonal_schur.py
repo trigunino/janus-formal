@@ -32,6 +32,12 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "FiniteModeOrthogonalSchurNamedVectorsData",
         "finite_mode_orthogonal_schur_named_vectors_gate",
     ),
+    "P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D.lean": (
+        "FiniteModeSchurNamedKernelBasisData",
+        "coordinates",
+        "toNamedModeFamily",
+        "finite_mode_schur_named_kernel_modes_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBlock4D.lean": (
         "GlobalCandidateAActualOrthogonalSchurData4D",
         "global_candidateA_actual_orthogonal_schur_block_gate",
@@ -44,6 +50,17 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "GlobalCandidateAActualOrthogonalSchurNamedVectorsData4D",
         "global_candidateA_actual_orthogonal_schur_named_vectors_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateAActualSchurNamedZeroMode4D.lean": (
+        "GlobalCandidateAActualSchurNamedZeroModeData4D",
+        "namedFamily",
+        "namedGap",
+        "global_candidateA_actual_schur_named_zeroMode_gate",
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedKernel4D.lean": (
+        "GlobalCandidateAActualOrthogonalSchurNamedKernelData4D",
+        "toNamedZeroModeData",
+        "global_candidateA_actual_orthogonal_schur_named_kernel_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurDeterminant4D.lean": (
         "globalCandidateAOrthogonalSchurDeterminant",
         "GlobalCandidateAActualOrthogonalSchurDeterminantData4D",
@@ -52,6 +69,16 @@ REQUIRED: dict[str, tuple[str, ...]] = {
     "P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurNamedVectorsFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_orthogonalSchurNamedVectors_frontier_gate",
         "global_candidateA_hessian_orthogonalSchurNamedVectors_kernel_finrank_eq",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixSchurNamedZeroModeFrontier4D.lean": (
+        "globalCandidateACanonicalSixSchurNamedPhysicalExtension",
+        "globalCandidateACanonicalSixSchurNamedActualGap",
+        "global_candidateA_hessian_canonicalSix_schurNamedZeroMode_frontier_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixSchurSectorModesFrontier4D.lean": (
+        "GlobalCandidateAOrthogonalSchurSectorModesData4D",
+        "kernel_finrank_eq_sum",
+        "global_candidateA_hessian_canonicalSix_schurSectorModes_frontier_gate",
     ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurNamedDeterminantFrontier4D.lean": (
         "GlobalCandidateAActualOrthogonalSchurNamedDeterminantData4D",
@@ -120,6 +147,8 @@ def main() -> int:
     print("- finite physical vectors generate their own mode subspace and basis")
     print("- Hilbert projection supplies the canonical orthogonal complement")
     print("- the displayed Hessian supplies all four Schur blocks")
+    print("- a finite basis of ker S reconstructs concrete actual zero modes")
+    print("- named zero modes span exactly ker H and admit sector counts")
     print("- complementary-block invertibility yields the actual-kernel package")
     print("- a finite determinant yields the zero-mode-free full Green operator")
     return 0
