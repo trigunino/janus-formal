@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static audit of the Candidate-A Noether Hessian frontier."""
+"""Static audit of the Candidate-A Noether/action-symmetry Hessian frontier."""
 
 from __future__ import annotations
 
@@ -18,11 +18,21 @@ REQUIRED = {
         "noetherMode_riesz_zero",
         "noether_hessian_kernel_gate",
     ),
+    "P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D.lean": (
+        "ActionTranslationEventuallyInvariantAt",
+        "gradientOrbitInvariant_of_actionTranslationInvariant",
+        "action_translation_symmetry_hessian_kernel_gate",
+    ),
     "P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D.lean": (
         "GlobalCandidateAActualNoetherModeAt",
         "GlobalCandidateAActualNoetherModeFamily4D",
         "globalCandidateAActualNoetherMode_operator_zero",
         "global_candidateA_actual_noether_modes_gate",
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D.lean": (
+        "GlobalCandidateAActionTranslationSymmetryModes4D",
+        "GlobalCandidateAActionTranslationAutomaticSplit4D",
+        "global_candidateA_action_translation_zero_mode_gate",
     ),
     "P0EFTJanusProgramPGlobalCandidateAActualNoetherGarding4D.lean": (
         "GlobalCandidateAActualNoetherGardingData4D",
@@ -40,6 +50,12 @@ REQUIRED = {
         "GlobalCandidateAActualNoetherStablePhysicalFormData4D.toOrthogonalGarding",
         "global_candidateA_actual_noether_stable_physical_form_gate",
     ),
+    "P0EFTJanusProgramPGlobalCandidateAActionTranslationStablePhysicalForm4D.lean": (
+        "GlobalCandidateAActionTranslationStablePhysicalFormData4D",
+        "GlobalCandidateAActionTranslationStablePhysicalFormData4D.physical_operator_small",
+        "GlobalCandidateAActionTranslationStablePhysicalFormData4D.toOrthogonalGarding",
+        "global_candidateA_action_translation_stable_physical_form_gate",
+    ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_noether_frontier_gate",
     ),
@@ -48,6 +64,9 @@ REQUIRED = {
     ),
     "P0EFTJanusProgramPGlobalHessianCanonicalSixNoetherStableFrontier4D.lean": (
         "global_candidateA_hessian_canonicalSix_noetherStable_frontier_gate",
+    ),
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryStableFrontier4D.lean": (
+        "global_candidateA_hessian_canonicalSix_actionSymmetryStable_frontier_gate",
     ),
 }
 
@@ -107,11 +126,12 @@ def main() -> int:
 
     print("Hessian Noether frontier audit: OK")
     print("- germ-level Noether identity implies Hessian kernel")
+    print("- exact action translation symmetry implies Noether identity")
     print("- actual Candidate-A Riesz operator annihilation")
     print("- automatic finite-span splitting and no-hidden-mode closure")
     print("- orthogonality-derived independence")
     print("- principal Garding plus small H11 form")
-    print("- terminal canonical-six Noether frontiers")
+    print("- terminal canonical-six action-symmetry frontier")
     return 0
 
 
