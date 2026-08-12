@@ -44,6 +44,7 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorQuillenAtlas4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorQuillenMetricAnchor4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 
@@ -197,7 +198,7 @@ theorem global_hessian_preferred_five_sector_quillen_closure_gate
     [Fintype NonNullFace] [Fintype NullFace]
     {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
     {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
+      couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     {einsteinScale : Real}
     {hTransverse : HasNoTangentialRadical period hPeriod
