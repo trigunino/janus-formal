@@ -73,7 +73,7 @@ def actualTrace
     {actual : Real → E →L[Real] E}
     {reference : Real → BaseReduced actual →L[Real] BaseReduced actual}
     (data : SelfAdjointKernelComplementBismutFreedFamilyData actual reference) :
-    IntrinsicLogarithmicDerivativeTraceData actualGap.fixedOperator where
+    IntrinsicLogarithmicDerivativeTraceData data.actualGap.fixedOperator where
   family := data.actualDifferentiable
   inverse := data.actualInverse
   traceClass := data.actualTraceClass
