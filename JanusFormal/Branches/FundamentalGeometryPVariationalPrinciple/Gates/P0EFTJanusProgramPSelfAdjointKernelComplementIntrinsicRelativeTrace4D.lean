@@ -121,22 +121,18 @@ theorem SelfAdjointKernelComplementIntrinsicRelativeTraceData.relativeHeat_compa
         relative.referenceOperator time) :=
   (relative.relativeTraceClass time).operator_compact
 
-/-- Intrinsic trace data are unique pointwise: two certificates for the same
-relative heat operator define the same scalar function. -/
-theorem selfAdjointKernelComplementIntrinsicRelativeHeatTrace_unique
+/-- The stored expansion computes the intrinsic trace definitionally. -/
+@[simp]
+theorem SelfAdjointKernelComplementIntrinsicRelativeTraceData.storedTrace_eq
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (first second : SelfAdjointKernelComplementIntrinsicRelativeTraceData operator
+    (relative : SelfAdjointKernelComplementIntrinsicRelativeTraceData operator
       hSelfAdjoint)
-    (hReference : first.referenceOperator = second.referenceOperator)
     (time : HeatTime) :
-    selfAdjointKernelComplementIntrinsicRelativeHeatTrace operator hSelfAdjoint
-        first time =
+    (relative.relativeTraceClass time).expansion.expansionTrace =
       selfAdjointKernelComplementIntrinsicRelativeHeatTrace operator hSelfAdjoint
-        second time := by
-  subst hReference
-  exact intrinsicNuclearTrace_unique
-    (first.relativeTraceClass time) (second.relativeTraceClass time)
+        relative time :=
+  rfl
 
 /-- Public intrinsic actual-kernel relative-trace checkpoint. -/
 theorem self_adjoint_kernel_complement_intrinsic_relative_trace_gate
