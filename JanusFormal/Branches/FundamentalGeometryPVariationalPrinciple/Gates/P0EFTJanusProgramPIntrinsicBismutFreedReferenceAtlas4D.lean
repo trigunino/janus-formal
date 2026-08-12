@@ -155,7 +155,7 @@ theorem finitePart_logDerivative_changeReference
 /-- The generated determinant transitions satisfy the Cech cocycle. -/
 theorem transition_cocycle
     {actual : Real → E →L[Real] E}
-    {reference : Index → Real → E →L[Real] E]
+    {reference : Index → Real → E →L[Real] E}
     (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
     (first second third : Index) (parameter : Real) :
     data.transition second third parameter *
