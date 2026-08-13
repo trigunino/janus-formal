@@ -108,6 +108,23 @@ def complexFredholmDeterminantSection (parameter : Real) :=
     (globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input)
     input.familyIndex.baseFamily.familyIndex.zetaFamily parameter
 
+/-- Exact tensor-line formula for the preferred Candidate-A determinant. -/
+theorem complexFredholmDeterminantSection_eq_zeta_smul_frame
+    (parameter : Real) :
+    complexFredholmDeterminantSection period hPeriod input parameter =
+      relativeHeatMellinZetaFamilyDeterminant
+          input.familyIndex.baseFamily.familyIndex.zetaFamily parameter •
+        (globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input).
+          complexifiedDeterminantFrame parameter :=
+  selfAdjointFredholmZetaDeterminantSection_eq
+    (globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input)
+    input.familyIndex.baseFamily.familyIndex.zetaFamily parameter
+
+/-- The complex coordinate multiplying the actual Fredholm frame never vanishes. -/
+theorem complexFredholmCoordinate_ne_zero (parameter : Real) :
+    (complexFredholmCoordinateFamily period hPeriod input).coordinate parameter ≠ 0 :=
+  (complexFredholmCoordinateFamily period hPeriod input).coordinate_ne_zero parameter
+
 end
 end P0EFTJanusProgramPCandidateAComplexFredholmSection4D
 end JanusFormal
