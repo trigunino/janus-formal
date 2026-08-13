@@ -1,0 +1,39 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminant4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
+
+set_option autoImplicit false
+noncomputable section
+
+open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
+open P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
+open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminant4D
+
+variable {E ZeroMode : Type*}
+  [NormedAddCommGroup E] [NormedSpace Real E]
+  [InnerProductSpace Real E] [CompleteSpace E]
+  [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
+
+namespace SelfAdjointFredholmDeterminantFamilyData
+
+abbrev fullTensorDeterminantLine
+    {operator : Real → E →L[Real] E}
+    (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
+    (parameter : Real) :=
+  data.complexifiedDeterminantLine parameter ⊗[Complex]
+    reducedInvertibleDeterminantLine
+
+def fullTensorDeterminantSection
+    {operator : Real → E →L[Real] E}
+    (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
+    (parameter : Real) (reducedCoordinate : Complex) :
+    data.fullTensorDeterminantLine parameter :=
+  TensorProduct.tmul Complex
+    (data.complexifiedDeterminantFrame parameter) reducedCoordinate
+
+end SelfAdjointFredholmDeterminantFamilyData
+
+end
+end P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
+end JanusFormal
