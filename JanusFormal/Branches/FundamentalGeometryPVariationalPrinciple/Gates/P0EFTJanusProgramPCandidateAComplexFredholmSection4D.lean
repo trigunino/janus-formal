@@ -5,8 +5,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 # Candidate-A complex Fredholm section
 
 This façade specializes the generic zeta-weighted complex Fredholm section to
-the preferred Candidate-A family.  The detailed specialization is built in
-small layers below so the final determinant-line comparison remains explicit.
+the preferred Candidate-A family.  The intrinsic reduced determinant now acts
+on the actual complexified kernel/cokernel Fredholm frame.
 -/
 
 namespace JanusFormal
@@ -34,6 +34,7 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorFredholmDeterminantFamily
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
+open P0EFTJanusProgramPSelfAdjointFredholmComplexCoordinateFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmZetaDeterminantSection4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
@@ -56,6 +57,56 @@ local instance effectiveQuotientMeasurableSpace :
 
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
+
+variable
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
+    {data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace}
+    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
+    {einsteinScale : Real}
+    {hTransverse : HasNoTangentialRadical period hPeriod
+      data.plusGravity.metric.metric}
+    {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      period hPeriod configuration data analysis
+        (diracGreenClosureMatterRealization period hPeriod
+          couplings.matterMassSquared) einsteinScale}
+    {chartBound : DenseCoreChartMapBound
+      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+        data analysis)
+      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+        analysis
+          (globalCandidateAActualKernelChart period hPeriod configuration data
+            analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod configuration
+            data analysis einsteinScale hTransverse family))}
+    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
+    [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
+    [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
+    [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
+    [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    [LinearOrder ZeroMode]
+    {fold : Fold} {Index : Type*}
+
+variable (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+  period hPeriod configuration data analysis einsteinScale hTransverse family
+    chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+
+/-- Candidate-A intrinsic zeta coordinates on the actual complexified Fredholm line. -/
+def complexFredholmCoordinateFamily :=
+  selfAdjointFredholmZetaCoordinateFamily
+    (globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input)
+    input.familyIndex.baseFamily.familyIndex.zetaFamily
+
+/-- Candidate-A determinant section in the actual complexified Fredholm fibre. -/
+def complexFredholmDeterminantSection (parameter : Real) :=
+  selfAdjointFredholmZetaDeterminantSection
+    (globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input)
+    input.familyIndex.baseFamily.familyIndex.zetaFamily parameter
 
 end
 end P0EFTJanusProgramPCandidateAComplexFredholmSection4D
