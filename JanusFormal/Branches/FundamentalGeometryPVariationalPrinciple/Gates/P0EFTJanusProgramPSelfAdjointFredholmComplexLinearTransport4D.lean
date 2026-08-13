@@ -33,6 +33,19 @@ def complexLinearDeterminantTransport
     (LinearEquiv.refl Complex Complex)
     (data.determinantTransport first second)
 
+/-- On pure tensors only the actual Fredholm factor is transported. -/
+@[simp]
+theorem complexLinearDeterminantTransport_tmul
+    {operator : Real → E →L[Real] E}
+    (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
+    (first second : Real) (coordinate : Complex)
+    (value : data.determinantLine first) :
+    data.complexLinearDeterminantTransport first second
+        (TensorProduct.tmul Real coordinate value) =
+      TensorProduct.tmul Real coordinate
+        (data.determinantTransport first second value) := by
+  simp [complexLinearDeterminantTransport]
+
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
