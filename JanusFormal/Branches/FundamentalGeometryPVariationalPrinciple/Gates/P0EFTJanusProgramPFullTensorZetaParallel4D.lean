@@ -1,0 +1,9 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorZetaConnection4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFullTensorZetaParallel4D
+set_option autoImplicit false
+noncomputable section
+end
+end P0EFTJanusProgramPFullTensorZetaParallel4D
+end JanusFormal
