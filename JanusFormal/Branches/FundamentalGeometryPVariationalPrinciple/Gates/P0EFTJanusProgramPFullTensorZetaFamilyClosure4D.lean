@@ -1,0 +1,10 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPZetaTensorIdentification4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorZetaParallel4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFullTensorZetaFamilyClosure4D
+set_option autoImplicit false
+noncomputable section
+end
+end P0EFTJanusProgramPFullTensorZetaFamilyClosure4D
+end JanusFormal
