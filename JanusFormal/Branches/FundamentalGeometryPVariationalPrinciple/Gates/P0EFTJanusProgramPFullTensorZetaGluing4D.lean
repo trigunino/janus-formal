@@ -18,6 +18,19 @@ variable {E ZeroMode Index : Type*}
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
+theorem localFullTensorSection_transition
+    {operator : Real → E →L[Real] E}
+    (fredholm : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
+    (atlas : RelativeZetaLocalFamilyAtlasData Index)
+    (first second : Index) (parameter : Real) :
+    relativeZetaTransition atlas first second parameter •
+        localFullTensorSection fredholm atlas first parameter =
+      localFullTensorSection fredholm atlas second parameter := by
+  unfold localFullTensorSection
+  apply (fredholm.fullTensorDeterminantCollapse parameter).injective
+  simp only [map_smul, fullTensorCollapse_formula, smul_smul]
+  rw [relativeZetaLocalDeterminant_transition atlas first second parameter]
+
 end
 end P0EFTJanusProgramPFullTensorZetaGluing4D
 end JanusFormal
