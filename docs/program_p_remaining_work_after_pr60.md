@@ -130,7 +130,7 @@ H_a sur l'espace Candidate A complet
 → clutching et holonomie.
 ```
 
-### 3.4 Noyaux finis et déterminant de Fredholm
+### 3.4 Noyaux finis et vraie ligne de Fredholm
 
 Un même type fini `ZeroMode` indexe une base de chaque noyau. Le transport à
 coordonnées constantes donne :
@@ -141,9 +141,34 @@ finrank ker H_a = card ZeroMode
 multiplicités des cinq secteurs constantes.
 ```
 
-La puissance extérieure maximale construit la ligne réelle du noyau et son
-volume nommé non nul. La branche joint ensuite ce volume au déterminant zêta du
-complément dans un atlas de coordonnées complexes :
+La puissance extérieure maximale construit la ligne du noyau et son volume
+nommé non nul. La self-adjonction et le gap donnent en plus :
+
+```text
+range H_a = (ker H_a)ᗮ
+coker H_a = E / range H_a ≃ ker H_a.
+```
+
+La branche construit donc désormais la véritable fibre réelle de Fredholm :
+
+```text
+Det_Fred(H_a) = Hom(det coker H_a, det ker H_a).
+```
+
+Elle prouve :
+
+- que les puissances extérieures du noyau et du conoyau sont de dimension un ;
+- que chaque fibre de Fredholm est de dimension un ;
+- que le transport des bases nommées induit de vraies équivalences entre les
+  fibres ;
+- que la frame Fredholm canonique est non nulle ;
+- que le volume nommé du conoyau, tiré en arrière par `coker ≃ ker`, est non
+  nul ;
+- que la frame canonique envoie exactement ce volume du conoyau vers le volume
+  nommé du noyau.
+
+Le déterminant zêta du complément est ensuite joint à cette normalisation dans
+un atlas de coordonnées complexes :
 
 ```text
 D_i(a) = k_i(a) det_zeta,red(a)
@@ -156,9 +181,10 @@ sont dérivées. Dans le repère canonique nommé `k = 1`, la coordonnée compl�
 est exactement le déterminant zêta réduit et la connexion complète est la même
 connexion zêta.
 
-La branche ne déclare pas artificiellement que ce modèle en coordonnées est
-déjà l'identification abstraite avec la ligne tensorielle complexe complète.
-Cette comparaison géométrique reste explicitement séparée.
+Ce qui reste séparé est plus précis qu'avant : il ne s'agit plus de construire
+la ligne réelle de Fredholm, qui existe désormais, mais d'identifier sa
+complexification/tensorisation avec la ligne analytique de Quillen et d'y
+transporter la métrique, la connexion et la section zêta.
 
 ## 4. État des grands frontiers non terminaux
 
@@ -212,12 +238,15 @@ habitants analytiques concrets :
 8. l'identification au véritable opérateur elliptique non borné et à sa
    réalisation maximale ;
 9. les constructions nucléaires relatives et leurs estimations uniformes ;
-10. la famille Candidate A concrète et son calcul de Bismut--Freed.
+10. la famille Candidate A concrète et son calcul de Bismut--Freed ;
+11. la complexification de la vraie ligne de Fredholm et son identification à
+    la ligne analytique de Quillen.
 
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
-Il manque :
+La vraie ligne algébrique de Fredholm et sa frame normalisée sont également
+présentes. Il manque :
 
 - la construction des références correspondant aux vraies coupures spectrales ;
 - les asymptotiques uniformes de chaleur ;
@@ -225,8 +254,8 @@ Il manque :
 - la formule locale d'indice des familles ;
 - l'application des contraintes d'anomalie au contenu de champs Candidate A
   complet ;
-- l'accord entre la ligne du noyau fini, le déterminant réduit et la ligne
-  complexe de Fredholm globale.
+- la complexification de `Hom(det coker, det ker)` et l'accord de cette ligne
+  avec la ligne de Quillen, sa métrique, sa connexion et sa section.
 
 ### Régulateur
 
@@ -303,8 +332,8 @@ bicomplexe local.
 
 ### T07 — `anomalyConstraintsApplied`
 
-**Déjà disponible :** modèles d'annulation PT, déterminants, ligne et
-frontiers Quillen/anomalie.
+**Déjà disponible :** modèles d'annulation PT, déterminants, vraie ligne de
+Fredholm, ligne/atlas Quillen et frontiers d'anomalie.
 
 **Reste :** appliquer le calcul d'anomalie continu au contenu de champs complet,
 aux vraies classes caractéristiques et à la famille physique, puis déduire les
@@ -346,12 +375,14 @@ avec tous les overlaps, lagrangiens nuls, normalisations et contre-termes fixés
 ### T12 — `hessianMatchesNaturalFredholmFamily`
 
 **Déjà disponible :** la plus grande partie de l'architecture dans la PR #60,
-plus le Dirac/Fredholm/régulateur global existant.
+le Dirac/Fredholm/régulateur global existant, la vraie ligne de Fredholm de la
+famille et sa frame normalisée.
 
-**Reste :** habiter les dix entrées analytiques listées plus haut, prouver
-l'accord avec l'opérateur elliptique naturel non borné, puis compiler et auditer
-le gate terminal. C'est la porte aujourd'hui la plus avancée
-architecturalement, mais elle n'est pas fermée.
+**Reste :** habiter les onze entrées analytiques listées plus haut, prouver
+l'accord avec l'opérateur elliptique naturel non borné, identifier la ligne
+complexifiée à la ligne de Quillen, puis compiler et auditer le gate terminal.
+C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
+pas fermée.
 
 ### T13 — `uniqueStableVacuumDerived`
 
@@ -453,7 +484,8 @@ isométrie cinq secteurs
 → petitesse H11
 → base exacte du noyau
 → réalisation non bornée/Fredholm
-→ trace relative et famille d'indice.
+→ trace relative et famille d'indice
+→ complexification et accord Quillen de la ligne de Fredholm.
 ```
 
 ### Phase 2 — T03 à T06
@@ -484,14 +516,16 @@ compteur officiel reste `0/14`.
 
 Il est en revanche très avancé au niveau de l'infrastructure : géométrie,
 champs, action régulière, Dirac, Euler/Helmholtz chartwise et une architecture
-Hessien--Fredholm--Quillen particulièrement développée.
+Hessien--Fredholm--Quillen particulièrement développée, incluant désormais la
+vraie ligne réelle de Fredholm de la famille.
 
 La difficulté résiduelle n'est plus principalement l'absence de wrappers. Elle
 se concentre sur trois noyaux scientifiques :
 
 ```text
 1. globaliser le calcul variationnel local et son bicomplexe ;
-2. habiter les estimations analytiques du Hessien/Fredholm physique ;
+2. habiter les estimations analytiques du Hessien/Fredholm physique et
+   identifier sa ligne complexifiée à la ligne de Quillen ;
 3. fournir la loi microscopique qui sélectionne normalisations, schéma, vide et
    échelle absolue.
 ```
