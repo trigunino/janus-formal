@@ -1,0 +1,10 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorAtlasConnection4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorCollapseFormula4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFullTensorGauge4D
+set_option autoImplicit false
+noncomputable section
+end
+end P0EFTJanusProgramPFullTensorGauge4D
+end JanusFormal
