@@ -1,0 +1,62 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorFredholmDeterminantFamily4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointFredholmZetaDeterminantSection4D
+
+/-!
+# Candidate-A complex Fredholm section
+
+This façade specializes the generic zeta-weighted complex Fredholm section to
+the preferred Candidate-A family.  The detailed specialization is built in
+small layers below so the final determinant-line comparison remains explicit.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPCandidateAComplexFredholmSection4D
+
+set_option autoImplicit false
+set_option maxHeartbeats 30000000
+set_option synthInstance.maxHeartbeats 15000000
+
+noncomputable section
+
+open Set Topology MeasureTheory
+open scoped BigOperators Manifold ContDiff InnerProductSpace
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorFredholmDeterminantFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
+open P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
+open P0EFTJanusProgramPSelfAdjointFredholmZetaDeterminantSection4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+
+variable (period : Real) (hPeriod : period ≠ 0)
+
+private abbrev EffectiveQuotient := MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientIsManifold :
+    IsManifold coverModelWithCorners ω (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotient_isManifold period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
+
+end
+end P0EFTJanusProgramPCandidateAComplexFredholmSection4D
+end JanusFormal
