@@ -32,6 +32,23 @@ def fullTensorDeterminantSection
   TensorProduct.tmul Complex
     (data.complexifiedDeterminantFrame parameter) reducedCoordinate
 
+/-- Scalar multiplication of a full determinant section is exactly
+multiplication of its reduced complex coordinate.  Downstream atlas and gauge
+proofs use this API instead of depending directly on tensor-product rewrite
+lemmas. -/
+@[simp]
+theorem fullTensorDeterminantSection_smul
+    {operator : Real → E →L[Real] E}
+    (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
+    (parameter : Real) (scalar coordinate : Complex) :
+    scalar • data.fullTensorDeterminantSection parameter coordinate =
+      data.fullTensorDeterminantSection parameter (scalar * coordinate) := by
+  change scalar • TensorProduct.tmul Complex
+      (data.complexifiedDeterminantFrame parameter) coordinate =
+    TensorProduct.tmul Complex
+      (data.complexifiedDeterminantFrame parameter) (scalar • coordinate)
+  rw [TensorProduct.tmul_smul]
+
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
