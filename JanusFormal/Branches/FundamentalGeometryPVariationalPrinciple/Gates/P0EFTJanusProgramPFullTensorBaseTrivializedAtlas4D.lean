@@ -109,8 +109,9 @@ theorem baseTrivializedLocalFullTensorConnection_gauge
   have h := relativeZetaLocalConnection_gauge_covariant
     atlas first second parameter value derivative
   rw [h]
-  simp [SelfAdjointFredholmDeterminantFamilyData.fullTensorDeterminantSection,
-    smul_tmul]
+  exact (fredholm.fullTensorDeterminantSection_smul 0
+    (relativeZetaTransition atlas first second parameter)
+    (relativeZetaLocalConnectionAt atlas first parameter value derivative)).symm
 
 /-- Public fixed-fibre determinant-atlas checkpoint. -/
 theorem full_tensor_base_trivialized_atlas_gate
