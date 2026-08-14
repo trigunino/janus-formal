@@ -262,9 +262,9 @@ theorem projected_kernel_gram_factorization_gate
         ∏ sector : FivePhysicalSector,
           projectedKernelSectorGramDeterminant period hPeriod input parameter
             sector) ∧
-    projectedKernelRegularSet period hPeriod input =
+    (projectedKernelRegularSet period hPeriod input =
       ⋂ sector : FivePhysicalSector,
-        projectedKernelSectorRegularSet period hPeriod input sector ∧
+        projectedKernelSectorRegularSet period hPeriod input sector) ∧
     (∀ sector,
       IsOpen (projectedKernelSectorRegularSet period hPeriod input sector)) ∧
     (∀ sector,
