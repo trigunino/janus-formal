@@ -37,7 +37,6 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
-open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorKernelTransportCovariance4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalFamilyCommutation4D
@@ -119,7 +118,7 @@ def projectedKernelVector
     (input.familyIndex.baseFamily.actualOperator parameter).ker := by
   refine ⟨(Coordinates period hPeriod input).sectorProjector sector vector.1, ?_⟩
   apply LinearMap.mem_ker.mpr
-  rw [natural.actualOperator_commutes_sectorProjector period hPeriod input
+  rw [actualOperator_commutes_sectorProjector period hPeriod input natural
     parameter sector vector.1]
   rw [LinearMap.mem_ker.mp vector.2]
   simp
