@@ -128,27 +128,61 @@ def preferredCandidateABasepointCommutingOperator
   commutes := by
     intro sector vector
     let candidateSector := fivePhysicalSectorToCandidateA sector
+    let sectorData :=
+      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
+        closure.frontier.analytic.geometry.coordinates
     have hCommute :=
       input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
         closure.frontier.analytic.geometry.commute period hPeriod
           candidateSector vector
-    rw [input.familyIndex.baseFamily.actual_zero] 
-    rw [input.familyIndex.baseFamily.actual_zero]
     have hProjection :=
       globalCandidateAFiveSectorOrthogonalProjection_agreement period hPeriod
-        configuration data analysis
-        input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
-          closure.frontier.analytic.geometry.coordinates
-        candidateSector vector
+        configuration data analysis sectorData candidateSector vector
     have hProjectionOperator :=
       globalCandidateAFiveSectorOrthogonalProjection_agreement period hPeriod
-        configuration data analysis
-        input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
-          closure.frontier.analytic.geometry.coordinates
-        candidateSector
+        configuration data analysis sectorData candidateSector
         (input.familyIndex.baseFamily.actualOperator 0 vector)
-    simpa [preferredCandidateAFiveSectorHilbertCoordinates, candidateSector] using
-      hCommute
+    have hProjection' :
+        globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+            (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+              period hPeriod configuration data analysis sectorData)
+            candidateSector vector =
+          (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
+            sectorProjector sector vector := by
+      simpa [preferredCandidateAFiveSectorHilbertCoordinates, candidateSector,
+        sectorData] using hProjection
+    rw [input.familyIndex.baseFamily.actual_zero] at hProjectionOperator
+    have hProjectionOperator' := hProjectionOperator
+    have hProjectionOperator'' :
+        globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+            (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+              period hPeriod configuration data analysis sectorData)
+            candidateSector
+            (globalCandidateAActualKernelOperator period hPeriod configuration data
+              analysis
+              (globalCandidateAActualKernelChart period hPeriod configuration data
+                analysis einsteinScale hTransverse family)
+              (globalCandidateAActualKernelSameAction period hPeriod configuration
+                data analysis einsteinScale hTransverse family)
+              (globalCandidateACanonicalSixPhysicalExtension_of_chartBound
+                period hPeriod configuration data analysis einsteinScale
+                hTransverse family chartBound) vector) =
+          (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
+            sectorProjector sector
+            (globalCandidateAActualKernelOperator period hPeriod configuration data
+              analysis
+              (globalCandidateAActualKernelChart period hPeriod configuration data
+                analysis einsteinScale hTransverse family)
+              (globalCandidateAActualKernelSameAction period hPeriod configuration
+                data analysis einsteinScale hTransverse family)
+              (globalCandidateACanonicalSixPhysicalExtension_of_chartBound
+                period hPeriod configuration data analysis einsteinScale
+                hTransverse family chartBound) vector) := by
+      simpa [preferredCandidateAFiveSectorHilbertCoordinates, candidateSector,
+        sectorData] using hProjectionOperator'
+    rw [input.familyIndex.baseFamily.actual_zero]
+    rw [← hProjection', ← hProjectionOperator'']
+    exact hCommute
 
 /-- The five blocks extracted from the actual basepoint Hessian. -/
 def preferredCandidateABasepointMetricBlock
