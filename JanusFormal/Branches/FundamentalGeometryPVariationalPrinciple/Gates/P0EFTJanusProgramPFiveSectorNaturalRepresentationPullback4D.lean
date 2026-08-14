@@ -81,7 +81,7 @@ theorem source_mem_sector
     (hState : state ∈ coordinates.sectorSubspace sector) :
     representation.representedSourcePullback morphism state ∈
       coordinates.sectorSubspace sector := by
-  apply coordinates.sectorProjector_eq_self_of_mem sector |>.mpr
+  refine ⟨representation.representedSourcePullback morphism state, ?_⟩
   rw [data.source_commutes morphism sector state]
   rw [coordinates.sectorProjector_eq_self_of_mem sector hState]
 
@@ -103,7 +103,7 @@ theorem target_mem_sector
     (hState : state ∈ coordinates.sectorSubspace sector) :
     representation.representedTargetPullback morphism state ∈
       coordinates.sectorSubspace sector := by
-  apply coordinates.sectorProjector_eq_self_of_mem sector |>.mpr
+  refine ⟨representation.representedTargetPullback morphism state, ?_⟩
   rw [data.target_commutes morphism sector state]
   rw [coordinates.sectorProjector_eq_self_of_mem sector hState]
 
