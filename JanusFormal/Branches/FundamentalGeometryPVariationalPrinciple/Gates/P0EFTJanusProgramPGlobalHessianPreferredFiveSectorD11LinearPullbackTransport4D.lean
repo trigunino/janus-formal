@@ -41,6 +41,7 @@ open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusSpinCImmersionCategory
+open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPLinearNaturalRepresentationIsomorphismTransport4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
@@ -251,12 +252,13 @@ theorem global_hessian_preferred_five_sector_D11_linear_pullback_transport_gate
       GlobalHessianPreferredFiveSectorD11LinearPullbackTransport4D
         period hPeriod input natural) :
     (∀ first second,
-      AdmissibleMorphism
-        natural.covariance.sectorRepresentation.bridge.immersionCategory
-        (natural.covariance.sectorRepresentation.bridge.representation.objectAt
-          second)
-        (natural.covariance.sectorRepresentation.bridge.representation.objectAt
-          first)) ∧
+      Nonempty
+        (AdmissibleMorphism
+          natural.covariance.sectorRepresentation.bridge.immersionCategory
+          (natural.covariance.sectorRepresentation.bridge.representation.objectAt
+            second)
+          (natural.covariance.sectorRepresentation.bridge.representation.objectAt
+            first))) ∧
     (∀ first second state,
       input.familyIndex.baseFamily.actualOperator second
           (d11Transport.linearPullback.transport first second state) =
@@ -275,7 +277,8 @@ theorem global_hessian_preferred_five_sector_D11_linear_pullback_transport_gate
       period hPeriod
         (d11Transport.physicalNamedKernelFamilyClosure period hPeriod input
           natural) :=
-  ⟨d11Transport.linearPullback.reverseMorphism,
+  ⟨fun first second =>
+      ⟨d11Transport.linearPullback.reverseMorphism first second⟩,
     d11Transport.linearPullback.operator_intertwining
       natural.covariance.sectorRepresentation.bridge.representation
       (Coordinates period hPeriod input)
