@@ -152,7 +152,7 @@ theorem global_hessian_preferred_five_sector_geometric_regularity_gate
     hGeometry.1,
     hGeometry.2.1,
     hGeometry.2.2.2.1,
-    hGeometry.2.2.2.2.2⟩
+    hGeometry.2.2.2.2⟩
 
 end
 end P0EFTJanusProgramPGlobalHessianPreferredFiveSectorGeometricRegularityClosure4D
