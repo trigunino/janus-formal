@@ -1,5 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorCovariantGeometricRegularityTerminal4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalOperatorGeometricBismutFreed4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalOperatorGeometricBismutFreed4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorKernelTransportCovariance4D
 
 /-!
@@ -46,6 +46,7 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalOperatorGeometricB
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorCovariantGeometricRegularityTerminal4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalFamilyCommutation4D
+open P0EFTJanusProgramPGeometricBismutFreedPathComparison4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -159,8 +160,7 @@ theorem differentiable_resolved_named_modes
       input.kernels.vector parameter mode ∈
         sectorKernel period hPeriod input parameter
           (namedModeFiveSector period hPeriod input mode)) :=
-  ⟨closure.regularity.kernels.toDifferentiableKernelFamily period hPeriod input
-      |>.vector_differentiable,
+  ⟨closure.regularity.kernels.vector_differentiable,
     (closure.resolvedKernel period hPeriod input).vector_mem_sectorKernel
       period hPeriod input⟩
 
