@@ -138,8 +138,8 @@ theorem global_hessian_preferred_five_sector_differentiable_fredholm_splitting_g
             P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D.
               SelfAdjointKernelComplement
                 (input.familyIndex.baseFamily.actualOperator parameter)) :
-            P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.
-              CandidateAHilbert period hPeriod configuration data analysis))) := by
+            GlobalCandidateAFaithfulSameActionHilbert
+              period hPeriod configuration data analysis))) := by
   let splitting := regularity.toDifferentiableFredholmSplitting period hPeriod input
   exact ⟨splitting.kernelVector_differentiable,
     splitting.complementVector_differentiable⟩
