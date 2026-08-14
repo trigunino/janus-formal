@@ -153,8 +153,8 @@ theorem transportedBasis_eq_namedBasis
       GlobalHessianPreferredFiveSectorNamedKernelTransportCommutation4D
         period hPeriod input natural)
     (parameter : Real) :
-    (commutation.toSectorPreservingKernelTransport period hPeriod input natural
-      regularity).physicalKernels period hPeriod input natural |>.basis parameter =
+    ((commutation.toSectorPreservingKernelTransport period hPeriod input natural
+      regularity).physicalKernels period hPeriod input natural).basis parameter =
       input.kernels.basis parameter := by
   ext mode
   change input.kernels.kernelTransport 0 parameter
@@ -217,8 +217,8 @@ theorem global_hessian_preferred_five_sector_named_kernel_transport_commutation_
         period hPeriod input natural) :
     GlobalHessianPreferredFiveSectorResolvedKernelFamily4D period hPeriod input ∧
     (∀ parameter,
-      (commutation.toSectorPreservingKernelTransport period hPeriod input natural
-        regularity).physicalKernels period hPeriod input natural |>.basis parameter =
+      ((commutation.toSectorPreservingKernelTransport period hPeriod input natural
+        regularity).physicalKernels period hPeriod input natural).basis parameter =
         input.kernels.basis parameter) ∧
     (∀ parameter mode,
       (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
