@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorGeometricBismutFreed4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorTopologicalDeterminantBundle4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorZetaParallel4D
 
 /-!
@@ -6,9 +7,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 The D10/D11 `QuillenBismutFreedStatus` is a logical interface.  For the
 preferred Candidate-A family most of that interface is no longer external:
-the actual Fredholm line, zeta/finite-part metric, intrinsic trace connection,
-operator-generated spectral-cut descent and circle holonomy are already
-constructed in Program P.
+the actual full Fredholm--zeta complex vector bundle, zeta/finite-part metric,
+intrinsic trace connection, operator-generated spectral-cut descent and circle
+holonomy are already constructed in Program P.
 
 Only the genuinely higher-dimensional geometric curvature theorem remains an
 independent geometric input here.
@@ -18,12 +19,12 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDerivedQuillenStatus4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 32000000
-set_option synthInstance.maxHeartbeats 16000000
+set_option maxHeartbeats 34000000
+set_option synthInstance.maxHeartbeats 17000000
 
 noncomputable section
 
-open Set Topology MeasureTheory
+open Set Topology MeasureTheory Bundle
 open scoped BigOperators Manifold ContDiff InnerProductSpace
 open P0EFTJanusCircleQuillenMetricFlatConnection
 open P0EFTJanusMappingTorusQuotient
@@ -38,9 +39,11 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorFredholmDeterminantFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorTopologicalDeterminantBundle4D
 open P0EFTJanusProgramPGeometricBismutFreedFamiliesIndexCurvature4D
 open P0EFTJanusProgramPFullTensorZetaConnection4D
 open P0EFTJanusProgramPFullTensorZetaParallel4D
+open P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTopologicalBundle4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
@@ -50,7 +53,8 @@ open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-private abbrev EffectiveQuotient := MappingTorus (reflectedSphereData period hPeriod)
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
 
 local instance effectiveQuotientChartedSpace :
     ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
@@ -100,17 +104,20 @@ variable
     [LinearOrder ZeroMode]
     {fold : Fold} {Index Base Tangent : Type*}
 
-/-- The D10/D11 Quillen status whose propositions are instantiated by the
-actual Candidate-A constructions rather than by abstract booleans. -/
+/-- The D10/D11 Quillen status instantiated by the actual Candidate-A
+constructions.  In particular, `determinantLineConstructed` now means that the
+dependent full determinant fibres carry an actual Mathlib complex vector-bundle
+structure, not merely that one pointwise frame is nonzero. -/
 def candidateAOperatorGeneratedQuillenBismutFreedStatus
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
     (curvature : GeometricFamiliesIndexCurvatureData Base Tangent) :
     QuillenBismutFreedStatus where
-  determinantLineConstructed := ∀ parameter,
-    (globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input).
-      determinantFrame parameter ≠ 0
+  determinantLineConstructed :=
+    let fredholm :=
+      globalHessianPreferredFiveSectorFredholmDeterminantFamily period hPeriod input
+    Nonempty (VectorBundle Complex Complex fredholm.FullDeterminantFiber)
   quillenMetricConstructed := ∀ parameter,
     ‖relativeHeatMellinZetaFamilyDeterminant
         input.familyIndex.baseFamily.familyIndex.zetaFamily parameter‖ =
@@ -153,8 +160,8 @@ theorem candidateAOperatorGeneratedQuillenBismutFreedStatus_closed
         period hPeriod input curvature) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact
-      (globalHessianPreferredFiveSectorFredholmDeterminantFamily
-        period hPeriod input).determinantFrame_ne_zero
+      (global_hessian_preferred_five_sector_topological_determinant_bundle_gate
+        period hPeriod input).1
   · exact norm_relativeHeatMellinZetaFamilyDeterminant
       input.familyIndex.baseFamily.familyIndex.zetaFamily
   · exact fullTensorZetaSection_parallel
