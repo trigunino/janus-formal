@@ -71,10 +71,8 @@ theorem finiteFamilySynthesis_injective_of_gramQuadratic_lower_bound
   have hSquareNonpos : ‖first - second‖ ^ 2 ≤ 0 := by
     apply (mul_le_mul_left hLowerConstant).mp
     simpa using hQuadratic
-  have hNormNonpos : ‖first - second‖ ≤ 0 := by
-    nlinarith [sq_nonneg ‖first - second‖]
   have hNormZero : ‖first - second‖ = 0 :=
-    le_antisymm hNormNonpos (norm_nonneg _)
+    (sq_nonpos_iff ‖first - second‖).mp hSquareNonpos
   exact sub_eq_zero.mp (norm_eq_zero.mp hNormZero)
 
 /-- The same quadratic estimate forces injectivity of the Gram endomorphism. -/
