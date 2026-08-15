@@ -1,10 +1,10 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11CollapsedReferenceBoundaryLimitsSpectralAtlas4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11FullySpectralReferenceAtlas4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicNuclearTraceBoundedComposition4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeNuclearMellinDifferenceFamily4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPOperatorNormDifferentiableUnitaryGreenConjugation4D
 
 /-!
-# Terminal H14--D11 endpoint-limit nuclear-Duhamel zeta facade
+# Terminal H14--D11 fully spectral nuclear-Duhamel zeta facade
 
 Building this module imports the complete preferred Candidate-A continuation
 chain through
@@ -22,19 +22,27 @@ chain through
   subtraction;
 * base and local reference heat derivatives obtained from nuclear operator
   Duhamel identities;
-* probability-averaged Duhamel slices of the form
+* common rank-one expansions of the probability-parameter slices
 
   ```text
-  K_left (H' K_right);
+  K_left(a,t,s) (H'_a K_right(a,t,s));
   ```
 
-* cyclic rotation and heat-semigroup collapse of every slice to `H' K_full`;
+* rank-one construction of the genuine averaged Duhamel operator and derivation
+  of
+
+  ```text
+  Tr(D_a(t)) = integral_s Tr(D_a(t,s)) dμ(s);
+  ```
+
+* automatic cyclic rotation and heat-semigroup collapse of every slice to
+  `H'_a K_full(a,t)`;
 * common rank-one expansions of the collapsed insertion/full-heat operators on
   the short- and long-time regions;
 * operator-valued regional integrals obtained by integrating the rank-one
   coefficients;
-* derivation of `integral Tr(D) = Tr(integral D)` from semigroup collapse and
-  one certified sum/integral interchange on each region;
+* derivation of `integral Tr(D) = Tr(integral D)` from the two spectral
+  sum/integral exchanges;
 * short-time renormalized cutoff convergence;
 * long-time finite-cutoff primitive identities and decay of the terminal
   primitive;
@@ -57,6 +65,7 @@ At this level the following former inputs have disappeared:
 ```text
 aligned expansions of B T and T B,
 trace of one Duhamel slice = trace of its cyclic collapse,
+trace of the averaged Duhamel operator = average of slice traces,
 probability average of slice traces = collapsed trace,
 integral Tr(D) = Tr(integral D),
 C - D_short = G H' + B,
@@ -71,13 +80,16 @@ spectral and limiting certificates:
 
 1. construct the genuine reference heat and Duhamel operators and prove their
    intrinsic nuclearity and parameter differentiability;
-2. supply nuclear expansions of `H'_a K_right(a,t,s)` for fixed Duhamel slices;
-3. prove the heat semigroup law for the left/right factors;
-4. prove the original Duhamel trace is the probability average of the slice
-   traces;
+2. construct common rank-one expansions of the Duhamel simplex slices and
+   prove their nuclear-norm and trace summability;
+3. integrate the slice coefficients and prove the simplex
+   sum/integral interchange generating the averaged Duhamel operator;
+4. supply nuclear expansions of `H'_a K_right(a,t,s)` and prove the heat
+   semigroup law for the left/right factors;
 5. construct common rank-one expansions of `H'_a K_a(t)` and prove pointwise
    and integrated nuclear-norm summability;
-6. prove the two exchanges of the spectral sum with time integration;
+6. prove the two exchanges of the collapsed spectral sum with short- and
+   long-time integration;
 7. prove convergence of the short-time cutoff counterterm and cutoff integral,
    together with convergence of their renormalized remainder to `G H'`;
 8. prove the finite long-time primitive identity and decay of its terminal
@@ -86,9 +98,9 @@ spectral and limiting certificates:
 10. prove reality of the standalone reference zeta derivative at zero and the
     common analytic continuation domains used by relative subtraction.
 
-No opaque total finite-part derivative, integrated trace equality, exact
-boundary identity, global Duhamel--Green scalar equality or complex coefficient
-equality remains as an independent input.
+No opaque simplex-average trace equality, total finite-part derivative,
+integrated trace equality, exact boundary identity, global Duhamel--Green scalar
+equality or complex coefficient equality remains as an independent input.
 -/
 
 namespace JanusFormal
