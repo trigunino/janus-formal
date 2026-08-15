@@ -170,7 +170,7 @@ theorem reference_nuclear_duhamel_green_selected_trace_exponential_boundary_limi
     (countertermContribution : Real → Real)
     (shortTimeRegion longTimeRegion : Set Real)
     (referenceOperator : Real → E →L[Real] E)
-    (selectedTrace : IntrinsicLogarithDerivativeTraceData referenceOperator)
+    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator)
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceExponentialBoundaryLimitsData
         sliceMeasure shortCutoffFilter longCutoffFilter nuclear
