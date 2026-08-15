@@ -1,4 +1,4 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11OperatorNormUnitaryFrame4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11OperatorNormSectorConnection4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPOperatorNormDifferentiableUnitaryGreenConjugation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11FixedCoordinateGreenDerivative4D
 
@@ -17,13 +17,17 @@ operator-norm differentiable unitary represented D11 frame to
   equal to zero in the canonical unitary coordinates;
 * the left and right Maurer--Cartan coefficients `F⁻¹F'` and `F'F⁻¹`;
 * skew-adjointness of both frame-connection coefficients;
+* exact commutation of the frame derivative and both connection coefficients
+  with all five preferred physical projectors;
 * the inverse-frame derivative `(F⁻¹)' = -F⁻¹F'F⁻¹`;
 * the generic moving-coordinate identities
   `C' = [F'F⁻¹,C]` and `G' = -GH'G` for every bounded inverse pair transported
   by the unitary frame.
 
 The operator-norm frame certificate subsumes the former separate C1 hypotheses
-for the finite kernel generators and arbitrary fixed complement vectors.
+for the finite kernel generators and arbitrary fixed complement vectors.  Its
+connection is both metric and five-block diagonal on the one preferred
+Candidate-A Hilbert completion.
 
 The generic moving-coordinate Green theorem is intentionally not advertised as
 a Candidate-A ambient pseudoinverse theorem: the concrete H14 Green still acts
