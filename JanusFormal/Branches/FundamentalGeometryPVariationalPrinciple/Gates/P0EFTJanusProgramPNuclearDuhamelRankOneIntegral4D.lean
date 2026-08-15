@@ -193,7 +193,7 @@ theorem scalarIntegral_eq_intrinsicTrace
           inner Real (data.leftVector parameter index)
             (data.rightVector parameter index) :=
       data.trace_integral_interchange parameter
-    _ = data.integratedExpansion parameter |>.expansionTrace := rfl
+    _ = (data.integratedExpansion parameter).expansionTrace := rfl
     _ = intrinsicNuclearTrace (data.integratedTraceClass parameter) :=
       (data.integratedTraceClass parameter).expansionTrace_eq
         (data.integratedExpansion parameter)
