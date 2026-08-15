@@ -283,8 +283,9 @@ theorem fixedGreen_eq_zero
     (FrameData period hPeriod input natural d11Unitary).
       fixedOperator_eq_basepoint (ActualSelfAdjoint period hPeriod input)
         (h14BasepointGap period hPeriod input) 0
-  change familyData.analytic.operator parameter
-      (familyData.analytic.green 0 vector) = vector
+  change
+    (fixedComplementGapFamily period hPeriod input natural d11Unitary).
+        fixedOperator parameter (familyData.analytic.green 0 vector) = vector
   rw [hParameter, ← hZero]
   exact familyData.analytic.operator_green 0 vector
 
@@ -304,9 +305,16 @@ def fixedGreenDifferentiability
   greenDerivative := fun _ => 0
   hasDerivAt_green := by
     intro parameter
-    convert hasDerivAt_const parameter
-      ((differentiableFixedReducedFamily period hPeriod input natural d11Unitary).
-        analytic.green 0) using 1
+    have hConst :
+        HasDerivAt
+          (fun _ : Real =>
+            (differentiableFixedReducedFamily period hPeriod input natural
+              d11Unitary).analytic.green 0)
+          0 parameter :=
+      hasDerivAt_const parameter
+        ((differentiableFixedReducedFamily period hPeriod input natural
+          d11Unitary).analytic.green 0)
+    convert hConst using 1
     funext current
     exact fixedGreen_eq_zero period hPeriod input natural d11Unitary current
   greenDerivative_eq := by
@@ -329,7 +337,10 @@ theorem global_hessian_preferred_five_sector_H14_D11_fixed_coordinate_green_deri
     let inverse :=
       fixedGreenDifferentiability period hPeriod input natural d11Unitary
     (∀ parameter,
-      HasDerivAt reduced.analytic.operator 0 parameter) ∧
+      HasDerivAt
+        (fixedComplementGapFamily period hPeriod input natural d11Unitary).
+          fixedOperator
+        0 parameter) ∧
     (∀ parameter,
       HasDerivAt reduced.analytic.green 0 parameter) ∧
     (∀ parameter,
