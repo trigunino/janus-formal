@@ -6,8 +6,11 @@ on:
       - dev-branch
       - agent/hessian-spinc-maximal-domain
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelLongTimeExponentialDecay4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceBoundaryLimits4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceExponentialBoundaryLimits4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceCanonicalSchwarzAssembly4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceExponentialCanonicalSchwarzAssembly4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceInvariantDomainSchwarzSpectralReferenceAtlas4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceInvariantDomainSchwarzNuclearDuhamelZetaTerminal4D.lean"
       - ".github/workflows/program-p-selected-trace-terminal.yml"
@@ -16,8 +19,11 @@ on:
       - "lake-manifest.json"
   pull_request:
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelLongTimeExponentialDecay4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceBoundaryLimits4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceExponentialBoundaryLimits4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceCanonicalSchwarzAssembly4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceExponentialCanonicalSchwarzAssembly4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceInvariantDomainSchwarzSpectralReferenceAtlas4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceInvariantDomainSchwarzNuclearDuhamelZetaTerminal4D.lean"
       - ".github/workflows/program-p-selected-trace-terminal.yml"
@@ -30,8 +36,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: program-p-selected-trace-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
-  cancel-in-progress: false
+  group: program-p-selected-trace-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   selected-trace-terminal:
@@ -57,4 +63,7 @@ jobs:
       - name: Build selected-trace terminal chain
         run: >-
           lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelLongTimeExponentialDecay4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceExponentialBoundaryLimits4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceExponentialCanonicalSchwarzAssembly4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceInvariantDomainSchwarzNuclearDuhamelZetaTerminal4D
