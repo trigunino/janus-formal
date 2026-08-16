@@ -1,4 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.Normed.Operator.Basic
 
 /-!
 # Bounded pullback of a chart Hessian along a dense smooth core
@@ -37,7 +38,7 @@ variable {Core Hilbert Chart : Type*}
 chart. -/
 structure DenseCoreChartMapBound
     (embedding : Core →ₗ[Real] Hilbert)
-    (chartMap : Core →ₗ[Real] Chart) : Prop where
+    (chartMap : Core →ₗ[Real] Chart) where
   constant : Real
   constant_nonneg : 0 ≤ constant
   estimate : ∀ core, ‖chartMap core‖ ≤ constant * ‖embedding core‖
@@ -100,10 +101,9 @@ theorem denseCoreChartBilinearPullback_bound
     _ ≤ (‖form‖ * (bound.constant * ‖embedding first‖)) *
           (bound.constant * ‖embedding second‖) := by
       gcongr
-      · exact norm_nonneg form
+      · exact mul_nonneg (norm_nonneg form)
+          (mul_nonneg bound.constant_nonneg (norm_nonneg (embedding first)))
       · exact bound.estimate first
-      · exact bound.constant_nonneg
-      · exact norm_nonneg (embedding first)
       · exact bound.estimate second
     _ = (‖form‖ * bound.constant ^ 2) * ‖embedding first‖ *
           ‖embedding second‖ := by

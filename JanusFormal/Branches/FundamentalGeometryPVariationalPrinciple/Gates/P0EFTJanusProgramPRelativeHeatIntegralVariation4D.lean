@@ -1,5 +1,7 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartTermwiseVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 /-!
 # Differentiation of parameterized relative heat integrals
@@ -30,6 +32,9 @@ noncomputable section
 
 open MeasureTheory Set
 open P0EFTJanusProgramPRelativeHeatFinitePartTermwiseVariation4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 /-- Differentiated scalar integral over one fixed measurable time region. -/
 structure ParametricRealIntegralVariationData
@@ -85,8 +90,7 @@ structure ReferenceHeatFinitePartIntegralAssemblyData
   shortTime : ParametricRealIntegralVariationData shortTimeRegion
   longTime : ParametricRealIntegralVariationData longTimeRegion
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter + shortTime.contribution parameter +
         longTime.contribution parameter
@@ -142,12 +146,11 @@ theorem hasDerivAt_finitePartLog
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
       (data.logarithmicTrace parameter) parameter :=
-  data.toTermwiseTraceData.toReferenceFinitePartTraceVariation.
-    hasDerivAt_finitePartLog parameter
+  (data.toTermwiseTraceData.toReferenceFinitePartTraceVariation).hasDerivAt_finitePartLog
+    parameter
 
 /-- Standalone reference coefficient produced by the integral assembly. -/
 theorem connectionCoefficient_eq_neg_trace
@@ -156,8 +159,7 @@ theorem connectionCoefficient_eq_neg_trace
     (data : ReferenceHeatFinitePartIntegralAssemblyData family shortTimeRegion
       longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(data.logarithmicTrace parameter : Complex) :=
   data.toTermwiseTraceData.connectionCoefficient_eq_neg_trace parameter
 
@@ -170,13 +172,11 @@ theorem reference_heat_finite_part_integral_assembly_gate
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
         (data.logarithmicTrace parameter) parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(data.logarithmicTrace parameter : Complex)) :=
   ⟨data.hasDerivAt_finitePartLog,
     data.connectionCoefficient_eq_neg_trace⟩

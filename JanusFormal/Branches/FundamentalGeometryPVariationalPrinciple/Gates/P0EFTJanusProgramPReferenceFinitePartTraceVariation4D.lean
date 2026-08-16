@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceZetaTraceCoefficient4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 /-!
 # Reference finite-part variation and logarithmic trace
@@ -25,6 +26,7 @@ noncomputable section
 open P0EFTJanusProgramPReferenceZetaTraceCoefficient4D
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 /-- Direct finite-part variation theorem for one standalone reference family. -/
 structure ReferenceFinitePartTraceVariationData
@@ -68,8 +70,7 @@ theorem connectionCoefficient_eq_neg_trace
     {family : RelativeHeatMellinZetaFamilyData}
     (data : ReferenceFinitePartTraceVariationData family)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(data.logarithmicTrace parameter : Complex) :=
   data.toReferenceZetaTraceCoefficient.connectionCoefficient_eq_neg_trace
     parameter
@@ -82,8 +83,7 @@ theorem reference_finite_part_trace_variation_gate
       family.finitePartFamily.logDerivative parameter =
         data.logarithmicTrace parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(data.logarithmicTrace parameter : Complex)) :=
   ⟨data.finitePartLogDerivative_eq_trace,
     data.connectionCoefficient_eq_neg_trace⟩

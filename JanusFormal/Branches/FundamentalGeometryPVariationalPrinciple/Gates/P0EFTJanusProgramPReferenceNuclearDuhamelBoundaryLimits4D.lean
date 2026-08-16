@@ -1,4 +1,4 @@
-import Mathlib.Topology.Algebra.Module.Basic
+import Mathlib.Analysis.Normed.Module.Basic
 
 /-!
 # Short- and long-time Duhamel boundary identities from limits

@@ -133,9 +133,9 @@ theorem secondFrechet_add
       (hFirstState.differentiableAt (by norm_num))
       (hSecondState.differentiableAt (by norm_num))
   have hFirstGradient : DifferentiableAt Real (actionGradient first) point :=
-    (hFirst.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hFirst.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   have hSecondGradient : DifferentiableAt Real (actionGradient second) point :=
-    (hSecond.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hSecond.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   rw [hGradient.fderiv_eq]
   exact fderiv_add hFirstGradient hSecondGradient
 
@@ -191,8 +191,8 @@ theorem fullCoupledPhysicalHessian_eq_six_add_robin
   rw [fullCoupledPhysicalAction_eq_six_add_robin]
   rw [secondFrechet_add
     (canonicalSixPhysicalAction_contDiffAt blocks point hC2) hC2.robin]
+  change canonicalSixPhysicalHessian blocks point + _ = _
   rw [canonicalSixPhysicalHessian_eq_sum blocks point hC2]
-  rfl
 
 /-- Public checkpoint: no six physical bilinear forms are accepted as input. -/
 theorem canonical_six_physical_chart_hessian_gate

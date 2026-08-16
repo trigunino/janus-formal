@@ -92,7 +92,7 @@ theorem relativeZetaTransition_inverse
     relativeZetaTransition atlas first second parameter *
         relativeZetaTransition atlas second first parameter = 1 := by
   unfold relativeZetaTransition
-  field_simp
+  field_simp [relativeZetaLocalDeterminant_ne_zero]
 
 /-- Exact Čech cocycle law. -/
 theorem relativeZetaTransition_cocycle
@@ -102,7 +102,7 @@ theorem relativeZetaTransition_cocycle
         relativeZetaTransition atlas first second parameter =
       relativeZetaTransition atlas first third parameter := by
   unfold relativeZetaTransition
-  field_simp
+  field_simp [relativeZetaLocalDeterminant_ne_zero]
 
 /-- Derivative of a local determinant coordinate. -/
 def relativeZetaLocalDeterminantDerivative
@@ -125,11 +125,10 @@ theorem relativeZetaLocalDeterminant_hasDerivAt
   have hExp :=
     (Complex.hasDerivAt_exp
       (-atlas.zetaPrimeAtZero index parameter)).comp parameter hNegative
-  convert hExp using 1
-  · rfl
-  · unfold relativeZetaLocalDeterminantDerivative
-      relativeZetaLocalDeterminant
-    ring
+  apply hExp.congr_deriv
+  unfold relativeZetaLocalDeterminantDerivative
+    relativeZetaLocalDeterminant
+  ring
 
 /-- Derivative of a transition function. -/
 def relativeZetaTransitionDerivative
@@ -163,7 +162,7 @@ theorem relativeZetaTransition_hasDerivAt
     (Complex.hasDerivAt_exp
       (atlas.zetaPrimeAtZero first parameter -
         atlas.zetaPrimeAtZero second parameter)).comp parameter hDifference
-  convert hExp using 1
+  apply hExp.congr_deriv
   unfold relativeZetaTransitionDerivative
   rw [relativeZetaTransition_eq_exp]
   ring

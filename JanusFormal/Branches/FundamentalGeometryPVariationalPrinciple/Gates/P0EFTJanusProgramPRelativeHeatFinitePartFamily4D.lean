@@ -1,4 +1,5 @@
 import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 
@@ -54,17 +55,15 @@ theorem relativeHeatFinitePartDeterminantFamily_hasDerivAt
     HasDerivAt (relativeHeatFinitePartDeterminantFamily family)
       (relativeHeatFinitePartDeterminantFamilyDerivative family parameter)
       parameter := by
-  have hExp :=
-    (Real.hasDerivAt_exp
-      (relativeHeatFinitePartLogDeterminant
-        (family.finitePart parameter))).comp parameter
-      (family.hasDerivAt_logDeterminant parameter)
-  convert hExp using 1
-  · rfl
-  · unfold relativeHeatFinitePartDeterminantFamilyDerivative
-      relativeHeatFinitePartDeterminantFamily
-      relativeHeatFinitePartDeterminant
-    ring
+  change HasDerivAt
+    (fun current => Real.exp
+      (relativeHeatFinitePartLogDeterminant (family.finitePart current)))
+    (relativeHeatFinitePartDeterminantFamilyDerivative family parameter)
+    parameter
+  refine (family.hasDerivAt_logDeterminant parameter).exp.congr_deriv ?_
+  unfold relativeHeatFinitePartDeterminantFamilyDerivative
+    relativeHeatFinitePartDeterminantFamily relativeHeatFinitePartDeterminant
+  ring
 
 /-- Squared determinant magnitude, the local Hermitian metric coefficient. -/
 def relativeHeatFinitePartMetricWeight
@@ -88,14 +87,14 @@ theorem relativeHeatFinitePartMetricWeight_hasDerivAt
       parameter := by
   have hDet :=
     relativeHeatFinitePartDeterminantFamily_hasDerivAt family parameter
-  have hSquare := hDet.mul hDet
-  convert hSquare using 1
-  · funext current
-    simp [relativeHeatFinitePartMetricWeight, pow_two]
-  · unfold relativeHeatFinitePartMetricWeightDerivative
-      relativeHeatFinitePartDeterminantFamilyDerivative
-      relativeHeatFinitePartMetricWeight
-    ring
+  change HasDerivAt
+    (fun current => relativeHeatFinitePartDeterminantFamily family current ^ 2)
+    (relativeHeatFinitePartMetricWeightDerivative family parameter) parameter
+  refine (hDet.pow 2).congr_deriv ?_
+  unfold relativeHeatFinitePartMetricWeightDerivative
+    relativeHeatFinitePartDeterminantFamilyDerivative
+    relativeHeatFinitePartMetricWeight
+  ring
 
 /-- Every determinant magnitude is positive. -/
 theorem relativeHeatFinitePartDeterminantFamily_pos

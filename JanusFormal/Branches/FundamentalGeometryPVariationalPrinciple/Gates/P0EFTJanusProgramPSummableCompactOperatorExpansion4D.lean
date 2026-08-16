@@ -1,5 +1,7 @@
 import Mathlib.Analysis.Normed.Operator.Compact.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import Mathlib.Analysis.Normed.Operator.Basic
+import Mathlib.Analysis.Normed.Group.InfiniteSum
+import Mathlib.Topology.Algebra.InfiniteSum.Constructions
 
 /-!
 # Summable compact-operator expansions
@@ -20,7 +22,7 @@ noncomputable section
 universe u
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E] [NormedSpace Real E] [CompleteSpace E]
 
 /-- Explicit norm-summable expansion of one bounded operator into compact
 components. -/
@@ -61,7 +63,7 @@ def SummableCompactOperatorExpansion.zero :
     SummableCompactOperatorExpansion (0 : E →L[Real] E) where
   Index := Empty
   component := Empty.elim
-  component_compact := Empty.elim
+  component_compact := fun index => index.elim
   summable_norm := by simp
   operator_eq_tsum := by simp
 
@@ -82,10 +84,20 @@ def SummableCompactOperatorExpansion.add
     rw [summable_sum]
     exact ⟨firstExpansion.summable_norm, secondExpansion.summable_norm⟩
   operator_eq_tsum := by
-    rw [tsum_sum]
-    exact congrArg₂ (· + ·)
-      firstExpansion.operator_eq_tsum
-      secondExpansion.operator_eq_tsum
+    have hFirst : Summable firstExpansion.component :=
+      firstExpansion.summable_norm.of_norm
+    have hSecond : Summable secondExpansion.component :=
+      secondExpansion.summable_norm.of_norm
+    calc
+      first + second =
+          (∑' index, firstExpansion.component index) +
+            ∑' index, secondExpansion.component index :=
+        congrArg₂ (· + ·) firstExpansion.operator_eq_tsum
+          secondExpansion.operator_eq_tsum
+      _ = ∑' index, match index with
+          | Sum.inl index => firstExpansion.component index
+          | Sum.inr index => secondExpansion.component index :=
+        (hFirst.tsum_sum hSecond).symm
 
 /-- Negate a summable compact expansion. -/
 def SummableCompactOperatorExpansion.neg
@@ -99,7 +111,10 @@ def SummableCompactOperatorExpansion.neg
   summable_norm := by
     simpa using expansion.summable_norm
   operator_eq_tsum := by
-    rw [expansion.operator_eq_tsum, tsum_neg]
+    calc
+      -operator = -(∑' index, expansion.component index) :=
+        congrArg Neg.neg expansion.operator_eq_tsum
+      _ = ∑' index, -expansion.component index := tsum_neg.symm
 
 /-- Difference of two summable compact expansions. -/
 def SummableCompactOperatorExpansion.sub

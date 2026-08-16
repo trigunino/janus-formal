@@ -136,7 +136,8 @@ theorem finite_sector_pairwise_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.principalEnergy vector := by
-  simpa [margin, FiniteSectorQuadraticGardingData.margin] using
+  simpa [margin, toQuadraticGardingData,
+    FiniteSectorQuadraticGardingData.margin] using
     data.toQuadraticGardingData.finite_sector_quadratic_garding_gate
 
 end FiniteSectorPairwiseGardingData

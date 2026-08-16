@@ -256,7 +256,8 @@ theorem finitePartLogDeterminant_eq_difference
     _ = -(actual.derivativeAtZero - reference.derivativeAtZero).re := by
       rw [data.derivativeAtZero_eq_difference]
     _ = -actual.derivativeAtZero.re + reference.derivativeAtZero.re := by
-      simp
+      rw [Complex.sub_re]
+      ring
     _ = relativeHeatFinitePartLogDeterminant actualFinitePart -
         relativeHeatFinitePartLogDeterminant referenceFinitePart := by
       rw [actual.finitePart_realPart, reference.finitePart_realPart]

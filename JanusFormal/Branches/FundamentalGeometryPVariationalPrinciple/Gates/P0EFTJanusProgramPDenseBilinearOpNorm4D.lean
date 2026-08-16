@@ -49,6 +49,8 @@ theorem continuousBilinear_opNorm_le_of_dense
         (continuous_const.mul continuous_norm)
     have hRange : Set.range embedding ⊆ controlled := by
       rintro _ ⟨core, rfl⟩
+      change ‖form (embedding first) (embedding core)‖ ≤
+        (constant * ‖embedding first‖) * ‖embedding core‖
       simpa [mul_assoc] using estimate first core
     have hClosure : closure (Set.range embedding) ⊆ controlled :=
       hControlledClosed.closure_subset_iff.mpr hRange

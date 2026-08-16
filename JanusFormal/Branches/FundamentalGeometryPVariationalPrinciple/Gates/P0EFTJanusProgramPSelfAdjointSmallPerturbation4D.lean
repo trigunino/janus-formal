@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
+import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 /-!
 # Stability of a self-adjoint gap under a small bounded perturbation
@@ -29,12 +30,11 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Quantitative small self-adjoint perturbation data. -/
 structure SelfAdjointSmallPerturbationData
-    (operator perturbation : E →L[Real] E) : Prop where
+    (operator perturbation : E →L[Real] E) where
   operator_selfAdjoint : IsSelfAdjoint operator
   perturbation_selfAdjoint : IsSelfAdjoint perturbation
   gap : Real

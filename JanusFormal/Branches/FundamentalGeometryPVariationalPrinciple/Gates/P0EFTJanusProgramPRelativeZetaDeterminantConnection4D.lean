@@ -47,8 +47,8 @@ theorem relativeZetaDeterminantCoordinate_ne_zero
 def relativeZetaDeterminantCoordinateDerivative
     (family : RelativeZetaDeterminantFamilyData)
     (parameter : Real) : Complex :=
-  -family.parameterDerivative parameter *
-    relativeZetaDeterminantCoordinate family parameter
+  relativeZetaDeterminantCoordinate family parameter *
+    -family.parameterDerivative parameter
 
 /-- Chain rule for `exp(-zeta')`. -/
 theorem relativeZetaDeterminantCoordinate_hasDerivAt
@@ -61,14 +61,13 @@ theorem relativeZetaDeterminantCoordinate_hasDerivAt
       (fun current => -family.zetaPrimeAtZero current)
       (-family.parameterDerivative parameter) parameter :=
     (family.hasDerivAt_zetaPrime parameter).neg
-  have hExp :=
-    (Complex.hasDerivAt_exp (-family.zetaPrimeAtZero parameter)).comp
-      parameter hNegative
-  convert hExp using 1
-  · rfl
-  · unfold relativeZetaDeterminantCoordinateDerivative
-      relativeZetaDeterminantCoordinate
-    ring
+  change HasDerivAt
+    (fun current => Complex.exp (-family.zetaPrimeAtZero current))
+    (relativeZetaDeterminantCoordinateDerivative family parameter) parameter
+  refine hNegative.cexp.congr_deriv ?_
+  unfold relativeZetaDeterminantCoordinateDerivative
+    relativeZetaDeterminantCoordinate
+  ring
 
 /-- Connection coefficient in the determinant trivialization. -/
 def relativeZetaConnectionCoefficient

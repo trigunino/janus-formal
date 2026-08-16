@@ -24,7 +24,13 @@ open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
 
+end
+end P0EFTJanusProgramPRelativeHeatDataTransport4D
+namespace P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 namespace RelativeHeatFinitePartData
+
+set_option autoImplicit false
+open P0EFTJanusCircleDiracHeatTraceCancellation
 
 /-- Reinterpret finite-part data through equality of the heat trace. -/
 def transportHeatTrace
@@ -77,8 +83,14 @@ theorem transportHeatTrace_determinant
   rfl
 
 end RelativeHeatFinitePartData
+end P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 
+namespace P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
 namespace RelativeHeatMellinZetaContinuationData
+
+set_option autoImplicit false
+open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 
 /-- Reinterpret one Mellin continuation through equality of its heat trace. -/
 def transportHeatTrace
@@ -136,6 +148,14 @@ theorem transportHeatTrace_zetaDeterminant
   rfl
 
 end RelativeHeatMellinZetaContinuationData
+end P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
+
+namespace P0EFTJanusProgramPRelativeHeatDataTransport4D
+
+set_option autoImplicit false
+open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
 
 /-- Public dependent-data transport checkpoint. -/
 theorem relative_heat_data_transport_gate
@@ -157,6 +177,5 @@ theorem relative_heat_data_transport_gate
     continuation.transportHeatTrace_derivativeAtZero hTrace,
     continuation.transportHeatTrace_zetaDeterminant hTrace⟩
 
-end
 end P0EFTJanusProgramPRelativeHeatDataTransport4D
 end JanusFormal

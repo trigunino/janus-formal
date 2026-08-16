@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatIntegralVariation4D
+import Mathlib.Algebra.Ring.Ext
 
 /-!
 # Differentiated weighted heat-trace integrals
@@ -89,7 +90,19 @@ theorem pointwise_hasDerivAt_kernel
       HasDerivAt (fun current => data.kernel current time)
         (data.derivativeKernel parameter time) parameter := by
   filter_upwards [data.pointwise_hasDerivAt_heatTrace parameter] with time hTime
-  exact (hasDerivAt_const parameter (data.weight time)).mul hTime
+  change HasDerivAt
+    (fun current => data.weight time * data.heatTrace current time)
+    (data.weight time * data.heatTraceDerivative parameter time) parameter
+  convert hTime.const_smul (data.weight time) using 1
+  · apply AddCommGroup.ext
+    funext first second
+    rfl
+  · apply Module.ext
+    funext scalar value
+    rfl
+  · funext current
+    rfl
+  · rfl
 
 /-- Convert to the generic parameterized integral interface. -/
 def toParametricIntegralVariation
