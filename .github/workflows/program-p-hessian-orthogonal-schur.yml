@@ -1,0 +1,136 @@
+name: Program P Hessian orthogonal Schur frontier
+
+on:
+  push:
+    branches:
+      - dev-branch
+      - agent/hessian-spinc-maximal-domain
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteModeOrthogonalSchur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualSchurNamedZeroMode4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixSchur*.lean"
+      - "scripts/audit_hessian_orthogonal_schur.py"
+      - "docs/hessian_global_01_orthogonal_schur.md"
+      - ".github/workflows/program-p-hessian-orthogonal-schur.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteModeOrthogonalSchur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualSchurNamedZeroMode4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixSchur*.lean"
+      - "scripts/audit_hessian_orthogonal_schur.py"
+      - "docs/hessian_global_01_orthogonal_schur.md"
+      - ".github/workflows/program-p-hessian-orthogonal-schur.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: program-p-hessian-orthogonal-schur-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit — orthogonal Schur architecture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python scripts/audit_hessian_orthogonal_schur.py
+
+  generic:
+    name: Lean — generic orthogonal Schur and named kernel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-orthogonal-schur-generic-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeOrthogonalSchurDecomposition4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeOrthogonalSchurBasis4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeOrthogonalSchurNamedVectors4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D
+
+  candidate:
+    name: Lean — Candidate-A orthogonal Schur named zero modes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-orthogonal-schur-candidate-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            hessian-orthogonal-schur-generic-${{ runner.os }}-
+      - run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBlock4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBasis4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedVectors4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualSchurNamedZeroMode4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedKernel4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurBasisFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurNamedVectorsFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixSchurNamedZeroModeFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixSchurSectorModesFrontier4D
+
+  determinant:
+    name: Lean — orthogonal Schur determinant stratum
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-orthogonal-schur-determinant-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            hessian-orthogonal-schur-candidate-${{ runner.os }}-
+      - run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurDeterminant4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurDeterminantFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurNamedDeterminantFrontier4D

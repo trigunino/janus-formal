@@ -1,183 +1,228 @@
-# HESSIAN-GLOBAL-01 — frontière analytique réduite
+# HESSIAN-GLOBAL-01 — frontière analytique constructive réduite
 
-Date du lot : **7 août 2026**.
+Date du lot : **8 août 2026**.
 
-Ce document décrit l'état d'implémentation après la réduction constructive de
-H13, H11 et H12. Il complète la carte de fermeture historique sans prétendre
-que les nouveaux fichiers sont certifiés par Lean : conformément à la décision
-du projet, leur implémentation a été poursuivie sans attendre le build complet.
+Ce document décrit la route constructive H10–H14 de la branche
+`agent/hessian-spinc-maximal-domain`. L’implémentation a été poursuivie sans
+attendre une validation Lean complète ; les nouvelles déclarations ne doivent
+donc pas être présentées comme certifiées par le noyau avant le passage des
+workflows focalisés.
 
 ## Résultat structurel
 
-Le certificat terminal H14 existe déjà :
+Le certificat terminal demeure :
 
 ```lean
 global_candidateA_hessian_closure_gate
 ```
 
-La route constructive privilégiée est désormais :
-
-```lean
-global_candidateA_hessian_minimalPhysical_bounded_closure_gate
-```
-
-exposée par :
+La façade constructive publique est :
 
 ```text
-P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D
+P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D
 ```
 
-Cette route ne demande plus directement :
+et son point d’entrée préféré :
 
-- une égalité de Hessien matière–LL fournie comme champ ;
-- une forme bornée arbitraire représentant les sept blocs physiques ;
-- une hypothèse Fredholm globale ;
-- une équivalence supposée entre deux complétions concurrentes.
+```lean
+global_candidateA_hessian_terminal_constructive_closure_gate
+```
 
-## Les quatre paquets analytiques restants
-
-### A. SpinC lisse dans le graphe maximal
-
-Façade :
+La frontière terminale comporte exactement trois paquets analytiques :
 
 ```text
-P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
+famille Candidate-A à six blocs C²
+extensions continues canoniques des sept Hessiennes physiques
+shift fini auto-adjoint avec ‖x‖ ≤ C ‖(H + P)x‖
 ```
 
-Les coefficients Fourier non pondérés sont maintenant canoniques : ils sont
-obtenus, secteur par secteur, par l'inverse de
-`primitiveSpinCGeometricSignedDiracModeUnitary`, puis assemblés sur
-`Sector × PrimitiveSpinCGeometricSignedMode`.
+H10 et SpinC ne sont plus des entrées de cette façade.
 
-Les compatibilités avec tout le cœur Fourier fini et l'injectivité sont
-dérivées. La voie géométrique restante porte sur :
+## SpinC : fermeture géométrique implémentée
+
+La chaîne Clifford–connexion–repère invariant–IPP–courant de Green construit la
+réalisation maximale same-action pour toute masse réelle. La façade privilégiée
+reste :
 
 ```lean
-ProgramPPrimitiveSpinCSmoothMaximalDomainData4D
+primitive_spinC_smooth_graph_of_geometric_green
 ```
 
-c'est-à-dire :
+Les anciennes voies par décroissance Fourier, domaine maximal fourni, symétrie
+fournie ou densité de cœur restent uniquement des adaptateurs.
 
-1. toute section primitive lisse appartient au domaine maximal de `2D + m²` ;
-2. l'opérateur maximal appliqué à cette section redonne l'inclusion L² de la
-   véritable expression différentielle lisse.
+## H10 : fermé par l’unique action mobile Candidate-A
 
-Il reste ensuite l'identité same-action de la paire complétée, portée par :
+Le terminal concret est :
 
 ```lean
-ProgramPPrimitiveSpinCMatterSmoothMaximalSameActionData4D
+global_candidateA_h10_closure_gate
 ```
 
-Ces deux objets construisent automatiquement la réalisation lisse dans le
-graphe maximal.
+Il assemble les résultats déjà présents :
 
-### B. Famille Candidate-A locale sur le vrai tangent physique minimal
+- l’action GHY complétée à deux feuilles est `C²` sur le vrai domaine ouvert ;
+- son second Fréchet est symétrique ;
+- toute présentation lisse admissible coïncide sur un vrai germe avec l’unique
+  source mobile de `globalCandidateAGHYAction` ;
+- la source lisse factorise par le cœur métrique-normal complété et ne dépend
+  pas du représentant choisi.
 
-Le modèle du chart est fixé à :
+Le paquet final est :
 
 ```lean
-GlobalMinimalPhysicalFieldTangent
+GlobalCandidateAH10ClosureCertificate4D
 ```
 
-Il est D10-free et le pont du tangent vers le modèle du chart est l'identité.
-L'injectivité et la densité de ce pont ne sont donc plus des obligations.
+Il ne demande aucune nouvelle action, normale, métrique ou donnée de bord. La
+transversalité déjà utilisée pour entrer dans le domaine GHY est sa seule
+prémisse géométrique.
 
-Le paquet réduit est :
+Les modules génériques de calcul de germe composante par composante restent
+utiles pour auditer l’origine de l’égalité, mais leurs huit identités
+`EventuallyEq` ne sont plus exposées comme un quatrième paquet terminal.
+
+## Paquet A : famille locale à six blocs `C²`
+
+Le paquet terminal H13 est :
 
 ```lean
-ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D
+ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
+```
+
+Il conserve seulement les régularités indépendantes :
+
+```text
+Candidate-A central
+Einstein–Hilbert +
+Einstein–Hilbert −
+Maxwell +
+Maxwell −
+BV fini
+```
+
+Les trois autres secteurs sont reconstruits :
+
+```text
+Robin/GHY ← H10
+matière   ← action quadratique du graphe SpinC
+LL        ← action quadratique du graphe LL complet
+```
+
+Le mismatch matière–LL est annulé sur la même action sans retirer les sept
+blocs physiques.
+
+## Paquet B : extensions canoniques des sept Hessiennes physiques
+
+Le paquet H11 préféré est :
+
+```lean
+GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
+```
+
+Les formes du cœur sont fixées comme les véritables seconds Fréchet des sept
+blocs de l’action locale. Chaque bloc fournit uniquement son prolongement
+bilinéaire continu, son accord sur le cœur dense et sa symétrie.
+
+Les estimations sont alors automatiques :
+
+```text
+‖B_j(x,y)‖ ≤ ‖B_j‖ ‖ιx‖ ‖ιy‖,
+C_total = Σ_j ‖B_j‖.
+```
+
+Le prolongement de la somme sur l’unique espace de Hilbert commun, son Riesz,
+la fermeture du graphe, l’auto-adjonction et l’accord avec le Hessien augmenté
+sont reconstruits par les gates H11.
+
+Le résidu analytique de H11 est exactement : **construire les sept
+prolongements continus canoniques et prouver leur accord sur le cœur dense**.
+
+## Paquet C : shift fini auto-adjoint contrôlé par une borne globale
+
+Le paquet PDE-facing est :
+
+```lean
+GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D
 ```
 
 Il contient :
 
-- un ouvert admissible contenant zéro ;
-- la vraie famille de données Candidate-A sur cet ouvert ;
-- la régularité `C²` des neuf blocs ;
-- deux bornes de norme de graphe, matière et LL ;
-- l'identité du bloc matière avec constante + action quadratique SpinC ;
-- l'identité du bloc LL avec constante + action quadratique LL complet.
+```text
+un projecteur de défaut fini P,
+la coercivité de H hors de P,
+l’auto-adjonction de H + P,
+une constante C et la borne ‖x‖ ≤ C ‖(H + P)x‖,
+la stationnarité LL.
+```
 
-La compatibilité de ces projections avec le cœur diagonal n'est plus un champ :
-elle est dérivée dans
-`P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphCoreCompatibility4D`
-à partir des injections de slots typées déjà présentes.
+La borne est transformée en certificat anti-Lipschitz. Pour un opérateur borné
+auto-adjoint, l’injectivité implique alors la densité de l’image via
 
-### C. Une seule borne pour les sept blocs physiques
+```text
+ker(H + P)ᗮ = closure(range((H + P)†)).
+```
 
-La forme algébrique sur le cœur dense est canonique : c'est le vrai Hessien
-local des sept blocs physiques, tiré sur le cœur diagonal existant.
+Le critère Banach anti-Lipschitz donne ensuite la bijectivité. La suite est
+construite automatiquement :
 
-Le seul paquet H11 restant est :
+```text
+surjectivité de H + P
+→ inverse borné de H + P
+→ QH = HQ = I - P
+→ HQH = H
+→ défauts gauche/droite finis
+→ image fermée, noyau et conoyau finis
+→ Fredholm, indice zéro.
+```
+
+La surjectivité, l’inverse, le paramétrix et les défauts ne sont donc plus des
+prémisses indépendantes.
+
+## Route terminale à trois entrées
+
+Le gate préféré est :
 
 ```lean
-GlobalCandidateASevenPhysicalCoreBound4D
+global_candidateA_hessian_h10Robin_lowerBound_closure_gate
 ```
 
-avec une estimation de la forme :
+Chaîne complète :
 
 ```text
-‖B(x,y)‖ ≤ C ‖ι(x)‖ ‖ι(y)‖.
-```
-
-La gate
-
-```text
-P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
-```
-
-utilise `LinearMap.extendOfNorm` dans les deux variables et construit
-canoniquement l'unique forme bilinéaire continue sur la complétion Hilbert
-commune. L'accord avec le cœur lisse dense et la symétrie sont dérivés.
-
-### D. Paramétrix augmenté à défaut fini
-
-Le paquet H12 restant est :
-
-```lean
-GlobalCandidateAFaithfulAugmentedFiniteDefectParametrix4D
-```
-
-Il porte :
-
-```text
-QH = I - K,
-HQ = I - C,
-CH = 0,
-range(K) et range(C) de dimension finie,
-stationnarité LL.
-```
-
-La gate prouve alors :
-
-```text
-range(H) = ker(C),
-```
-
-ce qui donne l'image fermée. Elle plonge aussi `ker(H)` dans `range(K)`, donc
-le noyau est de dimension finie. Le caractère Fredholm, le cokernel fini et
-l'indice zéro sont ensuite dérivés des gates auto-adjointes existantes.
-
-## Chaîne terminale
-
-Une fois A, B, C et D fournis, la chaîne est mécanique :
-
-```text
-SpinC maximal graph
-  → chart minimal H13
-  → mismatch matière–LL = 0
-  → extension H11 des sept blocs
-  → opérateur augmenté sur le domaine commun
-  → paramétrix H12
-  → Fredholm + indice zéro
+H10 géométrique déjà fermé
+  → Robin C² et Hessien Robin authentique
+  → famille locale à six blocs C²
+  → mismatch matière–LL nul (H13)
+  → sept extensions continues canoniques
+  → domaine commun augmenté (H11)
+  → shift fini auto-adjoint avec borne globale
+  → inverse, paramétrix et Fredholm (H12)
   → certificat H14.
 ```
 
-Aucune étape H15 n'est prévue.
+Aucune étape H15 n’est prévue.
+
+## Résidu mathématique exact
+
+Hors corrections Lean, la fermeture demande maintenant :
+
+1. construire la famille locale Candidate-A concrète et ses six preuves `C²` ;
+2. construire les sept prolongements continus canoniques sur le domaine commun ;
+3. choisir le projecteur fini des modes d’obstruction et démontrer la borne
+   elliptique globale
+   \[
+   \|x\| \le C\,\|(H+P)x\|.
+   \]
+
+Tous les autres témoins de H10–H14 sont reconstruits par les gates.
 
 ## État de confiance
 
-- **Implémentation structurelle :** poussée sur `dev-branch`.
-- **Réduction des résidus :** effectuée jusqu'aux quatre paquets ci-dessus.
-- **Validation Lean des nouveaux fichiers :** non effectuée / non garantie.
-- **Ticket mathématique terminal :** pas encore `DONE`, car les quatre témoins
-  analytiques concrets ne sont pas encore construits.
+- **SpinC structurel :** fermé dans l’implémentation, non recertifié dans ce lot.
+- **H10 structurel :** fermé par le gate concret, sans entrée terminale.
+- **H13 :** réduit à six régularités locales indépendantes.
+- **H11 :** réduit à sept prolongements canoniques continus.
+- **H12 :** réduit à une obstruction finie et une borne elliptique globale.
+- **Validation Lean :** non garantie à ce stade.
+- **PR :** reste en brouillon tant que les workflows Lean ne sont pas verts.

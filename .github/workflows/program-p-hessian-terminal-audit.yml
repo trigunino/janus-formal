@@ -1,0 +1,46 @@
+name: Program P terminal Hessian static audit
+
+on:
+  push:
+    branches:
+      - dev-branch
+      - agent/hessian-spinc-maximal-domain
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateANormalBoundary*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Robin*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjoint*Surjective4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
+      - "scripts/audit_hessian_terminal_constructive.py"
+      - ".github/workflows/program-p-hessian-terminal-audit.yml"
+      - ".github/workflows/program-p-hessian-terminal-constructive.yml"
+      - ".github/workflows/program-p-h10-h14-preferred-frontier.yml"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateANormalBoundary*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Robin*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjoint*Surjective4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
+      - "scripts/audit_hessian_terminal_constructive.py"
+      - ".github/workflows/program-p-hessian-terminal-audit.yml"
+      - ".github/workflows/program-p-hessian-terminal-constructive.yml"
+      - ".github/workflows/program-p-h10-h14-preferred-frontier.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Audit — terminal constructive Hessian
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run terminal constructive Hessian audit
+        run: python scripts/audit_hessian_terminal_constructive.py

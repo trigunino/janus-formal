@@ -1,0 +1,27 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPZetaTensorIdentification4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorZetaParallel4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFullTensorZetaFamilyClosure4D
+
+set_option autoImplicit false
+noncomputable section
+
+open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
+open P0EFTJanusProgramPSelfAdjointFredholmZetaDeterminantSection4D
+open P0EFTJanusProgramPSelfAdjointFredholmZetaFullTensor4D
+open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
+open P0EFTJanusProgramPZetaTensorIdentification4D
+open P0EFTJanusProgramPFullTensorZetaConnection4D
+open P0EFTJanusProgramPFullTensorZetaParallel4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+
+variable {E ZeroMode : Type*}
+  [NormedAddCommGroup E] [NormedSpace Real E]
+  [InnerProductSpace Real E] [CompleteSpace E]
+  [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
+
+end
+end P0EFTJanusProgramPFullTensorZetaFamilyClosure4D
+end JanusFormal

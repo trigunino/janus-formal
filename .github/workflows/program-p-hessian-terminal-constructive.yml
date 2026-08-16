@@ -1,0 +1,170 @@
+name: Program P terminal constructive Hessian
+
+on:
+  push:
+    branches:
+      - dev-branch
+      - agent/hessian-spinc-maximal-domain
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateANormalBoundary*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Robin*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjoint*Surjective4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPAugmentedFiniteProjectionGarding4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianH10Robin*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*AnalyticFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D.lean"
+      - ".github/workflows/program-p-hessian-terminal-constructive.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateANormalBoundary*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Robin*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjoint*Surjective4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPAugmentedFiniteProjectionGarding4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianH10Robin*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*AnalyticFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D.lean"
+      - ".github/workflows/program-p-hessian-terminal-constructive.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: program-p-terminal-hessian-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  terminal-h10:
+    name: Lean — terminal H10 closure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: terminal-hessian-h10-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build historical germ chain and concrete H10 certificate
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionGermCalculus4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryIntegrandGermClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryGHYFactorGerm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryMeanCurvatureGerm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaussFormGerm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryComponentwiseTerminalClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCommonGermDomain4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySeparatedGerms4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryEventuallyEqGerms4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryRobinFromGerm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
+
+  terminal-family-h11:
+    name: Lean — terminal family and canonical H11
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: terminal-hessian-family-h11-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build H10 Robin family and canonical physical extensions
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryRobinC2Transfer4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinAdapters4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtensions4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousSum4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D
+
+  terminal-h12:
+    name: Lean — self-adjoint lower-bound H12
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: terminal-hessian-h12-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build generic range theorem and Candidate-A shifted inverse
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointAntilipschitzSurjective4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPAugmentedFiniteProjectionGarding4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedGardingEstimates4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveShift4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveParametrix4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D
+
+  terminal-h14:
+    name: Lean — three-input terminal H14
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: terminal-hessian-h14-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build all terminal façades
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinAnalyticClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinContinuousClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinCanonicalClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinSelfAdjointClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinAntilipschitzClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinLowerBoundClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredAnalyticFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianTerminalConstructiveClosure4D

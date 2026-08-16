@@ -1,0 +1,23 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorZetaAtlas4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFullTensorZetaAtlasTransition4D
+
+set_option autoImplicit false
+noncomputable section
+
+open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
+open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
+open P0EFTJanusProgramPFullTensorCollapseFormula4D
+open P0EFTJanusProgramPFullTensorZetaAtlas4D
+open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
+open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
+
+variable {E ZeroMode Index : Type*}
+  [NormedAddCommGroup E] [NormedSpace Real E]
+  [InnerProductSpace Real E] [CompleteSpace E]
+  [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
+
+end
+end P0EFTJanusProgramPFullTensorZetaAtlasTransition4D
+end JanusFormal

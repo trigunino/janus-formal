@@ -1,0 +1,132 @@
+name: Program P Hessian symmetry zero modes
+
+on:
+  push:
+    branches:
+      - dev-branch
+      - agent/hessian-spinc-maximal-domain
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSymmetryOrbitHessianKernel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAInfinitesimalSymmetryZeroModes4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActionSymmetrySectors4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixSymmetryOrbitFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryFrontier4D.lean"
+      - "scripts/audit_hessian_symmetry_zero_modes.py"
+      - "docs/hessian_global_01_symmetry_zero_modes.md"
+      - ".github/workflows/program-p-hessian-symmetry-zero-modes.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSymmetryOrbitHessianKernel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAInfinitesimalSymmetryZeroModes4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActionSymmetrySectors4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixSymmetryOrbitFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryFrontier4D.lean"
+      - "scripts/audit_hessian_symmetry_zero_modes.py"
+      - "docs/hessian_global_01_symmetry_zero_modes.md"
+      - ".github/workflows/program-p-hessian-symmetry-zero-modes.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: program-p-hessian-symmetry-zero-modes-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit — symmetry-generated zero modes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run structural audit
+        run: python scripts/audit_hessian_symmetry_zero_modes.py
+
+  generic-noether:
+    name: Lean — action symmetry to Hessian kernel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-symmetry-generic-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build generic Noether calculus
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSymmetryOrbitHessianKernel4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D
+
+  candidate-noether:
+    name: Lean — Candidate-A action-generated zero modes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-symmetry-candidate-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            hessian-symmetry-generic-${{ runner.os }}-
+      - name: Build Candidate-A Noether and sector layers
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAInfinitesimalSymmetryZeroModes4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActionSymmetrySectors4D
+
+  terminal:
+    name: Lean — canonical-six action-symmetry H10-H14 frontier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-symmetry-terminal-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            hessian-symmetry-candidate-${{ runner.os }}-
+      - name: Build terminal symmetry frontiers
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixSymmetryOrbitFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryFrontier4D

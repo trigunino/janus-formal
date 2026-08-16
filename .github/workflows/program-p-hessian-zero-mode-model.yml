@@ -1,0 +1,153 @@
+name: Program P classified zero-mode Hessian
+
+on:
+  push:
+    branches:
+      - dev-branch
+      - agent/hessian-spinc-maximal-domain
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteKernelModel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjointKernelComplementStability4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D.lean"
+      - "scripts/audit_hessian_zero_mode_model.py"
+      - ".github/workflows/program-p-hessian-zero-mode-model.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteKernelModel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjointKernelComplementStability4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D.lean"
+      - "scripts/audit_hessian_zero_mode_model.py"
+      - ".github/workflows/program-p-hessian-zero-mode-model.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: program-p-zero-mode-model-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit — classified zero-mode frontier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Audit classified-zero-mode architecture
+        run: python scripts/audit_hessian_zero_mode_model.py
+
+  finite-kernel-model:
+    name: Lean — finite zero-mode model
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: zero-mode-model-generic-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            actual-kernel-generic-${{ runner.os }}-
+      - name: Build finite kernel model and reduced stability
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteKernelModel4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointKernelComplementStability4D
+
+  physical-chart-pullback:
+    name: Lean — bounded common-to-chart H11 pullback
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: zero-mode-model-h11-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            actual-kernel-h11-${{ runner.os }}-
+      - name: Build the chart pullback extension
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D
+
+  candidate-zero-modes:
+    name: Lean — Candidate-A zero modes and stability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: zero-mode-model-candidate-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            actual-kernel-candidate-${{ runner.os }}-
+      - name: Build Candidate-A zero-mode model and stability
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D
+
+  terminal:
+    name: Lean — classified zero-mode H10-H14 frontier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: zero-mode-model-terminal-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            actual-kernel-terminal-${{ runner.os }}-
+      - name: Build terminal chart and zero-mode façades
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D

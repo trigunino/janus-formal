@@ -5,29 +5,30 @@ on:
     branches:
       - dev-branch
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalFourierGraph4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalWeightedDecay4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterSmoothMaximalDomain4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianMinimalPhysicalBoundedClosure4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinC*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
       - ".github/workflows/program-p-reduced-hessian-frontier.yml"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
   pull_request:
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianMinimalPhysicalBoundedClosure4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveSpinC*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASevenPhysical*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmented*.lean"
       - ".github/workflows/program-p-reduced-hessian-frontier.yml"
       - "lean-toolchain"
       - "lakefile.lean"
       - "lake-manifest.json"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: program-p-reduced-hessian-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
@@ -58,12 +59,141 @@ jobs:
             program-p-build-${{ runner.os }}-
             program-p-reduced-hessian-${{ runner.os }}-
 
-      - name: Build smooth SpinC maximal-graph frontier
+      - name: Build algebraic Clifford and connection layers
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCCliffordHermitianSkew4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCConnectionHermitian4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCCliffordSection4D
+
+      - name: Build invariant-frame geometry and IPP
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameDecomposition4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameCoordinateDerivatives4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameIPP4D
+
+      - name: Build global SpinC Green closure
+        id: spinc
+        continue-on-error: true
+        shell: bash
+        run: |
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D"
+          lake build "$target" > spinc-green-build.log 2>&1
+          status=$?
+          cat spinc-green-build.log
+          exit "$status"
+
+      - name: Upload focused SpinC build log
+        if: always() && steps.spinc.outcome != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: reduced-hessian-spinc-log
+          path: spinc-green-build.log
+          if-no-files-found: warn
+          retention-days: 3
+
+      - name: Fail when the SpinC closure failed
+        if: steps.spinc.outcome == 'failure'
+        run: exit 1
+
+      - name: Build smooth SpinC graph façade
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
+
+      - name: Build decomposed analytic packets
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Reduction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
+
+      - name: Build three-input H14 closure route
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 
       - name: Build reduced global Hessian analytic frontier
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianReducedAnalyticFrontier4D
+
+  analytic-family-c2:
+    name: Lean — analytic packet A (physical C2 family)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Restore incremental project cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: program-p-analytic-a-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build physical C2 family reduction
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Reduction4D
+
+  analytic-seven-block-bounds:
+    name: Lean — analytic packet B (seven block bounds)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Restore incremental project cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: program-p-analytic-b-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build seven physical block bounds
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+
+  analytic-generalized-inverse:
+    name: Lean — analytic packet C (generalized inverse)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Restore incremental project cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: program-p-analytic-c-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build generalized inverse route
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D

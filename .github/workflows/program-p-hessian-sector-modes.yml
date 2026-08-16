@@ -1,0 +1,132 @@
+name: Program P Hessian sector modes
+
+on:
+  push:
+    branches:
+      - dev-branch
+      - agent/hessian-spinc-maximal-domain
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPCandidateASector*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASector*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAProfileActionTranslationStablePhysicalForm4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixSector*ActionSymmetryStableFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixProfileActionSymmetryStableFrontier4D.lean"
+      - "scripts/audit_hessian_sector_modes.py"
+      - "docs/hessian_global_01_sector_mode_profile.md"
+      - ".github/workflows/program-p-hessian-sector-modes.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPCandidateASector*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASector*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAProfileActionTranslationStablePhysicalForm4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixSector*ActionSymmetryStableFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixProfileActionSymmetryStableFrontier4D.lean"
+      - "scripts/audit_hessian_sector_modes.py"
+      - "docs/hessian_global_01_sector_mode_profile.md"
+      - ".github/workflows/program-p-hessian-sector-modes.yml"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: program-p-hessian-sector-modes-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit — five-sector zero-mode architecture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run structural audit
+        run: python scripts/audit_hessian_sector_modes.py
+
+  generic:
+    name: Lean — generic sector assembly and multiplicities
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-sector-generic-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            program-p-reduced-hessian-${{ runner.os }}-
+      - name: Build sector assembly
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateASectorModeAssembly4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateASectorSubspaceAssembly4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateASectorModeMultiplicity4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateASectorMultiplicityProfile4D
+
+  candidate:
+    name: Lean — Candidate-A stable sector packets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-sector-candidate-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            hessian-sector-generic-${{ runner.os }}-
+      - name: Build Candidate-A sector packets
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASectorActionTranslationStablePhysicalForm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASectorSubspaceActionTranslationStablePhysicalForm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASectorStableMultiplicity4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAProfileActionTranslationStablePhysicalForm4D
+
+  terminal:
+    name: Lean — terminal sector-profile H10-H14 frontier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: hessian-sector-terminal-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+            hessian-sector-candidate-${{ runner.os }}-
+      - name: Build terminal sector frontiers
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixSectorActionSymmetryStableFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixSectorSubspaceActionSymmetryStableFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixProfileActionSymmetryStableFrontier4D
