@@ -3,8 +3,7 @@ name: Program P product-throat positive heat gap
 on:
   push:
     branches:
-      - dev-branch
-      - agent/hessian-spinc-maximal-domain
+      - agent/product-throat-ci
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProductThroatPositiveHeatGapLongTime4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D.lean"
@@ -14,22 +13,6 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssembly4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProductThroatLongTimeSpectralReferenceAtlas4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProductThroatLongTimeNuclearDuhamelZetaTerminal4D.lean"
-      - "docs/hessian_global_01_h14_d11_product_throat_long_time_terminal.md"
-      - ".github/workflows/program-p-product-throat-positive-gap.yml"
-      - "lean-toolchain"
-      - "lakefile.lean"
-      - "lake-manifest.json"
-  pull_request:
-    paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProductThroatPositiveHeatGapLongTime4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNuclearDuhamelProductThroatLongTimeCollapsedRankOneIntegral4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelProductThroatLongTimeDecay4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimits4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssembly4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProductThroatLongTimeSpectralReferenceAtlas4D.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProductThroatLongTimeNuclearDuhamelZetaTerminal4D.lean"
-      - "docs/hessian_global_01_h14_d11_product_throat_long_time_terminal.md"
       - ".github/workflows/program-p-product-throat-positive-gap.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -40,7 +23,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: program-p-product-throat-positive-gap-${{ github.head_ref || github.ref_name }}
+  group: program-p-product-throat-isolated-ci
   cancel-in-progress: true
 
 jobs:
