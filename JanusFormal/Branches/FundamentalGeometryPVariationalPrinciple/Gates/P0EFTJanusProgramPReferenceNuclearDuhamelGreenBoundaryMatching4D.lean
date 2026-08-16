@@ -34,35 +34,38 @@ noncomputable section
 open MeasureTheory Set
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPNuclearDuhamelOperatorIntegral4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenOperatorIdentity4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Short/long operator matching data for one reference family. -/
 structure ReferenceNuclearDuhamelGreenBoundaryMatchingData
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (shortTimeRegion longTimeRegion : Set Real) where
   countertermOperator : Real → E →L[Real] E
   countertermTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (countertermOperator parameter)
+    IntrinsicNuclearTraceData.{u, v} (countertermOperator parameter)
   countertermDerivative : Real → Real
   countertermDerivative_eq_trace : ∀ parameter,
     countertermDerivative parameter =
       intrinsicNuclearTrace (countertermTraceClass parameter)
-  shortTime : NuclearDuhamelOperatorIntegralData nuclear shortTimeRegion
-  longTime : NuclearDuhamelOperatorIntegralData nuclear longTimeRegion
+  shortTime : NuclearDuhamelOperatorIntegralData.{u, v} nuclear shortTimeRegion
+  longTime : NuclearDuhamelOperatorIntegralData.{u, v} nuclear longTimeRegion
   countertermMinusShortTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       (countertermOperator parameter - shortTime.integratedOperator parameter)
   totalTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       ((countertermOperator parameter - shortTime.integratedOperator parameter) -
         longTime.integratedOperator parameter)
   logarithmicDerivativeOperator : Real → E →L[Real] E
   logarithmicDerivativeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (logarithmicDerivativeOperator parameter)
+    IntrinsicNuclearTraceData.{u, v} (logarithmicDerivativeOperator parameter)
   matchingOperator : Real → E →L[Real] E
   shortBoundaryIdentity : ∀ parameter,
     countertermOperator parameter - shortTime.integratedOperator parameter =
@@ -75,9 +78,9 @@ namespace ReferenceNuclearDuhamelGreenBoundaryMatchingData
 /-- Cancellation of the common boundary term gives the global operator
 Duhamel--Green identity. -/
 theorem totalOperator_eq_logarithmicDerivative
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData nuclear
+    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) :
     ((data.countertermOperator parameter -
@@ -90,11 +93,11 @@ theorem totalOperator_eq_logarithmicDerivative
 
 /-- Convert the split-boundary proof to the global operator identity packet. -/
 def toOperatorIdentity
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData nuclear
+    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData.{u, v} nuclear
       shortTimeRegion longTimeRegion) :
-    ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion where
   countertermOperator := data.countertermOperator
   shortTimeDuhamelOperator := data.shortTime.integratedOperator
@@ -116,24 +119,24 @@ def toOperatorIdentity
 /-- The renormalized integrated scalar identity follows from local boundary
 matching. -/
 theorem integratedDuhamel_eq_logarithmicTrace
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData nuclear
+    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) :
     data.countertermDerivative parameter -
         (∫ time in shortTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) -
+          extendedDuhamelTrace nuclear parameter time) -
         (∫ time in longTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) =
+          extendedDuhamelTrace nuclear parameter time) =
       data.toOperatorIdentity.logarithmicTrace parameter :=
   data.toOperatorIdentity.integratedDuhamel_eq_logarithmicTrace parameter
 
 /-- Public short/long boundary-matching checkpoint. -/
 theorem reference_nuclear_duhamel_green_boundary_matching_gate
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (shortTimeRegion longTimeRegion : Set Real)
-    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData nuclear
+    (data : ReferenceNuclearDuhamelGreenBoundaryMatchingData.{u, v} nuclear
       shortTimeRegion longTimeRegion) :
     (∀ parameter,
       data.countertermOperator parameter -
@@ -151,9 +154,9 @@ theorem reference_nuclear_duhamel_green_boundary_matching_gate
     (∀ parameter,
       data.countertermDerivative parameter -
           (∫ time in shortTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) -
+            extendedDuhamelTrace nuclear parameter time) -
           (∫ time in longTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) =
+            extendedDuhamelTrace nuclear parameter time) =
         data.toOperatorIdentity.logarithmicTrace parameter) :=
   ⟨data.shortBoundaryIdentity,
     data.longBoundaryIdentity,

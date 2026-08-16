@@ -1,3 +1,4 @@
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearDuhamelCollapsedRankOneIntegral4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelGreenBoundaryMatching4D
 
@@ -30,26 +31,29 @@ namespace P0EFTJanusProgramPReferenceNuclearDuhamelGreenCollapsedBoundary4D
 set_option autoImplicit false
 noncomputable section
 
-open Set
+open MeasureTheory Set
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPNuclearDuhamelCollapsedRankOneIntegral4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenBoundaryMatching4D
 
-variable {Slice E : Type*}
+universe e i s
+
+variable {Slice : Type s} {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Reference short/long matching data built from semigroup-collapsed spectral
 expansions. -/
 structure ReferenceNuclearDuhamelGreenCollapsedBoundaryData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (shortTimeRegion longTimeRegion : Set Real) where
   countertermOperator : Real → E →L[Real] E
   countertermTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (countertermOperator parameter)
+    IntrinsicNuclearTraceData.{e, i} (countertermOperator parameter)
   countertermDerivative : Real → Real
   countertermDerivative_eq_trace : ∀ parameter,
     countertermDerivative parameter =
@@ -59,15 +63,15 @@ structure ReferenceNuclearDuhamelGreenCollapsedBoundaryData
   longTime : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
     longTimeRegion
   countertermMinusShortTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       (countertermOperator parameter - shortTime.integratedOperator parameter)
   totalTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       ((countertermOperator parameter - shortTime.integratedOperator parameter) -
         longTime.integratedOperator parameter)
   logarithmicDerivativeOperator : Real → E →L[Real] E
   logarithmicDerivativeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (logarithmicDerivativeOperator parameter)
+    IntrinsicNuclearTraceData.{e, i} (logarithmicDerivativeOperator parameter)
   matchingOperator : Real → E →L[Real] E
   shortBoundaryIdentity : ∀ parameter,
     countertermOperator parameter - shortTime.integratedOperator parameter =
@@ -80,7 +84,7 @@ namespace ReferenceNuclearDuhamelGreenCollapsedBoundaryData
 /-- Conversion to the generic short/long boundary matching interface. -/
 def toBoundaryMatching
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryData sliceMeasure
       nuclear shortTimeRegion longTimeRegion) :
@@ -104,13 +108,13 @@ def toBoundaryMatching
 expansion. -/
 theorem shortTimeIntegral_eq_trace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryData sliceMeasure
       nuclear shortTimeRegion longTimeRegion)
     (parameter : Real) :
     (∫ time in shortTimeRegion,
-      nuclear.extendedDuhamelTrace parameter time) =
+      extendedDuhamelTrace nuclear parameter time) =
         intrinsicNuclearTrace (data.shortTime.integratedTraceClass parameter) :=
   data.shortTime.scalarIntegral_eq_intrinsicTrace parameter
 
@@ -118,13 +122,13 @@ theorem shortTimeIntegral_eq_trace
 expansion. -/
 theorem longTimeIntegral_eq_trace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryData sliceMeasure
       nuclear shortTimeRegion longTimeRegion)
     (parameter : Real) :
     (∫ time in longTimeRegion,
-      nuclear.extendedDuhamelTrace parameter time) =
+      extendedDuhamelTrace nuclear parameter time) =
         intrinsicNuclearTrace (data.longTime.integratedTraceClass parameter) :=
   data.longTime.scalarIntegral_eq_intrinsicTrace parameter
 
@@ -132,23 +136,23 @@ theorem longTimeIntegral_eq_trace
 rank-one integration and boundary cancellation. -/
 theorem integratedDuhamel_eq_logarithmicTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryData sliceMeasure
       nuclear shortTimeRegion longTimeRegion)
     (parameter : Real) :
     data.countertermDerivative parameter -
         (∫ time in shortTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) -
+          extendedDuhamelTrace nuclear parameter time) -
         (∫ time in longTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) =
+          extendedDuhamelTrace nuclear parameter time) =
       data.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :=
   data.toBoundaryMatching.integratedDuhamel_eq_logarithmicTrace parameter
 
 /-- Public collapsed-boundary checkpoint. -/
 theorem reference_nuclear_duhamel_green_collapsed_boundary_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (shortTimeRegion longTimeRegion : Set Real)
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryData sliceMeasure
       nuclear shortTimeRegion longTimeRegion) :
@@ -158,12 +162,12 @@ theorem reference_nuclear_duhamel_green_collapsed_boundary_gate
           (data.shortTime.semigroup.collapsedTraceClass parameter time)) ∧
     (∀ parameter,
       (∫ time in shortTimeRegion,
-        nuclear.extendedDuhamelTrace parameter time) =
+        extendedDuhamelTrace nuclear parameter time) =
           intrinsicNuclearTrace
             (data.shortTime.integratedTraceClass parameter)) ∧
     (∀ parameter,
       (∫ time in longTimeRegion,
-        nuclear.extendedDuhamelTrace parameter time) =
+        extendedDuhamelTrace nuclear parameter time) =
           intrinsicNuclearTrace
             (data.longTime.integratedTraceClass parameter)) ∧
     (∀ parameter,
@@ -177,9 +181,9 @@ theorem reference_nuclear_duhamel_green_collapsed_boundary_gate
     (∀ parameter,
       data.countertermDerivative parameter -
           (∫ time in shortTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) -
+            extendedDuhamelTrace nuclear parameter time) -
           (∫ time in longTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) =
+            extendedDuhamelTrace nuclear parameter time) =
         data.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter) :=
   ⟨data.shortTime.semigroup.duhamelTrace_eq_insertionFullHeatTrace,
     data.shortTimeIntegral_eq_trace,

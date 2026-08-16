@@ -33,30 +33,34 @@ noncomputable section
 open MeasureTheory Set
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenOperatorIdentity4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartAssembly4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Complete standalone reference packet whose integrated spectral identity is
 operator-generated. -/
 structure ReferenceNuclearHeatFinitePartOperatorAssemblyData
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)
   countertermContribution : Real → Real
-  operatorIdentity : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
-    shortTimeRegion longTimeRegion
+  operatorIdentity : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v}
+    nuclear shortTimeRegion longTimeRegion
   hasDerivAt_counterterm : ∀ parameter,
     HasDerivAt countertermContribution
       (operatorIdentity.countertermDerivative parameter) parameter
   shortTime : NuclearHeatDuhamelWeightedIntegralData nuclear shortTimeRegion
   longTime : NuclearHeatDuhamelWeightedIntegralData nuclear longTimeRegion
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
         shortTime.toWeightedHeatTraceVariation.contribution parameter +
@@ -69,12 +73,11 @@ namespace ReferenceNuclearHeatFinitePartOperatorAssemblyData
 /-- Forget the operator decomposition only after deriving its scalar integrated
 identity. -/
 def toNuclearHeatFinitePartAssembly
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData
+    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion) :
-    ReferenceNuclearHeatFinitePartAssemblyData
+    ReferenceNuclearHeatFinitePartAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion where
   nuclear := data.nuclear
   countertermContribution := data.countertermContribution
@@ -91,16 +94,14 @@ def toNuclearHeatFinitePartAssembly
 /-- The finite-part logarithmic derivative is the intrinsic trace of the final
 logarithmic derivative operator. -/
 theorem hasDerivAt_finitePartLog
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData
+    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion)
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
       (data.operatorIdentity.logarithmicTrace parameter) parameter :=
   data.toNuclearHeatFinitePartAssembly.hasDerivAt_finitePartLog parameter
@@ -108,24 +109,21 @@ theorem hasDerivAt_finitePartLog
 /-- Standalone reference coefficient obtained from the final nuclear
 logarithmic derivative operator. -/
 theorem connectionCoefficient_eq_neg_logarithmicTrace
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData
+    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(data.operatorIdentity.logarithmicTrace parameter : Complex) :=
   data.toNuclearHeatFinitePartAssembly.connectionCoefficient_eq_neg_trace
     parameter
 
 /-- Public operator-generated finite-part assembly checkpoint. -/
 theorem reference_nuclear_heat_finite_part_operator_assembly_gate
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real)
-    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData
+    (data : ReferenceNuclearHeatFinitePartOperatorAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion) :
     (∀ parameter,
       ((data.operatorIdentity.countertermOperator parameter -
@@ -135,20 +133,18 @@ theorem reference_nuclear_heat_finite_part_operator_assembly_gate
     (∀ parameter,
       data.operatorIdentity.countertermDerivative parameter -
           (∫ time in shortTimeRegion,
-            data.nuclear.extendedDuhamelTrace parameter time) -
+            extendedDuhamelTrace data.nuclear parameter time) -
           (∫ time in longTimeRegion,
-            data.nuclear.extendedDuhamelTrace parameter time) =
+            extendedDuhamelTrace data.nuclear parameter time) =
         data.operatorIdentity.logarithmicTrace parameter) ∧
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
         (data.operatorIdentity.logarithmicTrace parameter) parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(data.operatorIdentity.logarithmicTrace parameter : Complex)) :=
   ⟨data.operatorIdentity.totalOperator_eq_logarithmicDerivative,
     data.operatorIdentity.integratedDuhamel_eq_logarithmicTrace,

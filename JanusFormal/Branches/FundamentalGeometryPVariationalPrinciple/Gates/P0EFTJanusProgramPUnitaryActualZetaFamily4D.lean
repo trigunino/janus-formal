@@ -29,12 +29,14 @@ open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPUnitaryConjugatedNuclearTraceFamily4D
 open P0EFTJanusProgramPUnitaryConjugatedMellinZetaFamily4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Complete actual spectral family generated at one unitary basepoint. -/
 structure UnitaryActualZetaFamilyData where
-  heat : UnitaryConjugatedNuclearTraceFamilyData
+  heat : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
     (Parameter := Real) (Time := HeatTime) (E := E)
   baseFinitePart : RelativeHeatFinitePartData heat.baseTrace
   baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart
@@ -43,14 +45,14 @@ namespace UnitaryActualZetaFamilyData
 
 /-- Parameterized actual zeta family generated from the unitary heat family. -/
 def family
-    (data : UnitaryActualZetaFamilyData (E := E)) :
+    (data : UnitaryActualZetaFamilyData.{u, v} (E := E)) :
     RelativeHeatMellinZetaFamilyData :=
   data.heat.transportedMellinZetaFamily data.baseFinitePart
     data.baseContinuation
 
 /-- The actual zeta connection coefficient vanishes in the unitary frame. -/
 theorem connectionCoefficient_zero
-    (data : UnitaryActualZetaFamilyData (E := E))
+    (data : UnitaryActualZetaFamilyData.{u, v} (E := E))
     (parameter : Real) :
     relativeZetaConnectionCoefficient data.family.toZetaFamily parameter = 0 :=
   data.heat.transportedMellinZetaFamily_connectionCoefficient_zero
@@ -58,7 +60,7 @@ theorem connectionCoefficient_zero
 
 /-- The actual regularized derivative at zero is constant. -/
 theorem zetaPrimeAtZero_eq_base
-    (data : UnitaryActualZetaFamilyData (E := E))
+    (data : UnitaryActualZetaFamilyData.{u, v} (E := E))
     (parameter : Real) :
     data.family.zetaPrimeAtZero parameter =
       data.baseContinuation.derivativeAtZero :=
@@ -67,7 +69,7 @@ theorem zetaPrimeAtZero_eq_base
 
 /-- The actual finite-part logarithm is the basepoint logarithm. -/
 theorem finitePartLogDeterminant_eq_base
-    (data : UnitaryActualZetaFamilyData (E := E))
+    (data : UnitaryActualZetaFamilyData.{u, v} (E := E))
     (parameter : Real) :
     relativeHeatFinitePartLogDeterminant
         (data.family.finitePartFamily.finitePart parameter) =
@@ -76,7 +78,7 @@ theorem finitePartLogDeterminant_eq_base
 
 /-- The actual zeta determinant is constant. -/
 theorem determinant_eq_base
-    (data : UnitaryActualZetaFamilyData (E := E))
+    (data : UnitaryActualZetaFamilyData.{u, v} (E := E))
     (parameter : Real) :
     relativeHeatMellinZetaFamilyDeterminant data.family parameter =
       relativeHeatMellinZetaDeterminant data.baseContinuation :=
@@ -85,7 +87,7 @@ theorem determinant_eq_base
 
 /-- Public unitary actual-zeta checkpoint. -/
 theorem unitary_actual_zeta_family_gate
-    (data : UnitaryActualZetaFamilyData (E := E)) :
+    (data : UnitaryActualZetaFamilyData.{u, v} (E := E)) :
     (∀ parameter,
       relativeZetaConnectionCoefficient data.family.toZetaFamily parameter = 0) ∧
     (∀ parameter,

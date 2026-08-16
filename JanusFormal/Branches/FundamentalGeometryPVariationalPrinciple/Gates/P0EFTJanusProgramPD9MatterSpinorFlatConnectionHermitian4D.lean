@@ -50,9 +50,10 @@ theorem d9MatterSpinorFlatCoverDerivative_pairing_compatible
     (choice : NormalRootChoice)
     (first second : SmoothThroatMatterSpinorLift period hPeriod choice)
     (point : ThroatCover period hPeriod) (tangent : ThroatCoverCoordinates) :
-    mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+    (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
         (fun anchor => d9MatterSpinorHermitianPairing
-          (first anchor) (second anchor)) point tangent =
+          (first anchor) (second anchor)) point :
+      ThroatCoverCoordinates →L[Real] Complex) tangent =
       d9MatterSpinorHermitianPairing (first point)
           (d9MatterSpinorFlatCoverDerivative period hPeriod choice second point
             tangent) +

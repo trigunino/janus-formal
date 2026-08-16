@@ -32,7 +32,7 @@ structure FiniteIntertwiningOperatorTransportData
   transport_self : ∀ parameter,
     transport parameter parameter = LinearEquiv.refl Real E
   transport_trans : ∀ first second third,
-    (transport second third).comp (transport first second) =
+    (transport first second).trans (transport second third) =
       transport first third
   intertwines : ∀ first second vector,
     operator second (transport first second vector) =
@@ -50,17 +50,20 @@ def kernelTransport
     ⟨data.transport first second vector.1, by
       change operator second (data.transport first second vector.1) = 0
       rw [data.intertwines first second vector.1]
-      rw [vector.2]
-      exact map_zero (data.transport first second)⟩
+      calc
+        data.transport first second (operator first vector.1) =
+            data.transport first second 0 :=
+          congrArg (data.transport first second) vector.2
+        _ = 0 := map_zero (data.transport first second)⟩
   invFun := fun vector =>
     ⟨(data.transport first second).symm vector.1, by
       change operator first ((data.transport first second).symm vector.1) = 0
       have hIntertwine := data.intertwines first second
         ((data.transport first second).symm vector.1)
       rw [(data.transport first second).apply_symm_apply] at hIntertwine
-      rw [vector.2] at hIntertwine
       apply (data.transport first second).injective
-      simpa using hIntertwine.symm⟩
+      exact (hIntertwine.symm.trans vector.2).trans
+        (map_zero (data.transport first second)).symm⟩
   left_inv := by
     intro vector
     apply Subtype.ext
@@ -93,7 +96,8 @@ theorem kernelTransport_self
     (data : FiniteIntertwiningOperatorTransportData operator)
     (parameter : Real) :
     data.kernelTransport parameter parameter = LinearEquiv.refl Real _ := by
-  ext vector
+  apply LinearEquiv.ext
+  intro vector
   apply Subtype.ext
   rw [kernelTransport_apply_val, data.transport_self parameter]
   rfl
@@ -104,12 +108,13 @@ theorem kernelTransport_trans
     {operator : Real → E →L[Real] E}
     (data : FiniteIntertwiningOperatorTransportData operator)
     (first second third : Real) :
-    (data.kernelTransport second third).comp
-        (data.kernelTransport first second) =
+    (data.kernelTransport first second).trans
+        (data.kernelTransport second third) =
       data.kernelTransport first third := by
-  ext vector
+  apply LinearEquiv.ext
+  intro vector
   apply Subtype.ext
-  simp only [LinearEquiv.comp_apply, kernelTransport_apply_val]
+  simp only [LinearEquiv.trans_apply, kernelTransport_apply_val]
   have hTrans := congrArg (fun equivalence => equivalence vector.1)
     (data.transport_trans first second third)
   exact hTrans
@@ -135,8 +140,8 @@ theorem finite_intertwining_operator_kernel_transport_gate
     (∀ parameter,
       data.kernelTransport parameter parameter = LinearEquiv.refl Real _) ∧
     (∀ first second third,
-      (data.kernelTransport second third).comp
-          (data.kernelTransport first second) =
+      (data.kernelTransport first second).trans
+          (data.kernelTransport second third) =
         data.kernelTransport first third) :=
   ⟨data.intertwines,
     data.kernelTransport_mem_kernel,

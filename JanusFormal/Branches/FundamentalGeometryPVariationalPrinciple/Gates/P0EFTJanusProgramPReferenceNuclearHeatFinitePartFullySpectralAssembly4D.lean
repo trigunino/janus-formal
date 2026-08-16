@@ -1,3 +1,4 @@
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelGreenFullySpectralBoundaryLimits4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearHeatFinitePartCollapsedBoundaryLimitsAssembly4D
 
@@ -21,15 +22,20 @@ namespace P0EFTJanusProgramPReferenceNuclearHeatFinitePartFullySpectralAssembly4
 set_option autoImplicit false
 noncomputable section
 
-open Filter Set
+open Filter Set MeasureTheory
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenFullySpectralBoundaryLimits4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartCollapsedBoundaryLimitsAssembly4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {Slice ShortCutoff LongCutoff E : Type*}
+universe e i s a b
+
+variable {Slice : Type s} {ShortCutoff : Type a} {LongCutoff : Type b}
+  {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Complete standalone reference packet with fully spectral counterterm and
 Duhamel data. -/
@@ -37,24 +43,20 @@ structure ReferenceNuclearHeatFinitePartFullySpectralAssemblyData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)
   countertermContribution : Real → Real
   spectralBoundary :
     ReferenceNuclearDuhamelGreenFullySpectralBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
         countertermContribution shortTimeRegion longTimeRegion
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
-        spectralBoundary.shortTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter +
-          spectralBoundary.longTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter
+        spectralBoundary.shortTime.weighted.toWeightedHeatTraceVariation.contribution parameter +
+          spectralBoundary.longTime.weighted.toWeightedHeatTraceVariation.contribution parameter
   zetaPrimeAtZero_real : ∀ parameter,
     (family.zetaPrimeAtZero parameter).im = 0
 
@@ -66,8 +68,7 @@ def toCollapsedBoundaryLimitsAssembly
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearHeatFinitePartFullySpectralAssemblyData
       (E := E) sliceMeasure shortCutoffFilter longCutoffFilter family
@@ -89,8 +90,7 @@ theorem hasDerivAt_finitePartLog
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearHeatFinitePartFullySpectralAssemblyData
       (E := E) sliceMeasure shortCutoffFilter longCutoffFilter family
@@ -98,11 +98,10 @@ theorem hasDerivAt_finitePartLog
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
-      (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-        toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
+      (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+        parameter)
       parameter :=
   data.toCollapsedBoundaryLimitsAssembly.hasDerivAt_finitePartLog parameter
 
@@ -112,28 +111,24 @@ theorem connectionCoefficient_eq_neg_logarithmicTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearHeatFinitePartFullySpectralAssemblyData
       (E := E) sliceMeasure shortCutoffFilter longCutoffFilter family
         shortTimeRegion longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-      -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-          toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
         Complex) :=
-  data.toCollapsedBoundaryLimitsAssembly.
-    connectionCoefficient_eq_neg_logarithmicTrace parameter
+  data.toCollapsedBoundaryLimitsAssembly.connectionCoefficient_eq_neg_logarithmicTrace
+    parameter
 
 /-- Public fully spectral finite-part assembly checkpoint. -/
 theorem reference_nuclear_heat_finite_part_fully_spectral_assembly_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real)
     (data : ReferenceNuclearHeatFinitePartFullySpectralAssemblyData
       (E := E) sliceMeasure shortCutoffFilter longCutoffFilter family
@@ -150,17 +145,14 @@ theorem reference_nuclear_heat_finite_part_fully_spectral_assembly_gate
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
-        (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-          toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
+        (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+          parameter)
         parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-        -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-            toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+        -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
           Complex)) :=
   ⟨data.spectralBoundary.hasDerivAt_countertermContribution,
     data.spectralBoundary.countertermVariation.derivative_eq_intrinsicTrace,

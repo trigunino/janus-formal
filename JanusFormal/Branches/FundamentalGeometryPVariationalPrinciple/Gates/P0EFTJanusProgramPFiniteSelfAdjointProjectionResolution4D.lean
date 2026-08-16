@@ -23,8 +23,7 @@ open P0EFTJanusProgramPFiniteProjectionNormResolution4D
 
 variable {Sector E : Type*}
   [Fintype Sector] [DecidableEq Sector]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- A finite resolution of the identity by symmetric idempotent bounded maps. -/
 structure FiniteSelfAdjointProjectionResolutionData where

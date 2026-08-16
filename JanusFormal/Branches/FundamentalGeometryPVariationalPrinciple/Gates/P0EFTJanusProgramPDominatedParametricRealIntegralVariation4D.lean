@@ -27,6 +27,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Filter MeasureTheory Set
+open scoped Topology
 
 /-- A real parameter integral together with the complete local dominated
 -differentiation contract at every parameter. -/
@@ -98,7 +99,7 @@ theorem hasDerivAt_contribution
       (data.derivative_norm_le parameter)
       (data.bound_integrable parameter)
       (data.pointwise_hasDerivAt parameter)
-  simpa [contribution, derivativeContribution] using hIntegral.2
+  simpa [contribution, derivativeContribution] using! hIntegral.2
 
 /-- The derivative field is integrable at every parameter. -/
 theorem derivative_integrable

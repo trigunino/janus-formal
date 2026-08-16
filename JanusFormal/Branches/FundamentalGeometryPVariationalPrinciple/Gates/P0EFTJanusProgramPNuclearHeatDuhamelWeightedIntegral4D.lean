@@ -28,55 +28,60 @@ open P0EFTJanusProgramPDuhamelWeightedHeatTraceVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPWeightedHeatTraceIntegralVariation4D
 
-variable {E : Type*}
+universe u v
+
+variable {E : Type u}
   [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 namespace NuclearHeatDuhamelTraceVariationData
 
 /-- Scalar heat trace extended by zero to all real times. -/
 def extendedHeatTrace
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter time : Real) : Real :=
   if hTime : 0 < time then data.heatTrace parameter ⟨time, hTime⟩ else 0
 
 /-- Scalar Duhamel trace extended by zero to all real times. -/
 def extendedDuhamelTrace
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter time : Real) : Real :=
   if hTime : 0 < time then data.duhamelTrace parameter ⟨time, hTime⟩ else 0
 
 /-- Extended scalar heat derivative. -/
 def extendedHeatTraceDerivative
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter time : Real) : Real :=
-  -time * data.extendedDuhamelTrace parameter time
+  -time * extendedDuhamelTrace data parameter time
 
 /-- Pointwise derivative of the extended scalar heat trace. -/
 theorem extendedHeatTrace_hasDerivAt
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter time : Real) :
-    HasDerivAt (fun current => data.extendedHeatTrace current time)
-      (data.extendedHeatTraceDerivative parameter time) parameter := by
+    HasDerivAt (fun current => extendedHeatTrace data current time)
+      (extendedHeatTraceDerivative data parameter time) parameter := by
   by_cases hTime : 0 < time
   · simpa [extendedHeatTrace, extendedHeatTraceDerivative,
       extendedDuhamelTrace, hTime] using
       data.heatTrace_hasDerivAt parameter ⟨time, hTime⟩
-  · simp [extendedHeatTrace, extendedHeatTraceDerivative,
-      extendedDuhamelTrace, hTime]
+  · simp only [extendedHeatTrace, extendedHeatTraceDerivative,
+      extendedDuhamelTrace, hTime, dite_false, mul_zero]
+    exact hasDerivAt_const parameter 0
 
 /-- The extended derivative is still `-t` times the extended Duhamel trace. -/
 theorem extendedHeatTraceDerivative_eq
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter time : Real) :
-    data.extendedHeatTraceDerivative parameter time =
-      -time * data.extendedDuhamelTrace parameter time :=
+    extendedHeatTraceDerivative data parameter time =
+      -time * extendedDuhamelTrace data parameter time :=
   rfl
 
 end NuclearHeatDuhamelTraceVariationData
 
+open NuclearHeatDuhamelTraceVariationData
+
 /-- One weighted real-time region built from a nuclear heat Duhamel family. -/
 structure NuclearHeatDuhamelWeightedIntegralData
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (timeRegion : Set Real) where
   weight : Real → Real
   weight_mul_time_eq_one :
@@ -85,73 +90,74 @@ structure NuclearHeatDuhamelWeightedIntegralData
     HasDerivAt
       (fun current =>
         ∫ time in timeRegion,
-          weight time * nuclear.extendedHeatTrace current time)
+          weight time * extendedHeatTrace nuclear current time)
       (∫ time in timeRegion,
-        weight time * nuclear.extendedHeatTraceDerivative parameter time)
+        weight time * extendedHeatTraceDerivative nuclear parameter time)
       parameter
 
 namespace NuclearHeatDuhamelWeightedIntegralData
 
 /-- Weighted heat integral interface. -/
 def toWeightedHeatTraceVariation
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelWeightedIntegralData nuclear timeRegion) :
     WeightedHeatTraceIntegralVariationData timeRegion where
   weight := data.weight
-  heatTrace := nuclear.extendedHeatTrace
-  heatTraceDerivative := nuclear.extendedHeatTraceDerivative
+  heatTrace := extendedHeatTrace nuclear
+  heatTraceDerivative := extendedHeatTraceDerivative nuclear
   pointwise_hasDerivAt_heatTrace := by
     intro parameter
     filter_upwards [] with time
-    exact nuclear.extendedHeatTrace_hasDerivAt parameter time
+    exact extendedHeatTrace_hasDerivAt nuclear parameter time
   hasDerivAt_integral := data.hasDerivAt_integral
 
 /-- Complete Duhamel-weighted integral interface. -/
 def toDuhamelWeightedHeatTraceVariation
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelWeightedIntegralData nuclear timeRegion) :
     DuhamelWeightedHeatTraceVariationData timeRegion where
   weighted := data.toWeightedHeatTraceVariation
-  duhamelTrace := nuclear.extendedDuhamelTrace
+  duhamelTrace := extendedDuhamelTrace nuclear
   heatTraceDerivative_eq := by
     intro parameter
     filter_upwards [] with time
-    exact nuclear.extendedHeatTraceDerivative_eq parameter time
+    exact extendedHeatTraceDerivative_eq nuclear parameter time
   weight_mul_time_eq_one := data.weight_mul_time_eq_one
 
 /-- The weighted derivative integral is the negative Duhamel-trace integral. -/
 theorem derivativeContribution_eq_neg_integral
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelWeightedIntegralData nuclear timeRegion)
     (parameter : Real) :
     data.toWeightedHeatTraceVariation.derivativeContribution parameter =
       -(∫ time in timeRegion,
-        nuclear.extendedDuhamelTrace parameter time) :=
-  data.toDuhamelWeightedHeatTraceVariation.
-    derivativeContribution_eq_neg_integral_duhamelTrace parameter
+        extendedDuhamelTrace nuclear parameter time) :=
+  P0EFTJanusProgramPDuhamelWeightedHeatTraceVariation4D.DuhamelWeightedHeatTraceVariationData.derivativeContribution_eq_neg_integral_duhamelTrace
+    data.toDuhamelWeightedHeatTraceVariation parameter
 
 /-- Public nuclear-to-weighted-Duhamel checkpoint. -/
 theorem nuclear_heat_duhamel_weighted_integral_gate
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     (timeRegion : Set Real)
     (data : NuclearHeatDuhamelWeightedIntegralData nuclear timeRegion) :
     (∀ parameter time,
-      HasDerivAt (fun current => nuclear.extendedHeatTrace current time)
-        (nuclear.extendedHeatTraceDerivative parameter time) parameter) ∧
+      HasDerivAt (fun current => extendedHeatTrace nuclear current time)
+        (extendedHeatTraceDerivative nuclear parameter time) parameter) ∧
     (∀ parameter,
       data.toWeightedHeatTraceVariation.derivativeContribution parameter =
         -(∫ time in timeRegion,
-          nuclear.extendedDuhamelTrace parameter time)) ∧
+          extendedDuhamelTrace nuclear parameter time)) ∧
     (∀ parameter,
       HasDerivAt data.toWeightedHeatTraceVariation.contribution
         (-(∫ time in timeRegion,
-          nuclear.extendedDuhamelTrace parameter time)) parameter) :=
-  ⟨nuclear.extendedHeatTrace_hasDerivAt,
+          extendedDuhamelTrace nuclear parameter time)) parameter) :=
+  ⟨extendedHeatTrace_hasDerivAt nuclear,
     data.derivativeContribution_eq_neg_integral,
-    data.toDuhamelWeightedHeatTraceVariation.hasDerivAt_integral⟩
+    P0EFTJanusProgramPDuhamelWeightedHeatTraceVariation4D.DuhamelWeightedHeatTraceVariationData.hasDerivAt_contribution
+      data.toDuhamelWeightedHeatTraceVariation⟩
 
 end NuclearHeatDuhamelWeightedIntegralData
 

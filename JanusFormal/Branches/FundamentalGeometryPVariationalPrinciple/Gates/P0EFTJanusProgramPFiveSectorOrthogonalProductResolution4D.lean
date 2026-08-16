@@ -228,8 +228,12 @@ theorem fiveSectorProductProjection_comp_zero
     (first second : FiveSectorSlot) (hDistinct : first ≠ second) :
     (fiveSectorProductProjection first).comp
         (fiveSectorProductProjection second) =
-      0 := by
-  ext state
+      (0 : FiveSectorProduct MetricDiffeomorphism AbelianGauge
+          PrimitiveSpinCMatter LongitudinalLL BoundaryFiniteBV →L[Real]
+        FiveSectorProduct MetricDiffeomorphism AbelianGauge
+          PrimitiveSpinCMatter LongitudinalLL BoundaryFiniteBV) := by
+  apply ContinuousLinearMap.ext
+  intro state
   cases first <;> cases second <;>
     simp_all [fiveSectorProductProjection, fiveSectorMetricProjection,
       fiveSectorAbelianProjection, fiveSectorSpinCProjection,
@@ -252,26 +256,47 @@ theorem fiveSectorProductProjection_sum_apply
     fiveSectorAbelianProjection, fiveSectorSpinCProjection,
     fiveSectorLLProjection, fiveSectorBoundaryProjection]
 
+end Product
+
 section InnerProduct
 
 variable
+  {MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter LongitudinalLL
+    BoundaryFiniteBV : Type*}
+  [NormedAddCommGroup MetricDiffeomorphism]
   [InnerProductSpace Real MetricDiffeomorphism]
+  [NormedAddCommGroup AbelianGauge]
   [InnerProductSpace Real AbelianGauge]
+  [NormedAddCommGroup PrimitiveSpinCMatter]
   [InnerProductSpace Real PrimitiveSpinCMatter]
+  [NormedAddCommGroup LongitudinalLL]
   [InnerProductSpace Real LongitudinalLL]
+  [NormedAddCommGroup BoundaryFiniteBV]
   [InnerProductSpace Real BoundaryFiniteBV]
+
+/-- Sum inner product on the five coordinates (independent of the product's
+max norm). -/
+def fiveSectorProductInner
+    (first second : FiveSectorProduct MetricDiffeomorphism AbelianGauge
+      PrimitiveSpinCMatter LongitudinalLL BoundaryFiniteBV) : Real :=
+  inner Real first.1 second.1 +
+    inner Real first.2.1 second.2.1 +
+    inner Real first.2.2.1 second.2.2.1 +
+    inner Real first.2.2.2.1 second.2.2.2.1 +
+    inner Real first.2.2.2.2 second.2.2.2.2
 
 /-- Coordinate projectors are self-adjoint. -/
 theorem fiveSectorProductProjection_selfAdjoint
     (sector : FiveSectorSlot)
     (first second : FiveSectorProduct MetricDiffeomorphism AbelianGauge
       PrimitiveSpinCMatter LongitudinalLL BoundaryFiniteBV) :
-    ⟪fiveSectorProductProjection sector first, second, Real⟫ =
-      ⟪first, fiveSectorProductProjection sector second, Real⟫ := by
+    fiveSectorProductInner (fiveSectorProductProjection sector first) second =
+      fiveSectorProductInner first (fiveSectorProductProjection sector second) := by
   cases sector <;>
     rcases first with ⟨metric₁, abelian₁, spinC₁, ll₁, boundary₁⟩ <;>
     rcases second with ⟨metric₂, abelian₂, spinC₂, ll₂, boundary₂⟩ <;>
-    simp [fiveSectorProductProjection, fiveSectorMetricProjection,
+    simp [fiveSectorProductInner, fiveSectorProductProjection,
+      fiveSectorMetricProjection,
       fiveSectorAbelianProjection, fiveSectorSpinCProjection,
       fiveSectorLLProjection, fiveSectorBoundaryProjection]
 
@@ -281,17 +306,17 @@ theorem fiveSectorProductProjection_orthogonal
     (hDistinct : firstSector ≠ secondSector)
     (first second : FiveSectorProduct MetricDiffeomorphism AbelianGauge
       PrimitiveSpinCMatter LongitudinalLL BoundaryFiniteBV) :
-    ⟪fiveSectorProductProjection firstSector first,
-      fiveSectorProductProjection secondSector second, Real⟫ = 0 := by
+    fiveSectorProductInner (fiveSectorProductProjection firstSector first)
+      (fiveSectorProductProjection secondSector second) = 0 := by
   cases firstSector <;> cases secondSector <;>
     rcases first with ⟨metric₁, abelian₁, spinC₁, ll₁, boundary₁⟩ <;>
     rcases second with ⟨metric₂, abelian₂, spinC₂, ll₂, boundary₂⟩ <;>
-    simp_all [fiveSectorProductProjection, fiveSectorMetricProjection,
+    simp_all [fiveSectorProductInner, fiveSectorProductProjection,
+      fiveSectorMetricProjection,
       fiveSectorAbelianProjection, fiveSectorSpinCProjection,
       fiveSectorLLProjection, fiveSectorBoundaryProjection]
 
 end InnerProduct
-end Product
 
 section Transport
 
@@ -318,8 +343,8 @@ structure FiveSectorOrthogonalProductDecomposition where
     FiveSectorProduct MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter
       LongitudinalLL BoundaryFiniteBV
   inner_map : ∀ first second : E,
-    ⟪decomposition first, decomposition second, Real⟫ =
-      ⟪first, second, Real⟫
+    fiveSectorProductInner (decomposition first) (decomposition second) =
+      inner Real first second
 
 /-- Sector projector transported to the ambient Hilbert space. -/
 def FiveSectorOrthogonalProductDecomposition.projection
@@ -393,24 +418,23 @@ theorem FiveSectorOrthogonalProductDecomposition.projection_selfAdjoint
       (LongitudinalLL := LongitudinalLL)
       (BoundaryFiniteBV := BoundaryFiniteBV))
     (sector : FiveSectorSlot) (first second : E) :
-    ⟪data.projection sector first, second, Real⟫ =
-      ⟪first, data.projection sector second, Real⟫ := by
+    inner Real (data.projection sector first) second =
+      inner Real first (data.projection sector second) := by
   calc
-    ⟪data.projection sector first, second, Real⟫ =
-        ⟪data.decomposition (data.projection sector first),
-          data.decomposition second, Real⟫ :=
+    inner Real (data.projection sector first) second =
+        fiveSectorProductInner (data.decomposition (data.projection sector first))
+          (data.decomposition second) :=
       (data.inner_map (data.projection sector first) second).symm
-    _ = ⟪fiveSectorProductProjection sector (data.decomposition first),
-          data.decomposition second, Real⟫ := by
+    _ = fiveSectorProductInner (fiveSectorProductProjection sector (data.decomposition first))
+          (data.decomposition second) := by
       simp [FiveSectorOrthogonalProductDecomposition.projection]
-    _ = ⟪data.decomposition first,
-          fiveSectorProductProjection sector (data.decomposition second),
-          Real⟫ :=
+    _ = fiveSectorProductInner (data.decomposition first)
+          (fiveSectorProductProjection sector (data.decomposition second)) :=
       fiveSectorProductProjection_selfAdjoint sector _ _
-    _ = ⟪data.decomposition first,
-          data.decomposition (data.projection sector second), Real⟫ := by
+    _ = fiveSectorProductInner (data.decomposition first)
+          (data.decomposition (data.projection sector second)) := by
       simp [FiveSectorOrthogonalProductDecomposition.projection]
-    _ = ⟪first, data.projection sector second, Real⟫ :=
+    _ = inner Real first (data.projection sector second) :=
       data.inner_map first (data.projection sector second)
 
 /-- Images of distinct transported projectors are orthogonal. -/
@@ -424,8 +448,8 @@ theorem FiveSectorOrthogonalProductDecomposition.projection_orthogonal
     (firstSector secondSector : FiveSectorSlot)
     (hDistinct : firstSector ≠ secondSector)
     (first second : E) :
-    ⟪data.projection firstSector first,
-      data.projection secondSector second, Real⟫ = 0 := by
+    inner Real (data.projection firstSector first)
+      (data.projection secondSector second) = 0 := by
   rw [← data.inner_map]
   simp only [FiveSectorOrthogonalProductDecomposition.projection_apply,
     ContinuousLinearEquiv.apply_symm_apply]
@@ -462,10 +486,10 @@ theorem five_sector_orthogonal_product_resolution_gate
       (∀ first second, first ≠ second →
         (data.projection first).comp (data.projection second) = 0) ∧
       (∀ sector first second,
-        ⟪data.projection sector first, second, Real⟫ =
-          ⟪first, data.projection sector second, Real⟫) ∧
+        inner Real (data.projection sector first) second =
+          inner Real first (data.projection sector second)) ∧
       (∀ first second, first ≠ second → ∀ x y,
-        ⟪data.projection first x, data.projection second y, Real⟫ = 0) ∧
+        inner Real (data.projection first x) (data.projection second y) = 0) ∧
       (∀ state, ∑ sector : FiveSectorSlot,
         data.projection sector state = state) :=
   ⟨data.projection_idempotent,

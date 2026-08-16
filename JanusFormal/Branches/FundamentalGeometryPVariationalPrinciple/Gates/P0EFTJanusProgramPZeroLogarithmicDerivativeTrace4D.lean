@@ -34,9 +34,19 @@ open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceZero4D
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTrace4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
+
+private theorem intrinsicNuclearTrace_transportFromZero
+    {operator : E →L[Real] E}
+    (hOperator : operator = 0)
+    (zeroTrace : IntrinsicNuclearTraceData.{u, v} (0 : E →L[Real] E)) :
+    intrinsicNuclearTrace (hOperator.symm ▸ zeroTrace) = 0 := by
+  subst operator
+  exact intrinsicNuclearTrace_zero zeroTrace
 
 /-- One zero trace certificate generates the full logarithmic-trace packet for
 a family whose displayed derivative vanishes identically. -/
@@ -45,8 +55,8 @@ def intrinsicLogarithmicDerivativeTraceOfZeroDerivative
     (family : DifferentiableSelfAdjointUniformGapFamilyData operator)
     (inverse : family.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, family.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData (0 : E →L[Real] E)) :
-    IntrinsicLogarithmicDerivativeTraceData operator where
+    (zeroTrace : IntrinsicNuclearTraceData.{u, v} (0 : E →L[Real] E)) :
+    IntrinsicLogarithmicDerivativeTraceData.{u, v} operator where
   family := family
   inverse := inverse
   traceClass := by
@@ -55,8 +65,7 @@ def intrinsicLogarithmicDerivativeTraceOfZeroDerivative
       rw [DifferentiableSelfAdjointUniformGapFamilyData.logarithmicDerivativeOperator,
         hDerivative parameter]
       simp
-    rw [hLogarithmic]
-    exact zeroTrace
+    exact hLogarithmic.symm ▸ zeroTrace
 
 /-- The actual logarithmic trace of a zero-derivative family is zero. -/
 theorem intrinsicLogarithmicDerivativeTraceOfZeroDerivative_trace
@@ -64,12 +73,17 @@ theorem intrinsicLogarithmicDerivativeTraceOfZeroDerivative_trace
     (family : DifferentiableSelfAdjointUniformGapFamilyData operator)
     (inverse : family.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, family.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData (0 : E →L[Real] E))
+    (zeroTrace : IntrinsicNuclearTraceData.{u, v} (0 : E →L[Real] E))
     (parameter : Real) :
     (intrinsicLogarithmicDerivativeTraceOfZeroDerivative family inverse
       hDerivative zeroTrace).trace parameter = 0 := by
+  have hLogarithmic : family.logarithmicDerivativeOperator parameter = 0 := by
+    rw [DifferentiableSelfAdjointUniformGapFamilyData.logarithmicDerivativeOperator,
+      hDerivative parameter]
+    simp
   unfold IntrinsicLogarithmicDerivativeTraceData.trace
-  apply intrinsicNuclearTrace_zero
+  change intrinsicNuclearTrace (hLogarithmic.symm ▸ zeroTrace) = 0
+  exact intrinsicNuclearTrace_transportFromZero hLogarithmic zeroTrace
 
 /-- The logarithmic derivative operator itself is identically zero. -/
 theorem logarithmicDerivativeOperator_eq_zero
@@ -88,7 +102,7 @@ theorem zero_logarithmic_derivative_trace_gate
     (family : DifferentiableSelfAdjointUniformGapFamilyData operator)
     (inverse : family.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, family.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData (0 : E →L[Real] E)) :
+    (zeroTrace : IntrinsicNuclearTraceData.{u, v} (0 : E →L[Real] E)) :
     (∀ parameter,
       family.logarithmicDerivativeOperator parameter = 0) ∧
     (∀ parameter,

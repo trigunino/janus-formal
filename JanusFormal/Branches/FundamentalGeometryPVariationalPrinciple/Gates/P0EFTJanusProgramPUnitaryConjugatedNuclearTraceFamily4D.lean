@@ -32,8 +32,10 @@ open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceUnitaryConjugation4D
 
-variable {Parameter Time E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v
+
+variable {Parameter Time : Type*} {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Nuclear operator family obtained from one base family by unitary
 conjugation. -/
@@ -45,22 +47,22 @@ structure UnitaryConjugatedNuclearTraceFamilyData where
     movingOperator parameter time =
       unitaryConjugatedOperator (unitary parameter) (baseOperator time)
   baseTraceClass : ∀ time,
-    IntrinsicNuclearTraceData (baseOperator time)
+    IntrinsicNuclearTraceData.{u, v} (baseOperator time)
   movingTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (movingOperator parameter time)
+    IntrinsicNuclearTraceData.{u, v} (movingOperator parameter time)
 
 namespace UnitaryConjugatedNuclearTraceFamilyData
 
 /-- Scalar trace of the base operator family. -/
 def baseTrace
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Parameter) (Time := Time) (E := E))
     (time : Time) : Real :=
   intrinsicNuclearTrace (data.baseTraceClass time)
 
 /-- Scalar trace of the moving operator family. -/
 def movingTrace
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Parameter) (Time := Time) (E := E))
     (parameter : Parameter) (time : Time) : Real :=
   intrinsicNuclearTrace (data.movingTraceClass parameter time)
@@ -68,21 +70,23 @@ def movingTrace
 /-- Unitary conjugation makes the moving scalar trace independent of the
 parameter. -/
 theorem movingTrace_eq_baseTrace
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Parameter) (Time := Time) (E := E))
     (parameter : Parameter) (time : Time) :
     data.movingTrace parameter time = data.baseTrace time := by
-  let target : IntrinsicNuclearTraceData
+  let target : IntrinsicNuclearTraceData.{u, v}
       (unitaryConjugatedOperator (data.unitary parameter)
         (data.baseOperator time)) :=
-    (data.movingTraceClass parameter time).transportOperator
+    P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+      (data.movingTraceClass parameter time)
       (data.operator_eq_conjugate parameter time)
   calc
     data.movingTrace parameter time = intrinsicNuclearTrace target := by
       unfold movingTrace target
       symm
-      exact (data.movingTraceClass parameter time).
-        transportOperator_intrinsicNuclearTrace
+      exact
+        P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+          (data.movingTraceClass parameter time)
           (data.operator_eq_conjugate parameter time)
     _ = intrinsicNuclearTrace (data.baseTraceClass time) :=
       intrinsicNuclearTrace_unitaryConjugation (data.unitary parameter)
@@ -91,7 +95,7 @@ theorem movingTrace_eq_baseTrace
 
 /-- Equality of the full scalar trace functions. -/
 theorem movingTrace_eq_baseTrace_function
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Parameter) (Time := Time) (E := E))
     (parameter : Parameter) :
     data.movingTrace parameter = data.baseTrace := by
@@ -100,7 +104,7 @@ theorem movingTrace_eq_baseTrace_function
 
 /-- Public unitary nuclear-trace-family checkpoint. -/
 theorem unitary_conjugated_nuclear_trace_family_gate
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Parameter) (Time := Time) (E := E)) :
     (∀ parameter time,
       data.movingTrace parameter time = data.baseTrace time) ∧

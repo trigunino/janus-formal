@@ -40,7 +40,7 @@ structure FiniteUnitaryIntertwiningOperatorTransportData
   transport_self : ∀ parameter,
     transport parameter parameter = LinearIsometryEquiv.refl Real E
   transport_trans : ∀ first second third,
-    (transport second third).trans (transport first second) =
+    (transport first second).trans (transport second third) =
       transport first third
   intertwines : ∀ first second vector,
     operator second (transport first second vector) =
@@ -53,8 +53,8 @@ transport. -/
 def toFiniteIntertwiningOperatorTransport
     {operator : Real → E →L[Real] E}
     (data : FiniteUnitaryIntertwiningOperatorTransportData operator) :
-    P0EFTJanusProgramPFiniteIntertwiningOperatorKernelTransport4D.
-      FiniteIntertwiningOperatorTransportData operator where
+    P0EFTJanusProgramPFiniteIntertwiningOperatorKernelTransport4D.FiniteIntertwiningOperatorTransportData
+      operator where
   transport := fun first second =>
     (data.transport first second).toLinearEquiv
   transport_self := by
@@ -67,7 +67,7 @@ def toFiniteIntertwiningOperatorTransport
     have hTransport := congrArg
       (fun equivalence => equivalence vector)
       (data.transport_trans first second third)
-    exact hTransport
+    simpa using hTransport
   intertwines := data.intertwines
 
 /-- The inverse unitary transport intertwines in the reverse direction. -/
@@ -91,9 +91,17 @@ theorem transport_mem_kernel
     (first second : Real) {vector : E}
     (hVector : vector ∈ (operator first).ker) :
     data.transport first second vector ∈ (operator second).ker := by
-  rw [LinearMap.mem_ker] at hVector ⊢
-  rw [data.intertwines first second vector, hVector]
-  exact map_zero (data.transport first second)
+  apply LinearMap.mem_ker.mpr
+  change operator second (data.transport first second vector) = 0
+  have hZero : operator first vector = 0 := by
+    exact LinearMap.mem_ker.mp hVector
+  calc
+    operator second (data.transport first second vector) =
+        data.transport first second (operator first vector) :=
+      data.intertwines first second vector
+    _ = data.transport first second 0 := by
+      rw [hZero]
+    _ = 0 := map_zero (data.transport first second)
 
 /-- Inverse unitary transport preserves kernel membership. -/
 theorem symm_transport_mem_kernel
@@ -102,9 +110,17 @@ theorem symm_transport_mem_kernel
     (first second : Real) {vector : E}
     (hVector : vector ∈ (operator second).ker) :
     (data.transport first second).symm vector ∈ (operator first).ker := by
-  rw [LinearMap.mem_ker] at hVector ⊢
-  rw [data.symm_intertwines first second vector, hVector]
-  exact map_zero (data.transport first second).symm
+  apply LinearMap.mem_ker.mpr
+  change operator first ((data.transport first second).symm vector) = 0
+  have hZero : operator second vector = 0 := by
+    exact LinearMap.mem_ker.mp hVector
+  calc
+    operator first ((data.transport first second).symm vector) =
+        (data.transport first second).symm (operator second vector) :=
+      data.symm_intertwines first second vector
+    _ = (data.transport first second).symm 0 := by
+      rw [hZero]
+    _ = 0 := map_zero (data.transport first second).symm
 
 /-- Unitary transport preserves the orthogonal complement of the true kernel. -/
 theorem transport_mem_kernel_orthogonal
@@ -230,7 +246,6 @@ theorem kernelTransport_self
     data.kernelTransport parameter parameter =
       LinearIsometryEquiv.refl Real _ := by
   ext vector
-  apply Subtype.ext
   rw [kernelTransport_apply_val, data.transport_self parameter]
   rfl
 
@@ -242,7 +257,6 @@ theorem kernelComplementTransport_self
     data.kernelComplementTransport parameter parameter =
       LinearIsometryEquiv.refl Real _ := by
   ext vector
-  apply Subtype.ext
   rw [kernelComplementTransport_apply_val, data.transport_self parameter]
   rfl
 
@@ -251,11 +265,10 @@ theorem kernelTransport_trans
     {operator : Real → E →L[Real] E}
     (data : FiniteUnitaryIntertwiningOperatorTransportData operator)
     (first second third : Real) :
-    (data.kernelTransport second third).trans
-        (data.kernelTransport first second) =
+    (data.kernelTransport first second).trans
+        (data.kernelTransport second third) =
       data.kernelTransport first third := by
   ext vector
-  apply Subtype.ext
   simp only [LinearIsometryEquiv.trans_apply, kernelTransport_apply_val]
   have hTransport := congrArg
     (fun equivalence => equivalence vector.1)
@@ -267,11 +280,10 @@ theorem kernelComplementTransport_trans
     {operator : Real → E →L[Real] E}
     (data : FiniteUnitaryIntertwiningOperatorTransportData operator)
     (first second third : Real) :
-    (data.kernelComplementTransport second third).trans
-        (data.kernelComplementTransport first second) =
+    (data.kernelComplementTransport first second).trans
+        (data.kernelComplementTransport second third) =
       data.kernelComplementTransport first third := by
   ext vector
-  apply Subtype.ext
   simp only [LinearIsometryEquiv.trans_apply,
     kernelComplementTransport_apply_val]
   have hTransport := congrArg
@@ -294,8 +306,8 @@ theorem finite_unitary_intertwining_kernel_complement_transport_gate
       data.kernelComplementTransport parameter parameter =
         LinearIsometryEquiv.refl Real _) ∧
     (∀ first second third,
-      (data.kernelComplementTransport second third).trans
-          (data.kernelComplementTransport first second) =
+      (data.kernelComplementTransport first second).trans
+          (data.kernelComplementTransport second third) =
         data.kernelComplementTransport first third) :=
   ⟨data.intertwines,
     fun first second vector =>

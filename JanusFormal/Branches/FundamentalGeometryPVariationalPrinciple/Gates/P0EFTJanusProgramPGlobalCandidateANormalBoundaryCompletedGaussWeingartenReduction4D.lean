@@ -21,7 +21,7 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 1200000
+set_option maxHeartbeats 2400000
 set_option synthInstance.maxHeartbeats 600000
 set_option maxRecDepth 10000
 noncomputable section
@@ -340,7 +340,6 @@ theorem
     candidateANormalBoundaryGraphCovariantAccelerationRegularFrameCoefficientFiberEvaluation
   simp only [BoundedContinuousFunction.add_apply,
     BoundedContinuousFunction.sum_apply, BoundedContinuousFunction.mul_apply]
-  dsimp only [current] at hAlgebra
   exact hAlgebra
 
 end

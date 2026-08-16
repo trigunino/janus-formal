@@ -55,6 +55,12 @@ theorem canonicalSixPhysicalIndexedHessian_sum_eq
     (∑ block : CanonicalSixPhysicalBlock,
       canonicalSixPhysicalIndexedHessian blocks point block) =
         canonicalSixPhysicalHessianSum blocks point := by
+  have hUniv : (Finset.univ : Finset CanonicalSixPhysicalBlock) =
+      {.candidateA, .einsteinHilbertPlus, .einsteinHilbertMinus,
+        .maxwellPlus, .maxwellMinus, .finiteBV} := by
+    ext block
+    cases block <;> simp
+  rw [hUniv]
   simp [canonicalSixPhysicalIndexedHessian,
     canonicalSixPhysicalHessianSum,
     canonicalSixPhysicalBlockHessian,
@@ -118,7 +124,7 @@ theorem CanonicalSixPhysicalDenseCoreAgreement.toProductBound_constant
   rfl
 
 /-- Public checkpoint for the canonical, non-arbitrary H11 six-block bound. -/
-theorem canonical_six_physical_dense_core_bound_gate
+def canonical_six_physical_dense_core_bound_gate
     (embedding : Core →ₗ[Real] Hilbert)
     (chartMap : Core →ₗ[Real] Chart)
     (chartBound : DenseCoreChartMapBound embedding chartMap)

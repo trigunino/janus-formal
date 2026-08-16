@@ -79,8 +79,8 @@ def diagonalExtendedBulkSmoothCoreToLegacy
     (analysis : GlobalAnalysisData period hPeriod configuration) :
     GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod data analysis
       →ₗ[Real]
-    P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D.
-      GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod analysis where
+    P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D.GlobalCandidateADiagonalExtendedBulkSmoothCore
+      period hPeriod analysis where
   toFun core := (core.1.1, (core.1.2, (core.2.1, core.2.2)))
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
@@ -164,8 +164,8 @@ def diagonalExtendedBulkL2SmoothEmbedding
       →ₗ[Real]
     GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod metric
       massSquared data analysis :=
-  (P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.
-      diagonalExtendedBulkL2SmoothEmbedding period hPeriod metric massSquared
+  (P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalExtendedBulkL2SmoothEmbedding
+      period hPeriod metric massSquared
         data analysis).comp
     (diagonalExtendedBulkSmoothCoreToLegacy period hPeriod data analysis)
 
@@ -184,8 +184,8 @@ theorem diagonalExtendedBulkL2SmoothEmbedding_apply
       analysis) :
     diagonalExtendedBulkL2SmoothEmbedding period hPeriod metric massSquared data
         analysis core =
-      P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.
-        diagonalExtendedBulkL2SmoothEmbedding period hPeriod metric massSquared
+      P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalExtendedBulkL2SmoothEmbedding
+        period hPeriod metric massSquared
           data analysis
           (diagonalExtendedBulkSmoothCoreToLegacy period hPeriod data analysis
             core) :=
@@ -204,6 +204,7 @@ noncomputable section
 open scoped InnerProductSpace
 open P0EFTJanusD9D10ExactFieldContentBridge4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
@@ -350,13 +351,11 @@ namespace P0EFTJanusProgramPGlobalCandidateAExtendedBulkCoreCoordinates4D
 /-- Public compatibility name used by the physical coordinate and five-sector
 layers. -/
 abbrev GlobalCandidateADiagonalExtendedBulkSmoothCore :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Graph4D.
-    GlobalCandidateADiagonalExtendedBulkSmoothCore
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Graph4D.GlobalCandidateADiagonalExtendedBulkSmoothCore
 
 /-- Public compatibility name for the regrouped genuine L2 embedding. -/
-abbrev diagonalExtendedBulkL2SmoothEmbedding :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Graph4D.
-    diagonalExtendedBulkL2SmoothEmbedding
+noncomputable abbrev diagonalExtendedBulkL2SmoothEmbedding :=
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Graph4D.diagonalExtendedBulkL2SmoothEmbedding
 
 end P0EFTJanusProgramPGlobalCandidateAExtendedBulkCoreCoordinates4D
 end JanusFormal

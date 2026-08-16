@@ -24,30 +24,29 @@ open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 universe u v
 
 variable {E : Type u}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- An intrinsic nuclear trace is one certified rank-one presentation together
 with the theorem that every other certified presentation has the same scalar
 trace. -/
 structure IntrinsicNuclearTraceData
     (operator : E →L[Real] E) where
-  expansion : SummableRankOneOperatorExpansion operator
+  expansion : SummableRankOneOperatorExpansion.{v, u} operator
   presentation_independent :
-    ∀ other : SummableRankOneOperatorExpansion operator,
+    ∀ other : SummableRankOneOperatorExpansion.{v, u} operator,
       other.expansionTrace = expansion.expansionTrace
 
 /-- Canonical scalar trace of the represented operator. -/
 def intrinsicNuclearTrace
     {operator : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData operator) : Real :=
+    (data : IntrinsicNuclearTraceData.{u, v} operator) : Real :=
   data.expansion.expansionTrace
 
 /-- Every certified rank-one presentation computes the intrinsic trace. -/
 theorem IntrinsicNuclearTraceData.expansionTrace_eq
     {operator : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData operator)
-    (other : SummableRankOneOperatorExpansion operator) :
+    (data : IntrinsicNuclearTraceData.{u, v} operator)
+    (other : SummableRankOneOperatorExpansion.{v, u} operator) :
     other.expansionTrace = intrinsicNuclearTrace data :=
   data.presentation_independent other
 
@@ -55,7 +54,7 @@ theorem IntrinsicNuclearTraceData.expansionTrace_eq
 @[simp]
 theorem IntrinsicNuclearTraceData.stored_expansionTrace
     {operator : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData operator) :
+    (data : IntrinsicNuclearTraceData.{u, v} operator) :
     data.expansion.expansionTrace = intrinsicNuclearTrace data :=
   rfl
 
@@ -63,17 +62,17 @@ theorem IntrinsicNuclearTraceData.stored_expansionTrace
 same scalar. -/
 theorem intrinsicNuclearTrace_unique
     {operator : E →L[Real] E}
-    (first second : IntrinsicNuclearTraceData operator) :
+    (first second : IntrinsicNuclearTraceData.{u, v} operator) :
     intrinsicNuclearTrace first = intrinsicNuclearTrace second := by
-  exact (second.presentation_independent first.expansion).symm
+  exact second.presentation_independent first.expansion
 
 /-- Constructor spelling the exact remaining uniqueness obligation. -/
 def intrinsicNuclearTraceData_of_expansion
     {operator : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion operator)
-    (hUnique : ∀ other : SummableRankOneOperatorExpansion operator,
+    (expansion : SummableRankOneOperatorExpansion.{v, u} operator)
+    (hUnique : ∀ other : SummableRankOneOperatorExpansion.{v, u} operator,
       other.expansionTrace = expansion.expansionTrace) :
-    IntrinsicNuclearTraceData operator where
+    IntrinsicNuclearTraceData.{u, v} operator where
   expansion := expansion
   presentation_independent := hUnique
 
@@ -81,16 +80,18 @@ def intrinsicNuclearTraceData_of_expansion
 operator. -/
 theorem IntrinsicNuclearTraceData.operator_compact
     {operator : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData operator) :
+    [CompleteSpace E]
+    (data : IntrinsicNuclearTraceData.{u, v} operator) :
     IsCompactOperator operator :=
   data.expansion.operator_compact
 
 /-- Public trace-uniqueness checkpoint. -/
 theorem intrinsic_nuclear_trace_gate
     (operator : E →L[Real] E)
-    (data : IntrinsicNuclearTraceData operator) :
+    [CompleteSpace E]
+    (data : IntrinsicNuclearTraceData.{u, v} operator) :
     IsCompactOperator operator ∧
-      ∀ expansion : SummableRankOneOperatorExpansion operator,
+      ∀ expansion : SummableRankOneOperatorExpansion.{v, u} operator,
         expansion.expansionTrace = intrinsicNuclearTrace data :=
   ⟨data.operator_compact, data.expansionTrace_eq⟩
 

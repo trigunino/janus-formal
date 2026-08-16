@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointUniformGapFamily4D
+import Mathlib.Analysis.Calculus.Deriv.Mul
 
 /-!
 # Differentiable uniformly-gapped Green families
@@ -30,7 +31,7 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointUniformGapFamily4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Differentiable operator family with a uniform self-adjoint gap. -/
@@ -74,7 +75,7 @@ theorem canonicalGreenDerivative_apply
 the inverse from being supplied independently of `H'_a`. -/
 structure GreenDifferentiabilityData
     {operator : Real → E →L[Real] E}
-    (data : DifferentiableSelfAdjointUniformGapFamilyData operator) : Prop where
+    (data : DifferentiableSelfAdjointUniformGapFamilyData operator) where
   greenDerivative : Real → E →L[Real] E
   hasDerivAt_green : ∀ parameter,
     HasDerivAt data.analytic.green (greenDerivative parameter) parameter
@@ -116,8 +117,9 @@ theorem hasDerivAt_green_apply
     HasDerivAt
       (fun current => data.analytic.green current vector)
       (inverse.greenDerivative parameter vector) parameter :=
-  (inverse.hasDerivAt_green parameter).clm_apply
-    (hasDerivAt_const parameter vector)
+  by
+    simpa using (inverse.hasDerivAt_green parameter).clm_apply
+      (hasDerivAt_const parameter vector)
 
 /-- Public differentiable Green-family checkpoint. -/
 theorem differentiable_self_adjoint_green_family_gate

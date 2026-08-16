@@ -24,6 +24,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped InnerProductSpace
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelBasisCoercivity4D
 
 variable {E : Type*}
@@ -33,7 +34,7 @@ variable {E : Type*}
 synthesis onto the genuine operator kernel. -/
 structure FiniteKernelNamedModeFamily
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] where
+    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   synthesis : (ZeroMode → Real) ≃ₗ[Real] operator.ker
@@ -44,7 +45,7 @@ structure FiniteKernelNamedModeFamily
 /-- Kernel vector attached to one physical label. -/
 def FiniteKernelNamedModeFamily.kernelVector
     {operator : E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (modes : FiniteKernelNamedModeFamily operator ZeroMode)
     (mode : ZeroMode) : operator.ker :=
   ⟨modes.vector mode, modes.annihilated mode⟩
@@ -52,15 +53,15 @@ def FiniteKernelNamedModeFamily.kernelVector
 /-- The named family canonically determines a basis of the actual kernel. -/
 noncomputable def FiniteKernelNamedModeFamily.basis
     {operator : E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (modes : FiniteKernelNamedModeFamily operator ZeroMode) :
-    Basis ZeroMode Real operator.ker :=
+    Module.Basis ZeroMode Real operator.ker :=
   (Pi.basisFun Real ZeroMode).map modes.synthesis
 
 @[simp]
 theorem FiniteKernelNamedModeFamily.basis_apply
     {operator : E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (modes : FiniteKernelNamedModeFamily operator ZeroMode)
     (mode : ZeroMode) :
     modes.basis mode = modes.kernelVector mode := by
@@ -71,7 +72,7 @@ theorem FiniteKernelNamedModeFamily.basis_apply
 /-- Ambient linear synthesis of named zero modes. -/
 def FiniteKernelNamedModeFamily.ambientSynthesis
     {operator : E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (modes : FiniteKernelNamedModeFamily operator ZeroMode) :
     (ZeroMode → Real) →ₗ[Real] E :=
   operator.ker.subtype.comp modes.synthesis.toLinearMap
@@ -79,7 +80,7 @@ def FiniteKernelNamedModeFamily.ambientSynthesis
 @[simp]
 theorem FiniteKernelNamedModeFamily.ambientSynthesis_single
     {operator : E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (modes : FiniteKernelNamedModeFamily operator ZeroMode)
     (mode : ZeroMode) :
     modes.ambientSynthesis (Pi.single mode 1) = modes.vector mode := by
@@ -91,9 +92,9 @@ theorem FiniteKernelNamedModeFamily.ambientSynthesis_single
 ambient space. -/
 theorem FiniteKernelNamedModeFamily.ambientSynthesis_range
     {operator : E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (modes : FiniteKernelNamedModeFamily operator ZeroMode) :
-    LinearMap.range modes.ambientSynthesis = operator.ker.map operator.ker.subtype := by
+    LinearMap.range modes.ambientSynthesis = operator.ker := by
   rw [FiniteKernelNamedModeFamily.ambientSynthesis]
   rw [LinearMap.range_comp]
   simp
@@ -102,20 +103,20 @@ theorem FiniteKernelNamedModeFamily.ambientSynthesis_range
 structure SelfAdjointNamedKernelCoercivityData
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] where
+    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   modes : FiniteKernelNamedModeFamily operator ZeroMode
   constant : Real
   constant_pos : 0 < constant
   coercive : ∀ vector : SelfAdjointKernelComplement operator,
     constant * ‖(vector : E)‖ ^ 2 ≤
-      ⟪(vector : E), operator (vector : E), Real⟫
+      ⟪(vector : E), operator (vector : E)⟫_Real
 
 /-- Forget only the explicit ambient names and recover the basis/coercivity
 packet used by the PDE-to-gap theorem. -/
 def SelfAdjointNamedKernelCoercivityData.toBasisCoercivity
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointNamedKernelCoercivityData operator hSelfAdjoint ZeroMode) :
     SelfAdjointKernelBasisCoercivityData operator hSelfAdjoint ZeroMode where
   basis := data.modes.basis
@@ -127,9 +128,9 @@ def SelfAdjointNamedKernelCoercivityData.toBasisCoercivity
 theorem self_adjoint_named_kernel_coercivity_gate
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointNamedKernelCoercivityData operator hSelfAdjoint ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
   self_adjoint_kernel_basis_coercivity_gate data.toBasisCoercivity
 

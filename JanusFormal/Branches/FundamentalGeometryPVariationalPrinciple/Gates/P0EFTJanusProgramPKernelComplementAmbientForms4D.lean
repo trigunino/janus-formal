@@ -29,8 +29,7 @@ open scoped InnerProductSpace
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Canonical continuous inclusion of the true zero-mode complement into the
 ambient Hilbert space. -/

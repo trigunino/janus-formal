@@ -37,9 +37,12 @@ open P0EFTJanusProgramPIntrinsicNuclearTraceSubtraction4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Nuclear operator decomposition of the renormalized integrated Duhamel
 identity.
@@ -48,38 +51,38 @@ The total operator is written with nested subtraction so that its intrinsic
 trace follows from the already established binary subtraction theorem without
 introducing a second notion of nuclear sum. -/
 structure ReferenceNuclearDuhamelGreenOperatorIdentityData
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (shortTimeRegion longTimeRegion : Set Real) where
   countertermOperator : Real → E →L[Real] E
   shortTimeDuhamelOperator : Real → E →L[Real] E
   longTimeDuhamelOperator : Real → E →L[Real] E
   logarithmicDerivativeOperator : Real → E →L[Real] E
   countertermTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (countertermOperator parameter)
+    IntrinsicNuclearTraceData.{u, v} (countertermOperator parameter)
   shortTimeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (shortTimeDuhamelOperator parameter)
+    IntrinsicNuclearTraceData.{u, v} (shortTimeDuhamelOperator parameter)
   countertermMinusShortTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       (countertermOperator parameter - shortTimeDuhamelOperator parameter)
   longTimeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (longTimeDuhamelOperator parameter)
+    IntrinsicNuclearTraceData.{u, v} (longTimeDuhamelOperator parameter)
   totalTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       ((countertermOperator parameter - shortTimeDuhamelOperator parameter) -
         longTimeDuhamelOperator parameter)
   logarithmicDerivativeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (logarithmicDerivativeOperator parameter)
+    IntrinsicNuclearTraceData.{u, v} (logarithmicDerivativeOperator parameter)
   countertermDerivative : Real → Real
   countertermDerivative_eq_trace : ∀ parameter,
     countertermDerivative parameter =
       intrinsicNuclearTrace (countertermTraceClass parameter)
   shortTimeIntegral_eq_trace : ∀ parameter,
     (∫ time in shortTimeRegion,
-      nuclear.extendedDuhamelTrace parameter time) =
+      extendedDuhamelTrace nuclear parameter time) =
         intrinsicNuclearTrace (shortTimeTraceClass parameter)
   longTimeIntegral_eq_trace : ∀ parameter,
     (∫ time in longTimeRegion,
-      nuclear.extendedDuhamelTrace parameter time) =
+      extendedDuhamelTrace nuclear parameter time) =
         intrinsicNuclearTrace (longTimeTraceClass parameter)
   totalOperator_eq_logarithmicDerivative : ∀ parameter,
     ((countertermOperator parameter - shortTimeDuhamelOperator parameter) -
@@ -90,18 +93,18 @@ namespace ReferenceNuclearDuhamelGreenOperatorIdentityData
 
 /-- Intrinsic logarithmic trace represented by the final operator. -/
 def logarithmicTrace
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) : Real :=
   intrinsicNuclearTrace (data.logarithmicDerivativeTraceClass parameter)
 
 /-- Trace of the counterterm-minus-short-time operator. -/
 theorem countertermMinusShort_trace
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) :
     intrinsicNuclearTrace (data.countertermMinusShortTraceClass parameter) =
@@ -114,9 +117,9 @@ theorem countertermMinusShort_trace
 
 /-- Trace of the full renormalized Duhamel operator. -/
 theorem total_trace
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) :
     intrinsicNuclearTrace (data.totalTraceClass parameter) =
@@ -131,23 +134,24 @@ theorem total_trace
 /-- The operator identity identifies the total intrinsic trace with the
 logarithmic Green derivative trace. -/
 theorem totalTrace_eq_logarithmicTrace
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) :
     intrinsicNuclearTrace (data.totalTraceClass parameter) =
       data.logarithmicTrace parameter := by
-  let transported : IntrinsicNuclearTraceData
+  let transported : IntrinsicNuclearTraceData.{u, v}
       (data.logarithmicDerivativeOperator parameter) :=
-    (data.totalTraceClass parameter).transportOperator
+    P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+      (data.totalTraceClass parameter)
       (data.totalOperator_eq_logarithmicDerivative parameter)
   calc
     intrinsicNuclearTrace (data.totalTraceClass parameter) =
         intrinsicNuclearTrace transported :=
-      ((data.totalTraceClass parameter).
-        transportOperator_intrinsicNuclearTrace
-          (data.totalOperator_eq_logarithmicDerivative parameter)).symm
+      (P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+        (data.totalTraceClass parameter)
+        (data.totalOperator_eq_logarithmicDerivative parameter)).symm
     _ = intrinsicNuclearTrace
         (data.logarithmicDerivativeTraceClass parameter) :=
       intrinsicNuclearTrace_unique transported
@@ -156,16 +160,16 @@ theorem totalTrace_eq_logarithmicTrace
 
 /-- The old scalar integrated Duhamel--Green identity is now a theorem. -/
 theorem integratedDuhamel_eq_logarithmicTrace
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion)
     (parameter : Real) :
     data.countertermDerivative parameter -
         (∫ time in shortTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) -
+          extendedDuhamelTrace nuclear parameter time) -
         (∫ time in longTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) =
+          extendedDuhamelTrace nuclear parameter time) =
       data.logarithmicTrace parameter := by
   rw [data.countertermDerivative_eq_trace parameter,
     data.shortTimeIntegral_eq_trace parameter,
@@ -185,9 +189,9 @@ theorem integratedDuhamel_eq_logarithmicTrace
 
 /-- Public operator-level integrated Duhamel checkpoint. -/
 theorem reference_nuclear_duhamel_green_operator_identity_gate
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (shortTimeRegion longTimeRegion : Set Real)
-    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData nuclear
+    (data : ReferenceNuclearDuhamelGreenOperatorIdentityData.{u, v} nuclear
       shortTimeRegion longTimeRegion) :
     (∀ parameter,
       ((data.countertermOperator parameter -
@@ -200,9 +204,9 @@ theorem reference_nuclear_duhamel_green_operator_identity_gate
     (∀ parameter,
       data.countertermDerivative parameter -
           (∫ time in shortTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) -
+            extendedDuhamelTrace nuclear parameter time) -
           (∫ time in longTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) =
+            extendedDuhamelTrace nuclear parameter time) =
         data.logarithmicTrace parameter) :=
   ⟨data.totalOperator_eq_logarithmicDerivative,
     data.totalTrace_eq_logarithmicTrace,

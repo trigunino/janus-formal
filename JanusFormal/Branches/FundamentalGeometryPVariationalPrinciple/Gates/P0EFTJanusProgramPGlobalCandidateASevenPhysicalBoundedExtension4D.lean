@@ -27,6 +27,8 @@ noncomputable section
 
 open Filter Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusD9D10ExactFieldContentBridge4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -35,8 +37,11 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
@@ -260,7 +265,7 @@ structure GlobalCandidateASevenPhysicalCoreBound4D
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart) : Prop where
+      period hPeriod configuration data analysis chart) where
   constant : Real
   constant_nonneg : 0 ≤ constant
   estimate : ∀ first second : PhysicalCore period hPeriod analysis,
@@ -503,7 +508,11 @@ theorem global_candidateA_h11_common_augmented_domain_gate_of_bound
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (bound : GlobalCandidateASevenPhysicalCoreBound4D period hPeriod
-      configuration data analysis chart sameAction) :=
+      configuration data analysis chart sameAction) :
+    GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
+      configuration data analysis chart sameAction
+        (globalCandidateASevenPhysicalCommonDomainExtension_of_bound period
+          hPeriod configuration data analysis chart sameAction bound) :=
   global_candidateA_h11_common_augmented_domain_gate period hPeriod
     configuration data analysis chart sameAction
       (globalCandidateASevenPhysicalCommonDomainExtension_of_bound period hPeriod

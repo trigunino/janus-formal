@@ -30,9 +30,12 @@ noncomputable section
 
 open P0EFTJanusProgramPDifferentiableSelfAdjointGreenFamily4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
+open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- A differentiable uniformly invertible family whose logarithmic derivative
@@ -42,7 +45,7 @@ structure IntrinsicLogarithmicDerivativeTraceData
   family : DifferentiableSelfAdjointUniformGapFamilyData operator
   inverse : family.GreenDifferentiabilityData
   traceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       (family.logarithmicDerivativeOperator parameter)
 
 namespace IntrinsicLogarithmicDerivativeTraceData
@@ -50,16 +53,16 @@ namespace IntrinsicLogarithmicDerivativeTraceData
 /-- Canonical scalar trace `Tr(G_a H'_a)`. -/
 def trace
     {operator : Real → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceData.{u, v} operator)
     (parameter : Real) : Real :=
   intrinsicNuclearTrace (data.traceClass parameter)
 
 /-- Every certified expansion of `G_a H'_a` computes the same scalar. -/
 theorem expansionTrace_eq
     {operator : Real → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceData.{u, v} operator)
     (parameter : Real)
-    (expansion : SummableRankOneOperatorExpansion
+    (expansion : SummableRankOneOperatorExpansion.{v, u}
       (data.family.logarithmicDerivativeOperator parameter)) :
     expansion.expansionTrace = data.trace parameter :=
   (data.traceClass parameter).expansionTrace_eq expansion
@@ -67,7 +70,7 @@ theorem expansionTrace_eq
 /-- The logarithmic derivative operator is compact. -/
 theorem logarithmicDerivative_compact
     {operator : Real → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceData.{u, v} operator)
     (parameter : Real) :
     IsCompactOperator
       (data.family.logarithmicDerivativeOperator parameter) :=
@@ -76,7 +79,7 @@ theorem logarithmicDerivative_compact
 /-- The derivative of the Green family remains the canonical `-G H' G`. -/
 theorem greenDerivative_formula
     {operator : Real → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceData.{u, v} operator)
     (parameter : Real) :
     data.inverse.greenDerivative parameter =
       -((data.family.analytic.green parameter).comp
@@ -87,12 +90,12 @@ theorem greenDerivative_formula
 /-- Public logarithmic-trace checkpoint. -/
 theorem intrinsic_logarithmic_derivative_trace_gate
     (operator : Real → E →L[Real] E)
-    (data : IntrinsicLogarithmicDerivativeTraceData operator) :
+    (data : IntrinsicLogarithmicDerivativeTraceData.{u, v} operator) :
     (∀ parameter,
       IsCompactOperator
         (data.family.logarithmicDerivativeOperator parameter)) ∧
       (∀ parameter,
-        ∀ expansion : SummableRankOneOperatorExpansion
+        ∀ expansion : SummableRankOneOperatorExpansion.{v, u}
           (data.family.logarithmicDerivativeOperator parameter),
           expansion.expansionTrace = data.trace parameter) ∧
       (∀ parameter,
@@ -111,8 +114,8 @@ same fixed reduced Hilbert space, as required after a kernel-complement
 trivialization. -/
 structure RelativeIntrinsicLogarithmicDerivativeTraceData
     (actual reference : Real → E →L[Real] E) where
-  actualTrace : IntrinsicLogarithmicDerivativeTraceData actual
-  referenceTrace : IntrinsicLogarithmicDerivativeTraceData reference
+  actualTrace : IntrinsicLogarithmicDerivativeTraceData.{u, v} actual
+  referenceTrace : IntrinsicLogarithmicDerivativeTraceData.{u, v} reference
 
 namespace RelativeIntrinsicLogarithmicDerivativeTraceData
 
@@ -120,7 +123,7 @@ namespace RelativeIntrinsicLogarithmicDerivativeTraceData
 `Tr(G_actual H'_actual) - Tr(G_ref H'_ref)`. -/
 def trace
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceData.{u, v} actual reference)
     (parameter : Real) : Real :=
   data.actualTrace.trace parameter - data.referenceTrace.trace parameter
 
@@ -130,7 +133,7 @@ The determinant coordinate is `exp (-zetaPrimeAtZero)`, so the connection
 coefficient is the negative of the logarithmic determinant variation. -/
 def bismutFreedCoefficient
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceData.{u, v} actual reference)
     (parameter : Real) : Complex :=
   (-(data.trace parameter) : Real)
 
@@ -138,7 +141,7 @@ def bismutFreedCoefficient
 @[simp]
 theorem bismutFreedCoefficient_re
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceData.{u, v} actual reference)
     (parameter : Real) :
     (data.bismutFreedCoefficient parameter).re = -data.trace parameter := by
   rfl
@@ -146,7 +149,7 @@ theorem bismutFreedCoefficient_re
 /-- Public relative logarithmic-trace checkpoint. -/
 theorem relative_intrinsic_logarithmic_derivative_trace_gate
     (actual reference : Real → E →L[Real] E)
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceData actual reference) :
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceData.{u, v} actual reference) :
     (∀ parameter,
       data.trace parameter =
         data.actualTrace.trace parameter -

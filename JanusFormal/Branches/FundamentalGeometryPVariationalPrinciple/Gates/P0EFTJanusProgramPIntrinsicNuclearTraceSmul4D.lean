@@ -31,8 +31,20 @@ open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E]
 
+end
+end P0EFTJanusProgramPIntrinsicNuclearTraceSmul4D
+namespace P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
+namespace SummableRankOneOperatorExpansion
+
+noncomputable section
+
+open scoped InnerProductSpace
+
+variable {E : Type*}
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
+
 /-- Scale one summable rank-one presentation. -/
-def SummableRankOneOperatorExpansion.smul
+def smul
     {operator : E →L[Real] E}
     (data : SummableRankOneOperatorExpansion operator)
     (scalar : Real) :
@@ -47,26 +59,60 @@ def SummableRankOneOperatorExpansion.smul
   trace_summable := by
     simpa [mul_assoc] using data.trace_summable.mul_left scalar
   operator_eq_tsum := by
-    rw [data.operator_eq_tsum]
-    ext vector
-    simp [rankOneOperator, Finset.smul_sum, tsum_mul_left]
+    calc
+      scalar • operator = scalar • (∑' index,
+          data.coefficient index • InnerProductSpace.rankOne Real
+            (data.leftVector index) (data.rightVector index)) :=
+        congrArg (fun current : E →L[Real] E => scalar • current)
+          data.operator_eq_tsum
+      _ = ∑' index, (scalar * data.coefficient index) •
+          InnerProductSpace.rankOne Real
+            (data.leftVector index) (data.rightVector index) := by
+        rw [← tsum_const_smul'' scalar]
+        apply tsum_congr
+        intro index
+        rw [mul_smul]
 
 @[simp]
-theorem SummableRankOneOperatorExpansion.smul_expansionTrace
+theorem smul_expansionTrace
     {operator : E →L[Real] E}
     (data : SummableRankOneOperatorExpansion operator)
     (scalar : Real) :
     (data.smul scalar).expansionTrace =
       scalar * data.expansionTrace := by
   unfold SummableRankOneOperatorExpansion.expansionTrace
-  simp [SummableRankOneOperatorExpansion.smul, tsum_mul_left]
+  change (∑' index, scalar * data.coefficient index *
+      inner Real (data.leftVector index) (data.rightVector index)) = _
+  calc
+    _ = ∑' index, scalar * (data.coefficient index *
+        inner Real (data.leftVector index) (data.rightVector index)) := by
+      apply tsum_congr
+      intro index
+      ring
+    _ = _ := tsum_mul_left
+
+end
+end SummableRankOneOperatorExpansion
+end P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
+namespace P0EFTJanusProgramPIntrinsicNuclearTraceSmul4D
+
+noncomputable section
+
+open scoped InnerProductSpace
+open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
+open P0EFTJanusProgramPIntrinsicNuclearTrace4D
+
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Intrinsic nuclear trace is real-linear under scalar multiplication. -/
 theorem intrinsicNuclearTrace_smul
     {operator : E →L[Real] E}
     (scalar : Real)
-    (source : IntrinsicNuclearTraceData operator)
-    (target : IntrinsicNuclearTraceData (scalar • operator)) :
+    (source : IntrinsicNuclearTraceData.{u, v} operator)
+    (target : IntrinsicNuclearTraceData.{u, v} (scalar • operator)) :
     intrinsicNuclearTrace target =
       scalar * intrinsicNuclearTrace source := by
   calc
@@ -81,8 +127,8 @@ theorem intrinsicNuclearTrace_smul
 theorem intrinsic_nuclear_trace_smul_gate
     {operator : E →L[Real] E}
     (scalar : Real)
-    (source : IntrinsicNuclearTraceData operator)
-    (target : IntrinsicNuclearTraceData (scalar • operator)) :
+    (source : IntrinsicNuclearTraceData.{u, v} operator)
+    (target : IntrinsicNuclearTraceData.{u, v} (scalar • operator)) :
     intrinsicNuclearTrace target =
       scalar * intrinsicNuclearTrace source :=
   intrinsicNuclearTrace_smul scalar source target

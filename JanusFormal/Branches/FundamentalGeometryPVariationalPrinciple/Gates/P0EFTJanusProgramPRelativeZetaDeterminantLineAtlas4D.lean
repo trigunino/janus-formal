@@ -50,7 +50,7 @@ theorem relativeZetaLocalDeterminant_transition
         relativeZetaLocalDeterminant atlas first parameter =
       relativeZetaLocalDeterminant atlas second parameter := by
   unfold relativeZetaTransition
-  field_simp
+  field_simp [relativeZetaLocalDeterminant_ne_zero]
 
 /-- Gauge covariance of an arbitrary local first jet.  If the second-frame
 coordinate is `g_ij s_i`, its covariant derivative is `g_ij ∇_i s_i`. -/
@@ -65,8 +65,22 @@ theorem relativeZetaLocalConnection_gauge_covariant
       relativeZetaTransition atlas first second parameter *
         relativeZetaLocalConnectionAt atlas first parameter value derivative := by
   unfold relativeZetaLocalConnectionAt
-  rw [relativeZetaTransition_connection_gauge atlas first second parameter]
-  ring
+  have h :=
+    relativeZetaTransition_connection_gauge atlas first second parameter
+  calc
+    relativeZetaTransitionDerivative atlas first second parameter * value +
+          relativeZetaTransition atlas first second parameter * derivative +
+        relativeZetaLocalConnectionCoefficient atlas second parameter *
+          (relativeZetaTransition atlas first second parameter * value) =
+      (relativeZetaTransitionDerivative atlas first second parameter +
+          relativeZetaLocalConnectionCoefficient atlas second parameter *
+            relativeZetaTransition atlas first second parameter) * value +
+        relativeZetaTransition atlas first second parameter * derivative := by ring
+    _ = (relativeZetaTransition atlas first second parameter *
+          relativeZetaLocalConnectionCoefficient atlas first parameter) * value +
+        relativeZetaTransition atlas first second parameter * derivative := by rw [h]
+    _ = relativeZetaTransition atlas first second parameter *
+        (derivative + relativeZetaLocalConnectionCoefficient atlas first parameter * value) := by ring
 
 /-- Complete local determinant-line atlas certificate. -/
 structure RelativeZetaDeterminantLineAtlasCertificate

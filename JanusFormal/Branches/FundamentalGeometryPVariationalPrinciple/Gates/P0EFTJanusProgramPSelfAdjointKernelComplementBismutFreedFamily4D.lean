@@ -26,6 +26,7 @@ set_option synthInstance.maxHeartbeats 3100000
 noncomputable section
 
 open P0EFTJanusProgramPDifferentiableSelfAdjointGreenFamily4D
+open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTrace4D
 open P0EFTJanusProgramPRelativeBismutFreedTraceConnection4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
@@ -33,9 +34,10 @@ open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementFamilyTrivialization4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe e i
+
+variable {E : Type e}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev BaseReduced
     (actual : Real → E →L[Real] E) :=
@@ -56,10 +58,10 @@ structure SelfAdjointKernelComplementBismutFreedFamilyData
     actualDifferentiable.analytic = actualGap.toUniformGapFamily
   actualInverse : actualDifferentiable.GreenDifferentiabilityData
   actualTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       (actualDifferentiable.logarithmicDerivativeOperator parameter)
   referenceTrace :
-    IntrinsicLogarithmicDerivativeTraceData reference
+    IntrinsicLogarithmicDerivativeTraceData.{e, i} reference
   zetaFamily : RelativeHeatMellinZetaFamilyData
   coefficient_agreement : ∀ parameter,
     relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =

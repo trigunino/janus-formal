@@ -35,11 +35,13 @@ open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementBismutFreedFamily4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementFamilyTrivialization4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPZeroLogarithmicDerivativeTrace4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe e i
+
+variable {E : Type e}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev BaseReduced
     (actual : Real → E →L[Real] E) :=
@@ -55,9 +57,9 @@ def zeroActualTrace
       DifferentiableSelfAdjointUniformGapFamilyData actualGap.fixedOperator)
     (actualInverse : actualDifferentiable.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, actualDifferentiable.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData
+    (zeroTrace : IntrinsicNuclearTraceData.{e, i}
       (0 : BaseReduced actual →L[Real] BaseReduced actual)) :
-    IntrinsicLogarithmicDerivativeTraceData actualGap.fixedOperator :=
+    IntrinsicLogarithmicDerivativeTraceData.{e, i} actualGap.fixedOperator :=
   intrinsicLogarithmicDerivativeTraceOfZeroDerivative actualDifferentiable
     actualInverse hDerivative zeroTrace
 
@@ -75,9 +77,9 @@ def selfAdjointKernelComplementBismutFreedFamilyOfZeroActualDerivative
       actualDifferentiable.analytic = actualGap.toUniformGapFamily)
     (actualInverse : actualDifferentiable.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, actualDifferentiable.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData
+    (zeroTrace : IntrinsicNuclearTraceData.{e, i}
       (0 : BaseReduced actual →L[Real] BaseReduced actual))
-    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData reference)
+    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} reference)
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (coefficient_agreement : ∀ parameter,
       relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
@@ -98,9 +100,22 @@ def selfAdjointKernelComplementBismutFreedFamilyOfZeroActualDerivative
     have hZero :=
       intrinsicLogarithmicDerivativeTraceOfZeroDerivative_trace
         actualDifferentiable actualInverse hDerivative zeroTrace parameter
-    unfold IntrinsicLogarithmicDerivativeTraceData.trace at hZero
-    rw [hZero]
-    simpa using coefficient_agreement parameter
+    have hZeroActual :
+        intrinsicNuclearTrace
+          ((zeroActualTrace actualGap actualDifferentiable actualInverse hDerivative
+            zeroTrace).traceClass parameter) = 0 := by
+      simpa [zeroActualTrace, IntrinsicLogarithmicDerivativeTraceData.trace]
+        using hZero
+    calc
+      relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
+          (referenceTrace.trace parameter : Complex) :=
+        coefficient_agreement parameter
+      _ = (-(intrinsicNuclearTrace
+            ((zeroActualTrace actualGap actualDifferentiable actualInverse
+              hDerivative zeroTrace).traceClass parameter) -
+          referenceTrace.trace parameter) : Real) := by
+        rw [hZeroActual]
+        norm_num
 
 namespace SelfAdjointKernelComplementBismutFreedFamilyData
 
@@ -117,9 +132,9 @@ theorem zeroActualDerivative_actualTrace
       actualDifferentiable.analytic = actualGap.toUniformGapFamily)
     (actualInverse : actualDifferentiable.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, actualDifferentiable.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData
+    (zeroTrace : IntrinsicNuclearTraceData.{e, i}
       (0 : BaseReduced actual →L[Real] BaseReduced actual))
-    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData reference)
+    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} reference)
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (coefficient_agreement : ∀ parameter,
       relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
@@ -129,7 +144,10 @@ theorem zeroActualDerivative_actualTrace
       actual_selfAdjoint actualGap actualDifferentiable actualAnalytic_eq
       actualInverse hDerivative zeroTrace referenceTrace zetaFamily
       coefficient_agreement).actualTrace.trace parameter = 0 := by
-  apply intrinsicLogarithmicDerivativeTraceOfZeroDerivative_trace
+  change (zeroActualTrace actualGap actualDifferentiable actualInverse hDerivative
+    zeroTrace).trace parameter = 0
+  exact intrinsicLogarithmicDerivativeTraceOfZeroDerivative_trace
+    actualDifferentiable actualInverse hDerivative zeroTrace parameter
 
 /-- The relative trace reduces to minus the reference trace. -/
 theorem zeroActualDerivative_relativeTrace
@@ -144,9 +162,9 @@ theorem zeroActualDerivative_relativeTrace
       actualDifferentiable.analytic = actualGap.toUniformGapFamily)
     (actualInverse : actualDifferentiable.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, actualDifferentiable.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData
+    (zeroTrace : IntrinsicNuclearTraceData.{e, i}
       (0 : BaseReduced actual →L[Real] BaseReduced actual))
-    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData reference)
+    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} reference)
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (coefficient_agreement : ∀ parameter,
       relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
@@ -158,9 +176,16 @@ theorem zeroActualDerivative_relativeTrace
       coefficient_agreement).relativeTrace.trace parameter =
         -referenceTrace.trace parameter := by
   rw [RelativeIntrinsicLogarithmicDerivativeTraceData.trace]
-  rw [zeroActualDerivative_actualTrace actual_selfAdjoint actualGap
-    actualDifferentiable actualAnalytic_eq actualInverse hDerivative zeroTrace
-    referenceTrace zetaFamily coefficient_agreement parameter]
+  change (zeroActualTrace actualGap actualDifferentiable actualInverse hDerivative
+    zeroTrace).trace parameter - referenceTrace.trace parameter =
+      -referenceTrace.trace parameter
+  have hZero :
+      (zeroActualTrace actualGap actualDifferentiable actualInverse hDerivative
+        zeroTrace).trace parameter = 0 := by
+    simpa [zeroActualTrace] using
+      (intrinsicLogarithmicDerivativeTraceOfZeroDerivative_trace
+        actualDifferentiable actualInverse hDerivative zeroTrace parameter)
+  rw [hZero]
   ring
 
 /-- The Bismut--Freed coefficient is exactly the reference trace in this fixed
@@ -177,9 +202,9 @@ theorem zeroActualDerivative_bismutFreedCoefficient
       actualDifferentiable.analytic = actualGap.toUniformGapFamily)
     (actualInverse : actualDifferentiable.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, actualDifferentiable.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData
+    (zeroTrace : IntrinsicNuclearTraceData.{e, i}
       (0 : BaseReduced actual →L[Real] BaseReduced actual))
-    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData reference)
+    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} reference)
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (coefficient_agreement : ∀ parameter,
       relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
@@ -211,9 +236,9 @@ theorem zero_actual_bismut_freed_family_gate
       actualDifferentiable.analytic = actualGap.toUniformGapFamily)
     (actualInverse : actualDifferentiable.GreenDifferentiabilityData)
     (hDerivative : ∀ parameter, actualDifferentiable.derivative parameter = 0)
-    (zeroTrace : IntrinsicNuclearTraceData
+    (zeroTrace : IntrinsicNuclearTraceData.{e, i}
       (0 : BaseReduced actual →L[Real] BaseReduced actual))
-    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData reference)
+    (referenceTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} reference)
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (coefficient_agreement : ∀ parameter,
       relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
@@ -231,16 +256,16 @@ theorem zero_actual_bismut_freed_family_gate
         (referenceTrace.trace parameter : Real)) := by
   dsimp only
   exact
-    ⟨SelfAdjointKernelComplementBismutFreedFamilyData.
-        zeroActualDerivative_actualTrace actual_selfAdjoint actualGap
+    ⟨SelfAdjointKernelComplementBismutFreedFamilyData.zeroActualDerivative_actualTrace
+        actual_selfAdjoint actualGap
           actualDifferentiable actualAnalytic_eq actualInverse hDerivative
           zeroTrace referenceTrace zetaFamily coefficient_agreement,
-      SelfAdjointKernelComplementBismutFreedFamilyData.
-        zeroActualDerivative_relativeTrace actual_selfAdjoint actualGap
+      SelfAdjointKernelComplementBismutFreedFamilyData.zeroActualDerivative_relativeTrace
+        actual_selfAdjoint actualGap
           actualDifferentiable actualAnalytic_eq actualInverse hDerivative
           zeroTrace referenceTrace zetaFamily coefficient_agreement,
-      SelfAdjointKernelComplementBismutFreedFamilyData.
-        zeroActualDerivative_bismutFreedCoefficient actual_selfAdjoint actualGap
+      SelfAdjointKernelComplementBismutFreedFamilyData.zeroActualDerivative_bismutFreedCoefficient
+        actual_selfAdjoint actualGap
           actualDifferentiable actualAnalytic_eq actualInverse hDerivative
           zeroTrace referenceTrace zetaFamily coefficient_agreement⟩
 

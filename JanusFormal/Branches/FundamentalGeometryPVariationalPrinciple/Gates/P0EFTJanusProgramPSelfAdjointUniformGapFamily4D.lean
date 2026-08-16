@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
+import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 /-!
 # Uniformly gapped self-adjoint operator families
@@ -32,13 +33,13 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- A self-adjoint family on one fixed Hilbert space with one positive lower
 bound valid at every parameter. -/
 structure SelfAdjointUniformGapFamilyData
-    (operator : Real → E →L[Real] E) : Prop where
+    (operator : Real → E →L[Real] E) where
   selfAdjoint : ∀ parameter, IsSelfAdjoint (operator parameter)
   gap : Real
   gap_pos : 0 < gap
@@ -86,7 +87,8 @@ noncomputable def operatorEquiv
     (data : SelfAdjointUniformGapFamilyData operator)
     (parameter : Real) : E ≃L[Real] E :=
   ContinuousLinearEquiv.ofBijective (operator parameter)
-    (data.bijective parameter)
+    (LinearMap.ker_eq_bot.mpr (data.bijective parameter).1)
+    (LinearMap.range_eq_top.mpr (data.bijective parameter).2)
 
 /-- Canonical inverse Green family. -/
 noncomputable def green
@@ -101,7 +103,10 @@ theorem operator_green
     (data : SelfAdjointUniformGapFamilyData operator)
     (parameter : Real) (vector : E) :
     operator parameter (data.green parameter vector) = vector :=
-  (data.operatorEquiv parameter).apply_symm_apply vector
+  by
+    change (data.operatorEquiv parameter)
+      ((data.operatorEquiv parameter).symm vector) = vector
+    exact (data.operatorEquiv parameter).apply_symm_apply vector
 
 @[simp]
 theorem green_operator
@@ -109,7 +114,10 @@ theorem green_operator
     (data : SelfAdjointUniformGapFamilyData operator)
     (parameter : Real) (vector : E) :
     data.green parameter (operator parameter vector) = vector :=
-  (data.operatorEquiv parameter).symm_apply_apply vector
+  by
+    change (data.operatorEquiv parameter).symm
+      ((data.operatorEquiv parameter) vector) = vector
+    exact (data.operatorEquiv parameter).symm_apply_apply vector
 
 /-- Equality of endomorphisms for the left inverse. -/
 theorem operator_comp_green
@@ -154,7 +162,7 @@ theorem green_opNorm_le
     (data : SelfAdjointUniformGapFamilyData operator)
     (parameter : Real) :
     ‖data.green parameter‖ ≤ data.gap⁻¹ := by
-  apply ContinuousLinearMap.opNorm_le_bound
+  apply ContinuousLinearMap.opNorm_le_bound (data.green parameter)
     (inv_nonneg.mpr (le_of_lt data.gap_pos))
   intro vector
   exact data.green_norm_le parameter vector

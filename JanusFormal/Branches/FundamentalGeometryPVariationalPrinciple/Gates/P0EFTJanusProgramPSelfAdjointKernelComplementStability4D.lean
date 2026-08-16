@@ -33,7 +33,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointSmallPerturbation4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance actualKernelStabilityCompleteSpace
@@ -47,7 +47,7 @@ structure SelfAdjointKernelComplementPerturbationData
     (hSelfAdjoint : IsSelfAdjoint operator)
     (gapData : SelfAdjointKernelComplementGapData operator hSelfAdjoint)
     (perturbation : SelfAdjointKernelComplement operator →L[Real]
-      SelfAdjointKernelComplement operator) : Prop where
+      SelfAdjointKernelComplement operator) where
   perturbation_selfAdjoint : IsSelfAdjoint perturbation
   bound : Real
   bound_nonneg : 0 ≤ bound
@@ -114,10 +114,12 @@ noncomputable def selfAdjointKernelComplementPerturbedEquiv
   ContinuousLinearEquiv.ofBijective
     (selfAdjointKernelComplementPerturbedOperator operator hSelfAdjoint
       perturbation)
-    ⟨(selfAdjointKernelComplementPerturbedCertificate operator hSelfAdjoint
-        gapData perturbation data).injective,
+    (LinearMap.ker_eq_bot.mpr
       (selfAdjointKernelComplementPerturbedCertificate operator hSelfAdjoint
-        gapData perturbation data).surjective⟩
+        gapData perturbation data).injective)
+    (LinearMap.range_eq_top.mpr
+      (selfAdjointKernelComplementPerturbedCertificate operator hSelfAdjoint
+        gapData perturbation data).surjective)
 
 /-- Green operator of the perturbed reduced Hessian. -/
 noncomputable def selfAdjointKernelComplementPerturbedGreen
@@ -148,8 +150,13 @@ theorem selfAdjointKernelComplementPerturbedOperator_green
         (selfAdjointKernelComplementPerturbedGreen operator hSelfAdjoint gapData
           perturbation data vector) =
       vector :=
-  (selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint gapData
-    perturbation data).apply_symm_apply vector
+  by
+    change (selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint
+      gapData perturbation data)
+        ((selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint
+          gapData perturbation data).symm vector) = vector
+    exact (selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint
+      gapData perturbation data).apply_symm_apply vector
 
 @[simp]
 theorem selfAdjointKernelComplementPerturbedGreen_operator
@@ -166,8 +173,13 @@ theorem selfAdjointKernelComplementPerturbedGreen_operator
         (selfAdjointKernelComplementPerturbedOperator operator hSelfAdjoint
           perturbation vector) =
       vector :=
-  (selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint gapData
-    perturbation data).symm_apply_apply vector
+  by
+    change (selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint
+      gapData perturbation data).symm
+        ((selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint
+          gapData perturbation data) vector) = vector
+    exact (selfAdjointKernelComplementPerturbedEquiv operator hSelfAdjoint
+      gapData perturbation data).symm_apply_apply vector
 
 /-- Pointwise inverse estimate with the remaining gap. -/
 theorem selfAdjointKernelComplementPerturbedGreen_norm_le
@@ -188,12 +200,15 @@ theorem selfAdjointKernelComplementPerturbedGreen_norm_le
   have hLower := selfAdjointSmallPerturbation_lowerBound
     (selfAdjointKernelComplementOperator operator hSelfAdjoint)
     perturbation small preimage
+  change (gapData.gap - data.bound) * ‖preimage‖ ≤
+    ‖selfAdjointKernelComplementPerturbedOperator operator hSelfAdjoint
+      perturbation preimage‖ at hLower
+  dsimp only [preimage] at hLower
   rw [selfAdjointKernelComplementPerturbedOperator_green operator hSelfAdjoint
       gapData perturbation data vector] at hLower
   have hGapPos : 0 < gapData.gap - data.bound := by
     linarith [data.small]
   have hGapNe : gapData.gap - data.bound ≠ 0 := ne_of_gt hGapPos
-  change (gapData.gap - data.bound) * ‖preimage‖ ≤ ‖vector‖ at hLower
   calc
     ‖preimage‖ = (gapData.gap - data.bound)⁻¹ *
         ((gapData.gap - data.bound) * ‖preimage‖) := by
@@ -217,6 +232,8 @@ theorem selfAdjointKernelComplementPerturbedGreen_opNorm_le
   have hGapPos : 0 < gapData.gap - data.bound := by
     linarith [data.small]
   apply ContinuousLinearMap.opNorm_le_bound
+    (selfAdjointKernelComplementPerturbedGreen operator hSelfAdjoint gapData
+      perturbation data)
     (inv_nonneg.mpr (le_of_lt hGapPos))
   intro vector
   exact selfAdjointKernelComplementPerturbedGreen_norm_le operator hSelfAdjoint

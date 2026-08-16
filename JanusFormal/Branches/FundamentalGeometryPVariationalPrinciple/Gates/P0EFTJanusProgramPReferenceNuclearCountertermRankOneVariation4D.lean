@@ -41,10 +41,10 @@ noncomputable section
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 
-universe u
+universe u v
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type v}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- A differentiable scalar counterterm series whose derivative is represented
@@ -88,17 +88,18 @@ structure ReferenceNuclearCountertermRankOneVariationData
         InnerProductSpace.rankOne Real
           (leftVector index) (rightVector index)
   derivativeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (derivativeOperator parameter)
+    IntrinsicNuclearTraceData.{v, u} (derivativeOperator parameter)
 
 namespace ReferenceNuclearCountertermRankOneVariationData
 
 /-- Rank-one expansion of the counterterm variation operator. -/
 def derivativeExpansion
     {countertermContribution : Real → Real}
-    (data : ReferenceNuclearCountertermRankOneVariationData
+    (data : ReferenceNuclearCountertermRankOneVariationData.{u, v}
       (E := E) countertermContribution)
     (parameter : Real) :
-    SummableRankOneOperatorExpansion (data.derivativeOperator parameter) where
+    SummableRankOneOperatorExpansion.{u, v}
+      (data.derivativeOperator parameter) where
   Index := data.Index
   coefficient := fun index => data.derivativeCoefficient index parameter
   leftVector := data.leftVector
@@ -110,7 +111,7 @@ def derivativeExpansion
 /-- Intrinsic scalar derivative supplied by the nuclear variation operator. -/
 def derivative
     {countertermContribution : Real → Real}
-    (data : ReferenceNuclearCountertermRankOneVariationData
+    (data : ReferenceNuclearCountertermRankOneVariationData.{u, v}
       (E := E) countertermContribution)
     (parameter : Real) : Real :=
   intrinsicNuclearTrace (data.derivativeTraceClass parameter)
@@ -119,7 +120,7 @@ def derivative
 of its nuclear variation operator. -/
 theorem hasDerivAt_countertermContribution
     {countertermContribution : Real → Real}
-    (data : ReferenceNuclearCountertermRankOneVariationData
+    (data : ReferenceNuclearCountertermRankOneVariationData.{u, v}
       (E := E) countertermContribution)
     (parameter : Real) :
     HasDerivAt countertermContribution (data.derivative parameter) parameter := by
@@ -162,7 +163,7 @@ theorem hasDerivAt_countertermContribution
 @[simp]
 theorem derivative_eq_intrinsicTrace
     {countertermContribution : Real → Real}
-    (data : ReferenceNuclearCountertermRankOneVariationData
+    (data : ReferenceNuclearCountertermRankOneVariationData.{u, v}
       (E := E) countertermContribution)
     (parameter : Real) :
     data.derivative parameter =
@@ -172,7 +173,7 @@ theorem derivative_eq_intrinsicTrace
 /-- Public nuclear counterterm-variation checkpoint. -/
 theorem reference_nuclear_counterterm_rank_one_variation_gate
     (countertermContribution : Real → Real)
-    (data : ReferenceNuclearCountertermRankOneVariationData
+    (data : ReferenceNuclearCountertermRankOneVariationData.{u, v}
       (E := E) countertermContribution) :
     (∀ parameter,
       HasDerivAt countertermContribution (data.derivative parameter) parameter) ∧

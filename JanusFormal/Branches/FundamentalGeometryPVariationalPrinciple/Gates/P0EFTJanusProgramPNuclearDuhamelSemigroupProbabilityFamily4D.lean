@@ -45,16 +45,17 @@ open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearDuhamelProbabilityAverage4D
 open P0EFTJanusProgramPNuclearDuhamelSemigroupSlice4D
 
-variable {Slice E : Type*}
+universe u v w
+
+variable {Slice : Type u} {E : Type v}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- A parameterized Duhamel family whose simplex slices collapse by the heat
 semigroup law. -/
 structure NuclearDuhamelSemigroupProbabilityFamilyData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E)) where
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)) where
   leftHeat : Real → HeatTime → Slice → E →L[Real] E
   rightHeat : Real → HeatTime → Slice → E →L[Real] E
   fullHeat : Real → HeatTime → E →L[Real] E
@@ -63,18 +64,18 @@ structure NuclearDuhamelSemigroupProbabilityFamilyData
     (rightHeat parameter time slice).comp (leftHeat parameter time slice) =
       fullHeat parameter time
   insertionRightExpansion : ∀ parameter time slice,
-    SummableRankOneOperatorExpansion
+    SummableRankOneOperatorExpansion.{w, v}
       ((insertion parameter time).comp (rightHeat parameter time slice))
   sliceTraceClass : ∀ parameter time slice,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       ((leftHeat parameter time slice).comp
         ((insertion parameter time).comp (rightHeat parameter time slice)))
   rotatedTraceClass : ∀ parameter time slice,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       (((insertion parameter time).comp (rightHeat parameter time slice)).comp
         (leftHeat parameter time slice))
   collapsedTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       ((insertion parameter time).comp (fullHeat parameter time))
   duhamelTrace_eq_sliceAverage : ∀ parameter time,
     nuclear.duhamelTrace parameter time =
@@ -87,10 +88,10 @@ namespace NuclearDuhamelSemigroupProbabilityFamilyData
 /-- The fixed-slice semigroup packet. -/
 def sliceData
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) (slice : Slice) :
-    NuclearDuhamelSemigroupSliceData (E := E) where
+    NuclearDuhamelSemigroupSliceData.{v, w} (E := E) where
   leftHeat := data.leftHeat parameter time slice
   rightHeat := data.rightHeat parameter time slice
   fullHeat := data.fullHeat parameter time
@@ -105,7 +106,7 @@ def sliceData
 /-- Conversion to the generic probability-average interface. -/
 def toProbabilityAverage
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear) :
     NuclearDuhamelProbabilityAverageData sliceMeasure nuclear where
   sliceOperator := fun parameter time slice =>
@@ -121,7 +122,7 @@ def toProbabilityAverage
 /-- Every simplex slice has trace `Tr(H'_a K_full(a,t))`. -/
 theorem sliceTrace_eq_insertionFullHeatTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) (slice : Slice) :
     intrinsicNuclearTrace (data.sliceTraceClass parameter time slice) =
@@ -132,7 +133,7 @@ theorem sliceTrace_eq_insertionFullHeatTrace
 heat operator. -/
 theorem duhamelTrace_eq_insertionFullHeatTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) :
     nuclear.duhamelTrace parameter time =
@@ -142,7 +143,7 @@ theorem duhamelTrace_eq_insertionFullHeatTrace
 /-- Public semigroup-probability Duhamel checkpoint. -/
 theorem nuclear_duhamel_semigroup_probability_family_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E))
     (data : NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear) :
     (∀ parameter time slice,
       (data.rightHeat parameter time slice).comp

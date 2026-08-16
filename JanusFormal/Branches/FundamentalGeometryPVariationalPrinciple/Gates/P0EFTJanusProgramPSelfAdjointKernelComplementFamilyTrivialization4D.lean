@@ -32,7 +32,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointUniformGapFamily4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev ReducedFiber
@@ -131,8 +131,10 @@ theorem transportedReducedOperator_isSelfAdjoint
             (transport first) (transport second)
     _ = inner Real first
         (transport.symm (reduced (transport second))) := by
-      simpa using data.transport_inner parameter first
+      have hInner := data.transport_inner parameter first
         (transport.symm (reduced (transport second)))
+      rw [transport.apply_symm_apply] at hInner
+      exact hInner
     _ = inner Real first
         (data.transportedReducedOperator parameter second) :=
       rfl

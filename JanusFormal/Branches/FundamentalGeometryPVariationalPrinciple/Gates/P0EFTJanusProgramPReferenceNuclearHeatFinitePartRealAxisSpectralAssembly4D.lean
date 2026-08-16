@@ -1,3 +1,4 @@
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatMellinZetaRealAxisReality4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearHeatFinitePartFullySpectralAssembly4D
 
@@ -25,17 +26,19 @@ namespace P0EFTJanusProgramPReferenceNuclearHeatFinitePartRealAxisSpectralAssemb
 set_option autoImplicit false
 noncomputable section
 
-open Filter Set
+open Filter Set MeasureTheory
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaRealAxisReality4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenFullySpectralBoundaryLimits4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartFullySpectralAssembly4D
 
-variable {Slice ShortCutoff LongCutoff E : Type*}
+universe e i s a b
+
+variable {Slice : Type s} {ShortCutoff : Type a} {LongCutoff : Type b}
+  {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Fully spectral standalone reference data whose zeta reality is specified by
 its real-axis germ. -/
@@ -45,21 +48,18 @@ structure ReferenceNuclearHeatFinitePartRealAxisSpectralAssemblyData
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
     (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)
   countertermContribution : Real → Real
   spectralBoundary :
     ReferenceNuclearDuhamelGreenFullySpectralBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
         countertermContribution shortTimeRegion longTimeRegion
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
-        spectralBoundary.shortTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter +
-          spectralBoundary.longTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter
+        spectralBoundary.shortTime.weighted.toWeightedHeatTraceVariation.contribution parameter +
+          spectralBoundary.longTime.weighted.toWeightedHeatTraceVariation.contribution parameter
   zetaRealAxis : ∀ parameter,
     RelativeHeatMellinZetaRealAxisRealityData
       (family.continuation parameter)
@@ -115,11 +115,9 @@ theorem hasDerivAt_finitePartLog
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
-      (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-        toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
+      (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
       parameter :=
   data.toFullySpectralAssembly.hasDerivAt_finitePartLog parameter
 
@@ -135,13 +133,11 @@ theorem connectionCoefficient_eq_neg_logarithmicTrace
       (E := E) sliceMeasure shortCutoffFilter longCutoffFilter family
         shortTimeRegion longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-      -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-          toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
+    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.relativeZetaConnectionCoefficient
+        family.toZetaFamily parameter =
+      -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
         Complex) :=
-  data.toFullySpectralAssembly.
-    connectionCoefficient_eq_neg_logarithmicTrace parameter
+  data.toFullySpectralAssembly.connectionCoefficient_eq_neg_logarithmicTrace parameter
 
 /-- Public real-axis spectral assembly checkpoint. -/
 theorem reference_nuclear_heat_finite_part_real_axis_spectral_assembly_gate
@@ -158,17 +154,14 @@ theorem reference_nuclear_heat_finite_part_real_axis_spectral_assembly_gate
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
-        (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-          toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
+        (data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
         parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-        -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-            toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
+      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.relativeZetaConnectionCoefficient
+          family.toZetaFamily parameter =
+        -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
           Complex)) :=
   ⟨data.zetaPrimeAtZero_im_eq_zero,
     data.hasDerivAt_finitePartLog,

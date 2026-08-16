@@ -225,10 +225,11 @@ theorem d9DoubledMatterSpinorFlatCoverDerivative_pairing_compatible
     (choice : NormalRootChoice)
     (first second : SmoothThroatDoubledMatterSpinorLift period hPeriod choice)
     (point : ThroatCover period hPeriod) (tangent : ThroatCoverCoordinates) :
-    mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+    (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
         (fun anchor =>
           d9DoubledMatterSpinorHermitianPairing
-            (first anchor) (second anchor)) point tangent =
+            (first anchor) (second anchor)) point :
+      ThroatCoverCoordinates →L[Real] Complex) tangent =
       d9DoubledMatterSpinorHermitianPairing (first point)
           (d9DoubledMatterSpinorFlatCoverDerivative period hPeriod choice
             second point tangent) +
@@ -249,22 +250,64 @@ theorem d9DoubledMatterSpinorFlatCoverDerivative_pairing_compatible
       (oppositeRoot choice) first.second second.second).mdifferentiableAt
         (by simp)
   change
-    mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+    (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
         ((fun anchor => d9MatterSpinorHermitianPairing
             (first.first anchor) (second.first anchor)) +
           (fun anchor => d9MatterSpinorHermitianPairing
-            (first.second anchor) (second.second anchor))) point tangent = _
+            (first.second anchor) (second.second anchor))) point :
+      ThroatCoverCoordinates →L[Real] Complex) tangent = _
   rw [mfderiv_add hPlusDiff hMinusDiff]
   simp only [add_apply]
-  rw [d9MatterSpinorFlatCoverDerivative_pairing_compatible period hPeriod choice,
+  have hPlus :=
+    d9MatterSpinorFlatCoverDerivative_pairing_compatible period hPeriod choice
+      first.first second.first point tangent
+  have hMinus :=
     d9MatterSpinorFlatCoverDerivative_pairing_compatible period hPeriod
-      (oppositeRoot choice)]
-  rw [d9DoubledMatterSpinorFlatCoverDerivative_fst,
-    d9DoubledMatterSpinorFlatCoverDerivative_fst,
-    d9DoubledMatterSpinorFlatCoverDerivative_snd,
-    d9DoubledMatterSpinorFlatCoverDerivative_snd]
-  unfold d9DoubledMatterSpinorHermitianPairing
-  ring
+      (oppositeRoot choice) first.second second.second point tangent
+  have hPlus' :
+      (show ThroatCoverCoordinates →L[Real]
+          TangentSpace 𝓘(Real, Complex)
+            (d9DoubledMatterSpinorHermitianPairing (first point) (second point))
+        from by exact (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+          (fun anchor => d9MatterSpinorHermitianPairing
+            (first.first anchor) (second.first anchor)) point)) tangent =
+      (show TangentSpace 𝓘(Real, Complex)
+          (d9DoubledMatterSpinorHermitianPairing (first point) (second point))
+        from by exact (d9MatterSpinorHermitianPairing (first.first point)
+          (d9MatterSpinorFlatCoverDerivative period hPeriod choice second.first
+            point tangent) +
+        d9MatterSpinorHermitianPairing
+          (d9MatterSpinorFlatCoverDerivative period hPeriod choice first.first
+            point tangent) (second.first point))) := by
+    exact hPlus
+  have hMinus' :
+      (show ThroatCoverCoordinates →L[Real]
+          TangentSpace 𝓘(Real, Complex)
+            (d9DoubledMatterSpinorHermitianPairing (first point) (second point))
+        from by exact (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+          (fun anchor => d9MatterSpinorHermitianPairing
+            (first.second anchor) (second.second anchor)) point)) tangent =
+      (show TangentSpace 𝓘(Real, Complex)
+          (d9DoubledMatterSpinorHermitianPairing (first point) (second point))
+        from by exact (d9MatterSpinorHermitianPairing (first.second point)
+          (d9MatterSpinorFlatCoverDerivative period hPeriod
+            (oppositeRoot choice) second.second point tangent) +
+        d9MatterSpinorHermitianPairing
+          (d9MatterSpinorFlatCoverDerivative period hPeriod
+            (oppositeRoot choice) first.second point tangent)
+          (second.second point))) := by
+    exact hMinus
+  have hSum := congrArg₂ (· + ·) hPlus' hMinus'
+  abel_nf at hSum
+  convert hSum using 1 <;>
+    simp only [d9DoubledMatterSpinorFlatCoverDerivative_fst,
+      d9DoubledMatterSpinorFlatCoverDerivative_snd,
+      d9DoubledMatterSpinorHermitianPairing, add_apply]
+  case e'_1 => rfl
+  case e'_2 => rfl
+  case e'_3 =>
+    apply heq_of_eq
+    abel
 
 /-- The Levi--Civita spin connection retains the same pairing derivative as
 the flat derivative because its correction is skew-Hermitian. -/

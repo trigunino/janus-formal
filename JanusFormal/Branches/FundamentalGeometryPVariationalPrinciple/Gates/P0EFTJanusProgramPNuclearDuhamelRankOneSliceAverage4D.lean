@@ -1,4 +1,5 @@
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 
 /-!
@@ -37,22 +38,22 @@ open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 
-universe u
+universe u v w
 
-variable {Slice E : Type*}
+variable {Slice : Type u} {E : Type v}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- Common rank-one spectral construction of a probability-averaged Duhamel
 operator. -/
 structure NuclearDuhamelRankOneSliceAverageData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E)) where
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)) where
   sliceOperator : Real → HeatTime → Slice → E →L[Real] E
   sliceTraceClass : ∀ parameter time slice,
-    IntrinsicNuclearTraceData (sliceOperator parameter time slice)
-  Index : Type u
+    IntrinsicNuclearTraceData.{v, w} (sliceOperator parameter time slice)
+  Index : Type w
   coefficient : Real → HeatTime → Slice → Index → Real
   leftVector : Real → HeatTime → Index → E
   rightVector : Real → HeatTime → Index → E
@@ -109,10 +110,10 @@ namespace NuclearDuhamelRankOneSliceAverageData
 /-- Rank-one expansion of one auxiliary slice. -/
 def sliceExpansion
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) (slice : Slice) :
-    SummableRankOneOperatorExpansion
+    SummableRankOneOperatorExpansion.{w, v}
       (data.sliceOperator parameter time slice) where
   Index := data.Index
   coefficient := data.coefficient parameter time slice
@@ -126,10 +127,10 @@ def sliceExpansion
 /-- Rank-one expansion of the genuine averaged Duhamel operator. -/
 def duhamelExpansion
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) :
-    SummableRankOneOperatorExpansion
+    SummableRankOneOperatorExpansion.{w, v}
       (nuclear.duhamelOperator parameter time) where
   Index := data.Index
   coefficient := data.averagedCoefficient parameter time
@@ -142,7 +143,7 @@ def duhamelExpansion
 /-- Intrinsic trace of one slice in the common spectral coordinates. -/
 theorem sliceTrace_eq_tsum
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) (slice : Slice) :
     intrinsicNuclearTrace (data.sliceTraceClass parameter time slice) =
@@ -158,7 +159,7 @@ theorem sliceTrace_eq_tsum
 coordinates. -/
 theorem duhamelTrace_eq_tsum
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) :
     nuclear.duhamelTrace parameter time =
@@ -174,7 +175,7 @@ theorem duhamelTrace_eq_tsum
 series. -/
 theorem sliceTraceAverage_eq_tsum
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) :
     (∫ slice,
@@ -206,7 +207,7 @@ theorem sliceTraceAverage_eq_tsum
 /-- Intrinsic trace commutes with the rank-one Duhamel probability average. -/
 theorem duhamelTrace_eq_sliceAverage
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) :
     nuclear.duhamelTrace parameter time =
@@ -228,7 +229,7 @@ theorem duhamelTrace_eq_sliceAverage
 /-- Public rank-one slice-average checkpoint. -/
 theorem nuclear_duhamel_rank_one_slice_average_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E))
     (data : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear) :
     (∀ parameter time slice,
       intrinsicNuclearTrace (data.sliceTraceClass parameter time slice) =

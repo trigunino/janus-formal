@@ -37,7 +37,7 @@ open P0EFTJanusBoundedSelfAdjointFredholmReduction4D
 open P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- The canonical zero-mode-free Hilbert space of `operator`. -/
@@ -115,7 +115,7 @@ theorem selfAdjointKernelComplementOperator_isSelfAdjoint
 /-- The irreducible analytic input on the actual zero-mode-free space. -/
 structure SelfAdjointKernelComplementGapData
     (operator : E →L[Real] E)
-    (hSelfAdjoint : IsSelfAdjoint operator) : Prop where
+    (hSelfAdjoint : IsSelfAdjoint operator) where
   kernel_finite : FiniteDimensional Real operator.ker
   gap : Real
   gap_pos : 0 < gap
@@ -222,7 +222,7 @@ theorem selfAdjoint_operator_range_closed
     (data : SelfAdjointKernelComplementGapData operator hSelfAdjoint) :
     IsClosed (operator.range : Set E) := by
   rw [selfAdjoint_operator_range_eq_kernelComplement operator hSelfAdjoint data]
-  exact operator.kerᗮ.isClosed
+  exact Submodule.isClosed_orthogonal operator.ker
 
 /-- The genuine bounded self-adjoint operator is Fredholm once its actual
 kernel is finite and it has a gap on the kernel complement. -/
@@ -259,8 +259,10 @@ noncomputable def selfAdjointKernelComplementEquiv
       SelfAdjointKernelComplement operator :=
   ContinuousLinearEquiv.ofBijective
     (selfAdjointKernelComplementOperator operator hSelfAdjoint)
-    ⟨selfAdjointKernelComplementOperator_injective operator hSelfAdjoint data,
-      selfAdjointKernelComplementOperator_surjective operator hSelfAdjoint data⟩
+    (LinearMap.ker_eq_bot.mpr
+      (selfAdjointKernelComplementOperator_injective operator hSelfAdjoint data))
+    (LinearMap.range_eq_top.mpr
+      (selfAdjointKernelComplementOperator_surjective operator hSelfAdjoint data))
 
 /-- Canonical Green operator after removing the true zero modes. -/
 noncomputable def selfAdjointKernelComplementGreen
@@ -280,8 +282,12 @@ theorem selfAdjointKernelComplementOperator_green
     selfAdjointKernelComplementOperator operator hSelfAdjoint
         (selfAdjointKernelComplementGreen operator hSelfAdjoint data vector) =
       vector :=
-  (selfAdjointKernelComplementEquiv operator hSelfAdjoint data).apply_symm_apply
-    vector
+  by
+    change (selfAdjointKernelComplementEquiv operator hSelfAdjoint data)
+      ((selfAdjointKernelComplementEquiv operator hSelfAdjoint data).symm vector) =
+        vector
+    exact (selfAdjointKernelComplementEquiv operator hSelfAdjoint data).apply_symm_apply
+      vector
 
 @[simp]
 theorem selfAdjointKernelComplementGreen_operator
@@ -292,8 +298,12 @@ theorem selfAdjointKernelComplementGreen_operator
     selfAdjointKernelComplementGreen operator hSelfAdjoint data
         (selfAdjointKernelComplementOperator operator hSelfAdjoint vector) =
       vector :=
-  (selfAdjointKernelComplementEquiv operator hSelfAdjoint data).symm_apply_apply
-    vector
+  by
+    change (selfAdjointKernelComplementEquiv operator hSelfAdjoint data).symm
+      ((selfAdjointKernelComplementEquiv operator hSelfAdjoint data) vector) =
+        vector
+    exact (selfAdjointKernelComplementEquiv operator hSelfAdjoint data).symm_apply_apply
+      vector
 
 /-- Pointwise Green estimate. -/
 theorem selfAdjointKernelComplementGreen_norm_le
@@ -324,6 +334,7 @@ theorem selfAdjointKernelComplementGreen_opNorm_le
     ‖selfAdjointKernelComplementGreen operator hSelfAdjoint data‖ ≤
       data.gap⁻¹ := by
   apply ContinuousLinearMap.opNorm_le_bound
+    (selfAdjointKernelComplementGreen operator hSelfAdjoint data)
     (inv_nonneg.mpr (le_of_lt data.gap_pos))
   intro vector
   exact selfAdjointKernelComplementGreen_norm_le operator hSelfAdjoint data

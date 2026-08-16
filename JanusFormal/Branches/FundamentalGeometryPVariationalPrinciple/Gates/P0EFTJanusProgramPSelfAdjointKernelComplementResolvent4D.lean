@@ -33,8 +33,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointSmallPerturbation4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance actualKernelResolventCompleteSpace
     (operator : E →L[Real] E) :
@@ -69,7 +68,7 @@ theorem selfAdjointKernelComplementScalarShift_isSelfAdjoint
   intro first second
   change inner Real ((-spectralParameter) • first) second =
     inner Real first ((-spectralParameter) • second)
-  simp
+  simp only [real_inner_smul_left, real_inner_smul_right]
 
 /-- Reduced spectral shift `H_red - lambda I`. -/
 def selfAdjointKernelComplementShiftedOperator
@@ -146,10 +145,12 @@ noncomputable def selfAdjointKernelComplementResolventEquiv
   ContinuousLinearEquiv.ofBijective
     (selfAdjointKernelComplementShiftedOperator operator hSelfAdjoint
       spectralParameter)
-    ⟨(selfAdjointKernelComplementRealShiftCertificate operator hSelfAdjoint data
-        spectralParameter hSpectral).injective,
+    (LinearMap.ker_eq_bot.mpr
       (selfAdjointKernelComplementRealShiftCertificate operator hSelfAdjoint data
-        spectralParameter hSpectral).surjective⟩
+        spectralParameter hSpectral).injective)
+    (LinearMap.range_eq_top.mpr
+      (selfAdjointKernelComplementRealShiftCertificate operator hSelfAdjoint data
+        spectralParameter hSpectral).surjective)
 
 /-- Real reduced resolvent on the actual zero-mode complement. -/
 noncomputable def selfAdjointKernelComplementResolvent
@@ -176,8 +177,11 @@ theorem selfAdjointKernelComplementShiftedOperator_resolvent
         (selfAdjointKernelComplementResolvent operator hSelfAdjoint data
           spectralParameter hSpectral vector) =
       vector :=
-  (selfAdjointKernelComplementResolventEquiv operator hSelfAdjoint data
-    spectralParameter hSpectral).apply_symm_apply vector
+  by
+    simpa [selfAdjointKernelComplementResolvent,
+      selfAdjointKernelComplementResolventEquiv] using
+      (selfAdjointKernelComplementResolventEquiv operator hSelfAdjoint data
+        spectralParameter hSpectral).apply_symm_apply vector
 
 @[simp]
 theorem selfAdjointKernelComplementResolvent_shiftedOperator
@@ -192,8 +196,11 @@ theorem selfAdjointKernelComplementResolvent_shiftedOperator
         (selfAdjointKernelComplementShiftedOperator operator hSelfAdjoint
           spectralParameter vector) =
       vector :=
-  (selfAdjointKernelComplementResolventEquiv operator hSelfAdjoint data
-    spectralParameter hSpectral).symm_apply_apply vector
+  by
+    simpa [selfAdjointKernelComplementResolvent,
+      selfAdjointKernelComplementResolventEquiv] using
+      (selfAdjointKernelComplementResolventEquiv operator hSelfAdjoint data
+        spectralParameter hSpectral).symm_apply_apply vector
 
 /-- Pointwise resolvent estimate inside the true spectral gap. -/
 theorem selfAdjointKernelComplementResolvent_norm_le
@@ -214,6 +221,9 @@ theorem selfAdjointKernelComplementResolvent_norm_le
     (selfAdjointKernelComplementOperator operator hSelfAdjoint)
     (selfAdjointKernelComplementScalarShift operator spectralParameter)
     shiftData preimage
+  change shiftData.remainingGap * ‖preimage‖ ≤
+    ‖selfAdjointKernelComplementShiftedOperator operator hSelfAdjoint
+      spectralParameter preimage‖ at hLower
   rw [selfAdjointKernelComplementShiftedOperator_resolvent operator hSelfAdjoint
       data spectralParameter hSpectral vector] at hLower
   have hGapPos : 0 < data.gap - |spectralParameter| := by
@@ -240,7 +250,8 @@ theorem selfAdjointKernelComplementResolvent_opNorm_le
       (data.gap - |spectralParameter|)⁻¹ := by
   have hGapPos : 0 < data.gap - |spectralParameter| := by
     linarith
-  apply ContinuousLinearMap.opNorm_le_bound
+  apply (selfAdjointKernelComplementResolvent operator hSelfAdjoint data
+    spectralParameter hSpectral).opNorm_le_bound
     (inv_nonneg.mpr (le_of_lt hGapPos))
   intro vector
   exact selfAdjointKernelComplementResolvent_norm_le operator hSelfAdjoint data
@@ -291,7 +302,9 @@ theorem selfAdjointKernelComplement_resolvent_identity
     firstH (((first - second) • firstR.comp secondR) vector)
   simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply,
     ContinuousLinearMap.comp_apply]
-  rw [selfAdjointKernelComplementShiftedOperator_resolvent operator hSelfAdjoint
+  dsimp [firstH, firstR, secondR]
+  rw [map_sub,
+    selfAdjointKernelComplementShiftedOperator_resolvent operator hSelfAdjoint
     data first hFirst]
   have hFirstOnSecond :
       firstH (secondR vector) = vector + (second - first) • secondR vector := by
@@ -303,7 +316,9 @@ theorem selfAdjointKernelComplement_resolvent_identity
       simp [firstH, selfAdjointKernelComplementShiftedOperator,
         selfAdjointKernelComplementScalarShift]
       module]
-    simp [selfAdjointKernelComplementShiftedOperator_resolvent operator
+    simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+      ContinuousLinearMap.id_apply]
+    rw [selfAdjointKernelComplementShiftedOperator_resolvent operator
       hSelfAdjoint data second hSecond]
   rw [hFirstOnSecond]
   have hFirstOnFirstSecond :

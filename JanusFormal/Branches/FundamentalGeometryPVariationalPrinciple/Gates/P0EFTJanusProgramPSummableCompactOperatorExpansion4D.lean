@@ -81,23 +81,47 @@ def SummableCompactOperatorExpansion.add
     | Sum.inl index => firstExpansion.component_compact index
     | Sum.inr index => secondExpansion.component_compact index
   summable_norm := by
-    rw [summable_sum]
-    exact ⟨firstExpansion.summable_norm, secondExpansion.summable_norm⟩
+    refine (Summable.sum
+      (α := firstExpansion.Index) (β := secondExpansion.Index) (M := Real)
+      (fun index : firstExpansion.Index ⊕ secondExpansion.Index =>
+        match index with
+        | Sum.inl index => ‖firstExpansion.component index‖
+        | Sum.inr index => ‖secondExpansion.component index‖)
+      firstExpansion.summable_norm
+      secondExpansion.summable_norm).congr ?_
+    intro index
+    cases index <;> rfl
   operator_eq_tsum := by
     have hFirst : Summable firstExpansion.component :=
       firstExpansion.summable_norm.of_norm
     have hSecond : Summable secondExpansion.component :=
       secondExpansion.summable_norm.of_norm
-    calc
-      first + second =
-          (∑' index, firstExpansion.component index) +
-            ∑' index, secondExpansion.component index :=
-        congrArg₂ (· + ·) firstExpansion.operator_eq_tsum
-          secondExpansion.operator_eq_tsum
-      _ = ∑' index, match index with
-          | Sum.inl index => firstExpansion.component index
-          | Sum.inr index => secondExpansion.component index :=
-        (hFirst.tsum_sum hSecond).symm
+    change first + second = ∑' index :
+      firstExpansion.Index ⊕ secondExpansion.Index, match index with
+        | Sum.inl index => firstExpansion.component index
+        | Sum.inr index => secondExpansion.component index
+    convert (by
+      calc
+        first + second =
+            (∑' index, firstExpansion.component index) +
+              ∑' index, secondExpansion.component index :=
+          congrArg₂ (· + ·) firstExpansion.operator_eq_tsum
+            secondExpansion.operator_eq_tsum
+        _ = ∑' index, match index with
+            | Sum.inl index => firstExpansion.component index
+            | Sum.inr index => secondExpansion.component index := by
+          have hTsum := Summable.tsum_sum
+            (α := firstExpansion.Index) (β := secondExpansion.Index)
+            (M := E →L[Real] E)
+            (f := fun index : firstExpansion.Index ⊕ secondExpansion.Index =>
+              match index with
+              | Sum.inl index => firstExpansion.component index
+              | Sum.inr index => secondExpansion.component index)
+            hFirst hSecond
+          convert hTsum.symm using 1 <;> rfl) using 1
+    apply tsum_congr
+    intro index
+    cases index <;> rfl
 
 /-- Negate a summable compact expansion. -/
 def SummableCompactOperatorExpansion.neg

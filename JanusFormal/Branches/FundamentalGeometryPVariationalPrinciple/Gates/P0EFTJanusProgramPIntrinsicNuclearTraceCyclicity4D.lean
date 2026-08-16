@@ -37,11 +37,10 @@ open scoped InnerProductSpace
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 
-universe u
+universe u v
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+variable {E : Type v}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- One aligned nuclear presentation of `B T` and `T B`.
 
@@ -134,9 +133,9 @@ theorem leftExpansionTrace_eq_rightExpansionTrace
 /-- Presentation-independent cyclicity of the intrinsic nuclear trace. -/
 theorem intrinsicNuclearTrace_comp_comm
     {nuclear bounded : E →L[Real] E}
-    (data : CyclicNuclearCompositionExpansionData nuclear bounded)
-    (leftTrace : IntrinsicNuclearTraceData (bounded.comp nuclear))
-    (rightTrace : IntrinsicNuclearTraceData (nuclear.comp bounded)) :
+    (data : CyclicNuclearCompositionExpansionData.{u, v} nuclear bounded)
+    (leftTrace : IntrinsicNuclearTraceData.{v, u} (bounded.comp nuclear))
+    (rightTrace : IntrinsicNuclearTraceData.{v, u} (nuclear.comp bounded)) :
     intrinsicNuclearTrace leftTrace = intrinsicNuclearTrace rightTrace := by
   calc
     intrinsicNuclearTrace leftTrace =
@@ -150,9 +149,9 @@ theorem intrinsicNuclearTrace_comp_comm
 /-- Public intrinsic cyclicity checkpoint. -/
 theorem intrinsic_nuclear_trace_cyclicity_gate
     (nuclear bounded : E →L[Real] E)
-    (data : CyclicNuclearCompositionExpansionData nuclear bounded)
-    (leftTrace : IntrinsicNuclearTraceData (bounded.comp nuclear))
-    (rightTrace : IntrinsicNuclearTraceData (nuclear.comp bounded)) :
+    (data : CyclicNuclearCompositionExpansionData.{u, v} nuclear bounded)
+    (leftTrace : IntrinsicNuclearTraceData.{v, u} (bounded.comp nuclear))
+    (rightTrace : IntrinsicNuclearTraceData.{v, u} (nuclear.comp bounded)) :
     intrinsicNuclearTrace leftTrace = intrinsicNuclearTrace rightTrace :=
   data.intrinsicNuclearTrace_comp_comm leftTrace rightTrace
 
