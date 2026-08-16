@@ -1,0 +1,22 @@
+name: Release obsolete orthogonal-Schur run
+
+on:
+  push:
+    branches:
+      - agent/product-throat-ci
+    paths:
+      - ".github/workflows/cancel-stale-orthogonal-schur.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: program-p-hessian-orthogonal-schur-agent/hessian-spinc-maximal-domain-36895dba4b8f4f19a01a1d88f108d4c37d6c5e46
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - run: echo "Obsolete concurrency group released"
