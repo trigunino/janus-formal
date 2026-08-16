@@ -7,6 +7,7 @@ on:
       - agent/hessian-spinc-maximal-domain
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProductThroatPositiveHeatGapLongTime4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D.lean"
       - ".github/workflows/program-p-product-throat-positive-gap.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -14,6 +15,7 @@ on:
   pull_request:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProductThroatPositiveHeatGapLongTime4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D.lean"
       - ".github/workflows/program-p-product-throat-positive-gap.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -29,7 +31,7 @@ concurrency:
 
 jobs:
   product-throat-positive-gap:
-    name: Lean — product-throat positive heat gap
+    name: Lean — product-throat positive heat gap and Duhamel domination
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,8 +48,10 @@ jobs:
           key: program-p-product-throat-gap-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
           restore-keys: |
             program-p-build-${{ runner.os }}-
+            hessian-zeta-quillen-${{ runner.os }}-
             reduced-green-${{ runner.os }}-
-      - name: Build concrete product-throat long-time bound
+      - name: Build concrete product-throat long-time chain
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatPositiveHeatGapLongTime4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D
