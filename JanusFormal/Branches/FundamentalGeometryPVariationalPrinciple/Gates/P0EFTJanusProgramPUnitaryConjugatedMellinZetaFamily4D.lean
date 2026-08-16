@@ -38,15 +38,33 @@ open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPUnitaryConjugatedNuclearTraceFamily4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+end
+end P0EFTJanusProgramPUnitaryConjugatedMellinZetaFamily4D
+
+namespace P0EFTJanusProgramPUnitaryConjugatedNuclearTraceFamily4D
+
+noncomputable section
+
+open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusProgramPRelativeHeatDataTransport4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaComparison4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 namespace UnitaryConjugatedNuclearTraceFamilyData
 
 /-- Base heat trace equals the moving heat trace, in the direction needed for
 dependent transport. -/
 theorem baseTrace_eq_movingTrace
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (parameter : Real) :
     data.baseTrace = data.movingTrace parameter :=
@@ -54,7 +72,7 @@ theorem baseTrace_eq_movingTrace
 
 /-- Transport one basepoint finite-part packet to a current parameter. -/
 def transportedFinitePart
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (parameter : Real) :
@@ -64,7 +82,7 @@ def transportedFinitePart
 
 @[simp]
 theorem transportedFinitePart_logDeterminant
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (parameter : Real) :
@@ -76,7 +94,7 @@ theorem transportedFinitePart_logDeterminant
 
 /-- The transported finite-part family is constant in its scalar logarithm. -/
 def transportedFinitePartFamily
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace) :
     RelativeHeatFinitePartFamilyData where
@@ -97,7 +115,7 @@ def transportedFinitePartFamily
 
 /-- Transport the basepoint Mellin continuation to a current parameter. -/
 def transportedContinuation
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart)
@@ -109,19 +127,19 @@ def transportedContinuation
 
 @[simp]
 theorem transportedContinuation_derivativeAtZero
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart)
     (parameter : Real) :
-    (data.transportedContinuation baseFinitePart baseContinuation parameter).
-        derivativeAtZero = baseContinuation.derivativeAtZero :=
+    (data.transportedContinuation baseFinitePart baseContinuation parameter).derivativeAtZero =
+      baseContinuation.derivativeAtZero :=
   baseContinuation.transportHeatTrace_derivativeAtZero
     (data.baseTrace_eq_movingTrace parameter)
 
 /-- Complete Mellin zeta family transported from one basepoint continuation. -/
 def transportedMellinZetaFamily
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart) :
@@ -142,36 +160,36 @@ def transportedMellinZetaFamily
       baseContinuation current
   connection_realPart := by
     intro parameter
-    rfl
+    simp [transportedFinitePartFamily]
 
 /-- The transported zeta-prime family is constant. -/
 theorem transportedMellinZetaFamily_zetaPrimeAtZero
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart)
     (parameter : Real) :
-    (data.transportedMellinZetaFamily baseFinitePart baseContinuation).
-        zetaPrimeAtZero parameter = baseContinuation.derivativeAtZero :=
+    (data.transportedMellinZetaFamily baseFinitePart baseContinuation).zetaPrimeAtZero
+      parameter = baseContinuation.derivativeAtZero :=
   data.transportedContinuation_derivativeAtZero baseFinitePart baseContinuation
     parameter
 
 /-- Its determinant connection coefficient vanishes. -/
 theorem transportedMellinZetaFamily_connectionCoefficient_zero
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart)
     (parameter : Real) :
     relativeZetaConnectionCoefficient
-        (data.transportedMellinZetaFamily baseFinitePart baseContinuation).
-          toZetaFamily parameter = 0 :=
+        (data.transportedMellinZetaFamily baseFinitePart baseContinuation).toZetaFamily
+          parameter = 0 :=
   rfl
 
 /-- The complex zeta determinant coordinate is constant and equals the
 basepoint Mellin determinant. -/
 theorem transportedMellinZetaFamily_determinant_eq_base
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart)
@@ -183,27 +201,31 @@ theorem transportedMellinZetaFamily_determinant_eq_base
   unfold relativeHeatMellinZetaFamilyDeterminant
     relativeZetaDeterminantCoordinate
     relativeHeatMellinZetaDeterminant relativeZetaDeterminant
+  change Complex.exp
+      (-(data.transportedMellinZetaFamily baseFinitePart baseContinuation).zetaPrimeAtZero
+        parameter) =
+    Complex.exp (-baseContinuation.derivativeAtZero)
   rw [data.transportedMellinZetaFamily_zetaPrimeAtZero baseFinitePart
     baseContinuation parameter]
 
 /-- Public unitary Mellin-zeta transport checkpoint. -/
 theorem unitary_conjugated_mellin_zeta_family_gate
-    (data : UnitaryConjugatedNuclearTraceFamilyData
+    (data : UnitaryConjugatedNuclearTraceFamilyData.{u, v}
       (Parameter := Real) (Time := HeatTime) (E := E))
     (baseFinitePart : RelativeHeatFinitePartData data.baseTrace)
     (baseContinuation : RelativeHeatMellinZetaContinuationData baseFinitePart) :
     (∀ parameter,
       relativeHeatFinitePartLogDeterminant
-          ((data.transportedMellinZetaFamily baseFinitePart baseContinuation).
-            finitePartFamily.finitePart parameter) =
+          ((data.transportedMellinZetaFamily baseFinitePart baseContinuation).finitePartFamily.finitePart
+            parameter) =
         relativeHeatFinitePartLogDeterminant baseFinitePart) ∧
     (∀ parameter,
-      (data.transportedMellinZetaFamily baseFinitePart baseContinuation).
-        zetaPrimeAtZero parameter = baseContinuation.derivativeAtZero) ∧
+      (data.transportedMellinZetaFamily baseFinitePart baseContinuation).zetaPrimeAtZero
+        parameter = baseContinuation.derivativeAtZero) ∧
     (∀ parameter,
       relativeZetaConnectionCoefficient
-          (data.transportedMellinZetaFamily baseFinitePart baseContinuation).
-            toZetaFamily parameter = 0) ∧
+          (data.transportedMellinZetaFamily baseFinitePart baseContinuation).toZetaFamily
+            parameter = 0) ∧
     (∀ parameter,
       relativeHeatMellinZetaFamilyDeterminant
           (data.transportedMellinZetaFamily baseFinitePart baseContinuation)
@@ -219,5 +241,5 @@ theorem unitary_conjugated_mellin_zeta_family_gate
 end UnitaryConjugatedNuclearTraceFamilyData
 
 end
-end P0EFTJanusProgramPUnitaryConjugatedMellinZetaFamily4D
+end P0EFTJanusProgramPUnitaryConjugatedNuclearTraceFamily4D
 end JanusFormal

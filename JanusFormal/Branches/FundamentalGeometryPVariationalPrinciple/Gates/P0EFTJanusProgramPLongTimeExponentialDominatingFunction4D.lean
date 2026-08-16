@@ -47,7 +47,9 @@ theorem integrableOn_longTimeExponentialBound
     (scale : Real) {rate : Real} (hRate : 0 < rate) (start : Real) :
     IntegrableOn (longTimeExponentialBound scale rate) (Set.Ioi start) := by
   have hCore := integrableOn_longTimeExponentialCore hRate start
-  simpa only [longTimeExponentialBound] using hCore.const_mul scale
+  change Integrable (fun time : Real => scale * Real.exp (-rate * time))
+    (volume.restrict (Set.Ioi start))
+  exact hCore.const_mul scale
 
 /-- Exact integral of the unscaled exponential tail. -/
 theorem integral_longTimeExponentialCore

@@ -43,9 +43,10 @@ open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearDuhamelSliceCyclicity4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- One heat-semigroup Duhamel slice with a nuclear insertion/right factor. -/
 structure NuclearDuhamelSemigroupSliceData where
@@ -55,32 +56,32 @@ structure NuclearDuhamelSemigroupSliceData where
   insertion : E →L[Real] E
   semigroup_eq : rightHeat.comp leftHeat = fullHeat
   insertionRightExpansion :
-    SummableRankOneOperatorExpansion (insertion.comp rightHeat)
+    SummableRankOneOperatorExpansion.{v, u} (insertion.comp rightHeat)
   sliceTraceClass :
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       (leftHeat.comp (insertion.comp rightHeat))
   rotatedTraceClass :
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{u, v}
       ((insertion.comp rightHeat).comp leftHeat)
   collapsedTraceClass :
-    IntrinsicNuclearTraceData (insertion.comp fullHeat)
+    IntrinsicNuclearTraceData.{u, v} (insertion.comp fullHeat)
 
 namespace NuclearDuhamelSemigroupSliceData
 
 /-- The genuine slice operator. -/
-def sliceOperator (data : NuclearDuhamelSemigroupSliceData (E := E)) :
+def sliceOperator (data : NuclearDuhamelSemigroupSliceData.{u, v} (E := E)) :
     E →L[Real] E :=
   data.leftHeat.comp (data.insertion.comp data.rightHeat)
 
 /-- The cyclically collapsed insertion/heat operator. -/
-def collapsedOperator (data : NuclearDuhamelSemigroupSliceData (E := E)) :
+def collapsedOperator (data : NuclearDuhamelSemigroupSliceData.{u, v} (E := E)) :
     E →L[Real] E :=
   data.insertion.comp data.fullHeat
 
 /-- Associativity followed by the semigroup law collapses the rotated
 composition. -/
 theorem rotatedOperator_eq_collapsedOperator
-    (data : NuclearDuhamelSemigroupSliceData (E := E)) :
+    (data : NuclearDuhamelSemigroupSliceData.{u, v} (E := E)) :
     (data.insertion.comp data.rightHeat).comp data.leftHeat =
       data.collapsedOperator := by
   calc
@@ -94,8 +95,8 @@ theorem rotatedOperator_eq_collapsedOperator
 /-- Generic cyclicity packet generated from the heat factors and semigroup
 law. -/
 def toSliceCyclicity
-    (data : NuclearDuhamelSemigroupSliceData (E := E)) :
-    NuclearDuhamelSliceCyclicityData
+    (data : NuclearDuhamelSemigroupSliceData.{u, v} (E := E)) :
+    NuclearDuhamelSliceCyclicityData.{u, v}
       data.sliceOperator data.collapsedOperator
       data.sliceTraceClass data.collapsedTraceClass where
   nuclearFactor := data.insertion.comp data.rightHeat
@@ -109,14 +110,15 @@ def toSliceCyclicity
 
 /-- The trace of the original Duhamel slice is the trace of `H' K_full`. -/
 theorem sliceTrace_eq_collapsedTrace
-    (data : NuclearDuhamelSemigroupSliceData (E := E)) :
+    (data : NuclearDuhamelSemigroupSliceData.{u, v} (E := E)) :
     intrinsicNuclearTrace data.sliceTraceClass =
       intrinsicNuclearTrace data.collapsedTraceClass :=
-  data.toSliceCyclicity.sliceTrace_eq_collapsedTrace
+  P0EFTJanusProgramPNuclearDuhamelSliceCyclicity4D.NuclearDuhamelSliceCyclicityData.sliceTrace_eq_collapsedTrace
+    data.toSliceCyclicity
 
 /-- Public semigroup-slice checkpoint. -/
 theorem nuclear_duhamel_semigroup_slice_gate
-    (data : NuclearDuhamelSemigroupSliceData (E := E)) :
+    (data : NuclearDuhamelSemigroupSliceData.{u, v} (E := E)) :
     data.rightHeat.comp data.leftHeat = data.fullHeat ∧
     (data.insertion.comp data.rightHeat).comp data.leftHeat =
       data.insertion.comp data.fullHeat ∧

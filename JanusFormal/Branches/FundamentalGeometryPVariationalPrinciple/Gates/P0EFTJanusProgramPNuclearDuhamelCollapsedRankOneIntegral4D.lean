@@ -39,39 +39,39 @@ open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPNuclearDuhamelOperatorIntegral4D
 open P0EFTJanusProgramPNuclearDuhamelSemigroupProbabilityFamily4D
 
-universe u
+universe e i s
 
-variable {Slice E : Type*}
+variable {Slice : Type s} {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Common spectral expansion of the collapsed insertion/full-heat operator on
 one real-time region. -/
 structure NuclearDuhamelCollapsedRankOneIntegralData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (timeRegion : Set Real) where
   semigroup :
     NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear
   weighted : NuclearHeatDuhamelWeightedIntegralData nuclear timeRegion
-  Index : Type u
+  Index : Type i
   coefficient : Real → Real → Index → Real
   leftVector : Real → Index → E
   rightVector : Real → Index → E
-  pointwise_nuclearNorm_summable : ∀ parameter time : HeatTime,
+  pointwise_nuclearNorm_summable : ∀ parameter : Real, ∀ time : HeatTime,
     Summable (fun index =>
       |coefficient parameter time.1 index| *
         ‖leftVector parameter index‖ * ‖rightVector parameter index‖)
-  pointwise_trace_summable : ∀ parameter time : HeatTime,
+  pointwise_trace_summable : ∀ parameter : Real, ∀ time : HeatTime,
     Summable (fun index =>
       coefficient parameter time.1 index *
         inner Real (leftVector parameter index)
           (rightVector parameter index))
-  collapsed_operator_eq_tsum : ∀ parameter time : HeatTime,
+  collapsed_operator_eq_tsum : ∀ parameter : Real, ∀ time : HeatTime,
     (semigroup.insertion parameter time).comp
         (semigroup.fullHeat parameter time) = ∑' index,
       coefficient parameter time.1 index •
@@ -98,7 +98,7 @@ structure NuclearDuhamelCollapsedRankOneIntegralData
         InnerProductSpace.rankOne Real
           (leftVector parameter index) (rightVector parameter index)
   integratedTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (integratedOperator parameter)
+    IntrinsicNuclearTraceData.{e, i} (integratedOperator parameter)
   trace_integral_interchange : ∀ parameter,
     (∫ time in timeRegion,
       ∑' index,
@@ -115,7 +115,7 @@ namespace NuclearDuhamelCollapsedRankOneIntegralData
 /-- Pointwise expansion of `H'_a K_a(t)`. -/
 def pointwiseExpansion
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion)
@@ -134,7 +134,7 @@ def pointwiseExpansion
 /-- Expansion of the operator-valued regional integral. -/
 def integratedExpansion
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion)
@@ -151,7 +151,7 @@ def integratedExpansion
 /-- The genuine Duhamel trace is computed by the collapsed spectral series. -/
 theorem duhamelTrace_eq_tsum
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion)
@@ -177,37 +177,36 @@ theorem duhamelTrace_eq_tsum
 /-- Zero-extended Duhamel trace in the collapsed spectral coordinates. -/
 theorem extendedDuhamelTrace_eq_tsum
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion)
     (parameter time : Real) :
-    nuclear.extendedDuhamelTrace parameter time =
+    extendedDuhamelTrace nuclear parameter time =
       ∑' index,
         (if 0 < time then data.coefficient parameter time index else 0) *
           inner Real (data.leftVector parameter index)
             (data.rightVector parameter index) := by
   by_cases hTime : 0 < time
-  · simp only [NuclearHeatDuhamelTraceVariationData.extendedDuhamelTrace,
-      hTime, dite_true]
+  · simp only [extendedDuhamelTrace, hTime, dite_true]
     exact data.duhamelTrace_eq_tsum parameter ⟨time, hTime⟩
-  · simp [NuclearHeatDuhamelTraceVariationData.extendedDuhamelTrace, hTime]
+  · simp [extendedDuhamelTrace, hTime]
 
 /-- The time integral of the Duhamel trace is the intrinsic trace of the
 integrated collapsed operator. -/
 theorem scalarIntegral_eq_intrinsicTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion)
     (parameter : Real) :
     (∫ time in timeRegion,
-      nuclear.extendedDuhamelTrace parameter time) =
+      extendedDuhamelTrace nuclear parameter time) =
         intrinsicNuclearTrace (data.integratedTraceClass parameter) := by
   calc
     (∫ time in timeRegion,
-        nuclear.extendedDuhamelTrace parameter time) =
+        extendedDuhamelTrace nuclear parameter time) =
       ∫ time in timeRegion,
         ∑' index,
           (if 0 < time then data.coefficient parameter time index else 0) *
@@ -229,7 +228,7 @@ theorem scalarIntegral_eq_intrinsicTrace
 /-- Conversion to the generic operator-valued Duhamel integral interface. -/
 def toOperatorIntegral
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion) :
@@ -242,7 +241,7 @@ def toOperatorIntegral
 /-- Public collapsed rank-one integral checkpoint. -/
 theorem nuclear_duhamel_collapsed_rank_one_integral_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (timeRegion : Set Real)
     (data : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
       timeRegion) :
@@ -250,7 +249,7 @@ theorem nuclear_duhamel_collapsed_rank_one_integral_gate
       nuclear.duhamelTrace parameter time =
         intrinsicNuclearTrace
           (data.semigroup.collapsedTraceClass parameter time)) ∧
-    (∀ parameter time : HeatTime,
+    (∀ parameter : Real, ∀ time : HeatTime,
       nuclear.duhamelTrace parameter time =
         ∑' index,
           data.coefficient parameter time.1 index *
@@ -258,7 +257,7 @@ theorem nuclear_duhamel_collapsed_rank_one_integral_gate
               (data.rightVector parameter index)) ∧
     (∀ parameter,
       (∫ time in timeRegion,
-        nuclear.extendedDuhamelTrace parameter time) =
+        extendedDuhamelTrace nuclear parameter time) =
           intrinsicNuclearTrace (data.integratedTraceClass parameter)) :=
   ⟨data.semigroup.duhamelTrace_eq_insertionFullHeatTrace,
     data.duhamelTrace_eq_tsum,

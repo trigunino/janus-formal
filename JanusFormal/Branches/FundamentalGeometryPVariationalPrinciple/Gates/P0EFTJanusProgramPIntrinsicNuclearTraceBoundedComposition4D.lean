@@ -38,9 +38,10 @@ open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceCyclicity4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v
+
+variable {E : Type v}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 namespace SummableRankOneOperatorExpansion
 
@@ -58,7 +59,7 @@ theorem rankOne_comp_eq_rankOne_adjoint
 /-- Nuclear-norm summability after composition on the left. -/
 theorem compLeft_nuclearNorm_summable
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     Summable (fun index =>
       |expansion.coefficient index| *
@@ -89,14 +90,14 @@ theorem compLeft_nuclearNorm_summable
 /-- Trace summability after composition on the left. -/
 theorem compLeft_trace_summable
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     Summable (fun index =>
       expansion.coefficient index *
         inner Real (bounded (expansion.leftVector index))
           (expansion.rightVector index)) := by
   apply Summable.of_norm_bounded
-    (expansion.compLeft_nuclearNorm_summable bounded)
+    (compLeft_nuclearNorm_summable expansion bounded)
   intro index
   rw [norm_mul, Real.norm_eq_abs]
   calc
@@ -115,7 +116,7 @@ theorem compLeft_trace_summable
 /-- Operator-series identity after composition on the left. -/
 theorem compLeft_operator_eq_tsum
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     bounded.comp nuclear = ∑' index,
       expansion.coefficient index •
@@ -131,7 +132,8 @@ theorem compLeft_operator_eq_tsum
     bounded.comp nuclear =
         (ContinuousLinearMap.compL Real E E E bounded) nuclear := rfl
     _ = (ContinuousLinearMap.compL Real E E E bounded)
-        (∑' index, expansion.component index) := by rw [hOperator]
+        (∑' index, expansion.component index) :=
+      congrArg (ContinuousLinearMap.compL Real E E E bounded) hOperator
     _ = ∑' index,
         (ContinuousLinearMap.compL Real E E E bounded)
           (expansion.component index) :=
@@ -150,7 +152,7 @@ theorem compLeft_operator_eq_tsum
 /-- Nuclear-norm summability after composition on the right. -/
 theorem compRight_nuclearNorm_summable
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     Summable (fun index =>
       |expansion.coefficient index| * ‖expansion.leftVector index‖ *
@@ -191,7 +193,7 @@ theorem compRight_nuclearNorm_summable
 /-- Trace summability after composition on the right. -/
 theorem compRight_trace_summable
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     Summable (fun index =>
       expansion.coefficient index *
@@ -199,7 +201,7 @@ theorem compRight_trace_summable
           (ContinuousLinearMap.adjoint bounded
             (expansion.rightVector index))) := by
   apply Summable.of_norm_bounded
-    (expansion.compRight_nuclearNorm_summable bounded)
+    (compRight_nuclearNorm_summable expansion bounded)
   intro index
   rw [norm_mul, Real.norm_eq_abs]
   calc
@@ -220,7 +222,7 @@ theorem compRight_trace_summable
 /-- Operator-series identity after composition on the right. -/
 theorem compRight_operator_eq_tsum
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     nuclear.comp bounded = ∑' index,
       expansion.coefficient index •
@@ -238,8 +240,8 @@ theorem compRight_operator_eq_tsum
     (ContinuousLinearMap.compL Real E E E).flip bounded
   calc
     nuclear.comp bounded = rightComposition nuclear := rfl
-    _ = rightComposition (∑' index, expansion.component index) := by
-      rw [hOperator]
+    _ = rightComposition (∑' index, expansion.component index) :=
+      congrArg rightComposition hOperator
     _ = ∑' index, rightComposition (expansion.component index) :=
       rightComposition.map_tsum hSummable
     _ = ∑' index,
@@ -258,21 +260,117 @@ theorem compRight_operator_eq_tsum
 /-- Nuclear expansion of `B T` generated from an expansion of `T`. -/
 def compLeft
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     SummableRankOneOperatorExpansion (bounded.comp nuclear) where
   Index := expansion.Index
   coefficient := expansion.coefficient
   leftVector := fun index => bounded (expansion.leftVector index)
   rightVector := expansion.rightVector
-  summable_nuclearNorm := expansion.compLeft_nuclearNorm_summable bounded
-  trace_summable := expansion.compLeft_trace_summable bounded
-  operator_eq_tsum := expansion.compLeft_operator_eq_tsum bounded
+  summable_nuclearNorm := compLeft_nuclearNorm_summable expansion bounded
+  trace_summable := compLeft_trace_summable expansion bounded
+  operator_eq_tsum := compLeft_operator_eq_tsum expansion bounded
+
+/-- The trace of `B T` is bounded by the operator norm of `B` times the
+nuclear-norm sum of any rank-one presentation of `T`. -/
+theorem compLeft_expansionTrace_abs_le_nuclearNormSum
+    {nuclear : E →L[Real] E}
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
+    (bounded : E →L[Real] E) :
+    |(compLeft expansion bounded).expansionTrace| ≤
+      ‖bounded‖ * ∑' index,
+        |expansion.coefficient index| * ‖expansion.leftVector index‖ *
+          ‖expansion.rightVector index‖ := by
+  change
+    |∑' index,
+      expansion.coefficient index *
+        inner Real (bounded (expansion.leftVector index))
+          (expansion.rightVector index)| ≤ _
+  rw [← Real.norm_eq_abs]
+  have hMajorant : Summable (fun index =>
+      ‖bounded‖ *
+        (|expansion.coefficient index| * ‖expansion.leftVector index‖ *
+          ‖expansion.rightVector index‖)) :=
+    expansion.summable_nuclearNorm.mul_left ‖bounded‖
+  calc
+    ‖∑' index,
+        expansion.coefficient index *
+          inner Real (bounded (expansion.leftVector index))
+            (expansion.rightVector index)‖ ≤
+        ∑' index, ‖bounded‖ *
+          (|expansion.coefficient index| * ‖expansion.leftVector index‖ *
+            ‖expansion.rightVector index‖) := by
+      exact tsum_of_norm_bounded hMajorant.hasSum fun index => by
+        rw [norm_mul, Real.norm_eq_abs]
+        calc
+          |expansion.coefficient index| *
+                ‖inner Real (bounded (expansion.leftVector index))
+                  (expansion.rightVector index)‖ ≤
+              |expansion.coefficient index| *
+                (‖bounded (expansion.leftVector index)‖ *
+                  ‖expansion.rightVector index‖) := by
+            gcongr
+            exact norm_inner_le_norm _ _
+          _ ≤ ‖bounded‖ *
+              (|expansion.coefficient index| * ‖expansion.leftVector index‖ *
+                ‖expansion.rightVector index‖) := by
+            calc
+              _ ≤ |expansion.coefficient index| *
+                    ((‖bounded‖ * ‖expansion.leftVector index‖) *
+                      ‖expansion.rightVector index‖) := by
+                  gcongr
+                  exact bounded.le_opNorm _
+              _ = _ := by ring
+    _ = ‖bounded‖ * ∑' index,
+        |expansion.coefficient index| * ‖expansion.leftVector index‖ *
+          ‖expansion.rightVector index‖ := by
+      rw [tsum_mul_left]
+
+/-- Intrinsic version of the bounded-composition trace estimate. -/
+theorem intrinsicNuclearTrace_compLeft_abs_le_nuclearNormSum
+    {nuclear : E →L[Real] E}
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
+    (bounded : E →L[Real] E)
+    (trace : IntrinsicNuclearTraceData.{v, u} (bounded.comp nuclear)) :
+    |intrinsicNuclearTrace trace| ≤
+      ‖bounded‖ * ∑' index,
+        |expansion.coefficient index| * ‖expansion.leftVector index‖ *
+          ‖expansion.rightVector index‖ := by
+  rw [← trace.expansionTrace_eq (compLeft expansion bounded)]
+  exact compLeft_expansionTrace_abs_le_nuclearNormSum expansion bounded
+
+/-- If the nuclear-norm sum is controlled by a positive heat trace and
+`B` has a prescribed norm bound, then `|Tr(B T)|` has the expected heat-trace
+bound. -/
+theorem intrinsicNuclearTrace_compLeft_abs_le_heatTrace
+    {nuclear : E →L[Real] E}
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
+    (bounded : E →L[Real] E)
+    (trace : IntrinsicNuclearTraceData.{v, u} (bounded.comp nuclear))
+    (heatTrace bound : Real)
+    (hNuclear :
+      (∑' index,
+        |expansion.coefficient index| * ‖expansion.leftVector index‖ *
+          ‖expansion.rightVector index‖) ≤ heatTrace)
+    (hHeatTrace : 0 ≤ heatTrace)
+    (hBound : ‖bounded‖ ≤ bound) :
+    |intrinsicNuclearTrace trace| ≤ bound * heatTrace := by
+  calc
+    |intrinsicNuclearTrace trace| ≤
+        ‖bounded‖ * ∑' index,
+          |expansion.coefficient index| * ‖expansion.leftVector index‖ *
+            ‖expansion.rightVector index‖ :=
+      intrinsicNuclearTrace_compLeft_abs_le_nuclearNormSum expansion
+        bounded trace
+    _ ≤ ‖bounded‖ * heatTrace :=
+      mul_le_mul_of_nonneg_left hNuclear (norm_nonneg bounded)
+    _ ≤ bound * heatTrace :=
+      mul_le_mul_of_nonneg_right hBound hHeatTrace
 
 /-- Nuclear expansion of `T B` generated from an expansion of `T`. -/
 def compRight
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     SummableRankOneOperatorExpansion (nuclear.comp bounded) where
   Index := expansion.Index
@@ -280,51 +378,52 @@ def compRight
   leftVector := expansion.leftVector
   rightVector := fun index =>
     ContinuousLinearMap.adjoint bounded (expansion.rightVector index)
-  summable_nuclearNorm := expansion.compRight_nuclearNorm_summable bounded
-  trace_summable := expansion.compRight_trace_summable bounded
-  operator_eq_tsum := expansion.compRight_operator_eq_tsum bounded
+  summable_nuclearNorm := compRight_nuclearNorm_summable expansion bounded
+  trace_summable := compRight_trace_summable expansion bounded
+  operator_eq_tsum := compRight_operator_eq_tsum expansion bounded
 
 /-- Automatic aligned cyclicity presentation generated by one expansion of
 `T`. -/
 def toCyclicCompositionData
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E) :
     CyclicNuclearCompositionExpansionData nuclear bounded where
   Index := expansion.Index
   coefficient := expansion.coefficient
   leftVector := expansion.leftVector
   rightVector := expansion.rightVector
-  left_nuclearNorm_summable := expansion.compLeft_nuclearNorm_summable bounded
-  right_nuclearNorm_summable := expansion.compRight_nuclearNorm_summable bounded
-  left_trace_summable := expansion.compLeft_trace_summable bounded
-  right_trace_summable := expansion.compRight_trace_summable bounded
-  left_operator_eq_tsum := expansion.compLeft_operator_eq_tsum bounded
-  right_operator_eq_tsum := expansion.compRight_operator_eq_tsum bounded
+  left_nuclearNorm_summable := compLeft_nuclearNorm_summable expansion bounded
+  right_nuclearNorm_summable := compRight_nuclearNorm_summable expansion bounded
+  left_trace_summable := compLeft_trace_summable expansion bounded
+  right_trace_summable := compRight_trace_summable expansion bounded
+  left_operator_eq_tsum := compLeft_operator_eq_tsum expansion bounded
+  right_operator_eq_tsum := compRight_operator_eq_tsum expansion bounded
 
 /-- Intrinsic cyclicity from one nuclear presentation and two intrinsic trace
 certificates for the compositions. -/
 theorem intrinsicNuclearTrace_comp_comm_of_expansion
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E)
-    (leftTrace : IntrinsicNuclearTraceData (bounded.comp nuclear))
-    (rightTrace : IntrinsicNuclearTraceData (nuclear.comp bounded)) :
+    (leftTrace : IntrinsicNuclearTraceData.{v, u} (bounded.comp nuclear))
+    (rightTrace : IntrinsicNuclearTraceData.{v, u} (nuclear.comp bounded)) :
     intrinsicNuclearTrace leftTrace = intrinsicNuclearTrace rightTrace :=
-  (expansion.toCyclicCompositionData bounded).
-    intrinsicNuclearTrace_comp_comm leftTrace rightTrace
+  CyclicNuclearCompositionExpansionData.intrinsicNuclearTrace_comp_comm
+    (toCyclicCompositionData expansion bounded) leftTrace rightTrace
 
 end SummableRankOneOperatorExpansion
 
 /-- Public bounded-composition cyclicity checkpoint. -/
 theorem intrinsic_nuclear_trace_bounded_composition_gate
     {nuclear : E →L[Real] E}
-    (expansion : SummableRankOneOperatorExpansion nuclear)
+    (expansion : SummableRankOneOperatorExpansion.{u, v} nuclear)
     (bounded : E →L[Real] E)
-    (leftTrace : IntrinsicNuclearTraceData (bounded.comp nuclear))
-    (rightTrace : IntrinsicNuclearTraceData (nuclear.comp bounded)) :
+    (leftTrace : IntrinsicNuclearTraceData.{v, u} (bounded.comp nuclear))
+    (rightTrace : IntrinsicNuclearTraceData.{v, u} (nuclear.comp bounded)) :
     intrinsicNuclearTrace leftTrace = intrinsicNuclearTrace rightTrace :=
-  expansion.intrinsicNuclearTrace_comp_comm_of_expansion bounded
+  SummableRankOneOperatorExpansion.intrinsicNuclearTrace_comp_comm_of_expansion
+    expansion bounded
     leftTrace rightTrace
 
 end

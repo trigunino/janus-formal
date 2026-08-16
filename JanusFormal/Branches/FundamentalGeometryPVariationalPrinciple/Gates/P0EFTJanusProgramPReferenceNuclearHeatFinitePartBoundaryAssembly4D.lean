@@ -34,32 +34,35 @@ open Set
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenBoundaryMatching4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartOperatorAssembly4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Complete reference packet built from two locally matched time regions. -/
 structure ReferenceNuclearHeatFinitePartBoundaryAssemblyData
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)
   countertermContribution : Real → Real
   boundaryMatching :
-    ReferenceNuclearDuhamelGreenBoundaryMatchingData nuclear
+    ReferenceNuclearDuhamelGreenBoundaryMatchingData.{u, v} nuclear
       shortTimeRegion longTimeRegion
   hasDerivAt_counterterm : ∀ parameter,
     HasDerivAt countertermContribution
       (boundaryMatching.countertermDerivative parameter) parameter
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
-        boundaryMatching.shortTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter +
-          boundaryMatching.longTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter
+        boundaryMatching.shortTime.weighted.toWeightedHeatTraceVariation.contribution
+          parameter +
+          boundaryMatching.longTime.weighted.toWeightedHeatTraceVariation.contribution
+            parameter
   zetaPrimeAtZero_real : ∀ parameter,
     (family.zetaPrimeAtZero parameter).im = 0
 
@@ -68,12 +71,11 @@ namespace ReferenceNuclearHeatFinitePartBoundaryAssemblyData
 /-- Convert the local boundary matching data to the global operator-generated
 finite-part frontend. -/
 def toOperatorAssembly
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData
+    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion) :
-    ReferenceNuclearHeatFinitePartOperatorAssemblyData
+    ReferenceNuclearHeatFinitePartOperatorAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion where
   nuclear := data.nuclear
   countertermContribution := data.countertermContribution
@@ -87,16 +89,14 @@ def toOperatorAssembly
 /-- The finite-part logarithm differentiates to the trace of the logarithmic
 Green derivative operator. -/
 theorem hasDerivAt_finitePartLog
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData
+    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion)
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
       (data.boundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
       parameter :=
@@ -105,14 +105,12 @@ theorem hasDerivAt_finitePartLog
 /-- Standalone reference zeta coefficient generated from the two matched time
 regions. -/
 theorem connectionCoefficient_eq_neg_logarithmicTrace
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
-    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData
+    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(data.boundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
         Complex) :=
   data.toOperatorAssembly.connectionCoefficient_eq_neg_logarithmicTrace
@@ -120,10 +118,9 @@ theorem connectionCoefficient_eq_neg_logarithmicTrace
 
 /-- Public boundary-generated finite-part checkpoint. -/
 theorem reference_nuclear_heat_finite_part_boundary_assembly_gate
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real)
-    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData
+    (data : ReferenceNuclearHeatFinitePartBoundaryAssemblyData.{u, v}
       (E := E) family shortTimeRegion longTimeRegion) :
     (∀ parameter,
       data.boundaryMatching.countertermOperator parameter -
@@ -136,14 +133,12 @@ theorem reference_nuclear_heat_finite_part_boundary_assembly_gate
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
         (data.boundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
         parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(data.boundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
           Complex)) :=
   ⟨data.boundaryMatching.shortBoundaryIdentity,

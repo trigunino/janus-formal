@@ -46,17 +46,20 @@ open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearDuhamelRankOneSliceAverage4D
 open P0EFTJanusProgramPNuclearDuhamelSemigroupProbabilityFamily4D
 
-variable {Slice E : Type*}
+universe u v w
+
+variable {Slice : Type u} {E : Type v}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Rank-one averaged Duhamel slices equipped with their heat-semigroup
 factorization. -/
 structure NuclearDuhamelSemigroupRankOneAverageData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E)) where
-  sliceAverage : NuclearDuhamelRankOneSliceAverageData sliceMeasure nuclear
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)) where
+  sliceAverage : NuclearDuhamelRankOneSliceAverageData.{u, v, w}
+    sliceMeasure nuclear
   leftHeat : Real → HeatTime → Slice → E →L[Real] E
   rightHeat : Real → HeatTime → Slice → E →L[Real] E
   fullHeat : Real → HeatTime → E →L[Real] E
@@ -69,14 +72,14 @@ structure NuclearDuhamelSemigroupRankOneAverageData
     (rightHeat parameter time slice).comp (leftHeat parameter time slice) =
       fullHeat parameter time
   insertionRightExpansion : ∀ parameter time slice,
-    SummableRankOneOperatorExpansion
+    SummableRankOneOperatorExpansion.{w, v}
       ((insertion parameter time).comp (rightHeat parameter time slice))
   rotatedTraceClass : ∀ parameter time slice,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       (((insertion parameter time).comp (rightHeat parameter time slice)).comp
         (leftHeat parameter time slice))
   collapsedTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       ((insertion parameter time).comp (fullHeat parameter time))
 
 namespace NuclearDuhamelSemigroupRankOneAverageData
@@ -85,35 +88,39 @@ namespace NuclearDuhamelSemigroupRankOneAverageData
 left-composition operator. -/
 def leftCompositionTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
-    (data : NuclearDuhamelSemigroupRankOneAverageData sliceMeasure nuclear)
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
+    (data : NuclearDuhamelSemigroupRankOneAverageData.{u, v, w}
+      sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) (slice : Slice) :
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       ((data.leftHeat parameter time slice).comp
         ((data.insertion parameter time).comp
           (data.rightHeat parameter time slice))) :=
-  (data.sliceAverage.sliceTraceClass parameter time slice).transportOperator
+  P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+    (data.sliceAverage.sliceTraceClass parameter time slice)
     (data.sliceOperator_eq parameter time slice)
 
 /-- The transport does not change the intrinsic scalar trace. -/
 theorem leftCompositionTrace_eq_sliceTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
-    (data : NuclearDuhamelSemigroupRankOneAverageData sliceMeasure nuclear)
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
+    (data : NuclearDuhamelSemigroupRankOneAverageData.{u, v, w}
+      sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) (slice : Slice) :
     intrinsicNuclearTrace (data.leftCompositionTrace parameter time slice) =
       intrinsicNuclearTrace
         (data.sliceAverage.sliceTraceClass parameter time slice) :=
-  (data.sliceAverage.sliceTraceClass parameter time slice).
-    transportOperator_intrinsicNuclearTrace
-      (data.sliceOperator_eq parameter time slice)
+  P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+    (data.sliceAverage.sliceTraceClass parameter time slice)
+    (data.sliceOperator_eq parameter time slice)
 
 /-- Conversion to the semigroup-probability interface, with its slice-average
 identity derived from the rank-one spectral construction. -/
 def toSemigroupProbabilityFamily
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
-    (data : NuclearDuhamelSemigroupRankOneAverageData sliceMeasure nuclear) :
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
+    (data : NuclearDuhamelSemigroupRankOneAverageData.{u, v, w}
+      sliceMeasure nuclear) :
     NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear where
   leftHeat := data.leftHeat
   rightHeat := data.rightHeat
@@ -145,19 +152,21 @@ def toSemigroupProbabilityFamily
 with the slice average itself generated spectrally. -/
 theorem duhamelTrace_eq_insertionFullHeatTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
-    (data : NuclearDuhamelSemigroupRankOneAverageData sliceMeasure nuclear)
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E)}
+    (data : NuclearDuhamelSemigroupRankOneAverageData.{u, v, w}
+      sliceMeasure nuclear)
     (parameter : Real) (time : HeatTime) :
     nuclear.duhamelTrace parameter time =
       intrinsicNuclearTrace (data.collapsedTraceClass parameter time) :=
-  data.toSemigroupProbabilityFamily.
-    duhamelTrace_eq_insertionFullHeatTrace parameter time
+  data.toSemigroupProbabilityFamily.duhamelTrace_eq_insertionFullHeatTrace
+    parameter time
 
 /-- Public fully spectral semigroup-average checkpoint. -/
 theorem nuclear_duhamel_semigroup_rank_one_average_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
-    (data : NuclearDuhamelSemigroupRankOneAverageData sliceMeasure nuclear) :
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{v, w} (E := E))
+    (data : NuclearDuhamelSemigroupRankOneAverageData.{u, v, w}
+      sliceMeasure nuclear) :
     (∀ parameter time,
       nuclear.duhamelTrace parameter time =
         ∫ slice,

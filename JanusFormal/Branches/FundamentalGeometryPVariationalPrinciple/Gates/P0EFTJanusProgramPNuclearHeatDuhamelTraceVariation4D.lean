@@ -1,3 +1,5 @@
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleDiracHeatTraceCancellation
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicNuclearTraceSmul4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D
 
@@ -33,7 +35,9 @@ open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceSmul4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D
 
-variable {E : Type*}
+universe u v
+
+variable {E : Type u}
   [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Nuclear heat family with an operator-level Duhamel derivative and scalar
@@ -43,11 +47,11 @@ structure NuclearHeatDuhamelTraceVariationData where
   heatDerivativeOperator : Real → HeatTime → E →L[Real] E
   duhamelOperator : Real → HeatTime → E →L[Real] E
   heatTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (heatOperator parameter time)
+    IntrinsicNuclearTraceData.{u, v} (heatOperator parameter time)
   heatDerivativeTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (heatDerivativeOperator parameter time)
+    IntrinsicNuclearTraceData.{u, v} (heatDerivativeOperator parameter time)
   duhamelTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (duhamelOperator parameter time)
+    IntrinsicNuclearTraceData.{u, v} (duhamelOperator parameter time)
   heatDerivativeOperator_eq : ∀ parameter time,
     heatDerivativeOperator parameter time =
       (-(time.1) : Real) • duhamelOperator parameter time
@@ -61,39 +65,41 @@ namespace NuclearHeatDuhamelTraceVariationData
 
 /-- Scalar heat trace. -/
 def heatTrace
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter : Real) (time : HeatTime) : Real :=
   intrinsicNuclearTrace (data.heatTraceClass parameter time)
 
 /-- Scalar trace of the heat derivative operator. -/
 def heatTraceDerivative
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter : Real) (time : HeatTime) : Real :=
   intrinsicNuclearTrace (data.heatDerivativeTraceClass parameter time)
 
 /-- Scalar Duhamel trace. -/
 def duhamelTrace
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter : Real) (time : HeatTime) : Real :=
   intrinsicNuclearTrace (data.duhamelTraceClass parameter time)
 
 /-- Trace of the operator derivative is `-t` times the Duhamel trace. -/
 theorem heatTraceDerivative_eq_neg_time_mul_duhamelTrace
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter : Real) (time : HeatTime) :
     data.heatTraceDerivative parameter time =
       -(time.1) * data.duhamelTrace parameter time := by
-  let transported : IntrinsicNuclearTraceData
+  let transported : IntrinsicNuclearTraceData.{u, v}
       ((-(time.1) : Real) • data.duhamelOperator parameter time) :=
-    (data.heatDerivativeTraceClass parameter time).transportOperator
+    P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+      (data.heatDerivativeTraceClass parameter time)
       (data.heatDerivativeOperator_eq parameter time)
   calc
     data.heatTraceDerivative parameter time =
         intrinsicNuclearTrace transported := by
       unfold heatTraceDerivative transported
       symm
-      exact (data.heatDerivativeTraceClass parameter time).
-        transportOperator_intrinsicNuclearTrace
+      exact
+        P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+          (data.heatDerivativeTraceClass parameter time)
           (data.heatDerivativeOperator_eq parameter time)
     _ = -(time.1) *
         intrinsicNuclearTrace (data.duhamelTraceClass parameter time) :=
@@ -103,7 +109,7 @@ theorem heatTraceDerivative_eq_neg_time_mul_duhamelTrace
 
 /-- Pointwise scalar trace Duhamel formula. -/
 theorem heatTrace_hasDerivAt
-    (data : NuclearHeatDuhamelTraceVariationData (E := E))
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (parameter : Real) (time : HeatTime) :
     HasDerivAt (fun current => data.heatTrace current time)
       (-(time.1) * data.duhamelTrace parameter time) parameter := by
@@ -112,7 +118,7 @@ theorem heatTrace_hasDerivAt
 
 /-- Public nuclear Duhamel trace checkpoint. -/
 theorem nuclear_heat_duhamel_trace_variation_gate
-    (data : NuclearHeatDuhamelTraceVariationData (E := E)) :
+    (data : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)) :
     (∀ parameter time,
       data.heatTraceDerivative parameter time =
         -(time.1) * data.duhamelTrace parameter time) ∧

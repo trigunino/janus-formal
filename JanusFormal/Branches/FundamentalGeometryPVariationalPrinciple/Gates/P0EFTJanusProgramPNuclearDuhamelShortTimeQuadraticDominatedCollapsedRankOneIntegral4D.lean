@@ -1,34 +1,17 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearDuhamelCollapsedRankOneIntegral4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearHeatDuhamelDominatedWeightedIntegral4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearDuhamelDominatedCollapsedRankOneIntegral4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearHeatDuhamelShortTimeQuadraticDominatedWeightedIntegral4D
 
 /-!
-# Collapsed rank-one Duhamel integrals with generated differentiation
+# Short-time collapsed Duhamel integrals from quadratic domination
 
-The collapsed spectral integral already derives
-
-```text
-integral_R Tr(D_a(t)) dt = Tr(D_R,a)
-```
-
-from a common rank-one expansion and one sum/integral interchange.  Its
-`weighted` field, however, previously contained an independently supplied
-parameter differentiation theorem.
-
-This frontend replaces that field by the measurable and integrable domination
-packet of `NuclearHeatDuhamelDominatedWeightedIntegralData`.  The resulting
-collapsed integral therefore carries both
-
-```text
-partial_a integral_R w(t) Tr K_a(t) dt
-  = - integral_R Tr D_a(t) dt
-```
-
-and the operator-valued spectral identity, without accepting the derivative
-interchange as a primitive input.
+This combines the collapsed rank-one expansion of `H'_a K_a(t)` with the
+quadratic short-time majorant.  Integrability of the majorant and weighted
+differentiation are generated; only the spectral sum/integral interchange
+remains as an input.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPNuclearDuhamelDominatedCollapsedRankOneIntegral4D
+namespace P0EFTJanusProgramPNuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegral4D
 
 set_option autoImplicit false
 noncomputable section
@@ -38,9 +21,9 @@ open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
-open P0EFTJanusProgramPNuclearDuhamelCollapsedRankOneIntegral4D
+open P0EFTJanusProgramPNuclearDuhamelDominatedCollapsedRankOneIntegral4D
 open P0EFTJanusProgramPNuclearDuhamelSemigroupProbabilityFamily4D
-open P0EFTJanusProgramPNuclearHeatDuhamelDominatedWeightedIntegral4D
+open P0EFTJanusProgramPNuclearHeatDuhamelShortTimeQuadraticDominatedWeightedIntegral4D
 open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 
 universe e i s
@@ -49,16 +32,15 @@ variable {Slice : Type s} {E : Type e}
   [MeasurableSpace Slice]
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
-/-- Common collapsed spectral expansion with a dominated weighted heat
-integral. -/
-structure NuclearDuhamelDominatedCollapsedRankOneIntegralData
+structure NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
-    (timeRegion : Set Real) where
+    (cutoff : Real) where
   semigroup :
     NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear
   weighted :
-    NuclearHeatDuhamelDominatedWeightedIntegralData nuclear timeRegion
+    NuclearHeatDuhamelShortTimeQuadraticDominatedWeightedIntegralData nuclear
+      cutoff
   Index : Type i
   coefficient : Real → Real → Index → Real
   leftVector : Real → Index → E
@@ -81,7 +63,7 @@ structure NuclearDuhamelDominatedCollapsedRankOneIntegralData
   integratedCoefficient : Real → Index → Real
   integratedCoefficient_eq : ∀ parameter index,
     integratedCoefficient parameter index =
-      ∫ time in timeRegion,
+      ∫ time in Set.Ioo 0 cutoff,
         if 0 < time then coefficient parameter time index else 0
   integratedOperator : Real → E →L[Real] E
   integrated_nuclearNorm_summable : ∀ parameter,
@@ -101,7 +83,7 @@ structure NuclearDuhamelDominatedCollapsedRankOneIntegralData
   integratedTraceClass : ∀ parameter,
     IntrinsicNuclearTraceData.{e, i} (integratedOperator parameter)
   trace_integral_interchange : ∀ parameter,
-    (∫ time in timeRegion,
+    (∫ time in Set.Ioo 0 cutoff,
       ∑' index,
         (if 0 < time then coefficient parameter time index else 0) *
           inner Real (leftVector parameter index)
@@ -111,20 +93,19 @@ structure NuclearDuhamelDominatedCollapsedRankOneIntegralData
           inner Real (leftVector parameter index)
             (rightVector parameter index)
 
-namespace NuclearDuhamelDominatedCollapsedRankOneIntegralData
+namespace NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
 
-/-- Forget the domination witnesses only after generating the weighted
-parameter-derivative theorem. -/
-def toCollapsedRankOneIntegral
+def toDominatedCollapsedRankOneIntegral
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
-    {timeRegion : Set Real}
-    (data : NuclearDuhamelDominatedCollapsedRankOneIntegralData sliceMeasure
-      nuclear timeRegion) :
-    NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
-      timeRegion where
+    {cutoff : Real}
+    (data :
+      NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
+        sliceMeasure nuclear cutoff) :
+    NuclearDuhamelDominatedCollapsedRankOneIntegralData sliceMeasure nuclear
+      (Set.Ioo 0 cutoff) where
   semigroup := data.semigroup
-  weighted := data.weighted.toWeightedIntegral
+  weighted := data.weighted.toDominatedWeightedIntegral
   Index := data.Index
   coefficient := data.coefficient
   leftVector := data.leftVector
@@ -141,56 +122,69 @@ def toCollapsedRankOneIntegral
   integratedTraceClass := data.integratedTraceClass
   trace_integral_interchange := data.trace_integral_interchange
 
-/-- The collapsed scalar trace integral is the intrinsic trace of the regional
-operator. -/
-theorem scalarIntegral_eq_intrinsicTrace
-    {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
-    {timeRegion : Set Real}
-    (data : NuclearDuhamelDominatedCollapsedRankOneIntegralData sliceMeasure
-      nuclear timeRegion)
-    (parameter : Real) :
-    (∫ time in timeRegion,
-      extendedDuhamelTrace nuclear parameter time) =
-        intrinsicNuclearTrace (data.integratedTraceClass parameter) :=
-  data.toCollapsedRankOneIntegral.scalarIntegral_eq_intrinsicTrace parameter
-
-/-- Dominated differentiation of the weighted heat integral. -/
 theorem weightedIntegral_hasDerivAt
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
-    {timeRegion : Set Real}
-    (data : NuclearDuhamelDominatedCollapsedRankOneIntegralData sliceMeasure
-      nuclear timeRegion)
+    {cutoff : Real}
+    (data :
+      NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
+        sliceMeasure nuclear cutoff)
     (parameter : Real) :
     HasDerivAt
-      data.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
-      (-(∫ time in timeRegion,
-        extendedDuhamelTrace nuclear parameter time)) parameter :=
-  data.toCollapsedRankOneIntegral.weighted.toDuhamelWeightedHeatTraceVariation.hasDerivAt_contribution
+      data.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
+      (-∫ time in Set.Ioo 0 cutoff,
+        extendedDuhamelTrace nuclear parameter time) parameter :=
+  data.toDominatedCollapsedRankOneIntegral.weightedIntegral_hasDerivAt parameter
+
+theorem bound_integrable
+    {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
+    {cutoff : Real}
+    (data :
+      NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
+        sliceMeasure nuclear cutoff)
+    (parameter : Real) :
+    Integrable
+      (shortTimeQuadraticBound (data.weighted.scale parameter))
+      (volume.restrict (Set.Ioo 0 cutoff)) :=
+  data.weighted.bound_integrable parameter
+
+theorem scalarIntegral_eq_intrinsicTrace
+    {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
+    {cutoff : Real}
+    (data :
+      NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
+        sliceMeasure nuclear cutoff)
+    (parameter : Real) :
+    (∫ time in Set.Ioo 0 cutoff,
+      extendedDuhamelTrace nuclear parameter time) =
+        intrinsicNuclearTrace (data.integratedTraceClass parameter) :=
+  data.toDominatedCollapsedRankOneIntegral.scalarIntegral_eq_intrinsicTrace
     parameter
 
-/-- Public dominated collapsed spectral-integral checkpoint. -/
-theorem nuclear_duhamel_dominated_collapsed_rank_one_integral_gate
+/-- Public short-time collapsed spectral checkpoint. -/
+theorem nuclear_duhamel_short_time_quadratic_dominated_collapsed_rank_one_integral_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
-    (timeRegion : Set Real)
-    (data : NuclearDuhamelDominatedCollapsedRankOneIntegralData sliceMeasure
-      nuclear timeRegion) :
+    (cutoff : Real)
+    (data :
+      NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
+        sliceMeasure nuclear cutoff) :
     (∀ parameter,
       HasDerivAt
-        data.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
-        (-(∫ time in timeRegion,
-          extendedDuhamelTrace nuclear parameter time)) parameter) ∧
+        data.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
+        (-∫ time in Set.Ioo 0 cutoff,
+          extendedDuhamelTrace nuclear parameter time) parameter) ∧
     (∀ parameter,
-      (∫ time in timeRegion,
+      (∫ time in Set.Ioo 0 cutoff,
         extendedDuhamelTrace nuclear parameter time) =
           intrinsicNuclearTrace (data.integratedTraceClass parameter)) :=
   ⟨data.weightedIntegral_hasDerivAt,
     data.scalarIntegral_eq_intrinsicTrace⟩
 
-end NuclearDuhamelDominatedCollapsedRankOneIntegralData
+end NuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegralData
 
 end
-end P0EFTJanusProgramPNuclearDuhamelDominatedCollapsedRankOneIntegral4D
+end P0EFTJanusProgramPNuclearDuhamelShortTimeQuadraticDominatedCollapsedRankOneIntegral4D
 end JanusFormal

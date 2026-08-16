@@ -34,17 +34,21 @@ set_option autoImplicit false
 noncomputable section
 
 open Filter MeasureTheory Set
+open scoped Topology
 open P0EFTJanusProgramPDominatedParametricRealIntegralVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 
-variable {E : Type*}
+universe u v
+
+variable {E : Type u}
   [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Local dominated-differentiation data for one logarithmically weighted heat
 integral. -/
 structure NuclearHeatDuhamelDominatedWeightedIntegralData
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (timeRegion : Set Real) where
   weight : Real → Real
   weight_mul_time_eq_one :
@@ -55,22 +59,22 @@ structure NuclearHeatDuhamelDominatedWeightedIntegralData
   integrand_aeStronglyMeasurable : ∀ parameter,
     ∀ᶠ current in 𝓝 parameter,
       AEStronglyMeasurable
-        (fun time => weight time * nuclear.extendedHeatTrace current time)
+        (fun time => weight time * extendedHeatTrace nuclear current time)
         (volume.restrict timeRegion)
   integrand_integrable : ∀ parameter,
     Integrable
-      (fun time => weight time * nuclear.extendedHeatTrace parameter time)
+      (fun time => weight time * extendedHeatTrace nuclear parameter time)
       (volume.restrict timeRegion)
   derivative_aeStronglyMeasurable : ∀ parameter,
     AEStronglyMeasurable
       (fun time =>
-        weight time * nuclear.extendedHeatTraceDerivative parameter time)
+        weight time * extendedHeatTraceDerivative nuclear parameter time)
       (volume.restrict timeRegion)
   bound : Real → Real → Real
   derivative_norm_le : ∀ parameter,
     ∀ᵐ time ∂volume.restrict timeRegion,
       ∀ current ∈ parameterDomain parameter,
-        ‖weight time * nuclear.extendedHeatTraceDerivative current time‖ ≤
+        ‖weight time * extendedHeatTraceDerivative nuclear current time‖ ≤
           bound parameter time
   bound_integrable : ∀ parameter,
     Integrable (bound parameter) (volume.restrict timeRegion)
@@ -80,14 +84,14 @@ namespace NuclearHeatDuhamelDominatedWeightedIntegralData
 /-- The weighted heat integrand and its derivative satisfy the generic
 dominated parametric-integral packet. -/
 def toDominatedParametricIntegral
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelDominatedWeightedIntegralData nuclear timeRegion) :
     DominatedParametricRealIntegralVariationData timeRegion where
   integrand := fun parameter time =>
-    data.weight time * nuclear.extendedHeatTrace parameter time
+    data.weight time * extendedHeatTrace nuclear parameter time
   derivative := fun parameter time =>
-    data.weight time * nuclear.extendedHeatTraceDerivative parameter time
+    data.weight time * extendedHeatTraceDerivative nuclear parameter time
   parameterDomain := data.parameterDomain
   parameterDomain_mem_nhds := data.parameterDomain_mem_nhds
   integrand_aeStronglyMeasurable := data.integrand_aeStronglyMeasurable
@@ -103,13 +107,13 @@ def toDominatedParametricIntegral
     have hConstant :
         HasDerivAt (fun _ : Real => data.weight time) 0 current :=
       hasDerivAt_const current (data.weight time)
-    have hHeat := nuclear.extendedHeatTrace_hasDerivAt current time
-    simpa using hConstant.mul hHeat
+    have hHeat := extendedHeatTrace_hasDerivAt nuclear current time
+    simpa using! hConstant.mul hHeat
 
 /-- Construct the original weighted Duhamel interface from the dominated
 estimates. -/
 def toWeightedIntegral
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelDominatedWeightedIntegralData nuclear timeRegion) :
     NuclearHeatDuhamelWeightedIntegralData nuclear timeRegion where
@@ -118,56 +122,56 @@ def toWeightedIntegral
   hasDerivAt_integral := by
     intro parameter
     simpa [DominatedParametricRealIntegralVariationData.contribution,
-      DominatedParametricRealIntegralVariationData.derivativeContribution]
-      using data.toDominatedParametricIntegral.hasDerivAt_contribution parameter
+      DominatedParametricRealIntegralVariationData.derivativeContribution,
+      toDominatedParametricIntegral]
+      using! data.toDominatedParametricIntegral.hasDerivAt_contribution parameter
 
 /-- The weighted integral derivative is no longer an input. -/
 theorem hasDerivAt_integral
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelDominatedWeightedIntegralData nuclear timeRegion)
     (parameter : Real) :
     HasDerivAt
       (fun current =>
         ∫ time in timeRegion,
-          data.weight time * nuclear.extendedHeatTrace current time)
+          data.weight time * extendedHeatTrace nuclear current time)
       (∫ time in timeRegion,
         data.weight time *
-          nuclear.extendedHeatTraceDerivative parameter time)
+          extendedHeatTraceDerivative nuclear parameter time)
       parameter :=
   data.toWeightedIntegral.hasDerivAt_integral parameter
 
 /-- The logarithmic weight cancels the Duhamel time factor after dominated
 differentiation. -/
 theorem derivativeContribution_eq_neg_integral
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     {timeRegion : Set Real}
     (data : NuclearHeatDuhamelDominatedWeightedIntegralData nuclear timeRegion)
     (parameter : Real) :
-    data.toWeightedIntegral.toWeightedHeatTraceVariation.
-        derivativeContribution parameter =
+    data.toWeightedIntegral.toWeightedHeatTraceVariation.derivativeContribution parameter =
       -(∫ time in timeRegion,
-        nuclear.extendedDuhamelTrace parameter time) :=
+        extendedDuhamelTrace nuclear parameter time) :=
   data.toWeightedIntegral.derivativeContribution_eq_neg_integral parameter
 
 /-- Public dominated nuclear-Duhamel integral checkpoint. -/
 theorem nuclear_heat_duhamel_dominated_weighted_integral_gate
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     (timeRegion : Set Real)
     (data : NuclearHeatDuhamelDominatedWeightedIntegralData nuclear timeRegion) :
     (∀ parameter,
       Integrable
         (fun time =>
           data.weight time *
-            nuclear.extendedHeatTraceDerivative parameter time)
+            extendedHeatTraceDerivative nuclear parameter time)
         (volume.restrict timeRegion)) ∧
     (∀ parameter,
       HasDerivAt
         (fun current =>
           ∫ time in timeRegion,
-            data.weight time * nuclear.extendedHeatTrace current time)
+            data.weight time * extendedHeatTrace nuclear current time)
         (-(∫ time in timeRegion,
-          nuclear.extendedDuhamelTrace parameter time)) parameter) := by
+          extendedDuhamelTrace nuclear parameter time)) parameter) := by
   constructor
   · intro parameter
     exact data.toDominatedParametricIntegral.derivative_integrable parameter

@@ -19,9 +19,10 @@ noncomputable section
 
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 namespace IntrinsicNuclearTraceData
 
@@ -29,18 +30,18 @@ namespace IntrinsicNuclearTraceData
 equality. -/
 def transportOperator
     {first second : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData first)
+    (data : IntrinsicNuclearTraceData.{u, v} first)
     (hOperator : first = second) :
-    IntrinsicNuclearTraceData second := by
+    IntrinsicNuclearTraceData.{u, v} second := by
   cases hOperator
   exact data
 
 @[simp]
 theorem transportOperator_intrinsicNuclearTrace
     {first second : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData first)
+    (data : IntrinsicNuclearTraceData.{u, v} first)
     (hOperator : first = second) :
-    intrinsicNuclearTrace (data.transportOperator hOperator) =
+    intrinsicNuclearTrace (transportOperator data hOperator) =
       intrinsicNuclearTrace data := by
   cases hOperator
   rfl
@@ -50,11 +51,11 @@ end IntrinsicNuclearTraceData
 /-- Public intrinsic-trace transport checkpoint. -/
 theorem intrinsic_nuclear_trace_transport_gate
     {first second : E →L[Real] E}
-    (data : IntrinsicNuclearTraceData first)
+    (data : IntrinsicNuclearTraceData.{u, v} first)
     (hOperator : first = second) :
-    intrinsicNuclearTrace (data.transportOperator hOperator) =
+    intrinsicNuclearTrace (IntrinsicNuclearTraceData.transportOperator data hOperator) =
       intrinsicNuclearTrace data :=
-  data.transportOperator_intrinsicNuclearTrace hOperator
+  IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace data hOperator
 
 end
 end P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D

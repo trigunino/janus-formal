@@ -31,6 +31,8 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusD9D10ExactFieldContentBridge4D
+open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -39,6 +41,8 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
@@ -66,7 +70,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev CommonAugmentedHilbert
+private def CommonAugmentedHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -116,9 +120,8 @@ local instance (priority := 30000) commonAugmentedNormedSpace
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     NormedSpace Real
       (CommonAugmentedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  (commonAugmentedInnerProductSpace period hPeriod configuration data
+    analysis).toNormedSpace
 
 local instance (priority := 30000) commonAugmentedModule
     {couplings : GlobalCandidateAActionCouplings}
@@ -130,9 +133,8 @@ local instance (priority := 30000) commonAugmentedModule
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     Module Real
       (CommonAugmentedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  (commonAugmentedNormedSpace period hPeriod configuration data
+    analysis).toModule
 
 local instance (priority := 30000) commonAugmentedCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
@@ -147,6 +149,55 @@ local instance (priority := 30000) commonAugmentedCompleteSpace
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
+
+private def diagonalHessianCommon
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
+      CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
+        Real := by
+  unfold CommonAugmentedHilbert
+  exact diagonalExtendedBulkL2Hessian period hPeriod
+    (globalCandidateAMetricBySector period hPeriod data)
+    couplings.matterMassSquared data analysis
+
+private def diagonalRieszCommon
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
+      CommonAugmentedHilbert period hPeriod configuration data analysis := by
+  unfold CommonAugmentedHilbert
+  exact diagonalExtendedBulkL2RieszOperator period hPeriod
+    (globalCandidateAMetricBySector period hPeriod data)
+    couplings.matterMassSquared data analysis
+
+private theorem diagonalRieszCommon_pairing
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (first second : CommonAugmentedHilbert period hPeriod configuration data
+      analysis) :
+    inner Real (diagonalRieszCommon period hPeriod configuration data analysis first)
+        second =
+      diagonalHessianCommon period hPeriod configuration data analysis first second := by
+  unfold diagonalRieszCommon diagonalHessianCommon CommonAugmentedHilbert
+  exact diagonalExtendedBulkL2RieszOperator_pairing period hPeriod
+    (globalCandidateAMetricBySector period hPeriod data)
+    couplings.matterMassSquared data analysis first second
 
 /-! ## The seven physical blocks on the unchanged completion -/
 
@@ -263,9 +314,7 @@ def globalCandidateACommonAugmentedHessian
     CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
       CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
         Real :=
-  diagonalExtendedBulkL2Hessian period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis +
+  diagonalHessianCommon period hPeriod configuration data analysis +
     physical.form
 
 /-- Symmetry of the full augmented Hessian. -/
@@ -290,12 +339,13 @@ theorem globalCandidateACommonAugmentedHessian_comm
         analysis chart sameAction physical first second =
       globalCandidateACommonAugmentedHessian period hPeriod configuration data
         analysis chart sameAction physical second first := by
-  unfold globalCandidateACommonAugmentedHessian
+  unfold globalCandidateACommonAugmentedHessian diagonalHessianCommon
   simp only [ContinuousLinearMap.add_apply]
-  rw [diagonalExtendedBulkL2Hessian_comm period hPeriod
+  exact congrArg₂ (· + ·)
+    (diagonalExtendedBulkL2Hessian_comm period hPeriod
       (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis first second,
-    physical.symmetric first second]
+      couplings.matterMassSquared data analysis first second)
+    (physical.symmetric first second)
 
 /-- Bounded Riesz representative of the complete augmented Hessian. -/
 def globalCandidateACommonAugmentedRieszOperator
@@ -315,9 +365,7 @@ def globalCandidateACommonAugmentedRieszOperator
       hPeriod configuration data analysis chart sameAction) :
     CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
       CommonAugmentedHilbert period hPeriod configuration data analysis :=
-  diagonalExtendedBulkL2RieszOperator period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis +
+  diagonalRieszCommon period hPeriod configuration data analysis +
     globalCandidateASevenPhysicalCommonRieszOperator period hPeriod
       configuration data analysis chart sameAction physical
 
@@ -347,21 +395,19 @@ theorem globalCandidateACommonAugmentedRieszOperator_pairing
         analysis chart sameAction physical first second := by
   calc
     _ = inner Real
-          (diagonalExtendedBulkL2RieszOperator period hPeriod
-            (globalCandidateAMetricBySector period hPeriod data)
-            couplings.matterMassSquared data analysis first) second +
+          (diagonalRieszCommon period hPeriod configuration data analysis first)
+          second +
         inner Real
           (globalCandidateASevenPhysicalCommonRieszOperator period hPeriod
             configuration data analysis chart sameAction physical first)
           second := by
-      simp [globalCandidateACommonAugmentedRieszOperator]
-    _ = diagonalExtendedBulkL2Hessian period hPeriod
-          (globalCandidateAMetricBySector period hPeriod data)
-          couplings.matterMassSquared data analysis first second +
+      rw [globalCandidateACommonAugmentedRieszOperator,
+        ContinuousLinearMap.add_apply, inner_add_left]
+    _ = diagonalHessianCommon period hPeriod configuration data analysis
+          first second +
         physical.form first second := by
-      rw [diagonalExtendedBulkL2RieszOperator_pairing period hPeriod
-          (globalCandidateAMetricBySector period hPeriod data)
-          couplings.matterMassSquared data analysis first second,
+      rw [diagonalRieszCommon_pairing period hPeriod configuration data analysis
+          first second,
         globalCandidateASevenPhysicalCommonRieszOperator_pairing period hPeriod
           configuration data analysis chart sameAction physical first second]
     _ = _ := rfl
@@ -701,11 +747,22 @@ theorem globalCandidateACommonAugmentedHessian_smooth_eq_gaugeFixed
       diagonalExtendedBulkMinimalPhysicalLocalGaugeFixedHessianOnCore period
         hPeriod configuration data analysis chart sameAction.chartBridge first
           second := by
+  have hDiagonal :
+      diagonalHessianCommon period hPeriod configuration data analysis
+          (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+            (globalCandidateAMetricBySector period hPeriod data)
+            couplings.matterMassSquared data analysis first)
+          (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+            (globalCandidateAMetricBySector period hPeriod data)
+            couplings.matterMassSquared data analysis second) =
+        diagonalExtendedBulkGraphHessianOnCore period hPeriod configuration data
+          analysis first second := by
+    unfold diagonalHessianCommon CommonAugmentedHilbert
+    exact diagonalExtendedBulkL2Hessian_smooth_eq_graphOnCore period hPeriod
+      configuration data analysis first second
   unfold globalCandidateACommonAugmentedHessian
   simp only [ContinuousLinearMap.add_apply]
-  rw [diagonalExtendedBulkL2Hessian_smooth_eq_graphOnCore period hPeriod
-      configuration data analysis first second,
-    physical.smooth_agreement first second]
+  rw [hDiagonal, physical.smooth_agreement first second]
   exact
     (diagonalExtendedBulkH13GaugeFixed_eq_graph_add_sevenPhysical period hPeriod
       configuration data analysis chart sameAction first second).symm

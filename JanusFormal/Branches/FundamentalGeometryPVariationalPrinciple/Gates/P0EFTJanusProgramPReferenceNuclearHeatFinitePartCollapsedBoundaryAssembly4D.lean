@@ -1,3 +1,4 @@
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelGreenCollapsedBoundary4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearHeatFinitePartBoundaryAssembly4D
 
@@ -30,24 +31,29 @@ namespace P0EFTJanusProgramPReferenceNuclearHeatFinitePartCollapsedBoundaryAssem
 set_option autoImplicit false
 noncomputable section
 
+open MeasureTheory
+
 open Set
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenCollapsedBoundary4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartBoundaryAssembly4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {Slice E : Type*}
+universe e i s
+
+variable {Slice : Type s} {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Complete standalone reference packet from semigroup-collapsed rank-one
 Duhamel data. -/
 structure ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)
   countertermContribution : Real → Real
   collapsedBoundary :
     ReferenceNuclearDuhamelGreenCollapsedBoundaryData sliceMeasure nuclear
@@ -56,14 +62,11 @@ structure ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
     HasDerivAt countertermContribution
       (collapsedBoundary.countertermDerivative parameter) parameter
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
-        collapsedBoundary.shortTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter +
-          collapsedBoundary.longTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter
+        collapsedBoundary.shortTime.weighted.toWeightedHeatTraceVariation.contribution parameter +
+          collapsedBoundary.longTime.weighted.toWeightedHeatTraceVariation.contribution parameter
   zetaPrimeAtZero_real : ∀ parameter,
     (family.zetaPrimeAtZero parameter).im = 0
 
@@ -73,8 +76,7 @@ namespace ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
 after the Duhamel average and regional trace integrals have been derived. -/
 def toBoundaryAssembly
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
       (E := E) sliceMeasure family shortTimeRegion longTimeRegion) :
@@ -91,43 +93,38 @@ def toBoundaryAssembly
 logarithmic insertion/Green operator. -/
 theorem hasDerivAt_finitePartLog
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
       (E := E) sliceMeasure family shortTimeRegion longTimeRegion)
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
-      (data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-        logarithmicTrace parameter) parameter :=
+      (data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter)
+      parameter :=
   data.toBoundaryAssembly.hasDerivAt_finitePartLog parameter
 
 /-- Standalone reference zeta coefficient obtained without an expansion of the
 averaged Duhamel operator. -/
 theorem connectionCoefficient_eq_neg_logarithmicTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
       (E := E) sliceMeasure family shortTimeRegion longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-      -(data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-          logarithmicTrace parameter : Complex) :=
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      -(data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+          parameter : Complex) :=
   data.toBoundaryAssembly.connectionCoefficient_eq_neg_logarithmicTrace
     parameter
 
 /-- Public collapsed finite-part assembly checkpoint. -/
 theorem reference_nuclear_heat_finite_part_collapsed_boundary_assembly_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real)
     (data : ReferenceNuclearHeatFinitePartCollapsedBoundaryAssemblyData
       (E := E) sliceMeasure family shortTimeRegion longTimeRegion) :
@@ -138,29 +135,28 @@ theorem reference_nuclear_heat_finite_part_collapsed_boundary_assembly_gate
             parameter time)) ∧
     (∀ parameter,
       (∫ time in shortTimeRegion,
-        data.nuclear.extendedDuhamelTrace parameter time) =
+        P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData.extendedDuhamelTrace
+          data.nuclear parameter time) =
           P0EFTJanusProgramPIntrinsicNuclearTrace4D.intrinsicNuclearTrace
             (data.collapsedBoundary.shortTime.integratedTraceClass parameter)) ∧
     (∀ parameter,
       (∫ time in longTimeRegion,
-        data.nuclear.extendedDuhamelTrace parameter time) =
+        P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData.extendedDuhamelTrace
+          data.nuclear parameter time) =
           P0EFTJanusProgramPIntrinsicNuclearTrace4D.intrinsicNuclearTrace
             (data.collapsedBoundary.longTime.integratedTraceClass parameter)) ∧
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
-        (data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-          logarithmicTrace parameter) parameter) ∧
+        (data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+          parameter) parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-        -(data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-            logarithmicTrace parameter : Complex)) :=
-  ⟨data.collapsedBoundary.shortTime.semigroup.
-      duhamelTrace_eq_insertionFullHeatTrace,
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+        -(data.collapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+            parameter : Complex)) :=
+  ⟨data.collapsedBoundary.shortTime.semigroup.duhamelTrace_eq_insertionFullHeatTrace,
     data.collapsedBoundary.shortTimeIntegral_eq_trace,
     data.collapsedBoundary.longTimeIntegral_eq_trace,
     data.hasDerivAt_finitePartLog,

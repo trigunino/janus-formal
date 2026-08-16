@@ -21,19 +21,19 @@ noncomputable section
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 
-universe u
+universe u v
 
 variable {E : Type u}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- Empty rank-one presentation of the zero operator. -/
 def zeroRankOneExpansion :
-    SummableRankOneOperatorExpansion (0 : E →L[Real] E) where
-  Index := Empty
-  coefficient := Empty.elim
-  leftVector := Empty.elim
-  rightVector := Empty.elim
+    SummableRankOneOperatorExpansion.{v, u} (0 : E →L[Real] E) where
+  Index := ULift.{v} Empty
+  coefficient := fun index => index.down.elim
+  leftVector := fun index => index.down.elim
+  rightVector := fun index => index.down.elim
   summable_nuclearNorm := by simp
   trace_summable := by simp
   operator_eq_tsum := by simp

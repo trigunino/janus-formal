@@ -63,7 +63,9 @@ theorem d9PrimitiveSpinCCoordChange_clifford
         (d9PrimitiveSpinCCoordChange period hPeriod choice first second base
           matter) := by
   unfold d9PrimitiveSpinCCoordChange
-  rw [d9DoubledMatterFiberCliffordGamma_monodromy,
+  simp only [ContinuousLinearMap.comp_apply,
+    d9DoubledMatterSpinorMonodromyCLM_apply]
+  rw [← d9DoubledMatterFiberCliffordGamma_monodromy,
     d9PrimitiveSpinCPhaseAction_clifford]
 
 /-- Apply one fixed Clifford generator to every local representative. -/
@@ -127,11 +129,17 @@ theorem d9PrimitiveSpinCCliffordSection_apply
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).indexAt base
   have hBase : base ∈ d9PrimitiveSpinCBaseSet period hPeriod index :=
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).mem_baseSet_at base
+  rw [d9PrimitiveSpinCCliffordSection,
+    SmoothPrimitiveSpinCLocalGaugeFamily.toSmoothSection_apply]
+  change
+    d9DoubledMatterFiberCliffordGamma direction
+        (d9PrimitiveSpinCSmoothSectionLocalValue period hPeriod choice state
+          index base) =
+      d9DoubledMatterFiberCliffordGamma direction (state base)
+  apply congrArg (d9DoubledMatterFiberCliffordGamma direction)
   change
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).coordChange
-        index index base
-        (d9DoubledMatterFiberCliffordGamma direction (state base)) =
-      d9DoubledMatterFiberCliffordGamma direction (state base)
+        index index base (state base) = state base
   exact
     (d9PrimitiveSpinCVectorBundleCore period hPeriod choice).coordChange_self
       index base hBase _
@@ -144,10 +152,24 @@ def d9PrimitiveSpinCCliffordSectionLinearMap
   toFun := d9PrimitiveSpinCCliffordSection period hPeriod choice direction
   map_add' first second := by
     ext base
-    simp [map_add]
+    change
+      d9PrimitiveSpinCCliffordSection period hPeriod choice direction
+          (first + second) base =
+        d9PrimitiveSpinCCliffordSection period hPeriod choice direction first base +
+          d9PrimitiveSpinCCliffordSection period hPeriod choice direction second base
+    rw [d9PrimitiveSpinCCliffordSection_apply,
+      d9PrimitiveSpinCCliffordSection_apply,
+      d9PrimitiveSpinCCliffordSection_apply]
+    exact (d9DoubledMatterFiberCliffordGammaCLM direction).map_add _ _
   map_smul' scalar state := by
     ext base
-    simp [map_smul]
+    change
+      d9PrimitiveSpinCCliffordSection period hPeriod choice direction
+          (scalar • state) base =
+        scalar • d9PrimitiveSpinCCliffordSection period hPeriod choice direction state base
+    rw [d9PrimitiveSpinCCliffordSection_apply,
+      d9PrimitiveSpinCCliffordSection_apply]
+    exact (d9DoubledMatterFiberCliffordGammaCLM direction).map_smul scalar _
 
 /-- Public certificate for global Clifford action on the primitive bundle. -/
 structure ProgramPPrimitiveSpinCCliffordSectionCertificate4D : Prop where

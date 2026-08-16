@@ -28,13 +28,15 @@ noncomputable section
 open MeasureTheory Set
 open P0EFTJanusProgramPDuhamelWeightedHeatTraceVariation4D
 open P0EFTJanusProgramPRelativeHeatIntegralVariation4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPWeightedHeatTraceIntegralVariation4D
 
 /-- Counterterm and two Duhamel time regions for one standalone reference zeta
 family. -/
 structure ReferenceHeatDuhamelFinitePartAssemblyData
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
   countertermContribution : Real → Real
   countertermDerivative : Real → Real
@@ -44,8 +46,7 @@ structure ReferenceHeatDuhamelFinitePartAssemblyData
   shortTime : DuhamelWeightedHeatTraceVariationData shortTimeRegion
   longTime : DuhamelWeightedHeatTraceVariationData longTimeRegion
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
         shortTime.weighted.contribution parameter +
@@ -64,8 +65,7 @@ namespace ReferenceHeatDuhamelFinitePartAssemblyData
 /-- Convert Duhamel weighted integrals into the generic differentiated-integral
 assembly. -/
 def toIntegralAssembly
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceHeatDuhamelFinitePartAssemblyData family shortTimeRegion
       longTimeRegion) :
@@ -80,23 +80,25 @@ def toIntegralAssembly
   logarithmicTrace := data.logarithmicTrace
   integratedDerivative_eq_trace := by
     intro parameter
+    change data.countertermDerivative parameter +
+        data.shortTime.weighted.derivativeContribution parameter +
+        data.longTime.weighted.derivativeContribution parameter =
+      data.logarithmicTrace parameter
     rw [data.shortTime.derivativeContribution_eq_neg_integral_duhamelTrace,
       data.longTime.derivativeContribution_eq_neg_integral_duhamelTrace]
-    exact data.duhamel_integral_identity parameter
+    simpa [sub_eq_add_neg] using data.duhamel_integral_identity parameter
   zetaPrimeAtZero_real := data.zetaPrimeAtZero_real
 
 /-- Direct finite-part logarithm derivative from Duhamel. -/
 theorem hasDerivAt_finitePartLog
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceHeatDuhamelFinitePartAssemblyData family shortTimeRegion
       longTimeRegion)
     (parameter : Real) :
     HasDerivAt
       (fun current =>
-        P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-          relativeHeatFinitePartLogDeterminant
+        relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
       (data.logarithmicTrace parameter) parameter :=
   data.toIntegralAssembly.hasDerivAt_finitePartLog parameter
@@ -104,21 +106,18 @@ theorem hasDerivAt_finitePartLog
 /-- Standalone reference zeta coefficient from Duhamel and the integrated trace
 identity. -/
 theorem connectionCoefficient_eq_neg_trace
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceHeatDuhamelFinitePartAssemblyData family shortTimeRegion
       longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(data.logarithmicTrace parameter : Complex) :=
   data.toIntegralAssembly.connectionCoefficient_eq_neg_trace parameter
 
 /-- The named finite-part derivative is the integrated Duhamel expression. -/
 theorem namedLogDerivative_eq_duhamel
-    {family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData}
+    {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceHeatDuhamelFinitePartAssemblyData family shortTimeRegion
       longTimeRegion)
@@ -131,8 +130,7 @@ theorem namedLogDerivative_eq_duhamel
   calc
     family.finitePartFamily.logDerivative parameter =
         data.logarithmicTrace parameter :=
-      data.toIntegralAssembly.toTermwiseTraceData.
-        toReferenceFinitePartTraceVariation.finitePartLogDerivative_eq_trace
+      data.toIntegralAssembly.toTermwiseTraceData.toReferenceFinitePartTraceVariation.finitePartLogDerivative_eq_trace
           parameter
     _ = data.countertermDerivative parameter -
         (∫ time in shortTimeRegion, data.shortTime.duhamelTrace parameter time) -
@@ -142,16 +140,14 @@ theorem namedLogDerivative_eq_duhamel
 
 /-- Public Duhamel finite-part assembly checkpoint. -/
 theorem reference_heat_duhamel_finite_part_assembly_gate
-    (family : P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-      RelativeHeatMellinZetaFamilyData)
+    (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real)
     (data : ReferenceHeatDuhamelFinitePartAssemblyData family shortTimeRegion
       longTimeRegion) :
     (∀ parameter,
       HasDerivAt
         (fun current =>
-          P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-            relativeHeatFinitePartLogDeterminant
+          relativeHeatFinitePartLogDeterminant
               (family.finitePartFamily.finitePart current))
         (data.logarithmicTrace parameter) parameter) ∧
     (∀ parameter,
@@ -162,8 +158,7 @@ theorem reference_heat_duhamel_finite_part_assembly_gate
             (∫ time in longTimeRegion,
               data.longTime.duhamelTrace parameter time)) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(data.logarithmicTrace parameter : Complex)) :=
   ⟨data.hasDerivAt_finitePartLog,
     data.namedLogDerivative_eq_duhamel,

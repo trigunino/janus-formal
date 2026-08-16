@@ -38,22 +38,23 @@ open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceBoundedComposition4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- One nuclear Duhamel slice and its cyclically collapsed operator. -/
 structure NuclearDuhamelSliceCyclicityData
     (sliceOperator collapsedOperator : E →L[Real] E)
-    (sliceTrace : IntrinsicNuclearTraceData sliceOperator)
-    (collapsedTrace : IntrinsicNuclearTraceData collapsedOperator) where
+    (sliceTrace : IntrinsicNuclearTraceData.{u, v} sliceOperator)
+    (collapsedTrace : IntrinsicNuclearTraceData.{u, v} collapsedOperator) where
   nuclearFactor : E →L[Real] E
   boundedFactor : E →L[Real] E
-  nuclearExpansion : SummableRankOneOperatorExpansion nuclearFactor
+  nuclearExpansion : SummableRankOneOperatorExpansion.{v, u} nuclearFactor
   leftCompositionTrace :
-    IntrinsicNuclearTraceData (boundedFactor.comp nuclearFactor)
+    IntrinsicNuclearTraceData.{u, v} (boundedFactor.comp nuclearFactor)
   rightCompositionTrace :
-    IntrinsicNuclearTraceData (nuclearFactor.comp boundedFactor)
+    IntrinsicNuclearTraceData.{u, v} (nuclearFactor.comp boundedFactor)
   slice_eq_leftComposition :
     sliceOperator = boundedFactor.comp nuclearFactor
   rightComposition_eq_collapsed :
@@ -65,32 +66,37 @@ namespace NuclearDuhamelSliceCyclicityData
 operator. -/
 theorem sliceTrace_eq_collapsedTrace
     {sliceOperator collapsedOperator : E →L[Real] E}
-    {sliceTrace : IntrinsicNuclearTraceData sliceOperator}
-    {collapsedTrace : IntrinsicNuclearTraceData collapsedOperator}
+    {sliceTrace : IntrinsicNuclearTraceData.{u, v} sliceOperator}
+    {collapsedTrace : IntrinsicNuclearTraceData.{u, v} collapsedOperator}
     (data : NuclearDuhamelSliceCyclicityData sliceOperator collapsedOperator
       sliceTrace collapsedTrace) :
     intrinsicNuclearTrace sliceTrace =
       intrinsicNuclearTrace collapsedTrace := by
-  let leftOnSlice : IntrinsicNuclearTraceData sliceOperator :=
-    data.leftCompositionTrace.transportOperator
+  let leftOnSlice : IntrinsicNuclearTraceData.{u, v} sliceOperator :=
+    P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+      data.leftCompositionTrace
       data.slice_eq_leftComposition.symm
-  let rightOnCollapsed : IntrinsicNuclearTraceData collapsedOperator :=
-    data.rightCompositionTrace.transportOperator
+  let rightOnCollapsed : IntrinsicNuclearTraceData.{u, v} collapsedOperator :=
+    P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+      data.rightCompositionTrace
       data.rightComposition_eq_collapsed
   calc
     intrinsicNuclearTrace sliceTrace =
         intrinsicNuclearTrace leftOnSlice :=
       intrinsicNuclearTrace_unique sliceTrace leftOnSlice
     _ = intrinsicNuclearTrace data.leftCompositionTrace :=
-      data.leftCompositionTrace.transportOperator_intrinsicNuclearTrace
+      P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+        data.leftCompositionTrace
         data.slice_eq_leftComposition.symm
     _ = intrinsicNuclearTrace data.rightCompositionTrace :=
-      data.nuclearExpansion.intrinsicNuclearTrace_comp_comm_of_expansion
-        data.boundedFactor data.leftCompositionTrace
-          data.rightCompositionTrace
+      P0EFTJanusProgramPIntrinsicNuclearTraceBoundedComposition4D.SummableRankOneOperatorExpansion.intrinsicNuclearTrace_comp_comm_of_expansion
+        data.nuclearExpansion data.boundedFactor data.leftCompositionTrace
+        data.rightCompositionTrace
     _ = intrinsicNuclearTrace rightOnCollapsed := by
       symm
-      exact data.rightCompositionTrace.transportOperator_intrinsicNuclearTrace
+      exact
+        P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+          data.rightCompositionTrace
         data.rightComposition_eq_collapsed
     _ = intrinsicNuclearTrace collapsedTrace :=
       intrinsicNuclearTrace_unique rightOnCollapsed collapsedTrace
@@ -99,11 +105,11 @@ theorem sliceTrace_eq_collapsedTrace
 certificates selected for either operator. -/
 theorem sliceTrace_eq_anyCollapsedTrace
     {sliceOperator collapsedOperator : E →L[Real] E}
-    {sliceTrace : IntrinsicNuclearTraceData sliceOperator}
-    {collapsedTrace : IntrinsicNuclearTraceData collapsedOperator}
+    {sliceTrace : IntrinsicNuclearTraceData.{u, v} sliceOperator}
+    {collapsedTrace : IntrinsicNuclearTraceData.{u, v} collapsedOperator}
     (data : NuclearDuhamelSliceCyclicityData sliceOperator collapsedOperator
       sliceTrace collapsedTrace)
-    (otherCollapsedTrace : IntrinsicNuclearTraceData collapsedOperator) :
+    (otherCollapsedTrace : IntrinsicNuclearTraceData.{u, v} collapsedOperator) :
     intrinsicNuclearTrace sliceTrace =
       intrinsicNuclearTrace otherCollapsedTrace := by
   calc
@@ -116,8 +122,8 @@ theorem sliceTrace_eq_anyCollapsedTrace
 /-- Public fixed-slice cyclicity checkpoint. -/
 theorem nuclear_duhamel_slice_cyclicity_gate
     (sliceOperator collapsedOperator : E →L[Real] E)
-    (sliceTrace : IntrinsicNuclearTraceData sliceOperator)
-    (collapsedTrace : IntrinsicNuclearTraceData collapsedOperator)
+    (sliceTrace : IntrinsicNuclearTraceData.{u, v} sliceOperator)
+    (collapsedTrace : IntrinsicNuclearTraceData.{u, v} collapsedOperator)
     (data : NuclearDuhamelSliceCyclicityData sliceOperator collapsedOperator
       sliceTrace collapsedTrace) :
     intrinsicNuclearTrace sliceTrace =

@@ -1,4 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
@@ -43,13 +44,13 @@ its exact orthogonal complement. -/
 structure SelfAdjointKernelBasisCoercivityData
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
-  basis : Basis ZeroMode Real operator.ker
+    (ZeroMode : Type*) [Fintype ZeroMode] where
+  basis : Module.Basis ZeroMode Real operator.ker
   constant : Real
   constant_pos : 0 < constant
   coercive : ∀ vector : SelfAdjointKernelComplement operator,
     constant * ‖(vector : E)‖ ^ 2 ≤
-      ⟪(vector : E), operator (vector : E), Real⟫
+      ⟪(vector : E), operator (vector : E)⟫_Real
 
 /-- Cauchy--Schwarz converts quadratic coercivity into the norm lower bound
 used by the actual-kernel complement reduction. -/
@@ -67,7 +68,7 @@ theorem SelfAdjointKernelBasisCoercivityData.lowerBound
   · have hNormPos : 0 < ‖(vector : E)‖ :=
       lt_of_le_of_ne (norm_nonneg _) (Ne.symm hNorm)
     have hInnerUpper :
-        ⟪(vector : E), operator (vector : E), Real⟫ ≤
+        ⟪(vector : E), operator (vector : E)⟫_Real ≤
           ‖(vector : E)‖ * ‖operator (vector : E)‖ :=
       real_inner_le_norm _ _
     have hMul :
@@ -76,10 +77,10 @@ theorem SelfAdjointKernelBasisCoercivityData.lowerBound
       calc
         ‖(vector : E)‖ * (data.constant * ‖(vector : E)‖) =
             data.constant * ‖(vector : E)‖ ^ 2 := by ring
-        _ ≤ ⟪(vector : E), operator (vector : E), Real⟫ :=
+        _ ≤ ⟪(vector : E), operator (vector : E)⟫_Real :=
           data.coercive vector
         _ ≤ ‖(vector : E)‖ * ‖operator (vector : E)‖ := hInnerUpper
-    exact (mul_le_mul_left hNormPos).mp hMul
+    exact le_of_mul_le_mul_left hMul hNormPos
 
 /-- The basis itself supplies finite-dimensionality of the genuine kernel, and
 the quadratic estimate supplies the gap. -/
@@ -112,9 +113,9 @@ theorem self_adjoint_kernel_basis_coercivity_gate
     {hSelfAdjoint : IsSelfAdjoint operator}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : SelfAdjointKernelBasisCoercivityData operator hSelfAdjoint ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
-  ⟨data.toGapData, data.kernel_finrank_eq_card⟩
+  ⟨⟨data.toGapData⟩, data.kernel_finrank_eq_card⟩
 
 end
 end P0EFTJanusProgramPSelfAdjointKernelBasisCoercivity4D

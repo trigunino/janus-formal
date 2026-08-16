@@ -33,6 +33,8 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
+open P0EFTJanusMappingTorusD8NonabelianGhostThroatBRST4D
+open P0EFTJanusProgramPD9MatterSpinorLeviCivitaConnection4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
 open P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
@@ -150,10 +152,15 @@ theorem d9QuotientRadialDerivativeEquiv_time
       (throatTimeTranslationVelocity period hPeriod
         (mappingTorusMk (ThroatData period hPeriod) point)) = _
   rw [← throatProjection_mfderiv_time period hPeriod point,
-    ← d9ThroatProjectionDerivativeEquiv_coe,
-    d9QuotientRadialDerivativeEquiv_projection,
-    canonicalThroatRadialDerivativeEquiv_coe,
-    throatCoverRadialMap_mfderiv_time]
+    ← d9ThroatProjectionDerivativeEquiv_coe]
+  change d9QuotientRadialDerivativeEquiv period hPeriod point
+      (d9ThroatProjectionDerivativeEquiv period hPeriod point
+        (throatCoverTimeTranslationValue period hPeriod point)) = _
+  rw [d9QuotientRadialDerivativeEquiv_projection]
+  change mfderiv throatCoverModelWithCorners 𝓘(Real, EuclideanR3)
+      (throatCoverRadialMap period hPeriod) point
+        (throatCoverTimeTranslationValue period hPeriod point) = _
+  exact throatCoverRadialMap_mfderiv_time period hPeriod point
 
 /-- Projection of one cover rotation velocity is the descended rotation ghost. -/
 theorem d9ThroatProjectionDerivativeEquiv_rotation
@@ -162,8 +169,10 @@ theorem d9ThroatProjectionDerivativeEquiv_rotation
         (throatCoverSpatialRotationValue period hPeriod axis point) =
       throatSpatialRotationGhost period hPeriod axis
         (mappingTorusMk (ThroatData period hPeriod) point) := by
-  rw [d9ThroatProjectionDerivativeEquiv_coe,
-    throatSpatialRotationGhost,
+  change mfderiv throatCoverModelWithCorners throatCoverModelWithCorners
+      (mappingTorusMk (ThroatData period hPeriod)) point
+        (throatCoverSpatialRotationValue period hPeriod axis point) = _
+  rw [throatSpatialRotationGhost,
     descendSmoothDeckEquivariantThroatCoverGhost_mk]
   rfl
 
@@ -176,9 +185,11 @@ theorem d9QuotientRadialDerivativeEquiv_rotation
       canonicalRotationVelocity axis
         (throatCoverRadialMap period hPeriod point) := by
   rw [← d9ThroatProjectionDerivativeEquiv_rotation period hPeriod axis point,
-    d9QuotientRadialDerivativeEquiv_projection,
-    canonicalThroatRadialDerivativeEquiv_coe,
-    throatCoverRadialMap_mfderiv_rotation]
+    d9QuotientRadialDerivativeEquiv_projection]
+  change mfderiv throatCoverModelWithCorners 𝓘(Real, EuclideanR3)
+      (throatCoverRadialMap period hPeriod) point
+        (throatCoverSpatialRotationValue period hPeriod axis point) = _
+  exact throatCoverRadialMap_mfderiv_rotation period hPeriod axis point
 
 /-- Euclidean vector identity underlying the frame decomposition. -/
 theorem d9IntrinsicEuclideanFrame_decomposition
@@ -192,12 +203,24 @@ theorem d9IntrinsicEuclideanFrame_decomposition
               point •
             canonicalRotationVelocity axis
               (throatCoverRadialMap period hPeriod point) := by
+  have hNorm :
+      ‖(equatorialTwoSphereHomeomorph point.fiber).1‖ = 1 := by
+    have hSphere := (equatorialTwoSphereHomeomorph point.fiber).2
+    simp only [Metric.mem_sphere, dist_zero_right] at hSphere
+    exact hSphere
+  have hSquare := EuclideanSpace.real_norm_sq_eq
+    (equatorialTwoSphereHomeomorph point.fiber).1
+  rw [hNorm] at hSquare
+  norm_num at hSquare
+  simp [Fin.sum_univ_succ] at hSquare
   apply (EuclideanSpace.equiv (Fin 3) Real).injective
   funext coordinate
   fin_cases direction <;> fin_cases coordinate <;>
     simp [d9IntrinsicRotationCoefficientCover, Fin.sum_univ_succ,
       throatCoverRadialMap_apply, d9UnitRadialCoordinate,
       canonicalRotationVelocity] <;>
+    try ring <;>
+    (conv_lhs => rw [← mul_one (Real.exp point.time), hSquare]) <;>
     ring
 
 /-- Exact quotient decomposition at one selected mapping-torus representative. -/

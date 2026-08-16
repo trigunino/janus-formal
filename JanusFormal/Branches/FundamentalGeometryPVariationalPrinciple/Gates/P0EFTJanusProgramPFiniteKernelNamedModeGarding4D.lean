@@ -46,7 +46,7 @@ def finiteKernelNamedVector
 isomorphism is supplied: it is reconstructed from independence and spanning. -/
 structure FiniteKernelNamedSpanningData
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   linearIndependent : LinearIndependent Real
@@ -60,8 +60,8 @@ noncomputable def FiniteKernelNamedSpanningData.toBasis
     {operator : E →L[Real] E}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedSpanningData operator ZeroMode) :
-    Basis ZeroMode Real operator.ker :=
-  Basis.mk data.linearIndependent (by
+    Module.Basis ZeroMode Real operator.ker :=
+  Module.Basis.mk data.linearIndependent (by
     rw [data.span_eq_top])
 
 /-- The actual kernel is finite dimensional because it has the displayed
@@ -86,7 +86,7 @@ theorem FiniteKernelNamedSpanningData.kernel_finrank_eq_card
 explicitly in the named zero-mode coefficients. -/
 structure FiniteKernelNamedModeGardingData
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   spanning : FiniteKernelNamedSpanningData operator ZeroMode
   constant : Real
   constant_pos : 0 < constant
@@ -94,10 +94,10 @@ structure FiniteKernelNamedModeGardingData
   defectConstant_nonneg : 0 ≤ defectConstant
   garding : ∀ vector : E,
     constant * ‖vector‖ ^ 2 ≤
-      ⟪vector, operator vector, Real⟫ +
+      ⟪vector, operator vector⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪vector, spanning.vector mode, Real⟫ ^ 2
+            ⟪vector, spanning.vector mode⟫_Real ^ 2
 
 /-- Every named defect coefficient vanishes on the orthogonal complement of
 the actual kernel. -/
@@ -107,11 +107,12 @@ theorem FiniteKernelNamedModeGardingData.inner_named_eq_zero
     (data : FiniteKernelNamedModeGardingData operator ZeroMode)
     (vector : SelfAdjointKernelComplement operator)
     (mode : ZeroMode) :
-    ⟪(vector : E), data.spanning.vector mode, Real⟫ = 0 := by
+    ⟪(vector : E), data.spanning.vector mode⟫_Real = 0 := by
   have hKernel : data.spanning.vector mode ∈ operator.ker :=
     LinearMap.mem_ker.mpr (data.spanning.annihilated mode)
-  exact (Submodule.mem_orthogonal'.mp vector.property)
-    (data.spanning.vector mode) hKernel
+  have hOrthogonal := vector.property
+  rw [Submodule.mem_orthogonal'] at hOrthogonal
+  exact hOrthogonal (data.spanning.vector mode) hKernel
 
 /-- The global Gårding estimate restricts to genuine coercivity on
 `(ker H)ᗮ`. -/
@@ -121,7 +122,7 @@ theorem FiniteKernelNamedModeGardingData.coercive
     (data : FiniteKernelNamedModeGardingData operator ZeroMode)
     (vector : SelfAdjointKernelComplement operator) :
     data.constant * ‖(vector : E)‖ ^ 2 ≤
-      ⟪(vector : E), operator (vector : E), Real⟫ := by
+      ⟪(vector : E), operator (vector : E)⟫_Real := by
   simpa [data.inner_named_eq_zero vector] using data.garding (vector : E)
 
 /-- Convert the concrete named-mode Gårding packet to the basis/coercivity
@@ -155,9 +156,9 @@ theorem finite_kernel_named_mode_garding_gate
     {hSelfAdjoint : IsSelfAdjoint operator}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedModeGardingData operator ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
-  ⟨data.toGapData (hSelfAdjoint := hSelfAdjoint),
+  ⟨⟨data.toGapData (hSelfAdjoint := hSelfAdjoint)⟩,
     data.spanning.kernel_finrank_eq_card⟩
 
 end

@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelBoundaryLimits4D
+import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelGreenCollapsedBoundary4D
 
 /-!
@@ -20,16 +21,22 @@ namespace P0EFTJanusProgramPReferenceNuclearDuhamelGreenCollapsedBoundaryLimits4
 set_option autoImplicit false
 noncomputable section
 
+open MeasureTheory
+
 open Filter Set
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPNuclearDuhamelCollapsedRankOneIntegral4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelBoundaryLimits4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenCollapsedBoundary4D
 
-variable {Slice ShortCutoff LongCutoff E : Type*}
+universe e i s a b
+
+variable {Slice : Type s} {ShortCutoff : Type a} {LongCutoff : Type b}
+  {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Complete collapsed reference boundary data whose short- and long-time
@@ -38,11 +45,11 @@ structure ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (shortTimeRegion longTimeRegion : Set Real) where
   countertermOperator : Real → E →L[Real] E
   countertermTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (countertermOperator parameter)
+    IntrinsicNuclearTraceData.{e, i} (countertermOperator parameter)
   countertermDerivative : Real → Real
   countertermDerivative_eq_trace : ∀ parameter,
     countertermDerivative parameter =
@@ -52,15 +59,15 @@ structure ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
   longTime : NuclearDuhamelCollapsedRankOneIntegralData sliceMeasure nuclear
     longTimeRegion
   countertermMinusShortTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       (countertermOperator parameter - shortTime.integratedOperator parameter)
   totalTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       ((countertermOperator parameter - shortTime.integratedOperator parameter) -
         longTime.integratedOperator parameter)
   logarithmicDerivativeOperator : Real → E →L[Real] E
   logarithmicDerivativeTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (logarithmicDerivativeOperator parameter)
+    IntrinsicNuclearTraceData.{e, i} (logarithmicDerivativeOperator parameter)
   matchingOperator : Real → E →L[Real] E
   shortBoundaryLimit : ∀ parameter,
     ReferenceNuclearDuhamelShortTimeBoundaryLimitData shortCutoffFilter
@@ -80,7 +87,7 @@ def toCollapsedBoundary
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
@@ -108,7 +115,7 @@ theorem shortBoundaryIdentity
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
@@ -125,7 +132,7 @@ theorem longBoundaryIdentity
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
@@ -141,7 +148,7 @@ theorem integratedDuhamel_eq_logarithmicTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {shortTimeRegion longTimeRegion : Set Real}
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
@@ -149,11 +156,11 @@ theorem integratedDuhamel_eq_logarithmicTrace
     (parameter : Real) :
     data.countertermDerivative parameter -
         (∫ time in shortTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) -
+          extendedDuhamelTrace nuclear parameter time) -
         (∫ time in longTimeRegion,
-          nuclear.extendedDuhamelTrace parameter time) =
-      data.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-        logarithmicTrace parameter :=
+          extendedDuhamelTrace nuclear parameter time) =
+      data.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+        parameter :=
   data.toCollapsedBoundary.integratedDuhamel_eq_logarithmicTrace parameter
 
 /-- Public endpoint-limit collapsed-boundary checkpoint. -/
@@ -161,7 +168,7 @@ theorem reference_nuclear_duhamel_green_collapsed_boundary_limits_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (shortTimeRegion longTimeRegion : Set Real)
     (data : ReferenceNuclearDuhamelGreenCollapsedBoundaryLimitsData
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
@@ -177,11 +184,11 @@ theorem reference_nuclear_duhamel_green_collapsed_boundary_limits_gate
     (∀ parameter,
       data.countertermDerivative parameter -
           (∫ time in shortTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) -
+            extendedDuhamelTrace nuclear parameter time) -
           (∫ time in longTimeRegion,
-            nuclear.extendedDuhamelTrace parameter time) =
-        data.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-          logarithmicTrace parameter) :=
+            extendedDuhamelTrace nuclear parameter time) =
+        data.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+          parameter) :=
   ⟨data.shortBoundaryIdentity,
     data.longBoundaryIdentity,
     data.integratedDuhamel_eq_logarithmicTrace⟩

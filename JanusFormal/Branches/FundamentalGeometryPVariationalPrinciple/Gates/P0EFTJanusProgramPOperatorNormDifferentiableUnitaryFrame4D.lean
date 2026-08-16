@@ -1,4 +1,5 @@
 import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.InnerProductSpace.Basic
 
 /-!
 # Operator-norm differentiable unitary frames

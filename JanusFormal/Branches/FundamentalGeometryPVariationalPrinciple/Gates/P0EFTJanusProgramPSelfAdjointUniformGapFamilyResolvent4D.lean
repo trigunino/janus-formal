@@ -27,8 +27,7 @@ open P0EFTJanusProgramPSelfAdjointSmallPerturbation4D
 open P0EFTJanusProgramPSelfAdjointUniformGapFamily4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Real scalar perturbation `-lambda I`. -/
 def uniformGapFamilyScalarShift
@@ -50,7 +49,7 @@ theorem uniformGapFamilyScalarShift_isSelfAdjoint
   intro first second
   change inner Real ((-spectralParameter) • first) second =
     inner Real first ((-spectralParameter) • second)
-  simp
+  simp only [real_inner_smul_left, real_inner_smul_right]
 
 /-- Shifted member `H_a - lambda I`. -/
 def uniformGapFamilyShiftedOperator
@@ -110,10 +109,12 @@ noncomputable def uniformGapFamilyResolventEquiv
     (hSpectral : |spectralParameter| < data.gap) : E ≃L[Real] E :=
   ContinuousLinearEquiv.ofBijective
     (uniformGapFamilyShiftedOperator operator parameter spectralParameter)
-    ⟨(uniformGapFamilyRealShiftCertificate data parameter spectralParameter
-        hSpectral).injective,
+    (LinearMap.ker_eq_bot.mpr
       (uniformGapFamilyRealShiftCertificate data parameter spectralParameter
-        hSpectral).surjective⟩
+        hSpectral).injective)
+    (LinearMap.range_eq_top.mpr
+      (uniformGapFamilyRealShiftCertificate data parameter spectralParameter
+        hSpectral).surjective)
 
 /-- Uniform family resolvent. -/
 noncomputable def uniformGapFamilyResolvent
@@ -133,8 +134,10 @@ theorem shiftedOperator_resolvent
     uniformGapFamilyShiftedOperator operator parameter spectralParameter
         (uniformGapFamilyResolvent data parameter spectralParameter hSpectral
           vector) = vector :=
-  (uniformGapFamilyResolventEquiv data parameter spectralParameter hSpectral
-    ).apply_symm_apply vector
+  by
+    simpa [uniformGapFamilyResolvent, uniformGapFamilyResolventEquiv] using
+      (uniformGapFamilyResolventEquiv data parameter spectralParameter hSpectral
+        ).apply_symm_apply vector
 
 @[simp]
 theorem resolvent_shiftedOperator
@@ -146,8 +149,10 @@ theorem resolvent_shiftedOperator
     uniformGapFamilyResolvent data parameter spectralParameter hSpectral
         (uniformGapFamilyShiftedOperator operator parameter spectralParameter
           vector) = vector :=
-  (uniformGapFamilyResolventEquiv data parameter spectralParameter hSpectral
-    ).symm_apply_apply vector
+  by
+    simpa [uniformGapFamilyResolvent, uniformGapFamilyResolventEquiv] using
+      (uniformGapFamilyResolventEquiv data parameter spectralParameter hSpectral
+        ).symm_apply_apply vector
 
 /-- Pointwise resolvent estimate, uniform in the family parameter. -/
 theorem uniformGapFamilyResolvent_norm_le
@@ -166,6 +171,9 @@ theorem uniformGapFamilyResolvent_norm_le
   have hLower := selfAdjointSmallPerturbation_lowerBound
     (operator parameter)
     (uniformGapFamilyScalarShift spectralParameter) shiftData preimage
+  change shiftData.remainingGap * ‖preimage‖ ≤
+    ‖uniformGapFamilyShiftedOperator operator parameter spectralParameter preimage‖
+    at hLower
   rw [shiftedOperator_resolvent data parameter spectralParameter hSpectral
       vector] at hLower
   have hGapPos : 0 < data.gap - |spectralParameter| := by
@@ -190,7 +198,7 @@ theorem uniformGapFamilyResolvent_opNorm_le
       (data.gap - |spectralParameter|)⁻¹ := by
   have hGapPos : 0 < data.gap - |spectralParameter| := by
     linarith
-  apply ContinuousLinearMap.opNorm_le_bound
+  apply (uniformGapFamilyResolvent data parameter spectralParameter hSpectral).opNorm_le_bound
     (inv_nonneg.mpr (le_of_lt hGapPos))
   intro vector
   exact uniformGapFamilyResolvent_norm_le data parameter spectralParameter
@@ -222,7 +230,8 @@ theorem uniformGapFamily_noCrossing
     (data : SelfAdjointUniformGapFamilyData operator) :
     UniformGapFamilyNoCrossingCertificate data := by
   intro parameter vector hZero
-  exact (data.bijective parameter).1 hZero
+  apply (data.bijective parameter).1
+  simpa using hZero
 
 /-- Public uniform resolvent and no-crossing checkpoint. -/
 theorem self_adjoint_uniform_gap_family_resolvent_gate
@@ -244,8 +253,8 @@ theorem self_adjoint_uniform_gap_family_resolvent_gate
           hSpectral).injective,
         (uniformGapFamilyRealShiftCertificate data parameter spectralParameter
           hSpectral).surjective⟩,
-    data.uniformGapFamilyResolvent_opNorm_le,
-    data.uniformGapFamily_noCrossing⟩
+    uniformGapFamilyResolvent_opNorm_le data,
+    uniformGapFamily_noCrossing data⟩
 
 end
 end P0EFTJanusProgramPSelfAdjointUniformGapFamilyResolvent4D

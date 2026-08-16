@@ -1,3 +1,4 @@
+import Mathlib.Analysis.InnerProductSpace.Adjoint
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSummableCompactOperatorExpansion4D
 
 /-!
@@ -24,8 +25,7 @@ universe u
 open P0EFTJanusProgramPSummableCompactOperatorExpansion4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Explicit nuclear-style rank-one expansion with a summable trace series. -/
 structure SummableRankOneOperatorExpansion
@@ -84,9 +84,9 @@ theorem SummableRankOneOperatorExpansion.component_compact
     rw [InnerProductSpace.rankOne_def']
     exact
       (isCompactOperator_of_locallyCompactSpace_dom
-        (innerSL Real (expansion.leftVector index))).clm_comp
+        (innerSL Real (expansion.rightVector index))).clm_comp
           (ContinuousLinearMap.toSpanSingleton Real
-            (expansion.rightVector index))
+            (expansion.leftVector index))
   exact hRankOne.smul (expansion.coefficient index)
 
 /-- Forget trace information and retain the canonical compact expansion. -/
@@ -105,6 +105,7 @@ def SummableRankOneOperatorExpansion.toCompactExpansion
 /-- The represented operator is compact. -/
 theorem SummableRankOneOperatorExpansion.operator_compact
     {operator : E →L[Real] E}
+    [CompleteSpace E]
     (expansion : SummableRankOneOperatorExpansion operator) :
     IsCompactOperator operator :=
   expansion.toCompactExpansion.operator_compact
@@ -130,6 +131,7 @@ theorem SummableRankOneOperatorExpansion.hasSum_expansionTrace
 /-- Public rank-one expansion checkpoint. -/
 theorem summable_rank_one_operator_expansion_gate
     (operator : E →L[Real] E)
+    [CompleteSpace E]
     (expansion : SummableRankOneOperatorExpansion operator) :
     IsCompactOperator operator ∧
       Summable (fun index =>

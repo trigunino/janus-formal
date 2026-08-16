@@ -31,6 +31,9 @@ open Set Topology
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
 
+local syntax "⟪" term "," term "," "Real⟫" : term
+local macro_rules | `(⟪$x, $y, Real⟫) => `(inner Real $x $y)
+
 variable
   {E MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter LongitudinalLL
     BoundaryFiniteBV : Type*}
@@ -46,7 +49,7 @@ variable
   [NormedAddCommGroup BoundaryFiniteBV]
   [InnerProductSpace Real BoundaryFiniteBV]
 
-private abbrev Resolution :=
+local notation "Resolution" =>
   FiveSectorOrthogonalProductDecomposition
     (E := E)
     (MetricDiffeomorphism := MetricDiffeomorphism)

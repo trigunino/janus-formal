@@ -32,8 +32,10 @@ open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- One differentiable actual/reference reduced pair and one Mellin/zeta family
@@ -41,7 +43,7 @@ whose connection coefficient is the intrinsic operator trace. -/
 structure RelativeBismutFreedTraceConnectionData
     (actual reference : Real → E →L[Real] E) where
   operatorTrace :
-    RelativeIntrinsicLogarithmicDerivativeTraceData actual reference
+    RelativeIntrinsicLogarithmicDerivativeTraceData.{u, v} actual reference
   zetaFamily : RelativeHeatMellinZetaFamilyData
   coefficient_agreement : ∀ parameter,
     relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter =
@@ -52,14 +54,14 @@ namespace RelativeBismutFreedTraceConnectionData
 /-- Operator-defined Bismut--Freed connection on a scalar first jet. -/
 def connectionAt
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeBismutFreedTraceConnectionData actual reference)
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference)
     (parameter : Real) (value derivative : Complex) : Complex :=
   derivative + data.operatorTrace.bismutFreedCoefficient parameter * value
 
 /-- The operator trace connection and the zeta connection coincide. -/
 theorem connectionAt_eq_zeta
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeBismutFreedTraceConnectionData actual reference)
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference)
     (parameter : Real) (value derivative : Complex) :
     data.connectionAt parameter value derivative =
       relativeZetaConnectionAt data.zetaFamily.toZetaFamily parameter value
@@ -71,7 +73,7 @@ theorem connectionAt_eq_zeta
 Bismut--Freed trace connection. -/
 theorem determinant_parallel
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeBismutFreedTraceConnectionData actual reference)
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference)
     (parameter : Real) :
     data.connectionAt parameter
         (relativeHeatMellinZetaFamilyDeterminant data.zetaFamily parameter)
@@ -85,7 +87,7 @@ theorem determinant_parallel
 logarithmic trace. -/
 theorem finitePart_logDerivative_eq_trace
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeBismutFreedTraceConnectionData actual reference)
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference)
     (parameter : Real) :
     data.zetaFamily.finitePartFamily.logDerivative parameter =
       data.operatorTrace.trace parameter := by
@@ -94,8 +96,8 @@ theorem finitePart_logDerivative_eq_trace
         -(data.zetaFamily.parameterDerivative parameter).re :=
       data.zetaFamily.connection_realPart parameter
     _ = -(data.operatorTrace.bismutFreedCoefficient parameter).re := by
-      rw [data.coefficient_agreement parameter]
-      rfl
+      exact congrArg (fun value : Complex => -value.re)
+        (data.coefficient_agreement parameter)
     _ = data.operatorTrace.trace parameter := by
       rw [data.operatorTrace.bismutFreedCoefficient_re]
       ring
@@ -104,7 +106,7 @@ theorem finitePart_logDerivative_eq_trace
 trace. -/
 theorem finitePartDeterminant_hasDerivAt
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeBismutFreedTraceConnectionData actual reference)
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference)
     (parameter : Real) :
     HasDerivAt
       (relativeHeatFinitePartDeterminantFamily
@@ -123,7 +125,7 @@ theorem finitePartDeterminant_hasDerivAt
 logarithmic trace. -/
 theorem metricWeightDerivative_eq_trace
     {actual reference : Real → E →L[Real] E}
-    (data : RelativeBismutFreedTraceConnectionData actual reference)
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference)
     (parameter : Real) :
     relativeHeatFinitePartMetricWeightDerivative
         data.zetaFamily.finitePartFamily parameter =
@@ -145,7 +147,7 @@ theorem phase_norm_one
 /-- Public intrinsic Bismut--Freed connection checkpoint. -/
 theorem relative_bismut_freed_trace_connection_gate
     (actual reference : Real → E →L[Real] E)
-    (data : RelativeBismutFreedTraceConnectionData actual reference) :
+    (data : RelativeBismutFreedTraceConnectionData.{u, v} actual reference) :
     (∀ parameter,
       relativeZetaConnectionCoefficient data.zetaFamily.toZetaFamily parameter =
         data.operatorTrace.bismutFreedCoefficient parameter) ∧
