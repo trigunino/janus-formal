@@ -8,6 +8,7 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProductThroatPositiveHeatGapLongTime4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNuclearDuhamelProductThroatLongTimeCollapsedRankOneIntegral4D.lean"
       - ".github/workflows/program-p-product-throat-positive-gap.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -16,6 +17,7 @@ on:
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProductThroatPositiveHeatGapLongTime4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPNuclearDuhamelProductThroatLongTimeCollapsedRankOneIntegral4D.lean"
       - ".github/workflows/program-p-product-throat-positive-gap.yml"
       - "lean-toolchain"
       - "lakefile.lean"
@@ -55,3 +57,4 @@ jobs:
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProductThroatPositiveHeatGapLongTime4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPProductThroatNuclearHeatDuhamelLongTimeExponential4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPNuclearDuhamelProductThroatLongTimeCollapsedRankOneIntegral4D
