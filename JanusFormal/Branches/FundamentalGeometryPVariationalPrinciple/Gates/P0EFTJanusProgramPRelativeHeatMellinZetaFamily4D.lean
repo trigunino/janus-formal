@@ -62,10 +62,10 @@ def RelativeHeatMellinZetaFamilyData.toFinitePartComparison
     RelativeZetaFinitePartFamilyComparisonData where
   finitePartFamily := family.finitePartFamily
   zetaFamily := family.toZetaFamily
-  pointwise_realPart := by
+  finitePart_realPart := by
     intro parameter
     exact (family.continuation parameter).finitePart_realPart
-  connection_realPart := family.connection_realPart
+  derivative_realPart := family.connection_realPart
 
 /-- The complex determinant family obtained from the Mellin continuation. -/
 def relativeHeatMellinZetaFamilyDeterminant

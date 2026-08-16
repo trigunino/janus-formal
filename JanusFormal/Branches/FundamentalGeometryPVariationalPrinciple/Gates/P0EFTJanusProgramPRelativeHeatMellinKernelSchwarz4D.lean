@@ -26,7 +26,9 @@ set_option autoImplicit false
 noncomputable section
 
 open MeasureTheory Set
+open scoped ComplexConjugate
 open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
 open P0EFTJanusProgramPRelativeHeatMellinIntegralSchwarz4D
 
@@ -35,9 +37,22 @@ theorem relativeHeatMellinKernel_schwarz
     (heatTrace : HeatTime → Real)
     (spectral : Complex) (time : Real) :
     relativeHeatMellinKernel heatTrace spectral time =
-      Complex.conj
-        (relativeHeatMellinKernel heatTrace (Complex.conj spectral) time) := by
-  simp [relativeHeatMellinKernel]
+      conj
+        (relativeHeatMellinKernel heatTrace (conj spectral) time) := by
+  by_cases hTime : 0 < time
+  · have hArg : (time : Complex).arg ≠ Real.pi := by
+      rw [Complex.arg_ofReal_of_nonneg hTime.le]
+      exact ne_of_lt Real.pi_pos
+    have hPow :
+        (time : Complex) ^ (spectral - 1) =
+          conj ((time : Complex) ^ (conj spectral - 1)) := by
+      simpa using
+        (Complex.cpow_conj (time : Complex) (conj spectral - 1) hArg)
+    rw [relativeHeatMellinKernel, relativeHeatMellinKernel, hPow]
+    simp
+  · unfold relativeHeatMellinKernel
+    rw [positiveTimeTraceExtension_of_nonpos heatTrace (le_of_not_gt hTime)]
+    simp
 
 /-- Conjugation can be moved through the unnormalized Mellin integral.  This is
 the remaining Bochner integration statement after pointwise kernel symmetry has
@@ -46,13 +61,13 @@ structure RelativeHeatMellinKernelSchwarzData
     (heatTrace : HeatTime → Real) where
   conjugate_integral : ∀ spectral : Complex,
     (∫ time in Set.Ioi (0 : Real),
-      Complex.conj
+      conj
         (relativeHeatMellinKernel heatTrace
-          (Complex.conj spectral) time)) =
-      Complex.conj
+          (conj spectral) time)) =
+      conj
         (∫ time in Set.Ioi (0 : Real),
           relativeHeatMellinKernel heatTrace
-            (Complex.conj spectral) time)
+            (conj spectral) time)
 
 namespace RelativeHeatMellinKernelSchwarzData
 
@@ -63,26 +78,26 @@ theorem mellinIntegral_schwarz
     (data : RelativeHeatMellinKernelSchwarzData heatTrace)
     (spectral : Complex) :
     relativeHeatMellinIntegral heatTrace spectral =
-      Complex.conj
-        (relativeHeatMellinIntegral heatTrace (Complex.conj spectral)) := by
+      conj
+        (relativeHeatMellinIntegral heatTrace (conj spectral)) := by
   calc
     relativeHeatMellinIntegral heatTrace spectral =
         ∫ time in Set.Ioi (0 : Real),
           relativeHeatMellinKernel heatTrace spectral time := rfl
     _ = ∫ time in Set.Ioi (0 : Real),
-        Complex.conj
+        conj
           (relativeHeatMellinKernel heatTrace
-            (Complex.conj spectral) time) := by
+            (conj spectral) time) := by
       apply integral_congr_ae
       filter_upwards [] with time
       exact relativeHeatMellinKernel_schwarz heatTrace spectral time
-    _ = Complex.conj
+    _ = conj
         (∫ time in Set.Ioi (0 : Real),
           relativeHeatMellinKernel heatTrace
-            (Complex.conj spectral) time) :=
+            (conj spectral) time) :=
       data.conjugate_integral spectral
-    _ = Complex.conj
-        (relativeHeatMellinIntegral heatTrace (Complex.conj spectral)) := rfl
+    _ = conj
+        (relativeHeatMellinIntegral heatTrace (conj spectral)) := rfl
 
 /-- Convert the kernel-level packet to unnormalized Mellin symmetry. -/
 def toMellinIntegralSchwarz
@@ -97,9 +112,9 @@ theorem candidate_schwarz
     (data : RelativeHeatMellinKernelSchwarzData heatTrace)
     (spectral : Complex) :
     relativeHeatMellinZetaCandidate heatTrace spectral =
-      Complex.conj
+      conj
         (relativeHeatMellinZetaCandidate heatTrace
-          (Complex.conj spectral)) :=
+          (conj spectral)) :=
   data.toMellinIntegralSchwarz.candidate_schwarz spectral
 
 /-- Public kernel-level Mellin Schwarz checkpoint. -/
@@ -108,19 +123,19 @@ theorem relative_heat_mellin_kernel_schwarz_gate
     (data : RelativeHeatMellinKernelSchwarzData heatTrace) :
     (∀ spectral time,
       relativeHeatMellinKernel heatTrace spectral time =
-        Complex.conj
+        conj
           (relativeHeatMellinKernel heatTrace
-            (Complex.conj spectral) time)) ∧
+            (conj spectral) time)) ∧
     (∀ spectral,
       relativeHeatMellinIntegral heatTrace spectral =
-        Complex.conj
+        conj
           (relativeHeatMellinIntegral heatTrace
-            (Complex.conj spectral))) ∧
+            (conj spectral))) ∧
     (∀ spectral,
       relativeHeatMellinZetaCandidate heatTrace spectral =
-        Complex.conj
+        conj
           (relativeHeatMellinZetaCandidate heatTrace
-            (Complex.conj spectral))) :=
+            (conj spectral))) :=
   ⟨relativeHeatMellinKernel_schwarz heatTrace,
     data.mellinIntegral_schwarz,
     data.candidate_schwarz⟩

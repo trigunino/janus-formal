@@ -31,7 +31,7 @@ variable {Core Hilbert Chart Block : Type*}
 /-- Standard product estimate on a displayed core bilinear form. -/
 structure DenseCoreBilinearProductBound
     (embedding : Core →ₗ[Real] Hilbert)
-    (target : Core →ₗ[Real] Core →ₗ[Real] Real) : Prop where
+    (target : Core →ₗ[Real] Core →ₗ[Real] Real) where
   constant : Real
   constant_nonneg : 0 ≤ constant
   estimate : ∀ first second,
@@ -58,7 +58,7 @@ def DenseCoreFiniteChartHessianAgreement.toProductBound
     DenseCoreBilinearProductBound embedding target where
   constant := (∑ block : Block, ‖form block‖) * bound.constant ^ 2
   constant_nonneg :=
-    denseCoreFiniteChartHessianSum_constant_nonneg bound form
+    denseCoreFiniteChartHessianSum_constant_nonneg embedding chartMap bound form
   estimate := by
     intro first second
     rw [agreement.target_eq]
@@ -79,7 +79,7 @@ theorem DenseCoreFiniteChartHessianAgreement.toProductBound_constant
   rfl
 
 /-- Public exact-agreement checkpoint. -/
-theorem dense_core_chart_hessian_agreement_gate
+def dense_core_chart_hessian_agreement_gate
     (embedding : Core →ₗ[Real] Hilbert)
     (chartMap : Core →ₗ[Real] Chart)
     (bound : DenseCoreChartMapBound embedding chartMap)

@@ -21,7 +21,7 @@ set_option maxHeartbeats 1600000
 
 noncomputable section
 
-open Filter
+open Filter Topology
 open P0EFTJanusConvexHelmholtzReconstruction
 
 universe u v
@@ -56,11 +56,15 @@ theorem secondFrechet_linearPullback
         projection projection := by
   have hGradient :
       DifferentiableAt Real (actionGradient action) (projection base) :=
-    (hC2.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hC2.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   have hFirst :
       actionGradient (fun state => action (projection state)) =ᶠ[𝓝 base]
         fun state => (actionGradient action (projection state)).comp projection := by
-    filter_upwards [hC2.eventually (by norm_num)] with state hState
+    have hEventuallyC2 := hC2.eventually (by norm_num)
+    have hPulledBack :
+        ∀ᶠ state : E in 𝓝 base, ContDiffAt Real 2 action (projection state) :=
+      projection.continuous.continuousAt hEventuallyC2
+    filter_upwards [hPulledBack] with state hState
     exact actionGradient_linearPullback action projection state
       (hState.differentiableAt (by norm_num))
   rw [hFirst.fderiv_eq]
@@ -75,9 +79,13 @@ theorem secondFrechet_linearPullback
   have hGradientAlongDerivative :
       fderiv Real gradientAlong base =
         fderiv Real (actionGradient action) (projection base) ∘SL projection := by
-    exact fderiv_fun_comp base hGradient projection.differentiableAt
+    simpa using fderiv_fun_comp base hGradient projection.differentiableAt
   rw [hGradientAlongDerivative]
-  simp only [fderiv_const, ContinuousLinearMap.comp_zero, add_zero]
+  have hProjectionDerivative :
+      fderiv Real (fun _ : E => projection) base = 0 :=
+    (hasFDerivAt_const (x := base) projection).fderiv
+  rw [hProjectionDerivative]
+  simp only [ContinuousLinearMap.comp_zero, zero_add]
   ext first second
   rfl
 

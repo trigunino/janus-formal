@@ -132,6 +132,9 @@ theorem determinant_eq_div
         relativeHeatMellinZetaFamilyDeterminant reference parameter := by
   unfold relativeHeatMellinZetaFamilyDeterminant
     relativeZetaDeterminantCoordinate
+  change Complex.exp (-relative.zetaPrimeAtZero parameter) =
+    Complex.exp (-actual.zetaPrimeAtZero parameter) /
+      Complex.exp (-reference.zetaPrimeAtZero parameter)
   rw [data.zetaPrimeAtZero_eq_difference parameter]
   rw [show
     -(actual.zetaPrimeAtZero parameter - reference.zetaPrimeAtZero parameter) =

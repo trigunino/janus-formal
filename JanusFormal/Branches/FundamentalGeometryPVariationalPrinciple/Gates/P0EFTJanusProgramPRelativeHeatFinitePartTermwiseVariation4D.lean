@@ -1,4 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceFinitePartTraceVariation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 /-!
 # Termwise variation of a relative heat finite part
@@ -28,6 +30,8 @@ noncomputable section
 open P0EFTJanusProgramPReferenceFinitePartTraceVariation4D
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 /-- Three-term decomposition and differentiated contributions for one existing
 finite-part family. -/
@@ -71,14 +75,21 @@ theorem hasDerivAt_logDeterminant
       (fun current =>
         relativeHeatFinitePartLogDeterminant (family.finitePart current))
       (data.totalDerivative parameter) parameter := by
-  have hTerms :=
-    ((data.hasDerivAt_counterterm parameter).add
-      (data.hasDerivAt_shortTime parameter)).add
-        (data.hasDerivAt_longTime parameter)
-  convert hTerms using 1
-  · funext current
-    exact (data.logDeterminant_eq current).symm
-  · rfl
+  rw [show
+    (fun current =>
+      relativeHeatFinitePartLogDeterminant (family.finitePart current)) =
+        data.countertermContribution + data.shortTimeContribution +
+          data.longTimeContribution from by
+      funext current
+      exact data.logDeterminant_eq current]
+  change HasDerivAt
+    (data.countertermContribution + data.shortTimeContribution +
+      data.longTimeContribution)
+    (data.countertermDerivative parameter + data.shortTimeDerivative parameter +
+      data.longTimeDerivative parameter) parameter
+  exact ((data.hasDerivAt_counterterm parameter).add
+    (data.hasDerivAt_shortTime parameter)).add
+      (data.hasDerivAt_longTime parameter)
 
 /-- The derivative already stored in `RelativeHeatFinitePartFamilyData` is
 therefore the termwise total derivative. -/
@@ -139,8 +150,7 @@ theorem connectionCoefficient_eq_neg_trace
     {family : RelativeHeatMellinZetaFamilyData}
     (data : ReferenceHeatFinitePartTermwiseTraceData family)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(data.logarithmicTrace parameter : Complex) :=
   data.toReferenceFinitePartTraceVariation.connectionCoefficient_eq_neg_trace
     parameter
@@ -153,8 +163,7 @@ theorem reference_heat_finite_part_termwise_trace_gate
       family.finitePartFamily.logDerivative parameter =
         data.logarithmicTrace parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(data.logarithmicTrace parameter : Complex)) :=
   ⟨fun parameter => by
       rw [data.termwise.namedLogDerivative_eq_totalDerivative parameter,

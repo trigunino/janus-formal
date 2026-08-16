@@ -1,4 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleDiracHeatTraceCancellation
 
@@ -54,10 +55,10 @@ structure RelativeHeatFinitePartData
   shortTimeIntegrable : IntegrableOn
     (fun time =>
       (positiveTimeTraceExtension heatTrace time - counterterm time) / time)
-    (Set.Ioc (0 : Real) 1)
+    (Set.Ioc (0 : Real) 1) volume
   longTimeIntegrable : IntegrableOn
     (fun time => positiveTimeTraceExtension heatTrace time / time)
-    (Set.Ioi (1 : Real))
+    (Set.Ioi (1 : Real)) volume
 
 /-- Subtracted short-time logarithmic integral. -/
 def relativeHeatShortTimeFinitePart

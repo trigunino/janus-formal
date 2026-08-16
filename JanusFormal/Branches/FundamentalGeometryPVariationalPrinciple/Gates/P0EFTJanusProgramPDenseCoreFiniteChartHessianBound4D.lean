@@ -67,16 +67,16 @@ theorem denseCoreFiniteChartHessianSum_bound
     _ = ((∑ block : Block, ‖form block‖) * bound.constant ^ 2) *
           ‖embedding first‖ * ‖embedding second‖ := by
       simp only [Finset.sum_mul]
-      ring
 
 /-- The finite sum constant is nonnegative. -/
 theorem denseCoreFiniteChartHessianSum_constant_nonneg
-    (bound : DenseCoreChartMapBound
-      (embedding : Core →ₗ[Real] Hilbert)
-      (chartMap : Core →ₗ[Real] Chart))
+    (embedding : Core →ₗ[Real] Hilbert)
+    (chartMap : Core →ₗ[Real] Chart)
+    (bound : DenseCoreChartMapBound embedding chartMap)
     (form : Block → Chart →L[Real] Chart →L[Real] Real) :
     0 ≤ (∑ block : Block, ‖form block‖) * bound.constant ^ 2 := by
-  positivity
+  exact mul_nonneg (Finset.sum_nonneg fun block _ => norm_nonneg (form block))
+    (sq_nonneg bound.constant)
 
 /-- Public finite physical-chart bound checkpoint. -/
 theorem dense_core_finite_chart_hessian_bound_gate
@@ -89,7 +89,7 @@ theorem dense_core_finite_chart_hessian_bound_gate
         ‖denseCoreFiniteChartHessianSum chartMap form first second‖ ≤
           constant * ‖embedding first‖ * ‖embedding second‖ := by
   refine ⟨(∑ block : Block, ‖form block‖) * bound.constant ^ 2,
-    denseCoreFiniteChartHessianSum_constant_nonneg bound form, ?_⟩
+    denseCoreFiniteChartHessianSum_constant_nonneg embedding chartMap bound form, ?_⟩
   exact denseCoreFiniteChartHessianSum_bound embedding chartMap bound form
 
 end

@@ -34,6 +34,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Filter MeasureTheory Set Topology
+open scoped ComplexConjugate
 open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
@@ -44,7 +45,7 @@ open P0EFTJanusProgramPRelativeHeatMellinZetaSchwarzReflection4D
 
 /-- Complex conjugation as a real-linear map. -/
 def complexConjugationLinearMap : Complex →ₗ[Real] Complex where
-  toFun := Complex.conj
+  toFun := conj
   map_add' := by
     intro first second
     simp
@@ -60,7 +61,7 @@ def complexConjugationCLM : Complex →L[Real] Complex :=
 
 @[simp]
 theorem complexConjugationCLM_apply (value : Complex) :
-    complexConjugationCLM value = Complex.conj value :=
+    complexConjugationCLM value = conj value :=
   rfl
 
 /-- Conjugation commutes with the Bochner integral of an integrable complex
@@ -69,19 +70,11 @@ theorem integral_complexConjugation
     {α : Type*} [MeasurableSpace α]
     {μ : Measure α} {function : α → Complex}
     (hIntegrable : Integrable function μ) :
-    (∫ point, Complex.conj (function point) ∂μ) =
-      Complex.conj (∫ point, function point ∂μ) := by
-  first
-  | simpa [complexConjugationCLM] using
-      (complexConjugationCLM.integral_comp_comm hIntegrable).symm
-  | simpa [complexConjugationCLM] using
-      (complexConjugationCLM.integral_comp_comm hIntegrable)
-  | simpa [complexConjugationCLM] using
-      (ContinuousLinearMap.integral_comp_comm complexConjugationCLM
-        hIntegrable).symm
-  | simpa [complexConjugationCLM] using
-      (ContinuousLinearMap.integral_comp_comm complexConjugationCLM
-        hIntegrable)
+    (∫ point, conj (function point) ∂μ) =
+      conj (∫ point, function point ∂μ) := by
+  change (∫ point, complexConjugationCLM (function point) ∂μ) =
+    complexConjugationCLM (∫ point, function point ∂μ)
+  exact complexConjugationCLM.integral_comp_comm hIntegrable
 
 /-- Canonical Schwarz symmetry of the unnormalized Mellin integral in the
 certified convergence half-plane. -/
@@ -92,33 +85,33 @@ theorem mellinIntegral_schwarz_of_convergent
     (spectral : Complex)
     (hSpectral : continuation.convergenceAbscissa < spectral.re) :
     relativeHeatMellinIntegral heatTrace spectral =
-      Complex.conj
-        (relativeHeatMellinIntegral heatTrace (Complex.conj spectral)) := by
+      conj
+        (relativeHeatMellinIntegral heatTrace (conj spectral)) := by
   have hConjugate :
-      continuation.convergenceAbscissa < (Complex.conj spectral).re := by
+      continuation.convergenceAbscissa < (conj spectral).re := by
     simpa using hSpectral
   have hIntegrable : IntegrableOn
-      (relativeHeatMellinKernel heatTrace (Complex.conj spectral))
+      (relativeHeatMellinKernel heatTrace (conj spectral))
       (Set.Ioi (0 : Real)) :=
-    continuation.mellin_integrable (Complex.conj spectral) hConjugate
+    continuation.mellin_integrable (conj spectral) hConjugate
   calc
     relativeHeatMellinIntegral heatTrace spectral =
         ∫ time in Set.Ioi (0 : Real),
           relativeHeatMellinKernel heatTrace spectral time := rfl
     _ = ∫ time in Set.Ioi (0 : Real),
-        Complex.conj
+        conj
           (relativeHeatMellinKernel heatTrace
-            (Complex.conj spectral) time) := by
+            (conj spectral) time) := by
       apply integral_congr_ae
       filter_upwards [] with time
       exact relativeHeatMellinKernel_schwarz heatTrace spectral time
-    _ = Complex.conj
+    _ = conj
         (∫ time in Set.Ioi (0 : Real),
           relativeHeatMellinKernel heatTrace
-            (Complex.conj spectral) time) := by
+            (conj spectral) time) := by
       exact integral_complexConjugation hIntegrable
-    _ = Complex.conj
-        (relativeHeatMellinIntegral heatTrace (Complex.conj spectral)) := rfl
+    _ = conj
+        (relativeHeatMellinIntegral heatTrace (conj spectral)) := rfl
 
 /-- Canonical Schwarz symmetry of the Gamma-normalized Mellin candidate in the
 certified convergence half-plane. -/
@@ -129,26 +122,26 @@ theorem mellinCandidate_schwarz_of_convergent
     (spectral : Complex)
     (hSpectral : continuation.convergenceAbscissa < spectral.re) :
     relativeHeatMellinZetaCandidate heatTrace spectral =
-      Complex.conj
+      conj
         (relativeHeatMellinZetaCandidate heatTrace
-          (Complex.conj spectral)) := by
+          (conj spectral)) := by
   calc
     relativeHeatMellinZetaCandidate heatTrace spectral =
-        (Complex.conj (Complex.Gamma (Complex.conj spectral)))⁻¹ *
-          Complex.conj
+        (conj (Complex.Gamma (conj spectral)))⁻¹ *
+          conj
             (relativeHeatMellinIntegral heatTrace
-              (Complex.conj spectral)) := by
+              (conj spectral)) := by
       rw [relativeHeatMellinZetaCandidate,
         complexGamma_schwarz spectral,
-        continuation.mellinIntegral_schwarz_of_convergent spectral hSpectral]
-    _ = Complex.conj
-        ((Complex.Gamma (Complex.conj spectral))⁻¹ *
+        mellinIntegral_schwarz_of_convergent continuation spectral hSpectral]
+    _ = conj
+        ((Complex.Gamma (conj spectral))⁻¹ *
           relativeHeatMellinIntegral heatTrace
-            (Complex.conj spectral)) := by
+            (conj spectral)) := by
       simp
-    _ = Complex.conj
+    _ = conj
         (relativeHeatMellinZetaCandidate heatTrace
-          (Complex.conj spectral)) := rfl
+          (conj spectral)) := rfl
 
 /-- Analytic domain joining the canonical Mellin Schwarz identity to zero. -/
 structure RelativeHeatMellinZetaCanonicalSchwarzReflectionData
@@ -179,18 +172,18 @@ theorem zeta_eq_schwarz_of_mellin
     (hSpectral : continuation.convergenceAbscissa < spectral.re) :
     continuation.zeta spectral = schwarzReflect continuation.zeta spectral := by
   have hConjugate :
-      continuation.convergenceAbscissa < (Complex.conj spectral).re := by
+      continuation.convergenceAbscissa < (conj spectral).re := by
     simpa using hSpectral
   calc
     continuation.zeta spectral =
         relativeHeatMellinZetaCandidate heatTrace spectral :=
       continuation.zeta_eq_mellin spectral hSpectral
-    _ = Complex.conj
+    _ = conj
         (relativeHeatMellinZetaCandidate heatTrace
-          (Complex.conj spectral)) :=
-      continuation.mellinCandidate_schwarz_of_convergent spectral hSpectral
-    _ = Complex.conj (continuation.zeta (Complex.conj spectral)) := by
-      rw [← continuation.zeta_eq_mellin (Complex.conj spectral) hConjugate]
+          (conj spectral)) :=
+      mellinCandidate_schwarz_of_convergent continuation spectral hSpectral
+    _ = conj (continuation.zeta (conj spectral)) := by
+      rw [← continuation.zeta_eq_mellin (conj spectral) hConjugate]
     _ = schwarzReflect continuation.zeta spectral := rfl
 
 /-- The two analytic functions agree near the Mellin seed. -/
@@ -235,7 +228,8 @@ theorem eventually_realAxis_mem_domain
   have hOfReal :
       Tendsto (fun spectral : Real => (spectral : Complex))
         (𝓝 0) (𝓝 (0 : Complex)) := by
-    simpa using continuous_ofReal.continuousAt
+    change ContinuousAt Complex.ofReal 0
+    exact Complex.continuous_ofReal.continuousAt
   exact hOfReal hDomain
 
 /-- Canonical Schwarz symmetry gives a real-axis germ. -/
@@ -250,10 +244,10 @@ def toRealAxisReality
     have hReflection := data.zeta_eqOn_schwarz_domain hSpectral
     have hFixed :
         continuation.zeta (spectral : Complex) =
-          Complex.conj (continuation.zeta (spectral : Complex)) := by
+          conj (continuation.zeta (spectral : Complex)) := by
       simpa [schwarzReflect] using hReflection
     have hImaginary := congrArg Complex.im hFixed
-    simp only [Complex.conj_im] at hImaginary
+    simp at hImaginary
     linarith
 
 /-- Reality of the regularized derivative is completely canonical once the

@@ -23,7 +23,7 @@ open scoped BigOperators InnerProductSpace
 
 variable {Sector E : Type*}
   [Fintype Sector] [DecidableEq Sector]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- A finite resolution of the identity by positive projections. -/
@@ -52,7 +52,7 @@ theorem norm_sq_decomposition
       rw [data.sum_projection vector]
     _ = ∑ sector : Sector,
         inner Real (data.projection sector vector) vector := by
-      simp
+      rw [sum_inner]
     _ = ∑ sector : Sector,
         ‖data.projection sector vector‖ ^ 2 := by
       apply Finset.sum_congr rfl

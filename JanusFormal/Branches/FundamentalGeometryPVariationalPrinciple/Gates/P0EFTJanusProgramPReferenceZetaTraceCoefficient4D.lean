@@ -58,7 +58,11 @@ theorem parameterDerivative_im_zero
       HasDerivAt
         (fun current : Real => (family.zetaPrimeAtZero current).im)
         (family.parameterDerivative parameter).im parameter := by
-    simpa using Complex.imCLM.hasFDerivAt.comp_hasDerivAt parameter
+    change HasDerivAt
+      (fun current : Real => (family.continuation current).derivativeAtZero.im)
+      (family.parameterDerivative parameter).im parameter
+    simpa [Function.comp_def] using
+      Complex.imCLM.hasFDerivAt.comp_hasDerivAt parameter
       (family.hasDerivAt_zetaPrime parameter)
   have hZero :
       HasDerivAt (fun _ : Real => (0 : Real)) 0 parameter :=
@@ -67,9 +71,7 @@ theorem parameterDerivative_im_zero
       HasDerivAt
         (fun current : Real => (family.zetaPrimeAtZero current).im)
         0 parameter := by
-    convert hZero using 1
-    funext current
-    exact (data.zetaPrimeAtZero_real current).symm
+    simpa [data.zetaPrimeAtZero_real] using hZero
   exact hImaginary.unique hZeroAsImaginary
 
 /-- The standalone reference zeta coefficient is minus its logarithmic operator
@@ -84,10 +86,9 @@ theorem connectionCoefficient_eq_neg_trace
     -(data.logarithmicTrace parameter : Complex)
   apply Complex.ext
   · change (family.parameterDerivative parameter).re =
-      (-(data.logarithmicTrace parameter : Complex)).re
-    rw [family.connection_realPart,
+      -data.logarithmicTrace parameter
+    linarith [family.connection_realPart parameter,
       data.finitePartLogDerivative_eq_trace parameter]
-    simp
   · change (family.parameterDerivative parameter).im =
       (-(data.logarithmicTrace parameter : Complex)).im
     rw [data.parameterDerivative_im_zero parameter]

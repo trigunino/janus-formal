@@ -30,6 +30,7 @@ namespace P0EFTJanusProgramPRelativeHeatMellinIntegralSchwarz4D
 set_option autoImplicit false
 noncomputable section
 
+open scoped ComplexConjugate
 open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
 open P0EFTJanusProgramPRelativeHeatMellinCandidateSchwarz4D
@@ -38,10 +39,10 @@ open P0EFTJanusProgramPRelativeHeatMellinCandidateSchwarz4D
 candidate. -/
 theorem complexGamma_schwarz (spectral : Complex) :
     Complex.Gamma spectral =
-      Complex.conj (Complex.Gamma (Complex.conj spectral)) := by
+      conj (Complex.Gamma (conj spectral)) := by
   first
-  | simpa using Complex.Gamma_conj (Complex.conj spectral)
-  | simpa using (Complex.Gamma_conj (Complex.conj spectral)).symm
+  | simpa using Complex.Gamma_conj (conj spectral)
+  | simpa using (Complex.Gamma_conj (conj spectral)).symm
 
 /-- The only heat-dependent conjugation statement: Schwarz symmetry of the
 unnormalized Mellin integral. -/
@@ -49,8 +50,8 @@ structure RelativeHeatMellinIntegralSchwarzData
     (heatTrace : HeatTime → Real) where
   mellinIntegral_schwarz : ∀ spectral : Complex,
     relativeHeatMellinIntegral heatTrace spectral =
-      Complex.conj
-        (relativeHeatMellinIntegral heatTrace (Complex.conj spectral))
+      conj
+        (relativeHeatMellinIntegral heatTrace (conj spectral))
 
 namespace RelativeHeatMellinIntegralSchwarzData
 
@@ -70,9 +71,9 @@ theorem candidate_schwarz
     (data : RelativeHeatMellinIntegralSchwarzData heatTrace)
     (spectral : Complex) :
     relativeHeatMellinZetaCandidate heatTrace spectral =
-      Complex.conj
+      conj
         (relativeHeatMellinZetaCandidate heatTrace
-          (Complex.conj spectral)) :=
+          (conj spectral)) :=
   data.toCandidateSchwarz.candidate_schwarz spectral
 
 /-- Public unnormalized Mellin Schwarz checkpoint. -/
@@ -81,14 +82,14 @@ theorem relative_heat_mellin_integral_schwarz_gate
     (data : RelativeHeatMellinIntegralSchwarzData heatTrace) :
     (∀ spectral : Complex,
       relativeHeatMellinIntegral heatTrace spectral =
-        Complex.conj
+        conj
           (relativeHeatMellinIntegral heatTrace
-            (Complex.conj spectral))) ∧
+            (conj spectral))) ∧
     (∀ spectral : Complex,
       relativeHeatMellinZetaCandidate heatTrace spectral =
-        Complex.conj
+        conj
           (relativeHeatMellinZetaCandidate heatTrace
-            (Complex.conj spectral))) :=
+            (conj spectral))) :=
   ⟨data.mellinIntegral_schwarz, data.candidate_schwarz⟩
 
 end RelativeHeatMellinIntegralSchwarzData

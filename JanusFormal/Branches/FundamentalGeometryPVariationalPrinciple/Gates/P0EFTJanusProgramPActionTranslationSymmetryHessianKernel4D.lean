@@ -60,6 +60,8 @@ theorem gradientOrbitInvariant_of_actionTranslationInvariant
   have hChain :
       fderiv Real (fun state : E => action (state + parameter • vector)) point =
         fderiv Real action (point + parameter • vector) := by
+    change fderiv Real
+      (action ∘ fun state : E => state + parameter • vector) point = _
     have hComp :=
       (hActionAt.hasFDerivAt.comp point hTranslation).fderiv
     simpa [ContinuousLinearMap.comp_id] using hComp

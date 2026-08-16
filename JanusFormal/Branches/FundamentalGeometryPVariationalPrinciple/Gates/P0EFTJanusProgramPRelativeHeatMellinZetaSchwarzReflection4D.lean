@@ -44,6 +44,7 @@ namespace P0EFTJanusProgramPRelativeHeatMellinZetaSchwarzReflection4D
 set_option autoImplicit false
 noncomputable section
 
+open scoped ComplexConjugate
 open Filter Set Topology
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaContinuation4D
@@ -51,7 +52,7 @@ open P0EFTJanusProgramPRelativeHeatMellinZetaRealAxisReality4D
 
 /-- Schwarz reflection of a complex function. -/
 def schwarzReflect (function : Complex → Complex) (spectral : Complex) : Complex :=
-  Complex.conj (function (Complex.conj spectral))
+  conj (function (conj spectral))
 
 /-- Analytic Schwarz-reflection data joining the Mellin half-plane to zero. -/
 structure RelativeHeatMellinZetaSchwarzReflectionData
@@ -71,9 +72,9 @@ structure RelativeHeatMellinZetaSchwarzReflectionData
   mellinCandidate_schwarz : ∀ spectral,
     continuation.convergenceAbscissa < spectral.re →
       relativeHeatMellinZetaCandidate heatTrace spectral =
-        Complex.conj
+        conj
           (relativeHeatMellinZetaCandidate heatTrace
-            (Complex.conj spectral))
+            (conj spectral))
 
 namespace RelativeHeatMellinZetaSchwarzReflectionData
 
@@ -98,18 +99,18 @@ theorem zeta_eq_schwarz_of_mellin
     (hSpectral : continuation.convergenceAbscissa < spectral.re) :
     continuation.zeta spectral = schwarzReflect continuation.zeta spectral := by
   have hConjugate :
-      continuation.convergenceAbscissa < (Complex.conj spectral).re := by
+      continuation.convergenceAbscissa < (conj spectral).re := by
     simpa using hSpectral
   calc
     continuation.zeta spectral =
         relativeHeatMellinZetaCandidate heatTrace spectral :=
       continuation.zeta_eq_mellin spectral hSpectral
-    _ = Complex.conj
+    _ = conj
         (relativeHeatMellinZetaCandidate heatTrace
-          (Complex.conj spectral)) :=
+          (conj spectral)) :=
       data.mellinCandidate_schwarz spectral hSpectral
-    _ = Complex.conj (continuation.zeta (Complex.conj spectral)) := by
-      rw [← continuation.zeta_eq_mellin (Complex.conj spectral) hConjugate]
+    _ = conj (continuation.zeta (conj spectral)) := by
+      rw [← continuation.zeta_eq_mellin (conj spectral) hConjugate]
     _ = schwarzReflect continuation.zeta spectral := rfl
 
 /-- Equality with the reflected function holds on a neighborhood of the seed. -/
@@ -151,7 +152,8 @@ theorem eventually_realAxis_mem_domain
   have hOfReal :
       Tendsto (fun spectral : Real => (spectral : Complex))
         (𝓝 0) (𝓝 (0 : Complex)) := by
-    simpa using continuous_ofReal.continuousAt
+    change ContinuousAt Complex.ofReal 0
+    exact Complex.continuous_ofReal.continuousAt
   exact hOfReal hDomain
 
 /-- Schwarz symmetry forces reality on the real axis inside the domain. -/
@@ -165,7 +167,7 @@ theorem zeta_im_eq_zero_of_real_mem_domain
   have hReflection := data.zeta_eqOn_schwarz_domain hSpectral
   have hFixed :
       continuation.zeta (spectral : Complex) =
-        Complex.conj (continuation.zeta (spectral : Complex)) := by
+        conj (continuation.zeta (spectral : Complex)) := by
     simpa [schwarzReflect] using hReflection
   have hImaginary := congrArg Complex.im hFixed
   simp only [Complex.conj_im] at hImaginary

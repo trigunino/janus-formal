@@ -43,23 +43,26 @@ variable
   [NormedAddCommGroup Longitudinal] [NormedSpace Real Longitudinal]
   [NormedAddCommGroup Boundary] [NormedSpace Real Boundary]
 
-private abbrev ProductSpace :=
-  FiveSectorProduct Metric Abelian Matter Longitudinal Boundary
-
 /-- Metric/diffeomorphism coordinate axis. -/
-def fiveSectorMetricAxis : Metric →L[Real] ProductSpace :=
+def fiveSectorMetricAxis :
+    Metric →L[Real]
+      FiveSectorProduct Metric Abelian Matter Longitudinal Boundary :=
   ContinuousLinearMap.inl Real Metric
     (Abelian × (Matter × (Longitudinal × Boundary)))
 
 /-- Abelian coordinate axis. -/
-def fiveSectorAbelianAxis : Abelian →L[Real] ProductSpace :=
+def fiveSectorAbelianAxis :
+    Abelian →L[Real]
+      FiveSectorProduct Metric Abelian Matter Longitudinal Boundary :=
   (ContinuousLinearMap.inr Real Metric
       (Abelian × (Matter × (Longitudinal × Boundary)))).comp
     (ContinuousLinearMap.inl Real Abelian
       (Matter × (Longitudinal × Boundary)))
 
 /-- Primitive SpinC matter coordinate axis. -/
-def fiveSectorMatterAxis : Matter →L[Real] ProductSpace :=
+def fiveSectorMatterAxis :
+    Matter →L[Real]
+      FiveSectorProduct Metric Abelian Matter Longitudinal Boundary :=
   (ContinuousLinearMap.inr Real Metric
       (Abelian × (Matter × (Longitudinal × Boundary)))).comp
     ((ContinuousLinearMap.inr Real Abelian
@@ -67,7 +70,9 @@ def fiveSectorMatterAxis : Matter →L[Real] ProductSpace :=
       (ContinuousLinearMap.inl Real Matter (Longitudinal × Boundary)))
 
 /-- Longitudinal/LL coordinate axis. -/
-def fiveSectorLongitudinalAxis : Longitudinal →L[Real] ProductSpace :=
+def fiveSectorLongitudinalAxis :
+    Longitudinal →L[Real]
+      FiveSectorProduct Metric Abelian Matter Longitudinal Boundary :=
   (ContinuousLinearMap.inr Real Metric
       (Abelian × (Matter × (Longitudinal × Boundary)))).comp
     ((ContinuousLinearMap.inr Real Abelian
@@ -76,7 +81,9 @@ def fiveSectorLongitudinalAxis : Longitudinal →L[Real] ProductSpace :=
         (ContinuousLinearMap.inl Real Longitudinal Boundary)))
 
 /-- Finite-boundary/BV coordinate axis. -/
-def fiveSectorBoundaryAxis : Boundary →L[Real] ProductSpace :=
+def fiveSectorBoundaryAxis :
+    Boundary →L[Real]
+      FiveSectorProduct Metric Abelian Matter Longitudinal Boundary :=
   (ContinuousLinearMap.inr Real Metric
       (Abelian × (Matter × (Longitudinal × Boundary)))).comp
     ((ContinuousLinearMap.inr Real Abelian
@@ -85,19 +92,25 @@ def fiveSectorBoundaryAxis : Boundary →L[Real] ProductSpace :=
         (ContinuousLinearMap.inr Real Longitudinal Boundary)))
 
 /-- Metric coordinate extraction. -/
-def fiveSectorMetricCoordinate : ProductSpace →L[Real] Metric :=
+def fiveSectorMetricCoordinate :
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary →L[Real]
+      Metric :=
   ContinuousLinearMap.fst Real Metric
     (Abelian × (Matter × (Longitudinal × Boundary)))
 
 /-- Abelian coordinate extraction. -/
-def fiveSectorAbelianCoordinate : ProductSpace →L[Real] Abelian :=
+def fiveSectorAbelianCoordinate :
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary →L[Real]
+      Abelian :=
   (ContinuousLinearMap.fst Real Abelian
       (Matter × (Longitudinal × Boundary))).comp
     (ContinuousLinearMap.snd Real Metric
       (Abelian × (Matter × (Longitudinal × Boundary))))
 
 /-- Matter coordinate extraction. -/
-def fiveSectorMatterCoordinate : ProductSpace →L[Real] Matter :=
+def fiveSectorMatterCoordinate :
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary →L[Real]
+      Matter :=
   (ContinuousLinearMap.fst Real Matter (Longitudinal × Boundary)).comp
     ((ContinuousLinearMap.snd Real Abelian
         (Matter × (Longitudinal × Boundary))).comp
@@ -105,7 +118,9 @@ def fiveSectorMatterCoordinate : ProductSpace →L[Real] Matter :=
         (Abelian × (Matter × (Longitudinal × Boundary)))))
 
 /-- Longitudinal coordinate extraction. -/
-def fiveSectorLongitudinalCoordinate : ProductSpace →L[Real] Longitudinal :=
+def fiveSectorLongitudinalCoordinate :
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary →L[Real]
+      Longitudinal :=
   (ContinuousLinearMap.fst Real Longitudinal Boundary).comp
     ((ContinuousLinearMap.snd Real Matter (Longitudinal × Boundary)).comp
       ((ContinuousLinearMap.snd Real Abelian
@@ -114,7 +129,9 @@ def fiveSectorLongitudinalCoordinate : ProductSpace →L[Real] Longitudinal :=
           (Abelian × (Matter × (Longitudinal × Boundary))))))
 
 /-- Boundary/BV coordinate extraction. -/
-def fiveSectorBoundaryCoordinate : ProductSpace →L[Real] Boundary :=
+def fiveSectorBoundaryCoordinate :
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary →L[Real]
+      Boundary :=
   (ContinuousLinearMap.snd Real Longitudinal Boundary).comp
     ((ContinuousLinearMap.snd Real Matter (Longitudinal × Boundary)).comp
       ((ContinuousLinearMap.snd Real Abelian
@@ -123,25 +140,55 @@ def fiveSectorBoundaryCoordinate : ProductSpace →L[Real] Boundary :=
           (Abelian × (Matter × (Longitudinal × Boundary))))))
 
 @[simp] theorem fiveSectorMetricCoordinate_axis (x : Metric) :
-    fiveSectorMetricCoordinate (fiveSectorMetricAxis x) = x := rfl
+    fiveSectorMetricCoordinate
+        (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+        (Longitudinal := Longitudinal) (Boundary := Boundary)
+        (fiveSectorMetricAxis
+          (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+          (Longitudinal := Longitudinal) (Boundary := Boundary) x) = x := rfl
 @[simp] theorem fiveSectorAbelianCoordinate_axis (x : Abelian) :
-    fiveSectorAbelianCoordinate (fiveSectorAbelianAxis x) = x := rfl
+    fiveSectorAbelianCoordinate
+        (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+        (Longitudinal := Longitudinal) (Boundary := Boundary)
+        (fiveSectorAbelianAxis
+          (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+          (Longitudinal := Longitudinal) (Boundary := Boundary) x) = x := rfl
 @[simp] theorem fiveSectorMatterCoordinate_axis (x : Matter) :
-    fiveSectorMatterCoordinate (fiveSectorMatterAxis x) = x := rfl
+    fiveSectorMatterCoordinate
+        (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+        (Longitudinal := Longitudinal) (Boundary := Boundary)
+        (fiveSectorMatterAxis
+          (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+          (Longitudinal := Longitudinal) (Boundary := Boundary) x) = x := rfl
 @[simp] theorem fiveSectorLongitudinalCoordinate_axis (x : Longitudinal) :
-    fiveSectorLongitudinalCoordinate (fiveSectorLongitudinalAxis x) = x := rfl
+    fiveSectorLongitudinalCoordinate
+        (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+        (Longitudinal := Longitudinal) (Boundary := Boundary)
+        (fiveSectorLongitudinalAxis
+          (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+          (Longitudinal := Longitudinal) (Boundary := Boundary) x) = x := rfl
 @[simp] theorem fiveSectorBoundaryCoordinate_axis (x : Boundary) :
-    fiveSectorBoundaryCoordinate (fiveSectorBoundaryAxis x) = x := rfl
+    fiveSectorBoundaryCoordinate
+        (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+        (Longitudinal := Longitudinal) (Boundary := Boundary)
+        (fiveSectorBoundaryAxis
+          (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
+          (Longitudinal := Longitudinal) (Boundary := Boundary) x) = x := rfl
 
 /-- Every product vector is the exact sum of its five coordinate axes. -/
-theorem fiveSector_axis_decomposition (x : ProductSpace) :
+theorem fiveSector_axis_decomposition
+    (x : FiveSectorProduct Metric Abelian Matter Longitudinal Boundary) :
     fiveSectorMetricAxis (fiveSectorMetricCoordinate x) +
       fiveSectorAbelianAxis (fiveSectorAbelianCoordinate x) +
       fiveSectorMatterAxis (fiveSectorMatterCoordinate x) +
       fiveSectorLongitudinalAxis (fiveSectorLongitudinalCoordinate x) +
       fiveSectorBoundaryAxis (fiveSectorBoundaryCoordinate x) = x := by
   rcases x with ⟨metric, abelian, matter, longitudinal, boundary⟩
-  rfl
+  simp [fiveSectorMetricAxis, fiveSectorAbelianAxis, fiveSectorMatterAxis,
+    fiveSectorLongitudinalAxis, fiveSectorBoundaryAxis,
+    fiveSectorMetricCoordinate, fiveSectorAbelianCoordinate,
+    fiveSectorMatterCoordinate, fiveSectorLongitudinalCoordinate,
+    fiveSectorBoundaryCoordinate]
 
 end ProductCoordinates
 
@@ -156,13 +203,11 @@ variable
   [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
   [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
 
-private abbrev ProductSpace :=
-  FiveSectorProduct Metric Abelian Matter Longitudinal Boundary
-
 /-- One isometric coordinate decomposition replaces five unrelated subspace
 choices. -/
 structure FiveSectorHilbertCoordinates where
-  decomposition : E ≃ₗᵢ[Real] ProductSpace
+  decomposition : E ≃ₗᵢ[Real]
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary
 
 namespace FiveSectorHilbertCoordinates
 
@@ -170,10 +215,12 @@ variable (coordinates : FiveSectorHilbertCoordinates
   (E := E) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
   (Longitudinal := Longitudinal) (Boundary := Boundary))
 
-private def forward : E →L[Real] ProductSpace :=
+private def forward : E →L[Real]
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary :=
   coordinates.decomposition.toLinearIsometry.toContinuousLinearMap
 
-private def backward : ProductSpace →L[Real] E :=
+private def backward :
+    FiveSectorProduct Metric Abelian Matter Longitudinal Boundary →L[Real] E :=
   coordinates.decomposition.symm.toLinearIsometry.toContinuousLinearMap
 
 /-- Canonical metric-sector projector. -/
