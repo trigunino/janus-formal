@@ -1,0 +1,107 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointComplement4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinCanonicalClosure4D
+
+/-!
+# Canonical H14 route with one self-adjoint finite obstruction
+
+This is the narrowest terminal interface assembled in the current work.  H10
+supplies Robin, the physical H11 forms are the canonical second Fréchet
+blocks, and H12 receives one finite obstruction projection together with an
+inverse on its complement.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPGlobalHessianH10RobinSelfAdjointClosure4D
+
+set_option autoImplicit false
+set_option maxHeartbeats 4400000
+set_option synthInstance.maxHeartbeats 2200000
+
+noncomputable section
+
+open Set Topology MeasureTheory
+open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointComplement4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalHessianH10RobinAnalyticClosure4D
+open P0EFTJanusProgramPGlobalHessianH10RobinCanonicalClosure4D
+
+variable (period : Real) (hPeriod : period ≠ 0)
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientIsManifold :
+    IsManifold coverModelWithCorners ω (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotient_isManifold period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
+
+/-- Narrow terminal H14 gate. -/
+theorem global_candidateA_hessian_h10Robin_selfAdjoint_closure_gate
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (einsteinScale : Real)
+    (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
+      data.plusGravity.metric.metric)
+    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
+      period hPeriod configuration data analysis
+        (diracGreenClosureMatterRealization period hPeriod
+          couplings.matterMassSquared))
+    (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
+      period hPeriod configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod configuration data
+          analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+          analysis family))
+    (inverse : GlobalCandidateAFaithfulAugmentedSelfAdjointComplement4D period
+      hPeriod configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod configuration data
+          analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+          analysis family)
+        (globalCandidateAH10RobinCanonicalPhysicalExtension period hPeriod
+          configuration data analysis family extensions)) :=
+  global_candidateA_hessian_h10Robin_canonical_closure_gate period hPeriod
+    configuration data analysis einsteinScale hBoundaryTransverse family
+    extensions
+      (globalCandidateAFaithfulAugmentedComplementInverse_of_selfAdjoint period
+        hPeriod configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod configuration data
+          analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+          analysis family)
+        (globalCandidateAH10RobinCanonicalPhysicalExtension period hPeriod
+          configuration data analysis family extensions)
+        inverse)
+
+end
+end P0EFTJanusProgramPGlobalHessianH10RobinSelfAdjointClosure4D
+end JanusFormal
