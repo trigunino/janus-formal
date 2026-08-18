@@ -116,7 +116,6 @@ theorem represented_naturality
     representedTargetPullback
   simp only [Equiv.symm_apply_apply]
   rw [family.operator.naturality]
-  simp
 
 /-- Pull a base representation back along any parameter map. -/
 def pullback

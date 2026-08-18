@@ -42,12 +42,15 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
+open P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D
 open P0EFTJanusProgramPGlobalCandidateAActionSymmetrySectors4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorOrthogonalProduct4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionCoordinates4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
@@ -82,78 +85,15 @@ private abbrev CandidateAHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
+  GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod configuration
+    data analysis
 
-local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+attribute [local instance]
+  commonHilbertNormedAddCommGroup
+  commonHilbertInnerProductSpace
+  commonHilbertNormedSpace
+  commonHilbertModule
+  commonHilbertCompleteSpace
 
 /-- The Candidate-A sector-name transport is injective.  Thus different
 physical labels remain different coordinate slots. -/
@@ -186,7 +126,7 @@ structure GlobalCandidateAFiveSectorActionSymmetryModes4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   coordinates : GlobalCandidateAFiveSectorCompletionCoordinates4D period
     hPeriod configuration data analysis Metric Abelian Matter Longitudinal
       Boundary
@@ -224,7 +164,7 @@ def resolution
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode) :=
@@ -254,7 +194,7 @@ theorem vector_mem_sectorRange
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode)
@@ -288,7 +228,7 @@ theorem projection_eq_zero_of_ne
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode)
@@ -317,9 +257,11 @@ theorem projection_eq_zero_of_ne
         input.resolution sector vector =
       globalCandidateAFiveSectorOrthogonalProjection period hPeriod
         input.resolution sector
+          (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+           input.resolution ownSector vector) := by
+      exact congrArg
         (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
-          input.resolution ownSector vector) := by
-      rw [input.sector_fixed mode]
+          input.resolution sector) (input.sector_fixed mode).symm
     _ = 0 := by
       simpa [globalCandidateAFiveSectorOrthogonalProjection] using hApplied
 
@@ -346,7 +288,7 @@ theorem vectors_inner_eq_zero_of_sector_ne
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode)
@@ -371,9 +313,10 @@ theorem vectors_inner_eq_zero_of_sector_ne
       inner Real
         (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
           input.resolution firstSector firstVector)
-        (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
-          input.resolution secondSector secondVector) := by
-      rw [input.sector_fixed first, input.sector_fixed second]
+         (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+           input.resolution secondSector secondVector) := by
+      exact congrArg₂ (inner Real) (input.sector_fixed first).symm
+        (input.sector_fixed second).symm
     _ = 0 := by
       exact input.resolution.toGeneric.projection_orthogonal
         (candidateAZeroModeSectorToFiveSectorSlot firstSector)
@@ -402,7 +345,7 @@ theorem action_translation_invariant
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode)
@@ -436,7 +379,7 @@ theorem vector_annihilated
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode)
@@ -444,8 +387,8 @@ theorem vector_annihilated
     globalCandidateAActualKernelOperator period hPeriod configuration data
         analysis chart sameAction physical
         (input.actionSectors.symmetry.translations.vector mode) = 0 :=
-  (input.actionSectors.symmetry.translations.toGradientModes period hPeriod).
-    vector_annihilated period hPeriod mode
+  (input.actionSectors.symmetry.translations.toGradientModes period hPeriod).vector_annihilated
+    period hPeriod mode
 
 /-- Public checkpoint: named zero modes now simultaneously come from exact
 action invariance and lie in the ranges of the one physical five-sector
@@ -471,7 +414,7 @@ theorem global_candidateA_five_sector_action_symmetry_modes_gate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAFiveSectorActionSymmetryModes4D period hPeriod
       configuration data analysis chart sameAction physical Metric Abelian Matter
         Longitudinal Boundary ZeroMode) :

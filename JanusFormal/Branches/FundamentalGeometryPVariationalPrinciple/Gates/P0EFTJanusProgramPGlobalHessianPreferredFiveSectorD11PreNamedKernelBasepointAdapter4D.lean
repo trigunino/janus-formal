@@ -15,6 +15,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11PreNamedKernelBasepointAdapter4D
 
 set_option autoImplicit false
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -29,10 +31,18 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionCoordinates4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorOrthogonalProduct4D
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
@@ -42,6 +52,10 @@ open P0EFTJanusProgramPLinearNaturalRepresentationAdmissibleIsomorphismFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorCanonicalOperatorFrontier4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11TrueKernelGramFrontend4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -62,6 +76,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 private abbrev CandidateAHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -73,61 +89,12 @@ private abbrev CandidateAHilbert
   GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod configuration
     data analysis
 
-local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  diagonalL2ExtendedBulkNormedAddCommGroup period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  diagonalL2ExtendedBulkInnerProductSpace period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  diagonalL2ExtendedBulkNormedSpace period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  diagonalL2ExtendedBulkModule period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
+attribute [local instance]
+  commonHilbertNormedAddCommGroup
+  commonHilbertInnerProductSpace
+  commonHilbertNormedSpace
+  commonHilbertModule
+  commonHilbertCompleteSpace
 
 private abbrev CanonicalChart
     {couplings : GlobalCandidateAActionCouplings}
@@ -141,7 +108,7 @@ private abbrev CanonicalChart
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
   globalCandidateAActualKernelChart period hPeriod configuration data analysis
@@ -159,7 +126,7 @@ private abbrev CanonicalSameAction
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
   globalCandidateAActualKernelSameAction period hPeriod configuration data
@@ -177,7 +144,7 @@ private abbrev CanonicalPhysical
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
@@ -202,7 +169,7 @@ private abbrev CanonicalOperator
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
@@ -229,7 +196,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -264,8 +231,7 @@ def globalHessianPreferredFiveSectorD11PreNamedOrthogonalResolution :
 theorem globalHessianPreferredFiveSectorD11PreNamedOrthogonalResolution_decomposition :
     (globalHessianPreferredFiveSectorD11PreNamedOrthogonalResolution period
       hPeriod frontier).decomposition =
-    (Geometry period hPeriod frontier).coordinates.coordinates.decomposition.
-      toContinuousLinearEquiv := by
+    (Geometry period hPeriod frontier).coordinates.coordinates.decomposition.toContinuousLinearEquiv := by
   rfl
 
 variable
@@ -308,7 +274,9 @@ def globalHessianPreferredFiveSectorD11BasepointInput_of_preNamedFrontier
             (Geometry period hPeriod frontier).coordinates.coordinates refinement
               pullback 0 parameter
                 (globalHessianPreferredFiveSectorD11PreNamedBaseKernelBasis
-                  period hPeriod frontier operator_zero baseKernelBasis mode).1)) :
+                  (period := period) (hPeriod := hPeriod) (operator := operator)
+                  (operator_zero := operator_zero)
+                  (baseKernelBasis := baseKernelBasis) mode).1)) :
     GlobalHessianPreferredFiveSectorD11BasepointInput4D period hPeriod
       configuration data analysis Metric Abelian Matter Longitudinal Boundary
         ZeroMode operator (Geometry period hPeriod frontier).coordinates
@@ -318,8 +286,9 @@ def globalHessianPreferredFiveSectorD11BasepointInput_of_preNamedFrontier
             period hPeriod frontier)
           representation refinement pullback isomorphisms where
   baseKernelBasis :=
-    globalHessianPreferredFiveSectorD11PreNamedBaseKernelBasis period hPeriod
-      frontier operator_zero baseKernelBasis
+    globalHessianPreferredFiveSectorD11PreNamedBaseKernelBasis
+      (period := period) (hPeriod := hPeriod) (operator := operator)
+      (operator_zero := operator_zero) (baseKernelBasis := baseKernelBasis)
   transported_vector_differentiable := transported_vector_differentiable
 
 end

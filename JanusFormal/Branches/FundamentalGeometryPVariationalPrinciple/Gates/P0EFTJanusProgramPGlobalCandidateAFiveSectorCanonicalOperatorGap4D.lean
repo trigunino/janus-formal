@@ -29,6 +29,7 @@ namespace P0EFTJanusProgramPGlobalCandidateAFiveSectorCanonicalOperatorGap4D
 set_option autoImplicit false
 set_option maxHeartbeats 9800000
 set_option synthInstance.maxHeartbeats 4900000
+set_option maxRecDepth 4000
 
 noncomputable section
 
@@ -41,10 +42,16 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalSmallness4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalReducedPhysicalBound4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorActualHessianCommutation4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorCanonicalGap4D
 open P0EFTJanusProgramPGlobalCandidateAReducedCanonicalEnergies4D
@@ -52,9 +59,22 @@ open P0EFTJanusProgramPGlobalCandidateAReducedPrincipalOperator4D
 open P0EFTJanusProgramPFiniteProjectionOperatorOffDiagonalGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorProductOperatorOffDiagonalGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -76,66 +96,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev CanonicalChart
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
-    {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace}
-    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
-    (einsteinScale : Real)
-    (hTransverse : HasNoTangentialRadical period hPeriod
-      data.plusGravity.metric.metric)
-    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
-        (diracGreenClosureMatterRealization period hPeriod
-          couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAActualKernelChart period hPeriod configuration data analysis
-    einsteinScale hTransverse family
-
-private abbrev CanonicalSameAction
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
-    {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace}
-    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
-    (einsteinScale : Real)
-    (hTransverse : HasNoTangentialRadical period hPeriod
-      data.plusGravity.metric.metric)
-    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
-        (diracGreenClosureMatterRealization period hPeriod
-          couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAActualKernelSameAction period hPeriod configuration data
-    analysis einsteinScale hTransverse family
-
-private abbrev CanonicalPhysical
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
-    {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace}
-    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
-    (einsteinScale : Real)
-    (hTransverse : HasNoTangentialRadical period hPeriod
-      data.plusGravity.metric.metric)
-    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
-        (diracGreenClosureMatterRealization period hPeriod
-          couplings.matterMassSquared) einsteinScale)
-    (chartBound : DenseCoreChartMapBound
-      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
-        data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (CanonicalChart period hPeriod einsteinScale hTransverse family)
-          (CanonicalSameAction period hPeriod einsteinScale hTransverse family))) :=
-  globalCandidateACanonicalSixPhysicalExtension_of_chartBound period hPeriod
-    configuration data analysis einsteinScale hTransverse family chartBound
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
 private abbrev CanonicalPrincipalOperator
     {couplings : GlobalCandidateAActionCouplings}
@@ -149,6 +110,7 @@ private abbrev CanonicalPrincipalOperator
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -161,33 +123,6 @@ private abbrev CanonicalPrincipalOperator
           (CanonicalSameAction period hPeriod einsteinScale hTransverse family))) :=
   globalCandidateAReducedPrincipalOperator period hPeriod configuration data
     analysis
-    (CanonicalChart period hPeriod einsteinScale hTransverse family)
-    (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
-    (CanonicalPhysical period hPeriod einsteinScale hTransverse family chartBound)
-
-private abbrev CanonicalPrincipalForm
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
-    {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace}
-    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
-    (einsteinScale : Real)
-    (hTransverse : HasNoTangentialRadical period hPeriod
-      data.plusGravity.metric.metric)
-    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
-        (diracGreenClosureMatterRealization period hPeriod
-          couplings.matterMassSquared) einsteinScale)
-    (chartBound : DenseCoreChartMapBound
-      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
-        data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (CanonicalChart period hPeriod einsteinScale hTransverse family)
-          (CanonicalSameAction period hPeriod einsteinScale hTransverse family))) :=
-  globalCandidateAReducedPrincipalForm period hPeriod configuration data analysis
     (CanonicalChart period hPeriod einsteinScale hTransverse family)
     (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
     (CanonicalPhysical period hPeriod einsteinScale hTransverse family chartBound)
@@ -206,6 +141,7 @@ structure GlobalCandidateAFiveSectorCanonicalOperatorGapData4D
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -221,7 +157,7 @@ structure GlobalCandidateAFiveSectorCanonicalOperatorGapData4D
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
-    [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary] : Prop where
+    [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary] where
   geometry : GlobalCandidateAFiveSectorActualHessianOffDiagonalZero4D period
     hPeriod configuration data analysis
       (CanonicalChart period hPeriod einsteinScale hTransverse family)
@@ -283,6 +219,7 @@ def principalOperatorGarding
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -335,6 +272,7 @@ theorem principalOperator_form_eq
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -367,62 +305,6 @@ theorem principalOperator_form_eq
     (CanonicalPhysical period hPeriod einsteinScale hTransverse family chartBound)
     first second
 
-/-- Operator-remainder norm controls the canonical form remainder norm. -/
-theorem offDiagonalForm_norm_le_operator
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
-    {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace}
-    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
-    {einsteinScale : Real}
-    {hTransverse : HasNoTangentialRadical period hPeriod
-      data.plusGravity.metric.metric}
-    {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
-        (diracGreenClosureMatterRealization period hPeriod
-          couplings.matterMassSquared) einsteinScale}
-    {chartBound : DenseCoreChartMapBound
-      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
-        data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (CanonicalChart period hPeriod einsteinScale hTransverse family)
-          (CanonicalSameAction period hPeriod einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
-    [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
-    [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
-    [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
-    [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
-    [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    (input : GlobalCandidateAFiveSectorCanonicalOperatorGapData4D period hPeriod
-      configuration data analysis einsteinScale hTransverse family chartBound
-        Metric Abelian Matter Longitudinal Boundary) :
-    ‖CanonicalPrincipalForm period hPeriod einsteinScale hTransverse family
-        chartBound -
-      ∑ sector : CandidateAZeroModeSector,
-        (CanonicalPrincipalForm period hPeriod einsteinScale hTransverse family
-          chartBound).bilinearComp
-          (input.geometry.reducedResolution.projection sector)
-          (input.geometry.reducedResolution.projection sector)‖ ≤
-      ‖input.principalOperatorGarding.offDiagonalOperator‖ := by
-  have hGeneric :
-      ‖operatorBilinearForm
-          (CanonicalPrincipalOperator period hPeriod einsteinScale hTransverse
-            family chartBound) -
-        ∑ sector : CandidateAZeroModeSector,
-          (operatorBilinearForm
-            (CanonicalPrincipalOperator period hPeriod einsteinScale hTransverse
-              family chartBound)).bilinearComp
-            (input.geometry.reducedResolution.projection sector)
-            (input.geometry.reducedResolution.projection sector)‖ ≤
-        ‖input.principalOperatorGarding.offDiagonalOperator‖ := by
-    rw [input.principalOperatorGarding.offDiagonalOperator_form]
-    exact operatorBilinearForm_norm_le
-      input.principalOperatorGarding.offDiagonalOperator
-  simpa [input.principalOperator_form_eq period hPeriod] using hGeneric
-
 /-- Convert the operator-level frontier to the canonical form-level gap packet. -/
 def toCanonicalGap
     {couplings : GlobalCandidateAActionCouplings}
@@ -436,6 +318,7 @@ def toCanonicalGap
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -469,17 +352,30 @@ def toCanonicalGap
       (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
       (CanonicalPhysical period hPeriod einsteinScale hTransverse family chartBound)]
     exact input.diagonal_lower sector vector
-  offDiagonal_small := by
-    exact lt_of_le_of_lt
-      (input.offDiagonalForm_norm_le_operator period hPeriod)
-      (by simpa [FiniteProjectionOperatorOffDiagonalGardingData.offDiagonalOperator,
-          FiniteProjectionOperatorOffDiagonalGardingData.diagonalOperator]
-        using input.offDiagonalOperator_small)
-  canonicalPhysical_small := by
-    apply lt_of_lt_of_le input.canonicalPhysical_small
-    exact sub_le_sub_left
-      (input.offDiagonalForm_norm_le_operator period hPeriod)
-      input.diagonalConstants.sectorFloor
+  offDiagonalConstant := ‖input.principalOperatorGarding.offDiagonalOperator‖
+  offDiagonalConstant_nonneg := norm_nonneg _
+  offDiagonal_bound := by
+    intro vector
+    rw [← input.principalOperator_form_eq period hPeriod]
+    have hResolution :
+        input.principalOperatorGarding.resolution =
+          CanonicalReducedResolution period hPeriod einsteinScale hTransverse
+            family chartBound input.geometry := rfl
+    rw [← hResolution]
+    change |((operatorBilinearForm
+        (CanonicalPrincipalOperator period hPeriod einsteinScale hTransverse
+          family chartBound) -
+      ∑ sector : CandidateAZeroModeSector,
+        (operatorBilinearForm
+          (CanonicalPrincipalOperator period hPeriod einsteinScale hTransverse
+            family chartBound)).bilinearComp
+              (input.principalOperatorGarding.resolution.projection sector)
+              (input.principalOperatorGarding.resolution.projection sector))
+        vector) vector| ≤ _
+    rw [input.principalOperatorGarding.offDiagonalOperator_form]
+    exact input.principalOperatorGarding.toFiniteSectorGarding.coupling_bound vector
+  offDiagonal_small := input.offDiagonalOperator_small
+  canonicalPhysical_small := input.canonicalPhysical_small
   ll_stationary := input.ll_stationary
 
 /-- Actual-kernel gap from the projected reduced principal operator estimates. -/
@@ -495,6 +391,7 @@ def toActualKernelGap
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -529,6 +426,7 @@ theorem global_candidateA_five_sector_canonical_operator_gap_gate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}

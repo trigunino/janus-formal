@@ -30,14 +30,23 @@ open scoped BigOperators Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicMellinZetaFrontier4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicMellinZetaFrontier4D.GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFrontier4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
@@ -46,6 +55,15 @@ open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -67,6 +85,8 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 /-- Differentiable zeta family anchored at the intrinsic preferred scalar
 frontier. -/
 structure GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
@@ -81,6 +101,7 @@ structure GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -99,7 +120,7 @@ structure GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   basepoint : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFrontier4D
     period hPeriod configuration data analysis einsteinScale hTransverse family
       chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode
@@ -121,6 +142,7 @@ def mellinFamily
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -139,7 +161,7 @@ def mellinFamily
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) :=
@@ -159,6 +181,7 @@ def toPresentationFamily
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -177,7 +200,7 @@ def toPresentationFamily
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) :
@@ -200,6 +223,7 @@ theorem determinant_zero_eq_intrinsic_basepoint
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -218,7 +242,7 @@ theorem determinant_zero_eq_intrinsic_basepoint
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) :
@@ -239,6 +263,7 @@ structure GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamilyOutput4D
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -257,12 +282,13 @@ structure GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamilyOutput4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) : Prop where
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) where
   intrinsicBasepoint :
-    GlobalHessianPreferredFiveSectorIntrinsicMellinZetaOutput4D input.basepoint
+    GlobalHessianPreferredFiveSectorIntrinsicMellinZetaOutput4D
+      (period := period) (hPeriod := hPeriod) input.basepoint
   determinantAnchor :
     relativeHeatMellinZetaFamilyDeterminant input.mellinFamily 0 =
       input.basepoint.determinant
@@ -291,6 +317,7 @@ def close
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -309,11 +336,12 @@ def close
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) :
-    GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamilyOutput4D input where
+    GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamilyOutput4D
+      (period := period) (hPeriod := hPeriod) input where
   intrinsicBasepoint := input.basepoint.close
   determinantAnchor := input.determinant_zero_eq_intrinsic_basepoint
   metricVariation :=
@@ -322,7 +350,7 @@ def close
     relativeHeatMellinZetaFamily_phase_norm_one input.mellinFamily
 
 /-- Public intrinsic family checkpoint. -/
-theorem global_hessian_preferred_five_sector_intrinsic_mellin_zeta_family_gate
+def global_hessian_preferred_five_sector_intrinsic_mellin_zeta_family_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -334,6 +362,7 @@ theorem global_hessian_preferred_five_sector_intrinsic_mellin_zeta_family_gate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -352,11 +381,12 @@ theorem global_hessian_preferred_five_sector_intrinsic_mellin_zeta_family_gate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode) :
-    GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamilyOutput4D input :=
+    GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamilyOutput4D
+      (period := period) (hPeriod := hPeriod) input :=
   input.close
 
 end GlobalHessianPreferredFiveSectorIntrinsicMellinZetaFamily4D

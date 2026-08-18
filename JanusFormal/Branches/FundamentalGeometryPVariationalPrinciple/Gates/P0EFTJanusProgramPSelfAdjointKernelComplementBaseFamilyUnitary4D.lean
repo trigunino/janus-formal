@@ -12,8 +12,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementBaseFamilyTrivialization4D
 
 variable {Base E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev ReducedFiber
     (operator : Base → E →L[Real] E) (base : Base) :=
@@ -63,8 +62,12 @@ theorem transportedReducedOperator_isSelfAdjoint
             (transport first) (transport second)
     _ = inner Real first
         (transport.symm (reduced (transport second))) := by
-      simpa using data.transport_inner base first
-        (transport.symm (reduced (transport second)))
+      calc
+        _ = inner Real (transport first)
+            (transport (transport.symm (reduced (transport second)))) := by
+          rw [transport.apply_symm_apply]
+        _ = _ := data.transport_inner base first
+          (transport.symm (reduced (transport second)))
     _ = inner Real first
         (data.transportedReducedOperator base second) := rfl
 
@@ -77,8 +80,8 @@ theorem transportedReducedOperator_anchor
     (data : SelfAdjointKernelComplementBaseFamilyTrivializationData
       operator hSelfAdjoint anchor) :
     data.transportedReducedOperator anchor = data.currentReducedOperator anchor := by
-  rw [SelfAdjointKernelComplementBaseFamilyTrivializationData.
-      transportedReducedOperator, data.transport_anchor]
+  unfold SelfAdjointKernelComplementBaseFamilyTrivializationData.transportedReducedOperator
+  rw [data.transport_anchor]
   ext vector
   rfl
 
@@ -91,8 +94,8 @@ theorem self_adjoint_kernel_complement_base_family_unitary_gate
       operator hSelfAdjoint anchor) :
     (∀ base, IsSelfAdjoint (data.transportedReducedOperator base)) ∧
     data.transportedReducedOperator anchor = data.currentReducedOperator anchor :=
-  ⟨data.transportedReducedOperator_isSelfAdjoint,
-    data.transportedReducedOperator_anchor⟩
+  ⟨transportedReducedOperator_isSelfAdjoint data,
+    transportedReducedOperator_anchor data⟩
 
 end SelfAdjointKernelComplementBaseFamilyTrivializationData
 

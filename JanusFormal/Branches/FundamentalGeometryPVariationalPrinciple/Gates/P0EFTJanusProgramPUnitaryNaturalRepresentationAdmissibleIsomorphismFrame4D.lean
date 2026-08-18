@@ -217,15 +217,14 @@ theorem unitary_natural_representation_admissible_isomorphism_frame_gate
         coordinates.sectorProjector sector
           (data.frame representation coordinates refinement pullback parameter
             state)) ∧
-    FiniteUnitaryIntertwiningOperatorFrameData operator :=
+    Nonempty (FiniteUnitaryIntertwiningOperatorFrameData operator) :=
   ⟨fun parameter state =>
-      (data.frame representation coordinates refinement pullback parameter).
-        norm_map state,
+      (data.frame representation coordinates refinement pullback parameter).norm_map state,
     data.frame_intertwines representation coordinates refinement pullback,
     data.frame_commutes_sectorProjector representation coordinates refinement
       pullback,
-    data.toFiniteUnitaryIntertwiningOperatorFrame representation coordinates
-      refinement pullback⟩
+    ⟨data.toFiniteUnitaryIntertwiningOperatorFrame representation coordinates
+      refinement pullback⟩⟩
 
 end UnitaryNaturalRepresentationAdmissibleIsomorphismFrameData
 

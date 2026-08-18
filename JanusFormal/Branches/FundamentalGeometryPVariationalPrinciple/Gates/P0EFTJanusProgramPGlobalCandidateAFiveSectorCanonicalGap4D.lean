@@ -58,6 +58,7 @@ open P0EFTJanusProgramPGlobalCandidateAFiveSectorCommutingActualKernelGap4D
 open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPCandidateAFiveSectorCommutingActualKernelGap4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
+open P0EFTJanusProgramPKernelComplementAmbientForms4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
@@ -96,7 +97,7 @@ local instance effectiveQuotientBorelSpace :
 
 variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
-private abbrev CanonicalChart
+abbrev CanonicalChart
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -115,7 +116,7 @@ private abbrev CanonicalChart
   globalCandidateAActualKernelChart period hPeriod configuration data analysis
     einsteinScale hTransverse family
 
-private abbrev CanonicalSameAction
+abbrev CanonicalSameAction
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -134,7 +135,7 @@ private abbrev CanonicalSameAction
   globalCandidateAActualKernelSameAction period hPeriod configuration data
     analysis einsteinScale hTransverse family
 
-private abbrev CanonicalPhysical
+abbrev CanonicalPhysical
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -214,7 +215,7 @@ private abbrev CanonicalComplement
   SelfAdjointKernelComplement
     (CanonicalOperator period hPeriod einsteinScale hTransverse family chartBound)
 
-private abbrev CanonicalPrincipalForm
+abbrev CanonicalPrincipalForm
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -242,7 +243,7 @@ private abbrev CanonicalPrincipalForm
     (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
     (CanonicalPhysical period hPeriod einsteinScale hTransverse family chartBound)
 
-private abbrev CanonicalReducedResolution
+abbrev CanonicalReducedResolution
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -439,26 +440,63 @@ private def toGenericGap
       globalCandidateACanonicalReducedPhysicalEnergy_bound period hPeriod
         configuration data analysis einsteinScale hTransverse family chartBound
     physical_small := input.canonicalPhysical_small
-    totalEnergy := globalCandidateAReducedTotalEnergy period hPeriod
-      configuration data analysis
-      (CanonicalChart period hPeriod einsteinScale hTransverse family)
-      (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
-      (CanonicalPhysical period hPeriod einsteinScale hTransverse family
-        chartBound)
-    total_eq := globalCandidateAReducedTotalEnergy_eq period hPeriod
-      configuration data analysis
-      (CanonicalChart period hPeriod einsteinScale hTransverse family)
-      (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
-      (CanonicalPhysical period hPeriod einsteinScale hTransverse family
-        chartBound)
+    totalEnergy := fun vector => inner Real vector
+      (selfAdjointKernelComplementOperator
+        (CanonicalOperator period hPeriod einsteinScale hTransverse family
+          chartBound)
+        (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
+          configuration data analysis
+          (CanonicalChart period hPeriod einsteinScale hTransverse family)
+          (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
+          (CanonicalPhysical period hPeriod einsteinScale hTransverse family
+            chartBound)) vector)
+    total_eq := by
+      intro vector
+      calc
+        inner Real vector
+            (selfAdjointKernelComplementOperator
+              (CanonicalOperator period hPeriod einsteinScale hTransverse family
+                chartBound)
+              (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
+                configuration data analysis
+                (CanonicalChart period hPeriod einsteinScale hTransverse family)
+                (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
+                (CanonicalPhysical period hPeriod einsteinScale hTransverse family
+                  chartBound)) vector) =
+          globalCandidateAReducedTotalEnergy period hPeriod configuration data
+            analysis
+            (CanonicalChart period hPeriod einsteinScale hTransverse family)
+            (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
+            (CanonicalPhysical period hPeriod einsteinScale hTransverse family
+              chartBound) vector := by
+                change inner Real vector.1
+                    ((CanonicalOperator period hPeriod einsteinScale hTransverse
+                      family chartBound) vector.1) = _
+                rw [real_inner_comm]
+                exact globalCandidateACommonAugmentedRieszOperator_pairing period
+                  hPeriod configuration data analysis
+                  (CanonicalChart period hPeriod einsteinScale hTransverse family)
+                  (CanonicalSameAction period hPeriod einsteinScale hTransverse
+                    family)
+                  (CanonicalPhysical period hPeriod einsteinScale hTransverse
+                    family chartBound) vector.1 vector.1
+        _ = _ := globalCandidateAReducedTotalEnergy_eq period hPeriod
+          configuration data analysis
+          (CanonicalChart period hPeriod einsteinScale hTransverse family)
+          (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
+          (CanonicalPhysical period hPeriod einsteinScale hTransverse family
+            chartBound) vector
     energy_upper := by
       intro vector
-      convert globalCandidateAReducedTotalEnergy_upper period hPeriod configuration
-        data analysis
-        (CanonicalChart period hPeriod einsteinScale hTransverse family)
-        (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
-        (CanonicalPhysical period hPeriod einsteinScale hTransverse family
-          chartBound) vector using 1 <;> rfl
+      exact selfAdjointKernelComplement_energy_upper
+        (CanonicalOperator period hPeriod einsteinScale hTransverse family
+          chartBound)
+        (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
+          configuration data analysis
+          (CanonicalChart period hPeriod einsteinScale hTransverse family)
+          (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
+          (CanonicalPhysical period hPeriod einsteinScale hTransverse family
+            chartBound)) vector
 
 /-- Insert the canonical reduced forms and the explicit H11 constant into the
 previous commuting five-sector gap interface. -/

@@ -30,22 +30,36 @@ set_option synthInstance.maxHeartbeats 11000000
 
 noncomputable section
 
+universe w
+
 open Set Topology MeasureTheory
 open scoped BigOperators Manifold ContDiff InnerProductSpace
 open P0EFTJanusCircleQuillenMetricFlatConnection
+open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.GlobalHessianPreferredFiveSectorBismutFreedFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicQuillenClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSpectralCutReferenceAtlas4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSpectralCutReferenceAtlas4D.GlobalHessianPreferredFiveSectorSpectralCutReferenceAtlas4D
 open P0EFTJanusProgramPIntrinsicBismutFreedReferenceAtlas4D
 open P0EFTJanusProgramPIntrinsicRelativeTraceReferenceCocycle4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
@@ -55,6 +69,16 @@ open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 open P0EFTJanusProgramPSelfAdjointUniformGapFamilyResolvent4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -76,6 +100,21 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
+local instance (priority := 40000) preferredCandidateAHilbertModule
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*} [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    Module Real
+      (GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+        configuration data analysis) :=
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+    period hPeriod configuration data analysis
+
 /-- Terminal family-index certificate. -/
 structure GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D
     {couplings : GlobalCandidateAActionCouplings}
@@ -89,6 +128,7 @@ structure GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -107,19 +147,21 @@ structure GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
-    {fold : Fold} {Index : Type*}
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {fold : Fold} {Index : Type w}
     (input : GlobalHessianPreferredFiveSectorSpectralCutReferenceAtlas4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index) : Prop where
+          Index) where
   spectralCut :
-    GlobalHessianPreferredFiveSectorSpectralCutReferenceAtlasOutput4D input
+    GlobalHessianPreferredFiveSectorSpectralCutReferenceAtlasOutput4D
+      (period := period) (hPeriod := hPeriod) input
   baseFamily :
-    GlobalHessianPreferredFiveSectorBismutFreedFamilyOutput4D input.baseFamily
+    GlobalHessianPreferredFiveSectorBismutFreedFamilyOutput4D
+      (period := period) (hPeriod := hPeriod) input.baseFamily
   intrinsicQuillen :
     GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D
-      input.generatedQuillenAtlas
+      (period := period) (hPeriod := hPeriod) input.generatedQuillenAtlas
   baseDeterminant :
     input.referenceAtlas.localDeterminant
         input.baseFamily.quillen.baseIndex 0 =
@@ -183,6 +225,7 @@ def globalHessianPreferredFiveSectorFamilyIndexClosureCertificate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -201,23 +244,24 @@ def globalHessianPreferredFiveSectorFamilyIndexClosureCertificate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
-    {fold : Fold} {Index : Type*}
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {fold : Fold} {Index : Type w}
     (input : GlobalHessianPreferredFiveSectorSpectralCutReferenceAtlas4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index) :
-    GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D input where
+    GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D
+      (period := period) (hPeriod := hPeriod) input where
   spectralCut := input.close
   baseFamily := input.baseFamily.close
   intrinsicQuillen :=
     globalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate
-      input.generatedQuillenAtlas
+      (period := period) (hPeriod := hPeriod) input.generatedQuillenAtlas
   baseDeterminant := input.baseDeterminant_eq_intrinsic period hPeriod
   noReducedCrossing := input.baseFamily.noCrossing
   uniformResolvent :=
-    input.baseFamily.familyIndex.actualDifferentiable.analytic.
-      uniformGapFamilyResolvent_opNorm_le
+    uniformGapFamilyResolvent_opNorm_le
+      input.baseFamily.familyIndex.actualDifferentiable.analytic
   localLogDerivative :=
     input.referenceAtlas.finitePart_logDerivative_eq_localTrace
   referenceTraceCocycle := input.operatorCocycle.referenceChangeTrace_cocycle
@@ -230,7 +274,7 @@ def globalHessianPreferredFiveSectorFamilyIndexClosureCertificate
   phaseHolonomy := input.baseFamily.toCircleTraceBridge.closedHolonomy_eq_phase_ratio
 
 /-- Public terminal preferred family-index checkpoint. -/
-theorem global_hessian_preferred_five_sector_family_index_closure_gate
+def global_hessian_preferred_five_sector_family_index_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -242,6 +286,7 @@ theorem global_hessian_preferred_five_sector_family_index_closure_gate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -260,14 +305,16 @@ theorem global_hessian_preferred_five_sector_family_index_closure_gate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
-    {fold : Fold} {Index : Type*}
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {fold : Fold} {Index : Type w}
     (input : GlobalHessianPreferredFiveSectorSpectralCutReferenceAtlas4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index) :
-    GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D input :=
-  globalHessianPreferredFiveSectorFamilyIndexClosureCertificate input
+    GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D
+      (period := period) (hPeriod := hPeriod) input :=
+  globalHessianPreferredFiveSectorFamilyIndexClosureCertificate
+    (period := period) (hPeriod := hPeriod) input
 
 end
 end P0EFTJanusProgramPGlobalHessianPreferredFiveSectorFamilyIndexClosure4D

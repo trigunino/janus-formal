@@ -33,6 +33,7 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
@@ -41,6 +42,13 @@ open P0EFTJanusProgramPSymmetryCurveHessianKernel4D
 open P0EFTJanusProgramPStationarySymmetryCurveHessianKernel4D
 open P0EFTJanusProgramPGlobalCandidateASymmetryCurveZeroModes4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -70,77 +78,7 @@ private abbrev StationaryHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) stationaryNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (StationaryHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stationaryInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (StationaryHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stationaryNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (StationaryHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stationaryModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (StationaryHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stationaryCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (StationaryHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- The base point of the common augmented quadratic action is stationary. -/
 theorem globalCandidateACommonAugmentedAction_zero_stationary
@@ -162,6 +100,10 @@ theorem globalCandidateACommonAugmentedAction_zero_stationary
       (globalCandidateACommonAugmentedAction period hPeriod configuration data
         analysis chart sameAction physical)
       (0 : StationaryHilbert period hPeriod configuration data analysis) = 0 := by
+  change fderiv Real
+    (globalCandidateACommonAugmentedAction period hPeriod configuration data
+      analysis chart sameAction physical)
+    (0 : CommonAugmentedHilbert period hPeriod configuration data analysis) = 0
   rw [globalCandidateACommonAugmentedAction_fderiv period hPeriod configuration
     data analysis chart sameAction physical 0]
   simp
@@ -182,7 +124,7 @@ structure GlobalCandidateAStationarySymmetryCurves4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → StationaryHilbert period hPeriod configuration data analysis
   orbit : ∀ mode,
     SymmetryCurveAt
@@ -244,7 +186,7 @@ structure GlobalCandidateAStationarySymmetryAutomaticSplit4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   stationaryCurves : GlobalCandidateAStationarySymmetryCurves4D period hPeriod
     configuration data analysis chart sameAction physical ZeroMode
   linearIndependent : LinearIndependent Real
@@ -261,12 +203,12 @@ structure GlobalCandidateAStationarySymmetryAutomaticSplit4D
   garding : ∀ current :
       StationaryHilbert period hPeriod configuration data analysis,
     constant * ‖current‖ ^ 2 ≤
-      ⟪current,
-        globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis chart sameAction physical current, Real⟫ +
+      inner Real current
+        (globalCandidateAActualKernelOperator period hPeriod configuration data
+          analysis chart sameAction physical current) +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, stationaryCurves.vector mode, Real⟫ ^ 2
+            (inner Real current (stationaryCurves.vector mode)) ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -302,7 +244,7 @@ def GlobalCandidateAStationarySymmetryAutomaticSplit4D.toCurveAutomaticSplit
   ll_stationary := input.ll_stationary
 
 /-- Public Jacobi-field Candidate-A checkpoint. -/
-theorem global_candidateA_stationary_symmetry_zero_mode_gate
+def global_candidateA_stationary_symmetry_zero_mode_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

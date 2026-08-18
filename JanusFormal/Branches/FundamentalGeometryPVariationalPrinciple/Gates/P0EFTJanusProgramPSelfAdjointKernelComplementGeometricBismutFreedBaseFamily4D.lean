@@ -32,8 +32,7 @@ open P0EFTJanusProgramPDifferentiableOperatorGeometricBismutFreedComparison4D
 
 variable {Base E : Type*}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev AnchorReduced
     (actual : Base → E →L[Real] E) (anchor : Base) :=
@@ -43,11 +42,11 @@ private abbrev AnchorReduced
 kernel complements of one ambient actual family. -/
 structure SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
     (actual : Base → E →L[Real] E)
+    (anchor : Base)
     (reference : Base → AnchorReduced actual anchor →L[Real]
-      AnchorReduced actual anchor)
-    (anchor : Base) where
+      AnchorReduced actual anchor) where
   analytic : SelfAdjointKernelComplementBismutFreedBaseFamilyData
-    actual reference anchor
+    actual anchor reference
   geometric : DifferentiableLinearGeometricBismutFreedOneFormData Base
   oneForm_agreement : ∀ base direction,
     geometric.geometry.oneForm base direction =
@@ -67,11 +66,11 @@ namespace SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
 operator/geometric comparison. -/
 def toDifferentiableOperatorGeometricComparison
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
-      actual reference anchor) :
+      actual anchor reference) :
     DifferentiableOperatorGeometricBismutFreedComparisonData
       data.analytic.actualGap.fixedOperator reference where
   operator := data.analytic.trace
@@ -82,11 +81,11 @@ def toDifferentiableOperatorGeometricComparison
 /-- Full differential families-index comparison. -/
 def toDifferentialFamiliesIndexComparison
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
-      actual reference anchor) :
+      actual anchor reference) :
     DifferentialFamiliesIndexComparisonData
       data.analytic.actualGap.fixedOperator reference where
   comparison := data.toDifferentiableOperatorGeometricComparison
@@ -96,11 +95,11 @@ def toDifferentialFamiliesIndexComparison
 /-- BF curvature equals the complexified intrinsic operator-trace curvature. -/
 theorem curvature_eq_operatorTrace
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
-      actual reference anchor)
+      actual anchor reference)
     (base first second : Base) :
     data.geometric.curvature base first second =
       ((data.analytic.trace.bismutFreedTraceCurvature base first second : Real) :
@@ -111,11 +110,11 @@ theorem curvature_eq_operatorTrace
 /-- Local families-index form equals the same intrinsic trace curvature. -/
 theorem localIndex_eq_operatorTraceCurvature
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
-      actual reference anchor)
+      actual anchor reference)
     (base first second : Base) :
     data.localIndex.twoForm base first second =
       ((data.analytic.trace.bismutFreedTraceCurvature base first second : Real) :
@@ -126,11 +125,11 @@ theorem localIndex_eq_operatorTraceCurvature
 /-- Public genuine-ambient-family multidimensional BF checkpoint. -/
 theorem self_adjoint_kernel_complement_geometric_bismut_freed_base_family_gate
     (actual : Base → E →L[Real] E)
+    (anchor : Base)
     (reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor)
-    (anchor : Base)
     (data : SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
-      actual reference anchor) :
+      actual anchor reference) :
     (∀ base direction,
       data.geometric.geometry.oneForm base direction =
         ((data.analytic.bismutFreedRealOneForm base direction : Real) : Complex)) ∧

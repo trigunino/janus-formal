@@ -69,7 +69,7 @@ def ActualKernelHilbert
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) : Type :=
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 

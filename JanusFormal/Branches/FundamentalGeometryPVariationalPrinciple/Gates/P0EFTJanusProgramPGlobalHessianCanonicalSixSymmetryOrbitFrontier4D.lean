@@ -24,6 +24,12 @@ set_option synthInstance.maxHeartbeats 6400000
 
 noncomputable section
 
+universe u
+
+private def proofData {P : Prop} (proof : P) {Data : Sort u} (data : Data) :
+    PSigma (fun _ : P => Data) :=
+  ⟨proof, data⟩
+
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
@@ -39,12 +45,23 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10RobinProjectionCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAInfinitesimalSymmetryZeroModes4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixDenseCoreFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixProjectionCoreFrontier4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -81,7 +98,7 @@ def global_candidateA_hessian_canonicalSix_symmetryOrbit_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (projection : GlobalCandidateAH10RobinProjectionCoreData4D period hPeriod
@@ -124,7 +141,7 @@ def global_candidateA_hessian_canonicalSix_symmetryOrbit_frontier_gate
   let zeroModeCertificate :=
     global_candidateA_infinitesimal_symmetry_zero_mode_gate period hPeriod
       symmetries
-  (closure, zeroModeCertificate)
+  proofData closure zeroModeCertificate
 
 /-- All named vectors returned by the terminal input are actual zero modes, and
 their number is the exact kernel dimension. -/
@@ -141,7 +158,7 @@ theorem global_candidateA_hessian_canonicalSix_symmetryOrbit_exact_kernel
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (projection : GlobalCandidateAH10RobinProjectionCoreData4D period hPeriod

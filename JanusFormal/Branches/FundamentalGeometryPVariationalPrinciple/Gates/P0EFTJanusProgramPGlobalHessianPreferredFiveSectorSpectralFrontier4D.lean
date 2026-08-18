@@ -36,25 +36,45 @@ open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalSmallness4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorCanonicalOperatorFrontier4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelClosure4D.GlobalHessianPreferredFiveSectorNamedKernelClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14Certificate4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14Certificate4D.GlobalHessianPreferredFiveSectorNamedKernelClosure4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelExponential4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelRelativeTrace4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementExponential4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementExponentialCompactNoGo4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeHeat4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeTrace4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -76,6 +96,8 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 private abbrev CanonicalChart
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -88,10 +110,12 @@ private abbrev CanonicalChart
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAActualKernelChart period hPeriod configuration data analysis
+  globalCandidateAActualKernelChart period hPeriod (measure := measure)
+    configuration data analysis
     einsteinScale hTransverse family
 
 private abbrev CanonicalSameAction
@@ -106,10 +130,12 @@ private abbrev CanonicalSameAction
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAActualKernelSameAction period hPeriod configuration data
+  globalCandidateAActualKernelSameAction period hPeriod (measure := measure)
+    configuration data
     analysis einsteinScale hTransverse family
 
 private abbrev CanonicalPhysical
@@ -124,6 +150,7 @@ private abbrev CanonicalPhysical
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -135,7 +162,8 @@ private abbrev CanonicalPhysical
           (CanonicalChart period hPeriod einsteinScale hTransverse family)
           (CanonicalSameAction period hPeriod einsteinScale hTransverse family))) :=
   globalCandidateACanonicalSixPhysicalExtension_of_chartBound period hPeriod
-    configuration data analysis einsteinScale hTransverse family chartBound
+    (measure := measure) configuration data analysis einsteinScale hTransverse
+      family chartBound
 
 private abbrev CanonicalOperator
     {couplings : GlobalCandidateAActionCouplings}
@@ -149,6 +177,7 @@ private abbrev CanonicalOperator
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -159,7 +188,8 @@ private abbrev CanonicalOperator
         analysis
           (CanonicalChart period hPeriod einsteinScale hTransverse family)
           (CanonicalSameAction period hPeriod einsteinScale hTransverse family))) :=
-  globalCandidateAActualKernelOperator period hPeriod configuration data analysis
+  globalCandidateAActualKernelOperator period hPeriod (measure := measure)
+    configuration data analysis
     (CanonicalChart period hPeriod einsteinScale hTransverse family)
     (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
     (CanonicalPhysical period hPeriod einsteinScale hTransverse family chartBound)
@@ -177,6 +207,7 @@ structure GlobalHessianPreferredFiveSectorSpectralFrontier4D
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -193,11 +224,12 @@ structure GlobalHessianPreferredFiveSectorSpectralFrontier4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   closure : GlobalHessianPreferredFiveSectorNamedKernelClosure4D period hPeriod
     configuration data analysis einsteinScale hTransverse family chartBound
       Metric Abelian Matter Longitudinal Boundary ZeroMode
-  relativeTrace : GlobalCandidateAActualKernelRelativeTraceData4D period hPeriod
+  relativeTrace : GlobalCandidateAActualKernelRelativeTraceData4D.{_, _, 0, 0}
+    period hPeriod
     configuration data analysis
       (CanonicalChart period hPeriod einsteinScale hTransverse family)
       (CanonicalSameAction period hPeriod einsteinScale hTransverse family)
@@ -216,6 +248,7 @@ structure GlobalHessianPreferredFiveSectorSpectralFrontierOutput4D
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -232,10 +265,10 @@ structure GlobalHessianPreferredFiveSectorSpectralFrontierOutput4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (frontier : GlobalHessianPreferredFiveSectorSpectralFrontier4D period hPeriod
       configuration data analysis einsteinScale hTransverse family chartBound
-        Metric Abelian Matter Longitudinal Boundary ZeroMode) : Prop where
+        Metric Abelian Matter Longitudinal Boundary ZeroMode) where
   h14 : GlobalHessianPreferredFiveSectorH14Certificate4D period hPeriod
     configuration data analysis einsteinScale hTransverse family chartBound
       Metric Abelian Matter Longitudinal Boundary ZeroMode frontier.closure
@@ -292,6 +325,7 @@ def close
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -308,14 +342,14 @@ def close
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (frontier : GlobalHessianPreferredFiveSectorSpectralFrontier4D period hPeriod
       configuration data analysis einsteinScale hTransverse family chartBound
         Metric Abelian Matter Longitudinal Boundary ZeroMode) :
     GlobalHessianPreferredFiveSectorSpectralFrontierOutput4D period hPeriod
       configuration data analysis einsteinScale hTransverse family chartBound
         Metric Abelian Matter Longitudinal Boundary ZeroMode frontier where
-  h14 := frontier.closure.toH14Certificate
+  h14 := toH14Certificate period hPeriod frontier.closure
   exponential := globalCandidateAActualKernelExponentialCertificate period hPeriod
     configuration data analysis
     (CanonicalChart period hPeriod einsteinScale hTransverse family)
@@ -351,7 +385,7 @@ def close
       frontier.relativeTrace
 
 /-- Public preferred spectral-frontier checkpoint. -/
-theorem global_hessian_preferred_five_sector_spectral_frontier_gate
+def global_hessian_preferred_five_sector_spectral_frontier_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -363,6 +397,7 @@ theorem global_hessian_preferred_five_sector_spectral_frontier_gate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -379,7 +414,7 @@ theorem global_hessian_preferred_five_sector_spectral_frontier_gate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (frontier : GlobalHessianPreferredFiveSectorSpectralFrontier4D period hPeriod
       configuration data analysis einsteinScale hTransverse family chartBound
         Metric Abelian Matter Longitudinal Boundary ZeroMode) :

@@ -34,22 +34,45 @@ noncomputable section
 open Set Topology MeasureTheory
 open scoped BigOperators Manifold ContDiff InnerProductSpace
 open P0EFTJanusCircleQuillenMetricFlatConnection
+open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicQuillenAtlas4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicQuillenAtlas4D.GlobalHessianPreferredFiveSectorIntrinsicQuillenAtlas4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicTraceFrontier4D.GlobalHessianPreferredFiveSectorIntrinsicTraceFrontier4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorQuillenClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorQuillenHolonomy4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
+open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
+open P0EFTJanusProgramPRelativeZetaCircleHolonomyPhase4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -71,6 +94,8 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 /-- Terminal intrinsic H14--Quillen certificate. -/
 structure GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D
     {couplings : GlobalCandidateAActionCouplings}
@@ -84,6 +109,7 @@ structure GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -102,23 +128,25 @@ structure GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
     (input : GlobalHessianPreferredFiveSectorIntrinsicQuillenAtlas4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index) : Prop where
+          Index) where
   intrinsicAtlas :
-    GlobalHessianPreferredFiveSectorIntrinsicQuillenAtlasOutput4D input
+    GlobalHessianPreferredFiveSectorIntrinsicQuillenAtlasOutput4D
+      (period := period) (hPeriod := hPeriod) input
   intrinsicTrace :
     GlobalHessianPreferredFiveSectorIntrinsicTraceFrontierOutput4D
-      input.intrinsicFamily.basepoint.intrinsic
+      (period := period) (hPeriod := hPeriod)
+        input.intrinsicFamily.basepoint.intrinsic
   quillenClosure :
     GlobalHessianPreferredFiveSectorQuillenClosureCertificate4D
-      input.toPresentationAtlas
+      (period := period) (hPeriod := hPeriod) input.toPresentationAtlas
   quillenHolonomy :
     GlobalHessianPreferredFiveSectorQuillenHolonomyCertificate4D
-      input.toPresentationAtlas
+      (period := period) (hPeriod := hPeriod) input.toPresentationAtlas
   basepointDeterminant :
     relativeZetaLocalDeterminant input.atlas input.baseIndex 0 =
       input.intrinsicFamily.basepoint.determinant
@@ -142,6 +170,7 @@ def globalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -160,22 +189,25 @@ def globalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
     (input : GlobalHessianPreferredFiveSectorIntrinsicQuillenAtlas4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index) :
-    GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D input where
+    GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D
+      (period := period) (hPeriod := hPeriod) input where
   intrinsicAtlas := input.close
   intrinsicTrace := input.intrinsicFamily.basepoint.intrinsic.close
   quillenClosure :=
     globalHessianPreferredFiveSectorQuillenClosureCertificate
-      input.toPresentationAtlas
+      (period := period) (hPeriod := hPeriod) input.toPresentationAtlas
   quillenHolonomy :=
     globalHessianPreferredFiveSectorQuillenHolonomyCertificate
-      input.toPresentationAtlas
+      (period := period) (hPeriod := hPeriod) input.toPresentationAtlas
   basepointDeterminant := by
+    change relativeZetaLocalDeterminant input.toGeneric.atlas
+      input.toGeneric.baseIndex 0 = input.intrinsicFamily.basepoint.determinant
     rw [input.toGeneric.atlas_basepoint_eq_scalar]
     rfl
   phaseHolonomy :=
@@ -183,7 +215,7 @@ def globalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate
       input.intrinsicFamily.mellinFamily input.circleBridge
 
 /-- Public terminal intrinsic H14--Quillen checkpoint. -/
-theorem global_hessian_preferred_five_sector_intrinsic_quillen_closure_gate
+def global_hessian_preferred_five_sector_intrinsic_quillen_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -195,6 +227,7 @@ theorem global_hessian_preferred_five_sector_intrinsic_quillen_closure_gate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -213,14 +246,16 @@ theorem global_hessian_preferred_five_sector_intrinsic_quillen_closure_gate
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
     (input : GlobalHessianPreferredFiveSectorIntrinsicQuillenAtlas4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index) :
-    GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D input :=
-  globalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate input
+    GlobalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate4D
+      (period := period) (hPeriod := hPeriod) input :=
+  globalHessianPreferredFiveSectorIntrinsicQuillenClosureCertificate
+    (period := period) (hPeriod := hPeriod) input
 
 end
 end P0EFTJanusProgramPGlobalHessianPreferredFiveSectorIntrinsicQuillenClosure4D

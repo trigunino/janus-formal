@@ -20,8 +20,7 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {Base E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev ReducedFiber
     (operator : Base → E →L[Real] E) (base : Base) :=

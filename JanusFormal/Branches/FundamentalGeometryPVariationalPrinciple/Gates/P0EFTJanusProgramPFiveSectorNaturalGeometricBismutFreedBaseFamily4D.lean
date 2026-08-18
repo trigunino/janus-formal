@@ -35,8 +35,7 @@ open P0EFTJanusNaturalEllipticFamilyExistence
 variable
   {Base State Metric Abelian Matter Longitudinal Boundary : Type*}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup State] [NormedSpace Real State]
-  [InnerProductSpace Real State] [CompleteSpace State]
+  [NormedAddCommGroup State] [InnerProductSpace Real State] [CompleteSpace State]
   [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
   [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
   [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
@@ -55,41 +54,41 @@ structure FiveSectorNaturalGeometricBismutFreedBaseFamilyData
     (coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary))
+    (anchor : Base)
     (reference : Base → AnchorReduced operator anchor →L[Real]
-      AnchorReduced operator anchor)
-    (anchor : Base) where
+      AnchorReduced operator anchor) where
   natural : FiveSectorNaturalLinearBaseFamilyData
     (family := family) operator coordinates
   bismutFreed : SelfAdjointKernelComplementGeometricBismutFreedBaseFamilyData
-    operator reference anchor
+    operator anchor reference
 
 namespace FiveSectorNaturalGeometricBismutFreedBaseFamilyData
 
 /-- The single ambient family is D11-natural and exactly componentwise. -/
-theorem operator_blockFormula
+def operator_blockFormula
     {operator : Base → State →L[Real] State}
     {coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary)}
+    {anchor : Base}
     {reference : Base → AnchorReduced operator anchor →L[Real]
       AnchorReduced operator anchor}
-    {anchor : Base}
     (data : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
-      (family := family) operator coordinates reference anchor) :=
+      (family := family) operator coordinates anchor reference) :=
   data.natural.operator_blockFormula
 
 /-- Every member of the same ambient BF family commutes with all five physical
 projectors. -/
-theorem operator_commutes_sectorProjector
+def operator_commutes_sectorProjector
     {operator : Base → State →L[Real] State}
     {coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary)}
+    {anchor : Base}
     {reference : Base → AnchorReduced operator anchor →L[Real]
       AnchorReduced operator anchor}
-    {anchor : Base}
     (data : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
-      (family := family) operator coordinates reference anchor) :=
+      (family := family) operator coordinates anchor reference) :=
   data.natural.operator_commutes_sectorProjector
 
 /-- Geometric BF one-form is the intrinsic trace one-form of the genuine
@@ -99,11 +98,11 @@ theorem oneForm_eq_operatorTrace
     {coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary)}
+    {anchor : Base}
     {reference : Base → AnchorReduced operator anchor →L[Real]
       AnchorReduced operator anchor}
-    {anchor : Base}
     (data : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
-      (family := family) operator coordinates reference anchor)
+      (family := family) operator coordinates anchor reference)
     (base direction : Base) :
     data.bismutFreed.geometric.geometry.oneForm base direction =
       ((data.bismutFreed.analytic.bismutFreedRealOneForm base direction : Real) :
@@ -116,11 +115,11 @@ theorem curvature_eq_localIndex
     {coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary)}
+    {anchor : Base}
     {reference : Base → AnchorReduced operator anchor →L[Real]
       AnchorReduced operator anchor}
-    {anchor : Base}
     (data : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
-      (family := family) operator coordinates reference anchor)
+      (family := family) operator coordinates anchor reference)
     (base first second : Base) :
     data.bismutFreed.geometric.curvature base first second =
       data.bismutFreed.localIndex.twoForm base first second :=
@@ -132,11 +131,11 @@ theorem localIndex_eq_operatorTraceCurvature
     {coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary)}
+    {anchor : Base}
     {reference : Base → AnchorReduced operator anchor →L[Real]
       AnchorReduced operator anchor}
-    {anchor : Base}
     (data : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
-      (family := family) operator coordinates reference anchor)
+      (family := family) operator coordinates anchor reference)
     (base first second : Base) :
     data.bismutFreed.localIndex.twoForm base first second =
       ((data.bismutFreed.analytic.trace.bismutFreedTraceCurvature
@@ -149,11 +148,11 @@ theorem five_sector_natural_geometric_bismut_freed_base_family_gate
     (coordinates : FiveSectorHilbertCoordinates
       (E := State) (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
       (Longitudinal := Longitudinal) (Boundary := Boundary))
+    (anchor : Base)
     (reference : Base → AnchorReduced operator anchor →L[Real]
       AnchorReduced operator anchor)
-    (anchor : Base)
     (data : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
-      (family := family) operator coordinates reference anchor) :
+      (family := family) operator coordinates anchor reference) :
     (∀ base sector state,
       operator base (coordinates.sectorProjector sector state) =
         coordinates.sectorProjector sector (operator base state)) ∧

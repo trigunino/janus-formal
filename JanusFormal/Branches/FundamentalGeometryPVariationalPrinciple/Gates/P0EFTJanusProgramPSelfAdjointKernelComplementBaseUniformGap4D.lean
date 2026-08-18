@@ -20,11 +20,11 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementBaseFamilyTrivialization4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementBaseFamilyUnitary4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementBaseFamilyUnitary4D.SelfAdjointKernelComplementBaseFamilyTrivializationData
 open P0EFTJanusProgramPSelfAdjointUniformGapBaseFamily4D
 
 variable {Base E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev ReducedFiber
     (operator : Base → E →L[Real] E) (base : Base) :=
@@ -63,7 +63,7 @@ def toUniformGapBaseFamily
     (data : SelfAdjointKernelComplementBaseUniformGapTrivializationData
       operator hSelfAdjoint anchor) :
     SelfAdjointUniformGapBaseFamilyData data.fixedOperator where
-  selfAdjoint := data.trivialization.transportedReducedOperator_isSelfAdjoint
+  selfAdjoint := transportedReducedOperator_isSelfAdjoint data.trivialization
   gap := data.gap
   gap_pos := data.gap_pos
   lowerBound := by
@@ -77,7 +77,7 @@ def toUniformGapBaseFamily
           (data.trivialization.transport base vector)‖ := hCurrent
       _ = ‖data.fixedOperator base vector‖ := by
         symm
-        exact data.trivialization.transport_symm_norm base
+        exact transport_symm_norm data.trivialization base
           (data.trivialization.currentReducedOperator base
             (data.trivialization.transport base vector))
 

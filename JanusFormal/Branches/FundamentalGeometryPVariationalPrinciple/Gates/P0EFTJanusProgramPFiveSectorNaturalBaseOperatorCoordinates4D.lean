@@ -18,6 +18,7 @@ open P0EFTJanusProgramPNaturalEllipticOperatorBaseRepresentation4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPFiveSectorNaturalBaseRepresentation4D
 open P0EFTJanusProgramPFiveSectorNaturalBaseOperatorFactorization4D
+open P0EFTJanusProgramPFiveSectorNaturalBaseOperatorFactorization4D.FiveSectorNaturalBaseOperatorFactorizationData
 open P0EFTJanusNaturalEllipticFamilyExistence
 
 variable
@@ -308,16 +309,16 @@ theorem representedNaturalOperator_blockFormula
   have hDecompose := fiveSector_axis_decomposition
     (coordinates.decomposition
       (representation.representedNaturalOperator parameter state))
-  rw [data.representedNaturalOperator_metricCoordinate representation coordinates
-      refinement parameter state,
-    data.representedNaturalOperator_abelianCoordinate representation coordinates
-      refinement parameter state,
-    data.representedNaturalOperator_matterCoordinate representation coordinates
-      refinement parameter state,
-    data.representedNaturalOperator_longitudinalCoordinate representation coordinates
-      refinement parameter state,
-    data.representedNaturalOperator_boundaryCoordinate representation coordinates
-      refinement parameter state] at hDecompose
+  rw [representedNaturalOperator_metricCoordinate representation coordinates
+      refinement data parameter state,
+    representedNaturalOperator_abelianCoordinate representation coordinates
+      refinement data parameter state,
+    representedNaturalOperator_matterCoordinate representation coordinates
+      refinement data parameter state,
+    representedNaturalOperator_longitudinalCoordinate representation coordinates
+      refinement data parameter state,
+    representedNaturalOperator_boundaryCoordinate representation coordinates
+      refinement data parameter state] at hDecompose
   exact hDecompose.symm
 
 /-- Public arbitrary-base represented block-formula checkpoint. -/
@@ -349,7 +350,7 @@ theorem five_sector_natural_base_operator_coordinates_gate
           fiveSectorBoundaryAxis
             (data.representedBoundaryBlock representation coordinates refinement
               parameter (fiveSectorBoundaryCoordinate (coordinates.decomposition state))) :=
-  data.representedNaturalOperator_blockFormula representation coordinates refinement
+  representedNaturalOperator_blockFormula representation coordinates refinement data
 
 end FiveSectorNaturalBaseOperatorFactorizationData
 

@@ -19,16 +19,17 @@ namespace P0EFTJanusProgramPSelfAdjointKernelComplementBismutFreedBaseFamily4D
 set_option autoImplicit false
 noncomputable section
 
+universe b e
+
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementBaseUniformGap4D
 open P0EFTJanusProgramPSelfAdjointUniformGapBaseFamily4D
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTraceOneForm4D
 open P0EFTJanusProgramPDifferentiableIntrinsicTraceOneForm4D
 
-variable {Base E : Type*}
+variable {Base : Type b} {E : Type e}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 private abbrev AnchorReduced
     (actual : Base → E →L[Real] E) (anchor : Base) :=
@@ -38,13 +39,13 @@ private abbrev AnchorReduced
 true kernel complements of the ambient actual family. -/
 structure SelfAdjointKernelComplementBismutFreedBaseFamilyData
     (actual : Base → E →L[Real] E)
+    (anchor : Base)
     (reference : Base → AnchorReduced actual anchor →L[Real]
-      AnchorReduced actual anchor)
-    (anchor : Base) where
+      AnchorReduced actual anchor) where
   actual_selfAdjoint : ∀ base, IsSelfAdjoint (actual base)
   actualGap : SelfAdjointKernelComplementBaseUniformGapTrivializationData
     actual actual_selfAdjoint anchor
-  trace : DifferentiableRelativeIntrinsicTraceOneFormData
+  trace : DifferentiableRelativeIntrinsicTraceOneFormData.{b, e, 0}
     actualGap.fixedOperator reference
   actual_analytic_eq :
     trace.trace.actualTrace.family.analytic =
@@ -56,11 +57,11 @@ namespace SelfAdjointKernelComplementBismutFreedBaseFamilyData
 transported kernel-complement Green family. -/
 theorem actual_green_eq_genuine
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementBismutFreedBaseFamilyData
-      actual reference anchor)
+      actual anchor reference)
     (base : Base) :
     data.trace.trace.actualTrace.family.analytic.green base =
       data.actualGap.fixedGreen base := by
@@ -70,21 +71,21 @@ theorem actual_green_eq_genuine
 /-- Genuine reduced actual operator used by the multidimensional trace. -/
 def actualReducedOperator
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementBismutFreedBaseFamilyData
-      actual reference anchor) :=
+      actual anchor reference) :=
   data.actualGap.fixedOperator
 
 /-- Intrinsic relative BF trace one-form. -/
 def bismutFreedRealOneForm
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementBismutFreedBaseFamilyData
-      actual reference anchor)
+      actual anchor reference)
     (base : Base) : Base →L[Real] Real :=
   data.trace.trace.bismutFreedRealOneForm base
 
@@ -92,22 +93,22 @@ def bismutFreedRealOneForm
 derivative. -/
 def traceCurvature
     {actual : Base → E →L[Real] E}
+    {anchor : Base}
     {reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor}
-    {anchor : Base}
     (data : SelfAdjointKernelComplementBismutFreedBaseFamilyData
-      actual reference anchor)
+      actual anchor reference)
     (base first second : Base) : Real :=
   data.trace.bismutFreedTraceCurvature base first second
 
 /-- Public genuine-kernel multidimensional trace checkpoint. -/
 theorem self_adjoint_kernel_complement_bismut_freed_base_family_gate
     (actual : Base → E →L[Real] E)
+    (anchor : Base)
     (reference : Base → AnchorReduced actual anchor →L[Real]
       AnchorReduced actual anchor)
-    (anchor : Base)
     (data : SelfAdjointKernelComplementBismutFreedBaseFamilyData
-      actual reference anchor) :
+      actual anchor reference) :
     (∀ base,
       data.trace.trace.actualTrace.family.analytic.green base =
         data.actualGap.fixedGreen base) ∧

@@ -44,6 +44,13 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeHeat4D
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -168,7 +175,7 @@ theorem globalCandidateAActualKernelRelativeHeatTrace_toRelativeTraceData
 
 /-- Every certified rank-one presentation computes the intrinsic Candidate-A
 trace. -/
-theorem globalCandidateAActualKernelIntrinsicRelativeHeatTrace_expansion_eq
+def globalCandidateAActualKernelIntrinsicRelativeHeatTrace_expansion_eq
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -186,16 +193,13 @@ theorem globalCandidateAActualKernelIntrinsicRelativeHeatTrace_expansion_eq
     (relative : GlobalCandidateAActualKernelIntrinsicRelativeTraceData4D period
       hPeriod configuration data analysis chart sameAction physical)
     (time : HeatTime)
-    (expansion : SummableRankOneOperatorExpansion
+    (expansion : SummableRankOneOperatorExpansion.{0, _}
       (selfAdjointKernelComplementRelativeHeatDifference
         (globalCandidateAActualKernelOperator period hPeriod configuration data
           analysis chart sameAction physical)
         (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
           configuration data analysis chart sameAction physical)
-        relative.referenceOperator time)) :
-    expansion.expansionTrace =
-      globalCandidateAActualKernelIntrinsicRelativeHeatTrace period hPeriod
-        configuration data analysis chart sameAction physical relative time :=
+        relative.referenceOperator time)) :=
   relative.expansionTrace_eq
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -204,7 +208,7 @@ theorem globalCandidateAActualKernelIntrinsicRelativeHeatTrace_expansion_eq
     time expansion
 
 /-- Public intrinsic Candidate-A actual-kernel trace checkpoint. -/
-theorem global_candidateA_actual_kernel_intrinsic_relative_trace_gate
+def global_candidateA_actual_kernel_intrinsic_relative_trace_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -220,27 +224,7 @@ theorem global_candidateA_actual_kernel_intrinsic_relative_trace_gate
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
     (relative : GlobalCandidateAActualKernelIntrinsicRelativeTraceData4D period
-      hPeriod configuration data analysis chart sameAction physical) :
-    (∀ time : HeatTime,
-      IsCompactOperator
-        (selfAdjointKernelComplementRelativeHeatDifference
-          (globalCandidateAActualKernelOperator period hPeriod configuration data
-            analysis chart sameAction physical)
-          (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
-            configuration data analysis chart sameAction physical)
-          relative.referenceOperator time)) ∧
-      (∀ time : HeatTime,
-        ∀ expansion : SummableRankOneOperatorExpansion
-          (selfAdjointKernelComplementRelativeHeatDifference
-            (globalCandidateAActualKernelOperator period hPeriod configuration
-              data analysis chart sameAction physical)
-            (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
-              configuration data analysis chart sameAction physical)
-            relative.referenceOperator time),
-          expansion.expansionTrace =
-            globalCandidateAActualKernelIntrinsicRelativeHeatTrace period hPeriod
-              configuration data analysis chart sameAction physical relative
-                time) :=
+      hPeriod configuration data analysis chart sameAction physical) :=
   self_adjoint_kernel_complement_intrinsic_relative_trace_gate
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)

@@ -36,11 +36,11 @@ open P0EFTJanusProgramPCandidateAFiveSectorProductResolutionAdapter4D
 open P0EFTJanusProgramPCandidateAFiveSectorProductOffDiagonalGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable
   {E Metric Abelian Matter Longitudinal Boundary : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
   [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
   [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
   [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
@@ -64,11 +64,12 @@ operator norm. -/
 theorem operatorBilinearForm_norm_le
     (operator : E →L[Real] E) :
     ‖operatorBilinearForm operator‖ ≤ ‖operator‖ := by
-  apply ContinuousLinearMap.opNorm_le_bound (norm_nonneg operator)
+  apply (operatorBilinearForm operator).opNorm_le_bound (norm_nonneg operator)
   intro first
   calc
     ‖operatorBilinearForm operator first‖ ≤ ‖operator first‖ := by
-      apply ContinuousLinearMap.opNorm_le_bound (norm_nonneg (operator first))
+      apply (operatorBilinearForm operator first).opNorm_le_bound
+        (norm_nonneg (operator first))
       intro second
       change ‖inner Real (operator first) second‖ ≤
         ‖operator first‖ * ‖second‖
@@ -90,18 +91,18 @@ structure CandidateAFiveSectorProductOperatorOffDiagonalGardingData
           sector vector‖ ^ 2 ≤
       inner Real
         (operator
-          ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).
-            projection sector vector))
-        ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).
-          projection sector vector)
+          ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).projection
+            sector vector))
+        ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).projection
+          sector vector)
   offDiagonalOperator_small :
     ‖operator -
       ∑ sector : CandidateAZeroModeSector,
-        ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).
-          projection sector).comp
+        ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).projection
+          sector).comp
           (operator.comp
-            ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).
-              projection sector))‖ <
+            ((candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates).projection
+              sector))‖ <
       diagonalConstants.sectorFloor
 
 namespace CandidateAFiveSectorProductOperatorOffDiagonalGardingData
@@ -149,7 +150,11 @@ theorem diagonalOperator_form
   ext first second
   simp only [diagonalOperator, operatorBilinearForm_apply,
     ContinuousLinearMap.sum_apply, ContinuousLinearMap.comp_apply,
-    ContinuousLinearMap.bilinearComp_apply, inner_sum_left]
+    ContinuousLinearMap.bilinearComp_apply]
+  change ((innerSL Real).flip second)
+      (∑ sector, data.resolution.projection sector
+        (operator (data.resolution.projection sector first))) = _
+  rw [map_sum]
   apply Finset.sum_congr rfl
   intro sector _
   exact data.resolution.projection_symmetric sector
@@ -170,7 +175,10 @@ theorem offDiagonalOperator_form
       operatorBilinearForm data.offDiagonalOperator := by
   rw [← data.diagonalOperator_form]
   ext first second
-  rfl
+  simp only [operatorBilinearForm_apply, ContinuousLinearMap.sub_apply,
+    offDiagonalOperator]
+  exact (inner_sub_left (operator first) (data.diagonalOperator first)
+    second).symm
 
 /-- Operator remainder smallness implies the exact off-diagonal form
 smallness required by principal Gårding. -/

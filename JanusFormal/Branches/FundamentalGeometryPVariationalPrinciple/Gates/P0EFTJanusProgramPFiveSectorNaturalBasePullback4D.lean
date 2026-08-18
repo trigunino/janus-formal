@@ -80,8 +80,12 @@ theorem source_mem_sector
     representation.representedSourcePullback morphism state ∈
       coordinates.sectorSubspace sector := by
   refine ⟨representation.representedSourcePullback morphism state, ?_⟩
-  rw [data.source_commutes morphism sector state]
-  rw [coordinates.sectorProjector_eq_self_of_mem sector hState]
+  calc
+    _ = representation.representedSourcePullback morphism
+        (coordinates.sectorProjector sector state) :=
+      data.source_commutes morphism sector state
+    _ = representation.representedSourcePullback morphism state := by
+      rw [coordinates.sectorProjector_eq_self_of_mem sector hState]
 
 /-- Target pullback preserves every physical sector range. -/
 theorem target_mem_sector
@@ -101,8 +105,12 @@ theorem target_mem_sector
     representation.representedTargetPullback morphism state ∈
       coordinates.sectorSubspace sector := by
   refine ⟨representation.representedTargetPullback morphism state, ?_⟩
-  rw [data.target_commutes morphism sector state]
-  rw [coordinates.sectorProjector_eq_self_of_mem sector hState]
+  calc
+    _ = representation.representedTargetPullback morphism
+        (coordinates.sectorProjector sector state) :=
+      data.target_commutes morphism sector state
+    _ = representation.representedTargetPullback morphism state := by
+      rw [coordinates.sectorProjector_eq_self_of_mem sector hState]
 
 /-- Public arbitrary-base pullback covariance checkpoint. -/
 theorem five_sector_natural_base_pullback_gate

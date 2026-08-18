@@ -20,6 +20,8 @@ namespace P0EFTJanusProgramPFiveSectorNaturalLinearBaseFamily4D
 set_option autoImplicit false
 noncomputable section
 
+universe p s m a q l b
+
 open P0EFTJanusProgramPNaturalEllipticOperatorBaseRepresentation4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPFiveSectorHilbertProjectorCoordinates4D
@@ -27,11 +29,14 @@ open P0EFTJanusProgramPFiveSectorComponentwiseProductMap4D
 open P0EFTJanusProgramPFiveSectorNaturalBaseRepresentation4D
 open P0EFTJanusProgramPFiveSectorNaturalBaseOperatorFactorization4D
 open P0EFTJanusProgramPFiveSectorNaturalBaseOperatorCoordinates4D
+open P0EFTJanusProgramPFiveSectorNaturalBaseOperatorCoordinates4D.FiveSectorNaturalBaseOperatorFactorizationData
 open P0EFTJanusProgramPFiveSectorNaturalBasePullback4D
 open P0EFTJanusNaturalEllipticFamilyExistence
 
 variable
-  {Parameter State Metric Abelian Matter Longitudinal Boundary : Type*}
+  {Parameter : Type p} {State : Type s} {Metric : Type m}
+  {Abelian : Type a} {Matter : Type q} {Longitudinal : Type l}
+  {Boundary : Type b}
   [NormedAddCommGroup State] [InnerProductSpace Real State]
   [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
   [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
@@ -51,10 +56,13 @@ structure FiveSectorNaturalLinearBaseFamilyData
   representation : NaturalEllipticOperatorBaseRepresentationData
     Parameter State immersionCategory family (fun parameter state =>
       operator parameter state)
-  refinement : FiveSectorNaturalBaseRepresentationData representation coordinates
-  factorization : FiveSectorNaturalBaseOperatorFactorizationData
+  refinement : FiveSectorNaturalBaseRepresentationData.{p, s, m, a, q, l, b,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0} representation coordinates
+  factorization : FiveSectorNaturalBaseOperatorFactorizationData.{p, s, m, a,
+    q, l, b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     representation coordinates refinement
-  pullback : FiveSectorNaturalBasePullbackData representation coordinates refinement
+  pullback : FiveSectorNaturalBasePullbackData.{p, s, m, a, q, l, b,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0} representation coordinates refinement
 
 namespace FiveSectorNaturalLinearBaseFamilyData
 
@@ -88,9 +96,10 @@ theorem operator_blockFormula
           (data.factorization.representedBoundaryBlock data.representation coordinates
             data.refinement parameter
             (fiveSectorBoundaryCoordinate (coordinates.decomposition state))) := by
-  rw [← data.representation.representedNaturalOperator_eq parameter]
-  exact data.factorization.representedNaturalOperator_blockFormula
-    data.representation coordinates data.refinement parameter state
+  have h := representedNaturalOperator_blockFormula data.representation coordinates
+    data.refinement data.factorization parameter state
+  rw [data.representation.representedNaturalOperator_eq parameter] at h
+  exact h
 
 private theorem metricBlock_zero
     {operator : Parameter → State →L[Real] State}
@@ -102,8 +111,8 @@ private theorem metricBlock_zero
     (parameter : Parameter) :
     data.factorization.representedMetricBlock data.representation coordinates
         data.refinement parameter 0 = 0 := by
-  have h := data.factorization.representedNaturalOperator_metricCoordinate
-    data.representation coordinates data.refinement parameter (0 : State)
+  have h := representedNaturalOperator_metricCoordinate data.representation
+    coordinates data.refinement data.factorization parameter (0 : State)
   rw [data.representation.representedNaturalOperator_eq parameter] at h
   simpa using h.symm
 
@@ -117,8 +126,8 @@ private theorem abelianBlock_zero
     (parameter : Parameter) :
     data.factorization.representedAbelianBlock data.representation coordinates
         data.refinement parameter 0 = 0 := by
-  have h := data.factorization.representedNaturalOperator_abelianCoordinate
-    data.representation coordinates data.refinement parameter (0 : State)
+  have h := representedNaturalOperator_abelianCoordinate data.representation
+    coordinates data.refinement data.factorization parameter (0 : State)
   rw [data.representation.representedNaturalOperator_eq parameter] at h
   simpa using h.symm
 
@@ -132,8 +141,8 @@ private theorem matterBlock_zero
     (parameter : Parameter) :
     data.factorization.representedMatterBlock data.representation coordinates
         data.refinement parameter 0 = 0 := by
-  have h := data.factorization.representedNaturalOperator_matterCoordinate
-    data.representation coordinates data.refinement parameter (0 : State)
+  have h := representedNaturalOperator_matterCoordinate data.representation
+    coordinates data.refinement data.factorization parameter (0 : State)
   rw [data.representation.representedNaturalOperator_eq parameter] at h
   simpa using h.symm
 
@@ -147,8 +156,8 @@ private theorem longitudinalBlock_zero
     (parameter : Parameter) :
     data.factorization.representedLongitudinalBlock data.representation coordinates
         data.refinement parameter 0 = 0 := by
-  have h := data.factorization.representedNaturalOperator_longitudinalCoordinate
-    data.representation coordinates data.refinement parameter (0 : State)
+  have h := representedNaturalOperator_longitudinalCoordinate data.representation
+    coordinates data.refinement data.factorization parameter (0 : State)
   rw [data.representation.representedNaturalOperator_eq parameter] at h
   simpa using h.symm
 
@@ -162,8 +171,8 @@ private theorem boundaryBlock_zero
     (parameter : Parameter) :
     data.factorization.representedBoundaryBlock data.representation coordinates
         data.refinement parameter 0 = 0 := by
-  have h := data.factorization.representedNaturalOperator_boundaryCoordinate
-    data.representation coordinates data.refinement parameter (0 : State)
+  have h := representedNaturalOperator_boundaryCoordinate data.representation
+    coordinates data.refinement data.factorization parameter (0 : State)
   rw [data.representation.representedNaturalOperator_eq parameter] at h
   simpa using h.symm
 
@@ -189,9 +198,11 @@ private theorem operator_componentwise
           data.refinement parameter)
         (coordinates.decomposition state) := by
   rw [data.operator_blockFormula parameter state]
-  rcases coordinates.decomposition state with
-    ⟨metric, abelian, matter, longitudinal, boundary⟩
-  rfl
+  simp [fiveSectorComponentwiseMap, fiveSectorMetricCoordinate,
+    fiveSectorAbelianCoordinate, fiveSectorMatterCoordinate,
+    fiveSectorLongitudinalCoordinate, fiveSectorBoundaryCoordinate,
+    fiveSectorMetricAxis, fiveSectorAbelianAxis, fiveSectorMatterAxis,
+    fiveSectorLongitudinalAxis, fiveSectorBoundaryAxis]
 
 private theorem decomposition_sectorProjector_eq_raw
     {operator : Parameter → State →L[Real] State}
@@ -206,8 +217,11 @@ private theorem decomposition_sectorProjector_eq_raw
   cases sector <;>
     simp [fiveSectorProductProjector,
       FiveSectorHilbertCoordinates.decomposition_sectorProjector,
+      fiveSectorMetricCoordinate, fiveSectorAbelianCoordinate,
+      fiveSectorMatterCoordinate, fiveSectorLongitudinalCoordinate,
+      fiveSectorBoundaryCoordinate,
       fiveSectorMetricAxis, fiveSectorAbelianAxis, fiveSectorMatterAxis,
-      fiveSectorLongitudinalAxis, fiveSectorBoundaryAxis]
+      fiveSectorLongitudinalAxis, fiveSectorBoundaryAxis] <;> rfl
 
 /-- Every operator in the multidimensional D11 family commutes with all five
 physical projectors. -/
@@ -239,7 +253,8 @@ theorem operator_commutes_sectorProjector
     (data.matterBlock_zero parameter) (data.longitudinalBlock_zero parameter)
     (data.boundaryBlock_zero parameter)]
   rw [← data.operator_componentwise parameter state]
-  rw [← data.decomposition_sectorProjector_eq_raw sector state]
+  exact (data.decomposition_sectorProjector_eq_raw sector
+    (operator parameter state)).symm
 
 /-- Public multidimensional five-sector natural linear family checkpoint. -/
 theorem five_sector_natural_linear_base_family_gate

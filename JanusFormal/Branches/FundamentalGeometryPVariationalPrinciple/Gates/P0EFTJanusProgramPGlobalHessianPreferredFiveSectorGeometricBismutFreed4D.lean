@@ -28,18 +28,31 @@ set_option synthInstance.maxHeartbeats 16000000
 
 noncomputable section
 
+universe w x y
+
 open Set Topology MeasureTheory
 open scoped BigOperators Manifold ContDiff InnerProductSpace
+open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGeometricBismutFreedPathComparison4D
 open P0EFTJanusProgramPGeometricBismutFreedFullTensorComparison4D
@@ -47,6 +60,16 @@ open P0EFTJanusProgramPGeometricBismutFreedFamiliesIndexCurvature4D
 open P0EFTJanusNaturalFamilyQuillenBridge
 open P0EFTJanusQuillenFamilyCanonicity
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -66,6 +89,21 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
+local instance (priority := 40000) preferredCandidateAHilbertModule
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*} [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    Module Real
+      (GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+        configuration data analysis) :=
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+    period hPeriod configuration data analysis
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -78,6 +116,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -96,9 +135,9 @@ variable
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     [LinearOrder ZeroMode]
-    {fold : Fold} {Index Base Tangent : Type*}
+    {fold : Fold} {Index : Type w} {Base : Type x} {Tangent : Type y}
 
 /-- Preferred Candidate-A family plus the genuine geometric data needed to
 identify its operator trace connection with the D11 geometric
@@ -117,8 +156,8 @@ structure GlobalHessianPreferredFiveSectorGeometricBismutFreedComparison4D
   path : GeometricFamilyPathData Base Tangent
   coefficient_agreement : ∀ parameter,
     pulledGeometricCoefficient geometry path parameter =
-      input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.
-        bismutFreedCoefficient parameter
+      input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.bismutFreedCoefficient
+        parameter
   curvature : GeometricFamiliesIndexCurvatureData Base Tangent
 
 namespace GlobalHessianPreferredFiveSectorGeometricBismutFreedComparison4D
@@ -131,7 +170,7 @@ def toPathComparison
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
     (geometric : GlobalHessianPreferredFiveSectorGeometricBismutFreedComparison4D
       period hPeriod input Base Tangent) :
-    GeometricOperatorBismutFreedPathComparisonData
+    GeometricOperatorBismutFreedPathComparisonData.{0, 0, x, y}
       input.familyIndex.baseFamily.familyIndex.actualGap.fixedOperator
       input.familyIndex.baseFamily.referenceOperator Base Tangent where
   analyticFamily := geometric.analyticFamily
@@ -151,7 +190,7 @@ def toFamiliesIndexComparison
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
     (geometric : GlobalHessianPreferredFiveSectorGeometricBismutFreedComparison4D
       period hPeriod input Base Tangent) :
-    GeometricBismutFreedFamiliesIndexComparisonData
+    GeometricBismutFreedFamiliesIndexComparisonData.{0, 0, x, y}
       input.familyIndex.baseFamily.familyIndex.actualGap.fixedOperator
       input.familyIndex.baseFamily.referenceOperator Base Tangent where
   pathComparison := geometric.toPathComparison period hPeriod input

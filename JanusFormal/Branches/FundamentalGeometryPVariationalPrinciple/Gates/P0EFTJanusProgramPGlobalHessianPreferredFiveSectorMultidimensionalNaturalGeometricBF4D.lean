@@ -41,16 +41,34 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
+open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPFiveSectorNaturalGeometricBismutFreedBaseFamily4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPLinearGeometricBismutFreedOneForm4D
 open P0EFTJanusNaturalEllipticFamilyExistence
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -68,6 +86,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -80,7 +100,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -92,18 +112,24 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index Base : Type*}
     [NormedAddCommGroup Base] [NormedSpace Real Base]
 
-private abbrev CandidateAHilbert :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod
+private abbrev CandidateAHilbert
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*} [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
+  GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
     configuration data analysis
 
 private abbrev Coordinates
@@ -120,15 +146,16 @@ structure GlobalHessianPreferredFiveSectorMultidimensionalNaturalGeometricBFData
     (Base : Type*) [NormedAddCommGroup Base] [NormedSpace Real Base] where
   immersionCategory : P0EFTJanusSpinCImmersionCategory.SpinCImmersionCategory
   naturalFamily : NaturalEllipticOperatorFamily immersionCategory
-  ambientOperator : Base → CandidateAHilbert period hPeriod →L[Real]
-    CandidateAHilbert period hPeriod
+  ambientOperator : Base →
+    CandidateAHilbert period hPeriod configuration data analysis →L[Real]
+      CandidateAHilbert period hPeriod configuration data analysis
   anchor : Base
   reference : Base →
     SelfAdjointKernelComplement (ambientOperator anchor) →L[Real]
       SelfAdjointKernelComplement (ambientOperator anchor)
   multidimensional : FiveSectorNaturalGeometricBismutFreedBaseFamilyData
     (family := naturalFamily) ambientOperator (Coordinates period hPeriod input)
-      reference anchor
+      anchor reference
   path : DifferentiableGeometricFamilyPathData Base
   ambient_operator_restriction : ∀ parameter,
     ambientOperator (path.point parameter) =
@@ -136,8 +163,8 @@ structure GlobalHessianPreferredFiveSectorMultidimensionalNaturalGeometricBFData
   path_bismutFreed_restriction : ∀ parameter,
     pulledLinearGeometricCoefficient
         multidimensional.bismutFreed.geometric.geometry path parameter =
-      input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.
-        bismutFreedCoefficient parameter
+      input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.bismutFreedCoefficient
+        parameter
 
 namespace GlobalHessianPreferredFiveSectorMultidimensionalNaturalGeometricBFData4D
 
@@ -149,7 +176,7 @@ theorem ambientOperator_commutes_sectorProjector
     (closure : GlobalHessianPreferredFiveSectorMultidimensionalNaturalGeometricBFData4D
       period hPeriod input Base)
     (base : Base) (sector : FivePhysicalSector)
-    (state : CandidateAHilbert period hPeriod) :
+    (state : CandidateAHilbert period hPeriod configuration data analysis) :
     closure.ambientOperator base
         ((Coordinates period hPeriod input).sectorProjector sector state) =
       (Coordinates period hPeriod input).sectorProjector sector
@@ -180,8 +207,8 @@ theorem bismutFreed_on_path
     (parameter : Real) :
     pulledLinearGeometricCoefficient
         closure.multidimensional.bismutFreed.geometric.geometry closure.path parameter =
-      input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.
-        bismutFreedCoefficient parameter :=
+      input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.bismutFreedCoefficient
+        parameter :=
   closure.path_bismutFreed_restriction parameter
 
 /-- The higher-dimensional local index two-form is not independent of BF
@@ -195,8 +222,8 @@ theorem localIndex_eq_operatorTraceCurvature
       period hPeriod input Base)
     (base first second : Base) :
     closure.multidimensional.bismutFreed.localIndex.twoForm base first second =
-      ((closure.multidimensional.bismutFreed.analytic.trace.
-        bismutFreedTraceCurvature base first second : Real) : Complex) :=
+      ((closure.multidimensional.bismutFreed.analytic.trace.bismutFreedTraceCurvature
+        base first second : Real) : Complex) :=
   closure.multidimensional.localIndex_eq_operatorTraceCurvature base first second
 
 /-- Public genuine multidimensional Candidate-A checkpoint. -/
@@ -218,12 +245,12 @@ theorem global_hessian_preferred_five_sector_multidimensional_natural_geometric_
       pulledLinearGeometricCoefficient
           closure.multidimensional.bismutFreed.geometric.geometry closure.path
           parameter =
-        input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.
-          bismutFreedCoefficient parameter) ∧
+        input.familyIndex.baseFamily.familyIndex.toBismutFreed.operatorTrace.bismutFreedCoefficient
+          parameter) ∧
     (∀ base first second,
       closure.multidimensional.bismutFreed.localIndex.twoForm base first second =
-        ((closure.multidimensional.bismutFreed.analytic.trace.
-          bismutFreedTraceCurvature base first second : Real) : Complex)) :=
+        ((closure.multidimensional.bismutFreed.analytic.trace.bismutFreedTraceCurvature
+          base first second : Real) : Complex)) :=
   ⟨closure.ambientOperator_on_path period hPeriod input,
     closure.ambientOperator_commutes_sectorProjector period hPeriod input,
     closure.bismutFreed_on_path period hPeriod input,

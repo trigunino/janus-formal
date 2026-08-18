@@ -33,10 +33,11 @@ open P0EFTJanusProgramPCandidateAFiveSectorProductResolutionAdapter4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPFiniteSectorQuadraticGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable
   {E Metric Abelian Matter Longitudinal Boundary : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E] [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
   [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
   [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
   [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
@@ -145,7 +146,8 @@ def toFiniteSectorGarding
     exact data.diagonal_lower sector vector
   couplingEnergy := fun vector => data.offDiagonalForm vector vector
   couplingConstant := ‖data.offDiagonalForm‖
-  couplingConstant_nonneg := norm_nonneg _
+  couplingConstant_nonneg := by
+    exact norm_nonneg data.offDiagonalForm
   coupling_bound := data.offDiagonal_quadratic_bound
   coupling_small := by
     simpa [offDiagonalForm, diagonalForm, resolution] using data.offDiagonal_small
@@ -172,7 +174,8 @@ theorem candidateA_five_sector_product_offDiagonal_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.principalForm vector vector := by
-  simpa [margin, FiniteSectorQuadraticGardingData.margin] using
+  simpa [margin, toFiniteSectorGarding,
+    FiniteSectorQuadraticGardingData.margin] using
     data.toFiniteSectorGarding.finite_sector_quadratic_garding_gate
 
 end CandidateAFiveSectorProductOffDiagonalGardingData

@@ -36,8 +36,7 @@ open P0EFTJanusProgramPCandidateAFiveSectorProductOperatorOffDiagonalGarding4D
 
 variable {Sector E : Type*}
   [Fintype Sector] [DecidableEq Sector]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Finite inherited sector resolution with operator-level diagonal dominance. -/
 structure FiniteProjectionOperatorOffDiagonalGardingData
@@ -94,7 +93,11 @@ theorem diagonalOperator_form
   ext first second
   simp only [diagonalOperator, operatorBilinearForm_apply,
     ContinuousLinearMap.sum_apply, ContinuousLinearMap.comp_apply,
-    ContinuousLinearMap.bilinearComp_apply, inner_sum_left]
+    ContinuousLinearMap.bilinearComp_apply]
+  change ((innerSL Real).flip second)
+      (∑ sector, data.resolution.projection sector
+        (operator (data.resolution.projection sector first))) = _
+  rw [map_sum]
   apply Finset.sum_congr rfl
   intro sector _
   exact data.resolution.projection_symmetric sector
@@ -113,7 +116,10 @@ theorem offDiagonalOperator_form
       operatorBilinearForm data.offDiagonalOperator := by
   rw [← data.diagonalOperator_form]
   ext first second
-  rfl
+  simp only [operatorBilinearForm_apply, ContinuousLinearMap.sub_apply,
+    offDiagonalOperator]
+  exact (inner_sub_left (operator first) (data.diagonalOperator first)
+    second).symm
 
 /-- Operator smallness implies the canonical form smallness. -/
 theorem offDiagonalForm_small
@@ -161,7 +167,8 @@ def toFiniteSectorGarding
   couplingEnergy := fun vector =>
     operatorBilinearForm data.offDiagonalOperator vector vector
   couplingConstant := ‖data.offDiagonalOperator‖
-  couplingConstant_nonneg := norm_nonneg _
+  couplingConstant_nonneg := by
+    exact norm_nonneg data.offDiagonalOperator
   coupling_bound := by
     intro vector
     calc
@@ -183,7 +190,18 @@ def toFiniteSectorGarding
     have hForm := congrArg
       (fun form : E →L[Real] E →L[Real] Real => form vector vector)
       data.offDiagonalOperator_form
-    simpa [operatorBilinearForm_apply, offDiagonalOperator] using hForm.symm
+    have hOff :
+        inner Real (data.offDiagonalOperator vector) vector =
+          inner Real (operator vector) vector -
+            (∑ sector : Sector,
+              inner Real
+                (operator (data.resolution.projection sector vector))
+                (data.resolution.projection sector vector)) := by
+      simpa [operatorBilinearForm_apply, offDiagonalOperator] using hForm.symm
+    simp only [ContinuousLinearMap.sum_apply,
+      ContinuousLinearMap.bilinearComp_apply, operatorBilinearForm_apply]
+    rw [hOff]
+    ring
 
 /-- Explicit principal margin. -/
 def margin
@@ -200,7 +218,8 @@ theorem finite_projection_operator_offDiagonal_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ inner Real (operator vector) vector := by
-  simpa [margin, FiniteSectorQuadraticGardingData.margin] using
+  simpa [margin, toFiniteSectorGarding,
+    FiniteSectorQuadraticGardingData.margin] using
     data.toFiniteSectorGarding.finite_sector_quadratic_garding_gate
 
 end FiniteProjectionOperatorOffDiagonalGardingData

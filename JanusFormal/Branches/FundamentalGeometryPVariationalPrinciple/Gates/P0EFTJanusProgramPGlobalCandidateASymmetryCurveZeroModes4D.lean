@@ -34,6 +34,7 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
@@ -43,6 +44,13 @@ open P0EFTJanusProgramPFiniteKernelNamedModeNoHidden4D
 open P0EFTJanusProgramPFiniteKernelNamedModeAutomaticSplit4D
 open P0EFTJanusProgramPSymmetryCurveHessianKernel4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -72,73 +80,7 @@ private abbrev CurveHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) curveNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup (CurveHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) curveInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CurveHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) curveNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real (CurveHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) curveModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real (CurveHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) curveCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace (CurveHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- Finite family of genuine symmetry curves through the origin of the common
 Hilbert chart. -/
@@ -157,7 +99,7 @@ structure GlobalCandidateASymmetryCurveModes4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → CurveHilbert period hPeriod configuration data analysis
   orbit : ∀ mode,
     SymmetryCurveAt
@@ -214,9 +156,13 @@ theorem GlobalCandidateASymmetryCurveModes4D.hessian_apply_eq_zero
     (0 : CurveHilbert period hPeriod configuration data analysis)
     (modes.vector mode) (modes.orbit mode) hGradient
     (modes.gradient_curve_invariant mode)
-  rw [globalCandidateACommonAugmentedAction_second_fderiv period hPeriod
-    configuration data analysis chart sameAction physical 0] at hNoether
-  exact hNoether
+  have hSecond := congrArg
+    (fun derivative : CurveHilbert period hPeriod configuration data analysis →L[Real]
+        (CurveHilbert period hPeriod configuration data analysis →L[Real] Real) =>
+      derivative (modes.vector mode))
+    (globalCandidateACommonAugmentedAction_second_fderiv period hPeriod
+      configuration data analysis chart sameAction physical 0)
+  exact hSecond.symm.trans hNoether
 
 /-- General-curve symmetry vectors lie in the actual Riesz kernel. -/
 theorem GlobalCandidateASymmetryCurveModes4D.vector_annihilated
@@ -251,11 +197,19 @@ theorem GlobalCandidateASymmetryCurveModes4D.vector_annihilated
         globalCandidateACommonAugmentedHessian period hPeriod configuration data
           analysis chart sameAction physical (modes.vector mode)
             (operator (modes.vector mode)) := by
-          simpa [operator, globalCandidateAActualKernelOperator,
-            globalCandidateAFaithfulAugmentedRieszOperator] using
-            globalCandidateACommonAugmentedRieszOperator_pairing period hPeriod
-              configuration data analysis chart sameAction physical
-                (modes.vector mode) (operator (modes.vector mode))
+          change inner Real
+              (globalCandidateACommonAugmentedRieszOperator period hPeriod
+                configuration data analysis chart sameAction physical
+                  (modes.vector mode))
+              (globalCandidateACommonAugmentedRieszOperator period hPeriod
+                configuration data analysis chart sameAction physical
+                  (modes.vector mode)) = _
+          exact globalCandidateACommonAugmentedRieszOperator_pairing period
+            hPeriod configuration data analysis chart sameAction physical
+              (modes.vector mode)
+              (globalCandidateACommonAugmentedRieszOperator period hPeriod
+                configuration data analysis chart sameAction physical
+                  (modes.vector mode))
       _ = 0 := by rw [hForm]; simp
   have hNormSq : ‖operator (modes.vector mode)‖ ^ 2 = 0 := by
     rw [← real_inner_self_eq_norm_sq]
@@ -280,7 +234,7 @@ structure GlobalCandidateASymmetryCurveAutomaticSplit4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   curves : GlobalCandidateASymmetryCurveModes4D period hPeriod configuration
     data analysis chart sameAction physical ZeroMode
   linearIndependent : LinearIndependent Real
@@ -294,11 +248,11 @@ structure GlobalCandidateASymmetryCurveAutomaticSplit4D
   defectConstant_nonneg : 0 ≤ defectConstant
   garding : ∀ current : CurveHilbert period hPeriod configuration data analysis,
     constant * ‖current‖ ^ 2 ≤
-      ⟪current,
-        globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis chart sameAction physical current, Real⟫ +
+      inner Real current
+        (globalCandidateAActualKernelOperator period hPeriod configuration data
+          analysis chart sameAction physical current) +
         defectConstant *
-          ∑ mode : ZeroMode, ⟪current, curves.vector mode, Real⟫ ^ 2
+          ∑ mode : ZeroMode, (inner Real current (curves.vector mode)) ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -361,7 +315,7 @@ def GlobalCandidateASymmetryCurveAutomaticSplit4D.toActualKernelGap
   ll_stationary := input.ll_stationary
 
 /-- Public general-orbit Candidate-A checkpoint. -/
-theorem global_candidateA_symmetry_curve_zero_mode_gate
+def global_candidateA_symmetry_curve_zero_mode_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -379,8 +333,8 @@ theorem global_candidateA_symmetry_curve_zero_mode_gate
     {ZeroMode : Type*} [Fintype ZeroMode]
     (input : GlobalCandidateASymmetryCurveAutomaticSplit4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ : GlobalCandidateAActualKernelGap4D period hPeriod
+        configuration data analysis chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker = Fintype.card ZeroMode := by

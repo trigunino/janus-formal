@@ -42,15 +42,26 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorOrthogonalProduct4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorActualHessianCommutation4D
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -185,7 +196,7 @@ structure GlobalCandidateAFiveSectorActionSymmetryGenerators4D
     (geometry : GlobalCandidateAFiveSectorActualHessianOffDiagonalZero4D period
       hPeriod configuration data analysis chart sameAction physical Metric Abelian
         Matter Longitudinal Boundary)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   translations : GlobalCandidateAActionTranslationSymmetryModes4D period hPeriod
     configuration data analysis chart sameAction physical ZeroMode
   classification : CandidateAZeroModeSectorClassification ZeroMode
@@ -346,10 +357,7 @@ theorem projection_eq_zero_of_sector_ne
   have hComp := geometry.orthogonalResolution.toGeneric.projection_comp_zero
     (candidateAZeroModeSectorToFiveSectorSlot sector)
     (candidateAZeroModeSectorToFiveSectorSlot ownSector) hSlots
-  have hApplied := congrArg
-    (fun operator : CandidateAHilbert period hPeriod configuration data analysis
-        →L[Real] CandidateAHilbert period hPeriod configuration data analysis =>
-      operator vector) hComp
+  have hApplied := congrArg (fun operator => operator vector) hComp
   calc
     globalCandidateAFiveSectorOrthogonalProjection period hPeriod
         geometry.orthogonalResolution sector vector =
@@ -359,7 +367,12 @@ theorem projection_eq_zero_of_sector_ne
           geometry.orthogonalResolution ownSector vector) := by
       rw [input.sector_fixed mode]
     _ = 0 := by
-      simpa [globalCandidateAFiveSectorOrthogonalProjection] using hApplied
+      change
+        geometry.orthogonalResolution.toGeneric.projection
+            (candidateAZeroModeSectorToFiveSectorSlot sector)
+          (geometry.orthogonalResolution.toGeneric.projection
+            (candidateAZeroModeSectorToFiveSectorSlot ownSector) vector) = 0
+      simpa only [ContinuousLinearMap.comp_apply, zero_apply] using hApplied
 
 /-- Distinct-sector action generators are automatically orthogonal. -/
 theorem vectors_inner_eq_zero_of_sector_ne
@@ -397,26 +410,27 @@ theorem vectors_inner_eq_zero_of_sector_ne
         (input.translations.vector second) = 0 := by
   let firstSector := input.classification.sectorOf first
   let secondSector := input.classification.sectorOf second
-  let firstVector := input.translations.vector first
-  let secondVector := input.translations.vector second
   have hSlots :
       candidateAZeroModeSectorToFiveSectorSlot firstSector ≠
         candidateAZeroModeSectorToFiveSectorSlot secondSector := by
     intro hSame
     exact hDifferent (candidateASectorSlot_injective hSame)
   calc
-    inner Real firstVector secondVector =
+    inner Real (input.translations.vector first)
+        (input.translations.vector second) =
       inner Real
         (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
-          geometry.orthogonalResolution firstSector firstVector)
+          geometry.orthogonalResolution firstSector
+            (input.translations.vector first))
         (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
-          geometry.orthogonalResolution secondSector secondVector) := by
+          geometry.orthogonalResolution secondSector
+            (input.translations.vector second)) := by
       rw [input.sector_fixed first, input.sector_fixed second]
     _ = 0 :=
       geometry.orthogonalResolution.toGeneric.projection_orthogonal
         (candidateAZeroModeSectorToFiveSectorSlot firstSector)
         (candidateAZeroModeSectorToFiveSectorSlot secondSector)
-        hSlots firstVector secondVector
+        hSlots (input.translations.vector first) (input.translations.vector second)
 
 /-- Exact action invariance remains visible in the sector-refined packet. -/
 theorem action_translation_invariant

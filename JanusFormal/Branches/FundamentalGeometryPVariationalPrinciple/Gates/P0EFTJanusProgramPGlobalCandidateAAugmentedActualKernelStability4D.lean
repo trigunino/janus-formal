@@ -29,12 +29,21 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelResolvent4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementStability4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -135,6 +144,7 @@ local instance (priority := 30000) stabilityCompleteSpace
       (StabilityHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Candidate-A perturbation packet on the actual zero-mode complement. -/
 structure GlobalCandidateAActualKernelPerturbation4D
@@ -196,7 +206,7 @@ noncomputable def globalCandidateAActualKernelPerturbedGreen
     gap.gapData perturbation.perturbation perturbation.analytic
 
 /-- Public Candidate-A stability gate. -/
-theorem global_candidateA_actual_kernel_stability_gate
+def global_candidateA_actual_kernel_stability_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

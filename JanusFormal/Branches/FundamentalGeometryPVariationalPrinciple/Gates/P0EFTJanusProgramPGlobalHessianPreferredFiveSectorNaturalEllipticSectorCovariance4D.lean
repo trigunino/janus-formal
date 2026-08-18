@@ -27,14 +27,30 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPFiveSectorNaturalRepresentationPullback4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -56,6 +72,8 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -68,7 +86,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -80,13 +98,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- Exact sector-preserving D11 representation plus sector-preserving geometric
@@ -95,7 +113,7 @@ structure GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index) : Prop where
+          Index) where
   sectorRepresentation :
     GlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
       period hPeriod input
@@ -105,26 +123,6 @@ structure GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
     sectorRepresentation.sectorRefinement
 
 namespace GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
-
-/-- Represented source pullback commutes with every physical projector. -/
-theorem sourcePullback_commutes
-    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index)
-    (data : GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
-      period hPeriod input) :=
-  data.pullback.source_commutes
-
-/-- Represented target pullback commutes with every physical projector. -/
-theorem targetPullback_commutes
-    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index)
-    (data : GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
-      period hPeriod input) :=
-  data.pullback.target_commutes
 
 /-- Public sector-covariant D11 representation checkpoint. -/
 theorem global_hessian_preferred_five_sector_natural_elliptic_sector_covariance_gate
@@ -146,14 +144,12 @@ theorem global_hessian_preferred_five_sector_natural_elliptic_sector_covariance_
       (sector : FivePhysicalSector)
       (state : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
         configuration data analysis),
-      (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
-          sectorProjector sector
-          (data.sectorRepresentation.bridge.representation.
-            representedSourcePullback morphism state) =
-        data.sectorRepresentation.bridge.representation.
-          representedSourcePullback morphism
-          ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
-            sectorProjector sector state)) ∧
+      (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector sector
+          (data.sectorRepresentation.bridge.representation.representedSourcePullback
+            morphism state) =
+        data.sectorRepresentation.bridge.representation.representedSourcePullback morphism
+          ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
+            sector state)) ∧
     (∀ {first second : Real}
       (morphism : P0EFTJanusSpinCImmersionCategory.AdmissibleMorphism
         data.sectorRepresentation.bridge.immersionCategory
@@ -162,14 +158,12 @@ theorem global_hessian_preferred_five_sector_natural_elliptic_sector_covariance_
       (sector : FivePhysicalSector)
       (state : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
         configuration data analysis),
-      (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
-          sectorProjector sector
-          (data.sectorRepresentation.bridge.representation.
-            representedTargetPullback morphism state) =
-        data.sectorRepresentation.bridge.representation.
-          representedTargetPullback morphism
-          ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
-            sectorProjector sector state)) :=
+      (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector sector
+          (data.sectorRepresentation.bridge.representation.representedTargetPullback
+            morphism state) =
+        data.sectorRepresentation.bridge.representation.representedTargetPullback morphism
+          ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
+            sector state)) :=
   ⟨data.sectorRepresentation.representedNaturalOperator_eq_actual
       period hPeriod input,
     data.pullback.source_commutes,

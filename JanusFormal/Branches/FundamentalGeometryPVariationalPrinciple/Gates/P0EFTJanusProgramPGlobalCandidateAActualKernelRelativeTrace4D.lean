@@ -47,6 +47,13 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeHeat4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeTrace4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -83,7 +90,7 @@ abbrev GlobalCandidateAActualKernelRelativeTraceData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction) :=
-  SelfAdjointKernelComplementRelativeTraceData
+  SelfAdjointKernelComplementRelativeTraceData.{0}
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
     (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
@@ -175,7 +182,7 @@ theorem globalCandidateAActualKernelRelativeHeat_compact
     time
 
 /-- Candidate-A relative trace series is summable at every positive time. -/
-theorem globalCandidateAActualKernelRelativeTrace_summable
+def globalCandidateAActualKernelRelativeTrace_summable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -192,12 +199,7 @@ theorem globalCandidateAActualKernelRelativeTrace_summable
       hPeriod configuration data analysis chart sameAction)
     (relative : GlobalCandidateAActualKernelRelativeTraceData4D period hPeriod
       configuration data analysis chart sameAction physical)
-    (time : HeatTime) :
-    Summable (fun index =>
-      (relative.relativeRankOneExpansion time).coefficient index *
-        inner Real
-          ((relative.relativeRankOneExpansion time).leftVector index)
-          ((relative.relativeRankOneExpansion time).rightVector index)) :=
+    (time : HeatTime) :=
   relative.relativeTrace_summable
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -206,7 +208,7 @@ theorem globalCandidateAActualKernelRelativeTrace_summable
     time
 
 /-- Public Candidate-A actual-kernel relative-trace checkpoint. -/
-theorem global_candidateA_actual_kernel_relative_trace_gate
+def global_candidateA_actual_kernel_relative_trace_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -222,25 +224,12 @@ theorem global_candidateA_actual_kernel_relative_trace_gate
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
     (relative : GlobalCandidateAActualKernelRelativeTraceData4D period hPeriod
-      configuration data analysis chart sameAction physical) :
-    (∀ time : HeatTime,
-      IsCompactOperator
-        (selfAdjointKernelComplementRelativeHeatDifference
-          (globalCandidateAActualKernelOperator period hPeriod configuration data
-            analysis chart sameAction physical)
-          (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
-            configuration data analysis chart sameAction physical)
-          relative.referenceOperator time)) ∧
-      (∀ time : HeatTime,
-        Summable (fun index =>
-          (relative.relativeRankOneExpansion time).coefficient index *
-            inner Real
-              ((relative.relativeRankOneExpansion time).leftVector index)
-              ((relative.relativeRankOneExpansion time).rightVector index))) :=
-  ⟨globalCandidateAActualKernelRelativeHeat_compact period hPeriod configuration
-      data analysis chart sameAction physical relative,
-    globalCandidateAActualKernelRelativeTrace_summable period hPeriod
-      configuration data analysis chart sameAction physical relative⟩
+      configuration data analysis chart sameAction physical) :=
+  And.intro
+    (globalCandidateAActualKernelRelativeHeat_compact period hPeriod configuration
+      data analysis chart sameAction physical relative)
+    (globalCandidateAActualKernelRelativeTrace_summable period hPeriod
+      configuration data analysis chart sameAction physical relative)
 
 end
 end P0EFTJanusProgramPGlobalCandidateAActualKernelRelativeTrace4D
