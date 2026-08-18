@@ -44,17 +44,20 @@ theorem finiteFamilyGramMap_injective_of_synthesis_injective
       difference = finiteFamilySynthesis vectors (first - second) := by
     simp [difference, firstVector, secondVector]
   have hSelf : inner Real difference difference = 0 := by
-    rw [hDifferenceExpansion]
-    unfold finiteFamilySynthesis
-    rw [inner_sum_right]
-    apply Finset.sum_eq_zero
-    intro index _
-    rw [inner_smul_right]
-    have hZero := hOrthogonal index
-    rw [hDifferenceExpansion] at hZero
-    simp only [smul_eq_mul]
-    rw [hZero]
-    simp
+    calc
+      inner Real difference difference =
+          inner Real difference
+            (finiteFamilySynthesis vectors (first - second)) :=
+        congrArg (fun vector => inner Real difference vector)
+          hDifferenceExpansion
+      _ = 0 := by
+        change inner Real difference
+          (∑ index, (first - second) index • vectors index) = 0
+        rw [inner_sum]
+        apply Finset.sum_eq_zero
+        intro index _
+        rw [inner_smul_right, hOrthogonal index]
+        simp
   have hDifferenceZero : difference = 0 := by
     exact inner_self_eq_zero.mp hSelf
   exact sub_eq_zero.mp hDifferenceZero

@@ -2,15 +2,20 @@ import Mathlib.LinearAlgebra.TensorProduct.Basic
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 namespace JanusFormal
+
 namespace P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
+end P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
+open scoped TensorProduct
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -20,7 +25,7 @@ abbrev complexifiedDeterminantLine
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) :=
-  Complex ⊗[Real] data.determinantLine parameter
+  Complex ⊗[Real] (data.determinantLine parameter)
 
 def complexifiedDeterminantFrame
     {operator : Real → E →L[Real] E}
@@ -46,5 +51,5 @@ theorem complexifiedDeterminantSection_one
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

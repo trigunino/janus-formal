@@ -20,9 +20,10 @@ noncomputable section
 
 open P0EFTJanusProgramPGeometricBismutFreedPathComparison4D
 
-variable {E Base Tangent : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v w x
+
+variable {E : Type u} {Base : Type w} {Tangent : Type x}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Concrete curvature comparison on an arbitrary geometric parameter base. -/
 structure GeometricFamiliesIndexCurvatureData (Base Tangent : Type*) where
@@ -39,8 +40,8 @@ structure GeometricFamiliesIndexCurvatureData (Base Tangent : Type*) where
 higher-dimensional local families-index curvature theorem. -/
 structure GeometricBismutFreedFamiliesIndexComparisonData
     (actual reference : Real → E →L[Real] E)
-    (Base Tangent : Type*) where
-  pathComparison : GeometricOperatorBismutFreedPathComparisonData
+    (Base : Type w) (Tangent : Type x) where
+  pathComparison : GeometricOperatorBismutFreedPathComparisonData.{u, v, w, x}
     actual reference Base Tangent
   curvature : GeometricFamiliesIndexCurvatureData Base Tangent
 
@@ -50,7 +51,7 @@ namespace GeometricBismutFreedFamiliesIndexComparisonData
 is identified with the geometric Bismut--Freed curvature. -/
 theorem localFamiliesIndexCurvature_antisymm
     {actual reference : Real → E →L[Real] E}
-    (data : GeometricBismutFreedFamiliesIndexComparisonData
+    (data : GeometricBismutFreedFamiliesIndexComparisonData.{u, v, w, x}
       actual reference Base Tangent)
     (base : Base) (first second : Tangent) :
     data.curvature.localFamiliesIndexCurvature base first second =
@@ -62,7 +63,7 @@ theorem localFamiliesIndexCurvature_antisymm
 /-- Public multidimensional Bismut--Freed/families-index checkpoint. -/
 theorem geometric_bismut_freed_families_index_comparison_gate
     {actual reference : Real → E →L[Real] E}
-    (data : GeometricBismutFreedFamiliesIndexComparisonData
+    (data : GeometricBismutFreedFamiliesIndexComparisonData.{u, v, w, x}
       actual reference Base Tangent) :
     (∀ parameter value derivative,
       data.pathComparison.geometricConnectionAt parameter value derivative =

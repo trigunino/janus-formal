@@ -1,7 +1,8 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiveSectorProjectedOperatorBlocks4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActionSymmetrySectors4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateAZeroModeSector4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionCoordinates4D
 
 /-!
 # Candidate-A five-sector orthogonal product coordinates
@@ -21,8 +22,9 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalCandidateAFiveSectorOrthogonalProduct4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 7600000
-set_option synthInstance.maxHeartbeats 3800000
+set_option maxHeartbeats 2400000
+set_option synthInstance.maxHeartbeats 1200000
+set_option maxRecDepth 2000
 
 noncomputable section
 
@@ -35,12 +37,26 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionCoordinates4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
-open P0EFTJanusProgramPGlobalCandidateAActionSymmetrySectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
 open P0EFTJanusProgramPFiveSectorProjectedOperatorBlocks4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+  commonHilbertNormedAddCommGroup
+  commonHilbertInnerProductSpace
+  commonHilbertNormedSpace
+  commonHilbertModule
+  commonHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -62,7 +78,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev CandidateAFiveSectorHilbert
+private def CandidateAFiveSectorHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -176,12 +192,12 @@ structure GlobalCandidateAFiveSectorOrthogonalProductData4D
     [NormedAddCommGroup BoundaryFiniteBV]
     [InnerProductSpace Real BoundaryFiniteBV] where
   decomposition :
-    CandidateAFiveSectorHilbert period hPeriod configuration data analysis ≃L[Real]
+    GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod configuration data analysis ≃L[Real]
       FiveSectorProduct MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter
         LongitudinalLL BoundaryFiniteBV
   inner_map : ∀ first second,
-    ⟪decomposition first, decomposition second, Real⟫ =
-      ⟪first, second, Real⟫
+    fiveSectorProductInner (decomposition first) (decomposition second) =
+      inner Real first second
 
 /-- Forget the Candidate-A names and obtain the generic orthogonal resolution. -/
 def GlobalCandidateAFiveSectorOrthogonalProductData4D.toGeneric
@@ -208,7 +224,7 @@ def GlobalCandidateAFiveSectorOrthogonalProductData4D.toGeneric
       hPeriod configuration data analysis MetricDiffeomorphism AbelianGauge
         PrimitiveSpinCMatter LongitudinalLL BoundaryFiniteBV) :
     FiveSectorOrthogonalProductDecomposition
-      (E := CandidateAFiveSectorHilbert period hPeriod configuration data analysis)
+      (E := GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod configuration data analysis)
       (MetricDiffeomorphism := MetricDiffeomorphism)
       (AbelianGauge := AbelianGauge)
       (PrimitiveSpinCMatter := PrimitiveSpinCMatter)
@@ -364,11 +380,12 @@ theorem global_candidateA_five_sector_orthogonal_product_gate
         globalCandidateAFiveSectorOrthogonalProjection period hPeriod resolution
           sector state) ∧
       (∀ sector first second,
-        ⟪globalCandidateAFiveSectorOrthogonalProjection period hPeriod resolution
-            sector first, second, Real⟫ =
-          ⟪first,
-            globalCandidateAFiveSectorOrthogonalProjection period hPeriod
-              resolution sector second, Real⟫) ∧
+        inner Real
+            (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+              resolution sector first) second =
+          inner Real first
+            (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+              resolution sector second)) ∧
       (∀ state,
         ∑ sector : CandidateAZeroModeSector,
           globalCandidateAFiveSectorOrthogonalProjection period hPeriod
@@ -387,10 +404,17 @@ theorem global_candidateA_five_sector_orthogonal_product_gate
           .longitudinalLL, .boundaryFiniteBV} := by
       ext sector
       cases sector <;> simp
+    have hSlot : (Finset.univ : Finset FiveSectorSlot) =
+        {.metricDiffeomorphism, .abelianGauge, .primitiveSpinCMatter,
+          .longitudinalLL, .boundaryFiniteBV} := by
+      ext sector
+      cases sector <;> simp
+    have hSum := resolution.toGeneric.sum_projection_apply state
+    rw [hSlot] at hSum
     rw [hUniv]
     simpa [globalCandidateAFiveSectorOrthogonalProjection,
-      candidateAZeroModeSectorToFiveSectorSlot] using
-      resolution.toGeneric.sum_projection_apply state
+      candidateAZeroModeSectorToFiveSectorSlot, add_assoc] using
+      hSum
 
 /-- The actual principal operator is exactly the sum of its 25 sector blocks. -/
 theorem globalCandidateACanonicalStableReferenceOperator_eq_fiveSectorBlocks
@@ -422,7 +446,18 @@ theorem globalCandidateACanonicalStableReferenceOperator_eq_fiveSectorBlocks
         ∑ column : CandidateAZeroModeSector,
           globalCandidateAFiveSectorPrincipalBlock period hPeriod resolution row
             column := by
-  ext state
+  apply ContinuousLinearMap.ext
+  intro state
+  change
+    globalCandidateACanonicalStableReferenceOperator period hPeriod
+        configuration data analysis state =
+      ∑ row : CandidateAZeroModeSector,
+        ∑ column : CandidateAZeroModeSector,
+          fiveSectorProjectedOperatorBlock resolution.toGeneric
+            (globalCandidateACanonicalStableReferenceOperator period hPeriod
+              configuration data analysis)
+            (candidateAZeroModeSectorToFiveSectorSlot row)
+            (candidateAZeroModeSectorToFiveSectorSlot column) state
   have hGeneric := fiveSectorProjectedOperatorBlock_sum resolution.toGeneric
     (globalCandidateACanonicalStableReferenceOperator period hPeriod
       configuration data analysis) state
@@ -431,9 +466,14 @@ theorem globalCandidateACanonicalStableReferenceOperator_eq_fiveSectorBlocks
         .longitudinalLL, .boundaryFiniteBV} := by
     ext sector
     cases sector <;> simp
+  have hSlot : (Finset.univ : Finset FiveSectorSlot) =
+      {.metricDiffeomorphism, .abelianGauge, .primitiveSpinCMatter,
+        .longitudinalLL, .boundaryFiniteBV} := by
+    ext sector
+    cases sector <;> simp
+  rw [hSlot] at hGeneric
   rw [hUniv]
-  simpa [globalCandidateAFiveSectorPrincipalBlock,
-    candidateAZeroModeSectorToFiveSectorSlot] using hGeneric.symm
+  exact hGeneric.symm
 
 end
 end P0EFTJanusProgramPGlobalCandidateAFiveSectorOrthogonalProduct4D

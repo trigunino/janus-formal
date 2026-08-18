@@ -13,8 +13,8 @@ open P0EFTJanusProgramPFullTensorZetaAtlas4D
 open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
 open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
 
-variable {E ZeroMode Index : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E Index : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -28,7 +28,7 @@ theorem localFullTensorSection_transition
       localFullTensorSection fredholm atlas second parameter := by
   unfold localFullTensorSection
   apply (fredholm.fullTensorDeterminantCollapse parameter).injective
-  simp only [map_smul, fullTensorCollapse_formula, smul_smul]
+  simp only [map_smul, fredholm.fullTensorCollapse_formula, smul_smul]
   rw [relativeZetaLocalDeterminant_transition atlas first second parameter]
 
 end

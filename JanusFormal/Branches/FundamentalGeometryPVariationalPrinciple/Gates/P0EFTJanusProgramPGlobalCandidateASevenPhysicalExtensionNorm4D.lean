@@ -33,6 +33,7 @@ open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
@@ -168,14 +169,36 @@ theorem globalCandidateASevenPhysicalExtension_form_opNorm_le
   let extension :=
     globalCandidateASevenPhysicalCommonDomainExtension_of_bound period hPeriod
       configuration data analysis chart sameAction bound
-  apply continuousBilinear_opNorm_le_of_dense
+  refine @continuousBilinear_opNorm_le_of_dense
+    _ (GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
+      (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis)
+    inferInstance inferInstance
+    (WithLp.instProdNormedAddCommGroup 2 _ _)
+    (diagonalL2ExtendedBulkNormedSpace period hPeriod
+      (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis)
     (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration data
       analysis)
     (diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
       (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis)
-    extension.form bound.constant bound.constant_nonneg
+    extension.form bound.constant bound.constant_nonneg ?_
   intro first second
+  change ‖extension.form
+      (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+        (globalCandidateAMetricBySector period hPeriod data)
+        couplings.matterMassSquared data analysis first)
+      (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+        (globalCandidateAMetricBySector period hPeriod data)
+        couplings.matterMassSquared data analysis second)‖ ≤
+    bound.constant *
+      ‖diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+        (globalCandidateAMetricBySector period hPeriod data)
+        couplings.matterMassSquared data analysis first‖ *
+      ‖diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+        (globalCandidateAMetricBySector period hPeriod data)
+        couplings.matterMassSquared data analysis second‖
   rw [extension.smooth_agreement first second]
   rw [← globalCandidateASevenPhysicalCoreLinearForm_apply period hPeriod
     configuration data analysis chart sameAction first second]

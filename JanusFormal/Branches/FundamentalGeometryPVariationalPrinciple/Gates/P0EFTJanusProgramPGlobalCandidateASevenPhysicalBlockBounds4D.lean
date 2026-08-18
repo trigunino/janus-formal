@@ -1,3 +1,4 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalCoreEmbedding4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 
 /-!
@@ -32,9 +33,11 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -159,22 +162,6 @@ inductive GlobalCandidateAPhysicalBlock
   | finiteBV
   deriving DecidableEq, Fintype
 
-/-- Public spelling of the dense algebraic embedding whose norm is used by
-H11. -/
-def globalCandidateASevenPhysicalCoreEmbedding
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    PhysicalCore period hPeriod analysis →ₗ[Real]
-      PhysicalHilbert period hPeriod configuration data analysis :=
-  diagonalExtendedBulkL2SmoothEmbedding period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
 /-- Seven exact core forms, one estimate per physical action block, and an
 identity reconstructing their sum as the true physical Hessian. -/
 structure GlobalCandidateASevenPhysicalBlockCoreBounds4D
@@ -189,7 +176,7 @@ structure GlobalCandidateASevenPhysicalBlockCoreBounds4D
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart) : Prop where
+      period hPeriod configuration data analysis chart) : Type where
   form : GlobalCandidateAPhysicalBlock →
     PhysicalCore period hPeriod analysis →ₗ[Real]
       PhysicalCore period hPeriod analysis →ₗ[Real] Real
@@ -199,7 +186,8 @@ structure GlobalCandidateASevenPhysicalBlockCoreBounds4D
       ∑ block : GlobalCandidateAPhysicalBlock, form block first second
   constant : GlobalCandidateAPhysicalBlock → Real
   constant_nonneg : ∀ block, 0 ≤ constant block
-  estimate : ∀ block first second : PhysicalCore period hPeriod analysis,
+  estimate : ∀ (block : GlobalCandidateAPhysicalBlock)
+      (first second : PhysicalCore period hPeriod analysis),
     ‖form block first second‖ ≤
       constant block *
         ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
@@ -278,7 +266,13 @@ theorem global_candidateA_h11_common_augmented_domain_gate_of_blockBounds
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
-      configuration data analysis chart sameAction) :=
+      configuration data analysis chart sameAction) :
+    GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
+      configuration data analysis chart sameAction
+        (globalCandidateASevenPhysicalCommonDomainExtension_of_bound period
+          hPeriod configuration data analysis chart sameAction
+            (globalCandidateASevenPhysicalCoreBound_of_blockBounds period hPeriod
+              configuration data analysis chart sameAction bounds)) :=
   global_candidateA_h11_common_augmented_domain_gate_of_bound period hPeriod
     configuration data analysis chart sameAction
       (globalCandidateASevenPhysicalCoreBound_of_blockBounds period hPeriod

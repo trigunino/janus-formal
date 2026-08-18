@@ -96,10 +96,14 @@ structure ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared) where
-  normedAddCommGroup : NormedAddCommGroup
-    (ReducedFamilyModel period hPeriod configuration)
-  normedSpace : NormedSpace Real
-    (ReducedFamilyModel period hPeriod configuration)
+  [normedAddCommGroup : NormedAddCommGroup
+    (ReducedFamilyModel period hPeriod configuration)]
+  [normedSpace : NormedSpace Real
+    (ReducedFamilyModel period hPeriod configuration)]
+  toAddCommGroup_eq : normedAddCommGroup.toAddCommGroup =
+    Submodule.addCommGroup (ReducedFamilyModel period hPeriod configuration)
+  toSMul_eq : normedSpace.toModule.toSMul =
+    Submodule.smul (ReducedFamilyModel period hPeriod configuration)
   bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
     couplings NonNullFace NullFace _ _ configuration data analysis realization
       normedAddCommGroup normedSpace
@@ -185,6 +189,8 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D.toPhysicalC2
       period hPeriod configuration data analysis realization where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
+  toAddCommGroup_eq := family.toAddCommGroup_eq
+  toSMul_eq := family.toSMul_eq
   bounds := family.bounds
   domain := family.domain
   isOpen_domain := family.isOpen_domain

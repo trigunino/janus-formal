@@ -29,11 +29,13 @@ noncomputable section
 
 open P0EFTJanusProgramPFrechetDifferentiableSelfAdjointGreenBaseFamily4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
+open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 
-variable {Base E : Type*}
+universe u v w
+
+variable {Base : Type u} {E : Type v}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Multidimensional logarithmic trace with a genuine continuous-linear
 one-form in the parameter tangent direction. -/
@@ -42,7 +44,7 @@ structure IntrinsicLogarithmicDerivativeTraceOneFormData
   family : FrechetDifferentiableSelfAdjointUniformGapBaseFamilyData operator
   inverse : family.GreenFrechetDifferentiabilityData
   traceClass : ∀ base direction,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{v, w}
       (family.logarithmicDerivativeOperator base direction)
   traceOneForm : Base → Base →L[Real] Real
   traceOneForm_agreement : ∀ base direction,
@@ -54,7 +56,7 @@ namespace IntrinsicLogarithmicDerivativeTraceOneFormData
 /-- Intrinsic scalar trace in one tangent direction. -/
 def directionalTrace
     {operator : Base → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator)
     (base direction : Base) : Real :=
   intrinsicNuclearTrace (data.traceClass base direction)
 
@@ -62,7 +64,7 @@ def directionalTrace
 trace. -/
 theorem traceOneForm_eq_directionalTrace
     {operator : Base → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator)
     (base direction : Base) :
     data.traceOneForm base direction = data.directionalTrace base direction :=
   data.traceOneForm_agreement base direction
@@ -71,9 +73,9 @@ theorem traceOneForm_eq_directionalTrace
 one-form value. -/
 theorem expansionTrace_eq_oneForm
     {operator : Base → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator)
     (base direction : Base)
-    (expansion : SummableRankOneOperatorExpansion
+    (expansion : SummableRankOneOperatorExpansion.{w, v}
       (data.family.logarithmicDerivativeOperator base direction)) :
     expansion.expansionTrace = data.traceOneForm base direction := by
   rw [data.traceOneForm_agreement base direction]
@@ -82,7 +84,7 @@ theorem expansionTrace_eq_oneForm
 /-- Every directional logarithmic derivative is compact. -/
 theorem logarithmicDerivative_compact
     {operator : Base → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator)
     (base direction : Base) :
     IsCompactOperator
       (data.family.logarithmicDerivativeOperator base direction) :=
@@ -92,7 +94,7 @@ theorem logarithmicDerivative_compact
 actual continuous-linear one-form. -/
 theorem directionalTrace_add
     {operator : Base → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator)
     (base first second : Base) :
     data.directionalTrace base (first + second) =
       data.directionalTrace base first + data.directionalTrace base second := by
@@ -104,7 +106,7 @@ theorem directionalTrace_add
 /-- Real homogeneity in the tangent direction. -/
 theorem directionalTrace_smul
     {operator : Base → E →L[Real] E}
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator)
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator)
     (base : Base) (scalar : Real) (direction : Base) :
     data.directionalTrace base (scalar • direction) =
       scalar * data.directionalTrace base direction := by
@@ -116,7 +118,7 @@ theorem directionalTrace_smul
 /-- Public intrinsic trace-one-form checkpoint. -/
 theorem intrinsic_logarithmic_derivative_trace_one_form_gate
     (operator : Base → E →L[Real] E)
-    (data : IntrinsicLogarithmicDerivativeTraceOneFormData operator) :
+    (data : IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} operator) :
     (∀ base direction,
       IsCompactOperator
         (data.family.logarithmicDerivativeOperator base direction)) ∧
@@ -139,22 +141,26 @@ end IntrinsicLogarithmicDerivativeTraceOneFormData
 space. -/
 structure RelativeIntrinsicLogarithmicDerivativeTraceOneFormData
     (actual reference : Base → E →L[Real] E) where
-  actualTrace : IntrinsicLogarithmicDerivativeTraceOneFormData actual
-  referenceTrace : IntrinsicLogarithmicDerivativeTraceOneFormData reference
+  actualTrace :
+    IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} actual
+  referenceTrace :
+    IntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w} reference
 
 namespace RelativeIntrinsicLogarithmicDerivativeTraceOneFormData
 
 /-- Relative logarithmic trace as a genuine continuous linear one-form. -/
 def traceOneForm
     {actual reference : Base → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference)
     (base : Base) : Base →L[Real] Real :=
   data.actualTrace.traceOneForm base - data.referenceTrace.traceOneForm base
 
 /-- Relative directional trace. -/
 def directionalTrace
     {actual reference : Base → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference)
     (base direction : Base) : Real :=
   data.actualTrace.directionalTrace base direction -
     data.referenceTrace.directionalTrace base direction
@@ -163,7 +169,8 @@ def directionalTrace
 trace. -/
 theorem traceOneForm_eq_directionalTrace
     {actual reference : Base → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference)
     (base direction : Base) :
     data.traceOneForm base direction = data.directionalTrace base direction := by
   unfold traceOneForm directionalTrace
@@ -174,21 +181,24 @@ theorem traceOneForm_eq_directionalTrace
 /-- Real Bismut--Freed one-form in the zeta-prime sign convention. -/
 def bismutFreedRealOneForm
     {actual reference : Base → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference)
     (base : Base) : Base →L[Real] Real :=
   -(data.traceOneForm base)
 
 /-- Directional Bismut--Freed coefficient. -/
 def bismutFreedDirectionalCoefficient
     {actual reference : Base → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference)
     (base direction : Base) : Real :=
   -data.directionalTrace base direction
 
 @[simp]
 theorem bismutFreedRealOneForm_apply
     {actual reference : Base → E →L[Real] E}
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference)
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference)
     (base direction : Base) :
     data.bismutFreedRealOneForm base direction =
       data.bismutFreedDirectionalCoefficient base direction := by
@@ -199,7 +209,8 @@ theorem bismutFreedRealOneForm_apply
 /-- Public relative BF one-form checkpoint. -/
 theorem relative_intrinsic_logarithmic_derivative_trace_one_form_gate
     (actual reference : Base → E →L[Real] E)
-    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference) :
+    (data : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference) :
     (∀ base direction,
       data.traceOneForm base direction = data.directionalTrace base direction) ∧
     (∀ base direction,

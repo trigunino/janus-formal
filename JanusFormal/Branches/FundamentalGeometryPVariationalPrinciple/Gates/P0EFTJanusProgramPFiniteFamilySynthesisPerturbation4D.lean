@@ -30,7 +30,7 @@ open P0EFTJanusProgramPFiniteFamilyGramInjectivity4D
 
 variable {Index E : Type*}
   [Fintype Index] [DecidableEq Index]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- A target finite family remains linearly independent when its synthesis map
 is a perturbation smaller than a positive lower bound for a reference family. -/
@@ -78,7 +78,7 @@ theorem finiteFamilySynthesis_injective_of_reference_lower_bound_of_defect
     have hNormPos : 0 < ‖difference‖ :=
       lt_of_le_of_ne (norm_nonneg difference) (Ne.symm hNorm)
     have hLowerLeDefect : lowerConstant ≤ defectConstant :=
-      (mul_le_mul_right hNormPos).mp hCombined
+      le_of_mul_le_mul_right hCombined hNormPos
     exact (not_le_of_gt hDefectSmall) hLowerLeDefect
   exact sub_eq_zero.mp (norm_eq_zero.mp hDifferenceNormZero)
 

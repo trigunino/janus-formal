@@ -41,10 +41,19 @@ open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelStablePerturbation4D
 open P0EFTJanusProgramPNamedModeKernelStablePerturbation4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -77,7 +86,7 @@ private abbrev CanonicalStableHilbert
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
-local instance (priority := 30000) canonicalStableNormedAddCommGroup
+private def canonicalStableNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -91,7 +100,7 @@ local instance (priority := 30000) canonicalStableNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) canonicalStableInnerProductSpace
+private def canonicalStableInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -105,7 +114,7 @@ local instance (priority := 30000) canonicalStableInnerProductSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) canonicalStableNormedSpace
+private def canonicalStableNormedSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -119,7 +128,7 @@ local instance (priority := 30000) canonicalStableNormedSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) canonicalStableModule
+private def canonicalStableModule
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -133,7 +142,7 @@ local instance (priority := 30000) canonicalStableModule
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) canonicalStableCompleteSpace
+private def canonicalStableCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -145,6 +154,7 @@ local instance (priority := 30000) canonicalStableCompleteSpace
       (CanonicalStableHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Canonical principal BRST--SpinC--LL reference operator. -/
 def globalCandidateACanonicalStableReferenceOperator
@@ -155,8 +165,8 @@ def globalCandidateACanonicalStableReferenceOperator
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CanonicalStableHilbert period hPeriod configuration data analysis →L[Real]
-      CanonicalStableHilbert period hPeriod configuration data analysis :=
+    ActualKernelHilbert period hPeriod configuration data analysis →L[Real]
+      ActualKernelHilbert period hPeriod configuration data analysis :=
   diagonalExtendedBulkL2RieszOperator period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
@@ -178,8 +188,8 @@ def globalCandidateACanonicalStablePhysicalPerturbation
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction) :
-    CanonicalStableHilbert period hPeriod configuration data analysis →L[Real]
-      CanonicalStableHilbert period hPeriod configuration data analysis :=
+    ActualKernelHilbert period hPeriod configuration data analysis →L[Real]
+      ActualKernelHilbert period hPeriod configuration data analysis :=
   globalCandidateASevenPhysicalCommonRieszOperator period hPeriod configuration
     data analysis chart sameAction physical
 
@@ -225,7 +235,7 @@ structure GlobalCandidateACanonicalStableNamedPerturbation4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   stable : FiniteKernelStableOrthogonalNamedModePerturbationData
     (globalCandidateACanonicalStableReferenceOperator period hPeriod
       configuration data analysis)
@@ -253,7 +263,7 @@ def GlobalCandidateACanonicalStableNamedPerturbation4D.toActualStable
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateACanonicalStableNamedPerturbation4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateAActualKernelStablePerturbation4D period hPeriod
@@ -268,7 +278,7 @@ def GlobalCandidateACanonicalStableNamedPerturbation4D.toActualStable
   ll_stationary := input.ll_stationary
 
 /-- Public checkpoint: no arbitrary operator splitting remains. -/
-theorem global_candidateA_canonical_stable_named_perturbation_gate
+def global_candidateA_canonical_stable_named_perturbation_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -283,7 +293,7 @@ theorem global_candidateA_canonical_stable_named_perturbation_gate
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateACanonicalStableNamedPerturbation4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateAActualKernelStablePerturbation4D period hPeriod

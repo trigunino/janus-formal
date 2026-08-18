@@ -69,7 +69,7 @@ theorem curvature_add_left
     data.curvature base (first + second) third =
       data.curvature base first third + data.curvature base second third := by
   unfold curvature
-  rw [map_add, map_add]
+  simp only [map_add, add_apply, sub_eq_add_neg]
   abel
 
 /-- Additivity in the second tangent direction. -/
@@ -108,8 +108,7 @@ theorem curvature_smul_right
   rw [data.curvature_antisymm base first (scalar • second),
     data.curvature_smul_left base scalar second first,
     data.curvature_antisymm base second first]
-  simp only [smul_neg]
-  rfl
+  simp
 
 end DifferentiableLinearGeometricBismutFreedOneFormData
 

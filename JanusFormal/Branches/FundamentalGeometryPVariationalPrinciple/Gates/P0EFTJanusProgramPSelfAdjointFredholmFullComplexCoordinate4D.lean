@@ -18,6 +18,9 @@ In this coordinate the full tensor section constructed from a reduced scalar
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFullComplexCoordinate4D
+end P0EFTJanusProgramPSelfAdjointFredholmFullComplexCoordinate4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 7200000
@@ -31,8 +34,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
 open P0EFTJanusProgramPFullTensorCollapseFormula4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -91,7 +94,10 @@ theorem fullTensorDeterminantCoordinateEquiv_section
     data.fullTensorDeterminantCoordinateEquiv parameter
         (data.fullTensorDeterminantSection parameter coordinate) = coordinate := by
   rw [fullTensorDeterminantCoordinateEquiv]
-  rw [fullTensorCollapse_formula]
+  change data.complexifiedDeterminantCoordinateEquiv parameter
+    (data.fullTensorDeterminantCollapse parameter
+      (data.fullTensorDeterminantSection parameter coordinate)) = coordinate
+  rw [data.fullTensorCollapse_formula]
   exact data.complexifiedDeterminantCoordinateEquiv_section parameter coordinate
 
 /-- The inverse full coordinate is precisely the canonical full tensor section. -/
@@ -121,5 +127,5 @@ theorem self_adjoint_fredholm_full_complex_coordinate_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFullComplexCoordinate4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

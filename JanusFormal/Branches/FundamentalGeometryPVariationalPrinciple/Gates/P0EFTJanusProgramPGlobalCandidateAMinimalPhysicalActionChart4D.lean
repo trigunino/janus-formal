@@ -34,13 +34,17 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLQuadraticChartBridge4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
+open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -62,6 +66,10 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
 
 private abbrev MinimalPhysicalModel
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod) :=
@@ -112,21 +120,29 @@ structure ProgramPGlobalMinimalPhysicalActionChartData4D
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) where
-  normedAddCommGroup :
-    NormedAddCommGroup (MinimalPhysicalModel period hPeriod configuration)
-  normedSpace :
-    NormedSpace Real (MinimalPhysicalModel period hPeriod configuration)
+  [normedAddCommGroup :
+    NormedAddCommGroup (MinimalPhysicalModel period hPeriod configuration)]
+  [normedSpace :
+    NormedSpace Real (MinimalPhysicalModel period hPeriod configuration)]
+  toAddCommGroup_eq : normedAddCommGroup.toAddCommGroup =
+    Submodule.addCommGroup (MinimalPhysicalModel period hPeriod configuration)
+  toSMul_eq : normedSpace.toModule.toSMul =
+    Submodule.smul (MinimalPhysicalModel period hPeriod configuration)
   domain : Set (MinimalPhysicalModel period hPeriod configuration)
   isOpen_domain : IsOpen domain
-  zero_mem_domain : (0 : MinimalPhysicalModel period hPeriod configuration) ∈
-    domain
+  zero_mem_domain :
+    letI := normedAddCommGroup
+    (0 : MinimalPhysicalModel period hPeriod configuration) ∈ domain
   datumAt : ∀ point : MinimalPhysicalModel period hPeriod configuration,
     point ∈ domain →
       GlobalCandidateALocalActionDatum period hPeriod couplings
         NonNullFace NullFace
   datumAt_zero_configuration :
+    letI := normedAddCommGroup
     (datumAt 0 zero_mem_domain).1 = configuration.physical
   blocksC2Within : ∀ point (hPoint : point ∈ domain),
+    letI := normedAddCommGroup
+    letI := normedSpace
     let family : GlobalCandidateALocalActionFamily period hPeriod
         (MinimalPhysicalModel period hPeriod configuration) couplings
         NonNullFace NullFace :=
@@ -137,15 +153,21 @@ structure ProgramPGlobalMinimalPhysicalActionChartData4D
         (family.toActionFamily period hPeriod 0 zero_mem_domain) measure)
       domain point
   matterProjection :
+    letI := normedAddCommGroup
+    letI := normedSpace
     MinimalPhysicalModel period hPeriod configuration →L[Real]
       ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
         couplings.matterMassSquared
   llProjection :
+    letI := normedAddCommGroup
+    letI := normedSpace
     MinimalPhysicalModel period hPeriod configuration →L[Real]
       GlobalFullLLGraphHilbert period hPeriod data analysis
   matterConstant : Real
   llConstant : Real
   matterAction_eq :
+    letI := normedAddCommGroup
+    letI := normedSpace
     let family : GlobalCandidateALocalActionFamily period hPeriod
         (MinimalPhysicalModel period hPeriod configuration) couplings
         NonNullFace NullFace :=
@@ -157,6 +179,8 @@ structure ProgramPGlobalMinimalPhysicalActionChartData4D
         programPPrimitiveSpinCMatterGraphAction period hPeriod
           couplings.matterMassSquared (matterProjection state)
   llAction_eq :
+    letI := normedAddCommGroup
+    letI := normedSpace
     let family : GlobalCandidateALocalActionFamily period hPeriod
         (MinimalPhysicalModel period hPeriod configuration) couplings
         NonNullFace NullFace :=
@@ -168,6 +192,8 @@ structure ProgramPGlobalMinimalPhysicalActionChartData4D
         globalCandidateAFullLLGraphAction period hPeriod data analysis
           (llProjection state)
   matterProjection_diagonalCore :
+    letI := normedAddCommGroup
+    letI := normedSpace
     ∀ core : GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
         analysis,
       matterProjection
@@ -176,6 +202,8 @@ structure ProgramPGlobalMinimalPhysicalActionChartData4D
         programPPrimitiveSpinCMatterGraphFiniteRealLinearMap period hPeriod
           couplings.matterMassSquared core.2.2.1
   llProjection_diagonalCore :
+    letI := normedAddCommGroup
+    letI := normedSpace
     ∀ core : GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
         analysis,
       llProjection
@@ -195,7 +223,7 @@ def globalCandidateAMinimalPhysicalLocalActionFamily
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     GlobalCandidateALocalActionFamily period hPeriod
       (MinimalPhysicalModel period hPeriod configuration) couplings
         NonNullFace NullFace where
@@ -214,17 +242,49 @@ def globalCandidateAMinimalPhysicalLocalVariationalChart
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     GlobalCandidateALocalVariationalChart period hPeriod couplings
-      NonNullFace NullFace measure where
-  Model := MinimalPhysicalModel period hPeriod configuration
-  normedAddCommGroup := chartData.normedAddCommGroup
-  normedSpace := chartData.normedSpace
-  family := globalCandidateAMinimalPhysicalLocalActionFamily period hPeriod
-    configuration data analysis chartData
-  isOpen_domain := chartData.isOpen_domain
-  zero_mem_domain := chartData.zero_mem_domain
-  blocksC2Within := chartData.blocksC2Within
+      NonNullFace NullFace measure := by
+  letI : NormedAddCommGroup
+      (MinimalPhysicalModel period hPeriod configuration) :=
+    chartData.normedAddCommGroup
+  letI : NormedSpace Real
+      (MinimalPhysicalModel period hPeriod configuration) :=
+    chartData.normedSpace
+  have hZero :
+      @Zero.zero _ chartData.normedAddCommGroup.toAddCommGroup.toZero =
+        @Zero.zero _
+          (Submodule.addCommGroup
+            (MinimalPhysicalModel period hPeriod configuration)).toZero :=
+    congrArg
+      (fun group : AddCommGroup
+          (MinimalPhysicalModel period hPeriod configuration) =>
+        @Zero.zero _ group.toZero)
+      chartData.toAddCommGroup_eq
+  refine
+    { Model := MinimalPhysicalModel period hPeriod configuration
+      normedAddCommGroup := chartData.normedAddCommGroup
+      normedSpace := chartData.normedSpace
+      family := globalCandidateAMinimalPhysicalLocalActionFamily period hPeriod
+        configuration data analysis chartData
+      isOpen_domain := chartData.isOpen_domain
+      zero_mem_domain := ?_
+      blocksC2Within := ?_ }
+  · change
+      @Zero.zero _ chartData.normedAddCommGroup.toAddCommGroup.toZero ∈
+        chartData.domain
+    exact hZero.symm ▸ chartData.zero_mem_domain
+  · intro point hPoint
+    change point ∈ chartData.domain at hPoint
+    convert chartData.blocksC2Within point hPoint using 1
+    · congr 1
+      simp only [globalCandidateAMinimalPhysicalLocalActionFamily]
+      congr
+      exact congrArg
+        (fun group : AddCommGroup
+            (MinimalPhysicalModel period hPeriod configuration) => group.toZero)
+        chartData.toAddCommGroup_eq
+    · rfl
 
 /-- Identity dense-core bridge for the minimal physical chart. -/
 def globalCandidateAMinimalPhysicalLocalChartBridge
@@ -237,19 +297,65 @@ def globalCandidateAMinimalPhysicalLocalChartBridge
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     ProgramPGlobalMinimalPhysicalLocalVariationalChartCoreBridge4D period hPeriod
       configuration.physical
       (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-        configuration data analysis chartData) where
-  basePoint := 0
-  basePoint_mem := chartData.zero_mem_domain
-  baseConfiguration_fields := chartData.datumAt_zero_configuration
-  tangentAnalysis := LinearMap.id
-  tangentAnalysis_injective := Function.injective_id
-  tangentAnalysis_denseRange :=
-    (LinearEquiv.refl Real
-      (MinimalPhysicalModel period hPeriod configuration)).surjective.denseRange
+        configuration data analysis chartData) := by
+  letI : NormedAddCommGroup
+      (MinimalPhysicalModel period hPeriod configuration) :=
+    chartData.normedAddCommGroup
+  letI : NormedSpace Real
+      (MinimalPhysicalModel period hPeriod configuration) :=
+    chartData.normedSpace
+  have hZero :
+      @Zero.zero _ chartData.normedAddCommGroup.toAddCommGroup.toZero =
+        @Zero.zero _
+          (Submodule.addCommGroup
+            (MinimalPhysicalModel period hPeriod configuration)).toZero :=
+    congrArg
+      (fun group : AddCommGroup
+          (MinimalPhysicalModel period hPeriod configuration) =>
+        @Zero.zero _ group.toZero)
+      chartData.toAddCommGroup_eq
+  refine
+    { basePoint := (0 : MinimalPhysicalModel period hPeriod configuration)
+      basePoint_mem := ?_
+      baseConfiguration_fields := ?_
+      tangentAnalysis :=
+        { toFun := id
+          map_add' := by
+            intro first second
+            change
+              @Add.add _
+                  (Submodule.addCommGroup
+                    (MinimalPhysicalModel period hPeriod configuration)).toAdd
+                  first second =
+                @Add.add _ chartData.normedAddCommGroup.toAdd first second
+            rw [chartData.toAddCommGroup_eq]
+          map_smul' := by
+            intro scalar direction
+            change
+              @SMul.smul Real _
+                  (Submodule.smul
+                    (MinimalPhysicalModel period hPeriod configuration))
+                  scalar direction =
+                @SMul.smul Real _ chartData.normedSpace.toModule.toSMul
+                  scalar direction
+            rw [chartData.toSMul_eq] }
+      tangentAnalysis_injective := by
+        change Function.Injective id
+        exact Function.injective_id
+      tangentAnalysis_denseRange := by
+        apply Function.Surjective.denseRange
+        intro point
+        exact ⟨point, rfl⟩ }
+  · simp only [globalCandidateAMinimalPhysicalLocalVariationalChart,
+      globalCandidateAMinimalPhysicalLocalActionFamily]
+    exact chartData.zero_mem_domain
+  · simpa only [globalCandidateAMinimalPhysicalLocalVariationalChart,
+      globalCandidateAMinimalPhysicalLocalActionFamily, hZero] using
+        chartData.datumAt_zero_configuration
 
 /-- The action-level quadratic H13 bridge obtained from the concrete minimal
 physical chart. -/
@@ -263,24 +369,141 @@ def globalCandidateAMinimalPhysicalQuadraticChartBridge
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     ProgramPGlobalMinimalPhysicalLocalMatterLLQuadraticChartBridge4D period
       hPeriod configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-          configuration data analysis chartData) where
-  chartBridge := globalCandidateAMinimalPhysicalLocalChartBridge period hPeriod
-    configuration data analysis chartData
-  matterProjection := chartData.matterProjection
-  llProjection := chartData.llProjection
-  matterConstant := chartData.matterConstant
-  llConstant := chartData.llConstant
-  matterAction_eq := chartData.matterAction_eq
-  llAction_eq := chartData.llAction_eq
-  matterProjection_core := by
-    intro core
+          configuration data analysis chartData) := by
+  letI : NormedAddCommGroup
+      (MinimalPhysicalModel period hPeriod configuration) :=
+    chartData.normedAddCommGroup
+  letI : NormedSpace Real
+      (MinimalPhysicalModel period hPeriod configuration) :=
+    chartData.normedSpace
+  let chart := globalCandidateAMinimalPhysicalLocalVariationalChart period
+    hPeriod configuration data analysis chartData
+  have hBlocks :
+      globalCandidateAActionBlocks period hPeriod
+          (chart.family.toActionFamily period hPeriod (0 : chart.Model)
+            chart.zero_mem_domain) measure =
+        globalCandidateAActionBlocks period hPeriod
+          ((globalCandidateAMinimalPhysicalLocalActionFamily period hPeriod
+              configuration data analysis chartData).toActionFamily period hPeriod
+            (0 : MinimalPhysicalModel period hPeriod configuration)
+            chartData.zero_mem_domain) measure := by
+    congr 1
+    simp only [chart, globalCandidateAMinimalPhysicalLocalVariationalChart,
+      globalCandidateAMinimalPhysicalLocalActionFamily]
+    congr
+    exact congrArg
+      (fun group : AddCommGroup
+          (MinimalPhysicalModel period hPeriod configuration) => group.toZero)
+      chartData.toAddCommGroup_eq
+  let matterProjection : chart.Model →L[Real]
+      ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+        couplings.matterMassSquared :=
+    { toFun := chartData.matterProjection
+      map_add' := by
+        intro first second
+        change MinimalPhysicalModel period hPeriod configuration at first second
+        change chartData.matterProjection
+            (@Add.add _ chartData.normedAddCommGroup.toAdd first second) =
+          chartData.matterProjection first + chartData.matterProjection second
+        rw [chartData.toAddCommGroup_eq]
+        exact chartData.matterProjection.map_add first second
+      map_smul' := by
+        intro scalar direction
+        change MinimalPhysicalModel period hPeriod configuration at direction
+        change chartData.matterProjection
+            (@SMul.smul Real _ chartData.normedSpace.toModule.toSMul
+              scalar direction) =
+          (RingHom.id Real) scalar • chartData.matterProjection direction
+        rw [chartData.toSMul_eq]
+        have hMap := chartData.matterProjection.map_smul scalar direction
+        change chartData.matterProjection
+            (@SMul.smul Real _
+              (Submodule.smul
+                (MinimalPhysicalModel period hPeriod configuration))
+              scalar direction) =
+          scalar • chartData.matterProjection direction at hMap
+        simpa only [RingHom.id_apply] using hMap
+      cont := chartData.matterProjection.continuous }
+  let llProjection : chart.Model →L[Real]
+      GlobalFullLLGraphHilbert period hPeriod data analysis :=
+    { toFun := chartData.llProjection
+      map_add' := by
+        intro first second
+        change MinimalPhysicalModel period hPeriod configuration at first second
+        change chartData.llProjection
+            (@Add.add _ chartData.normedAddCommGroup.toAdd first second) =
+          chartData.llProjection first + chartData.llProjection second
+        rw [chartData.toAddCommGroup_eq]
+        exact chartData.llProjection.map_add first second
+      map_smul' := by
+        intro scalar direction
+        change MinimalPhysicalModel period hPeriod configuration at direction
+        change chartData.llProjection
+            (@SMul.smul Real _ chartData.normedSpace.toModule.toSMul
+              scalar direction) =
+          (RingHom.id Real) scalar • chartData.llProjection direction
+        rw [chartData.toSMul_eq]
+        have hMap := chartData.llProjection.map_smul scalar direction
+        change chartData.llProjection
+            (@SMul.smul Real _
+              (Submodule.smul
+                (MinimalPhysicalModel period hPeriod configuration))
+              scalar direction) =
+          scalar • chartData.llProjection direction at hMap
+        simpa only [RingHom.id_apply] using hMap
+      cont := chartData.llProjection.continuous }
+  refine
+    { chartBridge := globalCandidateAMinimalPhysicalLocalChartBridge period hPeriod
+        configuration data analysis chartData
+      matterProjection := matterProjection
+      llProjection := llProjection
+      matterConstant := chartData.matterConstant
+      llConstant := chartData.llConstant
+      matterAction_eq := ?_
+      llAction_eq := ?_
+      matterProjection_core := ?_
+      llProjection_core := ?_ }
+  · change
+      (globalCandidateAActionBlocks period hPeriod
+        (chart.family.toActionFamily period hPeriod (0 : chart.Model)
+          chart.zero_mem_domain) measure).matter =
+        fun state => chartData.matterConstant +
+          programPPrimitiveSpinCMatterGraphAction period hPeriod
+            couplings.matterMassSquared (matterProjection state)
+    rw [hBlocks]
+    funext state
+    change MinimalPhysicalModel period hPeriod configuration at state
+    calc
+      _ = chartData.matterConstant +
+          programPPrimitiveSpinCMatterGraphAction period hPeriod
+            couplings.matterMassSquared (chartData.matterProjection state) := by
+        simpa only [globalCandidateAMinimalPhysicalLocalActionFamily] using
+          congrFun chartData.matterAction_eq state
+      _ = _ := by rfl
+  · change
+      (globalCandidateAActionBlocks period hPeriod
+        (chart.family.toActionFamily period hPeriod (0 : chart.Model)
+          chart.zero_mem_domain) measure).ll =
+        fun state => chartData.llConstant +
+          globalCandidateAFullLLGraphAction period hPeriod data analysis
+            (llProjection state)
+    rw [hBlocks]
+    funext state
+    change MinimalPhysicalModel period hPeriod configuration at state
+    calc
+      _ = chartData.llConstant +
+          globalCandidateAFullLLGraphAction period hPeriod data analysis
+            (chartData.llProjection state) := by
+        simpa only [globalCandidateAMinimalPhysicalLocalActionFamily] using
+          congrFun chartData.llAction_eq state
+      _ = _ := by rfl
+  · intro core
     exact chartData.matterProjection_diagonalCore core
-  llProjection_core := by
-    intro core
+  · intro core
     exact chartData.llProjection_diagonalCore core
 
 /-- The concrete minimal-physical chart data constructs the original H13
@@ -295,7 +518,7 @@ def globalCandidateAMinimalPhysicalMatterLLSameActionBridge
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis) :=
+      (measure := measure) configuration data analysis) :=
   programPGlobalMinimalPhysicalLocalMatterLLSameActionBridge_of_quadraticChart
     period hPeriod configuration data analysis
       (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
@@ -314,7 +537,7 @@ theorem global_candidateA_h13_minimalPhysical_actionChart_gate
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     GlobalCandidateAH13MatterLLSameActionCertificate period hPeriod
       configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod

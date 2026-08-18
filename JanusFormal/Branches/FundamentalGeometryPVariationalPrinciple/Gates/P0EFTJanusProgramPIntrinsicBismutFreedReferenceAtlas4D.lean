@@ -32,12 +32,14 @@ open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaAtlas4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 
-variable {E Index : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v w
+
+variable {E : Type u} {Index : Type w}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Operator-generated local Mellin families for one actual family and many
 references. -/
@@ -45,7 +47,7 @@ structure IntrinsicBismutFreedReferenceAtlasData
     (actual : Real → E →L[Real] E)
     (reference : Index → Real → E →L[Real] E) where
   operatorCocycle :
-    IntrinsicRelativeTraceReferenceCocycleData actual reference
+    IntrinsicRelativeTraceReferenceCocycleData.{u, v, w} actual reference
   family : Index → RelativeHeatMellinZetaFamilyData
   coefficient_agreement : ∀ index parameter,
     relativeZetaConnectionCoefficient (family index).toZetaFamily parameter =
@@ -57,7 +59,7 @@ namespace IntrinsicBismutFreedReferenceAtlasData
 def mellinAtlas
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference) :
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference) :
     RelativeHeatMellinZetaFamilyAtlasData Index where
   family := data.family
 
@@ -65,7 +67,7 @@ def mellinAtlas
 def zetaAtlas
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference) :
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference) :
     RelativeZetaLocalFamilyAtlasData Index :=
   data.mellinAtlas.toZetaAtlas
 
@@ -73,7 +75,7 @@ def zetaAtlas
 def localDeterminant
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (index : Index) (parameter : Real) : Complex :=
   relativeHeatMellinZetaFamilyDeterminant (data.family index) parameter
 
@@ -81,7 +83,7 @@ def localDeterminant
 def transition
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (first second : Index) (parameter : Real) : Complex :=
   relativeZetaTransition data.zetaAtlas first second parameter
 
@@ -90,7 +92,7 @@ actual-minus-reference trace. -/
 theorem finitePart_logDerivative_eq_localTrace
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (index : Index) (parameter : Real) :
     (data.family index).finitePartFamily.logDerivative parameter =
       data.operatorCocycle.localTrace index parameter := by
@@ -102,14 +104,14 @@ theorem finitePart_logDerivative_eq_localTrace
     _ = -(data.operatorCocycle.localCoefficient index parameter).re := by
       rw [data.coefficient_agreement index parameter]
     _ = data.operatorCocycle.localTrace index parameter := by
-      rfl
+      simp [IntrinsicRelativeTraceReferenceCocycleData.localCoefficient]
 
 /-- Difference of local zeta coefficients equals the intrinsic
 reference-change trace. -/
 theorem coefficient_sub_eq_referenceChangeTrace
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (first second : Index) (parameter : Real) :
     relativeZetaConnectionCoefficient (data.family first).toZetaFamily parameter -
         relativeZetaConnectionCoefficient (data.family second).toZetaFamily
@@ -125,7 +127,7 @@ intrinsic reference-change trace. -/
 theorem transitionDerivative_eq_referenceChangeTrace
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (first second : Index) (parameter : Real) :
     relativeZetaTransitionDerivative data.zetaAtlas first second parameter =
       (data.operatorCocycle.referenceChangeTrace first second parameter :
@@ -143,7 +145,7 @@ theorem transitionDerivative_eq_referenceChangeTrace
 theorem finitePart_logDerivative_changeReference
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (first second : Index) (parameter : Real) :
     (data.family second).finitePartFamily.logDerivative parameter =
       (data.family first).finitePartFamily.logDerivative parameter +
@@ -156,7 +158,7 @@ theorem finitePart_logDerivative_changeReference
 theorem transition_cocycle
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (first second third : Index) (parameter : Real) :
     data.transition second third parameter *
         data.transition first second parameter =
@@ -167,7 +169,7 @@ theorem transition_cocycle
 theorem transition_connectionGauge
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference)
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference)
     (first second : Index) (parameter : Real) :
     relativeZetaTransitionDerivative data.zetaAtlas first second parameter +
         relativeZetaConnectionCoefficient
@@ -176,7 +178,12 @@ theorem transition_connectionGauge
       data.transition first second parameter *
         relativeZetaConnectionCoefficient
           (data.family first).toZetaFamily parameter := by
-  simpa [transition, zetaAtlas, mellinAtlas] using
+  simpa [transition, zetaAtlas, mellinAtlas,
+    relativeHeatMellinZetaTransition,
+    RelativeHeatMellinZetaFamilyAtlasData.toZetaAtlas,
+    RelativeHeatMellinZetaFamilyData.toZetaFamily,
+    relativeZetaLocalConnectionCoefficient,
+    relativeZetaConnectionCoefficient] using
     relativeHeatMellinZetaTransition_connectionGauge data.mellinAtlas first
       second parameter
 
@@ -184,7 +191,7 @@ theorem transition_connectionGauge
 def determinantLineAtlasCertificate
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference) :
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference) :
     RelativeZetaDeterminantLineAtlasCertificate data.zetaAtlas :=
   relativeZetaDeterminantLineAtlasCertificate data.zetaAtlas
 
@@ -192,7 +199,7 @@ def determinantLineAtlasCertificate
 theorem intrinsic_bismut_freed_reference_atlas_gate
     (actual : Real → E →L[Real] E)
     (reference : Index → Real → E →L[Real] E)
-    (data : IntrinsicBismutFreedReferenceAtlasData actual reference) :
+    (data : IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference) :
     RelativeZetaDeterminantLineAtlasCertificate data.zetaAtlas ∧
       (∀ first second parameter,
         relativeZetaTransitionDerivative data.zetaAtlas first second parameter =

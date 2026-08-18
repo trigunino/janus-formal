@@ -122,7 +122,7 @@ theorem transport_trans
     (data : CoherentLinearNaturalRepresentationPullbackTransportData
       representation coordinates refinement pullback)
     (first second third : Real) :
-    (data.transport second third).comp (data.transport first second) =
+    (data.transport first second).trans (data.transport second third) =
       data.transport first third := by
   ext state
   change data.transport second third
@@ -181,14 +181,14 @@ theorem coherent_linear_natural_representation_pullback_transport_gate
     (∀ parameter,
       data.transport parameter parameter = LinearEquiv.refl Real State) ∧
     (∀ first second third,
-      (data.transport second third).comp (data.transport first second) =
+      (data.transport first second).trans (data.transport second third) =
         data.transport first third) ∧
-    LinearNaturalRepresentationIsomorphismTransportData
-      representation coordinates refinement pullback :=
+    Nonempty (LinearNaturalRepresentationIsomorphismTransportData
+      representation coordinates refinement pullback) :=
   ⟨data.transport_self representation coordinates refinement pullback,
     data.transport_trans representation coordinates refinement pullback,
-    data.toLinearNaturalRepresentationIsomorphismTransport representation
-      coordinates refinement pullback⟩
+    ⟨data.toLinearNaturalRepresentationIsomorphismTransport representation
+      coordinates refinement pullback⟩⟩
 
 end CoherentLinearNaturalRepresentationPullbackTransportData
 

@@ -16,6 +16,9 @@ full tensor coordinate: all nontrivial scalar dependence of a full section
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFullTensorBasisIndependence4D
+end P0EFTJanusProgramPSelfAdjointFredholmFullTensorBasisIndependence4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 noncomputable section
@@ -27,8 +30,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
 open P0EFTJanusProgramPFullTensorCollapseFormula4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -90,5 +93,5 @@ theorem self_adjoint_fredholm_full_tensor_basis_independence_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFullTensorBasisIndependence4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

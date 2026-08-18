@@ -33,6 +33,8 @@ open P0EFTJanusMappingTorusOrientationDoubleCover
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCutBoundaryFirstSheetCurrentBridge4D
 open P0EFTJanusD8NormalBundleD9DisplacementBridge4D
 open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
@@ -362,7 +364,7 @@ theorem candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_gauss
           (tensor, displacement), parameter) =
       normalGraphCanonicalTwoSheetGaussGHYAction period hPeriod einsteinScale
         variedMetric displacement parameter hNonNull := by
-  rw [candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_historical
+  rw [candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_historicalWeingarten
     period hPeriod einsteinScale metric hTransverse tensor variedMetric hVaried
       displacement parameter hNonNull hCurrent.1 hNormalRootNonneg]
   exact

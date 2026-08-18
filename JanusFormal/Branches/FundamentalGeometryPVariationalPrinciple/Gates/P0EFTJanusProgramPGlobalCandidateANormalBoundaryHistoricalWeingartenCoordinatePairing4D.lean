@@ -33,6 +33,7 @@ open P0EFTJanusD8NormalBundleD9DisplacementBridge4D
 open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
 open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
+open P0EFTJanusMappingTorusCanonicalHolonomicAtlasTransitionJets4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
@@ -175,10 +176,12 @@ theorem
   simp only [LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
   apply Eq.symm
   rw [← Finset.sum_add_distrib]
+  simp_rw [map_sum]
+  simp only [map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+  simp_rw [Finset.mul_sum]
+  conv_lhs => rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro row _
-  rw [map_sum]
-  simp only [map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro column _

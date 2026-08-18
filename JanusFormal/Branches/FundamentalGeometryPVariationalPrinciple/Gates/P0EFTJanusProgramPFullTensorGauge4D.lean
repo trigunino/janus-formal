@@ -14,8 +14,8 @@ open P0EFTJanusProgramPFullTensorAtlasConnection4D
 open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
 open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
 
-variable {E ZeroMode Index : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E Index : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -34,10 +34,11 @@ theorem localFullTensorConnection_gauge
         localFullTensorConnectionAt fredholm atlas first parameter value derivative := by
   unfold localFullTensorConnectionAt
   apply (fredholm.fullTensorDeterminantCollapse parameter).injective
-  rw [fullTensorCollapse_formula, map_smul, fullTensorCollapse_formula]
+  rw [fredholm.fullTensorCollapse_formula, map_smul,
+    fredholm.fullTensorCollapse_formula]
   have h := relativeZetaLocalConnection_gauge_covariant
     atlas first second parameter value derivative
-  exact congrArg
+  simpa [smul_smul] using congrArg
     (fun coordinate : Complex =>
       coordinate • fredholm.complexifiedDeterminantFrame parameter) h
 

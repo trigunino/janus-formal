@@ -30,15 +30,14 @@ open P0EFTJanusProgramPFiniteKernelModel4D
 open P0EFTJanusProgramPFiniteKernelNamedModes4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Quadratic coercivity on the exact orthogonal complement of the actual
 kernel, with an explicit finite family of named zero modes. -/
 structure SelfAdjointKernelComplementCoercivityWithNamedModes
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   family : FiniteKernelNamedModeFamily operator ZeroMode
   coercivity : Real
   coercivity_pos : 0 < coercivity
@@ -52,7 +51,7 @@ all subsequent actual-kernel gates. -/
 theorem SelfAdjointKernelComplementCoercivityWithNamedModes.lowerBound
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointKernelComplementCoercivityWithNamedModes operator
       hSelfAdjoint ZeroMode)
     (vector : SelfAdjointKernelComplement operator) :
@@ -83,7 +82,7 @@ theorem SelfAdjointKernelComplementCoercivityWithNamedModes.lowerBound
 def SelfAdjointKernelComplementCoercivityWithNamedModes.toGapWithNamedModes
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointKernelComplementCoercivityWithNamedModes operator
       hSelfAdjoint ZeroMode) :
     SelfAdjointKernelComplementGapWithNamedModes operator hSelfAdjoint
@@ -98,7 +97,7 @@ packet. -/
 def SelfAdjointKernelComplementCoercivityWithNamedModes.toGapWithModel
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointKernelComplementCoercivityWithNamedModes operator
       hSelfAdjoint ZeroMode) :
     SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint :=
@@ -108,15 +107,15 @@ def SelfAdjointKernelComplementCoercivityWithNamedModes.toGapWithModel
 theorem selfAdjoint_named_kernel_coercivity_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointKernelComplementCoercivityWithNamedModes operator
       hSelfAdjoint ZeroMode) :
-    SelfAdjointKernelComplementGapWithNamedModes operator hSelfAdjoint
-        ZeroMode ∧
-      SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapWithNamedModes operator hSelfAdjoint
+        ZeroMode) ∧
+      Nonempty (SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode := by
-  exact ⟨data.toGapWithNamedModes,
-    data.toGapWithModel,
+  exact ⟨⟨data.toGapWithNamedModes⟩,
+    ⟨data.toGapWithModel⟩,
     data.family.kernel_finrank_eq_card⟩
 
 end

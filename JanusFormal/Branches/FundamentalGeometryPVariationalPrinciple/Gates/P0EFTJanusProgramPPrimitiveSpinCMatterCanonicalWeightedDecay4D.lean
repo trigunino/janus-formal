@@ -30,11 +30,18 @@ noncomputable section
 
 open scoped ENNReal lp LinearPMap
 open P0EFTJanusComplexDiagonalMaximalOperator4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalFourierGraph4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
+
+local instance matterHilbertRealInnerProductSpace :
+    InnerProductSpace Real ProgramPPrimitiveSpinCMatterHilbert :=
+  programPPrimitiveSpinCMatterHilbertRealInnerProductSpace
 
 private def canonicalFiniteCoefficientEmbedding
     (Mode : Type*) [DecidableEq Mode] :
@@ -50,6 +57,11 @@ private theorem canonicalFiniteCoefficientEmbedding_single
       lp.single 2 mode coefficient := by
   rw [canonicalFiniteCoefficientEmbedding, Finsupp.linearCombination_single,
     complexDiagonalBasis_eq_single]
+  ext other
+  by_cases hOther : other = mode
+  · subst other
+    simp [lp.single_apply]
+  · simp [lp.single_apply, hOther]
 
 @[simp]
 private theorem canonicalFiniteCoefficientEmbedding_apply
@@ -91,9 +103,24 @@ theorem primitiveSpinCOneSectorCanonicalFourierCoefficients_finite
         map_smul]
       apply
         (primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).injective
-      rw [LinearIsometryEquiv.apply_symm_apply,
-        primitiveSpinCGeometricSignedDiracModeUnitary_single,
-        canonicalFiniteCoefficientEmbedding_single]
+      simp only [map_add, map_smul,
+        primitiveSpinCOneSectorCanonicalFourierCoefficients,
+        ContinuousLinearMap.comp_apply]
+      have hInverse :=
+        (primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).apply_symm_apply
+          ((d9PrimitiveSpinCGeometricL2Embedding period hPeriod .positiveQuarter)
+            (primitiveSpinCGeometricSignedDiracModeSmoothVector period hPeriod
+              mode))
+      change
+        (primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod)
+            ((primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).symm
+              |>.toLinearIsometry.toContinuousLinearMap
+              ((d9PrimitiveSpinCGeometricL2Embedding period hPeriod
+                .positiveQuarter)
+                (primitiveSpinCGeometricSignedDiracModeSmoothVector period
+                  hPeriod mode))) = _ at hInverse
+      rw [hInverse, canonicalFiniteCoefficientEmbedding_single,
+        primitiveSpinCGeometricSignedDiracModeUnitary_single]
       rfl
 
 /-- The exact two-sector canonical coefficient map recovers arbitrary finite
@@ -150,8 +177,8 @@ theorem canonicalWeightedDecay_finite_weightedCoefficients
   rw [decay.weighted_relation,
     programPPrimitiveSpinCMatterCanonicalFourierCoefficients_finite,
     programPPrimitiveSpinCMatterFiniteHilbertEmbedding_apply,
-    programPPrimitiveSpinCMatterFiniteHilbertEmbedding_apply]
-  rfl
+    programPPrimitiveSpinCMatterFiniteHilbertEmbedding_apply,
+    programPPrimitiveSpinCMatterFiniteHessian_apply]
 
 /-- Convert the minimal weighted-decay datum to the previous canonical
 interface. -/

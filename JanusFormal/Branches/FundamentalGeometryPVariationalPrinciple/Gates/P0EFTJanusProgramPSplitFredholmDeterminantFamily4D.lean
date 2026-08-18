@@ -26,7 +26,7 @@ noncomputable section
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D
 
-variable {E ZeroMode : Type*}
+variable {E : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -34,7 +34,7 @@ variable {E ZeroMode : Type*}
 of the reduced invertible family. -/
 structure SplitFredholmDeterminantFamilyData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     [LinearOrder ZeroMode] where
   kernels : FiniteKernelBasisFamilyData operator ZeroMode
   reducedDeterminant : Real → Complex
@@ -44,7 +44,7 @@ structure SplitFredholmDeterminantFamilyData
 /-- Split determinant section at one parameter. -/
 structure SplitFredholmDeterminantSection
     {operator : Real → E →L[Real] E}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     [LinearOrder ZeroMode]
     (data : SplitFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) where
@@ -69,7 +69,7 @@ theorem canonicalSection_nonzero_components
     (parameter : Real) :
     (data.canonicalSection parameter).kernelVolume ≠ 0 ∧
       (data.canonicalSection parameter).reducedCoordinate ≠ 0 :=
-  ⟨data.kernels.finiteKernelNamedVolume_ne_zero parameter,
+  ⟨finiteKernelNamedVolume_ne_zero data.kernels parameter,
     data.reducedDeterminant_ne_zero parameter⟩
 
 /-- Transport only the finite kernel-line component between parameters. -/
@@ -77,10 +77,10 @@ def transportKernelComponent
     {operator : Real → E →L[Real] E}
     (data : SplitFredholmDeterminantFamilyData operator ZeroMode)
     (first second : Real)
-    (section : SplitFredholmDeterminantSection data first) :
+    (splitSection : SplitFredholmDeterminantSection data first) :
     FiniteKernelDeterminantFiber data.kernels second :=
   finiteKernelDeterminantTransport data.kernels first second
-    section.kernelVolume
+    splitSection.kernelVolume
 
 /-- Kernel transport sends the canonical split section's volume to the next
 canonical volume. -/
@@ -90,7 +90,7 @@ theorem transportKernelComponent_canonicalSection
     (first second : Real) :
     data.transportKernelComponent first second (data.canonicalSection first) =
       (data.canonicalSection second).kernelVolume :=
-  data.kernels.finiteKernelDeterminantTransport_namedVolume first second
+  finiteKernelDeterminantTransport_namedVolume data.kernels first second
 
 /-- The kernel component transports transitively. -/
 theorem transportKernelComponent_trans
@@ -101,7 +101,7 @@ theorem transportKernelComponent_trans
     finiteKernelDeterminantTransport data.kernels second third
         (finiteKernelDeterminantTransport data.kernels first second volume) =
       finiteKernelDeterminantTransport data.kernels first third volume := by
-  have hMaps := data.kernels.finiteKernelDeterminantTransport_trans
+  have hMaps := finiteKernelDeterminantTransport_trans data.kernels
     first second third
   exact LinearMap.congr_fun hMaps volume
 
@@ -119,7 +119,7 @@ theorem split_fredholm_determinant_family_gate
         data.transportKernelComponent first second
             (data.canonicalSection first) =
           (data.canonicalSection second).kernelVolume) :=
-  ⟨data.kernels.finiteKernelDeterminantFiber_finrank_one,
+  ⟨finiteKernelDeterminantFiber_finrank_one data.kernels,
     data.canonicalSection_nonzero_components,
     data.transportKernelComponent_canonicalSection⟩
 

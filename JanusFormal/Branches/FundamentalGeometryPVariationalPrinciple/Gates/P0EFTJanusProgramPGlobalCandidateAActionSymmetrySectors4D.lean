@@ -31,10 +31,19 @@ open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -73,7 +82,7 @@ structure GlobalCandidateAActionSymmetrySectorData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   symmetry : GlobalCandidateAActionTranslationAutomaticSplit4D period hPeriod
     configuration data analysis chart sameAction physical ZeroMode
   classification : CandidateAZeroModeSectorClassification ZeroMode
@@ -95,7 +104,7 @@ theorem GlobalCandidateAActionSymmetrySectorData4D.kernel_finrank_eq_sum
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionSymmetrySectorData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     Module.finrank Real
@@ -130,17 +139,17 @@ theorem global_candidateA_action_symmetry_sector_gate
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionSymmetrySectorData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    Nonempty (GlobalCandidateAActualKernelGap4D period hPeriod configuration data
+        analysis chart sameAction physical) ∧
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =
         ∑ sector : CandidateAZeroModeSector,
           input.classification.multiplicity sector :=
-  ⟨input.symmetry.toGradientAutomaticSplit.toActualKernelGap period hPeriod,
+  ⟨⟨input.symmetry.toGradientAutomaticSplit.toActualKernelGap period hPeriod⟩,
     input.kernel_finrank_eq_sum period hPeriod⟩
 
 end

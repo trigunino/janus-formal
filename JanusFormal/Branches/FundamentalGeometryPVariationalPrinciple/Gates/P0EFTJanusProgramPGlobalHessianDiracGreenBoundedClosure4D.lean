@@ -32,6 +32,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -91,10 +92,11 @@ def diracGreenClosureChartData
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-      hPeriod configuration data analysis
+      hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared)) :=
   maximalDomainClosureChartData period hPeriod configuration data analysis
+    (measure := measure)
     (diracGreenClosureSpinCDomain period hPeriod couplings.matterMassSquared)
     family
 
@@ -109,10 +111,11 @@ def diracGreenClosureChart
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-      hPeriod configuration data analysis
+      hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared)) :=
   maximalDomainClosureChart period hPeriod configuration data analysis
+    (measure := measure)
     (diracGreenClosureSpinCDomain period hPeriod couplings.matterMassSquared)
     family
 
@@ -127,11 +130,11 @@ def diracGreenClosureMatterLLSameAction
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-      hPeriod configuration data analysis
+      hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared)) :=
   maximalDomainClosureMatterLLSameAction period hPeriod configuration data
-    analysis
+    analysis (measure := measure)
       (diracGreenClosureSpinCDomain period hPeriod couplings.matterMassSquared)
       family
 
@@ -147,7 +150,7 @@ structure GlobalCandidateAHessianDiracGreenBoundedInputs4D
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) where
   family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-    hPeriod configuration data analysis
+    hPeriod (measure := measure) configuration data analysis
       (diracGreenClosureMatterRealization period hPeriod
         couplings.matterMassSquared)
   physicalBound :
@@ -184,9 +187,9 @@ def GlobalCandidateAHessianDiracGreenBoundedInputs4D.maximalInputs
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianDiracGreenBoundedInputs4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     GlobalCandidateAHessianMaximalDomainBoundedInputs4D period hPeriod
-      configuration data analysis where
+      (measure := measure) configuration data analysis where
   spinCDiracSymmetry :=
     programPPrimitiveSpinCSmoothDiracFormalSymmetryData4D period hPeriod
   family := inputs.family
@@ -204,7 +207,7 @@ def GlobalCandidateAHessianDiracGreenBoundedInputs4D.physical
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianDiracGreenBoundedInputs4D period hPeriod
-      configuration data analysis) :=
+      (measure := measure) configuration data analysis) :=
   (inputs.maximalInputs period hPeriod).physical period hPeriod
 
 /-- H12 Fredholm estimate package produced from the finite-defect
@@ -219,7 +222,7 @@ def GlobalCandidateAHessianDiracGreenBoundedInputs4D.estimates
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianDiracGreenBoundedInputs4D period hPeriod
-      configuration data analysis) :=
+      (measure := measure) configuration data analysis) :=
   (inputs.maximalInputs period hPeriod).estimates period hPeriod
 
 /-- Preferred H14 terminal gate after complete removal of the SpinC input. -/
@@ -236,7 +239,7 @@ theorem global_candidateA_hessian_diracGreen_bounded_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (inputs : GlobalCandidateAHessianDiracGreenBoundedInputs4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     GlobalCandidateAHessianClosureCertificate4D period hPeriod configuration
       data analysis
         (diracGreenClosureChart period hPeriod configuration data analysis

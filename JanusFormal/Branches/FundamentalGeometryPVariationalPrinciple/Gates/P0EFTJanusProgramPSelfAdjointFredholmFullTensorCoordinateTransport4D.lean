@@ -12,6 +12,9 @@ makes its identity/composition laws immediate.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFullTensorCoordinateTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmFullTensorCoordinateTransport4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 7200000
@@ -23,8 +26,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullComplexCoordinate4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorTransport4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -40,8 +43,12 @@ theorem fullTensorDeterminantTransport_coordinate
     data.fullTensorDeterminantCoordinateEquiv second
         (data.fullTensorDeterminantTransport first second value) =
       data.fullTensorDeterminantCoordinateEquiv first value := by
-  rw [← data.fullTensorDeterminantCoordinateEquiv_symm_apply first
-    (data.fullTensorDeterminantCoordinateEquiv first value)]
+  have hvalue :
+      value = data.fullTensorDeterminantSection first
+        (data.fullTensorDeterminantCoordinateEquiv first value) := by
+    rw [← data.fullTensorDeterminantCoordinateEquiv_symm_apply]
+    exact (data.fullTensorDeterminantCoordinateEquiv first).symm_apply_apply value |>.symm
+  rw [hvalue]
   rw [data.fullTensorDeterminantTransport_section]
   simp
 
@@ -64,12 +71,12 @@ theorem fullTensorDeterminantTransport_trans
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (first second third : Real) :
-    (data.fullTensorDeterminantTransport second third).comp
-        (data.fullTensorDeterminantTransport first second) =
+    (data.fullTensorDeterminantTransport first second).trans
+        (data.fullTensorDeterminantTransport second third) =
       data.fullTensorDeterminantTransport first third := by
   ext value
   apply (data.fullTensorDeterminantCoordinateEquiv third).injective
-  simp only [LinearEquiv.comp_apply]
+  simp only [LinearEquiv.trans_apply]
   rw [data.fullTensorDeterminantTransport_coordinate]
   rw [data.fullTensorDeterminantTransport_coordinate]
   rw [data.fullTensorDeterminantTransport_coordinate]
@@ -98,8 +105,8 @@ theorem self_adjoint_fredholm_full_tensor_coordinate_transport_gate
       data.fullTensorDeterminantTransport parameter parameter =
         LinearEquiv.refl Complex _) ∧
     (∀ first second third,
-      (data.fullTensorDeterminantTransport second third).comp
-          (data.fullTensorDeterminantTransport first second) =
+      (data.fullTensorDeterminantTransport first second).trans
+          (data.fullTensorDeterminantTransport second third) =
         data.fullTensorDeterminantTransport first third) :=
   ⟨data.fullTensorDeterminantTransport_coordinate,
     data.fullTensorDeterminantTransport_self,
@@ -108,5 +115,5 @@ theorem self_adjoint_fredholm_full_tensor_coordinate_transport_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFullTensorCoordinateTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

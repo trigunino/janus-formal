@@ -24,6 +24,7 @@ open P0EFTJanusMappingTorusGeneralLorentzTensor4D
 open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusMappingTorusCanonicalHolonomicAtlasTransitionJets4D
 open P0EFTJanusProgramPRegularFrameMaxwellCurvatureBridge4D
 open P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
@@ -306,7 +307,7 @@ theorem candidateANormalBoundaryCompletedGaussLocalSectionAgreement_smooth
             (tensor, displacement), parameter) point) :
     CandidateANormalBoundaryCompletedGaussLocalSectionAgreement period hPeriod
       metric tensor variedMetric displacement parameter := by
-  unfold CandidateANormalBoundaryCompletedGaussLocalSectionAgreement
+  refine { pointwise := ?_ }
   intro boundary patch coordinate hAt row column
   dsimp only
   let frame := finiteSmoothThroatGeneratingFrame

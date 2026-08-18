@@ -24,13 +24,12 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
 
 variable {Base E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Self-adjoint operator family over an arbitrary base with one uniform
 positive lower bound. -/
 structure SelfAdjointUniformGapBaseFamilyData
-    (operator : Base → E →L[Real] E) : Prop where
+    (operator : Base → E →L[Real] E) where
   selfAdjoint : ∀ base, IsSelfAdjoint (operator base)
   gap : Real
   gap_pos : 0 < gap
@@ -75,7 +74,9 @@ noncomputable def operatorEquiv
     {operator : Base → E →L[Real] E}
     (data : SelfAdjointUniformGapBaseFamilyData operator)
     (base : Base) : E ≃L[Real] E :=
-  ContinuousLinearEquiv.ofBijective (operator base) (data.bijective base)
+  ContinuousLinearEquiv.ofBijective (operator base)
+    (LinearMap.ker_eq_bot.mpr (data.bijective base).1)
+    (LinearMap.range_eq_top.mpr (data.bijective base).2)
 
 /-- Canonical inverse Green operator at a base point. -/
 noncomputable def green
@@ -122,7 +123,7 @@ theorem green_opNorm_le
     {operator : Base → E →L[Real] E}
     (data : SelfAdjointUniformGapBaseFamilyData operator)
     (base : Base) : ‖data.green base‖ ≤ data.gap⁻¹ := by
-  apply ContinuousLinearMap.opNorm_le_bound
+  apply ContinuousLinearMap.opNorm_le_bound (data.green base)
     (inv_nonneg.mpr (le_of_lt data.gap_pos))
   intro vector
   exact data.green_norm_le base vector

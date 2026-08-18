@@ -103,6 +103,8 @@ def programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced
       configuration data analysis realization where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
+  toAddCommGroup_eq := family.toAddCommGroup_eq
+  toSMul_eq := family.toSMul_eq
   bounds := family.bounds
   domain := family.domain
   isOpen_domain := family.isOpen_domain

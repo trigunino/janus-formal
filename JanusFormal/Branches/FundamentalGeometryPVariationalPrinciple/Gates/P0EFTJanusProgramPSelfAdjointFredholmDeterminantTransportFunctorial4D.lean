@@ -9,7 +9,11 @@ and composition laws. Their `arrowCongr` transport therefore makes
 -/
 
 namespace JanusFormal
+
 namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportFunctorial4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportFunctorial4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 4200000
@@ -20,8 +24,8 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportLaws4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -35,7 +39,11 @@ theorem determinantTransport_self
     data.determinantTransport parameter parameter = LinearEquiv.refl Real _ := by
   unfold determinantTransport
   rw [data.cokernelTopTransport_self, data.kernelTopTransport_self]
-  exact LinearEquiv.arrowCongr_refl
+  apply LinearEquiv.ext
+  intro value
+  apply LinearMap.ext
+  intro input
+  rfl
 
 /-- Exact composition law on the actual Fredholm determinant line. -/
 theorem determinantTransport_trans
@@ -65,5 +73,5 @@ theorem self_adjoint_fredholm_determinant_transport_functorial_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportFunctorial4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

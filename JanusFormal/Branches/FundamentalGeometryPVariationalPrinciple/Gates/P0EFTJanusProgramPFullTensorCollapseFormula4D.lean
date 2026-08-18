@@ -1,7 +1,11 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
 
 namespace JanusFormal
+
 namespace P0EFTJanusProgramPFullTensorCollapseFormula4D
+end P0EFTJanusProgramPFullTensorCollapseFormula4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 noncomputable section
@@ -11,8 +15,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -29,5 +33,5 @@ namespace SelfAdjointFredholmDeterminantFamilyData
 
 end SelfAdjointFredholmDeterminantFamilyData
 end
-end P0EFTJanusProgramPFullTensorCollapseFormula4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

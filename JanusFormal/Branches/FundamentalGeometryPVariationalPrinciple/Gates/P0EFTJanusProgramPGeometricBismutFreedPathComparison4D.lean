@@ -24,11 +24,14 @@ noncomputable section
 
 open P0EFTJanusNaturalFamilyQuillenBridge
 open P0EFTJanusQuillenFamilyCanonicity
+open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeBismutFreedTraceConnection4D
 
-variable {E Base Tangent : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v w x
+
+variable {E : Type u} {Base : Type w} {Tangent : Type x}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Geometric Bismut--Freed connection one-form on an arbitrary parameter
 base.  `Tangent` is deliberately abstract: later geometric layers may replace
@@ -53,7 +56,7 @@ def pulledGeometricCoefficient
 single comparison identity needed to identify the two connections. -/
 structure GeometricOperatorBismutFreedPathComparisonData
     (actual reference : Real → E →L[Real] E)
-    (Base Tangent : Type*) where
+    (Base : Type w) (Tangent : Type x) where
   analyticFamily : NaturalFamilyAnalyticUpgrade
   analyticFamilyClosed :
     ellipticFamilyInputClosed (toEllipticFamilyInputStatus analyticFamily)
@@ -61,7 +64,8 @@ structure GeometricOperatorBismutFreedPathComparisonData
   quillenClosed : quillenBismutFreedClosed quillen
   geometry : GeometricBismutFreedOneFormData Base Tangent
   path : GeometricFamilyPathData Base Tangent
-  operatorFamily : RelativeBismutFreedTraceConnectionData actual reference
+  operatorFamily : RelativeBismutFreedTraceConnectionData.{u, v}
+    actual reference
   coefficient_agreement : ∀ parameter,
     pulledGeometricCoefficient geometry path parameter =
       operatorFamily.operatorTrace.bismutFreedCoefficient parameter
@@ -71,7 +75,7 @@ namespace GeometricOperatorBismutFreedPathComparisonData
 /-- Covariant derivative obtained by pulling back the geometric connection. -/
 def geometricConnectionAt
     {actual reference : Real → E →L[Real] E}
-    (data : GeometricOperatorBismutFreedPathComparisonData
+    (data : GeometricOperatorBismutFreedPathComparisonData.{u, v, w, x}
       actual reference Base Tangent)
     (parameter : Real) (value derivative : Complex) : Complex :=
   derivative + pulledGeometricCoefficient data.geometry data.path parameter * value
@@ -80,37 +84,34 @@ def geometricConnectionAt
 is literally the intrinsic operator-trace connection. -/
 theorem geometricConnectionAt_eq_operator
     {actual reference : Real → E →L[Real] E}
-    (data : GeometricOperatorBismutFreedPathComparisonData
+    (data : GeometricOperatorBismutFreedPathComparisonData.{u, v, w, x}
       actual reference Base Tangent)
     (parameter : Real) (value derivative : Complex) :
     data.geometricConnectionAt parameter value derivative =
       data.operatorFamily.connectionAt parameter value derivative := by
   unfold geometricConnectionAt
-    P0EFTJanusProgramPRelativeBismutFreedTraceConnection4D.
-      RelativeBismutFreedTraceConnectionData.connectionAt
+    P0EFTJanusProgramPRelativeBismutFreedTraceConnection4D.RelativeBismutFreedTraceConnectionData.connectionAt
   rw [data.coefficient_agreement parameter]
 
 /-- The intrinsic zeta determinant is therefore parallel for the pulled-back
 geometric Bismut--Freed connection, not only for the operator presentation. -/
 theorem determinant_parallel_geometric
     {actual reference : Real → E →L[Real] E}
-    (data : GeometricOperatorBismutFreedPathComparisonData
+    (data : GeometricOperatorBismutFreedPathComparisonData.{u, v, w, x}
       actual reference Base Tangent)
     (parameter : Real) :
     data.geometricConnectionAt parameter
-        (P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-          relativeHeatMellinZetaFamilyDeterminant
-            data.operatorFamily.zetaFamily parameter)
-        (P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaDeterminantCoordinateDerivative
-            data.operatorFamily.zetaFamily.toZetaFamily parameter) = 0 := by
+        (relativeHeatMellinZetaFamilyDeterminant
+          data.operatorFamily.zetaFamily parameter)
+        (relativeZetaDeterminantCoordinateDerivative
+          data.operatorFamily.zetaFamily.toZetaFamily parameter) = 0 := by
   rw [data.geometricConnectionAt_eq_operator]
   exact data.operatorFamily.determinant_parallel parameter
 
 /-- Public pathwise geometric/operator comparison checkpoint. -/
 theorem geometric_operator_bismut_freed_path_comparison_gate
     {actual reference : Real → E →L[Real] E}
-    (data : GeometricOperatorBismutFreedPathComparisonData
+    (data : GeometricOperatorBismutFreedPathComparisonData.{u, v, w, x}
       actual reference Base Tangent) :
     ellipticFamilyInputClosed
         (toEllipticFamilyInputStatus data.analyticFamily) ∧
@@ -120,12 +121,10 @@ theorem geometric_operator_bismut_freed_path_comparison_gate
           data.operatorFamily.connectionAt parameter value derivative) ∧
       (∀ parameter,
         data.geometricConnectionAt parameter
-            (P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D.
-              relativeHeatMellinZetaFamilyDeterminant
-                data.operatorFamily.zetaFamily parameter)
-            (P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-              relativeZetaDeterminantCoordinateDerivative
-                data.operatorFamily.zetaFamily.toZetaFamily parameter) = 0) :=
+            (relativeHeatMellinZetaFamilyDeterminant
+              data.operatorFamily.zetaFamily parameter)
+            (relativeZetaDeterminantCoordinateDerivative
+              data.operatorFamily.zetaFamily.toZetaFamily parameter) = 0) :=
   ⟨data.analyticFamilyClosed,
     data.quillenClosed,
     data.geometricConnectionAt_eq_operator,

@@ -37,6 +37,14 @@ open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPSelfAdjointKernelBasisCoercivity4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -101,10 +109,14 @@ def globalCandidateAActualKernelGap_of_basisCoercivity
       hPeriod configuration data analysis chart sameAction}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (coercivity : GlobalCandidateAActualKernelBasisCoercivity4D period hPeriod
-      configuration data analysis chart sameAction physical ZeroMode) :
+      configuration data analysis chart sameAction physical ZeroMode)
+    (ll_stationary : ∀ point,
+      LLStationaryAt period hPeriod
+        (data.boundary.llFields period hPeriod) point) :
     GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
       chart sameAction physical where
-  toGeneric := coercivity.toGapData
+  gapData := coercivity.toGapData
+  ll_stationary := ll_stationary
 
 /-- The exact number of Candidate-A zero modes is the cardinality of the
 supplied physical basis. -/
@@ -150,15 +162,19 @@ theorem global_candidateA_actual_kernel_basis_coercivity_gate
       hPeriod configuration data analysis chart sameAction}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (coercivity : GlobalCandidateAActualKernelBasisCoercivity4D period hPeriod
-      configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+      configuration data analysis chart sameAction physical ZeroMode)
+    (ll_stationary : ∀ point,
+      LLStationaryAt period hPeriod
+        (data.boundary.llFields period hPeriod) point) :
+    Nonempty (GlobalCandidateAActualKernelGap4D period hPeriod configuration data
+        analysis chart sameAction physical) ∧
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =
         Fintype.card ZeroMode :=
-  ⟨globalCandidateAActualKernelGap_of_basisCoercivity coercivity,
-    globalCandidateAActualKernel_finrank_eq_card coercivity⟩
+  ⟨⟨globalCandidateAActualKernelGap_of_basisCoercivity period hPeriod
+      coercivity ll_stationary⟩,
+    globalCandidateAActualKernel_finrank_eq_card period hPeriod coercivity⟩
 
 end
 end P0EFTJanusProgramPGlobalCandidateAActualKernelBasisCoercivity4D

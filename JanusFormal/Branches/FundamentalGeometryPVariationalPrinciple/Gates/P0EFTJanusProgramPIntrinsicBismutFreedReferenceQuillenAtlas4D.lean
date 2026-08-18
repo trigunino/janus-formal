@@ -27,26 +27,31 @@ set_option synthInstance.maxHeartbeats 2600000
 
 noncomputable section
 
+open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusCircleDeterminantTopologicalBundle
 open P0EFTJanusCircleQuillenMetricFlatConnection
 open P0EFTJanusProgramPIntrinsicBismutFreedReferenceAtlas4D
 open P0EFTJanusProgramPRelativeBismutFreedCircleTraceBridge4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+open P0EFTJanusProgramPRelativeZetaDeterminantCocycle4D
 open P0EFTJanusProgramPRelativeZetaDeterminantLineAtlas4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 
-variable {E Index : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v w
+
+variable {E : Type u} {Index : Type w}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Operator-generated reference atlas with one selected circle chart. -/
 structure IntrinsicBismutFreedReferenceQuillenAtlasData
     (actual : Real → E →L[Real] E)
     (reference : Index → Real → E →L[Real] E)
     (fold : Fold) where
-  referenceAtlas : IntrinsicBismutFreedReferenceAtlasData actual reference
+  referenceAtlas :
+    IntrinsicBismutFreedReferenceAtlasData.{u, v, w} actual reference
   baseIndex : Index
-  circleBridge : RelativeBismutFreedCircleTraceBridgeData
+  circleBridge : RelativeBismutFreedCircleTraceBridgeData.{u, v}
     actual (reference baseIndex) fold
   baseFamily_eq : referenceAtlas.family baseIndex =
     circleBridge.bismutFreed.zetaFamily
@@ -62,7 +67,8 @@ theorem baseDeterminant_eq_circle
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold)
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold)
     (parameter : Real) :
     data.referenceAtlas.localDeterminant data.baseIndex parameter =
       relativeHeatMellinZetaFamilyDeterminant
@@ -75,7 +81,8 @@ theorem baseCoefficient_eq_circle
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold)
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold)
     (parameter : Real) :
     relativeZetaConnectionCoefficient
         (data.referenceAtlas.family data.baseIndex).toZetaFamily parameter =
@@ -99,7 +106,8 @@ theorem base_circle_parallel
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold)
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold)
     (parameter : Real) :
     circleQuillenConnectionAt fold
         (data.referenceAtlas.localDeterminant data.baseIndex parameter)
@@ -114,7 +122,8 @@ def atlasCertificate
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold) :
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold) :
     RelativeZetaDeterminantLineAtlasCertificate
       data.referenceAtlas.zetaAtlas :=
   data.referenceAtlas.determinantLineAtlasCertificate
@@ -124,7 +133,8 @@ theorem transitionDerivative_eq_referenceTrace
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold)
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold)
     (first second : Index) (parameter : Real) :
     relativeZetaTransitionDerivative data.referenceAtlas.zetaAtlas first second
         parameter =
@@ -139,7 +149,8 @@ theorem base_endpoint_clutching
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold) :
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold) :
     circleLargeGaugeFrameCoordinateTransition fold
         (data.referenceAtlas.localDeterminant data.baseIndex 1) =
       data.referenceAtlas.localDeterminant data.baseIndex 0 := by
@@ -153,7 +164,8 @@ theorem closedHolonomy_eq_basePhaseRatio
     {actual : Real → E →L[Real] E}
     {reference : Index → Real → E →L[Real] E}
     {fold : Fold}
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold) :
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold) :
     circleQuillenClosedHolonomy fold =
       relativeZetaFinitePartPhase
           data.circleBridge.bismutFreed.zetaFamily.toFinitePartComparison 0 /
@@ -166,7 +178,8 @@ theorem intrinsic_bismut_freed_reference_quillen_atlas_gate
     (actual : Real → E →L[Real] E)
     (reference : Index → Real → E →L[Real] E)
     (fold : Fold)
-    (data : IntrinsicBismutFreedReferenceQuillenAtlasData actual reference fold) :
+    (data : IntrinsicBismutFreedReferenceQuillenAtlasData.{u, v, w}
+      actual reference fold) :
     RelativeZetaDeterminantLineAtlasCertificate
         data.referenceAtlas.zetaAtlas ∧
       (∀ first second parameter,

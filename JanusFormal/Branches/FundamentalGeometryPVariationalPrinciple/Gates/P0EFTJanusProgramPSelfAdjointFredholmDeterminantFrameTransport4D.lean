@@ -2,7 +2,11 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportFunctorial4D
 
 namespace JanusFormal
+
 namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameTransport4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 6200000
@@ -16,8 +20,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportLaws4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportFunctorial4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -33,23 +37,28 @@ theorem cokernelTopKernelTopEquiv_transport
       data.kernelTopTransport first second
         (cokernelTopKernelTopEquiv data first value) := by
   change
-    exteriorPower.map determinantDegree
+    exteriorPower.map (determinantDegree (ZeroMode := ZeroMode))
         (data.cokernelKernelEquiv second).toLinearMap
-      (exteriorPower.map determinantDegree
+      (exteriorPower.map (determinantDegree (ZeroMode := ZeroMode))
         (data.cokernelTransport first second).toLinearMap value) =
-      exteriorPower.map determinantDegree
+      exteriorPower.map (determinantDegree (ZeroMode := ZeroMode))
         (data.kernels.kernelTransport first second).toLinearMap
-      (exteriorPower.map determinantDegree
+      (exteriorPower.map (determinantDegree (ZeroMode := ZeroMode))
         (data.cokernelKernelEquiv first).toLinearMap value)
   rw [← LinearMap.comp_apply, ← exteriorPower.map_comp]
   rw [← LinearMap.comp_apply, ← exteriorPower.map_comp]
-  congr 1
-  apply LinearMap.ext
-  intro current
-  exact data.cokernelKernelEquiv_transport first second current
+  have hLinear :
+      (data.cokernelKernelEquiv second).toLinearMap.comp
+          (data.cokernelTransport first second).toLinearMap =
+        (data.kernels.kernelTransport first second).toLinearMap.comp
+          (data.cokernelKernelEquiv first).toLinearMap := by
+    apply LinearMap.ext
+    intro current
+    exact data.cokernelKernelEquiv_transport first second current
+  rw [hLinear]
 
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

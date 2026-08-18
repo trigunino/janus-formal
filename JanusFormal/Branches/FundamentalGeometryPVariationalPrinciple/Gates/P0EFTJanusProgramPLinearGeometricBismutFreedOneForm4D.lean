@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Calculus.Deriv.Basic
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTraceOneForm4D
 
 /-!
@@ -24,10 +25,11 @@ noncomputable section
 
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTraceOneForm4D
 
-variable {Base E : Type*}
+universe u v w
+
+variable {Base : Type u} {E : Type v}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Genuine complex Bismut--Freed one-form on a real normed parameter space. -/
 structure LinearGeometricBismutFreedOneFormData (Base : Type*)
@@ -54,8 +56,9 @@ def pulledLinearGeometricCoefficient
 Bismut--Freed covector. -/
 structure LinearGeometricOperatorBismutFreedComparisonData
     (actual reference : Base → E →L[Real] E) where
-  operatorTrace : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData
-    actual reference
+  operatorTrace :
+    RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+      actual reference
   geometry : LinearGeometricBismutFreedOneFormData Base
   oneForm_agreement : ∀ base direction,
     geometry.oneForm base direction =
@@ -67,7 +70,8 @@ namespace LinearGeometricOperatorBismutFreedComparisonData
 linear map. -/
 theorem geometricOneForm_add
     {actual reference : Base → E →L[Real] E}
-    (data : LinearGeometricOperatorBismutFreedComparisonData actual reference)
+    (data : LinearGeometricOperatorBismutFreedComparisonData.{u, v, w}
+      actual reference)
     (base first second : Base) :
     data.geometry.oneForm base (first + second) =
       data.geometry.oneForm base first + data.geometry.oneForm base second :=
@@ -76,7 +80,8 @@ theorem geometricOneForm_add
 /-- The geometric covector is real homogeneous. -/
 theorem geometricOneForm_smul
     {actual reference : Base → E →L[Real] E}
-    (data : LinearGeometricOperatorBismutFreedComparisonData actual reference)
+    (data : LinearGeometricOperatorBismutFreedComparisonData.{u, v, w}
+      actual reference)
     (base : Base) (scalar : Real) (direction : Base) :
     data.geometry.oneForm base (scalar • direction) =
       scalar • data.geometry.oneForm base direction :=
@@ -86,7 +91,8 @@ theorem geometricOneForm_smul
 the directional intrinsic BF trace coefficient. -/
 theorem pulledCoefficient_eq_operatorTrace
     {actual reference : Base → E →L[Real] E}
-    (data : LinearGeometricOperatorBismutFreedComparisonData actual reference)
+    (data : LinearGeometricOperatorBismutFreedComparisonData.{u, v, w}
+      actual reference)
     (path : DifferentiableGeometricFamilyPathData Base)
     (parameter : Real) :
     pulledLinearGeometricCoefficient data.geometry path parameter =
@@ -97,7 +103,8 @@ theorem pulledCoefficient_eq_operatorTrace
 /-- Public genuine-one-form comparison checkpoint. -/
 theorem linear_geometric_operator_bismut_freed_comparison_gate
     (actual reference : Base → E →L[Real] E)
-    (data : LinearGeometricOperatorBismutFreedComparisonData actual reference) :
+    (data : LinearGeometricOperatorBismutFreedComparisonData.{u, v, w}
+      actual reference) :
     (∀ base direction,
       data.geometry.oneForm base direction =
         ((data.operatorTrace.bismutFreedRealOneForm base direction : Real) :
@@ -105,7 +112,7 @@ theorem linear_geometric_operator_bismut_freed_comparison_gate
     (∀ base first second,
       data.geometry.oneForm base (first + second) =
         data.geometry.oneForm base first + data.geometry.oneForm base second) ∧
-    (∀ base scalar direction,
+    (∀ base (scalar : Real) direction,
       data.geometry.oneForm base (scalar • direction) =
         scalar • data.geometry.oneForm base direction) :=
   ⟨data.oneForm_agreement, data.geometricOneForm_add,

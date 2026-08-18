@@ -11,6 +11,9 @@ homeomorphism obtained by passing through `Complex` with the identity map.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTransportHomeomorph4D
+end P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTransportHomeomorph4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 7200000
@@ -23,8 +26,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTopologicalBundle4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorTransport4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCoordinateTransport4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -50,6 +53,7 @@ theorem fullTensorDeterminantTransportHomeomorph_apply
       data.fullTensorDeterminantTransport first second value := by
   apply (data.fullTensorDeterminantCoordinateEquiv second).injective
   simp [fullTensorDeterminantTransportHomeomorph,
+    fullTensorDeterminantCoordinateHomeomorph,
     data.fullTensorDeterminantTransport_coordinate]
 
 /-- Topological transport preserves every canonical scalar section. -/
@@ -91,5 +95,5 @@ theorem self_adjoint_fredholm_full_determinant_transport_homeomorph_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTransportHomeomorph4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

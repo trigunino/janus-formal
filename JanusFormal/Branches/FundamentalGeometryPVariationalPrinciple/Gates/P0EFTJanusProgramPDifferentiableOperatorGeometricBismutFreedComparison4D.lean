@@ -27,17 +27,19 @@ open P0EFTJanusProgramPDifferentiableIntrinsicTraceOneForm4D
 open P0EFTJanusProgramPLinearGeometricBismutFreedOneForm4D
 open P0EFTJanusProgramPDifferentiableBismutFreedCurvature4D
 
-variable {Base E : Type*}
+universe u v w
+
+variable {Base : Type u} {E : Type v}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Full differential comparison before applying the local families-index
 formula.  The derivative agreement is the typed infinitesimal version of the
 one-form comparison. -/
 structure DifferentiableOperatorGeometricBismutFreedComparisonData
     (actual reference : Base → E →L[Real] E) where
-  operator : DifferentiableRelativeIntrinsicTraceOneFormData actual reference
+  operator : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+    actual reference
   geometric : DifferentiableLinearGeometricBismutFreedOneFormData Base
   oneForm_agreement : ∀ base direction,
     geometric.geometry.oneForm base direction =
@@ -52,7 +54,7 @@ namespace DifferentiableOperatorGeometricBismutFreedComparisonData
 self-adjoint logarithmic-trace sector and is embedded canonically in `Complex`. -/
 theorem curvature_eq_operatorTrace
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableOperatorGeometricBismutFreedComparisonData
+    (data : DifferentiableOperatorGeometricBismutFreedComparisonData.{u, v, w}
       actual reference)
     (base first second : Base) :
     data.geometric.curvature base first second =
@@ -68,7 +70,7 @@ theorem curvature_eq_operatorTrace
 antisymmetry premise. -/
 theorem geometricCurvature_antisymm
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableOperatorGeometricBismutFreedComparisonData
+    (data : DifferentiableOperatorGeometricBismutFreedComparisonData.{u, v, w}
       actual reference)
     (base first second : Base) :
     data.geometric.curvature base first second =
@@ -79,7 +81,7 @@ theorem geometricCurvature_antisymm
 intrinsic operator trace coefficient in the path velocity. -/
 theorem pathCoefficient_eq_operatorTrace
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableOperatorGeometricBismutFreedComparisonData
+    (data : DifferentiableOperatorGeometricBismutFreedComparisonData.{u, v, w}
       actual reference)
     (path : DifferentiableGeometricFamilyPathData Base)
     (parameter : Real) :
@@ -91,7 +93,7 @@ theorem pathCoefficient_eq_operatorTrace
 /-- Public differential operator/geometric BF comparison checkpoint. -/
 theorem differentiable_operator_geometric_bismut_freed_comparison_gate
     (actual reference : Base → E →L[Real] E)
-    (data : DifferentiableOperatorGeometricBismutFreedComparisonData
+    (data : DifferentiableOperatorGeometricBismutFreedComparisonData.{u, v, w}
       actual reference) :
     (∀ base direction,
       data.geometric.geometry.oneForm base direction =
@@ -113,7 +115,7 @@ end DifferentiableOperatorGeometricBismutFreedComparisonData
 identified with the BF curvature already derived from the connection one-form. -/
 structure DifferentialFamiliesIndexComparisonData
     (actual reference : Base → E →L[Real] E) where
-  comparison : DifferentiableOperatorGeometricBismutFreedComparisonData
+  comparison : DifferentiableOperatorGeometricBismutFreedComparisonData.{u, v, w}
     actual reference
   localIndex : LocalFamiliesIndexTwoFormData Base
   familiesIndex_agreement : ∀ base first second,
@@ -125,7 +127,8 @@ namespace DifferentialFamiliesIndexComparisonData
 /-- The local index two-form equals the intrinsic operator trace curvature. -/
 theorem localIndex_eq_operatorTraceCurvature
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentialFamiliesIndexComparisonData actual reference)
+    (data : DifferentialFamiliesIndexComparisonData.{u, v, w}
+      actual reference)
     (base first second : Base) :
     data.localIndex.twoForm base first second =
       ((data.comparison.operator.bismutFreedTraceCurvature
@@ -136,7 +139,8 @@ theorem localIndex_eq_operatorTraceCurvature
 /-- Public non-circular families-index checkpoint. -/
 theorem differential_families_index_comparison_gate
     (actual reference : Base → E →L[Real] E)
-    (data : DifferentialFamiliesIndexComparisonData actual reference) :
+    (data : DifferentialFamiliesIndexComparisonData.{u, v, w}
+      actual reference) :
     (∀ base first second,
       data.comparison.geometric.curvature base first second =
         data.localIndex.twoForm base first second) ∧

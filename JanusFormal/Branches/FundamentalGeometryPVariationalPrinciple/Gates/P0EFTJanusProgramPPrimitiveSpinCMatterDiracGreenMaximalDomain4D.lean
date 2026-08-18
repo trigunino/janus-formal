@@ -29,9 +29,13 @@ noncomputable section
 
 open scoped ENNReal lp LinearPMap InnerProductSpace BigOperators
 open P0EFTJanusComplexDiagonalMaximalOperator4D
+open P0EFTJanusD9D10ExactFieldContentBridge4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
+open P0EFTJanusProgramPD9PrimitiveSpinCAllLevelNullHarmonicDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalFourierGraph4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalWeightedDecay4D
@@ -49,7 +53,7 @@ private abbrev MatterCoefficients :=
 
 local instance matterCoefficientsRealInnerProductSpace :
     InnerProductSpace Real MatterCoefficients :=
-  InnerProductSpace.complexToReal
+  programPPrimitiveSpinCMatterHilbertRealInnerProductSpace
 
 /-! ## Canonical coefficients are geometric mode pairings -/
 
@@ -134,6 +138,7 @@ theorem primitiveSpinCSmoothActionHessian_pairing_symm_of_dirac
           massSquared first) second := by
   unfold primitiveSpinCGeometricSignedActionHessianSmoothCore
   simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply]
+  simp_rw [d9PrimitiveSpinCGeometricL2_complex_smul]
   rw [d9PrimitiveSpinCGeometricL2Pairing_add_right,
     d9PrimitiveSpinCGeometricL2Pairing_complexScalar_right,
     d9PrimitiveSpinCGeometricL2Pairing_complexScalar_right,
@@ -141,7 +146,11 @@ theorem primitiveSpinCSmoothActionHessian_pairing_symm_of_dirac
     d9PrimitiveSpinCGeometricL2Pairing_complexScalar_left,
     d9PrimitiveSpinCGeometricL2Pairing_complexScalar_left,
     diracSymmetry.pairing_symm first second]
-  simp
+  have hTwo : (starRingEnd Complex) (2 : Complex) = 2 := by
+    exact map_ofNat (starRingEnd Complex) 2
+  have hMass : (starRingEnd Complex) (massSquared : Complex) = massSquared := by
+    simp
+  rw [hTwo, hMass]
 
 /-- The Green identity forces the exact signed coefficient multiplier relation
 for the genuine smooth Hessian. -/
@@ -164,6 +173,7 @@ theorem primitiveSpinCSmoothActionHessian_coefficients_of_dirac
       (primitiveSpinCGeometricSignedDiracModeSmoothVector period hPeriod mode)
       field,
     primitiveSpinCGeometricSignedActionHessianSmoothCore_mode,
+    d9PrimitiveSpinCGeometricL2_complex_smul,
     d9PrimitiveSpinCGeometricL2Pairing_complexScalar_left]
   simp
 
@@ -210,12 +220,20 @@ theorem primitiveSpinCSmooth_maximalOperator_agrees_of_dirac
       d9PrimitiveSpinCGeometricL2Embedding period hPeriod .positiveQuarter
         (primitiveSpinCGeometricSignedActionHessianSmoothCore period hPeriod
           massSquared field) := by
+  have hMem := primitiveSpinCSmooth_mem_maximalDomain_of_dirac period hPeriod
+    massSquared diracSymmetry field
+  change d9PrimitiveSpinCGeometricL2Embedding period hPeriod .positiveQuarter
+      field ∈
+    (primitiveSpinCGeometricSignedActionHessianGeometricOperator period hPeriod
+      massSquared).domain at hMem
   let lifted :
-      primitiveSpinCGeometricSignedActionHessianGeometricDomain period hPeriod
-        massSquared :=
+      (primitiveSpinCGeometricSignedActionHessianGeometricOperator period hPeriod
+        massSquared).domain :=
     ⟨d9PrimitiveSpinCGeometricL2Embedding period hPeriod .positiveQuarter field,
-      primitiveSpinCSmooth_mem_maximalDomain_of_dirac period hPeriod
-        massSquared diracSymmetry field⟩
+      hMem⟩
+  change
+    primitiveSpinCGeometricSignedActionHessianGeometricOperator period hPeriod
+        massSquared lifted = _
   apply
     (primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).symm.injective
   rw [primitiveSpinCGeometricSignedActionHessianGeometricOperator_conjugacy
@@ -268,6 +286,13 @@ theorem primitiveSpinCOneSectorCanonicalFourier_inner_weighted_eq_smooth
           massSquared field)).re := by
   let lifted :=
     primitiveSpinCSmoothMaximalDomainLift period hPeriod massSquared domain field
+  have hAgreement := domain.operator_agreement field
+  change
+    primitiveSpinCGeometricSignedActionHessianGeometricOperator period hPeriod
+        massSquared lifted =
+      d9PrimitiveSpinCGeometricL2Embedding period hPeriod .positiveQuarter
+        (primitiveSpinCGeometricSignedActionHessianSmoothCore period hPeriod
+          massSquared field) at hAgreement
   change
     (inner Complex
         ((primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).symm
@@ -276,13 +301,42 @@ theorem primitiveSpinCOneSectorCanonicalFourier_inner_weighted_eq_smooth
         ((primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).symm
           (primitiveSpinCGeometricSignedActionHessianGeometricOperator period
             hPeriod massSquared lifted))).re = _
-  rw [LinearIsometryEquiv.inner_map_map,
-    domain.operator_agreement field,
-    UniformSpace.Completion.inner_coe]
+  rw [LinearIsometryEquiv.inner_map_map, hAgreement]
+  simp only [d9PrimitiveSpinCGeometricL2Embedding]
+  change
+    (inner Complex
+      (field : D9PrimitiveSpinCGeometricL2Completion period hPeriod
+        .positiveQuarter)
+      (primitiveSpinCGeometricSignedActionHessianSmoothCore period hPeriod
+        massSquared field : D9PrimitiveSpinCGeometricL2Completion period hPeriod
+          .positiveQuarter)).re = _
+  rw [UniformSpace.Completion.inner_coe]
   rfl
 
 /-- The real two-sector coefficient pairing splits into the sum of the two
 one-sector complex pairings. -/
+private theorem tsum_prod_eq_sum
+    {Outer Inner : Type*} [Fintype Outer]
+    (f : Outer × Inner → Complex) (hf : Summable f) :
+    (∑' mode, f mode) = ∑ outer, ∑' innerMode, f (outer, innerMode) := by
+  rw [hf.tsum_prod, tsum_fintype]
+
+private theorem product_inner_eq_sum
+    {Outer Inner : Type*} [Fintype Outer]
+    (first second : lp (fun _ : Outer × Inner => Complex) 2) :
+    inner Complex first second =
+      ∑ outer : Outer, ∑' innerMode : Inner,
+        inner Complex (first (outer, innerMode))
+          (second (outer, innerMode)) := by
+  calc
+    inner Complex first second =
+        ∑' mode, inner Complex (first mode) (second mode) :=
+      lp.inner_eq_tsum first second
+    _ = ∑ outer : Outer, ∑' innerMode : Inner,
+          inner Complex (first (outer, innerMode))
+            (second (outer, innerMode)) :=
+      tsum_prod_eq_sum _ (lp.summable_inner first second)
+
 theorem programPPrimitiveSpinCMatterCanonicalFourier_inner_weighted_eq_sum
     (massSquared : Real)
     (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
@@ -302,8 +356,16 @@ theorem programPPrimitiveSpinCMatterCanonicalFourier_inner_weighted_eq_sum
   rw [real_inner_eq_re_inner]
   unfold programPPrimitiveSpinCMatterCanonicalFourierCoefficients
     programPPrimitiveSpinCMatterCanonicalWeightedCoefficients_of_maximalDomain
-  rw [LinearIsometryEquiv.inner_map_map,
-    LinearIsometryEquiv.inner_map_map, PiLp.inner_apply]
+  rw [product_inner_eq_sum]
+  change
+    RCLike.re
+      (∑ sector : Sector, ∑' mode : SignedMode,
+        inner Complex
+          (primitiveSpinCOneSectorCanonicalFourierCoefficients period hPeriod
+            (field sector) mode)
+          (primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+            massSquared domain (field sector) mode)) = _
+  simp_rw [← lp.inner_eq_tsum]
   change
     RCLike.reCLM
         (∑ sector : Sector,

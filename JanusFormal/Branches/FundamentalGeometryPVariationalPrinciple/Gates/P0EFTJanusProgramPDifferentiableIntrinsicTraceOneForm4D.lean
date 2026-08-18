@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Calculus.FDeriv.Add
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTraceOneForm4D
 
 /-!
@@ -23,15 +24,17 @@ noncomputable section
 
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTraceOneForm4D
 
-variable {Base E : Type*}
+universe u v w
+
+variable {Base : Type u} {E : Type v}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Differentiable relative intrinsic logarithmic trace one-form. -/
 structure DifferentiableRelativeIntrinsicTraceOneFormData
     (actual reference : Base → E →L[Real] E) where
-  trace : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData actual reference
+  trace : RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.{u, v, w}
+    actual reference
   traceOneFormDerivative : Base → Base →L[Real] (Base →L[Real] Real)
   hasFDerivAt_traceOneForm : ∀ base,
     HasFDerivAt trace.traceOneForm (traceOneFormDerivative base) base
@@ -41,7 +44,8 @@ namespace DifferentiableRelativeIntrinsicTraceOneFormData
 /-- Derivative of the real BF one-form `-theta`. -/
 def bismutFreedOneFormDerivative
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference)
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference)
     (base : Base) : Base →L[Real] (Base →L[Real] Real) :=
   -(data.traceOneFormDerivative base)
 
@@ -49,18 +53,20 @@ def bismutFreedOneFormDerivative
 derivative. -/
 theorem hasFDerivAt_bismutFreedRealOneForm
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference)
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference)
     (base : Base) :
     HasFDerivAt data.trace.bismutFreedRealOneForm
       (data.bismutFreedOneFormDerivative base) base := by
-  unfold RelativeIntrinsicLogarithmicDerivativeTraceOneFormData.
-    bismutFreedRealOneForm bismutFreedOneFormDerivative
-  simpa using (data.hasFDerivAt_traceOneForm base).neg
+  change HasFDerivAt (-data.trace.traceOneForm)
+    (-data.traceOneFormDerivative base) base
+  exact (data.hasFDerivAt_traceOneForm base).neg
 
 /-- Real trace-part BF curvature derived from the operator one-form. -/
 def bismutFreedTraceCurvature
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference)
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference)
     (base first second : Base) : Real :=
   data.bismutFreedOneFormDerivative base first second -
     data.bismutFreedOneFormDerivative base second first
@@ -68,7 +74,8 @@ def bismutFreedTraceCurvature
 /-- Operator trace curvature is antisymmetric by construction. -/
 theorem bismutFreedTraceCurvature_antisymm
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference)
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference)
     (base first second : Base) :
     data.bismutFreedTraceCurvature base first second =
       -data.bismutFreedTraceCurvature base second first := by
@@ -78,30 +85,34 @@ theorem bismutFreedTraceCurvature_antisymm
 /-- Additivity in the first tangent direction. -/
 theorem bismutFreedTraceCurvature_add_left
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference)
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference)
     (base first second third : Base) :
     data.bismutFreedTraceCurvature base (first + second) third =
       data.bismutFreedTraceCurvature base first third +
         data.bismutFreedTraceCurvature base second third := by
   unfold bismutFreedTraceCurvature
-  rw [map_add, map_add]
+  simp only [map_add, add_apply, sub_eq_add_neg]
   abel
 
 /-- Real homogeneity in the first tangent direction. -/
 theorem bismutFreedTraceCurvature_smul_left
     {actual reference : Base → E →L[Real] E}
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference)
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference)
     (base : Base) (scalar : Real) (first second : Base) :
     data.bismutFreedTraceCurvature base (scalar • first) second =
       scalar * data.bismutFreedTraceCurvature base first second := by
   unfold bismutFreedTraceCurvature
   rw [map_smul, map_smul]
-  ring
+  simp only [smul_apply, smul_eq_mul]
+  ring_nf
 
 /-- Public differentiable intrinsic BF trace-one-form checkpoint. -/
 theorem differentiable_intrinsic_trace_one_form_gate
     (actual reference : Base → E →L[Real] E)
-    (data : DifferentiableRelativeIntrinsicTraceOneFormData actual reference) :
+    (data : DifferentiableRelativeIntrinsicTraceOneFormData.{u, v, w}
+      actual reference) :
     (∀ base,
       HasFDerivAt data.trace.bismutFreedRealOneForm
         (data.bismutFreedOneFormDerivative base) base) ∧

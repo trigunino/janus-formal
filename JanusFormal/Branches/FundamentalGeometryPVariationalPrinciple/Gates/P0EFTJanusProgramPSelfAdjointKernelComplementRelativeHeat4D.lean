@@ -34,14 +34,48 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementExponential4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementExponentialCompactNoGo4D
 open P0EFTJanusProgramPSummableCompactOperatorExpansion4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
+
+local instance actualKernelRelativeHeatNormedSpace
+    (operator : E →L[Real] E) :
+    NormedSpace Real (SelfAdjointKernelComplement operator) :=
+  (inferInstance : InnerProductSpace Real
+    (SelfAdjointKernelComplement operator)).toNormedSpace
 
 local instance actualKernelRelativeHeatCompleteSpace
     (operator : E →L[Real] E) :
     CompleteSpace (SelfAdjointKernelComplement operator) :=
   inferInstance
+
+local instance actualKernelRelativeHeatRatNormedAlgebra
+    (operator : E →L[Real] E) :
+    NormedAlgebra ℚ
+      (SelfAdjointKernelComplement operator →L[Real]
+        SelfAdjointKernelComplement operator) :=
+  NormedAlgebra.restrictScalars ℚ ℝ _
+
+local instance actualKernelRelativeHeatSMulCommClass
+    (operator : E →L[Real] E) :
+    SMulCommClass Real
+      (SelfAdjointKernelComplement operator →L[Real]
+        SelfAdjointKernelComplement operator)
+      (SelfAdjointKernelComplement operator →L[Real]
+        SelfAdjointKernelComplement operator) where
+  smul_comm scalar first second :=
+    (Algebra.smul_mul_assoc scalar first second).trans
+      (Algebra.mul_smul_comm scalar first second).symm
+
+local instance actualKernelRelativeHeatIsScalarTower
+    (operator : E →L[Real] E) :
+    IsScalarTower Real
+      (SelfAdjointKernelComplement operator →L[Real]
+        SelfAdjointKernelComplement operator)
+      (SelfAdjointKernelComplement operator →L[Real]
+        SelfAdjointKernelComplement operator) where
+  smul_assoc := Algebra.smul_mul_assoc
 
 /-- Bounded exponential of a reference operator on the same actual complement. -/
 noncomputable def selfAdjointKernelComplementReferenceExponential
@@ -78,7 +112,7 @@ structure SelfAdjointKernelComplementRelativeHeatData
   reference_lowerBound : ∀ vector,
     referenceGap * ‖vector‖ ≤ ‖referenceOperator vector‖
   relativeExpansion : ∀ time : HeatTime,
-    SummableCompactOperatorExpansion
+    SummableCompactOperatorExpansion.{v}
       (selfAdjointKernelComplementRelativeHeatDifference operator hSelfAdjoint
         referenceOperator time)
 

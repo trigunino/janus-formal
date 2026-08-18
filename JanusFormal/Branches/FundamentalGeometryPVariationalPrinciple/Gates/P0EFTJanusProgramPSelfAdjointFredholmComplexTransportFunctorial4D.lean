@@ -10,6 +10,9 @@ composition laws of the actual Fredholm determinant transport.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmComplexTransportFunctorial4D
+end P0EFTJanusProgramPSelfAdjointFredholmComplexTransportFunctorial4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 4200000
@@ -22,8 +25,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportFunctorial4D
 open P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
 open P0EFTJanusProgramPSelfAdjointFredholmComplexTransport4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -96,5 +99,5 @@ theorem self_adjoint_fredholm_complex_transport_functorial_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmComplexTransportFunctorial4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

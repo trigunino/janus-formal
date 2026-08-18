@@ -24,6 +24,7 @@ open P0EFTJanusMappingTorusGeneralLorentzTensor4D
 open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusMappingTorusCanonicalHolonomicAtlasTransitionJets4D
 open P0EFTJanusProgramPRegularFrameMaxwellCurvatureBridge4D
 open P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
@@ -105,10 +106,44 @@ private theorem finiteFrameCovariantExpansion
           (∑ regular : Fin 4, tangent regular • frame regular)
           (∑ upper : Fin 4, normal upper • frame upper) := by
   classical
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
-    ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
-    smul_add, smul_smul, Finset.smul_sum, Finset.sum_smul]
-  module
+  have hDerivative :
+      (∑ regular : Fin 4, ∑ upper : Fin 4,
+        (tangent regular * normal upper) •
+          frameDerivative upper (frame regular)) =
+        ∑ upper : Fin 4, normal upper •
+          frameDerivative upper
+            (∑ regular : Fin 4, tangent regular • frame regular) := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro upper _
+    simp only [map_sum, map_smul, Finset.smul_sum, smul_smul]
+    apply Finset.sum_congr rfl
+    intro regular _
+    rw [mul_comm]
+  have hConnection :
+      (∑ regular : Fin 4, ∑ upper : Fin 4,
+        (tangent regular * normal upper) •
+          christoffel (frame regular) (frame upper)) =
+        christoffel
+          (∑ regular : Fin 4, tangent regular • frame regular)
+          (∑ upper : Fin 4, normal upper • frame upper) := by
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+      Finset.smul_sum, smul_smul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro upper _
+    apply Finset.sum_congr rfl
+    intro regular _
+    rw [mul_comm]
+  calc
+    _ = (∑ regular : Fin 4, ∑ upper : Fin 4,
+          (tangent regular * normal upper) •
+            frameDerivative upper (frame regular)) +
+        (∑ regular : Fin 4, ∑ upper : Fin 4,
+          (tangent regular * normal upper) •
+            christoffel (frame regular) (frame upper)) := by
+        simp only [smul_add, Finset.sum_add_distrib]
+    _ = _ := by rw [hDerivative, hConnection]
 
 set_option backward.isDefEq.respectTransparency false in
 theorem candidateANormalBoundaryHistoricalCovariantNormalDerivativeCoordinatesAt_eq_localSection
@@ -254,10 +289,10 @@ theorem candidateANormalBoundaryHistoricalCovariantNormalDerivativeCoordinatesAt
   have hDerivativeExpansion :
       localNormalDerivative =
         ∑ row : Fin 4,
-          normal row • frameDerivative row tangentCoordinate +
+          (normal row • frameDerivative row tangentCoordinate +
             candidateANormalBoundaryHistoricalUnitNormalRegularFrameSpatialDerivativeCoefficient
                   period hPeriod metric variedMetric displacement parameter
-                    hNonNull outer row boundary • frameCoordinate row := by
+                    hNonNull outer row boundary • frameCoordinate row) := by
     unfold localNormalDerivative
     rw [hNormalDerivative]
     change mvfderiv throatCoverModelWithCorners
@@ -266,6 +301,20 @@ theorem candidateANormalBoundaryHistoricalCovariantNormalDerivativeCoordinatesAt
             coordinate) base.1 targetVector = _
     simpa only [current, frame, sourceVector, targetVector, base, tangentCoordinate,
       normal, frameDerivative, frameCoordinate] using hLeibniz
+  have hConnectionExpansion :
+      connectionCoefficientSum =
+        ∑ regular : Fin 4, ∑ upper : Fin 4,
+          (tangent regular * normal upper) •
+            candidateANormalBoundaryVariedRegularFrameLocalCovariantDerivativeVector
+              period hPeriod metric variedMetric patch regular upper coordinate := by
+    unfold connectionCoefficientSum
+    simpa only [current, tangent, normal, frameCoordinate] using hConnection
+  have hDerivativeSplit :
+      localNormalDerivative =
+        frameDerivativeSum + derivativeCoefficientSum := by
+    rw [hDerivativeExpansion]
+    unfold frameDerivativeSum derivativeCoefficientSum
+    rw [Finset.sum_add_distrib]
   calc
     candidateANormalBoundaryHistoricalCovariantNormalDerivativeCoordinatesAt
           period hPeriod metric tensor variedMetric displacement parameter
@@ -276,7 +325,7 @@ theorem candidateANormalBoundaryHistoricalCovariantNormalDerivativeCoordinatesAt
           (tangent regular * normal upper) •
             candidateANormalBoundaryVariedRegularFrameLocalCovariantDerivativeVector
               period hPeriod metric variedMetric patch regular upper coordinate) := by
-          rw [hConnection]
+          rw [hConnectionExpansion]
     _ = derivativeCoefficientSum +
         (frameDerivativeSum +
           localLeviCivitaChristoffelApply period hPeriod variedMetric patch
@@ -285,8 +334,7 @@ theorem candidateANormalBoundaryHistoricalCovariantNormalDerivativeCoordinatesAt
     _ = localNormalDerivative +
         localLeviCivitaChristoffelApply period hPeriod variedMetric patch
           coordinate tangentCoordinate normalCoordinate := by
-          rw [hDerivativeExpansion]
-          unfold derivativeCoefficientSum frameDerivativeSum
+          rw [hDerivativeSplit]
           module
 
 end

@@ -22,6 +22,7 @@ namespace P0EFTJanusProgramPGlobalCandidateAReducedCanonicalEnergies4D
 set_option autoImplicit false
 set_option maxHeartbeats 5200000
 set_option synthInstance.maxHeartbeats 2600000
+set_option maxRecDepth 2000
 
 noncomputable section
 
@@ -36,12 +37,20 @@ open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPKernelComplementAmbientForms4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -63,88 +72,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev CandidateAHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-private abbrev ActualOperator
+private def ActualOperator
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -161,6 +89,27 @@ private abbrev ActualOperator
       hPeriod configuration data analysis chart sameAction) :=
   globalCandidateAActualKernelOperator period hPeriod configuration data analysis
     chart sameAction physical
+
+private theorem actualOperator_isSelfAdjoint
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction) :
+    IsSelfAdjoint (ActualOperator period hPeriod configuration data analysis chart
+      sameAction physical) := by
+  unfold ActualOperator
+  exact globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
+    configuration data analysis chart sameAction physical
 
 private abbrev ActualComplement
     {couplings : GlobalCandidateAActionCouplings}
@@ -180,6 +129,31 @@ private abbrev ActualComplement
   SelfAdjointKernelComplement
     (ActualOperator period hPeriod configuration data analysis chart sameAction
       physical)
+
+private def ReducedActualOperator
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction) :
+    ActualComplement period hPeriod configuration data analysis chart sameAction
+        physical →L[Real]
+      ActualComplement period hPeriod configuration data analysis chart sameAction
+        physical :=
+  selfAdjointKernelComplementOperator
+    (ActualOperator period hPeriod configuration data analysis chart sameAction
+      physical)
+    (actualOperator_isSelfAdjoint period hPeriod configuration data analysis chart
+      sameAction physical)
 
 /-- The canonical BRST--SpinC--LL principal form restricted to the actual
 zero-mode complement. -/
@@ -452,15 +426,14 @@ theorem globalCandidateAReducedTotalEnergy_upper
     globalCandidateAReducedTotalEnergy period hPeriod configuration data analysis
         chart sameAction physical vector ≤
       ‖vector‖ *
-        ‖selfAdjointKernelComplementOperator
-          (ActualOperator period hPeriod configuration data analysis chart
-            sameAction physical)
-          (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
-            configuration data analysis chart sameAction physical) vector‖ := by
+        ‖ReducedActualOperator period hPeriod configuration data analysis chart
+          sameAction physical vector‖ := by
   let operator := ActualOperator period hPeriod configuration data analysis chart
     sameAction physical
-  let hSelfAdjoint := globalCandidateAActualKernelOperator_isSelfAdjoint period
-    hPeriod configuration data analysis chart sameAction physical
+  let hSelfAdjoint := actualOperator_isSelfAdjoint period hPeriod configuration
+    data analysis chart sameAction physical
+  let reduced := ReducedActualOperator period hPeriod configuration data analysis
+    chart sameAction physical
   calc
     globalCandidateAReducedTotalEnergy period hPeriod configuration data analysis
         chart sameAction physical vector =
@@ -469,13 +442,14 @@ theorem globalCandidateAReducedTotalEnergy_upper
           configuration data analysis chart sameAction physical vector.1
             vector.1).symm
     _ = inner Real vector
-        (selfAdjointKernelComplementOperator operator hSelfAdjoint vector) := by
+        (reduced vector) := by
+      unfold reduced ReducedActualOperator
       change inner Real (operator vector.1) vector.1 =
         inner Real vector.1 (operator vector.1)
       exact real_inner_comm _ _
     _ ≤ ‖vector‖ *
-        ‖selfAdjointKernelComplementOperator operator hSelfAdjoint vector‖ :=
-      selfAdjointKernelComplement_energy_upper operator hSelfAdjoint vector
+        ‖reduced vector‖ := by
+      exact real_inner_le_norm vector (reduced vector)
 
 /-- A scalar majorant for the canonical H11 form. -/
 structure GlobalCandidateAReducedPhysicalFormBound4D
@@ -492,7 +466,7 @@ structure GlobalCandidateAReducedPhysicalFormBound4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) where
   constant : Real
   constant_nonneg : 0 ≤ constant
   form_norm_le : ‖physical.form‖ ≤ constant
@@ -565,11 +539,8 @@ theorem global_candidateA_reduced_canonical_energies_gate
       globalCandidateAReducedTotalEnergy period hPeriod configuration data
           analysis chart sameAction physical vector ≤
         ‖vector‖ *
-          ‖selfAdjointKernelComplementOperator
-            (ActualOperator period hPeriod configuration data analysis chart
-              sameAction physical)
-            (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
-              configuration data analysis chart sameAction physical) vector‖) :=
+          ‖ReducedActualOperator period hPeriod configuration data analysis chart
+            sameAction physical vector‖) :=
   ⟨globalCandidateAReducedPrincipalForm_symmetric period hPeriod configuration
       data analysis chart sameAction physical,
     globalCandidateAReducedTotalEnergy_eq period hPeriod configuration data

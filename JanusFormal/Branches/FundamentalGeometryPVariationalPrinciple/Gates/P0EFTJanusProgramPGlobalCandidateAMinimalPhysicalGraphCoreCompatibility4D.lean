@@ -26,11 +26,19 @@ noncomputable section
 
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusCompleteVariationModuleCore4D
+open P0EFTJanusIndependentCompleteVariationEmbedding4D
+open P0EFTJanusCommonGaugeD9Variation4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalMetricTangentIntrinsicEmbedding4D
+open P0EFTJanusProgramPGlobalGaugeTangentIntrinsicEmbedding4D
 open P0EFTJanusProgramPGlobalAbelianBRSTOffShellGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateABulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateAAbelianExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
+open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
@@ -63,17 +71,20 @@ theorem diagonalExtendedBulkMinimalPhysicalTangent_matter
     extendedMatterMinimalTangentLinearMap
     extendedLLMinimalTangentLinearMap
     globalCandidateABulkMatterPhysicalTangentLinearMap
+    programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap
+    programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap
     globalGaugeFixedPhysicalTangentPhysicalProjectionLinearMap
     globalGaugeFixedPhysicalTangentPhysicalInclusionLinearMap
     globalMetricPerturbationMinimalPhysicalTangentLinearMap
     globalMetricPerturbationPhysicalTangentLinearMap
     globalCandidateAPairedGaugePotentialMinimalTangentLinearMap
-    globalMinimalPhysicalTangentInclusionLinearMap
+    gaugeVariationPairMinimalPhysicalTangentLinearMap
+    gaugeVariationPairPhysicalTangentLinearMap
     fullLLSmoothPhysicalTangentLinearMap
-  simp only [LinearMap.comp_apply, LinearMap.add_apply,
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.coe_mk,
+    AddHom.coe_mk, Submodule.coe_add,
     LinearMap.fst_apply, LinearMap.inl_apply, LinearMap.inr_apply,
     Prod.fst_add, Prod.snd_add, zero_add, add_zero]
-  rfl
 
 /-- The three LL slots of the corrected diagonal tangent are exactly the full
 LL smooth direction used in the diagonal core. -/
@@ -109,13 +120,26 @@ theorem diagonalExtendedBulkMinimalPhysicalTangent_fullLL
         globalMetricPerturbationPhysicalTangentLinearMap
         globalCandidateAPairedGaugePotentialMinimalTangentLinearMap
         globalCandidateABulkMatterPhysicalTangentLinearMap
+        gaugeVariationPairMinimalPhysicalTangentLinearMap
+        gaugeVariationPairPhysicalTangentLinearMap
+        gaugeVariationPairGeneralMetricLinearMap
+        gaugeVariationPairMatterFreeLinearMap
+        gaugeVariationPairCompleteLinearMap
+        gaugeVariationPairIndependentLinearMap gaugeOnlyIndependentVariation
+        globalMetricPerturbationGeneralMetricLinearMap
+        globalMetricPerturbationMatterFreeLinearMap
+        globalMetricPerturbationCompleteLinearMap
         fullLLSmoothPhysicalTangentLinearMap
         fullLLSmoothGeneralMetricLinearMap fullLLSmoothMatterFreeLinearMap
         fullLLSmoothCompleteLinearMap fullLLSmoothIndependentLinearMap
-      simp only [LinearMap.comp_apply, LinearMap.add_apply,
+        independentCompleteVariationLinearMap independentCompleteVariation
+        GlobalPhysicalFieldTangent.completeVariation LLH1Smooth.ofTest
+      simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.coe_mk,
+        AddHom.coe_mk, Submodule.coe_add,
         LinearMap.fst_apply, LinearMap.inl_apply, LinearMap.inr_apply,
         Prod.fst_add, Prod.snd_add, zero_add, add_zero]
-      rfl
+      change (0 : _) + 0 + core.2.2.2.1.1 = core.2.2.2.1.1
+      simp
     · unfold globalMinimalPhysicalFullLLSmoothLinearMap
         diagonalExtendedBulkMinimalPhysicalTangentLinearMap
         diagonalExtendedBulkGaugeFixedTangentLinearMap
@@ -131,13 +155,26 @@ theorem diagonalExtendedBulkMinimalPhysicalTangent_fullLL
         globalMetricPerturbationPhysicalTangentLinearMap
         globalCandidateAPairedGaugePotentialMinimalTangentLinearMap
         globalCandidateABulkMatterPhysicalTangentLinearMap
+        gaugeVariationPairMinimalPhysicalTangentLinearMap
+        gaugeVariationPairPhysicalTangentLinearMap
+        gaugeVariationPairGeneralMetricLinearMap
+        gaugeVariationPairMatterFreeLinearMap
+        gaugeVariationPairCompleteLinearMap
+        gaugeVariationPairIndependentLinearMap gaugeOnlyIndependentVariation
+        globalMetricPerturbationGeneralMetricLinearMap
+        globalMetricPerturbationMatterFreeLinearMap
+        globalMetricPerturbationCompleteLinearMap
         fullLLSmoothPhysicalTangentLinearMap
         fullLLSmoothGeneralMetricLinearMap fullLLSmoothMatterFreeLinearMap
         fullLLSmoothCompleteLinearMap fullLLSmoothIndependentLinearMap
-      simp only [LinearMap.comp_apply, LinearMap.add_apply,
+        independentCompleteVariationLinearMap independentCompleteVariation
+        GlobalPhysicalFieldTangent.completeVariation LLH1Smooth.ofTest
+      simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.coe_mk,
+        AddHom.coe_mk, Submodule.coe_add,
         LinearMap.fst_apply, LinearMap.inl_apply, LinearMap.inr_apply,
         Prod.fst_add, Prod.snd_add, zero_add, add_zero]
-      rfl
+      change (0 : _) + 0 + core.2.2.2.1.2 = core.2.2.2.1.2
+      simp
   · apply LLH1Smooth.ext
     unfold globalMinimalPhysicalFullLLSmoothLinearMap
       diagonalExtendedBulkMinimalPhysicalTangentLinearMap
@@ -154,14 +191,27 @@ theorem diagonalExtendedBulkMinimalPhysicalTangent_fullLL
       globalMetricPerturbationPhysicalTangentLinearMap
       globalCandidateAPairedGaugePotentialMinimalTangentLinearMap
       globalCandidateABulkMatterPhysicalTangentLinearMap
+      gaugeVariationPairMinimalPhysicalTangentLinearMap
+      gaugeVariationPairPhysicalTangentLinearMap
+      gaugeVariationPairGeneralMetricLinearMap
+      gaugeVariationPairMatterFreeLinearMap
+      gaugeVariationPairCompleteLinearMap
+      gaugeVariationPairIndependentLinearMap gaugeOnlyIndependentVariation
+      globalMetricPerturbationGeneralMetricLinearMap
+      globalMetricPerturbationMatterFreeLinearMap
+      globalMetricPerturbationCompleteLinearMap
       fullLLSmoothPhysicalTangentLinearMap
       fullLLSmoothGeneralMetricLinearMap fullLLSmoothMatterFreeLinearMap
       fullLLSmoothCompleteLinearMap fullLLSmoothIndependentLinearMap
-    simp only [LinearMap.comp_apply, LinearMap.add_apply,
+      independentCompleteVariationLinearMap independentCompleteVariation
+      GlobalPhysicalFieldTangent.completeVariation LLH1Smooth.ofTest
+    simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Submodule.coe_add,
       LinearMap.fst_apply, LinearMap.inl_apply, LinearMap.inr_apply,
       Prod.fst_add, Prod.snd_add, LLH1Smooth.toTest_add,
       LLH1Smooth.toTest_zero, zero_add, add_zero]
-    rfl
+    change (0 : _) + 0 + core.2.2.2.2.toTest = core.2.2.2.2.toTest
+    simp
 
 /-- The canonical smooth matter realization recovers the existing finite graph
 point on the diagonal core. -/
@@ -185,6 +235,10 @@ theorem globalMinimalPhysicalMatterGraphLinearMap_diagonalCore
         couplings.matterMassSquared core.2.2.1 := by
   unfold globalMinimalPhysicalMatterGraphLinearMap
     globalMinimalPhysicalSpinCMatterLinearMap
+  simp only [LinearMap.comp_apply]
+  change realization.toGraph
+      ((diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+        configuration data analysis core).1.2) = _
   rw [diagonalExtendedBulkMinimalPhysicalTangent_matter period hPeriod
     configuration data analysis core]
   exact realization.finite_compatibility core.2.2.1
@@ -208,6 +262,12 @@ theorem globalMinimalPhysicalLLGraphLinearMap_diagonalCore
       globalCandidateAFullLLSmoothEmbedding period hPeriod data analysis
         core.2.2.2 := by
   unfold globalMinimalPhysicalLLGraphLinearMap
+  simp only [LinearMap.comp_apply]
+  change globalCandidateAFullLLSmoothEmbedding period hPeriod data analysis
+      (globalMinimalPhysicalFullLLSmoothLinearMap period hPeriod configuration
+        analysis
+        (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+          configuration data analysis core)) = _
   rw [diagonalExtendedBulkMinimalPhysicalTangent_fullLL period hPeriod
     configuration data analysis core]
 

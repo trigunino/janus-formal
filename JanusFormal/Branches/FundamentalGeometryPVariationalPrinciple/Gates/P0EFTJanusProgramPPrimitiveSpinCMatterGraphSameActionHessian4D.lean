@@ -173,6 +173,17 @@ def programPPrimitiveSpinCMatterFiniteHessian
     (programPPrimitiveSpinCMatterHessianWeight
       period hPeriod massSquared)
 
+@[simp]
+theorem programPPrimitiveSpinCMatterFiniteHessian_apply
+    (massSquared : Real)
+    (coefficients : ProgramPPrimitiveSpinCMatterFiniteCoefficients)
+    (mode : ProgramPPrimitiveSpinCMatterMode) :
+    programPPrimitiveSpinCMatterFiniteHessian period hPeriod massSquared
+        coefficients mode =
+      ((programPPrimitiveSpinCMatterHessianWeight period hPeriod massSquared
+        mode : Real) : Complex) * coefficients mode :=
+  finiteDiagonalHessian_apply _ _ _ _
+
 /-- Canonical inclusion of finite coefficients into the ambient two-sector
 coefficient Hilbert space. -/
 def programPPrimitiveSpinCMatterFiniteHilbertEmbedding :

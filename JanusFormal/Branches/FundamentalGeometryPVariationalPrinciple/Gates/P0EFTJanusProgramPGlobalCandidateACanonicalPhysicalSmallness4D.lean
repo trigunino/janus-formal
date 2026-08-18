@@ -24,6 +24,8 @@ set_option synthInstance.maxHeartbeats 5900000
 
 noncomputable section
 
+universe u
+
 open Set Topology MeasureTheory
 open scoped BigOperators Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
@@ -33,18 +35,36 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalAggregateBound4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalExtensionNorm4D
+open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationStablePhysicalForm4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixDenseCoreFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -145,6 +165,7 @@ local instance (priority := 30000) canonicalSmallCompleteSpace
       (CanonicalSmallnessHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Exact seven-block core bound underlying the canonical chart-bound H11
 extension. -/
@@ -161,6 +182,7 @@ def globalCandidateACanonicalSevenPhysicalCoreBound_of_chartBound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -201,6 +223,7 @@ def globalCandidateACanonicalSevenPhysicalConstant
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -232,6 +255,7 @@ theorem globalCandidateACanonicalSixPhysicalExtension_form_opNorm_le
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -285,6 +309,7 @@ structure GlobalCandidateAActionTranslationCanonicalSmallnessData4D
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -297,7 +322,7 @@ structure GlobalCandidateAActionTranslationCanonicalSmallnessData4D
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type u) [Fintype ZeroMode] [DecidableEq ZeroMode] : Type u where
   translations : GlobalCandidateAActionTranslationSymmetryModes4D period hPeriod
     configuration data analysis
       (globalCandidateAActualKernelChart period hPeriod configuration data
@@ -309,7 +334,7 @@ structure GlobalCandidateAActionTranslationCanonicalSmallnessData4D
       ZeroMode
   nonzero : ∀ mode, translations.vector mode ≠ 0
   orthogonal : Pairwise fun first second =>
-    ⟪translations.vector first, translations.vector second, Real⟫ = 0
+    ⟪translations.vector first, translations.vector second⟫_Real = 0
   referenceConstant : Real
   canonical_constant_small :
     globalCandidateACanonicalSevenPhysicalConstant period hPeriod configuration
@@ -322,10 +347,10 @@ structure GlobalCandidateAActionTranslationCanonicalSmallnessData4D
     referenceConstant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateACanonicalStableReferenceOperator period hPeriod
-          configuration data analysis current, Real⟫ +
+          configuration data analysis current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, translations.vector mode, Real⟫ ^ 2
+            ⟪current, translations.vector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -344,6 +369,7 @@ def GlobalCandidateAActionTranslationCanonicalSmallnessData4D.toStable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -356,7 +382,7 @@ def GlobalCandidateAActionTranslationCanonicalSmallnessData4D.toStable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionTranslationCanonicalSmallnessData4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound ZeroMode) :
@@ -397,6 +423,7 @@ theorem global_candidateA_canonical_physical_smallness_gate
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
@@ -409,7 +436,7 @@ theorem global_candidateA_canonical_physical_smallness_gate
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionTranslationCanonicalSmallnessData4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound ZeroMode) :

@@ -36,11 +36,17 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
 open P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalAggregateBound4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtension4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
@@ -89,65 +95,7 @@ private abbrev CommonHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) canonicalDenseHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) canonicalDenseHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) canonicalDenseHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) canonicalDenseHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  CommonAugmentedHilbert period hPeriod configuration data analysis
 
 local instance canonicalDenseBoundaryCoreNormedAddCommGroup
     (metric : RegularGeneralLorentzMetric period hPeriod) :
@@ -223,6 +171,8 @@ def globalCandidateACanonicalSixCoreSum
     PhysicalCore period hPeriod analysis →ₗ[Real]
       PhysicalCore period hPeriod analysis →ₗ[Real] Real :=
   canonicalSixPhysicalDenseCoreSum
+    (Core := PhysicalCore period hPeriod analysis)
+    (Chart := chart.Model)
     (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
       analysis chart sameAction)
     (globalCandidateACanonicalSixLocalBlocks period hPeriod chart)
@@ -258,9 +208,14 @@ theorem globalCandidateALocalPhysicalHessian_eq_canonicalSix_add_robin
       (chart.blocksC2Within sameAction.chartBridge.basePoint
         sameAction.chartBridge.basePoint_mem)
       chart.isOpen_domain sameAction.chartBridge.basePoint_mem
-  simpa [blocks, globalCandidateALocalPhysicalHessian] using
-    fullCoupledPhysicalHessian_eq_six_add_robin blocks
-      sameAction.chartBridge.basePoint hC2
+  change
+    fderiv Real (actionGradient (fullCoupledPhysicalAction blocks))
+        sameAction.chartBridge.basePoint =
+      canonicalSixPhysicalHessianSum blocks sameAction.chartBridge.basePoint +
+        fderiv Real (actionGradient blocks.robin)
+          sameAction.chartBridge.basePoint
+  exact fullCoupledPhysicalHessian_eq_six_add_robin blocks
+    sameAction.chartBridge.basePoint hC2
 
 /-- Exact H10 agreement required on the dense core. This is the only Robin
 comparison retained by the canonical six-block H11 route. -/
@@ -287,6 +242,8 @@ structure GlobalCandidateAH10RobinDenseCoreAgreement4D
     globalCandidateAH10RobinCoreLinearForm period hPeriod configuration data
         analysis einsteinScale boundaryProjection =
       denseCoreChartBilinearPullback
+        (Core := PhysicalCore period hPeriod analysis)
+        (Chart := chart.Model)
         (globalCandidateACanonicalSixCoreToChart period hPeriod configuration
           data analysis chart sameAction)
         (fderiv Real
@@ -321,9 +278,11 @@ def globalCandidateACanonicalSixDenseCoreAgreement
         configuration data analysis chart sameAction einsteinScale
           robin.boundaryProjection) where
   target_eq := by
-    ext first second
+    apply LinearMap.ext
+    intro first
+    apply LinearMap.ext
+    intro second
     unfold globalCandidateASixPhysicalAggregateCoreLinearForm
-      globalCandidateACanonicalSixCoreSum
       canonicalSixPhysicalDenseCoreSum
     simp only [LinearMap.sub_apply,
       denseCoreFiniteChartHessianSum_apply]
@@ -335,6 +294,25 @@ def globalCandidateACanonicalSixDenseCoreAgreement
       (fun form => form first second) robin.robinCore_eq_chart
     simp only [denseCoreChartBilinearPullback_apply] at hRobin
     rw [hRobin]
+    rw [← canonicalSixPhysicalHessianSum_apply_eq_sum]
+    simp only [globalCandidateACanonicalSixCoreToChart, LinearMap.comp_apply]
+    let firstChart := sameAction.chartBridge.tangentAnalysis
+      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+        configuration data analysis first)
+    let secondChart := sameAction.chartBridge.tangentAnalysis
+      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+        configuration data analysis second)
+    let sixHessian := canonicalSixPhysicalHessianSum
+      (globalCandidateACanonicalSixLocalBlocks period hPeriod chart)
+      sameAction.chartBridge.basePoint
+    let robinHessian := fderiv Real
+      (actionGradient
+        (globalCandidateACanonicalSixLocalBlocks period hPeriod chart).robin)
+      sameAction.chartBridge.basePoint
+    change sixHessian firstChart secondChart +
+        robinHessian firstChart secondChart -
+        robinHessian firstChart secondChart =
+      sixHessian firstChart secondChart
     ring
 
 /-- Canonical chart-map bound and H10 agreement construct the sole H11
@@ -382,7 +360,7 @@ def globalCandidateASixPhysicalAggregateBound_of_canonicalDenseCore
       estimate := productBound.estimate }
 
 /-- Direct H11 gate with no arbitrary six-block forms. -/
-theorem global_candidateA_h11_gate_of_canonical_six_dense_core
+def global_candidateA_h11_gate_of_canonical_six_dense_core
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

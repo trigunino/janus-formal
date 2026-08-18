@@ -21,8 +21,7 @@ open P0EFTJanusProgramPQuadraticGardingOperatorLowerBound4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Finite actual kernel and a quadratic Gårding certificate on its orthogonal
 complement. -/
@@ -51,8 +50,8 @@ theorem quadratic_garding_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : QuadraticGardingActualKernelGapData operator hSelfAdjoint) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
-  data.toGapData
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) :=
+  ⟨data.toGapData⟩
 
 end QuadraticGardingActualKernelGapData
 

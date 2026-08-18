@@ -117,12 +117,12 @@ theorem candidateANormalBoundaryHistoricalDifferentiatedOrthogonalityAt_smooth
     candidateANormalBoundaryMetricUnitNormalGraphTangent_derivative_zero
       period hPeriod metric hTransverse tensor variedMetric hVaried displacement
         parameter hNonNull hCurrent hRootNonneg boundary outer inner
-  dsimp only at hDerivative
+  simp_rw [candidateANormalBoundary_mvfderiv_real_eq_mfderiv] at hDerivative
   unfold candidateANormalBoundaryHistoricalDifferentiatedOrthogonalityAt
   dsimp only
   simpa [
-    candidateANormalBoundaryHistoricalUnitNormalRegularFrameSpatialDerivativeCoefficient,
-    mvfderiv] using hDerivative
+    candidateANormalBoundaryHistoricalUnitNormalRegularFrameSpatialDerivativeCoefficient]
+      using hDerivative
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Unconditional completed H10 Gauss--Weingarten reduction on the smooth

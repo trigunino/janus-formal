@@ -4,6 +4,9 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmComplexLinearTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmComplexLinearTransport4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 5200000
@@ -14,9 +17,10 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmComplexification4D
 open P0EFTJanusProgramPSelfAdjointFredholmFramePreservation4D
+open scoped TensorProduct
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -49,5 +53,5 @@ theorem complexLinearDeterminantTransport_tmul
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmComplexLinearTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

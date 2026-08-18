@@ -112,19 +112,19 @@ private theorem mvfderiv_finset_sum_smul_apply
       MDifferentiableAt throatCoverModelWithCorners
         (modelWithCornersSelf Real CoordinateVector) (vectors current) point) :
     mvfderiv throatCoverModelWithCorners
-        (fun current => ∑ currentIndex in indices,
+        (fun current => ∑ currentIndex ∈ indices,
           coefficients currentIndex current • vectors currentIndex current)
         point direction =
-      ∑ currentIndex in indices,
-        coefficients currentIndex point •
+      ∑ currentIndex ∈ indices,
+        (coefficients currentIndex point •
             mvfderiv throatCoverModelWithCorners (vectors currentIndex)
               point direction +
           mvfderiv throatCoverModelWithCorners (coefficients currentIndex)
-              point direction • vectors currentIndex point := by
+              point direction • vectors currentIndex point) := by
   have hDifferentiable : ∀ currentIndices : Finset index,
       MDifferentiableAt throatCoverModelWithCorners
         (modelWithCornersSelf Real CoordinateVector)
-        (fun current => ∑ currentIndex in currentIndices,
+        (fun current => ∑ currentIndex ∈ currentIndices,
           coefficients currentIndex current • vectors currentIndex current)
         point := by
     intro currentIndices
@@ -138,7 +138,17 @@ private theorem mvfderiv_finset_sum_smul_apply
     | @insert currentIndex currentIndices hNotMem inductionHypothesis =>
         have hTerm :=
           (hCoefficients currentIndex).smul (hVectors currentIndex)
-        simpa [Finset.sum_insert hNotMem] using hTerm.add inductionHypothesis
+        have hFunction :
+            (fun current => ∑ index ∈ insert currentIndex currentIndices,
+              coefficients index current • vectors index current) =
+              ((fun current =>
+                coefficients currentIndex current • vectors currentIndex current) +
+                fun current => ∑ index ∈ currentIndices,
+                  coefficients index current • vectors index current) := by
+          funext current
+          simp only [Finset.sum_insert hNotMem, Pi.add_apply]
+        rw [hFunction]
+        exact hTerm.add inductionHypothesis
   induction indices using Finset.induction_on with
   | empty =>
       simp only [Finset.sum_empty]
@@ -156,7 +166,7 @@ private theorem mvfderiv_finset_sum_smul_apply
           mvfderiv throatCoverModelWithCorners
               (fun current =>
                 coefficients currentIndex current • vectors currentIndex current +
-                  ∑ index in currentIndices,
+                  ∑ index ∈ currentIndices,
                     coefficients index current • vectors index current)
               point direction =
             mvfderiv throatCoverModelWithCorners
@@ -164,9 +174,15 @@ private theorem mvfderiv_finset_sum_smul_apply
                   coefficients currentIndex current • vectors currentIndex current)
                 point direction +
               mvfderiv throatCoverModelWithCorners
-                (fun current => ∑ index in currentIndices,
+                (fun current => ∑ index ∈ currentIndices,
                   coefficients index current • vectors index current)
                 point direction := by
+        change mvfderiv throatCoverModelWithCorners
+            ((fun current =>
+              coefficients currentIndex current • vectors currentIndex current) +
+              fun current => ∑ index ∈ currentIndices,
+                coefficients index current • vectors index current)
+            point direction = _
         simpa only [add_apply] using hAdd
       have hProductApply :
           mvfderiv throatCoverModelWithCorners
@@ -179,7 +195,10 @@ private theorem mvfderiv_finset_sum_smul_apply
               mvfderiv throatCoverModelWithCorners
                   (coefficients currentIndex) point direction •
                 vectors currentIndex point := by
-        simpa using hProduct
+        change mvfderiv throatCoverModelWithCorners
+            (coefficients currentIndex • vectors currentIndex)
+            point direction = _
+        exact hProduct
       simp only [Finset.sum_insert hNotMem]
       rw [hAddApply, hProductApply, inductionHypothesis]
 
@@ -220,7 +239,7 @@ theorem candidateANormalBoundaryMetricUnitNormalField_historical_mvfderiv_expand
             coordinate)
         base.1 targetVector =
       ∑ row : Fin 4,
-        candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient
+        (candidateANormalBoundarySmoothMetricUnitNormalRegularFrameCoefficient
               period hPeriod metric variedMetric displacement parameter hNonNull
                 row boundary •
             fderiv Real
@@ -229,7 +248,7 @@ theorem candidateANormalBoundaryMetricUnitNormalField_historical_mvfderiv_expand
           candidateANormalBoundaryHistoricalUnitNormalRegularFrameSpatialDerivativeCoefficient
                 period hPeriod metric variedMetric displacement parameter hNonNull
                   outer row boundary •
-            pulledRegularFrameVector period hPeriod metric patch row coordinate := by
+            pulledRegularFrameVector period hPeriod metric patch row coordinate) := by
   dsimp only
   classical
   let current :=
@@ -309,7 +328,6 @@ theorem candidateANormalBoundaryMetricUnitNormalField_historical_mvfderiv_expand
       period hPeriod displacement base patch coordinate hGraph]
     rw [normalGraphHolonomicFamilyDerivativeCoordinates_apply_base_eq_mfderiv]
     rw [hTargetTrivialized]
-    rfl
   have hCoefficientSmooth (row : Fin 4) :
       MDifferentiableAt throatCoverModelWithCorners
         (modelWithCornersSelf Real Real) (coefficient row) base.1 := by
@@ -372,19 +390,53 @@ theorem candidateANormalBoundaryMetricUnitNormalField_historical_mvfderiv_expand
           |>.contMDiff.mdifferentiableAt (by simp)
     have hChain := mfderiv_comp_apply base.1 hOuter
       (hCoordinateSmooth.mdifferentiableAt (by simp)) targetVector
+    have hCoordinateMFDerivative :
+        mfderiv throatCoverModelWithCorners
+            (modelWithCornersSelf Real CoordinateVector) coordinateField base.1
+            targetVector = tangentCoordinate := by
+      change mvfderiv throatCoverModelWithCorners coordinateField base.1
+        targetVector = tangentCoordinate
+      exact hCoordinateDerivative
     change mfderiv throatCoverModelWithCorners
         (modelWithCornersSelf Real CoordinateVector) (vectorField row) base.1
           targetVector = _
-    rw [hCoordinateBase, hCoordinateDerivative] at hChain
-    rw [mfderiv_eq_fderiv] at hChain
-    simpa only [vectorField, Function.comp_def] using hChain
+    calc
+      _ = mfderiv (modelWithCornersSelf Real CoordinateVector)
+            (modelWithCornersSelf Real CoordinateVector)
+            (pulledRegularFrameVector period hPeriod metric patch row)
+            (coordinateField base.1)
+            (mfderiv throatCoverModelWithCorners
+              (modelWithCornersSelf Real CoordinateVector) coordinateField base.1
+              targetVector) := by
+          simpa only [vectorField, Function.comp_def] using hChain
+      _ = mfderiv (modelWithCornersSelf Real CoordinateVector)
+            (modelWithCornersSelf Real CoordinateVector)
+            (pulledRegularFrameVector period hPeriod metric patch row)
+            (coordinateField base.1) tangentCoordinate := by
+          exact congrArg
+            (fun direction => mfderiv
+              (modelWithCornersSelf Real CoordinateVector)
+              (modelWithCornersSelf Real CoordinateVector)
+              (pulledRegularFrameVector period hPeriod metric patch row)
+              (coordinateField base.1) direction)
+            hCoordinateMFDerivative
+      _ = _ := by
+          rw [mfderiv_eq_fderiv, hCoordinateBase]
+          rfl
+  have hField :
+      candidateANormalBoundaryMetricUnitNormalField_historical period hPeriod
+          metric variedMetric displacement parameter hNonNull boundary patch
+            coordinate =
+        fun point => ∑ row : Fin 4,
+          coefficient row point • vectorField row point := by
+    rfl
   have hLeibniz := mvfderiv_finset_sum_smul_apply period hPeriod Finset.univ
     coefficient vectorField base.1 targetVector hCoefficientSmooth hVectorSmooth
   simp_rw [hCoefficientValue, hVectorValue, hCoefficientDerivative,
     hVectorDerivative] at hLeibniz
-  simpa [candidateANormalBoundaryMetricUnitNormalField_historical,
-    current, frame, sourceVector, targetVector, base, localSection, coefficient,
-    coordinateField, vectorField, tangentCoordinate] using hLeibniz
+  rw [hField]
+  simpa [current, frame, sourceVector, targetVector, base, tangentCoordinate] using
+    hLeibniz
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D

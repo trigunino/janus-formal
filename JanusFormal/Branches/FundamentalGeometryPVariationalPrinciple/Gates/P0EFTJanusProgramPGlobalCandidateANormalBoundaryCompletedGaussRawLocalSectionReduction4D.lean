@@ -131,7 +131,7 @@ theorem
       period hPeriod metric tensor variedMetric displacement parameter hNonNull) :
     CandidateANormalBoundaryCompletedGaussLocalSectionAgreement period hPeriod
       metric tensor variedMetric displacement parameter := by
-  unfold CandidateANormalBoundaryCompletedGaussLocalSectionAgreement
+  refine { pointwise := ?_ }
   unfold CandidateANormalBoundaryCompletedGaussRawLocalSectionAgreement at hRaw
   intro boundary patch coordinate hAt row column
   dsimp only
@@ -145,7 +145,6 @@ theorem
     BoundedContinuousFunction.add_apply]
   rw [hRowColumn, hColumnRow]
   rw [normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap_apply]
-  ring
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D

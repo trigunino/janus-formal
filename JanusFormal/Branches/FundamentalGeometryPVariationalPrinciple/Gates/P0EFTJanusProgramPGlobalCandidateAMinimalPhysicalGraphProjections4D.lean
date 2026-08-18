@@ -27,8 +27,10 @@ open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
@@ -102,8 +104,14 @@ structure GlobalMinimalPhysicalMatterLLGraphBounds4D
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalProjectionModel period hPeriod configuration)] where
+    [normedAddCommGroup :
+      NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (MinimalProjectionModel period hPeriod configuration)] where
+  toAddCommGroup_eq : normedAddCommGroup.toAddCommGroup =
+    Submodule.addCommGroup (MinimalProjectionModel period hPeriod configuration)
+  toSMul_eq : normedSpace.toModule.toSMul =
+    Submodule.smul (MinimalProjectionModel period hPeriod configuration)
   matterBound : Real
   matter_le : ∀ direction,
     ‖globalMinimalPhysicalMatterGraphLinearMap period hPeriod configuration
@@ -126,16 +134,122 @@ def globalMinimalPhysicalMatterGraphCLM
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
-    (bounds : GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
-      configuration data analysis realization) :
-    MinimalProjectionModel period hPeriod configuration →L[Real]
-      ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
-        couplings.matterMassSquared :=
-  (globalMinimalPhysicalMatterGraphLinearMap period hPeriod configuration
-    couplings.matterMassSquared realization).mkContinuous bounds.matterBound
-      bounds.matter_le
+    [normedAddCommGroup :
+      NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
+    (bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
+      couplings NonNullFace NullFace _ _ configuration data analysis realization
+        normedAddCommGroup normedSpace) :
+    @ContinuousLinearMap Real Real _ _ (RingHom.id Real)
+      (MinimalProjectionModel period hPeriod configuration)
+      normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      (Submodule.addCommGroup
+        (MinimalProjectionModel period hPeriod configuration)).toAddCommMonoid
+      (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+        couplings.matterMassSquared)
+      inferInstance inferInstance
+      (Submodule.module (MinimalProjectionModel period hPeriod configuration))
+      inferInstance := by
+  letI : NormedAddCommGroup
+      (MinimalProjectionModel period hPeriod configuration) :=
+    normedAddCommGroup
+  letI : NormedSpace Real
+      (MinimalProjectionModel period hPeriod configuration) :=
+    normedSpace
+  let adapted :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (MinimalProjectionModel period hPeriod configuration)
+        (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+          couplings.matterMassSquared)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (MinimalProjectionModel period hPeriod configuration)
+      (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+        couplings.matterMassSquared)
+      normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (MinimalProjectionModel period hPeriod configuration)
+        (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+          couplings.matterMassSquared)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd inferInstance
+        (fun direction =>
+          globalMinimalPhysicalMatterGraphLinearMap period hPeriod configuration
+            couplings.matterMassSquared realization direction)
+        (by
+          intro first second
+          change
+            globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+                configuration couplings.matterMassSquared realization
+                (@Add.add _
+                  normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                  first second) =
+              globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+                  configuration couplings.matterMassSquared realization first +
+                globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+                  configuration couplings.matterMassSquared realization second
+          rw [bounds.toAddCommGroup_eq]
+          exact (globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+            configuration couplings.matterMassSquared realization).map_add
+              first second))
+      (by
+        intro scalar direction
+        change
+          globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+              configuration couplings.matterMassSquared realization
+              (@SMul.smul Real _ normedSpace.toModule.toSMul scalar direction) =
+            (RingHom.id Real) scalar •
+              globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+                configuration couplings.matterMassSquared realization direction
+        rw [bounds.toSMul_eq]
+        have hMap :=
+          (globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+            configuration couplings.matterMassSquared realization).map_smul
+              scalar direction
+        change
+          globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+              configuration couplings.matterMassSquared realization
+              (@SMul.smul Real _
+                (Submodule.smul
+                  (MinimalProjectionModel period hPeriod configuration))
+                scalar direction) =
+            scalar •
+              globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+                configuration couplings.matterMassSquared realization direction
+          at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  let bounded := adapted.mkContinuous bounds.matterBound (by
+    intro direction
+    change
+      ‖globalMinimalPhysicalMatterGraphLinearMap period hPeriod configuration
+          couplings.matterMassSquared realization direction‖ ≤
+        bounds.matterBound * ‖direction‖
+    exact bounds.matter_le direction)
+  exact
+    { toFun := fun direction =>
+        globalMinimalPhysicalMatterGraphLinearMap period hPeriod configuration
+          couplings.matterMassSquared realization direction
+      map_add' := (globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+        configuration couplings.matterMassSquared realization).map_add
+      map_smul' := by
+        intro scalar direction
+        simpa only [RingHom.id_apply] using
+          (globalMinimalPhysicalMatterGraphLinearMap period hPeriod
+            configuration couplings.matterMassSquared realization).map_smul
+              scalar direction
+      cont := by
+        change Continuous (fun direction =>
+          globalMinimalPhysicalMatterGraphLinearMap period hPeriod configuration
+            couplings.matterMassSquared realization direction)
+        exact @ContinuousLinearMap.cont Real Real _ _ (RingHom.id Real)
+          (MinimalProjectionModel period hPeriod configuration)
+          normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+          normedAddCommGroup.toSeminormedAddCommGroup.toAddCommMonoid
+          (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+            couplings.matterMassSquared)
+          inferInstance inferInstance normedSpace.toModule inferInstance bounded }
 
 /-- Continuous full-LL graph projection obtained from its graph-norm estimate. -/
 def globalMinimalPhysicalLLGraphCLM
@@ -148,14 +262,113 @@ def globalMinimalPhysicalLLGraphCLM
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
-    (bounds : GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
-      configuration data analysis realization) :
-    MinimalProjectionModel period hPeriod configuration →L[Real]
-      GlobalFullLLGraphHilbert period hPeriod data analysis :=
-  (globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration data
-    analysis).mkContinuous bounds.llBound bounds.ll_le
+    [normedAddCommGroup :
+      NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
+    (bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
+      couplings NonNullFace NullFace _ _ configuration data analysis realization
+        normedAddCommGroup normedSpace) :
+    @ContinuousLinearMap Real Real _ _ (RingHom.id Real)
+      (MinimalProjectionModel period hPeriod configuration)
+      normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      (Submodule.addCommGroup
+        (MinimalProjectionModel period hPeriod configuration)).toAddCommMonoid
+      (GlobalFullLLGraphHilbert period hPeriod data analysis)
+      inferInstance inferInstance
+      (Submodule.module (MinimalProjectionModel period hPeriod configuration))
+      inferInstance := by
+  letI : NormedAddCommGroup
+      (MinimalProjectionModel period hPeriod configuration) :=
+    normedAddCommGroup
+  letI : NormedSpace Real
+      (MinimalProjectionModel period hPeriod configuration) :=
+    normedSpace
+  let adapted :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (MinimalProjectionModel period hPeriod configuration)
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (MinimalProjectionModel period hPeriod configuration)
+      (GlobalFullLLGraphHilbert period hPeriod data analysis)
+      normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (MinimalProjectionModel period hPeriod configuration)
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd inferInstance
+        (fun direction =>
+          globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration data
+            analysis direction)
+        (by
+          intro first second
+          change
+            globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+                data analysis
+                (@Add.add _
+                  normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                  first second) =
+              globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+                  data analysis first +
+                globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+                  data analysis second
+          rw [bounds.toAddCommGroup_eq]
+          exact (globalMinimalPhysicalLLGraphLinearMap period hPeriod
+            configuration data analysis).map_add first second))
+      (by
+        intro scalar direction
+        change
+          globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+              data analysis
+              (@SMul.smul Real _ normedSpace.toModule.toSMul scalar direction) =
+            (RingHom.id Real) scalar •
+              globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+                data analysis direction
+        rw [bounds.toSMul_eq]
+        have hMap :=
+          (globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+            data analysis).map_smul scalar direction
+        change
+          globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+              data analysis
+              (@SMul.smul Real _
+                (Submodule.smul
+                  (MinimalProjectionModel period hPeriod configuration))
+                scalar direction) =
+            scalar •
+              globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+                data analysis direction
+          at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  let bounded := adapted.mkContinuous bounds.llBound (by
+    intro direction
+    change
+      ‖globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration data
+          analysis direction‖ ≤ bounds.llBound * ‖direction‖
+    exact bounds.ll_le direction)
+  exact
+    { toFun := fun direction =>
+        globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration data
+          analysis direction
+      map_add' := (globalMinimalPhysicalLLGraphLinearMap period hPeriod
+        configuration data analysis).map_add
+      map_smul' := by
+        intro scalar direction
+        simpa only [RingHom.id_apply] using
+          (globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration
+            data analysis).map_smul scalar direction
+      cont := by
+        change Continuous (fun direction =>
+          globalMinimalPhysicalLLGraphLinearMap period hPeriod configuration data
+            analysis direction)
+        exact @ContinuousLinearMap.cont Real Real _ _ (RingHom.id Real)
+          (MinimalProjectionModel period hPeriod configuration)
+          normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+          normedAddCommGroup.toSeminormedAddCommGroup.toAddCommMonoid
+          (GlobalFullLLGraphHilbert period hPeriod data analysis)
+          inferInstance inferInstance normedSpace.toModule inferInstance bounded }
 
 @[simp]
 theorem globalMinimalPhysicalMatterGraphCLM_apply
@@ -168,10 +381,13 @@ theorem globalMinimalPhysicalMatterGraphCLM_apply
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
-    (bounds : GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
-      configuration data analysis realization)
+    [normedAddCommGroup :
+      NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
+    (bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
+      couplings NonNullFace NullFace _ _ configuration data analysis realization
+        normedAddCommGroup normedSpace)
     (direction : MinimalProjectionModel period hPeriod configuration) :
     globalMinimalPhysicalMatterGraphCLM period hPeriod configuration data
         analysis realization bounds direction =
@@ -189,10 +405,13 @@ theorem globalMinimalPhysicalLLGraphCLM_apply
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
-    (bounds : GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
-      configuration data analysis realization)
+    [normedAddCommGroup :
+      NormedAddCommGroup (MinimalProjectionModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (MinimalProjectionModel period hPeriod configuration)]
+    (bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
+      couplings NonNullFace NullFace _ _ configuration data analysis realization
+        normedAddCommGroup normedSpace)
     (direction : MinimalProjectionModel period hPeriod configuration) :
     globalMinimalPhysicalLLGraphCLM period hPeriod configuration data analysis
         realization bounds direction =

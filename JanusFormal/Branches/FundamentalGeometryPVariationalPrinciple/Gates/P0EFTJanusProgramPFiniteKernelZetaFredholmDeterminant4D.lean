@@ -33,7 +33,7 @@ open P0EFTJanusProgramPSplitFredholmDeterminantFrameAtlas4D
 open P0EFTJanusProgramPSplitFredholmDeterminantFrameConnection4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E ZeroMode : Type*}
+variable {E : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -74,7 +74,10 @@ def finiteKernelZetaNamedFrameConnection
   kernelFrameDerivative := fun _ _ => 0
   kernelFrame_hasDerivAt := by
     intro _ parameter
-    simpa using (hasDerivAt_const parameter (1 : Complex))
+    change HasFDerivAt (fun _ : Real => (1 : Complex))
+      (ContinuousLinearMap.toSpanSingleton Real (0 : Complex)) parameter
+    simpa using
+      (hasFDerivAt_const (𝕜 := Real) (E := Real) (1 : Complex) parameter)
 
 /-- In the canonical named kernel frame the full determinant coordinate is
 literally the reduced zeta determinant. -/
@@ -87,7 +90,8 @@ theorem finiteKernelZetaNamedFrame_localDeterminant
     (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant
         () parameter =
       relativeZetaDeterminantCoordinate zetaFamily parameter := by
-  rfl
+  simp [SplitFredholmDeterminantFrameAtlasData.localDeterminant,
+    finiteKernelZetaNamedFrameAtlas, finiteKernelZetaSplitDeterminant]
 
 /-- The named kernel frame contributes no additional connection one-form. -/
 @[simp]
@@ -96,8 +100,8 @@ theorem finiteKernelZetaNamedFrame_localConnectionCoefficient
     (kernels : FiniteKernelBasisFamilyData operator ZeroMode)
     (zetaFamily : RelativeZetaDeterminantFamilyData)
     (parameter : Real) :
-    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-        localConnectionCoefficient () parameter =
+    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localConnectionCoefficient
+      () parameter =
       relativeZetaConnectionCoefficient zetaFamily parameter := by
   simp [finiteKernelZetaNamedFrameConnection,
     SplitFredholmDeterminantFrameConnectionData.localConnectionCoefficient]
@@ -110,8 +114,8 @@ theorem finiteKernelZetaNamedFrame_localDeterminant_ne_zero
     (parameter : Real) :
     (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant
         () parameter ≠ 0 :=
-  (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).
-    localDeterminant_ne_zero () parameter
+  (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant_ne_zero
+    () parameter
 
 /-- The full canonical coordinate is parallel for the same zeta connection. -/
 theorem finiteKernelZetaNamedFrame_parallel
@@ -119,14 +123,14 @@ theorem finiteKernelZetaNamedFrame_parallel
     (kernels : FiniteKernelBasisFamilyData operator ZeroMode)
     (zetaFamily : RelativeZetaDeterminantFamilyData)
     (parameter : Real) :
-    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-        localConnectionAt () parameter
-        ((finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).
-          localDeterminant () parameter)
-        ((finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-          localDeterminantDerivative () parameter) = 0 :=
-  (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-    localDeterminant_parallel () parameter
+    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localConnectionAt
+        () parameter
+        ((finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant
+          () parameter)
+        ((finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localDeterminantDerivative
+          () parameter) = 0 :=
+  (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localDeterminant_parallel
+    () parameter
 
 /-- The finite kernel determinant volume is nonzero independently of the zeta
 coordinate. -/
@@ -135,10 +139,10 @@ theorem finiteKernelZeta_namedVolume_ne_zero
     (kernels : FiniteKernelBasisFamilyData operator ZeroMode)
     (zetaFamily : RelativeZetaDeterminantFamilyData)
     (parameter : Real) :
-    ((finiteKernelZetaSplitDeterminant operator kernels zetaFamily).
-      canonicalSection parameter).kernelVolume ≠ 0 :=
-  (finiteKernelZetaSplitDeterminant operator kernels zetaFamily).
-    canonicalSection_nonzero_components parameter |>.1
+    ((finiteKernelZetaSplitDeterminant operator kernels zetaFamily).canonicalSection
+      parameter).kernelVolume ≠ 0 :=
+  (finiteKernelZetaSplitDeterminant operator kernels zetaFamily).canonicalSection_nonzero_components
+    parameter |>.1
 
 /-- Complete canonical-coordinate certificate. -/
 structure FiniteKernelZetaFredholmDeterminantCertificate
@@ -151,22 +155,22 @@ structure FiniteKernelZetaFredholmDeterminantCertificate
   namedVolume_nonzero : ∀ parameter,
     finiteKernelNamedVolume kernels parameter ≠ 0
   fullCoordinate_eq_zeta : ∀ parameter,
-    (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).
-        localDeterminant () parameter =
+    (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant
+        () parameter =
       relativeZetaDeterminantCoordinate zetaFamily parameter
   fullCoordinate_nonzero : ∀ parameter,
-    (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).
-        localDeterminant () parameter ≠ 0
+    (finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant
+        () parameter ≠ 0
   fullCoordinate_parallel : ∀ parameter,
-    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-        localConnectionAt () parameter
-        ((finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).
-          localDeterminant () parameter)
-        ((finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-          localDeterminantDerivative () parameter) = 0
+    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localConnectionAt
+        () parameter
+        ((finiteKernelZetaNamedFrameAtlas operator kernels zetaFamily).localDeterminant
+          () parameter)
+        ((finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localDeterminantDerivative
+          () parameter) = 0
   connection_eq_reduced : ∀ parameter,
-    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).
-        localConnectionCoefficient () parameter =
+    (finiteKernelZetaNamedFrameConnection operator kernels zetaFamily).localConnectionCoefficient
+      () parameter =
       relativeZetaConnectionCoefficient zetaFamily parameter
 
 /-- Build the full canonical-coordinate certificate. -/
@@ -175,8 +179,8 @@ def finiteKernelZetaFredholmDeterminantCertificate
     (kernels : FiniteKernelBasisFamilyData operator ZeroMode)
     (zetaFamily : RelativeZetaDeterminantFamilyData) :
     FiniteKernelZetaFredholmDeterminantCertificate operator kernels zetaFamily where
-  kernelLine := kernels.finiteKernelDeterminantFiber_finrank_one
-  namedVolume_nonzero := kernels.finiteKernelNamedVolume_ne_zero
+  kernelLine := finiteKernelDeterminantFiber_finrank_one kernels
+  namedVolume_nonzero := finiteKernelNamedVolume_ne_zero kernels
   fullCoordinate_eq_zeta :=
     finiteKernelZetaNamedFrame_localDeterminant operator kernels zetaFamily
   fullCoordinate_nonzero :=

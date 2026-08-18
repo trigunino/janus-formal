@@ -38,19 +38,25 @@ theorem sectorProjector_inner_sectorProjector_eq_zero
     (x y : E) :
     inner Real (coordinates.sectorProjector first x)
         (coordinates.sectorProjector second y) = 0 := by
-  rw [← coordinates.decomposition.inner_map_map]
-  cases first <;> cases second <;>
-    simp [FiveSectorHilbertCoordinates.sectorProjector,
-      FiveSectorHilbertCoordinates.metricProjector,
-      FiveSectorHilbertCoordinates.abelianProjector,
-      FiveSectorHilbertCoordinates.matterProjector,
-      FiveSectorHilbertCoordinates.longitudinalProjector,
-      FiveSectorHilbertCoordinates.boundaryProjector,
-      fiveSectorMetricAxis, fiveSectorAbelianAxis, fiveSectorMatterAxis,
-      fiveSectorLongitudinalAxis, fiveSectorBoundaryAxis,
-      fiveSectorMetricCoordinate, fiveSectorAbelianCoordinate,
-      fiveSectorMatterCoordinate, fiveSectorLongitudinalCoordinate,
-      fiveSectorBoundaryCoordinate] at hSector ⊢
+  let u := coordinates.sectorProjector first x
+  let v := coordinates.sectorProjector second y
+  have hNorm : ‖u + v‖ = ‖u - v‖ := by
+    rw [← coordinates.decomposition.norm_map (u + v),
+      ← coordinates.decomposition.norm_map (u - v)]
+    rw [map_add, map_sub]
+    dsimp [u, v]
+    cases first <;> cases second <;>
+      simp [FiveSectorHilbertCoordinates.sectorProjector,
+        fiveSectorMetricAxis, fiveSectorAbelianAxis, fiveSectorMatterAxis,
+        fiveSectorLongitudinalAxis, fiveSectorBoundaryAxis,
+        fiveSectorMetricCoordinate, fiveSectorAbelianCoordinate,
+        fiveSectorMatterCoordinate, fiveSectorLongitudinalCoordinate,
+        fiveSectorBoundaryCoordinate] at hSector ⊢
+  have hPolarization :=
+    re_inner_eq_norm_add_mul_self_sub_norm_sub_mul_self_div_four
+      (𝕜 := Real) u v
+  rw [hNorm] at hPolarization
+  simpa [u, v] using hPolarization
 
 /-- Any vectors fixed by two distinct sector projectors are orthogonal. -/
 theorem inner_eq_zero_of_sectorProjector_fixed

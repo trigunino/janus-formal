@@ -21,6 +21,7 @@ noncomputable section
 
 open Bundle Topology
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
+open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D.SelfAdjointFredholmDeterminantFamilyData
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullComplexCoordinate4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTopologicalBundle4D
@@ -28,8 +29,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmZetaFullTensor4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -85,12 +86,13 @@ theorem fullDeterminantTotalSpaceHomeomorph_zetaSection
     fredholm.fullDeterminantTotalSpaceHomeomorph
         (fullDeterminantZetaTotalSection fredholm zetaFamily parameter) =
       (parameter, relativeHeatMellinZetaFamilyDeterminant zetaFamily parameter) := by
-  simp [fullDeterminantTotalSpaceHomeomorph,
-    fullDeterminantGlobalTrivialization,
-    fullDeterminantPretrivialization,
-    fullDeterminantZetaTotalSection,
-    fullDeterminantZetaSection,
-    selfAdjointFredholmZetaFullTensorSection]
+  change
+    (parameter,
+      fredholm.fullTensorDeterminantCoordinateEquiv parameter
+        (fredholm.fullTensorDeterminantSection parameter
+          (relativeHeatMellinZetaFamilyDeterminant zetaFamily parameter))) =
+      (parameter, relativeHeatMellinZetaFamilyDeterminant zetaFamily parameter)
+  rw [fredholm.fullTensorDeterminantCoordinateEquiv_section]
 
 /-- The genuine dependent Fredholm--zeta section is continuous. -/
 theorem fullDeterminantZetaTotalSection_continuous
@@ -102,7 +104,7 @@ theorem fullDeterminantZetaTotalSection_continuous
       (fun parameter : Real =>
         (parameter,
           relativeHeatMellinZetaFamilyDeterminant zetaFamily parameter)) :=
-    continuous_id.prod_mk
+    continuous_id.prodMk
       (relativeHeatMellinZetaFamilyDeterminant_continuous zetaFamily)
   have hAfter : Continuous
       (fun parameter : Real =>
@@ -111,7 +113,11 @@ theorem fullDeterminantZetaTotalSection_continuous
     simpa only [fullDeterminantTotalSpaceHomeomorph_zetaSection] using hCoordinate
   have hBack :=
     fredholm.fullDeterminantTotalSpaceHomeomorph.symm.continuous.comp hAfter
-  simpa using hBack
+  change Continuous (fun parameter =>
+    fredholm.fullDeterminantTotalSpaceHomeomorph.symm
+      (fredholm.fullDeterminantTotalSpaceHomeomorph
+        (fullDeterminantZetaTotalSection fredholm zetaFamily parameter))) at hBack
+  simpa only [Homeomorph.symm_apply_apply] using hBack
 
 /-- Public continuous full determinant-section checkpoint. -/
 theorem self_adjoint_fredholm_zeta_topological_section_gate

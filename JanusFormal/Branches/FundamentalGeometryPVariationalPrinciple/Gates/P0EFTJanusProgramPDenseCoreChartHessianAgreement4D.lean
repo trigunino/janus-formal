@@ -23,7 +23,7 @@ open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPDenseCoreFiniteChartHessianBound4D
 
 variable {Core Hilbert Chart Block : Type*}
-  [NormedAddCommGroup Core] [NormedSpace Real Core]
+  [AddCommGroup Core] [Module Real Core]
   [NormedAddCommGroup Hilbert] [NormedSpace Real Hilbert]
   [NormedAddCommGroup Chart] [NormedSpace Real Chart]
   [Fintype Block] [DecidableEq Block]

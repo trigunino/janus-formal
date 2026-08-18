@@ -25,11 +25,15 @@ noncomputable section
 
 open scoped ENNReal lp LinearPMap InnerProductSpace
 open P0EFTJanusComplexDiagonalMaximalOperator4D
+open P0EFTJanusD9D10ExactFieldContentBridge4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalFourierGraph4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterCanonicalWeightedDecay4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -40,6 +44,10 @@ private abbrev MatterSmooth :=
   ProgramPPrimitiveSpinCMatterSmoothField period hPeriod
 private abbrev MatterCoefficients :=
   ProgramPPrimitiveSpinCMatterHilbert
+
+local instance matterHilbertRealInnerProductSpace :
+    InnerProductSpace Real MatterCoefficients :=
+  programPPrimitiveSpinCMatterHilbertRealInnerProductSpace
 
 /-- Exact global analytic assertion for the smooth differential expression:
 every smooth section is in the maximal geometric domain and the maximal
@@ -127,33 +135,61 @@ theorem primitiveSpinCOneSectorCanonicalWeightedCoefficients_apply
   rw [hConjugacy, hDomainRelation]
   rfl
 
+def primitiveSpinCMatterCanonicalSigmaWeightedCoefficients
+    (massSquared : Real)
+    (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
+      massSquared) :
+    MatterSmooth period hPeriod →ₗ[Complex] MatterCoefficients where
+  toFun := fun field => ⟨fun mode =>
+        primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+          massSquared domain (field mode.1) mode.2, by
+        change Memℓp (fun mode : Sector × SignedMode =>
+          primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+            massSquared domain (field mode.1) mode.2) 2
+        rw [memℓp_gen_iff (by norm_num)]
+        apply (summable_prod_of_nonneg (fun _ => by positivity)).2
+        constructor
+        · intro sector
+          exact (memℓp_gen_iff (by norm_num)).1
+            (primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+              massSquared domain (field sector)).2
+        · exact summable_of_hasFiniteSupport (Set.toFinite _)⟩
+  map_add' := by
+    intro first second
+    apply Subtype.ext
+    funext mode
+    exact congrArg (fun coefficients => coefficients mode.2) (map_add
+      (primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+        massSquared domain) (first mode.1) (second mode.1))
+  map_smul' := by
+    intro scalar field
+    apply Subtype.ext
+    funext mode
+    exact congrArg (fun coefficients => coefficients mode.2) (map_smul
+      (primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+        massSquared domain) scalar (field mode.1))
+
 /-- Assemble the weighted coefficients of both physical sectors. -/
 def programPPrimitiveSpinCMatterCanonicalWeightedCoefficients_of_maximalDomain
     (massSquared : Real)
     (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
       massSquared) :
     MatterSmooth period hPeriod →ₗ[Complex] MatterCoefficients :=
-  primitiveSpinCMatterSectorModeReindex.toLinearMap.comp
-    ((LinearIsometryEquiv.piLpCurry Complex (2 : ENNReal)
-      (fun _ : Sector => fun _ : SignedMode => Complex)).symm.toLinearMap.comp
-      { toFun := fun field =>
-          WithLp.toLp 2 fun sector =>
-            primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
-              massSquared domain (field sector)
-        map_add' := by
-          intro first second
-          apply WithLp.ofLp_injective 2
-          funext sector
-          exact map_add
-            (primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
-              massSquared domain) (first sector) (second sector)
-        map_smul' := by
-          intro scalar field
-          apply WithLp.ofLp_injective 2
-          funext sector
-          exact map_smul
-            (primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
-              massSquared domain) scalar (field sector) })
+  primitiveSpinCMatterCanonicalSigmaWeightedCoefficients period hPeriod
+    massSquared domain
+
+@[simp] private theorem
+    programPPrimitiveSpinCMatterCanonicalWeightedCoefficients_of_maximalDomain_raw_apply
+    (massSquared : Real)
+    (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
+      massSquared)
+    (field : MatterSmooth period hPeriod)
+    (sector : Sector) (mode : SignedMode) :
+    programPPrimitiveSpinCMatterCanonicalWeightedCoefficients_of_maximalDomain
+        period hPeriod massSquared domain field (sector, mode) =
+      primitiveSpinCOneSectorCanonicalWeightedCoefficients period hPeriod
+        massSquared domain (field sector) mode := by
+  rfl
 
 @[simp]
 theorem
@@ -170,8 +206,10 @@ theorem
         programPPrimitiveSpinCMatterCanonicalFourierCoefficients period hPeriod
           field mode := by
   rcases mode with ⟨sector, mode⟩
-  exact primitiveSpinCOneSectorCanonicalWeightedCoefficients_apply period hPeriod
-    massSquared domain (field sector) mode
+  rw [programPPrimitiveSpinCMatterCanonicalWeightedCoefficients_of_maximalDomain_raw_apply,
+    primitiveSpinCOneSectorCanonicalWeightedCoefficients_apply,
+    programPPrimitiveSpinCMatterCanonicalFourierCoefficients_apply]
+  rfl
 
 /-- The remaining scalar identity converting the independently integrated
 smooth action into the canonical completion pairing.  Unlike the coefficient

@@ -28,10 +28,10 @@ open P0EFTJanusProgramPGeometricBismutFreedPathComparison4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {Ambient Reduced Base Tangent ZeroMode : Type*}
-  [NormedAddCommGroup Ambient] [NormedSpace Real Ambient]
+variable {Ambient Reduced Base Tangent : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup Ambient]
   [InnerProductSpace Real Ambient] [CompleteSpace Ambient]
-  [NormedAddCommGroup Reduced] [NormedSpace Real Reduced]
+  [NormedAddCommGroup Reduced]
   [InnerProductSpace Real Reduced] [CompleteSpace Reduced]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 

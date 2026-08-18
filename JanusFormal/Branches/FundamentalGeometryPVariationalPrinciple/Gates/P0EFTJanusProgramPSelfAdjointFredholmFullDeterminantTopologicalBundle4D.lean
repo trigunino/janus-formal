@@ -17,6 +17,9 @@ is registered as a genuine Mathlib complex `VectorBundle`.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTopologicalBundle4D
+end P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTopologicalBundle4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 9000000
@@ -30,8 +33,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullComplexCoordinate4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorTransport4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCoordinateTransport4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -68,8 +71,7 @@ noncomputable def fullTensorDeterminantCoordinateHomeomorph
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) :
     data.FullDeterminantFiber parameter ≃ₜ Complex :=
-  (data.fullTensorDeterminantCoordinateEquiv parameter).toEquiv.
-    toHomeomorphOfIsInducing
+  (data.fullTensorDeterminantCoordinateEquiv parameter).toEquiv.toHomeomorphOfIsInducing
       (data.fullTensorDeterminantCoordinateEquiv_isInducing parameter)
 
 /-- Global pretrivialization supplied by the canonical full determinant
@@ -189,5 +191,5 @@ theorem self_adjoint_fredholm_full_determinant_topological_bundle_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFullDeterminantTopologicalBundle4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

@@ -26,6 +26,7 @@ open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
 open P0EFTJanusProgramPFiniteSelfAdjointProjectionResolution4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable
   {E Metric Abelian Matter Longitudinal Boundary : Type*}

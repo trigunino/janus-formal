@@ -34,6 +34,8 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -78,87 +80,6 @@ private abbrev PhysicalCore
     (analysis : GlobalAnalysisData period hPeriod configuration) :=
   GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod analysis
 
-private abbrev CommonHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) aggregateBoundHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) aggregateBoundHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) aggregateBoundHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) aggregateBoundHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) aggregateBoundHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-
 local instance aggregateBoundBoundaryCoreNormedAddCommGroup
     (metric : RegularGeneralLorentzMetric period hPeriod) :
     NormedAddCommGroup
@@ -177,6 +98,61 @@ local instance aggregateBoundBoundaryCoreCompleteSpace
       (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
   candidateANormalBoundaryFunctionalCoreCompleteSpace period hPeriod metric
 
+private def pullbackContinuousBilinear
+    {V W : Type*}
+    [AddCommGroup V] [Module Real V]
+    [NormedAddCommGroup W] [NormedSpace Real W]
+    (projection : V →ₗ[Real] W)
+    (form : W →L[Real] W →L[Real] Real) :
+    V →ₗ[Real] V →ₗ[Real] Real where
+  toFun first := (form (projection first)).toLinearMap.comp projection
+  map_add' first second := by
+    apply LinearMap.ext
+    intro third
+    simp only [map_add, LinearMap.add_apply, LinearMap.comp_apply]
+    rfl
+  map_smul' scalar first := by
+    apply LinearMap.ext
+    intro second
+    simp only [map_smul, LinearMap.smul_apply, LinearMap.comp_apply,
+      RingHom.id_apply]
+    rfl
+
+private def globalCandidateASevenPhysicalCommonCoreEmbedding
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    PhysicalCore period hPeriod analysis →ₗ[Real]
+      CommonAugmentedHilbert period hPeriod configuration data analysis where
+  toFun := fun current =>
+    globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+      data analysis current
+  map_add' first second := by
+    change
+      globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+          data analysis (first + second) =
+        globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+            data analysis first +
+          globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+            data analysis second
+    exact map_add
+      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+        data analysis) first second
+  map_smul' scalar current := by
+    change
+      globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+          data analysis (scalar • current) =
+        scalar •
+          globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+            data analysis current
+    exact map_smul
+      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+        data analysis) scalar current
+
 /-- Canonical Robin form on the diagonal smooth core. -/
 def globalCandidateAH10RobinCoreLinearForm
     {couplings : GlobalCandidateAActionCouplings}
@@ -187,36 +163,41 @@ def globalCandidateAH10RobinCoreLinearForm
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (einsteinScale : Real)
-    (projection : CommonHilbert period hPeriod configuration data analysis →L[Real]
+    (projection : CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
       Prod
         (CandidateANormalBoundaryFunctionalCore period hPeriod
           data.plusGravity.metric) Real) :
     PhysicalCore period hPeriod analysis →ₗ[Real]
-      PhysicalCore period hPeriod analysis →ₗ[Real] Real where
-  toFun first :=
-    { toFun := fun second =>
-        globalCandidateAH10RobinCommonDomainForm period hPeriod configuration data
-          analysis einsteinScale projection
-          (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
-            data analysis first)
-          (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
-            data analysis second)
-      map_add' := by
-        intro second third
-        simp only [map_add]
-      map_smul' := by
-        intro scalar second
-        simp only [map_smul]
-        rfl }
-  map_add' := by
-    intro first second
-    ext test
-    simp only [map_add]
-  map_smul' := by
-    intro scalar first
-    ext test
-    simp only [map_smul]
-    rfl
+      PhysicalCore period hPeriod analysis →ₗ[Real] Real :=
+  pullbackContinuousBilinear
+    (globalCandidateASevenPhysicalCommonCoreEmbedding period hPeriod
+      configuration data analysis)
+    (globalCandidateAH10RobinCommonDomainForm period hPeriod configuration data
+      analysis einsteinScale projection)
+
+@[simp]
+theorem globalCandidateAH10RobinCoreLinearForm_apply
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (einsteinScale : Real)
+    (projection : CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
+      Prod
+        (CandidateANormalBoundaryFunctionalCore period hPeriod
+          data.plusGravity.metric) Real)
+    (first second : PhysicalCore period hPeriod analysis) :
+    globalCandidateAH10RobinCoreLinearForm period hPeriod configuration data
+        analysis einsteinScale projection first second =
+      globalCandidateAH10RobinCommonDomainForm period hPeriod configuration data
+        analysis einsteinScale projection
+        (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+          data analysis first)
+        (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+          data analysis second) := rfl
 
 /-- The genuine six-block remainder on the smooth core. -/
 def globalCandidateASixPhysicalAggregateCoreLinearForm
@@ -233,7 +214,7 @@ def globalCandidateASixPhysicalAggregateCoreLinearForm
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (einsteinScale : Real)
-    (projection : CommonHilbert period hPeriod configuration data analysis →L[Real]
+    (projection : CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
       Prod
         (CandidateANormalBoundaryFunctionalCore period hPeriod
           data.plusGravity.metric) Real) :
@@ -258,8 +239,8 @@ structure GlobalCandidateASixPhysicalAggregateCoreBound4D
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
-    (einsteinScale : Real) : Prop where
-  boundaryProjection : CommonHilbert period hPeriod configuration data analysis →L[Real]
+    (einsteinScale : Real) where
+  boundaryProjection : CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
     Prod
       (CandidateANormalBoundaryFunctionalCore period hPeriod
         data.plusGravity.metric) Real
@@ -284,7 +265,7 @@ private theorem h10RobinCore_bound
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (einsteinScale : Real)
-    (projection : CommonHilbert period hPeriod configuration data analysis →L[Real]
+    (projection : CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
       Prod
         (CandidateANormalBoundaryFunctionalCore period hPeriod
           data.plusGravity.metric) Real)
@@ -335,7 +316,12 @@ def globalCandidateASevenPhysicalCoreBound_of_sixAggregate
   constant :=
     ‖globalCandidateAH10RobinCommonDomainForm period hPeriod configuration data
       analysis einsteinScale bound.boundaryProjection‖ + bound.constant
-  constant_nonneg := add_nonneg (norm_nonneg _) bound.constant_nonneg
+  constant_nonneg :=
+    add_nonneg
+      (norm_nonneg
+        (globalCandidateAH10RobinCommonDomainForm period hPeriod configuration
+          data analysis einsteinScale bound.boundaryProjection))
+      bound.constant_nonneg
   estimate := by
     intro first second
     let robin := globalCandidateAH10RobinCoreLinearForm period hPeriod
@@ -347,8 +333,8 @@ def globalCandidateASevenPhysicalCoreBound_of_sixAggregate
         globalCandidateASevenPhysicalCoreLinearForm period hPeriod configuration
             data analysis chart sameAction first second =
           robin first second + six first second := by
-      unfold six
-      simp only [LinearMap.sub_apply]
+      simp only [six, globalCandidateASixPhysicalAggregateCoreLinearForm,
+        LinearMap.sub_apply]
       ring
     rw [hReconstruct]
     calc
@@ -397,7 +383,9 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_sixAggregateBound
       period hPeriod configuration data analysis chart)
     (einsteinScale : Real)
     (bound : GlobalCandidateASixPhysicalAggregateCoreBound4D period hPeriod
-      configuration data analysis chart sameAction einsteinScale) :=
+      configuration data analysis chart sameAction einsteinScale) :
+    GlobalCandidateASevenPhysicalCommonDomainExtension4D period hPeriod
+      configuration data analysis chart sameAction :=
   globalCandidateASevenPhysicalCommonDomainExtension_of_bound period hPeriod
     configuration data analysis chart sameAction
       (globalCandidateASevenPhysicalCoreBound_of_sixAggregate period hPeriod
@@ -419,7 +407,14 @@ theorem global_candidateA_h11_gate_of_sixAggregateBound
       period hPeriod configuration data analysis chart)
     (einsteinScale : Real)
     (bound : GlobalCandidateASixPhysicalAggregateCoreBound4D period hPeriod
-      configuration data analysis chart sameAction einsteinScale) :=
+      configuration data analysis chart sameAction einsteinScale) :
+    GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
+      configuration data analysis chart sameAction
+        (globalCandidateASevenPhysicalCommonDomainExtension_of_bound period
+          hPeriod configuration data analysis chart sameAction
+            (globalCandidateASevenPhysicalCoreBound_of_sixAggregate period
+              hPeriod configuration data analysis chart sameAction
+                einsteinScale bound)) :=
   global_candidateA_h11_common_augmented_domain_gate_of_bound period hPeriod
     configuration data analysis chart sameAction
       (globalCandidateASevenPhysicalCoreBound_of_sixAggregate period hPeriod

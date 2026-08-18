@@ -9,7 +9,11 @@ introduced.
 -/
 
 namespace JanusFormal
+
 namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportLaws4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportLaws4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 6200000
@@ -21,8 +25,8 @@ open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -48,7 +52,7 @@ theorem kernelTopTransport_self
   apply LinearEquiv.ext
   intro value
   change finiteKernelDeterminantTransport data.kernels parameter parameter value = value
-  rw [data.kernels.finiteKernelDeterminantTransport_self]
+  rw [finiteKernelDeterminantTransport_self data.kernels]
   rfl
 
 @[simp]
@@ -60,7 +64,7 @@ theorem cokernelTopTransport_self
   apply LinearEquiv.ext
   intro value
   change
-    exteriorPower.map determinantDegree
+    exteriorPower.map (Fintype.card ZeroMode)
         (data.cokernelTransport parameter parameter).toLinearMap value = value
   rw [data.cokernelTransport_self]
   simp
@@ -79,7 +83,7 @@ theorem kernelTopTransport_trans
     finiteKernelDeterminantTransport data.kernels second third
         (finiteKernelDeterminantTransport data.kernels first second value) =
       finiteKernelDeterminantTransport data.kernels first third value
-  have h := data.kernels.finiteKernelDeterminantTransport_trans
+  have h := finiteKernelDeterminantTransport_trans data.kernels
     first second third
   exact LinearMap.congr_fun h value
 
@@ -94,19 +98,24 @@ theorem cokernelTopTransport_trans
   apply LinearEquiv.ext
   intro value
   change
-    exteriorPower.map determinantDegree
+    exteriorPower.map (Fintype.card ZeroMode)
         (data.cokernelTransport second third).toLinearMap
-      (exteriorPower.map determinantDegree
+      (exteriorPower.map (Fintype.card ZeroMode)
         (data.cokernelTransport first second).toLinearMap value) =
-      exteriorPower.map determinantDegree
+      exteriorPower.map (Fintype.card ZeroMode)
         (data.cokernelTransport first third).toLinearMap value
   rw [← LinearMap.comp_apply, ← exteriorPower.map_comp]
   have h := data.cokernelTransport_trans first second third
-  have hLinear := congrArg LinearEquiv.toLinearMap h
+  have hLinear :
+      (data.cokernelTransport second third).toLinearMap.comp
+          (data.cokernelTransport first second).toLinearMap =
+        (data.cokernelTransport first third).toLinearMap := by
+    simpa only [LinearEquiv.coe_trans] using
+      congrArg LinearEquiv.toLinearMap h
   rw [hLinear]
 
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmDeterminantTransportLaws4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

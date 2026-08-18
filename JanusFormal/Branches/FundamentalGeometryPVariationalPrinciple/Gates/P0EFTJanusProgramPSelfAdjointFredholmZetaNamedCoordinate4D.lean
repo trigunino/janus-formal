@@ -40,8 +40,8 @@ open P0EFTJanusProgramPSplitFredholmDeterminantFrameAtlas4D
 open P0EFTJanusProgramPSplitFredholmDeterminantFrameConnection4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -49,7 +49,7 @@ variable {E ZeroMode : Type*}
 its invertible complement. -/
 structure SelfAdjointFredholmZetaNamedCoordinateData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     [LinearOrder ZeroMode] where
   fredholm : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode
   zetaFamily : RelativeZetaDeterminantFamilyData
@@ -84,7 +84,7 @@ theorem frame_on_namedVolume
     (data : SelfAdjointFredholmZetaNamedCoordinateData operator ZeroMode)
     (parameter : Real) :
     data.fredholm.determinantFrame parameter
-        (cokernelNamedVolume data.fredholm parameter) =
+        (data.fredholm.cokernelNamedVolume parameter) =
       finiteKernelNamedVolume data.fredholm.kernels parameter :=
   data.fredholm.determinantFrame_cokernelNamedVolume parameter
 
@@ -93,7 +93,7 @@ theorem sourceVolume_ne_zero
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmZetaNamedCoordinateData operator ZeroMode)
     (parameter : Real) :
-    cokernelNamedVolume data.fredholm parameter ≠ 0 :=
+    data.fredholm.cokernelNamedVolume parameter ≠ 0 :=
   data.fredholm.cokernelNamedVolume_ne_zero parameter
 
 /-- The named target volume is nonzero. -/
@@ -102,7 +102,7 @@ theorem targetVolume_ne_zero
     (data : SelfAdjointFredholmZetaNamedCoordinateData operator ZeroMode)
     (parameter : Real) :
     finiteKernelNamedVolume data.fredholm.kernels parameter ≠ 0 :=
-  data.fredholm.kernels.finiteKernelNamedVolume_ne_zero parameter
+  finiteKernelNamedVolume_ne_zero data.fredholm.kernels parameter
 
 /-- The named full complex coordinate is nonzero. -/
 theorem fullCoordinate_ne_zero
@@ -159,12 +159,12 @@ structure SelfAdjointFredholmZetaNamedCoordinateCertificate
   line_finrank_one : ∀ parameter,
     Module.finrank Real (data.fredholm.determinantLine parameter) = 1
   sourceVolume_nonzero : ∀ parameter,
-    cokernelNamedVolume data.fredholm parameter ≠ 0
+    data.fredholm.cokernelNamedVolume parameter ≠ 0
   targetVolume_nonzero : ∀ parameter,
     finiteKernelNamedVolume data.fredholm.kernels parameter ≠ 0
   frame_normalized : ∀ parameter,
     data.fredholm.determinantFrame parameter
-        (cokernelNamedVolume data.fredholm parameter) =
+        (data.fredholm.cokernelNamedVolume parameter) =
       finiteKernelNamedVolume data.fredholm.kernels parameter
   coordinate_nonzero : ∀ parameter,
     data.fullCoordinate parameter ≠ 0

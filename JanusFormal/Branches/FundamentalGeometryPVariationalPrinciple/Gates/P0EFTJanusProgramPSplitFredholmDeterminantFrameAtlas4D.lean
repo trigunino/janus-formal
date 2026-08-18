@@ -33,7 +33,7 @@ open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D
 open P0EFTJanusProgramPSplitFredholmDeterminantFamily4D
 
-variable {E ZeroMode Index : Type*}
+variable {E Index : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -41,7 +41,7 @@ variable {E ZeroMode Index : Type*}
 the complexified named kernel volume. -/
 structure SplitFredholmDeterminantFrameAtlasData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     [LinearOrder ZeroMode]
     (Index : Type*) where
   split : SplitFredholmDeterminantFamilyData operator ZeroMode

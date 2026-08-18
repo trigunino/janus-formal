@@ -69,8 +69,7 @@ theorem finiteFamilySynthesis_injective_of_gramQuadratic_lower_bound
   have hQuadratic := hLower (first - second)
   rw [finiteFamilyGramQuadratic_eq_norm_sq, hDifference, norm_zero] at hQuadratic
   have hSquareNonpos : ‖first - second‖ ^ 2 ≤ 0 := by
-    apply (mul_le_mul_left hLowerConstant).mp
-    simpa using hQuadratic
+    exact nonpos_of_mul_nonpos_right (by simpa using hQuadratic) hLowerConstant
   have hNormZero : ‖first - second‖ = 0 :=
     (sq_nonpos_iff ‖first - second‖).mp hSquareNonpos
   exact sub_eq_zero.mp (norm_eq_zero.mp hNormZero)

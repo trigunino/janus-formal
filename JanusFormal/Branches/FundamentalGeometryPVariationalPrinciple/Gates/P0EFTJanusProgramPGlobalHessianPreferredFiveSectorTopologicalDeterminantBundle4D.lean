@@ -69,7 +69,7 @@ variable
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- Public topological full determinant-bundle checkpoint for Candidate-A. -/

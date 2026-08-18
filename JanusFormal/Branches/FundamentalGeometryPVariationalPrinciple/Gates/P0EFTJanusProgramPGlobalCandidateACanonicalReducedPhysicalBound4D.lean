@@ -32,13 +32,32 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalExtensionNorm4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalSmallness4D
 open P0EFTJanusProgramPGlobalCandidateAReducedCanonicalEnergies4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -102,6 +121,7 @@ def globalCandidateACanonicalReducedPhysicalFormBound_of_chartBound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -147,6 +167,7 @@ theorem globalCandidateACanonicalReducedPhysicalEnergy_bound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -183,7 +204,7 @@ theorem globalCandidateACanonicalReducedPhysicalEnergy_bound
         ‖vector‖ ^ 2 :=
   (globalCandidateACanonicalReducedPhysicalFormBound_of_chartBound period hPeriod
     configuration data analysis einsteinScale hTransverse family chartBound
-    ).energy_bound vector
+    ).energy_bound period hPeriod vector
 
 /-- Public canonical reduced-H11 checkpoint. -/
 theorem global_candidateA_canonical_reduced_physical_bound_gate
@@ -199,6 +220,7 @@ theorem global_candidateA_canonical_reduced_physical_bound_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      (measure := measure)
       period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
@@ -233,7 +255,7 @@ theorem global_candidateA_canonical_reduced_physical_bound_gate
   exact ⟨rfl,
     (globalCandidateACanonicalReducedPhysicalFormBound_of_chartBound period
       hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound).energy_bound⟩
+        chartBound).energy_bound period hPeriod⟩
 
 end
 end P0EFTJanusProgramPGlobalCandidateACanonicalReducedPhysicalBound4D

@@ -80,7 +80,7 @@ structure LinearNaturalRepresentationIsomorphismTransportData
   transport_self : ∀ parameter,
     transport parameter parameter = LinearEquiv.refl Real State
   transport_trans : ∀ first second third,
-    (transport second third).comp (transport first second) =
+    (transport first second).trans (transport second third) =
       transport first third
 
 namespace LinearNaturalRepresentationIsomorphismTransportData
@@ -116,7 +116,8 @@ theorem operator_intertwining
         operator second
           (representation.representedSourcePullback
             (data.reverseMorphism first second) state) := by
-      rw [data.source_pullback_agreement first second state]
+      exact (congrArg (operator second)
+        (data.source_pullback_agreement first second state)).symm
     _ = representation.representedTargetPullback
           (data.reverseMorphism first second) (operator first state) :=
       hNatural.symm
@@ -157,7 +158,8 @@ theorem transport_commutes_sectorProjector
       hSector.symm
     _ = coordinates.sectorProjector sector
           (data.transport first second state) := by
-      rw [data.source_pullback_agreement first second state]
+      exact congrArg (coordinates.sectorProjector sector)
+        (data.source_pullback_agreement first second state)
 
 /-- Adapter to the generic ambient intertwining-transport packet. -/
 def toFiniteIntertwiningOperatorTransport
@@ -204,7 +206,7 @@ theorem linear_natural_representation_isomorphism_transport_gate
     (∀ parameter,
       data.transport parameter parameter = LinearEquiv.refl Real State) ∧
     (∀ first second third,
-      (data.transport second third).comp (data.transport first second) =
+      (data.transport first second).trans (data.transport second third) =
         data.transport first third) :=
   ⟨data.operator_intertwining representation coordinates refinement pullback,
     data.transport_commutes_sectorProjector representation coordinates refinement

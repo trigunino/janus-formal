@@ -14,8 +14,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
 open P0EFTJanusProgramPFullTensorCollapseFormula4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -27,7 +27,8 @@ theorem zetaFullTensor_collapse
     fredholm.fullTensorDeterminantCollapse parameter
         (selfAdjointFredholmZetaFullTensorSection fredholm zetaFamily parameter) =
       selfAdjointFredholmZetaDeterminantSection fredholm zetaFamily parameter := by
-  rw [fullTensorCollapse_formula]
+  unfold selfAdjointFredholmZetaFullTensorSection
+  rw [fredholm.fullTensorCollapse_formula]
   exact (selfAdjointFredholmZetaDeterminantSection_eq
     fredholm zetaFamily parameter).symm
 

@@ -29,11 +29,11 @@ noncomputable section
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiniteSelfAdjointProjectionResolution4D
 open P0EFTJanusProgramPFiniteCommutingProjectionKernelComplement4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {Sector E : Type*}
   [Fintype Sector] [DecidableEq Sector]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- A finite self-adjoint projection resolution whose genuine operator blocks
 outside the diagonal vanish. -/

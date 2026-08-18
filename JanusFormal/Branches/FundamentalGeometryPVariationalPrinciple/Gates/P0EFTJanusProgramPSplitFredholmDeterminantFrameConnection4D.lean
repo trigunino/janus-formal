@@ -39,7 +39,7 @@ open P0EFTJanusProgramPSplitFredholmDeterminantFamily4D
 open P0EFTJanusProgramPSplitFredholmDeterminantFrameAtlas4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E ZeroMode Index : Type*}
+variable {E Index : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -47,7 +47,7 @@ variable {E ZeroMode Index : Type*}
 that supplies the split determinant coordinate. -/
 structure SplitFredholmDeterminantFrameConnectionData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     [LinearOrder ZeroMode]
     (Index : Type*) where
   atlas : SplitFredholmDeterminantFrameAtlasData operator ZeroMode Index
@@ -83,12 +83,15 @@ theorem localDeterminant_hasDerivAt
   have hFrame := data.kernelFrame_hasDerivAt index parameter
   have hReduced :=
     relativeZetaDeterminantCoordinate_hasDerivAt data.reducedFamily parameter
-  have hProduct := hFrame.mul hReduced
-  convert hProduct using 1
-  · funext current
+  have hFunction : data.atlas.localDeterminant index =
+      data.atlas.kernelFrameCoordinate index *
+        relativeZetaDeterminantCoordinate data.reducedFamily := by
+    funext current
     unfold SplitFredholmDeterminantFrameAtlasData.localDeterminant
     rw [data.reduced_agreement current]
-  · rfl
+    rfl
+  rw [hFunction]
+  simpa only [localDeterminantDerivative] using hFrame.mul hReduced
 
 /-- Connection coefficient in one full Fredholm determinant frame. -/
 def localConnectionCoefficient
@@ -145,10 +148,54 @@ theorem transition_hasDerivAt
       (data.transitionDerivative first second parameter) parameter := by
   have hNumerator := data.kernelFrame_hasDerivAt second parameter
   have hDenominator := data.kernelFrame_hasDerivAt first parameter
-  have hQuotient := hNumerator.div hDenominator
-    (data.atlas.kernelFrameCoordinate_ne_zero first parameter)
-  simpa [SplitFredholmDeterminantFrameAtlasData.transition,
-    transitionDerivative] using hQuotient
+  have hDenominatorInverse :
+      HasDerivAt ((data.atlas.kernelFrameCoordinate first)⁻¹)
+        (-data.kernelFrameDerivative first parameter /
+          data.atlas.kernelFrameCoordinate first parameter ^ 2) parameter := by
+    have hInverseF :=
+      (hasFDerivAt_inv' (𝕜 := Real)
+        (data.atlas.kernelFrameCoordinate_ne_zero first parameter)).comp
+        parameter hDenominator
+    change HasFDerivAt
+      (fun current => (data.atlas.kernelFrameCoordinate first current)⁻¹)
+      (ContinuousLinearMap.toSpanSingleton Real
+        (-data.kernelFrameDerivative first parameter /
+          data.atlas.kernelFrameCoordinate first parameter ^ 2)) parameter
+    have hFunction :
+        (fun current => (data.atlas.kernelFrameCoordinate first current)⁻¹) =
+          Inv.inv ∘ data.atlas.kernelFrameCoordinate first := rfl
+    rw [hFunction]
+    have hDerivative :
+        ContinuousLinearMap.toSpanSingleton Real
+            (-data.kernelFrameDerivative first parameter /
+              data.atlas.kernelFrameCoordinate first parameter ^ 2) =
+          (-ContinuousLinearMap.mulLeftRight Real Complex
+              (data.atlas.kernelFrameCoordinate first parameter)⁻¹
+              (data.atlas.kernelFrameCoordinate first parameter)⁻¹).comp
+            (ContinuousLinearMap.toSpanSingleton Real
+              (data.kernelFrameDerivative first parameter)) := by
+      ext
+      simp
+      ring
+    rw [hDerivative]
+    exact hInverseF
+  have hQuotient := hNumerator.mul hDenominatorInverse
+  unfold SplitFredholmDeterminantFrameAtlasData.transition
+  have hDerivative :
+      data.transitionDerivative first second parameter =
+        data.kernelFrameDerivative second parameter *
+            (data.atlas.kernelFrameCoordinate first parameter)⁻¹ +
+          data.atlas.kernelFrameCoordinate second parameter *
+            (-data.kernelFrameDerivative first parameter /
+              data.atlas.kernelFrameCoordinate first parameter ^ 2) := by
+    unfold transitionDerivative
+    field_simp [data.atlas.kernelFrameCoordinate_ne_zero first parameter]
+    ring
+  rw [hDerivative]
+  change HasDerivAt
+    (data.atlas.kernelFrameCoordinate second *
+      (data.atlas.kernelFrameCoordinate first)⁻¹) _ parameter
+  exact hQuotient
 
 /-- Gauge-transformation identity for the local full determinant
 connections. -/
@@ -180,15 +227,16 @@ theorem localConnection_gauge_covariant
       data.atlas.transition first second parameter *
         data.localConnectionAt first parameter value derivative := by
   unfold localConnectionAt
-  rw [data.transition_connection_gauge first second parameter]
-  ring
+  linear_combination
+    (data.transition_connection_gauge first second parameter) * value
 
 /-- Complete connection certificate for the split Fredholm determinant atlas. -/
 structure SplitFredholmDeterminantFrameConnectionCertificate
     {operator : Real → E →L[Real] E}
     (data : SplitFredholmDeterminantFrameConnectionData operator ZeroMode Index) :
     Prop where
-  atlas : SplitFredholmDeterminantFrameAtlasCertificate data.atlas
+  atlas : SplitFredholmDeterminantFrameAtlasData.SplitFredholmDeterminantFrameAtlasCertificate
+    data.atlas
   local_derivative : ∀ index parameter,
     HasDerivAt (data.atlas.localDeterminant index)
       (data.localDeterminantDerivative index parameter) parameter

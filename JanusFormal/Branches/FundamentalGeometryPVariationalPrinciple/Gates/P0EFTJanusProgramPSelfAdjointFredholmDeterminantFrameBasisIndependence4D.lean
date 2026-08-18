@@ -23,6 +23,9 @@ but they do not define a second determinant-line frame.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameBasisIndependence4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameBasisIndependence4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 noncomputable section
@@ -30,8 +33,8 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -93,5 +96,5 @@ theorem self_adjoint_fredholm_determinant_frame_basis_independence_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameBasisIndependence4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

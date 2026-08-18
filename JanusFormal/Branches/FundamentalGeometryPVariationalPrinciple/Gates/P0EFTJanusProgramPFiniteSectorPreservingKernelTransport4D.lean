@@ -24,7 +24,7 @@ open scoped BigOperators
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPDifferentiableFiniteKernelBasisFamily4D
 
-variable {Sector ZeroMode E : Type*}
+variable {Sector E : Type*} {ZeroMode : Type}
   [Fintype Sector] [DecidableEq Sector]
   [Fintype ZeroMode] [DecidableEq ZeroMode]
   [NormedAddCommGroup E] [NormedSpace Real E]
@@ -40,7 +40,7 @@ structure FiniteSectorPreservingKernelTransportData
   transport_self : ∀ parameter,
     transport parameter parameter = LinearEquiv.refl Real _
   transport_trans : ∀ first second third,
-    (transport second third).comp (transport first second) =
+    (transport first second).trans (transport second third) =
       transport first third
   transport_commutes : ∀ first second sector vector,
     transport first second (kernelProjection first sector vector) =
@@ -55,9 +55,9 @@ def transportedBasis
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (parameter : Real) :
-    Basis ZeroMode Real (operator parameter).ker :=
+    Module.Basis ZeroMode Real (operator parameter).ker :=
   basisZero.map (data.transport 0 parameter)
 
 @[simp]
@@ -67,7 +67,7 @@ theorem transportedBasis_apply
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (parameter : Real) (mode : ZeroMode) :
     data.transportedBasis basisZero parameter mode =
       data.transport 0 parameter (basisZero mode) :=
@@ -81,7 +81,7 @@ theorem transportedBasis_zero
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker) :
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker) :
     data.transportedBasis basisZero 0 = basisZero := by
   ext mode
   rw [transportedBasis_apply, data.transport_self 0]
@@ -94,7 +94,7 @@ theorem transportedBasis_fixed_by_sector
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (sectorOf : ZeroMode → Sector)
     (hBasepoint : ∀ mode,
       kernelProjection 0 (sectorOf mode) (basisZero mode) = basisZero mode)
@@ -113,7 +113,7 @@ def toFiniteKernelBasisFamily
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker) :
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker) :
     FiniteKernelBasisFamilyData operator ZeroMode where
   basis := data.transportedBasis basisZero
 
@@ -124,7 +124,7 @@ theorem toFiniteKernelBasisFamily_vector
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (parameter : Real) (mode : ZeroMode) :
     (data.toFiniteKernelBasisFamily basisZero).vector parameter mode =
       (data.transport 0 parameter (basisZero mode)).1 :=
@@ -138,14 +138,19 @@ theorem coordinateTransport_agrees_on_basis
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (first second : Real) (mode : ZeroMode) :
     (data.toFiniteKernelBasisFamily basisZero).kernelTransport first second
         (data.transportedBasis basisZero first mode) =
       data.transport first second
         (data.transportedBasis basisZero first mode) := by
+  change (data.toFiniteKernelBasisFamily basisZero).kernelTransport first second
+      ((data.toFiniteKernelBasisFamily basisZero).basis first mode) =
+    data.transport first second
+      (data.transportedBasis basisZero first mode)
   rw [(data.toFiniteKernelBasisFamily basisZero).kernelTransport_basis]
-  rw [transportedBasis_apply, transportedBasis_apply]
+  change data.transport 0 second (basisZero mode) =
+    data.transport first second (data.transport 0 first (basisZero mode))
   have hTrans := congrArg (fun equivalence => equivalence (basisZero mode))
     (data.transport_trans 0 first second)
   exact hTrans.symm
@@ -158,7 +163,7 @@ def toDifferentiableFiniteKernelBasisFamily
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (hDifferentiable : ∀ mode,
       Differentiable Real
         (fun parameter : Real =>
@@ -174,7 +179,7 @@ theorem finite_sector_preserving_kernel_transport_gate
       Sector → (operator parameter).ker →L[Real] (operator parameter).ker}
     (data : FiniteSectorPreservingKernelTransportData
       operator kernelProjection)
-    (basisZero : Basis ZeroMode Real (operator 0).ker)
+    (basisZero : Module.Basis ZeroMode Real (operator 0).ker)
     (sectorOf : ZeroMode → Sector)
     (hBasepoint : ∀ mode,
       kernelProjection 0 (sectorOf mode) (basisZero mode) = basisZero mode) :

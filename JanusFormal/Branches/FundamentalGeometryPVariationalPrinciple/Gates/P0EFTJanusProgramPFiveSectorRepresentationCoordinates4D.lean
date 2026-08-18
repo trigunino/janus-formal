@@ -100,7 +100,7 @@ theorem ambientEquiv_metricCoordinate
     fiveSectorMetricCoordinate
         (coordinates.decomposition (data.ambientEquiv coordinates sectionValue)) =
       data.metric sectionValue.1 := by
-  rfl
+  simp [ambientEquiv, productEquiv, fiveSectorMetricCoordinate]
 
 /-- All five physical components of the represented ambient vector are the
 supplied sector coordinates. -/
@@ -130,7 +130,9 @@ theorem ambientEquiv_allCoordinates
     fiveSectorBoundaryCoordinate
         (coordinates.decomposition (data.ambientEquiv coordinates sectionValue)) =
         data.boundary sectionValue.2.2.2.2 := by
-  exact ⟨rfl, rfl, rfl, rfl, rfl⟩
+  simp [ambientEquiv, productEquiv, fiveSectorMetricCoordinate,
+    fiveSectorAbelianCoordinate, fiveSectorMatterCoordinate,
+    fiveSectorLongitudinalCoordinate, fiveSectorBoundaryCoordinate]
 
 /-- Public sector-preserving representation checkpoint. -/
 theorem five_sector_representation_coordinates_gate

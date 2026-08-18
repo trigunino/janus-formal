@@ -26,7 +26,7 @@ noncomputable section
 open Module Set Set.powersetCard
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 
-variable {E ZeroMode : Type*}
+variable {E : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -67,6 +67,8 @@ theorem finiteKernelDeterminantFiber_finrank_one
     (data : FiniteKernelBasisFamilyData operator ZeroMode)
     (parameter : Real) :
     Module.finrank Real (FiniteKernelDeterminantFiber data parameter) = 1 := by
+  letI : Module.Finite Real (operator parameter).ker :=
+    Module.Finite.of_basis (data.basis parameter)
   rw [exteriorPower.finrank_eq, data.kernel_finrank_eq_card parameter,
     Nat.choose_self]
 
@@ -126,7 +128,9 @@ theorem finiteKernelDeterminantTransport_trans
   unfold finiteKernelDeterminantTransport
   rw [← exteriorPower.map_comp]
   congr 1
-  exact data.kernelTransport_trans first second third
+  have hTransport := congrArg LinearEquiv.toLinearMap
+    (data.kernelTransport_trans first second third)
+  simpa only [LinearEquiv.coe_trans] using hTransport
 
 /-- Public finite-kernel determinant-line checkpoint. -/
 theorem finite_kernel_determinant_line_family_gate
@@ -143,10 +147,10 @@ theorem finite_kernel_determinant_line_family_gate
         (finiteKernelDeterminantTransport data second third).comp
             (finiteKernelDeterminantTransport data first second) =
           finiteKernelDeterminantTransport data first third) :=
-  ⟨data.finiteKernelDeterminantFiber_finrank_one,
-    data.finiteKernelNamedVolume_ne_zero,
-    data.finiteKernelDeterminantTransport_namedVolume,
-    data.finiteKernelDeterminantTransport_trans⟩
+  ⟨finiteKernelDeterminantFiber_finrank_one data,
+    finiteKernelNamedVolume_ne_zero data,
+    finiteKernelDeterminantTransport_namedVolume data,
+    finiteKernelDeterminantTransport_trans data⟩
 
 end
 end P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D

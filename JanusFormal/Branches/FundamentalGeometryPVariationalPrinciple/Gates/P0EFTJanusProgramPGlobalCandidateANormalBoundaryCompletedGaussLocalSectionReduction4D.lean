@@ -85,34 +85,57 @@ local instance (priority := 30000)
 /-- Smallest remaining local geometric statement: on each installed generator
 pair, the completed Candidate-A Gauss scalar is the existing holonomic
 local-section second fundamental form evaluated on the transported vectors. -/
-def CandidateANormalBoundaryCompletedGaussLocalSectionAgreement
+structure CandidateANormalBoundaryCompletedGaussLocalSectionAgreement
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
     (displacement : SmoothNormalDisplacement period hPeriod)
-    (parameter : Real) : Prop :=
-  ∀ (boundary : CutThroatBoundary period hPeriod)
-    (patch : SmoothHolonomicFrameChart4 period hPeriod)
-    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
-    (hAt : patch.coordinateMap coordinate =
-      normalGraphOrientationDouble period hPeriod displacement
-        (boundary, parameter))
-    (row column : NormalBoundaryTangentIndex period hPeriod),
-    let current :=
-      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
-        (tensor, displacement), parameter)
-    let frame := finiteSmoothThroatGeneratingFrame
-      (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-    candidateANormalBoundaryMetricUnitGaussExtrinsicCurvatureFiberEvaluation
-        period hPeriod metric row column current boundary =
-      normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
-        period hPeriod variedMetric displacement boundary parameter patch
-          coordinate
-          (orientationDoubleToThroat period hPeriod boundary, parameter)
-          (normalBoundaryOrientationTangentEquiv period hPeriod boundary
-            (frame.vectorAt boundary column))
-          (normalBoundaryOrientationTangentEquiv period hPeriod boundary
-            (frame.vectorAt boundary row))
+    (parameter : Real) : Prop where
+  pointwise :
+    letI : NormedAddCommGroup
+        (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+      candidateANormalBoundaryFunctionalCoreNormedAddCommGroup
+        period hPeriod metric
+    letI : NormedSpace Real
+        (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+      candidateANormalBoundaryFunctionalCoreNormedSpace period hPeriod metric
+    letI : ChartedSpace ThroatCoverModel
+        (CutThroatBoundary period hPeriod) :=
+      P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryChartedSpace
+        period hPeriod
+    letI : IsManifold throatCoverModelWithCorners ω
+        (CutThroatBoundary period hPeriod) :=
+      P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryIsManifold
+        period hPeriod
+    letI : ChartedSpace CoverModel
+        (MappingTorus (reflectedSphereData period hPeriod)) :=
+      P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D.effectiveQuotientChartedSpace
+        period hPeriod
+    letI : IsManifold coverModelWithCorners ω
+        (MappingTorus (reflectedSphereData period hPeriod)) :=
+      reflectedSphereQuotient_isManifold period hPeriod
+    ∀ (boundary : CutThroatBoundary period hPeriod)
+      (patch : SmoothHolonomicFrameChart4 period hPeriod)
+      (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
+      (hAt : patch.coordinateMap coordinate =
+        normalGraphOrientationDouble period hPeriod displacement
+          (boundary, parameter))
+      (row column : NormalBoundaryTangentIndex period hPeriod),
+      let current :=
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter)
+      let frame := finiteSmoothThroatGeneratingFrame
+        (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+      candidateANormalBoundaryMetricUnitGaussExtrinsicCurvatureFiberEvaluation
+          period hPeriod metric row column current boundary =
+        normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
+          period hPeriod variedMetric displacement boundary parameter patch
+            coordinate
+            (orientationDoubleToThroat period hPeriod boundary, parameter)
+            (normalBoundaryOrientationTangentEquiv period hPeriod boundary
+              (frame.vectorAt boundary column))
+            (normalBoundaryOrientationTangentEquiv period hPeriod boundary
+              (frame.vectorAt boundary row))
 
 set_option backward.isDefEq.respectTransparency false in
 /-- The local-section identity implies the previous canonical pulled-back
@@ -129,21 +152,24 @@ theorem
     (hLocal : CandidateANormalBoundaryCompletedGaussLocalSectionAgreement period
       hPeriod metric tensor variedMetric displacement parameter) :
     CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement period
-      hPeriod metric tensor variedMetric displacement parameter hNonNull := by
-  unfold CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement
-  unfold CandidateANormalBoundaryCompletedGaussLocalSectionAgreement at hLocal
-  intro boundary patch coordinate hAt row column
-  dsimp only
-  let frame := finiteSmoothThroatGeneratingFrame
-    (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-  have hLocalAt := hLocal boundary patch coordinate hAt row column
-  dsimp only at hLocalAt
-  have hSource :=
-    normalBoundarySmoothGraphInducedMetricMusical_canonicalShape_eq_localSection
-      period hPeriod variedMetric displacement parameter hNonNull boundary patch
-        coordinate hAt (frame.vectorAt boundary column)
-          (frame.vectorAt boundary row)
-  exact hLocalAt.trans hSource.symm
+      hPeriod metric tensor variedMetric displacement parameter hNonNull :=
+  CandidateANormalBoundaryMetricUnitGaussPointwiseAgreement.mk
+    (period := period) (hPeriod := hPeriod) (metric := metric) (tensor := tensor)
+      (variedMetric := variedMetric) (displacement := displacement)
+        (parameter := parameter) (hNonNull := hNonNull) (by
+          intro boundary patch coordinate hAt row column
+          dsimp only
+          let frame := finiteSmoothThroatGeneratingFrame
+            (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+          have hLocalAt :=
+            hLocal.pointwise boundary patch coordinate hAt row column
+          dsimp only at hLocalAt
+          have hSource :=
+            normalBoundarySmoothGraphInducedMetricMusical_canonicalShape_eq_localSection
+              period hPeriod variedMetric displacement parameter hNonNull boundary
+                patch coordinate hAt (frame.vectorAt boundary column)
+                  (frame.vectorAt boundary row)
+          exact hLocalAt.trans hSource.symm)
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D

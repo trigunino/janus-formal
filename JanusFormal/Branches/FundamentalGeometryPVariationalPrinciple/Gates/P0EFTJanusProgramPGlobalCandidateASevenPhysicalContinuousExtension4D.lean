@@ -1,5 +1,6 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalCoreEmbedding4D
 
 /-!
 # H11 from six continuous physical extensions and the H10 Robin Hessian
@@ -32,11 +33,14 @@ open scoped Manifold ContDiff InnerProductSpace BigOperators
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
@@ -45,8 +49,6 @@ open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
-open P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionSourceBridge4D
-open P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -85,79 +87,7 @@ private abbrev CommonHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) commonHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) commonHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) commonHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) commonHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) commonHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CommonHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  CommonAugmentedHilbert period hPeriod configuration data analysis
 
 local instance h11BoundaryCoreNormedAddCommGroup
     (metric : RegularGeneralLorentzMetric period hPeriod) :
@@ -319,12 +249,26 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_sixContinuous
     rw [globalCandidateAH10RobinCommonDomainForm_symmetric period hPeriod
       configuration data analysis einsteinScale hTransverse
         extensions.robinProjection first second]
+    congr 1
     apply Finset.sum_congr rfl
     intro block _
     exact extensions.symmetric block first second
   smooth_agreement := by
     intro first second
     simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.sum_apply]
+    change
+      globalCandidateAH10RobinCommonDomainForm period hPeriod configuration data
+          analysis einsteinScale extensions.robinProjection
+          (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+            configuration data analysis first)
+          (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+            configuration data analysis second) +
+        (∑ block : GlobalCandidateANonRobinPhysicalBlock,
+          extensions.form block
+            (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis first)
+            (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis second)) = _
     rw [← extensions.robin_core_agreement first second]
     have hSum :
         (∑ block : GlobalCandidateANonRobinPhysicalBlock,
@@ -361,7 +305,12 @@ theorem global_candidateA_h11_common_augmented_domain_gate_of_sixContinuous
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (extensions : GlobalCandidateASixPhysicalContinuousExtensions4D period
-      hPeriod configuration data analysis chart sameAction einsteinScale) :=
+      hPeriod configuration data analysis chart sameAction einsteinScale) :
+    GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
+      configuration data analysis chart sameAction
+        (globalCandidateASevenPhysicalCommonDomainExtension_of_sixContinuous
+          period hPeriod configuration data analysis chart sameAction
+            einsteinScale hTransverse extensions) :=
   global_candidateA_h11_common_augmented_domain_gate period hPeriod
     configuration data analysis chart sameAction
       (globalCandidateASevenPhysicalCommonDomainExtension_of_sixContinuous

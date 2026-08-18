@@ -13,6 +13,9 @@ constructs a genuine complex-linear transport between full determinant fibres.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFullTensorTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmFullTensorTransport4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 noncomputable section
@@ -25,8 +28,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmFullTensorDeterminantFiber4D
 open P0EFTJanusProgramPSelfAdjointFredholmFullTensorCollapse4D
 open P0EFTJanusProgramPFullTensorCollapseFormula4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -54,7 +57,7 @@ theorem fullTensorDeterminantTransport_section
       data.fullTensorDeterminantSection second coordinate := by
   apply (data.fullTensorDeterminantCollapse second).injective
   simp [fullTensorDeterminantTransport,
-    data.complexLinearDeterminantTransport_section,
+    data.complexLinearDeterminantTransport_frame,
     fullTensorCollapse_formula]
 
 /-- Basepoint trivialization of the genuine full determinant family. -/
@@ -94,5 +97,5 @@ theorem self_adjoint_fredholm_full_tensor_transport_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFullTensorTransport4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

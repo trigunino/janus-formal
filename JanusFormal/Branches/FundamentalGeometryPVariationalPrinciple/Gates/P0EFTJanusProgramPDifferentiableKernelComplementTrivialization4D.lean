@@ -23,7 +23,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementFamilyTrivialization4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- C1 regularity of an already certified unitary kernel-complement

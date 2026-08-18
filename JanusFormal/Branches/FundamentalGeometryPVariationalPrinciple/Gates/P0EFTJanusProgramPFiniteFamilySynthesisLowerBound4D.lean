@@ -29,7 +29,7 @@ open P0EFTJanusProgramPFiniteFamilyGramBasis4D
 
 variable {Index E : Type*}
   [Fintype Index] [DecidableEq Index]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Injectivity of finite coefficient synthesis is equivalent to linear
 independence of the vector family. -/

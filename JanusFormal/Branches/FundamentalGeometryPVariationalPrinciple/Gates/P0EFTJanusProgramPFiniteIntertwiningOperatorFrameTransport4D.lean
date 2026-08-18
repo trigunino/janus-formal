@@ -36,7 +36,7 @@ variable {E : Type*}
 /-- Linear trivializing frame of an operator family based at parameter zero. -/
 structure FiniteIntertwiningOperatorFrameData
     (operator : Real → E →L[Real] E) where
-  frame : ∀ parameter, E ≃ₗ[Real] E
+  frame : ∀ parameter : Real, E ≃ₗ[Real] E
   frame_zero : frame 0 = LinearEquiv.refl Real E
   intertwines_basepoint : ∀ parameter vector,
     operator parameter (frame parameter vector) =
@@ -88,7 +88,7 @@ theorem transport_trans
     {operator : Real → E →L[Real] E}
     (data : FiniteIntertwiningOperatorFrameData operator)
     (first second third : Real) :
-    (data.transport second third).comp (data.transport first second) =
+    (data.transport first second).trans (data.transport second third) =
       data.transport first third := by
   ext vector
   simp [transport]
@@ -142,7 +142,7 @@ theorem finite_intertwining_operator_frame_transport_gate
     (∀ parameter,
       data.transport parameter parameter = LinearEquiv.refl Real E) ∧
     (∀ first second third,
-      (data.transport second third).comp (data.transport first second) =
+      (data.transport first second).trans (data.transport second third) =
         data.transport first third) ∧
     (∀ parameter,
       data.transport 0 parameter = data.frame parameter) :=

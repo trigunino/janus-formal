@@ -44,9 +44,21 @@ open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelBasisCoercivity4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+
+attribute [local instance]
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -82,35 +94,39 @@ def global_candidateA_hessian_canonicalSix_basisCoercivity_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
     (ZeroMode : Type*) [Fintype ZeroMode]
     (coercivity : GlobalCandidateAActualKernelBasisCoercivity4D period hPeriod
       configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)
-        ZeroMode) :=
-  let gap := globalCandidateAActualKernelGap_of_basisCoercivity coercivity
+        ZeroMode)
+    (ll_stationary : ∀ point,
+      LLStationaryAt period hPeriod
+        (data.boundary.llFields period hPeriod) point) :=
+  let gap := globalCandidateAActualKernelGap_of_basisCoercivity period hPeriod
+    (measure := measure)
+    coercivity ll_stationary
   let terminal := global_candidateA_hessian_canonicalSix_chartBound_frontier_gate
-    period hPeriod configuration data analysis einsteinScale hTransverse family
+    period hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
       chartBound gap
-  let zeroModeCount := globalCandidateAActualKernel_finrank_eq_card coercivity
-  (terminal, zeroModeCount)
+  terminal
 
 /-- The public result includes both the full closure and the exact finite
 zero-mode count. -/
@@ -127,41 +143,41 @@ theorem global_candidateA_hessian_canonicalSix_basisCoercivity_zeroMode_count
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
     (ZeroMode : Type*) [Fintype ZeroMode]
     (coercivity : GlobalCandidateAActualKernelBasisCoercivity4D period hPeriod
       configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)
         ZeroMode) :
     Module.finrank Real
-        (globalCandidateAActualKernelOperator period hPeriod configuration data
+        (globalCandidateAActualKernelOperator period hPeriod (measure := measure) configuration data
           analysis
-            (globalCandidateAActualKernelChart period hPeriod configuration data
+            (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
               analysis einsteinScale hTransverse family)
-            (globalCandidateAActualKernelSameAction period hPeriod configuration
+            (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
               data analysis einsteinScale hTransverse family)
             (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-              hPeriod configuration data analysis einsteinScale hTransverse
+              hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse
                 family chartBound)).ker =
       Fintype.card ZeroMode :=
-  globalCandidateAActualKernel_finrank_eq_card coercivity
+  globalCandidateAActualKernel_finrank_eq_card period hPeriod coercivity
 
 /-- After fixed geometric data, the remaining analysis is exactly one chart
 estimate and one basis/coercivity result. -/

@@ -36,6 +36,8 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
@@ -60,7 +62,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev ActualKernelHilbert
+def ActualKernelHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -139,6 +141,7 @@ local instance (priority := 30000) actualKernelCompleteSpace
       (ActualKernelHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Public abbreviation for the genuine augmented Candidate-A operator. -/
 def globalCandidateAActualKernelOperator
@@ -199,7 +202,7 @@ structure GlobalCandidateAActualKernelGap4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) where
   gapData : SelfAdjointKernelComplementGapData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -304,7 +307,11 @@ theorem global_candidateA_h12_fredholm_gate_of_actualKernelGap
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
     (gap : GlobalCandidateAActualKernelGap4D period hPeriod configuration data
-      analysis chart sameAction physical) :=
+      analysis chart sameAction physical) :
+    GlobalCandidateAFaithfulAugmentedFredholmCertificate4D period hPeriod
+      configuration data analysis chart sameAction physical
+        (globalCandidateAActualKernelFredholmEstimates period hPeriod
+          configuration data analysis chart sameAction physical gap) :=
   global_candidateA_h12_faithful_augmented_fredholm_gate period hPeriod
     configuration data analysis chart sameAction physical
       (globalCandidateAActualKernelFredholmEstimates period hPeriod

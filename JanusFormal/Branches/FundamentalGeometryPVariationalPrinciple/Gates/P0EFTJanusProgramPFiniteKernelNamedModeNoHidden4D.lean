@@ -23,6 +23,7 @@ noncomputable section
 open Set
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -42,7 +43,7 @@ kernel vector, and one global Gårding estimate.  No spanning assertion is
 stored. -/
 structure FiniteKernelNamedModeNoHiddenData
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   linearIndependent : LinearIndependent Real
@@ -58,10 +59,10 @@ structure FiniteKernelNamedModeNoHiddenData
   defectConstant_nonneg : 0 ≤ defectConstant
   garding : ∀ current : E,
     constant * ‖current‖ ^ 2 ≤
-      ⟪current, operator current, Real⟫ +
+      ⟪current, operator current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, vector mode, Real⟫ ^ 2
+            ⟪current, vector mode⟫_Real ^ 2
 
 /-- A remainder orthogonal to the named kernel span is orthogonal to every
 named ambient zero mode. -/
@@ -72,12 +73,14 @@ theorem FiniteKernelNamedModeNoHiddenData.remainder_inner_named_eq_zero
     (remainder :
       (finiteKernelNamedKernelSpan operator data.vector data.annihilated)ᗮ)
     (mode : ZeroMode) :
-    ⟪((remainder.1 : operator.ker) : E), data.vector mode, Real⟫ = 0 := by
+    ⟪((remainder.1 : operator.ker) : E), data.vector mode⟫_Real = 0 := by
   have hNamed :
       finiteKernelNamedVector operator data.vector data.annihilated mode ∈
         finiteKernelNamedKernelSpan operator data.vector data.annihilated :=
     Submodule.subset_span (Set.mem_range_self _)
-  exact (Submodule.mem_orthogonal'.mp remainder.property)
+  have hOrthogonal := remainder.property
+  rw [Submodule.mem_orthogonal'] at hOrthogonal
+  exact hOrthogonal
     (finiteKernelNamedVector operator data.vector data.annihilated mode) hNamed
 
 /-- The Gårding inequality kills every kernel vector orthogonal to the named
@@ -95,11 +98,16 @@ theorem FiniteKernelNamedModeNoHiddenData.remainder_eq_zero
   have hEstimate := data.garding ambient
   have hDefect :
       (∑ mode : ZeroMode,
-        ⟪ambient, data.vector mode, Real⟫ ^ 2) = 0 := by
+        ⟪ambient, data.vector mode⟫_Real ^ 2) = 0 := by
     simp [ambient, data.remainder_inner_named_eq_zero remainder]
   rw [hKernel, inner_zero_right, hDefect, mul_zero, add_zero] at hEstimate
+  have hProductZero : data.constant * ‖ambient‖ ^ 2 = 0 := by
+    apply le_antisymm hEstimate
+    exact mul_nonneg data.constant_pos.le (sq_nonneg ‖ambient‖)
+  have hNormSq : ‖ambient‖ ^ 2 = 0 :=
+    (mul_eq_zero.mp hProductZero).resolve_left (ne_of_gt data.constant_pos)
   have hNorm : ‖ambient‖ = 0 := by
-    nlinarith [data.constant_pos, norm_nonneg ambient]
+    exact sq_eq_zero_iff.mp hNormSq
   apply Subtype.ext
   apply Subtype.ext
   exact norm_eq_zero.mp hNorm
@@ -144,7 +152,7 @@ theorem finite_kernel_named_mode_no_hidden_gate
     {hSelfAdjoint : IsSelfAdjoint operator}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedModeNoHiddenData operator ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
   finite_kernel_named_mode_garding_gate
     (hSelfAdjoint := hSelfAdjoint) data.toNamedGarding

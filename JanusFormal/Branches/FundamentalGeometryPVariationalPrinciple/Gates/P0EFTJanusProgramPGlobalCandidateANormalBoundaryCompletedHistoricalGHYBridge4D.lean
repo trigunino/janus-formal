@@ -32,6 +32,8 @@ open P0EFTJanusMappingTorusOrientationDoubleCover
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
+open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCutBoundaryFirstSheetCurrentBridge4D
 open P0EFTJanusD8NormalBundleD9DisplacementBridge4D
 open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
@@ -342,6 +344,7 @@ theorem candidateANormalBoundaryMetricUnitGaussMeanCurvature_eq_historicalWeinga
   apply congrArg Matrix.trace
   ext row column
   unfold normalBoundaryRealMatrixMul
+  rw [Matrix.mul_apply]
   apply Finset.sum_congr rfl
   intro middle _
   rw [candidateANormalBoundaryMetricUnitGaussRelativeEndomorphismMatrix_eq_historicalWeingarten

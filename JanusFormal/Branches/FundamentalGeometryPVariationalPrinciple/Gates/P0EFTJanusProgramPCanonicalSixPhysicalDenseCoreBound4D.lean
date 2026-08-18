@@ -28,7 +28,7 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 universe u
 
 variable {Core Hilbert Chart : Type*}
-  [NormedAddCommGroup Core] [NormedSpace Real Core]
+  [AddCommGroup Core] [Module Real Core]
   [NormedAddCommGroup Hilbert] [NormedSpace Real Hilbert]
   [NormedAddCommGroup Chart] [NormedSpace Real Chart]
 
@@ -38,6 +38,19 @@ def canonicalSixPhysicalIndexedHessian
     (point : Chart) :
     CanonicalSixPhysicalBlock → Chart →L[Real] Chart →L[Real] Real :=
   fun block => canonicalSixPhysicalBlockHessian blocks block point
+
+theorem canonicalSixPhysicalHessianSum_apply_eq_sum
+    (blocks : FullCoupledActionBlocks Chart)
+    (point first second : Chart) :
+    canonicalSixPhysicalHessianSum blocks point first second =
+      ∑ block : CanonicalSixPhysicalBlock,
+        canonicalSixPhysicalIndexedHessian blocks point block first second := by
+  unfold canonicalSixPhysicalHessianSum canonicalSixPhysicalIndexedHessian
+    canonicalSixPhysicalBlockHessian
+  rw [show (Finset.univ : Finset CanonicalSixPhysicalBlock) =
+      {.candidateA, .einsteinHilbertPlus, .einsteinHilbertMinus,
+        .maxwellPlus, .maxwellMinus, .finiteBV} by decide]
+  simp
 
 /-- Finite dense-core pullback of the six canonical chart Hessians. -/
 def canonicalSixPhysicalDenseCoreSum

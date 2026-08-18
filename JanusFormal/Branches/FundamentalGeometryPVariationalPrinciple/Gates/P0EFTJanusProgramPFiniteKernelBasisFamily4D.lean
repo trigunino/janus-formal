@@ -30,7 +30,7 @@ open scoped BigOperators
 open P0EFTJanusProgramPFiniteKernelNamedModeBasis4D
 open P0EFTJanusProgramPFiniteKernelNamedModes4D
 
-variable {E ZeroMode Sector : Type*}
+variable {E Sector : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode]
   [Fintype Sector] [DecidableEq Sector]
@@ -38,8 +38,8 @@ variable {E ZeroMode Sector : Type*}
 /-- A basis of every actual kernel, indexed by one fixed finite physical type. -/
 structure FiniteKernelBasisFamilyData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
-  basis : ∀ parameter, Basis ZeroMode Real (operator parameter).ker
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
+  basis : ∀ parameter, Module.Basis ZeroMode Real (operator parameter).ker
 
 namespace FiniteKernelBasisFamilyData
 
@@ -107,7 +107,12 @@ theorem kernelTransport_basis
     data.kernelTransport first second (data.basis first mode) =
       data.basis second mode := by
   apply (data.basis second).equivFun.injective
-  simp [kernelTransport]
+  simp only [kernelTransport, LinearEquiv.trans_apply,
+    LinearEquiv.apply_symm_apply]
+  change (data.basis first).equivFun (data.basis first mode) =
+    (data.basis second).equivFun (data.basis second mode)
+  rw [Module.Basis.equivFun_apply, Module.Basis.equivFun_apply,
+    Module.Basis.repr_self, Module.Basis.repr_self]
 
 /-- Identity transport. -/
 @[simp]
@@ -116,21 +121,29 @@ theorem kernelTransport_self
     (data : FiniteKernelBasisFamilyData operator ZeroMode)
     (parameter : Real) :
     data.kernelTransport parameter parameter = LinearEquiv.refl Real _ := by
-  ext zeroMode
-  apply (data.basis parameter).equivFun.injective
-  simp [kernelTransport]
+  apply LinearEquiv.ext
+  intro zeroMode
+  change (data.basis parameter).equivFun.symm
+      ((data.basis parameter).equivFun zeroMode) = zeroMode
+  exact (data.basis parameter).equivFun.symm_apply_apply zeroMode
 
 /-- Exact composition law of kernel transports. -/
 theorem kernelTransport_trans
     {operator : Real → E →L[Real] E}
     (data : FiniteKernelBasisFamilyData operator ZeroMode)
     (first second third : Real) :
-    (data.kernelTransport second third).comp
-        (data.kernelTransport first second) =
+    (data.kernelTransport first second).trans
+        (data.kernelTransport second third) =
       data.kernelTransport first third := by
-  ext zeroMode
-  apply (data.basis third).equivFun.injective
-  simp [kernelTransport]
+  apply LinearEquiv.ext
+  intro zeroMode
+  change (data.basis third).equivFun.symm
+      ((data.basis second).equivFun
+        ((data.basis second).equivFun.symm
+          ((data.basis first).equivFun zeroMode))) =
+    (data.basis third).equivFun.symm
+      ((data.basis first).equivFun zeroMode)
+  rw [(data.basis second).equivFun.apply_symm_apply]
 
 /-- Kernel dimension is constant and equal to the number of physical labels. -/
 theorem kernel_finrank_eq_card
@@ -148,8 +161,11 @@ theorem transport_synthesize
     data.kernelTransport first second
         ((data.basis first).equivFun.symm coefficient) =
       (data.basis second).equivFun.symm coefficient := by
-  apply (data.basis second).equivFun.injective
-  simp [kernelTransport]
+  change (data.basis second).equivFun.symm
+      ((data.basis first).equivFun
+        ((data.basis first).equivFun.symm coefficient)) =
+    (data.basis second).equivFun.symm coefficient
+  rw [(data.basis first).equivFun.apply_symm_apply]
 
 /-- Public finite-kernel-family checkpoint. -/
 theorem finite_kernel_basis_family_gate
@@ -161,8 +177,8 @@ theorem finite_kernel_basis_family_gate
         data.kernelTransport first second (data.basis first mode) =
           data.basis second mode) ∧
       (∀ first second third,
-        (data.kernelTransport second third).comp
-            (data.kernelTransport first second) =
+        (data.kernelTransport first second).trans
+            (data.kernelTransport second third) =
           data.kernelTransport first third) ∧
       (∀ parameter,
         Module.finrank Real (operator parameter).ker =
@@ -177,7 +193,7 @@ end FiniteKernelBasisFamilyData
 /-- Fixed physical sector assignment for the named kernel basis family. -/
 structure FiniteKernelSectorBasisFamilyData
     (operator : Real → E →L[Real] E)
-    (ZeroMode Sector : Type*)
+    (ZeroMode : Type) (Sector : Type*)
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     [Fintype Sector] [DecidableEq Sector] where
   kernels : FiniteKernelBasisFamilyData operator ZeroMode
@@ -197,7 +213,11 @@ theorem sum_multiplicity
     {operator : Real → E →L[Real] E}
     (data : FiniteKernelSectorBasisFamilyData operator ZeroMode Sector) :
     ∑ sector : Sector, data.multiplicity sector = Fintype.card ZeroMode := by
-  simpa [multiplicity] using Fintype.sum_card_fiberwise data.sectorOf
+  rw [show (∑ sector : Sector, data.multiplicity sector) =
+      Fintype.card
+        (Σ sector : Sector, {mode : ZeroMode // data.sectorOf mode = sector}) by
+    simp [multiplicity, Fintype.card_sigma]]
+  exact Fintype.card_congr (Equiv.sigmaFiberEquiv data.sectorOf)
 
 /-- Kernel dimension is the same sum of sector multiplicities for every
 parameter. -/

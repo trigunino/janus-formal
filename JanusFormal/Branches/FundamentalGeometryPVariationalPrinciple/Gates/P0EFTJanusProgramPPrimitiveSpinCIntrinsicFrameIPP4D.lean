@@ -32,12 +32,18 @@ open P0EFTJanusInvariantMeasureFlowIPP4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusCompactQuotient
+open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
+open P0EFTJanusMappingTorusCompleteIndependentFieldTimeAction4D
 open P0EFTJanusMappingTorusDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
+open P0EFTJanusMappingTorusD8NonabelianGhostThroatBRST4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
 open P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
 open P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameDecomposition4D
 open P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameCoordinateDerivatives4D
@@ -68,6 +74,14 @@ local instance canonicalThroatFiniteMeasure :
     IsFiniteMeasure (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
   intrinsicCanonicalThroatVolumeMeasure_isFinite period hPeriod
 
+private def d9TimeGeneratorIndex :
+    Fin (canonicalDivergenceFreeLLFrame period hPeriod).count := by
+  simpa [canonicalDivergenceFreeLLFrame] using (Fin.last 3)
+
+private def d9RotationGeneratorIndex (axis : Fin 3) :
+    Fin (canonicalDivergenceFreeLLFrame period hPeriod).count := by
+  simpa [canonicalDivergenceFreeLLFrame] using (Fin.castSucc axis)
+
 /-! ## Smooth derivative fields for the invariant generators -/
 
 /-- Smooth derivative along quotient time translation. -/
@@ -77,13 +91,14 @@ def d9TimeGeneratorDerivativeField
     SmoothThroatField period hPeriod Fiber where
   toFun base :=
     throatFrameDerivative period hPeriod Fiber
-      (canonicalDivergenceFreeLLFrame period hPeriod) field base (Fin.last 3)
+      (canonicalDivergenceFreeLLFrame period hPeriod) field base
+        (d9TimeGeneratorIndex period hPeriod)
   contMDiff_toFun := by
     have hDerivative :=
       throatFrameDerivative_contMDiff period hPeriod Fiber
         (canonicalDivergenceFreeLLFrame period hPeriod) field
     rw [contMDiff_pi_space] at hDerivative
-    exact hDerivative (Fin.last 3)
+    exact hDerivative (d9TimeGeneratorIndex period hPeriod)
 
 /-- Smooth derivative along one quotient rotation generator. -/
 def d9RotationGeneratorDerivativeField
@@ -93,13 +108,13 @@ def d9RotationGeneratorDerivativeField
   toFun base :=
     throatFrameDerivative period hPeriod Fiber
       (canonicalDivergenceFreeLLFrame period hPeriod) field base
-        (Fin.castSucc axis)
+        (d9RotationGeneratorIndex period hPeriod axis)
   contMDiff_toFun := by
     have hDerivative :=
       throatFrameDerivative_contMDiff period hPeriod Fiber
         (canonicalDivergenceFreeLLFrame period hPeriod) field
     rw [contMDiff_pi_space] at hDerivative
-    exact hDerivative (Fin.castSucc axis)
+    exact hDerivative (d9RotationGeneratorIndex period hPeriod axis)
 
 @[simp]
 theorem d9TimeGeneratorDerivativeField_apply
@@ -109,9 +124,15 @@ theorem d9TimeGeneratorDerivativeField_apply
     d9TimeGeneratorDerivativeField period hPeriod field base =
       mvfderiv throatCoverModelWithCorners field.toFun base
         (throatTimeTranslationGhost period hPeriod base) := by
-  rw [d9TimeGeneratorDerivativeField,
-    throatFrameDerivative_eq_mvfderiv]
-  rfl
+  have hVector :
+      (canonicalDivergenceFreeLLFrame period hPeriod).vectorAt base
+      (d9TimeGeneratorIndex period hPeriod) =
+        throatTimeTranslationGhost period hPeriod base := by
+    rfl
+  change throatFrameDerivative period hPeriod Fiber
+    (canonicalDivergenceFreeLLFrame period hPeriod) field base
+      (d9TimeGeneratorIndex period hPeriod) = _
+  rw [throatFrameDerivative_eq_mvfderiv, hVector]
 
 @[simp]
 theorem d9RotationGeneratorDerivativeField_apply
@@ -121,9 +142,11 @@ theorem d9RotationGeneratorDerivativeField_apply
     d9RotationGeneratorDerivativeField period hPeriod axis field base =
       mvfderiv throatCoverModelWithCorners field.toFun base
         (throatSpatialRotationGhost period hPeriod axis base) := by
-  rw [d9RotationGeneratorDerivativeField,
-    throatFrameDerivative_eq_mvfderiv]
-  rfl
+  change throatFrameDerivative period hPeriod Fiber
+    (canonicalDivergenceFreeLLFrame period hPeriod) field base
+      (d9RotationGeneratorIndex period hPeriod axis) = _
+  rw [throatFrameDerivative_eq_mvfderiv]
+  simp [d9RotationGeneratorIndex, canonicalDivergenceFreeLLFrame]
 
 /-- Smooth radial-coordinate coefficient. -/
 def d9BaseUnitRadialCoordinateField
@@ -138,10 +161,8 @@ def d9IntrinsicRotationCoefficientField
   toFun := d9IntrinsicRotationCoefficient period hPeriod direction axis
   contMDiff_toFun := by
     fin_cases direction <;> fin_cases axis <;>
-      simp [d9IntrinsicRotationCoefficient,
-        d9PrimitiveSpinCBaseUnitRadialCoordinate] <;>
-      exact contMDiff_const <;>
       first
+      | exact contMDiff_const
       | exact d9PrimitiveMonopoleBaseCoordinate_contMDiff period hPeriod 0
       | exact d9PrimitiveMonopoleBaseCoordinate_contMDiff period hPeriod 1
       | exact d9PrimitiveMonopoleBaseCoordinate_contMDiff period hPeriod 2
@@ -162,9 +183,43 @@ private def d9TimeFlowCurve
 private theorem d9TimeFlowCurve_contMDiff
     (base : ThroatBase period hPeriod) :
     ContMDiff 𝓘(Real, Real) throatCoverModelWithCorners ∞
-      (d9TimeFlowCurve period hPeriod base) :=
-  ((throatJointTimeFlow_contMDiff period hPeriod).comp
-    (contMDiff_id.prodMk contMDiff_const)).congr (fun _ => rfl)
+      (d9TimeFlowCurve period hPeriod base) := by
+  have hBase : ContMDiff 𝓘(Real, Real) throatCoverModelWithCorners ∞
+      (fun _ : Real => base) := contMDiff_const
+  exact (((throatJointTimeFlow_contMDiff period hPeriod).of_le (by simp)).comp
+    (contMDiff_id.prodMk hBase)).congr (fun _ => rfl)
+
+private theorem d9SmoothThroatField_curve_hasDerivAt_zero
+    {Fiber : Type*} [NormedAddCommGroup Fiber] [NormedSpace Real Fiber]
+    [ContinuousSMul Real Fiber]
+    (field : SmoothThroatField period hPeriod Fiber)
+    (curve : Real → ThroatBase period hPeriod)
+    (hCurve : ContMDiff 𝓘(Real, Real) throatCoverModelWithCorners ∞ curve) :
+    HasDerivAt (fun parameter => field (curve parameter))
+      (mvfderiv throatCoverModelWithCorners field.toFun (curve 0)
+        (mfderiv 𝓘(Real, Real) throatCoverModelWithCorners curve 0 1)) 0 := by
+  have hCurveAt : MDifferentiableAt 𝓘(Real, Real)
+      throatCoverModelWithCorners curve 0 :=
+    hCurve.mdifferentiableAt (by simp)
+  have hFieldAt : MDifferentiableAt throatCoverModelWithCorners
+      𝓘(Real, Fiber) field.toFun (curve 0) :=
+    field.contMDiff_toFun.mdifferentiableAt (by simp)
+  have hComp := HasMFDerivAt.comp 0
+    hFieldAt.hasMFDerivAt hCurveAt.hasMFDerivAt
+  have hCompF : HasFDerivAt (field.toFun ∘ curve)
+      ((mfderiv throatCoverModelWithCorners 𝓘(Real, Fiber)
+        field.toFun (curve 0)).comp
+          (mfderiv 𝓘(Real, Real) throatCoverModelWithCorners curve 0)) 0 :=
+    hComp.hasFDerivAt
+  have hDeriv : HasDerivAt (field.toFun ∘ curve)
+      (((mfderiv throatCoverModelWithCorners 𝓘(Real, Fiber)
+        field.toFun (curve 0)).comp
+          (mfderiv 𝓘(Real, Real) throatCoverModelWithCorners curve 0)) 1) 0 :=
+    hasFDerivAt_iff_hasDerivAt.mp hCompF
+  change HasDerivAt (field.toFun ∘ curve) _ 0
+  convert hDeriv using 1
+  simp only [ContinuousLinearMap.comp_apply]
+  rfl
 
 private theorem smoothThroatField_timeFlow_hasDerivAt_zero
     {Fiber : Type*} [NormedAddCommGroup Fiber] [NormedSpace Real Fiber]
@@ -173,23 +228,19 @@ private theorem smoothThroatField_timeFlow_hasDerivAt_zero
     HasDerivAt
       (fun parameter => field (throatTimeFlow period hPeriod parameter base))
       (d9TimeGeneratorDerivativeField period hPeriod field base) 0 := by
-  have hCurveAt : MDifferentiableAt 𝓘(Real, Real)
-      throatCoverModelWithCorners (d9TimeFlowCurve period hPeriod base) 0 :=
-    (d9TimeFlowCurve_contMDiff period hPeriod base).mdifferentiableAt (by simp)
-  have hFieldAt : MDifferentiableAt throatCoverModelWithCorners
-      𝓘(Real, Fiber) field.toFun base :=
-    field.contMDiff_toFun.mdifferentiableAt (by simp)
-  have hComp := hFieldAt.hasMFDerivAt.comp 0 hCurveAt.hasMFDerivAt
-  have hFDeriv : HasFDerivAt (field.toFun ∘ d9TimeFlowCurve period hPeriod base)
-      ((mfderiv throatCoverModelWithCorners 𝓘(Real, Fiber) field.toFun base).comp
-        (mfderiv 𝓘(Real, Real) throatCoverModelWithCorners
-          (d9TimeFlowCurve period hPeriod base) 0)) 0 :=
-    hComp.hasFDerivAt
-  have hDeriv := hasFDerivAt_iff_hasDerivAt.mp hFDeriv
-  change HasDerivAt (field.toFun ∘ d9TimeFlowCurve period hPeriod base) _ 0
-  convert hDeriv using 1
-  rw [d9TimeGeneratorDerivativeField_apply,
-    throatTimeTranslationVelocity_eq_curve_mfderiv]
+  have h := d9SmoothThroatField_curve_hasDerivAt_zero
+    period hPeriod field (d9TimeFlowCurve period hPeriod base)
+      (d9TimeFlowCurve_contMDiff period hPeriod base)
+  have hCurveZero : d9TimeFlowCurve period hPeriod base 0 = base := by
+    simp [d9TimeFlowCurve, throatTimeFlow_zero]
+  rw [hCurveZero] at h
+  change HasDerivAt
+    (fun parameter => field (d9TimeFlowCurve period hPeriod base parameter)) _ 0
+  convert h using 1
+  rw [d9TimeGeneratorDerivativeField_apply]
+  apply congrArg (mvfderiv throatCoverModelWithCorners field.toFun base)
+  change throatTimeTranslationVelocity period hPeriod base = _
+  rw [throatTimeTranslationVelocity_eq_curve_mfderiv]
   rfl
 
 private theorem smoothThroatField_timeFlow_hasDerivAt
@@ -205,12 +256,17 @@ private theorem smoothThroatField_timeFlow_hasDerivAt
   have hShift : HasDerivAt (fun t : Real => t - parameter) 1 parameter :=
     (hasDerivAt_id parameter).sub_const parameter
   have hComp := hZero.scomp_of_eq parameter hShift (by simp)
-  apply hComp.congr_of_eventuallyEq
-  filter_upwards with t
-  simp only [Function.comp_apply]
-  rw [← throatTimeFlow_add]
-  congr 2
-  ring
+  have hResult : HasDerivAt
+      (fun t => field (throatTimeFlow period hPeriod t base))
+      ((1 : Real) • d9TimeGeneratorDerivativeField period hPeriod field
+        (throatTimeFlow period hPeriod parameter base)) parameter := by
+    apply hComp.congr_of_eventuallyEq
+    filter_upwards with t
+    simp only [Function.comp_apply]
+    rw [← throatTimeFlow_add]
+    congr 2
+    ring
+  simpa only [one_smul] using hResult
 
 private theorem smoothThroatField_rotationFlow_hasDerivAt
     {Fiber : Type*} [NormedAddCommGroup Fiber] [NormedSpace Real Fiber]
@@ -229,12 +285,19 @@ private theorem smoothThroatField_rotationFlow_hasDerivAt
   have hShift : HasDerivAt (fun t : Real => t - parameter) 1 parameter :=
     (hasDerivAt_id parameter).sub_const parameter
   have hComp := hZero.scomp_of_eq parameter hShift (by simp)
-  apply hComp.congr_of_eventuallyEq
-  filter_upwards with t
-  simp only [Function.comp_apply]
-  rw [← throatSpatialRotationFlow_add]
-  congr 2
-  ring
+  have hResult : HasDerivAt
+      (fun t => field
+        (throatSpatialRotationFlow period hPeriod axis t base))
+      ((1 : Real) • d9RotationGeneratorDerivativeField period hPeriod axis field
+        (throatSpatialRotationFlow period hPeriod axis parameter base))
+      parameter := by
+    apply hComp.congr_of_eventuallyEq
+    filter_upwards with t
+    simp only [Function.comp_apply]
+    rw [← throatSpatialRotationFlow_add]
+    congr 2
+    ring
+  simpa only [one_smul] using hResult
 
 private def d9TimeFlowHomeomorph
     (shift : Real) : ThroatBase period hPeriod ≃ₜ ThroatBase period hPeriod where
@@ -297,11 +360,13 @@ theorem d9TimeGenerator_integral_smul_derivative_eq_neg
   have hDerivative : ∀ parameter base,
       HasDerivAt (fun t => F t base) (F' parameter base) parameter := by
     intro parameter base
-    simpa [F, F'] using
-      (smoothThroatField_timeFlow_hasDerivAt period hPeriod coefficient
-        parameter base).smul
-      (smoothThroatField_timeFlow_hasDerivAt period hPeriod field
-        parameter base)
+    dsimp only [F, F']
+    apply ((smoothThroatField_timeFlow_hasDerivAt
+      period hPeriod coefficient parameter base).smul
+        (smoothThroatField_timeFlow_hasDerivAt
+          period hPeriod field parameter base)).congr_of_eventuallyEq
+    filter_upwards with t
+    rfl
   have hInvariant : ∀ parameter,
       (∫ base, F parameter base
         ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
@@ -389,11 +454,13 @@ theorem d9RotationGenerator_integral_smul_derivative_eq_neg
   have hDerivative : ∀ parameter base,
       HasDerivAt (fun t => F t base) (F' parameter base) parameter := by
     intro parameter base
-    simpa [F, F', flow] using
-      (smoothThroatField_rotationFlow_hasDerivAt period hPeriod axis coefficient
-        parameter base).smul
-      (smoothThroatField_rotationFlow_hasDerivAt period hPeriod axis field
-        parameter base)
+    dsimp only [F, F', flow]
+    apply ((smoothThroatField_rotationFlow_hasDerivAt
+      period hPeriod axis coefficient parameter base).smul
+        (smoothThroatField_rotationFlow_hasDerivAt
+          period hPeriod axis field parameter base)).congr_of_eventuallyEq
+    filter_upwards with t
+    rfl
   have hInvariant : ∀ parameter,
       (∫ base, F parameter base
         ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
@@ -415,8 +482,8 @@ theorem d9RotationGenerator_integral_smul_derivative_eq_neg
         d9RotationGeneratorDerivativeField period hPeriod axis field base)
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
     (coefficient.contMDiff_toFun.continuous.smul
-      (d9RotationGeneratorDerivativeField period hPeriod axis field)
-        |>.contMDiff_toFun.continuous)
+      ((d9RotationGeneratorDerivativeField period hPeriod axis field)
+        |>.contMDiff_toFun.continuous))
       |>.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
   have hSecond : Integrable
       (fun base =>
@@ -463,8 +530,9 @@ theorem d9IntrinsicThroatFrame_integral_mvfderiv
           ∑ axis : Fin 3,
             rotation axis base •
               d9RotationGeneratorDerivativeField period hPeriod axis field base := by
-    rw [mfderiv_intrinsicThroatFrame_decomposition,
-      d9TimeGeneratorDerivativeField_apply]
+    rw [d9IntrinsicThroatFrame_decomposition]
+    simp only [map_add, map_smul, map_sum]
+    rw [d9TimeGeneratorDerivativeField_apply]
     simp_rw [d9RotationGeneratorDerivativeField_apply]
     rfl
   rw [integral_congr_ae (Filter.Eventually.of_forall hPointwise)]
@@ -480,43 +548,52 @@ theorem d9IntrinsicThroatFrame_integral_mvfderiv
         d9RotationGeneratorDerivativeField period hPeriod axis field base)
       (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
     ((rotation axis).contMDiff_toFun.continuous.smul
-      (d9RotationGeneratorDerivativeField period hPeriod axis field)
-        |>.contMDiff_toFun.continuous)
+      ((d9RotationGeneratorDerivativeField period hPeriod axis field)
+        |>.contMDiff_toFun.continuous))
       |>.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
-  rw [integral_add hTimeIntegrable,
+  have hRotationSumIntegrable : Integrable
+      (fun base => ∑ axis : Fin 3,
+        rotation axis base •
+          d9RotationGeneratorDerivativeField period hPeriod axis field base)
+      (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
+    integrable_finsetSum Finset.univ fun axis _ => hRotationIntegrable axis
+  rw [integral_add hTimeIntegrable hRotationSumIntegrable,
     integral_finsetSum Finset.univ (fun axis _ => hRotationIntegrable axis)]
   rw [d9TimeGenerator_integral_smul_derivative_eq_neg
       period hPeriod radial field]
-  apply congrArg₂ (· + ·) rfl
-  apply Finset.sum_congr rfl
-  intro axis _
-  rw [d9RotationGenerator_integral_smul_derivative_eq_neg
-    period hPeriod axis (rotation axis) field]
-  rw [← Finset.sum_neg_distrib, ← integral_finsetSum]
-  · rw [← integral_add]
+  simp_rw [d9RotationGenerator_integral_smul_derivative_eq_neg
+    period hPeriod]
+  rw [Finset.sum_neg_distrib, ← integral_finsetSum]
+  · rw [← neg_add, ← integral_add]
     · apply congrArg Neg.neg
       apply integral_congr_ae
       filter_upwards with base
-      change
-        (d9TimeGeneratorDerivativeField period hPeriod radial base +
-            ∑ axis : Fin 3,
-              d9RotationGeneratorDerivativeField period hPeriod axis
-                (rotation axis) base) • field base = _
+      rw [← Finset.sum_smul, ← add_smul]
       rw [d9TimeGeneratorDerivativeField_apply]
       simp_rw [d9RotationGeneratorDerivativeField_apply]
-      rw [d9IntrinsicFrameCoefficientDivergence]
+      apply congrArg (fun scalar : Real => scalar • field base)
+      change
+        mvfderiv throatCoverModelWithCorners
+            (d9PrimitiveSpinCBaseUnitRadialCoordinate
+              period hPeriod direction) base
+              (throatTimeTranslationGhost period hPeriod base) +
+          ∑ axis : Fin 3,
+            mvfderiv throatCoverModelWithCorners
+              (d9IntrinsicRotationCoefficient
+                period hPeriod direction axis) base
+              (throatSpatialRotationGhost period hPeriod axis base) = _
+      exact d9IntrinsicFrameCoefficientDivergence
+        period hPeriod direction base
     · exact
         ((d9TimeGeneratorDerivativeField period hPeriod radial).contMDiff_toFun
           |>.continuous.smul field.contMDiff_toFun.continuous)
           |>.integrable_of_hasCompactSupport
             (HasCompactSupport.of_compactSpace _)
-    · exact
-        ((continuous_finset_sum Finset.univ fun axis _ =>
-          (d9RotationGeneratorDerivativeField period hPeriod axis
-            (rotation axis)).contMDiff_toFun.continuous).smul
-              field.contMDiff_toFun.continuous)
-          |>.integrable_of_hasCompactSupport
-            (HasCompactSupport.of_compactSpace _)
+    · exact integrable_finsetSum Finset.univ fun axis _ =>
+        ((d9RotationGeneratorDerivativeField period hPeriod axis
+          (rotation axis)).contMDiff_toFun.continuous.smul
+            field.contMDiff_toFun.continuous)
+          |>.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
   · intro axis _
     exact
       ((d9RotationGeneratorDerivativeField period hPeriod axis
@@ -541,7 +618,7 @@ theorem d9IntrinsicThroatFrame_integral_mvfderiv_eq_two
             field base
           ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) := by
   rw [d9IntrinsicThroatFrame_integral_mvfderiv]
-  rw [← integral_const_smul]
+  rw [← integral_smul, ← integral_neg]
   apply integral_congr_ae
   filter_upwards with base
   module

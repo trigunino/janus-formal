@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Calculus.FDeriv.CompCLM
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointUniformGapBaseFamily4D
 
 /-!
@@ -33,8 +34,7 @@ open P0EFTJanusProgramPSelfAdjointUniformGapBaseFamily4D
 
 variable {Base E : Type*}
   [NormedAddCommGroup Base] [NormedSpace Real Base]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Frechet-differentiable self-adjoint uniformly-gapped operator family on a
 fixed Hilbert space. -/
@@ -86,7 +86,7 @@ theorem canonicalGreenDirectionalDerivative_apply
 required pointwise in tangent directions to be exactly `-G (DH) G`. -/
 structure GreenFrechetDifferentiabilityData
     {operator : Base → E →L[Real] E}
-    (data : FrechetDifferentiableSelfAdjointUniformGapBaseFamilyData operator) : Prop where
+    (data : FrechetDifferentiableSelfAdjointUniformGapBaseFamilyData operator) where
   greenDerivative : Base → Base →L[Real] (E →L[Real] E)
   hasFDerivAt_green : ∀ base,
     HasFDerivAt data.analytic.green (greenDerivative base) base
@@ -130,9 +130,11 @@ theorem hasFDerivAt_green_apply
     HasFDerivAt
       (fun current => data.analytic.green current vector)
       ((ContinuousLinearMap.apply Real E vector).comp
-        (inverse.greenDerivative base)) base :=
-  (inverse.hasFDerivAt_green base).clm_apply
-    (hasFDerivAt_const base vector)
+        (inverse.greenDerivative base)) base := by
+  convert (inverse.hasFDerivAt_green base).clm_apply
+    (hasFDerivAt_const vector base) using 1
+  ext direction
+  simp
 
 /-- Public multidimensional differentiable Green-family checkpoint. -/
 theorem frechet_differentiable_self_adjoint_green_base_family_gate

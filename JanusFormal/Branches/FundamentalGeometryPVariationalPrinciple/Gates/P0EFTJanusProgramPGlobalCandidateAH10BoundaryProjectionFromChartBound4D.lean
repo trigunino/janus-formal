@@ -19,8 +19,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 9800000
-set_option synthInstance.maxHeartbeats 4900000
+set_option maxHeartbeats 2400000
+set_option synthInstance.maxHeartbeats 1200000
 
 noncomputable section
 
@@ -32,10 +32,14 @@ open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
@@ -44,11 +48,16 @@ open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10RobinProjectionCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10CompletedBoundaryProjection4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixDenseCoreFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixProjectionCoreFrontier4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -93,6 +102,91 @@ local instance h10ChartBoundBoundaryCoreCompleteSpace
       (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
   candidateANormalBoundaryFunctionalCoreCompleteSpace period hPeriod metric
 
+def globalCandidateAH10AdaptedBoundaryProjection
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (einsteinScale : Real)
+    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      period hPeriod (measure := measure) configuration data analysis
+        (diracGreenClosureMatterRealization period hPeriod
+          couplings.matterMassSquared) einsteinScale) :
+    @ContinuousLinearMap Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      family.normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+      (Prod
+        (CandidateANormalBoundaryFunctionalCore period hPeriod
+          data.plusGravity.metric) Real)
+      inferInstance inferInstance family.normedSpace.toModule inferInstance := by
+  letI := family.normedAddCommGroup
+  letI := family.normedSpace
+  let projectionMap := family.boundaryProjection
+  let adaptedLinear :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        family.normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      (Prod
+        (CandidateANormalBoundaryFunctionalCore period hPeriod
+          data.plusGravity.metric) Real)
+      family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      family.normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (ReducedFamilyModel period hPeriod configuration)
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+        inferInstance
+        (fun direction => projectionMap direction)
+        (by
+          intro first second
+          change projectionMap
+              (@Add.add _
+                family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                first second) =
+            projectionMap first + projectionMap second
+          rw [family.toAddCommGroup_eq]
+          exact projectionMap.map_add first second))
+      (by
+        intro scalar direction
+        change projectionMap
+            (@SMul.smul Real _ family.normedSpace.toModule.toSMul scalar
+              direction) =
+          (RingHom.id Real) scalar • projectionMap direction
+        rw [family.toSMul_eq]
+        have hMap := projectionMap.map_smul scalar direction
+        change projectionMap
+            (@SMul.smul Real _
+              (Submodule.smul
+                (ReducedFamilyModel period hPeriod configuration))
+              scalar direction) =
+          scalar • projectionMap direction at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  exact @ContinuousLinearMap.mk Real Real _ _ (RingHom.id Real)
+    (ReducedFamilyModel period hPeriod configuration)
+    family.normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+    (Prod
+      (CandidateANormalBoundaryFunctionalCore period hPeriod
+        data.plusGravity.metric) Real)
+    inferInstance inferInstance family.normedSpace.toModule inferInstance
+    adaptedLinear
+    (by
+      change Continuous (fun direction => projectionMap direction)
+      exact projectionMap.cont)
+
 /-- Canonical boundary parameter map on the typed smooth core. -/
 def globalCandidateAH10BoundaryCoreMap
     {couplings : GlobalCandidateAActionCouplings}
@@ -107,20 +201,114 @@ def globalCandidateAH10BoundaryCoreMap
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :
     PhysicalCore period hPeriod analysis →ₗ[Real]
       Prod
         (CandidateANormalBoundaryFunctionalCore period hPeriod
-          data.plusGravity.metric) Real :=
-  family.boundaryProjection.toLinearMap.comp
-    (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-      analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          data.plusGravity.metric) Real := by
+  letI := family.normedAddCommGroup
+  letI := family.normedSpace
+  let coreToChart := globalCandidateACanonicalSixCoreToChart period hPeriod
+    (measure := measure) configuration data analysis
+      (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+        configuration data analysis einsteinScale hTransverse family)
+      (globalCandidateAActualKernelSameAction period hPeriod (measure := measure)
+        configuration data analysis einsteinScale hTransverse family)
+  let projectionMap := family.boundaryProjection
+  let adaptedLinear :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        family.normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      (Prod
+        (CandidateANormalBoundaryFunctionalCore period hPeriod
+          data.plusGravity.metric) Real)
+      family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      family.normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (ReducedFamilyModel period hPeriod configuration)
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+        inferInstance
+        (fun direction => projectionMap direction)
+        (by
+          intro first second
+          change projectionMap
+              (@Add.add _
+                family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                first second) =
+            projectionMap first + projectionMap second
+          rw [family.toAddCommGroup_eq]
+          exact projectionMap.map_add first second))
+      (by
+        intro scalar direction
+        change projectionMap
+            (@SMul.smul Real _ family.normedSpace.toModule.toSMul scalar
+              direction) =
+          (RingHom.id Real) scalar • projectionMap direction
+        rw [family.toSMul_eq]
+        have hMap := projectionMap.map_smul scalar direction
+        change projectionMap
+            (@SMul.smul Real _
+              (Submodule.smul
+                (ReducedFamilyModel period hPeriod configuration))
+              scalar direction) =
+          scalar • projectionMap direction at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  exact
+    { toFun := fun core => adaptedLinear (coreToChart core)
+      map_add' := by
+        intro first second
+        calc
+          adaptedLinear (coreToChart (first + second)) =
+              adaptedLinear
+                (@Add.add _
+                  family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                  (coreToChart first) (coreToChart second)) :=
+            congrArg adaptedLinear (coreToChart.map_add' first second)
+          _ = adaptedLinear (coreToChart first) +
+              adaptedLinear (coreToChart second) :=
+            by
+              change projectionMap
+                  (@Add.add _
+                    family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                    (coreToChart first) (coreToChart second)) =
+                projectionMap (coreToChart first) +
+                  projectionMap (coreToChart second)
+              rw [family.toAddCommGroup_eq]
+              exact projectionMap.map_add _ _
+      map_smul' := by
+        intro scalar core
+        calc
+          adaptedLinear (coreToChart (scalar • core)) =
+              adaptedLinear
+                (@SMul.smul Real _ family.normedSpace.toModule.toSMul
+                  ((RingHom.id Real) scalar) (coreToChart core)) :=
+            congrArg adaptedLinear (coreToChart.map_smul' scalar core)
+          _ = (RingHom.id Real) scalar • adaptedLinear (coreToChart core) :=
+            by
+              change projectionMap
+                  (@SMul.smul Real _ family.normedSpace.toModule.toSMul
+                    scalar (coreToChart core)) =
+                (RingHom.id Real) scalar • projectionMap (coreToChart core)
+              rw [family.toSMul_eq]
+              have hMap := projectionMap.map_smul scalar (coreToChart core)
+              change projectionMap
+                  (@SMul.smul Real _
+                    (Submodule.smul
+                      (ReducedFamilyModel period hPeriod configuration))
+                    scalar (coreToChart core)) =
+                scalar • projectionMap (coreToChart core) at hMap
+              simpa only [RingHom.id_apply] using hMap }
 
 /-- The boundary-core estimate derived from the one core-to-chart estimate. -/
 structure GlobalCandidateAH10BoundaryCoreMapBound4D
@@ -136,13 +324,13 @@ structure GlobalCandidateAH10BoundaryCoreMapBound4D
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
-          couplings.matterMassSquared) einsteinScale) : Prop where
+          couplings.matterMassSquared) einsteinScale) : Type where
   constant : Real
   constant_nonneg : 0 ≤ constant
   estimate : ∀ core : PhysicalCore period hPeriod analysis,
-    ‖globalCandidateAH10BoundaryCoreMap period hPeriod configuration data
+    ‖globalCandidateAH10BoundaryCoreMap period hPeriod (measure := measure) configuration data
         analysis einsteinScale hTransverse family core‖ ≤
       constant *
         ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
@@ -163,48 +351,55 @@ def globalCandidateAH10BoundaryCoreMapBound_of_chartBound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family))) :
-    GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod configuration data
-      analysis einsteinScale hTransverse family where
-  constant := ‖family.boundaryProjection‖ * chartBound.constant
-  constant_nonneg := mul_nonneg (norm_nonneg _) chartBound.constant_nonneg
-  estimate := by
-    intro core
-    let chartValue :=
-      globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family) core
-    change ‖family.boundaryProjection chartValue‖ ≤
-      (‖family.boundaryProjection‖ * chartBound.constant) *
-        ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
-          data analysis core‖
-    calc
-      ‖family.boundaryProjection chartValue‖ ≤
-          ‖family.boundaryProjection‖ * ‖chartValue‖ :=
-        family.boundaryProjection.le_opNorm chartValue
-      _ ≤ ‖family.boundaryProjection‖ *
-          (chartBound.constant *
-            ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod
-              configuration data analysis core‖) := by
-        exact mul_le_mul_of_nonneg_left (chartBound.estimate core)
-          (norm_nonneg family.boundaryProjection)
-      _ = (‖family.boundaryProjection‖ * chartBound.constant) *
+    GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod (measure := measure) configuration data
+      analysis einsteinScale hTransverse family := by
+  letI := family.normedAddCommGroup
+  letI := family.normedSpace
+  let adapted := globalCandidateAH10AdaptedBoundaryProjection period hPeriod
+    (measure := measure) configuration data analysis einsteinScale family
+  exact {
+    constant := ‖adapted‖ * chartBound.constant
+    constant_nonneg := mul_nonneg (norm_nonneg _) chartBound.constant_nonneg
+    estimate := by
+      intro core
+      let chartValue :=
+        globalCandidateACanonicalSixCoreToChart period hPeriod
+          (measure := measure) configuration data analysis
+            (globalCandidateAActualKernelChart period hPeriod
+              (measure := measure) configuration data analysis einsteinScale
+                hTransverse family)
+            (globalCandidateAActualKernelSameAction period hPeriod
+              (measure := measure) configuration data analysis einsteinScale
+                hTransverse family) core
+      change ‖adapted chartValue‖ ≤
+        (‖adapted‖ * chartBound.constant) *
           ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod
-            configuration data analysis core‖ := by ring
+            configuration data analysis core‖
+      calc
+        ‖adapted chartValue‖ ≤ ‖adapted‖ * ‖chartValue‖ :=
+          adapted.le_opNorm chartValue
+        _ ≤ ‖adapted‖ *
+            (chartBound.constant *
+              ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+                configuration data analysis core‖) := by
+          exact mul_le_mul_of_nonneg_left (chartBound.estimate core)
+            (norm_nonneg adapted)
+        _ = (‖adapted‖ * chartBound.constant) *
+            ‖globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis core‖ := by ring
+  }
 
 /-- Canonical extension of the boundary parameter map to the common Hilbert
 completion. -/
@@ -221,17 +416,17 @@ def globalCandidateAH10CompletedBoundaryProjection_of_bound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
-    (bound : GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod
+    (bound : GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod (measure := measure)
       configuration data analysis einsteinScale hTransverse family) :
-    GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+    CommonAugmentedHilbert period hPeriod configuration data
         analysis →L[Real]
       Prod
         (CandidateANormalBoundaryFunctionalCore period hPeriod
           data.plusGravity.metric) Real :=
-  (globalCandidateAH10BoundaryCoreMap period hPeriod configuration data analysis
+  (globalCandidateAH10BoundaryCoreMap period hPeriod (measure := measure) configuration data analysis
     einsteinScale hTransverse family).extendOfNorm
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
@@ -250,17 +445,17 @@ theorem globalCandidateAH10CompletedBoundaryProjection_eq_core
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
-    (bound : GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod
+    (bound : GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod (measure := measure)
       configuration data analysis einsteinScale hTransverse family)
     (core : PhysicalCore period hPeriod analysis) :
-    globalCandidateAH10CompletedBoundaryProjection_of_bound period hPeriod
+    globalCandidateAH10CompletedBoundaryProjection_of_bound period hPeriod (measure := measure)
         configuration data analysis einsteinScale hTransverse family bound
         (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
           data analysis core) =
-      globalCandidateAH10BoundaryCoreMap period hPeriod configuration data
+      globalCandidateAH10BoundaryCoreMap period hPeriod (measure := measure) configuration data
         analysis einsteinScale hTransverse family core := by
   apply LinearMap.extendOfNorm_eq
   · exact diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
@@ -282,21 +477,39 @@ def globalCandidateAH10CompletedBoundaryProjectionData_of_bound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
-    (bound : GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod
+    (bound : GlobalCandidateAH10BoundaryCoreMapBound4D period hPeriod (measure := measure)
       configuration data analysis einsteinScale hTransverse family) :
-    GlobalCandidateAH10CompletedBoundaryProjectionData4D period hPeriod
+    GlobalCandidateAH10CompletedBoundaryProjectionData4D period hPeriod (measure := measure)
       configuration data analysis einsteinScale hTransverse family where
   completedProjection :=
-    globalCandidateAH10CompletedBoundaryProjection_of_bound period hPeriod
+    globalCandidateAH10CompletedBoundaryProjection_of_bound period hPeriod (measure := measure)
       configuration data analysis einsteinScale hTransverse family bound
   smoothCoreAgreement := by
     intro core
-    rw [globalCandidateAH10CompletedBoundaryProjection_eq_core period hPeriod
-      configuration data analysis einsteinScale hTransverse family bound core]
-    rfl
+    calc
+      globalCandidateAH10CompletedBoundaryProjection_of_bound period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family bound
+          (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+            configuration data analysis core) =
+        globalCandidateAH10BoundaryCoreMap period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family core :=
+        globalCandidateAH10CompletedBoundaryProjection_eq_core period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family bound core
+      _ = family.boundaryProjection
+          (globalCandidateACanonicalSixCoreToChart period hPeriod
+            (measure := measure) configuration data analysis
+              (globalCandidateAActualKernelChart period hPeriod
+                (measure := measure) configuration data analysis einsteinScale
+                  hTransverse family)
+              (globalCandidateAActualKernelSameAction period hPeriod
+                (measure := measure) configuration data analysis einsteinScale
+                  hTransverse family) core) := by
+        rfl
 
 /-- The one chart-map bound constructs the complete H10 projection packet. -/
 def globalCandidateAH10ProjectionCoreData_of_chartBound
@@ -312,23 +525,23 @@ def globalCandidateAH10ProjectionCoreData_of_chartBound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family))) :=
-  (globalCandidateAH10CompletedBoundaryProjectionData_of_bound period hPeriod
+  (globalCandidateAH10CompletedBoundaryProjectionData_of_bound period hPeriod (measure := measure)
     configuration data analysis einsteinScale hTransverse family
-      (globalCandidateAH10BoundaryCoreMapBound_of_chartBound period hPeriod
+      (globalCandidateAH10BoundaryCoreMapBound_of_chartBound period hPeriod (measure := measure)
         configuration data analysis einsteinScale hTransverse family
-          chartBound)).toProjectionCoreData period hPeriod
+          chartBound)).toProjectionCoreData period hPeriod (measure := measure)
 
 /-- Canonical H11 physical extension generated from that same chart-map bound. -/
 def globalCandidateACanonicalSixPhysicalExtension_of_chartBound
@@ -344,23 +557,23 @@ def globalCandidateACanonicalSixPhysicalExtension_of_chartBound
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family))) :=
-  globalCandidateACanonicalSixPhysicalExtension period hPeriod configuration
+  globalCandidateACanonicalSixPhysicalExtension period hPeriod (measure := measure) configuration
     data analysis einsteinScale hTransverse family
-      ((globalCandidateAH10ProjectionCoreData_of_chartBound period hPeriod
+      ((globalCandidateAH10ProjectionCoreData_of_chartBound period hPeriod (measure := measure)
         configuration data analysis einsteinScale hTransverse family chartBound
-        ).toDenseCoreAgreement period hPeriod hTransverse)
+        ).toDenseCoreAgreement period hPeriod (measure := measure) hTransverse)
       chartBound
 
 /-- Narrowest current terminal: family, one core-to-chart estimate, and the
@@ -379,30 +592,30 @@ def global_candidateA_hessian_canonicalSix_chartBound_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (gap : GlobalCandidateAActualKernelGap4D period hPeriod configuration data
+    (gap : GlobalCandidateAActualKernelGap4D period hPeriod (measure := measure) configuration data
       analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)) :=
   global_candidateA_hessian_canonicalSix_projectionCore_frontier_gate period
-    hPeriod configuration data analysis einsteinScale hTransverse family
-      (globalCandidateAH10ProjectionCoreData_of_chartBound period hPeriod
+    hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
+      (globalCandidateAH10ProjectionCoreData_of_chartBound period hPeriod (measure := measure)
         configuration data analysis einsteinScale hTransverse family chartBound)
       chartBound gap
 

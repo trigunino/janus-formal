@@ -40,7 +40,8 @@ def finiteFamilySynthesis (vectors : Index → E) :
     simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib]
   map_smul' := by
     intro scalar coefficient
-    simp only [Pi.smul_apply, smul_eq_mul, mul_smul, Finset.smul_sum]
+    simp only [Pi.smul_apply, RingHom.id_apply, smul_eq_mul, mul_smul,
+      Finset.smul_sum]
 
 @[simp]
 theorem finiteFamilySynthesis_single
@@ -49,6 +50,8 @@ theorem finiteFamilySynthesis_single
       scalar • vectors index := by
   classical
   unfold finiteFamilySynthesis
+  change (∑ other, (Pi.single index scalar : Index → Real) other • vectors other) =
+    scalar • vectors index
   rw [Finset.sum_eq_single index]
   · simp
   · intro other _ hOther
@@ -64,11 +67,20 @@ def finiteFamilyGramMap (vectors : Index → E) :
   map_add' := by
     intro first second
     ext index
-    simp [finiteFamilySynthesis, inner_add_left]
+    change inner Real (finiteFamilySynthesis vectors (first + second))
+        (vectors index) =
+      inner Real (finiteFamilySynthesis vectors first) (vectors index) +
+        inner Real (finiteFamilySynthesis vectors second) (vectors index)
+    rw [map_add, inner_add_left]
   map_smul' := by
     intro scalar coefficient
     ext index
-    simp [finiteFamilySynthesis, inner_smul_left]
+    change inner Real (finiteFamilySynthesis vectors (scalar • coefficient))
+        (vectors index) =
+      scalar • inner Real (finiteFamilySynthesis vectors coefficient)
+        (vectors index)
+    rw [map_smul, inner_smul_left]
+    simp
 
 @[simp]
 theorem finiteFamilyGramMap_apply
@@ -122,8 +134,8 @@ def finiteFamilyBasisOfGramInjective
     (vectors : Index → E)
     (hFinrank : Module.finrank Real E = Fintype.card Index)
     (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
-    Basis Index Real E :=
-  Basis.ofEquivFun
+    Module.Basis Index Real E :=
+  Module.Basis.ofEquivFun
     (finiteFamilyLinearEquivOfGramInjective vectors hFinrank hGram).symm
 
 /-- The resulting basis vectors are exactly the original family. -/
@@ -135,7 +147,7 @@ theorem finiteFamilyBasisOfGramInjective_apply
     (index : Index) :
     finiteFamilyBasisOfGramInjective vectors hFinrank hGram index =
       vectors index := by
-  apply (finiteFamilyLinearEquivOfGramInjective vectors hFinrank hGram).injective
+  apply (finiteFamilyLinearEquivOfGramInjective vectors hFinrank hGram).symm.injective
   simp [finiteFamilyBasisOfGramInjective,
     finiteFamilyLinearEquivOfGramInjective,
     finiteFamilySynthesis_single]

@@ -10,6 +10,9 @@ transport.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmFramePreservation4D
+end P0EFTJanusProgramPSelfAdjointFredholmFramePreservation4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 4200000
@@ -22,8 +25,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantFrameTransport4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -38,9 +41,21 @@ theorem cokernelTopTransport_namedVolume
       cokernelNamedVolume data second := by
   apply (cokernelTopKernelTopEquiv data second).injective
   rw [data.cokernelTopKernelTopEquiv_transport]
-  rw [cokernelNamedVolume]
-  simp
-  exact data.kernels.finiteKernelDeterminantTransport_namedVolume first second
+  have hNamed :
+      cokernelTopKernelTopEquiv data first (cokernelNamedVolume data first) =
+        finiteKernelNamedVolume data.kernels first :=
+    (cokernelTopKernelTopEquiv data first).apply_symm_apply _
+  rw [hNamed]
+  have hTarget :
+      cokernelTopKernelTopEquiv data second (cokernelNamedVolume data second) =
+        finiteKernelNamedVolume data.kernels second :=
+    (cokernelTopKernelTopEquiv data second).apply_symm_apply _
+  rw [hTarget]
+  change
+    finiteKernelDeterminantTransport data.kernels first second
+        (finiteKernelNamedVolume data.kernels first) =
+      finiteKernelNamedVolume data.kernels second
+  exact finiteKernelDeterminantTransport_namedVolume data.kernels first second
 
 /-- The actual Fredholm Hom-line transport preserves its canonical frame. -/
 theorem determinantTransport_frame
@@ -51,10 +66,16 @@ theorem determinantTransport_frame
       data.determinantFrame second := by
   apply LinearMap.ext
   intro value
+  unfold determinantTransport
   rw [LinearEquiv.arrowCongr_apply]
   have h := data.cokernelTopKernelTopEquiv_transport first second
     ((data.cokernelTopTransport first second).symm value)
-  simpa [cokernelTopKernelTopEquiv, determinantFrame] using h.symm
+  change
+    data.kernelTopTransport first second
+        (cokernelTopKernelTopEquiv data first
+          ((data.cokernelTopTransport first second).symm value)) =
+      cokernelTopKernelTopEquiv data second value
+  simpa using h.symm
 
 /-- Public canonical-frame preservation checkpoint. -/
 theorem self_adjoint_fredholm_frame_preservation_gate
@@ -71,5 +92,5 @@ theorem self_adjoint_fredholm_frame_preservation_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmFramePreservation4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

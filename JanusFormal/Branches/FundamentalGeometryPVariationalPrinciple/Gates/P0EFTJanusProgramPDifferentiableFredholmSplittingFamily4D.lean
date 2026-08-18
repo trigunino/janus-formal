@@ -26,15 +26,15 @@ open P0EFTJanusProgramPDifferentiableKernelComplementTrivialization4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementFamilyTrivialization4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode]
 
 /-- Complete C1 orthogonal Fredholm splitting data for one self-adjoint family. -/
 structure DifferentiableFredholmSplittingFamilyData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   selfAdjoint : ∀ parameter, IsSelfAdjoint (operator parameter)
   kernels : DifferentiableFiniteKernelBasisFamilyData operator ZeroMode
   complementTrivialization :
@@ -115,7 +115,8 @@ theorem differentiable_fredholm_splitting_family_gate
               SelfAdjointKernelComplement (operator parameter)) : E))) ∧
     (∀ parameter mode,
       operator parameter (data.kernels.kernels.vector parameter mode) = 0) ∧
-    (∀ parameter vector : SelfAdjointKernelComplement (operator 0),
+    (∀ (parameter : Real)
+        (vector : SelfAdjointKernelComplement (operator 0)),
       ((data.complementTrivialization.transport parameter vector :
           SelfAdjointKernelComplement (operator parameter)) : E) ∈
         (operator parameter).kerᗮ) ∧

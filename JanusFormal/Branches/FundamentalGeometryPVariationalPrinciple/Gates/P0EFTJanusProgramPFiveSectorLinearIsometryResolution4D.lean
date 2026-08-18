@@ -1,12 +1,14 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiveSectorOrthogonalProductPythagoras4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiveSectorProjectedOperatorBlocks4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiveSectorL2LinearIsometryResolution4D
 
 /-!
 # Five-sector resolution from one linear isometry equivalence
 
-The most economical orthogonal-coordinate input is a single linear isometry
+The most economical orthogonal-coordinate input is a single Hilbert L² linear
+isometry
 
-`E ≃ₗᵢ[ℝ] M × A × S × L × B`.
+`E ≃ₗᵢ[ℝ] M ×₂ A ×₂ S ×₂ L ×₂ B`.
 
 Its continuity and preservation of the real inner product are automatic.  This
 file converts such an isometry into the complete orthogonal product resolution,
@@ -23,6 +25,7 @@ open scoped InnerProductSpace
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
 open P0EFTJanusProgramPFiveSectorOrthogonalProductPythagoras4D
 open P0EFTJanusProgramPFiveSectorProjectedOperatorBlocks4D
+open P0EFTJanusProgramPFiveSectorL2LinearIsometryResolution4D
 
 variable
   {E MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter LongitudinalLL
@@ -43,7 +46,7 @@ variable
 orthogonal product decomposition. -/
 def fiveSectorOrthogonalProductDecompositionOfIsometry
     (decomposition : E ≃ₗᵢ[Real]
-      FiveSectorProduct MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter
+      FiveSectorL2Product MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter
         LongitudinalLL BoundaryFiniteBV) :
     FiveSectorOrthogonalProductDecomposition
       (E := E)
@@ -51,16 +54,13 @@ def fiveSectorOrthogonalProductDecompositionOfIsometry
       (AbelianGauge := AbelianGauge)
       (PrimitiveSpinCMatter := PrimitiveSpinCMatter)
       (LongitudinalLL := LongitudinalLL)
-      (BoundaryFiniteBV := BoundaryFiniteBV) where
-  decomposition := decomposition.toContinuousLinearEquiv
-  inner_map := by
-    intro first second
-    exact decomposition.inner_map_map first second
+      (BoundaryFiniteBV := BoundaryFiniteBV) :=
+  fiveSectorOrthogonalProductDecompositionOfL2Isometry decomposition
 
 /-- Public one-isometry checkpoint. -/
 theorem five_sector_linear_isometry_resolution_gate
     (decomposition : E ≃ₗᵢ[Real]
-      FiveSectorProduct MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter
+      FiveSectorL2Product MetricDiffeomorphism AbelianGauge PrimitiveSpinCMatter
         LongitudinalLL BoundaryFiniteBV) :
     let resolution :=
       fiveSectorOrthogonalProductDecompositionOfIsometry decomposition
@@ -68,8 +68,8 @@ theorem five_sector_linear_isometry_resolution_gate
       resolution.projection sector (resolution.projection sector state) =
         resolution.projection sector state) ∧
       (∀ sector first second,
-        ⟪resolution.projection sector first, second, Real⟫ =
-          ⟪first, resolution.projection sector second, Real⟫) ∧
+        inner Real (resolution.projection sector first) second =
+          inner Real first (resolution.projection sector second)) ∧
       (∀ state,
         ‖state‖ ^ 2 =
           ∑ sector : FiveSectorSlot,

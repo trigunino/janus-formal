@@ -21,6 +21,7 @@ noncomputable section
 
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -30,7 +31,7 @@ realisation of the displayed operator.  The named modes span the kernel of the
 full operator, not an auxiliary reference kernel. -/
 structure FiniteKernelNamedReferenceGardingPerturbationData
     (operator reference perturbation : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   spanning : FiniteKernelNamedSpanningData operator ZeroMode
   operator_eq : operator = reference + perturbation
   referenceConstant : Real
@@ -39,10 +40,10 @@ structure FiniteKernelNamedReferenceGardingPerturbationData
   defectConstant_nonneg : 0 ≤ defectConstant
   reference_garding : ∀ vector : E,
     referenceConstant * ‖vector‖ ^ 2 ≤
-      ⟪vector, reference vector, Real⟫ +
+      ⟪vector, reference vector⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪vector, spanning.vector mode, Real⟫ ^ 2
+            ⟪vector, spanning.vector mode⟫_Real ^ 2
 
 /-- A bounded perturbation contributes at worst its operator norm times the
 squared norm to the quadratic form. -/
@@ -50,12 +51,12 @@ theorem perturbation_real_inner_lower_bound
     (perturbation : E →L[Real] E)
     (vector : E) :
     -(‖perturbation‖ * ‖vector‖ ^ 2) ≤
-      ⟪vector, perturbation vector, Real⟫ := by
+      ⟪vector, perturbation vector⟫_Real := by
   have hAbs :
-      |⟪vector, perturbation vector, Real⟫| ≤
+      |⟪vector, perturbation vector⟫_Real| ≤
         ‖perturbation‖ * ‖vector‖ ^ 2 := by
     calc
-      |⟪vector, perturbation vector, Real⟫| ≤
+      |⟪vector, perturbation vector⟫_Real| ≤
           ‖vector‖ * ‖perturbation vector‖ :=
         abs_real_inner_le_norm _ _
       _ ≤ ‖vector‖ * (‖perturbation‖ * ‖vector‖) := by
@@ -64,9 +65,9 @@ theorem perturbation_real_inner_lower_bound
       _ = ‖perturbation‖ * ‖vector‖ ^ 2 := by ring
   calc
     -(‖perturbation‖ * ‖vector‖ ^ 2) ≤
-        -|⟪vector, perturbation vector, Real⟫| :=
+        -|⟪vector, perturbation vector⟫_Real| :=
       neg_le_neg hAbs
-    _ ≤ ⟪vector, perturbation vector, Real⟫ :=
+    _ ≤ ⟪vector, perturbation vector⟫_Real :=
       neg_abs_le _
 
 /-- The full operator inherits a global Gårding estimate with reduced positive
@@ -87,7 +88,11 @@ def FiniteKernelNamedReferenceGardingPerturbationData.toNamedGarding
     have hReference := data.reference_garding vector
     have hPerturbation :=
       perturbation_real_inner_lower_bound perturbation vector
-    rw [data.operator_eq, ContinuousLinearMap.add_apply, inner_add_right]
+    have hOperator :
+        operator vector = reference vector + perturbation vector := by
+      simpa only [ContinuousLinearMap.add_apply] using
+        congrArg (fun current : E →L[Real] E => current vector) data.operator_eq
+    rw [hOperator, inner_add_right]
     linarith
 
 /-- Public bounded-perturbation checkpoint. -/
@@ -97,7 +102,7 @@ theorem named_mode_garding_bounded_perturbation_gate
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedReferenceGardingPerturbationData
       operator reference perturbation ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
   finite_kernel_named_mode_garding_gate
     (hSelfAdjoint := hSelfAdjoint) data.toNamedGarding

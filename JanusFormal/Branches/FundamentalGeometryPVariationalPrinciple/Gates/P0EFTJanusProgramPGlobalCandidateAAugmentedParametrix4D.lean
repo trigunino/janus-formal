@@ -35,6 +35,7 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
@@ -162,7 +163,7 @@ structure GlobalCandidateAFaithfulAugmentedFiniteDefectParametrix4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) : Type where
   parametrix :
     AugmentedParametrixHilbert period hPeriod configuration data analysis
       →L[Real]
@@ -175,19 +176,16 @@ structure GlobalCandidateAFaithfulAugmentedFiniteDefectParametrix4D
     AugmentedParametrixHilbert period hPeriod configuration data analysis
       →L[Real]
     AugmentedParametrixHilbert period hPeriod configuration data analysis
-  left_identity :
-    parametrix.comp
-        (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-          configuration data analysis chart sameAction physical) =
-      ContinuousLinearMap.id Real
-          (AugmentedParametrixHilbert period hPeriod configuration data analysis) -
-        kernelDefect
-  right_identity :
+  left_identity : ∀ vector,
+    parametrix
+        ((globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+          configuration data analysis chart sameAction physical) vector) =
+      vector - kernelDefect vector
+  right_identity : ∀ vector,
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-        configuration data analysis chart sameAction physical).comp parametrix =
-      ContinuousLinearMap.id Real
-          (AugmentedParametrixHilbert period hPeriod configuration data analysis) -
-        cokernelDefect
+        configuration data analysis chart sameAction physical)
+        (parametrix vector) =
+      vector - cokernelDefect vector
   cokernel_annihilates_range :
     cokernelDefect.comp
         (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
@@ -236,12 +234,7 @@ theorem augmentedParametrix_range_eq_cokernelDefect_ker
     have hKernel : parametrix.cokernelDefect vector = 0 :=
       LinearMap.mem_ker.mp hVector
     refine ⟨parametrix.parametrix vector, ?_⟩
-    have hRight := congrArg
-      (fun map :
-        AugmentedParametrixHilbert period hPeriod configuration data analysis
-          →L[Real]
-        AugmentedParametrixHilbert period hPeriod configuration data analysis =>
-        map vector) parametrix.right_identity
+    have hRight := parametrix.right_identity vector
     change operator (parametrix.parametrix vector) =
       vector - parametrix.cokernelDefect vector at hRight
     rw [hKernel, sub_zero] at hRight
@@ -273,6 +266,14 @@ theorem augmentedParametrix_range_closed
             analysis)) := by
   rw [augmentedParametrix_range_eq_cokernelDefect_ker period hPeriod
     configuration data analysis chart sameAction physical parametrix]
+  letI := augmentedParametrixNormedAddCommGroup period hPeriod configuration data
+    analysis
+  letI : T0Space
+      (AugmentedParametrixHilbert period hPeriod configuration data analysis) :=
+    MetricSpace.instT0Space
+  letI : T1Space
+      (AugmentedParametrixHilbert period hPeriod configuration data analysis) :=
+    inferInstance
   exact parametrix.cokernelDefect.isClosed_ker
 
 /-- A kernel vector is fixed by the finite-dimensional left defect. -/
@@ -300,16 +301,11 @@ theorem augmentedParametrix_kernel_eq_kernelDefect
   let operator := globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
     configuration data analysis chart sameAction physical
   have hOperator : operator vector.1 = 0 := LinearMap.mem_ker.mp vector.2
-  have hLeft := congrArg
-    (fun map :
-      AugmentedParametrixHilbert period hPeriod configuration data analysis
-        →L[Real]
-      AugmentedParametrixHilbert period hPeriod configuration data analysis =>
-      map vector.1) parametrix.left_identity
+  have hLeft := parametrix.left_identity vector.1
   change parametrix.parametrix (operator vector.1) =
     vector.1 - parametrix.kernelDefect vector.1 at hLeft
   rw [hOperator, map_zero] at hLeft
-  linarith
+  exact (sub_eq_zero.mp hLeft.symm).symm
 
 private def augmentedParametrix_kernelToDefectRange
     {couplings : GlobalCandidateAActionCouplings}
@@ -334,7 +330,7 @@ private def augmentedParametrix_kernelToDefectRange
   toFun vector :=
     ⟨vector.1, ⟨vector.1,
       (augmentedParametrix_kernel_eq_kernelDefect period hPeriod configuration
-        data analysis chart sameAction physical parametrix vector).symm⟩⟩
+        data analysis chart sameAction physical parametrix vector)⟩⟩
   map_add' first second := by
     apply Subtype.ext
     rfl
@@ -364,7 +360,7 @@ private theorem augmentedParametrix_kernelToDefectRange_injective
         analysis chart sameAction physical parametrix) := by
   intro first second hEqual
   apply Subtype.ext
-  exact congrArg Subtype.val hEqual
+  exact congrArg (fun vector : parametrix.kernelDefect.range => vector.1) hEqual
 
 /-- The augmented operator kernel embeds in the finite left-defect range. -/
 theorem augmentedParametrix_kernel_finite

@@ -26,6 +26,7 @@ noncomputable section
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPNamedModeGardingPerturbation4D
 open P0EFTJanusProgramPFiniteKernelOrthogonalNamedModeGarding4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -33,23 +34,23 @@ variable {E : Type*}
 /-- Reference zero modes preserved by a bounded perturbation. -/
 structure FiniteKernelStableOrthogonalNamedModePerturbationData
     (reference perturbation : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → E
   reference_annihilated : ∀ mode, reference (vector mode) = 0
   perturbation_annihilated : ∀ mode, perturbation (vector mode) = 0
   nonzero : ∀ mode, vector mode ≠ 0
   orthogonal : Pairwise fun first second =>
-    ⟪vector first, vector second, Real⟫ = 0
+    ⟪vector first, vector second⟫_Real = 0
   referenceConstant : Real
   perturbation_small : ‖perturbation‖ < referenceConstant
   defectConstant : Real
   defectConstant_nonneg : 0 ≤ defectConstant
   reference_garding : ∀ current : E,
     referenceConstant * ‖current‖ ^ 2 ≤
-      ⟪current, reference current, Real⟫ +
+      ⟪current, reference current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, vector mode, Real⟫ ^ 2
+            ⟪current, vector mode⟫_Real ^ 2
 
 /-- The displayed full operator. -/
 def finiteKernelStablePerturbedOperator
@@ -102,9 +103,9 @@ theorem finite_kernel_stable_named_mode_perturbation_gate
       (finiteKernelStablePerturbedOperator reference perturbation))
     (data : FiniteKernelStableOrthogonalNamedModePerturbationData
       reference perturbation ZeroMode) :
-    SelfAdjointKernelComplementGapData
-        (finiteKernelStablePerturbedOperator reference perturbation)
-        hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData
+      (finiteKernelStablePerturbedOperator reference perturbation)
+      hSelfAdjoint) ∧
       Module.finrank Real
           (finiteKernelStablePerturbedOperator reference perturbation).ker =
         Fintype.card ZeroMode :=

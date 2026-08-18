@@ -31,8 +31,8 @@ open P0EFTJanusProgramPSelfAdjointFredholmComplexCoordinateFamily4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -55,8 +55,8 @@ def selfAdjointFredholmZetaDeterminantSection
     (fredholm : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (parameter : Real) : fredholm.complexifiedDeterminantLine parameter :=
-  (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).
-    determinantSection parameter
+  (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).determinantSection
+    parameter
 
 /-- The determinant section is exactly the intrinsic reduced zeta coordinate
 multiplying the canonical complexified finite Fredholm frame. -/
@@ -70,6 +70,8 @@ theorem selfAdjointFredholmZetaDeterminantSection_eq
         fredholm.complexifiedDeterminantFrame parameter :=
   rfl
 
+attribute [-instance] instInnerProductSpaceRealComplex
+  RCLike.toInnerProductSpaceReal in
 /-- The scalar coordinate of the genuine Fredholm section has the exact zeta
 first derivative already produced by the Mellin family. -/
 theorem selfAdjointFredholmZetaCoordinate_hasDerivAt
@@ -81,10 +83,12 @@ theorem selfAdjointFredholmZetaCoordinate_hasDerivAt
       (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).coordinate
       (relativeZetaDeterminantCoordinateDerivative
         zetaFamily.toZetaFamily parameter) parameter := by
-  simpa [selfAdjointFredholmZetaCoordinateFamily,
-    relativeHeatMellinZetaFamilyDeterminant] using
-    relativeZetaDeterminantCoordinate_hasDerivAt
-      zetaFamily.toZetaFamily parameter
+  change HasDerivAt
+    (relativeZetaDeterminantCoordinate zetaFamily.toZetaFamily)
+    (relativeZetaDeterminantCoordinateDerivative
+      zetaFamily.toZetaFamily parameter) parameter
+  exact relativeZetaDeterminantCoordinate_hasDerivAt
+    zetaFamily.toZetaFamily parameter
 
 /-- In the canonical finite Fredholm frame the zeta-weighted section is
 parallel for the intrinsic scalar Bismut--Freed connection. -/
@@ -94,8 +98,8 @@ theorem selfAdjointFredholmZetaCoordinate_parallel
     (zetaFamily : RelativeHeatMellinZetaFamilyData)
     (parameter : Real) :
     relativeZetaConnectionAt zetaFamily.toZetaFamily parameter
-        ((selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).
-          coordinate parameter)
+        ((selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).coordinate
+          parameter)
         (relativeZetaDeterminantCoordinateDerivative
           zetaFamily.toZetaFamily parameter) = 0 := by
   simpa [selfAdjointFredholmZetaCoordinateFamily,
@@ -115,8 +119,8 @@ theorem selfAdjointFredholmZetaDeterminantSection_reference_change
         (transition * relativeHeatMellinZetaFamilyDeterminant
           zetaFamily parameter) := by
   exact
-    (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).
-      determinantSection_reference_change parameter transition
+    (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).determinantSection_reference_change
+      parameter transition
 
 /-- Public checkpoint: the intrinsic Mellin determinant is now a genuine
 coordinate on the actual complexified Fredholm line and remains parallel in
@@ -130,17 +134,16 @@ theorem self_adjoint_fredholm_zeta_determinant_section_gate
         relativeHeatMellinZetaFamilyDeterminant zetaFamily parameter •
           fredholm.complexifiedDeterminantFrame parameter) ∧
       (∀ parameter,
-        (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).
-          coordinate parameter ≠ 0) ∧
+        (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).coordinate
+          parameter ≠ 0) ∧
       (∀ parameter,
         relativeZetaConnectionAt zetaFamily.toZetaFamily parameter
-            ((selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).
-              coordinate parameter)
+            ((selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).coordinate
+              parameter)
             (relativeZetaDeterminantCoordinateDerivative
               zetaFamily.toZetaFamily parameter) = 0) :=
   ⟨selfAdjointFredholmZetaDeterminantSection_eq fredholm zetaFamily,
-    (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).
-      coordinate_ne_zero,
+    (selfAdjointFredholmZetaCoordinateFamily fredholm zetaFamily).coordinate_ne_zero,
     selfAdjointFredholmZetaCoordinate_parallel fredholm zetaFamily⟩
 
 end

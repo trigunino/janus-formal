@@ -17,6 +17,9 @@ than merely a distinguished nonzero vector.
 
 namespace JanusFormal
 namespace P0EFTJanusProgramPSelfAdjointFredholmNamedCoordinate4D
+end P0EFTJanusProgramPSelfAdjointFredholmNamedCoordinate4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 6200000
@@ -26,8 +29,8 @@ noncomputable section
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -38,7 +41,7 @@ def determinantFrameBasis
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) :
-    Basis Unit Real (data.determinantLine parameter) := by
+    Module.Basis Unit Real (data.determinantLine parameter) := by
   letI : FiniteDimensional Real (operator parameter).ker :=
     (data.gap parameter).kernel_finite
   letI : FiniteDimensional Real (data.cokernel parameter) :=
@@ -71,11 +74,13 @@ theorem determinantFrameCoordinateEquiv_frame
   change (Finsupp.uniqueLinearEquiv Real Real Unit.unit)
       ((data.determinantFrameBasis parameter).repr
         (data.determinantFrame parameter)) = 1
-  rw [← FiniteDimensional.basisSingleton_apply Unit
-    (data.determinantLine_finrank_one parameter)
-    (data.determinantFrame parameter)
-    (data.determinantFrame_ne_zero parameter) Unit.unit]
-  simp [determinantFrameBasis]
+  have hFrame :
+      data.determinantFrameBasis parameter Unit.unit =
+        data.determinantFrame parameter := by
+    unfold determinantFrameBasis
+    rw [FiniteDimensional.basisSingleton_apply]
+  rw [← hFrame, Module.Basis.repr_self]
+  simp
 
 /-- Named coordinate reconstructs every real Fredholm-line vector exactly. -/
 theorem determinantFrameCoordinateEquiv_symm_apply
@@ -103,5 +108,5 @@ theorem self_adjoint_fredholm_named_coordinate_gate
 end SelfAdjointFredholmDeterminantFamilyData
 
 end
-end P0EFTJanusProgramPSelfAdjointFredholmNamedCoordinate4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal

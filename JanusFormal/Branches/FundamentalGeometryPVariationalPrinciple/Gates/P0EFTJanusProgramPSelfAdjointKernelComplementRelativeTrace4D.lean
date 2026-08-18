@@ -28,9 +28,10 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeHeat4D
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance actualKernelRelativeTraceCompleteSpace
     (operator : E →L[Real] E) :
@@ -49,7 +50,7 @@ structure SelfAdjointKernelComplementRelativeTraceData
   reference_lowerBound : ∀ vector,
     referenceGap * ‖vector‖ ≤ ‖referenceOperator vector‖
   relativeRankOneExpansion : ∀ time : HeatTime,
-    SummableRankOneOperatorExpansion
+    SummableRankOneOperatorExpansion.{v, u}
       (selfAdjointKernelComplementRelativeHeatDifference operator hSelfAdjoint
         referenceOperator time)
 

@@ -42,6 +42,8 @@ open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
 open P0EFTJanusMappingTorusGeneralLorentzTensor4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusMappingTorusIntrinsicMetricThroatNondegenerate4D
+open P0EFTJanusMappingTorusIntrinsicMetricBVThroatBracket4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusProgramPGeneralMetricC2OpenDomain4D
@@ -145,8 +147,7 @@ theorem candidateANormalBoundaryHistoricalGaussEncodingAgreement_of_shapePairing
     CandidateANormalBoundaryHistoricalGaussEncodingAgreement period hPeriod
       metric tensor variedMetric displacement parameter hNonNull := by
   unfold CandidateANormalBoundaryHistoricalGaussEncodingAgreement
-  unfold CandidateANormalBoundaryHistoricalGaussShapePairingAgreement at
-    hPairing
+  unfold CandidateANormalBoundaryHistoricalGaussShapePairingAgreement at hPairing
   intro boundary patch coordinate hAt
   classical
   let frame := finiteSmoothThroatGeneratingFrame
@@ -156,61 +157,124 @@ theorem candidateANormalBoundaryHistoricalGaussEncodingAgreement_of_shapePairing
   let shape :=
     normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
       variedMetric displacement parameter hNonNull boundary patch coordinate hAt
-  let endomorphism :
-      TangentSpace throatCoverModelWithCorners boundary →ₗ[Real]
-        TangentSpace throatCoverModelWithCorners boundary :=
-    relative.toLinearMap.comp shape
-  let inverseFrame :
-      TangentSpace throatCoverModelWithCorners boundary →ₗ[Real]
-        TangentSpace throatCoverModelWithCorners boundary :=
-    (intrinsicThroatFiniteFrameOperator
-      (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-      frame boundary).inverse.toLinearMap
-  let secondFormMatrix : Matrix
-      (NormalBoundaryTangentIndex period hPeriod)
-      (NormalBoundaryTangentIndex period hPeriod) Real :=
-    fun row column =>
-      candidateANormalBoundaryHistoricalWeingartenExtrinsicCurvatureAt
-        period hPeriod metric tensor variedMetric displacement parameter
-          hNonNull row column boundary
-  let dualMatrix : Matrix
-      (NormalBoundaryTangentIndex period hPeriod)
-      (NormalBoundaryTangentIndex period hPeriod) Real :=
-    fun row column =>
-      normalBoundaryReferenceDualCoefficientMatrix
-        period hPeriod row column boundary
-  have hDual : dualMatrix =
-      intrinsicThroatFiniteFrameEndomorphismMatrixAt
-        (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-        frame boundary inverseFrame := by
+  have hDual :
+      (fun row column =>
+        normalBoundaryReferenceDualCoefficientMatrix
+          period hPeriod row column boundary) =
+        intrinsicThroatFiniteFrameEndomorphismMatrixAt
+          (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+          frame boundary
+          ((intrinsicThroatFiniteFrameOperator
+            (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+            frame boundary).inverse.toLinearMap) := by
     ext row column
-    simpa [dualMatrix, inverseFrame, frame] using
+    simpa [frame] using
       (normalBoundaryReferenceDualCoefficientMatrix_apply_eq_encoding_inverse
         period hPeriod row column boundary)
-  have hSecondForm : secondFormMatrix =
-      intrinsicThroatFiniteFrameEndomorphismMatrixAt
-        (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-        frame boundary
-        ((intrinsicThroatFiniteFrameOperator
-            (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-            frame boundary).toLinearMap.comp endomorphism) := by
-    ext row column
-    rw [intrinsicThroatFiniteFrameEndomorphismMatrixAt_operator_comp_apply]
-    simpa [frame, relative, shape, endomorphism, secondFormMatrix] using
-      (hPairing boundary patch coordinate hAt row column)
   have hHistorical :
-      candidateANormalBoundaryHistoricalWeingartenRelativeEndomorphismMatrixAt
-          period hPeriod metric tensor variedMetric displacement parameter
-            hNonNull boundary =
-        dualMatrix * secondFormMatrix := by
+      (fun row column =>
+        candidateANormalBoundaryHistoricalWeingartenExtrinsicCurvatureAt period
+          hPeriod metric tensor variedMetric displacement parameter hNonNull row
+            column boundary) =
+        intrinsicThroatFiniteFrameEndomorphismMatrixAt
+          (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+          frame boundary
+          ((intrinsicThroatFiniteFrameOperator
+              (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+              frame boundary).toLinearMap.comp
+            (relative.toLinearMap.comp shape)) := by
     ext row column
-    simp [candidateANormalBoundaryHistoricalWeingartenRelativeEndomorphismMatrixAt,
-      dualMatrix, secondFormMatrix, Matrix.mul_apply]
-  rw [hHistorical, hDual, hSecondForm]
-  simpa [inverseFrame] using
-    (intrinsicThroatFiniteFrameEncoding_inverse_mul_operator_comp
+    have hPair := hPairing boundary patch coordinate hAt row column
+    dsimp only at hPair
+    calc
+      candidateANormalBoundaryHistoricalWeingartenExtrinsicCurvatureAt period
+          hPeriod metric tensor variedMetric displacement parameter hNonNull row
+            column boundary =
+          (intrinsicSmoothNondegenerateThroatMetric
+            (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)).1.tensor
+          boundary (frame.vectorAt boundary row)
+          ((relative.toLinearMap.comp shape)
+            (frame.vectorAt boundary column)) := by
+            simpa only [frame, relative, shape] using hPair
+      _ = intrinsicThroatFiniteFrameEndomorphismMatrixAt
+          (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+          frame boundary
+          ((intrinsicThroatFiniteFrameOperator
+              (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+              frame boundary).toLinearMap.comp
+            (relative.toLinearMap.comp shape)) row column := by
+              symm
+              exact
+                intrinsicThroatFiniteFrameEndomorphismMatrixAt_operator_comp_apply
+                  (doubledPeriod period)
+                  (doubledPeriod_ne_zero period hPeriod) frame boundary
+                  (relative.toLinearMap.comp shape) row column
+  have hCancel :=
+    intrinsicThroatFiniteFrameEncoding_inverse_mul_operator_comp
       (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-      frame boundary endomorphism)
+      frame boundary (relative.toLinearMap.comp shape)
+  rw [← hDual, ← hHistorical] at hCancel
+  unfold
+    candidateANormalBoundaryHistoricalWeingartenRelativeEndomorphismMatrixAt
+  ext row column
+  have hEntry := congrArg (fun matrix => matrix row column) hCancel
+  simpa [Matrix.mul_apply, frame, NormalBoundaryTangentIndex] using hEntry
+
+/-- Pointwise completed metric-unit Gauss form paired with the canonical shape
+operator, under this module's installed boundary instances. -/
+structure CandidateANormalBoundaryMetricUnitGaussPointwiseAgreement
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter) : Prop where
+  pointwise :
+    letI : NormedAddCommGroup
+        (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+      candidateANormalBoundaryFunctionalCoreNormedAddCommGroup
+        period hPeriod metric
+    letI : NormedSpace Real
+        (CandidateANormalBoundaryFunctionalCore period hPeriod metric) :=
+      candidateANormalBoundaryFunctionalCoreNormedSpace period hPeriod metric
+    letI : ChartedSpace ThroatCoverModel
+        (CutThroatBoundary period hPeriod) :=
+      P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryChartedSpace
+        period hPeriod
+    letI : IsManifold throatCoverModelWithCorners ω
+        (CutThroatBoundary period hPeriod) :=
+      P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D.orientationBoundaryIsManifold
+        period hPeriod
+    letI : ChartedSpace CoverModel
+        (MappingTorus (reflectedSphereData period hPeriod)) :=
+      P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D.effectiveQuotientChartedSpace
+        period hPeriod
+    letI : IsManifold coverModelWithCorners ω
+        (MappingTorus (reflectedSphereData period hPeriod)) :=
+      reflectedSphereQuotient_isManifold period hPeriod
+    ∀ (boundary : CutThroatBoundary period hPeriod)
+      (patch : SmoothHolonomicFrameChart4 period hPeriod)
+      (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
+      (hAt : patch.coordinateMap coordinate =
+        normalGraphOrientationDouble period hPeriod displacement
+          (boundary, parameter))
+      (row column : NormalBoundaryTangentIndex period hPeriod),
+      let current :=
+        (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter)
+      let frame := finiteSmoothThroatGeneratingFrame
+        (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+      let shape :=
+        normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
+          variedMetric displacement parameter hNonNull boundary patch coordinate
+            hAt
+      candidateANormalBoundaryMetricUnitGaussExtrinsicCurvatureFiberEvaluation
+          period hPeriod metric row column current boundary =
+        normalBoundarySmoothGraphInducedMetricMusical period hPeriod variedMetric
+          displacement parameter boundary
+          (shape (frame.vectorAt boundary column))
+          (frame.vectorAt boundary row)
 
 /-- Final scalar geometric residue after cancelling the intrinsic reference
 metric.  It says that the historical symmetric form equals the induced metric
@@ -244,6 +308,80 @@ def CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement
         (shape (frame.vectorAt boundary column))
         (frame.vectorAt boundary row)
 
+/-- Constructor for the pointwise presentation of the pulled-back second-form
+agreement, kept beside the definition so its installed instances are shared. -/
+theorem candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_mk
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (hPointwise :
+      ∀ (boundary : CutThroatBoundary period hPeriod)
+        (patch : SmoothHolonomicFrameChart4 period hPeriod)
+        (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
+        (hAt : patch.coordinateMap coordinate =
+          normalGraphOrientationDouble period hPeriod displacement
+            (boundary, parameter))
+        (row column : NormalBoundaryTangentIndex period hPeriod),
+        let frame := finiteSmoothThroatGeneratingFrame
+          (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
+        let shape :=
+          normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
+            variedMetric displacement parameter hNonNull boundary patch
+              coordinate hAt
+        candidateANormalBoundaryHistoricalWeingartenExtrinsicCurvatureAt
+            period hPeriod metric tensor variedMetric displacement parameter
+              hNonNull row column boundary =
+          normalBoundarySmoothGraphInducedMetricMusical period hPeriod
+            variedMetric displacement parameter boundary
+            (shape (frame.vectorAt boundary column))
+            (frame.vectorAt boundary row)) :
+    CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement period
+      hPeriod metric tensor variedMetric displacement parameter hNonNull := by
+  exact hPointwise
+
+set_option maxHeartbeats 4800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- A completed metric-unit Gauss pairing gives the historical pairing
+pointwise, with all boundary instances fixed at the definition site. -/
+theorem candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_of_metricUnitGaussPointwise
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (hTransverse : HasNoTangentialRadical period hPeriod metric.metric)
+    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (hVaried : variedMetric.tensor = metric.metric.tensor + tensor)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (hCurrent :
+      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+          (tensor, displacement), parameter) ∈
+        candidateANormalBoundaryMetricNormalRootDomain period hPeriod metric)
+    (hRootNonneg : ∀ point : CutThroatBoundary period hPeriod, 0 ≤
+      candidateANormalBoundaryMetricNormalRelativeRootFiberEvaluation
+        period hPeriod metric
+          (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
+            (tensor, displacement), parameter) point)
+    (hPointwise :
+      CandidateANormalBoundaryMetricUnitGaussPointwiseAgreement period hPeriod
+        metric tensor variedMetric displacement parameter hNonNull) :
+    CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement period
+      hPeriod metric tensor variedMetric displacement parameter hNonNull := by
+  apply candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_mk
+    period hPeriod metric tensor variedMetric displacement parameter hNonNull
+  intro boundary patch coordinate hAt row column
+  dsimp only
+  exact
+    (candidateANormalBoundaryMetricUnitGaussExtrinsicCurvature_eq_historicalWeingarten
+      period hPeriod metric hTransverse tensor variedMetric hVaried displacement
+        parameter hNonNull hCurrent hRootNonneg row column boundary patch
+          coordinate hAt).symm.trans
+      (hPointwise.pointwise boundary patch coordinate hAt row column)
+
 /-- Raising with the intrinsic reference metric and then pairing with that same
 metric cancels exactly.  Therefore the pulled-back second-form equality is
 already the pointwise shape-pairing equality above. -/
@@ -262,8 +400,7 @@ theorem candidateANormalBoundaryHistoricalGaussShapePairingAgreement_of_pulledBa
     CandidateANormalBoundaryHistoricalGaussShapePairingAgreement period hPeriod
       metric tensor variedMetric displacement parameter hNonNull := by
   unfold CandidateANormalBoundaryHistoricalGaussShapePairingAgreement
-  unfold CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement at
-    hSecondForm
+  unfold CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement at hSecondForm
   intro boundary patch coordinate hAt row column
   classical
   let frame := finiteSmoothThroatGeneratingFrame
@@ -282,8 +419,20 @@ theorem candidateANormalBoundaryHistoricalGaussShapePairingAgreement_of_pulledBa
     (normalBoundarySmoothGraphInducedMetricMusical period hPeriod variedMetric
       displacement parameter boundary
       (shape (frame.vectorAt boundary column)))
-  simpa [relative, normalBoundarySmoothGraphRelativeEndomorphism,
-    LinearMap.comp_apply, ContinuousLinearMap.comp_apply] using hRaise.symm
+  change
+    normalBoundarySmoothGraphInducedMetricMusical period hPeriod variedMetric
+        displacement parameter boundary
+        (shape (frame.vectorAt boundary column))
+        (frame.vectorAt boundary row) =
+      (intrinsicSmoothNondegenerateThroatMetric
+          (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)).1.tensor
+        boundary (frame.vectorAt boundary row)
+        (intrinsicThroatInverseMusical
+          (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod) boundary
+          (normalBoundarySmoothGraphInducedMetricMusical period hPeriod
+            variedMetric displacement parameter boundary
+            (shape (frame.vectorAt boundary column))))
+  exact hRaise.symm
 
 /-- The scalar second-form identity is sufficient for the exact matrix
 encoding consumed by the terminal Candidate-A source bridge. -/

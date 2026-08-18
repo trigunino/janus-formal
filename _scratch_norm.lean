@@ -1,0 +1,7 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPDenseBilinearOpNorm4D
+
+open JanusFormal.P0EFTJanusProgramPDenseBilinearOpNorm4D
+
+set_option pp.universes true in
+set_option pp.explicit true in
+#check @continuousBilinear_opNorm_le_of_dense

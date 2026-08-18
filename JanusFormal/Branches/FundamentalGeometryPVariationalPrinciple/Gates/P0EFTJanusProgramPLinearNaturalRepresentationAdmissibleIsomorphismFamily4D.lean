@@ -220,15 +220,15 @@ theorem linear_natural_representation_admissible_isomorphism_family_gate
       Function.RightInverse
         (data.forwardLinear first second)
         (data.reverseLinear first second)) ∧
-    CoherentLinearNaturalRepresentationPullbackTransportData
-      representation coordinates refinement pullback ∧
-    LinearNaturalRepresentationIsomorphismTransportData
-      representation coordinates refinement pullback := by
+    Nonempty (CoherentLinearNaturalRepresentationPullbackTransportData
+      representation coordinates refinement pullback) ∧
+    Nonempty (LinearNaturalRepresentationIsomorphismTransportData
+      representation coordinates refinement pullback) := by
   refine ⟨?_, ?_,
-    data.toCoherentPullbackTransport representation coordinates refinement
-      pullback,
-    data.toLinearNaturalRepresentationIsomorphismTransport representation
-      coordinates refinement pullback⟩
+    ⟨data.toCoherentPullbackTransport representation coordinates refinement
+      pullback⟩,
+    ⟨data.toLinearNaturalRepresentationIsomorphismTransport representation
+      coordinates refinement pullback⟩⟩
   · intro first second state
     exact (data.transport representation coordinates refinement pullback first
       second).left_inv state

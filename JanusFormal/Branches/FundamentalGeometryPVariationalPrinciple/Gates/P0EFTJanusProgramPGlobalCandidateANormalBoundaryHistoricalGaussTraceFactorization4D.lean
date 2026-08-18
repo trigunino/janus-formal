@@ -152,8 +152,7 @@ theorem candidateANormalBoundaryHistoricalLocalTraceAgreement_of_intrinsicFactor
     CandidateANormalBoundaryHistoricalLocalTraceAgreement period hPeriod metric
       tensor variedMetric displacement parameter hNonNull := by
   intro boundary patch coordinate hAt
-  unfold CandidateANormalBoundaryHistoricalIntrinsicTraceFactorization at
-    hFactorization
+  unfold CandidateANormalBoundaryHistoricalIntrinsicTraceFactorization at hFactorization
   have hFactorizationAt := hFactorization boundary patch coordinate hAt
   dsimp only at hFactorizationAt
   rcases hFactorizationAt with ⟨shape, hHistorical, hShapeTrace⟩
@@ -185,7 +184,7 @@ theorem candidateANormalBoundaryHistoricalLocalTraceAgreement_of_intrinsicFactor
     candidateANormalBoundaryInducedRelativeLift_inverse_mul period hPeriod
       metric current hCurrent
   have hInverseAtCandidate :
-      inverseMatrix *
+      normalBoundaryRealMatrixMul period hPeriod inverseMatrix
           (fun row column =>
             candidateANormalBoundaryInducedRelativeLiftFiberEvaluation
               period hPeriod metric current row column boundary) = 1 := by
@@ -194,13 +193,19 @@ theorem candidateANormalBoundaryHistoricalLocalTraceAgreement_of_intrinsicFactor
       (fun field : BoundedContinuousFunction
           (CutThroatBoundary period hPeriod) Real => field boundary)
       (congrFun (congrFun hInverseField row) column)
-    simpa [inverseMatrix, Matrix.mul_apply] using hEntry
+    by_cases hRowColumn : row = column <;>
+      simpa [inverseMatrix, normalBoundaryRealMatrixMul, Matrix.mul_apply,
+        Matrix.one_apply, hRowColumn] using hEntry
   have hInverseAt :
-      inverseMatrix *
-          intrinsicThroatFiniteFrameLiftAt
+      normalBoundaryRealMatrixMul period hPeriod inverseMatrix
+          (intrinsicThroatFiniteFrameLiftAt
             (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-            frame boundary relative.toLinearMap = 1 := by
+            frame boundary relative.toLinearMap) = 1 := by
     simpa [hLift] using hInverseAtCandidate
+  letI : FiniteDimensional Real
+      (TangentSpace throatCoverModelWithCorners boundary) := by
+    change FiniteDimensional Real ThroatCoverCoordinates
+    infer_instance
   have hCancel :=
     redundantFiniteFrame_leftInverse_trace_encoding_of_factorization
       (analysis := intrinsicThroatFiniteFrameAnalysisAt

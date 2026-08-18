@@ -201,13 +201,16 @@ theorem frame_intertwines
       operator parameter
         (representation.representedSourcePullback
           (data.isomorphismAt parameter).inv state) := by
-        rw [data.reverse_source_agreement parameter state]
+        simpa only [frame_apply] using
+          (congrArg (operator parameter)
+            (data.reverse_source_agreement parameter state)).symm
     _ = representation.representedTargetPullback
           (data.isomorphismAt parameter).inv (operator 0 state) :=
       hNatural.symm
     _ = data.frame representation coordinates refinement pullback parameter
           (operator 0 state) :=
-      data.reverse_target_agreement parameter (operator 0 state)
+      by simpa only [frame_apply] using
+        data.reverse_target_agreement parameter (operator 0 state)
 
 /-- Existing sector covariance gives frame/projector commutation. -/
 theorem frame_commutes_sectorProjector
@@ -244,7 +247,9 @@ theorem frame_commutes_sectorProjector
       hSector.symm
     _ = coordinates.sectorProjector sector
         (data.frame representation coordinates refinement pullback parameter state) := by
-      rw [data.reverse_source_agreement parameter state]
+      simpa only [frame_apply] using
+        congrArg (coordinates.sectorProjector sector)
+          (data.reverse_source_agreement parameter state)
 
 /-- Adapter to the generic basepoint operator-frame packet. -/
 def toFiniteIntertwiningOperatorFrame
@@ -297,19 +302,17 @@ theorem linear_natural_representation_admissible_isomorphism_frame_gate
         coordinates.sectorProjector sector
           (data.frame representation coordinates refinement pullback parameter
             state)) ∧
-    FiniteIntertwiningOperatorFrameData operator := by
+    Nonempty (FiniteIntertwiningOperatorFrameData operator) := by
   refine ⟨?_, ?_,
     data.frame_intertwines representation coordinates refinement pullback,
     data.frame_commutes_sectorProjector representation coordinates refinement
       pullback,
-    data.toFiniteIntertwiningOperatorFrame representation coordinates refinement
-      pullback⟩
+    ⟨data.toFiniteIntertwiningOperatorFrame representation coordinates refinement
+      pullback⟩⟩
   · intro parameter state
-    exact (data.frame representation coordinates refinement pullback parameter).
-      left_inv state
+    exact (data.frame representation coordinates refinement pullback parameter).left_inv state
   · intro parameter state
-    exact (data.frame representation coordinates refinement pullback parameter).
-      right_inv state
+    exact (data.frame representation coordinates refinement pullback parameter).right_inv state
 
 end LinearNaturalRepresentationAdmissibleIsomorphismFrameData
 

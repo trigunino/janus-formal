@@ -90,7 +90,7 @@ local instance (priority := 30000)
 presentation.  The completed Candidate-A Gauss form must equal the induced
 metric paired with the canonical shape operator on each installed generator
 pair. -/
-def CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement
+abbrev CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
@@ -98,29 +98,10 @@ def CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement
     (parameter : Real)
     (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
       parameter) : Prop :=
-  ∀ (boundary : CutThroatBoundary period hPeriod)
-    (patch : SmoothHolonomicFrameChart4 period hPeriod)
-    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
-    (hAt : patch.coordinateMap coordinate =
-      normalGraphOrientationDouble period hPeriod displacement
-        (boundary, parameter))
-    (row column : NormalBoundaryTangentIndex period hPeriod),
-    let current :=
-      (smoothToCandidateANormalBoundaryFunctionalCore period hPeriod metric
-        (tensor, displacement), parameter)
-    let frame := finiteSmoothThroatGeneratingFrame
-      (doubledPeriod period) (doubledPeriod_ne_zero period hPeriod)
-    let shape :=
-      normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
-        variedMetric displacement parameter hNonNull boundary patch coordinate
-          hAt
-    candidateANormalBoundaryMetricUnitGaussExtrinsicCurvatureFiberEvaluation
-        period hPeriod metric row column current boundary =
-      normalBoundarySmoothGraphInducedMetricMusical period hPeriod variedMetric
-        displacement parameter boundary
-        (shape (frame.vectorAt boundary column))
-        (frame.vectorAt boundary row)
+  CandidateANormalBoundaryMetricUnitGaussPointwiseAgreement period hPeriod
+    metric tensor variedMetric displacement parameter hNonNull
 
+set_option maxHeartbeats 4800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- The already proved completed-Gauss/historical equality transports the
 residual canonical identification directly to the historical second form. -/
@@ -147,20 +128,10 @@ theorem candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_of_
       CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement period
         hPeriod metric tensor variedMetric displacement parameter hNonNull) :
     CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement period
-      hPeriod metric tensor variedMetric displacement parameter hNonNull := by
-  unfold CandidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement
-  unfold CandidateANormalBoundaryCompletedGaussCanonicalSecondFormAgreement at
-    hCanonical
-  intro boundary patch coordinate hAt row column
-  dsimp only
-  have hHistorical :=
-    candidateANormalBoundaryMetricUnitGaussExtrinsicCurvature_eq_historicalWeingarten
-      period hPeriod metric hTransverse tensor variedMetric hVaried displacement
-        parameter hNonNull hCurrent hRootNonneg row column boundary patch
-          coordinate hAt
-  have hCanonicalAt := hCanonical boundary patch coordinate hAt row column
-  dsimp only at hCanonicalAt
-  exact hHistorical.symm.trans hCanonicalAt
+      hPeriod metric tensor variedMetric displacement parameter hNonNull :=
+  candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_of_metricUnitGaussPointwise
+    period hPeriod metric hTransverse tensor variedMetric hVaried displacement
+      parameter hNonNull hCurrent hRootNonneg hCanonical
 
 /-- Direct chart-free trace consequence of the completed-Gauss canonical
 second-form identification. -/
@@ -193,7 +164,7 @@ theorem candidateANormalBoundaryHistoricalGaussTraceAgreement_of_completedGaussC
       hNonNull hCurrentGHY.1.1.2
       (candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_of_completedGaussCanonical
         period hPeriod metric hTransverse tensor variedMetric hVaried
-          displacement parameter hNonNull hCurrentGHY.1.1 hRootNonneg
+          displacement parameter hNonNull hCurrentGHY.1 hRootNonneg
             hCanonical)
 
 end

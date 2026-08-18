@@ -24,6 +24,7 @@ open Set
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 open P0EFTJanusProgramPFiniteKernelNamedModeNoHidden4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -32,7 +33,7 @@ variable {E : Type*}
 orthogonal decomposition and exact kernel spanning are both derived. -/
 structure FiniteKernelNamedModeAutomaticSplitData
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   linearIndependent : LinearIndependent Real
@@ -43,10 +44,10 @@ structure FiniteKernelNamedModeAutomaticSplitData
   defectConstant_nonneg : 0 ≤ defectConstant
   garding : ∀ current : E,
     constant * ‖current‖ ^ 2 ≤
-      ⟪current, operator current, Real⟫ +
+      ⟪current, operator current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, vector mode, Real⟫ ^ 2
+            ⟪current, vector mode⟫_Real ^ 2
 
 /-- The named span is finite dimensional. -/
 local instance namedKernelSpanFiniteDimensional
@@ -57,7 +58,7 @@ local instance namedKernelSpanFiniteDimensional
     FiniteDimensional Real
       (finiteKernelNamedKernelSpan operator vector annihilated) := by
   unfold finiteKernelNamedKernelSpan
-  exact FiniteDimensional.span_of_finite (Set.finite_range _)
+  exact FiniteDimensional.span_of_finite Real (Set.finite_range _)
 
 /-- The canonical orthogonal projection supplies the splitting used by the
 no-hidden-mode argument. -/
@@ -76,10 +77,11 @@ theorem FiniteKernelNamedModeAutomaticSplitData.kernel_split
   letI : FiniteDimensional Real span :=
     namedKernelSpanFiniteDimensional operator data.vector data.annihilated
   letI : CompleteSpace span := FiniteDimensional.complete Real span
-  let projected : span := span.orthogonalProjection zeroMode
+  let projected : span := span.orthogonalProjectionOnto zeroMode
   let remainder : spanᗮ :=
     ⟨zeroMode - projected.1,
-      span.sub_orthogonalProjection_mem_orthogonal zeroMode⟩
+      by simpa [projected] using
+        span.sub_starProjection_mem_orthogonal zeroMode⟩
   refine ⟨projected, remainder, ?_⟩
   change zeroMode = projected.1 + (zeroMode - projected.1)
   abel
@@ -107,7 +109,7 @@ theorem finite_kernel_named_mode_automatic_split_gate
     {hSelfAdjoint : IsSelfAdjoint operator}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedModeAutomaticSplitData operator ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
   finite_kernel_named_mode_no_hidden_gate
     (hSelfAdjoint := hSelfAdjoint) data.toNoHidden

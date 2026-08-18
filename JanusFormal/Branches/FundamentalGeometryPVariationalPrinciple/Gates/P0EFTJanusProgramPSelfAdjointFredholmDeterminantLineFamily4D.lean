@@ -1,6 +1,7 @@
 import Mathlib.Analysis.InnerProductSpace.Projection.Submodule
 import Mathlib.LinearAlgebra.Contraction
 import Mathlib.LinearAlgebra.ExteriorPower.Basis
+import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D
 
@@ -40,8 +41,8 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
 
@@ -49,8 +50,8 @@ variable {E ZeroMode : Type*}
 actual kernel. -/
 structure SelfAdjointFredholmDeterminantFamilyData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
-    [LinearOrder ZeroMode] : Prop where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    [LinearOrder ZeroMode] where
   selfAdjoint : ∀ parameter, IsSelfAdjoint (operator parameter)
   gap : ∀ parameter,
     SelfAdjointKernelComplementGapData
@@ -115,7 +116,7 @@ abbrev cokernelTop
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) :=
-  ⋀[Real]^determinantDegree (data.cokernel parameter)
+  ⋀[Real]^(determinantDegree (ZeroMode := ZeroMode)) (data.cokernel parameter)
 
 /-- Top exterior power of the actual kernel. -/
 abbrev kernelTop
@@ -136,7 +137,7 @@ def determinantFrame
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) : data.determinantLine parameter :=
-  exteriorPower.map determinantDegree
+  exteriorPower.map (determinantDegree (ZeroMode := ZeroMode))
     (data.cokernelKernelEquiv parameter).toLinearMap
 
 /-- Exterior-power equivalence induced by a linear equivalence. -/
@@ -167,7 +168,7 @@ def kernelTopTransport
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (first second : Real) :
     data.kernelTop first ≃ₗ[Real] data.kernelTop second :=
-  exteriorPowerEquiv determinantDegree
+  exteriorPowerEquiv (determinantDegree (ZeroMode := ZeroMode))
     (data.kernels.kernelTransport first second)
 
 /-- Cokernel top-exterior transport. -/
@@ -176,7 +177,7 @@ def cokernelTopTransport
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (first second : Real) :
     data.cokernelTop first ≃ₗ[Real] data.cokernelTop second :=
-  exteriorPowerEquiv determinantDegree
+  exteriorPowerEquiv (determinantDegree (ZeroMode := ZeroMode))
     (data.cokernelTransport first second)
 
 /-- Genuine transport between the actual Fredholm determinant fibres. -/
@@ -205,13 +206,18 @@ theorem cokernelTransport_trans
     {operator : Real → E →L[Real] E}
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (first second third : Real) :
-    (data.cokernelTransport second third).comp
-        (data.cokernelTransport first second) =
+    (data.cokernelTransport first second).trans
+        (data.cokernelTransport second third) =
       data.cokernelTransport first third := by
-  ext value
+  apply LinearEquiv.ext
+  intro value
   apply (data.cokernelKernelEquiv third).injective
-  simp [data.cokernelKernelEquiv_transport,
-    data.kernels.kernelTransport_trans first second third]
+  simp only [LinearEquiv.trans_apply,
+    data.cokernelKernelEquiv_transport]
+  have hTransport := congrArg
+    (fun transport => transport (data.cokernelKernelEquiv first value))
+    (data.kernels.kernelTransport_trans first second third)
+  simpa only [LinearEquiv.trans_apply] using hTransport
 
 /-- The kernel top exterior fibre is one-dimensional. -/
 theorem kernelTop_finrank_one
@@ -219,7 +225,7 @@ theorem kernelTop_finrank_one
     (data : SelfAdjointFredholmDeterminantFamilyData operator ZeroMode)
     (parameter : Real) :
     Module.finrank Real (data.kernelTop parameter) = 1 :=
-  data.kernels.finiteKernelDeterminantFiber_finrank_one parameter
+  finiteKernelDeterminantFiber_finrank_one data.kernels parameter
 
 /-- The cokernel top exterior fibre is one-dimensional. -/
 theorem cokernelTop_finrank_one
@@ -233,6 +239,8 @@ theorem cokernelTop_finrank_one
     FiniteDimensional.of_injective
       (data.cokernelKernelEquiv parameter).toLinearMap
       (data.cokernelKernelEquiv parameter).injective
+  change Module.finrank Real
+      (⋀[Real]^(Fintype.card ZeroMode) (data.cokernel parameter)) = 1
   rw [exteriorPower.finrank_eq, data.cokernel_finrank_eq_card parameter,
     Nat.choose_self]
 
@@ -248,8 +256,10 @@ theorem determinantLine_finrank_one
     FiniteDimensional.of_injective
       (data.cokernelKernelEquiv parameter).toLinearMap
       (data.cokernelKernelEquiv parameter).injective
+  change Module.finrank Real
+      (data.cokernelTop parameter →ₗ[Real] data.kernelTop parameter) = 1
   rw [Module.finrank_linearMap, data.cokernelTop_finrank_one parameter,
-    data.kernelTop_finrank_one parameter]
+    data.kernelTop_finrank_one parameter, Nat.one_mul]
 
 /-- The canonical determinant frame is injective. -/
 theorem determinantFrame_injective
@@ -258,6 +268,7 @@ theorem determinantFrame_injective
     (parameter : Real) :
     Function.Injective (data.determinantFrame parameter) :=
   exteriorPower.map_injective_field
+    (n := determinantDegree (ZeroMode := ZeroMode))
     (data.cokernelKernelEquiv parameter).injective
 
 /-- The canonical determinant frame never vanishes. -/
@@ -298,8 +309,8 @@ theorem self_adjoint_fredholm_determinant_line_family_gate
       (∀ first second,
         Function.Bijective (data.determinantTransport first second)) ∧
       (∀ first second third,
-        (data.cokernelTransport second third).comp
-            (data.cokernelTransport first second) =
+        (data.cokernelTransport first second).trans
+            (data.cokernelTransport second third) =
           data.cokernelTransport first third) :=
   ⟨data.range_eq_kernel_orthogonal,
     data.determinantLine_finrank_one,

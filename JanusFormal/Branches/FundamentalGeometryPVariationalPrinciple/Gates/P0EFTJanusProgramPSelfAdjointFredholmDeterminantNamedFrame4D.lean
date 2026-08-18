@@ -13,7 +13,11 @@ line before any complex zeta scalar is attached.
 -/
 
 namespace JanusFormal
+
 namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
+
+namespace P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 3200000
@@ -24,10 +28,12 @@ noncomputable section
 open P0EFTJanusProgramPFiniteKernelDeterminantLineFamily4D
 open P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 
-variable {E ZeroMode : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} {ZeroMode : Type}
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype ZeroMode] [DecidableEq ZeroMode] [LinearOrder ZeroMode]
+
+namespace SelfAdjointFredholmDeterminantFamilyData
 
 /-- Exterior-power equivalence between actual cokernel and actual kernel. -/
 def cokernelTopKernelTopEquiv
@@ -36,7 +42,8 @@ def cokernelTopKernelTopEquiv
     (parameter : Real) :
     data.cokernelTop parameter ≃ₗ[Real] data.kernelTop parameter :=
   SelfAdjointFredholmDeterminantFamilyData.exteriorPowerEquiv
-    SelfAdjointFredholmDeterminantFamilyData.determinantDegree
+    (SelfAdjointFredholmDeterminantFamilyData.determinantDegree
+      (ZeroMode := ZeroMode))
     (data.cokernelKernelEquiv parameter)
 
 /-- Canonical source volume obtained by pulling the named kernel volume through
@@ -70,10 +77,9 @@ theorem cokernelNamedVolume_ne_zero
     (parameter : Real) :
     cokernelNamedVolume data parameter ≠ 0 := by
   intro hZero
-  have hMapped := congrArg (cokernelTopKernelTopEquiv data parameter) hZero
-  rw [map_zero] at hMapped
-  change finiteKernelNamedVolume data.kernels parameter = 0 at hMapped
-  exact data.kernels.finiteKernelNamedVolume_ne_zero parameter hMapped
+  have hMapped := congrArg (data.determinantFrame parameter) hZero
+  rw [determinantFrame_cokernelNamedVolume data parameter, map_zero] at hMapped
+  exact finiteKernelNamedVolume_ne_zero data.kernels parameter hMapped
 
 /-- Public named normalization checkpoint. -/
 theorem self_adjoint_fredholm_determinant_named_frame_gate
@@ -86,6 +92,8 @@ theorem self_adjoint_fredholm_determinant_named_frame_gate
   ⟨data.cokernelNamedVolume_ne_zero,
     data.determinantFrame_cokernelNamedVolume⟩
 
+end SelfAdjointFredholmDeterminantFamilyData
+
 end
-end P0EFTJanusProgramPSelfAdjointFredholmDeterminantNamedFrame4D
+end P0EFTJanusProgramPSelfAdjointFredholmDeterminantLineFamily4D
 end JanusFormal
