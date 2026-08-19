@@ -31,9 +31,18 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
 open P0EFTJanusProgramPFiniteFamilyGramBasis4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
@@ -41,6 +50,16 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernel
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelGram4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelGramLocalPersistence4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -57,6 +76,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -69,7 +90,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -81,13 +102,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- A pointwise basis packet whose vectors are exactly the canonical projected
@@ -99,7 +120,7 @@ structure GlobalHessianPreferredFiveSectorProjectedKernelBasisAt4D
     (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
       period hPeriod input)
     (parameter : Real) where
-  basis : Basis ZeroMode Real
+  basis : Module.Basis ZeroMode Real
     (input.familyIndex.baseFamily.actualOperator parameter).ker
   basis_agreement : ∀ mode,
     basis mode =
@@ -118,22 +139,16 @@ def projectedKernelBasisAtOfGramInjective
       (projectedKernelGramMap period hPeriod input natural parameter)) :
     GlobalHessianPreferredFiveSectorProjectedKernelBasisAt4D
       period hPeriod input natural parameter := by
-  letI : FiniteDimensional Real
-      (input.familyIndex.baseFamily.actualOperator parameter).ker :=
-    (input.kernels.basis parameter).finiteDimensional
-  have hGram' : Function.Injective
-      (finiteFamilyGramMap
-        (projectedKernelSubtypeVector period hPeriod input natural parameter)) := by
-    simpa [projectedKernelGramMap] using hGram
   exact
-    { basis := finiteFamilyBasisOfGramInjective
-        (projectedKernelSubtypeVector period hPeriod input natural parameter)
-        (input.kernels.kernel_finrank_eq_card parameter) hGram'
+    { basis :=
+        GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D.projectedKernelBasisAtOfGramInjective
+          period hPeriod input natural parameter hGram
       basis_agreement := by
         intro mode
-        exact finiteFamilyBasisOfGramInjective_apply
-          (projectedKernelSubtypeVector period hPeriod input natural parameter)
-          (input.kernels.kernel_finrank_eq_card parameter) hGram' mode }
+        apply Subtype.ext
+        exact
+          GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D.projectedKernelBasisAtOfGramInjective_apply
+            period hPeriod input natural parameter hGram mode }
 
 /-- The canonical pointwise projected basis exists throughout a neighbourhood
 of the H12 basepoint. -/
@@ -170,16 +185,11 @@ theorem projectedKernelSynthesis_bijective_of_gram_injective
     Function.Bijective
       (finiteFamilySynthesis
         (projectedKernelSubtypeVector period hPeriod input natural parameter)) := by
-  letI : FiniteDimensional Real
-      (input.familyIndex.baseFamily.actualOperator parameter).ker :=
-    (input.kernels.basis parameter).finiteDimensional
-  have hGram' : Function.Injective
-      (finiteFamilyGramMap
-        (projectedKernelSubtypeVector period hPeriod input natural parameter)) := by
-    simpa [projectedKernelGramMap] using hGram
-  exact finiteFamilySynthesis_bijective_of_gram_injective
+  let basisData := projectedKernelBasisAtOfGramInjective period hPeriod input
+    natural parameter hGram
+  exact finiteFamilySynthesis_bijective_of_basis
     (projectedKernelSubtypeVector period hPeriod input natural parameter)
-    (input.kernels.kernel_finrank_eq_card parameter) hGram'
+    basisData.basis basisData.basis_agreement
 
 /-- Projected physical coefficient synthesis is locally bijective around the
 H12 basepoint. -/

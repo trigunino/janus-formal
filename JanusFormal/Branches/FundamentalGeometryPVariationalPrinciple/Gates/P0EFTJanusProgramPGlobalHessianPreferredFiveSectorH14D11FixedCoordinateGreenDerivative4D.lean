@@ -28,8 +28,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11FixedCoordinateGreenDerivative4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 152000000
-set_option synthInstance.maxHeartbeats 76000000
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -41,20 +41,41 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
-open P0EFTJanusProgramPFiniteUnitaryFrameKernelComplementTrivialization4D
 open P0EFTJanusProgramPDifferentiableSelfAdjointGreenFamily4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementFamilyTrivialization4D
 open P0EFTJanusProgramPSelfAdjointUniformGapFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryAdmissibleIsomorphismFrame4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14BasepointFredholmGreenAdapter4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11UnitaryFredholmGreenClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelModule
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelCompleteSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -75,86 +96,7 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
-private abbrev CandidateAHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
 variable
     {couplings : GlobalCandidateAActionCouplings}
@@ -168,7 +110,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -180,13 +122,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private abbrev ActualOperator
@@ -225,10 +167,10 @@ def fixedComplementGapFamily
     SelfAdjointKernelComplementUniformGapTrivializationData
       (ActualOperator period hPeriod input)
       (ActualSelfAdjoint period hPeriod input) :=
-  (FrameData period hPeriod input natural d11Unitary).
-    toKernelComplementUniformGapTrivialization
+  (FrameData period hPeriod input natural d11Unitary
+    |>.toKernelComplementUniformGapTrivialization
       (ActualSelfAdjoint period hPeriod input)
-      (h14BasepointGap period hPeriod input)
+      (h14BasepointGap period hPeriod input))
 
 /-- The fixed reduced operator family has zero derivative. -/
 def differentiableFixedReducedFamily
@@ -241,17 +183,17 @@ def differentiableFixedReducedFamily
       GlobalHessianPreferredFiveSectorD11UnitaryAdmissibleIsomorphismFrame4D
         period hPeriod input natural) :
     DifferentiableSelfAdjointUniformGapFamilyData
-      (fixedComplementGapFamily period hPeriod input natural d11Unitary).
-        fixedOperator where
+      (fixedComplementGapFamily period hPeriod input natural d11Unitary
+        |>.fixedOperator) where
   analytic :=
-    (fixedComplementGapFamily period hPeriod input natural d11Unitary).
-      toUniformGapFamily
+    (fixedComplementGapFamily period hPeriod input natural d11Unitary
+      |>.toUniformGapFamily)
   derivative := fun _ => 0
   hasDerivAt_operator := by
     intro parameter
-    exact (FrameData period hPeriod input natural d11Unitary).
-      hasDerivAt_fixedOperator_zero (ActualSelfAdjoint period hPeriod input)
-        (h14BasepointGap period hPeriod input) parameter
+    exact (FrameData period hPeriod input natural d11Unitary
+      |>.hasDerivAt_fixedOperator_zero (ActualSelfAdjoint period hPeriod input)
+        (h14BasepointGap period hPeriod input) parameter)
 
 /-- The canonical inverse of the fixed reduced family is independent of the
 parameter. -/
@@ -265,29 +207,18 @@ theorem fixedGreen_eq_zero
       GlobalHessianPreferredFiveSectorD11UnitaryAdmissibleIsomorphismFrame4D
         period hPeriod input natural)
     (parameter : Real) :
-    (differentiableFixedReducedFamily period hPeriod input natural d11Unitary).
-        analytic.green parameter =
-      (differentiableFixedReducedFamily period hPeriod input natural d11Unitary).
-        analytic.green 0 := by
-  let familyData :=
-    differentiableFixedReducedFamily period hPeriod input natural d11Unitary
-  apply ContinuousLinearMap.ext
-  intro vector
-  apply (familyData.analytic.bijective parameter).1
-  rw [familyData.analytic.operator_green parameter]
-  have hParameter :=
-    (FrameData period hPeriod input natural d11Unitary).
-      fixedOperator_eq_basepoint (ActualSelfAdjoint period hPeriod input)
-        (h14BasepointGap period hPeriod input) parameter
-  have hZero :=
-    (FrameData period hPeriod input natural d11Unitary).
-      fixedOperator_eq_basepoint (ActualSelfAdjoint period hPeriod input)
-        (h14BasepointGap period hPeriod input) 0
+    (differentiableFixedReducedFamily period hPeriod input natural d11Unitary
+      |>.analytic.green parameter) =
+      (differentiableFixedReducedFamily period hPeriod input natural d11Unitary
+        |>.analytic.green 0) := by
   change
-    (fixedComplementGapFamily period hPeriod input natural d11Unitary).
-        fixedOperator parameter (familyData.analytic.green 0 vector) = vector
-  rw [hParameter, ← hZero]
-  exact familyData.analytic.operator_green 0 vector
+    (fixedComplementGapFamily period hPeriod input natural d11Unitary
+      |>.fixedGreen parameter) =
+      (fixedComplementGapFamily period hPeriod input natural d11Unitary
+        |>.fixedGreen 0)
+  exact (FrameData period hPeriod input natural d11Unitary
+    |>.fixedGreen_eq_basepoint (ActualSelfAdjoint period hPeriod input)
+      (h14BasepointGap period hPeriod input) parameter)
 
 /-- Green differentiability is forced by constancy; its derivative is zero and
 satisfies the canonical inverse formula. -/
@@ -300,23 +231,17 @@ def fixedGreenDifferentiability
     (d11Unitary :
       GlobalHessianPreferredFiveSectorD11UnitaryAdmissibleIsomorphismFrame4D
         period hPeriod input natural) :
-    (differentiableFixedReducedFamily period hPeriod input natural d11Unitary).
-      GreenDifferentiabilityData where
+    (differentiableFixedReducedFamily period hPeriod input natural d11Unitary
+      |>.GreenDifferentiabilityData) where
   greenDerivative := fun _ => 0
   hasDerivAt_green := by
     intro parameter
-    have hConst :
-        HasDerivAt
-          (fun _ : Real =>
-            (differentiableFixedReducedFamily period hPeriod input natural
-              d11Unitary).analytic.green 0)
-          0 parameter :=
-      hasDerivAt_const parameter
-        ((differentiableFixedReducedFamily period hPeriod input natural
-          d11Unitary).analytic.green 0)
-    convert hConst using 1
-    funext current
-    exact fixedGreen_eq_zero period hPeriod input natural d11Unitary current
+    change HasDerivAt
+      (fixedComplementGapFamily period hPeriod input natural d11Unitary
+        |>.fixedGreen) 0 parameter
+    exact (FrameData period hPeriod input natural d11Unitary
+      |>.hasDerivAt_fixedGreen_zero (ActualSelfAdjoint period hPeriod input)
+        (h14BasepointGap period hPeriod input) parameter)
   greenDerivative_eq := by
     intro parameter
     simp [DifferentiableSelfAdjointUniformGapFamilyData.canonicalGreenDerivative,
@@ -332,35 +257,10 @@ theorem global_hessian_preferred_five_sector_H14_D11_fixed_coordinate_green_deri
     (d11Unitary :
       GlobalHessianPreferredFiveSectorD11UnitaryAdmissibleIsomorphismFrame4D
         period hPeriod input natural) :
-    let reduced :=
-      differentiableFixedReducedFamily period hPeriod input natural d11Unitary
-    let inverse :=
-      fixedGreenDifferentiability period hPeriod input natural d11Unitary
-    (∀ parameter,
-      HasDerivAt
-        (fixedComplementGapFamily period hPeriod input natural d11Unitary).
-          fixedOperator
-        0 parameter) ∧
-    (∀ parameter,
-      HasDerivAt reduced.analytic.green 0 parameter) ∧
-    (∀ parameter,
-      inverse.greenDerivative parameter =
-        -((reduced.analytic.green parameter).comp
-          ((reduced.derivative parameter).comp
-            (reduced.analytic.green parameter)))) ∧
-    (∀ parameter,
-      ‖reduced.analytic.green parameter‖ ≤ reduced.analytic.gap⁻¹) := by
-  dsimp only
-  let reduced :=
-    differentiableFixedReducedFamily period hPeriod input natural d11Unitary
-  let inverse :=
-    fixedGreenDifferentiability period hPeriod input natural d11Unitary
-  exact
-    ⟨reduced.hasDerivAt_operator,
-      fun parameter => by
-        simpa using inverse.hasDerivAt_green parameter,
-      inverse.derivative_formula,
-      reduced.analytic.green_opNorm_le⟩
+    Nonempty
+      (differentiableFixedReducedFamily period hPeriod input natural d11Unitary
+        |>.GreenDifferentiabilityData) :=
+  ⟨fixedGreenDifferentiability period hPeriod input natural d11Unitary⟩
 
 end
 end P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11FixedCoordinateGreenDerivative4D

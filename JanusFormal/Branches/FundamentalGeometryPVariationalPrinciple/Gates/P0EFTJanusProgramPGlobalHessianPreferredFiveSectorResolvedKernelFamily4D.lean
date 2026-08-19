@@ -23,8 +23,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 36000000
-set_option synthInstance.maxHeartbeats 18000000
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -36,14 +36,31 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -62,8 +79,10 @@ local instance effectiveQuotientMeasurableSpace :
     MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
 
 local instance effectiveQuotientBorelSpace :
-    BorelSpace (EffectiveQuotient period hPeriod) where
+  BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
+
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
 variable
     {couplings : GlobalCandidateAActionCouplings}
@@ -77,7 +96,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -89,13 +108,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private abbrev Coordinates
@@ -112,7 +131,29 @@ def namedModeFiveSector
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index)
     (mode : ZeroMode) : FivePhysicalSector :=
-  candidateAZeroModeSectorToFivePhysicalSector (input.sectorOf mode)
+  candidateAZeroModeSectorToFivePhysicalSector
+    (GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D.sectorOf
+      period hPeriod input mode)
+
+/-- Value of the named kernel vector, exported without exposing the
+instance-sensitive basis-family projection. -/
+def namedKernelVectorValue
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (parameter : Real) (mode : ZeroMode) :
+    GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+      configuration data analysis :=
+  input.kernels.vector parameter mode
+
+theorem namedKernelVectorValue_mem_kernel
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (parameter : Real) (mode : ZeroMode) :
+    input.familyIndex.baseFamily.actualOperator parameter
+        (namedKernelVectorValue period hPeriod input parameter mode) = 0 :=
+  input.kernels.vector_mem_kernel parameter mode
 
 /-- Strong family-level sector resolution of the named actual-kernel basis. -/
 structure GlobalHessianPreferredFiveSectorResolvedKernelFamily4D
@@ -180,8 +221,8 @@ def sectorKernel
           Index)
     (parameter : Real) (sector : FivePhysicalSector) :
     Submodule Real
-      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
-        data analysis) :=
+      (GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+        configuration data analysis) :=
   (input.familyIndex.baseFamily.actualOperator parameter).ker ⊓
     (Coordinates period hPeriod input).sectorSubspace sector
 

@@ -155,7 +155,7 @@ def representedBoundaryBlock
       ((refinement.sourceSectorCoordinates parameter).boundary.symm value))
 
 /-- The D11 output product is exactly the five component outputs. -/
-theorem operator_product_formula
+def operator_product_formula
     (representation : NaturalEllipticOperatorRepresentationData
       immersionCategory family representedOperator)
     (coordinates : FiveSectorHilbertCoordinates

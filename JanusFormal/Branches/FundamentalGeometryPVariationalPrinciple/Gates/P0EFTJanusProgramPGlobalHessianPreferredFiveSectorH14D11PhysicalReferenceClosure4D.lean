@@ -35,20 +35,43 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11OperatorNormUnitaryFrame4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryFredholmGreenClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11ReferenceTraceBismutFreedFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11ReferenceTraceSpectralAtlas4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelModule
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelCompleteSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -69,6 +92,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -81,7 +106,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -93,13 +118,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private abbrev OldAtlas
@@ -123,8 +148,8 @@ private def physicalOutput
       period hPeriod input)
     (frame : GlobalHessianPreferredFiveSectorD11OperatorNormUnitaryFrame4D
       period hPeriod input natural) :=
-  (frame.toConcreteH14D11UnitaryFredholmGreenClosure period hPeriod input natural).
-    fredholmFrame period hPeriod input natural |>.physical
+  (frame.toConcreteH14D11UnitaryFredholmGreenClosure period hPeriod input natural
+    |>.fredholmFrame period hPeriod input natural |>.physical)
 
 /-- Physical named-kernel family over the rebuilt reference-only atlas. -/
 def physicalReferenceNamedKernelClosure
@@ -140,10 +165,10 @@ def physicalReferenceNamedKernelClosure
         BaseReduced period hPeriod input))
     (baseReferenceCoefficientAgreement : ∀ parameter,
       relativeZetaConnectionCoefficient
-          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.
-            toZetaFamily parameter =
-        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.
-          trace parameter : Real))
+          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.toZetaFamily
+            parameter =
+        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.trace
+          parameter : Real))
     (referenceCoefficientAgreement : ∀ index parameter,
       relativeZetaConnectionCoefficient
           ((OldAtlas period hPeriod input).localFamily index).toZetaFamily
@@ -161,10 +186,10 @@ def physicalReferenceNamedKernelClosure
     change
       ((physicalOutput period hPeriod input natural frame).closure.kernels.basis
         0 mode).1 =
-      ((OldAtlas period hPeriod input).baseFamily.quillen.intrinsicFamily.
-        basepoint.intrinsic.closure.basis mode).1
-    exact (physicalOutput period hPeriod input natural frame).closure.
-      basis_zero_agreement mode
+      ((OldAtlas period hPeriod input).baseFamily.quillen.intrinsicFamily
+        |>.basepoint.intrinsic.closure.basis mode).1
+    exact (physicalOutput period hPeriod input natural frame).closure
+      |>.basis_zero_agreement mode
 
 /-- The combined closure is physically sector-resolved. -/
 def physicalReferenceResolvedKernelFamily
@@ -180,10 +205,10 @@ def physicalReferenceResolvedKernelFamily
         BaseReduced period hPeriod input))
     (baseReferenceCoefficientAgreement : ∀ parameter,
       relativeZetaConnectionCoefficient
-          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.
-            toZetaFamily parameter =
-        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.
-          trace parameter : Real))
+          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.toZetaFamily
+            parameter =
+        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.trace
+          parameter : Real))
     (referenceCoefficientAgreement : ∀ index parameter,
       relativeZetaConnectionCoefficient
           ((OldAtlas period hPeriod input).localFamily index).toZetaFamily
@@ -204,8 +229,8 @@ def physicalReferenceResolvedKernelFamily
           parameter mode) =
       (physicalOutput period hPeriod input natural frame).closure.kernels.vector
         parameter mode
-    exact (physicalOutput period hPeriod input natural frame).resolved.
-      basis_fixed_by_sector parameter mode
+    exact (physicalOutput period hPeriod input natural frame).resolved
+      |>.basis_fixed_by_sector parameter mode
 
 /-- The combined physical basis remains C1 in the ambient Candidate-A Hilbert
 space. -/
@@ -222,10 +247,10 @@ def physicalReferenceRegularity
         BaseReduced period hPeriod input))
     (baseReferenceCoefficientAgreement : ∀ parameter,
       relativeZetaConnectionCoefficient
-          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.
-            toZetaFamily parameter =
-        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.
-          trace parameter : Real))
+          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.toZetaFamily
+            parameter =
+        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.trace
+          parameter : Real))
     (referenceCoefficientAgreement : ∀ index parameter,
       relativeZetaConnectionCoefficient
           ((OldAtlas period hPeriod input).localFamily index).toZetaFamily
@@ -237,8 +262,8 @@ def physicalReferenceRegularity
           zeroTrace baseReferenceCoefficientAgreement
             referenceCoefficientAgreement) where
   vector_differentiable :=
-    (physicalOutput period hPeriod input natural frame).regularity.
-      vector_differentiable
+    (physicalOutput period hPeriod input natural frame).regularity
+      |>.vector_differentiable
 
 /-- Public physical/reference combined closure checkpoint. -/
 theorem global_hessian_preferred_five_sector_H14_D11_physical_reference_closure_gate
@@ -254,10 +279,10 @@ theorem global_hessian_preferred_five_sector_H14_D11_physical_reference_closure_
         BaseReduced period hPeriod input))
     (baseReferenceCoefficientAgreement : ∀ parameter,
       relativeZetaConnectionCoefficient
-          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.
-            toZetaFamily parameter =
-        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.
-          trace parameter : Real))
+          (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily.toZetaFamily
+            parameter =
+        ((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.trace
+          parameter : Real))
     (referenceCoefficientAgreement : ∀ index parameter,
       relativeZetaConnectionCoefficient
           ((OldAtlas period hPeriod input).localFamily index).toZetaFamily

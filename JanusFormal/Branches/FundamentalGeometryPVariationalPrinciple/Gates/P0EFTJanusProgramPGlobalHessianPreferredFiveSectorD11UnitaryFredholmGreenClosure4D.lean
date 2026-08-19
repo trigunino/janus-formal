@@ -30,8 +30,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryFredholmGreenClosure4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 132000000
-set_option synthInstance.maxHeartbeats 66000000
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -43,13 +43,20 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
-open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPFiniteUnitaryKernelComplementGapTransport4D
 open P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenFrame4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryAdmissibleIsomorphismFrame4D
@@ -58,8 +65,19 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorUnitaryGapContinuation4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorUnitaryFredholmFrame4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorUnitaryFredholmFrame4D.GlobalHessianPreferredFiveSectorUnitaryAmbientFrame4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorPhysicalKernelContinuation4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -76,6 +94,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -88,7 +108,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -100,13 +120,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- Complete unitary D11 Fredholm--Green continuation datum. -/
@@ -167,7 +187,8 @@ def fredholmFrame
     (closure : GlobalHessianPreferredFiveSectorD11UnitaryFredholmGreenClosure4D
       period hPeriod input natural) :
     GlobalHessianPreferredFiveSectorUnitaryFredholmFrameOutput4D
-      period hPeriod input :=
+      period hPeriod input natural
+        (closure.d11Unitary.toUnitaryAmbientFrame period hPeriod input natural) :=
   (closure.greenContinuation period hPeriod input natural).fredholmFrame period
     hPeriod input natural
 
@@ -181,8 +202,8 @@ def reducedOperatorCLM
     (closure : GlobalHessianPreferredFiveSectorD11UnitaryFredholmGreenClosure4D
       period hPeriod input natural)
     (parameter : Real) :=
-  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.
-    reducedOperatorCLM period hPeriod input natural
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.reducedOperatorCLM
+    period hPeriod input natural
       (closure.greenContinuation period hPeriod input natural) parameter
 
 /-- Bundled reduced Green on one moving fibre. -/
@@ -195,8 +216,8 @@ def greenCLM
     (closure : GlobalHessianPreferredFiveSectorD11UnitaryFredholmGreenClosure4D
       period hPeriod input natural)
     (parameter : Real) :=
-  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.
-    greenCLM period hPeriod input natural
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.greenCLM
+    period hPeriod input natural
       (closure.greenContinuation period hPeriod input natural) parameter
 
 /-- Uniform reduced gap on every current canonical complement. -/
@@ -231,8 +252,8 @@ theorem norm_greenCLM_le_gap_inv
     ‖closure.greenCLM period hPeriod input natural parameter‖ ≤
       closure.basepointGap.gap⁻¹ :=
   le_trans
-    (P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.
-      norm_greenCLM_le period hPeriod input natural
+    (P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.norm_greenCLM_le
+      period hPeriod input natural
         (closure.greenContinuation period hPeriod input natural) parameter)
     closure.green_norm_le_gap_inv
 
@@ -247,12 +268,12 @@ theorem trivializedReducedOperator_eq_basepoint
       period hPeriod input natural)
     (parameter : Real)
     (vector : (input.familyIndex.baseFamily.actualOperator 0).kerᗮ) :
-    P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.
-        trivializedReducedOperator period hPeriod input natural
+    P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.trivializedReducedOperator
+        period hPeriod input natural
           (closure.greenContinuation period hPeriod input natural) parameter vector =
       closure.basepointGreen.reducedOperator vector :=
-  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.
-    trivializedReducedOperator_eq_basepoint period hPeriod input natural
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.trivializedReducedOperator_eq_basepoint
+    period hPeriod input natural
       (closure.greenContinuation period hPeriod input natural) parameter vector
 
 /-- Exact fixed-coordinate Green identity. -/
@@ -266,12 +287,12 @@ theorem trivializedGreen_eq_basepoint
       period hPeriod input natural)
     (parameter : Real)
     (vector : (input.familyIndex.baseFamily.actualOperator 0).kerᗮ) :
-    P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.
-        trivializedGreen period hPeriod input natural
+    P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.trivializedGreen
+        period hPeriod input natural
           (closure.greenContinuation period hPeriod input natural) parameter vector =
       closure.basepointGreen.green vector :=
-  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.
-    trivializedGreen_eq_basepoint period hPeriod input natural
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.trivializedGreen_eq_basepoint
+    period hPeriod input natural
       (closure.greenContinuation period hPeriod input natural) parameter vector
 
 /-- Public terminal D11 Fredholm--Green checkpoint. -/
@@ -307,8 +328,8 @@ theorem global_hessian_preferred_five_sector_D11_unitary_fredholm_green_closure_
       ‖closure.greenCLM period hPeriod input natural parameter‖ ≤
         closure.basepointGap.gap⁻¹) ∧
     (∀ parameter vector,
-      P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.
-          trivializedGreen period hPeriod input natural
+      P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenTrivialization4D.trivializedGreen
+          period hPeriod input natural
             (closure.greenContinuation period hPeriod input natural) parameter
             vector = closure.basepointGreen.green vector) ∧
     (∀ vector,
@@ -323,11 +344,11 @@ theorem global_hessian_preferred_five_sector_D11_unitary_fredholm_green_closure_
       output.physical.regularity,
       output.physical.familyIndex_eq,
       closure.global_norm_gap period hPeriod input natural,
-      P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.
-        reducedOperatorCLM_comp_greenCLM period hPeriod input natural
+      P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.reducedOperatorCLM_comp_greenCLM
+        period hPeriod input natural
           greenContinuation,
-      P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.
-        greenCLM_comp_reducedOperatorCLM period hPeriod input natural
+      P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11UnitaryGreenOperator4D.greenCLM_comp_reducedOperatorCLM
+        period hPeriod input natural
           greenContinuation,
       closure.norm_greenCLM_le_gap_inv period hPeriod input natural,
       closure.trivializedGreen_eq_basepoint period hPeriod input natural,

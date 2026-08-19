@@ -43,9 +43,18 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
 open P0EFTJanusProgramPFiniteFamilyGramBasis4D
 open P0EFTJanusProgramPFiniteFamilyGramInjectivity4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
@@ -56,6 +65,16 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelBasisFamil
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelRegularChart4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelRegularTransport4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -72,6 +91,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -84,7 +105,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -96,13 +117,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- The regular chart covers all real parameters exactly when the genuine
@@ -187,24 +208,63 @@ def projectedKernelGramNondegenerateOfBasisFamily
       period hPeriod input natural where
   gram_injective := by
     intro parameter
-    unfold projectedKernelGramMap
-    apply finiteFamilyGramMap_injective_of_synthesis_injective
+    letI hNormed : NormedAddCommGroup
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis) :=
+      P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
+        period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis
+    letI hInner : InnerProductSpace Real
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis) :=
+      P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
+        period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis
+    let inclusion : @LinearMap Real Real _ _ (RingHom.id Real)
+        (input.familyIndex.baseFamily.actualOperator parameter).ker
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis)
+        (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid
+        hNormed.toAddCommMonoid
+        (input.familyIndex.baseFamily.actualOperator parameter).ker.module
+        hInner.toModule :=
+      @LinearMap.mk Real Real _ _ (RingHom.id Real) _ _
+        (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid
+        hNormed.toAddCommMonoid
+        (input.familyIndex.baseFamily.actualOperator parameter).ker.module
+        hInner.toModule
+        (@AddHom.mk _ _
+          (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid.toAdd
+          hNormed.toAddCommMonoid.toAdd
+          (fun vector => vector.1) (by intro first second; rfl))
+        (by intro scalar vector; rfl)
+    have hMapped := @LinearIndependent.map' ZeroMode Real
+      (input.familyIndex.baseFamily.actualOperator parameter).ker
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis)
+      (fun mode => physical.basis parameter mode) _
+      (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommGroup
+      hNormed.toAddCommGroup
+      (input.familyIndex.baseFamily.actualOperator parameter).ker.module
+      hInner.toModule (physical.basis parameter).linearIndependent inclusion
+      (LinearMap.ker_eq_bot.mpr fun first second hEqual => Subtype.ext hEqual)
     have hFamily :
-        (fun mode =>
-          projectedKernelSubtypeVector period hPeriod input natural parameter
-            mode) =
-          fun mode => physical.basis parameter mode := by
+        (inclusion ∘ fun mode => physical.basis parameter mode) =
+          fun mode =>
+            projectedNamedKernelVector period hPeriod input parameter mode := by
       funext mode
-      apply Subtype.ext
       change
-        projectedNamedKernelVector period hPeriod input parameter mode =
-          (physical.basis parameter mode).1
-      exact (physical.basis_agreement parameter mode).symm
-    rw [hFamily]
-    intro first second hEqual
-    have hCoordinates :=
-      congrArg (physical.basis parameter).equivFun hEqual
-    simpa [finiteFamilySynthesis] using hCoordinates
+        (physical.basis parameter mode).1 =
+          projectedNamedKernelVector period hPeriod input parameter mode
+      exact physical.basis_agreement parameter mode
+    rw [hFamily] at hMapped
+    simpa [projectedKernelGramMap] using
+      (@finiteFamilyGramMap_injective_of_linearIndependent ZeroMode
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis) inferInstance inferInstance hNormed hInner
+        (fun mode =>
+          projectedNamedKernelVector period hPeriod input parameter mode)
+        hMapped)
 
 /-- The global basis-family interface is reconstructed directly from the
 statement that the regular chart covers all parameters. -/

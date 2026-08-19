@@ -35,9 +35,18 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
@@ -46,7 +55,18 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelGram4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelBasisLocal4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelRegularChart4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D.GlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -63,6 +83,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -75,7 +97,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -87,13 +109,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- Canonical projected physical basis on one point of the open regular chart. -/
@@ -104,7 +126,7 @@ def regularProjectedKernelBasis
     (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
       period hPeriod input)
     (parameter : projectedKernelRegularSet period hPeriod input) :
-    Basis ZeroMode Real
+    Module.Basis ZeroMode Real
       (input.familyIndex.baseFamily.actualOperator parameter.1).ker :=
   (projectedKernelBasisOnRegularSet period hPeriod input natural parameter).basis
 
@@ -135,8 +157,7 @@ def regularProjectedKernelAnalyze
     (parameter : projectedKernelRegularSet period hPeriod input) :
     (input.familyIndex.baseFamily.actualOperator parameter.1).ker →ₗ[Real]
       (ZeroMode → Real) :=
-  (regularProjectedKernelBasis period hPeriod input natural parameter).equivFun.
-    toLinearMap
+  (regularProjectedKernelBasis period hPeriod input natural parameter).equivFun.toLinearMap
 
 /-- Synthesis of true zero modes from fixed physical coordinates on the chart. -/
 def regularProjectedKernelSynthesize
@@ -148,8 +169,7 @@ def regularProjectedKernelSynthesize
     (parameter : projectedKernelRegularSet period hPeriod input) :
     (ZeroMode → Real) →ₗ[Real]
       (input.familyIndex.baseFamily.actualOperator parameter.1).ker :=
-  (regularProjectedKernelBasis period hPeriod input natural parameter).equivFun.
-    symm.toLinearMap
+  (regularProjectedKernelBasis period hPeriod input natural parameter).equivFun.symm.toLinearMap
 
 /-- Canonical local kernel transport: keep the fixed physical coordinates. -/
 def regularProjectedKernelTransport
@@ -178,9 +198,16 @@ theorem regularProjectedKernelTransport_basis
     regularProjectedKernelTransport period hPeriod input natural first second
         (regularProjectedKernelBasis period hPeriod input natural first mode) =
       regularProjectedKernelBasis period hPeriod input natural second mode := by
-  apply (regularProjectedKernelBasis period hPeriod input natural second).equivFun.
-    injective
-  simp [regularProjectedKernelTransport]
+  apply (regularProjectedKernelBasis period hPeriod input natural second).equivFun.injective
+  simp only [regularProjectedKernelTransport, LinearEquiv.trans_apply,
+    LinearEquiv.apply_symm_apply]
+  change
+    (regularProjectedKernelBasis period hPeriod input natural first).equivFun
+        (regularProjectedKernelBasis period hPeriod input natural first mode) =
+      (regularProjectedKernelBasis period hPeriod input natural second).equivFun
+        (regularProjectedKernelBasis period hPeriod input natural second mode)
+  rw [Module.Basis.equivFun_apply, Module.Basis.equivFun_apply,
+    Module.Basis.repr_self, Module.Basis.repr_self]
 
 /-- Local transport is the identity on the diagonal. -/
 @[simp]
@@ -194,10 +221,14 @@ theorem regularProjectedKernelTransport_self
     regularProjectedKernelTransport period hPeriod input natural parameter
         parameter =
       LinearEquiv.refl Real _ := by
-  ext zeroMode
-  apply (regularProjectedKernelBasis period hPeriod input natural parameter).
-    equivFun.injective
-  simp [regularProjectedKernelTransport]
+  apply LinearEquiv.ext
+  intro zeroMode
+  change
+    (regularProjectedKernelBasis period hPeriod input natural parameter).equivFun.symm
+        ((regularProjectedKernelBasis period hPeriod input natural parameter).equivFun
+          zeroMode) = zeroMode
+  exact (regularProjectedKernelBasis period hPeriod input natural parameter).equivFun.symm_apply_apply
+    zeroMode
 
 /-- Exact cocycle/composition law of the chart transports. -/
 theorem regularProjectedKernelTransport_trans
@@ -207,14 +238,21 @@ theorem regularProjectedKernelTransport_trans
     (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
       period hPeriod input)
     (first second third : projectedKernelRegularSet period hPeriod input) :
-    (regularProjectedKernelTransport period hPeriod input natural second third).comp
-        (regularProjectedKernelTransport period hPeriod input natural first
-          second) =
+    (regularProjectedKernelTransport period hPeriod input natural first second).trans
+        (regularProjectedKernelTransport period hPeriod input natural second third) =
       regularProjectedKernelTransport period hPeriod input natural first third := by
-  ext zeroMode
-  apply (regularProjectedKernelBasis period hPeriod input natural third).equivFun.
-    injective
-  simp [regularProjectedKernelTransport]
+  apply LinearEquiv.ext
+  intro zeroMode
+  change
+    (regularProjectedKernelBasis period hPeriod input natural third).equivFun.symm
+        ((regularProjectedKernelBasis period hPeriod input natural second).equivFun
+          ((regularProjectedKernelBasis period hPeriod input natural second).equivFun.symm
+            ((regularProjectedKernelBasis period hPeriod input natural first).equivFun
+              zeroMode))) =
+      (regularProjectedKernelBasis period hPeriod input natural third).equivFun.symm
+        ((regularProjectedKernelBasis period hPeriod input natural first).equivFun
+          zeroMode)
+  rw [(regularProjectedKernelBasis period hPeriod input natural second).equivFun.apply_symm_apply]
 
 /-- Every local chart basis vector belongs to its assigned physical sector
 kernel. -/
@@ -266,10 +304,8 @@ theorem projected_kernel_regular_transport_gate
           (regularProjectedKernelBasis period hPeriod input natural first mode) =
         regularProjectedKernelBasis period hPeriod input natural second mode) ∧
     (∀ first second third,
-      (regularProjectedKernelTransport period hPeriod input natural second third).
-          comp
-          (regularProjectedKernelTransport period hPeriod input natural first
-            second) =
+      (regularProjectedKernelTransport period hPeriod input natural first second).trans
+          (regularProjectedKernelTransport period hPeriod input natural second third) =
         regularProjectedKernelTransport period hPeriod input natural first third) :=
   ⟨regularProjectedKernelBasis_mem_sectorKernel period hPeriod input natural,
     regularProjectedKernelTransport_basis period hPeriod input natural,

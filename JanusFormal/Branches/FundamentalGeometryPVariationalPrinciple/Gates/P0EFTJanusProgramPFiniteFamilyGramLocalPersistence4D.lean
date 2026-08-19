@@ -54,9 +54,9 @@ theorem finiteFamilyGramMatrix_apply
 matrix. -/
 theorem finiteFamilyGramMatrix_mulVec
     (vectors : Index → E) (coefficient : Index → Real) :
-    finiteFamilyGramMatrix vectors *ᵥ coefficient =
+    Matrix.mulVec (finiteFamilyGramMatrix vectors) coefficient =
       finiteFamilyGramMap vectors coefficient := by
-  ext row
+  funext row
   simp [finiteFamilyGramMatrix, Matrix.mulVec, dotProduct,
     finiteFamilyGramMap_apply, finiteFamilySynthesis, sum_inner,
     inner_smul_left, mul_comm]
@@ -84,7 +84,7 @@ theorem finiteFamilyGramMap_injective_iff_det_ne_zero
         finiteFamilyGramMap vectors (first - second) = 0 := by
       rw [map_sub, hEqual, sub_self]
     have hMatrixDifference :
-        finiteFamilyGramMatrix vectors *ᵥ (first - second) = 0 := by
+        Matrix.mulVec (finiteFamilyGramMatrix vectors) (first - second) = 0 := by
       rw [finiteFamilyGramMatrix_mulVec]
       exact hGramDifference
     exact hDet <| Matrix.exists_mulVec_eq_zero_iff.mp
@@ -129,8 +129,8 @@ theorem eventually_finiteFamilyGramMap_injective
   have hDetEventually :
       ∀ᶠ parameter in 𝓝 basepoint,
         (finiteFamilyGramMatrix (vectors parameter)).det ≠ 0 :=
-    (continuous_finiteFamilyGramDeterminant vectors hVectors).continuousAt.
-      eventually_ne hDetBasepoint
+    (continuous_finiteFamilyGramDeterminant vectors hVectors).continuousAt.eventually_ne
+      hDetBasepoint
   filter_upwards [hDetEventually] with parameter hDet
   exact (finiteFamilyGramMap_injective_iff_det_ne_zero
     (vectors parameter)).mpr hDet

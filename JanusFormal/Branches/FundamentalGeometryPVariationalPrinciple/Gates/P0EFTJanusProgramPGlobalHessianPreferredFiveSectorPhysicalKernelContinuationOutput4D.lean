@@ -1,22 +1,11 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPDifferentiableFiniteKernelBasisFamily4D
-
-/-!
-# Differentiable named-kernel family for the preferred Candidate-A route
-
-The preferred family already has one fixed finite physical label type and a
-basis of every actual kernel.  This layer adds precisely the missing C1 family
-regularity in the common ambient Candidate-A Hilbert space.  It does not change
-the basis, sector assignment or coordinate transport.
--/
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorPhysicalKernelContinuation4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 1000000
 set_option synthInstance.maxHeartbeats 500000
-
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -38,7 +27,8 @@ open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-open P0EFTJanusProgramPDifferentiableFiniteKernelBasisFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusCircleDiracHeatTraceCancellation
 
@@ -53,19 +43,16 @@ attribute [local instance]
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
-private abbrev EffectiveQuotient := MappingTorus (reflectedSphereData period hPeriod)
-
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
 local instance effectiveQuotientChartedSpace :
     ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotientChartedSpace period hPeriod
-
 local instance effectiveQuotientIsManifold :
     IsManifold coverModelWithCorners ω (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotient_isManifold period hPeriod
-
 local instance effectiveQuotientMeasurableSpace :
     MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
-
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
@@ -104,67 +91,22 @@ variable
     {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
-/-- Candidate-A named kernel basis with C1 ambient dependence on the family
-parameter. -/
-structure GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+/-- Route-independent physical continuation result. -/
+structure GlobalHessianPreferredFiveSectorPhysicalKernelContinuationOutput4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index) : Prop where
-  vector_differentiable : ∀ mode,
-    Differentiable Real
-      (fun parameter : Real => input.kernels.vector parameter mode)
-
-namespace GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
-
-/-- Generic differentiable-kernel packet without changing the Candidate-A basis. -/
-def toDifferentiableKernelFamily
-    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
-    (regularity : GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
-      period hPeriod input) :
-    DifferentiableFiniteKernelBasisFamilyData
-      input.familyIndex.baseFamily.actualOperator ZeroMode where
-  kernels := input.kernels
-  vector_differentiable := regularity.vector_differentiable
-
-/-- The action-generator identification at the physical basepoint survives the
-regularity upgrade unchanged. -/
-theorem vector_zero_eq_actionGenerator
-    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
-    (regularity : GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
-      period hPeriod input)
-    (mode : ZeroMode) :
-    input.kernels.vector 0 mode =
-      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.closure.frontier.generators.translations.vector mode :=
-  GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D.vector_zero_eq_actionGenerator
-    period hPeriod input mode
-
-/-- Public Candidate-A differentiable named-kernel checkpoint. -/
-theorem global_hessian_preferred_five_sector_differentiable_named_kernel_gate
-    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
-    (regularity : GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
-      period hPeriod input) :
-    (∀ mode,
-      Differentiable Real
-        (fun parameter : Real => input.kernels.vector parameter mode)) ∧
-    (∀ mode,
-      Continuous
-        (fun parameter : Real => input.kernels.vector parameter mode)) ∧
-    (∀ mode,
-      input.kernels.vector 0 mode =
-        input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.closure.frontier.generators.translations.vector mode) :=
-  ⟨regularity.vector_differentiable,
-    DifferentiableFiniteKernelBasisFamilyData.vector_continuous
-      (toDifferentiableKernelFamily period hPeriod input regularity),
-    vector_zero_eq_actionGenerator period hPeriod input regularity⟩
-
-end GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index) where
+  closure : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+    period hPeriod configuration data analysis einsteinScale hTransverse family
+      chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index
+  familyIndex_eq : closure.familyIndex = input.familyIndex
+  resolved : GlobalHessianPreferredFiveSectorResolvedKernelFamily4D
+    period hPeriod closure
+  regularity : GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+    period hPeriod closure
+  basis_zero_agreement : ∀ mode,
+    closure.kernels.vector 0 mode = input.kernels.vector 0 mode
 
 end
-end P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
+end P0EFTJanusProgramPGlobalHessianPreferredFiveSectorPhysicalKernelContinuation4D
 end JanusFormal

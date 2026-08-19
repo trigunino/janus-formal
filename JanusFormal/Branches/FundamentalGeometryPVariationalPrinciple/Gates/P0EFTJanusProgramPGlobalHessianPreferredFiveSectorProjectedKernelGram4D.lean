@@ -25,8 +25,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelGram4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 42000000
-set_option synthInstance.maxHeartbeats 21000000
+set_option maxHeartbeats 4000000
+set_option synthInstance.maxHeartbeats 2000000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -38,9 +38,18 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
 open P0EFTJanusProgramPFiniteFamilyGramBasis4D
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
@@ -48,6 +57,16 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOper
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedResolvedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelBasisFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -64,6 +83,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -76,7 +97,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -88,13 +109,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 /-- Projected physical vector regarded as an element of the true kernel
@@ -121,8 +142,23 @@ def projectedKernelGramMap
       period hPeriod input)
     (parameter : Real) :
     (ZeroMode → Real) →ₗ[Real] (ZeroMode → Real) :=
-  finiteFamilyGramMap
-    (projectedKernelSubtypeVector period hPeriod input natural parameter)
+  by
+    letI hNormed : NormedAddCommGroup
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis) :=
+      P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
+        period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis
+    letI hInner : InnerProductSpace Real
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis) :=
+      P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
+        period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis
+    exact @finiteFamilyGramMap ZeroMode
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis) inferInstance hNormed hInner
+      (fun mode => projectedNamedKernelVector period hPeriod input parameter mode)
 
 /-- Exact scalar finite-dimensional completeness premise. -/
 structure GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D
@@ -137,6 +173,134 @@ structure GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D
 
 namespace GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D
 
+theorem projectedKernelSubtypeVector_linearIndependent_of_gram_injective
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
+      period hPeriod input)
+    (parameter : Real)
+    (hGram : Function.Injective
+      (projectedKernelGramMap period hPeriod input natural parameter)) :
+    LinearIndependent Real
+      (projectedKernelSubtypeVector period hPeriod input natural parameter) := by
+  letI hNormed : NormedAddCommGroup
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis) :=
+    P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
+      period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+        couplings.matterMassSquared data analysis
+  letI hInner : InnerProductSpace Real
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis) :=
+    P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
+      period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+        couplings.matterMassSquared data analysis
+  letI : Module Real
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis) := hInner.toNormedSpace.toModule
+  have hAmbient := @finiteFamily_linearIndependent_of_gram_injective ZeroMode
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis) inferInstance inferInstance hNormed hInner
+    (fun mode => projectedNamedKernelVector period hPeriod input parameter mode)
+    (by simpa [projectedKernelGramMap] using hGram)
+  let inclusion : @LinearMap Real Real _ _ (RingHom.id Real)
+      (input.familyIndex.baseFamily.actualOperator parameter).ker
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis)
+      (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid
+      hNormed.toAddCommMonoid
+      (input.familyIndex.baseFamily.actualOperator parameter).ker.module
+      hInner.toModule :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real) _ _
+      (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid
+      hNormed.toAddCommMonoid
+      (input.familyIndex.baseFamily.actualOperator parameter).ker.module
+      hInner.toModule
+      (@AddHom.mk _ _
+        (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid.toAdd
+        hNormed.toAddCommMonoid.toAdd
+        (fun vector => vector.1) (by intro first second; rfl))
+      (by intro scalar vector; rfl)
+  apply @LinearIndependent.of_comp ZeroMode Real
+    (input.familyIndex.baseFamily.actualOperator parameter).ker
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (projectedKernelSubtypeVector period hPeriod input natural parameter)
+    _
+    (input.familyIndex.baseFamily.actualOperator parameter).ker.addCommMonoid
+    hNormed.toAddCommMonoid
+    (input.familyIndex.baseFamily.actualOperator parameter).ker.module
+    hInner.toModule inclusion
+  simpa [Function.comp_def, inclusion, projectedKernelSubtypeVector] using
+    hAmbient
+
+def projectedKernelBasisAtOfGramInjective
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
+      period hPeriod input)
+    (parameter : Real)
+    (hGram : Function.Injective
+      (projectedKernelGramMap period hPeriod input natural parameter)) :
+    Module.Basis ZeroMode Real
+      (input.familyIndex.baseFamily.actualOperator parameter).ker := by
+  letI : Module.Finite Real
+      (input.familyIndex.baseFamily.actualOperator parameter).ker :=
+    Module.Finite.of_basis (input.kernels.basis parameter)
+  exact basisOfLinearIndependentOfCardEqFinrank'
+    (projectedKernelSubtypeVector period hPeriod input natural parameter)
+    (projectedKernelSubtypeVector_linearIndependent_of_gram_injective period
+      hPeriod input natural parameter hGram)
+    (input.kernels.kernel_finrank_eq_card parameter).symm
+
+@[simp]
+theorem projectedKernelBasisAtOfGramInjective_apply
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
+      period hPeriod input)
+    (parameter : Real)
+    (hGram : Function.Injective
+      (projectedKernelGramMap period hPeriod input natural parameter))
+    (mode : ZeroMode) :
+    ((projectedKernelBasisAtOfGramInjective period hPeriod input natural parameter
+        hGram mode).1) =
+      projectedNamedKernelVector period hPeriod input parameter mode := by
+  unfold projectedKernelBasisAtOfGramInjective
+  simp [projectedKernelSubtypeVector]
+
+private def projectedKernelBasisAt
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
+      period hPeriod input)
+    (gram : GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D
+      period hPeriod input natural)
+    (parameter : Real) :
+    Module.Basis ZeroMode Real
+      (input.familyIndex.baseFamily.actualOperator parameter).ker :=
+  projectedKernelBasisAtOfGramInjective period hPeriod input natural parameter
+    (gram.gram_injective parameter)
+
+@[simp]
+private theorem projectedKernelBasisAt_apply
+    (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+      period hPeriod configuration data analysis einsteinScale hTransverse family
+        chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
+    (natural : GlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
+      period hPeriod input)
+    (gram : GlobalHessianPreferredFiveSectorProjectedKernelGramNondegenerate4D
+      period hPeriod input natural)
+    (parameter : Real) (mode : ZeroMode) :
+    ((projectedKernelBasisAt period hPeriod input natural gram parameter mode).1) =
+      projectedNamedKernelVector period hPeriod input parameter mode :=
+  projectedKernelBasisAtOfGramInjective_apply period hPeriod input natural
+    parameter (gram.gram_injective parameter) mode
+
 /-- Gram nondegeneracy constructs the complete physical projected kernel basis
 at every parameter. -/
 def toProjectedKernelBasisFamily
@@ -149,27 +313,11 @@ def toProjectedKernelBasisFamily
       period hPeriod input natural) :
     GlobalHessianPreferredFiveSectorProjectedKernelBasisFamily4D
       period hPeriod input natural where
-  basis := fun parameter => by
-    letI : FiniteDimensional Real
-        (input.familyIndex.baseFamily.actualOperator parameter).ker :=
-      (input.kernels.basis parameter).finiteDimensional
-    exact finiteFamilyBasisOfGramInjective
-      (projectedKernelSubtypeVector period hPeriod input natural parameter)
-      (input.kernels.kernel_finrank_eq_card parameter)
-      (gram.gram_injective parameter)
+  basis := projectedKernelBasisAt period hPeriod input natural gram
   basis_agreement := by
     intro parameter mode
-    letI : FiniteDimensional Real
-        (input.familyIndex.baseFamily.actualOperator parameter).ker :=
-      (input.kernels.basis parameter).finiteDimensional
-    change
-      ((finiteFamilyBasisOfGramInjective
-        (projectedKernelSubtypeVector period hPeriod input natural parameter)
-        (input.kernels.kernel_finrank_eq_card parameter)
-        (gram.gram_injective parameter)) mode).1 =
-          projectedNamedKernelVector period hPeriod input parameter mode
-    rw [finiteFamilyBasisOfGramInjective_apply]
-    rfl
+    exact projectedKernelBasisAt_apply period hPeriod input natural gram
+      parameter mode
 
 /-- Public projected-kernel Gram checkpoint. -/
 theorem projected_kernel_gram_nondegenerate_gate

@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteSectorPreservingKernelTransport4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalKernelResolution4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
 
 /-!
 # Global physical kernel family from sector-preserving transport
@@ -26,8 +27,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 68000000
-set_option synthInstance.maxHeartbeats 34000000
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -39,9 +40,16 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPDifferentiableFiniteKernelBasisFamily4D
 open P0EFTJanusProgramPFiniteSectorPreservingKernelTransport4D
@@ -52,6 +60,16 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOper
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalKernelResolution4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -68,6 +86,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -80,7 +100,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -92,13 +112,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private abbrev Coordinates
@@ -121,7 +141,7 @@ structure GlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D
   transport_self : ∀ parameter,
     transport parameter parameter = LinearEquiv.refl Real _
   transport_trans : ∀ first second third,
-    (transport second third).comp (transport first second) =
+    (transport first second).trans (transport second third) =
       transport first third
   transport_commutes : ∀ first second sector vector,
     transport first second
@@ -280,12 +300,11 @@ theorem physical_vector_zero_eq_actionGenerator
       GlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D
         period hPeriod input natural)
     (mode : ZeroMode) :
-    (transportData.physicalNamedKernelFamilyClosure period hPeriod input natural).
-        kernels.vector 0 mode =
-      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
-        closure.frontier.generators.translations.vector mode :=
-  (transportData.physicalNamedKernelFamilyClosure period hPeriod input natural).
-    vector_zero_eq_actionGenerator period hPeriod mode
+    (physicalNamedKernelFamilyClosure period hPeriod input natural transportData).kernels.vector 0 mode =
+      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.closure.frontier.generators.translations.vector mode :=
+  GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D.vector_zero_eq_actionGenerator
+    period hPeriod
+    (physicalNamedKernelFamilyClosure period hPeriod input natural transportData) mode
 
 /-- Public global sector-preserving kernel-transport checkpoint. -/
 theorem global_hessian_preferred_five_sector_sector_preserving_kernel_transport_gate
@@ -315,16 +334,13 @@ theorem global_hessian_preferred_five_sector_sector_preserving_kernel_transport_
         (transportData.physicalNamedKernelFamilyClosure period hPeriod input
           natural) ∧
     (∀ mode,
-      (transportData.physicalNamedKernelFamilyClosure period hPeriod input natural).
-          kernels.vector 0 mode =
-        input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
-          closure.frontier.generators.translations.vector mode) :=
+      (physicalNamedKernelFamilyClosure period hPeriod input natural transportData).kernels.vector 0 mode =
+        input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.closure.frontier.generators.translations.vector mode) :=
   ⟨transportData.physicalKernels_basis_fixed_by_sector period hPeriod input natural,
     transportData.physicalKernels_basis_zero period hPeriod input natural,
     transportData.physicalResolvedKernelFamily period hPeriod input natural,
     transportData.physicalRegularity period hPeriod input natural,
-    transportData.physical_vector_zero_eq_actionGenerator period hPeriod input
-      natural⟩
+    physical_vector_zero_eq_actionGenerator period hPeriod input natural transportData⟩
 
 end GlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D
 

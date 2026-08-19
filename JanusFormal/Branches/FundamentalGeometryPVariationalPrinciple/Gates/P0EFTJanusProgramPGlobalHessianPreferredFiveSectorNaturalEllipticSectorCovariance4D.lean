@@ -14,8 +14,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 38000000
-set_option synthInstance.maxHeartbeats 19000000
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -130,44 +130,44 @@ theorem global_hessian_preferred_five_sector_natural_elliptic_sector_covariance_
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index)
-    (data : GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
+    (covariance : GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
       period hPeriod input) :
     (∀ parameter,
-      data.sectorRepresentation.bridge.representation.representedNaturalOperator
+      covariance.sectorRepresentation.bridge.representation.representedNaturalOperator
           parameter =
         fun state => input.familyIndex.baseFamily.actualOperator parameter state) ∧
     (∀ {first second : Real}
       (morphism : P0EFTJanusSpinCImmersionCategory.AdmissibleMorphism
-        data.sectorRepresentation.bridge.immersionCategory
-        (data.sectorRepresentation.bridge.representation.objectAt first)
-        (data.sectorRepresentation.bridge.representation.objectAt second))
+        covariance.sectorRepresentation.bridge.immersionCategory
+        (covariance.sectorRepresentation.bridge.representation.objectAt first)
+        (covariance.sectorRepresentation.bridge.representation.objectAt second))
       (sector : FivePhysicalSector)
       (state : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
         configuration data analysis),
       (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector sector
-          (data.sectorRepresentation.bridge.representation.representedSourcePullback
+          (covariance.sectorRepresentation.bridge.representation.representedSourcePullback
             morphism state) =
-        data.sectorRepresentation.bridge.representation.representedSourcePullback morphism
+        covariance.sectorRepresentation.bridge.representation.representedSourcePullback morphism
           ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
             sector state)) ∧
     (∀ {first second : Real}
       (morphism : P0EFTJanusSpinCImmersionCategory.AdmissibleMorphism
-        data.sectorRepresentation.bridge.immersionCategory
-        (data.sectorRepresentation.bridge.representation.objectAt first)
-        (data.sectorRepresentation.bridge.representation.objectAt second))
+        covariance.sectorRepresentation.bridge.immersionCategory
+        (covariance.sectorRepresentation.bridge.representation.objectAt first)
+        (covariance.sectorRepresentation.bridge.representation.objectAt second))
       (sector : FivePhysicalSector)
       (state : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
         configuration data analysis),
       (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector sector
-          (data.sectorRepresentation.bridge.representation.representedTargetPullback
+          (covariance.sectorRepresentation.bridge.representation.representedTargetPullback
             morphism state) =
-        data.sectorRepresentation.bridge.representation.representedTargetPullback morphism
+        covariance.sectorRepresentation.bridge.representation.representedTargetPullback morphism
           ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
             sector state)) :=
-  ⟨data.sectorRepresentation.representedNaturalOperator_eq_actual
+  ⟨covariance.sectorRepresentation.representedNaturalOperator_eq_actual
       period hPeriod input,
-    data.pullback.source_commutes,
-    data.pullback.target_commutes⟩
+    covariance.pullback.source_commutes,
+    covariance.pullback.target_commutes⟩
 
 end GlobalHessianPreferredFiveSectorNaturalEllipticSectorCovariance4D
 

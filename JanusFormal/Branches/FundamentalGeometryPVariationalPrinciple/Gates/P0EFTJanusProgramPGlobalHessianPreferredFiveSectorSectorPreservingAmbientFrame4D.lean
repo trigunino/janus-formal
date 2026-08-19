@@ -1,6 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteIntertwiningOperatorFrameTransport4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorPreservingAmbientTransport4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorPhysicalKernelContinuation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorPhysicalKernelContinuationOutput4D
 
 /-!
 # Candidate-A physical kernel continuation from a basepoint frame
@@ -22,8 +22,8 @@ namespace JanusFormal
 namespace P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorPreservingAmbientFrame4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 86000000
-set_option synthInstance.maxHeartbeats 43000000
+set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 500000
 noncomputable section
 
 open Set Topology MeasureTheory
@@ -35,18 +35,37 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
 open P0EFTJanusProgramPFiniteIntertwiningOperatorFrameTransport4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorPreservingAmbientTransport4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorPhysicalKernelContinuation4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  candidateAHilbertNormedAddCommGroup
+  candidateAHilbertInnerProductSpace
+  candidateAHilbertNormedSpace
+  candidateAHilbertModule
+  candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -63,6 +82,8 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -75,7 +96,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -87,13 +108,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private abbrev Coordinates
@@ -134,8 +155,8 @@ theorem frame_symm_commutes_sector
     (frame : GlobalHessianPreferredFiveSectorSectorPreservingAmbientFrame4D
       period hPeriod input natural)
     (parameter : Real) (sector : FivePhysicalSector) (vector :
-      GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-        analysis) :
+      GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+        configuration data analysis) :
     (frame.frameData.frame parameter).symm
         ((Coordinates period hPeriod input).sectorProjector sector vector) =
       (Coordinates period hPeriod input).sectorProjector sector
@@ -158,8 +179,8 @@ theorem transport_commutes_sector
     (frame : GlobalHessianPreferredFiveSectorSectorPreservingAmbientFrame4D
       period hPeriod input natural)
     (first second : Real) (sector : FivePhysicalSector) (vector :
-      GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-        analysis) :
+      GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+        configuration data analysis) :
     frame.frameData.transport first second
         ((Coordinates period hPeriod input).sectorProjector sector vector) =
       (Coordinates period hPeriod input).sectorProjector sector
@@ -209,29 +230,16 @@ def toPhysicalKernelContinuationOutput
       period hPeriod input natural) :
     GlobalHessianPreferredFiveSectorPhysicalKernelContinuationOutput4D
       period hPeriod input :=
-  physicalKernelContinuationOfD11LinearPullback period hPeriod input natural
-    { linearPullback :=
-        { reverseMorphism := fun _ _ =>
-            natural.covariance.sectorRepresentation.bridge.representation.
-              immersionCategory.category.identity
-              |> fun morphism =>
-                { morphism := morphism
-                  preservesSpinC :=
-                    natural.covariance.sectorRepresentation.bridge.representation.
-                      immersionCategory.category.identity_preserves_spinC _ }
-          transport := frame.frameData.transport
-          source_pullback_agreement := by
-            intro
-            rfl
-          target_pullback_agreement := by
-            intro
-            rfl
-          transport_self := frame.frameData.transport_self
-          transport_trans := frame.frameData.transport_trans }
-      transported_vector_differentiable := by
-        intro mode
-        exact (frame.toSectorPreservingAmbientTransport period hPeriod input
-          natural).transported_vector_differentiable mode }
+  let ambient := frame.toSectorPreservingAmbientTransport period hPeriod input natural
+  let kernel := ambient.toSectorPreservingKernelTransport period hPeriod input natural
+  { closure := kernel.physicalNamedKernelFamilyClosure period hPeriod input natural
+    familyIndex_eq := rfl
+    resolved := kernel.physicalResolvedKernelFamily period hPeriod input natural
+    regularity := kernel.physicalRegularity period hPeriod input natural
+    basis_zero_agreement := by
+      intro mode
+      exact congrArg (fun basis => (basis mode).1)
+        (kernel.physicalKernels_basis_zero period hPeriod input natural) }
 
 /-- Direct physical closure generated by the frame.  This avoids exposing the
 synthetic D11 adapter used only to reuse the unified constructor. -/
@@ -243,8 +251,9 @@ def physicalNamedKernelFamilyClosure
       period hPeriod input)
     (frame : GlobalHessianPreferredFiveSectorSectorPreservingAmbientFrame4D
       period hPeriod input natural) :=
-  (frame.toSectorPreservingAmbientTransport period hPeriod input natural).
-    toPhysicalNamedKernelFamilyClosure period hPeriod input natural
+  GlobalHessianPreferredFiveSectorSectorPreservingAmbientTransport4D.toPhysicalNamedKernelFamilyClosure
+    period hPeriod input natural
+    (frame.toSectorPreservingAmbientTransport period hPeriod input natural)
 
 /-- Public sector-preserving basepoint-frame checkpoint. -/
 theorem global_hessian_preferred_five_sector_sector_preserving_ambient_frame_gate
@@ -267,20 +276,22 @@ theorem global_hessian_preferred_five_sector_sector_preserving_ambient_frame_gat
           (frame.frameData.transport first second state)) ∧
     GlobalHessianPreferredFiveSectorResolvedKernelFamily4D
       period hPeriod
-        (frame.physicalNamedKernelFamilyClosure period hPeriod input natural) ∧
+        (physicalNamedKernelFamilyClosure period hPeriod input natural frame) ∧
     GlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
       period hPeriod
-        (frame.physicalNamedKernelFamilyClosure period hPeriod input natural) :=
+        (physicalNamedKernelFamilyClosure period hPeriod input natural frame) :=
   ⟨frame.frameData.transport_intertwines,
     frame.transport_commutes_sector period hPeriod input natural,
-    (frame.toSectorPreservingAmbientTransport period hPeriod input natural).
-      toSectorPreservingKernelTransport period hPeriod input natural |>
-        fun transport =>
-          transport.physicalResolvedKernelFamily period hPeriod input natural,
-    (frame.toSectorPreservingAmbientTransport period hPeriod input natural).
-      toSectorPreservingKernelTransport period hPeriod input natural |>
-        fun transport =>
-          transport.physicalRegularity period hPeriod input natural⟩
+    GlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D.physicalResolvedKernelFamily
+      period hPeriod input natural
+      (GlobalHessianPreferredFiveSectorSectorPreservingAmbientTransport4D.toSectorPreservingKernelTransport
+        period hPeriod input natural
+        (frame.toSectorPreservingAmbientTransport period hPeriod input natural)),
+    GlobalHessianPreferredFiveSectorSectorPreservingKernelTransport4D.physicalRegularity
+      period hPeriod input natural
+      (GlobalHessianPreferredFiveSectorSectorPreservingAmbientTransport4D.toSectorPreservingKernelTransport
+        period hPeriod input natural
+        (frame.toSectorPreservingAmbientTransport period hPeriod input natural))⟩
 
 end GlobalHessianPreferredFiveSectorSectorPreservingAmbientFrame4D
 

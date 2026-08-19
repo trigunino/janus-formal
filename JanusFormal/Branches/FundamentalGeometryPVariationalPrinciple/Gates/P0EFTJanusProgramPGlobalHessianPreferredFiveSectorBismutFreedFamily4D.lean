@@ -98,7 +98,7 @@ local instance effectiveQuotientBorelSpace :
 
 variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
-def GlobalHessianPreferredFiveSectorBismutFreedHilbert4D
+abbrev GlobalHessianPreferredFiveSectorBismutFreedHilbert4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -106,8 +106,7 @@ def GlobalHessianPreferredFiveSectorBismutFreedHilbert4D
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}

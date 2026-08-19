@@ -62,6 +62,19 @@ theorem finiteFamilyGramMap_injective_of_synthesis_injective
     exact inner_self_eq_zero.mp hSelf
   exact sub_eq_zero.mp hDifferenceZero
 
+/-- Linear independence is sufficient for Gram injectivity. -/
+theorem finiteFamilyGramMap_injective_of_linearIndependent
+    (vectors : Index → E) (hVectors : LinearIndependent Real vectors) :
+    Function.Injective (finiteFamilyGramMap vectors) := by
+  apply finiteFamilyGramMap_injective_of_synthesis_injective vectors
+  intro first second hEqual
+  have hDifference : finiteFamilySynthesis vectors (first - second) = 0 := by
+    rw [map_sub, hEqual, sub_self]
+  have hCoefficients := Fintype.linearIndependent_iff.mp hVectors
+    (first - second) (by simpa [finiteFamilySynthesis] using hDifference)
+  funext index
+  exact sub_eq_zero.mp (hCoefficients index)
+
 /-- For a finite family, Gram injectivity and synthesis injectivity are
 equivalent. -/
 theorem finiteFamilyGramMap_injective_iff_synthesis_injective

@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenFrame4D
+import Mathlib.Analysis.Calculus.FDeriv.Const
 
 /-!
 # Fixed-coordinate trivialization of reduced and Green families
@@ -17,7 +18,7 @@ families are constant, so their fixed-coordinate derivatives vanish.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenTrivialization4D
+namespace P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
 
 set_option autoImplicit false
 noncomputable section
@@ -131,5 +132,5 @@ theorem finite_unitary_kernel_complement_green_trivialization_gate
 end FiniteUnitaryIntertwiningOperatorFrameData
 
 end
-end P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenTrivialization4D
+end P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
 end JanusFormal
